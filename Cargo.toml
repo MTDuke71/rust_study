@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "Ch1/hello_cargo",
+    "Ch2/guessing_game", 
+    "Ch3/variables",
+    "Mission1"
+]
+
+resolver = "2"
