@@ -1,0 +1,10 @@
+[package]
+name = "brackets_extended"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mission1 = { path = "../Mission1" }
+
+[dev-dependencies]
+anyhow = "1.0"

@@ -1,0 +1,13 @@
+line,ok,index,kind,expected,found,open_index
+1,true,,,,,
+2,true,,,,,
+3,true,,,,,
+4,true,,,,,
+5,false,2,MismatchedPair,],),
+6,false,2,UnclosedOpenings,),,2
+7,true,,,,,
+8,false,0,UnexpectedClosing,,],
+9,true,,,,,
+10,true,,,,,
+11,false,1,MismatchedPair,),],
+12,false,2,UnexpectedClosing,,),
