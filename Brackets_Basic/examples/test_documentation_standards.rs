@@ -1,8 +1,6 @@
 // Example of Rust Test Documentation Standards
 // This demonstrates how tests should be documented vs production code
 
-use brackets_basic::{validate_brackets, BracketError, BracketErrorKind};
-
 fn main() {
     println!("🧪 Rust Test Documentation Standards\n");
     println!("This example shows how tests should be documented differently from production code.");
@@ -10,7 +8,7 @@ fn main() {
 
 #[cfg(test)]
 mod test_documentation_examples {
-    use super::*;
+    use brackets_basic::{validate_brackets, BracketError, BracketErrorKind};
 
     // ============================================================================
     // ✅ GOOD: Test functions should have descriptive names that explain what they test
@@ -195,7 +193,7 @@ mod performance_tests {
     //! These tests verify that the algorithm performs well on large inputs
     //! and maintains O(n) time complexity characteristics.
     
-    use super::*;
+    use brackets_basic::validate_brackets;
     use std::time::Instant;
     
     #[test]
@@ -232,7 +230,7 @@ mod edge_case_tests {
     //! These tests cover unusual inputs and boundary conditions
     //! that might not be covered by typical usage.
     
-    use super::*;
+    use brackets_basic::validate_brackets;
     
     #[test]
     fn extremely_deep_nesting_should_work() {
