@@ -4,6 +4,7 @@ members = [
     "Ch2/guessing_game", 
     "Ch3/variables",
     "Mission1",
+    "Mission2",
     "Brackets_Basic",
     "Brackets_Ext"
 ]
