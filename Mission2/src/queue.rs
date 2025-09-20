@@ -251,6 +251,74 @@ impl<T> RingBufferQueue<T> {
             self.buf[self.head].as_ref()
         }
     }
+
+    /// Adds an element to the back of the queue, overwriting the oldest element if full.
+    ///
+    /// Unlike `enqueue()`, this method never fails - if the queue is full, it overwrites
+    /// the oldest element and returns it. This is useful for fixed-size buffers where
+    /// you always want to keep the most recent N elements.
+    ///
+    /// When the queue is not full, this behaves identically to `enqueue().unwrap()`.
+    /// When the queue is full, it overwrites the oldest element and advances both
+    /// head and tail pointers to maintain the circular buffer invariants.
+    ///
+    /// # Returns
+    /// - `None` if the queue had space (normal enqueue)
+    /// - `Some(old_value)` if the queue was full and the oldest value was overwritten
+    ///
+    /// # Examples
+    /// ```rust
+    /// use mission2::RingBufferQueue;
+    ///
+    /// let mut queue = RingBufferQueue::with_capacity(3);
+    /// 
+    /// // Normal enqueue when not full
+    /// assert_eq!(queue.enqueue_overwrite(1), None);
+    /// assert_eq!(queue.enqueue_overwrite(2), None);
+    /// assert_eq!(queue.enqueue_overwrite(3), None);
+    /// assert_eq!(queue.len(), 3);
+    /// 
+    /// // Overwrite when full
+    /// assert_eq!(queue.enqueue_overwrite(4), Some(1)); // Overwrote 1
+    /// assert_eq!(queue.enqueue_overwrite(5), Some(2)); // Overwrote 2
+    /// assert_eq!(queue.len(), 3); // Still full
+    /// 
+    /// // Queue now contains [3, 4, 5] in FIFO order
+    /// assert_eq!(queue.dequeue(), Some(3));
+    /// assert_eq!(queue.dequeue(), Some(4));
+    /// assert_eq!(queue.dequeue(), Some(5));
+    /// ```
+    ///
+    /// # Use Cases
+    /// - Recent message history (keep last N messages)
+    /// - Sensor data buffering (rolling window of readings)
+    /// - Game frame history (replay/analysis buffer)
+    /// - Log rotation (circular log buffer)
+    ///
+    /// # Requirements
+    /// - **REQ-G1**: FIFO API extension
+    /// - **REQ-G2**: Maintains FIFO ordering of remaining elements
+    /// - **REQ-G4**: O(1) complexity
+    /// - **REQ-R2**: Wrap-around behavior for full queue
+    pub fn enqueue_overwrite(&mut self, x: T) -> Option<T> {
+        let cap = self.capacity();
+        
+        if self.is_full() {
+            // Overwrite the oldest element (at head position)
+            let old_value = self.buf[self.head].replace(x);
+            // Move both head and tail forward to maintain circular buffer
+            self.head = (self.head + 1) % cap;
+            self.tail = (self.tail + 1) % cap;
+            // Length stays the same (still full)
+            old_value
+        } else {
+            // Normal enqueue - queue has space
+            self.buf[self.tail] = Some(x);
+            self.tail = (self.tail + 1) % cap;
+            self.len += 1;
+            None
+        }
+    }
 }
 
 // ==========================
@@ -619,5 +687,153 @@ mod tests {
             assert_eq!(queue.dequeue(), Some(i));
         }
         assert!(queue.is_empty());
+    }
+
+    #[test]
+    fn ring_buffer_enqueue_overwrite_basic() {
+        let mut queue = RingBufferQueue::with_capacity(3);
+        
+        // Test normal enqueue when not full
+        assert_eq!(queue.enqueue_overwrite(1), None);
+        assert_eq!(queue.enqueue_overwrite(2), None);
+        assert_eq!(queue.enqueue_overwrite(3), None);
+        assert_eq!(queue.len(), 3);
+        assert!(queue.is_full());
+        
+        // Test overwrite when full
+        assert_eq!(queue.enqueue_overwrite(4), Some(1)); // Overwrote 1
+        assert_eq!(queue.len(), 3); // Still full
+        assert_eq!(queue.enqueue_overwrite(5), Some(2)); // Overwrote 2
+        assert_eq!(queue.enqueue_overwrite(6), Some(3)); // Overwrote 3
+        
+        // Verify FIFO order of remaining elements
+        assert_eq!(queue.dequeue(), Some(4));
+        assert_eq!(queue.dequeue(), Some(5));
+        assert_eq!(queue.dequeue(), Some(6));
+        assert!(queue.is_empty());
+    }
+
+    #[test]
+    fn ring_buffer_enqueue_overwrite_single_capacity() {
+        let mut queue = RingBufferQueue::with_capacity(1);
+        
+        // First element goes in normally
+        assert_eq!(queue.enqueue_overwrite(1), None);
+        assert_eq!(queue.len(), 1);
+        assert!(queue.is_full());
+        
+        // Subsequent elements overwrite
+        assert_eq!(queue.enqueue_overwrite(2), Some(1));
+        assert_eq!(queue.enqueue_overwrite(3), Some(2));
+        assert_eq!(queue.enqueue_overwrite(4), Some(3));
+        
+        // Only the last element remains
+        assert_eq!(queue.dequeue(), Some(4));
+        assert!(queue.is_empty());
+    }
+
+    #[test]
+    fn ring_buffer_enqueue_overwrite_mixed_operations() {
+        let mut queue = RingBufferQueue::with_capacity(4);
+        
+        // Fill queue normally
+        assert_eq!(queue.enqueue_overwrite(1), None);
+        assert_eq!(queue.enqueue_overwrite(2), None);
+        assert_eq!(queue.enqueue_overwrite(3), None);
+        assert_eq!(queue.enqueue_overwrite(4), None);
+        
+        // Dequeue some elements
+        assert_eq!(queue.dequeue(), Some(1));
+        assert_eq!(queue.dequeue(), Some(2));
+        assert_eq!(queue.len(), 2);
+        
+        // Add more elements (should not overwrite since space available)
+        assert_eq!(queue.enqueue_overwrite(5), None);
+        assert_eq!(queue.enqueue_overwrite(6), None);
+        assert!(queue.is_full());
+        
+        // Now overwrite again
+        assert_eq!(queue.enqueue_overwrite(7), Some(3)); // Overwrote 3
+        assert_eq!(queue.enqueue_overwrite(8), Some(4)); // Overwrote 4
+        
+        // Verify final order
+        assert_eq!(queue.dequeue(), Some(5));
+        assert_eq!(queue.dequeue(), Some(6));
+        assert_eq!(queue.dequeue(), Some(7));
+        assert_eq!(queue.dequeue(), Some(8));
+        assert!(queue.is_empty());
+    }
+
+    #[test]
+    fn ring_buffer_enqueue_overwrite_wrap_around() {
+        let mut queue = RingBufferQueue::with_capacity(3);
+        
+        // Fill queue completely
+        assert_eq!(queue.enqueue_overwrite(1), None);
+        assert_eq!(queue.enqueue_overwrite(2), None);
+        assert_eq!(queue.enqueue_overwrite(3), None);
+        assert!(queue.is_full());
+        
+        // Now test multiple overwrite cycles to ensure wrap-around works
+        assert_eq!(queue.enqueue_overwrite(4), Some(1)); // [2, 3, 4]
+        assert_eq!(queue.enqueue_overwrite(5), Some(2)); // [3, 4, 5]
+        assert_eq!(queue.enqueue_overwrite(6), Some(3)); // [4, 5, 6]
+        
+        // Verify the queue wrapped around correctly
+        assert_eq!(queue.dequeue(), Some(4));
+        assert_eq!(queue.dequeue(), Some(5));
+        assert_eq!(queue.dequeue(), Some(6));
+        assert!(queue.is_empty());
+        
+        // Test wrap-around after partial operations
+        queue.enqueue_overwrite(10);
+        queue.enqueue_overwrite(20);
+        assert_eq!(queue.dequeue(), Some(10)); // Partial drain
+        
+        // Fill again
+        queue.enqueue_overwrite(30);
+        queue.enqueue_overwrite(40); // Should fill without overwrite
+        assert_eq!(queue.len(), 3);
+        
+        // Now overwrite should happen
+        assert_eq!(queue.enqueue_overwrite(50), Some(20)); // Overwrote 20
+        assert_eq!(queue.dequeue(), Some(30));
+        assert_eq!(queue.dequeue(), Some(40));
+        assert_eq!(queue.dequeue(), Some(50));
+    }
+
+    #[test]
+    fn ring_buffer_enqueue_overwrite_maintains_peek() {
+        let mut queue = RingBufferQueue::with_capacity(2);
+        
+        // Fill queue
+        queue.enqueue_overwrite(1);
+        queue.enqueue_overwrite(2);
+        assert_eq!(queue.peek(), Some(&1));
+        
+        // Overwrite - peek should now show the new front
+        assert_eq!(queue.enqueue_overwrite(3), Some(1));
+        assert_eq!(queue.peek(), Some(&2)); // 2 is now at front
+        
+        assert_eq!(queue.enqueue_overwrite(4), Some(2));
+        assert_eq!(queue.peek(), Some(&3)); // 3 is now at front
+        
+        // Verify by dequeuing
+        assert_eq!(queue.dequeue(), Some(3));
+        assert_eq!(queue.dequeue(), Some(4));
+    }
+
+    #[test]
+    fn ring_buffer_enqueue_overwrite_type_safety() {
+        // Test with different types to ensure generic implementation works
+        let mut string_queue = RingBufferQueue::with_capacity(2);
+        assert_eq!(string_queue.enqueue_overwrite("first".to_string()), None);
+        assert_eq!(string_queue.enqueue_overwrite("second".to_string()), None);
+        assert_eq!(string_queue.enqueue_overwrite("third".to_string()), Some("first".to_string()));
+        
+        let mut option_queue = RingBufferQueue::with_capacity(2);
+        assert_eq!(option_queue.enqueue_overwrite(Some(1)), None);
+        assert_eq!(option_queue.enqueue_overwrite(None), None);
+        assert_eq!(option_queue.enqueue_overwrite(Some(2)), Some(Some(1)));
     }
 }

@@ -24,7 +24,7 @@ let mut x = 5;
     let spaces = spaces.len();
     println!("spaces: {}",spaces);
 
-    /// Data Types
+    // Data Types
     
     let x = 2.0; // f64
 

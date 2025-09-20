@@ -12,6 +12,7 @@ fn main() {
 
     demo_ring_buffer_queue();
     demo_linked_queue();
+    demo_overwriting_buffer(); // New demo for enqueue_overwrite
     demo_performance_comparison();
     demo_bfs_simulation();
 }
@@ -117,6 +118,94 @@ fn demo_linked_queue() {
     while let Some(item) = queue.dequeue() {
         println!("  Final: {}", item);
     }
+    
+    println!();
+}
+
+fn demo_overwriting_buffer() {
+    println!("🔄 Overwriting Ring Buffer Demo");
+    println!("-------------------------------");
+    
+    let mut queue = RingBufferQueue::with_capacity(4);
+    
+    println!("Created overwriting ring buffer with capacity: {}", queue.capacity());
+    
+    // Fill the queue normally
+    println!("\n1. Filling queue normally:");
+    for i in 1..=4 {
+        let result = queue.enqueue_overwrite(i);
+        println!("  Enqueue {}: returned {:?} (len: {})", i, result, queue.len());
+    }
+    
+    // Now it's full - demonstrate overwriting
+    println!("\n2. Overwriting oldest values when full:");
+    for i in 5..=7 {
+        let overwritten = queue.enqueue_overwrite(i);
+        println!("  Enqueue {}: overwrote {:?} (len: {})", i, overwritten, queue.len());
+        println!("    Current front: {:?}", queue.peek());
+    }
+    
+    // Show the power of overwriting with a message buffer simulation
+    println!("\n3. Message Buffer Simulation:");
+    let mut msg_buffer = RingBufferQueue::with_capacity(3);
+    
+    let messages = vec![
+        "User connected",
+        "User logged in", 
+        "User opened file",
+        "User saved file",
+        "User logged out", // This will overwrite "User connected"
+        "User disconnected", // This will overwrite "User logged in"
+    ];
+    
+    for msg in messages {
+        if let Some(old_msg) = msg_buffer.enqueue_overwrite(msg.to_string()) {
+            println!("  📝 New: '{}' (replaced: '{}')", msg, old_msg);
+        } else {
+            println!("  📝 New: '{}'", msg);
+        }
+    }
+    
+    println!("\n4. Recent messages (most recent 3):");
+    while let Some(msg) = msg_buffer.dequeue() {
+        println!("    📜 {}", msg);
+    }
+    
+    // Compare with regular enqueue behavior
+    println!("\n5. Comparison with regular enqueue:");
+    let mut regular_queue = RingBufferQueue::with_capacity(3);
+    
+    println!("  Regular enqueue:");
+    for i in 1..=3 {
+        regular_queue.enqueue(i).unwrap();
+    }
+    match regular_queue.enqueue(4) {
+        Ok(()) => println!("    Enqueue 4: Success"),
+        Err(value) => println!("    Enqueue 4: REJECTED (returned {})", value),
+    }
+    
+    let mut overwrite_queue = RingBufferQueue::with_capacity(3);
+    println!("\n  Overwrite enqueue:");
+    for i in 1..=3 {
+        overwrite_queue.enqueue_overwrite(i);
+    }
+    match overwrite_queue.enqueue_overwrite(4) {
+        None => println!("    Enqueue 4: Success (no overwrite)"),
+        Some(old) => println!("    Enqueue 4: Success (overwrote {})", old),
+    }
+    
+    println!("\n  Final contents:");
+    print!("    Regular queue: ");
+    while let Some(val) = regular_queue.dequeue() {
+        print!("{} ", val);
+    }
+    println!();
+    
+    print!("    Overwrite queue: ");
+    while let Some(val) = overwrite_queue.dequeue() {
+        print!("{} ", val);
+    }
+    println!();
     
     println!();
 }

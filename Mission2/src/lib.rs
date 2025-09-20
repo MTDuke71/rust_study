@@ -10,6 +10,7 @@
 //! - **Cache-friendly** with no pointer chasing
 //! - **O(1) operations** with predictable performance
 //! - **Perfect for bounded problems** (e.g., BFS on grids)
+//! - **Overwriting mode** for circular buffers (enqueue_overwrite)
 //!
 //! ### 🔗 **LinkedQueue<T>**
 //! - **Dynamic size** growing as needed
@@ -27,6 +28,13 @@
 //! ring.enqueue(1).unwrap();
 //! ring.enqueue(2).unwrap();
 //! assert_eq!(ring.dequeue(), Some(1)); // FIFO order
+//!
+//! // Ring buffer with overwrite mode (circular buffer)
+//! let mut circular = RingBufferQueue::with_capacity(2);
+//! circular.enqueue_overwrite(1); // Returns None (not full)
+//! circular.enqueue_overwrite(2); // Returns None (not full)
+//! let old = circular.enqueue_overwrite(3); // Returns Some(1) (overwrote oldest)
+//! assert_eq!(old, Some(1));
 //!
 //! // Linked queue (dynamic size)
 //! let mut linked = LinkedQueue::new();
@@ -50,6 +58,14 @@
 //! - **REQ-R1**: Fixed capacity with backpressure (returns Err on full)
 //! - **REQ-R2**: Efficient wrap-around indexing without branches
 //! - **REQ-R3**: Contiguous memory with no reallocation
+//! - **REQ-R4**: Overwriting circular buffer semantics (enqueue_overwrite)
+//!
+//! ### Ring Buffer Overwriting Extension
+//! - **REQ-RO1**: Never-fail enqueue operation (enqueue_overwrite)
+//! - **REQ-RO2**: Automatic oldest-element eviction when at capacity
+//! - **REQ-RO3**: Return overwritten value for caller processing
+//! - **REQ-RO4**: Maintain FIFO ordering of remaining elements
+//! - **REQ-RO5**: Consistent behavior with peek/dequeue after overwrite
 //!
 //! ### Linked Queue Specific
 //! - **REQ-L1**: Singly-linked node structure with head/tail
@@ -58,21 +74,29 @@
 //!
 //! ## Performance Characteristics
 //!
-//! | Operation | RingBufferQueue | LinkedQueue |
-//! |-----------|-----------------|-------------|
-//! | enqueue   | O(1)           | O(1)        |
-//! | dequeue   | O(1)           | O(1)        |
-//! | peek      | O(1)           | O(1)        |
-//! | Space     | Fixed          | Dynamic     |
-//! | Cache     | Excellent      | Moderate    |
+//! | Operation         | RingBufferQueue | LinkedQueue |
+//! |-------------------|-----------------|-------------|
+//! | enqueue           | O(1)           | O(1)        |
+//! | enqueue_overwrite | O(1)           | N/A         |
+//! | dequeue           | O(1)           | O(1)        |
+//! | peek              | O(1)           | O(1)        |
+//! | Space             | Fixed          | Dynamic     |
+//! | Cache             | Excellent      | Moderate    |
 //!
 //! ## Usage Patterns
 //!
-//! ### When to Use RingBufferQueue
+//! ### When to Use RingBufferQueue (Standard Mode)
 //! - BFS on bounded grids or graphs
 //! - Producer-consumer with known capacity
 //! - Real-time systems requiring predictable memory
 //! - High-frequency operations needing cache efficiency
+//!
+//! ### When to Use RingBufferQueue (Overwrite Mode)
+//! - Recent history tracking (last N messages/events)
+//! - Sensor data buffering with fixed memory footprint
+//! - Circular log buffers with automatic rotation
+//! - Game replay systems with bounded frame history
+//! - Rolling window analytics and monitoring
 //!
 //! ### When to Use LinkedQueue
 //! - Unknown or highly variable queue sizes
