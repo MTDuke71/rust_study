@@ -5,10 +5,13 @@ members = [
     "Ch3/variables",
     "Mission1",
     "Mission2",
+    "Mission3",
     "Brackets_Basic",
     "Brackets_Ext",
     "competitive_ring_bfs",
-    "competitive_linked_tree"
+    "competitive_linked_tree",
+    "aoc_scaffold_templates_with_tests",
+    "aoc_pattern_recognition"
 ]
 
 resolver = "2"

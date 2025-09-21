@@ -1,0 +1,30 @@
+[package]
+name = "aoc_pattern_recognition"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.9.2"
+
+[dev-dependencies]
+criterion = { version = "0.7.0", features = ["html_reports"] }
+
+[[example]]
+name = "grid_patterns_demo"
+path = "examples/grid_patterns_demo.rs"
+
+[[example]]
+name = "parsing_patterns_demo" 
+path = "examples/parsing_patterns_demo.rs"
+
+[[example]]
+name = "state_patterns_demo"
+path = "examples/state_patterns_demo.rs"
+
+[[example]]
+name = "simple_demo"
+path = "examples/simple_demo.rs"
+
+[[example]]
+name = "real_aoc_solutions"
+path = "examples/real_aoc_solutions.rs"

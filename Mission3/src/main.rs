@@ -1,0 +1,35 @@
+fn main() {
+    println!("Mission 3: Binary Search - Traits, Slices, and Iterators");
+    println!("========================================================");
+    println!();
+    println!("This mission demonstrates binary search algorithms with Rust's");
+    println!("trait system, slice borrowing, and iterator patterns.");
+    println!();
+    println!("🎯 Learning Objectives:");
+    println!("  • REQ-1: Slice-based binary search with lifetime safety");
+    println!("  • REQ-2: Trait abstractions for generic containers");
+    println!("  • REQ-3: Iterator integration for zero-cost operations");
+    println!("  • REQ-4: Custom ordering and key extraction");
+    println!("  • REQ-5: Memory-safe borrowing patterns");
+    println!("  • REQ-6: AoC-style utility functions");
+    println!();
+    println!("📚 Key Rust Concepts:");
+    println!("  • Generic trait bounds (T: Ord)");
+    println!("  • Lifetime parameters and borrowing");
+    println!("  • Iterator trait implementation");
+    println!("  • Zero-cost abstractions");
+    println!("  • Custom comparators and key functions");
+    println!();
+    println!("🚀 Run Examples:");
+    println!("  cargo run --example demo");
+    println!("  cargo run --example aoc_style_examples");
+    println!("  cargo run --example performance_comparison");
+    println!();
+    println!("🧪 Run Tests:");
+    println!("  cargo test");
+    println!("  cargo test req1_  # Test REQ-1 specifically");
+    println!("  cargo test req2_  # Test REQ-2 specifically");
+    println!("  cargo test -- --nocapture  # See test output");
+    println!();
+    println!("📖 For detailed requirements and design, see README.md");
+}

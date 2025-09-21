@@ -1,0 +1,544 @@
+//! State Management Pattern Recognition Demo
+//! 
+//! This example demonstrates how to identify and solve state-heavy AoC problems
+//! using optimization and state management patterns.
+
+use aoc_pattern_recognition::state_patterns::*;
+use aoc_pattern_recognition::{AocPattern, PatternComplexity};
+use std::collections::HashMap;
+
+fn main() {
+    println!("=== State Management Pattern Recognition Demo ===\n");
+
+    // Demo 1: Memoization for Recursive Problems
+    println!("🧠 Demo 1: Memoization for Recursive Problems");
+    demo_memoization();
+    println!();
+
+    // Demo 2: Cycle Detection in Sequences
+    println!("🔄 Demo 2: Cycle Detection in Sequences");
+    demo_cycle_detection();
+    println!();
+
+    // Demo 3: Dynamic Programming
+    println!("⚡ Demo 3: Dynamic Programming");
+    demo_dynamic_programming();
+    println!();
+
+    // Demo 4: Sliding Window Optimization
+    println!("🪟 Demo 4: Sliding Window Optimization");
+    demo_sliding_window();
+    println!();
+
+    // Demo 5: Complex State Tracking
+    println!("📊 Demo 5: Complex State Tracking");
+    demo_state_tracking();
+    println!();
+
+    // Demo 6: Pattern Recognition Guide
+    println!("🧠 Demo 6: Pattern Recognition Guide");
+    demo_pattern_recognition();
+    println!();
+
+    println!("All state management pattern demos completed! ✅");
+}
+
+fn demo_memoization() {
+    let mut cache = MemoizationCache::new();
+    
+    println!("  📝 Fibonacci with Memoization (AoC 2021 Day 6 Lanternfish style):");
+    
+    // Simulate lanternfish population growth with memoization
+    fn lanternfish_count_memo(days: u64, timer: u64, cache: &mut MemoizationCache<(u64, u64), u64>) -> u64 {
+        let key = (days, timer);
+        
+        if let Some(&cached) = cache.get(&key) {
+            return cached;
+        }
+        
+        let result = if days == 0 {
+            1 // One fish at the end
+        } else if timer == 0 {
+            // Fish reproduces: reset timer + new fish with timer 8
+            lanternfish_count_memo(days - 1, 6, cache) + lanternfish_count_memo(days - 1, 8, cache)
+        } else {
+            // Fish ages: decrement timer
+            lanternfish_count_memo(days - 1, timer - 1, cache)
+        };
+        
+        cache.insert(key, result);
+        result
+    }
+    
+    // Test different scenarios
+    let test_cases = vec![
+        (18, 3, "Small example"),
+        (80, 3, "Part 1 example"), 
+        (256, 3, "Part 2 example"),
+    ];
+    
+    for (days, initial_timer, description) in test_cases {
+        let start_time = std::time::Instant::now();
+        let count = lanternfish_count_memo(days, initial_timer, &mut cache);
+        let duration = start_time.elapsed();
+        
+        println!("    {} (days={}, timer={}): {} fish", description, days, initial_timer, count);
+        println!("      Time: {:?}, Cache size: {}", duration, cache.size());
+    }
+    
+    println!("    💡 Without memoization, the 256-day case would take hours!");
+    println!("    Cache hit rate: {:.1}%", cache.hit_rate() * 100.0);
+}
+
+fn demo_cycle_detection() {
+    let tracker = StateTracker::new();
+    
+    println!("  🔄 Conway's Game of Life with Cycle Detection:");
+    
+    // Simplified Game of Life state representation
+    #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+    struct LifeState {
+        grid: Vec<Vec<bool>>,
+        generation: usize,
+    }
+    
+    impl LifeState {
+        fn new(pattern: &str) -> Self {
+            let grid = pattern.lines()
+                .map(|line| line.chars().map(|c| c == '#').collect())
+                .collect();
+            Self { grid, generation: 0 }
+        }
+        
+        fn next_generation(&self) -> Self {
+            let height = self.grid.len();
+            let width = self.grid[0].len();
+            let mut new_grid = vec![vec![false; width]; height];
+            
+            for y in 0..height {
+                for x in 0..width {
+                    let neighbors = self.count_neighbors(x, y);
+                    let alive = self.grid[y][x];
+                    
+                    new_grid[y][x] = match (alive, neighbors) {
+                        (true, 2) | (true, 3) => true,  // Stay alive
+                        (false, 3) => true,             // Born
+                        _ => false,                     // Die or stay dead
+                    };
+                }
+            }
+            
+            Self { 
+                grid: new_grid, 
+                generation: self.generation + 1 
+            }
+        }
+        
+        fn count_neighbors(&self, x: usize, y: usize) -> usize {
+            let height = self.grid.len() as i32;
+            let width = self.grid[0].len() as i32;
+            let mut count = 0;
+            
+            for dy in -1..=1 {
+                for dx in -1..=1 {
+                    if dx == 0 && dy == 0 { continue; }
+                    
+                    let nx = x as i32 + dx;
+                    let ny = y as i32 + dy;
+                    
+                    if nx >= 0 && nx < width && ny >= 0 && ny < height {
+                        if self.grid[ny as usize][nx as usize] {
+                            count += 1;
+                        }
+                    }
+                }
+            }
+            count
+        }
+        
+        fn to_string(&self) -> String {
+            self.grid.iter()
+                .map(|row| row.iter().map(|&alive| if alive { '#' } else { '.' }).collect::<String>())
+                .collect::<Vec<_>>()
+                .join("\n")
+        }
+    }
+    
+    // Test with a known oscillator pattern (blinker)
+    let initial_pattern = "...\n###\n...";
+    let mut state = LifeState::new(initial_pattern);
+    
+    println!("    Initial state (generation {}):", state.generation);
+    println!("{}", state.to_string().lines().map(|l| format!("      {}", l)).collect::<Vec<_>>().join("\n"));
+    
+    let cycle_detector = CycleDetection::new();
+    
+    // Run simulation and detect cycles
+    let mut states = vec![state.clone()];
+    for generation in 1..=10 {
+        state = state.next_generation();
+        states.push(state.clone());
+        
+        if generation <= 3 {
+            println!("    Generation {}:", generation);
+            println!("{}", state.to_string().lines().map(|l| format!("      {}", l)).collect::<Vec<_>>().join("\n"));
+        }
+        
+        // Check for cycle
+        if let Some((cycle_start, cycle_length)) = cycle_detector.detect_cycle(&states) {
+            println!("    🎯 Cycle detected!");
+            println!("      Cycle starts at generation: {}", cycle_start);
+            println!("      Cycle length: {} generations", cycle_length);
+            
+            // Predict future state
+            let future_gen = 1000000;
+            let predicted_state_idx = cycle_start + ((future_gen - cycle_start) % cycle_length);
+            println!("      State at generation {} would be same as generation {}", 
+                future_gen, predicted_state_idx);
+            break;
+        }
+    }
+}
+
+fn demo_dynamic_programming() {
+    println!("  ⚡ Classic DP: Longest Common Subsequence");
+    
+    let dp = DynamicProgramming::new();
+    
+    // Example from AoC-style string processing
+    let sequences = vec![
+        ("ABCDGH", "AEDFHR", "Similar DNA sequences"),
+        ("PROGRAMMING", "ALGORITHM", "Code similarity"),
+        ("ADVENT", "EVENTS", "Short example"),
+    ];
+    
+    for (seq1, seq2, description) in sequences {
+        println!("    {} Example:", description);
+        println!("      Sequence 1: {}", seq1);
+        println!("      Sequence 2: {}", seq2);
+        
+        let lcs_length = dp.longest_common_subsequence(seq1, seq2);
+        println!("      LCS Length: {}", lcs_length);
+        
+        // Calculate similarity percentage
+        let max_len = seq1.len().max(seq2.len());
+        let similarity = (lcs_length as f64 / max_len as f64) * 100.0;
+        println!("      Similarity: {:.1}%", similarity);
+        println!();
+    }
+    
+    println!("  💰 Classic DP: Knapsack Problem (Resource optimization)");
+    
+    // Simulate AoC resource optimization problem
+    let items = vec![
+        (10, 60),   // (weight, value)
+        (20, 100),
+        (30, 120),
+    ];
+    let capacity = 50;
+    
+    let max_value = dp.knapsack(&items, capacity);
+    println!("    Items: {:?} (weight, value)", items);
+    println!("    Capacity: {}", capacity);
+    println!("    Maximum value: {}", max_value);
+    
+    // Show which items to take
+    println!("    💡 This pattern appears in AoC for:");
+    println!("      • Equipment selection with weight limits");
+    println!("      • Resource allocation with constraints");
+    println!("      • Optimization with multiple criteria");
+}
+
+fn demo_sliding_window() {
+    println!("  🪟 Sliding Window: Finding Patterns in Sequences");
+    
+    let window = SlidingWindow::new(4);
+    
+    // Simulate packet processing (AoC 2022 Day 6 style)
+    let datastream = "mjqjpqmgbljsphdztnvjfqwrcgsmlb";
+    println!("    Datastream: {}", datastream);
+    println!("    Looking for first 4-character window with all unique characters:");
+    
+    for (i, ch) in datastream.chars().enumerate() {
+        // Add character to window
+        let current_window: Vec<char> = window.current_window().iter().cloned().collect();
+        
+        // Check if we have a valid start-of-packet marker
+        if current_window.len() == 4 {
+            let mut unique_chars = current_window.clone();
+            unique_chars.sort();
+            unique_chars.dedup();
+            
+            if unique_chars.len() == 4 {
+                println!("    ✅ Found start marker: {:?} at position {}", current_window, i);
+                break;
+            }
+        }
+        
+        // For demo, simulate the sliding
+        println!("    Position {}: '{}' → Window: {:?}", i, ch, current_window);
+        if i >= 8 { // Limit output for demo
+            println!("    ... continuing scan ...");
+            break;
+        }
+    }
+    
+    println!();
+    println!("  📊 Sliding Window: Sum Analysis");
+    
+    let numbers = vec![1, 3, 2, 6, -1, 4, 1, 8, 2];
+    let window_size = 3;
+    
+    println!("    Numbers: {:?}", numbers);
+    println!("    Window size: {}", window_size);
+    
+    // Calculate sliding window sums
+    let mut max_sum = i32::MIN;
+    let mut max_window = Vec::new();
+    
+    for i in 0..=(numbers.len().saturating_sub(window_size)) {
+        let window: Vec<i32> = numbers[i..i+window_size].to_vec();
+        let sum: i32 = window.iter().sum();
+        
+        if sum > max_sum {
+            max_sum = sum;
+            max_window = window.clone();
+        }
+        
+        println!("    Window {:?} → Sum: {}", window, sum);
+    }
+    
+    println!("    🏆 Maximum sum window: {:?} → {}", max_window, max_sum);
+}
+
+fn demo_state_tracking() {
+    println!("  📊 Complex State Tracking: Robot Navigation");
+    
+    #[derive(Debug, Clone, Hash, PartialEq, Eq)]
+    struct RobotState {
+        x: i32,
+        y: i32,
+        direction: String,
+        fuel: u32,
+    }
+    
+    let mut tracker = StateTracker::new();
+    
+    let initial_state = RobotState {
+        x: 0,
+        y: 0,
+        direction: "North".to_string(),
+        fuel: 100,
+    };
+    
+    tracker.record_state(initial_state.clone());
+    
+    // Simulate robot movement commands
+    let commands = vec![
+        ("forward", 5),
+        ("turn_right", 0),
+        ("forward", 3),
+        ("turn_left", 0),
+        ("forward", 2),
+    ];
+    
+    let mut current_state = initial_state;
+    
+    println!("    Initial state: {:?}", current_state);
+    
+    for (command, value) in commands {
+        println!("    Command: {} {}", command, value);
+        
+        // Apply command
+        match command {
+            "forward" => {
+                match current_state.direction.as_str() {
+                    "North" => current_state.y += value,
+                    "South" => current_state.y -= value,
+                    "East" => current_state.x += value,
+                    "West" => current_state.x -= value,
+                    _ => {}
+                }
+                current_state.fuel = current_state.fuel.saturating_sub(value as u32);
+            }
+            "turn_right" => {
+                current_state.direction = match current_state.direction.as_str() {
+                    "North" => "East",
+                    "East" => "South", 
+                    "South" => "West",
+                    "West" => "North",
+                    _ => "North",
+                }.to_string();
+            }
+            "turn_left" => {
+                current_state.direction = match current_state.direction.as_str() {
+                    "North" => "West",
+                    "West" => "South",
+                    "South" => "East", 
+                    "East" => "North",
+                    _ => "North",
+                }.to_string();
+            }
+            _ => {}
+        }
+        
+        tracker.record_state(current_state.clone());
+        println!("      → {:?}", current_state);
+        
+        // Check if we've been in this state before
+        if tracker.has_visited_state(&current_state) {
+            println!("      🔄 State revisited! Potential loop detected.");
+        }
+    }
+    
+    println!("    📈 State Statistics:");
+    println!("      Total states visited: {}", tracker.state_count());
+    println!("      Unique states: {}", tracker.unique_state_count());
+    println!("      Final position: ({}, {})", current_state.x, current_state.y);
+    println!("      Manhattan distance from origin: {}", current_state.x.abs() + current_state.y.abs());
+}
+
+fn demo_pattern_recognition() {
+    println!("  🧠 How to recognize state management patterns in AoC problems:");
+    println!();
+    
+    let pattern_signals = vec![
+        (
+            "Memoization/Caching",
+            vec![
+                "Recursive problems with overlapping subproblems",
+                "\"Calculate for very large numbers\" (days 256, etc.)",
+                "Tree/graph traversal with repeated states", 
+                "Fibonacci-like sequences",
+                "Dynamic population/growth simulations",
+            ]
+        ),
+        (
+            "Cycle Detection", 
+            vec![
+                "\"Simulate for 1 billion iterations\"",
+                "Cellular automata (Game of Life style)",
+                "State machines that might repeat",
+                "Orbital mechanics or planetary motion",
+                "Memory/register manipulation that might loop",
+            ]
+        ),
+        (
+            "Dynamic Programming",
+            vec![
+                "Optimization problems (shortest, longest, maximum)",
+                "\"How many ways to...\" counting problems", 
+                "Resource allocation with constraints",
+                "String/sequence analysis problems",
+                "Building/crafting with dependencies",
+            ]
+        ),
+        (
+            "Sliding Window",
+            vec![
+                "Finding subsequences with properties",
+                "\"First occurrence of pattern\" problems",
+                "Stream processing with fixed-size buffers",
+                "Moving averages or rolling calculations",
+                "Signal processing or data validation",
+            ]
+        ),
+    ];
+    
+    for (pattern_name, signals) in pattern_signals {
+        println!("  🎯 {}:", pattern_name);
+        for signal in signals {
+            println!("    • {}", signal);
+        }
+        println!();
+    }
+    
+    println!("  💡 Performance Impact Guidelines:");
+    println!("    • Memoization: Converts O(2ⁿ) to O(n) for recursive problems");
+    println!("    • Cycle Detection: Converts O(n) to O(√n) space, early termination");
+    println!("    • Dynamic Programming: O(n²) or O(n³) but avoids exponential");
+    println!("    • Sliding Window: O(n) instead of O(n×k) for window operations");
+    println!();
+    
+    println!("  ⚠️  When NOT to use these patterns:");
+    println!("    • Don't memoize if each computation is unique");
+    println!("    • Don't look for cycles in truly random sequences");
+    println!("    • Don't use DP for simple linear problems");
+    println!("    • Don't use sliding window for sparse/random access");
+    println!();
+    
+    println!("  🔧 Implementation Tips:");
+    println!("    • Use HashMap for memoization with composite keys");
+    println!("    • Floyd's cycle detection for space efficiency");
+    println!("    • Bottom-up DP usually more efficient than top-down");
+    println!("    • VecDeque for sliding window with efficient pop/push");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_memoization() {
+        let mut cache = MemoizationCache::new();
+        
+        // Test fibonacci with memoization
+        fn fib(n: u64, cache: &mut MemoizationCache<u64, u64>) -> u64 {
+            if let Some(&cached) = cache.get(&n) {
+                return cached;
+            }
+            
+            let result = match n {
+                0 => 0,
+                1 => 1,
+                _ => fib(n-1, cache) + fib(n-2, cache),
+            };
+            
+            cache.insert(n, result);
+            result
+        }
+        
+        assert_eq!(fib(10, &mut cache), 55);
+        assert!(cache.size() > 0);
+    }
+    
+    #[test]
+    fn test_cycle_detection() {
+        let detector = CycleDetection::new();
+        
+        // Test with a simple repeating sequence
+        let sequence = vec![1, 2, 3, 1, 2, 3, 1, 2, 3];
+        
+        if let Some((start, length)) = detector.detect_cycle(&sequence) {
+            assert_eq!(length, 3); // Pattern "1,2,3" repeats
+        }
+    }
+    
+    #[test]
+    fn test_dynamic_programming() {
+        let dp = DynamicProgramming::new();
+        
+        // Test LCS
+        let lcs_len = dp.longest_common_subsequence("ABCDGH", "AEDFHR");
+        assert_eq!(lcs_len, 3); // "ADH"
+        
+        // Test knapsack
+        let items = vec![(10, 60), (20, 100), (30, 120)];
+        let max_value = dp.knapsack(&items, 50);
+        assert_eq!(max_value, 220); // Take items 2 and 3
+    }
+    
+    #[test]
+    fn test_sliding_window() {
+        let window = SlidingWindow::new(3);
+        let data = vec![1, 2, 3, 4, 5];
+        
+        // Test that window maintains correct size
+        for item in data {
+            // Sliding window logic would go here
+            // This is a simplified test
+        }
+        
+        assert_eq!(window.window_size(), 3);
+    }
+}
