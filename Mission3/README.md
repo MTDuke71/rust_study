@@ -144,8 +144,6 @@ This mission builds on:
 - **Mission 2**: Generic data structures
 
 This mission prepares for:
-- **Mission 4**: Advanced trait usage
-- **Mission 7**: Graph algorithms with custom ordering
 - **AoC Problems**: Search-heavy puzzles (pathfinding, parsing, optimization)
 
 ---
