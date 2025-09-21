@@ -3,6 +3,7 @@ members = [
     "Ch1/hello_cargo",
     "Ch2/guessing_game", 
     "Ch3/variables",
+    "Ch3/data_types",
     "Mission1",
     "Mission2",
     "Mission3",
