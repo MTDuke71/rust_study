@@ -12,7 +12,8 @@ members = [
     "competitive_ring_bfs",
     "competitive_linked_tree",
     "aoc_scaffold_templates_with_tests",
-    "aoc_pattern_recognition"
+    "aoc_pattern_recognition",
+    "aoc2015"
 ]
 
 resolver = "2"
