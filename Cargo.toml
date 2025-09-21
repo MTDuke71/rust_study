@@ -6,7 +6,9 @@ members = [
     "Mission1",
     "Mission2",
     "Brackets_Basic",
-    "Brackets_Ext"
+    "Brackets_Ext",
+    "competitive_ring_bfs",
+    "competitive_linked_tree"
 ]
 
 resolver = "2"

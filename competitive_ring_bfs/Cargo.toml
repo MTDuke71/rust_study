@@ -1,0 +1,14 @@
+[package]
+name = "competitive_ring_bfs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mission2 = { path = "../Mission2" }
+
+[dev-dependencies]
+criterion = "0.7"
+
+[[example]]
+name = "maze_solver_demo"
+path = "examples/maze_solver_demo.rs"
