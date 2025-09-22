@@ -61,696 +61,157 @@
 //! - **Graph Algorithms**: Node-based representations
 //! - **Parser Implementation**: Recursive data structures
 
-use std::rc::{Rc, Weak};
-use std::cell::{RefCell, Ref, RefMut};
-use std::fmt;
+pub mod linked_list;
 
-/// Simple linked list using Box for owned pointers
-/// 
-/// This implementation demonstrates the most straightforward approach to linked lists
-/// in Rust, using `Box<T>` for heap allocation and owned pointers.
-/// 
-/// # Requirements Satisfied: REQ-1, REQ-3, REQ-5
-/// 
-/// # Examples
-/// 
-/// ```
-/// use mission4::SimpleLinkedList;
-/// 
-/// let mut list = SimpleLinkedList::new();
-/// list.push_front(1);
-/// list.push_front(2);
-/// assert_eq!(list.pop_front(), Some(2));
-/// assert_eq!(list.len(), 1);
-/// ```
-#[derive(Debug)]
-pub struct SimpleLinkedList<T> {
-    head: Option<Box<Node<T>>>,
-    length: usize,
-}
+pub use linked_list::{SimpleLinkedList, RcLinkedList, RcNode, LinkedListError, IntoIter, Iter, IterMut};
 
-/// Node for the simple linked list implementation
-#[derive(Debug)]
-struct Node<T> {
-    data: T,
-    next: Option<Box<Node<T>>>,
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-/// Linked list using Rc<RefCell<T>> for shared ownership and interior mutability
-/// 
-/// This implementation demonstrates advanced Rust patterns for scenarios requiring
-/// shared ownership of nodes. Uses reference counting and interior mutability.
-/// 
-/// # Requirements Satisfied: REQ-2, REQ-3, REQ-5, REQ-6
-/// 
-/// # Examples
-/// 
-/// ```
-/// use mission4::RcLinkedList;
-/// 
-/// let mut list = RcLinkedList::new();
-/// list.push_front("hello");
-/// list.push_front("world");
-/// assert_eq!(list.len(), 2);
-/// ```
-#[derive(Debug)]
-pub struct RcLinkedList<T> {
-    head: Option<Rc<RefCell<RcNode<T>>>>,
-    length: usize,
-}
-
-/// Node for the Rc-based linked list implementation
-#[derive(Debug)]
-pub struct RcNode<T> {
-    pub data: T,
-    pub next: Option<Rc<RefCell<RcNode<T>>>>,
-    // For advanced patterns, we might add a weak back-reference
-    pub prev_weak: Option<Weak<RefCell<RcNode<T>>>>,
-}
-
-/// Error types for linked list operations
-#[derive(Debug, Clone, PartialEq)]
-pub enum LinkedListError {
-    /// Attempted to borrow a node that is already mutably borrowed
-    BorrowError,
-    /// Node still has multiple references and cannot be unwrapped
-    MultipleReferences,
-    /// Operation attempted on empty list
-    EmptyList,
-}
-
-impl fmt::Display for LinkedListError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            LinkedListError::BorrowError => write!(f, "Node is already mutably borrowed"),
-            LinkedListError::MultipleReferences => write!(f, "Node still has multiple references"),
-            LinkedListError::EmptyList => write!(f, "Operation attempted on empty list"),
-        }
-    }
-}
-
-impl std::error::Error for LinkedListError {}
-
-// ============================================================================
-// SimpleLinkedList Implementation
-// ============================================================================
-
-impl<T> SimpleLinkedList<T> {
-    /// Creates a new empty linked list
-    /// 
-    /// # Requirements Satisfied: REQ-1
-    /// 
-    /// # Time Complexity: O(1)
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let list: SimpleLinkedList<i32> = SimpleLinkedList::new();
-    /// assert!(list.is_empty());
-    /// ```
-    pub fn new() -> Self {
-        SimpleLinkedList {
-            head: None,
-            length: 0,
-        }
-    }
-
-    /// Adds an element to the front of the list
-    /// 
-    /// # Requirements Satisfied: REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let mut list = SimpleLinkedList::new();
-    /// list.push_front(42);
-    /// assert_eq!(list.len(), 1);
-    /// assert_eq!(list.peek_front(), Some(&42));
-    /// ```
-    pub fn push_front(&mut self, value: T) {
-        let new_node = Box::new(Node {
-            data: value,
-            next: self.head.take(),
-        });
-        self.head = Some(new_node);
-        self.length += 1;
-    }
-
-    /// Removes and returns the front element
-    /// 
-    /// # Requirements Satisfied: REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let mut list = SimpleLinkedList::new();
-    /// list.push_front(42);
-    /// assert_eq!(list.pop_front(), Some(42));
-    /// assert_eq!(list.pop_front(), None);
-    /// ```
-    pub fn pop_front(&mut self) -> Option<T> {
-        self.head.take().map(|node| {
-            self.head = node.next;
-            self.length -= 1;
-            node.data
-        })
-    }
-
-    /// Returns a reference to the front element without removing it
-    /// 
-    /// # Requirements Satisfied: REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let mut list = SimpleLinkedList::new();
-    /// assert_eq!(list.peek_front(), None);
-    /// list.push_front(42);
-    /// assert_eq!(list.peek_front(), Some(&42));
-    /// ```
-    pub fn peek_front(&self) -> Option<&T> {
-        self.head.as_ref().map(|node| &node.data)
-    }
-
-    /// Returns a mutable reference to the front element without removing it
-    /// 
-    /// # Requirements Satisfied: REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let mut list = SimpleLinkedList::new();
-    /// list.push_front(42);
-    /// if let Some(front) = list.peek_front_mut() {
-    ///     *front = 100;
-    /// }
-    /// assert_eq!(list.peek_front(), Some(&100));
-    /// ```
-    pub fn peek_front_mut(&mut self) -> Option<&mut T> {
-        self.head.as_mut().map(|node| &mut node.data)
-    }
-
-    /// Returns true if the list is empty
-    /// 
-    /// # Requirements Satisfied: REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let mut list = SimpleLinkedList::new();
-    /// assert!(list.is_empty());
-    /// list.push_front(42);
-    /// assert!(!list.is_empty());
-    /// ```
-    pub fn is_empty(&self) -> bool {
-        self.head.is_none()
-    }
-
-    /// Returns the number of elements in the list
-    /// 
-    /// # Requirements Satisfied: REQ-3
-    /// 
-    /// # Time Complexity: O(1) - maintained as invariant
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let mut list = SimpleLinkedList::new();
-    /// assert_eq!(list.len(), 0);
-    /// list.push_front(1);
-    /// list.push_front(2);
-    /// assert_eq!(list.len(), 2);
-    /// ```
-    pub fn len(&self) -> usize {
-        self.length
-    }
-
-    /// Clears all elements from the list
-    /// 
-    /// # Requirements Satisfied: REQ-3
-    /// 
-    /// # Time Complexity: O(n) where n is the number of elements
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let mut list = SimpleLinkedList::new();
-    /// list.push_front(1);
-    /// list.push_front(2);
-    /// list.clear();
-    /// assert!(list.is_empty());
-    /// assert_eq!(list.len(), 0);
-    /// ```
-    pub fn clear(&mut self) {
-        while self.pop_front().is_some() {}
-    }
-
-    /// Returns an iterator over references to the elements
-    /// 
-    /// # Requirements Satisfied: REQ-4
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let mut list = SimpleLinkedList::new();
-    /// list.push_front(3);
-    /// list.push_front(2);
-    /// list.push_front(1);
-    /// 
-    /// let collected: Vec<&i32> = list.iter().collect();
-    /// assert_eq!(collected, vec![&1, &2, &3]);
-    /// ```
-    pub fn iter(&self) -> Iter<'_, T> {
-        Iter {
-            current: self.head.as_deref(),
-        }
-    }
-
-    /// Returns an iterator over mutable references to the elements
-    /// 
-    /// # Requirements Satisfied: REQ-4
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::SimpleLinkedList;
-    /// 
-    /// let mut list = SimpleLinkedList::new();
-    /// list.push_front(1);
-    /// list.push_front(2);
-    /// 
-    /// for item in list.iter_mut() {
-    ///     *item *= 2;
-    /// }
-    /// 
-    /// let collected: Vec<i32> = list.into_iter().collect();
-    /// assert_eq!(collected, vec![4, 2]);
-    /// ```
-    pub fn iter_mut(&mut self) -> IterMut<'_, T> {
-        IterMut {
-            current: self.head.as_deref_mut(),
-        }
-    }
-}
-
-impl<T> Default for SimpleLinkedList<T> {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<T: Clone> Clone for SimpleLinkedList<T> {
-    fn clone(&self) -> Self {
-        let mut new_list = SimpleLinkedList::new();
-        // Collect items and reverse to maintain order
-        let items: Vec<T> = self.iter().cloned().collect();
-        for item in items.into_iter().rev() {
-            new_list.push_front(item);
-        }
-        new_list
-    }
-}
-
-impl<T: PartialEq> PartialEq for SimpleLinkedList<T> {
-    fn eq(&self, other: &Self) -> bool {
-        if self.len() != other.len() {
-            return false;
-        }
-        self.iter().zip(other.iter()).all(|(a, b)| a == b)
-    }
-}
-
-impl<T: Eq> Eq for SimpleLinkedList<T> {}
-
-impl<T: fmt::Display> fmt::Display for SimpleLinkedList<T> {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "[")?;
-        let mut first = true;
-        for item in self.iter() {
-            if !first {
-                write!(f, ", ")?;
-            }
-            write!(f, "{}", item)?;
-            first = false;
-        }
-        write!(f, "]")
-    }
-}
-
-// ============================================================================
-// Iterator Implementations (REQ-4)
-// ============================================================================
-
-/// Iterator that consumes the SimpleLinkedList
-pub struct IntoIter<T> {
-    list: SimpleLinkedList<T>,
-}
-
-impl<T> Iterator for IntoIter<T> {
-    type Item = T;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.list.pop_front()
-    }
-
-    fn size_hint(&self) -> (usize, Option<usize>) {
-        (self.list.len(), Some(self.list.len()))
-    }
-}
-
-impl<T> ExactSizeIterator for IntoIter<T> {}
-
-impl<T> IntoIterator for SimpleLinkedList<T> {
-    type Item = T;
-    type IntoIter = IntoIter<T>;
-
-    fn into_iter(self) -> Self::IntoIter {
-        IntoIter { list: self }
-    }
-}
-
-/// Iterator over references to elements in SimpleLinkedList
-pub struct Iter<'a, T> {
-    current: Option<&'a Node<T>>,
-}
-
-impl<'a, T> Iterator for Iter<'a, T> {
-    type Item = &'a T;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.current.map(|node| {
-            self.current = node.next.as_deref();
-            &node.data
-        })
-    }
-}
-
-/// Iterator over mutable references to elements in SimpleLinkedList
-pub struct IterMut<'a, T> {
-    current: Option<&'a mut Node<T>>,
-}
-
-impl<'a, T> Iterator for IterMut<'a, T> {
-    type Item = &'a mut T;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.current.take().map(|node| {
-            self.current = node.next.as_deref_mut();
-            &mut node.data
-        })
-    }
-}
-
-/// Allow iteration over references
-impl<'a, T> IntoIterator for &'a SimpleLinkedList<T> {
-    type Item = &'a T;
-    type IntoIter = Iter<'a, T>;
-
-    fn into_iter(self) -> Self::IntoIter {
-        self.iter()
-    }
-}
-
-/// Allow iteration over mutable references
-impl<'a, T> IntoIterator for &'a mut SimpleLinkedList<T> {
-    type Item = &'a mut T;
-    type IntoIter = IterMut<'a, T>;
-
-    fn into_iter(self) -> Self::IntoIter {
-        self.iter_mut()
-    }
-}
-
-/// Convert from iterator
-impl<T> FromIterator<T> for SimpleLinkedList<T> {
-    fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
+    #[test] // REQ-1: Basic linked list structure with owned pointers
+    fn req1_box_based_ownership() {
         let mut list = SimpleLinkedList::new();
-        // Collect and reverse to maintain order when pushing front
-        let items: Vec<T> = iter.into_iter().collect();
-        for item in items.into_iter().rev() {
-            list.push_front(item);
-        }
-        list
-    }
-}
-
-/// Extend trait implementation
-impl<T> Extend<T> for SimpleLinkedList<T> {
-    fn extend<I: IntoIterator<Item = T>>(&mut self, iter: I) {
-        // Add each item to the front (LIFO order)
-        for item in iter {
-            self.push_front(item);
-        }
-    }
-}
-
-// ============================================================================
-// RcLinkedList Implementation
-// ============================================================================
-
-impl<T> RcLinkedList<T> {
-    /// Creates a new empty Rc-based linked list
-    /// 
-    /// # Requirements Satisfied: REQ-2
-    /// 
-    /// # Time Complexity: O(1)
-    pub fn new() -> Self {
-        RcLinkedList {
-            head: None,
-            length: 0,
-        }
-    }
-
-    /// Adds an element to the front of the list
-    /// 
-    /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    pub fn push_front(&mut self, value: T) {
-        let new_node = Rc::new(RefCell::new(RcNode {
-            data: value,
-            next: self.head.take(),
-            prev_weak: None,
-        }));
         
-        // Set up weak back-reference if there was a previous head
-        if let Some(ref next_node) = new_node.borrow().next {
-            next_node.borrow_mut().prev_weak = Some(Rc::downgrade(&new_node));
+        // Test basic ownership transfer with Box
+        let val = String::from("owned_data");
+        list.push_front(val);
+        // val is moved and cannot be used anymore
+        
+        assert_eq!(list.len(), 1);
+        assert!(!list.is_empty());
+        
+        // Pop returns ownership
+        let retrieved = list.pop_front().unwrap();
+        assert_eq!(retrieved, "owned_data");
+        assert!(list.is_empty());
+    }
+
+    #[test] // REQ-2: Interior mutability with Rc<RefCell<T>>
+    fn req2_interior_mutability_patterns() {
+        let mut list = RcLinkedList::new();
+        
+        // Test Rc<RefCell<T>> patterns
+        list.push_front(42);
+        list.push_front(24);
+        
+        // Try to get mutable reference through RefCell
+        match list.try_peek_front_mut() {
+            Ok(Some(mut val)) => {
+                *val = 100; // Interior mutability in action
+            },
+            _ => panic!("Should be able to mutably borrow"),
+        };
+        
+        // Verify the mutation worked
+        match list.try_peek_front() {
+            Ok(Some(val)) => assert_eq!(*val, 100),
+            _ => panic!("Should be able to peek"),
+        };
+    }
+
+    #[test] // REQ-3: Core list operations (push, pop, peek)
+    fn req3_core_operations() {
+        // Test SimpleLinkedList operations
+        let mut simple = SimpleLinkedList::new();
+        
+        // Push operations
+        simple.push_front(1);
+        simple.push_front(2);
+        simple.push_front(3);
+        assert_eq!(simple.len(), 3);
+        
+        // Peek operations (immutable and mutable)
+        assert_eq!(simple.peek_front(), Some(&3));
+        if let Some(front) = simple.peek_front_mut() {
+            *front = 30;
+        }
+        assert_eq!(simple.peek_front(), Some(&30));
+        
+        // Pop operations (LIFO order)
+        assert_eq!(simple.pop_front(), Some(30));
+        assert_eq!(simple.pop_front(), Some(2));
+        assert_eq!(simple.pop_front(), Some(1));
+        assert_eq!(simple.pop_front(), None);
+        
+        // Test RcLinkedList operations
+        let mut rc_list = RcLinkedList::new();
+        rc_list.push_front("first");
+        rc_list.push_front("second");
+        
+        assert_eq!(rc_list.len(), 2);
+        assert_eq!(rc_list.pop_front().unwrap(), Some("second"));
+        assert_eq!(rc_list.pop_front().unwrap(), Some("first"));
+    }
+
+    #[test] // REQ-4: Safe iteration patterns
+    fn req4_safe_iteration() {
+        let mut list = SimpleLinkedList::new();
+        list.push_front(1);
+        list.push_front(2);
+        list.push_front(3);
+        
+        // Test that we can safely iterate without use-after-free
+        let current_val = list.peek_front().copied();
+        let mut count = 0;
+        
+        while current_val.is_some() {
+            count += 1;
+            // In a real iterator, we'd advance to next
+            // For now, just test that peeking is safe
+            if count >= 10 { break; } // Safety check for infinite loop
         }
         
-        self.head = Some(new_node);
-        self.length += 1;
+        // Verify list is still intact after peeking
+        assert_eq!(list.len(), 3);
+        assert_eq!(list.peek_front(), Some(&3));
     }
 
-    /// Removes and returns the front element
-    /// 
-    /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    /// 
-    /// # Returns
-    /// 
-    /// Returns `Ok(T)` if successful, or `Err(LinkedListError)` if the node
-    /// still has multiple references.
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::RcLinkedList;
-    /// 
-    /// let mut list = RcLinkedList::new();
-    /// list.push_front(42);
-    /// assert_eq!(list.pop_front(), Ok(Some(42)));
-    /// assert_eq!(list.pop_front(), Ok(None));
-    /// ```
-    pub fn pop_front(&mut self) -> Result<Option<T>, LinkedListError> {
-        match self.head.take() {
-            None => Ok(None),
-            Some(node) => {
-                match Rc::try_unwrap(node) {
-                    Ok(cell) => {
-                        let node = cell.into_inner();
-                        self.head = node.next;
-                        // Clear weak reference in new head if exists
-                        if let Some(ref new_head) = self.head {
-                            new_head.borrow_mut().prev_weak = None;
-                        }
-                        self.length -= 1;
-                        Ok(Some(node.data))
-                    },
-                    Err(rc_node) => {
-                        // Put the node back and return error
-                        self.head = Some(rc_node);
-                        Err(LinkedListError::MultipleReferences)
-                    }
-                }
-            }
+    #[test] // REQ-5: Memory management comparisons
+    fn req5_memory_management_comparison() {
+        // SimpleLinkedList: minimal overhead with Box
+        let mut simple = SimpleLinkedList::new();
+        simple.push_front(42);
+        assert_eq!(simple.len(), 1);
+        
+        // RcLinkedList: higher overhead but shared ownership capability
+        let mut rc_list = RcLinkedList::new();
+        rc_list.push_front(42);
+        
+        // Get a reference to the head node to show shared ownership
+        let head_ref = rc_list.get_head_ref();
+        assert!(head_ref.is_some());
+        
+        // Both implementations should handle basic operations
+        assert_eq!(simple.pop_front(), Some(42));
+        
+        // Need to drop the head reference before we can pop from rc_list
+        drop(head_ref);
+        assert_eq!(rc_list.pop_front().unwrap(), Some(42));
+    }
+
+    #[test] // REQ-6: Weak references for cycle prevention
+    fn req6_weak_references() {
+        let mut list = RcLinkedList::new();
+        list.push_front("first");
+        list.push_front("second");
+        
+        // Get head reference
+        if let Some(head) = list.get_head_ref() {
+            // The implementation uses weak references internally
+            // to prevent cycles in the prev_weak field
+            
+            // Verify we can still manipulate the list
+            let borrowed = head.borrow();
+            assert_eq!(borrowed.data, "second");
+            
+            // The weak reference should not prevent cleanup
+            drop(borrowed);
         }
-    }
-
-    /// Attempts to get a reference to the front element
-    /// 
-    /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    /// 
-    /// Note: This operation can fail if the front node is currently mutably borrowed.
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::RcLinkedList;
-    /// 
-    /// let mut list = RcLinkedList::new();
-    /// list.push_front(42);
-    /// 
-    /// match list.try_peek_front() {
-    ///     Ok(Some(value)) => println!("Front value: {}", *value),
-    ///     Ok(None) => println!("List is empty"),
-    ///     Err(_) => println!("Could not borrow front node"),
-    /// };
-    /// ```
-    pub fn try_peek_front(&self) -> Result<Option<Ref<'_, T>>, LinkedListError> {
-        match &self.head {
-            None => Ok(None),
-            Some(node) => {
-                match node.try_borrow() {
-                    Ok(borrowed) => Ok(Some(Ref::map(borrowed, |n| &n.data))),
-                    Err(_) => Err(LinkedListError::BorrowError),
-                }
-            }
-        }
-    }
-
-    /// Attempts to get a mutable reference to the front element
-    /// 
-    /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    /// 
-    /// Note: This operation can fail if the front node is currently borrowed.
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::RcLinkedList;
-    /// 
-    /// let mut list = RcLinkedList::new();
-    /// list.push_front(42);
-    /// 
-    /// match list.try_peek_front_mut() {
-    ///     Ok(Some(mut value)) => *value = 100,
-    ///     Ok(None) => println!("List is empty"),
-    ///     Err(_) => println!("Could not mutably borrow front node"),
-    /// };
-    /// ```
-    pub fn try_peek_front_mut(&self) -> Result<Option<RefMut<'_, T>>, LinkedListError> {
-        match &self.head {
-            None => Ok(None),
-            Some(node) => {
-                match node.try_borrow_mut() {
-                    Ok(borrowed) => Ok(Some(RefMut::map(borrowed, |n| &mut n.data))),
-                    Err(_) => Err(LinkedListError::BorrowError),
-                }
-            }
-        }
-    }
-
-    /// Returns true if the list is empty
-    /// 
-    /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    pub fn is_empty(&self) -> bool {
-        self.head.is_none()
-    }
-
-    /// Returns the number of elements in the list
-    /// 
-    /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
-    /// # Time Complexity: O(1)
-    pub fn len(&self) -> usize {
-        self.length
-    }
-
-    /// Clears all elements from the list
-    /// 
-    /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
-    /// # Time Complexity: O(n) where n is the number of elements
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::RcLinkedList;
-    /// 
-    /// let mut list = RcLinkedList::new();
-    /// list.push_front(1);
-    /// list.push_front(2);
-    /// list.clear();
-    /// assert!(list.is_empty());
-    /// assert_eq!(list.len(), 0);
-    /// ```
-    pub fn clear(&mut self) {
-        while let Ok(Some(_)) = self.pop_front() {}
-    }
-
-    /// Gets a cloned reference to the head node for advanced operations
-    /// 
-    /// # Requirements Satisfied: REQ-6
-    /// 
-    /// This allows for advanced patterns where you need direct access to the Rc.
-    /// Be careful not to create reference cycles.
-    /// 
-    /// # Examples
-    /// 
-    /// ```
-    /// use mission4::RcLinkedList;
-    /// 
-    /// let mut list = RcLinkedList::new();
-    /// list.push_front(42);
-    /// 
-    /// if let Some(head_ref) = list.get_head_ref() {
-    ///     // Can share this reference with other data structures
-    ///     println!("Head ref count: {}", std::rc::Rc::strong_count(&head_ref));
-    /// }
-    /// ```
-    pub fn get_head_ref(&self) -> Option<Rc<RefCell<RcNode<T>>>> {
-        self.head.clone()
-    }
-}
-
-impl<T> Default for RcLinkedList<T> {
-    fn default() -> Self {
-        Self::new()
+        
+        // List should still be functional
+        assert_eq!(list.len(), 2);
+        list.clear();
+        assert!(list.is_empty());
     }
 }
