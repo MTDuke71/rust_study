@@ -1,0 +1,36 @@
+[package]
+name = "mission4_tut"
+version = "0.1.0"
+edition = "2021"
+authors = ["Rust Study Tutorial"]
+description = "Tutorial for learning linked lists in Rust with Box<T> and Rc<RefCell<T>>"
+
+[dependencies]
+
+[[example]]
+name = "step1_basic_structure"
+path = "examples/step1_basic_structure.rs"
+
+[[example]]
+name = "step2_push_front"
+path = "examples/step2_push_front.rs"
+
+[[example]]
+name = "step3_peeking"
+path = "examples/step3_peeking.rs"
+
+[[example]]
+name = "step4_popping"
+path = "examples/step4_popping.rs"
+
+[[example]]
+name = "step5_rc_basics"
+path = "examples/step5_rc_basics.rs"
+
+[[example]]
+name = "step6_borrow_checking"
+path = "examples/step6_borrow_checking.rs"
+
+[[example]]
+name = "step7_performance"
+path = "examples/step7_performance.rs"
