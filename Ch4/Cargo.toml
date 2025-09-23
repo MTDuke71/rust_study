@@ -1,0 +1,10 @@
+[package]
+name = "ch4_ownership"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "ownership_basics"
+path = "src/main.rs"
+
+[dependencies]
