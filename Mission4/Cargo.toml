@@ -9,7 +9,7 @@ edition = "2021"
 
 [dev-dependencies]
 # For property-based testing and random test data
-rand = "0.8"
+rand = "0.9"
 
 [[example]]
 name = "demo"

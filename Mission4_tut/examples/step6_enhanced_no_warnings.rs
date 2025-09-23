@@ -1,5 +1,5 @@
-// Step 6: Runtime Borrow Checking
-// Run with: cargo run --example step6_borrow_checking
+// Step 6: Runtime Borrow Checking - Enhanced Version (No Warnings)
+// Run with: cargo run --example step6_enhanced_no_warnings
 //
 // This example demonstrates:
 // 1. How RefCell enables runtime borrow checking
@@ -17,9 +17,9 @@ use std::cell::RefCell;
 type NodeRef<T> = Rc<RefCell<RcNode<T>>>;
 
 #[derive(Debug)]
-struct RcNode<T> {
-    data: T,
-    next: Option<NodeRef<T>>,
+pub struct RcNode<T> {  // Made public to fix visibility warning
+    pub data: T,        // Made public for external access
+    pub next: Option<NodeRef<T>>,  // Made public for external access
 }
 
 #[derive(Debug)]
@@ -99,6 +99,27 @@ impl<T> RcLinkedList<T> {
     
     pub fn len(&self) -> usize {
         self.length
+    }
+    
+    pub fn is_empty(&self) -> bool {
+        self.length == 0
+    }
+    
+    // Helper method to safely get data without exposing internal structure
+    pub fn get_data(&self, index: usize) -> Result<T, LinkedListError>
+    where
+        T: Clone,
+    {
+        let node_ref = self.get_node_ref(index)?;
+        let borrowed = node_ref.borrow();
+        Ok(borrowed.data.clone())
+    }
+    
+    // Helper method to safely set data
+    pub fn set_data(&mut self, index: usize, new_data: T) -> Result<(), LinkedListError> {
+        let node_ref = self.get_node_ref(index)?;
+        node_ref.borrow_mut().data = new_data;
+        Ok(())
     }
 }
 
@@ -217,8 +238,37 @@ fn demonstrate_error_handling() {
     }
 }
 
+fn demonstrate_helper_methods() {
+    println!("=== Demonstrating Helper Methods ===");
+    
+    let mut list = RcLinkedList::new();
+    list.push_front(String::from("World"));
+    list.push_front(String::from("Hello"));
+    
+    // Use helper methods that don't expose internal structure
+    println!("List length: {}", list.len());
+    println!("Is empty: {}", list.is_empty());
+    
+    // Safe data access
+    match list.get_data(0) {
+        Ok(data) => println!("Data at index 0: {}", data),
+        Err(e) => println!("Error getting data: {:?}", e),
+    }
+    
+    // Safe data modification
+    match list.set_data(1, String::from("Rust")) {
+        Ok(()) => println!("Successfully updated index 1"),
+        Err(e) => println!("Error setting data: {:?}", e),
+    }
+    
+    // Verify the change
+    if let Ok(data) = list.get_data(1) {
+        println!("Updated data at index 1: {}", data);
+    }
+}
+
 fn main() {
-    println!("=== Step 6: Runtime Borrow Checking ===");
+    println!("=== Step 6: Runtime Borrow Checking (Enhanced) ===");
     
     demonstrate_successful_borrowing();
     println!();
@@ -230,6 +280,9 @@ fn main() {
     println!();
     
     demonstrate_error_handling();
+    println!();
+    
+    demonstrate_helper_methods();
     
     why_refcell_works_demonstration();
     
@@ -244,7 +297,13 @@ fn main() {
     println!("- Regular references enforce borrowing at COMPILE time");
     println!("- RefCell allows shared mutation by moving checks to RUNTIME");
     
-    println!("✅ Runtime borrow checking demonstrated!");
+    println!();
+    println!("🔧 Warning Fixes Applied:");
+    println!("- Made RcNode public to fix visibility warning");
+    println!("- Added helper methods that hide internal complexity");
+    println!("- Enhanced error handling and demonstrations");
+    
+    println!("✅ Runtime borrow checking demonstrated without warnings!");
 }
 
 // ============================================================================

@@ -1,0 +1,39 @@
+[package]
+name = "mission5_tut"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+solutions = []
+
+[dependencies]
+# No external dependencies - pure Rust std library focus
+# Educational approach using HashMap and HashSet directly
+
+[dev-dependencies]
+# For property-based testing examples
+rand = "0.9"
+
+[[example]]
+name = "step1_basic_hashmap"
+path = "examples/step1_basic_hashmap.rs"
+
+[[example]]
+name = "step2_hashset_operations"
+path = "examples/step2_hashset_operations.rs"
+
+[[example]]
+name = "step3_frequency_counting"
+path = "examples/step3_frequency_counting.rs"
+
+[[example]]
+name = "step4_multi_value_patterns"
+path = "examples/step4_multi_value_patterns.rs"
+
+[[example]]
+name = "step5_memoization_cache"
+path = "examples/step5_memoization_cache.rs"
+
+[[example]]
+name = "final_project"
+path = "examples/final_project.rs"

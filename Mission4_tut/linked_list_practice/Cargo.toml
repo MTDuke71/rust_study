@@ -1,0 +1,9 @@
+[package]
+name = "linked_list_practice"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+# Empty workspace table to exclude from parent workspace
+
+[dependencies]

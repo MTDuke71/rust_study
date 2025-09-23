@@ -1,0 +1,16 @@
+[package]
+name = "mission5"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# No external dependencies for this mission - pure Rust std library
+# Focus on HashMap and HashSet patterns for competitive programming
+
+[dev-dependencies]
+# For property-based testing and random test data
+rand = "0.9"
+
+[[example]]
+name = "demo"
+path = "examples/demo.rs"
