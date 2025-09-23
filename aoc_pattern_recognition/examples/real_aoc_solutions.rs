@@ -5,9 +5,7 @@
 
 use aoc_pattern_recognition::grid_patterns::*;
 use aoc_pattern_recognition::parsing_patterns::*;
-use aoc_pattern_recognition::state_patterns::*;
-use aoc_pattern_recognition::{AocPattern, PatternComplexity};
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::{HashMap, HashSet};
 
 fn main() {
     println!("=== Real AoC Problem Solutions Demo ===\n");
@@ -183,9 +181,18 @@ fn demo_aoc_2020_day12() {
         println!("    {}", line);
     }
     
-    // Parse instructions
-    let parser = InstructionParser::new();
-    let instructions = parser.solve(navigation_input.to_string()).unwrap();
+    // Parse instructions - for navigation, we need to handle format like "F10", "N3"
+    let instructions: Vec<Instruction> = navigation_input.lines()
+        .map(|line| {
+            let line = line.trim();
+            let command = line.chars().next().unwrap_or(' ').to_string();
+            let value = line[1..].to_string();
+            Instruction {
+                command,
+                parameters: vec![value],
+            }
+        })
+        .collect();
     
     println!("  🚢 Part 1: Ship navigation (direct movement)");
     let (x1, y1) = navigate_ship_direct(&instructions);
@@ -353,7 +360,9 @@ fn solve_chiton(grid: &Grid<char>, start: Coord, end: Coord) -> i32 {
 }
 
 fn expand_cave_grid(grid: &Grid<char>, factor: usize) -> Grid<char> {
-    let mut expanded = vec![vec!['.'; grid.width * factor]; grid.height * factor];
+    let new_width = grid.width * factor;
+    let new_height = grid.height * factor;
+    let mut expanded = Grid::new(new_width, new_height);
     
     for tile_y in 0..factor {
         for tile_x in 0..factor {
@@ -361,17 +370,23 @@ fn expand_cave_grid(grid: &Grid<char>, factor: usize) -> Grid<char> {
             
             for y in 0..grid.height {
                 for x in 0..grid.width {
-                    let original_risk = grid.data[y][x].to_digit(10).unwrap();
-                    let new_risk = ((original_risk - 1 + risk_increase) % 9) + 1;
-                    
-                    expanded[tile_y * grid.height + y][tile_x * grid.width + x] = 
-                        char::from_digit(new_risk, 10).unwrap();
+                    let coord = Coord::new(x as i32, y as i32);
+                    if let Some(original_char) = grid.get(&coord) {
+                        let original_risk = original_char.to_digit(10).unwrap();
+                        let new_risk = ((original_risk - 1 + risk_increase) % 9) + 1;
+                        
+                        let new_coord = Coord::new(
+                            (tile_x * grid.width + x) as i32,
+                            (tile_y * grid.height + y) as i32
+                        );
+                        expanded.set(new_coord, char::from_digit(new_risk, 10).unwrap());
+                    }
                 }
             }
         }
     }
     
-    Grid::new(expanded)
+    expanded
 }
 
 fn find_unique_window(data: &str, window_size: usize) -> usize {
@@ -386,7 +401,7 @@ fn find_unique_window(data: &str, window_size: usize) -> usize {
         }
         
         if unique.len() == window_size {
-            return i;
+            return i; // Return 1-indexed position after the window (AoC standard)
         }
     }
     
@@ -443,19 +458,24 @@ fn navigate_ship_direct(instructions: &[Instruction]) -> (i32, i32) {
     let mut direction = 90; // East
     
     for instr in instructions {
+        // For navigation instructions like "F10", "N3", the first parameter contains the value
+        let value = instr.parameters.get(0)
+            .and_then(|s| s.parse::<i32>().ok())
+            .unwrap_or(0);
+            
         match instr.command.as_str() {
-            "N" => y += instr.value,
-            "S" => y -= instr.value,
-            "E" => x += instr.value,
-            "W" => x -= instr.value,
-            "L" => direction = (direction - instr.value + 360) % 360,
-            "R" => direction = (direction + instr.value) % 360,
+            "N" => y += value,
+            "S" => y -= value,
+            "E" => x += value,
+            "W" => x -= value,
+            "L" => direction = (direction - value + 360) % 360,
+            "R" => direction = (direction + value) % 360,
             "F" => {
                 match direction {
-                    0 => y += instr.value,
-                    90 => x += instr.value,
-                    180 => y -= instr.value,
-                    270 => x -= instr.value,
+                    0 => y += value,
+                    90 => x += value,
+                    180 => y -= value,
+                    270 => x -= value,
                     _ => {}
                 }
             }
@@ -473,28 +493,33 @@ fn navigate_ship_waypoint(instructions: &[Instruction]) -> (i32, i32) {
     let mut waypoint_y = 1;
     
     for instr in instructions {
+        // For navigation instructions like "F10", "N3", the first parameter contains the value
+        let value = instr.parameters.get(0)
+            .and_then(|s| s.parse::<i32>().ok())
+            .unwrap_or(0);
+            
         match instr.command.as_str() {
-            "N" => waypoint_y += instr.value,
-            "S" => waypoint_y -= instr.value,
-            "E" => waypoint_x += instr.value,
-            "W" => waypoint_x -= instr.value,
+            "N" => waypoint_y += value,
+            "S" => waypoint_y -= value,
+            "E" => waypoint_x += value,
+            "W" => waypoint_x -= value,
             "L" => {
-                for _ in 0..(instr.value / 90) {
+                for _ in 0..(value / 90) {
                     let temp = waypoint_x;
                     waypoint_x = -waypoint_y;
                     waypoint_y = temp;
                 }
             }
             "R" => {
-                for _ in 0..(instr.value / 90) {
+                for _ in 0..(value / 90) {
                     let temp = waypoint_x;
                     waypoint_x = waypoint_y;
                     waypoint_y = -temp;
                 }
             }
             "F" => {
-                ship_x += waypoint_x * instr.value;
-                ship_y += waypoint_y * instr.value;
+                ship_x += waypoint_x * value;
+                ship_y += waypoint_y * value;
             }
             _ => {}
         }
@@ -549,13 +574,16 @@ mod tests {
         let end = Coord::new(2, 2);
         
         let risk = solve_chiton(&simple_grid, start, end);
-        assert_eq!(risk, 7); // Path: 1+1+1+1+1+1+1 = 7
+        // Path: start(free) -> (0,1):1 -> (0,2):1 -> (1,2):1 -> (2,2):1 = 4
+        assert_eq!(risk, 4);
     }
     
     #[test]
     fn test_unique_window_detection() {
+        // "abcdefg": first 4 unique chars are at positions 0-3, marker ends at position 4 (1-indexed)
         assert_eq!(find_unique_window("abcdefg", 4), 4);
-        assert_eq!(find_unique_window("abccdefg", 4), 6);
+        // "abccdefg": first 4 unique chars are at positions 3-6, marker ends at position 7 (1-indexed)  
+        assert_eq!(find_unique_window("abccdefg", 4), 7);
     }
     
     #[test]

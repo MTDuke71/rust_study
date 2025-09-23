@@ -4,7 +4,7 @@
 //! using the grid pattern recognition system.
 
 use aoc_pattern_recognition::grid_patterns::*;
-use aoc_pattern_recognition::{AocPattern, PatternComplexity};
+use aoc_pattern_recognition::{AocPattern};
 
 fn main() {
     println!("=== Grid Pattern Recognition Demo ===\n");

@@ -14,7 +14,7 @@
 //! 3. **Instruction Parsing**: Commands with parameters (AoC 2022 Day 5, 2020 Day 8)
 //! 4. **Number Sequences**: Lists, ranges, mathematical input (AoC 2020 Day 9, 2021 Day 6)
 
-use crate::{AocPattern, PatternResult, PatternError, PatternComplexity};
+use crate::{PatternResult, PatternError, PatternComplexity};
 use std::collections::HashMap;
 
 /// Trait for AoC input parsing patterns
@@ -75,16 +75,13 @@ impl ParsePattern<Vec<i32>> for NumberExtractionParser {
     /// assert_eq!(result, vec![3, 2, 1]);
     /// ```
     fn parse_line(&self, line: &str) -> PatternResult<Vec<i32>> {
-        let numbers: Vec<i32> = line
-            .split_whitespace()
-            .filter_map(|word| {
-                // Try to parse as number, handle negative numbers
-                word.parse::<i32>().ok().or_else(|| {
-                    // Handle numbers with trailing punctuation
-                    word.trim_end_matches(|c: char| !c.is_ascii_digit() && c != '-')
-                        .parse::<i32>().ok()
-                })
-            })
+        use regex::Regex;
+        
+        // Use regex to find all integers (including negative numbers)
+        let re = Regex::new(r"-?\d+").unwrap();
+        let numbers: Vec<i32> = re
+            .find_iter(line)
+            .filter_map(|m| m.as_str().parse::<i32>().ok())
             .collect();
             
         Ok(numbers)

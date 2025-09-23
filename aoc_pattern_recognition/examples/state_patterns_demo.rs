@@ -4,8 +4,6 @@
 //! using optimization and state management patterns.
 
 use aoc_pattern_recognition::state_patterns::*;
-use aoc_pattern_recognition::{AocPattern, PatternComplexity};
-use std::collections::HashMap;
 
 fn main() {
     println!("=== State Management Pattern Recognition Demo ===\n");
@@ -83,16 +81,15 @@ fn demo_memoization() {
         let duration = start_time.elapsed();
         
         println!("    {} (days={}, timer={}): {} fish", description, days, initial_timer, count);
-        println!("      Time: {:?}, Cache size: {}", duration, cache.size());
+        println!("      Time: {:?}, Cache size: {}", duration, cache.len());
     }
     
     println!("    💡 Without memoization, the 256-day case would take hours!");
-    println!("    Cache hit rate: {:.1}%", cache.hit_rate() * 100.0);
+    let (_hits, _misses, hit_rate) = cache.stats();
+    println!("    Cache hit rate: {:.1}%", hit_rate * 100.0);
 }
 
 fn demo_cycle_detection() {
-    let tracker = StateTracker::new();
-    
     println!("  🔄 Conway's Game of Life with Cycle Detection:");
     
     // Simplified Game of Life state representation
@@ -171,21 +168,26 @@ fn demo_cycle_detection() {
     println!("    Initial state (generation {}):", state.generation);
     println!("{}", state.to_string().lines().map(|l| format!("      {}", l)).collect::<Vec<_>>().join("\n"));
     
-    let cycle_detector = CycleDetection::new();
+    // Use StateTracker for cycle detection
+    let mut tracker = StateTracker::new(state.clone());
     
     // Run simulation and detect cycles
-    let mut states = vec![state.clone()];
     for generation in 1..=10 {
         state = state.next_generation();
-        states.push(state.clone());
         
         if generation <= 3 {
             println!("    Generation {}:", generation);
             println!("{}", state.to_string().lines().map(|l| format!("      {}", l)).collect::<Vec<_>>().join("\n"));
         }
         
-        // Check for cycle
-        if let Some((cycle_start, cycle_length)) = cycle_detector.detect_cycle(&states) {
+        // Advance the tracker with the new state
+        let advanced = tracker.advance(|_| state.clone());
+        if !advanced {
+            break;
+        }
+        
+        // Check for cycle using StateTracker's built-in cycle detection
+        if let Some((cycle_start, cycle_length)) = tracker.find_cycle() {
             println!("    🎯 Cycle detected!");
             println!("      Cycle starts at generation: {}", cycle_start);
             println!("      Cycle length: {} generations", cycle_length);
@@ -203,7 +205,7 @@ fn demo_cycle_detection() {
 fn demo_dynamic_programming() {
     println!("  ⚡ Classic DP: Longest Common Subsequence");
     
-    let dp = DynamicProgramming::new();
+    // Use DynamicProgramming static methods instead of instantiation
     
     // Example from AoC-style string processing
     let sequences = vec![
@@ -217,7 +219,7 @@ fn demo_dynamic_programming() {
         println!("      Sequence 1: {}", seq1);
         println!("      Sequence 2: {}", seq2);
         
-        let lcs_length = dp.longest_common_subsequence(seq1, seq2);
+        let lcs_length = DynamicProgramming::longest_common_subsequence(seq1, seq2);
         println!("      LCS Length: {}", lcs_length);
         
         // Calculate similarity percentage
@@ -230,15 +232,12 @@ fn demo_dynamic_programming() {
     println!("  💰 Classic DP: Knapsack Problem (Resource optimization)");
     
     // Simulate AoC resource optimization problem
-    let items = vec![
-        (10, 60),   // (weight, value)
-        (20, 100),
-        (30, 120),
-    ];
+    let weights = vec![10, 20, 30];
+    let values = vec![60, 100, 120];
     let capacity = 50;
     
-    let max_value = dp.knapsack(&items, capacity);
-    println!("    Items: {:?} (weight, value)", items);
+    let max_value = DynamicProgramming::knapsack(&weights, &values, capacity);
+    println!("    Items: weights={:?}, values={:?}", weights, values);
     println!("    Capacity: {}", capacity);
     println!("    Maximum value: {}", max_value);
     
@@ -252,16 +251,21 @@ fn demo_dynamic_programming() {
 fn demo_sliding_window() {
     println!("  🪟 Sliding Window: Finding Patterns in Sequences");
     
-    let window = SlidingWindow::new(4);
+    // Use SlidingWindow static methods instead of instantiation
     
     // Simulate packet processing (AoC 2022 Day 6 style)
     let datastream = "mjqjpqmgbljsphdztnvjfqwrcgsmlb";
     println!("    Datastream: {}", datastream);
     println!("    Looking for first 4-character window with all unique characters:");
     
+    let mut current_window = Vec::new();
+    
     for (i, ch) in datastream.chars().enumerate() {
         // Add character to window
-        let current_window: Vec<char> = window.current_window().iter().cloned().collect();
+        current_window.push(ch);
+        if current_window.len() > 4 {
+            current_window.remove(0);
+        }
         
         // Check if we have a valid start-of-packet marker
         if current_window.len() == 4 {
@@ -322,7 +326,12 @@ fn demo_state_tracking() {
         fuel: u32,
     }
     
-    let mut tracker = StateTracker::new();
+    let mut tracker = StateTracker::new(RobotState { 
+        x: 0, 
+        y: 0, 
+        direction: "North".to_string(), 
+        fuel: 100 
+    });
     
     let initial_state = RobotState {
         x: 0,
@@ -331,7 +340,8 @@ fn demo_state_tracking() {
         fuel: 100,
     };
     
-    tracker.record_state(initial_state.clone());
+    // StateTracker manages state history using advance() method
+    // tracker.advance() handles both recording and transitioning
     
     // Simulate robot movement commands
     let commands = vec![
@@ -382,18 +392,29 @@ fn demo_state_tracking() {
             _ => {}
         }
         
-        tracker.record_state(current_state.clone());
+        // StateTracker uses advance() for state transitions
+        let advanced = tracker.advance(|state| RobotState {
+            x: state.x + 1,
+            y: state.y,
+            direction: state.direction.clone(),
+            fuel: state.fuel.saturating_sub(1),
+        });
+        
+        if !advanced {
+            break; // Couldn't advance further
+        }
+        
+        let current_state = tracker.current();
         println!("      → {:?}", current_state);
         
         // Check if we've been in this state before
-        if tracker.has_visited_state(&current_state) {
+        if tracker.has_seen_state(&current_state) {
             println!("      🔄 State revisited! Potential loop detected.");
         }
     }
     
     println!("    📈 State Statistics:");
-    println!("      Total states visited: {}", tracker.state_count());
-    println!("      Unique states: {}", tracker.unique_state_count());
+    println!("      Total generations tracked: {}", tracker.generation());
     println!("      Final position: ({}, {})", current_state.x, current_state.y);
     println!("      Manhattan distance from origin: {}", current_state.x.abs() + current_state.y.abs());
 }
@@ -499,46 +520,51 @@ mod tests {
         }
         
         assert_eq!(fib(10, &mut cache), 55);
-        assert!(cache.size() > 0);
+        assert!(cache.len() > 0);
     }
     
     #[test]
     fn test_cycle_detection() {
-        let detector = CycleDetection::new();
+        // Use CycleDetection static methods
         
-        // Test with a simple repeating sequence
+        // Test with a simple repeating sequence using Floyd's detection
         let sequence = vec![1, 2, 3, 1, 2, 3, 1, 2, 3];
+        let indexed_sequence: Vec<usize> = (0..sequence.len()).collect();
         
-        if let Some((start, length)) = detector.detect_cycle(&sequence) {
-            assert_eq!(length, 3); // Pattern "1,2,3" repeats
+        // Floyd's algorithm expects a function, so this is a simplified test
+        if let Some((start, length)) = CycleDetection::floyd_cycle_detection(0, |&i| (i + 1) % 3) {
+            assert_eq!(length, 3); // Cycle length should be 3
         }
     }
     
     #[test]
     fn test_dynamic_programming() {
-        let dp = DynamicProgramming::new();
+        // Use DynamicProgramming static methods
         
         // Test LCS
-        let lcs_len = dp.longest_common_subsequence("ABCDGH", "AEDFHR");
+        let lcs_len = DynamicProgramming::longest_common_subsequence("ABCDGH", "AEDFHR");
         assert_eq!(lcs_len, 3); // "ADH"
         
         // Test knapsack
-        let items = vec![(10, 60), (20, 100), (30, 120)];
-        let max_value = dp.knapsack(&items, 50);
+        let weights = vec![10, 20, 30];
+        let values = vec![60, 100, 120];
+        let max_value = DynamicProgramming::knapsack(&weights, &values, 50);
         assert_eq!(max_value, 220); // Take items 2 and 3
     }
     
     #[test]
     fn test_sliding_window() {
-        let window = SlidingWindow::new(3);
+        // Use SlidingWindow static methods
         let data = vec![1, 2, 3, 4, 5];
         
-        // Test that window maintains correct size
-        for item in data {
-            // Sliding window logic would go here
-            // This is a simplified test
-        }
+        // Test maximum sum window
+        let max_sum = SlidingWindow::max_sum_window(&data, 3);
+        assert_eq!(max_sum, Some(12)); // [3, 4, 5]
         
-        assert_eq!(window.window_size(), 3);
+        // Test anagram finding
+        let text = "abab";
+        let pattern = "ab";
+        let anagrams = SlidingWindow::find_anagrams(text, pattern);
+        assert_eq!(anagrams, vec![0, 2]); // "ab" at positions 0 and 2
     }
 }

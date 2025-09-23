@@ -4,7 +4,6 @@
 //! pattern recognition skills for Advent of Code problems.
 
 use aoc_pattern_recognition::pattern_trainer::*;
-use aoc_pattern_recognition::{AocPattern, PatternComplexity};
 
 fn main() {
     println!("=== Interactive Pattern Training Demo ===\n");
@@ -38,46 +37,39 @@ fn main() {
 }
 
 fn demo_pattern_training() {
-    let trainer = PatternTrainer::new();
+    let _trainer = PatternTrainer::new();
     
-    println!("  📚 Available Training Modules:");
-    let modules = trainer.get_available_modules();
-    for (i, module) in modules.iter().enumerate() {
-        println!("    {}. {}", i + 1, module);
-    }
+    println!("  📚 Pattern Training System");
+    println!("    Interactive exercises to master AoC pattern recognition");
     println!();
     
-    println!("  🎯 Training Module: Grid Patterns");
+    // Simulate accessing training exercises
+    println!("  🎯 Available Training Categories:");
+    println!("    1. Grid Patterns - Navigation, flood fill, pathfinding");
+    println!("    2. Parsing Patterns - Input transformation and extraction");
+    println!("    3. State Patterns - Memoization, cycle detection, caching");
+    println!("    4. Optimization Patterns - Dynamic programming, graph algorithms");
+    println!();
     
-    // Start a training session focused on grid patterns
-    println!("    📝 Learning Objectives:");
-    println!("      • Identify when to use BFS vs DFS");
-    println!("      • Recognize flood fill opportunities");
-    println!("      • Understand grid transformation patterns");
-    println!("      • Master coordinate system navigation");
+    println!("  � Sample Training Exercise:");
+    println!("    Title: Basic Grid Navigation");
+    println!("    Description: Navigate from point A to B in a 2D grid");
+    println!("    Difficulty: Beginner");
+    println!("    Pattern Focus: Grid traversal, coordinate systems");
     println!();
     
     // Simulate training progress
     let grid_exercises = vec![
-        ("Basic Grid Navigation", "Navigate from point A to B in a 2D grid"),
-        ("Shortest Path Finding", "Find shortest path avoiding obstacles"),
-        ("Connected Components", "Count separate regions in a map"),
-        ("Grid Transformations", "Rotate and flip grid patterns"),
+        ("Basic Grid Navigation", "Navigate from point A to B in a 2D grid", 95),
+        ("Shortest Path Finding", "Find shortest path avoiding obstacles", 87),
+        ("Connected Components", "Count separate regions in a map", 92),
+        ("Grid Transformations", "Rotate and flip grid patterns", 78),
     ];
     
-    for (exercise_name, description) in grid_exercises {
+    println!("  📈 Training Progress Simulation:");
+    for (exercise_name, description, success_rate) in grid_exercises {
         println!("    🔍 Exercise: {}", exercise_name);
         println!("      Description: {}", description);
-        
-        // Simulate exercise completion
-        let success_rate = match exercise_name {
-            "Basic Grid Navigation" => 95,
-            "Shortest Path Finding" => 87,
-            "Connected Components" => 92,
-            "Grid Transformations" => 78,
-            _ => 85,
-        };
-        
         println!("      Result: {}% success rate", success_rate);
         
         if success_rate >= 90 {
@@ -90,7 +82,7 @@ fn demo_pattern_training() {
         println!();
     }
     
-    println!("  📊 Grid Patterns Training Summary:");
+    println!("  📊 Training Summary:");
     println!("    Overall Progress: 88% (Good)");
     println!("    Strengths: Basic navigation, component counting");
     println!("    Focus Areas: Grid transformations, complex pathfinding");
@@ -101,85 +93,82 @@ fn demo_pattern_quiz() {
     let quiz = PatternQuiz::new();
     
     println!("  🧠 Pattern Recognition Quiz");
-    println!("  Time limit: 5 minutes per question");
-    println!("  Goal: Identify the primary pattern(s) needed");
+    println!("  Interactive quiz to test pattern identification skills");
     println!();
     
-    // Sample quiz questions based on real AoC problems
-    let questions = vec![
-        QuizQuestion {
-            id: 1,
-            problem_description: "You have a 2D grid representing a cave system. Each cell contains a risk level. Find the path from top-left to bottom-right with the lowest total risk.".to_string(),
-            correct_patterns: vec!["Shortest Path".to_string(), "Grid Navigation".to_string()],
-            difficulty: QuizDifficulty::Medium,
-            aoc_reference: Some("2021 Day 15".to_string()),
-        },
-        QuizQuestion {
-            id: 2,
-            problem_description: "You need to simulate 1 billion iterations of a cellular automaton. Each generation follows specific birth/death rules.".to_string(),
-            correct_patterns: vec!["Cycle Detection".to_string(), "State Management".to_string()],
-            difficulty: QuizDifficulty::Hard,
-            aoc_reference: Some("2015 Day 18".to_string()),
-        },
-        QuizQuestion {
-            id: 3,
-            problem_description: "Parse input containing coordinates like 'x=123, y=456' and instructions like 'fold along x=655'.".to_string(),
-            correct_patterns: vec!["Coordinate Parsing".to_string(), "Instruction Parsing".to_string()],
-            difficulty: QuizDifficulty::Easy,
-            aoc_reference: Some("2021 Day 13".to_string()),
-        },
+    // Sample quiz questions based on real AoC problems - manually created since 
+    // the actual quiz structure is different
+    let sample_questions = vec![
+        (
+            "2D Grid Pathfinding",
+            "You have a 2D grid representing a cave system. Each cell contains a risk level. Find the path from top-left to bottom-right with the lowest total risk.",
+            vec!["BFS", "Dijkstra's Algorithm", "A* Search", "DFS"],
+            1, // Dijkstra's is correct
+            "AoC 2021 Day 15"
+        ),
+        (
+            "Cycle Detection",
+            "You need to simulate 1 billion iterations of a cellular automaton. Each generation follows specific birth/death rules.",
+            vec!["Brute Force", "Cycle Detection", "Memoization", "Dynamic Programming"],
+            1, // Cycle Detection is correct
+            "AoC 2015 Day 18"
+        ),
+        (
+            "Parsing Mixed Input",
+            "Parse input containing coordinates like 'x=123, y=456' and instructions like 'fold along x=655'.",
+            vec!["Single Parser", "Multiple Parsers", "Regex Only", "Manual String Splitting"],
+            1, // Multiple Parsers is correct
+            "AoC 2021 Day 13"
+        ),
     ];
     
-    for question in questions {
-        println!("  📋 Question {}: {} Difficulty", question.id, 
-            match question.difficulty {
-                QuizDifficulty::Easy => "Easy",
-                QuizDifficulty::Medium => "Medium", 
-                QuizDifficulty::Hard => "Hard",
-            });
-        println!("    Problem: {}", question.problem_description);
+    for (i, (category, problem, options, correct_idx, aoc_ref)) in sample_questions.iter().enumerate() {
+        println!("  📋 Question {}: {}", i + 1, category);
+        println!("    Problem: {}", problem);
+        println!("    Reference: {}", aoc_ref);
+        println!("    Options:");
         
-        if let Some(ref aoc_ref) = question.aoc_reference {
-            println!("    Reference: AoC {}", aoc_ref);
+        for (j, option) in options.iter().enumerate() {
+            let marker = if j == *correct_idx { "✅" } else { "  " };
+            println!("      {}{}. {}", marker, j + 1, option);
         }
         
-        println!("    Correct Patterns: {:?}", question.correct_patterns);
-        
-        // Simulate quiz interaction
         println!("    💡 Analysis:");
-        match question.id {
-            1 => {
+        match i {
+            0 => {
                 println!("      • '2D grid' + 'path' + 'lowest cost' → Shortest Path");
-                println!("      • Graph algorithms: BFS, Dijkstra, or A*");
-                println!("      • Grid navigation with weighted edges");
+                println!("      • Dijkstra's algorithm handles weighted edges");
+                println!("      • BFS works for unweighted, A* adds heuristics");
+            }
+            1 => {
+                println!("      • '1 billion iterations' → Too many to simulate directly");
+                println!("      • 'cellular automaton' → State patterns often repeat");
+                println!("      • Cycle detection finds patterns to predict future states");
             }
             2 => {
-                println!("      • '1 billion iterations' → Too many to simulate directly");
-                println!("      • 'cellular automaton' → State might repeat");
-                println!("      • Pattern: Detect cycles to predict future states");
-            }
-            3 => {
-                println!("      • 'coordinates like x=123, y=456' → Coordinate parsing");
-                println!("      • 'instructions like fold along' → Instruction parsing");
-                println!("      • Mixed input types require multiple parsers");
+                println!("      • Mixed input types (coordinates + instructions)");
+                println!("      • Each format needs specialized parsing");
+                println!("      • Multiple parsers handle different patterns");
             }
             _ => {}
         }
         println!();
     }
     
-    let quiz_results = quiz.take_quiz(questions.clone());
-    println!("  📊 Quiz Results:");
-    println!("    Score: {}/100", quiz_results.score);
-    println!("    Time: {} minutes", quiz_results.time_taken);
-    println!("    Correct: {}/{}", quiz_results.correct_answers, questions.len());
+    // Simulate quiz results
+    println!("  📊 Quiz Results Simulation:");
+    println!("    Score: 85/100");
+    println!("    Time: 12 minutes");
+    println!("    Correct: 3/3");
+    println!("    Status: ✅ Excellent pattern recognition!");
     
-    if quiz_results.score >= 80 {
-        println!("    Status: ✅ Excellent pattern recognition!");
-    } else if quiz_results.score >= 60 {
-        println!("    Status: 📈 Good progress, keep practicing");
-    } else {
-        println!("    Status: 📚 Review fundamental patterns");
+    // Show what actual quiz functionality would provide
+    if let Some(_current_q) = quiz.current_question() {
+        println!("  📝 Real Quiz System Features:");
+        println!("    • Interactive questions with multiple choice");
+        println!("    • Detailed explanations for each answer");
+        println!("    • Progress tracking and scoring");
+        println!("    • Adaptive difficulty based on performance");
     }
 }
 
@@ -191,89 +180,80 @@ fn demo_training_exercises() {
     println!("  🔷 Exercise 1: Grid Pattern Implementation");
     let exercise1 = TrainingExercise {
         id: 1,
-        name: "Basic Flood Fill".to_string(),
+        title: "Basic Flood Fill".to_string(),
         description: "Implement flood fill to count connected regions".to_string(),
-        pattern_type: "Grid Patterns".to_string(),
-        difficulty: ExerciseDifficulty::Medium,
-        time_limit_minutes: 15,
-        test_cases: vec![
-            TestCase {
-                input: "##.##\n#...#\n.....\n#...#\n##.##".to_string(),
-                expected_output: "3".to_string(), // 3 separate regions
-                description: "Count water regions in island map".to_string(),
-            }
-        ],
+        input_sample: "##.##\n#...#\n.....\n#...#\n##.##".to_string(),
+        expected_patterns: vec!["Grid Navigation".to_string(), "DFS/BFS".to_string()],
+        difficulty: TrainingDifficulty::Intermediate,
+        aoc_reference: Some("AoC 2017 Day 12".to_string()),
     };
     
-    println!("    Name: {}", exercise1.name);
+    println!("    Title: {}", exercise1.title);
     println!("    Description: {}", exercise1.description);
-    println!("    Pattern: {}", exercise1.pattern_type);
-    println!("    Time Limit: {} minutes", exercise1.time_limit_minutes);
+    println!("    Difficulty: {:?}", exercise1.difficulty);
+    println!("    Expected Patterns: {:?}", exercise1.expected_patterns);
     
-    println!("    Test Case:");
-    println!("      Input grid:");
-    for line in exercise1.test_cases[0].input.lines() {
+    println!("    Sample Input:");
+    for line in exercise1.input_sample.lines() {
         println!("        {}", line);
     }
-    println!("      Expected: {} regions", exercise1.test_cases[0].expected_output);
+    println!("      Expected: 3 regions (water areas marked with '.')");
     println!("      Hint: Use DFS or BFS from each '.' not yet visited");
+    
+    if let Some(ref aoc_ref) = exercise1.aoc_reference {
+        println!("      AoC Reference: {}", aoc_ref);
+    }
     println!();
     
     // Exercise 2: Parsing Pattern
     println!("  🔷 Exercise 2: Parsing Pattern Implementation");
     let exercise2 = TrainingExercise {
         id: 2,
-        name: "Coordinate Extraction".to_string(),
+        title: "Coordinate Extraction".to_string(),
         description: "Extract all coordinates from mixed input format".to_string(),
-        pattern_type: "Parsing Patterns".to_string(),
-        difficulty: ExerciseDifficulty::Easy,
-        time_limit_minutes: 10,
-        test_cases: vec![
-            TestCase {
-                input: "Sensor at x=2, y=18: closest beacon is at x=-2, y=15".to_string(),
-                expected_output: "[(2,18), (-2,15)]".to_string(),
-                description: "Extract sensor and beacon coordinates".to_string(),
-            }
-        ],
+        input_sample: "Sensor at x=2, y=18: closest beacon is at x=-2, y=15".to_string(),
+        expected_patterns: vec!["Coordinate Parsing".to_string(), "Regex".to_string()],
+        difficulty: TrainingDifficulty::Beginner,
+        aoc_reference: Some("AoC 2022 Day 15".to_string()),
     };
     
-    println!("    Name: {}", exercise2.name);
+    println!("    Title: {}", exercise2.title);
     println!("    Description: {}", exercise2.description);
-    println!("    Pattern: {}", exercise2.pattern_type);
+    println!("    Difficulty: {:?}", exercise2.difficulty);
     
-    println!("    Test Case:");
-    println!("      Input: {}", exercise2.test_cases[0].input);
-    println!("      Expected: {}", exercise2.test_cases[0].expected_output);
+    println!("    Sample Input: {}", exercise2.input_sample);
+    println!("      Expected: [(2,18), (-2,15)]");
     println!("      Hint: Use regex to find 'x=NUMBER, y=NUMBER' patterns");
+    
+    if let Some(ref aoc_ref) = exercise2.aoc_reference {
+        println!("      AoC Reference: {}", aoc_ref);
+    }
     println!();
     
     // Exercise 3: State Management
     println!("  🔷 Exercise 3: State Management Implementation");
     let exercise3 = TrainingExercise {
         id: 3,
-        name: "Fibonacci with Memoization".to_string(),
+        title: "Fibonacci with Memoization".to_string(),
         description: "Implement memoized fibonacci for large numbers".to_string(),
-        pattern_type: "State Patterns".to_string(),
-        difficulty: ExerciseDifficulty::Medium,
-        time_limit_minutes: 20,
-        test_cases: vec![
-            TestCase {
-                input: "50".to_string(),
-                expected_output: "12586269025".to_string(),
-                description: "Calculate fib(50) efficiently".to_string(),
-            }
-        ],
+        input_sample: "50".to_string(),
+        expected_patterns: vec!["Memoization".to_string(), "Dynamic Programming".to_string()],
+        difficulty: TrainingDifficulty::Intermediate,
+        aoc_reference: Some("AoC Pattern - State Management".to_string()),
     };
     
-    println!("    Name: {}", exercise3.name);
+    println!("    Title: {}", exercise3.title);
     println!("    Description: {}", exercise3.description);
-    println!("    Pattern: {}", exercise3.pattern_type);
+    println!("    Difficulty: {:?}", exercise3.difficulty);
     
-    println!("    Test Case:");
-    println!("      Input: fib({})", exercise3.test_cases[0].input);
-    println!("      Expected: {}", exercise3.test_cases[0].expected_output);
+    println!("    Sample Input: fib({})", exercise3.input_sample);
+    println!("      Expected: 12586269025");
     println!("      Hint: Use HashMap<u64, u64> to cache results");
     println!("      Challenge: Try fib(100) - impossible without memoization!");
+    
+    if let Some(ref aoc_ref) = exercise3.aoc_reference {
+        println!("      Reference: {}", aoc_ref);
+    }
     println!();
     
     println!("  📈 Exercise Progression:");
@@ -282,118 +262,71 @@ fn demo_training_exercises() {
     println!("    3. Solve hard exercises combining 3+ patterns");
     println!("    4. Practice with actual AoC problems from past years");
     println!("    5. Time yourself solving new problems under pressure");
+    
+    // Show time limits based on difficulty
+    println!("  ⏱️  Time Limits by Difficulty:");
+    for difficulty in [TrainingDifficulty::Beginner, TrainingDifficulty::Intermediate, 
+                       TrainingDifficulty::Advanced, TrainingDifficulty::Expert] {
+        println!("    {:?}: {} seconds", difficulty, difficulty.time_limit_seconds());
+    }
 }
 
 fn demo_pattern_benchmarking() {
-    let benchmark = PatternBenchmark::new();
-    
     println!("  ⚡ Pattern Performance Benchmarking");
     println!();
     
-    // Benchmark 1: Pathfinding algorithms
-    println!("  🔍 Benchmark 1: Pathfinding Algorithms");
-    let pathfinding_results = vec![
-        BenchmarkResult {
-            pattern_name: "BFS Shortest Path".to_string(),
-            input_size: 1000,
-            execution_time_ms: 15,
-            memory_usage_mb: 2.5,
-            success_rate: 100.0,
-        },
-        BenchmarkResult {
-            pattern_name: "Dijkstra Weighted Path".to_string(),
-            input_size: 1000,
-            execution_time_ms: 45,
-            memory_usage_mb: 4.2,
-            success_rate: 100.0,
-        },
-        BenchmarkResult {
-            pattern_name: "A* Heuristic Path".to_string(),
-            input_size: 1000,
-            execution_time_ms: 25,
-            memory_usage_mb: 3.1,
-            success_rate: 100.0,
-        },
-    ];
+    // Demonstrate benchmark functionality
+    println!("  🔍 Benchmark: Parsing Pattern Performance");
+    println!("    Testing parsing performance on sample input");
     
-    for result in &pathfinding_results {
-        println!("    {}: {}ms, {:.1}MB, {:.0}% success",
-            result.pattern_name, result.execution_time_ms, 
-            result.memory_usage_mb, result.success_rate);
+    // Sample input for benchmarking
+    let input = "1,2,3\n4,5,6\n7,8,9\n10,11,12";
+    
+    // Run actual benchmark
+    match PatternBenchmark::benchmark_parsing(input, 1000) {
+        Ok(results) => {
+            println!("  📊 Benchmark Results:");
+            for (pattern_name, avg_nanoseconds) in results.results() {
+                let avg_microseconds = avg_nanoseconds / 1000.0;
+                println!("    {}: {:.2} μs average", pattern_name, avg_microseconds);
+            }
+            
+            if let Some((fastest_name, fastest_time)) = results.fastest() {
+                println!("    ✅ Fastest: {} ({:.2} μs)", fastest_name, fastest_time / 1000.0);
+            }
+            
+            if let Some((slowest_name, slowest_time)) = results.slowest() {
+                println!("    ⏳ Slowest: {} ({:.2} μs)", slowest_name, slowest_time / 1000.0);
+            }
+        }
+        Err(e) => {
+            println!("    ❌ Benchmarking failed: {:?}", e);
+        }
     }
-    
-    println!("    🏆 Winner: BFS for unweighted grids, A* for weighted");
     println!();
     
-    // Benchmark 2: State management
-    println!("  🧠 Benchmark 2: State Management Patterns");
-    let state_results = vec![
-        BenchmarkResult {
-            pattern_name: "Naive Recursion".to_string(),
-            input_size: 40,
-            execution_time_ms: 2500,
-            memory_usage_mb: 1.0,
-            success_rate: 100.0,
-        },
-        BenchmarkResult {
-            pattern_name: "Memoized Recursion".to_string(),
-            input_size: 40,
-            execution_time_ms: 1,
-            memory_usage_mb: 0.1,
-            success_rate: 100.0,
-        },
-        BenchmarkResult {
-            pattern_name: "Bottom-up DP".to_string(),
-            input_size: 40,
-            execution_time_ms: 1,
-            memory_usage_mb: 0.05,
-            success_rate: 100.0,
-        },
-    ];
+    // Simulated performance analysis for educational purposes
+    println!("  📈 Performance Insights (Simulated):");
     
-    for result in &state_results {
-        println!("    {}: {}ms, {:.2}MB",
-            result.pattern_name, result.execution_time_ms, result.memory_usage_mb);
-    }
-    
-    println!("    💡 Key Insight: Memoization provides 2500x speedup!");
-    println!("    💡 Bottom-up DP uses least memory");
+    println!("  🧠 State Management Patterns:");
+    println!("    Naive Recursion (fib 40): 2500ms");
+    println!("    Memoized Recursion: 1ms (2500x speedup!)");
+    println!("    Bottom-up DP: 1ms, minimal memory");
+    println!("    💡 Key Insight: Memoization provides exponential speedup");
     println!();
     
-    // Benchmark 3: Parsing patterns
-    println!("  📝 Benchmark 3: Parsing Pattern Performance");
-    let parsing_results = vec![
-        BenchmarkResult {
-            pattern_name: "Regex Parsing".to_string(),
-            input_size: 10000,
-            execution_time_ms: 120,
-            memory_usage_mb: 8.5,
-            success_rate: 99.8,
-        },
-        BenchmarkResult {
-            pattern_name: "Manual String Parsing".to_string(),
-            input_size: 10000,
-            execution_time_ms: 45,
-            memory_usage_mb: 3.2,
-            success_rate: 100.0,
-        },
-        BenchmarkResult {
-            pattern_name: "State Machine Parser".to_string(),
-            input_size: 10000,
-            execution_time_ms: 35,
-            memory_usage_mb: 2.8,
-            success_rate: 100.0,
-        },
-    ];
-    
-    for result in &parsing_results {
-        println!("    {}: {}ms, {:.1}MB, {:.1}% success",
-            result.pattern_name, result.execution_time_ms,
-            result.memory_usage_mb, result.success_rate);
-    }
-    
+    println!("  📝 Parsing Pattern Performance:");
+    println!("    Regex Parsing: 120ms, 8.5MB (99.8% success)");
+    println!("    Manual Parsing: 45ms, 3.2MB (100% success)");
+    println!("    State Machine: 35ms, 2.8MB (100% success)");
     println!("    🎯 Recommendation: State machine for complex formats");
-    println!("                     Manual parsing for simple, performance-critical cases");
+    println!();
+    
+    println!("  🔍 Pathfinding Algorithms:");
+    println!("    BFS (unweighted): 15ms, 2.5MB");
+    println!("    Dijkstra (weighted): 45ms, 4.2MB");
+    println!("    A* Search: 25ms, 3.1MB");
+    println!("    🏆 Winner: BFS for unweighted grids, A* for weighted");
     println!();
     
     println!("  📊 Benchmarking Best Practices:");
@@ -524,50 +457,59 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_quiz_question_structure() {
-        let question = QuizQuestion {
-            id: 1,
-            problem_description: "Test problem".to_string(),
-            correct_patterns: vec!["Test Pattern".to_string()],
-            difficulty: QuizDifficulty::Easy,
-            aoc_reference: None,
-        };
-        
-        assert_eq!(question.id, 1);
-        assert!(!question.problem_description.is_empty());
-        assert!(!question.correct_patterns.is_empty());
+    fn test_pattern_trainer_creation() {
+        let _trainer = PatternTrainer::new();
+        // Test that trainer can be created successfully
+        // The trainer should have built-in exercises
+    }
+    
+    #[test]
+    fn test_pattern_quiz_creation() {
+        let quiz = PatternQuiz::new();
+        // Test that quiz can be created successfully
+        if let Some(question) = quiz.current_question() {
+            assert!(!question.question.is_empty());
+            assert!(!question.options.is_empty());
+            assert!(!question.explanation.is_empty());
+        }
     }
     
     #[test]
     fn test_training_exercise_structure() {
         let exercise = TrainingExercise {
             id: 1,
-            name: "Test Exercise".to_string(),
+            title: "Test Exercise".to_string(),
             description: "Test description".to_string(),
-            pattern_type: "Test Pattern".to_string(),
-            difficulty: ExerciseDifficulty::Easy,
-            time_limit_minutes: 15,
-            test_cases: vec![],
+            input_sample: "test input".to_string(),
+            expected_patterns: vec!["Test Pattern".to_string()],
+            difficulty: TrainingDifficulty::Beginner,
+            aoc_reference: Some("AoC Test".to_string()),
         };
         
         assert_eq!(exercise.id, 1);
-        assert!(!exercise.name.is_empty());
-        assert_eq!(exercise.time_limit_minutes, 15);
+        assert!(!exercise.title.is_empty());
+        assert!(!exercise.expected_patterns.is_empty());
+        assert_eq!(exercise.difficulty, TrainingDifficulty::Beginner);
     }
     
     #[test]
-    fn test_benchmark_result_structure() {
-        let result = BenchmarkResult {
-            pattern_name: "Test Pattern".to_string(),
-            input_size: 1000,
-            execution_time_ms: 50,
-            memory_usage_mb: 2.5,
-            success_rate: 100.0,
-        };
+    fn test_benchmark_creation() {
+        let input = "1,2,3\n4,5,6\n7,8,9";
+        let results = PatternBenchmark::benchmark_parsing(input, 10).unwrap();
         
-        assert_eq!(result.input_size, 1000);
-        assert!(result.execution_time_ms > 0);
-        assert!(result.memory_usage_mb > 0.0);
-        assert_eq!(result.success_rate, 100.0);
+        // Results should contain at least one benchmark
+        assert!(!results.results().is_empty());
+        
+        // Should be able to find fastest and slowest
+        assert!(results.fastest().is_some());
+        assert!(results.slowest().is_some());
+    }
+    
+    #[test] 
+    fn test_training_difficulty_time_limits() {
+        assert_eq!(TrainingDifficulty::Beginner.time_limit_seconds(), 300);
+        assert_eq!(TrainingDifficulty::Intermediate.time_limit_seconds(), 600);
+        assert_eq!(TrainingDifficulty::Advanced.time_limit_seconds(), 1200);
+        assert_eq!(TrainingDifficulty::Expert.time_limit_seconds(), 1800);
     }
 }

@@ -14,8 +14,7 @@
 //! 3. **Cycle Detection**: Finding patterns in state evolution (AoC 2022 Day 17, 2020 Day 14)
 //! 4. **Set Operations**: Union, intersection, difference on state sets (AoC 2020 Day 6, 2021 Day 8)
 
-use crate::{AocPattern, PatternResult, PatternError, PatternComplexity};
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::{HashMap, HashSet};
 use std::hash::Hash;
 
 /// Generic memoization cache for recursive computations

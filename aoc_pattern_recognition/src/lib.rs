@@ -19,7 +19,9 @@
 //! 
 //! // Identify grid navigation problems
 //! let grid = Grid::from_string("..#.\n.#..\n..#.");
-//! let path = find_shortest_path(&grid, (0,0), (2,2));
+//! let start = Coord { x: 0, y: 0 };
+//! let end = Coord { x: 2, y: 2 };
+//! // Use grid.shortest_path(start, end) or implement pathfinding algorithm
 //! ```
 //!
 //! ### 📝 Parsing Patterns  
@@ -28,8 +30,10 @@
 //! use aoc_pattern_recognition::parsing_patterns::*;
 //!
 //! // Recognize parsing scenarios
-//! let input = "move 3 from 2 to 1\nrotate left 5";
-//! let commands = parse_instruction_list(input);
+//! let parser = InstructionParser;
+//! let instruction = parser.parse_line("move 3 from 2 to 1").unwrap();
+//! assert_eq!(instruction.command, "move");
+//! assert_eq!(instruction.parameters, vec!["3", "from", "2", "to", "1"]);
 //! ```
 //!
 //! ### 🗃️ State Management Patterns
@@ -39,7 +43,9 @@
 //!
 //! // Handle complex state problems
 //! let mut cache = MemoizationCache::new();
-//! let result = cached_fibonacci(&mut cache, 100);
+//! cache.insert("key", 42);
+//! let value = cache.get(&"key").unwrap();
+//! assert_eq!(*value, 42);
 //! ```
 
 pub mod grid_patterns;

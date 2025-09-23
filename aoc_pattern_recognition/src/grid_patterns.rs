@@ -18,7 +18,7 @@ use crate::{AocPattern, PatternResult, PatternError, PatternComplexity};
 use std::collections::{HashMap, HashSet, VecDeque};
 
 /// 2D coordinate system for grid navigation
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct Coord {
     pub x: i32,
     pub y: i32,
