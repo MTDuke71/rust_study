@@ -258,6 +258,7 @@ Traceability Matrix
 - **[Ch1/](Ch1/)** - Hello World & Cargo fundamentals
 - **[Ch2/](Ch2/)** - Guessing game with input/output
 - **[Ch3/](Ch3/)** - Variables, mutability, and data types
+- **[Ch4/](Ch4/)** - Ownership, borrowing, and memory safety
 
 ## 🛠️ Development Environment
 
