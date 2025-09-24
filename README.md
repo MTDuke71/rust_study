@@ -23,7 +23,140 @@ Traceability Matrix
 
 **Key Pattern**: Every feature starts with numbered requirements that are directly traceable to tests and implementation.
 
-## 📚 Learning Progression
+## 📅 Parallel Daily Study Track
+
+### **Week 1: Foundations** (Ownership, Borrowing, Mutability)
+- **Day 1**: Ownership basics - move semantics, stack vs heap
+- **Day 2**: Borrowing rules - immutable and mutable references
+- **Day 3**: Lifetimes introduction - reference validity and scope
+- **Day 4**: Mutability patterns - `mut`, interior mutability concepts
+- **Day 5**: Option and Result - handling absence and errors
+- **Day 6**: Pattern matching - `match`, `if let`, destructuring
+- **Day 7**: Practice day - ownership puzzles and exercises
+
+### **Week 2: Collections** (Foundation Data Structures)
+- **Day 8**: Vectors - dynamic arrays, capacity vs length
+- **Day 9**: Strings - `String` vs `&str`, UTF-8, manipulation
+- **Day 10**: HashMaps - key-value storage, borrowing keys
+- **Day 11**: HashSets - unique collections, set operations
+- **Day 12**: Slices - array views, slice patterns
+- **Day 13**: Iterators basics - `iter()`, `into_iter()`, `iter_mut()`
+- **Day 14**: Collections practice - combining data structures
+
+### **Week 3: Abstractions** (Traits, Lifetimes, Generics)
+- **Day 15**: Traits fundamentals - defining and implementing behavior
+- **Day 16**: Generic types - type parameters, constraints
+- **Day 17**: Lifetime annotations - explicit lifetime syntax
+- **Day 18**: Advanced traits - associated types, default implementations
+- **Day 19**: Trait objects - dynamic dispatch with `dyn`
+- **Day 20**: Advanced lifetimes - lifetime elision, `'static`
+- **Day 21**: Generics + traits practice - building flexible APIs
+
+### **Week 4: Applied Problem Solving** (AoC-Style Problems)
+- **Day 22**: Grid fundamentals - 2D arrays, coordinate systems
+- **Day 23**: Grid navigation - directions, bounds checking, pathfinding setup
+- **Day 24**: Grid algorithms - flood fill, connected components
+- **Day 25**: Queue applications - BFS implementation, level traversal
+- **Day 26**: Advanced queues - priority queues, deque patterns
+- **Day 27**: String parsing - splitting, regex basics, custom parsers
+- **Day 28**: Input parsing patterns - handling AoC-style input formats
+
+### **Week 5: Error Handling Mastery**
+- **Day 29**: Custom error types - implementing `std::error::Error`
+- **Day 30**: Error propagation - `?` operator chains, error conversion
+- **Day 31**: `anyhow` and `thiserror` - practical error handling crates
+- **Day 32**: Result combinators - `and_then`, `or_else`, `map_err`
+- **Day 33**: Panic recovery - `catch_unwind`, panic hooks
+- **Day 34**: Error handling patterns - when to panic vs return errors
+- **Day 35**: Error handling practice - building robust parsers
+
+### **Week 6: Modules & Crate System**
+- **Day 36**: Module basics - `mod`, `pub`, visibility rules
+- **Day 37**: Crate organization - lib vs bin, module trees
+- **Day 38**: Cargo features - conditional compilation, feature flags
+- **Day 39**: Workspace management - multi-crate projects
+- **Day 40**: Publishing crates - `Cargo.toml`, documentation, versioning
+- **Day 41**: External dependencies - choosing and using crates
+- **Day 42**: Module practice - organizing a complex project
+
+### **Week 7: Advanced Type System**
+- **Day 43**: Associated types vs generics - when to use which
+- **Day 44**: Higher-ranked trait bounds - `for<'a>` syntax
+- **Day 45**: Phantom types - zero-cost type safety
+- **Day 46**: Const generics - compile-time parameters
+- **Day 47**: Type-level programming - const functions, compile-time computation
+- **Day 48**: Trait objects deep dive - `dyn Trait`, object safety
+- **Day 49**: Advanced types practice - building type-safe APIs
+
+### **Week 8: Concurrency Fundamentals**
+- **Day 50**: Thread basics - `std::thread`, `JoinHandle`, thread safety
+- **Day 51**: Message passing - `mpsc` channels, producer-consumer patterns
+- **Day 52**: Shared state - `Arc<Mutex<T>>`, avoiding deadlocks
+- **Day 53**: `RwLock` and atomic operations - `AtomicUsize`, memory ordering
+- **Day 54**: Thread-safe collections - concurrent data structures
+- **Day 55**: Parallel iterators - `rayon` for CPU-bound work
+- **Day 56**: Concurrency practice - building thread-safe systems
+
+### **Week 9: Async Programming**
+- **Day 57**: Async fundamentals - `Future` trait, `async`/`await`
+- **Day 58**: `tokio` basics - async runtime, spawning tasks
+- **Day 59**: Async I/O - file operations, network programming
+- **Day 60**: Async channels - `mpsc`, `broadcast`, `watch`
+- **Day 61**: Async patterns - timeouts, cancellation, select!
+- **Day 62**: Error handling in async - `Result` with async functions
+- **Day 63**: Async practice - building concurrent applications
+
+### **Week 10: Macros & Metaprogramming**
+- **Day 64**: Declarative macros - `macro_rules!` patterns
+- **Day 65**: Macro debugging - `cargo expand`, common pitfalls
+- **Day 66**: Derive macros - implementing `#[derive(MyTrait)]`
+- **Day 67**: Attribute macros - custom attributes for code generation
+- **Day 68**: Function-like macros - domain-specific languages
+- **Day 69**: Advanced macro techniques - recursion, parsing
+- **Day 70**: Macro practice - building code generation tools
+
+### **Week 11: Memory Management Advanced**
+- **Day 71**: Custom allocators - `GlobalAlloc` trait
+- **Day 72**: `Pin` and `Unpin` - self-referential types
+- **Day 73**: `Cow` (Clone on Write) - efficient string/data handling
+- **Day 74**: `MaybeUninit` - working with uninitialized memory
+- **Day 75**: Memory layout - `#[repr]`, padding, alignment
+- **Day 76**: Unsafe Rust basics - raw pointers, safety invariants
+- **Day 77**: Memory management practice - optimization techniques
+
+### **Week 12: Foreign Function Interface (FFI)**
+- **Day 78**: FFI basics - calling C from Rust
+- **Day 79**: Memory safety across boundaries - raw pointers, lifetimes
+- **Day 80**: Calling Rust from C - `#[no_mangle]`, `extern "C" fn`
+- **Day 81**: Bindgen - automatically generating FFI bindings
+- **Day 82**: Error handling across FFI boundaries
+- **Day 83**: Performance considerations - zero-cost abstractions
+- **Day 84**: FFI practice - integrating with C libraries
+
+## 📚 Learning Progressionengineering-driven approach** to mastering Rust through formal software development methodology. This workspace follows the **V-Cycle model** for requirements-driven development, making it ideal for competitive programming preparation (especially **Advent of Code**) and building production-ready systems.
+
+## 🎯 Learning Philosophy
+
+This is **not casual coding practice** - it's a **professional software engineering curriculum** that treats Rust learning as a formal discipline. Every feature is traced from requirements to implementation to validation, building both language mastery and engineering rigor.
+
+### V-Cycle Methodology
+```
+Requirements (REQ-1, REQ-2, etc.)
+    ↓
+Design Specification  
+    ↓
+Implementation
+    ↓
+Verification (Unit Tests)
+    ↓
+Validation (Integration Tests)
+    ↓
+Traceability Matrix
+```
+
+**Key Pattern**: Every feature starts with numbered requirements that are directly traceable to tests and implementation.
+
+## �📚 Learning Progression
 
 ### �️ Complete Rust + AoC Roadmap (V-Cycle Methodology)
 
@@ -82,11 +215,15 @@ Traceability Matrix
 - 🔄 **Mission 16: Arena Allocation** - Efficient node storage
 - 🔄 **Mission 17: Bit Manipulation** - Bitmasks for set problems (AoC Day 14, 2020)
 
-#### **Phase 5: AoC Prep "Mini-Advent"**
-- 🔄 **Mission 18-20**: Practice past AoC problems in full V-cycle style
-  - Pathfinding in a grid
-  - Parsing a custom DSL
-  - Optimizing with memoization/bitmasks
+#### **Phase 5: Rust Design Patterns**
+- 🔄 **Mission 18: Builder Pattern** - Fluent APIs and configuration objects
+- 🔄 **Mission 19: State Machine** - Finite state machines with type safety
+- 🔄 **Mission 20: Command Pattern** - Encapsulating operations for undo/redo
+- 🔄 **Mission 21: Observer Pattern** - Event handling with channels and callbacks  
+- 🔄 **Mission 22: Strategy Pattern** - Runtime algorithm selection with trait objects
+- 🔄 **Mission 23: Factory Pattern** - Object creation with associated types
+- 🔄 **Mission 24: Decorator Pattern** - Composable behavior with wrapper types
+- 🔄 **Mission 25: Adapter Pattern** - Interface compatibility between incompatible APIs
 
 ### 🎮 Completed Problem-Solving Applications
 
