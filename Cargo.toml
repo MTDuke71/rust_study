@@ -6,7 +6,7 @@ members = [
     "Ch3/functions",
     "Ch3/data_types",
     "Ch3/control_flow",
-    "Ch4",
+    "Ch4/ownership",
     "Mission1",
     "Mission2",
     "Mission3",
