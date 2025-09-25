@@ -200,11 +200,19 @@ fn exercise_email_domains() {
         "frank@outlook.com"
     ];
     
-    // TODO: Create a HashSet to store unique domains
-    // TODO: Extract domain from each email (part after @)
-    // TODO: Add domains to the set
-    // TODO: Print unique domains and count
-    
+      let mut domains = HashSet::new();
+        
+        for email in emails {
+            if let Some(domain) = email.split('@').nth(1) {
+                domains.insert(domain);
+            }
+        }
+        
+        println!("📧 Unique domains found: {}", domains.len());
+        for domain in &domains {
+            println!("  - {}", domain);
+        }
+     
     println!("✅ Exercise 1 complete!\n");
 }
 
@@ -219,12 +227,23 @@ fn exercise_permission_analysis() {
     let read_users: HashSet<&str> = vec!["alice", "bob", "charlie", "diana"].into_iter().collect();
     let write_users: HashSet<&str> = vec!["alice", "charlie", "eve"].into_iter().collect();
     let admin_users: HashSet<&str> = vec!["alice", "frank"].into_iter().collect();
+        
+    // Users who can read but not write
+    let read_only: HashSet<_> = read_users.difference(&write_users).collect();
+    println!("📖 Read-only users: {:?}", read_only);
     
-    // TODO: Find users who can read but not write
-    // TODO: Find users who have all permissions (read, write, admin)
-    // TODO: Find users who have at least one permission
-    // TODO: Check if there are any users with no permissions
+    // Users with all permissions
+    let all_perms: HashSet<_> = read_users.intersection(&write_users)
+        .filter(|user| admin_users.contains(*user))
+        .collect();
+    println!("👑 Super users (all permissions): {:?}", all_perms);
     
+    // Users with at least one permission
+    let any_perms: HashSet<_> = read_users.union(&write_users)
+        .chain(admin_users.iter())
+        .collect();
+    println!("🎫 Users with any permission: {:?}", any_perms);
+
     println!("✅ Exercise 2 complete!\n");
 }
 
@@ -239,11 +258,20 @@ fn exercise_word_relationships() {
     let sentence1 = "the quick brown fox jumps over the lazy dog";
     let sentence2 = "a quick brown cat runs over the sleeping dog";
     
-    // TODO: Create HashSets for words in each sentence
-    // TODO: Find words that appear in both sentences
-    // TODO: Find words unique to sentence 1
-    // TODO: Find words unique to sentence 2
-    // TODO: Calculate similarity percentage
+    let words1: HashSet<&str> = sentence1.split_whitespace().collect();
+    let words2: HashSet<&str> = sentence2.split_whitespace().collect();
+    
+    let common: HashSet<_> = words1.intersection(&words2).collect();
+    let unique1: HashSet<_> = words1.difference(&words2).collect();
+    let unique2: HashSet<_> = words2.difference(&words1).collect();
+    
+    println!("🤝 Common words: {:?}", common);
+    println!("🔹 Unique to sentence 1: {:?}", unique1);
+    println!("🔸 Unique to sentence 2: {:?}", unique2);
+    
+    let total_unique = words1.union(&words2).count();
+    let similarity = (common.len() as f32 / total_unique as f32) * 100.0;
+    println!("📊 Similarity: {:.1}%", similarity);
     
     println!("✅ Exercise 3 complete!\n");
 }
@@ -383,3 +411,4 @@ mod tests {
         assert!(unique.contains("c"));
     }
 }
+
