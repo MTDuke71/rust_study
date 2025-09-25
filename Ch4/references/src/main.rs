@@ -6,26 +6,37 @@
 //! - References (&T) for borrowing without taking ownership
 //! - Mutable references (&mut T) for borrowing with modification rights
 //! - Borrowing rules: multiple immutable OR one mutable reference
+//! - Slices (&[T] and &mut [T]) for working with parts of collections
+//! - Method receivers (`&self`, `&mut self`) leverage borrowing in types
 //! - Dangling reference prevention
-//! - Reference lifetime basics
+//! - Reference lifetime basics with explicit annotations
 
 fn main() {
     println!("🦀 Chapter 4: References and Borrowing");
     println!("======================================\n");
-    
+
     // Example 1: Basic references
     example_basic_references();
-    
+
     // Example 2: Mutable references
     example_mutable_references();
-    
+
     // Example 3: Reference rules
     example_reference_rules();
-    
+
     // Example 4: Functions with references
     example_functions_with_references();
-    
-    // Example 5: Printing and ownership
+
+    // Example 5: Avoiding dangling references
+    example_avoiding_dangles();
+
+    // Example 6: Borrowing in methods
+    example_method_receivers();
+
+    // Example 7: Lifetime annotations
+    example_lifetime_annotations();
+
+    // Example 8: Printing and ownership
     example_printing_ownership();
 }
 
@@ -94,23 +105,93 @@ fn example_functions_with_references() {
     println!("=======================================");
     
     let mut numbers = vec![1, 2, 3, 4, 5];
-    
-    // Read-only access
-    let sum = sum_vector(&numbers);
+
+    // Read-only access (borrow as slice)
+    let sum = sum_slice(&numbers);
     println!("Sum of {:?} = {}", numbers, sum);
-    
-    // Modify through mutable reference
-    double_vector(&mut numbers);
+
+    // Modify through mutable reference (slice coercion works for Vec)
+    double_slice(&mut numbers);
     println!("Doubled: {:?}", numbers);
-    
+
+    // Borrow only part of the collection immutably
+    let first_two = &numbers[..2];
+    println!("First two (slice view): {:?}", first_two);
+
+    // Borrow a different part mutably to update in place
+    {
+        let tail = &mut numbers[2..];
+        for value in tail.iter_mut() {
+            *value += 100;
+        }
+        println!("Tail after +100 via &mut [T]: {:?}", tail);
+    }
+    println!("Numbers after slice edits: {:?}", numbers);
+
     // String slice example
     let text = String::from("hello world");
     let first_word = get_first_word(&text);
     println!("First word of '{}' is '{}'", text, first_word);
-    
-    println!();
 
-    main5();
+    println!();
+}
+
+/// Example 5: Avoiding dangling references by returning owned data
+fn example_avoiding_dangles() {
+    println!("🪢 Example 5: Avoiding Dangling References");
+    println!("========================================");
+
+    let safe_string = no_dangle();
+    println!("Safe owned return: {}", safe_string);
+
+    println!("You can still borrow the result: {}", safe_string.to_uppercase());
+    println!("Original still available: {}", safe_string);
+
+    println!();
+}
+
+/// Example 6: Borrowing rules apply to method receivers too
+fn example_method_receivers() {
+    println!("🏗️  Example 6: Borrowing in Methods");
+    println!("===================================");
+
+    let mut counter = Counter::new();
+    println!("Initial peek via &self: {}", counter.peek());
+
+    counter.increment();
+    counter.increment();
+    println!("After two &mut self increments: {}", counter.peek());
+
+    {
+        let snapshot = counter.peek();
+        println!("Snapshot with immutable borrow: {}", snapshot);
+        // counter.increment(); // ❌ would fail here because snapshot still borrows immutably
+    }
+
+    counter.increment();
+    println!("Increment works once immutable borrow ends: {}", counter.peek());
+
+    println!();
+}
+
+/// Example 7: Lifetime annotations tie borrows together
+fn example_lifetime_annotations() {
+    println!("⏳ Example 7: Lifetime Annotations");
+    println!("=================================");
+
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first_sentence = novel.split('.').next().unwrap();
+    let quote = "Sail on";
+
+    let longest_part = longest(first_sentence, quote);
+    println!("Longest borrowed part: '{}'", longest_part);
+
+    let highlight = Highlight { excerpt: longest_part };
+    println!("Highlight holds: '{}'", highlight.excerpt);
+
+    println!("Static reference example: {}", static_message());
+
+    println!();
 }
 
 // Helper functions
@@ -125,13 +206,13 @@ fn change_string(s: &mut String) {
     s.push_str(", world!");
 }
 
-/// Calculate sum of vector elements using immutable reference
-fn sum_vector(numbers: &Vec<i32>) -> i32 {
+/// Calculate sum of elements using an immutable slice reference
+fn sum_slice(numbers: &[i32]) -> i32 {
     numbers.iter().sum()
 }
 
-/// Double all elements in a vector using mutable reference
-fn double_vector(numbers: &mut Vec<i32>) {
+/// Double all elements in a slice using mutable reference
+fn double_slice(numbers: &mut [i32]) {
     for num in numbers.iter_mut() {
         *num *= 2;
     }
@@ -140,20 +221,65 @@ fn double_vector(numbers: &mut Vec<i32>) {
 /// Get the first word from a string (returns string slice)
 fn get_first_word(s: &str) -> &str {
     let bytes = s.as_bytes();
-    
+
     for (i, &item) in bytes.iter().enumerate() {
         if item == b' ' {
             return &s[0..i];
         }
     }
-    
+
     &s[..]  // Return entire string if no space found
 }
 
-/// Example 5: Printing and Ownership - Debug vs Move
+/// Return owned data so the caller never receives a dangling reference
+fn no_dangle() -> String {
+    let s = String::from("hello");
+
+    s
+}
+
+/// Simple counter demonstrating `&self` and `&mut self` receivers
+struct Counter {
+    value: i32,
+}
+
+impl Counter {
+    fn new() -> Self {
+        Self { value: 0 }
+    }
+
+    fn increment(&mut self) {
+        self.value += 1;
+    }
+
+    fn peek(&self) -> i32 {
+        self.value
+    }
+}
+
+/// Struct that holds a borrowed string slice with an explicit lifetime
+struct Highlight<'a> {
+    excerpt: &'a str,
+}
+
+/// Return the longer of two string slices, tying their lifetimes together
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() >= y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+/// `&'static str` lives for the entire duration of the program
+fn static_message() -> &'static str {
+    "Borrowed for the program lifetime"
+}
+
+/// Example 8: Printing and Ownership - Debug vs Move
 /// Shows how printing works with ownership and when you can reuse values
 fn example_printing_ownership() {
-    println!("🖨️  Example 5: Printing and Ownership");
+    println!("🖨️  Example 8: Printing and Ownership");
     println!("====================================");
     
     // MYTH BUSTING: println! does NOT take ownership!
@@ -259,9 +385,31 @@ mod tests {
     }
 
     #[test]
-    fn test_sum_vector() {
+    fn test_sum_slice() {
         let numbers = vec![1, 2, 3, 4, 5];
-        assert_eq!(sum_vector(&numbers), 15);
+        assert_eq!(sum_slice(&numbers), 15);
+    }
+
+    #[test]
+    fn test_double_slice() {
+        let mut numbers = vec![1, 2, 3];
+        double_slice(&mut numbers);
+        assert_eq!(numbers, vec![2, 4, 6]);
+    }
+
+    #[test]
+    fn test_longest() {
+        let a = "short";
+        let b = "a little longer";
+        assert_eq!(longest(a, b), b);
+    }
+
+    #[test]
+    fn test_counter_methods() {
+        let mut counter = Counter::new();
+        assert_eq!(counter.peek(), 0);
+        counter.increment();
+        assert_eq!(counter.peek(), 1);
     }
 
     #[test]
@@ -306,18 +454,6 @@ mod tests {
 //
 //    &s
 // }
-
-fn main5() {
-    let reference_to_nothing = no_dangle();
-    println!("reference_to_nothing = {}", reference_to_nothing);
-}
-
-fn no_dangle() -> String {
-    let s = String::from("hello");
-
-    s
-}
-
 
 // fn main6() {
 //     let mut s = String::from("hello");
