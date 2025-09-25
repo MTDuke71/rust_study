@@ -97,6 +97,10 @@ name = "ch4_ownership"
 version = "0.1.0"
 
 [[package]]
+name = "ch4_references"
+version = "0.1.0"
+
+[[package]]
 name = "ciborium"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
