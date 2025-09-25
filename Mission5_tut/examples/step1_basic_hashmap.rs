@@ -213,7 +213,7 @@ fn exercise_phone_book() {
     println!("========================");
     
     // TODO: Create a HashMap<&str, &str> for name -> phone number
-    let mut _phone_book: HashMap<&str, &str> = HashMap::new();
+    let mut phone_book: HashMap<&str, &str> = HashMap::new();
     // TODO: Add these contacts:
     //   - "Alice" -> "555-0123"
     //   - "Bob" -> "555-0456"  
@@ -224,6 +224,22 @@ fn exercise_phone_book() {
     // TODO: Print Alice's phone number or "Not found" message
     
     // TODO: Check if "David" exists in the phone book
+
+    phone_book.insert("Alice", "555-0123");
+    phone_book.insert("Bob", "555-0456");
+    phone_book.insert("Charlie", "555-0789");
+    
+    let name_to_find = "Alice";
+    match phone_book.get(name_to_find) {
+        Some(number) => println!("📞 {}: {}", name_to_find, number),
+        None => println!("❌ {} not found", name_to_find),
+    }
+    
+    if phone_book.contains_key("David") {
+        println!("✅ David is in the phone book");
+    } else {
+        println!("❌ David is not in the phone book");
+    }
     
     println!("✅ Exercise 1 complete!\n");
 }
@@ -244,7 +260,7 @@ fn exercise_shopping_cart() {
     prices.insert("bread", 2.50);
     
     // Shopping cart (item, quantity)
-    let _cart = vec![
+    let cart = vec![
         ("apple", 3),
         ("banana", 2),
         ("orange", 1),
@@ -254,6 +270,24 @@ fn exercise_shopping_cart() {
     // TODO: Calculate total cost
     // TODO: Handle missing items gracefully
     // TODO: Print itemized receipt
+
+    let mut total = 0.0;
+    println!("🧾 Receipt:");
+    
+    for (item, quantity) in cart {
+        match prices.get(item) {
+            Some(price) => {
+                let item_total = price * quantity as f64;
+                total += item_total;
+                println!("  {} x{} @ ${:.2} = ${:.2}", item, quantity, price, item_total);
+            },
+            None => {
+                println!("  {} x{} - PRICE NOT FOUND", item, quantity);
+            }
+        }
+    }
+    
+    println!("💰 Total: ${:.2}", total);
     
     println!("✅ Exercise 2 complete!\n");
 }
@@ -266,7 +300,7 @@ fn exercise_letter_frequency() {
     println!("🧪 EXERCISE 3: Letter Frequency");
     println!("==============================");
     
-    let _text = "Hello World Programming";
+    let text = "Hello World Programming";
     
     // TODO: Create HashMap<char, u32> for letter -> count
     // TODO: Process each character:
@@ -275,6 +309,25 @@ fn exercise_letter_frequency() {
     //   - Count frequency
     
     // TODO: Print results in alphabetical order (hint: collect and sort)
+
+
+    let mut letter_count = HashMap::new();
+    
+    for ch in text.chars() {
+        if ch != ' ' {
+            let lower_ch = ch.to_lowercase().next().unwrap();
+            let count = letter_count.entry(lower_ch).or_insert(0);
+            *count += 1;
+        }
+    }
+    
+    let mut letters: Vec<_> = letter_count.iter().collect();
+    letters.sort_by_key(|&(ch, _)| ch);
+    
+    println!("📊 Letter frequencies:");
+    for (letter, count) in letters {
+        println!("  '{}': {}", letter, count);
+    }
     
     println!("✅ Exercise 3 complete!\n");
 }
