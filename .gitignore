@@ -49,3 +49,5 @@ desktop.ini
 # Backup files
 *.bak
 *.backup
+
+.obsidian/
