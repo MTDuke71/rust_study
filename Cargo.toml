@@ -8,6 +8,7 @@ members = [
     "Ch3/control_flow",
     "Ch4/ownership",
     "Ch4/references",
+    "Ch4/slices",
     "Mission1",
     "Mission2",
     "Mission3",
