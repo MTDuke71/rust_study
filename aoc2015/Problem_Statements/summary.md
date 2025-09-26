@@ -35,15 +35,26 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
+### Day 3: Perfectly Spherical Houses in a Vacuum
+**Title**: Perfectly Spherical Houses in a Vacuum  
+**Part 1 Type**: Simulation + Data Structures  
+**Part 1 Description**: Track Santa's movement on 2D grid, count unique houses visited  
+**Part 2 Type**: Simulation + String Processing + Data Structures  
+**Part 2 Description**: Santa and Robo-Santa alternate moves (even/odd indices), count combined unique houses  
+**Key Concepts**: 2D coordinate tracking, HashSet for uniqueness, character splitting by index, alternating processing
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
-| String Processing | 2 | 1 |
+| String Processing | 2 | 2 |
 | Mathematical | 2 | 2 |
-| Simulation | 1 | 1 |
+| Simulation | 2 | 2 |
 | Search/Traversal | 1 | 1 |
 | Optimization | 0 | 1 |
+| Data Structures | 1 | 1 |
 
 ## Implementation Notes
 
@@ -56,6 +67,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 ### Rust-Specific Considerations:
 - Day 1: Good for practicing iterator methods, `chars()`, `enumerate()`
 - Day 2: Excellent for tuple destructuring, `split()`, `parse()`, mathematical operations
+- Day 3: Perfect for HashSet usage, coordinate systems, `step_by()` iterators, even/odd index splitting
 
 ---
 
@@ -83,4 +95,4 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2*
+*Days Available: 1, 2, 3*
