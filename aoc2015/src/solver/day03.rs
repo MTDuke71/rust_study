@@ -10,6 +10,7 @@ use std::collections::HashSet;
 // ^ = up, v = down, < = left, > = right
 // start at (0,0) and track all visited locations in a HashSet
 // Total characters: 8192
+// coordinate: (x, y) where x=horizontal, y=vertical
 
 pub fn solve_part1(input: &str) -> Result<String> {
     let mut coordinate = (0, 0);
