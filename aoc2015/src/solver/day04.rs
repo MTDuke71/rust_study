@@ -2,9 +2,6 @@
 use anyhow::Result;
 use md5;
 
-// use crate::parser::*;
-// use crate::grid::*;
-
 // --- Day 4: The Ideal Stocking Stuffer ---
 // Santa needs help mining some AdventCoins (very similar to bitcoins) to use as gifts for all the economically forward-thinking little girls and boys.
 
@@ -21,12 +18,14 @@ use md5;
 // Answer:  
 // You can also [Share] this puzzle.
 
-/// Day 04: template demonstrating reuse of parser/grid helpers.
+/// Day 04: The Ideal Stocking Stuffer
+/// Part 1: Find the lowest positive number that produces an MD5 hash starting with five zeroes
+/// Part 2: Find the lowest positive number that produces an MD5 hash starting with six zeroes
+/// Key Concepts: MD5 hashing, brute force search, cryptographic hardness, computational complexity, prefix matching
 pub fn solve_part1(input: &str) -> Result<String> {
     let secret_key = input.trim();
     let mut count = 0;
     let mut hash = String::new();
-    println!("🔍 Mining AdventCoins: Hash {secret_key}");
     while !hash.starts_with("00000") {
         count += 1;
         let data = format!("{secret_key}{count}");
@@ -40,7 +39,6 @@ pub fn solve_part2(input: &str) -> Result<String> {
     let secret_key = input.trim();
     let mut count = 0;
     let mut hash = String::new();
-    println!("🔍 Mining AdventCoins: Hash {secret_key}");
     while !hash.starts_with("000000") {
         count += 1;
         let data = format!("{secret_key}{count}");
