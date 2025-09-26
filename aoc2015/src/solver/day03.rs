@@ -15,7 +15,7 @@ pub fn solve_part2(_input: &str) -> Result<String> {
 }
 
 
-// valid chars: ^[<>v^]+$
+// valid chars: ^ v < >
 // ^ = up, v = down, < = left, > = right
 // start at (0,0) and track all visited locations in a HashSet
 // Total characters: 8192
