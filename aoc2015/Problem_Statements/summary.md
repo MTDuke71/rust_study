@@ -45,6 +45,16 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
+### Day 4: The Ideal Stocking Stuffer
+**Title**: The Ideal Stocking Stuffer  
+**Part 1 Type**: Brute Force + Cryptographic  
+**Part 1 Description**: Find lowest number that creates MD5 hash starting with 5 zeros  
+**Part 2 Type**: Brute Force + Cryptographic  
+**Part 2 Description**: Find lowest number that creates MD5 hash starting with 6 zeros  
+**Key Concepts**: MD5 hashing, brute force search, cryptographic hardness, computational complexity, prefix matching
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -55,6 +65,8 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 | Search/Traversal | 1 | 1 |
 | Optimization | 0 | 1 |
 | Data Structures | 1 | 1 |
+| Brute Force | 1 | 1 |
+| Cryptographic | 1 | 1 |
 
 ## Implementation Notes
 
@@ -63,11 +75,13 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 2. **Iterative Processing**: Process input character-by-character or line-by-line
 3. **State Tracking**: Maintain running totals or current positions
 4. **Part 2 Extensions**: Often adds complexity or early termination conditions to Part 1
+5. **Brute Force Solutions**: Some problems require computational search without mathematical shortcuts
 
 ### Rust-Specific Considerations:
 - Day 1: Good for practicing iterator methods, `chars()`, `enumerate()`
 - Day 2: Excellent for tuple destructuring, `split()`, `parse()`, mathematical operations
 - Day 3: Perfect for HashSet usage, coordinate systems, `step_by()` iterators, even/odd index splitting
+- Day 4: Demonstrates external crates (`md5`), loop optimization, computational complexity, parallel processing
 
 ---
 
@@ -95,4 +109,4 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3*
+*Days Available: 1, 2, 3, 4*
