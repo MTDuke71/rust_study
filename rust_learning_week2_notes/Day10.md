@@ -1,18 +1,23 @@
-# Day 10 · Strings (`String` vs `&str`)
+# Day 10 · HashMap & HashSet
 
 ## Key Points
-- `&str` = borrowed slice of UTF-8 bytes.
-- `String` = owned, growable heap buffer of UTF-8 bytes.
-- Indexing by position is tricky: `String` is UTF-8, so `s[0]` doesn’t compile.
-- Use `.chars()` or `.char_indices()`.
+- `HashMap<K,V>` stores key-value pairs. Requires `K: Eq + Hash`.
+- `HashSet<T>` is just `HashMap<T, ()>` internally.
+- Common ops: `insert`, `get`, `contains_key`, `entry`.
 
 ## Example
 ```rust
-let s = String::from("hi 🚀");
-for (i, c) in s.char_indices() {
-    println!("{i}: {c}");
+use std::collections::HashMap;
+let mut counts = HashMap::new();
+for word in ["a", "b", "a"] {
+    *counts.entry(word).or_insert(0) += 1;
 }
+assert_eq!(counts["a"], 2);
 ```
 
 ## Takeaway
-Work with strings at the `char` or iterator level. Indexing is unsafe in UTF-8 world.
+Maps/sets appear in almost every AoC puzzle: counting, state tracking, deduplication.
+
+
+
+
