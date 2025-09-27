@@ -287,13 +287,35 @@ fn exercise_grade_analysis() {
     println!("🧪 EXERCISE 1: Grade Analysis");
     println!("=============================");
     
-    let _grades = vec![85, 92, 78, 96, 88, 92, 85, 90, 78, 94, 88, 92, 85, 90, 96];
+    let grades = vec![85, 92, 78, 96, 88, 92, 85, 90, 78, 94, 88, 92, 85, 90, 96];
     
-    // TODO: Create frequency counter for grades
-    // TODO: Find most common grade
-    // TODO: Calculate grade distribution by ranges:
-    //   A: 90-100, B: 80-89, C: 70-79, D: 60-69, F: 0-59
-    // TODO: Find percentage of students in each grade range
+
+    let mut grade_freq = HashMap::new();
+    let mut range_freq = HashMap::new();
+    
+    for &grade in &grades {
+        *grade_freq.entry(grade).or_insert(0) += 1;
+        
+        let range = match grade {
+            90..=100 => "A (90-100)",
+            80..=89 => "B (80-89)",
+            70..=79 => "C (70-79)",
+            60..=69 => "D (60-69)",
+            _ => "F (0-59)",
+        };
+        *range_freq.entry(range).or_insert(0) += 1;
+    }
+    
+    println!("📊 Grade frequencies:");
+    for (grade, count) in &grade_freq {
+        println!("  {} -> {}", grade, count);
+    }
+    
+    println!("\n📈 Grade distribution:");
+    for (range, count) in &range_freq {
+        let percentage = (*count as f32 / grades.len() as f32) * 100.0;
+        println!("  {}: {} students ({:.1}%)", range, count, percentage);
+    }
     
     println!("✅ Exercise 1 complete!\n");
 }
@@ -306,12 +328,34 @@ fn exercise_dna_analysis() {
     println!("🧪 EXERCISE 2: DNA Analysis");
     println!("===========================");
     
-    let _dna_sequence = "ATCGATCGATCGTAGCTAGCTAGCATCGATCGTAGC";
-    
-    // TODO: Count nucleotide frequencies (A, T, C, G)
-    // TODO: Calculate GC content percentage (G + C) / total
-    // TODO: Find all possible codons (3-nucleotide sequences)
-    // TODO: Identify most common codon
+        let dna_sequence = "ATCGATCGATCGTAGCTAGCTAGCATCGATCGTAGC";
+        let mut nucleotide_count = HashMap::new();
+        
+        for nucleotide in dna_sequence.chars() {
+            *nucleotide_count.entry(nucleotide).or_insert(0) += 1;
+        }
+        
+        println!("🧬 Nucleotide frequencies:");
+        for (nucleotide, count) in &nucleotide_count {
+            let percentage = (*count as f32 / dna_sequence.len() as f32) * 100.0;
+            println!("  {}: {} ({:.1}%)", nucleotide, count, percentage);
+        }
+        
+        let gc_count = nucleotide_count.get(&'G').unwrap_or(&0) + nucleotide_count.get(&'C').unwrap_or(&0);
+        let gc_content = (gc_count as f32 / dna_sequence.len() as f32) * 100.0;
+        println!("💡 GC Content: {:.1}%", gc_content);
+        
+        let mut codon_count = HashMap::new();
+        for codon in dna_sequence.chars().collect::<Vec<_>>().chunks(3) {
+            if codon.len() == 3 {
+                let codon_str: String = codon.iter().collect();
+                *codon_count.entry(codon_str).or_insert(0) += 1;
+            }
+        }
+        
+        if let Some((most_common_codon, count)) = codon_count.iter().max_by_key(|(_, &count)| count) {
+            println!("🎯 Most common codon: {} (appears {} times)", most_common_codon, count);
+        }
     
     println!("✅ Exercise 2 complete!\n");
 }
@@ -324,7 +368,7 @@ fn exercise_web_analytics() {
     println!("🧪 EXERCISE 3: Web Analytics");
     println!("============================");
     
-    let _page_visits = vec![
+    let page_visits = vec![
         ("/home", "Mozilla Firefox"),
         ("/about", "Chrome"),
         ("/home", "Safari"),
@@ -335,12 +379,41 @@ fn exercise_web_analytics() {
         ("/about", "Chrome"),
     ];
     
-    // TODO: Count page view frequencies
-    // TODO: Count browser frequencies
-    // TODO: Find most popular page
-    // TODO: Find most common browser
-    // TODO: Calculate bounce rate (visits to only one page)
-    
+    let mut page_view_freq = HashMap::with_capacity(page_visits.len());
+    for &(page, _) in &page_visits {
+        *page_view_freq.entry(page).or_insert(0) += 1;
+    }
+
+    println!("?? Page view frequencies:");
+    for (page, count) in &page_view_freq {
+        println!("  {} -> {}", page, count);
+    }
+    let mut browser_freq = HashMap::with_capacity(page_visits.len());
+    for &(_, browser) in &page_visits {
+        *browser_freq.entry(browser).or_insert(0) += 1;
+    }
+
+    println!("?? Browser frequencies:");
+    for (browser, count) in &browser_freq {
+        println!("  {} -> {}", browser, count);
+    }
+    if let Some((page, count)) = page_view_freq.iter().max_by_key(|(_, &count)| count) {
+        println!("?? Most popular page: {} ({} visits)", page, count);
+    }
+    if let Some((browser, count)) = browser_freq.iter().max_by_key(|(_, &count)| count) {
+        println!("?? Most popular browser: {} ({} visits)", browser, count);
+    }
+    let single_page_visits = page_view_freq.values().filter(|&count| *count == 1).count();
+    let total_visits = page_visits.len();
+
+    let bounce_rate = if total_visits == 0 {
+        0.0
+    } else {
+        (single_page_visits as f32 / total_visits as f32) * 100.0
+    };
+
+    println!("?? Bounce rate: {:.1}%", bounce_rate);
+
     println!("✅ Exercise 3 complete!\n");
 }
 
@@ -470,3 +543,6 @@ mod tests {
         assert_eq!(word_count.get("world"), Some(&1));
     }
 }
+
+
+
