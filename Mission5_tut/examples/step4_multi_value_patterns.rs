@@ -319,7 +319,70 @@ fn exercise_social_network() {
     // TODO: Find mutual friends between Alice and Bob
     // TODO: Suggest friends for Diana (friends of friends who aren't already friends)
     // TODO: Find the person with the most friends
-    
+
+        let mut friends: HashMap<&str, Vec<&str>> = HashMap::new();
+        
+        // Add bidirectional friendships
+        friends.insert("Alice", vec!["Bob", "Charlie", "Diana"]);
+        friends.insert("Bob", vec!["Alice", "Charlie", "Eve"]);
+        friends.insert("Charlie", vec!["Alice", "Bob", "Frank"]);
+        friends.insert("Diana", vec!["Alice"]);
+        friends.insert("Eve", vec!["Bob", "Frank"]);
+        friends.insert("Frank", vec!["Charlie", "Eve"]);
+        
+        // Find mutual friends between Alice and Bob
+        if let (Some(alice_friends), Some(bob_friends)) = (friends.get("Alice"), friends.get("Bob")) {
+            let mutual: Vec<_> = alice_friends.iter()
+                .filter(|friend| bob_friends.contains(friend))
+                .collect();
+            println!("🤝 Alice and Bob's mutual friends: {:?}", mutual);
+        }
+        
+        // Suggest friends for Diana (friends of friends who aren't already friends)
+        let target_person = "Diana";
+        if let Some(diana_friends) = friends.get(target_person) {
+            let mut suggestions: HashMap<&str, usize> = HashMap::new();
+            
+            // For each of Diana's friends
+            for &friend in diana_friends {
+                // Get that friend's friends
+                if let Some(friend_of_friends) = friends.get(friend) {
+                    for &potential_friend in friend_of_friends {
+                        // Skip if it's Diana herself
+                        if potential_friend == target_person {
+                            continue;
+                        }
+                        // Skip if already friends with Diana
+                        if diana_friends.contains(&potential_friend) {
+                            continue;
+                        }
+                        // Count how many mutual connections this person has
+                        *suggestions.entry(potential_friend).or_insert(0) += 1;
+                    }
+                }
+            }
+            
+            // Sort suggestions by number of mutual connections (highest first)
+            let mut sorted_suggestions: Vec<_> = suggestions.into_iter().collect();
+            sorted_suggestions.sort_by(|a, b| b.1.cmp(&a.1));
+            
+            println!("\n👥 Friend suggestions for {}:", target_person);
+            if sorted_suggestions.is_empty() {
+                println!("  No suggestions found");
+            } else {
+                for (suggested_person, connection_count) in sorted_suggestions {
+                    println!("  {} ({} mutual connection{})", 
+                           suggested_person, 
+                           connection_count,
+                           if connection_count == 1 { "" } else { "s" });
+                }
+            }
+        }
+        
+        // Person with most friends
+        if let Some((popular_person, friend_list)) = friends.iter().max_by_key(|(_, friends)| friends.len()) {
+            println!("👑 Most popular: {} with {} friends", popular_person, friend_list.len());
+        }
     println!("✅ Exercise 1 complete!\n");
 }
 
@@ -331,7 +394,7 @@ fn exercise_course_prerequisites() {
     println!("🧪 EXERCISE 2: Course Prerequisites");
     println!("===================================");
     
-    let _prerequisites = vec![
+    let prerequisites = vec![
         ("CS201", vec!["CS101"]),
         ("CS301", vec!["CS201", "MATH201"]),
         ("CS401", vec!["CS301"]),
@@ -339,10 +402,87 @@ fn exercise_course_prerequisites() {
         ("MATH301", vec!["MATH201"]),
     ];
     
-    // TODO: Build HashMap<&str, Vec<&str>> for course -> prerequisites
-    // TODO: Find all courses a student can take if they've completed CS101 and MATH101
-    // TODO: Calculate the minimum number of semesters needed to complete CS401
-    // TODO: Find courses with no prerequisites (entry-level courses)
+    // Build HashMap<&str, Vec<&str>> for course -> prerequisites
+    let mut course_prereqs: HashMap<&str, Vec<&str>> = HashMap::new();
+    for (course, prereqs) in prerequisites {
+        course_prereqs.insert(course, prereqs);
+    }
+    
+    println!("📚 Course Prerequisites:");
+    for (course, prereqs) in &course_prereqs {
+        println!("  {} requires: {:?}", course, prereqs);
+    }
+    
+    // Find courses with no prerequisites (entry-level courses)
+    let all_courses: std::collections::HashSet<_> = course_prereqs.keys().cloned().collect();
+    let mut all_mentioned_courses = all_courses.clone();
+    for prereqs in course_prereqs.values() {
+        for &prereq in prereqs {
+            all_mentioned_courses.insert(prereq);
+        }
+    }
+    
+    let entry_level: Vec<_> = all_mentioned_courses.iter()
+        .filter(|course| !course_prereqs.contains_key(*course))
+        .collect();
+    
+    println!("\n🎓 Entry-level courses (no prerequisites): {:?}", entry_level);
+    
+    // Find all courses a student can take if they've completed CS101 and MATH101
+    let completed = vec!["CS101", "MATH101"];
+    let mut available_courses = Vec::new();
+    
+    for (&course, prereqs) in &course_prereqs {
+        let can_take = prereqs.iter().all(|prereq| completed.contains(prereq));
+        if can_take {
+            available_courses.push(course);
+        }
+    }
+    
+    println!("\n📝 Courses available after completing CS101 and MATH101: {:?}", available_courses);
+    
+    // Calculate minimum semesters needed to complete CS401
+    fn min_semesters_for_course(
+        target: &str, 
+        prereqs_map: &HashMap<&str, Vec<&str>>, 
+        memo: &mut HashMap<String, usize>
+    ) -> usize {
+        let target_string = target.to_string();
+        if let Some(&cached) = memo.get(&target_string) {
+            return cached;
+        }
+        
+        if let Some(prereqs) = prereqs_map.get(target) {
+            if prereqs.is_empty() {
+                memo.insert(target_string, 1);
+                return 1;
+            }
+            
+            let max_prereq_depth = prereqs.iter()
+                .map(|prereq| min_semesters_for_course(prereq, prereqs_map, memo))
+                .max()
+                .unwrap_or(0);
+            
+            let result = max_prereq_depth + 1;
+            memo.insert(target_string, result);
+            result
+        } else {
+            // Entry-level course
+            memo.insert(target_string, 1);
+            1
+        }
+    }
+    
+    let mut memo = HashMap::new();
+    let semesters_for_cs401 = min_semesters_for_course("CS401", &course_prereqs, &mut memo);
+    println!("\n⏱️  Minimum semesters to complete CS401: {}", semesters_for_cs401);
+    
+    // Show the path to CS401
+    println!("\n🛤️  Path to CS401:");
+    println!("  Semester 1: CS101, MATH101 (entry-level)");
+    println!("  Semester 2: CS201, MATH201 (after CS101, MATH101)");
+    println!("  Semester 3: CS301 (after CS201, MATH201)");
+    println!("  Semester 4: CS401 (after CS301)");
     
     println!("✅ Exercise 2 complete!\n");
 }
@@ -355,7 +495,7 @@ fn exercise_file_system() {
     println!("🧪 EXERCISE 3: File System");
     println!("==========================");
     
-    let _file_structure = vec![
+    let file_structure = vec![
         ("/", vec!["home", "usr", "var"]),
         ("/home", vec!["alice", "bob"]),
         ("/home/alice", vec!["documents", "downloads"]),
@@ -366,10 +506,153 @@ fn exercise_file_system() {
         ("/var", vec!["log", "tmp"]),
     ];
     
-    // TODO: Build HashMap<&str, Vec<&str>> for directory -> contents
-    // TODO: List all files in /home/alice directory tree (recursive)
-    // TODO: Find the total number of files vs directories
-    // TODO: Find the deepest directory path
+    // Build HashMap<&str, Vec<&str>> for directory -> contents
+    let mut fs: HashMap<&str, Vec<&str>> = HashMap::new();
+    for (directory, contents) in file_structure {
+        fs.insert(directory, contents);
+    }
+    
+    println!("📁 File System Structure:");
+    for (directory, contents) in &fs {
+        println!("  {} -> {:?}", directory, contents);
+    }
+    
+    // Helper function to check if an item is a file (has extension) or directory
+    fn is_file(name: &str) -> bool {
+        name.contains('.')
+    }
+    
+    // Recursive function to list all files in a directory tree
+    fn list_files_recursive(
+        path: &str, 
+        fs: &HashMap<&str, Vec<&str>>, 
+        files: &mut Vec<String>
+    ) {
+        if let Some(contents) = fs.get(path) {
+            for &item in contents {
+                let full_path = if path == "/" {
+                    format!("/{}", item)
+                } else {
+                    format!("{}/{}", path, item)
+                };
+                
+                if is_file(item) {
+                    files.push(full_path);
+                } else {
+                    // It's a directory, recurse into it
+                    list_files_recursive(&full_path, fs, files);
+                }
+            }
+        }
+    }
+    
+    // List all files in /home/alice directory tree (recursive)
+    let mut alice_files = Vec::new();
+    list_files_recursive("/home/alice", &fs, &mut alice_files);
+    
+    println!("\n📄 All files in /home/alice (recursive):");
+    for file in &alice_files {
+        println!("  {}", file);
+    }
+    
+    // Count total files vs directories in the entire system
+    fn count_files_and_dirs(fs: &HashMap<&str, Vec<&str>>) -> (usize, usize) {
+        let mut file_count = 0;
+        let dir_count = fs.len(); // All keys are directories
+        
+        for contents in fs.values() {
+            for &item in contents {
+                if is_file(item) {
+                    file_count += 1;
+                }
+            }
+        }
+        
+        (file_count, dir_count)
+    }
+    
+    let (total_files, total_dirs) = count_files_and_dirs(&fs);
+    println!("\n📊 File System Statistics:");
+    println!("  Total files: {}", total_files);
+    println!("  Total directories: {}", total_dirs);
+    
+    // Find the deepest directory path
+    let deepest_path = fs.keys()
+        .max_by_key(|path| path.matches('/').count())
+        .unwrap_or(&"/");
+    
+    let depth = deepest_path.matches('/').count();
+    println!("\n🏔️  Deepest directory path: {} (depth: {})", deepest_path, depth);
+    
+    // Bonus: Find all paths to a specific file
+    fn find_file_paths(
+        filename: &str, 
+        fs: &HashMap<&str, Vec<&str>>
+    ) -> Vec<String> {
+        let mut paths = Vec::new();
+        
+        for (&directory, contents) in fs {
+            for &item in contents {
+                if item == filename {
+                    let full_path = if directory == "/" {
+                        format!("/{}", item)
+                    } else {
+                        format!("{}/{}", directory, item)
+                    };
+                    paths.push(full_path);
+                }
+            }
+        }
+        
+        paths
+    }
+    
+    let pdf_files = find_file_paths("resume.pdf", &fs);
+    println!("\n🔍 Location of 'resume.pdf': {:?}", pdf_files);
+    
+    // Show directory tree structure
+    fn print_directory_tree(
+        path: &str, 
+        fs: &HashMap<&str, Vec<&str>>, 
+        prefix: &str, 
+        is_last: bool
+    ) {
+        let current_prefix = if is_last { "└── " } else { "├── " };
+        let path_name = if path == "/" { 
+            "/"
+        } else { 
+            path.split('/').last().unwrap_or(path) 
+        };
+        
+        println!("{}{}{}", prefix, current_prefix, path_name);
+        
+        if let Some(contents) = fs.get(path) {
+            let next_prefix = if is_last {
+                format!("{}    ", prefix)
+            } else {
+                format!("{}│   ", prefix)
+            };
+            
+            for (i, &item) in contents.iter().enumerate() {
+                let is_last_item = i == contents.len() - 1;
+                let full_path = if path == "/" {
+                    format!("/{}", item)
+                } else {
+                    format!("{}/{}", path, item)
+                };
+                
+                if is_file(item) {
+                    let file_prefix = if is_last_item { "└── " } else { "├── " };
+                    println!("{}{}{}", next_prefix, file_prefix, item);
+                } else if fs.contains_key(full_path.as_str()) {
+                    print_directory_tree(&full_path, fs, &next_prefix, is_last_item);
+                }
+            }
+        }
+    }
+    
+    println!("\n🌳 Directory Tree:");
+    print_directory_tree("/", &fs, "", true);
     
     println!("✅ Exercise 3 complete!\n");
 }
