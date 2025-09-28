@@ -633,8 +633,11 @@ fn exercise_file_system() {
                 format!("{}│   ", prefix)
             };
             
-            for (i, &item) in contents.iter().enumerate() {
-                let is_last_item = i == contents.len() - 1;
+            // Separate files and directories
+            let mut files = Vec::new();
+            let mut directories = Vec::new();
+            
+            for &item in contents {
                 let full_path = if path == "/" {
                     format!("/{}", item)
                 } else {
@@ -642,11 +645,23 @@ fn exercise_file_system() {
                 };
                 
                 if is_file(item) {
-                    let file_prefix = if is_last_item { "└── " } else { "├── " };
-                    println!("{}{}{}", next_prefix, file_prefix, item);
+                    files.push(item);
                 } else if fs.contains_key(full_path.as_str()) {
-                    print_directory_tree(&full_path, fs, &next_prefix, is_last_item);
+                    directories.push((item, full_path));
                 }
+            }
+            
+            // Print directories first
+            for (i, (_dir_name, full_path)) in directories.iter().enumerate() {
+                let is_last_dir = i == directories.len() - 1 && files.is_empty();
+                print_directory_tree(&full_path, fs, &next_prefix, is_last_dir);
+            }
+            
+            // Then print files
+            for (i, &file) in files.iter().enumerate() {
+                let is_last_file = i == files.len() - 1;
+                let file_prefix = if is_last_file { "└── " } else { "├── " };
+                println!("{}{}{}", next_prefix, file_prefix, file);
             }
         }
     }
