@@ -10,6 +10,10 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **Search/Traversal**: Finding positions, tracking states
 - **Optimization**: Finding minimum/maximum values
 - **Data Structures**: Working with arrays, lists, sets, maps
+- **Pattern Matching**: Regular expressions, string validation, substring detection
+- **Advanced Pattern Matching**: Complex pattern constraints, non-overlapping patterns
+- **Brute Force**: Exhaustive search through solution space
+- **Cryptographic**: Hash functions, encryption, cryptographic puzzles
 
 ---
 
@@ -55,11 +59,21 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
+### Day 5: Doesn't He Have Intern-Elves For This?
+**Title**: Doesn't He Have Intern-Elves For This?  
+**Part 1 Type**: String Processing + Pattern Matching  
+**Part 1 Description**: Validate "nice" strings with 3+ vowels, consecutive letters, no forbidden substrings (ab/cd/pq/xy)  
+**Part 2 Type**: String Processing + Advanced Pattern Matching  
+**Part 2 Description**: New rules - non-overlapping letter pairs and letters with exactly one character between  
+**Key Concepts**: Regular expressions, string validation, pattern matching, non-overlapping substring detection, character iteration with lookahead
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
-| String Processing | 2 | 2 |
+| String Processing | 3 | 3 |
 | Mathematical | 2 | 2 |
 | Simulation | 2 | 2 |
 | Search/Traversal | 1 | 1 |
@@ -67,6 +81,8 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 | Data Structures | 1 | 1 |
 | Brute Force | 1 | 1 |
 | Cryptographic | 1 | 1 |
+| Pattern Matching | 1 | 0 |
+| Advanced Pattern Matching | 0 | 1 |
 
 ## Implementation Notes
 
@@ -82,6 +98,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - Day 2: Excellent for tuple destructuring, `split()`, `parse()`, mathematical operations
 - Day 3: Perfect for HashSet usage, coordinate systems, `step_by()` iterators, even/odd index splitting
 - Day 4: Demonstrates external crates (`md5`), loop optimization, computational complexity, parallel processing
+- Day 5: Ideal for regex crate usage, string pattern matching, `saturating_sub()`, manual string iteration vs regex trade-offs
 
 ---
 
@@ -109,4 +126,4 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4*
+*Days Available: 1, 2, 3, 4, 5*

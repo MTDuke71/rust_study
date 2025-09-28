@@ -236,15 +236,13 @@
 //The Rust language gives you control over your memory usage in the same way as other systems programming languages, but having the owner of data automatically clean up that data when the owner goes out of scope means you don’t have to write and debug extra code to get this control.
 
 // Ownership affects how lots of other parts of Rust work, so we’ll talk about these concepts further throughout the rest of the book. Let’s move on to Chapter 5 and look at grouping pieces of data together in a struct.
-//     println!("Hello, slices!");
-}
-
 fn main() {
-    let s = String::from("hello world");
+    let mut s = String::from("hello world");
     let word = first_word(&s); // word will get the value 5
     println!("the first word length  is: {word}");
     s.clear(); // this empties the String, making it equal to ""
-    
+    println!("the first word length is: {word}");
+
     // word still has the value 5 here, but s no longer has any content that we
     // could meaningfully use with the value 5, so word is now totally invalid!
 
@@ -279,24 +277,24 @@ fn main() {
     // s.clear(); // error!  error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
     // println!("the first word is: {word}");
 
-    //Tihis a a string literal (&str)
+    // This is a string literal (&str)
     //let s = "Hello, world!";
 
     let my_string = String::from("hello world");
 
         // `first_word` works on slices of `String`s, whether partial or whole.
-    let word = first_word_best(&my_string[0..6]);
-    let word = first_word_best(&my_string[..]);
+    let _word = first_word_best(&my_string[0..6]);
+    let _word = first_word_best(&my_string[..]);
     // `first_word` also works on references to `String`s, which are equivalent
     // to whole slices of `String`s.
-    let word = first_word_best(&my_string);
+    let _word = first_word_best(&my_string);
 
     let my_string_literal = "hello world";
 
     // `first_word` works on slices of string literals, whether partial or
     // whole.
-    let word = first_word_best(&my_string_literal[0..6]);
-    let word = first_word_best(&my_string_literal[..]);
+    let _word = first_word_best(&my_string_literal[0..6]);
+    let _word = first_word_best(&my_string_literal[..]);
 
     // Because string literals *are* string slices already,
     // this works too, without the slice syntax!
@@ -310,8 +308,6 @@ fn main() {
     // assert_eq!(slice, &[2, 3]);
     
     println!("the slice of the array is: {:?}", slice);
-
-
 
 }
 
@@ -327,17 +323,17 @@ fn first_word(s: &String) -> usize {
     s.len()
 }
 
-fn first_word_improved(s: &String) -> &str {
-    let bytes = s.as_bytes();
+// fn first_word_improved(s: &String) -> &str {
+//     let bytes = s.as_bytes();
 
-    for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return &s[0..i];
-        }
-    }
+//     for (i, &item) in bytes.iter().enumerate() {
+//         if item == b' ' {
+//             return &s[0..i];
+//         }
+//     }
 
-    &s[..]
-}
+//     &s[..]
+// }
 
 
 //Works with both &String and &str
