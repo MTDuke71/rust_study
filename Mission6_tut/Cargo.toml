@@ -1,0 +1,37 @@
+[package]
+name = "mission6_tut"
+version = "0.1.0"
+edition = "2021"
+description = "Step-by-step tutorial for learning Grids & 2D Arrays programming"
+authors = ["Rust Study Workspace"]
+
+[dependencies]
+mission6 = { path = "../Mission6" }
+
+[[example]]
+name = "step1_grid_setup"
+path = "examples/step1_grid_setup.rs"
+
+[[example]]
+name = "step2_grid_indexing"
+path = "examples/step2_grid_indexing.rs"
+
+[[example]]
+name = "step3_coordinates"
+path = "examples/step3_coordinates.rs"
+
+[[example]]
+name = "step4_pathfinding"
+path = "examples/step4_pathfinding.rs"
+
+[[example]]
+name = "step5_aoc_utilities"
+path = "examples/step5_aoc_utilities.rs"
+
+[[example]]
+name = "step6_performance"
+path = "examples/step6_performance.rs"
+
+[[example]]
+name = "step7_documentation"
+path = "examples/step7_documentation.rs"

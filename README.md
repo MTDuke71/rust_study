@@ -39,9 +39,9 @@ Traceability Matrix
 - **Day 9**: Strings - `String` vs `&str`, UTF-8, manipulation
 - **Day 10**: HashMaps - key-value storage, borrowing keys
 - **Day 11**: HashSets - unique collections, set operations
-- **Day 12**: Slices - array views, slice patterns
-- **Day 13**: Iterators basics - `iter()`, `into_iter()`, `iter_mut()`
-- **Day 14**: Collections practice - combining data structures
+- **Day 12**: BTreeMap & BTreeSet (ordered collections) 
+- **Day 13**: Advanced Iterators (transforming and processing collections) 
+- **Day 14**: Error Handling Patterns (robust error management) 
 
 ### **Week 3: Abstractions** (Traits, Lifetimes, Generics)
 - **Day 15**: Traits fundamentals - defining and implementing behavior
@@ -189,7 +189,13 @@ Traceability Matrix
   - **Key Learning**: Ownership conflicts, reference counting, cycle prevention
   - **Tests**: 32+ unit tests + 18 doctests with requirement traceability
   - **Status**: ✅ **Complete** - Two implementations with comprehensive examples
-- 🔄 **Mission 5: HashMaps & HashSets** - Build tiny dictionary problems
+
+- ✅ **[Mission 5: HashMaps & HashSets](Mission5/)** - Dictionary data structures and set operations
+  - **Focus**: Key-value storage, set operations, and competitive programming patterns
+  - **Requirements**: REQ-1 to REQ-6 (Custom dictionary, set operations, counting patterns, multi-value maps, caching, AoC utilities)
+  - **Key Learning**: Hash-based data structures, O(1) operations, frequency counting, memoization
+  - **Tests**: 35+ unit tests + 20+ doctests with requirement traceability
+
 - 🔄 **Mission 6: Grids & 2D Arrays** - Indexing helpers for AoC's "map navigation" puzzles
 
 #### **Phase 2: Algorithms with Lifetimes & Traits**
@@ -259,6 +265,7 @@ Traceability Matrix
 - **[Ch2/](Ch2/)** - Guessing game with input/output
 - **[Ch3/](Ch3/)** - Variables, mutability, and data types
 - **[Ch4/](Ch4/)** - Ownership, borrowing, and memory safety
+- **[Ch5/](Ch5/)** - Structs, methods, and associated functions
 
 ## 🛠️ Development Environment
 
@@ -300,17 +307,19 @@ cargo doc --open            # Generate documentation
 | Mission 2 (Queue) | 32+ | REQ-G1 to REQ-L3 | ✅ Complete |
 | Mission 3 (Search) | 40+ | REQ-1 to REQ-6 | ✅ Complete |
 | Mission 4 (Linked List) | 50+ | REQ-1 to REQ-6 | ✅ Complete |
+| Mission 5 (HashMaps) | 30+ | REQ-1 to REQ-8 | ✅ Complete |
 | Brackets Basic | 20+ | REQ-1 to REQ-6 | ✅ Complete |
 | Brackets Extended | 25+ | REQ-7 to REQ-9 | ✅ Complete |
 | Competitive Tree | 15+ | REQ-G1 to REQ-P3 | ✅ Complete |
 | Ring BFS | 12+ | REQ-B1 to REQ-P2 | ✅ Complete |
-| **Total** | **200+** | **40+ REQs** | **Production Ready** |
+| **Total** | **250+** | **50+ REQs** | **Production Ready** |
 
 ## 🎯 Key Learning Outcomes
 
 ### Rust Language Mastery
 - ✅ **Ownership & Borrowing**: Move semantics, references, lifetimes
 - ✅ **Type System**: Generics, traits, associated types
+- ✅ **Collections**: HashMap/HashSet patterns, trait bounds (Eq + Hash)
 - ✅ **Memory Safety**: Compile-time guarantees, zero-cost abstractions
 - ✅ **Interior Mutability**: `Rc<RefCell<T>>`, runtime borrow checking
 - ✅ **Smart Pointers**: `Box<T>`, `Rc<T>`, `RefCell<T>`, `Weak<T>`

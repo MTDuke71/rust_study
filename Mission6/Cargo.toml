@@ -1,0 +1,30 @@
+[package]
+name = "mission6"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# No external dependencies for this mission - pure Rust std library
+# Focus on 2D grids, coordinate systems, and pathfinding for competitive programming
+
+[dev-dependencies]
+# For property-based testing and random test data
+rand = "0.8"
+# For benchmarking grid operations
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[example]]
+name = "demo"
+path = "examples/demo.rs"
+
+[[example]]
+name = "grid_demo"
+path = "examples/grid_demo.rs"
+
+[[example]]
+name = "aoc_examples"
+path = "examples/aoc_examples.rs"
+
+[[bench]]
+name = "grid_benchmarks"
+harness = false

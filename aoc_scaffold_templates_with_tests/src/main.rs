@@ -1,5 +1,5 @@
 
-use anyhow::{bail, Result};
+use anyhow::Result;
 use std::fs;
 use aoc_scaffold::prelude::*;
 

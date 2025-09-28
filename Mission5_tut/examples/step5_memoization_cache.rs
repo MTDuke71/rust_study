@@ -55,6 +55,29 @@ fn example_fibonacci_memoization() {
     println!("  Result: {} (computed in {:?})", fib_40, duration);
     println!("  Cache now has {} entries", cache.len());
     
+    // Compare with naive implementation (WARNING: This is SLOW!)
+    fn fibonacci_naive(n: u32) -> u64 {
+        match n {
+            0 => 0,
+            1 => 1,
+            _ => fibonacci_naive(n - 1) + fibonacci_naive(n - 2),
+        }
+    }
+    
+    println!("\n🐌 Performance comparison - Naive fib(40) WITHOUT caching:");
+    println!("  ⚠️  WARNING: This will take several seconds...");
+    let start_naive = std::time::Instant::now();
+    let fib_40_naive = fibonacci_naive(40);
+    let duration_naive = start_naive.elapsed();
+    
+    println!("  Result: {} (computed in {:?})", fib_40_naive, duration_naive);
+    
+    let speedup = duration_naive.as_nanos() as f64 / duration.as_nanos() as f64;
+    println!("\n🚀 MEMOIZATION PERFORMANCE IMPROVEMENT:");
+    println!("  📊 Cached version: {:?}", duration);
+    println!("  📊 Naive version:  {:?}", duration_naive);
+    println!("  🏆 Speedup: {:.0}x faster with memoization!", speedup);
+    
     println!();
 }
 
@@ -105,6 +128,7 @@ where
         self.cache.len()
     }
     
+    #[allow(dead_code)]
     fn clear(&mut self) {
         self.cache.clear();
         self.hits = 0;
@@ -148,6 +172,66 @@ fn example_generic_memoizer() {
     println!("  Cache size: {} entries", expensive_function_cache.cache_size());
     println!("  Hit ratio: {:.1}%", expensive_function_cache.hit_ratio() * 100.0);
     println!("  Hits: {}, Misses: {}", expensive_function_cache.hits, expensive_function_cache.misses);
+    println!("  💡 Note: Cache contains 3 unique values (5!, 6!, 7!) - duplicates reuse cached results");
+    println!("  🔍 Key insight: Unlike Fibonacci, factorial doesn't store intermediate steps");
+    println!("     Fibonacci fib(40) → 41 cache entries (0,1,2,...,40)");
+    println!("     Factorial fact(7) → 1 cache entry (just 7!)");
+    
+    // Performance comparison with recursive factorial
+    fn factorial_recursive_memo(n: u32, cache: &mut HashMap<u32, u64>) -> u64 {
+        if let Some(&cached_result) = cache.get(&n) {
+            return cached_result;
+        }
+        
+        let result = match n {
+            0 | 1 => 1,
+            _ => n as u64 * factorial_recursive_memo(n - 1, cache),
+        };
+        
+        cache.insert(n, result);
+        result
+    }
+    
+    fn factorial_recursive_naive(n: u32) -> u64 {
+        match n {
+            0 | 1 => 1,
+            _ => n as u64 * factorial_recursive_naive(n - 1),
+        }
+    }
+    
+    println!("\n⚡ Factorial Performance Comparison:");
+    println!("  Computing multiple factorials to show memoization benefit...");
+    
+    // Test multiple calculations where memoization helps
+    let test_values = [10, 15, 18, 20, 12, 16, 14, 19];
+    
+    let start_multi_memo = std::time::Instant::now();
+    let mut multi_cache = HashMap::new();
+    for &n in &test_values {
+        let _result = factorial_recursive_memo(n, &mut multi_cache);
+    }
+    let duration_multi_memo = start_multi_memo.elapsed();
+    
+    let start_multi_naive = std::time::Instant::now();
+    for &n in &test_values {
+        let _result = factorial_recursive_naive(n);
+    }
+    let duration_multi_naive = start_multi_naive.elapsed();
+    
+    println!("  📊 Memoized approach: {:?} ({} cache entries built)", 
+             duration_multi_memo, multi_cache.len());
+    println!("  📊 Naive approach:    {:?} (recalculated everything)", duration_multi_naive);
+    
+    if duration_multi_naive.as_nanos() > 0 {
+        let speedup = duration_multi_naive.as_nanos() as f64 / duration_multi_memo.as_nanos() as f64;
+        println!("  🚀 Speedup: {:.1}x faster with memoization!", speedup);
+    }
+    
+    println!("  💡 Key insight: Recursive factorial DOES store intermediate values!");
+    println!("  💡 Computing 20! stores 1!, 2!, 3!, ..., 20! (20 cache entries)");
+    println!("  🔍 Compare to earlier: iterative factorial stored only final answers");
+    println!("     - Iterative: fact(5), fact(6), fact(7) → 3 cache entries");  
+    println!("     - Recursive: fact(20) → 20 cache entries (1 through 20)");
     
     println!();
 }
@@ -367,22 +451,29 @@ fn example_web_cache() {
     println!("🔄 Simulating web page requests:");
     
     // First requests - cache misses
-    let _page1 = web_cache.get_page("https://example.com");
-    let _page2 = web_cache.get_page("https://rust-lang.org");
+    let page1 = web_cache.get_page("https://example.com");
+    println!("  📄 Retrieved: {} (content length: {})", page1.url, page1.content.len());
+    
+    let page2 = web_cache.get_page("https://rust-lang.org");
+    println!("  📄 Retrieved: {} (content length: {})", page2.url, page2.content.len());
     
     // Immediate re-requests - cache hits
-    let _page1_again = web_cache.get_page("https://example.com");
+    let page1_again = web_cache.get_page("https://example.com");
+    println!("  📄 Cached content for {}: {}", page1_again.url, page1_again.content);
+    
     let _page2_again = web_cache.get_page("https://rust-lang.org");
     
     // New page
-    let _page3 = web_cache.get_page("https://github.com");
+    let page3 = web_cache.get_page("https://github.com");
+    println!("  📄 Retrieved: {} (content: {})", page3.url, page3.content);
     
     // Wait for cache to expire
     println!("  ⏳ Waiting for cache expiry...");
     std::thread::sleep(std::time::Duration::from_secs(3));
     
     // Request expired page - should be cache miss
-    let _page1_expired = web_cache.get_page("https://example.com");
+    let page1_expired = web_cache.get_page("https://example.com");
+    println!("  📄 Fresh content for {}: {}", page1_expired.url, page1_expired.content);
     
     let (hits, misses, hit_ratio) = web_cache.stats();
     println!("\n📊 Cache Statistics:");
@@ -403,18 +494,58 @@ fn exercise_recursive_optimization() {
     println!("🧪 EXERCISE 1: Recursive Optimization");
     println!("=====================================");
     
-    // TODO: Implement memoized version of this expensive recursive function:
-    fn _expensive_calculation(n: u32) -> u64 {
+    // Expensive recursive function that benefits from memoization
+    fn expensive_calculation_naive(n: u32) -> u64 {
         if n <= 1 { return 1; }
-        _expensive_calculation(n - 1) + _expensive_calculation(n - 2) + n as u64
+        expensive_calculation_naive(n - 1) + expensive_calculation_naive(n - 2) + n as u64
     }
     
-    // TODO: Create a memoized version using HashMap<u32, u64>
-    // TODO: Time both versions for n=30 and compare performance
-    // TODO: Count how many times the recursive function is called in each version
+    // Memoized version using HashMap<u32, u64>
+    fn expensive_calculation_memo(n: u32, cache: &mut HashMap<u32, u64>) -> u64 {
+        if let Some(&cached_result) = cache.get(&n) {
+            return cached_result;
+        }
+        
+        let result = if n <= 1 { 
+            1 
+        } else { 
+            expensive_calculation_memo(n - 1, cache) + 
+            expensive_calculation_memo(n - 2, cache) + 
+            n as u64 
+        };
+        
+        cache.insert(n, result);
+        result
+    }
     
-    let _test_input = 30u32;
-    println!("  Computing expensive_calculation({}) with and without memoization", _test_input);
+    let test_input = 30u32;
+    println!("  Computing expensive_calculation({}) with and without memoization", test_input);
+    
+    // Time memoized version
+    let start_memo = std::time::Instant::now();
+    let mut cache = HashMap::new();
+    let result_memo = expensive_calculation_memo(test_input, &mut cache);
+    let duration_memo = start_memo.elapsed();
+    
+    // Time naive version with same input
+    let start_naive = std::time::Instant::now();
+    let result_naive = expensive_calculation_naive(test_input);
+    let duration_naive = start_naive.elapsed();
+    
+    println!("  📊 Memoized version (n={}): result={}, time={:?}, cache_size={}", 
+             test_input, result_memo, duration_memo, cache.len());
+    println!("  📊 Naive version (n={}): result={}, time={:?}", 
+             test_input, result_naive, duration_naive);
+    
+    // Verify both versions produce the same result
+    assert_eq!(result_memo, result_naive, "Memoized and naive versions should produce identical results!");
+    
+    let speedup = if duration_memo.as_nanos() > 0 {
+        duration_naive.as_nanos() as f64 / duration_memo.as_nanos() as f64
+    } else {
+        0.0
+    };
+    println!("  🚀 Actual speedup: {:.0}x faster with memoization!", speedup);
     
     println!("✅ Exercise 1 complete!\n");
 }
@@ -427,19 +558,115 @@ fn exercise_database_cache() {
     println!("🧪 EXERCISE 2: Database Query Cache");
     println!("===================================");
     
-    // Simulated database queries
-    let _queries = vec![
+    #[derive(Debug, Clone)]
+    struct QueryResult {
+        data: String,
+        timestamp: std::time::Instant,
+    }
+    
+    #[derive(Debug)]
+    struct DatabaseCache {
+        cache: HashMap<String, QueryResult>,
+        max_age: std::time::Duration,
+        hits: usize,
+        misses: usize,
+    }
+    
+    impl DatabaseCache {
+        fn new(max_age_seconds: u64) -> Self {
+            DatabaseCache {
+                cache: HashMap::new(),
+                max_age: std::time::Duration::from_secs(max_age_seconds),
+                hits: 0,
+                misses: 0,
+            }
+        }
+        
+        fn query(&mut self, sql: &str) -> String {
+            // Check if we have a cached result that's still valid
+            if let Some(result) = self.cache.get(sql) {
+                if result.timestamp.elapsed() < self.max_age {
+                    self.hits += 1;
+                    println!("  📄 Cache HIT for: {}", sql);
+                    return result.data.clone();
+                } else {
+                    println!("  ⏰ Cache EXPIRED for: {}", sql);
+                    self.cache.remove(sql); // Remove expired entry
+                }
+            }
+            
+            // Cache miss - simulate database query
+            self.misses += 1;
+            println!("  🗃️  Cache MISS - executing: {}", sql);
+            
+            // Simulate query execution time
+            std::thread::sleep(std::time::Duration::from_millis(10));
+            
+            let result_data = format!("Result for: {}", sql);
+            let result = QueryResult {
+                data: result_data.clone(),
+                timestamp: std::time::Instant::now(),
+            };
+            
+            self.cache.insert(sql.to_string(), result);
+            result_data
+        }
+        
+        fn invalidate_table(&mut self, table_name: &str) {
+            let keys_to_remove: Vec<String> = self.cache
+                .keys()
+                .filter(|query| query.contains(table_name))
+                .cloned()
+                .collect();
+                
+            for key in keys_to_remove {
+                self.cache.remove(&key);
+                println!("  🗑️  Invalidated cache for table '{}': {}", table_name, key);
+            }
+        }
+        
+        fn stats(&self) -> (usize, usize, f32) {
+            let total = self.hits + self.misses;
+            let hit_ratio = if total == 0 { 0.0 } else { self.hits as f32 / total as f32 };
+            (self.hits, self.misses, hit_ratio)
+        }
+    }
+    
+    // Simulate database queries with caching
+    let mut db_cache = DatabaseCache::new(5); // 5-second cache expiration
+    
+    let queries = [
         "SELECT * FROM users WHERE id = 1",
         "SELECT * FROM posts WHERE user_id = 1", 
         "SELECT * FROM users WHERE id = 2",
-        "SELECT * FROM users WHERE id = 1", // Repeated query
+        "SELECT * FROM users WHERE id = 1", // Repeated query - should be cache hit
         "SELECT COUNT(*) FROM posts",
     ];
     
-    // TODO: Create a cache structure for query -> result mapping
-    // TODO: Implement cache expiration (queries older than 5 seconds)
-    // TODO: Track cache hit/miss statistics
-    // TODO: Implement cache invalidation for specific table updates
+    println!("  🔄 Executing database queries with caching:");
+    for query in &queries {
+        let _result = db_cache.query(query);
+    }
+    
+    // Test cache expiration
+    println!("\n  ⏳ Waiting for cache expiration (6 seconds)...");
+    std::thread::sleep(std::time::Duration::from_secs(6));
+    
+    let _expired_result = db_cache.query("SELECT * FROM users WHERE id = 1");
+    
+    // Test cache invalidation
+    println!("\n  🔄 Testing cache invalidation:");
+    let _result1 = db_cache.query("SELECT * FROM products WHERE category = 'electronics'");
+    let _result2 = db_cache.query("SELECT COUNT(*) FROM products");
+    
+    println!("  💾 Before invalidation - cache size: {}", db_cache.cache.len());
+    db_cache.invalidate_table("products");
+    println!("  💾 After invalidation - cache size: {}", db_cache.cache.len());
+    
+    let (hits, misses, hit_ratio) = db_cache.stats();
+    println!("\n  📊 Cache Statistics:");
+    println!("    Hits: {}, Misses: {}", hits, misses);
+    println!("    Hit ratio: {:.1}%", hit_ratio * 100.0);
     
     println!("✅ Exercise 2 complete!\n");
 }
@@ -452,8 +679,101 @@ fn exercise_pathfinding_cache() {
     println!("🧪 EXERCISE 3: Pathfinding Cache");
     println!("=================================");
     
-    // Simple graph representation
-    let _graph = vec![
+    use std::collections::{VecDeque, HashSet};
+    
+    #[derive(Debug)]
+    struct PathfindingCache {
+        path_cache: HashMap<(String, String), Vec<String>>,
+        hits: usize,
+        misses: usize,
+    }
+    
+    impl PathfindingCache {
+        fn new() -> Self {
+            PathfindingCache {
+                path_cache: HashMap::new(),
+                hits: 0,
+                misses: 0,
+            }
+        }
+        
+        fn find_path_cached(&mut self, graph: &HashMap<String, Vec<String>>, start: &str, end: &str) -> Vec<String> {
+            let cache_key = (start.to_string(), end.to_string());
+            
+            // Check cache first
+            if let Some(cached_path) = self.path_cache.get(&cache_key) {
+                self.hits += 1;
+                println!("  📄 Cache HIT for path: {} → {}", start, end);
+                return cached_path.clone();
+            }
+            
+            // Cache miss - compute path using BFS
+            self.misses += 1;
+            println!("  🔍 Cache MISS - computing path: {} → {}", start, end);
+            
+            let path = self.bfs_shortest_path(graph, start, end);
+            
+            // Cache the result (cache both directions for efficiency)
+            self.path_cache.insert(cache_key, path.clone());
+            if !path.is_empty() && path.len() > 1 {
+                let reverse_path: Vec<String> = path.iter().rev().cloned().collect();
+                let reverse_key = (end.to_string(), start.to_string());
+                self.path_cache.insert(reverse_key, reverse_path);
+            }
+            
+            path
+        }
+        
+        fn bfs_shortest_path(&self, graph: &HashMap<String, Vec<String>>, start: &str, end: &str) -> Vec<String> {
+            if start == end {
+                return vec![start.to_string()];
+            }
+            
+            let mut queue = VecDeque::new();
+            let mut visited = HashSet::new();
+            let mut parent = HashMap::new();
+            
+            queue.push_back(start.to_string());
+            visited.insert(start.to_string());
+            
+            while let Some(current) = queue.pop_front() {
+                if let Some(neighbors) = graph.get(&current) {
+                    for neighbor in neighbors {
+                        if !visited.contains(neighbor) {
+                            visited.insert(neighbor.clone());
+                            parent.insert(neighbor.clone(), current.clone());
+                            queue.push_back(neighbor.clone());
+                            
+                            if neighbor == end {
+                                // Reconstruct path
+                                let mut path = Vec::new();
+                                let mut node = end.to_string();
+                                
+                                while let Some(p) = parent.get(&node) {
+                                    path.push(node.clone());
+                                    node = p.clone();
+                                }
+                                path.push(start.to_string());
+                                path.reverse();
+                                return path;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            vec![] // No path found
+        }
+        
+        fn stats(&self) -> (usize, usize, f32) {
+            let total = self.hits + self.misses;
+            let hit_ratio = if total == 0 { 0.0 } else { self.hits as f32 / total as f32 };
+            (self.hits, self.misses, hit_ratio)
+        }
+    }
+    
+    // Build adjacency list from graph data
+    let graph_data = vec![
         ("A", vec!["B", "C"]),
         ("B", vec!["A", "D", "E"]),
         ("C", vec!["A", "F"]),
@@ -462,10 +782,41 @@ fn exercise_pathfinding_cache() {
         ("F", vec!["C", "E"]),
     ];
     
-    // TODO: Build adjacency list from graph data
-    // TODO: Implement path finding function (simple BFS)
-    // TODO: Add memoization for paths between node pairs
-    // TODO: Test with multiple path queries and measure cache effectiveness
+    let mut graph: HashMap<String, Vec<String>> = HashMap::new();
+    for (node, neighbors) in graph_data {
+        graph.insert(node.to_string(), neighbors.iter().map(|s| s.to_string()).collect());
+    }
+    
+    println!("  🗺️  Graph: {:?}", graph);
+    
+    let mut pathfinder = PathfindingCache::new();
+    
+    // Test pathfinding with multiple queries
+    let path_queries = [
+        ("A", "F"),
+        ("B", "F"), 
+        ("A", "E"),
+        ("A", "F"), // Repeated query - should be cache hit
+        ("F", "A"), // Reverse path - should also be cache hit due to bidirectional caching
+        ("D", "C"),
+        ("B", "F"), // Another repeat - cache hit
+    ];
+    
+    println!("\n  🔄 Testing pathfinding with caching:");
+    for (start, end) in &path_queries {
+        let path = pathfinder.find_path_cached(&graph, start, end);
+        if path.is_empty() {
+            println!("    No path from {} to {}", start, end);
+        } else {
+            println!("    Path from {} to {}: {}", start, end, path.join(" → "));
+        }
+    }
+    
+    let (hits, misses, hit_ratio) = pathfinder.stats();
+    println!("\n  📊 Pathfinding Cache Statistics:");
+    println!("    Hits: {}, Misses: {}", hits, misses);
+    println!("    Hit ratio: {:.1}%", hit_ratio * 100.0);
+    println!("    Cached paths: {}", pathfinder.path_cache.len());
     
     println!("✅ Exercise 3 complete!\n");
 }
