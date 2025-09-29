@@ -9,3 +9,4 @@ anyhow = "1"
 md5 = "0.8"
 regex = "1"
 mission5 = { path = "../Mission5" }
+mission6 = { path = "../Mission6" }

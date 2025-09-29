@@ -110,9 +110,9 @@ fn coordinate_benchmark(c: &mut Criterion) {
         })
     });
 
-    c.bench_function("euclidean_distance", |b| {
+    c.bench_function("euclidean_distance_squared", |b| {
         b.iter(|| {
-            black_box(coord1.euclidean_distance(coord2))
+            black_box(coord1.euclidean_distance_squared(coord2))
         })
     });
 

@@ -69,16 +69,26 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
+### Day 6: Probably a Fire Hazard
+**Title**: Probably a Fire Hazard  
+**Part 1 Type**: Simulation + Data Structures  
+**Part 1 Description**: Control 1000x1000 grid of lights with turn on/off/toggle commands on rectangular regions  
+**Part 2 Type**: Simulation + Mathematical  
+**Part 2 Description**: Same commands but control brightness levels (+1/-1/+2) instead of boolean states  
+**Key Concepts**: 2D grid operations, coordinate parsing, rectangular region processing, string command parsing, grid state management
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
 | String Processing | 3 | 3 |
-| Mathematical | 2 | 2 |
-| Simulation | 2 | 2 |
+| Mathematical | 2 | 3 |
+| Simulation | 3 | 3 |
 | Search/Traversal | 1 | 1 |
 | Optimization | 0 | 1 |
-| Data Structures | 1 | 1 |
+| Data Structures | 2 | 1 |
 | Brute Force | 1 | 1 |
 | Cryptographic | 1 | 1 |
 | Pattern Matching | 1 | 0 |
@@ -99,6 +109,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - Day 3: Perfect for HashSet usage, coordinate systems, `step_by()` iterators, even/odd index splitting
 - Day 4: Demonstrates external crates (`md5`), loop optimization, computational complexity, parallel processing
 - Day 5: Ideal for regex crate usage, string pattern matching, `saturating_sub()`, manual string iteration vs regex trade-offs
+- Day 6: Excellent for 2D grid data structures, coordinate systems, rectangular iteration, `split_whitespace()`, `saturating_sub()` for brightness bounds
 
 ---
 
@@ -126,4 +137,4 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5*
+*Days Available: 1, 2, 3, 4, 5, 6*
