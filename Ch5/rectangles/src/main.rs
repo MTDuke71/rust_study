@@ -74,7 +74,7 @@ fn main() {
         width: dbg!(30 * scale),
         height: 50,
     };
-    dbg!(&rect3);
+    dbg!(&rect3);  // reference passed to dbg! so it doesn't take ownership
 }
 
 fn area_separate(width: u32, height: u32) -> u32 {
