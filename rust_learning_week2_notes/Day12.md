@@ -1,5 +1,17 @@
 # Day 12 · BTreeMap & BTreeSet (ordered collections)
 
+> **Learning Context**: Day 12 of Week 2 focuses on ordered collections, building toward Mission5's HashMap implementation by understanding the alternative tree-based approach to key-value storage.
+
+**Cross-Track Integration:**
+- **Mission5 Connection**: Contrasts with HashMap's hash-table approach - see [[Mission5 Overview]]
+- **Daily Study**: Part of Week 2's collections mastery progression  
+- **Rust Book**: Complements Chapter 8 Collections with ordered alternatives
+
+**Related Zettelkasten Notes:**
+- [[Collections MOC]] - Complete map of data structure learning
+- [[HashMap Internals]] - Hash table vs B-tree comparison
+- [[zettel-index]] - Main learning hub
+
 ## Core Concepts
 
 ### BTreeMap<K,V> Fundamentals
@@ -204,6 +216,47 @@ for student in &honor_roll {
 // Output: Alice: 95, Charlie: 95, Bob: 87
 ```
 
+## Mission5 Integration: Hash vs Tree Trade-offs
+
+### When to Choose BTreeMap over HashMap (Mission5 REQ-4 Analysis)
+```rust
+use std::collections::{HashMap, BTreeMap};
+
+// Mission5 HashMap: O(1) amortized, unordered
+// Perfect for: Fast lookups, no ordering requirements
+let mut user_sessions: HashMap<String, u64> = HashMap::new();
+
+// BTreeMap: O(log n) guaranteed, ordered  
+// Perfect for: Range queries, sorted iteration, predictable performance
+let mut timestamp_events: BTreeMap<u64, String> = BTreeMap::new();
+
+// Example: Processing events chronologically (common AoC pattern)
+timestamp_events.insert(1001, "user_login".to_string());
+timestamp_events.insert(1003, "data_access".to_string());  
+timestamp_events.insert(1002, "permission_check".to_string());
+
+// BTreeMap automatically maintains chronological order
+println!("Event timeline:");
+for (timestamp, event) in &timestamp_events {
+    println!("  {}: {}", timestamp, event);
+}
+// Output is naturally chronological: 1001, 1002, 1003
+```
+
+### Performance Comparison (Mission5 REQ-5 Validation Context)
+```rust
+// Mission5 focuses on HashMap optimization, but BTreeMap provides:
+// ✅ Guaranteed O(log n) - no worst-case O(n) hash collisions
+// ✅ Predictable memory usage - no rehashing overhead
+// ✅ Cache-friendly iteration - sequential tree traversal
+// ❌ Slower single operations - O(log n) vs O(1) average
+
+// Use BTreeMap when Mission5 HashMap isn't suitable:
+// - Need sorted output (reports, debugging)
+// - Range queries (time windows, coordinate bounds)
+// - Predictable performance critical
+```
+
 ## Use Cases and Applications
 
 ### Sorted Data Processing
@@ -379,6 +432,16 @@ From Day 12, you should understand:
 5. **Use Cases**: Time series, sorted output, range searches
 6. **Trade-offs**: Predictable performance vs maximum speed
 
+**3-Track Learning Integration:**
+- **Mission5**: Compare BTreeMap's O(log n) with HashMap's O(1) amortized - both solve REQ-1 generic storage
+- **Week 2 Progression**: Day 11 HashMap basics → Day 12 BTreeMap ordering → Day 13 Iterator mastery
+- **AoC Applications**: Coordinate systems, event timelines, priority queues in competitive programming
+
+**Cross-References:**
+- [[Collections MOC]] - See "Tree-Based Collections" section
+- [[Mission5 Overview]] - REQ-4 performance comparison opportunities  
+- [[HashMap Internals]] - Hash collision vs tree rebalancing trade-offs
+
 **Next**: Day 13 will cover **Advanced Iterators** - transforming and processing collections efficiently!
 
 ## 🚀 **Complete Runnable Example**
@@ -471,3 +534,9 @@ fn main() {
 2. **Local file**: Save as `day12_demo.rs` and run `rustc day12_demo.rs && ./day12_demo`  
 3. **In this workspace**: `.\run_md.bat rust_learning_week2_notes\Day12.md`
 4. **As Cargo example**: `cargo run --example day12_btree_demo` (if you add it to Mission5_tut)
+
+---
+**Zettelkasten Integration:**
+*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+
+*Tags: #btreemap #btreeset #ordered-collections #data-structures #daily-study #week2 #collections #performance-comparison*

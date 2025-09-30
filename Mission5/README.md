@@ -2,7 +2,14 @@
 
 **Key-Value Storage, Set Operations, and Competitive Programming Patterns**
 
-## 📋 V-Cycle Summary
+## � Zettelkasten Links
+- **Overview**: [[Mission5 Overview]] - Complete mission context and learning integration
+- **Concepts**: [[HashMap Internals]] - Deep dive into hash table implementation
+- **Tutorial**: [[Mission5_tut Overview]] - Step-by-step guided learning
+- **Integration**: [[Collections MOC]] - Broader data structures context
+- **Daily Study**: [[Day 10 - HashMap Basics]] | [[Day 11 - HashSet Operations]]
+
+## �📋 V-Cycle Summary
 
 ### Requirements (Analysis Phase)
 - **REQ-1**: Implement custom dictionary wrapper around `HashMap<K, V>` with enhanced functionality

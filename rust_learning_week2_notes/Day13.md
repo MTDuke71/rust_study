@@ -1,5 +1,17 @@
 # Day 13 · Advanced Iterators (transforming and processing collections)
 
+> **Learning Context**: Day 13 completes Week 2's collections mastery with iterator patterns essential for efficient data processing in Mission5 and AoC problems.
+
+**Cross-Track Integration:**
+- **Mission5 Connection**: Iterator patterns for HashMap traversal and batch operations - see [[Mission5 Overview]]
+- **Daily Study**: Culminates Week 2 collections (HashMap → BTreeMap → Iterators)
+- **Rust Book**: Builds on Chapter 13 Functional Language Features with practical applications
+
+**Related Zettelkasten Notes:**
+- [[Collections MOC]] - Iterator patterns across all data structures
+- [[HashMap Internals]] - Internal iteration vs external iteration patterns
+- [[zettel-index]] - Main learning hub
+
 ## Core Concepts
 
 ### Iterator Fundamentals
@@ -131,6 +143,64 @@ let pos = numbers.iter().position(|&x| x == 3); // Some(2)
 
 // contains - check membership (only for PartialEq types)
 let contains_five = numbers.contains(&5); // true
+```
+
+## Mission5 Integration: Iterator Patterns for HashMap Operations
+
+### Efficient HashMap Processing (REQ-6 Advanced Operations)
+```rust
+use std::collections::HashMap;
+
+// Mission5 HashMap with iterator-based batch operations
+let mut user_scores: HashMap<String, i32> = HashMap::new();
+user_scores.insert("Alice".to_string(), 95);
+user_scores.insert("Bob".to_string(), 87);
+user_scores.insert("Charlie".to_string(), 92);
+user_scores.insert("Diana".to_string(), 78);
+
+// Iterator patterns for Mission5 REQ-6 advanced features:
+
+// 1. Filtering and transforming in one pass (zero-cost abstraction)
+let high_performers: Vec<_> = user_scores
+    .iter()
+    .filter(|(_, &score)| score >= 90)
+    .map(|(name, score)| format!("{}: {}", name, score))
+    .collect();
+
+// 2. Aggregation operations 
+let total_score: i32 = user_scores.values().sum();
+let average_score: f64 = user_scores.values().sum::<i32>() as f64 / user_scores.len() as f64;
+
+// 3. Batch updates using iterator chains
+let updated_scores: HashMap<String, i32> = user_scores
+    .into_iter()
+    .map(|(name, score)| (name, score + 5)) // Bonus points
+    .filter(|(_, score)| *score <= 100)     // Cap at 100
+    .collect();
+
+println!("High performers: {:?}", high_performers);
+println!("Average score: {:.1}", average_score);
+```
+
+### Iterator Performance vs Manual Loops (Mission5 REQ-5 Validation)
+```rust
+// Mission5 performance comparison: Iterator vs manual
+use std::collections::HashMap;
+
+let data: HashMap<i32, String> = (0..10000).map(|i| (i, format!("value_{}", i))).collect();
+
+// ✅ Iterator approach - compiles to same performance as manual loop
+let sum_keys: i32 = data.keys().sum();
+
+// ✅ Manual loop equivalent - same assembly output
+let mut manual_sum = 0;
+for key in data.keys() {
+    manual_sum += key;
+}
+
+// Both approaches have identical performance after optimization
+// Iterator provides: readability, composability, safety
+// Manual provides: explicit control, debugging clarity
 ```
 
 ## Advanced Patterns
@@ -466,7 +536,7 @@ fn main() {
     let lazy_chain = numbers
         .iter()
         .map(|x| { println!("  Processing: {}", x); x * 2 })
-        .filter(|&&x| x > 10);
+        .filter(|&x| x > 10);
     
     println!("   Chain created, but nothing printed yet!");
     println!("   Now consuming with collect():");
@@ -481,7 +551,7 @@ fn main() {
         .iter()
         .enumerate()
         .inspect(|(i, s)| println!("   Step {}: Processing '{}'", i + 1, s))
-        .filter_map(|(_, s)| s.parse().ok())
+        .filter_map(|(_, s)| s.parse::<i32>().ok())
         .map(|n| n * 10)
         .filter(|&n| n > 1000)
         .collect();
@@ -592,3 +662,19 @@ fn main() {
 2. **Local file**: Save as `day13_demo.rs` and run `rustc day13_demo.rs && ./day13_demo`
 3. **In this workspace**: `.\run_md.bat rust_learning_week2_notes\Day13.md`
 4. **As Cargo example**: `cargo run --example day13_iterators_demo` (if you add it to Mission5_tut)
+
+**3-Track Learning Integration:**
+- **Mission5**: Iterator patterns enable efficient HashMap batch operations and traversal
+- **Week 2 Completion**: HashMap basics → BTreeMap ordering → Iterator mastery
+- **AoC Applications**: Data transformation pipelines, filtering, and aggregation patterns
+
+**Cross-References:**
+- [[Collections MOC]] - See "Iterator Patterns" section for cross-collection usage
+- [[Mission5 Overview]] - REQ-6 advanced operations benefit from iterator chains
+- [[HashMap Internals]] - Internal vs external iteration performance considerations
+
+---
+**Zettelkasten Integration:**
+*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+
+*Tags: #iterators #advanced-patterns #data-processing #collections #daily-study #week2 #functional-programming #mission5*

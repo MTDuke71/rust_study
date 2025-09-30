@@ -409,6 +409,7 @@ This workspace follows strict V-Cycle methodology. When adding new missions:
 - **Reference**: Comprehensive rustdoc generated with `cargo doc --open`
 - **Practice**: Examples in each mission demonstrate real-world usage
 - **Validation**: Test suites provide both learning and verification
+- **Knowledge Management**: [[zettelkasten/]] - Zettelkasten system for interconnected learning navigation
 
 ---
 

@@ -1,13 +1,19 @@
 // Chapter 5.3 - Method Syntax
+// Demonstrates method syntax patterns used in Mission5 HashMap implementation
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Rectangle {
     width: u32,
     height: u32,
 }
 
 impl Rectangle {
-    // Method - takes &self as first parameter
+    // Associated function constructors (Mission5 pattern: HashMap::new())
+    fn new(width: u32, height: u32) -> Self {
+        Self { width, height }
+    }
+    
+    // Method - takes &self as first parameter (Mission5: map.get(&key))
     fn area(&self) -> u32 {
         self.width * self.height
     }
@@ -17,12 +23,15 @@ impl Rectangle {
         self.width > other.width && self.height > other.height
     }
     
-    // Associated function (like static method) - no self parameter
+    // Associated function (Mission5 pattern: HashMap::with_capacity())
     fn square(size: u32) -> Self {
-        Self {
-            width: size,
-            height: size,
-        }
+        Self::new(size, size)  // Delegate to constructor
+    }
+    
+    // Mutable method (Mission5 pattern: map.insert())
+    fn scale(&mut self, factor: u32) {
+        self.width *= factor;
+        self.height *= factor;
     }
 }
 
@@ -53,17 +62,19 @@ fn main() {
     println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
     println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
     
-    // Using associated function
+    // Using associated function (Mission5: HashMap::new() pattern)
     let sq = Rectangle::square(3);
     println!("Created square: {:?}", sq);
     println!("Square area: {}", sq.area());
     
-    // Demonstrate multiple impl blocks
-    let rect4 = Rectangle {
-        width: 20,
-        height: 30,
-    };
+    // Demonstrate mutable methods (Mission5: map.insert() pattern)
+    let mut scalable_rect = Rectangle::new(10, 15);
+    println!("Before scaling: {:?}", scalable_rect);
+    scalable_rect.scale(2);
+    println!("After scaling by 2: {:?}", scalable_rect);
     
+    // Demonstrate multiple impl blocks
+    let rect4 = Rectangle::new(20, 30);
     println!("Rectangle perimeter: {}", rect4.perimeter());
 }
 

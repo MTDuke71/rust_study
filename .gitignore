@@ -5,6 +5,9 @@
 /target/
 **/target/
 
+# Obsidian workspace files (optional - keeps your personal workspace settings private)
+.obsidian/
+
 # Cargo lock file (uncomment if this is a library)
 Cargo.lock
 

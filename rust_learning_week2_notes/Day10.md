@@ -1,5 +1,13 @@
 # Day 10 · HashMap & HashSet Deep Dive
 
+## 🔗 Zettelkasten Connections
+- **Implementation**: [[Mission5 Overview]] - Custom HashMap from scratch
+- **Tutorial**: [[Mission5_tut Overview]] - Guided learning progression
+- **Internals**: [[HashMap Internals]] - How hash tables work under the hood
+- **Collections**: [[Collections MOC]] - Broader data structures context
+- **Next**: [[Day 11 - HashSet Operations]] - Set theory applications
+- **Previous**: [[Day 9 - String Patterns]] - String handling in Rust
+
 ## Core Concepts
 
 ### HashMap<K,V> Fundamentals

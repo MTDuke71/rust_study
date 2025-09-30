@@ -1,5 +1,18 @@
 # Day 14 · Error Handling Patterns (robust error management)
 
+> **Learning Context**: Day 14 explores Rust's comprehensive error handling approach, essential for Mission5's robust HashMap operations and providing foundation for advanced error patterns.
+
+**Cross-Track Integration:**
+- **Mission Focus**: Error handling enables Mission5's reliable HashMap operations with graceful failure modes - see [[Mission5 Overview]]
+- **Daily Study**: Concludes Week 2 with practical error management patterns
+- **Rust Book**: Chapter 9 Error Handling with real-world application patterns
+
+**Related Zettelkasten Notes:**
+- [[Collections MOC]] - Error handling patterns across collection operations
+- [[Mission5 Overview]] - REQ-4 robust error handling in HashMap operations
+- [[HashMap Internals]] - Error cases in hash table operations
+- [[zettel-index]] - Main learning hub
+
 ## Core Concepts
 
 ### Rust's Error Philosophy
@@ -309,6 +322,191 @@ fn complex_operation(input: &str) -> Result<String, AppError> {
 }
 ```
 
+## Mission5 Integration: Robust HashMap Error Handling
+
+### HashMap Operation Errors
+```rust
+use std::collections::HashMap;
+use std::fmt;
+
+// Mission5: Custom error types for HashMap operations
+#[derive(Debug, Clone)]
+pub enum HashMapError {
+    KeyNotFound(String),
+    InvalidKey(String),
+    CapacityExceeded(usize),
+    SerializationError(String),
+    ValidationError(String),
+}
+
+impl fmt::Display for HashMapError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            HashMapError::KeyNotFound(key) => write!(f, "Key '{}' not found in HashMap", key),
+            HashMapError::InvalidKey(reason) => write!(f, "Invalid key: {}", reason),
+            HashMapError::CapacityExceeded(max) => write!(f, "HashMap capacity exceeded (max: {})", max),
+            HashMapError::SerializationError(msg) => write!(f, "Serialization failed: {}", msg),
+            HashMapError::ValidationError(msg) => write!(f, "Validation failed: {}", msg),
+        }
+    }
+}
+
+impl std::error::Error for HashMapError {}
+
+// Mission5: Robust HashMap wrapper with error handling
+pub struct RobustHashMap<K, V> {
+    inner: HashMap<K, V>,
+    max_capacity: Option<usize>,
+}
+
+impl<K, V> RobustHashMap<K, V>
+where
+    K: std::hash::Hash + Eq + Clone + fmt::Display,
+    V: Clone,
+{
+    pub fn new() -> Self {
+        RobustHashMap {
+            inner: HashMap::new(),
+            max_capacity: None,
+        }
+    }
+    
+    pub fn with_capacity_limit(limit: usize) -> Self {
+        RobustHashMap {
+            inner: HashMap::new(),
+            max_capacity: Some(limit),
+        }
+    }
+    
+    // Safe insertion with capacity checking
+    pub fn insert(&mut self, key: K, value: V) -> Result<Option<V>, HashMapError> {
+        if let Some(max_cap) = self.max_capacity {
+            if self.inner.len() >= max_cap && !self.inner.contains_key(&key) {
+                return Err(HashMapError::CapacityExceeded(max_cap));
+            }
+        }
+        
+        Ok(self.inner.insert(key, value))
+    }
+    
+    // Safe retrieval with detailed error information
+    pub fn get(&self, key: &K) -> Result<&V, HashMapError> {
+        self.inner
+            .get(key)
+            .ok_or_else(|| HashMapError::KeyNotFound(key.to_string()))
+    }
+    
+    // Safe removal with error handling
+    pub fn remove(&mut self, key: &K) -> Result<V, HashMapError> {
+        self.inner
+            .remove(key)
+            .ok_or_else(|| HashMapError::KeyNotFound(key.to_string()))
+    }
+    
+    // Bulk operations with partial success handling
+    pub fn insert_many(&mut self, pairs: Vec<(K, V)>) -> Result<Vec<K>, HashMapError> {
+        let mut failed_keys = Vec::new();
+        
+        for (key, value) in pairs {
+            if let Err(_) = self.insert(key.clone(), value) {
+                failed_keys.push(key);
+            }
+        }
+        
+        if failed_keys.is_empty() {
+            Ok(failed_keys)
+        } else {
+            Err(HashMapError::ValidationError(
+                format!("Failed to insert {} keys", failed_keys.len())
+            ))
+        }
+    }
+}
+
+// Mission5: Configuration validation with error handling
+impl RobustHashMap<String, String> {
+    pub fn validate_config(&self) -> Result<(), HashMapError> {
+        // Check required keys
+        let required_keys = ["host", "port", "database"];
+        for &key in &required_keys {
+            self.get(&key.to_string())?;
+        }
+        
+        // Validate port is numeric
+        if let Ok(port_str) = self.get(&"port".to_string()) {
+            port_str.parse::<u16>()
+                .map_err(|_| HashMapError::ValidationError(
+                    "Port must be a valid number between 0-65535".to_string()
+                ))?;
+        }
+        
+        Ok(())
+    }
+    
+    pub fn get_config_value(&self, key: &str) -> Result<&String, HashMapError> {
+        if key.trim().is_empty() {
+            return Err(HashMapError::InvalidKey("Key cannot be empty".to_string()));
+        }
+        
+        self.get(&key.to_string())
+    }
+}
+```
+
+### Error Recovery Patterns for HashMap
+```rust
+// Mission5: Error recovery and fallback strategies
+impl<K, V> RobustHashMap<K, V>
+where
+    K: std::hash::Hash + Eq + Clone + fmt::Display,
+    V: Clone + Default,
+{
+    // Get with fallback to default value
+    pub fn get_or_default(&self, key: &K) -> V {
+        self.get(key).unwrap_or_else(|_| V::default())
+    }
+    
+    // Try multiple keys until one succeeds
+    pub fn get_any(&self, keys: &[K]) -> Result<&V, HashMapError> {
+        for key in keys {
+            if let Ok(value) = self.get(key) {
+                return Ok(value);
+            }
+        }
+        
+        Err(HashMapError::KeyNotFound(
+            format!("None of the {} keys were found", keys.len())
+        ))
+    }
+    
+    // Safe batch update with rollback on error
+    pub fn update_batch(&mut self, updates: Vec<(K, V)>) -> Result<(), HashMapError> {
+        // Store backup of original values
+        let mut backup: Vec<(K, Option<V>)> = Vec::new();
+        
+        // Try to apply all updates
+        for (key, new_value) in updates {
+            let old_value = self.inner.get(&key).cloned();
+            backup.push((key.clone(), old_value));
+            
+            // If this fails, rollback and return error
+            if let Err(e) = self.insert(key, new_value) {
+                // Rollback previous changes
+                for (backup_key, backup_value) in backup {
+                    match backup_value {
+                        Some(old_val) => { self.inner.insert(backup_key, old_val); }
+                        None => { self.inner.remove(&backup_key); }
+                    }
+                }
+                return Err(e);
+            }
+        }
+        
+        Ok(())
+    }
+}
+```
+
 ## Option<T> Error Handling
 
 ### Option as Simple Error Type
@@ -565,11 +763,23 @@ From Day 14, you should understand:
 3. **Custom Errors**: Creating domain-specific error types
 4. **Error Conversion**: Using `From` trait for seamless error transformation
 5. **Combinators**: Functional error handling with `map`, `and_then`, etc.
-6. **Best Practices**: When to use Result vs Option vs panic
-7. **Testing**: How to test error conditions effectively
-8. **Real-World Patterns**: AoC parsing, file processing, data validation
+6. **Mission5 Integration**: Robust HashMap operations with comprehensive error handling
+7. **Recovery Patterns**: Fallback strategies and error resilience
+8. **Best Practices**: When to use Result vs Option vs panic
+9. **Testing**: How to test error conditions effectively
+10. **Real-World Patterns**: AoC parsing, file processing, data validation
 
-**Week 2 Complete!** You now have a solid foundation in Rust's collections, iterators, and error handling - essential tools for any Rust developer!
+**3-Track Learning Integration:**
+- **Mission5**: Robust error handling enables reliable HashMap operations and graceful failure modes
+- **Week 2 Completion**: Collections → Iterators → Error Handling provide complete foundation
+- **Real-World Applications**: AoC parsing, configuration management, data processing pipelines
+
+**Cross-References:**
+- [[Collections MOC]] - Error handling patterns across different collection types
+- [[Mission5 Overview]] - REQ-4 robust error handling in HashMap operations
+- [[HashMap Internals]] - Error cases and recovery strategies in hash table implementations
+
+**Next**: Week 3 will cover **Advanced Type System** (Traits, Generics, Lifetimes) building on this solid error handling foundation!
 
 ## 🚀 **Complete Runnable Example**
 
@@ -787,3 +997,9 @@ fn parse_move_instruction(line: &str) -> Result<Move, String> {
 2. **Local file**: Save as `day14_demo.rs` and run `rustc day14_demo.rs && ./day14_demo`
 3. **In this workspace**: `.\run_md.bat rust_learning_week2_notes\Day14.md`
 4. **As Cargo example**: `cargo run --example day14_error_handling_demo` (if you add it to Mission5_tut)
+
+---
+**Zettelkasten Integration:**
+*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+
+*Tags: #error-handling #result-type #custom-errors #mission5 #robustness #daily-study #week2 #error-recovery*

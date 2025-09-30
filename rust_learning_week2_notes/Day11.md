@@ -1,5 +1,14 @@
 # Day 11 · HashSets (unique collections, set operations)
 
+## 🔗 Zettelkasten Connections  
+- **Today's Focus**: [[Mission5 Overview]] - REQ-4 Iterator Implementation aligns with today
+- **Implementation**: [[Mission5 HashSet]] - Custom HashSet wrapper in mission
+- **Tutorial**: [[Mission5_tut Step 5]] - MemoCache integration (today's tutorial step)
+- **Theory**: [[HashMap Internals]] - Understanding the backing HashMap structure
+- **Previous**: [[Day 10 - HashMap Basics]] - Foundation concepts
+- **Next**: [[Day 12 - BTreeMap]] - Ordered collections comparison
+- **Applications**: [[AoC HashSet Patterns]] - Competitive programming applications
+
 ## Core Concepts
 
 ### HashSet<T> Fundamentals
