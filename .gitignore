@@ -54,3 +54,5 @@ desktop.ini
 *.backup
 
 .obsidian/
+.claude/settings.local.json
+nul

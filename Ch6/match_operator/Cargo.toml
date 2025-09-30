@@ -1,0 +1,7 @@
+[package]
+name = "match_operator"
+version = "0.1.0"
+edition = "2021"
+
+# Chapter 6.2: The match Control Flow Operator
+# Demonstrates pattern matching with match expressions

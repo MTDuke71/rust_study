@@ -1,0 +1,7 @@
+[package]
+name = "if_let"
+version = "0.1.0"
+edition = "2021"
+
+# Chapter 6.3: Concise Control Flow with if let
+# Demonstrates if let syntax for single-pattern matching

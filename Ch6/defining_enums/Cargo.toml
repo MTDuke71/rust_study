@@ -1,0 +1,7 @@
+[package]
+name = "defining_enums"
+version = "0.1.0"
+edition = "2021"
+
+# Chapter 6.1: Defining Enums
+# Demonstrates enum definition and usage patterns

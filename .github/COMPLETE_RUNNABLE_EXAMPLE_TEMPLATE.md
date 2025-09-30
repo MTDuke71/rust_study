@@ -131,3 +131,116 @@ The Complete Runnable Examples work seamlessly with:
 4. **Manual Compilation**: Standard `rustc` workflow
 
 This template ensures consistency across all learning materials and provides multiple ways for users to interact with and learn from the code!
+
+---
+
+## 🔧 Troubleshooting Guide
+
+### Common Issues Running Examples
+
+**Issue**: `.\run_md.bat` not found or won't run
+```powershell
+# ❌ Problem: File not in current directory or using wrong shell
+.\run_md.bat DayXX.md
+
+# ✅ Solution: Ensure you're in workspace root with PowerShell
+cd D:\repos\rust_study
+.\run_md.bat rust_learning_week1_notes\Day01.md
+
+# Alternative: Run PowerShell script directly
+powershell -ExecutionPolicy Bypass -File .\run_markdown_code.ps1 DayXX.md
+```
+
+**Issue**: "cannot find `main` function"
+```rust
+// ❌ Problem: Missing main() function
+fn example_code() {
+    println!("Hello");
+}
+
+// ✅ Solution: Add main() function that calls examples
+fn main() {
+    example_code();
+}
+```
+
+**Issue**: Code compiles but doesn't show output
+```rust
+// ❌ Problem: Functions defined but never called
+fn example1() { println!("Example 1"); }
+fn example2() { println!("Example 2"); }
+
+fn main() {
+    // Empty main!
+}
+
+// ✅ Solution: Call all examples in main
+fn main() {
+    example1();
+    example2();
+}
+```
+
+**Issue**: "use of undeclared crate or module"
+```rust
+// ❌ Problem: Missing imports
+fn main() {
+    let mut map = HashMap::new();  // Error!
+}
+
+// ✅ Solution: Add necessary imports at top
+use std::collections::HashMap;
+
+fn main() {
+    let mut map = HashMap::new();
+}
+```
+
+### Cross-Platform Compatibility
+
+**Windows:**
+```powershell
+.\run_md.bat rust_learning_week1_notes\Day01.md
+```
+
+**Linux/Mac:**
+```bash
+# Extract and run code blocks manually
+rustc -o /tmp/day01 day01_code.rs && /tmp/day01
+
+# Or use this one-liner to extract first rust block:
+awk '/```rust/,/```/' Day01.md | rustc - && ./a.out
+```
+
+**Rust Playground (All Platforms):**
+1. Open https://play.rust-lang.org/
+2. Copy entire code block from markdown
+3. Click "Run" button
+4. See output immediately
+
+### Debugging Code Examples
+
+**Enable detailed error messages:**
+```bash
+# Show full backtrace on errors
+RUST_BACKTRACE=1 cargo run --example demo
+
+# Show all compiler warnings
+cargo build --example demo -- -W warnings
+```
+
+**Check for common mistakes:**
+```bash
+# Run clippy for suggestions
+cargo clippy --example demo
+
+# Format code to see structure
+cargo fmt --check
+```
+
+### Getting Help
+
+- 📋 Check the example's `//!` documentation at top of file
+- 🔍 Look for "Common Errors" sections within examples
+- 📚 Reference Mission README files for context
+- 💡 See [MISSION5_CASE_STUDY.md](.github/MISSION5_CASE_STUDY.md) for working patterns
