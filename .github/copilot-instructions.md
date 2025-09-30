@@ -60,7 +60,7 @@ Progressive chapter-by-chapter study:
 ```
 MONTHLY_CALENDAR.md           # 30-day learning plan with 3-track coordination
                              # ⚠️  CRITICAL: Contains alignment requirements for Mission + Tutorial coordination
-COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md  # Standards for executable examples
+.github/COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md  # Standards for executable examples
 run_markdown_code.ps1         # Tool to execute examples from .md files
 ```
 
@@ -173,7 +173,7 @@ cargo run --example demo     # Mission demos
 
 ### Complete Runnable Example Workflow
 When creating/updating daily study files:
-1. **Follow template** from `COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md`
+1. **Follow template** from `.github/COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md`
 2. **Test immediately**: `.\run_md.bat rust_learning_week*_notes\DayXX.md`
 3. **Include 4-7 sections**: Basic → Advanced → Real-world → AoC patterns
 4. **Self-contained**: All helper functions included
