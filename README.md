@@ -23,7 +23,45 @@ Traceability Matrix
 
 **Key Pattern**: Every feature starts with numbered requirements that are directly traceable to tests and implementation.
 
-## 📅 Parallel Daily Study Track
+## � Workspace Organization
+
+### **Hybrid Learning Structure**
+```
+📁 missions/           # Core V-Cycle implementations
+├── Mission1/          # Stack - LIFO operations
+├── Mission2/          # Queue - Ring buffer + linked
+├── Mission3/          # Binary Search - Traits & algorithms  
+├── Mission4/          # LinkedList - Interior mutability
+├── Mission5/          # HashMap/HashSet - Hash-based collections
+└── Mission6/          # Grids & 2D Arrays - Spatial data structures
+
+📁 tutorials/          # Step-by-step learning progressions  
+├── Mission4_tut/      # LinkedList tutorial - Box<T>, Rc<RefCell<T>>
+├── Mission5_tut/      # HashMap tutorial - Hash algorithms & patterns
+└── Mission6_tut/      # Grid tutorial - 2D navigation & pathfinding
+
+📁 advanced_examples/  # Real-world applications
+├── Brackets_Basic/    # Stack validation (Mission1 extension)
+├── Brackets_Ext/      # Advanced validation (Mission1 extension)
+├── competitive_ring_bfs/    # BFS maze solver (Mission2 extension)
+└── competitive_linked_tree/ # Tree algorithms (Mission2 extension)
+
+📁 advent_of_code/     # AoC preparation & solutions
+├── aoc_pattern_recognition/ # Algorithm pattern trainer
+└── aoc2015/          # Complete 2015 solutions with analysis
+
+📁 daily_study/        # Systematic concept progression
+📁 rust_book/          # Chapter-by-chapter Rust fundamentals  
+📁 zettelkasten/       # Cross-referenced knowledge management
+```
+
+### **Integration Benefits**
+- **Clear separation**: Core missions vs learning progressions vs applications
+- **Scalable structure**: Easy to add Mission7-25 without root clutter
+- **Educational flow**: Tutorial → Mission → Advanced application
+- **Professional organization**: Follows industry-standard project layout
+
+## �📅 Parallel Daily Study Track
 
 ### **Week 1: Foundations** (Ownership, Borrowing, Mutability)
 - **Day 1**: Ownership basics - move semantics, stack vs heap
@@ -162,7 +200,7 @@ Traceability Matrix
 
 #### **Phase 0: Setup & Discipline**
 - ✅ **Mission 0**: Environment setup (completed)
-- ✅ **[Mission 1: Stack Implementation](Mission1/)** - V-cycle foundation, ownership discipline
+- ✅ **[Mission 1: Stack Implementation](missions/Mission1/)** - V-cycle foundation, ownership discipline
   - **Focus**: Ownership, borrowing, and memory safety
   - **Requirements**: REQ-1 to REQ-5 (Generic types, O(1) operations, ownership transfer)
   - **Key Learning**: Move vs Copy semantics, `Option<T>`, borrowing rules
@@ -171,32 +209,32 @@ Traceability Matrix
 #### **Phase 1: Core Data Structures & Ownership**
 *Many AoC puzzles require ad hoc stacks, queues, sets, maps, grids*
 
-- ✅ **[Mission 2: FIFO Queue Systems](Mission2/)** - Ring buffer + linked queue
+- ✅ **[Mission 2: FIFO Queue Systems](missions/Mission2/)** - Ring buffer + linked queue
   - **Focus**: Memory layout optimization and performance
-  - **Requirements**: REQ-G1 to REQ-L3 (Generic API, ring efficiency, linked flexibility)
+  - **Requirements**: REQ-G1 to REQ-L3 (Generic API, ring efficiency, linked flexibility)  
   - **Key Learning**: Memory-efficient data structures, performance comparison
   - **Tests**: 32+ tests including stress testing and benchmarks
 
-- ✅ **[Mission 3: Binary Search & Traits](Mission3/)** - Traits, slices, iterators
+- ✅ **[Mission 3: Binary Search & Traits](missions/Mission3/)** - Traits, slices, iterators
   - **Focus**: Trait system, lifetimes, and iterator patterns
   - **Requirements**: REQ-1 to REQ-6 (Slice search, traits, iterators, AoC utilities)
   - **Key Learning**: Generic programming, lifetime management, zero-cost abstractions
   - **Tests**: 40+ tests (17 unit + 15 integration + 8 doc tests)
 
-- ✅ **[Mission 4: Singly Linked List](Mission4/)** - Interior mutability, Rc/RefCell patterns
+- ✅ **[Mission 4: Singly Linked List](missions/Mission4/)** - Interior mutability, Rc/RefCell patterns
   - **Focus**: Why Rust makes linked lists tricky, interior mutability
   - **Requirements**: REQ-1 to REQ-6 (Basic structure, Rc/RefCell, core ops, iteration, memory patterns, weak refs)
   - **Key Learning**: Ownership conflicts, reference counting, cycle prevention
   - **Tests**: 32+ unit tests + 18 doctests with requirement traceability
   - **Status**: ✅ **Complete** - Two implementations with comprehensive examples
 
-- ✅ **[Mission 5: HashMaps & HashSets](Mission5/)** - Dictionary data structures and set operations
+- ✅ **[Mission 5: HashMaps & HashSets](missions/Mission5/)** - Dictionary data structures and set operations
   - **Focus**: Key-value storage, set operations, and competitive programming patterns
   - **Requirements**: REQ-1 to REQ-6 (Custom dictionary, set operations, counting patterns, multi-value maps, caching, AoC utilities)
   - **Key Learning**: Hash-based data structures, O(1) operations, frequency counting, memoization
   - **Tests**: 35+ unit tests + 20+ doctests with requirement traceability
 
-- 🔄 **Mission 6: Grids & 2D Arrays** - 2D coordinate systems and navigation for AoC map-based puzzles
+- 🔄 **[Mission 6: Grids & 2D Arrays](missions/Mission6/)** - 2D coordinate systems and navigation for AoC map-based puzzles
   - **Focus**: Grid data structures, coordinate systems, and spatial algorithms
   - **Requirements**: REQ-1 to REQ-8 (Grid creation, indexing safety, coordinate conversion, direction navigation, bounds checking, pathfinding setup, iterator patterns, AoC utilities)
   - **Key Learning**: 2D array management, coordinate arithmetic, direction vectors, spatial reasoning
@@ -261,8 +299,15 @@ Traceability Matrix
 
 ### 🎄 AoC Framework Ready
 
+#### 📦 **[advent_of_code/](advent_of_code/)**
+**Focus**: Comprehensive AoC preparation and competitive programming mastery
+- ✅ **Pattern Recognition** - Algorithm classification and template system
+- ✅ **Historical Solutions** - Complete AoC 2015 with analysis and optimization
+- **Features**: Pattern trainer, grid utilities, parser framework, performance benchmarking
+- **Goal**: Pattern-based problem solving for AoC 2025 domination
+
 #### 📦 **[aoc_scaffold_templates_with_tests/](aoc_scaffold_templates_with_tests/)**
-**Focus**: AoC problem-solving framework
+**Focus**: Quick-start templates and testing infrastructure  
 - ✅ **Complete** - Template system with testing infrastructure
 - **Features**: Grid utilities, parser framework, solver templates
 - **Goal**: Ready-to-use foundation for December AoC challenges
