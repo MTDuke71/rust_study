@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-mission2 = { path = "../Mission2" }
+mission2 = { path = "../../Mission2" }
 
 [dev-dependencies]
 criterion = "0.7"

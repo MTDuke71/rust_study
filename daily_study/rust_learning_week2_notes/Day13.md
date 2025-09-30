@@ -330,8 +330,94 @@ let batches: Vec<Vec<i32>> = numbers
 ## Performance and Best Practices
 
 ### Zero-Cost Abstractions in Action
+
+**Rust's iterators are "zero-cost abstractions" - they compile to the same efficient assembly code as hand-written loops.**
+
+#### Demonstration 1: Simple Iterator vs Manual Loop
 ```rust
-// This iterator chain...
+// Iterator version - expressive and functional
+fn iterator_version(data: &[i32]) -> i32 {
+    data.iter()
+        .map(|x| x * 2)
+        .filter(|&x| x > 5)
+        .fold(0, |acc, x| acc + x)
+}
+
+// Manual version - explicit control flow
+fn manual_version(data: &[i32]) -> i32 {
+    let mut sum = 0;
+    for &value in data {
+        let doubled = value * 2;
+        if doubled > 5 {
+            sum += doubled;
+        }
+    }
+    sum
+}
+
+// Both produce identical optimized assembly code!
+// Compile with: rustc -O your_file.rs
+// Examine with: objdump -d your_file.exe
+```
+
+#### Demonstration 2: Performance Benchmarking
+```rust
+use std::time::Instant;
+
+fn iterator_approach(data: &[i32]) -> i32 {
+    data.iter()
+        .map(|x| x.wrapping_mul(x.wrapping_add(1)))  // Some computation
+        .filter(|&x| x % 3 == 0)
+        .sum()
+}
+
+fn manual_approach(data: &[i32]) -> i32 {
+    let mut sum: i32 = 0;
+    for &x in data {
+        let result = x.wrapping_mul(x.wrapping_add(1));
+        if result % 3 == 0 {
+            sum = sum.wrapping_add(result);
+        }
+    }
+    sum
+}
+
+fn benchmark_zero_cost() {
+    let data: Vec<i32> = (0..1_000_000).collect();
+    
+    // Warm up both functions
+    iterator_approach(&data);
+    manual_approach(&data);
+    
+    // Benchmark iterator approach
+    let start = Instant::now();
+    let result1 = iterator_approach(&data);
+    let iter_time = start.elapsed();
+    
+    // Benchmark manual approach  
+    let start = Instant::now();
+    let result2 = manual_approach(&data);
+    let manual_time = start.elapsed();
+    
+    println!("Iterator result: {}", result1);
+    println!("Manual result: {}", result2);
+    println!("Results match: {}", result1 == result2);
+    println!("Iterator time: {:?}", iter_time);
+    println!("Manual time: {:?}", manual_time);
+    println!("Performance ratio: {:.2}", 
+             iter_time.as_nanos() as f64 / manual_time.as_nanos() as f64);
+}
+```
+
+#### Why Zero-Cost Works
+1. **Compile-Time Optimization**: Rust's optimizer eliminates iterator overhead
+2. **Inlining**: Method calls are inlined into tight loops
+3. **Dead Code Elimination**: Unused iterator state is removed
+4. **LLVM Backend**: Benefits from industrial-strength optimization passes
+
+#### Complex Iterator Chain Optimization
+```rust
+// This complex chain...
 let result: Vec<i32> = (0..1_000_000)
     .filter(|&x| x % 2 == 0)
     .map(|x| x * x)
@@ -507,6 +593,51 @@ fn word_frequency(text: &str) -> std::collections::HashMap<String, usize> {
 }
 ```
 
+### Examining Zero-Cost Abstractions (Advanced)
+
+**For developers who want to verify that iterators truly compile to optimal code:**
+
+```bash
+# Create a test file with both iterator and manual versions
+# Save as zero_cost_test.rs:
+
+fn iterator_version(data: &[i32]) -> i32 {
+    data.iter()
+        .map(|x| x * 2)
+        .filter(|&x| x > 5)
+        .fold(0, |acc, x| acc + x)
+}
+
+fn manual_version(data: &[i32]) -> i32 {
+    let mut sum = 0;
+    for &value in data {
+        let doubled = value * 2;
+        if doubled > 5 {
+            sum += doubled;
+        }
+    }
+    sum
+}
+
+fn main() {
+    let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    println!("Iterator: {}", iterator_version(&numbers));
+    println!("Manual: {}", manual_version(&numbers));
+}
+
+# Compile with optimizations
+rustc -O zero_cost_test.rs
+
+# Examine the assembly (Windows with objdump)
+objdump -d zero_cost_test.exe
+
+# Or use Rust's built-in assembly viewer
+cargo asm --rust zero_cost_test::iterator_version
+cargo asm --rust zero_cost_test::manual_version
+```
+
+**What you'll see**: Nearly identical assembly output for both functions, proving that Rust's iterators truly are zero-cost abstractions!
+
 ## Learning Progression Summary
 
 From Day 13, you should understand:
@@ -621,22 +752,55 @@ fn main() {
         println!("     '{}': {}", word, count);
     }
     
-    // 6. Iterator performance vs manual loops
-    println!("\n6. Zero-Cost Abstractions:");
-    let large_data: Vec<i32> = (1..=1000).collect();
+    // 6. Zero-Cost Abstractions - Performance Comparison
+    println!("\n6. Zero-Cost Abstractions - Performance Benchmark:");
     
-    // Iterator version (compiles to same assembly as manual loop)
-    let sum_iter: i32 = large_data.iter().map(|x| x * x).sum();
-    
-    // Manual loop version
-    let mut sum_manual = 0;
-    for &x in &large_data {
-        sum_manual += x * x;
+    // Helper functions for zero-cost demonstration
+    fn iterator_approach(data: &[i32]) -> i32 {
+        data.iter()
+            .map(|x| x.wrapping_mul(x.wrapping_add(1)))
+            .filter(|&x| x % 3 == 0)
+            .sum()
     }
     
-    println!("   Iterator sum: {}", sum_iter);
-    println!("   Manual sum: {}", sum_manual);
-    println!("   Both compile to identical optimized assembly!");
+    fn manual_approach(data: &[i32]) -> i32 {
+        let mut sum: i32 = 0;
+        for &x in data {
+            let result = x.wrapping_mul(x.wrapping_add(1));
+            if result % 3 == 0 {
+                sum = sum.wrapping_add(result);
+            }
+        }
+        sum
+    }
+    
+    let benchmark_data: Vec<i32> = (0..100_000).collect();
+    
+    // Warm up
+    iterator_approach(&benchmark_data);
+    manual_approach(&benchmark_data);
+    
+    // Simple timing (for demonstration - use criterion for real benchmarks)
+    let start = std::time::Instant::now();
+    let iter_result = iterator_approach(&benchmark_data);
+    let iter_time = start.elapsed();
+    
+    let start = std::time::Instant::now();
+    let manual_result = manual_approach(&benchmark_data);
+    let manual_time = start.elapsed();
+    
+    println!("   Iterator result: {}", iter_result);
+    println!("   Manual result: {}", manual_result);
+    println!("   Results match: {}", iter_result == manual_result);
+    println!("   Iterator time: {:?}", iter_time);
+    println!("   Manual time: {:?}", manual_time);
+    
+    if iter_time.as_nanos() > 0 && manual_time.as_nanos() > 0 {
+        let ratio = iter_time.as_nanos() as f64 / manual_time.as_nanos() as f64;
+        println!("   Performance ratio: {:.2} (1.0 = identical performance)", ratio);
+    } else {
+        println!("   Both too fast to measure - essentially identical performance!");
+    }
     
     // 7. Partition and collect patterns
     println!("\n7. Partition and Collect Patterns:");

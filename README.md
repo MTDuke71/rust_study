@@ -238,20 +238,22 @@ Traceability Matrix
 
 ### 🎮 Completed Problem-Solving Applications
 
-#### 🔗 **[Brackets_Basic/](Brackets_Basic/) & [Brackets_Ext/](Brackets_Ext/)**
+> **📁 [Advanced Examples](advanced_examples/)**: Detailed implementations showcasing real-world applications of Mission1/Mission2 data structures in competitive programming and production scenarios.
+
+#### 🔗 **[Brackets_Basic/](advanced_examples/Brackets_Basic/) & [Brackets_Ext/](advanced_examples/Brackets_Ext/)**
 **Focus**: Stack applications and parsing
 - ✅ **Complete** - Balanced bracket validation with extensions
 - **Requirements**: REQ-1 to REQ-9 (Basic validation + error collection + Unicode)
 - **Key Learning**: Real-world stack usage, error handling, UTF-8 processing
 - **Examples**: Parser building, syntax validation, educational tools
 
-#### 🌳 **[competitive_linked_tree/](competitive_linked_tree/)**
+#### 🌳 **[competitive_linked_tree/](advanced_examples/competitive_linked_tree/)**
 **Focus**: Tree algorithms for competitive programming
 - ✅ **Complete** - Union-Find with path compression
 - **Applications**: Graph connectivity, MST algorithms, competitive programming
 - **Integration**: File-based testing with real datasets
 
-#### 🔵 **[competitive_ring_bfs/](competitive_ring_bfs/)**
+#### 🔵 **[competitive_ring_bfs/](advanced_examples/competitive_ring_bfs/)**
 **Focus**: Graph traversal with optimized queue
 - ✅ **Complete** - BFS pathfinding with ring buffer optimization
 - **Applications**: Maze solving, shortest path, AoC-style problems
@@ -374,7 +376,7 @@ cd ../Mission3 && cargo test && cargo run --example demo
 
 **For AoC Preparation**: Focus on competitive programming modules
 ```powershell
-cd competitive_ring_bfs && cargo test
+cd advanced_examples/competitive_ring_bfs && cargo test
 cd ../competitive_linked_tree && cargo test
 cd ../aoc_scaffold_templates_with_tests && cargo test
 ```
@@ -392,9 +394,9 @@ This workspace provides a **complete competitive programming toolkit**:
 
 | AoC Problem Type | Rust Study Component | Ready-to-Use Features |
 |------------------|---------------------|---------------------|
-| **Parsing & Validation** | Brackets_Basic/Ext | Stack-based parsers, error collection |
-| **Graph Traversal** | competitive_ring_bfs | Optimized BFS, pathfinding |
-| **Tree Algorithms** | competitive_linked_tree | Union-Find, connectivity |
+| **Parsing & Validation** | [advanced_examples/Brackets_Basic/Ext](advanced_examples/) | Stack-based parsers, error collection |
+| **Graph Traversal** | [advanced_examples/competitive_ring_bfs](advanced_examples/) | Optimized BFS, pathfinding |
+| **Tree Algorithms** | [advanced_examples/competitive_linked_tree](advanced_examples/) | Union-Find, connectivity |
 | **Linked Structures** | Mission4 | Interior mutability, shared ownership patterns |
 | **Search Problems** | Mission3 | Binary search, trait abstractions |
 | **Data Processing** | Mission1/2 | Efficient stack/queue operations |

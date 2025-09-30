@@ -24,10 +24,10 @@ members = [
     "Mission5_tut",
     "Mission6",
     "Mission6_tut",
-    "Brackets_Basic",
-    "Brackets_Ext",
-    "competitive_ring_bfs",
-    "competitive_linked_tree",
+    "advanced_examples/Brackets_Basic",
+    "advanced_examples/Brackets_Ext", 
+    "advanced_examples/competitive_ring_bfs",
+    "advanced_examples/competitive_linked_tree",
     "aoc_pattern_recognition",
     "aoc2015"
 ]
