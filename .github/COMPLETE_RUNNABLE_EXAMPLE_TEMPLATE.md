@@ -2,7 +2,7 @@
 
 ## 📋 **Standard Template for Learning Day Files**
 
-Use this template when creating new Day files in `rust_learning_week*_notes/`:
+Use this template when creating new Day files in `daily_study/rust_learning_week*_notes/`:
 
 ```markdown
 ## 🚀 **Complete Runnable Example**
@@ -35,7 +35,16 @@ fn main() {
 
 1. **Online**: Copy to [Rust Playground](https://play.rust-lang.org/)
 2. **Local file**: Save as `day[X]_demo.rs` and run `rustc day[X]_demo.rs && ./day[X]_demo`
-3. **In this workspace**: `.\run_md.bat rust_learning_week*_notes\Day[X].md`
+3. **In this workspace**: `**Example Usage:**
+```bash
+```bash
+# PowerShell example
+.\run_md.bat daily_study\rust_learning_week1_notes\Day01.md
+
+# Git Bash example  
+./run_md.bat daily_study/rust_learning_week1_notes/Day01.md
+```
+````
 4. **As Cargo example**: `cargo run --example day[X]_[topic]_demo` (if you add it to Mission5_tut)
 ```
 
@@ -65,7 +74,7 @@ fn main() {
 ### **Testing Your Examples:**
 ```bash
 # Always test with the markdown runner
-.\run_md.bat rust_learning_week*_notes\DayX.md
+.\run_md.bat daily_study\rust_learning_week*_notes\DayX.md
 
 # Should compile and run without errors
 # Output should be educational and easy to follow
@@ -118,7 +127,7 @@ When creating a new Day file:
 
 ### **File Naming Convention:**
 - `DayXX.md` where XX is zero-padded (Day01, Day02, ..., Day10, Day11, etc.)
-- Place in appropriate `rust_learning_week*_notes/` directory
+- Place in appropriate `daily_study/rust_learning_week*_notes/` directory
 - Update MONTHLY_CALENDAR.md if needed
 
 ## 🚀 **Integration with Existing Tools**

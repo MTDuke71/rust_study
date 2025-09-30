@@ -36,8 +36,8 @@ This directory contains the **Zettelkasten overlay** for the Rust Study workspac
 - Enhanced existing files with Zettelkasten links:
   - `Mission5/README.md` - Added concept navigation
   - `Mission5_tut/README.md` - Added learning path context  
-  - `rust_learning_week2_notes/Day10.md` - Added cross-references
-  - `rust_learning_week2_notes/Day11.md` - Added today's alignment
+  - `daily_study/rust_learning_week2_notes/Day10.md` - Added cross-references
+  - `daily_study/rust_learning_week2_notes/Day11.md` - Added today's alignment
 
 ## 🚀 Getting Started
 

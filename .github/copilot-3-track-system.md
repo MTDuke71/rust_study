@@ -47,13 +47,13 @@ Progressive chapter-by-chapter study:
 - **Brackets_*/competitive_*/**: Real-world applications with AoC validation
 
 **Daily Study Notes** (Systematic Practice):
-- **rust_learning_week*_notes/**: Structured daily learning files
+- **daily_study/rust_learning_week*_notes/**: Structured daily learning files
 - **Day01-14**: Collections mastery (HashMap → BTreeMap → Iterators → Errors)
 - **Day15+**: Advanced topics (Traits, Generics, Lifetimes)
 - **Complete Runnable Examples**: Every day file includes executable code
 
 **Rust Book Integration** (Foundation):
-- **Ch1-Ch5/**: Basic Rust concepts with hands-on examples
+- **rust_book/Ch1-Ch5/**: Basic Rust concepts with hands-on examples
 - **Ch6+/**: Advanced language features
 - Coordinated with mission and daily study progress
 

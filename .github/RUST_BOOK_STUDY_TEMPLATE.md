@@ -211,7 +211,7 @@ name = "chapter{X}_{section_name}"
 version = "0.1.0"
 edition = "2021"
 
-# Example from Ch4/ownership/Cargo.toml
+# Example from rust_book/Ch4/ownership/Cargo.toml
 [package]
 name = "ownership"
 version = "0.1.0"
@@ -370,7 +370,7 @@ Located in: `Ch{X}/`
 cd MissionX && cargo test
 
 # Daily study tasks (15 min)
-.\run_md.bat rust_learning_week*_notes\DayYY.md
+.\run_md.bat daily_study\rust_learning_week*_notes\DayYY.md
 
 # Rust Book tasks (15 min)
 cd ChZ/section_name
@@ -463,7 +463,7 @@ Before finalizing a chapter:
 - ⚠️  No chapter overview note in zettelkasten/
 - ⚠️  Not linked to specific missions or daily study
 
-**Enhancement Template for Ch4/README.md:**
+**Enhancement Template for rust_book/Ch4/README.md:**
 
 Add at top:
 ```markdown
@@ -487,13 +487,13 @@ Add at bottom:
 ## 🔍 Reference Examples
 
 **Well-Structured Chapter:**
-- Ch4/README.md (current implementation) - good content, needs Zettelkasten links
+- rust_book/Ch4/README.md (current implementation) - good content, needs Zettelkasten links
 - See `.github/MISSION5_CASE_STUDY.md` for linking patterns
 
 **Section Project Pattern:**
-- Ch4/ownership/ - basic structure
-- Ch4/references/ - basic structure
-- Ch4/slices/ - basic structure
+- rust_book/Ch4/ownership/ - basic structure
+- rust_book/Ch4/references/ - basic structure
+- rust_book/Ch4/slices/ - basic structure
 
 **Enhancement Opportunity:**
 Each section's main.rs could follow the pattern shown in Mission5_tut examples with multiple clearly-marked examples.

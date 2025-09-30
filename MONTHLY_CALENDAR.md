@@ -458,7 +458,7 @@ git add . && git commit -m "Day X progress" # Save daily progress
 
 - **Mission READMEs**: Each mission has complete V-Cycle documentation
 - **Mission Tutorials**: `MissionX_tut/` directories with step-by-step guided learning
-- **Daily Study Notes**: `rust_learning_week*_notes/` directories  
+- **Daily Study Notes**: `daily_study/rust_learning_week*_notes/` directories  
 - **Rust Book Online**: https://doc.rust-lang.org/book/
 - **Practice Problems**: Use your AoC scaffold for additional practice
 - **Documentation**: `cargo doc --open` for comprehensive references

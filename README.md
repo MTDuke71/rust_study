@@ -266,11 +266,11 @@ Traceability Matrix
 - **Goal**: Ready-to-use foundation for December AoC challenges
 
 ### 🔰 Foundation Reference (Rust Book Basics)
-- **[Ch1/](Ch1/)** - Hello World & Cargo fundamentals
-- **[Ch2/](Ch2/)** - Guessing game with input/output
-- **[Ch3/](Ch3/)** - Variables, mutability, and data types
-- **[Ch4/](Ch4/)** - Ownership, borrowing, and memory safety
-- **[Ch5/](Ch5/)** - Structs, methods, and associated functions
+- **[rust_book/Ch1/](rust_book/Ch1/)** - Hello World & Cargo fundamentals
+- **[rust_book/Ch2/](rust_book/Ch2/)** - Guessing game with input/output
+- **[rust_book/Ch3/](rust_book/Ch3/)** - Variables, mutability, and data types
+- **[rust_book/Ch4/](rust_book/Ch4/)** - Ownership, borrowing, and memory safety
+- **[rust_book/Ch5/](rust_book/Ch5/)** - Structs, methods, and associated functions
 
 ## 🛠️ Development Environment
 
@@ -362,7 +362,7 @@ cargo test --workspace
 
 **For Beginners**: Start with Ch1-Ch3, then Mission 1
 ```powershell
-cd Ch1/hello_cargo && cargo run
+cd rust_book/Ch1/hello_cargo && cargo run
 cd ../../Mission1 && cargo test && cargo run --example demo
 ```
 

@@ -366,7 +366,7 @@ cd MissionN && cargo test reqN_*
 cargo run --example stepN_specific_concept  # MissionN_tut tutorial step
 
 # Daily Study Tasks (15 min)
-.\run_md.bat rust_learning_weekX_notes\DayYY.md
+.\run_md.bat daily_study\rust_learning_weekX_notes\DayYY.md
 
 # Rust Book Tasks (15 min)
 # Read ChZ.N, complete exercises

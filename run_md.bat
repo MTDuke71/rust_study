@@ -4,7 +4,7 @@ REM Usage: run_md.bat Day11.md
 
 if "%~1"=="" (
     echo Usage: run_md.bat ^<markdown_file^>
-    echo Example: run_md.bat rust_learning_week2_notes\Day11.md
+    echo Example: run_md.bat daily_study\rust_learning_week2_notes\Day11.md
     exit /b 1
 )
 

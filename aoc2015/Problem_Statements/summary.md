@@ -138,3 +138,8 @@ To add a new day to this summary:
 
 *Last Updated: Based on available problem statements as of current date*
 *Days Available: 1, 2, 3, 4, 5, 6*
+
+---
+
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #competitive-programming #rust-learning*
+*Links: [[../../zettelkasten/AoC Patterns MOC]] | [[../../zettelkasten/AoC Collection Problems]] | [[../README]] | [[../../Mission5/README]] | [[../../daily_study/rust_learning_week2_notes/Day10]]*

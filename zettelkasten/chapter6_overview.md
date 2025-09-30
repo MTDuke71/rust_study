@@ -52,7 +52,7 @@ These features work together to eliminate null pointer errors (the "billion doll
 
 ## Code Examples
 
-Located in: `Ch6/`
+Located in: `rust_book/Ch6/`
 
 ### Ch6.1: Defining Enums (`defining_enums/`)
 - Basic enum definitions with variants
@@ -62,7 +62,7 @@ Located in: `Ch6/`
 - Real-world HTTP status modeling
 - AoC pattern: Direction enum with methods
 
-**Run with**: `cd Ch6/defining_enums && cargo run`
+**Run with**: `cd rust_book/Ch6/defining_enums && cargo run`
 
 ### Ch6.2: The match Operator (`match_operator/`)
 - Basic match expressions with enums
@@ -73,7 +73,7 @@ Located in: `Ch6/`
 - Pattern guards with `if`
 - AoC pattern: Instruction parsing and execution
 
-**Run with**: `cd Ch6/match_operator && cargo run`
+**Run with**: `cd rust_book/Ch6/match_operator && cargo run`
 
 ### Ch6.3: if let Syntax (`if_let/`)
 - Concise if let vs verbose match
@@ -84,7 +84,7 @@ Located in: `Ch6/`
 - When to use match vs if let
 - AoC pattern: Config file parsing
 
-**Run with**: `cd Ch6/if_let && cargo run`
+**Run with**: `cd rust_book/Ch6/if_let && cargo run`
 
 ## Mental Models
 
@@ -186,7 +186,7 @@ let value = match some_option {
 ## Next Steps
 
 1. **Complete all section exercises**
-   - Run each example: `cd Ch6/[section] && cargo run`
+   - Run each example: `cd rust_book/Ch6/[section] && cargo run`
    - Modify examples to experiment with patterns
    - Try adding new enum variants and handlers
 

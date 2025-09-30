@@ -14,9 +14,9 @@ This is a simple README file for a Rust learning repository. Here's what it mean
 
 Based on your workspace structure, I can see you're working through what appears to be a Rust learning curriculum:
 
-- **Ch1/** - Contains basic "hello world" projects (`hello_cargo`, `hello_world`)
-- **Ch2/** - Has a `guessing_game` project (likely from the Rust Book)
-- **Ch3/** - Contains a `variables` project (probably learning about Rust variables)
+- **rust_book/Ch1/** - Contains basic "hello world" projects (`hello_cargo`, `hello_world`)
+- **rust_book/Ch2/** - Has a `guessing_game` project (likely from the Rust Book)
+- **rust_book/Ch3/** - Contains a `variables` project (probably learning about Rust variables)
 - **Mission1/** - Appears to be a custom project with a stack implementation
 
 This is a typical structure for someone learning Rust systematically, possibly following "The Rust Programming Language" book or a similar curriculum. The README is just a placeholder that identifies the repository's purpose - you might want to expand it to include more details about your learning journey, the projects you've completed, or notes about what you've learned.

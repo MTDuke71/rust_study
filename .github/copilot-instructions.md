@@ -46,13 +46,13 @@ Progressive chapter-by-chapter study:
 - **Brackets_*/competitive_*/**: Real-world applications with AoC validation
 
 **Daily Study Notes** (Systematic Practice):
-- **rust_learning_week*_notes/**: Structured daily learning files
+- **daily_study/rust_learning_week*_notes/**: Structured daily learning files
 - **Day01-14**: Collections mastery (HashMap → BTreeMap → Iterators → Errors)
 - **Day15+**: Advanced topics (Traits, Generics, Lifetimes)
 - **Complete Runnable Examples**: Every day file includes executable code
 
 **Rust Book Integration** (Foundation):
-- **Ch1-Ch5/**: Basic Rust concepts with hands-on examples  
+- **rust_book/Ch1-Ch5/**: Basic Rust concepts with hands-on examples  
 - **Ch6+/**: Advanced language features
 - Coordinated with mission and daily study progress
 
@@ -117,7 +117,7 @@ tests/brackets_checker_test.rs  // Integration test
 ## 📝 Documentation Standards
 
 ### Complete Runnable Example Requirements
-**MANDATORY** for all daily study files (`rust_learning_week*_notes/DayXX.md`):
+**MANDATORY** for all daily study files (`daily_study/rust_learning_week*_notes/DayXX.md`):
 
 ```markdown
 ## 🚀 **Complete Runnable Example**
@@ -133,7 +133,7 @@ fn main() {
 ### **🛠️ How to Run This Code:**
 1. **Online**: Copy to [Rust Playground](https://play.rust-lang.org/)
 2. **Local file**: Save as `day[X]_demo.rs` and run `rustc day[X]_demo.rs && ./day[X]_demo`
-3. **In this workspace**: `.\run_md.bat rust_learning_week*_notes\Day[X].md`
+3. **In this workspace**: `.\run_md.bat daily_study\rust_learning_week*_notes\Day[X].md`
 ```
 
 ### Module Documentation (`//!`)
@@ -174,7 +174,7 @@ cargo run --example demo     # Mission demos
 ### Complete Runnable Example Workflow
 When creating/updating daily study files:
 1. **Follow template** from `.github/COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md`
-2. **Test immediately**: `.\run_md.bat rust_learning_week*_notes\DayXX.md`
+2. **Test immediately**: `.\run_md.bat daily_study\rust_learning_week*_notes\DayXX.md`
 3. **Include 4-7 sections**: Basic → Advanced → Real-world → AoC patterns
 4. **Self-contained**: All helper functions included
 5. **Educational**: Progressive complexity with clear section headers
