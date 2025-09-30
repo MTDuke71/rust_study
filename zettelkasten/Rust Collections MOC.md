@@ -133,6 +133,12 @@
 - **CPU Efficient**: Cache-friendly access patterns, iterator chains
 - **Balanced**: General-purpose collection selection guidelines
 
+## 📝 **Documentation Standards**
+
+All collection implementations follow comprehensive documentation standards:
+- **[RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)** - rustdoc patterns, examples, error documentation
+- **[RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)** - test naming, assertion patterns, integration testing
+
 ---
 
 *Tags: #collections #overview #navigation #moc #rust-fundamentals #data-structures #algorithms #performance*

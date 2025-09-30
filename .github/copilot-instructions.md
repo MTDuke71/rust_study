@@ -414,5 +414,6 @@ Day 5: Documentation → step5_final_project.rs (complete mission review)
 - **Professional standards** - Every feature follows engineering discipline
 - **Comprehensive testing** - Unit, integration, and requirement-based tests
 - **Documentation completeness** - Module docs, function docs, and examples
+- **Documentation standards** - Follow [RUST_DOCUMENTATION_STANDARDS.md](RUST_DOCUMENTATION_STANDARDS.md) and [RUST_TEST_DOCUMENTATION_STANDARDS.md](RUST_TEST_DOCUMENTATION_STANDARDS.md)
 
 This codebase treats learning Rust as an engineering discipline with integrated tracks that reinforce each other through practical, runnable examples and formal V-Cycle methodology.

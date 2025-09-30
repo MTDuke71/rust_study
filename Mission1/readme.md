@@ -137,3 +137,9 @@ REQ-2	Vec<T> push semantics	req2_push_amortized_constant
 REQ-3	pop -> Option<T>	req3_pop_transfers_ownership
 REQ-4	Ownership move rules	req4_no_use_after_pop
 REQ-5	peek / peek_mut	req5_peek_aliasing_rules
+
+## 📝 Documentation Standards
+
+This mission follows the workspace documentation standards:
+- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)
+- **Test Documentation**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)

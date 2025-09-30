@@ -210,6 +210,8 @@ cargo run --example aoc_patterns            # Competitive programming patterns
 cargo doc --open    # Full API documentation
 ```
 
+**Documentation Standards**: This mission follows [RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md) and [RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
+
 ## 📚 Learning Path
 
 1. **Start with Dictionary**: Basic key-value operations

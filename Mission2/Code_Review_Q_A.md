@@ -2578,9 +2578,9 @@ Read [](file:///d%3A/repos/rust_study/Mission1/tests/stack_tests.rs#1-1), lines 
 
 Now let me examine the documentation standards: 
 
-Read [](file:///d%3A/repos/rust_study/Brackets_Basic/RUST_DOCUMENTATION_STANDARDS.md#1-1), lines 1 to 50
+Read [](file:///d%3A/repos/rust_study/.github/RUST_DOCUMENTATION_STANDARDS.md#1-1), lines 1 to 50
 
-Read [](file:///d%3A/repos/rust_study/Brackets_Basic/RUST_TEST_DOCUMENTATION_STANDARDS.md#1-1), lines 1 to 50
+Read [](file:///d%3A/repos/rust_study/.github/RUST_TEST_DOCUMENTATION_STANDARDS.md#1-1), lines 1 to 50
 
 Now I have enough context to understand the codebase structure and patterns. Let me create comprehensive `.github/copilot-instructions.md`: 
 

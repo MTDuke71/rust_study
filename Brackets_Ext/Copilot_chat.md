@@ -2396,7 +2396,7 @@ Created [](file:///d%3A/repos/rust_study/Brackets_Basic/examples/documentation_s
 
 Let me fix those errors and create a proper documentation reference: 
 
-Created [](file:///d%3A/repos/rust_study/Brackets_Basic/RUST_DOCUMENTATION_STANDARDS.md)
+Created [](file:///d%3A/repos/rust_study/.github/RUST_DOCUMENTATION_STANDARDS.md)
 
 Perfect! Now let me show you a practical example by improving the documentation in your actual brackets.rs file: 
 
@@ -2504,7 +2504,7 @@ Ran terminal command: cargo test --example test_documentation_standards
 
 Perfect! Now let me create a final summary document: 
 
-Created [](file:///d%3A/repos/rust_study/Brackets_Basic/RUST_TEST_DOCUMENTATION_STANDARDS.md)
+Created [](file:///d%3A/repos/rust_study/.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
 
 ## 🎯 **Answer to Your Question**
 
@@ -2549,7 +2549,7 @@ fn mismatched_brackets_should_report_expected_and_found_characters() {
 }
 ```
 
-The **test names and assertions themselves serve as living documentation** of how the system should behave! I've created comprehensive examples in `test_documentation_standards.rs` and `RUST_TEST_DOCUMENTATION_STANDARDS.md` that demonstrate these best practices. 🚀
+The **test names and assertions themselves serve as living documentation** of how the system should behave! I've created comprehensive examples in `test_documentation_standards.rs` and `.github/RUST_TEST_DOCUMENTATION_STANDARDS.md` that demonstrate these best practices. 🚀
 
 Made changes.
 

@@ -21,4 +21,10 @@ cargo clippy -- -D warnings
 - **Validation:** AoC-style datasets (small+large).
 - **Traceability:** tests named with `reqX_*` and data-driven checker.
 
+## 📝 Documentation Standards
+
+This project follows the workspace documentation standards:
+- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)  
+- **Test Documentation**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
+
 Happy hacking! 🎄
