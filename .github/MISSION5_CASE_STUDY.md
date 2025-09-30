@@ -227,7 +227,7 @@ Day 7 (Sept 30): Testing & Documentation
    - **Fix**: Include solutions at bottom with clear "SPOILER ALERT" marker
 
 6. **Cross-Platform Limitations**
-   - Tutorial assumed Windows environment (.\run_md.bat)
+   - Tutorial assumed Windows environment (.\scripts\run_md.bat)
    - No instructions for Linux/Mac users
    - **Fix**: Add cross-platform command alternatives
 
@@ -366,7 +366,7 @@ cd MissionN && cargo test reqN_*
 cargo run --example stepN_specific_concept  # MissionN_tut tutorial step
 
 # Daily Study Tasks (15 min)
-.\run_md.bat daily_study\rust_learning_weekX_notes\DayYY.md
+.\scripts\run_md.bat daily_study\rust_learning_weekX_notes\DayYY.md
 
 # Rust Book Tasks (15 min)
 # Read ChZ.N, complete exercises

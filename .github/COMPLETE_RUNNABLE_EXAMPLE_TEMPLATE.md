@@ -39,10 +39,10 @@ fn main() {
 ```bash
 ```bash
 # PowerShell example
-.\run_md.bat daily_study\rust_learning_week1_notes\Day01.md
+.\scripts\run_md.bat daily_study\rust_learning_week1_notes\Day01.md
 
 # Git Bash example  
-./run_md.bat daily_study/rust_learning_week1_notes/Day01.md
+./scripts/run_md.bat daily_study/rust_learning_week1_notes/Day01.md
 ```
 ````
 4. **As Cargo example**: `cargo run --example day[X]_[topic]_demo` (if you add it to Mission5_tut)
@@ -74,7 +74,7 @@ fn main() {
 ### **Testing Your Examples:**
 ```bash
 # Always test with the markdown runner
-.\run_md.bat daily_study\rust_learning_week*_notes\DayX.md
+.\scripts\run_md.bat daily_study\rust_learning_week*_notes\DayX.md
 
 # Should compile and run without errors
 # Output should be educational and easy to follow
@@ -134,7 +134,7 @@ When creating a new Day file:
 
 The Complete Runnable Examples work seamlessly with:
 
-1. **Markdown Runner**: `.\run_md.bat` automatically extracts and runs
+1. **Markdown Runner**: `.\scripts\run_md.bat` automatically extracts and runs
 2. **Rust Playground**: Copy-paste for online execution
 3. **Cargo Examples**: Can be added to Mission*_tut crates
 4. **Manual Compilation**: Standard `rustc` workflow
@@ -147,10 +147,10 @@ This template ensures consistency across all learning materials and provides mul
 
 ### Common Issues Running Examples
 
-**Issue**: `.\run_md.bat` not found or won't run
+**Issue**: `.\scripts\run_md.bat` not found or won't run
 ```powershell
 # ❌ Problem: File not in current directory or using wrong shell
-.\run_md.bat DayXX.md
+.\scripts\run_md.bat DayXX.md
 
 # ✅ Solution: Ensure you're in workspace root with PowerShell
 cd D:\repos\rust_study

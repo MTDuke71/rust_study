@@ -1,5 +1,5 @@
 # PowerShell script to extract and run Rust code from markdown files
-# Usage: .\run_markdown_code.ps1 daily_study\rust_learning_week2_notes\Day11.md
+# Usage: .\scripts\run_markdown_code.ps1 daily_study\rust_learning_week2_notes\Day11.md
 
 param(
     [Parameter(Mandatory=$true)]

@@ -370,7 +370,7 @@ Located in: `Ch{X}/`
 cd MissionX && cargo test
 
 # Daily study tasks (15 min)
-.\run_md.bat daily_study\rust_learning_week*_notes\DayYY.md
+.\scripts\run_md.bat daily_study\rust_learning_week*_notes\DayYY.md
 
 # Rust Book tasks (15 min)
 cd ChZ/section_name

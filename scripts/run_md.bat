@@ -8,4 +8,4 @@ if "%~1"=="" (
     exit /b 1
 )
 
-powershell -ExecutionPolicy Bypass -File "run_markdown_code.ps1" "%~1"
+powershell -ExecutionPolicy Bypass -File "%~dp0run_markdown_code.ps1" "%~1"

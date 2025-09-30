@@ -133,7 +133,7 @@ fn main() {
 ### **🛠️ How to Run This Code:**
 1. **Online**: Copy to [Rust Playground](https://play.rust-lang.org/)
 2. **Local file**: Save as `day[X]_demo.rs` and run `rustc day[X]_demo.rs && ./day[X]_demo`
-3. **In this workspace**: `.\run_md.bat daily_study\rust_learning_week*_notes\Day[X].md`
+3. **In this workspace**: `.\scripts\run_md.bat daily_study\rust_learning_week*_notes\Day[X].md`
 ```
 
 ### Module Documentation (`//!`)
@@ -163,7 +163,7 @@ cargo test                    # Run all tests
 cargo clippy -- -D warnings  # Enforce design contracts
 cargo test req1               # Run specific requirement tests
 cargo run --example demo     # Mission demos
-.\run_md.bat DayXX.md        # Run complete runnable examples from markdown
+.\scripts\run_md.bat DayXX.md        # Run complete runnable examples from markdown
 ```
 
 ### 3-Track Daily Workflow (30-45 minutes)
@@ -174,7 +174,7 @@ cargo run --example demo     # Mission demos
 ### Complete Runnable Example Workflow
 When creating/updating daily study files:
 1. **Follow template** from `.github/COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md`
-2. **Test immediately**: `.\run_md.bat daily_study\rust_learning_week*_notes\DayXX.md`
+2. **Test immediately**: `.\scripts\run_md.bat daily_study\rust_learning_week*_notes\DayXX.md`
 3. **Include 4-7 sections**: Basic → Advanced → Real-world → AoC patterns
 4. **Self-contained**: All helper functions included
 5. **Educational**: Progressive complexity with clear section headers
@@ -325,7 +325,7 @@ Day 5: Documentation → step5_final_project.rs (complete mission review)
 
 ### Daily Study Standards
 - **Complete Runnable Examples** - MANDATORY for every Day file
-- **Test immediately** - Use `.\run_md.bat` to verify examples work
+- **Test immediately** - Use `.\scripts\run_md.bat` to verify examples work
 - **4-7 educational sections** - Progressive complexity from basic to AoC-style
 - **Self-contained code** - Include all helper functions needed
 - **Multiple execution paths** - Playground, local file, markdown runner, cargo examples

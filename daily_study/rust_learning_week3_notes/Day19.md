@@ -1073,5 +1073,5 @@ fn state_machine_demo() {
 
 1. **Online**: Copy to [Rust Playground](https://play.rust-lang.org/)
 2. **Local file**: Save as `day19_demo.rs` and run `rustc day19_demo.rs && ./day19_demo`
-3. **In this workspace**: `.\run_md.bat daily_study\rust_learning_week3_notes\Day19.md`
+3. **In this workspace**: `.\scripts\run_md.bat daily_study\rust_learning_week3_notes\Day19.md`
 4. **As Cargo example**: `cargo run --example day19_trait_objects_demo` (if you add it to Mission5_tut)

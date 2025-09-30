@@ -54,7 +54,7 @@ Coordinated with official Rust Book progression:
 ### **Running Daily Examples**
 ```bash
 # From workspace root
-.\run_md.bat daily_study\rust_learning_week2_notes\Day10.md
+.\scripts\run_md.bat daily_study\rust_learning_week2_notes\Day10.md
 
 # Or with PowerShell script
 .\run_markdown_code.ps1 daily_study\rust_learning_week2_notes\Day10.md
@@ -98,7 +98,7 @@ Coordinated with official Rust Book progression:
 1. **Follow naming convention**: `DayXX.md` with zero-padded numbers
 2. **Include complete runnable examples** per template standards
 3. **Add cross-references** to related Mission projects and zettelkasten
-4. **Test execution** with `run_md.bat` before committing
+4. **Test execution** with `scripts\run_md.bat` before committing
 
 ### **Cross-Reference Management**
 - **Update zettelkasten links** when adding new concepts

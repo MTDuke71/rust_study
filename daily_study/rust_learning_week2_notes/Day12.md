@@ -532,7 +532,7 @@ fn main() {
 
 1. **Online**: Copy to [Rust Playground](https://play.rust-lang.org/)
 2. **Local file**: Save as `day12_demo.rs` and run `rustc day12_demo.rs && ./day12_demo`  
-3. **In this workspace**: `.\run_md.bat daily_study\rust_learning_week2_notes\Day12.md`
+3. **In this workspace**: `.\scripts\run_md.bat daily_study\rust_learning_week2_notes\Day12.md`
 4. **As Cargo example**: `cargo run --example day12_btree_demo` (if you add it to Mission5_tut)
 
 ---
