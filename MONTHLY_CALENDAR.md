@@ -34,9 +34,9 @@
 
 ---
 
-## 🗓️ Week 1: September 25-October 1, 2025
+## 🗓️ Week 1: September 24-September 30, 2025
 
-### **Wednesday, September 25** 📚
+### **Wednesday, September 24** 📚
 **Mission Focus**: Mission 5 Setup & Planning
 **Daily Study**: Week 1, Day 7 - Practice day (ownership puzzles)
 **Rust Book**: Chapter 4.1 - What is Ownership?
@@ -47,7 +47,7 @@ cd Mission5 && cargo test                    # Check current state
 # Read Ch4.1, take notes on stack vs heap
 ```
 
-### **Thursday, September 26** 🔧
+### **Thursday, September 25** 🔧
 **Mission Focus**: Mission 5 Requirements Definition
 **Daily Study**: Week 2, Day 8 - Vectors (dynamic arrays, capacity vs length)
 **Rust Book**: Chapter 4.2 - References and Borrowing
@@ -58,7 +58,7 @@ cd Mission5 && cargo test                    # Check current state
 # Read Ch4.2, practice borrowing rules
 ```
 
-### **Friday, September 27** 🧪
+### **Friday, September 26** 🧪
 **Mission Focus**: Mission 5 Basic HashMap Structure
 **Daily Study**: Week 2, Day 9 - Strings (`String` vs `&str`, UTF-8)
 **Rust Book**: Chapter 4.3 - The Slice Type
@@ -70,7 +70,7 @@ cd Mission5 && cargo test req1_basic_structure
 # Complete slice exercises from Ch4.3
 ```
 
-### **Saturday, September 28** ⚡
+### **Saturday, September 27** ⚡
 **Mission Focus**: Mission 5 Hash Function & Collision Handling
 **Daily Study**: Week 2, Day 10 - HashMaps (key-value storage, borrowing keys)
 **Rust Book**: Review Chapter 4 (Complete ownership concepts)
@@ -81,7 +81,7 @@ cd Mission5 && cargo test req1_basic_structure
 # Review and solidify Ch4 concepts with examples
 ```
 
-### **Sunday, September 29** 🎯
+### **Sunday, September 28** 🎯
 **Mission Focus**: Mission 5 Core Operations (insert, get, remove)
 **Daily Study**: Week 2, Day 11 - HashSets (unique collections, set operations)
 **Rust Book**: Chapter 5.1 - Defining and Instantiating Structs
@@ -92,7 +92,7 @@ cargo test req2_insert && cargo test req3_get && cargo test req4_remove
 # Learn struct syntax, field access, ownership in structs
 ```
 
-### **Monday, September 30** 🔍
+### **Monday, September 29** 🔍
 **Mission Focus**: Mission 5 Iterator Implementation
 **Daily Study**: Week 2, Day 12 - BTreeMap & BTreeSet (ordered collections)
 **Rust Book**: Chapter 5.2 - An Example Program Using Structs
@@ -104,7 +104,7 @@ cargo test req5_iteration
 # Work through rectangle area program example
 ```
 
-### **Tuesday, October 1** 📋
+### **Tuesday, September 30** 📋
 **Mission Focus**: Mission 5 Testing & Documentation
 **Daily Study**: Week 2, Day 13 - Advanced Iterators (transforming and processing collections)
 **Rust Book**: Chapter 5.3 - Method Syntax
@@ -118,9 +118,9 @@ cargo doc --open                            # Generate documentation
 
 ---
 
-## 🗓️ Week 2: October 2-8, 2025
+## 🗓️ Week 2: October 1-7, 2025
 
-### **Wednesday, October 2** 🚀
+### **Wednesday, October 1** 🚀
 **Mission Focus**: Mission 6 Setup (Grids & 2D Arrays)
 **Daily Study**: Week 2, Day 14 - Error Handling Patterns (robust error management)
 **Rust Book**: Chapter 6.1 - Defining an Enum
@@ -131,7 +131,7 @@ cd Mission6 && cargo init                    # Initialize new mission
 # Learn enum syntax, variants, memory representation
 ```
 
-### **Thursday, October 3** 🎮
+### **Thursday, October 2** 🎮
 **Mission Focus**: Mission 6 Grid Representation & Indexing
 **Daily Study**: Week 3, Day 15 - Traits fundamentals (defining and implementing)
 **Rust Book**: Chapter 6.2 - The match Control Flow Operator
@@ -143,7 +143,7 @@ cargo test req1_grid_creation && cargo test req2_safe_indexing
 # Master match expressions and exhaustive patterns
 ```
 
-### **Friday, October 4** 🧭
+### **Friday, October 3** 🧭
 **Mission Focus**: Mission 6 Coordinate Systems & Navigation
 **Daily Study**: Week 3, Day 16 - Generic types (type parameters, constraints)
 **Rust Book**: Chapter 6.3 - Concise Control Flow with if let
@@ -155,7 +155,7 @@ cargo test req3_navigation
 # Learn if let for cleaner Option/Result handling
 ```
 
-### **Saturday, October 5** 🗺️
+### **Saturday, October 4** 🗺️
 **Mission Focus**: Mission 6 Path Finding Helpers
 **Daily Study**: Week 3, Day 17 - Lifetime annotations (explicit syntax)
 **Rust Book**: Chapter 7.1 - Packages and Crates
@@ -167,7 +167,7 @@ cargo test req4_pathfinding
 # Understand crate structure and module system basics
 ```
 
-### **Sunday, October 6** 🔧
+### **Sunday, October 5** 🔧
 **Mission Focus**: Mission 6 AoC Grid Utilities
 **Daily Study**: Week 3, Day 18 - Advanced traits (associated types, defaults)
 **Rust Book**: Chapter 7.2 - Defining Modules to Control Scope and Privacy
@@ -179,7 +179,7 @@ cargo test req5_aoc_utilities
 # Practice pub, mod, and visibility rules
 ```
 
-### **Monday, October 7** 🎯
+### **Monday, October 6** 🎯
 **Mission Focus**: Mission 6 Performance Optimization
 **Daily Study**: Week 3, Day 19 - Trait objects (dynamic dispatch with `dyn`)
 **Rust Book**: Chapter 7.3 - Paths for Referring to an Item in the Module Tree
@@ -191,7 +191,7 @@ cargo criterion                             # Benchmark grid operations
 # Master absolute and relative module paths
 ```
 
-### **Tuesday, October 8** 📚
+### **Tuesday, October 7** 📚
 **Mission Focus**: Mission 6 Documentation & Examples
 **Daily Study**: Week 3, Day 20 - Advanced lifetimes (elision, `'static`)
 **Rust Book**: Chapter 7.4 - Bringing Paths into Scope with use
@@ -205,9 +205,9 @@ cargo run --example grid_demo
 
 ---
 
-## 🗓️ Week 3: October 9-15, 2025
+## 🗓️ Week 3: October 8-14, 2025
 
-### **Wednesday, October 9** 🌳
+### **Wednesday, October 8** 🌳
 **Mission Focus**: Mission 7 Setup (Graph Representation)
 **Daily Study**: Week 3, Day 21 - Generics + traits practice (flexible APIs)
 **Rust Book**: Chapter 7.5 - Separating Modules into Different Files
@@ -219,7 +219,7 @@ cd Mission7 && cargo init
 # Organize code across multiple files
 ```
 
-### **Thursday, October 10** 📊
+### **Thursday, October 9** 📊
 **Mission Focus**: Mission 7 Adjacency Lists & Node Storage
 **Daily Study**: Week 4, Day 22 - Grid fundamentals (2D arrays, coordinates)
 **Rust Book**: Chapter 8.1 - Storing Lists of Values with Vectors
@@ -231,7 +231,7 @@ cargo test req1_adjacency_list
 # Deep dive into Vector internals and performance
 ```
 
-### **Friday, October 11** 🔗
+### **Friday, October 10** 🔗
 **Mission Focus**: Mission 7 Graph Building & Edge Management
 **Daily Study**: Week 4, Day 23 - Grid navigation (directions, bounds checking)
 **Rust Book**: Chapter 8.2 - Storing UTF-8 Encoded Text with Strings
@@ -243,7 +243,7 @@ cargo test req2_edge_management
 # Master String vs &str, when to use each
 ```
 
-### **Saturday, October 12** 🎯
+### **Saturday, October 11** 🎯
 **Mission Focus**: Mission 7 Graph Algorithms Foundation
 **Daily Study**: Week 4, Day 24 - Grid algorithms (flood fill, connected components)
 **Rust Book**: Chapter 8.3 - Storing Keys with Associated Values in Hash Maps
@@ -255,7 +255,7 @@ cargo test req3_algorithm_foundation
 # Learn HashMap API, entry patterns, ownership with keys
 ```
 
-### **Sunday, October 13** 🔍
+### **Sunday, October 12** 🔍
 **Mission Focus**: Mission 7 DFS Implementation
 **Daily Study**: Week 4, Day 25 - Queue applications (BFS, level traversal)
 **Rust Book**: Review Chapters 5-8 (Structs, Enums, Collections)
@@ -267,7 +267,7 @@ cargo test req4_dfs_traversal
 # Consolidate learning from structs through collections
 ```
 
-### **Monday, October 14** 🌊
+### **Monday, October 13** 🌊
 **Mission Focus**: Mission 7 BFS Implementation
 **Daily Study**: Week 4, Day 26 - Advanced queues (priority queues, deque patterns)
 **Rust Book**: Chapter 9.1 - Unrecoverable Errors with panic!
@@ -279,7 +279,7 @@ cargo test req5_bfs_traversal
 # Understand when to panic vs return Result
 ```
 
-### **Tuesday, October 15** 🎮
+### **Tuesday, October 14** 🎮
 **Mission Focus**: Mission 7 Integration & Examples
 **Daily Study**: Week 4, Day 27 - String parsing (splitting, regex, custom parsers)
 **Rust Book**: Chapter 9.2 - Recoverable Errors with Result
@@ -293,9 +293,9 @@ cargo run --example graph_demo
 
 ---
 
-## 🗓️ Week 4: October 16-22, 2025
+## 🗓️ Week 4: October 15-21, 2025
 
-### **Wednesday, October 16** 📝
+### **Wednesday, October 15** 📝
 **Mission Focus**: Mission 8 Setup (BFS/DFS Algorithms)
 **Daily Study**: Week 4, Day 28 - Input parsing patterns (AoC-style formats)
 **Rust Book**: Chapter 9.3 - To panic! or Not to panic!
@@ -307,7 +307,7 @@ cd Mission8 && cargo init
 # Learn error handling decision guidelines
 ```
 
-### **Thursday, October 17** 🎯
+### **Thursday, October 16** 🎯
 **Mission Focus**: Mission 8 Generic Algorithm Implementation
 **Daily Study**: Week 5, Day 29 - Custom error types (std::error::Error)
 **Rust Book**: Chapter 10.1 - Generic Data Types
@@ -319,7 +319,7 @@ cargo test req1_generic_algorithms
 # Deep dive into generic syntax: functions, structs, enums
 ```
 
-### **Friday, October 18** 🔄
+### **Friday, October 17** 🔄
 **Mission Focus**: Mission 8 Algorithm Composition
 **Daily Study**: Week 5, Day 30 - Error propagation (? operator, conversions)
 **Rust Book**: Chapter 10.2 - Traits: Defining Shared Behavior
@@ -331,7 +331,7 @@ cargo test req2_algorithm_composition
 # Learn trait definitions, implementations, bounds
 ```
 
-### **Saturday, October 19** 📊
+### **Saturday, October 18** 📊
 **Mission Focus**: Mission 8 Performance Analysis
 **Daily Study**: Week 5, Day 31 - anyhow and thiserror (practical error handling)
 **Rust Book**: Chapter 10.3 - Validating References with Lifetimes
@@ -343,7 +343,7 @@ cargo criterion                             # Benchmark algorithm performance
 # Master lifetime parameters in generic contexts
 ```
 
-### **Sunday, October 20** 🧪
+### **Sunday, October 19** 🧪
 **Mission Focus**: Mission 8 Real-world Applications
 **Daily Study**: Week 5, Day 32 - Result combinators (and_then, or_else, map_err)
 **Rust Book**: Chapter 11.1 - How to Write Tests
@@ -355,7 +355,7 @@ cargo run --example maze_solver
 # Learn test organization, unit vs integration tests
 ```
 
-### **Monday, October 21** 🔧
+### **Monday, October 20** 🔧
 **Mission Focus**: Mission 8 Integration Testing
 **Daily Study**: Week 5, Day 33 - Panic recovery (catch_unwind, panic hooks)
 **Rust Book**: Chapter 11.2 - Controlling How Tests Are Run
@@ -367,7 +367,7 @@ cargo test --workspace                      # Full integration testing
 # Master cargo test options and parallel execution
 ```
 
-### **Tuesday, October 22** 📋
+### **Tuesday, October 21** 📋
 **Mission Focus**: Mission 8 Documentation & Review
 **Daily Study**: Week 5, Day 34 - Error handling patterns (panic vs Result)
 **Rust Book**: Chapter 11.3 - Test Organization

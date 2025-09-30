@@ -100,3 +100,42 @@ pub fn solve_day10_part2(input: &str) -> usize {
     let result = look_and_say_with_memo(input.trim(), 50);
     result.len()
 }
+
+fn main() {
+    println!("=== Day 10: Look-and-Say with Memoization Demo ===\n");
+    
+    // Demonstrate the look-and-say sequence progression
+    let start_sequence = "1";
+    println!("Starting sequence: {}", start_sequence);
+    
+    // Show progressive iterations
+    for i in 1..=5 {
+        let result = look_and_say_with_memo(start_sequence, i);
+        println!("After {} iterations: {} (length: {})", i, result, result.len());
+    }
+    
+    println!("\n=== Performance Demonstration ===");
+    
+    // Example with AoC-style input to show memoization benefits
+    let test_input = "1113122113";
+    println!("Input: {}", test_input);
+    
+    let start = std::time::Instant::now();
+    let result_40 = look_and_say_with_memo(test_input, 40);
+    let duration_40 = start.elapsed();
+    
+    println!("After 40 iterations:");
+    println!("- Length: {}", result_40.len());
+    println!("- Time: {:?}", duration_40);
+    
+    let start = std::time::Instant::now();
+    let result_50 = look_and_say_with_memo(test_input, 50);
+    let duration_50 = start.elapsed();
+    
+    println!("After 50 iterations:");
+    println!("- Length: {}", result_50.len());
+    println!("- Time: {:?}", duration_50);
+    
+    println!("\nNote: This demonstrates Mission5 MemoCache integration for AoC optimization patterns.");
+    println!("The memoization cache helps avoid recomputing identical subsequences.");
+}
