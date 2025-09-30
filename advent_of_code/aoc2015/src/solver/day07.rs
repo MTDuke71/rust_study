@@ -44,45 +44,44 @@ use std::collections::HashMap;
 /// Represents different types of inputs to a gate or wire
 #[derive(Debug, Clone, PartialEq)]
 pub enum WireInput {
-    // TODO: Define input types:
-    // - Direct numeric value (e.g., "123")
-    // - Reference to another wire (e.g., "x")
+    Direct(u16),  //numeric value
+    Wire(String)  //reference to another wire
 }
 
 /// Represents different bitwise operations available
 #[derive(Debug, Clone, PartialEq)]
 pub enum Operation {
     // TODO: Define operations:
-    // - Direct assignment (value -> wire)
-    // - AND (input1 AND input2 -> wire)  
-    // - OR (input1 OR input2 -> wire)
-    // - NOT (NOT input -> wire)
-    // - LSHIFT (input LSHIFT amount -> wire)
-    // - RSHIFT (input RSHIFT amount -> wire)
+    Assign(WireInput),  // Direct assignment (value -> wire)
+    And(WireInput, WireInput),  // Bitwise AND (input1 AND input2 -> wire)
+    Or(WireInput, WireInput),   // Bitwise OR (input1 OR input2 -> wire)
+    Not(WireInput),   // Bitwise NOT (NOT input -> wire)
+    LShift(WireInput, WireInput),  // Left shift (input LSHIFT amount -> wire)
+    RShift(WireInput, WireInput)   // Right shift (input RSHIFT amount -> wire)
 }
 
 /// Represents a single instruction in the circuit
 #[derive(Debug, Clone, PartialEq)]
 pub struct Instruction {
-    // TODO: Define instruction structure:
-    // - operation: Operation
-    // - output_wire: String (target wire name)
-    // - inputs: Vec<WireInput> (operation inputs)
+    pub operation: Operation,
+    pub output_wire: String
 }
 
 /// Circuit simulator with memoization
 #[derive(Debug)]
 pub struct Circuit {
     // TODO: Define circuit state:
-    // - instructions: HashMap<String, Instruction> (wire -> instruction)
-    // - memo: HashMap<String, u16> (wire -> cached value)
+    instructions: HashMap<String, Instruction>, // (wire -> instruction)
+    memo: HashMap<String, u16> // (wire -> cached value)
 }
 
 impl Circuit {
     /// Create a new empty circuit
     pub fn new() -> Self {
-        // TODO: Initialize empty circuit
-        todo!("Create new Circuit instance")
+        Circuit {
+            instructions: HashMap::new(),
+            memo: HashMap::new(),
+        }
     }
     
     /// Parse and add an instruction to the circuit
@@ -110,36 +109,147 @@ impl Circuit {
 
 /// Parse a wire input (either numeric value or wire reference)
 fn parse_wire_input(input: &str) -> Result<WireInput> {
-    // TODO: Parse input string to WireInput enum
-    // - If it's all digits, parse as numeric value
-    // - Otherwise, treat as wire reference
-    todo!("Parse wire input: {}", input)
+    use anyhow::anyhow;
+    
+    let trimmed = input.trim();
+    
+    // Check if input is empty
+    if trimmed.is_empty() {
+        return Err(anyhow!("Wire input cannot be empty"));
+    }
+    
+    // Try to parse as a number first
+    if let Ok(value) = trimmed.parse::<u16>() {
+        Ok(WireInput::Direct(value))
+    } else {
+        // If it's not a number, treat as wire name
+        // Basic validation: wire names should be alphanumeric
+        if trimmed.chars().all(|c| c.is_alphanumeric()) {
+            Ok(WireInput::Wire(trimmed.to_string()))
+        } else {
+            Err(anyhow!("Invalid wire name: '{}'. Wire names must be alphanumeric.", trimmed))
+        }
+    }
 }
 
 /// Parse a complete instruction line
 fn parse_instruction(line: &str) -> Result<Instruction> {
-    // TODO: Parse instruction using arrow syntax
+    use anyhow::anyhow;
+    
+    let trimmed = line.trim();
+    
     // Split by " -> " to get operation and target wire
-    // Parse left side to determine operation type and inputs
-    // Examples:
-    // - "123 -> x" => Direct assignment
-    // - "x AND y -> z" => Binary AND operation
-    // - "NOT e -> f" => Unary NOT operation  
-    // - "p LSHIFT 2 -> q" => Binary shift operation
-    todo!("Parse instruction: {}", line)
+    let parts: Vec<&str> = trimmed.split(" -> ").collect();
+    if parts.len() != 2 {
+        return Err(anyhow!("Invalid instruction format: '{}'", line));
+    }
+    
+    let operation_str = parts[0].trim();
+    let output_wire = parts[1].trim().to_string();
+    
+    // Parse the operation part to determine type and inputs
+    let operation = if operation_str.contains(" AND ") {
+        // Binary AND: "x AND y"
+        let and_parts: Vec<&str> = operation_str.split(" AND ").collect();
+        if and_parts.len() != 2 {
+            return Err(anyhow!("Invalid AND operation: '{}'", operation_str));
+        }
+        let input1 = parse_wire_input(and_parts[0])?;  // Call 1
+        let input2 = parse_wire_input(and_parts[1])?;  // Call 2
+        Operation::And(input1, input2)
+        
+    } else if operation_str.contains(" OR ") {
+        // Binary OR: "x OR y"
+        let or_parts: Vec<&str> = operation_str.split(" OR ").collect();
+        if or_parts.len() != 2 {
+            return Err(anyhow!("Invalid OR operation: '{}'", operation_str));
+        }
+        let input1 = parse_wire_input(or_parts[0])?;   // Call 1
+        let input2 = parse_wire_input(or_parts[1])?;   // Call 2
+        Operation::Or(input1, input2)
+        
+    } else if operation_str.contains(" LSHIFT ") {
+        // Left shift: "p LSHIFT 2"
+        let shift_parts: Vec<&str> = operation_str.split(" LSHIFT ").collect();
+        if shift_parts.len() != 2 {
+            return Err(anyhow!("Invalid LSHIFT operation: '{}'", operation_str));
+        }
+        let input = parse_wire_input(shift_parts[0])?;    // Call 1
+        let amount = parse_wire_input(shift_parts[1])?;   // Call 2
+        Operation::LShift(input, amount)
+        
+    } else if operation_str.contains(" RSHIFT ") {
+        // Right shift: "x RSHIFT 3"
+        let shift_parts: Vec<&str> = operation_str.split(" RSHIFT ").collect();
+        if shift_parts.len() != 2 {
+            return Err(anyhow!("Invalid RSHIFT operation: '{}'", operation_str));
+        }
+        let input = parse_wire_input(shift_parts[0])?;    // Call 1
+        let amount = parse_wire_input(shift_parts[1])?;   // Call 2
+        Operation::RShift(input, amount)
+        
+    } else if operation_str.starts_with("NOT ") {
+        // Unary NOT: "NOT e"
+        let not_input = operation_str.strip_prefix("NOT ").unwrap().trim();
+        let input = parse_wire_input(not_input)?;         // Call 1
+        Operation::Not(input)
+        
+    } else {
+        // Direct assignment: "123" or "x"
+        let input = parse_wire_input(operation_str)?;     // Call 1
+        Operation::Assign(input)
+    };
+    
+    Ok(Instruction {
+        operation,
+        output_wire,
+    })
 }
 
 /// Apply a bitwise operation to input values
 fn apply_operation(operation: &Operation, inputs: &[u16]) -> Result<u16> {
-    // TODO: Implement bitwise operations
-    // Ensure all operations work with 16-bit values (0-65535)
-    // Handle:
-    // - AND: bitwise AND of two inputs
-    // - OR: bitwise OR of two inputs  
-    // - NOT: bitwise complement of single input
-    // - LSHIFT: left shift by specified amount
-    // - RSHIFT: right shift by specified amount
-    todo!("Apply operation: {:?} to inputs: {:?}", operation, inputs)
+    use anyhow::anyhow;
+    
+    let result = match operation {
+        Operation::Assign(_) => {
+            if inputs.len() != 1 {
+                return Err(anyhow!("Assign operation requires exactly 1 input, got {}", inputs.len()));
+            }
+            inputs[0]
+        }
+        Operation::And(_, _) => {
+            if inputs.len() != 2 {
+                return Err(anyhow!("And operation requires exactly 2 inputs, got {}", inputs.len()));
+            }
+            inputs[0] & inputs[1]
+        }
+        Operation::Or(_, _) => {
+            if inputs.len() != 2 {
+                return Err(anyhow!("Or operation requires exactly 2 inputs, got {}", inputs.len()));
+            }
+            inputs[0] | inputs[1]
+        }
+        Operation::Not(_) => {
+            if inputs.len() != 1 {
+                return Err(anyhow!("Not operation requires exactly 1 input, got {}", inputs.len()));
+            }
+            !inputs[0]
+        }
+        Operation::LShift(_, _) => {
+            if inputs.len() != 2 {
+                return Err(anyhow!("LShift operation requires exactly 2 inputs, got {}", inputs.len()));
+            }
+            inputs[0] << inputs[1]
+        }
+        Operation::RShift(_, _) => {
+            if inputs.len() != 2 {
+                return Err(anyhow!("RShift operation requires exactly 2 inputs, got {}", inputs.len()));
+            }
+            inputs[0] >> inputs[1]
+        }
+    };
+    
+    Ok(result)
 }
 
 /// Day 07 Part 1: Find the signal provided to wire 'a'
