@@ -507,7 +507,7 @@ where
 }
 ```
 
-## Option<T> Error Handling
+## Option `<T>` Error Handling
 
 ### Option as Simple Error Type
 ```rust
