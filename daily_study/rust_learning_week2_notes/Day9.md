@@ -1,5 +1,12 @@
 # Day 9 · Strings - `String` vs `&str`, UTF-8, Manipulation
 
+## 🔗 Zettelkasten Links
+- **Previous**: [[Day 8 - Vectors]] - Dynamic arrays
+- **Next**: [[Day 10 - HashMap Basics]] - Key-value storage
+- **Concept**: [[Rust Concepts MOC]] - String types and UTF-8
+- **Rust Book**: [[Chapter 8.2 - Strings]] - Storing UTF-8 text
+- **Week Summary**: [[Day 14 - Week 2 Summary]] - Collections review
+
 ## 🎯 Learning Objectives
 - Understand the difference between `String` and `&str`
 - Master UTF-8 encoding and Unicode handling
@@ -505,3 +512,8 @@ fn test_parse_coordinates() {
 ---
 
 **Remember**: Strings in Rust are safe, fast, and Unicode-correct by default. Master the `String` vs `&str` distinction and you'll handle text processing with confidence! 🦀
+
+---
+
+*Links: [[Day 8 - Vectors]] | [[Day 10 - HashMap Basics]] | [[Rust Concepts MOC]]*
+*Tags: #string #str #utf8 #text-processing #daily-study #week2 #rust-book #chapter8 #parsing*

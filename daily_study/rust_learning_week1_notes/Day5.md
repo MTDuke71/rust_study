@@ -1,5 +1,13 @@
 # Day 5 · Option and Result - Expanded
 
+## 🔗 Zettelkasten Links
+- **Previous**: [[Day 4 - Lifetimes]] - Lifetime annotations
+- **Next**: [[Day 6 - Pattern Matching]] - Match expressions
+- **Concept**: [[Rust Concepts MOC]] - Error handling system
+- **Rust Book**: [[Chapter 6 - Enums]] - Option and pattern matching
+- **Rust Book**: [[Chapter 9 - Error Handling]] - Result and ? operator
+- **Week Summary**: [[Day 7 - Week 1 Summary]] - Foundations review
+
 ## Overview
 Rust eliminates null pointer exceptions and unchecked exceptions through two powerful enum types: `Option<T>` and `Result<T, E>`. These types force explicit handling of absence and errors at compile time.
 
@@ -408,7 +416,13 @@ fn complex_operation() -> Result<i32, MyError> {
 - **Composability** - Option and Result work well with iterators and functional patterns
 
 These types are fundamental to Rust's approach to safety and make programs more reliable by forcing explicit handling of edge cases.
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+---
+
+*Links: [[Day 4 - Lifetimes]] | [[Day 6 - Pattern Matching]] | [[Rust Concepts MOC]]*
+*Tags: #option #result #error-handling #daily-study #rust-book #chapter6 #chapter9 #foundation*
+
+---
 
 Please expand on the outline from day 5 to give more details.
 

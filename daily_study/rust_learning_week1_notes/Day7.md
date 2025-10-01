@@ -1,5 +1,12 @@
 # Day 7 · Week 1 Summary & Code Cheat Sheet
 
+## 🔗 Zettelkasten Links
+- **Previous**: [[Day 6 - Pattern Matching]] - Match expressions
+- **Next**: [[Day 8 - Vectors]] - Dynamic arrays (Week 2 start)
+- **Concept**: [[Rust Concepts MOC]] - All foundation concepts
+- **Rust Book**: [[Chapter 1-6 Overview]] - Foundations complete
+- **Daily Study**: [[Week 1 Overview]] - Summary of week 1
+
 ## 📋 Week 1 Review: Foundations Mastery
 
 This week covered the **core pillars** of Rust programming that make it unique among systems languages. Every concept builds on ownership and memory safety.
@@ -287,3 +294,8 @@ let slice = &vec[1..3];  // Borrowing without copying
 ```
 
 **Mastery Check**: If you can explain why each code example above compiles (or doesn't), you're ready for Week 2! 🎯
+
+---
+
+*Links: [[Day 6 - Pattern Matching]] | [[Day 8 - Vectors]] | [[Rust Concepts MOC]] | [[Week 1 Overview]]*
+*Tags: #week-summary #review #cheatsheet #daily-study #foundation #rust-book*
