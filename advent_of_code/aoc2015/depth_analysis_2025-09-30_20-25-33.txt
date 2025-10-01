@@ -1,0 +1,429 @@
+# Dependency Depth Analysis for Wire 'a' - Generated 09/30/2025 20:25:33
+# AoC 2015 Day 7 Circuit Analysis
+
+## Summary:
+Maximum Dependency Depth: 208 levels
+Gates Analyzed: 336
+Calculation Time: 101.76 ms
+
+## Longest Dependency Path:
+a -> lx -> a
+  lx -> lw OR lv -> lx
+    lv -> 1 AND lu -> lv
+      lu -> lr AND lt -> lu
+        lt -> NOT ls -> lt
+          ls -> lf AND lq -> ls
+            lq -> ln AND lp -> lq
+              lp -> NOT lo -> lp
+                lo -> lg AND lm -> lo
+                  lm -> lj AND ll -> lm
+                    ll -> NOT lk -> ll
+                      lk -> lh AND li -> lk
+                        lh -> lf RSHIFT 3 -> lh
+                          lf -> ld OR le -> lf
+                            le -> la LSHIFT 15 -> le
+                              la -> 1 AND kz -> la
+                                kz -> kw AND ky -> kz
+                                  ky -> NOT kx -> ky
+                                    kx -> kk AND kv -> kx
+                                      kv -> ks AND ku -> kv
+                                        ku -> NOT kt -> ku
+                                          kt -> kl AND kr -> kt
+                                            kr -> ko AND kq -> kr
+                                              kq -> NOT kp -> kq
+                                                kp -> km AND kn -> kp
+                                                  km -> kk RSHIFT 3 -> km
+                                                    kk -> ki OR kj -> kk
+                                                      kj -> kf LSHIFT 15 -> kj
+                                                        kf -> 1 AND ke -> kf
+                                                          ke -> kb AND kd -> ke
+                                                            kd -> NOT kc -> kd
+                                                              kc -> jp AND ka -> kc
+                                                                ka -> jx AND jz -> ka
+                                                                  jz -> NOT jy -> jz
+                                                                    jy -> jq AND jw -> jy
+                                                                      jw -> jt AND jv -> jw
+                                                                        jv -> NOT ju -> jv
+                                                                          ju -> jr AND js -> ju
+                                                                            jr -> jp RSHIFT 3 -> jr
+                                                                              jp -> jn OR jo -> jp
+                                                                                jo -> jk LSHIFT 15 -> jo
+                                                                                  jk -> 1 AND jj -> jk
+                                                                                    jj -> jg AND ji -> jj
+                                                                                      ji -> NOT jh -> ji
+                                                                                        jh -> iu AND jf -> jh
+                                                                                          jf -> jc AND je -> jf
+                                                                                            je -> NOT jd -> je
+                                                                                              jd -> iv AND jb -> jd
+                                                                                                jb -> iy AND ja -> jb
+                                                                                                  ja -> NOT iz -> ja
+                                                                                                    iz -> iw AND ix -> iz
+                                                                                                      iw -> iu RSHIFT 3 -> iw
+                                                                                                        iu -> is OR it -> iu
+                                                                                                          it -> ip LSHIFT 15 -> it
+                                                                                                            ip -> 1 AND io -> ip
+                                                                                                              io -> il AND in -> io
+                                                                                                                in -> NOT im -> in
+                                                                                                                  im -> hz AND ik -> im
+                                                                                                                    ik -> ih AND ij -> ik
+                                                                                                                      ij -> NOT ii -> ij
+                                                                                                                        ii -> ia AND ig -> ii
+                                                                                                                          ig -> id AND if -> ig
+                                                                                                                            if -> NOT ie -> if
+                                                                                                                              ie -> ib AND ic -> ie
+                                                                                                                                ib -> hz RSHIFT 3 -> ib
+                                                                                                                                  hz -> hx OR hy -> hz
+                                                                                                                                    hy -> hu LSHIFT 15 -> hy
+                                                                                                                                      hu -> 1 AND ht -> hu
+                                                                                                                                        ht -> hq AND hs -> ht
+                                                                                                                                          hs -> NOT hr -> hs
+                                                                                                                                            hr -> he AND hp -> hr
+                                                                                                                                              hp -> hm AND ho -> hp
+                                                                                                                                                ho -> NOT hn -> ho
+                                                                                                                                                  hn -> hf AND hl -> hn
+                                                                                                                                                    hl -> hi AND hk -> hl
+                                                                                                                                                      hk -> NOT hj -> hk
+                                                                                                                                                        hj -> hg AND hh -> hj
+                                                                                                                                                          hg -> he RSHIFT 3 -> hg
+                                                                                                                                                            he -> hc OR hd -> he
+                                                                                                                                                              hd -> gz LSHIFT 15 -> hd
+                                                                                                                                                                gz -> 1 AND gy -> gz
+                                                                                                                                                                  gy -> gv AND gx -> gy
+                                                                                                                                                                    gx -> NOT gw -> gx
+                                                                                                                                                                      gw -> gj AND gu -> gw
+                                                                                                                                                                        gu -> gr AND gt -> gu
+                                                                                                                                                                          gt -> NOT gs -> gt
+                                                                                                                                                                            gs -> gk AND gq -> gs
+                                                                                                                                                                              gq -> gn AND gp -> gq
+                                                                                                                                                                                gp -> NOT go -> gp
+                                                                                                                                                                                  go -> gl AND gm -> go
+                                                                                                                                                                                    gl -> gj RSHIFT 3 -> gl
+                                                                                                                                                                                      gj -> gh OR gi -> gj
+                                                                                                                                                                                        gi -> ge LSHIFT 15 -> gi
+                                                                                                                                                                                          ge -> 1 AND gd -> ge
+                                                                                                                                                                                            gd -> ga AND gc -> gd
+                                                                                                                                                                                              gc -> NOT gb -> gc
+                                                                                                                                                                                                gb -> fo AND fz -> gb
+                                                                                                                                                                                                  fz -> fw AND fy -> fz
+                                                                                                                                                                                                    fy -> NOT fx -> fy
+                                                                                                                                                                                                      fx -> fp AND fv -> fx
+                                                                                                                                                                                                        fv -> fs AND fu -> fv
+                                                                                                                                                                                                          fu -> NOT ft -> fu
+                                                                                                                                                                                                            ft -> fq AND fr -> ft
+                                                                                                                                                                                                              fq -> fo RSHIFT 3 -> fq
+                                                                                                                                                                                                                fo -> fm OR fn -> fo
+                                                                                                                                                                                                                  fn -> fj LSHIFT 15 -> fn
+                                                                                                                                                                                                                    fj -> 1 AND fi -> fj
+                                                                                                                                                                                                                      fi -> ff AND fh -> fi
+                                                                                                                                                                                                                        fh -> NOT fg -> fh
+                                                                                                                                                                                                                          fg -> et AND fe -> fg
+                                                                                                                                                                                                                            fe -> fb AND fd -> fe
+                                                                                                                                                                                                                              fd -> NOT fc -> fd
+                                                                                                                                                                                                                                fc -> eu AND fa -> fc
+                                                                                                                                                                                                                                  fa -> ex AND ez -> fa
+                                                                                                                                                                                                                                    ez -> NOT ey -> ez
+                                                                                                                                                                                                                                      ey -> ev AND ew -> ey
+                                                                                                                                                                                                                                        ev -> et RSHIFT 3 -> ev
+                                                                                                                                                                                                                                          et -> er OR es -> et
+                                                                                                                                                                                                                                            es -> eo LSHIFT 15 -> es
+                                                                                                                                                                                                                                              eo -> 1 AND en -> eo
+                                                                                                                                                                                                                                                en -> ek AND em -> en
+                                                                                                                                                                                                                                                  em -> NOT el -> em
+                                                                                                                                                                                                                                                    el -> dy AND ej -> el
+                                                                                                                                                                                                                                                      ej -> eg AND ei -> ej
+                                                                                                                                                                                                                                                        ei -> NOT eh -> ei
+                                                                                                                                                                                                                                                          eh -> dz AND ef -> eh
+                                                                                                                                                                                                                                                            ef -> ec AND ee -> ef
+                                                                                                                                                                                                                                                              ee -> NOT ed -> ee
+                                                                                                                                                                                                                                                                ed -> ea AND eb -> ed
+                                                                                                                                                                                                                                                                  ea -> dy RSHIFT 3 -> ea
+                                                                                                                                                                                                                                                                    dy -> dw OR dx -> dy
+                                                                                                                                                                                                                                                                      dx -> dt LSHIFT 15 -> dx
+                                                                                                                                                                                                                                                                        dt -> 1 AND ds -> dt
+                                                                                                                                                                                                                                                                          ds -> dp AND dr -> ds
+                                                                                                                                                                                                                                                                            dr -> NOT dq -> dr
+                                                                                                                                                                                                                                                                              dq -> dd AND do -> dq
+                                                                                                                                                                                                                                                                                do -> dl AND dn -> do
+                                                                                                                                                                                                                                                                                  dn -> NOT dm -> dn
+                                                                                                                                                                                                                                                                                    dm -> de AND dk -> dm
+                                                                                                                                                                                                                                                                                      dk -> dh AND dj -> dk
+                                                                                                                                                                                                                                                                                        dj -> NOT di -> dj
+                                                                                                                                                                                                                                                                                          di -> df AND dg -> di
+                                                                                                                                                                                                                                                                                            df -> dd RSHIFT 3 -> df
+                                                                                                                                                                                                                                                                                              dd -> db OR dc -> dd
+                                                                                                                                                                                                                                                                                                dc -> cy LSHIFT 15 -> dc
+                                                                                                                                                                                                                                                                                                  cy -> 1 AND cx -> cy
+                                                                                                                                                                                                                                                                                                    cx -> cu AND cw -> cx
+                                                                                                                                                                                                                                                                                                      cw -> NOT cv -> cw
+                                                                                                                                                                                                                                                                                                        cv -> ci AND ct -> cv
+                                                                                                                                                                                                                                                                                                          ct -> cq AND cs -> ct
+                                                                                                                                                                                                                                                                                                            cs -> NOT cr -> cs
+                                                                                                                                                                                                                                                                                                              cr -> cj AND cp -> cr
+                                                                                                                                                                                                                                                                                                                cp -> cm AND co -> cp
+                                                                                                                                                                                                                                                                                                                  co -> NOT cn -> co
+                                                                                                                                                                                                                                                                                                                    cn -> ck AND cl -> cn
+                                                                                                                                                                                                                                                                                                                      ck -> ci RSHIFT 3 -> ck
+                                                                                                                                                                                                                                                                                                                        ci -> cg OR ch -> ci
+                                                                                                                                                                                                                                                                                                                          ch -> cd LSHIFT 15 -> ch
+                                                                                                                                                                                                                                                                                                                            cd -> 1 AND cc -> cd
+                                                                                                                                                                                                                                                                                                                              cc -> bz AND cb -> cc
+                                                                                                                                                                                                                                                                                                                                cb -> NOT ca -> cb
+                                                                                                                                                                                                                                                                                                                                  ca -> bn AND by -> ca
+                                                                                                                                                                                                                                                                                                                                    by -> bv AND bx -> by
+                                                                                                                                                                                                                                                                                                                                      bx -> NOT bw -> bx
+                                                                                                                                                                                                                                                                                                                                        bw -> bo AND bu -> bw
+                                                                                                                                                                                                                                                                                                                                          bu -> br AND bt -> bu
+                                                                                                                                                                                                                                                                                                                                            bt -> NOT bs -> bt
+                                                                                                                                                                                                                                                                                                                                              bs -> bp AND bq -> bs
+                                                                                                                                                                                                                                                                                                                                                bp -> bn RSHIFT 3 -> bp
+                                                                                                                                                                                                                                                                                                                                                  bn -> bl OR bm -> bn
+                                                                                                                                                                                                                                                                                                                                                    bm -> bi LSHIFT 15 -> bm
+                                                                                                                                                                                                                                                                                                                                                      bi -> 1 AND bh -> bi
+                                                                                                                                                                                                                                                                                                                                                        bh -> be AND bg -> bh
+                                                                                                                                                                                                                                                                                                                                                          bg -> NOT bf -> bg
+                                                                                                                                                                                                                                                                                                                                                            bf -> as AND bd -> bf
+                                                                                                                                                                                                                                                                                                                                                              bd -> ba AND bc -> bd
+                                                                                                                                                                                                                                                                                                                                                                bc -> NOT bb -> bc
+                                                                                                                                                                                                                                                                                                                                                                  bb -> at AND az -> bb
+                                                                                                                                                                                                                                                                                                                                                                    az -> aw AND ay -> az
+                                                                                                                                                                                                                                                                                                                                                                      ay -> NOT ax -> ay
+                                                                                                                                                                                                                                                                                                                                                                        ax -> au AND av -> ax
+                                                                                                                                                                                                                                                                                                                                                                          au -> as RSHIFT 3 -> au
+                                                                                                                                                                                                                                                                                                                                                                            as -> aq OR ar -> as
+                                                                                                                                                                                                                                                                                                                                                                              ar -> an LSHIFT 15 -> ar
+                                                                                                                                                                                                                                                                                                                                                                                an -> 1 AND am -> an
+                                                                                                                                                                                                                                                                                                                                                                                  am -> aj AND al -> am
+                                                                                                                                                                                                                                                                                                                                                                                    al -> NOT ak -> al
+                                                                                                                                                                                                                                                                                                                                                                                      ak -> x AND ai -> ak
+                                                                                                                                                                                                                                                                                                                                                                                        ai -> af AND ah -> ai
+                                                                                                                                                                                                                                                                                                                                                                                          ah -> NOT ag -> ah
+                                                                                                                                                                                                                                                                                                                                                                                            ag -> y AND ae -> ag
+                                                                                                                                                                                                                                                                                                                                                                                              ae -> ab AND ad -> ae
+                                                                                                                                                                                                                                                                                                                                                                                                ad -> NOT ac -> ad
+                                                                                                                                                                                                                                                                                                                                                                                                  ac -> z AND aa -> ac
+                                                                                                                                                                                                                                                                                                                                                                                                    z -> x RSHIFT 3 -> z
+                                                                                                                                                                                                                                                                                                                                                                                                      x -> v OR w -> x
+                                                                                                                                                                                                                                                                                                                                                                                                        w -> s LSHIFT 15 -> w
+                                                                                                                                                                                                                                                                                                                                                                                                          s -> 1 AND r -> s
+                                                                                                                                                                                                                                                                                                                                                                                                            r -> o AND q -> r
+                                                                                                                                                                                                                                                                                                                                                                                                              q -> NOT p -> q
+                                                                                                                                                                                                                                                                                                                                                                                                                p -> b AND n -> p
+                                                                                                                                                                                                                                                                                                                                                                                                                  n -> k AND m -> n
+                                                                                                                                                                                                                                                                                                                                                                                                                    m -> NOT l -> m
+                                                                                                                                                                                                                                                                                                                                                                                                                      l -> d AND j -> l
+                                                                                                                                                                                                                                                                                                                                                                                                                        j -> g AND i -> j
+                                                                                                                                                                                                                                                                                                                                                                                                                          i -> NOT h -> i
+                                                                                                                                                                                                                                                                                                                                                                                                                            h -> e AND f -> h
+                                                                                                                                                                                                                                                                                                                                                                                                                              e -> b RSHIFT 3 -> e
+                                                                                                                                                                                                                                                                                                                                                                                                                                b -> 19138 -> b
+
+## Depth Distribution:
+Depth 0: 2 wires (0.6%)
+Depth 1: 5 wires (1.5%)
+Depth 10: 1 wires (0.3%)
+Depth 100: 1 wires (0.3%)
+Depth 101: 1 wires (0.3%)
+Depth 102: 1 wires (0.3%)
+Depth 103: 2 wires (0.6%)
+Depth 104: 2 wires (0.6%)
+Depth 105: 4 wires (1.2%)
+Depth 106: 2 wires (0.6%)
+Depth 107: 1 wires (0.3%)
+Depth 108: 1 wires (0.3%)
+Depth 109: 2 wires (0.6%)
+Depth 11: 1 wires (0.3%)
+Depth 110: 1 wires (0.3%)
+Depth 111: 1 wires (0.3%)
+Depth 112: 2 wires (0.6%)
+Depth 113: 1 wires (0.3%)
+Depth 114: 1 wires (0.3%)
+Depth 115: 1 wires (0.3%)
+Depth 116: 2 wires (0.6%)
+Depth 117: 2 wires (0.6%)
+Depth 118: 4 wires (1.2%)
+Depth 119: 2 wires (0.6%)
+Depth 12: 2 wires (0.6%)
+Depth 120: 1 wires (0.3%)
+Depth 121: 1 wires (0.3%)
+Depth 122: 2 wires (0.6%)
+Depth 123: 1 wires (0.3%)
+Depth 124: 1 wires (0.3%)
+Depth 125: 2 wires (0.6%)
+Depth 126: 1 wires (0.3%)
+Depth 127: 1 wires (0.3%)
+Depth 128: 1 wires (0.3%)
+Depth 129: 2 wires (0.6%)
+Depth 13: 2 wires (0.6%)
+Depth 130: 2 wires (0.6%)
+Depth 131: 4 wires (1.2%)
+Depth 132: 2 wires (0.6%)
+Depth 133: 1 wires (0.3%)
+Depth 134: 1 wires (0.3%)
+Depth 135: 2 wires (0.6%)
+Depth 136: 1 wires (0.3%)
+Depth 137: 1 wires (0.3%)
+Depth 138: 2 wires (0.6%)
+Depth 139: 1 wires (0.3%)
+Depth 14: 4 wires (1.2%)
+Depth 140: 1 wires (0.3%)
+Depth 141: 1 wires (0.3%)
+Depth 142: 2 wires (0.6%)
+Depth 143: 2 wires (0.6%)
+Depth 144: 4 wires (1.2%)
+Depth 145: 2 wires (0.6%)
+Depth 146: 1 wires (0.3%)
+Depth 147: 1 wires (0.3%)
+Depth 148: 2 wires (0.6%)
+Depth 149: 1 wires (0.3%)
+Depth 15: 2 wires (0.6%)
+Depth 150: 1 wires (0.3%)
+Depth 151: 2 wires (0.6%)
+Depth 152: 1 wires (0.3%)
+Depth 153: 1 wires (0.3%)
+Depth 154: 1 wires (0.3%)
+Depth 155: 2 wires (0.6%)
+Depth 156: 2 wires (0.6%)
+Depth 157: 4 wires (1.2%)
+Depth 158: 2 wires (0.6%)
+Depth 159: 1 wires (0.3%)
+Depth 16: 1 wires (0.3%)
+Depth 160: 1 wires (0.3%)
+Depth 161: 2 wires (0.6%)
+Depth 162: 1 wires (0.3%)
+Depth 163: 1 wires (0.3%)
+Depth 164: 2 wires (0.6%)
+Depth 165: 1 wires (0.3%)
+Depth 166: 1 wires (0.3%)
+Depth 167: 1 wires (0.3%)
+Depth 168: 2 wires (0.6%)
+Depth 169: 2 wires (0.6%)
+Depth 17: 1 wires (0.3%)
+Depth 170: 4 wires (1.2%)
+Depth 171: 2 wires (0.6%)
+Depth 172: 1 wires (0.3%)
+Depth 173: 1 wires (0.3%)
+Depth 174: 2 wires (0.6%)
+Depth 175: 1 wires (0.3%)
+Depth 176: 1 wires (0.3%)
+Depth 177: 2 wires (0.6%)
+Depth 178: 1 wires (0.3%)
+Depth 179: 1 wires (0.3%)
+Depth 18: 2 wires (0.6%)
+Depth 180: 1 wires (0.3%)
+Depth 181: 2 wires (0.6%)
+Depth 182: 2 wires (0.6%)
+Depth 183: 4 wires (1.2%)
+Depth 184: 2 wires (0.6%)
+Depth 185: 1 wires (0.3%)
+Depth 186: 1 wires (0.3%)
+Depth 187: 2 wires (0.6%)
+Depth 188: 1 wires (0.3%)
+Depth 189: 1 wires (0.3%)
+Depth 19: 1 wires (0.3%)
+Depth 190: 2 wires (0.6%)
+Depth 191: 1 wires (0.3%)
+Depth 192: 1 wires (0.3%)
+Depth 193: 1 wires (0.3%)
+Depth 194: 2 wires (0.6%)
+Depth 195: 2 wires (0.6%)
+Depth 196: 3 wires (0.9%)
+Depth 197: 2 wires (0.6%)
+Depth 198: 1 wires (0.3%)
+Depth 199: 1 wires (0.3%)
+Depth 2: 2 wires (0.6%)
+Depth 20: 1 wires (0.3%)
+Depth 200: 2 wires (0.6%)
+Depth 201: 1 wires (0.3%)
+Depth 202: 1 wires (0.3%)
+Depth 203: 2 wires (0.6%)
+Depth 204: 1 wires (0.3%)
+Depth 205: 1 wires (0.3%)
+Depth 206: 1 wires (0.3%)
+Depth 207: 1 wires (0.3%)
+Depth 208: 1 wires (0.3%)
+Depth 21: 2 wires (0.6%)
+Depth 22: 1 wires (0.3%)
+Depth 23: 1 wires (0.3%)
+Depth 24: 1 wires (0.3%)
+Depth 25: 2 wires (0.6%)
+Depth 26: 2 wires (0.6%)
+Depth 27: 4 wires (1.2%)
+Depth 28: 2 wires (0.6%)
+Depth 29: 1 wires (0.3%)
+Depth 3: 1 wires (0.3%)
+Depth 30: 1 wires (0.3%)
+Depth 31: 2 wires (0.6%)
+Depth 32: 1 wires (0.3%)
+Depth 33: 1 wires (0.3%)
+Depth 34: 2 wires (0.6%)
+Depth 35: 1 wires (0.3%)
+Depth 36: 1 wires (0.3%)
+Depth 37: 1 wires (0.3%)
+Depth 38: 2 wires (0.6%)
+Depth 39: 2 wires (0.6%)
+Depth 4: 1 wires (0.3%)
+Depth 40: 4 wires (1.2%)
+Depth 41: 2 wires (0.6%)
+Depth 42: 1 wires (0.3%)
+Depth 43: 1 wires (0.3%)
+Depth 44: 2 wires (0.6%)
+Depth 45: 1 wires (0.3%)
+Depth 46: 1 wires (0.3%)
+Depth 47: 2 wires (0.6%)
+Depth 48: 1 wires (0.3%)
+Depth 49: 1 wires (0.3%)
+Depth 5: 2 wires (0.6%)
+Depth 50: 1 wires (0.3%)
+Depth 51: 2 wires (0.6%)
+Depth 52: 2 wires (0.6%)
+Depth 53: 4 wires (1.2%)
+Depth 54: 2 wires (0.6%)
+Depth 55: 1 wires (0.3%)
+Depth 56: 1 wires (0.3%)
+Depth 57: 2 wires (0.6%)
+Depth 58: 1 wires (0.3%)
+Depth 59: 1 wires (0.3%)
+Depth 6: 1 wires (0.3%)
+Depth 60: 2 wires (0.6%)
+Depth 61: 1 wires (0.3%)
+Depth 62: 1 wires (0.3%)
+Depth 63: 1 wires (0.3%)
+Depth 64: 2 wires (0.6%)
+Depth 65: 2 wires (0.6%)
+Depth 66: 4 wires (1.2%)
+Depth 67: 2 wires (0.6%)
+Depth 68: 1 wires (0.3%)
+Depth 69: 1 wires (0.3%)
+Depth 7: 1 wires (0.3%)
+Depth 70: 2 wires (0.6%)
+Depth 71: 1 wires (0.3%)
+Depth 72: 1 wires (0.3%)
+Depth 73: 2 wires (0.6%)
+Depth 74: 1 wires (0.3%)
+Depth 75: 1 wires (0.3%)
+Depth 76: 1 wires (0.3%)
+Depth 77: 2 wires (0.6%)
+Depth 78: 2 wires (0.6%)
+Depth 79: 4 wires (1.2%)
+Depth 8: 2 wires (0.6%)
+Depth 80: 2 wires (0.6%)
+Depth 81: 1 wires (0.3%)
+Depth 82: 1 wires (0.3%)
+Depth 83: 2 wires (0.6%)
+Depth 84: 1 wires (0.3%)
+Depth 85: 1 wires (0.3%)
+Depth 86: 2 wires (0.6%)
+Depth 87: 1 wires (0.3%)
+Depth 88: 1 wires (0.3%)
+Depth 89: 1 wires (0.3%)
+Depth 9: 1 wires (0.3%)
+Depth 90: 2 wires (0.6%)
+Depth 91: 2 wires (0.6%)
+Depth 92: 4 wires (1.2%)
+Depth 93: 2 wires (0.6%)
+Depth 94: 1 wires (0.3%)
+Depth 95: 1 wires (0.3%)
+Depth 96: 2 wires (0.6%)
+Depth 97: 1 wires (0.3%)
+Depth 98: 1 wires (0.3%)
+Depth 99: 2 wires (0.6%)

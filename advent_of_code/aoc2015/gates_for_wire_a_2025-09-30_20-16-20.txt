@@ -1,0 +1,1011 @@
+# Gates Leading to Wire 'a' - Generated 09/30/2025 20:16:20
+# Total gates: 336
+
+a = ASSIGN(lx)
+  // lx -> a
+
+aa = RSHIFT(x, 5)
+  // x RSHIFT 5 -> aa
+
+ab = OR(z, aa)
+  // z OR aa -> ab
+
+ac = AND(z, aa)
+  // z AND aa -> ac
+
+ad = NOT(ac)
+  // NOT ac -> ad
+
+ae = AND(ab, ad)
+  // ab AND ad -> ae
+
+af = OR(y, ae)
+  // y OR ae -> af
+
+ag = AND(y, ae)
+  // y AND ae -> ag
+
+ah = NOT(ag)
+  // NOT ag -> ah
+
+ai = AND(af, ah)
+  // af AND ah -> ai
+
+aj = OR(x, ai)
+  // x OR ai -> aj
+
+ak = AND(x, ai)
+  // x AND ai -> ak
+
+al = NOT(ak)
+  // NOT ak -> al
+
+am = AND(aj, al)
+  // aj AND al -> am
+
+an = AND(1, am)
+  // 1 AND am -> an
+
+ao = LSHIFT(u, 1)
+  // u LSHIFT 1 -> ao
+
+ap = OR(ao, an)
+  // ao OR an -> ap
+
+aq = RSHIFT(x, 1)
+  // x RSHIFT 1 -> aq
+
+ar = LSHIFT(an, 15)
+  // an LSHIFT 15 -> ar
+
+as = OR(aq, ar)
+  // aq OR ar -> as
+
+at = RSHIFT(as, 2)
+  // as RSHIFT 2 -> at
+
+au = RSHIFT(as, 3)
+  // as RSHIFT 3 -> au
+
+av = RSHIFT(as, 5)
+  // as RSHIFT 5 -> av
+
+aw = OR(au, av)
+  // au OR av -> aw
+
+ax = AND(au, av)
+  // au AND av -> ax
+
+ay = NOT(ax)
+  // NOT ax -> ay
+
+az = AND(aw, ay)
+  // aw AND ay -> az
+
+b = ASSIGN(19138)
+  // 19138 -> b
+
+ba = OR(at, az)
+  // at OR az -> ba
+
+bb = AND(at, az)
+  // at AND az -> bb
+
+bc = NOT(bb)
+  // NOT bb -> bc
+
+bd = AND(ba, bc)
+  // ba AND bc -> bd
+
+be = OR(as, bd)
+  // as OR bd -> be
+
+bf = AND(as, bd)
+  // as AND bd -> bf
+
+bg = NOT(bf)
+  // NOT bf -> bg
+
+bh = AND(be, bg)
+  // be AND bg -> bh
+
+bi = AND(1, bh)
+  // 1 AND bh -> bi
+
+bj = LSHIFT(ap, 1)
+  // ap LSHIFT 1 -> bj
+
+bk = OR(bj, bi)
+  // bj OR bi -> bk
+
+bl = RSHIFT(as, 1)
+  // as RSHIFT 1 -> bl
+
+bm = LSHIFT(bi, 15)
+  // bi LSHIFT 15 -> bm
+
+bn = OR(bl, bm)
+  // bl OR bm -> bn
+
+bo = RSHIFT(bn, 2)
+  // bn RSHIFT 2 -> bo
+
+bp = RSHIFT(bn, 3)
+  // bn RSHIFT 3 -> bp
+
+bq = RSHIFT(bn, 5)
+  // bn RSHIFT 5 -> bq
+
+br = OR(bp, bq)
+  // bp OR bq -> br
+
+bs = AND(bp, bq)
+  // bp AND bq -> bs
+
+bt = NOT(bs)
+  // NOT bs -> bt
+
+bu = AND(br, bt)
+  // br AND bt -> bu
+
+bv = OR(bo, bu)
+  // bo OR bu -> bv
+
+bw = AND(bo, bu)
+  // bo AND bu -> bw
+
+bx = NOT(bw)
+  // NOT bw -> bx
+
+by = AND(bv, bx)
+  // bv AND bx -> by
+
+bz = OR(bn, by)
+  // bn OR by -> bz
+
+c = ASSIGN(0)
+  // 0 -> c
+
+ca = AND(bn, by)
+  // bn AND by -> ca
+
+cb = NOT(ca)
+  // NOT ca -> cb
+
+cc = AND(bz, cb)
+  // bz AND cb -> cc
+
+cd = AND(1, cc)
+  // 1 AND cc -> cd
+
+ce = LSHIFT(bk, 1)
+  // bk LSHIFT 1 -> ce
+
+cf = OR(ce, cd)
+  // ce OR cd -> cf
+
+cg = RSHIFT(bn, 1)
+  // bn RSHIFT 1 -> cg
+
+ch = LSHIFT(cd, 15)
+  // cd LSHIFT 15 -> ch
+
+ci = OR(cg, ch)
+  // cg OR ch -> ci
+
+cj = RSHIFT(ci, 2)
+  // ci RSHIFT 2 -> cj
+
+ck = RSHIFT(ci, 3)
+  // ci RSHIFT 3 -> ck
+
+cl = RSHIFT(ci, 5)
+  // ci RSHIFT 5 -> cl
+
+cm = OR(ck, cl)
+  // ck OR cl -> cm
+
+cn = AND(ck, cl)
+  // ck AND cl -> cn
+
+co = NOT(cn)
+  // NOT cn -> co
+
+cp = AND(cm, co)
+  // cm AND co -> cp
+
+cq = OR(cj, cp)
+  // cj OR cp -> cq
+
+cr = AND(cj, cp)
+  // cj AND cp -> cr
+
+cs = NOT(cr)
+  // NOT cr -> cs
+
+ct = AND(cq, cs)
+  // cq AND cs -> ct
+
+cu = OR(ci, ct)
+  // ci OR ct -> cu
+
+cv = AND(ci, ct)
+  // ci AND ct -> cv
+
+cw = NOT(cv)
+  // NOT cv -> cw
+
+cx = AND(cu, cw)
+  // cu AND cw -> cx
+
+cy = AND(1, cx)
+  // 1 AND cx -> cy
+
+cz = LSHIFT(cf, 1)
+  // cf LSHIFT 1 -> cz
+
+d = RSHIFT(b, 2)
+  // b RSHIFT 2 -> d
+
+da = OR(cz, cy)
+  // cz OR cy -> da
+
+db = RSHIFT(ci, 1)
+  // ci RSHIFT 1 -> db
+
+dc = LSHIFT(cy, 15)
+  // cy LSHIFT 15 -> dc
+
+dd = OR(db, dc)
+  // db OR dc -> dd
+
+de = RSHIFT(dd, 2)
+  // dd RSHIFT 2 -> de
+
+df = RSHIFT(dd, 3)
+  // dd RSHIFT 3 -> df
+
+dg = RSHIFT(dd, 5)
+  // dd RSHIFT 5 -> dg
+
+dh = OR(df, dg)
+  // df OR dg -> dh
+
+di = AND(df, dg)
+  // df AND dg -> di
+
+dj = NOT(di)
+  // NOT di -> dj
+
+dk = AND(dh, dj)
+  // dh AND dj -> dk
+
+dl = OR(de, dk)
+  // de OR dk -> dl
+
+dm = AND(de, dk)
+  // de AND dk -> dm
+
+dn = NOT(dm)
+  // NOT dm -> dn
+
+do = AND(dl, dn)
+  // dl AND dn -> do
+
+dp = OR(dd, do)
+  // dd OR do -> dp
+
+dq = AND(dd, do)
+  // dd AND do -> dq
+
+dr = NOT(dq)
+  // NOT dq -> dr
+
+ds = AND(dp, dr)
+  // dp AND dr -> ds
+
+dt = AND(1, ds)
+  // 1 AND ds -> dt
+
+du = LSHIFT(da, 1)
+  // da LSHIFT 1 -> du
+
+dv = OR(du, dt)
+  // du OR dt -> dv
+
+dw = RSHIFT(dd, 1)
+  // dd RSHIFT 1 -> dw
+
+dx = LSHIFT(dt, 15)
+  // dt LSHIFT 15 -> dx
+
+dy = OR(dw, dx)
+  // dw OR dx -> dy
+
+dz = RSHIFT(dy, 2)
+  // dy RSHIFT 2 -> dz
+
+e = RSHIFT(b, 3)
+  // b RSHIFT 3 -> e
+
+ea = RSHIFT(dy, 3)
+  // dy RSHIFT 3 -> ea
+
+eb = RSHIFT(dy, 5)
+  // dy RSHIFT 5 -> eb
+
+ec = OR(ea, eb)
+  // ea OR eb -> ec
+
+ed = AND(ea, eb)
+  // ea AND eb -> ed
+
+ee = NOT(ed)
+  // NOT ed -> ee
+
+ef = AND(ec, ee)
+  // ec AND ee -> ef
+
+eg = OR(dz, ef)
+  // dz OR ef -> eg
+
+eh = AND(dz, ef)
+  // dz AND ef -> eh
+
+ei = NOT(eh)
+  // NOT eh -> ei
+
+ej = AND(eg, ei)
+  // eg AND ei -> ej
+
+ek = OR(dy, ej)
+  // dy OR ej -> ek
+
+el = AND(dy, ej)
+  // dy AND ej -> el
+
+em = NOT(el)
+  // NOT el -> em
+
+en = AND(ek, em)
+  // ek AND em -> en
+
+eo = AND(1, en)
+  // 1 AND en -> eo
+
+ep = LSHIFT(dv, 1)
+  // dv LSHIFT 1 -> ep
+
+eq = OR(ep, eo)
+  // ep OR eo -> eq
+
+er = RSHIFT(dy, 1)
+  // dy RSHIFT 1 -> er
+
+es = LSHIFT(eo, 15)
+  // eo LSHIFT 15 -> es
+
+et = OR(er, es)
+  // er OR es -> et
+
+eu = RSHIFT(et, 2)
+  // et RSHIFT 2 -> eu
+
+ev = RSHIFT(et, 3)
+  // et RSHIFT 3 -> ev
+
+ew = RSHIFT(et, 5)
+  // et RSHIFT 5 -> ew
+
+ex = OR(ev, ew)
+  // ev OR ew -> ex
+
+ey = AND(ev, ew)
+  // ev AND ew -> ey
+
+ez = NOT(ey)
+  // NOT ey -> ez
+
+f = RSHIFT(b, 5)
+  // b RSHIFT 5 -> f
+
+fa = AND(ex, ez)
+  // ex AND ez -> fa
+
+fb = OR(eu, fa)
+  // eu OR fa -> fb
+
+fc = AND(eu, fa)
+  // eu AND fa -> fc
+
+fd = NOT(fc)
+  // NOT fc -> fd
+
+fe = AND(fb, fd)
+  // fb AND fd -> fe
+
+ff = OR(et, fe)
+  // et OR fe -> ff
+
+fg = AND(et, fe)
+  // et AND fe -> fg
+
+fh = NOT(fg)
+  // NOT fg -> fh
+
+fi = AND(ff, fh)
+  // ff AND fh -> fi
+
+fj = AND(1, fi)
+  // 1 AND fi -> fj
+
+fk = LSHIFT(eq, 1)
+  // eq LSHIFT 1 -> fk
+
+fl = OR(fk, fj)
+  // fk OR fj -> fl
+
+fm = RSHIFT(et, 1)
+  // et RSHIFT 1 -> fm
+
+fn = LSHIFT(fj, 15)
+  // fj LSHIFT 15 -> fn
+
+fo = OR(fm, fn)
+  // fm OR fn -> fo
+
+fp = RSHIFT(fo, 2)
+  // fo RSHIFT 2 -> fp
+
+fq = RSHIFT(fo, 3)
+  // fo RSHIFT 3 -> fq
+
+fr = RSHIFT(fo, 5)
+  // fo RSHIFT 5 -> fr
+
+fs = OR(fq, fr)
+  // fq OR fr -> fs
+
+ft = AND(fq, fr)
+  // fq AND fr -> ft
+
+fu = NOT(ft)
+  // NOT ft -> fu
+
+fv = AND(fs, fu)
+  // fs AND fu -> fv
+
+fw = OR(fp, fv)
+  // fp OR fv -> fw
+
+fx = AND(fp, fv)
+  // fp AND fv -> fx
+
+fy = NOT(fx)
+  // NOT fx -> fy
+
+fz = AND(fw, fy)
+  // fw AND fy -> fz
+
+g = OR(e, f)
+  // e OR f -> g
+
+ga = OR(fo, fz)
+  // fo OR fz -> ga
+
+gb = AND(fo, fz)
+  // fo AND fz -> gb
+
+gc = NOT(gb)
+  // NOT gb -> gc
+
+gd = AND(ga, gc)
+  // ga AND gc -> gd
+
+ge = AND(1, gd)
+  // 1 AND gd -> ge
+
+gf = LSHIFT(fl, 1)
+  // fl LSHIFT 1 -> gf
+
+gg = OR(gf, ge)
+  // gf OR ge -> gg
+
+gh = RSHIFT(fo, 1)
+  // fo RSHIFT 1 -> gh
+
+gi = LSHIFT(ge, 15)
+  // ge LSHIFT 15 -> gi
+
+gj = OR(gh, gi)
+  // gh OR gi -> gj
+
+gk = RSHIFT(gj, 2)
+  // gj RSHIFT 2 -> gk
+
+gl = RSHIFT(gj, 3)
+  // gj RSHIFT 3 -> gl
+
+gm = RSHIFT(gj, 5)
+  // gj RSHIFT 5 -> gm
+
+gn = OR(gl, gm)
+  // gl OR gm -> gn
+
+go = AND(gl, gm)
+  // gl AND gm -> go
+
+gp = NOT(go)
+  // NOT go -> gp
+
+gq = AND(gn, gp)
+  // gn AND gp -> gq
+
+gr = OR(gk, gq)
+  // gk OR gq -> gr
+
+gs = AND(gk, gq)
+  // gk AND gq -> gs
+
+gt = NOT(gs)
+  // NOT gs -> gt
+
+gu = AND(gr, gt)
+  // gr AND gt -> gu
+
+gv = OR(gj, gu)
+  // gj OR gu -> gv
+
+gw = AND(gj, gu)
+  // gj AND gu -> gw
+
+gx = NOT(gw)
+  // NOT gw -> gx
+
+gy = AND(gv, gx)
+  // gv AND gx -> gy
+
+gz = AND(1, gy)
+  // 1 AND gy -> gz
+
+h = AND(e, f)
+  // e AND f -> h
+
+ha = LSHIFT(gg, 1)
+  // gg LSHIFT 1 -> ha
+
+hb = OR(ha, gz)
+  // ha OR gz -> hb
+
+hc = RSHIFT(gj, 1)
+  // gj RSHIFT 1 -> hc
+
+hd = LSHIFT(gz, 15)
+  // gz LSHIFT 15 -> hd
+
+he = OR(hc, hd)
+  // hc OR hd -> he
+
+hf = RSHIFT(he, 2)
+  // he RSHIFT 2 -> hf
+
+hg = RSHIFT(he, 3)
+  // he RSHIFT 3 -> hg
+
+hh = RSHIFT(he, 5)
+  // he RSHIFT 5 -> hh
+
+hi = OR(hg, hh)
+  // hg OR hh -> hi
+
+hj = AND(hg, hh)
+  // hg AND hh -> hj
+
+hk = NOT(hj)
+  // NOT hj -> hk
+
+hl = AND(hi, hk)
+  // hi AND hk -> hl
+
+hm = OR(hf, hl)
+  // hf OR hl -> hm
+
+hn = AND(hf, hl)
+  // hf AND hl -> hn
+
+ho = NOT(hn)
+  // NOT hn -> ho
+
+hp = AND(hm, ho)
+  // hm AND ho -> hp
+
+hq = OR(he, hp)
+  // he OR hp -> hq
+
+hr = AND(he, hp)
+  // he AND hp -> hr
+
+hs = NOT(hr)
+  // NOT hr -> hs
+
+ht = AND(hq, hs)
+  // hq AND hs -> ht
+
+hu = AND(1, ht)
+  // 1 AND ht -> hu
+
+hv = LSHIFT(hb, 1)
+  // hb LSHIFT 1 -> hv
+
+hw = OR(hv, hu)
+  // hv OR hu -> hw
+
+hx = RSHIFT(he, 1)
+  // he RSHIFT 1 -> hx
+
+hy = LSHIFT(hu, 15)
+  // hu LSHIFT 15 -> hy
+
+hz = OR(hx, hy)
+  // hx OR hy -> hz
+
+i = NOT(h)
+  // NOT h -> i
+
+ia = RSHIFT(hz, 2)
+  // hz RSHIFT 2 -> ia
+
+ib = RSHIFT(hz, 3)
+  // hz RSHIFT 3 -> ib
+
+ic = RSHIFT(hz, 5)
+  // hz RSHIFT 5 -> ic
+
+id = OR(ib, ic)
+  // ib OR ic -> id
+
+ie = AND(ib, ic)
+  // ib AND ic -> ie
+
+if = NOT(ie)
+  // NOT ie -> if
+
+ig = AND(id, if)
+  // id AND if -> ig
+
+ih = OR(ia, ig)
+  // ia OR ig -> ih
+
+ii = AND(ia, ig)
+  // ia AND ig -> ii
+
+ij = NOT(ii)
+  // NOT ii -> ij
+
+ik = AND(ih, ij)
+  // ih AND ij -> ik
+
+il = OR(hz, ik)
+  // hz OR ik -> il
+
+im = AND(hz, ik)
+  // hz AND ik -> im
+
+in = NOT(im)
+  // NOT im -> in
+
+io = AND(il, in)
+  // il AND in -> io
+
+ip = AND(1, io)
+  // 1 AND io -> ip
+
+iq = LSHIFT(hw, 1)
+  // hw LSHIFT 1 -> iq
+
+ir = OR(iq, ip)
+  // iq OR ip -> ir
+
+is = RSHIFT(hz, 1)
+  // hz RSHIFT 1 -> is
+
+it = LSHIFT(ip, 15)
+  // ip LSHIFT 15 -> it
+
+iu = OR(is, it)
+  // is OR it -> iu
+
+iv = RSHIFT(iu, 2)
+  // iu RSHIFT 2 -> iv
+
+iw = RSHIFT(iu, 3)
+  // iu RSHIFT 3 -> iw
+
+ix = RSHIFT(iu, 5)
+  // iu RSHIFT 5 -> ix
+
+iy = OR(iw, ix)
+  // iw OR ix -> iy
+
+iz = AND(iw, ix)
+  // iw AND ix -> iz
+
+j = AND(g, i)
+  // g AND i -> j
+
+ja = NOT(iz)
+  // NOT iz -> ja
+
+jb = AND(iy, ja)
+  // iy AND ja -> jb
+
+jc = OR(iv, jb)
+  // iv OR jb -> jc
+
+jd = AND(iv, jb)
+  // iv AND jb -> jd
+
+je = NOT(jd)
+  // NOT jd -> je
+
+jf = AND(jc, je)
+  // jc AND je -> jf
+
+jg = OR(iu, jf)
+  // iu OR jf -> jg
+
+jh = AND(iu, jf)
+  // iu AND jf -> jh
+
+ji = NOT(jh)
+  // NOT jh -> ji
+
+jj = AND(jg, ji)
+  // jg AND ji -> jj
+
+jk = AND(1, jj)
+  // 1 AND jj -> jk
+
+jl = LSHIFT(ir, 1)
+  // ir LSHIFT 1 -> jl
+
+jm = OR(jl, jk)
+  // jl OR jk -> jm
+
+jn = RSHIFT(iu, 1)
+  // iu RSHIFT 1 -> jn
+
+jo = LSHIFT(jk, 15)
+  // jk LSHIFT 15 -> jo
+
+jp = OR(jn, jo)
+  // jn OR jo -> jp
+
+jq = RSHIFT(jp, 2)
+  // jp RSHIFT 2 -> jq
+
+jr = RSHIFT(jp, 3)
+  // jp RSHIFT 3 -> jr
+
+js = RSHIFT(jp, 5)
+  // jp RSHIFT 5 -> js
+
+jt = OR(jr, js)
+  // jr OR js -> jt
+
+ju = AND(jr, js)
+  // jr AND js -> ju
+
+jv = NOT(ju)
+  // NOT ju -> jv
+
+jw = AND(jt, jv)
+  // jt AND jv -> jw
+
+jx = OR(jq, jw)
+  // jq OR jw -> jx
+
+jy = AND(jq, jw)
+  // jq AND jw -> jy
+
+jz = NOT(jy)
+  // NOT jy -> jz
+
+k = OR(d, j)
+  // d OR j -> k
+
+ka = AND(jx, jz)
+  // jx AND jz -> ka
+
+kb = OR(jp, ka)
+  // jp OR ka -> kb
+
+kc = AND(jp, ka)
+  // jp AND ka -> kc
+
+kd = NOT(kc)
+  // NOT kc -> kd
+
+ke = AND(kb, kd)
+  // kb AND kd -> ke
+
+kf = AND(1, ke)
+  // 1 AND ke -> kf
+
+kg = LSHIFT(jm, 1)
+  // jm LSHIFT 1 -> kg
+
+kh = OR(kg, kf)
+  // kg OR kf -> kh
+
+ki = RSHIFT(jp, 1)
+  // jp RSHIFT 1 -> ki
+
+kj = LSHIFT(kf, 15)
+  // kf LSHIFT 15 -> kj
+
+kk = OR(ki, kj)
+  // ki OR kj -> kk
+
+kl = RSHIFT(kk, 2)
+  // kk RSHIFT 2 -> kl
+
+km = RSHIFT(kk, 3)
+  // kk RSHIFT 3 -> km
+
+kn = RSHIFT(kk, 5)
+  // kk RSHIFT 5 -> kn
+
+ko = OR(km, kn)
+  // km OR kn -> ko
+
+kp = AND(km, kn)
+  // km AND kn -> kp
+
+kq = NOT(kp)
+  // NOT kp -> kq
+
+kr = AND(ko, kq)
+  // ko AND kq -> kr
+
+ks = OR(kl, kr)
+  // kl OR kr -> ks
+
+kt = AND(kl, kr)
+  // kl AND kr -> kt
+
+ku = NOT(kt)
+  // NOT kt -> ku
+
+kv = AND(ks, ku)
+  // ks AND ku -> kv
+
+kw = OR(kk, kv)
+  // kk OR kv -> kw
+
+kx = AND(kk, kv)
+  // kk AND kv -> kx
+
+ky = NOT(kx)
+  // NOT kx -> ky
+
+kz = AND(kw, ky)
+  // kw AND ky -> kz
+
+l = AND(d, j)
+  // d AND j -> l
+
+la = AND(1, kz)
+  // 1 AND kz -> la
+
+lb = LSHIFT(kh, 1)
+  // kh LSHIFT 1 -> lb
+
+lc = OR(lb, la)
+  // lb OR la -> lc
+
+ld = RSHIFT(kk, 1)
+  // kk RSHIFT 1 -> ld
+
+le = LSHIFT(la, 15)
+  // la LSHIFT 15 -> le
+
+lf = OR(ld, le)
+  // ld OR le -> lf
+
+lg = RSHIFT(lf, 2)
+  // lf RSHIFT 2 -> lg
+
+lh = RSHIFT(lf, 3)
+  // lf RSHIFT 3 -> lh
+
+li = RSHIFT(lf, 5)
+  // lf RSHIFT 5 -> li
+
+lj = OR(lh, li)
+  // lh OR li -> lj
+
+lk = AND(lh, li)
+  // lh AND li -> lk
+
+ll = NOT(lk)
+  // NOT lk -> ll
+
+lm = AND(lj, ll)
+  // lj AND ll -> lm
+
+ln = OR(lg, lm)
+  // lg OR lm -> ln
+
+lo = AND(lg, lm)
+  // lg AND lm -> lo
+
+lp = NOT(lo)
+  // NOT lo -> lp
+
+lq = AND(ln, lp)
+  // ln AND lp -> lq
+
+lr = OR(lf, lq)
+  // lf OR lq -> lr
+
+ls = AND(lf, lq)
+  // lf AND lq -> ls
+
+lt = NOT(ls)
+  // NOT ls -> lt
+
+lu = AND(lr, lt)
+  // lr AND lt -> lu
+
+lv = AND(1, lu)
+  // 1 AND lu -> lv
+
+lw = LSHIFT(lc, 1)
+  // lc LSHIFT 1 -> lw
+
+lx = OR(lw, lv)
+  // lw OR lv -> lx
+
+m = NOT(l)
+  // NOT l -> m
+
+n = AND(k, m)
+  // k AND m -> n
+
+o = OR(b, n)
+  // b OR n -> o
+
+p = AND(b, n)
+  // b AND n -> p
+
+q = NOT(p)
+  // NOT p -> q
+
+r = AND(o, q)
+  // o AND q -> r
+
+s = AND(1, r)
+  // 1 AND r -> s
+
+t = LSHIFT(c, 1)
+  // c LSHIFT 1 -> t
+
+u = OR(t, s)
+  // t OR s -> u
+
+v = RSHIFT(b, 1)
+  // b RSHIFT 1 -> v
+
+w = LSHIFT(s, 15)
+  // s LSHIFT 15 -> w
+
+x = OR(v, w)
+  // v OR w -> x
+
+y = RSHIFT(x, 2)
+  // x RSHIFT 2 -> y
+
+z = RSHIFT(x, 3)
+  // x RSHIFT 3 -> z
+

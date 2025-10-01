@@ -72,7 +72,8 @@ pub struct Instruction {
 pub struct Circuit {
     // TODO: Define circuit state:
     instructions: HashMap<String, Instruction>, // (wire -> instruction)
-    memo: HashMap<String, u16> // (wire -> cached value)
+    memo: HashMap<String, u16>, // (wire -> cached value)
+    debug: bool // Enable debug output
 }
 
 impl Circuit {
@@ -81,34 +82,139 @@ impl Circuit {
         Circuit {
             instructions: HashMap::new(),
             memo: HashMap::new(),
+            debug: false,
+        }
+    }
+    
+    /// Create a new circuit with debug enabled
+    pub fn new_with_debug(debug: bool) -> Self {
+        Circuit {
+            instructions: HashMap::new(),
+            memo: HashMap::new(),
+            debug,
         }
     }
     
     /// Parse and add an instruction to the circuit
     pub fn add_instruction(&mut self, line: &str) -> Result<()> {
-        // TODO: Parse instruction and add to circuit
-        // Examples to handle:
-        // - "123 -> x"
-        // - "x AND y -> z"  
-        // - "NOT e -> f"
-        // - "p LSHIFT 2 -> q"
-        todo!("Parse and store instruction: {}", line)
+        let instruction = parse_instruction(line)?;
+        
+        if self.debug {
+            println!("📝 Adding instruction: {} -> {}", line.trim(), instruction.output_wire);
+            println!("   Parsed as: {:?}", instruction.operation);
+        }
+        
+        self.instructions.insert(instruction.output_wire.clone(), instruction);
+        
+        if self.debug {
+            println!("🔧 Instructions table now has {} entries", self.instructions.len());
+            self.print_instructions_table();
+        }
+        
+        Ok(())
     }
     
     /// Get the signal value for a specific wire
     pub fn get_wire_value(&mut self, wire_name: &str) -> Result<u16> {
-        // TODO: Implement recursive evaluation with memoization
-        // 1. Check if value already computed (memoization)
-        // 2. If not, look up instruction for this wire
-        // 3. Recursively evaluate input dependencies  
-        // 4. Apply operation to get result
-        // 5. Cache result and return
-        todo!("Evaluate wire value for: {}", wire_name)
+        use anyhow::anyhow;
+        
+        if self.debug {
+            println!("🔍 Evaluating wire '{}'", wire_name);
+        }
+        
+        // Check memoization first
+        if let Some(&cached) = self.memo.get(wire_name) {
+            if self.debug {
+                println!("💾 Found cached value for '{}': {}", wire_name, cached);
+            }
+            return Ok(cached);
+        }
+        
+        // Look up instruction
+        let instruction = self.instructions.get(wire_name)
+            .ok_or_else(|| anyhow!("No instruction found for wire: {}", wire_name))?
+            .clone();
+        
+        if self.debug {
+            println!("⚙️  Executing operation: {:?}", instruction.operation);
+        }
+        
+        // Evaluate based on operation
+        let result = match instruction.operation {
+            Operation::Assign(input) => self.evaluate_input(&input)?,
+            Operation::And(a, b) => self.evaluate_input(&a)? & self.evaluate_input(&b)?,
+            Operation::Or(a, b) => self.evaluate_input(&a)? | self.evaluate_input(&b)?,
+            Operation::Not(input) => !self.evaluate_input(&input)?,
+            Operation::LShift(input, amount) => self.evaluate_input(&input)? << self.evaluate_input(&amount)?,
+            Operation::RShift(input, amount) => self.evaluate_input(&input)? >> self.evaluate_input(&amount)?,
+        };
+        
+        if self.debug {
+            println!("✅ Wire '{}' evaluated to: {}", wire_name, result);
+        }
+        
+        // Cache and return
+        self.memo.insert(wire_name.to_string(), result);
+        
+        if self.debug {
+            println!("💾 Cached '{}' = {}", wire_name, result);
+            self.print_memo_table();
+        }
+        
+        Ok(result)
+    }
+    
+    /// Helper function to evaluate a WireInput (either direct value or wire reference)
+    fn evaluate_input(&mut self, input: &WireInput) -> Result<u16> {
+        match input {
+            WireInput::Direct(value) => {
+                if self.debug {
+                    println!("    📊 Direct value: {}", value);
+                }
+                Ok(*value)
+            },
+            WireInput::Wire(wire_name) => {
+                if self.debug {
+                    println!("    🔗 Looking up wire: {}", wire_name);
+                }
+                self.get_wire_value(wire_name)
+            },
+        }
+    }
+    
+    /// Print the current instructions table (debug helper)
+    fn print_instructions_table(&self) {
+        println!("📋 Instructions Table:");
+        let mut wires: Vec<_> = self.instructions.keys().collect();
+        wires.sort();
+        for wire in wires {
+            if let Some(instruction) = self.instructions.get(wire) {
+                println!("  {} -> {:?}", wire, instruction.operation);
+            }
+        }
+        println!();
+    }
+    
+    /// Print the current memoization table (debug helper)
+    fn print_memo_table(&self) {
+        if self.memo.is_empty() {
+            println!("💾 Memo Table: (empty)");
+        } else {
+            println!("💾 Memo Table:");
+            let mut wires: Vec<_> = self.memo.keys().collect();
+            wires.sort();
+            for wire in wires {
+                if let Some(&value) = self.memo.get(wire) {
+                    println!("  {} = {}", wire, value);
+                }
+            }
+        }
+        println!();
     }
 }
 
 /// Parse a wire input (either numeric value or wire reference)
-fn parse_wire_input(input: &str) -> Result<WireInput> {
+pub fn parse_wire_input(input: &str) -> Result<WireInput> {
     use anyhow::anyhow;
     
     let trimmed = input.trim();
@@ -133,7 +239,7 @@ fn parse_wire_input(input: &str) -> Result<WireInput> {
 }
 
 /// Parse a complete instruction line
-fn parse_instruction(line: &str) -> Result<Instruction> {
+pub fn parse_instruction(line: &str) -> Result<Instruction> {
     use anyhow::anyhow;
     
     let trimmed = line.trim();
@@ -206,67 +312,98 @@ fn parse_instruction(line: &str) -> Result<Instruction> {
     })
 }
 
-/// Apply a bitwise operation to input values
-fn apply_operation(operation: &Operation, inputs: &[u16]) -> Result<u16> {
-    use anyhow::anyhow;
+/// Day 07 Part 1: Find the signal provided to wire 'a'
+pub fn solve_part1(input: &str) -> Result<String> {
+    solve_part1_with_debug(input, false)
+}
+
+/// Day 07 Part 1 with debug output
+pub fn solve_part1_with_debug(input: &str, debug: bool) -> Result<String> {
+    let mut circuit = Circuit::new_with_debug(debug);
     
-    let result = match operation {
-        Operation::Assign(_) => {
-            if inputs.len() != 1 {
-                return Err(anyhow!("Assign operation requires exactly 1 input, got {}", inputs.len()));
-            }
-            inputs[0]
+    if debug {
+        println!("🚀 Starting Day 7 Part 1 with DEBUG enabled");
+        println!("📥 Processing {} lines of input", input.lines().count());
+        println!();
+    }
+    
+    for line in input.lines().filter(|line| !line.is_empty()) {
+        // Parse and apply each instruction directly to the circuit
+        circuit.add_instruction(line)?;
+    }
+    
+    if debug {
+        println!("🎯 Evaluating final result for wire 'a':");
+    }
+    
+    let result = circuit.get_wire_value("a")?;
+    
+    if debug {
+        println!("🏁 Final result: {}", result);
+    }
+    
+    Ok(result.to_string())
+}
+
+/// Day 07 Part 2: Override wire 'b' with Part 1's result and recalculate
+pub fn solve_part2(input: &str) -> Result<String> {
+    solve_part2_with_debug(input, false)
+}
+
+/// Day 07 Part 2 with debug output
+pub fn solve_part2_with_debug(input: &str, debug: bool) -> Result<String> {
+    if debug {
+        println!("🚀 Starting Day 7 Part 2 with DEBUG enabled");
+        println!("📥 First, calculating Part 1 result...");
+        println!();
+    }
+    
+    // Step 1: Get the signal from wire 'a' in the original circuit (Part 1 result)
+    let part1_result = {
+        let mut circuit = Circuit::new_with_debug(debug && false); // Don't debug Part 1 calculation
+        for line in input.lines().filter(|line| !line.is_empty()) {
+            circuit.add_instruction(line)?;
         }
-        Operation::And(_, _) => {
-            if inputs.len() != 2 {
-                return Err(anyhow!("And operation requires exactly 2 inputs, got {}", inputs.len()));
-            }
-            inputs[0] & inputs[1]
-        }
-        Operation::Or(_, _) => {
-            if inputs.len() != 2 {
-                return Err(anyhow!("Or operation requires exactly 2 inputs, got {}", inputs.len()));
-            }
-            inputs[0] | inputs[1]
-        }
-        Operation::Not(_) => {
-            if inputs.len() != 1 {
-                return Err(anyhow!("Not operation requires exactly 1 input, got {}", inputs.len()));
-            }
-            !inputs[0]
-        }
-        Operation::LShift(_, _) => {
-            if inputs.len() != 2 {
-                return Err(anyhow!("LShift operation requires exactly 2 inputs, got {}", inputs.len()));
-            }
-            inputs[0] << inputs[1]
-        }
-        Operation::RShift(_, _) => {
-            if inputs.len() != 2 {
-                return Err(anyhow!("RShift operation requires exactly 2 inputs, got {}", inputs.len()));
-            }
-            inputs[0] >> inputs[1]
-        }
+        circuit.get_wire_value("a")?
     };
     
-    Ok(result)
-}
-
-/// Day 07 Part 1: Find the signal provided to wire 'a'
-pub fn solve_part1(_input: &str) -> Result<String> {
-    // TODO: Main solving logic
-    // 1. Create new circuit
-    // 2. Parse all instructions and add to circuit
-    // 3. Evaluate wire 'a' to get final signal value
-    // 4. Return as string
-    todo!("Solve Part 1: Find signal on wire 'a'")
-}
-
-/// Day 07 Part 2: [REDACTED - No spoilers!]
-pub fn solve_part2(_input: &str) -> Result<String> {
-    // TODO: Part 2 will be implemented after Part 1 is complete
-    // No spoilers - wait for Part 2 requirements!
-    todo!("Part 2 implementation - TBD")
+    if debug {
+        println!("✅ Part 1 result: {}", part1_result);
+        println!("🔄 Now creating modified circuit with b = {}...", part1_result);
+        println!();
+    }
+    
+    // Step 2: Create a new circuit with modified input
+    let mut circuit = Circuit::new_with_debug(debug);
+    
+    // Step 3: Process all instructions, but override any instruction targeting wire 'b'
+    for line in input.lines().filter(|line| !line.is_empty()) {
+        // Check if this instruction targets wire 'b'
+        if line.trim().ends_with(" -> b") {
+            // Override: use Part 1's result as the new value for wire 'b'
+            let override_instruction = format!("{} -> b", part1_result);
+            if debug {
+                println!("🔄 Overriding: '{}' with '{}'", line.trim(), override_instruction);
+            }
+            circuit.add_instruction(&override_instruction)?;
+        } else {
+            // Use original instruction
+            circuit.add_instruction(line)?;
+        }
+    }
+    
+    if debug {
+        println!("🎯 Evaluating final result for wire 'a' with modified circuit:");
+    }
+    
+    // Step 4: Calculate the new signal on wire 'a'
+    let result = circuit.get_wire_value("a")?;
+    
+    if debug {
+        println!("🏁 Part 2 final result: {}", result);
+    }
+    
+    Ok(result.to_string())
 }
 
 // ============================================================================

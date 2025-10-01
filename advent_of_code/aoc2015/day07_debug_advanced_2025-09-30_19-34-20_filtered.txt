@@ -1,0 +1,50 @@
+≡ƒÉ¢ Debug mode enabled for Day 7
+≡ƒôü Using input file: inputs\day07_example.txt
+≡ƒÜÇ Starting Day 7 Part 1 with DEBUG enabled
+≡ƒôÑ Processing 339 lines of input
+≡ƒô¥ Adding instruction: lf AND lq -> ls -> ls
+≡ƒöº Instructions table now has 1 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: iu RSHIFT 1 -> jn -> jn
+≡ƒöº Instructions table now has 2 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: bo OR bu -> bv -> bv
+≡ƒöº Instructions table now has 3 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: gj RSHIFT 1 -> hc -> hc
+≡ƒöº Instructions table now has 4 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: et RSHIFT 2 -> eu -> eu
+≡ƒöº Instructions table now has 5 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: bv AND bx -> by -> by
+≡ƒöº Instructions table now has 6 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: is OR it -> iu -> iu
+≡ƒöº Instructions table now has 7 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: b OR n -> o -> o
+≡ƒöº Instructions table now has 8 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: gf OR ge -> gg -> gg
+≡ƒöº Instructions table now has 9 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: NOT kt -> ku -> ku
+≡ƒöº Instructions table now has 10 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: ea AND eb -> ed -> ed
+≡ƒöº Instructions table now has 11 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: kl OR kr -> ks -> ks
+≡ƒöº Instructions table now has 12 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: hi AND hk -> hl -> hl
+≡ƒöº Instructions table now has 13 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: au AND av -> ax -> ax
+≡ƒöº Instructions table now has 14 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: lf RSHIFT 2 -> lg -> lg
+≡ƒöº Instructions table now has 15 entries
+≡ƒôï Instructions Table:
+≡ƒô¥ Adding instruction: dd RSHIFT 3 -> df -> df
