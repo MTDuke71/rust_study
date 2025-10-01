@@ -1,10 +1,42 @@
 //! # Chapter 6.1: Defining Enums
 //!
-//! Demonstrates how to define and use enums in Rust, including:
-//! - Basic enum definitions
-//! - Enums with associated data
-//! - Enum methods
-//! - The Option<T> enum
+//! ## 📚 What You'll Learn
+//!
+//! Enums (enumerations) are one of Rust's most powerful features. They allow you to
+//! define a type by enumerating its possible variants. Unlike enums in C/C++, Rust
+//! enums can hold data, making them similar to "sum types" in functional programming.
+//!
+//! ## 🎯 Key Concepts Covered
+//!
+//! 1. **Basic Enums**: Simple variants without data
+//! 2. **Enums with Data**: Each variant can hold different types of data
+//! 3. **Enum Methods**: Adding behavior with `impl` blocks
+//! 4. **Option<T>**: Rust's built-in enum for handling optional values (no null!)
+//! 5. **Real-World Usage**: HTTP status codes, state machines
+//! 6. **AoC Patterns**: Direction enums for grid-based problems
+//!
+//! ## ⚠️ About the Warnings
+//!
+//! You may see compiler warnings about "unused fields" in this file. These are
+//! INTENTIONAL for educational purposes! We're demonstrating enum structure and
+//! syntax, not building production code. In real applications, you'd either:
+//! - Use all fields in pattern matching
+//! - Remove unused variants
+//! - Add `#[allow(dead_code)]` for legitimate reasons
+//!
+//! ## 💡 Why Enums Matter
+//!
+//! - **Type Safety**: Compiler ensures you handle all possible variants
+//! - **No Null Pointers**: Option<T> replaces null with compile-time checking
+//! - **Pattern Matching**: Exhaustive matching prevents bugs
+//! - **Mission5 Connection**: Enum-based instruction modeling (Day 7 AoC)
+//!
+//! ## 🔗 Related Concepts
+//!
+//! - [[Enum Patterns]] - Pattern matching strategies
+//! - [[Option Type]] - Handling absence of values safely
+//! - [[Result Type]] - Error handling with enums (Chapter 9)
+//! - [[Match Expressions]] - Exhaustive pattern matching (Chapter 6.2)
 //!
 //! Run with: `cargo run`
 
@@ -13,21 +45,25 @@ fn example1_basic_enums() {
     println!("====================================");
 
     // Simple enum with variants
-    #[derive(Debug)]
+    // Each variant is a possible value this type can have
+    // Think of it as: "An IpAddrKind is EITHER V4 OR V6, but not both"
+    #[derive(Debug)] // Allows us to print the enum with {:?}
     enum IpAddrKind {
-        V4,
-        V6,
+        V4, // Variant 1: IPv4 addressing
+        V6, // Variant 2: IPv6 addressing
     }
 
+    // Creating enum instances using :: syntax
     let four = IpAddrKind::V4;
     let six = IpAddrKind::V6;
 
     println!("IP Address kinds: {:?} and {:?}", four, six);
 
-    // Enum in a struct
+    // Enum in a struct - the OLD way (before we learned about enum data)
+    // This pattern is common in other languages, but Rust has a better way!
     struct IpAddr {
-        kind: IpAddrKind,
-        address: String,
+        kind: IpAddrKind,  // The type of IP address
+        address: String,    // The actual address as a string
     }
 
     let home = IpAddr {
@@ -36,6 +72,9 @@ fn example1_basic_enums() {
     };
 
     println!("Home address: {} ({:?})", home.address, home.kind);
+    
+    println!("\n💡 Note: This works, but Example 2 shows a better way!");
+    println!("   Enums can hold data directly, eliminating the need for separate structs.");
     println!();
 }
 
@@ -44,10 +83,20 @@ fn example2_enums_with_data() {
     println!("=========================================");
 
     // Enum variants can hold data directly
+    // 
+    // ⚠️ WARNING EXPLANATION: The compiler warns about unused fields (0, 1, 2, 3 in V4)
+    // This is INTENTIONAL for educational purposes - we're demonstrating enum structure,
+    // not fully using all data. In real code, you'd access these fields with pattern matching.
+    // 
+    // Example of accessing fields:
+    //   if let IpAddr::V4(a, b, c, d) = home {
+    //       println!("{}.{}.{}.{}", a, b, c, d);
+    //   }
+    #[allow(dead_code)] // Allow unused enum variant data for educational examples
     #[derive(Debug)]
     enum IpAddr {
-        V4(u8, u8, u8, u8),
-        V6(String),
+        V4(u8, u8, u8, u8),  // Each field is a separate u8 (0-255)
+        V6(String),          // IPv6 uses string representation
     }
 
     let home = IpAddr::V4(127, 0, 0, 1);
@@ -57,12 +106,20 @@ fn example2_enums_with_data() {
     println!("Loopback IP: {:?}", loopback);
 
     // Different variants can have different types
+    // 
+    // ⚠️ WARNING EXPLANATION: Similar to above - x, y fields and tuple fields aren't accessed
+    // This demonstrates that enum variants can have:
+    // - No data (Quit)
+    // - Named fields like a struct (Move)
+    // - Single values (Write)
+    // - Multiple tuple values (ChangeColor)
+    #[allow(dead_code)] // Educational example showing enum variant variety
     #[derive(Debug)]
     enum Message {
-        Quit,                       // No data
-        Move { x: i32, y: i32 },   // Named fields (like struct)
-        Write(String),              // Single value
-        ChangeColor(i32, i32, i32), // Multiple values (tuple)
+        Quit,                       // No data - represents a simple signal
+        Move { x: i32, y: i32 },   // Named fields (like struct) - represents position
+        Write(String),              // Single value - represents text message
+        ChangeColor(i32, i32, i32), // Multiple values (tuple) - represents RGB color
     }
 
     let msg1 = Message::Quit;
@@ -75,6 +132,11 @@ fn example2_enums_with_data() {
     println!("  {:?}", msg2);
     println!("  {:?}", msg3);
     println!("  {:?}", msg4);
+    
+    // 💡 KEY CONCEPT: Each enum variant can hold completely different data!
+    // This is much more flexible than structs, which have fixed fields.
+    println!("\n💡 Note: Each variant has different data - this flexibility is");
+    println!("   what makes enums powerful for modeling domain concepts!");
     println!();
 }
 
@@ -82,6 +144,13 @@ fn example3_enum_methods() {
     println!("🎯 Example 3: Enum Methods");
     println!("==========================");
 
+    // ⚠️ WARNING EXPLANATION: The enum variant data is accessed in the match arms,
+    // but Rust sometimes warns if you don't use all parts. We use #[allow(dead_code)]
+    // because this is an educational example focusing on method implementation patterns.
+    // 
+    // 💡 KEY LEARNING: Enums can have impl blocks just like structs!
+    // This allows you to add behavior specific to your enum type.
+    #[allow(dead_code)] // Allow unused fields in match patterns for clarity
     #[derive(Debug)]
     enum Message {
         Quit,
@@ -91,7 +160,9 @@ fn example3_enum_methods() {
     }
 
     // Enums can have methods just like structs!
+    // This is one of Rust's most powerful features - behavior and data together.
     impl Message {
+        // Method that processes the enum based on its variant
         fn call(&self) {
             match self {
                 Message::Quit => println!("  Quitting application..."),
@@ -103,12 +174,13 @@ fn example3_enum_methods() {
             }
         }
 
+        // Method that returns information about the variant
         fn description(&self) -> &str {
             match self {
                 Message::Quit => "quit message",
-                Message::Move { .. } => "move message",
-                Message::Write(_) => "write message",
-                Message::ChangeColor(_, _, _) => "color change message",
+                Message::Move { .. } => "move message",  // .. ignores fields we don't need
+                Message::Write(_) => "write message",     // _ ignores single field
+                Message::ChangeColor(_, _, _) => "color change message", // _ for each tuple field
             }
         }
     }
@@ -125,6 +197,9 @@ fn example3_enum_methods() {
         println!("\n{}: ", msg.description());
         msg.call();
     }
+    
+    println!("\n💡 Note: Methods allow enums to have behavior, not just data!");
+    println!("   This makes enums perfect for state machines and command patterns.");
     println!();
 }
 
