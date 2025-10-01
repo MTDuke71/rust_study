@@ -756,25 +756,25 @@ fn main() {
     println!("\n6. Zero-Cost Abstractions - Performance Benchmark:");
     
     // Helper functions for zero-cost demonstration
-    fn iterator_approach(data: &[i32]) -> i32 {
+    fn iterator_approach(data: &[i32]) -> i64 {
         data.iter()
-            .map(|x| x.wrapping_mul(x.wrapping_add(1)))
+            .map(|x| (*x as i64) * (*x as i64 + 1))
             .filter(|&x| x % 3 == 0)
             .sum()
     }
     
-    fn manual_approach(data: &[i32]) -> i32 {
-        let mut sum: i32 = 0;
+    fn manual_approach(data: &[i32]) -> i64 {
+        let mut sum: i64 = 0;
         for &x in data {
-            let result = x.wrapping_mul(x.wrapping_add(1));
+            let result = (x as i64) * (x as i64 + 1);
             if result % 3 == 0 {
-                sum = sum.wrapping_add(result);
+                sum += result;
             }
         }
         sum
     }
     
-    let benchmark_data: Vec<i32> = (0..100_000).collect();
+    let benchmark_data: Vec<i32> = (0..10_000).collect(); // Reduced size to prevent overflow
     
     // Warm up
     iterator_approach(&benchmark_data);
@@ -789,8 +789,8 @@ fn main() {
     let manual_result = manual_approach(&benchmark_data);
     let manual_time = start.elapsed();
     
-    println!("   Iterator result: {}", iter_result);
-    println!("   Manual result: {}", manual_result);
+    println!("   Iterator result: {} (using i64 to prevent overflow)", iter_result);
+    println!("   Manual result: {} (using i64 to prevent overflow)", manual_result);
     println!("   Results match: {}", iter_result == manual_result);
     println!("   Iterator time: {:?}", iter_time);
     println!("   Manual time: {:?}", manual_time);
