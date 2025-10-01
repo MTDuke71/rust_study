@@ -33,21 +33,74 @@ impl Rectangle {
         self.width *= factor;
         self.height *= factor;
     }
+
+      fn width(&self) -> bool {
+        self.width > 0
+    }
 }
 
 fn main() {
-    println!("Chapter 5.3 - Method Syntax");
+    println!("Chapter 5.3 - Method Syntax & Memory Address Analysis");
+    
+    // =============================================================================
+    // MEMORY ADDRESS PRINTING IN RUST (like C's pointer printing)
+    // =============================================================================
+    
+    println!("\n🔍 Memory Address Analysis:");
     
     let rect1 = Rectangle {
         width: 30,
         height: 50,
     };
     
+    // Print address of the struct itself
+    println!("   rect1 address: {:p}", &rect1);
+    
+    // Print addresses of individual fields
+    println!("   rect1.width address: {:p}", &rect1.width);
+    println!("   rect1.height address: {:p}", &rect1.height);
+    
+    // Stack vs Heap demonstration
+    let stack_rect = Rectangle::new(10, 20);
+    let heap_rect = Box::new(Rectangle::new(10, 20));
+    
+    println!("\n📚 Stack vs Heap Addresses:");
+    println!("   Stack rect: {:p}", &stack_rect);
+    println!("   Heap rect (Box): {:p}", heap_rect.as_ref());
+    println!("   Box itself: {:p}", &heap_rect);
+    
+    // Address changes with moves
+    println!("\n🚚 Move Semantics & Address Changes:");
+    let original = Rectangle::new(5, 5);
+    println!("   Original address: {:p}", &original);
+    
+    let moved = original;  // Move occurs here
+    println!("   After move: {:p}", &moved);
+    // Note: original is no longer accessible
+    
+    // Reference addresses vs value addresses
+    println!("\n🔗 Reference vs Value Addresses:");
+    let value = 42u32;
+    let reference = &value;
+    let reference_to_reference = &reference;
+    
+    println!("   Value address: {:p}", &value);
+    println!("   Reference points to: {:p}", reference);
+    println!("   Reference itself at: {:p}", &reference);
+    println!("   Ref-to-ref points to: {:p}", reference_to_reference);
+    println!("   Ref-to-ref itself at: {:p}", &reference_to_reference);
+    
     // Using method syntax
     println!(
         "The area of the rectangle is {} square pixels.",
         rect1.area()
     );
+    
+       if rect1.width() {
+        println!("The rectangle has a nonzero width; it is {}", rect1.width);
+    } else {
+        println!("The rectangle does not have a nonzero width; it is {}", rect1.width);
+    }
     
     // Multiple rectangles for can_hold example
     let rect2 = Rectangle {
