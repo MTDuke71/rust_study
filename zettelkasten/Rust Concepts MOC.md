@@ -33,6 +33,7 @@
 - [[Trait Objects]] - Dynamic dispatch patterns
 - [[Iterator Traits]] - Custom iteration implementations
 - [[Clone vs Copy]] - Value semantics understanding
+- [[PhantomData Type Safety Patterns]] - Zero-cost type safety with PhantomData
 
 ### **Module System & Organization**
 - [[Module Organization]] - Project structure and privacy

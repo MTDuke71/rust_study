@@ -641,7 +641,7 @@ fn pair_up<T, U>(first: T, second: U) -> (T, U) {
 
 fn find_max<T>(items: &[T]) -> Option<&T>
 where 
-    T: PartialOrd,
+    T: PartialOrd + Ord,
 {
     items.iter().max()
 }
@@ -822,7 +822,7 @@ fn main() {
     println!("   Success result: {:?}", success);
     println!("   Is success? {}", success.is_success());
     
-    let doubled = ProcessResult::Success(21).map(|x| x * 2);
+    let doubled: ProcessResult<i32, String> = ProcessResult::Success(42).map(|x| x * 2);
     println!("   Doubled result: {:?}", doubled);
     
     println!("\n=== Generics enable type-safe, reusable code! ===");

@@ -331,6 +331,148 @@ fn example8_aoc_pattern() {
     println!();
 }
 
+fn example9_let_else_happy_path() {
+    println!("😊 Example 9: Staying on the Happy Path with let...else");
+    println!("=======================================================");
+
+    // This example follows the official Rust Book's approach
+    // https://doc.rust-lang.org/stable/book/ch06-03-if-let.html
+
+    #[derive(Debug, Clone)]
+    enum UsState {
+        Alabama,
+        Alaska,
+        California,
+        Texas,
+    }
+
+    impl UsState {
+        fn existed_in(&self, year: u16) -> bool {
+            match self {
+                UsState::Alabama => year >= 1819,
+                UsState::Alaska => year >= 1959,
+                UsState::California => year >= 1850,
+                UsState::Texas => year >= 1845,
+            }
+        }
+    }
+
+    #[derive(Debug, Clone)]
+    enum Coin {
+        Penny,
+        Nickel,
+        Dime,
+        Quarter(UsState),
+    }
+
+    // Traditional approach with nested if let
+    fn describe_state_quarter_traditional(coin: Coin) -> Option<String> {
+        if let Coin::Quarter(state) = coin {
+            if state.existed_in(1900) {
+                Some(format!("{:?} is pretty old, for America!", state))
+            } else {
+                Some(format!("{:?} is relatively new.", state))
+            }
+        } else {
+            None
+        }
+    }
+
+    // Using if let to produce a value or return early
+    fn describe_state_quarter_if_let(coin: Coin) -> Option<String> {
+        let state = if let Coin::Quarter(state) = coin {
+            state
+        } else {
+            return None;
+        };
+
+        if state.existed_in(1900) {
+            Some(format!("{:?} is pretty old, for America!", state))
+        } else {
+            Some(format!("{:?} is relatively new.", state))
+        }
+    }
+
+    // Modern approach with let...else (Rust 1.65+)
+    fn describe_state_quarter_let_else(coin: Coin) -> Option<String> {
+        let Coin::Quarter(state) = coin else {
+            return None;
+        };
+
+        if state.existed_in(1900) {
+            Some(format!("{:?} is pretty old, for America!", state))
+        } else {
+            Some(format!("{:?} is relatively new.", state))
+        }
+    }
+
+    let coins = vec![
+        Coin::Quarter(UsState::Alabama),  // 1819 - old
+        Coin::Quarter(UsState::Alaska),   // 1959 - new
+        Coin::Quarter(UsState::California), // 1850 - old
+        Coin::Penny,                      // Not a quarter
+        Coin::Quarter(UsState::Texas),    // 1845 - old
+    ];
+
+    println!("Traditional approach (nested if let):");
+    for coin in &coins {
+        if let Some(desc) = describe_state_quarter_traditional(coin.clone()) {
+            println!("  ✅ {}", desc);
+        } else {
+            println!("  ❌ Not a state quarter");
+        }
+    }
+
+    println!("\nif let approach (produce value or return early):");
+    for coin in &coins {
+        if let Some(desc) = describe_state_quarter_if_let(coin.clone()) {
+            println!("  ✅ {}", desc);
+        } else {
+            println!("  ❌ Not a state quarter");
+        }
+    }
+
+    println!("\nlet...else approach (staying on happy path):");
+    for coin in &coins {
+        if let Some(desc) = describe_state_quarter_let_else(coin.clone()) {
+            println!("  ✅ {}", desc);
+        } else {
+            println!("  ❌ Not a state quarter");
+        }
+    }
+
+    // Additional example with Option handling
+    println!("\nOption handling with let...else:");
+    let config_values = vec![
+        Some(3u8),
+        Some(10u8),
+        None,
+        Some(255u8),
+    ];
+
+    for config in config_values {
+        let Some(max) = config else {
+            println!("  ❌ No maximum configured");
+            continue;
+        };
+        
+        // We're on the happy path here - no nesting!
+        println!("  ✅ Maximum configured to be {}", max);
+        
+        if max > 100 {
+            println!("    (That's a high maximum!)");
+        }
+    }
+
+    println!("\n💡 Key Benefits of let...else:");
+    println!("  - Reduces nesting and improves readability");
+    println!("  - Keeps the 'happy path' at the top level");
+    println!("  - Early returns make error handling cleaner");
+    println!("  - Works with both Option and Result types");
+    println!("  - Available in Rust 1.65+");
+    println!();
+}
+
 fn main() {
     println!("📚 Chapter 6.3: Concise Control Flow with if let\n");
 
@@ -342,9 +484,11 @@ fn main() {
     example6_enum_variants();
     example7_match_vs_if_let();
     example8_aoc_pattern();
+    example9_let_else_happy_path();
 
     println!("✅ All examples completed!");
     println!("📖 Next: Review Chapter 6 concepts or continue to Chapter 7");
     println!("\n💡 Key Insight: Use 'if let' when you only care about one pattern,");
     println!("   use 'match' when you need to handle multiple patterns exhaustively.");
+    println!("   Use 'let...else' to stay on the happy path with early returns.");
 }

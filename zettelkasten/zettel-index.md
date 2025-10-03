@@ -24,6 +24,11 @@
 - [[Day 5 - Option and Result]] - Basic error handling concepts
 - [[AoC Error Patterns]] - Input parsing and validation strategies
 
+### **Advanced Type System Patterns**
+- [[PhantomData Type Safety Patterns]] - Zero-cost type safety with PhantomData
+- [[Generic Programming]] - Type parameterization techniques
+- [[Trait Objects]] - Dynamic dispatch patterns
+
 ### **Daily Study Integration**
 - [[Day 10 - HashMap Basics]] - Theoretical foundation
 - [[Day 11 - HashSet Operations]] - Set theory in practice
