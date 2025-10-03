@@ -14,6 +14,8 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **Advanced Pattern Matching**: Complex pattern constraints, non-overlapping patterns
 - **Brute Force**: Exhaustive search through solution space
 - **Cryptographic**: Hash functions, encryption, cryptographic puzzles
+- **Parsing**: Escape sequence parsing, character-level analysis
+- **Encoding**: String encoding, character escaping
 
 ---
 
@@ -104,11 +106,56 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
+### Day 8: Matchsticks
+**Title**: Matchsticks  
+**Part 1 Type**: String Processing + Parsing  
+**Part 1 Description**: Calculate difference between code representation length and in-memory string length after processing escape sequences  
+**Part 2 Type**: String Processing + Encoding  
+**Part 2 Description**: Calculate difference between encoded representation length and original code length  
+**Key Concepts**: Escape sequence parsing (`\\`, `\"`, `\xHH`), character vs byte counting, string encoding
+
+**Escape Sequences**:
+- `\\` - Escaped backslash (represents single `\` in memory)
+- `\"` - Escaped quote (represents single `"` in memory)
+- `\xHH` - Hex escape (represents single byte/character in memory)
+
+**Part 1 Examples**:
+- `""` → 2 code - 0 memory = 2
+- `"abc"` → 5 code - 3 memory = 2
+- `"aaa\"aaa"` → 10 code - 7 memory = 3
+- `"\x27"` → 6 code - 1 memory = 5
+
+**Part 2 Examples** (encoding adds quotes and escapes special chars):
+- `""` → `"\"\""` : 2 → 6 (+4)
+- `"abc"` → `"\"abc\""` : 5 → 9 (+4)
+- `"aaa\"aaa"` → `"\"aaa\\\"aaa\""` : 10 → 16 (+6)
+- `"\x27"` → `"\"\\x27\""` : 6 → 11 (+5)
+- `"\\zrs\\syur"` → `"\"\\\\zrs\\\\syur\""` : 13 → 21 (+8)
+
+**Rust-Specific Challenge - UTF-8 Encoding Issue**:
+- ⚠️ **Critical Bug Found**: Original implementation used `byte as char` for hex escapes
+- **Problem**: `\xc4` (byte 196) when cast to `char` becomes Unicode U+00C4 ('Ä')
+- **UTF-8 Encoding**: Character 'Ä' encodes as **2 bytes** (0xC3 0x84) in UTF-8
+- **Expected**: `\xc4` should count as **1 character** in memory (byte-oriented, C-style strings)
+- **Solution**: Created `count_memory_characters()` that counts logical characters, not UTF-8 bytes
+- **Lesson**: AoC treats strings as byte arrays (like C), not UTF-8 strings (like Rust)
+
+**Implementation Approach**:
+- Part 1: Count logical characters during parsing, treating each escape as single character
+- Part 2: Count encoded length by processing each character (`\` → 2, `"` → 2, others → 1) plus 2 for surrounding quotes
+- Test Coverage: 18 tests (12 Part 1, 6 Part 2) validating all escape types and edge cases
+
+**Results**:
+- Part 1: 1342 (code - memory difference)
+- Part 2: 2074 (encoded - code difference)
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
-| String Processing | 3 | 3 |
+| String Processing | 4 | 4 |
 | Mathematical | 2 | 3 |
 | Simulation | 4 | 4 |
 | Search/Traversal | 1 | 1 |
@@ -119,6 +166,8 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 | Pattern Matching | 1 | 0 |
 | Advanced Pattern Matching | 0 | 1 |
 | Graph Algorithms | 1 | 2 |
+| Parsing | 1 | 0 |
+| Encoding | 0 | 1 |
 
 ## Implementation Notes
 
@@ -137,6 +186,11 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - Day 5: Ideal for regex crate usage, string pattern matching, `saturating_sub()`, manual string iteration vs regex trade-offs
 - Day 6: Excellent for 2D grid data structures, coordinate systems, rectangular iteration, `split_whitespace()`, `saturating_sub()` for brightness bounds
 - Day 7: **Advanced HashMap memoization**, recursive algorithms, enum-based instruction modeling, `anyhow` error handling, comprehensive test coverage (36 tests), professional debug tooling, dependency analysis algorithms, architectural understanding of DAG structures, zero-cost abstraction validation
+- Day 8: **Critical UTF-8 vs byte array distinction**, escape sequence parsing, character counting vs byte counting, `chars()` iteration, understanding when `byte as char` fails, Rust strings are UTF-8 (not byte arrays like C), custom character counting logic
+
+---
+
+**Day 7 Deep Dive - Professional Engineering Practices**:
 
 **Day 7 Deep Dive - Professional Engineering Practices**:
 - **Circuit Architecture**: 208-level dependency DAG with memoized evaluation
@@ -146,6 +200,51 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **Performance**: HashMap memoization prevents redundant calculations, ~100ms for 336-gate network analysis
 - **Educational Value**: Demonstrates recursive dependency resolution, cycle detection, virtual memory concepts
 - **Part 2 Design Genius**: Tests dynamic modification and complete tree recalculation validation
+
+---
+
+### Day 8: Matchsticks
+**Title**: Matchsticks  
+**Part 1 Type**: String Processing + Parsing  
+**Part 1 Description**: Calculate difference between code representation length and in-memory string length after processing escape sequences  
+**Part 2 Type**: String Processing + Encoding  
+**Part 2 Description**: Calculate difference between encoded representation length and original code length  
+**Key Concepts**: Escape sequence parsing (`\\`, `\"`, `\xHH`), character vs byte counting, string encoding
+
+**Escape Sequences**:
+- `\\` - Escaped backslash (represents single `\` in memory)
+- `\"` - Escaped quote (represents single `"` in memory)
+- `\xHH` - Hex escape (represents single byte/character in memory)
+
+**Part 1 Examples**:
+- `""` → 2 code - 0 memory = 2
+- `"abc"` → 5 code - 3 memory = 2
+- `"aaa\"aaa"` → 10 code - 7 memory = 3
+- `"\x27"` → 6 code - 1 memory = 5
+
+**Part 2 Examples** (encoding adds quotes and escapes special chars):
+- `""` → `"\"\""` : 2 → 6 (+4)
+- `"abc"` → `"\"abc\""` : 5 → 9 (+4)
+- `"aaa\"aaa"` → `"\"aaa\\\"aaa\""` : 10 → 16 (+6)
+- `"\x27"` → `"\"\\x27\""` : 6 → 11 (+5)
+- `"\\zrs\\syur"` → `"\"\\\\zrs\\\\syur\""` : 13 → 21 (+8)
+
+**Rust-Specific Challenge - UTF-8 Encoding Issue**:
+- ⚠️ **Critical Bug Found**: Original implementation used `byte as char` for hex escapes
+- **Problem**: `\xc4` (byte 196) when cast to `char` becomes Unicode U+00C4 ('Ä')
+- **UTF-8 Encoding**: Character 'Ä' encodes as **2 bytes** (0xC3 0x84) in UTF-8
+- **Expected**: `\xc4` should count as **1 character** in memory (byte-oriented, C-style strings)
+- **Solution**: Created `count_memory_characters()` that counts logical characters, not UTF-8 bytes
+- **Lesson**: AoC treats strings as byte arrays (like C), not UTF-8 strings (like Rust)
+
+**Implementation Approach**:
+- Part 1: Count logical characters during parsing, treating each escape as single character
+- Part 2: Count encoded length by processing each character (`\` → 2, `"` → 2, others → 1) plus 2 for surrounding quotes
+- Test Coverage: 18 tests (12 Part 1, 6 Part 2) validating all escape types and edge cases
+
+**Results**:
+- Part 1: 1342 (code - memory difference)
+- Part 2: 2074 (encoded - code difference)
 
 ---
 
@@ -173,7 +272,7 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8*
 
 ---
 
