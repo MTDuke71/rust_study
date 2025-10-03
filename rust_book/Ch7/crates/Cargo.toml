@@ -1,0 +1,12 @@
+[package]
+name = "crates"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "binary_example"
+path = "src/binary_example.rs"
+
+[[bin]]
+name = "library_example"
+path = "src/library_example.rs"

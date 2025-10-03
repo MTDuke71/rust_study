@@ -59,6 +59,7 @@
 - [[Deduplication]] - Removing duplicates efficiently  
 - [[Set Operations]] - Union, intersection, difference
 - [[Memoization]] - Caching computation results
+- [[Error Handling Deep Dive]] - Robust input parsing and validation
 
 ## 🧪 Tutorial Progression
 

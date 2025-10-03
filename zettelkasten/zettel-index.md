@@ -19,6 +19,11 @@
 - [[HashSet Applications]] - Unique collection patterns
 - [[Collision Resolution]] - Handling hash conflicts
 
+### **Error Handling Mastery**
+- [[Error Handling Deep Dive]] - Comprehensive error handling guide
+- [[Day 5 - Option and Result]] - Basic error handling concepts
+- [[AoC Error Patterns]] - Input parsing and validation strategies
+
 ### **Daily Study Integration**
 - [[Day 10 - HashMap Basics]] - Theoretical foundation
 - [[Day 11 - HashSet Operations]] - Set theory in practice
