@@ -151,6 +151,45 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
+### Day 9: All in a Single Night
+**Title**: All in a Single Night  
+**Part 1 Type**: Brute Force + Optimization + Graph Algorithms  
+**Part 1 Description**: Find shortest route visiting all cities exactly once (Traveling Salesman Problem)  
+**Part 2 Type**: Brute Force + Optimization + Graph Algorithms  
+**Part 2 Description**: Find longest route visiting all cities exactly once (TSP maximization variant)  
+**Key Concepts**: Traveling Salesman Problem, permutation generation, Heap's algorithm, graph traversal, distance matrix, brute force optimization, DRY principle implementation
+
+**Algorithm Implementation**:
+- **Heap's Algorithm**: Efficient permutation generation with O(n!) time complexity
+- **Distance Matrix**: Bidirectional city-to-city distance lookup using Mission 5 Dictionary
+- **Brute Force Search**: Exhaustive exploration of all possible routes
+- **DRY Principle**: Single `solve_tsp()` function handles both min/max optimization via boolean parameter
+
+**Rust-Specific Implementation Details**:
+- **Lifetime Management**: Explicit lifetime annotations (`'a`) for string slice references in permutations
+- **Error Handling**: `anyhow::Result` for robust error propagation with `?` operator
+- **Data Structures**: Mission 5 `Dictionary<(&str, &str), usize>` for distance storage
+- **Memory Efficiency**: Heap's algorithm minimizes memory allocation compared to recursive approaches
+- **Test Coverage**: 11 comprehensive tests including edge cases (single city, two cities, malformed input)
+
+**Performance Characteristics**:
+- **Time Complexity**: O(n! × n) where n = number of cities
+- **Space Complexity**: O(n! × n) for storing all permutations
+- **Practical Limit**: ~10 cities before exponential explosion becomes prohibitive
+- **Optimization Opportunities**: Could implement branch-and-bound or dynamic programming for larger instances
+
+**Example Routes** (London-Dublin-Belfast):
+- **Shortest**: London → Dublin → Belfast = 464 + 141 = 605
+- **Longest**: Dublin → London → Belfast = 464 + 518 = 982
+
+**Educational Value**:
+- **Classic CS Problem**: Introduces the fundamental TSP problem and its variants
+- **Algorithm Design**: Demonstrates when brute force is acceptable vs. when optimization is needed
+- **Rust Patterns**: Lifetime management, error handling, generic function design
+- **Competitive Programming**: Common pattern in algorithmic contests and optimization problems
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -159,13 +198,13 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 | Mathematical | 2 | 3 |
 | Simulation | 4 | 4 |
 | Search/Traversal | 1 | 1 |
-| Optimization | 0 | 1 |
+| Optimization | 1 | 2 |
 | Data Structures | 3 | 1 |
-| Brute Force | 1 | 1 |
+| Brute Force | 2 | 2 |
 | Cryptographic | 1 | 1 |
 | Pattern Matching | 1 | 0 |
 | Advanced Pattern Matching | 0 | 1 |
-| Graph Algorithms | 1 | 2 |
+| Graph Algorithms | 2 | 3 |
 | Parsing | 1 | 0 |
 | Encoding | 0 | 1 |
 
@@ -187,64 +226,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - Day 6: Excellent for 2D grid data structures, coordinate systems, rectangular iteration, `split_whitespace()`, `saturating_sub()` for brightness bounds
 - Day 7: **Advanced HashMap memoization**, recursive algorithms, enum-based instruction modeling, `anyhow` error handling, comprehensive test coverage (36 tests), professional debug tooling, dependency analysis algorithms, architectural understanding of DAG structures, zero-cost abstraction validation
 - Day 8: **Critical UTF-8 vs byte array distinction**, escape sequence parsing, character counting vs byte counting, `chars()` iteration, understanding when `byte as char` fails, Rust strings are UTF-8 (not byte arrays like C), custom character counting logic
-
----
-
-**Day 7 Deep Dive - Professional Engineering Practices**:
-
-**Day 7 Deep Dive - Professional Engineering Practices**:
-- **Circuit Architecture**: 208-level dependency DAG with memoized evaluation
-- **Test Coverage**: 36 comprehensive tests with requirement traceability (REQ-X naming)
-- **Debug Infrastructure**: Command-line `--debug` flag, emoji-decorated logging, table output
-- **Analysis Tools**: 6 PowerShell tools for gate extraction, dependency visualization, depth calculation
-- **Performance**: HashMap memoization prevents redundant calculations, ~100ms for 336-gate network analysis
-- **Educational Value**: Demonstrates recursive dependency resolution, cycle detection, virtual memory concepts
-- **Part 2 Design Genius**: Tests dynamic modification and complete tree recalculation validation
-
----
-
-### Day 8: Matchsticks
-**Title**: Matchsticks  
-**Part 1 Type**: String Processing + Parsing  
-**Part 1 Description**: Calculate difference between code representation length and in-memory string length after processing escape sequences  
-**Part 2 Type**: String Processing + Encoding  
-**Part 2 Description**: Calculate difference between encoded representation length and original code length  
-**Key Concepts**: Escape sequence parsing (`\\`, `\"`, `\xHH`), character vs byte counting, string encoding
-
-**Escape Sequences**:
-- `\\` - Escaped backslash (represents single `\` in memory)
-- `\"` - Escaped quote (represents single `"` in memory)
-- `\xHH` - Hex escape (represents single byte/character in memory)
-
-**Part 1 Examples**:
-- `""` → 2 code - 0 memory = 2
-- `"abc"` → 5 code - 3 memory = 2
-- `"aaa\"aaa"` → 10 code - 7 memory = 3
-- `"\x27"` → 6 code - 1 memory = 5
-
-**Part 2 Examples** (encoding adds quotes and escapes special chars):
-- `""` → `"\"\""` : 2 → 6 (+4)
-- `"abc"` → `"\"abc\""` : 5 → 9 (+4)
-- `"aaa\"aaa"` → `"\"aaa\\\"aaa\""` : 10 → 16 (+6)
-- `"\x27"` → `"\"\\x27\""` : 6 → 11 (+5)
-- `"\\zrs\\syur"` → `"\"\\\\zrs\\\\syur\""` : 13 → 21 (+8)
-
-**Rust-Specific Challenge - UTF-8 Encoding Issue**:
-- ⚠️ **Critical Bug Found**: Original implementation used `byte as char` for hex escapes
-- **Problem**: `\xc4` (byte 196) when cast to `char` becomes Unicode U+00C4 ('Ä')
-- **UTF-8 Encoding**: Character 'Ä' encodes as **2 bytes** (0xC3 0x84) in UTF-8
-- **Expected**: `\xc4` should count as **1 character** in memory (byte-oriented, C-style strings)
-- **Solution**: Created `count_memory_characters()` that counts logical characters, not UTF-8 bytes
-- **Lesson**: AoC treats strings as byte arrays (like C), not UTF-8 strings (like Rust)
-
-**Implementation Approach**:
-- Part 1: Count logical characters during parsing, treating each escape as single character
-- Part 2: Count encoded length by processing each character (`\` → 2, `"` → 2, others → 1) plus 2 for surrounding quotes
-- Test Coverage: 18 tests (12 Part 1, 6 Part 2) validating all escape types and edge cases
-
-**Results**:
-- Part 1: 1342 (code - memory difference)
-- Part 2: 2074 (encoded - code difference)
+- Day 9: **Advanced algorithmic problem solving**, Heap's algorithm implementation, lifetime management with string slices, `anyhow::Result` error handling, Mission 5 Dictionary integration, permutation generation, DRY principle in function design, comprehensive test coverage (11 tests), competitive programming patterns
 
 ---
 
@@ -272,9 +254,9 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning*
-*Links: [[../../zettelkasten/AoC Patterns MOC]] | [[../../zettelkasten/AoC Collection Problems]] | [[../README]] | [[../../Mission5/README]] | [[../../daily_study/rust_learning_week2_notes/Day10]] | [[../../zettelkasten/HashMap Internals]] | [[../../zettelkasten/Memory Address Analysis]]*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations*
+*Links: [[../../zettelkasten/AoC Patterns MOC]] | [[../../zettelkasten/AoC Collection Problems]] | [[../README]] | [[../../Mission5/README]] | [[../../daily_study/rust_learning_week2_notes/Day10]] | [[../../zettelkasten/HashMap Internals]] | [[../../zettelkasten/Memory Address Analysis]] | [[../../zettelkasten/Heap's Algorithm Deep Dive]]*
