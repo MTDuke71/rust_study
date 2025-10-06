@@ -1,6 +1,7 @@
 // Mission1_tut Step 7: Final Project - Production-Ready Stack
 // Integrate all concepts into a complete, Mission1-compliant implementation
 
+#[allow(unused_imports)]
 use std::collections::HashMap;
 use std::fmt;
 
@@ -47,7 +48,7 @@ pub struct ProductionStack<T> {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-struct OperationStats {
+pub struct OperationStats {
     push_count: usize,
     pop_count: usize,
     peek_count: usize,

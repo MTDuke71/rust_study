@@ -197,6 +197,7 @@ fn analyze_stack_operations() {
 }
 
 // Self-Assessment Questions
+#[allow(dead_code)]
 fn self_assessment() {
     println!("\n=== Self-Assessment Questions ===");
     println!("After running this step, you should understand:");
@@ -213,9 +214,10 @@ fn self_assessment() {
 }
 
 // Call self-assessment at the end
+#[allow(dead_code)]
 fn call_self_assessment() {
     self_assessment();
 }
 
 // Note: We use this pattern to ensure self_assessment runs
-static _: fn() = call_self_assessment;
+static _ASSESSMENT: fn() = call_self_assessment;

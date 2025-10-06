@@ -128,7 +128,9 @@ fn demonstrate_multiple_types() {
     
     #[derive(Debug)]
     struct Point {
+        #[allow(dead_code)]
         x: f64,
+        #[allow(dead_code)]
         y: f64,
     }
     
@@ -175,6 +177,7 @@ fn explain_type_parameters() {
     println!("   • Box<T>           - Heap-allocated T");
 }
 
+#[allow(dead_code)]
 fn demonstrate_compilation_differences() {
     println!("\n   What the Compiler Generates:");
     println!("   Original generic code:");
@@ -221,23 +224,24 @@ fn self_assessment() {
 }
 
 // Bonus: Demonstrate advanced generic usage
+#[allow(dead_code)]
 fn bonus_advanced_generics() {
     println!("\n=== Bonus: Advanced Generic Concepts ===");
-    
-    // Generic methods
-    impl<T> Stack<T> {
-        /// Generic method that works with any closure
-        fn _map_top<U, F>(&self, f: F) -> Option<U>
-        where
-            F: FnOnce(&T) -> U,
-        {
-            self.peek().map(f)
-        }
-    }
-    
     println!("   Advanced patterns you'll see later:");
     println!("   • Trait bounds: Stack<T> where T: Clone");
     println!("   • Associated types: Iterator<Item = T>");
     println!("   • Higher-ranked trait bounds: for<'a> ...");
     println!("   • Generic methods: fn map<U, F>(...) where F: FnOnce(T) -> U");
+}
+
+// Generic methods for Stack<T>
+impl<T> Stack<T> {
+    /// Generic method that works with any closure
+    #[allow(dead_code)]
+    fn _map_top<U, F>(&self, f: F) -> Option<U>
+    where
+        F: FnOnce(&T) -> U,
+    {
+        self.peek().map(f)
+    }
 }

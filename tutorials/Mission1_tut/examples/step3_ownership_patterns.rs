@@ -66,6 +66,7 @@ impl<T> Stack<T> {
         // Only one mutable borrow allowed at a time
     }
     
+    #[allow(dead_code)]
     fn is_empty(&self) -> bool {
         self.items.is_empty()
     }

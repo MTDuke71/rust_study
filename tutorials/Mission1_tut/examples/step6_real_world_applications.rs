@@ -56,6 +56,7 @@ impl<T> Stack<T> {
         self.items.is_empty()
     }
     
+    #[allow(dead_code)]
     fn len(&self) -> usize {
         self.items.len()
     }
@@ -63,7 +64,7 @@ impl<T> Stack<T> {
 
 fn demonstrate_bracket_validation() {
     println!("   Problem: Validate that brackets are properly matched");
-    println!("   Valid: '()' '[]' '{{}}' '([{}])'");
+    println!("   Valid: '()' '[]' '{{}}' '([{{}}])'");
     println!("   Invalid: '(' '])' '([)]' '((('");
     
     fn validate_brackets(input: &str) -> bool {
@@ -288,6 +289,7 @@ fn demonstrate_undo_redo() {
     enum Action {
         Insert { pos: usize, text: String },
         Delete { pos: usize, text: String },
+        #[allow(dead_code)]
         Replace { pos: usize, old: String, new: String },
     }
     
@@ -422,6 +424,7 @@ fn demonstrate_call_stack() {
     struct StackFrame {
         function_name: String,
         local_vars: std::collections::HashMap<String, i32>,
+        #[allow(dead_code)]
         return_address: String,
     }
     

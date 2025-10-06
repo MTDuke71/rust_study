@@ -55,19 +55,23 @@ impl<T> Stack<T> {
     }
     
     /// Returns Option<&mut T> because stack might be empty
+    #[allow(dead_code)]
     fn peek_mut(&mut self) -> Option<&mut T> {
         self.items.last_mut()
     }
     
+    #[allow(dead_code)]
     fn is_empty(&self) -> bool {
         self.items.is_empty()
     }
     
+    #[allow(dead_code)]
     fn len(&self) -> usize {
         self.items.len()
     }
     
     /// Safe pop that doesn't panic on empty stack
+    #[allow(dead_code)]
     fn try_pop(&mut self) -> Result<T, &'static str> {
         match self.items.pop() {
             Some(item) => Ok(item),
@@ -306,24 +310,28 @@ fn demonstrate_error_propagation() {
     demonstrate_result_type();
 }
 
+#[derive(Debug)]
+enum StackError {
+    Empty,
+    #[allow(dead_code)]
+    InvalidOperation,
+}
+
+// Move impl block outside function
+impl<T> Stack<T> {
+    #[allow(dead_code)]
+    fn pop_result(&mut self) -> Result<T, StackError> {
+        self.items.pop().ok_or(StackError::Empty)
+    }
+    
+    #[allow(dead_code)]
+    fn peek_result(&self) -> Result<&T, StackError> {
+        self.items.last().ok_or(StackError::Empty)
+    }
+}
+
 fn demonstrate_result_type() {
     println!("\n   Using Result<T, E> for More Detailed Errors:");
-    
-    #[derive(Debug)]
-    enum StackError {
-        Empty,
-        InvalidOperation,
-    }
-    
-    impl<T> Stack<T> {
-        fn pop_result(&mut self) -> Result<T, StackError> {
-            self.items.pop().ok_or(StackError::Empty)
-        }
-        
-        fn peek_result(&self) -> Result<&T, StackError> {
-            self.items.last().ok_or(StackError::Empty)
-        }
-    }
     
     let mut stack: Stack<i32> = Stack::new();
     

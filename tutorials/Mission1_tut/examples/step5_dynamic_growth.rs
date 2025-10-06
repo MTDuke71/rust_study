@@ -57,6 +57,7 @@ impl<T> Stack<T> {
         self.items.pop()
     }
     
+    #[allow(dead_code)]
     fn peek(&self) -> Option<&T> {
         self.items.last()
     }
@@ -65,6 +66,7 @@ impl<T> Stack<T> {
         self.items.len()
     }
     
+    #[allow(dead_code)]
     fn is_empty(&self) -> bool {
         self.items.is_empty()
     }
@@ -82,6 +84,15 @@ impl<T> Stack<T> {
     /// Shrink capacity to fit current length
     fn shrink_to_fit(&mut self) {
         self.items.shrink_to_fit();
+    }
+    
+    /// Efficient way to extend stack
+    #[allow(dead_code)]
+    fn extend<I>(&mut self, iter: I) 
+    where 
+        I: IntoIterator<Item = T>,
+    {
+        self.items.extend(iter);
     }
 }
 
@@ -291,7 +302,7 @@ fn demonstrate_optimizations() {
     // 1. Pre-allocation
     println!("\n   1. Pre-allocation Strategy:");
     fn create_optimized_stack(expected_size: usize) -> Stack<i32> {
-        let mut stack = Stack::with_capacity(expected_size);
+        let stack = Stack::with_capacity(expected_size);
         println!("   Pre-allocated capacity: {}", stack.capacity());
         stack
     }
@@ -335,14 +346,6 @@ fn demonstrate_bulk_operations() {
     println!("   Created stack from iterator: {:?}", stack);
     
     // Efficient way to extend stack
-    impl<T> Stack<T> {
-        fn extend<I>(&mut self, iter: I) 
-        where 
-            I: IntoIterator<Item = T>,
-        {
-            self.items.extend(iter);
-        }
-    }
     
     let mut stack: Stack<i32> = Stack::new();
     stack.extend(vec![1, 2, 3, 4, 5]);
