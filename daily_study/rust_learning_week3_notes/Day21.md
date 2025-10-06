@@ -853,7 +853,7 @@ From Day 21, you should master:
 - [[Mission5 Overview]] - REQ-8 advanced HashMap implementation with all Week 3 concepts
 - [[HashMap Internals]] - Implementation details for performance-critical generic code
 
-**Next Week**: Week 4 will focus on **Error Handling, Async Programming, and Advanced Patterns** building on this solid type system foundation!
+**Next Week**: Week 4 will focus on **Applied Problem Solving** with a emphasis on AoC-Style Problems
 
 ---
 **Zettelkasten Integration:**
