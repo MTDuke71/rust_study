@@ -202,7 +202,7 @@ where
         }
     }
     
-    // Method with multiple lifetime parameters
+    // Method with single lifetime parameter - returns reference with same lifetime as self
     pub fn get_or_insert<'a>(&'a mut self, key: K, default: V) -> &'a mut V
     where 
         K: Clone,
@@ -271,27 +271,42 @@ where
         self.iter().map(|(k, _)| k)
     }
     
-    // Pattern 2: Reference with caller-controlled lifetime
-    pub fn find_key<'a, 'b>(&'a self, predicate: impl Fn(&K) -> bool) -> Option<&'a K>
+    // Pattern 2: Higher-order function with multiple lifetimes
+    // This function takes another function (predicate) as a parameter
+    // The predicate function is defined by the caller, not by this method
+    pub fn find_key<'a, 'b>(
+        &'a self, 
+        predicate: impl Fn(&'b K) -> bool  // Higher-order: takes a function as parameter
+    ) -> Option<&'a K>
     where 
-        'b: 'a,  // 'b outlives 'a
+        'b: 'a,  // 'b outlives 'a - predicate can work with keys that live longer than self
     {
+        // Iterate through all key-value pairs in the HashMap
         for (key, _) in self.iter() {
-            if predicate(key) {
+            // Call the predicate function on each key
+            // The caller's function determines what condition to test
+            if predicate(key) {  // key has lifetime 'a, but predicate expects 'b
+                // Return the first key that passes the caller's test
                 return Some(key);
             }
         }
+        // No key passed the test
         None
     }
     
     // Pattern 3: Multiple references with constraints
+    // This function retrieves values for two keys and returns them as a tuple
+    // The caller is responsible for doing the actual comparison logic
     pub fn compare_values<'a>(
         &'a self,
         key1: &K,
         key2: &K,
     ) -> Option<(&'a V, &'a V)> {
+        // Look up both keys simultaneously
         match (self.get(key1), self.get(key2)) {
+            // Both keys exist - return tuple of both values
             (Some(v1), Some(v2)) => Some((v1, v2)),
+            // At least one key is missing - return None
             _ => None,
         }
     }

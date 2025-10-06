@@ -170,6 +170,10 @@ name = "control_flow"
 version = "0.1.0"
 
 [[package]]
+name = "crates"
+version = "0.1.0"
+
+[[package]]
 name = "criterion"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -476,6 +480,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "mission7"
+version = "0.1.0"
+dependencies = [
+ "criterion 0.5.1",
+ "rand 0.8.5",
+]
+
+[[package]]
+name = "mission7_tut"
+version = "0.1.0"
+dependencies = [
+ "mission7",
+]
+
+[[package]]
+name = "modules"
+version = "0.1.0"
+
+[[package]]
 name = "num-traits"
 version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -495,6 +518,14 @@ name = "oorandom"
 version = "11.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d6790f58c7ff633d8771f42965289203411a5e5c68388703c06e14f24770b41e"
+
+[[package]]
+name = "packages"
+version = "0.1.0"
+
+[[package]]
+name = "paths"
+version = "0.1.0"
 
 [[package]]
 name = "plotters"
@@ -770,6 +801,10 @@ checksum = "f63a545481291138910575129486daeaf8ac54aee4387fe7906919f7830c7d9d"
 
 [[package]]
 name = "variables"
+version = "0.1.0"
+
+[[package]]
+name = "visibility"
 version = "0.1.0"
 
 [[package]]

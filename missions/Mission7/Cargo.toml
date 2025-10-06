@@ -1,0 +1,28 @@
+[package]
+name = "mission7"
+version = "0.1.0"
+edition = "2021"
+description = "Mission 7: Graph Representation - Adjacency lists, node storage, and graph algorithms foundation"
+authors = ["Rust Study Workspace"]
+
+[dependencies]
+# No external dependencies for this mission - pure Rust std library
+# Focus on graph representation, adjacency lists, and algorithm foundations
+
+[dev-dependencies]
+# For property-based testing and random test data
+rand = "0.8"
+# For benchmarking graph operations
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[example]]
+name = "demo"
+path = "examples/demo.rs"
+
+[[example]]
+name = "graph_demo"
+path = "examples/graph_demo.rs"
+
+# [[bench]]
+# name = "graph_benchmarks"
+# harness = false

@@ -1,0 +1,37 @@
+[package]
+name = "mission7_tut"
+version = "0.1.0"
+edition = "2021"
+description = "Step-by-step tutorial for learning Graph Representation and Algorithms"
+authors = ["Rust Study Workspace"]
+
+[dependencies]
+mission7 = { path = "../../missions/Mission7" }
+
+[[example]]
+name = "step1_graph_fundamentals"
+path = "examples/step1_graph_fundamentals.rs"
+
+[[example]]
+name = "step2_adjacency_lists"
+path = "examples/step2_adjacency_lists.rs"
+
+[[example]]
+name = "step3_edge_management"
+path = "examples/step3_edge_management.rs"
+
+[[example]]
+name = "step4_algorithm_foundation"
+path = "examples/step4_algorithm_foundation.rs"
+
+[[example]]
+name = "step5_dfs_implementation"
+path = "examples/step5_dfs_implementation.rs"
+
+[[example]]
+name = "step6_bfs_implementation"
+path = "examples/step6_bfs_implementation.rs"
+
+[[example]]
+name = "step7_integration_project"
+path = "examples/step7_integration_project.rs"

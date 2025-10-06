@@ -1,60 +1,43 @@
-//! # Library Crate Example
+//! # Binary Crate Example: Using the Library
 //!
-//! Demonstrates a library crate without main() function.
+//! This demonstrates a **binary crate** that uses the library crate.
+//! Binary crates have a main() function and can be executed directly.
 //!
 //! Run with: `cargo run --bin library_example`
 
-// Library crates don't have main() function
-// They provide functionality to other programs
-
-pub fn greet(name: &str) {
-    println!("Hello, {}!", name);
-}
-
-pub fn calculate_sum(a: i32, b: i32) -> i32 {
-    a + b
-}
-
-pub struct Calculator {
-    value: i32,
-}
-
-impl Calculator {
-    pub fn new() -> Self {
-        Calculator { value: 0 }
-    }
-    
-    pub fn add(&mut self, n: i32) {
-        self.value += n;
-    }
-    
-    pub fn get_value(&self) -> i32 {
-        self.value
-    }
-}
+// Import functions and types from our library crate
+use crates::{greet, calculate_sum, Calculator, math};
 
 fn main() {
-    println!("📚 Library Crate Example");
-    println!("========================");
+    println!("🦀 Binary Crate Example: Using the Library");
+    println!("==========================================");
     
-    println!("This is a library crate because:");
-    println!("  - It provides functions and structs");
-    println!("  - It can be used by other programs");
-    println!("  - It's defined in Cargo.toml as [[bin]]");
+    println!("This is a binary crate because:");
+    println!("  - It has a main() function");
+    println!("  - It can be executed directly");
+    println!("  - It uses the library crate as a dependency");
+    println!();
     
-    // Demonstrate the library functionality
+    // Use the library's greeting function
     greet("Rust Developer");
     
+    // Use the library's calculation function
     let sum = calculate_sum(5, 3);
     println!("5 + 3 = {}", sum);
     
+    // Use the library's Calculator struct
     let mut calc = Calculator::new();
     calc.add(10);
     calc.add(5);
     println!("Calculator value: {}", calc.get_value());
     
-    println!("\nLibrary crates are useful for:");
-    println!("  - Reusable code");
-    println!("  - API libraries");
-    println!("  - Shared functionality");
+    // Use the library's math module
+    println!("Factorial of 5: {}", math::factorial(5));
+    println!("Is 17 prime? {}", math::is_prime(17));
+    
+    println!("\nBinary crates are useful for:");
+    println!("  - Command-line tools");
+    println!("  - Server applications");
+    println!("  - Any executable program");
+    println!("  - Testing library functionality");
 }

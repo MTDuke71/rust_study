@@ -9,6 +9,7 @@
 - [[HashSet Applications]] - Unique collection use cases
 - [[Collision Resolution]] - Chaining vs open addressing
 - [[Hash Function Design]] - Creating good hash functions
+- [[Predicates and Higher-Order Functions Deep Dive]] - Filtering and searching with predicates
 
 ### **Tree-Based Collections** 
 - [[BTreeMap Patterns]] - Ordered key-value storage
@@ -27,6 +28,7 @@
 - [[Mission5 HashSet]] - Set wrapper implementation
 - [[Mission5 Iterator]] - Custom iteration patterns
 - [[Mission5 Testing Strategy]] - Requirement-based validation
+- [[Predicates and Higher-Order Functions Deep Dive]] - Advanced HashMap operations with predicates
 
 ### **Mission 1: Stack** → [[Stack Implementation Patterns]]
 ### **Mission 2: Queue** → [[Queue Implementation Strategies]] 
@@ -60,6 +62,7 @@
 - [[Set Operations]] - Union, intersection, difference
 - [[Memoization]] - Caching computation results
 - [[Error Handling Deep Dive]] - Robust input parsing and validation
+- [[Predicates and Higher-Order Functions Deep Dive]] - Filtering and validation patterns
 
 ## 🧪 Tutorial Progression
 
