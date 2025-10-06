@@ -8,6 +8,9 @@
 - [[Day 2 - Ownership Basics]] - Single ownership, move semantics
 - [[Day 3 - Borrowing]] - References and borrowing rules
 - [[Day 4 - Lifetimes]] - Reference lifetime management
+- [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
+- [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships
+- [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns and scenarios
 - [[Ownership in Collections]] - Memory management with data structures
 
 ### **Error Handling**
@@ -29,8 +32,12 @@
 ## 🏗️ Advanced Concepts
 
 ### **Generics & Traits**
+- [[Day 15 - Traits Fundamentals]] - Defining and implementing traits
+- [[Day 16 - Generic Types]] - Type parameters and constraints
+- [[Day 18 - Advanced Traits]] - Associated types and defaults
+- [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn`
+- [[Day 21 - Generics + Traits Practice]] - Integrated mastery project
 - [[Generic Programming]] - Type parameterization
-- [[Trait Objects]] - Dynamic dispatch patterns
 - [[Iterator Traits]] - Custom iteration implementations
 - [[Clone vs Copy]] - Value semantics understanding
 - [[PhantomData Type Safety Patterns]] - Zero-cost type safety with PhantomData
@@ -84,14 +91,14 @@
 - [[Day 12 - BTreeMap]] - Ordered collections
 - [[Day 13 - Advanced Iterators]] - Collection processing
 
-### **Week 3: Advanced Topics**
-- [[Day 15 - Traits and Generics]] - Type system mastery
-- [[Day 16 - Lifetimes Advanced]] - Complex lifetime scenarios
-- [[Day 17 - Error Handling Advanced]] - Custom error types
-- [[Day 18 - Module System]] - Project organization
-- [[Day 19 - Testing Strategies]] - Comprehensive testing
-- [[Day 20 - Performance Optimization]] - Zero-cost abstractions
-- [[Day 21 - Week 3 Summary]] - Advanced concepts integration
+### **Week 3: Advanced Type System**
+- [[Day 15 - Traits Fundamentals]] - Defining and implementing traits
+- [[Day 16 - Generic Types]] - Type parameters and constraints
+- [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
+- [[Day 18 - Advanced Traits]] - Associated types and defaults
+- [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn`
+- [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships
+- [[Day 21 - Generics + Traits Practice]] - Integrated mastery project
 
 ## 🔗 Cross-Concept Connections
 
