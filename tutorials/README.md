@@ -9,6 +9,7 @@ This folder contains guided tutorials that provide scaffolded learning experienc
 ## 📂 **Tutorial Structure**
 
 ### **Available Learning Paths**
+- **[Mission1_tut/](Mission1_tut/)** - **Stack Tutorial** - LIFO principles, generics, and fundamental data structures
 - **[Mission4_tut/](Mission4_tut/)** - **LinkedList Tutorial** - Box<T>, Option<T>, and pointer management
 - **[Mission5_tut/](Mission5_tut/)** - **HashMap Tutorial** - Hash-based collections and algorithms
 - **[Mission6_tut/](Mission6_tut/)** - **Grid Programming Tutorial** - 2D spatial data structures and pathfinding

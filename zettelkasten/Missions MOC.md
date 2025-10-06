@@ -60,7 +60,7 @@ Traceability Matrix
 ### **Mission 4: Linked Lists** ✅
 - **Documentation**: [[Mission4 README]] - Linked list implementation with smart pointers
 - **Focus**: Node-based dynamic data structure with pointer management
-- **Location**: `Mission4/` + `Mission4_tut/`
+- **Location**: `Mission4/` + `tutorials/Mission4_tut/`
 - **Key Concepts**: Box<T>, Rc<T>, RefCell<T>, ownership patterns
 - **Requirements**: REQ-1 (Node linking), REQ-2 (Memory safety), REQ-3 (Interior mutability)
 - **Tutorial**: Advanced ownership patterns and smart pointers
@@ -69,7 +69,7 @@ Traceability Matrix
 ### **Mission 5: HashMap & HashSet** ✅
 - **Documentation**: [[Mission5 README]] - Hash table implementation with collision resolution
 - **Focus**: Hash-based collections with collision resolution
-- **Location**: `Mission5/` + `Mission5_tut/`
+- **Location**: `Mission5/` + `tutorials/Mission5_tut/`
 - **Key Concepts**: Hash functions, collision handling, generic collections
 - **Requirements**: REQ-1 (Hashing), REQ-2 (Collision resolution), REQ-6 (Advanced operations)
 - **Tutorial**: Hash table internals and performance optimization
@@ -97,8 +97,9 @@ Traceability Matrix
 ## 🎓 Tutorial Integration
 
 ### **Companion Tutorial Projects**
-Each mission includes a companion `MissionX_tut/` project following pedagogical design principles:
+Each mission includes a companion `tutorials/MissionX_tut/` project following pedagogical design principles:
 
+- **[[Mission1_tut Overview]]** - Stack fundamentals with LIFO principles and generics
 - **[[Mission4_tut Overview]]** - Linked list deep dive with ownership patterns
 - **[[Mission5_tut Overview]]** - Hash table tutorial with step-by-step progression
 - **[[Mission5_tut Step Mapping]]** - Detailed learning path alignment

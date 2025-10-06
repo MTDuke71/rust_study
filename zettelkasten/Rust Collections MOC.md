@@ -43,8 +43,9 @@
 - **[[../Mission6/README]]** - Grid collections and 2D algorithms
 
 ### **Tutorial Projects**
-- **[[../Mission4_tut/README]]** - Step-by-step linked list learning
-- **[[../Mission5_tut/README]]** - Progressive HashMap construction tutorial
+- **[[../tutorials/Mission1_tut/README]]** - Stack fundamentals with LIFO and generics
+- **[[../tutorials/Mission4_tut/README]]** - Step-by-step linked list learning
+- **[[../tutorials/Mission5_tut/README]]** - Progressive HashMap construction tutorial
 - **[[Tutorial Design Patterns]]** - Educational scaffolding techniques
 
 ---

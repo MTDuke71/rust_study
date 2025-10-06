@@ -1,0 +1,34 @@
+[package]
+name = "mission1_tut"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[example]]
+name = "step1_basic_stack"
+path = "examples/step1_basic_stack.rs"
+
+[[example]]
+name = "step2_generic_stack"
+path = "examples/step2_generic_stack.rs"
+
+[[example]]
+name = "step3_ownership_patterns"
+path = "examples/step3_ownership_patterns.rs"
+
+[[example]]
+name = "step4_error_handling"
+path = "examples/step4_error_handling.rs"
+
+[[example]]
+name = "step5_dynamic_growth"
+path = "examples/step5_dynamic_growth.rs"
+
+[[example]]
+name = "step6_real_world_applications"
+path = "examples/step6_real_world_applications.rs"
+
+[[example]]
+name = "step7_final_project"
+path = "examples/step7_final_project.rs"
