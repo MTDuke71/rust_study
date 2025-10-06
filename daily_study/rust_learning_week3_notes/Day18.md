@@ -101,6 +101,7 @@ where
 ### Default Associated Types
 ```rust
 // Associated types with defaults
+// Rhs stands for Right Hand Side
 trait Add<Rhs = Self> {  // Default: Rhs = Self
     type Output;
     
