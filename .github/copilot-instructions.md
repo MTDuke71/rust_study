@@ -4,6 +4,34 @@ This is a **V-Cycle learning workspace** for systematic Rust development using f
 
 ## 🎯 Core Development Philosophy: 3-Track Learning System
 
+This codebase integrates three parallel learning tracks for comprehensive Rust mastery, guided by established software engineering principles:
+
+### 🏗️ **Software Engineering Principles Integration**
+
+**Clean Code Principles** (Robert Martin):
+- **Meaningful Names**: All functions, structs, and variables use expressive, intention-revealing names
+- **Single Responsibility**: Each function/struct does one thing well
+- **Small Functions**: Keep functions focused and under 20 lines when possible  
+- **No Side Effects**: Pure functions preferred, mutations clearly documented
+- **Command-Query Separation**: Functions either do something or return something, not both
+- **DRY Principle**: Don't repeat yourself - extract common patterns into reusable components
+
+**Software Architecture in Practice** (Bass, Clements, Kazman):
+- **Quality Attributes Focus**: Architecture decisions explicitly target performance, modifiability, testability
+- **Deep Modules**: Simple interfaces hiding complex implementations (Rust's zero-cost abstractions)
+- **Information Hiding**: Implementation details encapsulated behind clear APIs
+- **Architecture Documentation**: Document architectural decisions, rationale, and trade-offs in README files
+- **Component-Based Design**: Each Mission is a self-contained component with well-defined interfaces
+- **Layered Architecture**: Clear separation between data structures → algorithms → applications
+
+**When Creating New Content:**
+- Apply **Clean Code naming conventions** - use `calculate_total_price()` not `calc()`
+- Follow **Single Responsibility Principle** - one REQ per function when possible
+- Design **Deep Modules** - simple public APIs hiding complex internal logic
+- Document **architectural decisions** and quality attribute trade-offs
+- Create **testable architectures** with clear component boundaries
+- Prioritize **modifiability** through trait-based design and separation of concerns
+
 This codebase integrates three parallel learning tracks for comprehensive Rust mastery:
 
 ### **Track 1: V-Cycle Missions** (Engineering Discipline)
@@ -323,6 +351,15 @@ Day 5: Documentation → step5_final_project.rs (complete mission review)
 - **⚠️  CALENDAR ALIGNMENT** - Ensure MissionX_tut activities align with MONTHLY_CALENDAR.md daily focus goals
 - **📋 REQUIREMENT MAPPING** - Tutorial exercises must directly support mission REQ-X completion
 
+### Software Engineering Discipline Application
+- **Clean Code naming** - Use `validate_brackets()` not `check()`, `calculate_hash()` not `hash()`
+- **Single Responsibility functions** - Each function should fulfill one REQ or sub-requirement
+- **Deep module design** - Simple public APIs (`insert()`, `get()`) hiding complex internals (hashing, collision resolution)
+- **Information hiding** - Keep implementation details private, expose only necessary interfaces
+- **Architecture documentation** - Document quality attribute decisions (performance vs. memory, flexibility vs. simplicity)
+- **Testable design** - Structure code so each architectural component can be tested independently
+- **Quality attribute focus** - Explicitly design for performance, modifiability, testability in each Mission
+
 ### Daily Study Standards
 - **Complete Runnable Examples** - MANDATORY for every Day file
 - **Test immediately** - Use `.\scripts\run_md.bat` to verify examples work
@@ -415,5 +452,7 @@ Day 5: Documentation → step5_final_project.rs (complete mission review)
 - **Comprehensive testing** - Unit, integration, and requirement-based tests
 - **Documentation completeness** - Module docs, function docs, and examples
 - **Documentation standards** - Follow [RUST_DOCUMENTATION_STANDARDS.md](RUST_DOCUMENTATION_STANDARDS.md) and [RUST_TEST_DOCUMENTATION_STANDARDS.md](RUST_TEST_DOCUMENTATION_STANDARDS.md)
+- **Clean Code compliance** - Apply meaningful names, single responsibility, and DRY principles
+- **Architecture quality** - Ensure deep modules, information hiding, and quality attribute achievement
 
 This codebase treats learning Rust as an engineering discipline with integrated tracks that reinforce each other through practical, runnable examples and formal V-Cycle methodology.
