@@ -99,9 +99,14 @@ fn example5_glob_operator() {
     use std::collections::*;
 
     // Now all public items from std::collections are available
-    let mut map = HashMap::new();
-    let mut set = HashSet::new();
-    let mut vec_deque = VecDeque::new();
+    let mut map: HashMap<&str, i32> = HashMap::new();
+    map.insert("example", 42);
+    
+    let mut set: HashSet<&str> = HashSet::new();
+    set.insert("item");
+    
+    let mut vec_deque: VecDeque<i32> = VecDeque::new();
+    vec_deque.push_back(1);
 
     println!("Glob operator (*) brings all public items into scope");
     println!("Use sparingly - can cause naming conflicts");
@@ -120,6 +125,15 @@ fn example6_use_best_practices() {
 
     use std::collections::HashMap;
     use crate::front_of_house::hosting;
+    use crate::back_of_house::Breakfast;
+
+    // Actually use the imports to demonstrate the concept
+    let mut map: HashMap<&str, &str> = HashMap::new();
+    map.insert("practice", "makes perfect");
+    
+    hosting::add_to_waitlist();
+    
+    let _meal = Breakfast::summer("Rye");
 
     println!("Best practices:");
     println!("  1. Group by source (std, external, local)");

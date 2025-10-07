@@ -2,50 +2,21 @@
 
 **Organized daily learning materials for systematic Rust skill development**
 
+> 📚 **For comprehensive navigation and weekly breakdowns, see the [[../zettelkasten/Daily Study MOC]]**
+
 ---
 
-## 📚 **Learning Structure**
+## � **Directory Structure**
 
 This directory contains all daily study materials organized by week, following the **3-Track Learning System**:
 
-### **Weekly Organization**
 ```
 daily_study/
-├── rust_learning_week1_notes/    # Days 1-7: Fundamentals
+├── rust_learning_week1_notes/    # Days 1-7: Foundations (Ownership, Borrowing)
 ├── rust_learning_week2_notes/    # Days 8-14: Collections & Data Structures  
-├── rust_learning_week3_notes/    # Days 15-21: Advanced Concepts
-└── rust_learning_week4_notes/    # Days 22-28: Specialized Topics
+├── rust_learning_week3_notes/    # Days 15-21: Abstractions (Traits, Generics)
+└── rust_learning_week4_notes/    # Days 22-28: Applied Problem Solving (Grids, Queues, Parsing)
 ```
-
-### **Daily Study Standards**
-Each day file (`DayXX.md`) includes:
-- **🚀 Complete Runnable Example** - Self-contained, executable code
-- **📖 Concept Explanation** - Theory and practical application
-- **🔗 Cross-References** - Links to Mission projects and zettelkasten
-- **💡 AoC Applications** - Competitive programming context
-- **🛠️ Multiple Execution Methods** - Playground, local, workspace runners
-
----
-
-## 🎯 **Learning Tracks Integration**
-
-### **Track 1: V-Cycle Missions** 
-Daily concepts directly support mission implementations:
-- **Day 8**: Vector fundamentals → Mission1 Stack operations
-- **Day 10**: HashMap patterns → Mission5 implementation
-- **Day 11**: HashSet operations → AoC coordinate tracking
-
-### **Track 2: AoC Preparation**
-Daily study builds competitive programming skills:
-- **Collection mastery** for efficient problem solving
-- **Algorithm patterns** for common AoC challenges  
-- **Performance optimization** for speed and memory efficiency
-
-### **Track 3: Rust Book Integration**
-Coordinated with official Rust Book progression:
-- **Chapter alignment** with daily concept introduction
-- **Hands-on practice** complementing book theory
-- **Real-world applications** beyond book examples
 
 ---
 
@@ -57,38 +28,63 @@ Coordinated with official Rust Book progression:
 .\scripts\run_md.bat daily_study\rust_learning_week2_notes\Day10.md
 
 # Or with PowerShell script
-.\run_markdown_code.ps1 daily_study\rust_learning_week2_notes\Day10.md
+.\run_markdown_code.ps1 daily_study\rust_learning_week4_notes\Day24.md
 ```
 
-### **Cross-Reference Navigation**
-- **[[../zettelkasten/Rust Collections MOC]]** - Central collections knowledge hub
-- **[[../zettelkasten/AoC Collection Problems]]** - Competitive programming patterns
-- **[[../Mission5/README]]** - HashMap implementation from scratch
-- **[[../aoc2015/README]]** - Real AoC problem applications
+### **Navigation**
+- **📚 Full Learning Guide**: [[../zettelkasten/Daily Study MOC]] - Complete weekly breakdown
+- **📅 Today's Focus**: [[../MONTHLY_CALENDAR]] - Current day activities
+- **🗺️ Central Hub**: [[../zettelkasten/zettel-index]] - Knowledge network entry point
 
 ---
 
-## 📊 **Weekly Focus Areas**
+## 📊 **Weekly Overview**
 
-### **Week 1 (Days 1-7): Foundation**
-- Rust basics, ownership, borrowing
-- Iterator patterns and functional programming
-- Basic data structures and operations
+For detailed day-by-day breakdown with links to all concepts, see **[[../zettelkasten/Daily Study MOC]]**.
 
-### **Week 2 (Days 8-14): Collections Mastery**
-- Vec, String, HashMap, HashSet deep-dive
-- Performance optimization and memory management
-- AoC collection problem patterns
+### **Week 1: Foundations** (Days 1-7)
+Ownership, Borrowing, Lifetimes, Pattern Matching
 
-### **Week 3 (Days 15-21): Advanced Concepts**
-- Traits, generics, lifetimes
-- Error handling and Result patterns
-- Complex algorithm implementations
+### **Week 2: Collections** (Days 8-14)
+Vectors, Strings, HashMap, HashSet, BTreeMap, Iterators, Error Handling
 
-### **Week 4+ (Days 22+): Specialization**
-- Domain-specific applications (chess engines, parsers)
-- Unsafe Rust and performance optimization
-- Production-ready code patterns
+### **Week 3: Abstractions** (Days 15-21)
+Traits, Generics, Lifetimes, Associated Types, Trait Objects
+
+### **Week 4: Applied Problem Solving** (Days 22-28)
+Grids, Navigation, Flood Fill, BFS, Priority Queues, String Parsing
+
+---
+
+## 🎯 **Daily Study Standards**
+
+Each day file (`DayXX.md`) includes:
+- **🚀 Complete Runnable Example** - Self-contained, executable code (600-900 lines)
+- **📖 Learning Context** - Cross-track integration with Missions and Rust Book
+- **💡 Extensive Explanations** - Detailed concept breakdowns (not just code comments)
+- **🔗 Cross-References** - Links to Mission projects, zettelkasten notes, and related topics
+- **🛠️ Key Takeaways** - Summary, best practices, and common patterns
+- **🎯 AoC Applications** - Competitive programming usage examples
+
+---
+
+## 🔗 **Cross-Reference Navigation**
+
+### **Core MOCs**
+- **[[../zettelkasten/Daily Study MOC]]** - Complete daily study navigation hub
+- **[[../zettelkasten/Missions MOC]]** - V-Cycle engineering projects
+- **[[../zettelkasten/Collections MOC]]** - Data structures deep dives
+- **[[../zettelkasten/AoC Patterns MOC]]** - Competitive programming patterns
+
+### **Mission Integration**
+- **Week 1** → Mission 1 (Stack), Mission 4 (Linked Lists)
+- **Week 2** → Mission 5 (HashMap from scratch)
+- **Week 3** → Generic implementations across all missions
+- **Week 4** → Mission 6 (2D Grids + Pathfinding), Mission 2 (Ring Buffer)
+
+### **AoC Applications**
+- **[[../zettelkasten/AoC Collection Problems]]** - Collections in competitive programming
+- **[[../aoc2015/README]]** - Real AoC solutions using daily concepts
 
 ---
 

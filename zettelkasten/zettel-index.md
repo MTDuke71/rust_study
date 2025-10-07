@@ -1,15 +1,8 @@
-# 🧠 Zettelkasten Index - Rust Study Wo### **Key Concept Areas**
-- [[HashMap Internals]] - Hash table implementation details
-- [[Error Handling Deep Dive]] - Comprehensive error handling
-- [[Generic Programming]] - Type parameterization techniques
-- [[Trait Objects]] - Dynamic dispatch patterns
-- [[PhantomData Type Safety Patterns]] - Zero-cost type safety
-- [[../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
-- [[../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - When optimizations trigger
+# 🧠 Zettelkasten Index - Rust Study Workspace
 
+*Master entry point for knowledge navigation and discovery*
 
-
-## 🔄 Cross-Track Integration*Master entry point for knowledge navigation and discovery**
+---
 
 ## 🗺️ Maps of Content (MOCs)
 
@@ -41,12 +34,15 @@
 - [[Mission3 Overview]] - Binary Search Trees
 - [[Mission4 Overview]] - Linked Lists
 - [[Mission5 Overview]] - HashMap & HashSet
+- [[Mission6 Overview]] - 2D Grids & Navigation
+- [[../missions/Mission7/README|Mission7]] - Graph Algorithms & Traversal (DFS/BFS)
+  - **Tutorial**: [[../tutorials/Mission7_tut/README|Mission7 Tutorial]] - 7-step graph learning progression
 
 ### **Daily Study Track** - Systematic Learning
 - [[Week 1 Notes]] - Collections Fundamentals
 - [[Week 2 Notes]] - Advanced Collections  
 - [[Week 3 Notes]] - Traits & Type System
-- [[Week 4 Notes]] - Advanced Patterns
+- [[Week 4 Notes]] - Applied Problem Solving (AoC)
 
 ### **Key Concept Areas**
 - [[HashMap Internals]] - Hash table implementation details
@@ -54,10 +50,12 @@
 - [[Generic Programming]] - Type parameterization techniques
 - [[Trait Objects]] - Dynamic dispatch patterns
 - [[PhantomData Type Safety Patterns]] - Zero-cost type safety
+- [[../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
+- [[../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - When optimizations trigger
 
 
 
-## � Cross-Track Integration
+## 🔄 Cross-Track Integration
 
 ### **Mission ↔ Daily Study Alignment**
 - HashMap implementation connects to [[Day 10 - HashMap Basics]]
@@ -69,6 +67,7 @@
 - Struct design connects to [[Chapter 5 - Structs]]
 - Generic implementation connects to [[Chapter 10 - Generics]]
 - Error handling connects to [[Chapter 9 - Error Handling]]
+- Module organization connects to [[../rust_book/Ch7/crates/README|Chapter 7 - Packages and Crates]]
 
 ### **Progress Tracking**
 - **Live Progress**: See [[MONTHLY_CALENDAR]] for today's activities

@@ -14,7 +14,7 @@ Step5_aoc_utilities.rs -Completed
 Need to Complete Tuesday Oct 7
 
 Day20
-Chapter 7.4
+Chapter 7.4 - Completed
 Step6_performance.rs
 Step7_documentation.rs
 

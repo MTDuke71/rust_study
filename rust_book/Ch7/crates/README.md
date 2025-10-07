@@ -88,3 +88,7 @@ After studying this example, you should understand:
 - **Library Crates**: `serde`, `tokio`, `clap` - provide functionality to other programs
 - **Binary Crates**: `cargo`, `rustc`, `ripgrep` - executable command-line tools
 - **Mixed Packages**: Many packages contain both library and binary crates
+
+---
+*Tags: #rust-book #chapter7 #crates #packages #modules #organization #library #binary*
+*Links: [[../../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../../zettelkasten/Rust Concepts MOC|Rust Concepts]] | [[../../../zettelkasten/Missions MOC|Missions MOC]] | [[../../../missions/Mission7/README|Mission7 - Modules in Practice]]*
