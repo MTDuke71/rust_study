@@ -12,6 +12,7 @@
 - [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns and scenarios
 - [[Ownership in Collections]] - Memory management with data structures
+- [[Box Smart Pointer Patterns]] - Heap allocation and smart pointer usage
 
 ### **Error Handling**
 - [[Day 5 - Option and Result]] - Basic error handling concepts
@@ -37,6 +38,7 @@
 - [[Day 18 - Advanced Traits]] - Associated types and defaults
 - [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn`
 - [[Day 21 - Generics + Traits Practice]] - Integrated mastery project
+- [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks
 - [[Generic Programming]] - Type parameterization
 - [[Iterator Traits]] - Custom iteration implementations
 - [[Clone vs Copy]] - Value semantics understanding

@@ -70,6 +70,14 @@
 - [[Implementation Challenges]] - Coding exercises
 - [[Connection Verification]] - Link validation
 
+## 📦 Smart Pointers & Memory Management
+
+- [[Box Smart Pointer Patterns]] - Heap allocation and ownership management
+
+## 🏗️ Type System Fundamentals
+
+- [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks of Rust's type system
+
 ---
 *Tags: #index #overview #navigation #cross-track #zettelkasten #moc*
 *Links: [[MONTHLY_CALENDAR]] | [[Collections MOC]] | [[Missions MOC]] | [[Daily Study MOC]] | [[README]]*

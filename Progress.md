@@ -5,8 +5,8 @@ Completed Mission Step3_coordinates.rs
 
 Need to Complete Monday Oct 6
 
-Day18
-Day19
+Day18 -Completed
+Day19 -Completed
 Chapter 7.3
 Step4_pathfinding.rs
 Step5_aoc_utilities.rs
