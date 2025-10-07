@@ -1,5 +1,7 @@
 # Visual Compilation Process for step2_push_front.rs
 
+> **Navigation**: [[zettel-index]] | [[Collections MOC]] | [[Mission4_tut Overview]] | [[Mission4 Overview]]
+
 ## 🎯 High-Level Overview
 
 ```
@@ -237,3 +239,31 @@ Heap:
 5. **Debugging**: Source line mapping preserved through all stages
 
 This transformation shows how Rust's high-level safety features compile into efficient, safe machine code that's competitive with hand-optimized C!
+
+---
+
+## 🔗 **Related Documentation**
+
+### **Mission4 Tutorial Materials**
+- **[[Mission4_tut Overview]]** - Main linked list tutorial guide
+- **[[Mission4_tut/examples/README.md]]** - Progressive linked list examples (7 steps)
+- **[[COMPILE_ERROR_ANALYSIS]]** - Common compilation errors and solutions
+- **[[TYPE_BREAKDOWN]]** - Deep dive into `Box<T>` and `Rc<RefCell<T>>` types
+- **[[COMPLETE_ANALYSIS]]** - Complete compilation stages overview
+
+### **Core Concepts**
+- **[[Day 02 - Ownership Basics]]** - Ownership fundamentals needed for Box<T>
+- **[[Day 03 - Borrowing]]** - Reference rules in linked structures
+- **[[Day 04 - Lifetimes]]** - Lifetime management in recursive types
+- **[[Box Smart Pointer Patterns]]** - Box<T> usage patterns and heap allocation
+- **[[Performance Optimization Guide]]** - Compilation level optimizations
+
+### **Main Mission**
+- **[[Mission4 Overview]]** - Mission 4: Linked Lists implementation
+- **[[Collections MOC]]** - Data structures hub with Mission 4 integration
+
+---
+
+*Tags: #mission4 #compilation #assembly #llvm #box #linked-list #tutorial #visualization #zero-cost-abstractions #monomorphization #memory-layout*
+
+*Links: [[zettel-index]] | [[Mission4_tut Overview]] | [[Collections MOC]] | [[Box Smart Pointer Patterns]] | [[Performance Optimization Guide]]*

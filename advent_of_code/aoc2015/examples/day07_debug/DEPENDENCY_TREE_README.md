@@ -58,3 +58,9 @@ a [ASSIGN] ← lx
 The tree above shows how wire 'a' depends on 'lx', which depends on 'lw' and 'lv', 
 which in turn depend on hundreds of other gates in a complex web of bit manipulations
 and logical operations - all to compute the final value 16076! 🎯
+
+---
+
+*Tags: #aoc2015 #day07 #graph-algorithms #dag #dependency-resolution #circuit-simulation #debugging*
+
+*Links: [[../../../../zettelkasten/AoC 2015 MOC]] | [[../../Problem_Statements/summary]] | [[../../src/solver/day07]] | [[../../../../zettelkasten/Collections MOC]] | [[../../../../zettelkasten/zettel-index]]*

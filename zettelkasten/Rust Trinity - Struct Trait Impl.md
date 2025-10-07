@@ -403,7 +403,7 @@ for (Drawable shape : shapes) {
 ## 🔗 Related Concepts
 
 ### **Ownership & Memory**
-- [[Day 2 - Ownership Basics]] - How structs own their data
+- [[Day 02 - Ownership Basics]] - How structs own their data
 - [[Box Smart Pointer Patterns]] - Heap allocation for trait objects
 
 ### **Advanced Type System**

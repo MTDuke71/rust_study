@@ -250,12 +250,25 @@ You'll see:
 
 ## 🔗 **Related Files**
 
+- [[SIZE_HINT_EXPLAINED]] - What size_hint() does and how to implement it
+- [[../../zettelkasten/Collections MOC]] - Main collections knowledge hub
+- [[../../zettelkasten/Day 13 - Advanced Iterators]] - Iterator patterns and adaptors
+- [[README]] - Mission 6 Grid implementation overview
 - **`examples/size_hint_demo.rs`** - Full demonstration code
-- **`SIZE_HINT_EXPLAINED.md`** - What size_hint() does
 - **`src/grid.rs`** - Your grid's size_hint() implementations
+
+**Key Concepts**:
+- `.collect()` pre-allocation behavior
+- `ExactSizeIterator` trait and `.len()`
+- Iterator performance optimization
+- Proving optimizations with capacity checks
+
+**See Also**:
+- [[SIZE_HINT_EXPLAINED]] for implementation details
+- [[../../zettelkasten/Collections MOC#Performance Patterns]] for related optimizations
 
 ---
 
-*Tags: #size-hint #iterators #performance #rust-internals #mission6 #collect*
+*Tags: #size-hint #iterators #performance #rust-internals #mission6 #collect #optimization #proof*
 
-*Links: [[Iterator Trait]] | [[ExactSizeIterator]] | [[Collect Performance]] | [[Grid]]*
+*Links: [[SIZE_HINT_EXPLAINED]] | [[../../zettelkasten/Collections MOC]] | [[../../zettelkasten/Day 13 - Advanced Iterators]] | [[../../zettelkasten/zettel-index]] | [[README]]*

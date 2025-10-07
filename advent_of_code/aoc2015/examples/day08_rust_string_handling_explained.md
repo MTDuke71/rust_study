@@ -284,4 +284,4 @@ fn parse_memory_length(s: &str) -> usize {
 
 *Tags: #aoc2015 #day08 #string-parsing #escape-sequences #compile-time-vs-runtime #rust-strings*
 
-*Links: [[String Handling]] | [[Escape Sequences]] | [[File I/O]] | [[AoC 2015]]*
+*Links: [[../../../zettelkasten/AoC 2015 MOC]] | [[../Problem_Statements/summary]] | [[../src/solver/day08]] | [[../tests/day08_tests]] | [[../../../zettelkasten/Collections MOC]] | [[../../../zettelkasten/zettel-index]]*

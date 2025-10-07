@@ -276,9 +276,9 @@ let single_boxed = Box::new(42);
 - `RefCell<T>` - Interior mutability, runtime borrowing
 
 ### **Memory Management**
-- [[Day 2 - Ownership Basics]] - Ownership fundamentals
-- [[Day 3 - Borrowing]] - Reference semantics
-- [[Day 4 - Lifetimes]] - Reference lifetime management
+- [[Day 02 - Ownership Basics]] - Ownership fundamentals
+- [[Day 03 - Borrowing]] - Reference semantics
+- [[Day 04 - Lifetimes]] - Reference lifetime management
 
 ### **Trait Objects**
 - [[Day 19 - Trait Objects]] - Dynamic dispatch patterns
@@ -352,5 +352,9 @@ for animal in animals {
 
 ---
 
+**See Also**: [[../../tutorials/Mission4_tut/compilation_stages/VISUAL_COMPILATION_PROCESS]] - Detailed visual guide showing how `Box<Node<T>>` compiles from Rust source through LLVM IR and assembly to machine code with memory layout diagrams
+
+---
+
 *Tags: #box #smart-pointers #heap-allocation #ownership #memory-management #trait-objects #recursive-structures*
-*Links: [[Day 2 - Ownership Basics]] | [[Day 19 - Trait Objects]] | [[Rust Concepts MOC]] | [[Collections MOC]]*
+*Links: [[Day 02 - Ownership Basics]] | [[Day 19 - Trait Objects]] | [[Rust Concepts MOC]] | [[Collections MOC]]*

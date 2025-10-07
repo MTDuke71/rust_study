@@ -387,14 +387,26 @@ let coords: Vec<Coord> = grid.coordinates().collect();
 
 ## 🔗 **Related Concepts**
 
-- [[Iterator Trait]] - The base trait for iteration
-- [[ExactSizeIterator]] - Iterators with known exact length
-- [[DoubleEndedIterator]] - Iterators that can go backwards
-- [[Collect Performance]] - How size_hint affects collection
-- [[Mission 6 Grid]] - Your grid implementation
+- [[../../zettelkasten/Collections MOC]] - Main collections knowledge hub
+- [[../../zettelkasten/Day 13 - Advanced Iterators]] - Iterator patterns and adaptors
+- [[WHEN_SIZE_HINT_CALLED]] - When is size_hint() actually invoked by Rust stdlib
+- [[README]] - Mission 6 Grid implementation overview
+- [[../../Mission5/README]] - Mission 5 custom iterators
+
+**Iterator Trait Ecosystem**:
+- `Iterator` trait - Base trait for iteration
+- `ExactSizeIterator` - Iterators with known exact length
+- `DoubleEndedIterator` - Iterators that can go backwards
+- `FusedIterator` - Iterators that stay None after first None
+
+**Performance Topics**:
+- [[WHEN_SIZE_HINT_CALLED]] - Proving size_hint() improves collect() performance
+- Collection pre-allocation with `with_capacity()`
+- Memory efficiency in iterator chains
+- Compiler optimizations from size hints
 
 ---
 
-*Tags: #iterators #size-hint #performance #optimization #rust-traits #mission6*
+*Tags: #iterators #size-hint #performance #optimization #rust-traits #mission6 #iterator-patterns*
 
-*Links: [[Iterator]] | [[ExactSizeIterator]] | [[Grid]] | [[Coord]]*
+*Links: [[../../zettelkasten/Collections MOC]] | [[../../zettelkasten/Day 13 - Advanced Iterators]] | [[../../zettelkasten/zettel-index]] | [[WHEN_SIZE_HINT_CALLED]] | [[README]]*

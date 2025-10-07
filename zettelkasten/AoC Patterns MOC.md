@@ -28,6 +28,9 @@
 - **[[BFS Patterns]]** - Shortest path, level-order, and state exploration
 - **[[DFS Patterns]]** - Recursive exploration, backtracking, and cycle detection
 - **[[A* Search]]** - Heuristic search for optimal pathfinding
+  - **[[Chebyshev Distance]]** - Chessboard/8-connected distance metric
+  - **[[Manhattan Distance]]** - 4-connected grid distance
+  - **[[Euclidean Distance]]** - Continuous space distance
 - **[[Binary Search]]** - Sorted array search and optimization problems
 - **[[Two-Pointer Techniques]]** - Array manipulation and meeting problems
 
@@ -47,10 +50,12 @@
 
 ### **String Algorithms**
 - **[[Pattern Matching]]** - KMP, Boyer-Moore, and regex approaches
+  - **Quick Reference**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Comprehensive regex guide with AoC examples
 - **[[String Manipulation]]** - Rotation, palindromes, and transformation
 - **[[Parsing Techniques]]** - Recursive descent and state machine parsing
 - **[[Text Processing]]** - Tokenization, normalization, and analysis
 - **[[Encoding/Decoding]]** - Caesar cipher, Base64, and custom encodings
+- **Stack-Based Validation** - [[../../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended]] - Configurable bracket matching with multi-error reporting
 
 ---
 

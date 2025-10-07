@@ -613,6 +613,23 @@ pub struct DoublyLinkedList<T> {
 - [The Rust Book - Smart Pointers](https://doc.rust-lang.org/book/ch15-00-smart-pointers.html)
 - [Rust By Example - Rc](https://doc.rust-lang.org/rust-by-example/std/rc.html)
 - [Learn Rust With Entirely Too Many Linked Lists](https://rust-unofficial.github.io/too-many-lists/)
+- [[examples/README]] - Step-by-step runnable examples guide
+
+### Related Internal Documentation
+
+- [[../Mission4/README]] - Mission4 main implementation
+- [[../../zettelkasten/Missions MOC]] - All mission overviews
+- [[../../zettelkasten/Box Smart Pointer Patterns]] - Box<T> deep dive
+- [[../../zettelkasten/Collections MOC]] - Data structure patterns
+- [[compilation_stages/README]] - Understanding Rust compilation
+- [[compilation_stages/VISUAL_COMPILATION_PROCESS]] - Visual diagrams showing Rust → Assembly → Machine Code
+- [[TROUBLESHOOTING]] - Common errors and solutions
+
+---
+
+*Tags: #mission4 #tutorial #linked-list #box #rc #refcell #ownership #smart-pointers #interior-mutability*
+
+*Links: [[examples/README]] | [[../Mission4/README]] | [[../../zettelkasten/Missions MOC]] | [[../../zettelkasten/Collections MOC]] | [[../../zettelkasten/zettel-index]]*
 
 ---
 

@@ -6,7 +6,7 @@
 - **Internals**: [[HashMap Internals]] - How hash tables work under the hood
 - **Collections**: [[Collections MOC]] - Broader data structures context
 - **Next**: [[Day 11 - HashSet Operations]] - Set theory applications
-- **Previous**: [[Day 9 - String Patterns]] - String handling in Rust
+- **Previous**: [[Day 09 - String Patterns]] - String handling in Rust
 
 ## Core Concepts
 

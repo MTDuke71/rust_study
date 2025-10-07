@@ -22,9 +22,9 @@
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
-| **Sept 25** | Setup & Planning | [[Step 1 - Basic HashMap Structure]] | [[Day 7 - Practice Day]] |
-| **Sept 26** | Requirements | [[Step 2 - Collision Handling]] | [[Day 8 - Vec Fundamentals]] |  
-| **Sept 27** | Basic Structure | [[Step 3 - Advanced Operations]] | [[Day 9 - String Patterns]] |
+| **Sept 25** | Setup & Planning | [[Step 1 - Basic HashMap Structure]] | [[Day 07 - Practice Day]] |
+| **Sept 26** | Requirements | [[Step 2 - Collision Handling]] | [[Day 08 - Vec Fundamentals]] |  
+| **Sept 27** | Basic Structure | [[Step 3 - Advanced Operations]] | [[Day 09 - String Patterns]] |
 | **Sept 28** | Hash & Collision | [[Step 4 - Multi-Value Patterns]] | [[Day 10 - HashMap Basics]] |
 | **Sept 29** | Core Operations | [[Step 5 - MemoCache Integration]] | [[Day 11 - HashSet Operations]] |
 | **Sept 30** | Iterator Implementation | [[Final Project Review]] | [[Day 12 - BTreeMap]] |
@@ -40,8 +40,8 @@
 
 ### **Tutorial → Daily Study Links**
 - **Step 1** applies concepts from → [[Day 10 - HashMap Basics]]
-- **Step 2** reinforces → [[Day 1 - Ownership Basics]] 
-- **Step 3** builds on → [[Day 9 - String Patterns]]
+- **Step 2** reinforces → [[Day 01 - Ownership Basics]] 
+- **Step 3** builds on → [[Day 09 - String Patterns]]
 - **Step 4** connects to → [[Day 11 - HashSet Operations]]
 - **Step 5** prepares for → [[Day 13 - Advanced Iterators]]
 

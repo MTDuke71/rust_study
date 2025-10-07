@@ -580,8 +580,8 @@ impl GameState {
 
 ## 🔗 Related Learning
 
-- **[[Day 4 - Lifetimes]]** - Understanding reference lifetimes
-- **[[Day 5 - Option and Result]]** - Error handling patterns
+- **[[Day 04 - Lifetimes]]** - Understanding reference lifetimes
+- **[[Day 05 - Option and Result]]** - Error handling patterns
 - **[[Mission 5.md]]** - HashMap/HashSet implementation
 - **[[Thread Safety]]** - Concurrent programming patterns
 - **[[Memory Management]]** - Rust's ownership system
@@ -611,4 +611,4 @@ impl GameState {
 *Interior mutability is a powerful tool that allows you to work within Rust's ownership system while still achieving the flexibility you need. Use it judiciously and understand the trade-offs between compile-time and runtime safety.*
 
 *Tags: #interior-mutability #refcell #cell #mutex #thread-safety #memory-management #rust-advanced*
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Day 4 - Lifetimes]] | [[Mission 5.md]] | [[Thread Safety]]*
+*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Day 04 - Lifetimes]] | [[Mission 5.md]] | [[Thread Safety]]*

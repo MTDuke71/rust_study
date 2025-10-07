@@ -1,5 +1,7 @@
 # Regular Expressions Quick Reference
 
+> **Navigation**: [[../../zettelkasten/zettel-index|zettel-index]] | [[../../zettelkasten/Collections MOC|Collections MOC]] | [[../../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]] | [[README|Mission5_tut Overview]]
+
 ## 🧠 Mental Model
 **Regex = Pattern Matching Language**
 - Think of it as "smart search" that finds patterns, not just exact text
@@ -193,3 +195,38 @@ fn is_nice(s: &str) -> bool {
 5. **Use Raw Strings**: In Rust, use `r"pattern"` to avoid double escaping
 
 **Remember**: Regex is a tool for pattern matching. If the pattern is complex, sometimes manual string processing is clearer and more maintainable!
+
+---
+
+## 🔗 **Related Documentation**
+
+### **Mission5 Tutorial Materials**
+- **[[README|Mission5_tut Overview]]** - Complete HashMap tutorial with step-by-step guide
+- **[[Step 1 - Basic HashMap|Step 1]]** - Building hash table foundations
+- **[[Step 3 - String Keys|Step 3]]** - String key handling with pattern matching
+
+### **String & Pattern Concepts**
+- **[[../../zettelkasten/Day 09 - String Patterns|Day 09 - String Patterns]]** - String vs &str, UTF-8 handling
+- **[[../../zettelkasten/Day 06 - Pattern Matching|Day 06 - Pattern Matching]]** - Match expressions and destructuring
+- **[[../../zettelkasten/Error Handling Deep Dive|Error Handling Deep Dive]]** - Result types for regex operations
+
+### **AoC Applications**
+- **[[../../zettelkasten/AoC 2015 MOC|AoC 2015 MOC]]** - Day 5 (Nice Strings), Day 8 (String Escaping)
+- **[[../../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - String algorithms and parsing techniques
+- **[[../../zettelkasten/AoC Collection Problems|AoC Collection Problems]]** - When to use regex vs manual parsing
+
+### **Parsing & Validation**
+- **Text Parsing Patterns** - Line-by-line and regex-based parsing
+- **Input Validation** - Using regex for data validation
+- **String Manipulation** - Character extraction and transformation
+
+### **Knowledge Hubs**
+- **[[../../zettelkasten/Collections MOC|Collections MOC]]** - Data structure patterns
+- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+- **[[../../missions/Mission5/README|Mission5 HashMap]]** - Main implementation using string keys
+
+---
+
+*Tags: #regex #pattern-matching #string-processing #validation #parsing #aoc #quick-reference #tutorial #mission5*
+
+*Links: [[../../zettelkasten/zettel-index|zettel-index]] | [[README|Mission5_tut]] | [[../../zettelkasten/Day 09 - String Patterns|Day 09]] | [[../../zettelkasten/AoC Patterns MOC|AoC Patterns]]*

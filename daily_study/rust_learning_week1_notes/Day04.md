@@ -1,11 +1,11 @@
 # Day 4 · Lifetimes Basics
 
 ## 🔗 Zettelkasten Links
-- **Previous**: [[Day 3 - Borrowing]] - Reference rules
-- **Next**: [[Day 5 - Option and Result]] - Error handling types
+- **Previous**: [[Day 03 - Borrowing]] - Reference rules
+- **Next**: [[Day 05 - Option and Result]] - Error handling types
 - **Concept**: [[Rust Concepts MOC]] - Lifetime system
 - **Rust Book**: [[Chapter 10.3 - Lifetimes]] - Validating references with lifetimes
-- **Week Summary**: [[Day 7 - Week 1 Summary]] - Foundations review
+- **Week Summary**: [[Day 07 - Week 1 Summary]] - Foundations review
 
 ## What Are Lifetimes?
 Lifetimes are Rust's way of ensuring that references are valid for as long as we need them. They prevent **dangling references** - pointers to memory that has been freed or is no longer valid.
@@ -268,6 +268,6 @@ The lifetimes concept builds directly on the ownership and borrowing concepts fr
 
 ---
 
-*Links: [[Day 3 - Borrowing]] | [[Day 5 - Option and Result]] | [[Rust Concepts MOC]]*
+*Links: [[Day 03 - Borrowing]] | [[Day 05 - Option and Result]] | [[Rust Concepts MOC]]*
 *Tags: #lifetimes #references #daily-study #rust-book #chapter10 #foundation*
 

@@ -23,6 +23,14 @@
 
 ## 🎯 Mission Implementations
 
+### **Mission 4: Linked Lists**
+- [[../../tutorials/Mission4_tut/README]] - Complete linked list tutorial
+- [[../../tutorials/Mission4_tut/examples/README]] - Step-by-step runnable examples
+- [[../../tutorials/Mission4_tut/compilation_stages/VISUAL_COMPILATION_PROCESS]] - Visual compilation: Rust → LLVM → Assembly → Machine Code
+- Box<T> vs Rc<RefCell<T>> patterns
+- Interior mutability and shared ownership
+- 7 progressive examples from basic to performance analysis
+
 ### **Mission 5: Hash Collections**
 - [[Mission5 HashMap]] - Custom hash table from scratch
 - [[Mission5 HashSet]] - Set wrapper implementation
@@ -31,18 +39,31 @@
 - [[Predicates and Higher-Order Functions Deep Dive]] - Advanced HashMap operations with predicates
 
 ### **Mission 1: Stack** → [[Stack Implementation Patterns]]
+- **Application**: [[../../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended Validator]] - Advanced bracket validation with configurable alphabet and multi-error reporting
+
 ### **Mission 2: Queue** → [[Queue Implementation Strategies]] 
 ### **Mission 6: Grids** → [[2D Array Navigation Patterns]]
+- [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator optimization for grid traversal
 
 ## 📖 Daily Study Integration
 
 ### **Week 2: Collections Mastery**
-- [[Day 8 - Vec Fundamentals]] - Dynamic arrays, capacity vs length
-- [[Day 9 - String Patterns]] - String vs &str, UTF-8 handling
+- [[Day 08 - Vec Fundamentals]] - Dynamic arrays, capacity vs length
+- [[Day 09 - String Patterns]] - String vs &str, UTF-8 handling
+  - **Pattern Matching**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Comprehensive regex guide
 - [[Day 10 - HashMap Basics]] - Key-value storage, borrowing keys  
 - [[Day 11 - HashSet Operations]] - Unique collections, set operations
 - [[Day 12 - BTreeMap]] - Ordered collections, range queries
 - [[Day 13 - Advanced Iterators]] - Transforming and processing
+- [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
+
+## 🔄 Iterator Patterns
+
+### **Core Iterator Concepts**
+- [[Day 13 - Advanced Iterators]] - Iterator adaptors and chains
+- [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - size_hint() for performance optimization
+- [[../../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - When size_hint() is actually invoked
+- [[Mission5 Iterator]] - Custom iteration patterns
 
 ## 🔗 Cross-Concept Connections
 
@@ -55,8 +76,14 @@
 - [[O(1) vs O(log n)]] - HashMap vs BTreeMap trade-offs  
 - [[Memory Layout]] - Contiguous vs fragmented storage
 - [[Cache Efficiency]] - Access pattern optimization
+- [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size hints for allocation optimization
+- [[../../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - Understanding when optimizations trigger
 
 ### **AoC Applications**
+- [[AoC 2015 MOC]] - Advent of Code 2015 solutions (8 days completed)
+  - Day 3: HashSet for coordinate tracking
+  - Day 7: HashMap memoization patterns
+  - Day 8: String parsing and character counting
 - [[Frequency Counting]] - Character/word occurrence patterns
 - [[Deduplication]] - Removing duplicates efficiently  
 - [[Set Operations]] - Union, intersection, difference

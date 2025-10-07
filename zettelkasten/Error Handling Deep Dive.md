@@ -341,8 +341,8 @@ fn panic_calculation(x: i32) -> i32 {
 
 ## 📚 Further Reading
 
-- [[Day 5 - Option and Result]] - Basic error handling concepts
-- [[Day 6 - Pattern Matching]] - Using match for error handling
+- [[Day 05 - Option and Result]] - Basic error handling concepts
+- [[Day 06 - Pattern Matching]] - Using match for error handling
 - [[Mission5 API Reference]] - Error handling in HashMap implementation
 - [[Performance Optimization Guide]] - Zero-cost error handling
 
@@ -351,4 +351,4 @@ fn panic_calculation(x: i32) -> i32 {
 *This comprehensive guide covers Rust's error handling from basic concepts to advanced patterns, with practical examples for competitive programming and mission work.*
 
 *Tags: #error-handling #result #option #pattern-matching #aoc #mission5 #daily-study #cross-track*
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Collections MOC]] | [[Day 5 - Option and Result]]*
+*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Collections MOC]] | [[Day 05 - Option and Result]]*

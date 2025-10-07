@@ -159,4 +159,34 @@ After running each example, try these modifications:
 
 ---
 
+## 🔗 Related Resources
+
+### **Main Tutorial**
+- [[../README]] - Mission4_tut main tutorial guide
+- [[../../Mission4/README]] - Mission4 main implementation
+
+### **Zettelkasten Knowledge Base**
+- [[../../../zettelkasten/Missions MOC]] - All mission overviews
+- [[../../../zettelkasten/Collections MOC]] - Data structure patterns
+- [[../../../zettelkasten/Box Smart Pointer Patterns]] - Box<T> deep dive
+- [[../../../zettelkasten/zettel-index]] - Main knowledge index
+
+### **Compilation & Debugging**
+- [[../compilation_stages/README]] - Understanding Rust compilation stages
+- [[../TROUBLESHOOTING]] - Common errors and solutions
+- [[../COMPILE_ERROR_ANALYSIS]] - Error message analysis
+
+### **Daily Study Integration**
+- [[../../../daily_study/rust_learning_week1_notes/Day02]] - Ownership basics
+- [[../../../daily_study/rust_learning_week1_notes/Day03]] - Borrowing and references
+- [[../../../daily_study/rust_learning_week2_notes/Day08]] - Vec fundamentals (similar patterns)
+
+---
+
+*Tags: #mission4 #linked-list #tutorial #examples #box #rc #refcell #ownership #borrowing*
+
+*Links: [[../README]] | [[../../Mission4/README]] | [[../../../zettelkasten/Missions MOC]] | [[../../../zettelkasten/Collections MOC]] | [[../../../zettelkasten/zettel-index]]*
+
+---
+
 **Next Steps**: After completing these examples, move on to the exercises in the `exercises/` directory for hands-on practice!

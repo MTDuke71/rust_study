@@ -1,12 +1,12 @@
 # Day 6 · Pattern Matching
 
 ## 🔗 Zettelkasten Links
-- **Previous**: [[Day 5 - Option and Result]] - Error handling types
-- **Next**: [[Day 7 - Week 1 Summary]] - Week foundations review
+- **Previous**: [[Day 05 - Option and Result]] - Error handling types
+- **Next**: [[Day 07 - Week 1 Summary]] - Week foundations review
 - **Concept**: [[Rust Concepts MOC]] - Pattern matching system
 - **Rust Book**: [[Chapter 6.2 - Match]] - The match control flow operator
 - **Rust Book**: [[Chapter 18 - Patterns]] - All pattern forms
-- **Week Summary**: [[Day 7 - Week 1 Summary]] - Foundations review
+- **Week Summary**: [[Day 07 - Week 1 Summary]] - Foundations review
 
 ## Overview
 Pattern matching is one of Rust's most powerful features, providing a way to destructure and match against the shape of data. It's both a control flow mechanism and a data extraction tool that enforces exhaustiveness and safety at compile time.
@@ -413,5 +413,5 @@ Pattern matching is central to idiomatic Rust and appears throughout your worksp
 
 ---
 
-*Links: [[Day 5 - Option and Result]] | [[Day 7 - Week 1 Summary]] | [[Rust Concepts MOC]]*
+*Links: [[Day 05 - Option and Result]] | [[Day 07 - Week 1 Summary]] | [[Rust Concepts MOC]]*
 *Tags: #pattern-matching #match #daily-study #rust-book #chapter6 #chapter18 #foundation*

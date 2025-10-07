@@ -5,9 +5,9 @@
 ## 🎯 Core Language Features
 
 ### **Ownership & Memory Management**
-- [[Day 2 - Ownership Basics]] - Single ownership, move semantics
-- [[Day 3 - Borrowing]] - References and borrowing rules
-- [[Day 4 - Lifetimes]] - Reference lifetime management
+- [[Day 02 - Ownership Basics]] - Single ownership, move semantics
+- [[Day 03 - Borrowing]] - References and borrowing rules
+- [[Day 04 - Lifetimes]] - Reference lifetime management
 - [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
 - [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns and scenarios
@@ -15,12 +15,12 @@
 - [[Box Smart Pointer Patterns]] - Heap allocation and smart pointer usage
 
 ### **Error Handling**
-- [[Day 5 - Option and Result]] - Basic error handling concepts
+- [[Day 05 - Option and Result]] - Basic error handling concepts
 - [[Error Handling Deep Dive]] - Advanced patterns and best practices
 - [[AoC Error Patterns]] - Input parsing and validation strategies
 
 ### **Pattern Matching & Control Flow**
-- [[Day 6 - Pattern Matching]] - Match expressions and destructuring
+- [[Day 06 - Pattern Matching]] - Match expressions and destructuring
 - [[Match Operator Examples]] - Practical pattern matching patterns
 - [[if let Patterns]] - Concise control flow
 
@@ -77,17 +77,17 @@
 ## 📚 Learning Progression
 
 ### **Week 1: Fundamentals**
-- [[Day 1 - Setup]] - Environment and toolchain
-- [[Day 2 - Ownership Basics]] - Memory management foundation
-- [[Day 3 - Borrowing]] - Reference semantics
-- [[Day 4 - Lifetimes]] - Reference lifetime management
-- [[Day 5 - Option and Result]] - Error handling introduction
-- [[Day 6 - Pattern Matching]] - Control flow patterns
-- [[Day 7 - Week 1 Summary]] - Integration and review
+- [[Day 01 - Setup]] - Environment and toolchain
+- [[Day 02 - Ownership Basics]] - Memory management foundation
+- [[Day 03 - Borrowing]] - Reference semantics
+- [[Day 04 - Lifetimes]] - Reference lifetime management
+- [[Day 05 - Option and Result]] - Error handling introduction
+- [[Day 06 - Pattern Matching]] - Control flow patterns
+- [[Day 07 - Week 1 Summary]] - Integration and review
 
 ### **Week 2: Collections Mastery**
-- [[Day 8 - Vec Fundamentals]] - Dynamic arrays
-- [[Day 9 - String Patterns]] - String handling
+- [[Day 08 - Vec Fundamentals]] - Dynamic arrays
+- [[Day 09 - String Patterns]] - String handling
 - [[Day 10 - HashMap Basics]] - Key-value storage
 - [[Day 11 - HashSet Operations]] - Unique collections
 - [[Day 12 - BTreeMap]] - Ordered collections

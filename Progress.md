@@ -7,9 +7,9 @@ Need to Complete Monday Oct 6
 
 Day18 -Completed
 Day19 -Completed
-Chapter 7.3
-Step4_pathfinding.rs
-Step5_aoc_utilities.rs
+Chapter 7.3 - Completed
+Step4_pathfinding.rs - Completed
+Step5_aoc_utilities.rs -Completed
 
 Need to Complete Tuesday Oct 7
 
@@ -17,5 +17,4 @@ Day20
 Chapter 7.4
 Step6_performance.rs
 Step7_documentation.rs
-
 

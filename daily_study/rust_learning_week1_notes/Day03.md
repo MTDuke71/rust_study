@@ -1,11 +1,11 @@
 # Day 3 · Functions & References
 
 ## 🔗 Zettelkasten Links
-- **Previous**: [[Day 2 - Ownership]] - Move and copy semantics
-- **Next**: [[Day 4 - Lifetimes]] - Lifetime annotations
+- **Previous**: [[Day 02 - Ownership]] - Move and copy semantics
+- **Next**: [[Day 04 - Lifetimes]] - Lifetime annotations
 - **Concept**: [[Rust Concepts MOC]] - Borrowing rules
 - **Rust Book**: [[Chapter 4.2 - References and Borrowing]] - Reference rules
-- **Week Summary**: [[Day 7 - Week 1 Summary]] - Foundations review
+- **Week Summary**: [[Day 07 - Week 1 Summary]] - Foundations review
 
 ## Key Points
 - Functions declared with `fn`.
@@ -153,5 +153,5 @@ fn count_words(text: &String) -> usize {
 
 ---
 
-*Links: [[Day 2 - Ownership]] | [[Day 4 - Lifetimes]] | [[Rust Concepts MOC]]*
+*Links: [[Day 02 - Ownership]] | [[Day 04 - Lifetimes]] | [[Rust Concepts MOC]]*
 *Tags: #borrowing #references #daily-study #rust-book #chapter4 #foundation*

@@ -15,6 +15,9 @@
 - 2D coordinate system with `Coord(x, y)` representation
 - Direction-based movement (8-directional support)
 - Distance calculations (Manhattan, Euclidean, Chebyshev)
+  - **[[Chebyshev Distance]]** - Chessboard/8-connected distance
+  - **[[Manhattan Distance]]** - 4-connected grid distance
+  - **[[Euclidean Distance]]** - Continuous space distance
 - Neighbor finding (4-connected and 8-connected)
 - **Connected to**: [[Coordinate Systems]]
 - **Tutorial**: [[Mission6_tut Step 3 - Coordinates]]

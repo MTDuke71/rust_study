@@ -82,7 +82,7 @@ fn example4_using_enums() {
 
     // All enum variants are public if the enum is public
     let order1 = back_of_house::Appetizer::Soup;
-    let order2 = back_of_house::Appetizer::Salad;
+    let _order2 = back_of_house::Appetizer::Salad;
 
     match order1 {
         back_of_house::Appetizer::Soup => println!("Ordered soup"),
@@ -93,6 +93,21 @@ fn example4_using_enums() {
     println!();
 }
 
+// Module for demonstrating super keyword
+mod super_example {
+    fn serve_order() {
+        println!("Serving order");
+    }
+
+    pub mod back_of_house {
+        pub fn fix_incorrect_order() {
+            // super refers to the parent module (super_example)
+            super::serve_order();
+            println!("Fixing incorrect order");
+        }
+    }
+}
+
 fn example5_super_keyword() {
     println!("⬆️  Example 5: Using super Keyword");
     println!("=================================");
@@ -100,18 +115,8 @@ fn example5_super_keyword() {
     // super refers to the parent module
     // Useful for relative paths that go up the module tree
 
-    fn serve_order() {
-        println!("Serving order");
-    }
-
-    mod back_of_house {
-        fn fix_incorrect_order() {
-            // super refers to the parent module (main)
-            super::serve_order();
-            println!("Fixing incorrect order");
-        }
-    }
-
+    super_example::back_of_house::fix_incorrect_order();
+    
     println!("super keyword refers to parent module");
     println!("Useful for going up the module tree");
     println!();

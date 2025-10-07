@@ -37,8 +37,8 @@
 
 ### **Daily Study Connections**
 - Builds on [[Day 10 - HashMap Basics]] theoretical foundation
-- Reinforces [[Day 1 - Ownership Basics]] through collection ownership
-- Applies [[Day 9 - String Patterns]] in key handling
+- Reinforces [[Day 01 - Ownership Basics]] through collection ownership
+- Applies [[Day 09 - String Patterns]] in key handling
 - Prepares for [[Day 13 - Advanced Iterators]] practical usage
 
 ### **Rust Book Integration** 

@@ -545,6 +545,8 @@ rustflags = ["-C", "target-cpu=native"] # Use all CPU features
 - [ ] Consider target-specific optimization flags
 - [ ] Profile with realistic input sizes and patterns
 
+**See Also**: [[../../tutorials/Mission4_tut/compilation_stages/VISUAL_COMPILATION_PROCESS]] - Visual guide showing Rust source → LLVM IR → Assembly → Machine code transformation with memory layout diagrams
+
 ---
 
 *Tags: #performance #optimization #algorithms #memory #benchmarking #profiling #competitive-programming #rust-specific*

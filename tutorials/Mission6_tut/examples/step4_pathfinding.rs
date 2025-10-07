@@ -86,7 +86,7 @@ fn main() {
     
     // Demonstrate BFS exploration order
     let exploration_order = bfs_exploration_order(&maze, start);
-    println!("\nBFS exploration order from {}:", start);
+    println!("\nBFS exploration order (visit sequence) from {}:", start);
     
     let mut order_grid = maze.clone();
     for (step, coord) in exploration_order.iter().enumerate() {
@@ -97,6 +97,27 @@ fn main() {
     }
     
     println!("{}", order_grid);
+    println!("(Numbers show visit order, not distance)");
+    
+    // Demonstrate BFS distance from start
+    let distance_map = bfs_distance_map(&maze, start);
+    println!("\nBFS distance from start {} (shortest path length):", start);
+    
+    let mut distance_grid = maze.clone();
+    for y in 0..maze.height() {
+        for x in 0..maze.width() {
+            let coord = TutorialCoord::new(x, y);
+            if let Some(&distance) = distance_map.get(&coord) {
+                if maze.get(coord) == Some(&'.') {
+                    let symbol = char::from_digit(distance as u32 % 10, 10).unwrap_or('*');
+                    distance_grid.set(coord, symbol);
+                }
+            }
+        }
+    }
+    
+    println!("{}", distance_grid);
+    println!("(Numbers show actual distance from start - all neighbors have same distance + 1)");
     
     // Section 4: A* Algorithm Introduction
     print_section("4. A* Algorithm Introduction");
@@ -436,6 +457,28 @@ fn bfs_exploration_order(maze: &TutorialGrid<char>, start: TutorialCoord) -> Vec
     order
 }
 
+// BFS distance map - returns actual shortest distance from start to each reachable cell
+fn bfs_distance_map(maze: &TutorialGrid<char>, start: TutorialCoord) -> HashMap<TutorialCoord, usize> {
+    let mut queue = VecDeque::new();
+    let mut distance_map = HashMap::new();
+    
+    queue.push_back(start);
+    distance_map.insert(start, 0);
+    
+    while let Some(current) = queue.pop_front() {
+        let current_distance = distance_map[&current];
+        
+        for neighbor in get_neighbors(current, maze.width(), maze.height()) {
+            if !distance_map.contains_key(&neighbor) && is_passable(maze, neighbor) {
+                distance_map.insert(neighbor, current_distance + 1);
+                queue.push_back(neighbor);
+            }
+        }
+    }
+    
+    distance_map
+}
+
 fn create_large_maze(width: usize, height: usize) -> TutorialGrid<char> {
     let mut maze = TutorialGrid::new(width, height, '.');
     
@@ -471,12 +514,504 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 
 // Exercise for the Reader:
 // 1. Implement Dijkstra's algorithm (A* with h=0)
+//    ✅ SOLUTION: See step4_dijkstra.rs
 // 2. Create a bidirectional BFS that searches from both start and goal
 // 3. Add support for diagonal movement with appropriate costs
 // 4. Implement JPS (Jump Point Search) for optimized A* on uniform grids
 
-// Design Questions to Consider:
-// - When is BFS better than A* and vice versa?
-// - How do different heuristics affect A* performance and optimality?
-// - What data structures are most efficient for the open set in A*?
-// - How would you handle dynamic obstacles that change during pathfinding?
+// ═══════════════════════════════════════════════════════════════════════════════
+// 🎓 DESIGN QUESTIONS & ANSWERS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ❓ Question 1: When is BFS better than A* and vice versa?
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// ✅ USE BFS WHEN:
+// 
+// 1. **UNWEIGHTED GRAPHS** (all edges cost 1)
+//    - BFS guarantees shortest path
+//    - Simpler implementation (no priority queue needed)
+//    - Memory efficient (HashSet + VecDeque)
+//    - Example: Grid with uniform movement cost
+//
+// 2. **SMALL SEARCH SPACE**
+//    - When exploring all nodes is acceptable
+//    - Graph fits comfortably in memory
+//    - Example: 10x10 grid, few obstacles
+//
+// 3. **NO CLEAR DIRECTION TO GOAL**
+//    - When heuristic would be unreliable
+//    - Multiple potential goals at similar distances
+//    - Example: "Find ANY exit", not specific one
+//
+// 4. **SIMPLICITY MATTERS**
+//    - Prototyping phase
+//    - Educational purposes
+//    - When performance is not critical
+//
+// ✅ USE A* WHEN:
+//
+// 1. **WEIGHTED GRAPHS** (edges have different costs)
+//    - Different terrain types (water=2, mountain=3)
+//    - BFS doesn't consider weights at all
+//    - Example: Strategy game with varied terrain
+//
+// 2. **LARGE SEARCH SPACE**
+//    - Hundreds or thousands of nodes
+//    - Heuristic guides search efficiently
+//    - Example: 100x100 grid with sparse obstacles
+//
+// 3. **SINGLE DESTINATION** with good heuristic
+//    - Manhattan distance for 4-connected grids
+//    - Euclidean distance for continuous space
+//    - Example: GPS navigation from A to B
+//
+// 4. **PERFORMANCE CRITICAL**
+//    - Real-time pathfinding (games, robotics)
+//    - A* explores fewer nodes than BFS
+//    - Example: RTS game with 100+ units pathfinding
+//
+// 📊 PERFORMANCE COMPARISON:
+//
+// Scenario: 20x15 grid, start (0,0) → goal (19,14)
+// - BFS:  Explores ~150 nodes (all reachable)
+// - A*:   Explores ~50 nodes (guided by heuristic)
+// 
+// Result: A* is 3x faster for single-goal pathfinding!
+//
+// 🎯 RULE OF THUMB:
+// - Uniform cost + small graph = BFS
+// - Weighted graph + large space + single goal = A*
+// - Need all distances = Dijkstra's (see step4_dijkstra.rs)
+
+// ❓ Question 2: How do different heuristics affect A* performance and optimality?
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// 🔑 KEY CONCEPT: **ADMISSIBILITY**
+//
+// A heuristic h(n) is ADMISSIBLE if it NEVER OVERESTIMATES the true cost.
+// Formula: h(n) ≤ true_cost(n, goal)
+//
+// ✅ ADMISSIBLE HEURISTIC → A* GUARANTEES OPTIMAL PATH
+// ❌ NON-ADMISSIBLE HEURISTIC → A* MAY RETURN SUBOPTIMAL PATH
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 📏 HEURISTIC COMPARISON TABLE
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// | Heuristic  | Formula        | Grid Type      | Admissible? | Performance |
+// |------------|----------------|----------------|-------------|-------------|
+// | Zero       | h=0            | Any            | ✅ Yes      | Slow        |
+// | Manhattan  | |dx|+|dy|      | 4-connected    | ✅ Yes      | Fast        |
+// | Euclidean  | √(dx²+dy²)     | Any movement   | ✅ Yes      | Medium      |
+// | Chebyshev  | max(|dx|,|dy|) | 8-connected    | ✅ Yes      | Fast        |
+// | 2×Manhattan| 2*(|dx|+|dy|)  | 4-connected    | ❌ No       | Very Fast*  |
+//
+// * Non-admissible! May find suboptimal paths but explores fewer nodes.
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 🎯 EFFECTS ON A* BEHAVIOR
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// 1. **h(n) = 0** (Zero heuristic = Dijkstra's)
+//    - Explores nodes in ALL directions equally
+//    - Guaranteed optimal, but SLOWEST
+//    - Nodes explored: ~150 (entire reachable area)
+//    - Use case: No goal known, need all distances
+//
+// 2. **h(n) = Manhattan distance** (for 4-connected grid)
+//    - Explores nodes primarily TOWARD goal
+//    - Guaranteed optimal for 4-connected movement
+//    - Nodes explored: ~50 (focused search)
+//    - Use case: Grid-based games, AoC problems
+//
+// 3. **h(n) = Euclidean distance**
+//    - More accurate for continuous/diagonal movement
+//    - Always admissible (straight line ≤ any path)
+//    - Nodes explored: ~45 (slightly more focused)
+//    - Use case: Robotics, free movement
+//
+// 4. **h(n) = Chebyshev distance** (for 8-connected grid)
+//    - Best for grids with diagonal movement
+//    - Optimal when diagonal cost = cardinal cost
+//    - Nodes explored: ~40 (most focused for 8-conn)
+//    - Use case: Chess, strategy games
+//
+// 5. **h(n) = 2 × Manhattan** (NON-ADMISSIBLE example)
+//    - Overestimates distance by 2x
+//    - Explores FEWER nodes (~30) = FASTER
+//    - ❌ MAY FIND SUBOPTIMAL PATH (25% longer)
+//    - Use case: Real-time games where "good enough" is OK
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 🧮 MATHEMATICAL PROPERTIES
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// **Consistency (Monotonicity):**
+// h(n) is consistent if: h(n) ≤ cost(n, n') + h(n') for all neighbors n'
+//
+// Consistent heuristics ensure:
+// - Each node is expanded at most once
+// - No need to re-open closed nodes
+// - More efficient than just admissible
+//
+// Manhattan, Euclidean, Chebyshev are ALL consistent for their respective grids!
+//
+// **Trade-off: Accuracy vs Speed**
+//
+// More accurate heuristic (closer to true cost):
+// ✅ Explores fewer nodes
+// ✅ Faster pathfinding
+// ❌ May be slower to COMPUTE the heuristic itself
+//
+// Example:
+// - Manhattan: 3 operations (2 abs, 1 add)
+// - Euclidean: 5 operations (2 sub, 2 square, 1 sqrt)
+//
+// For most grids, Manhattan is the sweet spot!
+
+// ❓ Question 3: What data structures are most efficient for the open set in A*?
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// The "open set" stores nodes to explore, prioritized by f_score = g + h
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 📊 DATA STRUCTURE COMPARISON
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// | Structure         | Insert    | Extract-Min | Decrease-Key | Memory   | Best Use Case           |
+// |-------------------|-----------|-------------|--------------|----------|-------------------------|
+// | Unsorted Vec      | O(1)      | O(n)        | O(n)         | Minimal  | ❌ Never (too slow)     |
+// | Sorted Vec        | O(n)      | O(1)        | O(n)         | Minimal  | ❌ Rarely (slow insert) |
+// | **BinaryHeap**    | **O(log n)** | **O(log n)** | ❌ N/A    | **Low**  | ✅ **BEST DEFAULT**     |
+// | BTreeSet          | O(log n)  | O(log n)    | O(log n)     | Medium   | ✅ If need decrease-key |
+// | Fibonacci Heap    | O(1)†     | O(log n)    | O(1)†        | High     | ⚠️ Theoretical only     |
+//
+// † Amortized time complexity
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 🏆 WINNER: BinaryHeap (Rust's std::collections::BinaryHeap)
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// ✅ ADVANTAGES:
+// 1. **Simple API**: push() and pop() are all you need
+// 2. **Fast operations**: O(log n) for both insert and extract-min
+// 3. **Cache-friendly**: Heap stored in contiguous Vec
+// 4. **Low memory overhead**: Just the Vec storage
+// 5. **Battle-tested**: Standard library implementation
+//
+// ⚠️ LIMITATION: No decrease-key operation
+//
+// WORKAROUND (what we do in our implementation):
+// - Insert duplicate entries with updated f_score
+// - Check if current cost > known cost when popping
+// - Skip outdated entries (lazy deletion)
+//
+// Example from our code:
+// ```rust
+// while let Some(Reverse(current_node)) = open_set.pop() {
+//     // Skip if we've already found a better path to this node
+//     if current_node.cost > *g_score.get(&current).unwrap_or(&f64::INFINITY) {
+//         continue;  // Lazy deletion of stale entry
+//     }
+//     // ... process node
+// }
+// ```
+//
+// This adds at most O(E) duplicates where E = edges, still efficient!
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 🔬 ADVANCED ALTERNATIVES
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// **BTreeSet/BTreeMap** (if you need true decrease-key):
+// ```rust
+// let mut open_set = BTreeSet::new();
+// 
+// // Insert
+// open_set.insert((f_score, coord));
+// 
+// // Decrease-key (remove old, insert new)
+// open_set.remove(&(old_f_score, coord));
+// open_set.insert((new_f_score, coord));
+// 
+// // Extract-min
+// let (f, coord) = open_set.pop_first().unwrap();
+// ```
+//
+// Trade-offs:
+// ✅ True decrease-key support
+// ✅ No duplicate entries
+// ❌ Slightly slower than BinaryHeap (tree vs array)
+// ❌ Less cache-friendly
+// ❌ Requires coordinate to implement Ord
+//
+// **Custom Indexed Priority Queue** (for maximum performance):
+// - Array-based heap with position tracking
+// - O(1) decrease-key with index lookup
+// - Used in high-performance pathfinding libraries
+// - Complex to implement correctly
+// - Overkill for most use cases
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 🎯 RECOMMENDATION
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// Use BinaryHeap with lazy deletion for 95% of use cases!
+//
+// Only consider alternatives if:
+// - Profiling shows open set operations are bottleneck (rare)
+// - Extremely large graphs (millions of nodes)
+// - Tight real-time constraints (game engines, robotics)
+
+// ❓ Question 4: How would you handle dynamic obstacles that change during pathfinding?
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// Dynamic obstacles = obstacles that appear/disappear/move WHILE pathfinding
+//
+// Examples:
+// - Moving enemies in a game
+// - Traffic congestion changing
+// - Doors opening/closing
+// - Terrain destruction/construction
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 🏗️ APPROACH 1: REPLAN FROM SCRATCH (Simple)
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// When environment changes:
+// 1. Detect the change
+// 2. Abort current pathfinding
+// 3. Run A* again from current position
+//
+// ```rust
+// fn handle_obstacle_change(
+//     current_pos: Coord,
+//     goal: Coord,
+//     maze: &TutorialGrid<char>
+// ) -> Option<Vec<Coord>> {
+//     // Just replan from current position
+//     astar_pathfind(maze, current_pos, goal)
+// }
+// ```
+//
+// ✅ ADVANTAGES:
+// - Simple to implement
+// - Always finds optimal path for current state
+// - Works with any pathfinding algorithm
+//
+// ❌ DISADVANTAGES:
+// - Wasteful (throws away previous work)
+// - Expensive for frequent changes
+// - Noticeable lag in real-time applications
+//
+// ✅ USE WHEN:
+// - Changes are RARE (< 1 per second)
+// - Grid is SMALL (< 50x50)
+// - Simplicity > Performance
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 🔄 APPROACH 2: D* / D* LITE (Incremental Replanning)
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// D* Lite is an incremental A* that repairs paths efficiently
+//
+// Key idea: Propagate cost changes only where needed
+//
+// Pseudocode:
+// ```rust
+// struct DStarLite {
+//     g: HashMap<Coord, f64>,      // Cost from start
+//     rhs: HashMap<Coord, f64>,    // One-step lookahead cost
+//     open_set: BinaryHeap<Node>,
+//     
+//     fn update_vertex(&mut self, coord: Coord) {
+//         // Recalculate rhs based on neighbors
+//         if g[coord] != rhs[coord] {
+//             // Inconsistent! Need to fix
+//             if coord in open_set { remove it }
+//             if g[coord] != rhs[coord] { insert into open_set }
+//         }
+//     }
+//     
+//     fn handle_cost_change(&mut self, changed_edges: Vec<(Coord, Coord)>) {
+//         for (u, v) in changed_edges {
+//             self.update_vertex(u);
+//             self.update_vertex(v);
+//         }
+//         self.compute_shortest_path();  // Repair incrementally
+//     }
+// }
+// ```
+//
+// ✅ ADVANTAGES:
+// - MUCH faster than replanning (10-100x)
+// - Only updates affected nodes
+// - Proven optimal (same path as A*)
+//
+// ❌ DISADVANTAGES:
+// - Complex implementation (~500 lines)
+// - More memory overhead
+// - Only handles cost changes, not topology
+//
+// ✅ USE WHEN:
+// - Changes are FREQUENT (> 1 per second)
+// - Grid is LARGE (> 100x100)
+// - Real-time performance critical
+//
+// 📚 REFERENCE: "D* Lite" by Koenig & Likhachev (2002)
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// ⚡ APPROACH 3: LOCAL REPAIR (Path Smoothing)
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// When obstacle blocks current path:
+// 1. Find which segment is blocked
+// 2. Replan only that LOCAL segment
+// 3. Splice repaired segment into existing path
+//
+// ```rust
+// fn repair_path(
+//     path: &mut Vec<Coord>,
+//     blocked_index: usize,
+//     maze: &TutorialGrid<char>
+// ) {
+//     // Find nearest valid points before and after blockage
+//     let start_repair = path[blocked_index - 1];
+//     let end_repair = path[blocked_index + 5];  // Look ahead
+//     
+//     // Replan just this segment
+//     if let Some(segment) = astar_pathfind(maze, start_repair, end_repair) {
+//         // Splice in the new segment
+//         path.splice(blocked_index..blocked_index+5, segment);
+//     } else {
+//         // Can't repair locally, full replan needed
+//         *path = astar_pathfind(maze, path[0], *path.last().unwrap()).unwrap();
+//     }
+// }
+// ```
+//
+// ✅ ADVANTAGES:
+// - Faster than full replan
+// - Simpler than D* Lite
+// - Works well for local obstacles
+//
+// ❌ DISADVANTAGES:
+// - May produce suboptimal paths
+// - Can't handle large-scale changes
+// - Requires path validation
+//
+// ✅ USE WHEN:
+// - Obstacles are LOCALIZED (affect small area)
+// - "Good enough" paths acceptable
+// - Want simple + fast solution
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 🎮 APPROACH 4: HIERARCHICAL PATHFINDING (For Games)
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// Divide map into REGIONS, path at two levels:
+//
+// 1. **High-level**: Path between regions (stable)
+// 2. **Low-level**: Path within current region (dynamic)
+//
+// ```rust
+// struct HierarchicalMap {
+//     regions: Vec<Region>,          // Large areas (16x16 chunks)
+//     region_graph: Graph,           // Connections between regions
+//     
+//     fn path_hierarchical(&self, start: Coord, goal: Coord) -> Path {
+//         // 1. Find which regions contain start/goal
+//         let start_region = self.find_region(start);
+//         let goal_region = self.find_region(goal);
+//         
+//         // 2. High-level path (rare changes)
+//         let region_path = astar_pathfind(&self.region_graph, start_region, goal_region);
+//         
+//         // 3. Low-level path in current region (frequent changes)
+//         let local_path = astar_pathfind(&self.regions[current], current_pos, region_exit);
+//         
+//         // 4. Combine
+//         combine_paths(local_path, region_path)
+//     }
+// }
+// ```
+//
+// ✅ ADVANTAGES:
+// - High-level path stable (rarely replans)
+// - Low-level path cheap (small area)
+// - Scales to huge maps
+//
+// ❌ DISADVANTAGES:
+// - Complex setup and maintenance
+// - Needs region precomputation
+// - Path may not be globally optimal
+//
+// ✅ USE WHEN:
+// - LARGE WORLDS (> 500x500)
+// - Many simultaneous pathfinders
+// - AAA game development
+//
+// 📚 REFERENCE: Hierarchical Pathfinding A* (HPA*)
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 🎯 DECISION MATRIX
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// | Scenario                        | Recommended Approach        |
+// |---------------------------------|-----------------------------|
+// | Small grid, rare changes        | Replan from scratch         |
+// | Large grid, frequent changes    | D* Lite                     |
+// | Local obstacles, good enough OK | Local repair                |
+// | Huge world, many agents         | Hierarchical pathfinding    |
+// | Unknown obstacles discovered    | Replan from scratch         |
+// | Predictable obstacle patterns   | Precompute alternative paths|
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// 💡 PRACTICAL TIPS
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// 1. **Validate before moving**
+//    ```rust
+//    let next_pos = path[current_index + 1];
+//    if !is_passable(maze, next_pos) {
+//        replan_from(current_pos);
+//    }
+//    ```
+//
+// 2. **Use dirty flags**
+//    - Mark regions that changed
+//    - Only replan if dirty
+//
+// 3. **Amortize expensive operations**
+//    - Replan over multiple frames
+//    - Use cached partial results
+//
+// 4. **Add safety buffer**
+//    - Path around obstacles with margin
+//    - Reduces replan frequency
+//
+// 5. **Combine approaches**
+//    - Local repair first (fast)
+//    - Full replan if repair fails (correct)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 📚 FURTHER READING
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// Papers:
+// - Hart, Nilsson & Raphael (1968): "A Formal Basis for the Heuristic Determination of Minimum Cost Paths" (Original A*)
+// - Koenig & Likhachev (2002): "D* Lite" (Incremental replanning)
+// - Botea, Müller & Schaeffer (2004): "Near Optimal Hierarchical Path-Finding" (HPA*)
+//
+// Books:
+// - "Artificial Intelligence: A Modern Approach" by Russell & Norvig
+// - "Game AI Pro" series (various pathfinding chapters)
+//
+// Online:
+// - Red Blob Games: https://www.redblobgames.com/pathfinding/a-star/
+// - Amit's A* Pages: http://theory.stanford.edu/~amitp/GameProgramming/
+//
+// Rust Implementations:
+// - `pathfinding` crate: Production-ready A*, Dijkstra's, etc.
+// - `petgraph` crate: Graph algorithms library

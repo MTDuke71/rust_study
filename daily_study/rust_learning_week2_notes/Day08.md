@@ -1,8 +1,8 @@
 # Day 8 · Vectors (`Vec<T>`)
 
 ## 🔗 Zettelkasten Links
-- **Previous**: [[Day 7 - Week 1 Summary]] - Foundations complete
-- **Next**: [[Day 9 - Strings]] - String types and UTF-8
+- **Previous**: [[Day 07 - Week 1 Summary]] - Foundations complete
+- **Next**: [[Day 09 - Strings]] - String types and UTF-8
 - **Concept**: [[Collections MOC]] - Dynamic arrays and collections
 - **Mission**: [[Mission1 Overview]] - Stack uses Vec internally
 - **Mission**: [[Mission2 Overview]] - Queue ring buffer with Vec
@@ -395,5 +395,5 @@ let numbers: Vec<i32> = (1..=10)
 
 ---
 
-*Links: [[Day 7 - Week 1 Summary]] | [[Day 9 - Strings]] | [[Collections MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]]*
+*Links: [[Day 07 - Week 1 Summary]] | [[Day 09 - Strings]] | [[Collections MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]]*
 *Tags: #vector #vec #collections #dynamic-arrays #daily-study #week2 #rust-book #chapter8 #foundation*

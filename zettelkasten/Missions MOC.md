@@ -64,6 +64,7 @@ Traceability Matrix
 - **Key Concepts**: Box<T>, Rc<T>, RefCell<T>, ownership patterns
 - **Requirements**: REQ-1 (Node linking), REQ-2 (Memory safety), REQ-3 (Interior mutability)
 - **Tutorial**: Advanced ownership patterns and smart pointers
+- **Compilation Deep Dive**: [[../../tutorials/Mission4_tut/compilation_stages/VISUAL_COMPILATION_PROCESS]] - Visual guide: Rust → LLVM → Assembly → Machine Code
 - **Status**: Complete with detailed tutorial companion
 
 ### **Mission 5: HashMap & HashSet** ✅
@@ -142,7 +143,7 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 ## 🔗 Cross-Track Integration
 
 ### **Mission ↔ Daily Study Alignment**
-- **Mission1 Stack** connects to [[Day 1 - Setup]] and [[Day 2 - Ownership Basics]]
+- **Mission1 Stack** connects to [[Day 01 - Setup]] and [[Day 02 - Ownership Basics]]
 - **Mission2 Queue** connects to [[Vec Patterns]] and performance concepts
 - **Mission4 LinkedList** connects to [[Interior Mutability Deep Dive]]
 - **Mission5 HashMap** connects to [[Day 10 - HashMap Basics]] and [[HashMap Internals]]

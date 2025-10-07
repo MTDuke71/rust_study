@@ -1,6 +1,15 @@
-# 🧠 Zettelkasten Index - Rust Study Workspace
+# 🧠 Zettelkasten Index - Rust Study Wo### **Key Concept Areas**
+- [[HashMap Internals]] - Hash table implementation details
+- [[Error Handling Deep Dive]] - Comprehensive error handling
+- [[Generic Programming]] - Type parameterization techniques
+- [[Trait Objects]] - Dynamic dispatch patterns
+- [[PhantomData Type Safety Patterns]] - Zero-cost type safety
+- [[../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
+- [[../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - When optimizations trigger
 
-**Master entry point for knowledge navigation and discovery**
+
+
+## 🔄 Cross-Track Integration*Master entry point for knowledge navigation and discovery**
 
 ## 🗺️ Maps of Content (MOCs)
 
@@ -9,6 +18,7 @@
 - [[Collections MOC]] - Data structures and algorithms
 - [[Daily Study MOC]] - Progressive learning track
 - [[AoC Patterns MOC]] - Competitive programming techniques
+- [[AoC 2015 MOC]] - Advent of Code 2015 solutions and learnings
 
 ## 🗺️ Navigation Hub
 
@@ -26,6 +36,7 @@
 
 ### **Mission Track** - Engineering Projects
 - [[Mission1 Overview]] - Stack Implementation  
+  - **Application**: [[../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended Validator]] - Real-world stack usage
 - [[Mission2 Overview]] - Queue & Ring Buffer
 - [[Mission3 Overview]] - Binary Search Trees
 - [[Mission4 Overview]] - Linked Lists
@@ -51,7 +62,7 @@
 ### **Mission ↔ Daily Study Alignment**
 - HashMap implementation connects to [[Day 10 - HashMap Basics]]
 - HashSet wrapper connects to [[Day 11 - HashSet Operations]] 
-- Memory patterns connect to [[Day 1 - Ownership Basics]]
+- Memory patterns connect to [[Day 01 - Ownership Basics]]
 - Iterator patterns connect to [[Day 13 - Advanced Iterators]]
 
 ### **Mission ↔ Rust Book Connections**  
@@ -73,10 +84,20 @@
 ## 📦 Smart Pointers & Memory Management
 
 - [[Box Smart Pointer Patterns]] - Heap allocation and ownership management
+- [[../tutorials/Mission4_tut/compilation_stages/VISUAL_COMPILATION_PROCESS]] - Visual compilation: Rust → LLVM → Assembly → Machine Code with memory layouts
 
 ## 🏗️ Type System Fundamentals
 
 - [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks of Rust's type system
+
+## 🎯 Algorithms & Problem Solving
+
+- [[Chebyshev Distance]] - Chessboard/8-connected distance metric for pathfinding
+- [[Manhattan Distance]] - 4-connected grid distance metric
+- [[Euclidean Distance]] - Continuous space distance metric
+- [[A* Search]] - Heuristic-based optimal pathfinding
+- [[BFS Patterns]] - Breadth-first search for shortest paths
+- [[DFS Patterns]] - Depth-first search and backtracking
 
 ---
 *Tags: #index #overview #navigation #cross-track #zettelkasten #moc*
