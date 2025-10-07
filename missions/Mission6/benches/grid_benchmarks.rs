@@ -1,5 +1,6 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
 use mission6::{Grid, Coord, PathFinder, FloodFill};
+use std::hint::black_box;
 
 fn grid_creation_benchmark(c: &mut Criterion) {
     c.bench_function("grid_creation_1000x1000", |b| {
@@ -84,18 +85,42 @@ fn pathfinding_benchmark(c: &mut Criterion) {
 }
 
 fn flood_fill_benchmark(c: &mut Criterion) {
-    let grid = Grid::new(100, 100, '.');
-    let start = Coord::new(50, 50);
+    // Smaller grid for single region test
+    let small_grid = Grid::new(50, 50, '.');
+    let start = Coord::new(25, 25);
     
-    c.bench_function("flood_fill_region_detection", |b| {
+    c.bench_function("flood_fill_region_detection_50x50", |b| {
         b.iter(|| {
-            black_box(FloodFill::find_region_4(&grid, start, &'.'))
+            black_box(FloodFill::find_region_4(&small_grid, start, &'.'))
         })
     });
 
-    c.bench_function("flood_fill_all_regions", |b| {
+    // Grid with multiple regions (more realistic for all_regions benchmark)
+    let mut multi_region_grid = Grid::new(50, 50, '.');
+    // Add obstacles to create 4 separate regions (quadrants)
+    for i in 0..50 {
+        multi_region_grid[(20, i)] = '#';  // Horizontal wall
+        multi_region_grid[(i, 20)] = '#';  // Vertical wall
+    }
+    // NO gaps - we want the walls to separate the '.' regions into 4 quadrants
+    // The '#' walls at row 20 and column 20 create 4 distinct '.' regions:
+    // - Top-left: (0..20, 0..20)
+    // - Top-right: (0..20, 21..50)
+    // - Bottom-left: (21..50, 0..20)
+    // - Bottom-right: (21..50, 21..50)
+    
+    c.bench_function("flood_fill_multiple_regions_50x50", |b| {
         b.iter(|| {
-            black_box(FloodFill::find_all_regions(&grid, &'.'))
+            black_box(FloodFill::find_all_regions(&multi_region_grid, &'.'))
+        })
+    });
+    
+    // Smaller test for connected components
+    let tiny_grid = Grid::new(20, 20, '.');
+    
+    c.bench_function("flood_fill_region_detection_20x20", |b| {
+        b.iter(|| {
+            black_box(FloodFill::find_region_4(&tiny_grid, Coord::new(10, 10), &'.'))
         })
     });
 }
