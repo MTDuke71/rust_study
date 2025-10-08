@@ -165,6 +165,7 @@ This tutorial is designed to work alongside **Mission6** (main implementation):
 ## 📖 Additional Resources
 
 - **Mission6 README.md**: Complete V-Cycle documentation
+- **[BENCHMARKING_PITFALLS.md](BENCHMARKING_PITFALLS.md)**: Deep dive into performance measurement gotchas and compiler optimizations
 - **MONTHLY_CALENDAR.md**: Daily learning coordination
 - **Rust Book Chapter 8**: Collections (Vec, HashMap integration)
 - **AoC Pattern Recognition**: Grid problem solving strategies

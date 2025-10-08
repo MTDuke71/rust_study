@@ -283,5 +283,33 @@ This will give you **reliable, monotonic timing** that actually reflects memory 
 
 ---
 
-*Tags: #benchmarking #performance #optimization #pitfalls #memory-allocation #compiler-optimization*
-*Links: [[step6_performance.rs]] | [[Mission6 README]] | [[Performance Optimization Patterns]]*
+## 🔗 Navigation
+
+### 📚 Zettelkasten
+- **[[../../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
+- **[[../../zettelkasten/Missions MOC|Missions MOC]]** - V-Cycle projects navigation
+- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+
+### 🎯 Mission 6 Tutorial Context
+- **[Mission6_tut README](README.md)** - Tutorial overview
+- **[step6_performance.rs](examples/step6_performance.rs)** - Performance benchmarking example
+- **[Mission6 README](../../missions/Mission6/README.md)** - Main mission documentation
+- **[[../../zettelkasten/Mission6 Overview|Mission6 Overview]]** - Conceptual overview
+
+### 🔬 Related Performance Topics
+- **[[../../missions/Mission6/TARPAULIN_USAGE_GUIDE|Tarpaulin Coverage Guide]]** - Testing and code coverage
+- **Performance Optimization** - Best practices for Rust benchmarking
+- **Memory Allocation Patterns** - Understanding allocator behavior
+
+### 📖 Benchmarking Resources
+- **Criterion.rs** - Rust benchmarking framework
+- **std::hint::black_box** - Preventing compiler optimizations in tests
+- **perf** and **valgrind** - System-level profiling tools
+
+### 🎄 AoC Integration
+- **[[../../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - Competitive programming performance patterns
+- **Grid Performance** - Optimizing 2D array operations for AoC
+
+---
+
+*Tags: #benchmarking #performance #optimization #pitfalls #memory-allocation #compiler-optimization #mission6-tutorial #profiling #testing*
