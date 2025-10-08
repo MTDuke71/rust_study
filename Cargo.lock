@@ -98,6 +98,22 @@ name = "ch4_references"
 version = "0.1.0"
 
 [[package]]
+name = "ch8-exercises"
+version = "0.1.0"
+
+[[package]]
+name = "ch8-hashmaps"
+version = "0.1.0"
+
+[[package]]
+name = "ch8-strings"
+version = "0.1.0"
+
+[[package]]
+name = "ch8-vectors"
+version = "0.1.0"
+
+[[package]]
 name = "ciborium"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"

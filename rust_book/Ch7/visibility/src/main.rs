@@ -62,7 +62,7 @@ fn example1_module_file_organization() {
     // 3. In directories with mod.rs files
 
     println!("Module organization options:");
-    println!("  1. Inline modules (mod { ... })");
+    println!("  1. Inline modules (mod {{ ... }})");
     println!("  2. Separate files (mod module_name;)");
     println!("  3. Directory modules (mod module_name/;)");
     println!();
