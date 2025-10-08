@@ -143,4 +143,42 @@ All tutorials follow workspace documentation standards:
 
 ---
 
+## 🔗 Navigation
+
+### 📚 Zettelkasten
+- **[[../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
+- **[[../zettelkasten/Missions MOC|Missions MOC]]** - V-Cycle projects navigation
+- **[[../zettelkasten/Daily Study MOC|Daily Study MOC]]** - Progressive learning track
+- **[[../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+
+### 🎯 Tutorial-Specific Navigation
+- **[Mission1_tut](Mission1_tut/)** - Stack fundamentals and LIFO principles
+- **[Mission4_tut](Mission4_tut/)** - LinkedList with Box<T> and Option<T>
+- **[Mission5_tut](Mission5_tut/)** - HashMap internals and hash algorithms
+- **[Mission6_tut](Mission6_tut/)** - Grid programming and spatial algorithms
+
+### 🏗️ Mission Integration
+- **[[../zettelkasten/Mission1 Overview|Mission1 Overview]]** - Stack implementation
+- **[[../zettelkasten/Mission4 Overview|Mission4 Overview]]** - LinkedList implementation
+- **[[../zettelkasten/Mission5 Overview|Mission5 Overview]]** - HashMap implementation
+- **[[../zettelkasten/Mission6 Overview|Mission6 Overview]]** - Grid algorithms
+- **[missions/](../missions/)** - Full V-Cycle implementations
+
+### 📖 Learning Resources
+- **[[../zettelkasten/PROJECT_ORIGIN|Project Origin]]** - Founding philosophy and 3-track system
+- **[[../zettelkasten/V-Cycle in Rust Development|V-Cycle Methodology]]** - Requirements-driven approach
+- **[MONTHLY_CALENDAR.md](../MONTHLY_CALENDAR.md)** - 30-day learning plan with track alignment
+- **[daily_study/](../daily_study/)** - Daily systematic concept progression
+- **[advanced_examples/](../advanced_examples/)** - Real-world competitive programming applications
+
+### 🎄 AoC Integration
+- **[[../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - Competitive programming patterns
+- **[aoc_pattern_recognition/](../aoc_pattern_recognition/)** - Pattern detection tools
+
+---
+
+*Tags: #tutorials #pedagogical-design #progressive-learning #mission-tutorials #hands-on-learning #step-by-step #tutorial-engineering #educational-scaffolding*
+
+---
+
 **🎯 Mission**: Transform complex Rust concepts into accessible, step-by-step learning experiences that build confidence and competency for both academic understanding and practical application.**

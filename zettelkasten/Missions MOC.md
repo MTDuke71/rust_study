@@ -121,6 +121,7 @@ Traceability Matrix
 ### **Companion Tutorial Projects**
 Each mission includes a companion `tutorials/MissionX_tut/` project following pedagogical design principles:
 
+- **[Tutorials Overview](../tutorials/README.md)** - Complete tutorial system documentation and learning framework
 - **[[Mission1_tut Overview]]** - Stack fundamentals with LIFO principles and generics
 - **[[Mission4_tut Overview]]** - Linked list deep dive with ownership patterns
 - **[[Mission5_tut Overview]]** - Hash table tutorial with step-by-step progression
