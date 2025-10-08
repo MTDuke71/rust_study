@@ -17,6 +17,9 @@
 - [[../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded]] - **Deep dive** into variables, mutability, moves vs copies with detailed analogies
 - [[Day 03 - Borrowing]] - References and borrowing rules
 - [[../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded]] - **Deep dive** into functions, parameter passing, and reference system
+- **Beginner-Friendly Resources**:
+  - [[../missions/Mission1/QUICK_REFERENCE|Mission1 Quick Reference]] - 2-minute ownership essentials
+  - [[../missions/Mission1/SIMPLE_GUIDE|Mission1 Simple Guide]] - Real-world mental models and analogies
 - [[Day 04 - Lifetimes]] - Reference lifetime management
 - [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
 - [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships

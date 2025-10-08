@@ -34,6 +34,9 @@ Traceability Matrix
 - **Key Concepts**: Generic types, Vec<T> wrapping, ownership
 - **Requirements**: REQ-1 (LIFO), REQ-2 (Dynamic growth), REQ-3 (Generic support)
 - **Tutorial**: Stack fundamentals and memory management
+- **Learning Resources**:
+  - [[../missions/Mission1/QUICK_REFERENCE|Quick Reference]] - 2-minute ownership essentials (Copy vs Move)
+  - [[../missions/Mission1/SIMPLE_GUIDE|Simple Guide]] - Mental models and real-world analogies for ownership
 - **Status**: Complete with comprehensive testing
 
 ### **Mission 2: Queue & Ring Buffer** ✅  

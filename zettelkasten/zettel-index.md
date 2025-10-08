@@ -35,6 +35,8 @@
 
 ### **Mission Track** - Engineering Projects
 - [[Mission1 Overview]] - Stack Implementation  
+  - **Quick Start**: [[../missions/Mission1/QUICK_REFERENCE|Quick Reference]] - 2-minute ownership essentials
+  - **Beginner Guide**: [[../missions/Mission1/SIMPLE_GUIDE|Simple Guide]] - Mental models for ownership
   - **Application**: [[../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended Validator]] - Real-world stack usage
 - [[Mission2 Overview]] - Queue & Ring Buffer
 - [[Mission3 Overview]] - Binary Search Trees
