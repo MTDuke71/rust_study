@@ -73,6 +73,8 @@ These Day 3 concepts form the foundation for more advanced topics like lifetimes
 ### 🚀 Mission Integration
 - **Mission1**: Stack with push/pop borrowing patterns
 - **Mission2**: Ring buffer reference management
+  - [IMPLEMENTATION_SUMMARY.md](../../missions/Mission2/IMPLEMENTATION_SUMMARY.md) - V-Cycle queue implementation with ownership examples
+  - [ALTERNATIVE_COMPARISON.md](../../missions/Mission2/ALTERNATIVE_COMPARISON.md) - Comparing safe vs unsafe implementations
 - **Mission4**: Linked list exploring &T and &mut T patterns
 - **Mission5**: HashMap key borrowing strategies
 
