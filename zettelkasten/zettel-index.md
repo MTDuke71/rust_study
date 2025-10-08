@@ -121,6 +121,7 @@
 - [[A* Search]] - Heuristic-based optimal pathfinding
 - [[BFS Patterns]] - Breadth-first search for shortest paths
 - [[DFS Patterns]] - Depth-first search and backtracking
+- [[Graph Network Density]] - Network connectivity metrics and graph analysis
 
 ## ⚡ Performance & Optimization
 

@@ -101,6 +101,7 @@ Traceability Matrix
 - **Key Concepts**: Adjacency lists/matrices, BFS, DFS, shortest paths
 - **Requirements**: Graph representation, traversal, weighted edges
 - **Applications**: Network analysis, dependency resolution, routing
+- **Graph Metrics**: [[Graph Network Density]] - Network connectivity and completeness measurement
 
 ### **Future Missions** 📅
 - **Advanced Algorithms**: Dijkstra's, A*, topological sort

@@ -101,6 +101,7 @@
 - [[BFS/DFS Implementation]] - Graph traversal algorithms
 - [[Pathfinding Algorithms]] - Shortest path and route finding
 - [[State Machine Patterns]] - Enum-based state management
+- [[Graph Network Density]] - Network connectivity metrics and analysis
 
 ## 📚 Learning Progression
 
