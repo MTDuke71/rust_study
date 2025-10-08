@@ -202,7 +202,7 @@ fn main() {
     }
     
     // Process the data
-    let stats = calculate_temperature_stats(&sensor_grid);
+    let stats: TemperatureStats = calculate_temperature_stats(&sensor_grid);
     println!("\nTemperature analysis:");
     println!("  Active sensors: {}", stats.sensor_count);
     println!("  Average temperature: {:.1}°C", stats.average);
@@ -720,7 +720,48 @@ impl fmt::Display for GameEcosystem {
 // 4. Implement a spatial database query system with grid-based indexing
 
 // Design Questions to Consider:
-// - How do you balance API simplicity with feature completeness?
-// - What documentation strategies work best for spatial data structures?
-// - How do you test integration scenarios systematically?
-// - What are the best practices for grid-based game architecture?
+//
+// Q: How do you balance API simplicity with feature completeness?
+// A: Follow the "Progressive Disclosure" principle: Provide simple, safe defaults for
+//    common cases (e.g., `grid.get(coord)`) while offering advanced methods for power
+//    users (e.g., `grid.get_unchecked()` for hot paths after validation). Use builder
+//    patterns for complex configuration, trait implementations for standard operations
+//    (Index, Iterator), and comprehensive documentation showing both basic and advanced
+//    usage. Example: TutorialGrid offers simple `get()`/`set()` but could add `iter()`,
+//    `iter_mut()`, `rows()`, `neighbors()` for advanced use without complicating the
+//    basic API. Key principle: "Make simple things simple, complex things possible."
+//
+// Q: What documentation strategies work best for spatial data structures?
+// A: 1) Visual ASCII diagrams showing coordinate systems and transformations
+//    2) Worked examples with grid visualizations (as demonstrated in this tutorial)
+//    3) Document coordinate conventions prominently (screen vs math, 0-indexed vs 1-indexed)
+//    4) Show common patterns: pathfinding, flood fill, neighbor iteration
+//    5) Include performance characteristics (O(1) access, cache-friendly iteration)
+//    6) Provide doctests that create small grids and demonstrate operations
+//    7) Document edge cases explicitly (corners, boundaries, wrapping behavior)
+//    8) Cross-reference related functions (e.g., get() → set(), in_bounds())
+//    Real-world tip: One clear diagram beats 1000 words of coordinate explanation!
+//
+// Q: How do you test integration scenarios systematically?
+// A: Use hierarchical testing strategy:
+//    1) Unit tests: Individual operations (get, set, in_bounds) - 70% of tests
+//    2) Property tests: Invariants hold (set then get returns same value) - 20%
+//    3) Integration tests: Multi-component scenarios (pathfinding + obstacles) - 10%
+//    4) End-to-end tests: Complete workflows (game simulation, data pipeline)
+//    5) Regression tests: Capture and replay real failure scenarios
+//    Create test fixtures for common grid configurations (empty, obstacles, filled).
+//    Use snapshot testing for complex outputs (pathfinding results, game states).
+//    Test with realistic data sizes matching production workloads.
+//    Best practice: Write integration tests that mirror real user workflows.
+//
+// Q: What are the best practices for grid-based game architecture?
+// A: 1) Separation of Concerns: Grid (data) + Game Logic (rules) + Renderer (display)
+//    2) Entity Component System (ECS): Store entity IDs in grid, attributes separately
+//    3) Event-driven updates: Grid fires events on state changes for loose coupling
+//    4) Chunk-based storage: For large worlds, load/unload grid regions dynamically
+//    5) State management: Immutable grids + functional updates for time-travel/undo
+//    6) Spatial indexing: Use HashMaps for sparse entities, grids for dense terrain
+//    7) Query patterns: Provide `neighbors()`, `within_radius()`, `line_of_sight()`
+//    8) Performance: Cache frequently-queried data, use dirty flags for updates
+//    Architecture pattern: Grid<TileType> + HashMap<Coord, Entity> + RenderQueue
+//    This separates static world data from dynamic entities for optimal performance.

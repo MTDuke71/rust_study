@@ -98,6 +98,15 @@
 - [[BFS Patterns]] - Breadth-first search for shortest paths
 - [[DFS Patterns]] - Depth-first search and backtracking
 
+## ⚡ Performance & Optimization
+
+- [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
+  - Pointer chasing vs direct access
+  - Cache-friendly access patterns
+  - Memory layout optimization (Vec<Vec<T>> vs Vec<T> flat)
+  - Common benchmarking pitfalls and solutions
+  - Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
+
 ---
 *Tags: #index #overview #navigation #cross-track #zettelkasten #moc*
 *Links: [[MONTHLY_CALENDAR]] | [[Collections MOC]] | [[Missions MOC]] | [[Daily Study MOC]] | [[README]]*
