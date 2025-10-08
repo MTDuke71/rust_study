@@ -1154,3 +1154,30 @@ You’re on exactly the right track — keep going at your own pace.
 
 No file chosenNo file chosen
 ChatGPT can make mistakes. Check important info.
+
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[Daily Study MOC]]** - Week-by-week learning progression
+- **[[Rust Concepts MOC]]** - Concept-based navigation
+
+### 🎯 Related Concepts in Zettelkasten
+- **Ownership Deep Dives:**
+  - Day 02 - Ownership Basics (quick reference)
+  - Day 03 - Borrowing (next topic)
+  - [Day 3 Expanded - Functions & References Deep Dive](Day03_expanded.md)
+
+### 🚀 Mission Integration
+- **Mission1**: Stack implementation using ownership semantics
+- **Mission2**: Ring buffer with move/copy considerations
+- **Mission4**: Linked list exploring Box<T> ownership patterns
+
+### 📖 Foundation Documents
+- [PROJECT_ORIGIN.md](../../zettelkasten/PROJECT_ORIGIN.md) - Genesis of the learning system
+- [Day 02 Notes](Day02.md) - Original concise notes
+
+### 🏷️ Tags
+*Tags: #ownership #variables #move-semantics #copy-semantics #daily-study #expanded-guide #rust-fundamentals*

@@ -54,3 +54,33 @@ Competitive Programming: Efficient data handling without unnecessary copies
 The note emphasizes that "Function signatures communicate ownership/borrowing clearly" - this is how Rust makes memory management explicit and predictable, which is crucial for the systematic approach you're taking in your learning journey.
 
 These Day 3 concepts form the foundation for more advanced topics like lifetimes, which you'll need for the complex data structures in your missions.
+
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[Daily Study MOC]]** - Week-by-week learning progression
+- **[[Rust Concepts MOC]]** - Concept-based navigation
+
+### 🎯 Related Concepts in Zettelkasten
+- **Ownership & Borrowing Deep Dives:**
+  - [Day 2 Expanded - Variables & Ownership Deep Dive](Day02_expanded.md)
+  - Day 03 - Borrowing (quick reference)
+  - **[[Deref Coercion and Automatic Dereferencing]]** - Advanced reference behavior
+
+### 🚀 Mission Integration
+- **Mission1**: Stack with push/pop borrowing patterns
+- **Mission2**: Ring buffer reference management
+- **Mission4**: Linked list exploring &T and &mut T patterns
+- **Mission5**: HashMap key borrowing strategies
+
+### 📖 Foundation Documents
+- [PROJECT_ORIGIN.md](../../zettelkasten/PROJECT_ORIGIN.md) - Genesis of the learning system
+- [Day 03 Notes](Day03.md) - Original concise notes
+
+### 🏷️ Tags
+*Tags: #borrowing #references #functions #ownership #daily-study #expanded-guide #rust-fundamentals #mut-references*
+
+---
