@@ -52,11 +52,24 @@
 - [[Week 4 Notes]] - Applied Problem Solving (AoC)
 
 ### **Key Concept Areas**
+
+**Data Structures & Collections:**
 - [[HashMap Internals]] - Hash table implementation details
+- [[Ring Buffer Overwriting Semantics]] - Circular buffer capacity management strategies
+
+**Language Features:**
+- [[While Let Pattern Deep Dive]] - Idiomatic consuming collection patterns
+- [[Closures in Rust]] - Anonymous functions with environment capture
+- [[Deref Coercion and Automatic Dereferencing]] - Smart pointer unwrapping mechanics
+
+**Advanced Topics:**
 - [[Error Handling Deep Dive]] - Comprehensive error handling
 - [[Generic Programming]] - Type parameterization techniques
 - [[Trait Objects]] - Dynamic dispatch patterns
+- [[Unsafe Rust - Raw Pointers and Safety Contracts]] - Building safe abstractions from unsafe code
 - [[PhantomData Type Safety Patterns]] - Zero-cost type safety
+
+**Performance & Optimization:**
 - [[../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
 - [[../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - When optimizations trigger
 

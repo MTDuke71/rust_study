@@ -21,6 +21,7 @@
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns and scenarios
 - [[Ownership in Collections]] - Memory management with data structures
 - [[Box Smart Pointer Patterns]] - Heap allocation and smart pointer usage
+- [[Deref Coercion and Automatic Dereferencing]] - Smart pointer unwrapping mechanics
 
 ### **Error Handling**
 - [[Day 05 - Option and Result]] - Basic error handling concepts
@@ -31,12 +32,19 @@
 - [[Day 06 - Pattern Matching]] - Match expressions and destructuring
 - [[Match Operator Examples]] - Practical pattern matching patterns
 - [[if let Patterns]] - Concise control flow
+- [[While Let Pattern Deep Dive]] - Consuming collections idiomatically
+
+### **Functional Programming**
+- [[Closures in Rust]] - Anonymous functions with environment capture
+- [[Iterator Traits]] - Custom iteration implementations
+- [[Higher-Order Functions]] - Functions that take or return functions
 
 ### **Data Structures & Collections**
 - [[Collections MOC]] - Complete data structures overview
 - [[HashMap Internals]] - Hash table implementation details
 - [[BTreeMap Patterns]] - Ordered collection strategies
 - [[Vec Patterns]] - Dynamic array management
+- [[Ring Buffer Overwriting Semantics]] - Circular buffer capacity strategies
 
 ## 🏗️ Advanced Concepts
 
@@ -62,11 +70,18 @@
 - [[Async Programming]] - Asynchronous Rust patterns
 - [[Channel Communication]] - Message passing between threads
 
+### **Unsafe Rust & Low-Level Programming**
+- [[Unsafe Rust - Raw Pointers and Safety Contracts]] - Building safe abstractions from unsafe code
+- [[Raw Pointer Patterns]] - NonNull, *const T, *mut T usage
+- [[Send and Sync Deep Dive]] - Thread safety marker traits
+
 ## 🎯 Mission-Specific Applications
 
 ### **Mission 1-4: Basic Data Structures**
 - [[Stack Implementation]] - LIFO data structure patterns
-- [[Queue Implementation]] - FIFO data structure patterns
+- [[Queue Implementation]] - FIFO data structure patterns  
+- [[While Let Pattern Deep Dive]] - Draining collections idiomatically (Mission2)
+- [[Ring Buffer Overwriting Semantics]] - Circular buffer strategies (Mission2)
 - [[LinkedList Design]] - Dynamic memory allocation patterns
 - [[Search Algorithms]] - Linear and binary search implementations
 
