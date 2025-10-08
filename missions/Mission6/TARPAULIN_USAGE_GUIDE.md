@@ -444,11 +444,30 @@ cargo tarpaulin --out html
 ## 🔗 **Related Documentation**
 
 - **Tarpaulin GitHub**: https://github.com/xd009642/tarpaulin
-- **Coverage Best Practices**: `.github/RUST_TEST_DOCUMENTATION_STANDARDS.md`
+- **Coverage Best Practices**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
 - **Your Tests**: `missions/Mission6/src/*/tests.rs`
 
 ---
 
-*Tags: #tarpaulin #code-coverage #testing #mission6 #rust-testing*
+## 🔗 Navigation
 
-*Links: [[Testing]] | [[Coverage]] | [[Mission6]] | [[CI/CD]]*
+### 📚 Zettelkasten
+- **[[../../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
+- **[[../../zettelkasten/Missions MOC|Missions MOC]]** - V-Cycle projects navigation
+- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+
+### 🎯 Mission 6 Context
+- **[Mission 6 README](README.md)** - Main mission documentation
+- **[[../../zettelkasten/Mission6 Overview|Mission6 Overview]]** - Conceptual overview (if exists)
+
+### 🧪 Related Testing Concepts
+- **[RUST_TEST_DOCUMENTATION_STANDARDS.md](../../Brackets_Basic/RUST_TEST_DOCUMENTATION_STANDARDS.md)** - Test documentation best practices
+- **[RUST_DOCUMENTATION_STANDARDS.md](../../Brackets_Basic/RUST_DOCUMENTATION_STANDARDS.md)** - General documentation standards
+
+### 🎄 AoC Integration
+- **[[../../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - Testing patterns for competitive programming
+- **[AoC Pattern Recognition](../../aoc_pattern_recognition/)** - Pattern-based testing strategies
+
+---
+
+*Tags: #tarpaulin #code-coverage #testing #mission6 #rust-testing #tooling #ci-cd*

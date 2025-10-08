@@ -1,5 +1,13 @@
 # 🎯 Missions MOC - V-Cycle Engineering Projects
-*Master overview of engineering missions implementing core Rust concepts*
+*Master overview of engineering mis### **Mission 6: 2D Grids & Navigation** 🗺️
+- **Focus**: Grid-based algorithms for AoC-style problems
+- **Location**: `Mission6/`
+- **Key Concepts**: 2D arrays, pathfinding, BFS/DFS on grids
+- **Requirements**: Grid representation, neighbor traversal, pathfinding algorithms
+- **Tutorial**: Grid algorithms and spatial data structures
+- **Applications**: AoC grid problems, game boards, maze solving, pathfinding
+- **Resources**: [Tarpaulin Coverage Guide](../missions/Mission6/TARPAULIN_USAGE_GUIDE.md) - Testing and code coverage
+- **Status**: Active development - current learning focusplementing core Rust concepts*
 
 ## 🌟 Foundational Context
 
