@@ -14,7 +14,9 @@
 
 ### **Ownership & Memory Management**
 - [[Day 02 - Ownership Basics]] - Single ownership, move semantics
+- [[../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded]] - **Deep dive** into variables, mutability, moves vs copies with detailed analogies
 - [[Day 03 - Borrowing]] - References and borrowing rules
+- [[../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded]] - **Deep dive** into functions, parameter passing, and reference system
 - [[Day 04 - Lifetimes]] - Reference lifetime management
 - [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
 - [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships

@@ -78,6 +78,8 @@
 ## 🔄 Cross-Track Integration
 
 ### **Mission ↔ Daily Study Alignment**
+- Ownership fundamentals connect to [[../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded - Variables & Ownership Deep Dive]]
+- Borrowing and references connect to [[../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded - Functions & References Deep Dive]]
 - HashMap implementation connects to [[Day 10 - HashMap Basics]]
 - HashSet wrapper connects to [[Day 11 - HashSet Operations]] 
 - Memory patterns connect to [[Day 01 - Ownership Basics]]

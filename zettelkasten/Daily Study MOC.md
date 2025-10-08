@@ -13,6 +13,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 - ✅ **Hands-On Practice** - Every day includes complete runnable examples
 - ✅ **Cross-Track Integration** - Daily concepts support Mission implementations
 - ✅ **AoC Preparation** - Competitive programming patterns and techniques
+- 🌟 **Expanded Deep Dives** - Selected days include comprehensive expanded guides with detailed analogies and examples
 
 ---
 
@@ -24,8 +25,8 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 | Day | Topic | Key Concepts | Links |
 |-----|-------|--------------|-------|
 | [[Day 01 - Setup\|Day 1]] | Setup & Tooling | Cargo, rustc, project structure | [[../rust_book/Ch1\|Rust Book Ch1]] |
-| [[Day 02 - Ownership Basics\|Day 2]] | Ownership Basics | Move semantics, stack vs heap | [[../rust_book/Ch4\|Ch4]] |
-| [[Day 03 - Borrowing\|Day 3]] | Borrowing Rules | Immutable/mutable references | [[../rust_book/Ch4\|Ch4]] |
+| [[Day 02 - Ownership Basics\|Day 2]] | Ownership Basics | Move semantics, stack vs heap | [[../rust_book/Ch4\|Ch4]] · [[../daily_study/rust_learning_week1_notes/Day02_expanded\|**Expanded Deep Dive**]] |
+| [[Day 03 - Borrowing\|Day 3]] | Borrowing Rules | Immutable/mutable references | [[../rust_book/Ch4\|Ch4]] · [[../daily_study/rust_learning_week1_notes/Day03_expanded\|**Expanded Deep Dive**]] |
 | [[Day 04 - Lifetimes\|Day 4]] | Lifetimes | Reference validity, scope | [[../rust_book/Ch10\|Ch10]] |
 | [[Day 05 - Option and Result\|Day 5]] | Error Handling | Option, Result, ? operator | [[../rust_book/Ch9\|Ch9]] |
 | [[Day 06 - Pattern Matching\|Day 6]] | Pattern Matching | match, if let, destructuring | [[../rust_book/Ch6\|Ch6]] |
