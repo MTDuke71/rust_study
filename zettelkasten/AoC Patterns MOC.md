@@ -157,6 +157,7 @@
 ### **Workspace Integration**
 - **[[../aoc_pattern_recognition/README]]** - Automated pattern detection tools
 - **[[../aoc_scaffold_templates_with_tests/README]]** - Template generation system
+- **[[../advanced_examples/README]]** - Production-ready implementations of core patterns (Stack, Queue, BFS, Tree algorithms)
 - **[[Performance Optimization Guide]]** - General optimization strategies
 - **[[Tutorial Engineering]]** - Creating educational content for patterns
 

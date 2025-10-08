@@ -121,4 +121,38 @@ All projects follow the workspace documentation standards:
 
 ---
 
+## 🔗 Navigation
+
+### 📚 Zettelkasten
+- **[[../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
+- **[[../zettelkasten/Missions MOC|Missions MOC]]** - V-Cycle projects navigation
+- **[[../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - Competitive programming patterns
+
+### 🎯 Core Mission Integration
+- **[[../zettelkasten/Mission1 Overview|Mission1 Overview]]** - Stack foundations (Brackets applications)
+- **[[../zettelkasten/Mission2 Overview|Mission2 Overview]]** - Queue foundations (BFS applications)
+- **[Mission1 README](../Mission1/readme.md)** - Stack implementation details
+- **[Mission2 README](../Mission2/README.md)** - Queue implementation details
+
+### 🏗️ Project-Specific Resources
+- **[Brackets_Basic README](Brackets_Basic/README.md)** - AoC bracket validation
+- **[Brackets_Ext README](Brackets_Ext/README.md)** - Extended validator with custom alphabets
+- **[competitive_ring_bfs README](competitive_ring_bfs/README.md)** - BFS maze solver
+- **[competitive_linked_tree README](competitive_linked_tree/README.md)** - Tree diameter calculation
+
+### 🎄 AoC Integration
+- **[[../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - Pattern recognition and strategies
+- **[AoC Pattern Recognition](../aoc_pattern_recognition/README.md)** - Advanced pattern matching
+- **[AoC 2015 Solutions](../aoc2015/README.md)** - Historical problem solutions
+
+### 📖 Daily Study Connection
+- **[[../zettelkasten/Daily Study MOC|Daily Study MOC]]** - Progressive learning track
+- **[[../zettelkasten/Collections MOC|Collections MOC]]** - Data structure deep dives
+
+---
+
+*Tags: #advanced-examples #competitive-programming #aoc #v-cycle #mission-extensions #stack-applications #queue-applications #bfs #tree-algorithms*
+
+---
+
 **🎄 Ready for AoC 2025 Domination!** These implementations provide the foundation for tackling any data structure or algorithm challenge in competitive programming.

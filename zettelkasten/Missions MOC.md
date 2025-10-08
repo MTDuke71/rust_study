@@ -174,6 +174,7 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 - **Queue**: BFS algorithms, level-order traversal, task scheduling
 - **HashMap**: Frequency counting, caching, duplicate detection
 - **Trees**: Hierarchical data, range queries, sorted operations
+- **Advanced Examples**: [[../advanced_examples/README|Production implementations]] - Real-world applications of Mission1 (Stack) and Mission2 (Queue) for competitive programming
 
 ### **Mission ↔ Rust Book Chapters**
 - **Generics**: Chapter 10 - Generic Types, Traits, and Lifetimes
