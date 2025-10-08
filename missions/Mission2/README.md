@@ -8,8 +8,45 @@ Thought for 10s
 
 awesome — Mission 2 is your Queue double feature: a cache-friendly ring buffer and a pointer-flavored linked queue. We’ll do the full V-cycle so it’s production-grade and AoC-ready.
 
-Mission 2 · Queue (Ring Buffer + Linked Queue)
-1) Requirements
+# Mission 2 · Queue (Ring Buffer + Linked Queue)
+
+## 📚 **Deep Dive: Knowledge Resources**
+
+This mission's insights have been preserved in the zettelkasten system:
+
+### **[While Let Pattern Deep Dive](../../zettelkasten/While%20Let%20Pattern%20Deep%20Dive.md)** 🔄
+*Rust's idiomatic pattern for consuming collections*
+
+Learn the elegant `while let Some(value) = queue.dequeue()` pattern and why it's preferred over traditional loops.
+
+### **[Ring Buffer Overwriting Semantics](../../zettelkasten/Ring%20Buffer%20Overwriting%20Semantics.md)** 🔄
+*Capacity management strategies for circular buffers*
+
+Understand reject-on-full vs overwrite-oldest strategies and real-world applications.
+
+### **[Unsafe Rust - Raw Pointers and Safety Contracts](../../zettelkasten/Unsafe%20Rust%20-%20Raw%20Pointers%20and%20Safety%20Contracts.md)** ⚠️
+*When and why unsafe code enables performance*
+
+Explore how raw pointers enable O(1) tail operations while maintaining memory safety through careful design.
+
+### **[Deref Coercion and Automatic Dereferencing](../../zettelkasten/Deref%20Coercion%20and%20Automatic%20Dereferencing.md)** 📦
+*How Rust seamlessly unwraps smart pointer layers*
+
+Discover how `&node.elem` works when `node` is `&Box<Node<T>>` through automatic deref coercion.
+
+### **[Closures in Rust](../../zettelkasten/Closures%20in%20Rust.md)** 🎯
+*Anonymous functions that capture their environment*
+
+Master the `|node| &node.elem` pattern and functional programming with `map`, `filter`, and method chains.
+
+### **[Mission2 Key Learnings](KEY_LEARNINGS.md)** 🏆
+*Quick reference guide to all core concepts*
+
+Distilled insights from extensive code review discussions covering patterns, performance, and best practices.
+
+---
+
+## 1) Requirements
 Global (both implementations)
 
 REQ-G1 (API): Provide a FIFO queue API:
