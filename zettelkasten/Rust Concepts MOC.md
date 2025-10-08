@@ -29,6 +29,7 @@
 - [[Deref Coercion and Automatic Dereferencing]] - Smart pointer unwrapping mechanics
 
 ### **Error Handling**
+- [[Option Type]] - Rust's null safety solution
 - [[Day 05 - Option and Result]] - Basic error handling concepts
 - [[Error Handling Deep Dive]] - Advanced patterns and best practices
 - [[AoC Error Patterns]] - Input parsing and validation strategies
