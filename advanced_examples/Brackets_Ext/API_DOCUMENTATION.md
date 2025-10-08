@@ -793,3 +793,32 @@ The `brackets_extended` crate provides a comprehensive, flexible bracket validat
 - **📚 Well-documented**: Extensive examples and guidance
 
 Choose the API that best fits your use case, configure options for your specific needs, and leverage the detailed error information to provide excellent user experiences in your applications.
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[Missions MOC]]** - V-Cycle project implementations
+- **[[Rust Concepts MOC]]** - Core language features and patterns
+
+### 🎯 Brackets Extended Resources
+- [[README_EXTENDED]] - Complete implementation guide and design decisions
+- [[README]] - Quick start and overview
+- [[BRACKETS_EXTENDED_WALKTHROUGH]] - Step-by-step implementation walkthrough
+- [[DOCUMENTATION_IMPROVEMENTS]] - Documentation evolution and enhancements
+
+### 🔗 Stack Integration
+- **[[Mission1 Overview]]** - Stack implementation (LIFO foundation)
+- [[../../missions/Mission1/QUICK_REFERENCE|Quick Reference]] - Stack and ownership basics
+- [[../../missions/Mission1/SIMPLE_GUIDE|Simple Guide]] - Mental models for data structures
+
+### 📖 Related Concepts
+- Pattern matching - Match expressions for error handling
+- Error handling - Result<T, E> and custom error types
+- Iterators - Character processing and validation
+- String processing - UTF-8 text manipulation
+- State machines - Bracket matching algorithm
+
+### 🏷️ Tags
+*Tags: #brackets #validation #api-documentation #stack-application #error-handling #configuration #unicode #performance*
