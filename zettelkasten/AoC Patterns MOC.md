@@ -124,6 +124,7 @@
 
 ### **Combinatorial Problems**
 - **[[Permutation Generation]]** - All arrangements and ordering problems
+  - **[[Heap's Algorithm Deep Dive]]** - Efficient permutation generation with minimal swaps
 - **[[Subset Generation]]** - Power sets and combination enumeration
 - **[[Constraint Satisfaction]]** - Sudoku-style and rule-based solving
 - **[[Game Theory]]** - Optimal play and minimax strategies

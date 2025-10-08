@@ -429,3 +429,37 @@ for route in generate_permutations(&cities) {
 **Next Steps**: This algorithm is essential for many competitive programming problems. Practice with TSP variations, constraint satisfaction problems, and enumeration tasks to master its applications.
 
 **Related Learning**: [[Dynamic Programming]], [[Backtracking Algorithms]], [[Graph Algorithms]], [[Combinatorial Optimization]]
+
+---
+
+## 🔗 Navigation
+
+### 📚 Zettelkasten
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[AoC Patterns MOC]]** - Competitive programming patterns (Combinatorial Problems section)
+- **[[Rust Concepts MOC]]** - Core language features
+
+### 🎯 Algorithm Context
+- **[[Permutation Generation]]** - Parent concept for arrangement problems
+- **[[A-Star-Algorithm-Deep-Dive|A* Algorithm Deep Dive]]** - Another optimization algorithm
+- **[[Dynamic Programming]]** - Optimization technique
+- **[[Backtracking Algorithms]]** - Alternative exploration strategy
+
+### 🏗️ Mission Integration
+- **[[Mission5 Overview]]** - HashMap applications (distance lookups for TSP)
+- **[Mission5 README](../missions/Mission5/README.md)** - Dictionary implementation for route calculations
+
+### 🎄 AoC Applications
+- **TSP (Traveling Salesman Problem)** - Classic permutation optimization
+- **N-Queens Problem** - Constraint satisfaction with backtracking
+- **Route Optimization** - Finding shortest paths through all points
+- **Puzzle Solving** - Configuration enumeration
+
+### 📖 Related Algorithms
+- **[[Graph Algorithms]]** - Path finding and traversal
+- **[[Combinatorial Optimization]]** - Mathematical optimization techniques
+- **[[Constraint Satisfaction]]** - Rule-based problem solving
+
+---
+
+*Tags: #algorithms #permutations #recursion #optimization #competitive-programming #mission5 #heap-algorithm #tsp #combinatorics*
