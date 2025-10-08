@@ -1,3 +1,5 @@
+← [[summary|AoC 2015 Index]]
+
 --- Day 4: The Ideal Stocking Stuffer ---
 Santa needs help mining some AdventCoins (very similar to bitcoins) to use as gifts for all the economically forward-thinking little girls and boys.
 
@@ -21,3 +23,30 @@ At this point, you should return to your Advent calendar and try another puzzle.
 Your puzzle input was yzbqklnj.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[hashing]] - MD5 hash algorithm and cryptographic hashing
+- [[brute-force]] - Exhaustive search with early termination
+- [[string-formatting]] - Concatenating key + number
+- [[hexadecimal]] - Hexadecimal representation and prefix matching
+
+**Data Structures:**
+- [[hashmap]] - Understanding hash functions (conceptual)
+
+**Patterns:**
+- [[iterators]] - Counting up from 1 until condition met
+- [[loop-until-found]] - Search until prefix match found
+- [[starts-with]] - Prefix checking pattern
+
+**Performance:**
+- [[performance-benchmarking-grid-optimization]] - Optimization strategies for brute-force
+- [[parallel-processing]] - Potential parallelization (external crate: rayon)
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 6-10 cover HashMap and hash concepts
+
+*Tags: #aoc #aoc2015 #day04 #hashing #brute-force #cryptography*

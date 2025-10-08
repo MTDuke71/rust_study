@@ -35,6 +35,7 @@
 - [[Mission4 Overview]] - Linked Lists
 - [[Mission5 Overview]] - HashMap & HashSet
 - [[Mission6 Overview]] - 2D Grids & Navigation
+  - **Coverage**: [[COVERAGE_IMPROVEMENT_LOG]] - Test coverage strategies and improvements
 - [[../missions/Mission7/README|Mission7]] - Graph Algorithms & Traversal (DFS/BFS)
   - **Tutorial**: [[../tutorials/Mission7_tut/README|Mission7 Tutorial]] - 7-step graph learning progression
 

@@ -160,3 +160,36 @@ cargo run --example step7_performance --release
 The tutorial takes learners from "Why don't traditional linked list patterns work in Rust?" to building complex doubly-linked lists with shared ownership and proper memory management. Each step includes working code, explanations of key concepts, and opportunities for practice.
 
 This follows the V-Cycle methodology from your rust_study workspace while implementing the tutorial engineering best practices for maximum learning effectiveness!
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Tutorial Engineering:**
+- [[tutorial-design]] - Tutorial design principles
+- [[progressive-disclosure]] - Step-by-step learning
+- [[hands-on-learning]] - Interactive exercises
+- [[error-anticipation]] - Proactive error handling
+
+**Mission Integration:**
+- [[Mission4 Overview]] - Linked list mission
+- [[Mission4_tut Overview]] - Complete tutorial guide
+- [[V-Cycle Methodology]] - Engineering approach
+
+**Smart Pointers:**
+- [[Box Smart Pointer Patterns]] - Box<T> patterns
+- [[Interior Mutability Deep Dive]] - RefCell patterns
+- [[weak-references]] - Weak<T> for cycles
+
+**Tutorial Components:**
+- [[exercise1_box_basics]] - Basic Box exercise
+- [[exercise2_rc_patterns]] - Rc/RefCell exercise
+- [[exercise3_doubly_linked]] - Advanced challenge
+- [[TROUBLESHOOTING]] - Common issues guide
+
+**Development Process:**
+- [[copilot-agent]] - AI-assisted development
+- [[project-scaffolding]] - Project structure creation
+- [[learning-path-design]] - Curriculum design
+
+*Tags: #mission4 #tutorial #meta #development-log #copilot #learning-design*

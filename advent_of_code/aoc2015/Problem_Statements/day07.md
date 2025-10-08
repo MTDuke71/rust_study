@@ -1,3 +1,5 @@
+← [[summary|AoC 2015 Index]]
+
 --- Day 7: Some Assembly Required ---
 This year, Santa brought little Bobby Tables a set of wires and bitwise logic gates! Unfortunately, little Bobby is a little under the recommended age range, and he needs help assembling the circuit.
 
@@ -49,3 +51,36 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[graph-algorithms]] - Dependency graph evaluation
+- [[memoization]] - Caching computed wire values
+- [[topological-sort]] - Evaluating dependencies in order
+- [[bitwise-operations]] - AND, OR, NOT, LSHIFT, RSHIFT
+
+**Data Structures:**
+- [[hashmap]] - Wire name → value/instruction mapping
+- [[enum]] - Representing different gate types
+- [[recursion]] - Recursive evaluation with memoization
+
+**Patterns:**
+- [[lazy-evaluation]] - Computing values only when needed
+- [[parsing]] - Parsing instruction grammar
+- [[state-management]] - Tracking computed vs pending values
+
+**Mission Connections:**
+- [[mission5]] - HashMap for efficient lookups
+
+**Performance:**
+- [[memoization]] - Avoiding redundant calculations
+- [[recursive-caching]] - Caching recursive results
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 6-10 cover HashMap patterns
+- [[rust-book-ch6]] - Enums for gate representation
+
+*Tags: #aoc #aoc2015 #day07 #hashmap #graph #memoization #bitwise*

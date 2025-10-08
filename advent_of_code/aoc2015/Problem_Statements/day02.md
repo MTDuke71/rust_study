@@ -1,3 +1,5 @@
+← [[summary|AoC 2015 Index]]
+
 --- Day 2: I Was Told There Would Be No Math ---
 The elves are running low on wrapping paper, and so they need to submit an order for more. They have a list of the dimensions (length l, width w, and height h) of each present, and only want to order exactly as much as they need.
 
@@ -31,3 +33,28 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[parsing]] - Parsing dimension strings (e.g., "2x3x4")
+- [[split-lines]] - Processing line-by-line input
+- [[string-to-number]] - Converting string dimensions to integers
+- [[sorting-algorithms]] - Finding smallest/largest sides
+
+**Data Structures:**
+- [[vec]] - Collection of dimensions
+- [[tuple]] - Representing (length, width, height)
+
+**Patterns:**
+- [[map-filter-reduce]] - Transform and sum calculations
+- [[min-max]] - Finding smallest side/perimeter
+- [[mathematical-algorithms]] - Surface area and volume calculations
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 1-5 cover parsing patterns
+- [[rust-book-ch4]] - String handling and slices
+
+*Tags: #aoc #aoc2015 #day02 #parsing #mathematics #sorting*

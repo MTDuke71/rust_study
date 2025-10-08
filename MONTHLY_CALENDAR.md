@@ -1,3 +1,9 @@
+---
+*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]]*
+*Quick Links: [[Week 1 Overview]] | [[Week 2 Overview]] | [[Mission5 Overview]] | [[Collections MOC]]*
+*Related Concepts: [[V-Cycle Development]] | [[Learning Strategy]] | [[Time Management]] | [[Progressive Learning]]*
+---
+
 # 🗓️ Monthly Learning Calendar - October 2025
 
 **Current Status**: Mission 5 Active, Daily Study Week 2 Ready, Rust Book Chapter 5 (Method Syntax)
@@ -476,3 +482,55 @@ git add . && git commit -m "Day X progress" # Save daily progress
 **Remember**: Consistency beats intensity. 30-45 minutes daily will build solid mastery over this month! 🚀
 
 **⚠️  CRITICAL SUCCESS FACTOR**: Always maintain alignment between Mission Tutorial daily activities and Mission Focus goals - they should reinforce each other, not compete for attention!
+
+---
+
+## 🏷️ Tags & Cross-References
+
+*Tags: #monthly-calendar #learning-plan #time-management #v-cycle #daily-study #missions #rust-book #3-track-system #calendar-2025*
+
+*Related Learning Plans:*
+- [[Daily Study MOC]] - Day-by-day systematic learning structure
+- [[Missions Overview]] - V-Cycle engineering discipline missions
+- [[Rust Book Progress]] - Chapter-by-chapter foundation building
+- [[Week 1 Overview]] - Collections fundamentals (HashMap, HashSet, BTreeMap)
+- [[Week 2 Overview]] - Advanced collections and iterators
+- [[Week 3 Overview]] - Traits, generics, and lifetimes
+- [[Week 4-5 Overview]] - Grids, parsing, and error handling
+
+*Mission Integration:*
+- [[Mission1 Overview]] - Stack Implementation (V-Cycle foundation)
+- [[Mission2 Overview]] - Queue Implementation (Ring buffer patterns)
+- [[Mission3 Overview]] - Search Algorithms (Binary search mastery)
+- [[Mission4 Overview]] - Linked Lists (Pointer manipulation)
+- [[Mission5 Overview]] - HashMap & HashSet (Current focus)
+- [[Mission6 Overview]] - Grid Systems (2D spatial algorithms)
+- [[Mission7 Overview]] - Graph Algorithms (BFS/DFS)
+- [[Mission8 Overview]] - Advanced Data Structures
+
+*Core Learning Concepts:*
+- [[Ownership]] - Rust's memory safety foundation
+- [[Borrowing]] - Reference rules and lifetime management
+- [[Traits]] - Behavior abstraction and polymorphism
+- [[Generics]] - Type parameterization for reusable code
+- [[Collections MOC]] - Standard library collection types
+- [[Error Handling]] - Result and Option patterns
+- [[Testing Strategies]] - Unit, integration, and requirement-based testing
+- [[Documentation Standards]] - Professional Rust documentation
+
+*Learning Resources:*
+- [[Complete Runnable Examples]] - Executable learning demonstrations
+- [[AoC Integration]] - Real-world problem-solving applications
+- [[Tutorial Engineering]] - Pedagogical design for missions
+- [[Zettelkasten System]] - Knowledge management and linking
+
+*Success Metrics:*
+- [[Progress Tracking]] - How to measure learning advancement
+- [[V-Cycle Methodology]] - Requirements through validation
+- [[3-Track Integration]] - Coordinating missions, daily study, and book learning
+- [[Time Boxing]] - 30-45 minute daily commitment strategy
+
+---
+
+*Last Updated: October 7, 2025*
+*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]]*

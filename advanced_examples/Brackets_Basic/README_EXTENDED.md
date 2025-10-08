@@ -41,3 +41,72 @@ enum UnclosedPolicy { LatestOpen, EarliestOpen }
 | REQ-9 | `UnclosedPolicy` handling at EOF | `req9_unclosed_policy_latest_vs_earliest` |
 | Iterator | `validate_iter`, `validate_indexed`, core engine | iterator API tests |
 
+---
+
+## 📚 Related Zettelkasten Concepts
+
+### Core Concepts
+- [[Configurable Alphabet]] - Arbitrary opener-closer mapping (REQ-7)
+- [[Error Collection Mode]] - StopAtFirst vs CollectAll (REQ-8)
+- [[Unclosed Policy]] - LatestOpen vs EarliestOpen (REQ-9)
+- [[Iterator API Design]] - Streaming validation patterns
+
+### Data Structures
+- [[Stack Data Structure]] - LIFO bracket tracking
+- [[HashMap]] - Alphabet configuration storage
+- [[Vec]] - Multiple error collection
+- [[Options Pattern]] - Configuration struct
+
+### Advanced Patterns
+- [[Builder Pattern]] - Options configuration with defaults
+- [[Strategy Pattern]] - Pluggable ErrorMode and UnclosedPolicy
+- [[Iterator Patterns]] - IntoIterator trait usage
+- [[Generic Programming]] - Flexible input types
+
+### Error Handling
+- [[Multiple Error Collection]] - Vec<BracketError> result
+- [[Error Context]] - Detailed error information
+- [[BracketError Type]] - Structured error reporting
+- [[Result Composition]] - Result<(), Vec<BracketError>>
+
+### API Design
+- [[Progressive Enhancement]] - Basic to extended APIs
+- [[Backward Compatibility]] - Preserving validate_brackets
+- [[Smart Defaults]] - Options::default() convenience
+- [[Flexible Interfaces]] - validate_iter, validate_indexed
+
+### Requirements Engineering
+- [[REQ-7]] - Configurable alphabet extension
+- [[REQ-8]] - Error collection mode
+- [[REQ-9]] - Unclosed bracket policy
+- [[Iterator API Requirements]] - Streaming support
+- [[V-Cycle Methodology]] - Requirements-driven development
+
+### Testing Strategies
+- [[Requirements-Based Testing]] - REQ-7, REQ-8, REQ-9 tests
+- [[Integration Testing]] - CSV dataset validation
+- [[Iterator Testing]] - Stream validation tests
+- [[Traceability Matrix]] - Requirements to tests mapping
+
+### Mission Integration
+- [[Brackets Basic]] - Foundation implementation
+- [[Mission1]] - Stack implementation
+- [[Brackets Extended]] - Full implementation
+- [[Missions MOC]] - V-Cycle projects
+
+### AoC Applications
+- [[Custom Delimiters]] - HTML/XML tag validation
+- [[IDE Integration]] - Linting and error reporting
+- [[Educational Use Cases]] - Step-by-step error feedback
+- [[Mathematical Notation]] - Custom bracket types
+
+### Learning Resources
+- [[Rust Book]] - Language fundamentals
+- [[Daily Study MOC]] - Structured learning
+- [[AoC Patterns]] - Problem-solving strategies
+- [[RUST_DOCUMENTATION_STANDARDS]] - Documentation guide
+
+*Links: [[zettel-index]] | [[Brackets Basic]] | [[Brackets Extended]] | [[V-Cycle Methodology]] | [[Configurable Alphabet]]*
+
+*Tags: #brackets-extended #req7 #req8 #req9 #iterator-api #configuration #error-collection #aoc-patterns #extensibility*
+

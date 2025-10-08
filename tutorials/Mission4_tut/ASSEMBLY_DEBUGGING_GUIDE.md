@@ -203,3 +203,48 @@ By debugging this way, you'll understand:
 5. **Save sessions**: Record interesting debugging sessions
 
 This debugging approach gives you deep insight into how Rust's high-level constructs compile to efficient machine code!
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Debugging Techniques:**
+- [[QUICK_DEBUG_START]] - Quick 3-minute debugging setup
+- [[lldb-debugging]] - LLDB debugger mastery
+- [[assembly-debugging]] - Assembly-level debugging
+- [[breakpoint-strategies]] - Advanced breakpoint usage
+
+**Compilation Analysis:**
+- [[COMPILATION_BREAKDOWN]] - Detailed compilation stages
+- [[VISUAL_COMPILATION_PROCESS]] - Visual compilation guide
+- [[disassembly-analysis]] - Reading disassembly output
+- [[instruction-stepping]] - Single-step debugging
+
+**Memory & Registers:**
+- [[register-inspection]] - CPU register analysis
+- [[memory-debugging]] - Memory inspection techniques
+- [[stack-frame-analysis]] - Stack frame navigation
+- [[heap-tracking]] - Heap allocation tracking
+
+**Performance Investigation:**
+- [[zero-cost-abstractions]] - Verifying zero-cost claims
+- [[optimization-verification]] - Checking compiler optimizations
+- [[performance-profiling]] - Performance analysis tools
+- [[instruction-counting]] - Counting actual CPU instructions
+
+**Smart Pointers:**
+- [[Box Smart Pointer Patterns]] - Box<T> assembly patterns
+- [[option-lowering]] - Option<T> in assembly
+- [[memory-layout]] - Struct layout in memory
+
+**Mission Integration:**
+- [[Mission4 Overview]] - Linked list mission
+- [[Mission4_tut Overview]] - Complete tutorial
+- [[step2_push_front]] - Example source file
+
+**Tools & Commands:**
+- [[lldb-command-reference]] - LLDB command cheat sheet
+- [[vscode-debugging]] - VS Code debugging setup
+- [[codelldb-extension]] - CodeLLDB configuration
+
+*Tags: #mission4 #debugging #assembly #lldb #advanced #disassembly #performance-analysis*

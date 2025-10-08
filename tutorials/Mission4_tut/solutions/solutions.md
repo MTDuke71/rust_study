@@ -60,3 +60,49 @@ Both solutions include comprehensive test suites that demonstrate:
 ✅ Memory management (reference cycles, cleanup)
 ✅ Advanced features (bidirectional iteration, insertion/deletion)
 The solutions follow Rust best practices and demonstrate real-world patterns you'll use when building complex data structures with shared ownership and interior mutability!
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Exercise Solutions:**
+- [[exercise1_box_basics]] - Basic Box exercise
+- [[exercise2_rc_patterns]] - Rc/RefCell exercise
+- [[exercise3_doubly_linked]] - Doubly linked list exercise
+
+**Smart Pointer Patterns:**
+- [[Box Smart Pointer Patterns]] - Box<T> solutions
+- [[Interior Mutability Deep Dive]] - RefCell patterns
+- [[rc-try-unwrap]] - Safe Rc unwrapping
+- [[weak-upgrade-pattern]] - Weak<T> upgrade handling
+
+**Error Handling:**
+- [[custom-error-types]] - LinkedListError design
+- [[error-conversion]] - From trait for errors
+- [[try-methods]] - try_borrow and try_borrow_mut
+
+**Memory Management:**
+- [[reference-cycles]] - Cycle prevention with Weak
+- [[reference-counting]] - Rc strong/weak counts
+- [[memory-leak-prevention]] - Avoiding leaks
+
+**Data Structure Design:**
+- [[linked-list-solutions]] - Complete implementations
+- [[bidirectional-traversal]] - Forward/backward iteration
+- [[insert-at-position]] - Complex insertion logic
+
+**Mission Integration:**
+- [[Mission4 Overview]] - Linked list mission
+- [[Mission4_tut Overview]] - Tutorial series
+- [[TROUBLESHOOTING]] - Common issues guide
+
+**Testing Patterns:**
+- [[comprehensive-testing]] - Edge cases and scenarios
+- [[borrow-conflict-testing]] - Runtime borrow tests
+- [[reference-sharing-tests]] - Shared reference scenarios
+
+**Learning Resources:**
+- [[rust-book-ch15]] - Smart Pointers chapter
+- [[Daily Study MOC]] - Learning progression
+
+*Tags: #mission4 #solutions #complete-implementations #rc #refcell #weak #doubly-linked-list*

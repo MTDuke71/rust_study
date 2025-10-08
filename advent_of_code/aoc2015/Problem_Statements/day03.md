@@ -1,3 +1,5 @@
+← [[summary|AoC 2015 Index]]
+
 --- Day 3: Perfectly Spherical Houses in a Vacuum ---
 Santa is delivering presents to an infinite two-dimensional grid of houses.
 
@@ -36,3 +38,32 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[hashset]] - Tracking unique visited locations
+- [[grid-navigation]] - 2D coordinate movement (up/down/left/right)
+- [[coordinate-systems]] - (x, y) position tracking
+- [[deduplication]] - Counting unique houses
+
+**Data Structures:**
+- [[hashset]] - Efficient duplicate detection O(1)
+- [[tuple]] - Representing (x, y) coordinates
+- [[struct]] - Position representation
+
+**Patterns:**
+- [[state-machines]] - Tracking current position
+- [[set-operations]] - Union of two paths (Part 2)
+- [[alternating-iteration]] - Santa/Robo-Santa turns
+
+**Mission Connections:**
+- [[mission6]] - Grid navigation and coordinate systems
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 6-10 cover HashSet and deduplication
+- [[performance-benchmarking-grid-optimization]] - Coordinate system patterns
+
+*Tags: #aoc #aoc2015 #day03 #hashset #grid #coordinates #navigation*

@@ -129,3 +129,75 @@ Memory Safety: Zero aliasing risks through ownership
 This is production-quality code that handles edge cases, Unicode correctly, and provides excellent user experience! 🦀✨
 
 Claude Sonnet 4 • 1x
+
+---
+
+## 📚 Related Zettelkasten Concepts
+
+### Core Concepts
+- [[Stack Invariants]] - Maintaining correctness guarantees
+- [[UTF-8 Handling]] - char_indices() and byte positioning
+- [[Algorithm Analysis]] - Complexity and correctness proofs
+- [[Memory Safety]] - Ownership and aliasing analysis
+
+### Rust Fundamentals
+- [[Ownership and Borrowing]] - Memory safety guarantees
+- [[Iterator Patterns]] - char_indices() and consumption
+- [[Result Type]] - Error handling conventions
+- [[Type Safety]] - Compile-time correctness
+
+### Data Structures
+- [[Stack Data Structure]] - LIFO operations and invariants
+- [[Vec]] - Underlying storage and reallocation
+- [[Tuples]] - (expected_closer, open_index) pairs
+
+### Algorithm Design
+- [[Invariant Maintenance]] - Stack state correctness
+- [[Early Error Detection]] - Fail-fast design
+- [[Single-Pass Algorithms]] - O(n) time complexity
+- [[Stack-Based Parsing]] - Expected closer tracking
+
+### Error Handling
+- [[Error Positioning]] - Byte indices vs character positions
+- [[Result vs Option]] - Semantic clarity in APIs
+- [[Early Return]] - Fail-fast error detection
+- [[Error Types]] - BracketError structure
+
+### String Processing
+- [[UTF-8 Encoding]] - Multi-byte character handling
+- [[char_indices()]] - Byte position iteration
+- [[String Slicing]] - Byte-based indexing
+- [[Unicode Support]] - Character boundaries
+
+### Memory Safety
+- [[Aliasing Prevention]] - No shared mutable state
+- [[Ownership Model]] - Stack owns its data
+- [[Borrow Checker]] - Compile-time safety
+- [[No Unsafe Code]] - Pure safe Rust
+
+### Performance Analysis
+- [[Big-O Notation]] - Time and space complexity
+- [[Amortized Analysis]] - Vec reallocation costs
+- [[Tight Bounds]] - Best and worst-case scenarios
+- [[Cache Efficiency]] - Stack-based memory locality
+
+### Testing & Verification
+- [[Property-Based Testing]] - Invariant verification
+- [[Edge Case Testing]] - Boundary conditions
+- [[Unit Testing]] - Component-level tests
+- [[Integration Testing]] - End-to-end scenarios
+
+### Mission Integration
+- [[Brackets Basic]] - Implementation project
+- [[Mission1]] - Stack implementation foundation
+- [[V-Cycle Methodology]] - Requirements and validation
+
+### Learning Resources
+- [[Rust Book]] - Language fundamentals
+- [[Daily Study MOC]] - Structured learning
+- [[Clean Code Principles]] - Code quality standards
+- [[Claude AI]] - AI-assisted learning
+
+*Links: [[zettel-index]] | [[Brackets Basic]] | [[Stack Invariants]] | [[UTF-8 Handling]] | [[Memory Safety]]*
+
+*Tags: #q-and-a #deep-dive #invariants #utf8 #memory-safety #algorithm-analysis #error-handling #performance #claude-ai*

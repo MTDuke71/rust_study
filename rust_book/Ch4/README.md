@@ -1,3 +1,9 @@
+---
+*Navigation: [[zettel-index]] | [[Rust Book Progress]] | [[Ownership]] | [[Borrowing]]*
+*Quick Links: [[Memory Management]] | [[References]] | [[Slices]] | [[Daily Study MOC]]*
+*Related Concepts: [[Move Semantics]] | [[Copy vs Clone]] | [[Lifetimes]] | [[Smart Pointers]]*
+---
+
 # Chapter 4: Understanding Ownership
 
 ## 📚 Overview
@@ -263,6 +269,67 @@ The compiler ensures memory safety by tracking these relationships at compile ti
 - [The Rust Book Chapter 4](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
 - [Rust Reference - Ownership](https://doc.rust-lang.org/reference/ownership.html)
 - [Rustonomicon - Ownership](https://doc.rust-lang.org/nomicon/ownership.html)
+
+---
+
+## 🔗 Integration with Learning System
+
+### **Mission Applications**
+This chapter's concepts are fundamental to all missions:
+- [[Mission1 Overview]] - Stack ownership and move semantics
+- [[Mission2 Overview]] - Queue ownership with enqueue/dequeue
+- [[Mission3 Overview]] - Binary search with borrowed slices
+- [[Mission4 Overview]] - Linked list pointer ownership
+- [[Mission5 Overview]] - HashMap key/value ownership patterns
+
+### **Daily Study Connections**
+- [[Day 01 - Ownership Basics]] - Reinforces ownership rules
+- [[Day 02 - Borrowing Rules]] - Practical borrowing patterns
+- [[Week 1 Overview]] - Ownership fundamentals in daily practice
+
+### **Related Rust Book Chapters**
+- [[Ch3 - Common Programming Concepts]] - Variables and mutability foundation
+- [[Ch5 - Structs]] - Ownership in custom types
+- [[Ch6 - Enums]] - Option and Result with ownership
+- [[Ch10 - Generics]] - Generic types with ownership constraints
+- [[Ch15 - Smart Pointers]] - Advanced ownership patterns
+
+### **Core Concepts Deep Dives**
+- [[Ownership]] - Comprehensive ownership concept page
+- [[Borrowing]] - Borrowing rules and patterns
+- [[Move Semantics]] - Understanding moves vs copies
+- [[References]] - Reference types and lifetimes
+- [[Slices]] - Slice patterns and string slices
+- [[Memory Management]] - Stack vs heap, allocation strategies
+- [[Copy vs Clone]] - Trait-based copying behavior
+- [[Drop Trait]] - Automatic cleanup and RAII
+
+### **Practical Applications**
+- [[Error Handling]] - Ownership in Result and Option
+- [[Iterator Pattern]] - Borrowing in iterator chains
+- [[Collections MOC]] - Ownership in Vec, String, HashMap
+- [[Zero-Cost Abstractions]] - Performance without runtime overhead
+
+---
+
+## 🎯 Learning Progression
+
+**Prerequisites Completed:**
+- ✅ Ch1-Ch3: Basic Rust syntax and control flow
+
+**Current Focus:**
+- 🔄 Ch4: Ownership fundamentals (this chapter)
+
+**Next Steps:**
+- ⏭️ Ch5: Structs - Applying ownership to custom types
+- ⏭️ Ch6: Enums - Pattern matching with owned values
+- ⏭️ Ch10: Generics - Generic ownership patterns
+
+---
+
+*Tags: #rust-book #chapter4 #ownership #borrowing #references #slices #memory-management #foundation*
+
+*Links: [[zettel-index]] | [[Rust Book Progress]] | [[Ownership]] | [[Borrowing]] | [[Memory Management]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
 
 ---
 

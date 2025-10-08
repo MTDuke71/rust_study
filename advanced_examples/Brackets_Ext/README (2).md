@@ -42,3 +42,53 @@ To run:
 cargo test
 cargo clippy -- -D warnings
 ```
+
+---
+
+## 📚 Related Zettelkasten Concepts
+
+### Core Concepts
+- [[Stack Data Structure]] - LIFO structure for bracket tracking
+- [[V-Cycle Methodology]] - Requirements-driven development process
+- [[Big-O Notation]] - Time and space complexity analysis
+- [[Algorithm Design]] - Problem-solving patterns
+
+### Rust Fundamentals
+- [[Result Type]] - Error handling with Result<(), E>
+- [[String Slicing]] - Working with &str
+- [[Pattern Matching]] - Match expressions for error handling
+- [[Unit Testing]] - Test organization and naming
+
+### Data Structures
+- [[Stack Implementation]] - Stack operations (push, pop, peek)
+- [[Vec]] - Underlying storage for stack
+
+### Error Handling
+- [[Error Types]] - BracketError and BracketErrorKind
+- [[Early Return]] - Fail-fast error detection
+- [[Error Reporting]] - Detailed error messages with positions
+
+### Testing Strategies
+- [[Integration Testing]] - CSV-based validation testing
+- [[Test Data Organization]] - tests/data structure
+- [[Traceability Matrix]] - Requirements to tests mapping
+- [[Cargo Test]] - Running tests with cargo
+
+### Mission Integration
+- [[Mission1]] - Stack implementation foundation
+- [[Brackets Extended]] - Advanced features building on this
+- [[Missions MOC]] - V-Cycle mission overview
+
+### AoC Patterns
+- [[Bracket Validation]] - Classic AoC pattern
+- [[LIFO Processing]] - Last-in-first-out algorithms
+- [[String Processing]] - Character-by-character scanning
+
+### Learning Resources
+- [[Rust Book]] - The Rust Programming Language
+- [[Daily Study MOC]] - Structured learning
+- [[Competitive Programming]] - AoC-style problems
+
+*Links: [[zettel-index]] | [[Brackets Extended]] | [[Missions MOC]] | [[V-Cycle Methodology]]*
+
+*Tags: #brackets #validation #v-cycle #requirements #stack #testing #error-handling #aoc-patterns*

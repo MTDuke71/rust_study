@@ -1,3 +1,5 @@
+← [[summary|AoC 2015 Index]]
+
 --- Day 5: Doesn't He Have Intern-Elves For This? ---
 Santa needs help figuring out which strings in his text file are naughty or nice.
 
@@ -41,3 +43,30 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[string-validation]] - Multi-rule validation patterns
+- [[pattern-matching]] - Finding substrings and patterns
+- [[iterators]] - Windows, pairs, and character sequences
+- [[contains]] - Substring searching
+- [[chars]] - Character iteration
+
+**Data Structures:**
+- [[vec]] - Collection of strings to validate
+- [[hashset]] - Vowel checking
+
+**Patterns:**
+- [[windows]] - Sliding window for consecutive pairs
+- [[all-any-predicates]] - Checking if all/any rules match
+- [[filter-count]] - Counting valid strings
+- [[boolean-logic]] - Combining multiple conditions
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 1-5 cover string iteration
+- [[rust-book-ch4]] - String slices and iteration
+
+*Tags: #aoc #aoc2015 #day05 #string-validation #pattern-matching #iterators*

@@ -355,3 +355,44 @@ This Mission 1 implementation demonstrates that Rust provides:
 The stack implementation serves as an excellent introduction to Rust's ownership and borrowing system, showcasing how the language prevents entire classes of bugs while maintaining performance and expressiveness.
 
 These concepts form the foundation for safe systems programming in Rust, enabling developers to write fast, reliable code without sacrificing safety.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[ownership]] - Rust's ownership system and move semantics
+- [[borrowing]] - Immutable and mutable references
+- [[lifetimes]] - Ensuring references remain valid
+- [[generics]] - Type parameters and generic programming
+- [[traits]] - Copy trait vs Move semantics
+
+**Data Structures:**
+- [[vec]] - Dynamic array underlying the stack
+- [[stack-data-structure]] - LIFO (Last In, First Out) principle
+- [[option]] - Safe handling of optional values
+
+**Patterns:**
+- [[builder-pattern]] - with_capacity() constructor
+- [[method-chaining]] - Fluent API design
+- [[zero-cost-abstractions]] - Performance without overhead
+
+**Memory & Performance:**
+- [[stack-vs-heap]] - Memory allocation strategies
+- [[amortized-complexity]] - O(1) amortized push operations
+- [[capacity-management]] - Avoiding reallocations
+
+**Mission Connections:**
+- [[mission1]] - Stack implementation
+- [[mission2]] - Queue (complementary data structure)
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 1-5 cover collections and ownership
+- [[rust-book-ch4]] - Understanding ownership in depth
+- [[rust-book-ch10]] - Generic types, traits, and lifetimes
+
+**Testing & Quality:**
+- [[test-driven-development]] - Requirement-based testing
+- [[v-cycle]] - Software engineering methodology used
+
+*Tags: #mission1 #stack #ownership #borrowing #generics #data-structures #copy-vs-move*

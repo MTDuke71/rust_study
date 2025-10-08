@@ -126,3 +126,34 @@ Once you complete this exercise:
 1. Run `cargo run --bin exercise1_box_basics` to test your implementation
 2. Add a `display()` method that prints all elements
 3. Implement `push_back()` for practice (harder!)
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Smart Pointers:**
+- [[Box Smart Pointer Patterns]] - Heap allocation and ownership management
+- [[box]] - Box<T> for single ownership on the heap
+- [[ownership]] - Rust ownership system fundamentals
+- [[move-semantics]] - Transfer of ownership without copying
+
+**Data Structures:**
+- [[linked-list]] - Linked list patterns and implementations
+- [[option]] - Option<T> for null safety
+- [[take-method]] - Option::take() for ownership transfer
+
+**Memory Management:**
+- [[stack-vs-heap]] - Stack vs heap allocation strategies
+- [[raii]] - Resource Acquisition Is Initialization pattern
+- [[drop-trait]] - Automatic cleanup on scope exit
+
+**Mission Integration:**
+- [[Mission4 Overview]] - Linked list mission context
+- [[Mission4_tut Overview]] - Complete tutorial progression
+- [[exercise2_rc_patterns]] - Next exercise: shared ownership
+
+**Learning Resources:**
+- [[rust-book-ch15]] - Smart Pointers chapter
+- [[Daily Study MOC]] - Ownership and borrowing days
+
+*Tags: #mission4 #tutorial #box #linked-list #ownership #exercise #hands-on*

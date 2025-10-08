@@ -109,6 +109,7 @@ See [[Mission6_tut Overview]] for step-by-step learning path
 - **Examples**: `missions/Mission6/examples/`
 - **Tutorial**: `tutorials/Mission6_tut/` directory
 - **Documentation**: [[Mission6 API Reference]]
+- **Coverage Reports**: [[COVERAGE_IMPROVEMENT_LOG]] - Test coverage improvements and strategies
 
 ## 🎄 AoC Applications
 

@@ -107,3 +107,40 @@ All warnings have been addressed with:
 - ✅ Examples demonstrating the correct patterns
 
 The code now compiles without warnings while maintaining its educational value! 🎉
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Rust Concepts:**
+- [[enums]] - Enum types and variants with data
+- [[pattern-matching]] - Extracting data from enums with match/if let
+- [[dead-code-analysis]] - Compiler warnings and unused code detection
+- [[attributes]] - #[allow(dead_code)] and other compiler directives
+
+**Compiler & Tooling:**
+- [[compiler-warnings]] - Understanding and managing Rust compiler warnings
+- [[cargo-clippy]] - Linting and code quality tools
+- [[rustc-lints]] - Compiler lint configuration and management
+
+**Design Patterns:**
+- [[enum-variants-with-data]] - Storing data in enum variants
+- [[educational-code-vs-production]] - Different standards for different contexts
+- [[intentional-suppression]] - When and how to suppress warnings
+
+**Rust Book Integration:**
+- [[rust-book-ch6]] - Enums and Pattern Matching chapter
+- [[chapter6_overview]] - Overview of enum concepts
+- [[rust-book-ch9]] - Result<T, E> enum with proper data usage
+
+**Best Practices:**
+- [[code-documentation]] - Documenting design decisions
+- [[compiler-feedback]] - Using compiler messages effectively
+- [[rust-idioms]] - Idiomatic enum usage patterns
+
+**Related Missions:**
+- [[Mission5 Overview]] - Enums in HashMap implementation
+- [[Mission6 Overview]] - Direction enum for grid navigation
+- [[Mission7 Overview]] - Graph representation with enums
+
+*Tags: #enums #compiler-warnings #rust-book #ch6 #pattern-matching #dead-code #educational #best-practices*

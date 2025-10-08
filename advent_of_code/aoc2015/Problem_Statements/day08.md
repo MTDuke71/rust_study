@@ -1,3 +1,5 @@
+← [[summary|AoC 2015 Index]]
+
 --- Day 8: Matchsticks ---
 Space on the sleigh is limited this year, and so Santa will be bringing his list as a digital copy. He needs to know how much space it will take up when stored.
 
@@ -39,3 +41,28 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[string-escaping]] - Understanding escape sequences (\", \\, \x)
+- [[string-encoding]] - Encoding/decoding transformations
+- [[character-counting]] - Byte vs character counting
+- [[state-machines]] - Parsing escape sequences with state
+
+**Data Structures:**
+- [[vec]] - Building encoded/decoded strings
+- [[chars]] - Character-by-character iteration
+
+**Patterns:**
+- [[iterators]] - Peekable iterators for lookahead
+- [[pattern-matching]] - Match on escape patterns
+- [[string-manipulation]] - String transformation operations
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 1-5 cover string processing
+- [[rust-book-ch8]] - String and Vec<u8> representations
+
+*Tags: #aoc #aoc2015 #day08 #strings #escaping #parsing #state-machine*

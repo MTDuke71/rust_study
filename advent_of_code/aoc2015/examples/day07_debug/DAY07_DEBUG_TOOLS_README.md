@@ -151,3 +151,49 @@ Try these progressively:
 5. **Custom circuits**: `.\run_day07_advanced_debug.ps1 -CreateInput`
 
 The debug tools provide complete visibility into the AoC Day 7 circuit simulation algorithm! 🎉
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Debugging Concepts:**
+- [[debugging-strategies]] - Systematic debugging approaches
+- [[tracing]] - Program execution tracing and logging
+- [[debug-output]] - Structured debug output design
+- [[interactive-debugging]] - Interactive debugging tools and workflows
+
+**AoC-Specific:**
+- [[day07]] - AoC 2015 Day 7 problem (circuit simulation)
+- [[aoc2015]] - Full AoC 2015 problem set
+- [[AoC 2015 MOC]] - Overview and navigation for AoC 2015
+- [[bitwise-operations]] - AND, OR, NOT, LSHIFT, RSHIFT operations
+- [[circuit-simulation]] - Digital circuit evaluation patterns
+
+**Data Structures:**
+- [[hashmap]] - Wire storage and memoization
+- [[memoization]] - Caching computed values for performance
+- [[graph-algorithms]] - Dependency resolution and evaluation order
+- [[lazy-evaluation]] - Computing values only when needed
+
+**Problem-Solving Patterns:**
+- [[dependency-graph]] - Wire dependencies and evaluation order
+- [[topological-sort]] - Evaluating dependencies in order
+- [[recursive-evaluation]] - Recursive wire value computation
+
+**Tooling & Scripting:**
+- [[powershell-scripting]] - PowerShell automation scripts
+- [[log-filtering]] - Filtering and analyzing log output
+- [[interactive-tools]] - Building interactive command-line tools
+- [[file-management]] - Timestamped output and file organization
+
+**Performance Analysis:**
+- [[performance-benchmarking-grid-optimization]] - Performance measurement techniques
+- [[cache-hit-rate]] - Memoization effectiveness analysis
+- [[profiling]] - Performance profiling and optimization
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Daily learning progression
+- [[Mission5 Overview]] - HashMap implementation (used for memoization)
+- [[Mission7 Overview]] - Graph algorithms (dependency resolution)
+
+*Tags: #aoc #aoc2015 #day07 #debugging #tools #memoization #circuit-simulation #hashmap #interactive-tools #powershell*

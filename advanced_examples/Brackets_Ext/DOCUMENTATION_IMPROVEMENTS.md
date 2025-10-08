@@ -227,3 +227,57 @@ The **Brackets_Extended** project now has **enterprise-grade documentation** tha
 5. **✅ Validates** - all examples tested and verified
 
 **The project is now ready for professional use with documentation that matches the quality of the implementation!** 🌟
+
+---
+
+## 📚 Related Zettelkasten Concepts
+
+### Core Concepts
+- [[Documentation Standards]] - Rust documentation best practices
+- [[Rustdoc]] - Documentation generation with cargo doc
+- [[Doc Comments]] - /// and //! comment styles
+- [[Doctests]] - Executable documentation examples
+
+### Documentation Types
+- [[Module Documentation]] - //! module-level docs
+- [[Function Documentation]] - /// function-level docs
+- [[Type Documentation]] - Struct and enum documentation
+- [[API Documentation]] - Public API reference
+
+### Documentation Patterns
+- [[Examples in Documentation]] - Runnable code examples
+- [[Performance Documentation]] - Big-O complexity notes
+- [[Error Documentation]] - Error conditions and handling
+- [[Migration Guides]] - Upgrading between versions
+
+### Rust Best Practices
+- [[Self-Documenting Code]] - Clear naming and structure
+- [[Clean Code Principles]] - Meaningful names and organization
+- [[Error Handling]] - Comprehensive error scenarios
+- [[Type Safety]] - Type-driven documentation
+
+### Project Quality
+- [[Code Quality]] - Maintainability and professionalism
+- [[Testing Strategies]] - Documentation testing with doctests
+- [[Onboarding Documentation]] - Quick start guides
+- [[Troubleshooting Guides]] - Common errors and solutions
+
+### Development Process
+- [[Documentation-Driven Development]] - Documentation as design tool
+- [[Professional Standards]] - Enterprise-grade documentation
+- [[User Experience]] - Developer-friendly documentation
+- [[Self-Service Learning]] - Comprehensive examples
+
+### Mission Integration
+- [[Brackets Extended]] - Main implementation project
+- [[V-Cycle Methodology]] - Requirements and validation
+- [[RUST_DOCUMENTATION_STANDARDS]] - Workspace documentation guide
+
+### Learning Resources
+- [[Rust Book]] - Documentation conventions
+- [[Daily Study MOC]] - Structured learning
+- [[Missions MOC]] - V-Cycle projects
+
+*Links: [[zettel-index]] | [[Brackets Extended]] | [[RUST_DOCUMENTATION_STANDARDS]] | [[Documentation Standards]]*
+
+*Tags: #documentation #rustdoc #api-design #best-practices #professional-standards #doctests #code-quality*

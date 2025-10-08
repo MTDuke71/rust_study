@@ -272,3 +272,71 @@ let math_alphabet = Alphabet::with_pairs(&[
 - **Real-world Applications**: Seeing how features translate to practical use cases
 
 The **Brackets_Extended** project demonstrates sophisticated Rust development practices, comprehensive testing strategies, and practical API design patterns that are directly applicable to real-world software development! 🌟
+
+---
+
+## 📚 Related Zettelkasten Concepts
+
+### Core Concepts
+- [[Configurable Alphabet]] - Custom bracket pair definitions (REQ-7)
+- [[Error Collection Mode]] - StopAtFirst vs CollectAll (REQ-8)
+- [[Unclosed Policy]] - LatestOpen vs EarliestOpen (REQ-9)
+- [[Iterator API Design]] - Flexible input handling
+
+### Data Structures
+- [[Stack Data Structure]] - LIFO bracket tracking
+- [[HashMap]] - Alphabet opener-to-closer mapping
+- [[Vec]] - Error collection storage
+- [[Options Pattern]] - Configuration with defaults
+
+### Advanced Patterns
+- [[Builder Pattern]] - Options configuration
+- [[Strategy Pattern]] - ErrorMode and UnclosedPolicy
+- [[Iterator Patterns]] - Generic iteration support
+- [[Extensible Design]] - Adding features without breaking changes
+
+### Error Handling
+- [[Multiple Error Collection]] - CollectAll error mode
+- [[Error Context]] - Detailed error messages
+- [[BracketError Type]] - Structured error reporting
+- [[Result Composition]] - Vec<BracketError> results
+
+### Testing Strategies
+- [[Requirements-Based Testing]] - REQ-1 through REQ-9 tests
+- [[Integration Testing]] - CSV dataset validation
+- [[Unit Testing]] - Fine-grained component tests
+- [[Doctests]] - Documentation testing
+
+### API Design
+- [[Progressive Enhancement]] - Basic to advanced APIs
+- [[Smart Defaults]] - Options::default() convenience
+- [[Backward Compatibility]] - Preserving basic API
+- [[Flexible Interfaces]] - Multiple input types
+
+### Performance
+- [[Zero-Cost Abstractions]] - Compiler optimizations
+- [[Big-O Notation]] - O(n) time complexity
+- [[Memory Efficiency]] - Stack-based minimal allocations
+- [[UTF-8 Support]] - Proper Unicode handling
+
+### Mission Integration
+- [[Brackets Basic]] - Foundation implementation
+- [[Mission1]] - Stack implementation
+- [[V-Cycle Methodology]] - Requirements-driven development
+- [[Missions MOC]] - Mission overview
+
+### AoC Applications
+- [[Bracket Validation]] - AoC-style problems
+- [[Custom Delimiters]] - HTML/XML tag validation
+- [[IDE Integration]] - Linting and error reporting
+- [[Educational Use Cases]] - Step-by-step error feedback
+
+### Learning Resources
+- [[Rust Book]] - Language fundamentals
+- [[Daily Study MOC]] - Structured learning
+- [[AoC Patterns]] - Problem-solving strategies
+- [[RUST_DOCUMENTATION_STANDARDS]] - Documentation guide
+
+*Links: [[zettel-index]] | [[Brackets Basic]] | [[Brackets Extended]] | [[Missions MOC]] | [[V-Cycle Methodology]]*
+
+*Tags: #brackets-extended #req7 #req8 #req9 #configuration #iterator-api #error-collection #aoc-patterns #walkthrough*

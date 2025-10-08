@@ -229,3 +229,40 @@ let mut_borrow = node.borrow_mut(); // This would panic if borrow1 is still aliv
 - 🚨 **Forgetting to use `try_` methods**: Always handle potential borrow failures
 - 🚨 **Reference cycles**: Be careful not to create cycles that prevent cleanup
 - 🚨 **Holding borrows too long**: Drop `Ref` and `RefMut` guards quickly
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Smart Pointers:**
+- [[rc-refcell-patterns]] - Rc<RefCell<T>> usage patterns
+- [[interior-mutability]] - Interior mutability and RefCell
+- [[Interior Mutability Deep Dive]] - Comprehensive interior mutability guide
+- [[reference-counting]] - Rc<T> and reference counting mechanics
+
+**Borrow Checking:**
+- [[runtime-borrow-checking]] - RefCell runtime checks
+- [[borrow-rules]] - Rust borrowing rules and enforcement
+- [[try-borrow]] - Graceful borrow conflict handling
+
+**Error Handling:**
+- [[error-handling]] - Custom error types and Result<T, E>
+- [[from-trait]] - Error conversion with From trait
+- [[panic-vs-result]] - When to panic vs return errors
+
+**Data Structures:**
+- [[linked-list]] - Linked list implementations
+- [[shared-ownership]] - Rc<T> for shared ownership
+- [[weak-references]] - Weak<T> for breaking cycles
+
+**Mission Integration:**
+- [[Mission4 Overview]] - Linked list mission
+- [[exercise1_box_basics]] - Previous exercise: Box basics
+- [[exercise3_doubly_linked]] - Next exercise: doubly linked list
+- [[Mission4_tut Overview]] - Complete tutorial guide
+
+**Learning Resources:**
+- [[rust-book-ch15]] - Smart Pointers
+- [[rust-book-ch9]] - Error Handling
+
+*Tags: #mission4 #tutorial #rc #refcell #interior-mutability #shared-ownership #exercise*

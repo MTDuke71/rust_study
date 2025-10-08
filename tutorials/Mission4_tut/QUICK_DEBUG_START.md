@@ -113,3 +113,42 @@ This gives you **real-time insight** into how Rust's safe abstractions compile t
 - **Step vs stepi**: `F10` = Rust level, `stepi` = assembly level
 
 You're now ready to see **exactly** how Rust's memory safety features translate to machine code! 🦀
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Debugging Tools:**
+- [[ASSEMBLY_DEBUGGING_GUIDE]] - Complete assembly debugging guide
+- [[lldb-commands]] - LLDB debugger reference
+- [[disassembly-view]] - Viewing assembly in debugger
+- [[breakpoint-strategies]] - Effective breakpoint usage
+
+**Compilation & Assembly:**
+- [[COMPILATION_BREAKDOWN]] - Rust → LLVM → Assembly pipeline
+- [[VISUAL_COMPILATION_PROCESS]] - Visual compilation guide
+- [[assembly-analysis]] - Reading assembly code
+- [[register-usage]] - CPU register patterns
+
+**Memory Investigation:**
+- [[memory-inspection]] - Inspecting memory in debugger
+- [[heap-allocation]] - Heap allocation debugging
+- [[pointer-tracking]] - Following pointer chains
+- [[memory-layout]] - Struct memory organization
+
+**Smart Pointers:**
+- [[Box Smart Pointer Patterns]] - Box<T> implementation
+- [[option-assembly]] - How Option<T> compiles
+- [[zero-cost-abstractions]] - Performance guarantees
+
+**Mission Integration:**
+- [[Mission4 Overview]] - Linked list mission
+- [[Mission4_tut Overview]] - Complete tutorial
+- [[step2_push_front]] - Example being debugged
+
+**Learning Resources:**
+- [[debugging-strategies]] - Systematic debugging
+- [[performance-analysis]] - Performance profiling
+- [[Daily Study MOC]] - Learning progression
+
+*Tags: #mission4 #debugging #assembly #lldb #quick-start #hands-on*

@@ -1,3 +1,5 @@
+← [[summary|AoC 2015 Index]]
+
 --- Day 6: Probably a Fire Hazard ---
 Because your neighbors keep defeating you in the holiday house decorating contest year after year, you've decided to deploy one million lights in a 1000x1000 grid.
 
@@ -42,3 +44,35 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[grid-systems]] - 2D array/grid representation and access patterns
+- [[parsing]] - Parsing instruction commands (turn on/off/toggle)
+- [[coordinate-ranges]] - Processing rectangular regions
+- [[regex]] - Pattern matching for instruction parsing
+
+**Data Structures:**
+- [[vec]] - 1D Vec for flat grid storage (1000x1000)
+- [[array]] - Fixed-size grid representation
+
+**Patterns:**
+- [[nested-loops]] - Iterating over rectangular regions
+- [[flat-indexing]] - row * width + col for 1D storage
+- [[state-mutations]] - Updating grid values in place
+
+**Mission Connections:**
+- [[mission6]] - Grid navigation and 2D systems
+- [[performance-benchmarking-grid-optimization]] - Memory layout for large grids
+
+**Performance:**
+- [[cache-locality]] - Row-major access patterns for cache efficiency
+- [[memory-layout]] - Flat Vec<T> vs Vec<Vec<T>> tradeoffs
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 24-28 cover grids and 2D navigation
+
+*Tags: #aoc #aoc2015 #day06 #grid #2d-arrays #parsing #performance*

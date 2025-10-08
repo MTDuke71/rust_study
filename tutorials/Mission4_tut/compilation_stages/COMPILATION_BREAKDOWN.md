@@ -178,3 +178,41 @@ Node<i32> allocations:
 5. **Debugging support**: Debug builds preserve source mapping
 
 This compilation process demonstrates how Rust's high-level safety features translate into efficient, safe machine code without sacrificing performance!
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Compilation Process:**
+- [[VISUAL_COMPILATION_PROCESS]] - Visual compilation guide (Rust → LLVM → Assembly)
+- [[compilation-stages]] - Detailed compilation pipeline
+- [[llvm-ir]] - LLVM intermediate representation
+- [[assembly-generation]] - Assembly code generation
+
+**Memory & Performance:**
+- [[zero-cost-abstractions]] - High-level without overhead
+- [[monomorphization]] - Generic type specialization
+- [[memory-layout]] - Struct memory organization
+- [[heap-allocation]] - Box<T> allocation patterns
+
+**Smart Pointers:**
+- [[Box Smart Pointer Patterns]] - Box<T> implementation details
+- [[option-compilation]] - How Option<T> compiles
+- [[pointer-representation]] - Pointer encoding in assembly
+
+**Debugging:**
+- [[ASSEMBLY_DEBUGGING_GUIDE]] - Assembly-level debugging guide
+- [[QUICK_DEBUG_START]] - Quick start debugging tutorial
+- [[lldb-commands]] - LLDB debugger commands
+
+**Mission Integration:**
+- [[Mission4 Overview]] - Linked list mission context
+- [[Mission4_tut Overview]] - Complete tutorial series
+- [[step2_push_front]] - Source file being analyzed
+
+**Learning Resources:**
+- [[rust-book-ch15]] - Smart Pointers
+- [[llvm-optimization]] - LLVM optimization passes
+- [[Daily Study MOC]] - Performance topics
+
+*Tags: #mission4 #compilation #llvm #assembly #debugging #performance #zero-cost-abstractions*

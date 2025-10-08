@@ -356,3 +356,41 @@ Your implementation should:
 2. **Add `remove_at(index)`** for removal at any position  
 3. **Create a `find(predicate)` method** that returns node references
 4. **Implement `reverse()`** that reverses the list in-place
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Advanced Smart Pointers:**
+- [[weak-references]] - Weak<T> for breaking reference cycles
+- [[rc-weak-patterns]] - Rc/Weak combination patterns
+- [[reference-cycles]] - Detecting and preventing memory leaks
+- [[PhantomData Type Safety Patterns]] - Advanced type safety
+
+**Interior Mutability:**
+- [[Interior Mutability Deep Dive]] - Comprehensive guide
+- [[refcell-patterns]] - RefCell usage patterns
+- [[borrow-conflicts]] - Handling runtime borrow errors
+
+**Data Structure Design:**
+- [[doubly-linked-list]] - Bidirectional linked lists
+- [[graph-structures]] - Graph-like data structures
+- [[memory-leak-prevention]] - Preventing cycles and leaks
+
+**Mission Integration:**
+- [[Mission4 Overview]] - Linked list mission
+- [[exercise1_box_basics]] - Basic ownership patterns
+- [[exercise2_rc_patterns]] - Shared ownership foundation
+- [[Mission4_tut Overview]] - Complete tutorial series
+
+**Debugging & Testing:**
+- [[strong-count]] - Rc::strong_count() debugging
+- [[weak-count]] - Rc::weak_count() monitoring
+- [[upgrade-pattern]] - Weak::upgrade() usage
+
+**Learning Resources:**
+- [[rust-book-ch15]] - Smart Pointers (Weak<T>)
+- [[rust-book-ch16]] - Fearless Concurrency patterns
+- [[Daily Study MOC]] - Advanced ownership patterns
+
+*Tags: #mission4 #tutorial #doubly-linked-list #weak #rc #advanced #memory-management #exercise*

@@ -1,3 +1,5 @@
+← [[summary|AoC 2015 Index]]
+
 --- Day 9: All in a Single Night ---
 Every year, Santa manages to deliver all of his presents in a single night.
 
@@ -40,3 +42,33 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[permutations]] - Generating all possible routes (n! permutations)
+- [[graph-algorithms]] - Traveling Salesman Problem (TSP)
+- [[shortest-path]] - Finding minimum distance path
+- [[backtracking]] - Exploring all route possibilities
+
+**Data Structures:**
+- [[hashmap]] - Distance lookup table between cities
+- [[hashset]] - Tracking visited cities
+- [[vec]] - Storing route permutations
+
+**Patterns:**
+- [[recursion]] - Recursive permutation generation
+- [[min-max]] - Finding shortest/longest route
+- [[combinatorics]] - Factorial growth of search space
+
+**Algorithms:**
+- [[brute-force]] - Exhaustive search for small n (8-10 cities)
+- [[dynamic-programming]] - Held-Karp algorithm for larger instances
+- [[greedy-algorithms]] - Nearest neighbor heuristic
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 6-10 cover HashMap for distance lookup
+
+*Tags: #aoc #aoc2015 #day09 #graph #tsp #permutations #optimization*

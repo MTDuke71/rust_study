@@ -1,3 +1,5 @@
+← [[summary|AoC 2015 Index]]
+
 --- Day 1: Not Quite Lisp ---
 Santa was hoping for a white Christmas, but his weather machine's "snow" function is powered by stars, and he's fresh out! To save Christmas, he needs you to collect fifty stars by December 25th.
 
@@ -42,3 +44,26 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Zettelkasten Concepts
+
+**Core Concepts:**
+- [[iterators]] - Character-by-character iteration patterns
+- [[string-manipulation]] - Processing string inputs
+- [[counting-algorithms]] - Accumulator pattern for tracking state
+- [[enumerate]] - Position tracking in iteration
+
+**Data Structures:**
+- [[vec]] - String as byte/char collection
+
+**Patterns:**
+- [[fold-reduce]] - Reducing a sequence to a single value
+- [[state-tracking]] - Maintaining running total/position
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Days 1-3 cover iterators and collections
+- [[rust-book-ch4]] - Understanding string slices
+
+*Tags: #aoc #aoc2015 #day01 #iterators #string-manipulation #counting*
