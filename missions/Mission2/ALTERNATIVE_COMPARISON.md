@@ -235,3 +235,37 @@ Both implementations fulfill the Mission 2 requirements but serve different purp
 Choose based on your specific needs: learning vs. production, simplicity vs. robustness, speed of development vs. long-term maintainability.
 
 Both are valuable for understanding different aspects of Rust systems programming and queue data structure implementation strategies.
+
+---
+
+## 🔗 Navigation
+
+### 📚 Zettelkasten
+- **[[../../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
+- **[[../../zettelkasten/Missions MOC|Missions MOC]]** - V-Cycle projects navigation
+- **[[../../zettelkasten/Mission2 Overview|Mission2 Overview]]** - Queue conceptual overview
+
+### 🎯 Mission 2 Resources
+- **[Mission2 README](README.md)** - Main mission documentation
+- **[IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md)** - V-Cycle development summary
+- **[src/queue.rs](src/queue.rs)** - Main production-ready implementation
+- **[src/queue_alt.rs](src/queue_alt.rs)** - Alternative specification-focused implementation
+
+### 🧠 Related Concepts
+- **[[../../zettelkasten/Ring Buffer Overwriting Semantics|Ring Buffer Semantics]]** - Circular buffer capacity strategies
+- **[[../../zettelkasten/While Let Pattern Deep Dive|While Let Pattern]]** - Consuming collections idiomatically
+- **[[../../zettelkasten/Unsafe Rust - Raw Pointers and Safety Contracts|Unsafe Rust]]** - Raw pointer patterns
+- **[[../../zettelkasten/Collections MOC|Collections MOC]]** - Data structures overview
+
+### 📖 Learning Path
+- **[[../../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded]]** - Ownership deep dive
+- **[[../../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded]]** - Borrowing and references
+- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+
+### 🎄 AoC Applications
+- **[[../../advanced_examples/competitive_ring_bfs/README|competitive_ring_bfs]]** - BFS maze solver using RingBufferQueue
+- **[[../../advanced_examples/competitive_linked_tree/README|competitive_linked_tree]]** - Tree algorithms using LinkedQueue
+
+---
+
+*Tags: #mission2 #queues #fifo #ring-buffer #linked-list #implementation-comparison #safe-vs-unsafe #performance-analysis*
