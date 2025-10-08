@@ -229,6 +229,6 @@ The rust_study workspace is the physical manifestation of this conversation's vi
 
 ---
 
-*Tags: #project-origin #v-cycle #learning-philosophy #mental-models #roadmap*
+*Tags: #project-origin #v-cycle #learning-philosophy #mental-models #roadmap #mission1 #foundations*
 
-*Links: [[zettel-index]] | [[V-Cycle in Rust Development]] | [[Ownership Mental Model - The Library Analogy]]*
+*Links: [[zettel-index]] | [[Missions MOC]] | [[Rust Concepts MOC]] | [[V-Cycle in Rust Development]] | [[Ownership Mental Model - The Library Analogy]] | [[Rust Learning Roadmap - The Master Plan]] | [[../missions/Mission1/FOUNDATIONAL_CONCEPTS|Mission1 Foundational Concepts]]*

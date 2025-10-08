@@ -31,7 +31,7 @@ Understand how formal software engineering integrates with Rust's compiler-enfor
 
 See where Mission1 fits in the complete learning journey from basics to capstone.
 
-### **[Project Origin Story](../../PROJECT_ORIGIN.md)** 🎯
+### **[Project Origin Story](../../zettelkasten/PROJECT_ORIGIN.md)** 🎯
 *How this workspace began*
 
 Read the founding conversation that defined the interactive agent mode and learning philosophy.

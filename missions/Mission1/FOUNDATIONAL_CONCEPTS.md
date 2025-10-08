@@ -2,6 +2,8 @@
 
 *Key insights and mental models from the conversation that launched this learning journey.*
 
+> **🌟 For the complete founding story**, see [[../../zettelkasten/PROJECT_ORIGIN|PROJECT_ORIGIN]] - The genesis conversation that created this entire learning system.
+
 ---
 
 ## 🎯 **Mission1 in Context**

@@ -4,6 +4,12 @@
 
 ---
 
+## 🌟 Foundational Documents
+
+- [[PROJECT_ORIGIN]] - **The Genesis** - How this learning system was born (founding conversation, philosophy, "The Pact")
+
+---
+
 ## 🗺️ Maps of Content (MOCs)
 
 - [[Rust Concepts MOC]] - Core language features and patterns

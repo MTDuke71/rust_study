@@ -2,6 +2,12 @@
 
 **Organized knowledge network for Rust Study workspace**
 
+## 🌟 Start Here
+
+- **[[PROJECT_ORIGIN]]** - The genesis conversation - How this entire learning system was created, the founding philosophy, and "The Pact" that defines our approach
+
+---
+
 ## 📁 Directory Purpose
 
 This directory contains the **Zettelkasten overlay** for the Rust Study workspace, providing interconnected knowledge maps and learning navigation without disrupting the existing project structure.

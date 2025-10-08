@@ -2,7 +2,15 @@
 
 **Comprehensive map of Rust language concepts and patterns across the workspace**
 
-## 🎯 Core Language Features
+## � Learning Foundation
+
+- [[PROJECT_ORIGIN]] - The founding philosophy and approach that shapes how concepts are learned
+- [[V-Cycle in Rust Development]] - Requirements-driven methodology applied to every concept
+- [[Rust Learning Roadmap - The Master Plan]] - The complete learning journey structure
+
+---
+
+## �🎯 Core Language Features
 
 ### **Ownership & Memory Management**
 - [[Day 02 - Ownership Basics]] - Single ownership, move semantics
