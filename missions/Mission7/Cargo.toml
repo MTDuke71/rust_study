@@ -19,9 +19,9 @@ criterion = { version = "0.5", features = ["html_reports"] }
 name = "demo"
 path = "examples/demo.rs"
 
-[[example]]
-name = "graph_demo"
-path = "examples/graph_demo.rs"
+# [[example]]
+# name = "graph_demo"
+# path = "examples/graph_demo.rs"
 
 # [[bench]]
 # name = "graph_benchmarks"

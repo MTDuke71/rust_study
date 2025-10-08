@@ -82,7 +82,7 @@ pub use algorithms::{DfsResult, BfsResult, TraversalResult};
 
 /// Graph representation module containing the core Graph struct
 pub mod graph {
-    use std::collections::{VecDeque, HashSet};
+    use std::collections::HashSet;
     
     /// Type alias for node identifiers
     pub type NodeId = usize;
@@ -492,7 +492,7 @@ pub mod algorithms {
 
 /// Utility functions and helpers
 pub mod utils {
-    use super::graph::{Graph, NodeId};
+    use super::graph::Graph;
     
     /// Create a complete graph with n nodes
     pub fn complete_graph<T>(n: usize, default_data: T) -> Graph<T>
@@ -618,7 +618,7 @@ mod tests {
     
     #[test]
     fn test_graph_creation() {
-        let mut graph = Graph::new_directed();
+        let graph: Graph<&str> = Graph::new_directed();
         assert_eq!(graph.node_count(), 0);
         assert_eq!(graph.edge_count(), 0);
         assert!(graph.is_empty());
@@ -626,7 +626,7 @@ mod tests {
     
     #[test]
     fn test_add_nodes() {
-        let mut graph = Graph::new_directed();
+        let mut graph: Graph<&str> = Graph::new_directed();
         let node_a = graph.add_node("A");
         let node_b = graph.add_node("B");
         
@@ -639,7 +639,7 @@ mod tests {
     
     #[test]
     fn test_add_edges() {
-        let mut graph = Graph::new_directed();
+        let mut graph: Graph<&str> = Graph::new_directed();
         let node_a = graph.add_node("A");
         let node_b = graph.add_node("B");
         
@@ -651,7 +651,7 @@ mod tests {
     
     #[test]
     fn test_undirected_edges() {
-        let mut graph = Graph::new_undirected();
+        let mut graph: Graph<&str> = Graph::new_undirected();
         let node_a = graph.add_node("A");
         let node_b = graph.add_node("B");
         
@@ -663,7 +663,7 @@ mod tests {
     
     #[test]
     fn test_dfs_traversal() {
-        let mut graph = Graph::new_directed();
+        let mut graph: Graph<&str> = Graph::new_directed();
         let node_a = graph.add_node("A");
         let node_b = graph.add_node("B");
         let node_c = graph.add_node("C");
@@ -678,7 +678,7 @@ mod tests {
     
     #[test]
     fn test_bfs_traversal() {
-        let mut graph = Graph::new_directed();
+        let mut graph: Graph<&str> = Graph::new_directed();
         let node_a = graph.add_node("A");
         let node_b = graph.add_node("B");
         let node_c = graph.add_node("C");
@@ -695,7 +695,7 @@ mod tests {
     
     #[test]
     fn test_shortest_path() {
-        let mut graph = Graph::new_undirected();
+        let mut graph: Graph<&str> = Graph::new_undirected();
         let node_a = graph.add_node("A");
         let node_b = graph.add_node("B");
         let node_c = graph.add_node("C");
@@ -711,7 +711,7 @@ mod tests {
     
     #[test]
     fn test_cycle_detection() {
-        let mut graph = Graph::new_directed();
+        let mut graph: Graph<&str> = Graph::new_directed();
         let node_a = graph.add_node("A");
         let node_b = graph.add_node("B");
         let node_c = graph.add_node("C");
@@ -725,7 +725,7 @@ mod tests {
     
     #[test]
     fn test_connected_components() {
-        let mut graph = Graph::new_undirected();
+        let mut graph: Graph<&str> = Graph::new_undirected();
         let node_a = graph.add_node("A");
         let node_b = graph.add_node("B");
         let node_c = graph.add_node("C");
