@@ -1102,3 +1102,24 @@ main() prints the values
 ```
 
 **Bottom line**: `Ok(...)` is the **required wrapper** to convert your computed value into the `Result` type that the framework expects for composable error handling! 🎯
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[AoC 2015 MOC]]** - Complete AoC 2015 solutions
+- **[[AoC Patterns MOC]]** - Pattern recognition strategies
+
+### 🎯 AoC 2015 Resources
+- [[../../src/solver/day01|Day 1 Solution Code]] - Rust implementation
+- [[../../README|AoC 2015 Project]] - Scaffold and infrastructure
+- [[../../Problem_Statements/day01|Problem Statement]] - Original challenge
+
+### 📖 Related Concepts
+- Parsing patterns - Character-by-character processing
+- State accumulation - Running totals and counters
+- Early termination - Breaking on condition match
+
+### 🏷️ Tags
+*Tags: #aoc2015 #day1 #parsing #state-tracking #implementation-walkthrough #rust-scaffold #discussion*

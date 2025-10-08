@@ -123,3 +123,31 @@ The HashMap approach is a **valid and valuable alternative** to the Grid impleme
 **Bottom Line**: Grid for performance, HashMap for flexibility and memory efficiency! 
 
 Both approaches are production-ready and demonstrate different algorithmic thinking patterns valuable for competitive programming and real-world applications.
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[AoC 2015 MOC]]** - Complete AoC 2015 solutions
+- **[[Collections MOC]]** - HashMap and data structures
+
+### �� HashMap Resources
+- **[[HashMap Internals]]** - Hash table implementation details
+- **[[Mission5 Overview]]** - HashMap V-Cycle implementation
+- [[Day 10 - HashMap Basics]] - Foundational HashMap learning
+
+### 📊 Performance Analysis
+- Grid vs HashMap trade-offs
+- Cache efficiency considerations
+- Memory usage patterns
+- When to use each approach
+
+### 🎄 AoC 2015 Day 6
+- [[../../src/solver/day06|Day 6 Solution Code]] - Both implementations
+- [[../../Problem_Statements/day06|Problem Statement]] - Light grid challenge
+- Grid implementation - Dense spatial data
+- HashMap implementation - Sparse coordinate storage
+
+### 🏷️ Tags
+*Tags: #hashmap #performance #benchmarking #aoc2015 #day6 #grid-vs-hashmap #cache-efficiency #sparse-data #analysis*

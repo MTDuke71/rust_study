@@ -204,3 +204,31 @@ After working with this project, you'll understand:
 ---
 
 *This project follows the **V-Cycle development methodology** with complete traceability from requirements through implementation to validation.*
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[Missions MOC]]** - V-Cycle project implementations
+- **[[Collections MOC]]** - Data structures and algorithms
+
+### 🎯 LinkedQueue Resources
+- **[[Mission2 Overview]]** - Queue V-Cycle implementation
+- **[[Ring Buffer Overwriting Semantics]]** - Capacity management strategies
+- [[../../missions/Mission2/IMPLEMENTATION_SUMMARY|Implementation Summary]] - Mission2 complete details
+- [[../../missions/Mission2/ALTERNATIVE_COMPARISON|Alternative Comparison]] - Queue approaches
+
+### 🌲 Tree Algorithms & BFS
+- Tree diameter algorithm - Two-pass BFS approach
+- Unbounded queue growth - LinkedQueue benefits
+- Multi-source BFS - Multiple starting points
+- Competitive programming patterns
+
+### 📖 Related Examples
+- [[Q_A]] - Implementation discussion and decisions
+- [[../competitive_ring_bfs/README|Ring BFS Example]] - RingBufferQueue use case
+- [[../competitive_ring_bfs/Q_A|Ring BFS Discussion]] - DFS vs BFS data structures
+
+### 🏷️ Tags
+*Tags: #linkedqueue #bfs #tree-diameter #competitive-programming #unbounded-growth #v-cycle #requirements*

@@ -188,3 +188,31 @@ After working with this project, you'll understand:
 ---
 
 *This project follows the **V-Cycle development methodology** with complete traceability from requirements through implementation to validation.*
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[Missions MOC]]** - V-Cycle project implementations
+- **[[Collections MOC]]** - Data structures and algorithms
+
+### 🎯 RingBufferQueue Resources
+- **[[Mission2 Overview]]** - Queue V-Cycle implementation
+- **[[Ring Buffer Overwriting Semantics]]** - Circular buffer capacity management
+- [[../../missions/Mission2/IMPLEMENTATION_SUMMARY|Implementation Summary]] - Mission2 details
+- [[../../missions/Mission2/ALTERNATIVE_COMPARISON|Alternative Comparison]] - Queue approaches
+
+### 🗺️ Grid Algorithms & BFS
+- BFS maze solving - Shortest path algorithm
+- Grid navigation - Bounded spatial problems
+- Cache efficiency - Performance optimization
+- Fixed capacity benefits - RingBufferQueue advantages
+
+### 📖 Related Examples
+- [[Q_A]] - Implementation discussion and design decisions
+- [[../competitive_linked_tree/README|Linked Tree Example]] - LinkedQueue use case
+- [[../competitive_linked_tree/Q_A|Linked Tree Discussion]] - Unbounded growth patterns
+
+### 🏷️ Tags
+*Tags: #ringbuffer #bfs #maze #grid #competitive-programming #cache-efficiency #v-cycle #requirements*

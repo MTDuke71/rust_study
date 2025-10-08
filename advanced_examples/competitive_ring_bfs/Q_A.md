@@ -1928,3 +1928,32 @@ The progression from:
 ...follows the same pattern of managing exponential search spaces with smart evaluation functions.
 
 Your observation shows you're thinking like a computer scientist - recognizing that the fundamental challenge isn't just implementing algorithms, but making them **tractable** for real-world problem sizes!
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[Missions MOC]]** - V-Cycle project implementations
+- **[[Collections MOC]]** - Data structures and algorithms
+
+### 🎯 RingBufferQueue Resources
+- **[[Mission2 Overview]]** - Queue V-Cycle implementation
+- **[[Ring Buffer Overwriting Semantics]]** - Capacity management strategies
+- [[IMPLEMENTATION_SUMMARY]] - Complete Mission2 implementation
+- [[ALTERNATIVE_COMPARISON]] - Queue implementation trade-offs
+
+### 🗺️ Grid & BFS Algorithms
+- Grid BFS - Shortest path in bounded space
+- Cache efficiency - Contiguous memory benefits
+- Bounded problems - Known maximum queue size
+- 4-directional movement - Grid navigation patterns
+
+### 🏆 Competitive Programming
+- [[README]] - Maze solver problem and implementation
+- [[../../competitive_linked_tree/README|Linked Tree Example]] - Complementary LinkedQueue example
+- Fixed capacity benefits - When to use RingBufferQueue
+- Performance optimization - Cache-friendly patterns
+
+### 🏷️ Tags
+*Tags: #ringbuffer #bfs #grid #competitive-programming #cache-efficiency #bounded-growth #pathfinding #discussion*

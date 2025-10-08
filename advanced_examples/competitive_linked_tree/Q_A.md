@@ -1714,3 +1714,32 @@ pub fn find_diameter(&self) -> Option<(usize, Vec<NodeId>)> {
 **Two independent BFS traversals** = **Two fresh LinkedQueues** that each adapt to the actual tree structure without pre-planning capacity.
 
 The two-pass approach is both **mathematically necessary** and **perfectly suited** to LinkedQueue's dynamic growth! 🚀
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[Missions MOC]]** - V-Cycle project implementations
+- **[[Collections MOC]]** - Data structures and algorithms
+
+### 🎯 LinkedQueue Resources
+- **[[Mission2 Overview]]** - Queue V-Cycle implementation
+- **[[Ring Buffer Overwriting Semantics]]** - Capacity management strategies
+- [[IMPLEMENTATION_SUMMARY]] - Complete Mission2 implementation details
+- [[ALTERNATIVE_COMPARISON]] - Queue implementation comparisons
+
+### 🌲 Tree Algorithms
+- BFS traversal - Breadth-first graph exploration
+- Tree diameter - Longest path in tree
+- Multi-source BFS - Multiple starting points
+- Dynamic growth benefits - LinkedQueue advantages
+
+### 🏆 Competitive Programming
+- [[README]] - Tree diameter problem and implementation
+- [[../../competitive_ring_bfs/README|Ring BFS Example]] - Complementary BFS example
+- Unbounded problem sizes - When to use LinkedQueue
+- Memory efficiency - Dynamic allocation patterns
+
+### 🏷️ Tags
+*Tags: #linkedqueue #bfs #tree-algorithms #competitive-programming #dynamic-growth #graph-traversal #discussion*

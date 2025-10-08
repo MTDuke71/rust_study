@@ -114,3 +114,24 @@ These examples are designed to work with the broader `rust_study` workspace:
 ---
 
 These examples provide a complete foundation for mastering AoC pattern recognition and should significantly improve your problem-solving speed and accuracy for competitive programming challenges.
+---
+
+## 🔗 Related Resources & Navigation
+
+### 📚 Zettelkasten Navigation
+- **[[zettel-index]]** - Main knowledge base entry point
+- **[[AoC Patterns MOC]]** - Competitive programming techniques
+- **[[Collections MOC]]** - Data structures and algorithms
+
+### 🎯 Related Pattern Libraries
+- [[../../src/lib|AoC Pattern Recognition Library]] - Main library documentation
+- Grid Patterns - 2D navigation and pathfinding
+- Parsing Patterns - Input processing and data extraction  
+- State Patterns - Optimization and memoization
+
+### 📖 AoC Integration
+- [[../../../zettelkasten/AoC 2015 MOC|AoC 2015 Solutions]] - Complete 2015 challenge solutions
+- Real Problem Solutions - Actual AoC implementations using these patterns
+
+### 🏷️ Tags
+*Tags: #aoc #patterns #competitive-programming #grid #parsing #state-management #bfs #dijkstra #memoization #examples*
