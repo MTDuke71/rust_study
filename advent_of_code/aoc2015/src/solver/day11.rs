@@ -36,7 +36,19 @@ pub fn solve_part1(input: &str) -> Result<String> {
     // TODO: Implement the password search
     // Loop: increment → validate → return when valid
     
-    todo!("Implement password generation logic");
+    loop {
+        password = increment_password(&password);
+        
+        // OPTIMIZATION: Skip entire ranges with forbidden chars
+        if !has_no_forbidden_chars(&password) {
+            password = skip_forbidden_char(&password);
+            continue;
+        }
+        
+        if is_valid_password(&password) {
+            return Ok(password);
+        }
+    }
 }
 
 // TODO: Implement solve_part2
@@ -47,7 +59,18 @@ pub fn solve_part2(input: &str) -> Result<String> {
     
     // TODO: Get the Part 1 result, then find the next valid password
     
-    todo!("Implement Part 2 logic");
+    let part1_password = solve_part1(input)?;
+    
+    // Increment once to move past Part 1 answer
+    let mut password = increment_password(&part1_password);
+    
+    // Find next valid password
+    loop {
+        if is_valid_password(&password) {
+            return Ok(password);
+        }
+        password = increment_password(&password);
+    }
 }
 
 // ============================================================================
@@ -79,6 +102,21 @@ pub fn solve_part2(input: &str) -> Result<String> {
 ///    - If char == 'z': set to 'a' and continue (carry)
 /// 4. Join chars back into string
 pub fn increment_password(password: &str) -> String {
+    let mut chars: Vec<char> = password.chars().collect();
+    // Start from rightmost character
+    for i in (0..chars.len()).rev() {
+        if chars[i] != 'z' {
+            // Simple increment: 'a' → 'b', 'b' → 'c', etc.
+            chars[i] = ((chars[i] as u8) + 1) as char;
+            break;  // Done!
+        } else {
+            // Wrap 'z' → 'a' and carry to next position
+            chars[i] = 'a';
+            // Continue loop to carry left
+        }
+    }
+    chars.into_iter().collect()
+}
     // TODO: Implement base-26 incrementing
     // 
     // Hints:
@@ -87,8 +125,6 @@ pub fn increment_password(password: &str) -> String {
     // - Handle wrapping 'z' → 'a' with carry
     // - Use iter().collect::<String>() to convert back
     
-    todo!("Implement password incrementing");
-}
 
 // ============================================================================
 // Password Validation Rules
@@ -120,7 +156,22 @@ pub fn is_valid_password(password: &str) -> bool {
     // - has_two_pairs() is O(n) 
     // - has_increasing_straight() is O(n)
     
-    todo!("Implement password validation");
+    // Rule 2: Most likely to fail, cheapest to check
+    if !has_no_forbidden_chars(password) {
+        return false;
+    }
+    
+    // Rule 3: Medium likelihood
+    if !has_two_pairs(password) {
+        return false;
+    }
+    
+    // Rule 1: Least likely to fail
+    if !has_increasing_straight(password) {
+        return false;
+    }
+    
+    true
 }
 
 /// Rule 1: Password must include one increasing straight of at least 3 letters
@@ -149,7 +200,13 @@ pub fn has_increasing_straight(password: &str) -> bool {
     // - Check bytes[i+1] == bytes[i] + 1 && bytes[i+2] == bytes[i] + 2
     // - Use windows(3) or manual indexing
     
-    todo!("Implement straight detection");
+    let bytes = password.as_bytes();
+    for i in 0..bytes.len().saturating_sub(2) {
+        if bytes[i + 1] == bytes[i] + 1 && bytes[i + 2] == bytes[i] + 2 {
+            return true;
+        }
+    }
+    false
 }
 
 /// Rule 2: Password must NOT contain 'i', 'o', or 'l' (confusing characters)
@@ -173,8 +230,7 @@ pub fn has_no_forbidden_chars(password: &str) -> bool {
     // - Use .chars().any() or .contains()
     // - Check for 'i', 'o', and 'l'
     // - Return true if NONE are found
-    
-    todo!("Implement forbidden character check");
+    !password.chars().any(|c| c == 'i' || c == 'o' || c == 'l')
 }
 
 /// Rule 3: Password must contain at least two different, non-overlapping pairs
@@ -197,6 +253,21 @@ pub fn has_no_forbidden_chars(password: &str) -> bool {
 /// - "aaa" contains one pair (aa), not two
 /// - "aaaa" contains two pairs (aa at position 0, aa at position 2)
 pub fn has_two_pairs(password: &str) -> bool {
+
+    let chars: Vec<char> = password.chars().collect();
+    let mut pair_count = 0;
+    let mut i = 0;
+    
+    while i < chars.len() - 1 {
+        if chars[i] == chars[i + 1] {
+            pair_count += 1;
+            i += 2;  // Skip next to avoid overlap
+        } else {
+            i += 1;
+        }
+    }    
+    pair_count >= 2
+}
     // TODO: Implement pair counting
     // 
     // Hints:
@@ -205,8 +276,7 @@ pub fn has_two_pairs(password: &str) -> bool {
     // - Use i += 2 to skip overlapping
     // - Return count >= 2
     
-    todo!("Implement pair counting");
-}
+
 
 // ============================================================================
 // Advanced Optimization (Optional)
@@ -234,7 +304,28 @@ pub fn skip_forbidden_char(password: &str) -> String {
     // 
     // This can speed up your solution significantly!
     
-    password.to_string()  // Placeholder - returns same password
+    let mut chars: Vec<char> = password.chars().collect();
+    
+    for i in 0..chars.len() {
+        if chars[i] == 'i' || chars[i] == 'o' || chars[i] == 'l' {
+            // Replace with next valid letter
+            chars[i] = match chars[i] {
+                'i' => 'j',
+                'o' => 'p',
+                'l' => 'm',
+                _ => chars[i],
+            };
+            
+            // Reset everything to the right to 'a'
+            for j in (i + 1)..chars.len() {
+                chars[j] = 'a';
+            }
+            
+            break;
+        }
+    }
+    
+    chars.into_iter().collect()
 }
 
 // ============================================================================

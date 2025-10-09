@@ -262,22 +262,187 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
+### Day 11: Corporate Policy
+**Title**: Corporate Policy  
+**Part 1 Type**: String Processing + Pattern Matching + Simulation  
+**Part 1 Description**: Find next valid password using base-26 incrementing with validation rules  
+**Part 2 Type**: String Processing + Pattern Matching + Simulation  
+**Part 2 Description**: Find the next valid password after Part 1 result  
+**Key Concepts**: Base-26 counting with carry, sliding window for consecutive sequences, non-overlapping pattern detection, optimization through forbidden character skipping, string validation rules
+
+**Password Requirements**:
+1. **8 lowercase letters** (a-z only)
+2. **Incrementing wraps**: `xx → xy → xz → ya → yb` (like odometer)
+3. **Must include increasing straight**: At least 3 consecutive letters (`abc`, `bcd`, `xyz`)
+4. **No forbidden characters**: Cannot contain `i`, `o`, or `l` (too confusing)
+5. **Two different pairs**: At least 2 non-overlapping pairs (`aa`, `bb`, not just one pair twice)
+
+**Algorithm Implementation**:
+- **Base-26 Incrementing**: Like counting in base-26 (a=0, z=25)
+  - Single increment: `xx → xy → xz`
+  - Wrap with carry: `xz → ya` (z wraps to a, carry left)
+  - Multiple carries: `zz → aa` (both wrap)
+- **Sliding Window**: Check 3-character windows for consecutive letters
+- **Pair Detection**: Find non-overlapping pairs by tracking last pair position
+- **Optimization**: Skip entire ranges when hitting forbidden characters
+  - If password contains `i`: jump directly to next `j` prefix
+  - Avoids checking thousands of invalid passwords
+
+**Validation Rules**:
+1. **`has_increasing_straight()`**: Slide window through string, check if chars are consecutive (`b == a+1 && c == b+1`)
+2. **`has_no_forbidden_chars()`**: Simple check for `i`, `o`, `l` presence
+3. **`has_two_pairs()`**: Find first pair, then search for different pair after it
+4. **`skip_forbidden_char()`**: When forbidden char found, increment that position and reset all following to `a`
+
+**Example Progressions**:
+- `hijklmmn` ❌: Has straight (`hij`) but contains forbidden `i` and `l`
+- `abbceffg` ❌: Has pairs (`bb`, `ff`) but no increasing straight
+- `abbcegjk` ❌: Has only one pair (`bb`)
+- `abcdefgh` → `abcdffaa` ✅: First valid password
+- `ghijklmn` → `ghjaabcc` ✅: Skips forbidden `i`
+
+**Rust-Specific Implementation Details**:
+- **Base-26 Arithmetic**: `((char as u8) + 1) as char` for incrementing
+- **Reverse Iteration**: `(0..len).rev()` for right-to-left carry propagation
+- **Vec<char> Mutability**: Convert string to char vector for in-place modification
+- **Sliding Window Pattern**: Three consecutive index accesses `chars[i], chars[i+1], chars[i+2]`
+- **Early Return Optimization**: Exit validation early on first failure
+- **Range Skipping**: When forbidden char detected, jump entire range instead of increment-by-increment
+
+**Performance Optimization**:
+- **Without Skipping**: Would check every password sequentially (very slow)
+- **With Skipping**: Jump past entire invalid ranges
+  - Example: `abcdefhi` → skip directly to `abcdefjaa`
+  - Saves checking `abcdefhj`, `abcdefhk`, ..., `abcdefiz` (unnecessary checks)
+- **Early Validation**: Check forbidden chars first (cheapest check) before expensive pattern matching
+
+**Educational Value**:
+- **Base-N Counting**: Generalizes to any base (binary, octal, hex, base-26)
+- **Carry Propagation**: Classic algorithm problem (odometer, clock arithmetic)
+- **String Validation**: Multiple independent validation rules combined
+- **Optimization Techniques**: Skip invalid ranges instead of brute force
+- **Pattern Detection**: Sliding windows, non-overlapping constraints
+- **Clean Code**: Separate validation functions for each rule (Single Responsibility)
+
+---
+
+### Day 12: JSAbacusFramework.io
+**Title**: JSAbacusFramework.io  
+**Part 1 Type**: Parsing + Mathematical + Data Structures  
+**Part 1 Description**: Parse JSON document and sum all numeric values (arrays, objects, nested structures)  
+**Part 2 Type**: Parsing + Mathematical + Data Structures + Pattern Matching  
+**Part 2 Description**: Sum all numbers, but ignore any object (and all its children) that has any property with value "red"  
+**Key Concepts**: JSON parsing, recursive traversal, tree structures, numeric extraction, conditional filtering, deep object inspection
+
+**JSON Structure Types**:
+- **Arrays**: `[1, 2, 3]` - List of values
+- **Objects**: `{"a": 1, "b": 2}` - Key-value pairs
+- **Numbers**: Integers and negative numbers (`-1`, `42`, `100`)
+- **Strings**: Text values (ignored for Part 1, special meaning in Part 2)
+- **Nested Structures**: Arrays containing objects containing arrays, etc.
+
+**Examples (Part 1)**:
+- `[1,2,3]` → Sum: **6** (simple array)
+- `{"a":2,"b":4}` → Sum: **6** (object values)
+- `[[[3]]]` → Sum: **3** (deeply nested array)
+- `{"a":{"b":4},"c":-1}` → Sum: **3** (nested object: 4 + (-1))
+- `{"a":[-1,1]}` → Sum: **0** (array in object: -1 + 1)
+- `[-1,{"a":1}]` → Sum: **0** (object in array: -1 + 1)
+- `[]` and `{}` → Sum: **0** (empty structures)
+
+**Algorithm Approaches**:
+
+**Approach 1: Regex/Pattern Matching** (Simple but limited)
+- Extract all number patterns from raw JSON string
+- Use regex: `-?\d+` to find integers (negative and positive)
+- Sum all matched numbers
+- **Limitation**: Cannot handle Part 2 filtering (no structure awareness)
+
+**Approach 2: JSON Deserialization** (Structured, Part 2-ready)
+- Parse JSON into proper data structure using `serde_json`
+- Recursively traverse the JSON tree
+- Handle different value types: `Number`, `Array`, `Object`, `String`, `Bool`, `Null`
+- Sum numbers while respecting filtering rules
+
+**Recursive Traversal Pattern**:
+```rust
+fn sum_numbers(value: &Value) -> i64 {
+    match value {
+        Value::Number(n) => n.as_i64().unwrap_or(0),
+        Value::Array(arr) => arr.iter().map(sum_numbers).sum(),
+        Value::Object(obj) => obj.values().map(sum_numbers).sum(),
+        _ => 0,  // Strings, bools, null = 0
+    }
+}
+```
+
+**Part 2 Filtering Logic**:
+- Check if object contains property with value `"red"` (string "red")
+- If found: ignore entire object and all nested values
+- Arrays are never ignored (only objects can trigger filtering)
+- Recursive filtering: check object before processing its contents
+
+**Example (Part 2 - Red Filtering)**:
+- `[1,2,3]` → Sum: **6** (no objects, no filtering)
+- `[1,{"c":"red","b":2},3]` → Sum: **4** (1 + 3, object with "red" ignored)
+- `{"d":"red","e":[1,2,3,4],"f":5}` → Sum: **0** (entire object ignored due to "red")
+- `[1,"red",5]` → Sum: **6** (string "red" in array doesn't trigger filtering, only in objects)
+
+**Rust-Specific Implementation Details**:
+- **`serde_json` crate**: Industry-standard JSON parsing
+- **`Value` enum**: Represents JSON types (`Number`, `Array`, `Object`, `String`, `Bool`, `Null`)
+- **Pattern Matching**: `match` on `Value` variants for type handling
+- **Recursive Functions**: Natural fit for nested JSON structures
+- **Iterator Methods**: `.iter().map().sum()` for clean aggregation
+- **Error Handling**: `as_i64()` with `unwrap_or(0)` for safe numeric conversion
+- **Ownership**: JSON tree owned by parsed `Value`, references used in traversal
+
+**Alternative Regex Approach** (Part 1 only):
+```rust
+fn sum_with_regex(json: &str) -> i64 {
+    let re = Regex::new(r"-?\d+").unwrap();
+    re.find_iter(json)
+        .filter_map(|m| m.as_str().parse::<i64>().ok())
+        .sum()
+}
+```
+- **Pros**: Simple, fast for Part 1, no JSON parsing overhead
+- **Cons**: Cannot handle Part 2 filtering (no structure awareness)
+- **Use Case**: When you only need numbers, not structure
+
+**Performance Considerations**:
+- **Parsing Overhead**: JSON deserialization has initial cost
+- **Regex Speed**: Faster for simple extraction (Part 1 only)
+- **Memory**: Full JSON tree in memory vs streaming regex
+- **Trade-off**: Regex for Part 1 speed, JSON parsing for Part 2 flexibility
+
+**Educational Value**:
+- **JSON Parsing**: Real-world data format handling
+- **Recursive Algorithms**: Tree traversal patterns
+- **Pattern Matching**: Rust's enum matching for type safety
+- **External Crates**: Using `serde_json` for serialization/deserialization
+- **Algorithm Selection**: Regex vs structured parsing trade-offs
+- **Filtering Logic**: Conditional tree traversal
+- **Data Structures**: Understanding JSON as a tree structure
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
-| String Processing | 5 | 5 |
-| Mathematical | 2 | 3 |
-| Simulation | 5 | 5 |
+| String Processing | 6 | 6 |
+| Mathematical | 3 | 4 |
+| Simulation | 6 | 6 |
 | Search/Traversal | 1 | 1 |
 | Optimization | 1 | 2 |
-| Data Structures | 3 | 1 |
+| Data Structures | 4 | 2 |
 | Brute Force | 2 | 2 |
 | Cryptographic | 1 | 1 |
-| Pattern Matching | 1 | 0 |
+| Pattern Matching | 2 | 2 |
 | Advanced Pattern Matching | 0 | 1 |
 | Graph Algorithms | 2 | 3 |
-| Parsing | 1 | 0 |
+| Parsing | 2 | 1 |
 | Encoding | 0 | 1 |
 
 ## Implementation Notes
@@ -300,6 +465,8 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - Day 8: **Critical UTF-8 vs byte array distinction**, escape sequence parsing, character counting vs byte counting, `chars()` iteration, understanding when `byte as char` fails, Rust strings are UTF-8 (not byte arrays like C), custom character counting logic
 - Day 9: **Advanced algorithmic problem solving**, Heap's algorithm implementation, lifetime management with string slices, `anyhow::Result` error handling, Mission 5 Dictionary integration, permutation generation, DRY principle in function design, comprehensive test coverage (11 tests), competitive programming patterns
 - Day 10: **Run-length encoding**, while loop with manual index control, iterative vs recursive performance comparison, benchmarking with Criterion, understanding when memoization hurts performance (0% cache hit rate), string growth patterns, clean code principles (avoiding redundant checks), comprehensive performance analysis documentation
+- Day 11: **Base-26 counting with carry**, string validation with multiple rules, sliding window for pattern detection, non-overlapping pair constraints, optimization through range skipping, forbidden character handling, password incrementing algorithms
+- Day 12: **JSON parsing with serde_json**, recursive tree traversal, pattern matching on Value enum, conditional filtering (red objects), regex vs structured parsing trade-offs, external crate integration, data structure selection (string scanning vs tree building)
 
 ---
 
@@ -327,7 +494,7 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 

@@ -39,6 +39,7 @@ dependencies = [
  "mission5",
  "mission6",
  "regex",
+ "serde_json",
 ]
 
 [[package]]

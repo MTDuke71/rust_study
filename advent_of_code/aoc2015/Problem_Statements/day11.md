@@ -19,10 +19,12 @@ The next password after abcdefgh is abcdffaa.
 The next password after ghijklmn is ghjaabcc, because you eventually skip all the passwords that start with ghi..., since i is not allowed.
 Given Santa's current password (your puzzle input), what should his next password be?
 
-Your puzzle input is hxbxwxba.
+Your puzzle answer was hxbxxyzz.
 
 --- Part Two ---
 Santa's password expired again. What's the next one?
+
+Your puzzle answer was hxcaabcc.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
 
