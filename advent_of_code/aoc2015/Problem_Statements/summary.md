@@ -21,7 +21,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ## Day-by-Day Summary
 
-### Day 1: Not Quite Lisp
+### [[day01.md|Day 1: Not Quite Lisp]]
 **Title**: Not Quite Lisp  
 **Part 1 Type**: String Processing + Mathematical  
 **Part 1 Description**: Count opening/closing parentheses to determine final floor  
@@ -31,7 +31,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 2: I Was Told There Would Be No Math
+### [[day02.md|Day 2: I Was Told There Would Be No Math]]
 **Title**: I Was Told There Would Be No Math  
 **Part 1 Type**: Mathematical + String Processing  
 **Part 1 Description**: Calculate surface area of boxes plus slack (smallest side area)  
@@ -41,7 +41,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 3: Perfectly Spherical Houses in a Vacuum
+### [[day03.md|Day 3: Perfectly Spherical Houses in a Vacuum]]
 **Title**: Perfectly Spherical Houses in a Vacuum  
 **Part 1 Type**: Simulation + Data Structures  
 **Part 1 Description**: Track Santa's movement on 2D grid, count unique houses visited  
@@ -51,7 +51,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 4: The Ideal Stocking Stuffer
+### [[day04.md|Day 4: The Ideal Stocking Stuffer]]
 **Title**: The Ideal Stocking Stuffer  
 **Part 1 Type**: Brute Force + Cryptographic  
 **Part 1 Description**: Find lowest number that creates MD5 hash starting with 5 zeros  
@@ -61,7 +61,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 5: Doesn't He Have Intern-Elves For This?
+### [[day05.md|Day 5: Doesn't He Have Intern-Elves For This?]]
 **Title**: Doesn't He Have Intern-Elves For This?  
 **Part 1 Type**: String Processing + Pattern Matching  
 **Part 1 Description**: Validate "nice" strings with 3+ vowels, consecutive letters, no forbidden substrings (ab/cd/pq/xy)  
@@ -71,7 +71,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 6: Probably a Fire Hazard
+### [[day06.md|Day 6: Probably a Fire Hazard]]
 **Title**: Probably a Fire Hazard  
 **Part 1 Type**: Simulation + Data Structures  
 **Part 1 Description**: Control 1000x1000 grid of lights with turn on/off/toggle commands on rectangular regions  
@@ -81,7 +81,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 7: Some Assembly Required
+### [[day07.md|Day 7: Some Assembly Required]]
 **Title**: Some Assembly Required  
 **Part 1 Type**: Data Structures + Simulation + Graph Algorithms  
 **Part 1 Description**: Simulate a bitwise logic circuit with 339 wires, evaluate signal on wire 'a'  
@@ -106,7 +106,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 8: Matchsticks
+### [[day08.md|Day 8: Matchsticks]]
 **Title**: Matchsticks  
 **Part 1 Type**: String Processing + Parsing  
 **Part 1 Description**: Calculate difference between code representation length and in-memory string length after processing escape sequences  
@@ -151,7 +151,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 9: All in a Single Night
+### [[day09.md|Day 9: All in a Single Night]]
 **Title**: All in a Single Night  
 **Part 1 Type**: Brute Force + Optimization + Graph Algorithms  
 **Part 1 Description**: Find shortest route visiting all cities exactly once (Traveling Salesman Problem)  
@@ -190,7 +190,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 10: Elves Look, Elves Say
+### [[day10.md|Day 10: Elves Look, Elves Say]]
 **Title**: Elves Look, Elves Say  
 **Part 1 Type**: String Processing + Simulation  
 **Part 1 Description**: Apply look-and-say sequence transformation 40 times, return final length  
@@ -262,7 +262,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 11: Corporate Policy
+### [[day11.md|Day 11: Corporate Policy]]
 **Title**: Corporate Policy  
 **Part 1 Type**: String Processing + Pattern Matching + Simulation  
 **Part 1 Description**: Find next valid password using base-26 incrementing with validation rules  
@@ -326,7 +326,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### Day 12: JSAbacusFramework.io
+### [[day12.md|Day 12: JSAbacusFramework.io]]
 **Title**: JSAbacusFramework.io  
 **Part 1 Type**: Parsing + Mathematical + Data Structures  
 **Part 1 Description**: Parse JSON document and sum all numeric values (arrays, objects, nested structures)  
