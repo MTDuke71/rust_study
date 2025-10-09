@@ -302,6 +302,48 @@ echo '[1,2,3]' | cargo run -- --day 12
 
 ---
 
+## 🔗 **Related Resources**
+
+### **Implementation & Testing**
+- [[day12.rs]] - JSON parser and sum calculator implementation
+- [[day12_test.rs]] - Test suite with examples
+- [[day12_example.txt]] - Input data (raw JSON)
+- [[day12_example_formatted.txt]] - Formatted JSON for readability
+- [[format_json.py]] - JSON formatting utility script
+
+### **Documentation & Guides**
+- [[DAY12_README]] - Quick start guide and problem overview (if exists)
+- [[DAY12_IMPLEMENTATION_GUIDE]] - Step-by-step implementation walkthrough (if exists)
+
+### **Core Concepts (Zettelkasten)**
+- [[JSON Parsing Patterns]] - Structured data parsing techniques
+- [[Recursive Tree Traversal]] - Tree traversal algorithms
+- [[Pattern Matching]] - Rust pattern matching for JSON types
+- [[Conditional Filtering]] - Filter strategies in recursive algorithms
+- [[External Crate Integration]] - Using serde_json in Rust projects
+- [[String Manipulation Patterns]] - Text processing patterns
+
+### **Related AoC Problems**
+- [[AoC 2015 MOC]] - All Advent of Code 2015 solutions
+- [[AoC Patterns MOC]] - Common AoC problem patterns
+- [[Parsing Problems MOC]] - AoC parsing problem collection
+
+### **Rust Learning Integration**
+- [[Rust Book Chapter 8]] - Collections and data structures
+- [[Rust Book Chapter 9]] - Error handling with Result
+- [[Rust Book Chapter 10]] - Traits and generics
+- [[Week 1 Overview]] - Daily study on collections
+- [[Week 2 Overview]] - Advanced iteration and parsing
+
+### **Related Missions**
+- [[Mission5 README]] - HashMap and data structure patterns
+- [[Mission3 README]] - Tree traversal and search algorithms
+
+### **Problem Catalog**
+- [[AoC 2015 Summary]] - Complete problem index
+
+---
+
 *Tags: #aoc2015 #day12 #json #parsing #recursion #tree-traversal #serde-json #pattern-matching*
 *Difficulty: ⭐⭐ Medium*
 *Concepts: JSON, Recursion, Tree Traversal, Conditional Filtering*

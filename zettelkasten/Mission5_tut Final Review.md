@@ -264,5 +264,47 @@ If you've worked through all steps and can confidently tackle the challenges abo
 
 ---
 
+## 🔗 Additional Learning Resources
+
+**Mission5 Documentation:**
+- [[Mission5 README|../missions/Mission5/README]] - Complete V-Cycle implementation
+- [[Mission5 API Reference]] - Detailed API documentation  
+- [[Mission5 Overview]] - Requirements and learning integration
+
+**Core Concepts:**
+- [[HashMap Deep Dive]] - Internal implementation analysis
+- [[Hash Function Design]] - Creating effective hash functions
+- [[Collision Resolution]] - Handling hash conflicts
+- [[Generic Programming]] - Type parameters and constraints
+
+**Collections Context:**
+- [[Collections MOC]] - Navigate all data structure concepts
+- [[HashSet Wrapper Pattern]] - Set abstraction patterns
+- [[Iterator Design Patterns]] - Custom iteration
+- [[Performance Patterns]] - Optimization strategies
+
+**Daily Study Integration:**
+- [[Day 10 - HashMap Basics|../daily_study/rust_learning_week2_notes/Day10]] - Foundational theory
+- [[Day 11 - HashSet Operations|../daily_study/rust_learning_week2_notes/Day11]] - Set operations
+- [[Day 12 - BTreeMap|../daily_study/rust_learning_week2_notes/Day12]] - Ordered maps
+- [[Day 13 - Advanced Iterators|../daily_study/rust_learning_week2_notes/Day13]] - Iterator chains
+
+**Rust Book:**
+- [[Chapter 8|../rust_book/Ch8/README]] - Collections (Vec, String, HashMap)
+- [[Chapter 10|../rust_book/Ch10/README]] - Generics, Traits, Lifetimes
+
+**Related Missions:**
+- [[Mission1 Overview]] - Stack (ownership foundations)
+- [[Mission2 Overview]] - Queue (FIFO patterns)
+- [[Mission3 Overview]] - Search algorithms
+- [[Mission4 Overview]] - Linked List (smart pointers)
+- [[Mission6 Overview]] - Grid Systems (spatial algorithms)
+
+**AoC Applications:**
+- [[AoC Patterns MOC]] - Common algorithm patterns
+- [[AoC 2015 MOC|../zettelkasten/AoC 2015 MOC]] - Year 2015 problems
+
+---
+
 *Last Updated: October 7, 2025*
 *Tutorial Completion Status: Review and validate your mastery before proceeding to Mission 6*

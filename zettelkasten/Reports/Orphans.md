@@ -42,7 +42,7 @@ AND !contains(file.path, "target")
 AND !contains(file.path, ".git")
 AND file.name != "Orphans"
 SORT length(file.outlinks) DESC
-LIMIT 50
+LIMIT 75
 ```
 
 ---

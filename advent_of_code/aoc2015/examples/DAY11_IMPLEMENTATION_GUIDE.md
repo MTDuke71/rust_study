@@ -477,3 +477,34 @@ hxbxwxba → increment → hxbxwxbb → invalid (no straight?)
 5. **Have fun!** - This is a satisfying problem when it clicks! 🎉
 
 Good luck! 🚀
+
+---
+
+## 🔗 Related Resources
+
+**Day 11 Documentation:**
+- [[day11.md|../../Problem_Statements/day11]] - Official problem statement
+- [[DAY11_QUICK_REFERENCE|DAY11_QUICK_REFERENCE]] - Quick reference card
+- [[DAY11_SETUP_COMPLETE|DAY11_SETUP_COMPLETE]] - Template summary
+
+**Implementation Files:**
+- [[day11.rs|../../src/solver/day11]] - Your implementation (with TODOs)
+- [[day11_test.rs|../../tests/day11_test]] - Test suite (21 comprehensive tests)
+- [[day11_example.txt|../../inputs/day11_example.txt]] - Puzzle input (`hxbxwxba`)
+
+**Zettelkasten Learning:**
+- [[String Manipulation|../../../zettelkasten/String Manipulation]] - String processing in Rust
+- [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Loop and windowing techniques
+- [[Validation Patterns|../../../zettelkasten/Validation Patterns]] - Rule-based validation
+- [[Test-Driven Development|../../../zettelkasten/Test-Driven Development]] - TDD approach
+- [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - Navigate all 2015 problems
+- [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common AoC patterns
+
+**Rust Book Integration:**
+- [[Chapter 8|../../../rust_book/Ch8/README]] - Collections and strings
+- [[Week 1 Overview|../../../zettelkasten/Week 1 Overview]] - String fundamentals
+
+**Problem Catalog:**
+- [[summary.md|../../Problem_Statements/summary]] - All AoC 2015 problems
+
+*Tags: #aoc2015 #day11 #tutorial #implementation-guide #password-validation #step-by-step*

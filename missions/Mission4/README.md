@@ -417,3 +417,32 @@ This linked list implementation provides foundation for:
 
 **Status**: 🔄 **In Development** - Setting up V-Cycle foundation
 **Next Phase**: Implementation of basic Box-based linked list
+
+---
+
+## 🔗 Related Resources
+
+**Mission4 Tutorial:**
+- [[Mission4_tut README|../../tutorials/Mission4_tut/README]] - Complete compilation and type system tutorial
+- [[COMPILE_ERROR_ANALYSIS|../../tutorials/Mission4_tut/COMPILE_ERROR_ANALYSIS]] - Understanding unsafe pointer errors
+- [[TYPE_BREAKDOWN|../../tutorials/Mission4_tut/TYPE_BREAKDOWN]] - `Option<Box<Node<T>>>` deep dive
+- [[Compilation Stages|../../tutorials/Mission4_tut/compilation_stages/README]] - From source to executable
+- [[COMPLETE_ANALYSIS|../../tutorials/Mission4_tut/compilation_stages/COMPLETE_ANALYSIS]] - Full compilation analysis
+
+**Zettelkasten Knowledge:**
+- [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership concepts
+- [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Heap allocation with Box
+- [[Rc and RefCell|../../zettelkasten/Rc and RefCell]] - Shared ownership and interior mutability
+- [[Linked List Patterns|../../zettelkasten/Linked List Patterns]] - Data structure implementations
+- [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+
+**Related Missions:**
+- [[Mission1 README|../Mission1/README]] - Stack (ownership basics)
+- [[Mission2 README|../Mission2/README]] - Queue (FIFO patterns)
+- [[Mission3 README|../Mission3/README]] - Search algorithms
+
+**Rust Book Integration:**
+- [[Chapter 15|../../rust_book/Ch15/README]] - Smart Pointers
+- [[Week 2 Overview|../../zettelkasten/Week 2 Overview]] - Advanced patterns
+
+*Tags: #mission4 #linked-list #box #rc #refcell #interior-mutability #smart-pointers*

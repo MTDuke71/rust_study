@@ -43,3 +43,24 @@ cd D:\repos\rust_study\Mission4_tut
 - **`executable_analysis.txt`** - Final executable breakdown
 
 Each file shows a different stage of compilation with explanations!
+
+---
+
+## 🔗 Related Resources
+
+**Mission4 Tutorial:**
+- [[Mission4_tut README|../README]] - Main tutorial overview
+- [[COMPLETE_ANALYSIS|COMPLETE_ANALYSIS]] - Full compilation breakdown
+- [[COMPILE_ERROR_ANALYSIS|../COMPILE_ERROR_ANALYSIS]] - Understanding unsafe pointer errors
+- [[TYPE_BREAKDOWN|../TYPE_BREAKDOWN]] - Type system deep dive
+
+**Mission4 Implementation:**
+- [[Mission4 README|../../../missions/Mission4/README]] - Main linked list V-Cycle documentation
+
+**Zettelkasten Knowledge:**
+- [[Compilation Process|../../../zettelkasten/Compilation Process]] - Rust compilation stages
+- [[LLVM and Rust|../../../zettelkasten/LLVM and Rust]] - LLVM backend integration
+- [[Zero-Cost Abstractions|../../../zettelkasten/Zero-Cost Abstractions]] - Performance guarantees
+- [[Rust Concepts MOC|../../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+
+*Tags: #mission4 #compilation #llvm #assembly #tutorial #compiler*

@@ -239,6 +239,37 @@ All tools are in place:
 
 ---
 
+## 🔗 Related Resources
+
+**Day 11 Documentation:**
+- [[day11.md|../../Problem_Statements/day11]] - Complete problem statement
+- [[DAY11_IMPLEMENTATION_GUIDE|DAY11_IMPLEMENTATION_GUIDE]] - Detailed step-by-step guide
+- [[DAY11_QUICK_REFERENCE|DAY11_QUICK_REFERENCE]] - Quick reference card
+
+**Implementation Files:**
+- [[day11.rs|../../src/solver/day11]] - Implementation template (ready for coding!)
+- [[day11_test.rs|../../tests/day11_test]] - 21 comprehensive tests
+- [[day11_example.txt|../../inputs/day11_example.txt]] - Your puzzle input
+
+**Zettelkasten Knowledge:**
+- [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - All AoC 2015 problems
+- [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common algorithms
+- [[String Manipulation|../../../zettelkasten/String Manipulation]] - String processing patterns
+- [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Windowing and loops
+- [[Validation Patterns|../../../zettelkasten/Validation Patterns]] - Rule-based validation
+- [[Test-Driven Development|../../../zettelkasten/Test-Driven Development]] - TDD workflow
+
+**Rust Concepts:**
+- [[Chapter 8|../../../rust_book/Ch8/README]] - Collections and string handling
+- [[Week 1 Overview|../../../zettelkasten/Week 1 Overview]] - String fundamentals
+
+**Learning Path:**
+- [[summary.md|../../Problem_Statements/summary]] - AoC 2015 problem catalog
+
+*Tags: #aoc2015 #day11 #setup #template #password-generation #validation #ready-to-code*
+
+---
+
 *Last Updated: Day 11 Template Created*
 *Status: Ready for implementation*
 *Difficulty: Medium (Optimization makes it easier)*

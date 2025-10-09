@@ -33,3 +33,34 @@ At this point, you should return to your Advent calendar and try another puzzle.
 Your puzzle input was hxbxwxba.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Resources
+
+**Day 11 Implementation:**
+- [[day11.rs|../src/solver/day11]] - Your implementation workspace
+- [[day11_test.rs|../tests/day11_test]] - Comprehensive test suite (21 tests)
+- [[day11_example.txt|../inputs/day11_example.txt]] - Puzzle input
+
+**Day 11 Documentation:**
+- [[DAY11_IMPLEMENTATION_GUIDE|../examples/DAY11_IMPLEMENTATION_GUIDE]] - Step-by-step guide
+- [[DAY11_QUICK_REFERENCE|../examples/DAY11_QUICK_REFERENCE]] - Quick reference card
+- [[DAY11_SETUP_COMPLETE|../examples/DAY11_SETUP_COMPLETE]] - Template summary
+
+**Zettelkasten Concepts:**
+- [[String Manipulation|../../../zettelkasten/String Manipulation]] - String processing in Rust
+- [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Windowing and loops
+- [[Validation Patterns|../../../zettelkasten/Validation Patterns]] - Rule-based validation
+- [[Test-Driven Development|../../../zettelkasten/Test-Driven Development]] - TDD workflow
+- [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - All 2015 problems
+- [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common algorithms
+
+**Rust Book Integration:**
+- [[Chapter 8|../../../rust_book/Ch8/README]] - Collections and strings
+- [[Week 1 Overview|../../../zettelkasten/Week 1 Overview]] - String fundamentals
+
+**Problem Catalog:**
+- [[summary.md|summary]] - All AoC 2015 problems overview
+
+*Tags: #aoc2015 #day11 #corporate-policy #password-generation #validation #base26 #string-processing*

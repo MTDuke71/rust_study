@@ -28,3 +28,34 @@ At this point, you should return to your Advent calendar and try another puzzle.
 Your puzzle input was 1321131112.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Related Resources
+
+**Day 10 Implementation:**
+- [[day10.rs|../src/solver/day10]] - Production iterative solution
+- [[day10_with_memo.rs|../examples/day10_with_memo]] - Memoized recursive approach
+
+**Day 10 Documentation:**
+- [[DAY10_README|../examples/DAY10_README]] - Complete performance analysis
+- [[DAY10_LEARNING_GUIDE|../examples/DAY10_LEARNING_GUIDE]] - Step-by-step implementation
+- [[DAY10_BENCHMARK_ANALYSIS|../examples/DAY10_BENCHMARK_ANALYSIS]] - Iterative vs memoized
+- [[DAY10_MEMOIZATION_WALKTHROUGH|../examples/DAY10_MEMOIZATION_WALKTHROUGH]] - Memoization deep dive
+
+**Mission5 Integration:**
+- [[Mission5 README|../../../missions/Mission5/README]] - Custom HashMap implementation
+- [[Mission5_tut Overview|../../../zettelkasten/Mission5_tut Overview]] - HashMap tutorial
+
+**Zettelkasten Concepts:**
+- [[String Manipulation|../../../zettelkasten/String Manipulation]] - String processing patterns
+- [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Loop techniques
+- [[Memoization Patterns|../../../zettelkasten/Memoization Patterns]] - Caching strategies
+- [[Performance Patterns|../../../zettelkasten/Performance Patterns]] - Optimization techniques
+- [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - All 2015 problems
+- [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common algorithms
+
+**Problem Catalog:**
+- [[summary.md|summary]] - All AoC 2015 problems overview
+
+*Tags: #aoc2015 #day10 #look-and-say #sequence #string-processing #run-length-encoding*

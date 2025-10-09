@@ -27,4 +27,35 @@ This project follows the workspace documentation standards:
 - **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)  
 - **Test Documentation**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
 
+---
+
+## 📚 **Additional Resources**
+
+### **Foundation Documentation**
+- [[Brackets_Basic Q and A]] - Deep technical analysis of bracket validation fundamentals:
+  - Stack invariants and correctness proofs
+  - UTF-8 byte indexing with char_indices()
+  - Algorithm complexity analysis (O(n) proof)
+  - Memory safety guarantees and aliasing prevention
+  - API design principles and Rust idioms
+
+- [[Brackets_Basic README_EXTENDED]] - Extended validator design documentation:
+  - REQ-7: Configurable alphabet implementation
+  - REQ-8: Multiple error collection strategies
+  - REQ-9: Unclosed bracket policy options
+  - Iterator API design patterns
+
+### **Related Projects**
+- [[Brackets_Basic]] - Foundation implementation (REQ-1 through REQ-6)
+- [[Mission1]] - Stack data structure foundation
+
+### **Learning Resources**
+- [[V-Cycle Methodology]] - Requirements-driven development
+- [[Stack Invariants]] - Correctness through invariant maintenance
+- [[AoC Patterns MOC]] - Competitive programming strategies
+
+---
+
+*Tags: #brackets-ext #aoc #v-cycle #extended-requirements #configuration*
+
 Happy hacking! 🎄

@@ -209,4 +209,30 @@ Find the next valid password! 🔐
 
 ---
 
+## 🔗 Related Resources
+
+**Day 11 Documentation:**
+- [[day11.md|../../Problem_Statements/day11]] - Full problem statement
+- [[DAY11_IMPLEMENTATION_GUIDE|DAY11_IMPLEMENTATION_GUIDE]] - Step-by-step implementation
+- [[DAY11_SETUP_COMPLETE|DAY11_SETUP_COMPLETE]] - Template creation summary
+
+**Implementation Files:**
+- [[day11.rs|../../src/solver/day11]] - Your implementation workspace
+- [[day11_test.rs|../../tests/day11_test]] - Comprehensive test suite (21 tests)
+- [[day11_example.txt|../../inputs/day11_example.txt]] - Puzzle input
+
+**Zettelkasten Knowledge:**
+- [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - All AoC 2015 problems
+- [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common algorithms
+- [[String Manipulation|../../../zettelkasten/String Manipulation]] - Rust string patterns
+- [[Validation Patterns|../../../zettelkasten/Validation Patterns]] - Rule-based validation
+
+**Learning Resources:**
+- [[summary.md|../../Problem_Statements/summary]] - AoC 2015 problem catalog
+- [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Loop techniques
+
+*Tags: #aoc2015 #day11 #quick-reference #password-generation #validation #base26*
+
+---
+
 *Quick Reference Card for Day 11: Corporate Policy*

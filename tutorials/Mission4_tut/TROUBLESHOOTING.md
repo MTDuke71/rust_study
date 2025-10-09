@@ -429,3 +429,49 @@ impl<T> ListBuilder<T> {
 | Weak reference fails to upgrade | Original data was dropped | Always check `upgrade()` result |
 | Memory leaks | Reference cycles with `Rc` | Use `Weak` for back-references |
 | "Use of moved value" | Partial move from struct | Destructure or clone before moving |
+
+---
+
+## 🔗 Related Resources
+
+**Mission4 Tutorial:**
+- [[README|README]] - Main tutorial overview
+- [[COMPILE_ERROR_ANALYSIS|COMPILE_ERROR_ANALYSIS]] - Understanding unsafe pointer errors
+- [[TYPE_BREAKDOWN|TYPE_BREAKDOWN]] - `Option<Box<Node<T>>>` explained
+- [[Compilation Stages|compilation_stages/README]] - From source to executable
+- [[QUICK_DEBUG_START|QUICK_DEBUG_START]] - Fast debugging reference
+
+**Mission4 Implementation:**
+- [[Mission4 README|../../missions/Mission4/README]] - Main linked list V-Cycle documentation
+
+**Zettelkasten Core Concepts:**
+- [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership rules
+- [[Borrowing Rules|../../zettelkasten/Borrowing Rules]] - The borrow checker explained
+- [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Unique ownership
+- [[Rc and RefCell|../../zettelkasten/Rc and RefCell]] - Shared ownership and interior mutability
+- [[Memory Safety|../../zettelkasten/Memory Safety]] - Rust's safety guarantees
+- [[Error Handling Deep Dive|../../zettelkasten/Error Handling Deep Dive]] - Result and error patterns
+
+**Common Error Patterns:**
+- [[Copy vs Clone vs Move|../../zettelkasten/Copy vs Clone vs Move]] - Data transfer semantics
+- [[Lifetime Errors|../../zettelkasten/Lifetime Errors]] - Common lifetime issues
+- [[Borrow Checker Patterns|../../zettelkasten/Borrow Checker Patterns]] - Working with borrows
+
+**Rust Book Integration:**
+- [[Chapter 4|../../rust_book/Ch4/README]] - Understanding Ownership
+- [[Chapter 15|../../rust_book/Ch15/README]] - Smart Pointers (Box, Rc, RefCell)
+- [[Week 2 Overview|../../zettelkasten/Week 2 Overview]] - Advanced ownership patterns
+
+**Related Missions:**
+- [[Mission1 Overview|../../zettelkasten/Mission1 Overview]] - Stack (ownership basics)
+- [[Mission2 Overview|../../zettelkasten/Mission2 Overview]] - Queue (ownership in practice)
+- [[Mission5 Overview|../../zettelkasten/Mission5 Overview]] - HashMap (complex ownership)
+
+**Learning Support:**
+- [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+- [[Test-Driven Development|../../zettelkasten/Test-Driven Development]] - TDD approach
+
+---
+
+*Tags: #mission4 #troubleshooting #linked-list #borrowing #rc #refcell #error-solutions #debugging*
+*Links: [[README|README]] | [[Mission4 README|../../missions/Mission4/README]] | [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]]*

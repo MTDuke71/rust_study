@@ -246,3 +246,38 @@ After completing the basic solution:
 **Happy Coding!** 🎄
 
 Remember: The goal is learning, not speed. Take your time, test incrementally, and refer to `day10_sol.rs` when needed.
+
+---
+
+## 🔗 Related Resources
+
+**Day 10 Documentation:**
+- [[day10.md|../../Problem_Statements/day10]] - Official problem statement
+- [[DAY10_README|DAY10_README]] - Complete performance analysis overview
+- [[DAY10_BENCHMARK_ANALYSIS|DAY10_BENCHMARK_ANALYSIS]] - Iterative vs memoized comparison
+- [[DAY10_MEMOIZATION_WALKTHROUGH|DAY10_MEMOIZATION_WALKTHROUGH]] - Memoization deep dive
+
+**Implementation Files:**
+- [[day10.rs|../../src/solver/day10]] - Production solution (your implementation)
+- [[day10_sol.rs|../../src/solver/day10_sol]] - Reference solution skeleton
+- [[day10_with_memo.rs|day10_with_memo]] - Memoized approach example
+
+**Mission Integration:**
+- [[Mission5 README|../../../missions/Mission5/README]] - HashMap implementation
+- [[Mission5 Tutorial|../../../missions/Mission5_tut/README]] - HashMap learning guide
+
+**Zettelkasten Learning:**
+- [[String Manipulation|../../../zettelkasten/String Manipulation]] - Rust string patterns
+- [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Loop techniques
+- [[Test-Driven Development|../../../zettelkasten/Test-Driven Development]] - TDD in Rust
+- [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - Navigate all 2015 problems
+- [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common AoC algorithms
+
+**Rust Book Integration:**
+- [[Chapter 8|../../../rust_book/Ch8/README]] - Collections and strings
+- [[Week 1 Overview|../../../zettelkasten/Week 1 Overview]] - Collections basics
+
+**Problem Catalog:**
+- [[summary.md|../../Problem_Statements/summary]] - All AoC 2015 problems
+
+*Tags: #aoc2015 #day10 #tutorial #learning-guide #step-by-step #run-length-encoding #beginner*

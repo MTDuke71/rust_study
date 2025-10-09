@@ -295,6 +295,8 @@ Traceability Matrix
 - **Requirements**: REQ-1 to REQ-9 (Basic validation + error collection + Unicode)
 - **Key Learning**: Real-world stack usage, error handling, UTF-8 processing
 - **Examples**: Parser building, syntax validation, educational tools
+- **📘 Deep Dive**: See [[Q and A|advanced_examples/Brackets_Basic/Q and A]] for technical analysis (invariants, complexity proofs, memory safety)
+- **📘 Extended Guide**: See [[README_EXTENDED|advanced_examples/Brackets_Basic/README_EXTENDED]] for advanced features (REQ-7/8/9, iterator API)
 
 #### 🌳 **[competitive_linked_tree/](advanced_examples/competitive_linked_tree/)**
 **Focus**: Tree algorithms for competitive programming

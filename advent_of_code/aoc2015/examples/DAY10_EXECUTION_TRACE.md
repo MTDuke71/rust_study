@@ -341,4 +341,45 @@ String in loop:
 
 ---
 
+## 🔗 **Related Resources**
+
+### **Implementation & Testing**
+- [[day10.rs]] - Optimal iterative solver implementation
+- [[day10_with_memo.rs]] - Memoized recursive version for comparison
+- [[day10_test.rs]] - Test suite with execution examples
+
+### **Documentation & Analysis**
+- [[DAY10_README]] - Quick start guide and problem overview
+- [[DAY10_LEARNING_GUIDE]] - Complete learning pathway
+- [[DAY10_BENCHMARK_ANALYSIS]] - Detailed performance comparison
+- [[DAY10_MEMOIZATION_WALKTHROUGH]] - Code walkthrough with explanations
+- [[day10.md]] - Original AoC problem statement
+
+### **Core Concepts (Zettelkasten)**
+- [[String Manipulation Patterns]] - String processing techniques
+- [[Iteration Patterns]] - Loop vs recursion tradeoffs
+- [[Memoization Patterns]] - When to cache, when not to
+- [[Performance Patterns]] - Overhead analysis and optimization
+- [[Execution Tracing Techniques]] - Debugging with execution traces
+- [[Algorithm Complexity Analysis]] - Time/space complexity evaluation
+
+### **Related Patterns**
+- [[AoC 2015 MOC]] - All Advent of Code 2015 solutions
+- [[AoC Patterns MOC]] - Common AoC problem patterns
+- [[Dynamic Programming Patterns]] - DP technique catalog
+
+### **Learning Integration**
+- [[Mission5 README]] - HashMap and data structure mission
+- [[Rust Book Chapter 8]] - Collections and iteration
+- [[Week 1 Overview]] - Daily study integration
+
+### **Problem Catalog**
+- [[AoC 2015 Summary]] - Complete problem index
+
+---
+
+*Tags: #aoc2015 #day10 #execution-trace #performance-analysis #memoization #iterative-vs-recursive #overhead-analysis #cache-effectiveness*
+
+---
+
 **Bottom Line**: Execution traces reveal why your simple iterative approach beats the complex memoized version - no overhead, no wasted cache, just direct transformation! 🚀

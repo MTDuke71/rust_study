@@ -222,3 +222,28 @@ Consider memoization when you see:
 - **Memoized (Mission5)**: 394ms, complex, memory heavy ❌
 
 **Keep writing clean, simple code like this!** 🚀
+
+---
+
+## 🔗 Related Resources
+
+**AoC 2015 Day 10:**
+- [[day10.md|../../Problem_Statements/day10]] - Problem statement and explanation
+- [[day10.rs|../../src/solver/day10]] - Your iterative solution (winner!)
+- [[day10_with_memo.rs|day10_with_memo]] - Memoized implementation example
+- [[DAY10_MEMOIZATION_WALKTHROUGH|DAY10_MEMOIZATION_WALKTHROUGH]] - Step-by-step memoization guide
+
+**Mission5 HashMap:**
+- [[Mission5 README|../../../missions/Mission5/README]] - Custom HashMap implementation
+- [[MemoCache|../../../missions/Mission5/src/lib]] - Generic memoization cache
+
+**Zettelkasten Knowledge Base:**
+- [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - All AoC 2015 problems
+- [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common algorithmic patterns
+- [[HashMap Deep Dive|../../../zettelkasten/HashMap Deep Dive]] - HashMap internals
+- [[Performance Patterns|../../../zettelkasten/Performance Patterns]] - Optimization techniques
+
+**Learning Resources:**
+- [[summary.md|../../Problem_Statements/summary]] - AoC 2015 problem catalog
+
+*Tags: #aoc2015 #day10 #benchmark #performance #memoization #optimization #analysis*

@@ -153,3 +153,30 @@ type NodeRef<T> = Rc<RefCell<Node<T>>>;  // ✅ Safe shared pointer
 **The moral**: Rust's ownership system prevents entire classes of bugs that plague C/C++ programs. Raw pointers bypass these protections and should only be used when absolutely necessary (FFI, performance-critical code, implementing low-level data structures).
 
 For linked lists, `Box<T>` and `Rc<RefCell<T>>` provide the same functionality with compile-time or runtime safety guarantees!
+
+---
+
+## 🔗 Related Resources
+
+**Mission4 Tutorial:**
+- [[Mission4_tut README|README]] - Main tutorial overview
+- [[TYPE_BREAKDOWN|TYPE_BREAKDOWN]] - Understanding `Option<Box<Node<T>>>`
+- [[Compilation Stages|compilation_stages/README]] - From source to executable
+- [[COMPLETE_ANALYSIS|compilation_stages/COMPLETE_ANALYSIS]] - Full compilation breakdown
+
+**Mission4 Implementation:**
+- [[Mission4 README|../../missions/Mission4/README]] - Main linked list implementation
+
+**Zettelkasten Concepts:**
+- [[Unsafe Rust|../../zettelkasten/Unsafe Rust]] - When and why to use unsafe
+- [[Memory Safety|../../zettelkasten/Memory Safety]] - Rust's safety guarantees
+- [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Safe heap allocation
+- [[Rc and RefCell|../../zettelkasten/Rc and RefCell]] - Safe shared ownership
+- [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core concepts
+- [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+
+**Rust Book:**
+- [[Chapter 15|../../rust_book/Ch15/README]] - Smart Pointers
+- [[Chapter 19|../../rust_book/Ch19/README]] - Unsafe Rust
+
+*Tags: #mission4 #unsafe #compile-errors #raw-pointers #memory-safety #tutorial*

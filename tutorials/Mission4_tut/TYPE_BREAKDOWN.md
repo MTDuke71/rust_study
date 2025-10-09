@@ -131,3 +131,34 @@ Heap Memory:                      │
 4. **Expressiveness**: The type signature tells you exactly what the field does
 
 This type signature embodies Rust's philosophy: **"Fast, safe, expressive - pick all three!"**
+
+---
+
+## 🔗 Related Resources
+
+**Mission4 Tutorial:**
+- [[Mission4_tut README|README]] - Main tutorial overview
+- [[COMPILE_ERROR_ANALYSIS|COMPILE_ERROR_ANALYSIS]] - Why raw pointers fail
+- [[Compilation Stages|compilation_stages/README]] - From source to assembly
+- [[COMPLETE_ANALYSIS|compilation_stages/COMPLETE_ANALYSIS]] - Full compilation breakdown
+
+**Mission4 Implementation:**
+- [[Mission4 README|../../missions/Mission4/README]] - Linked list V-Cycle implementation
+
+**Zettelkasten Type System:**
+- [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Heap allocation with Box
+- [[Option Type|../../zettelkasten/Option Type]] - Null safety with Option
+- [[Generic Types|../../zettelkasten/Generic Types]] - Type parameters and monomorphization
+- [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership
+- [[Memory Layout|../../zettelkasten/Memory Layout]] - Rust type layouts
+- [[Zero-Cost Abstractions|../../zettelkasten/Zero-Cost Abstractions]] - Performance guarantees
+- [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+
+**Rust Book:**
+- [[Chapter 15|../../rust_book/Ch15/README]] - Smart Pointers (Box, Rc, RefCell)
+- [[Chapter 10|../../rust_book/Ch10/README]] - Generic Types
+
+**Learning Path:**
+- [[Week 2 Overview|../../zettelkasten/Week 2 Overview]] - Advanced type patterns
+
+*Tags: #mission4 #types #box #option #generics #memory-safety #type-system #tutorial*

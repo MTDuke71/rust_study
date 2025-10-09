@@ -431,3 +431,35 @@ Consider memoization when you see:
 ---
 
 **Bottom Line**: Your straightforward iterative solution is **both simpler AND 15.7% faster** than the memoized approach! This is a perfect example of why "premature optimization is the root of all evil" - sometimes the simple solution is the best solution! 🎉
+
+---
+
+## 🔗 Related Resources
+
+**AoC 2015 Day 10:**
+- [[day10.md|../../Problem_Statements/day10]] - Problem statement and algorithm explanation
+- [[day10.rs|../../src/solver/day10]] - Production iterative solution
+- [[day10_with_memo.rs|day10_with_memo]] - Memoized implementation (this walkthrough)
+- [[DAY10_BENCHMARK_ANALYSIS|DAY10_BENCHMARK_ANALYSIS]] - Performance comparison results
+
+**Mission5 HashMap:**
+- [[Mission5 README|../../../missions/Mission5/README]] - Complete HashMap V-Cycle documentation
+- [[Mission5 Tutorial|../../../missions/Mission5_tut/README]] - Step-by-step HashMap learning
+- [[MemoCache Implementation|../../../missions/Mission5/src/lib]] - Generic memoization cache
+
+**Zettelkasten Deep Dives:**
+- [[HashMap Deep Dive|../../../zettelkasten/HashMap Deep Dive]] - Hash table internals
+- [[Memoization Patterns|../../../zettelkasten/Memoization Patterns]] - When and how to cache
+- [[Dynamic Programming|../../../zettelkasten/Dynamic Programming]] - DP vs memoization
+- [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - Navigate all 2015 problems
+- [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Algorithmic pattern catalog
+
+**Performance Analysis:**
+- [[Performance Patterns|../../../zettelkasten/Performance Patterns]] - Optimization techniques
+- [[Big-O Analysis|../../../zettelkasten/Big-O Analysis]] - Complexity theory
+
+**Learning Path:**
+- [[Week 1 Overview|../../../zettelkasten/Week 1 Overview]] - HashMap fundamentals
+- [[summary.md|../../Problem_Statements/summary]] - All AoC 2015 problems
+
+*Tags: #aoc2015 #day10 #memoization #tutorial #hashmap #mission5 #dynamic-programming #walkthrough*

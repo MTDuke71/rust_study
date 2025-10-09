@@ -299,3 +299,33 @@ start target/criterion/report/index.html
 ---
 
 **Bottom Line**: Your implementation is **production-ready** and **optimal** for Day 10! The memoized example serves as a valuable learning tool for Mission5 integration, demonstrating when caching patterns do (and don't!) apply. 🎯
+
+---
+
+## 🔗 Related Resources
+
+**Day 10 Documentation:**
+- [[day10.md|../../Problem_Statements/day10]] - Problem statement and algorithm explanation
+- [[DAY10_LEARNING_GUIDE|DAY10_LEARNING_GUIDE]] - Step-by-step implementation guide
+- [[DAY10_MEMOIZATION_WALKTHROUGH|DAY10_MEMOIZATION_WALKTHROUGH]] - Detailed memoization analysis
+- [[DAY10_BENCHMARK_ANALYSIS|DAY10_BENCHMARK_ANALYSIS]] - Performance comparison results
+
+**Implementation Files:**
+- [[day10.rs|../../src/solver/day10]] - Production iterative solution (winner!)
+- [[day10_with_memo.rs|day10_with_memo]] - Memoized recursive example
+- [[day10_comparison.rs|../../benches/day10_comparison]] - Benchmark suite
+
+**Mission5 Integration:**
+- [[Mission5 README|../../../missions/Mission5/README]] - Custom HashMap V-Cycle documentation
+- [[MemoCache|../../../missions/Mission5/src/lib]] - Generic memoization cache implementation
+
+**Zettelkasten Knowledge:**
+- [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - All AoC 2015 problems
+- [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common algorithm patterns
+- [[Performance Patterns|../../../zettelkasten/Performance Patterns]] - Optimization strategies
+- [[HashMap Deep Dive|../../../zettelkasten/HashMap Deep Dive]] - Hash table internals
+
+**Learning Resources:**
+- [[summary.md|../../Problem_Statements/summary]] - AoC 2015 problem catalog
+
+*Tags: #aoc2015 #day10 #overview #performance #benchmark #iterative #memoization*
