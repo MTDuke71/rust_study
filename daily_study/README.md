@@ -42,17 +42,67 @@ daily_study/
 
 For detailed day-by-day breakdown with links to all concepts, see **[[../zettelkasten/Daily Study MOC]]**.
 
-### **Week 1: Foundations** (Days 1-7)
-Ownership, Borrowing, Lifetimes, Pattern Matching
+### **📘 [[rust_learning_week1_notes/README|Week 1: Foundations]]** (Days 1-7)
+**Focus**: Ownership, Borrowing, Lifetimes, Pattern Matching
 
-### **Week 2: Collections** (Days 8-14)
-Vectors, Strings, HashMap, HashSet, BTreeMap, Iterators, Error Handling
+Core Topics:
+- [[rust_learning_week1_notes/Day01|Day 01]] - Vec and Basic Collections
+- [[rust_learning_week1_notes/Day02|Day 02]] - HashMap Fundamentals
+- [[rust_learning_week1_notes/Day03|Day 03]] - HashSet Operations  
+- [[rust_learning_week1_notes/Day04|Day 04]] - BTreeMap Sorted Storage
+- [[rust_learning_week1_notes/Day05|Day 05]] - Iterator Patterns
+- [[rust_learning_week1_notes/Day06|Day 06]] - Error Handling Basics
+- [[rust_learning_week1_notes/Day07|Day 07]] - Pattern Matching Deep Dive
 
-### **Week 3: Abstractions** (Days 15-21)
-Traits, Generics, Lifetimes, Associated Types, Trait Objects
+**Mission Integration**: Mission 1 (Stack), Mission 4 (Linked Lists)
 
-### **Week 4: Applied Problem Solving** (Days 22-28)
-Grids, Navigation, Flood Fill, BFS, Priority Queues, String Parsing
+---
+
+### **📗 [[rust_learning_week2_notes/README|Week 2: Collections]]** (Days 8-14)
+**Focus**: Advanced Collection Usage, Iteration Patterns, Data Processing
+
+Core Topics:
+- [[rust_learning_week2_notes/Day08|Day 08]] - Vector Advanced Patterns
+- [[rust_learning_week2_notes/Day09|Day 09]] - HashMap Deep Dive
+- [[rust_learning_week2_notes/Day10|Day 10]] - HashSet Advanced Operations
+- [[rust_learning_week2_notes/Day11|Day 11]] - BTreeMap Range Operations
+- [[rust_learning_week2_notes/Day12|Day 12]] - Iterator Combinators
+- [[rust_learning_week2_notes/Day13|Day 13]] - Iterator Consumers
+- [[rust_learning_week2_notes/Day14|Day 14]] - Error Handling with Collections
+
+**Mission Integration**: Mission 5 (HashMap from scratch), Mission 2 (Ring Buffer)
+
+---
+
+### **📙 [[rust_learning_week3_notes/README|Week 3: Abstractions]]** (Days 15-21)
+**Focus**: Traits, Generics, Lifetimes, Advanced Type System
+
+Core Topics:
+- [[rust_learning_week3_notes/Day15|Day 15]] - Trait Basics
+- [[rust_learning_week3_notes/Day16|Day 16]] - Generic Types
+- [[rust_learning_week3_notes/Day17|Day 17]] - Lifetimes Introduction
+- [[rust_learning_week3_notes/Day18|Day 18]] - Advanced Traits
+- [[rust_learning_week3_notes/Day19|Day 19]] - Trait Objects and Dynamic Dispatch
+- [[rust_learning_week3_notes/Day20|Day 20]] - Advanced Generics
+- [[rust_learning_week3_notes/Day21|Day 21]] - Lifetime Patterns
+
+**Mission Integration**: Generic implementations across all missions
+
+---
+
+### **📕 [[rust_learning_week4_notes/README|Week 4: Applied Problem Solving]]** (Days 22-28)
+**Focus**: Grids, Navigation, Pathfinding, Algorithms
+
+Core Topics:
+- [[rust_learning_week4_notes/Day22|Day 22]] - 2D Grid Fundamentals
+- [[rust_learning_week4_notes/Day23|Day 23]] - Direction and Navigation
+- [[rust_learning_week4_notes/Day24|Day 24]] - Flood Fill Algorithms
+- [[rust_learning_week4_notes/Day25|Day 25]] - Breadth-First Search (BFS)
+- [[rust_learning_week4_notes/Day26|Day 26]] - Depth-First Search (DFS)
+- [[rust_learning_week4_notes/Day27|Day 27]] - Priority Queues and Dijkstra
+- [[rust_learning_week4_notes/Day28|Day 28]] - String Parsing and Validation
+
+**Mission Integration**: Mission 6 (2D Grids + Pathfinding), Mission 3 (Search Algorithms)
 
 ---
 
@@ -77,10 +127,10 @@ Each day file (`DayXX.md`) includes:
 - **[[../zettelkasten/AoC Patterns MOC]]** - Competitive programming patterns
 
 ### **Mission Integration**
-- **Week 1** → Mission 1 (Stack), Mission 4 (Linked Lists)
-- **Week 2** → Mission 5 (HashMap from scratch)
-- **Week 3** → Generic implementations across all missions
-- **Week 4** → Mission 6 (2D Grids + Pathfinding), Mission 2 (Ring Buffer)
+- **[[rust_learning_week1_notes/README|Week 1]]** → Mission 1 (Stack), Mission 4 (Linked Lists)
+- **[[rust_learning_week2_notes/README|Week 2]]** → Mission 5 (HashMap from scratch), Mission 2 (Ring Buffer)
+- **[[rust_learning_week3_notes/README|Week 3]]** → Generic implementations across all missions
+- **[[rust_learning_week4_notes/README|Week 4]]** → Mission 6 (2D Grids + Pathfinding), Mission 3 (Search Algorithms)
 
 ### **AoC Applications**
 - **[[../zettelkasten/AoC Collection Problems]]** - Collections in competitive programming
