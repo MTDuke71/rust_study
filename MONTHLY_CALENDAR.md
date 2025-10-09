@@ -1,8 +1,8 @@
----
+
 *Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]]*
 *Quick Links: [[Week 1 Overview]] | [[Week 2 Overview]] | [[Mission5 Overview]] | [[Collections MOC]]*
 *Related Concepts: [[V-Cycle Development]] | [[Learning Strategy]] | [[Time Management]] | [[Progressive Learning]]*
----
+
 
 # 🗓️ Monthly Learning Calendar - October 2025
 

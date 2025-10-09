@@ -125,7 +125,6 @@ Each mission includes a companion `tutorials/MissionX_tut/` project following pe
 - **[[Mission1_tut Overview]]** - Stack fundamentals with LIFO principles and generics
 - **[[Mission4_tut Overview]]** - Linked list deep dive with ownership patterns
 - **[[Mission5_tut Overview]]** - Hash table tutorial with step-by-step progression
-- **[[Mission5_tut Step Mapping]]** - Detailed learning path alignment
 
 ### **Tutorial Design Principles**
 - **Progressive Disclosure**: Complex concepts broken into digestible steps

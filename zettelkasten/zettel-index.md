@@ -28,7 +28,7 @@
 - [[AoC Patterns MOC]] - Competitive programming techniques
 
 ### **Find Today's Focus**
-- **Current Day**: See [[MONTHLY_CALENDAR]] Day activities
+- **Current Day**: See [[../MONTHLY_CALENDAR]] Day activities
 - **Latest Study Notes**: [[Daily Study MOC]] → Current Week
 - **Recent Work**: Check most recently modified files
 
@@ -42,7 +42,7 @@
 - [[Mission4 Overview]] - Linked Lists
 - [[Mission5 Overview]] - HashMap & HashSet
 - [[Mission6 Overview]] - 2D Grids & Navigation
-  - **Coverage**: [[COVERAGE_IMPROVEMENT_LOG]] - Test coverage strategies and improvements
+  - **Coverage**: [[../missions/Mission6/COVERAGE_IMPROVEMENT_LOG]] - Test coverage strategies and improvements
 - [[Mission7 Overview]] - Graph Algorithms & Traversal (DFS/BFS)
   - **Tutorial**: [[../tutorials/Mission7_tut/README|Mission7 Tutorial]] - 7-step graph learning progression
 
@@ -74,8 +74,6 @@
 - [[../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
 - [[../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - When optimizations trigger
 
-
-
 ## 🔄 Cross-Track Integration
 
 ### **Mission ↔ Daily Study Alignment**
@@ -83,25 +81,17 @@
 - Borrowing and references connect to [[../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded - Functions & References Deep Dive]]
 - HashMap implementation connects to [[Day 10 - HashMap Basics]]
 - HashSet wrapper connects to [[Day 11 - HashSet Operations]] 
-- Memory patterns connect to [[Day 01 - Ownership Basics]]
+- Memory patterns connect to [[Day 02 - Ownership Basics]]
 - Iterator patterns connect to [[Day 13 - Advanced Iterators]]
 
 ### **Mission ↔ Rust Book Connections**  
-- Struct design connects to [[Chapter 5 - Structs]]
-- Generic implementation connects to [[Chapter 10 - Generics]]
-- Error handling connects to [[Chapter 9 - Error Handling]]
+- Struct design connects to [[../rust_book/Ch5/README|Chapter 5 - Structs]]
+- Generic implementation connects to [[../rust_book/Ch10/README|Chapter 10 - Generics]]
+- Error handling connects to [[../rust_book/Ch9/README|Chapter 9 - Error Handling]]
 - Module organization connects to [[../rust_book/Ch7/crates/README|Chapter 7 - Packages and Crates]]
 
 ### **Progress Tracking**
-- **Live Progress**: See [[MONTHLY_CALENDAR]] for today's activities
-- **Mission Status**: [[Mission Progress Tracker]]
-- **Tutorial Alignment**: [[Mission5_tut Step Mapping]]
-
-## 🧪 Knowledge Testing
-
-- [[HashMap Quiz Questions]] - Self-assessment
-- [[Implementation Challenges]] - Coding exercises
-- [[Connection Verification]] - Link validation
+- **Live Progress**: See [[../MONTHLY_CALENDAR]] for today's activities
 
 ## 📦 Smart Pointers & Memory Management
 
@@ -117,7 +107,7 @@
 - [[Chebyshev Distance]] - Chessboard/8-connected distance metric for pathfinding
 - [[Manhattan Distance]] - 4-connected grid distance metric
 - [[Euclidean Distance]] - Continuous space distance metric
-- [[A* Search]] - Heuristic-based optimal pathfinding
+- [[A-Star-Algorithm-Deep-Dive]] - Heuristic-based optimal pathfinding
 - [[BFS Patterns]] - Breadth-first search for shortest paths
 - [[DFS Patterns]] - Depth-first search and backtracking
 - [[Graph Network Density]] - Network connectivity metrics and graph analysis
@@ -125,12 +115,8 @@
 ## ⚡ Performance & Optimization
 
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
-  - Pointer chasing vs direct access
-  - Cache-friendly access patterns
-  - Memory layout optimization (Vec<Vec<T>> vs Vec<T> flat)
-  - Common benchmarking pitfalls and solutions
-  - Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
+- Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
 
 ---
 *Tags: #index #overview #navigation #cross-track #zettelkasten #moc*
-*Links: [[MONTHLY_CALENDAR]] | [[Collections MOC]] | [[Missions MOC]] | [[Daily Study MOC]] | [[README]]*
+*Links: [[../MONTHLY_CALENDAR]] | [[Collections MOC]] | [[Missions MOC]] | [[Daily Study MOC]] | [[README]]*
