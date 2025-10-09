@@ -8,7 +8,7 @@
 - Generic `Graph<N, E>` with adjacency list representation
 - Node storage with unique identifiers and efficient lookup
 - Support for both directed and undirected graphs
-- **Implementation**: [[Mission 7]]
+- **Implementation**: [[Mission7 Overview]]
 - **Testing**: [[REQ-1 Test Strategy]]
 
 ### **REQ-2: Edge Management Operations**
@@ -23,7 +23,7 @@
 - Cycle detection and connectivity analysis
 - Graph validation and integrity checking
 - **Connected to**: [[Graph Validation Techniques]]
-- **Implementation**: [[Mission 7]]
+- **Implementation**: [[Mission7 Overview]]
 
 ### **REQ-4: Algorithm Foundation**
 - Visited tracking infrastructure for graph algorithms
@@ -37,7 +37,7 @@
 - Path finding and cycle detection
 - Component analysis and connectivity
 - **Connected to**: [[DFS Algorithms]]
-- **Implementation**: [[Mission 7]]
+- **Implementation**: [[Mission7 Overview]]
 
 ### **REQ-6: BFS Implementation**
 - Breadth-first search with shortest path capabilities
@@ -102,7 +102,7 @@ See [[Mission7_tut]] for step-by-step learning path
 - **Tests**: `missions/Mission7/tests/`
 - **Examples**: `missions/Mission7/examples/`
 - **Tutorial**: `tutorials/Mission7_tut/` directory
-- **Documentation**: [[Mission 7]]
+- **Documentation**: [[Mission7 Overview]]
 
 ## 🎄 AoC Applications
 

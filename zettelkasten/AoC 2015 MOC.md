@@ -83,6 +83,9 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Benchmarking with Criterion (340ms vs 394ms)
 - Understanding when memoization hurts performance (0% cache hit rate)
 
+Day 11:
+[[Day11_README]]
+
 ---
 
 ## 🎓 Key Learnings by Concept

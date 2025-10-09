@@ -44,7 +44,7 @@ From the daily study file, Day 16 covers:
 ### Mission Applications
 - [[Mission1]] - Generic Stack<T>
 - [[Mission5 Overview]] - Generic HashMap<K, V>
-- [[Mission 6]] - Generic Grid<T>
+- [[Mission6 Overview]] - Generic Grid<T>
 
 ### Learning Tracks
 - [[Daily Study MOC]] - Full daily study overview

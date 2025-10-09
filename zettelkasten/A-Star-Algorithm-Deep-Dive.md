@@ -2,7 +2,7 @@
 
 **Tags**: #algorithms #pathfinding #heuristics #grid-navigation #mission6
 
-**Related**: [[Mission 6.md]], [[Grid algorithms (flood fill, connected components).md]], [[Queue applications (BFS, level traversal).md]]
+**Related**: [[Mission6 Overview]], [[Grid algorithms (flood fill, connected components).md]], [[Queue applications (BFS, level traversal).md]]
 
 ## Overview
 

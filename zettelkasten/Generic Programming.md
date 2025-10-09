@@ -465,7 +465,7 @@ impl<T: Clone> Grid<T> {
 }
 ```
 
-Related: [[Mission 6]]
+Related: [[Mission6 Overview]]
 
 ## 🧪 Testing Generic Code
 
@@ -619,7 +619,7 @@ Related: [[Day 19 - Trait Objects]]
 - [[Mission3]] - Generic binary search algorithms
 - [[Mission4]] - Generic LinkedList<T> with smart pointers
 - [[Mission5 Overview]] - Generic HashMap<K, V> and HashSet<T>
-- [[Mission 6]] - Generic Grid<T> for 2D arrays
+- [[Mission6 Overview]] - Generic Grid<T> for 2D arrays
 
 ### **Collections & Iterators**
 - [[Collections MOC]] - Overview of generic collections

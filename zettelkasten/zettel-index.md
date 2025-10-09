@@ -29,7 +29,6 @@
 
 ### **Find Today's Focus**
 - **Current Day**: See [[MONTHLY_CALENDAR]] Day activities
-- **Mission Progress**: [[Mission Progress Tracker]]
 - **Latest Study Notes**: [[Daily Study MOC]] → Current Week
 - **Recent Work**: Check most recently modified files
 
@@ -44,7 +43,7 @@
 - [[Mission5 Overview]] - HashMap & HashSet
 - [[Mission6 Overview]] - 2D Grids & Navigation
   - **Coverage**: [[COVERAGE_IMPROVEMENT_LOG]] - Test coverage strategies and improvements
-- [[../missions/Mission7/README|Mission7]] - Graph Algorithms & Traversal (DFS/BFS)
+- [[Mission7 Overview]] - Graph Algorithms & Traversal (DFS/BFS)
   - **Tutorial**: [[../tutorials/Mission7_tut/README|Mission7 Tutorial]] - 7-step graph learning progression
 
 ### **Daily Study Track** - Systematic Learning
