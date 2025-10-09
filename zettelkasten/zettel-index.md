@@ -118,6 +118,13 @@
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
 - Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
 
+## 📊 System Reports & Analysis
+
+- [[Reports/README|Reports Directory]] - Automated zettelkasten health reports
+  - [[Reports/Orphans|Orphaned Files]] - Files needing better integration
+  - [[Reports/Broken Links Report|Broken Links]] - Missing concepts to create
+  - [[Reports/Link Validation Report|Link Validation]] - Overall link health
+
 ---
 *Tags: #index #overview #navigation #cross-track #zettelkasten #moc*
 *Links: [[../MONTHLY_CALENDAR]] | [[Collections MOC]] | [[Missions MOC]] | [[Daily Study MOC]] | [[README]]*
