@@ -85,7 +85,7 @@
   - Day 7: HashMap memoization patterns
   - Day 8: String parsing and character counting
 - [[Frequency Counting]] - Character/word occurrence patterns
-- [[Deduplication]] - Removing duplicates efficiently  
+- [[Deduplication]] - Removing duplicates efficiently with HashSet, sort+dedup, and order-preserving strategies
 - [[Set Operations]] - Union, intersection, difference
 - [[Memoization]] - Caching computation results
 - [[Error Handling Deep Dive]] - Robust input parsing and validation
