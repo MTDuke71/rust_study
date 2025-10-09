@@ -9,14 +9,14 @@ This directory contains specialized tools, patterns, and complete solutions desi
 ## 📂 **Project Structure**
 
 ### **Pattern Recognition & Framework**
-- **[aoc_pattern_recognition/](aoc_pattern_recognition/)** - Algorithm pattern trainer and competitive programming utilities
+- **[aoc_pattern_recognition/](aoc_pattern_recognition/README.md)** - Algorithm pattern trainer and competitive programming utilities
   - Grid traversal patterns (BFS, DFS, pathfinding)
   - Parsing patterns (regex, nom, custom parsers)
   - State management patterns (finite state machines)
   - Pattern trainer for rapid problem classification
 
 ### **Historical Solutions & Analysis**
-- **[aoc2015/](aoc2015/)** - Complete AoC 2015 solutions with comprehensive analysis
+- **[aoc2015/](aoc2015/README.md)** - Complete AoC 2015 solutions with comprehensive analysis
   - 7+ complete solutions with optimization studies
   - Performance benchmarking and algorithm comparison
   - Visualization tools (brightness maps, grid displays)
