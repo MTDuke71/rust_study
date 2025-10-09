@@ -48,6 +48,7 @@
 ### **Data Structures & Collections**
 - [[Collections MOC]] - Complete data structures overview
 - [[HashMap Internals]] - Hash table implementation details
+- [[JSON Processing with serde_json]] - Dynamic data structures and JSON traversal
 - [[BTreeMap Patterns]] - Ordered collection strategies
 - [[Vec Patterns]] - Dynamic array management
 - [[Ring Buffer Overwriting Semantics]] - Circular buffer capacity strategies

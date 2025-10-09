@@ -11,6 +11,7 @@
 - **[[Number Processing]]** - Integer parsing, range handling, mathematical operations
 - **[[Grid Input Handling]]** - 2D data ingestion and coordinate systems
 - **[[Multi-Format Parsing]]** - JSON, CSV, custom delimiter handling
+- **[[JSON Processing with serde_json]]** - AoC Day 12 JSON traversal and filtering patterns
 - **[[Stream Processing]]** - Large input handling and memory efficiency
 
 ### **Data Structure Selection**

@@ -1,0 +1,35 @@
+[package]
+name = "mission2_tut"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+
+[[example]]
+name = "step1_queue_basics"
+path = "examples/step1_queue_basics.rs"
+
+[[example]]
+name = "step2_simple_array_queue"
+path = "examples/step2_simple_array_queue.rs"
+
+[[example]]
+name = "step3_ring_buffer_basics"
+path = "examples/step3_ring_buffer_basics.rs"
+
+[[example]]
+name = "step4_ring_buffer_with_option"
+path = "examples/step4_ring_buffer_with_option.rs"
+
+[[example]]
+name = "step5_linked_queue_basics"
+path = "examples/step5_linked_queue_basics.rs"
+
+[[example]]
+name = "step6_advanced_linked_queue"
+path = "examples/step6_advanced_linked_queue.rs"
+
+[[example]]
+name = "step7_production_queues"
+path = "examples/step7_production_queues.rs"

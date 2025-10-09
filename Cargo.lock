@@ -453,6 +453,13 @@ name = "mission2"
 version = "0.1.0"
 
 [[package]]
+name = "mission2_tut"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+]
+
+[[package]]
 name = "mission3"
 version = "0.1.0"
 dependencies = [

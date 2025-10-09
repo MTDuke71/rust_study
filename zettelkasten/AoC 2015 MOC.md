@@ -83,8 +83,24 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Benchmarking with Criterion (340ms vs 394ms)
 - Understanding when memoization hurts performance (0% cache hit rate)
 
-Day 11:
-[[Day11_README]]
+### **Day 11: Corporate Policy**
+- **Documentation Hub**: [[../advent_of_code/aoc2015/examples/Day11_README]] - Complete Day 11 guide and file links
+- **Quick Start**: [[../advent_of_code/aoc2015/examples/DAY11_QUICK_REFERENCE]] - Rules summary and implementation order
+- **Implementation Guide**: [[../advent_of_code/aoc2015/examples/DAY11_IMPLEMENTATION_GUIDE]] - Step-by-step coding walkthrough
+- **Setup Summary**: [[../advent_of_code/aoc2015/examples/DAY11_SETUP_COMPLETE]] - Files created and structure overview
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day11]]
+- **Source Code**: [[../advent_of_code/aoc2015/src/solver/day11.rs]]
+- **Core Algorithm**: Base-26 counting system for string incrementing ("xx" → "xy" → "xz" → "ya")
+- **Validation Rules**: Multi-rule composition (straight sequences, forbidden chars, duplicate pairs)
+- **Performance**: Smart range skipping optimization to avoid generating invalid passwords
+
+### **Day 12: JSAbacusFramework.io**
+- **Deep Dive**: [[JSON Processing with serde_json]] - Complete guide to JSON parsing and traversal
+- JSON parsing with `serde_json::Value`
+- Recursive data structure traversal
+- Pattern matching on JSON types
+- Conditional filtering (Part 2: "red" object exclusion)
+- Dynamic typing in statically-typed language
 
 ---
 
@@ -94,11 +110,14 @@ Day 11:
 - [[../advent_of_code/aoc2015/examples/day08_rust_string_handling_explained]] - Compile-time vs runtime string handling
 - Day 8: Escape sequence parsing (`\\`, `\"`, `\xHH`)
 - Day 8: UTF-8 encoding vs byte arrays (C-style strings)
+- Day 11: [[../advent_of_code/aoc2015/examples/DAY11_IMPLEMENTATION_GUIDE]] - Base-26 counting and string incrementing with wrap-around logic
+- Day 11: Character arithmetic (`'a' as u8 + 1`) for consecutive sequence detection
 
 ### **Data Structures**
 - Day 3: HashSet for coordinate tracking
 - Day 6: 2D grids and array indexing
 - Day 7: HashMap for memoization
+- Day 12: JSON recursive traversal with `serde_json::Value`
 
 ### **Performance Optimization**
 - Day 4: Computational efficiency
@@ -106,18 +125,27 @@ Day 11:
 - Day 8: Character counting algorithms
 - Day 10: [[../advent_of_code/aoc2015/examples/DAY10_BENCHMARK_ANALYSIS]] - Benchmarking iterative vs memoized approaches
 - Day 10: Understanding when caching hurts performance
+- Day 11: [[../advent_of_code/aoc2015/examples/DAY11_QUICK_REFERENCE]] - Smart range skipping and rule ordering optimization
 
 ### **Parsing & Validation**
 - Day 2: Structured input parsing
 - Day 5: Regex patterns
 - Day 8: Custom escape sequence parser
 - Day 10: Run-length encoding
+- Day 11: Multi-rule validation composition - combining 3 independent password rules
+- Day 12: [[JSON Processing with serde_json]] - Dynamic JSON parsing and conditional filtering
 
 ### **Graph & Dependencies**
 - Day 7: DAG traversal
 - Day 7: Dependency resolution
 - Day 7: Cycle detection
 - [[../advent_of_code/aoc2015/examples/day07_debug/DEPENDENCY_TREE_README]] - Complete dependency tree analysis for circuit gates
+
+### **Algorithm Patterns**
+- Day 11: Base-N counting systems (base-26 for alphabetic incrementing)
+- Day 11: Multi-constraint satisfaction with early termination
+- Day 11: Generation with validation loop - increment until valid pattern found
+- Day 12: Recursive tree traversal with conditional filtering
 - Day 9: TSP with permutation generation
 
 ### **Algorithms & Problem Solving**
@@ -141,6 +169,7 @@ Day 11:
 - Day 7 → [[Day 10 - HashMap Basics]] - Key-value storage
 - Day 3 → [[Day 11 - HashSet Operations]] - Set operations
 - Day 10 → [[../daily_study/rust_learning_week2_notes/Day10]] - HashMap and iteration patterns
+- Day 11 → [[../daily_study/rust_learning_week2_notes/Day09]] - Password validation patterns and string rule composition
 
 ### **Rust Concepts**
 - [[Error Handling Deep Dive]] - AoC input validation

@@ -62,6 +62,7 @@
 - [[While Let Pattern Deep Dive]] - Idiomatic consuming collection patterns
 - [[Closures in Rust]] - Anonymous functions with environment capture
 - [[Deref Coercion and Automatic Dereferencing]] - Smart pointer unwrapping mechanics
+- [[JSON Processing with serde_json]] - JSON parsing, traversal, and type-safe processing
 
 **Advanced Topics:**
 - [[Error Handling Deep Dive]] - Comprehensive error handling
