@@ -47,10 +47,10 @@
   - **Tutorial**: [[../tutorials/Mission7_tut/README|Mission7 Tutorial]] - 7-step graph learning progression
 
 ### **Daily Study Track** - Systematic Learning
-- [[Week 1 Notes]] - Collections Fundamentals
-- [[Week 2 Notes]] - Advanced Collections  
-- [[Week 3 Notes]] - Traits & Type System
-- [[Week 4 Notes]] - Applied Problem Solving (AoC)
+- [[Week 1 Overview]] - Collections Fundamentals
+- [[Week 2 Overview]] - Advanced Collections  
+- [[Week 3 Overview]] - Traits & Type System
+- [[Week 4 Overview]] - Applied Problem Solving (AoC)
 
 ### **Key Concept Areas**
 
