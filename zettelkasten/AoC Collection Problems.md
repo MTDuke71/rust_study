@@ -677,8 +677,8 @@ fn calculate_answer<T>(state: &HashMap<String, T>) -> usize {
 - **[[../Mission1/README]]**: Stack operations using Vec as foundation
 
 ### **Daily Study Connections**
-- **[[../daily_study/rust_learning_week2_notes/Day8]]**: Vector fundamentals and capacity management
-- **[[../daily_study/rust_learning_week2_notes/Day9]]**: String processing and UTF-8 considerations  
+- **[[../daily_study/rust_learning_week2_notes/Day08]]**: Vector fundamentals and capacity management
+- **[[../daily_study/rust_learning_week2_notes/Day09]]**: String processing and UTF-8 considerations  
 - **[[../daily_study/rust_learning_week2_notes/Day10]]**: HashMap operations and entry API patterns
 - **[[../daily_study/rust_learning_week2_notes/Day11]]**: HashSet operations and set theory applications
 

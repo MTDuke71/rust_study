@@ -24,10 +24,13 @@ use anyhow::Result;
 pub fn solve_part1(input: &str) -> Result<String> {
     println!("🎄 Day 10 Part 1: Apply look-and-say 40 times");
     
-    // TODO: Your implementation here
-    let result = 0; // Replace with actual length
+    let mut current = input.trim().to_string();
     
-    Ok(result.to_string())
+    for _ in 0..40 {  // Apply 40 times!
+        current = look_and_say(&current);
+    }
+    
+    Ok(current.len().to_string())  // Return LENGTH, not string!
 }
 
 // TODO: Implement solve_part2
@@ -35,16 +38,19 @@ pub fn solve_part1(input: &str) -> Result<String> {
 pub fn solve_part2(input: &str) -> Result<String> {
     println!("🎄 Day 10 Part 2: Apply look-and-say 50 times");
     
-    // TODO: Your implementation here
-    let result = 0; // Replace with actual length
+    let mut current = input.trim().to_string();
     
-    Ok(result.to_string())
+    for _ in 0..50 {  // Apply 50 times!
+        current = look_and_say(&current);
+    }
+    
+    Ok(current.len().to_string())  // Return LENGTH, not string!
 }
 
 /// Applies one iteration of the look-and-say sequence
 /// 
 /// ## Algorithm
-/// 1. Convert string to characters
+/// 1. Convert string to characters 
 /// 2. Iterate through characters, counting consecutive occurrences
 /// 3. For each group: append count + character to result
 /// 
@@ -70,8 +76,23 @@ pub fn look_and_say(s: &str) -> String {
     // Edge cases to handle:
     // - Empty string → return empty string
     // - Single character → return "1" + character
+    let mut result = String::new();
+    let vector_string: Vec<char> = s.chars().collect();
+    let mut i = 0;
+    while i < vector_string.len() {
+        let current_char = vector_string[i];
+        let mut count = 1;
+        while i + count < vector_string.len() 
+        && vector_string[i + count] == current_char {
+            count += 1;
+        }
+    result.push_str(&count.to_string());  // Output count
+    result.push(current_char);            // Output character
+    i += count;                           // Skip entire group
+    }
+
     
-    String::new() // Replace with your implementation
+    result// Replace with your implementation
 }
 
 #[cfg(test)]

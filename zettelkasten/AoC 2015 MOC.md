@@ -64,6 +64,25 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Part 1: Code length vs memory length
 - Part 2: String encoding/escaping
 
+### **Day 9: All in a Single Night**
+- **Traveling Salesman Problem (TSP)**
+- Permutation generation with Heap's algorithm
+- Mission 5 Dictionary integration
+- Brute force optimization
+- Lifetime management with string slices
+
+### **Day 10: Elves Look, Elves Say**
+- **Run-length encoding** and look-and-say sequences
+- **Performance Analysis**: [[../advent_of_code/aoc2015/examples/DAY10_BENCHMARK_ANALYSIS]] - Iterative vs Memoized comparison
+- **Deep Dive**: [[../advent_of_code/aoc2015/examples/DAY10_MEMOIZATION_WALKTHROUGH]] - Why memoization fails for Day 10
+- **Execution Trace**: [[../advent_of_code/aoc2015/examples/DAY10_EXECUTION_TRACE]] - Side-by-side visualization
+- **Learning Guide**: [[../advent_of_code/aoc2015/examples/DAY10_LEARNING_GUIDE]] - Step-by-step implementation
+- **Quick Reference**: [[../advent_of_code/aoc2015/examples/DAY10_README]] - Commands and summary
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day10]]
+- While loop with manual index control
+- Benchmarking with Criterion (340ms vs 394ms)
+- Understanding when memoization hurts performance (0% cache hit rate)
+
 ---
 
 ## 🎓 Key Learnings by Concept
@@ -82,17 +101,26 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 4: Computational efficiency
 - Day 7: Memoization patterns
 - Day 8: Character counting algorithms
+- Day 10: [[../advent_of_code/aoc2015/examples/DAY10_BENCHMARK_ANALYSIS]] - Benchmarking iterative vs memoized approaches
+- Day 10: Understanding when caching hurts performance
 
 ### **Parsing & Validation**
 - Day 2: Structured input parsing
 - Day 5: Regex patterns
 - Day 8: Custom escape sequence parser
+- Day 10: Run-length encoding
 
 ### **Graph & Dependencies**
 - Day 7: DAG traversal
 - Day 7: Dependency resolution
 - Day 7: Cycle detection
 - [[../advent_of_code/aoc2015/examples/day07_debug/DEPENDENCY_TREE_README]] - Complete dependency tree analysis for circuit gates
+- Day 9: TSP with permutation generation
+
+### **Algorithms & Problem Solving**
+- Day 9: Heap's algorithm for permutations
+- Day 10: [[../advent_of_code/aoc2015/examples/DAY10_MEMOIZATION_WALKTHROUGH]] - Run-length encoding and sequence transformation
+- Day 10: [[../advent_of_code/aoc2015/examples/DAY10_EXECUTION_TRACE]] - Iterative vs recursive execution patterns
 
 ---
 
@@ -102,11 +130,14 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 7 → [[Mission5 Overview]] - HashMap memoization patterns
 - Day 8 → String parsing techniques
 - Day 3 → [[Collections MOC]] - HashSet usage
+- Day 9 → [[Mission5 Overview]] - Dictionary for distance matrix
+- Day 10 → [[Mission5 Overview]] - MemoCache usage (educational example of when NOT to cache)
 
 ### **Daily Study Connections**
 - Day 8 → [[Day 09 - String Patterns]] - String vs &str
 - Day 7 → [[Day 10 - HashMap Basics]] - Key-value storage
 - Day 3 → [[Day 11 - HashSet Operations]] - Set operations
+- Day 10 → [[../daily_study/rust_learning_week2_notes/Day10]] - HashMap and iteration patterns
 
 ### **Rust Concepts**
 - [[Error Handling Deep Dive]] - AoC input validation
@@ -119,14 +150,16 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 
 Based on [[../advent_of_code/aoc2015/Problem_Statements/summary]]:
 
-- **String Processing**: Days 1, 8
+- **String Processing**: Days 1, 8, 10
 - **Mathematical**: Days 2
-- **Simulation**: Days 3, 6
+- **Simulation**: Days 3, 6, 10
 - **Cryptographic**: Day 4
 - **Pattern Matching**: Day 5
-- **Graph Algorithms**: Day 7
+- **Graph Algorithms**: Day 7, 9
 - **Parsing**: Day 8
-- **Encoding**: Day 8 (Part 2)
+- **Encoding**: Day 8 (Part 2), Day 10 (Run-length encoding)
+- **Optimization**: Day 9 (TSP)
+- **Brute Force**: Day 4, 9
 
 ---
 
@@ -143,6 +176,9 @@ Based on [[../advent_of_code/aoc2015/Problem_Statements/summary]]:
 - Memoization for expensive computations
 - Iterator efficiency
 - Avoiding unnecessary allocations
+- **Benchmarking**: [[../advent_of_code/aoc2015/examples/DAY10_README]] - Day 10 demonstrates when NOT to memoize
+- Cache hit rate analysis
+- Simple solutions often outperform complex ones
 
 ---
 
@@ -160,13 +196,21 @@ Based on [[../advent_of_code/aoc2015/Problem_Statements/summary]]:
 - Part 1 and Part 2 coverage
 - Example-driven development
 
+### **Day 10 Performance Testing**
+- **Criterion Benchmarking**: [[../advent_of_code/aoc2015/examples/DAY10_BENCHMARK_ANALYSIS]]
+- Release mode performance comparison
+- Iterative vs recursive with memoization
+- Cache effectiveness analysis
+- 4 unit tests for correctness validation
+
 ---
 
 ## 📈 Progress Tracking
 
-**Days Completed**: 8 / 25
-**Test Coverage**: Excellent (Day 7: 36 tests, Day 8: 18 tests)
-**Documentation**: Comprehensive with problem summaries
+**Days Completed**: 10 / 25
+**Test Coverage**: Excellent (Day 7: 36 tests, Day 8: 18 tests, Day 10: 4 tests + benchmarks)
+**Documentation**: Comprehensive with problem summaries and deep dives
+**Performance Analysis**: Day 10 benchmarking suite with Criterion
 
 ---
 

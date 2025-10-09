@@ -190,13 +190,85 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
+### Day 10: Elves Look, Elves Say
+**Title**: Elves Look, Elves Say  
+**Part 1 Type**: String Processing + Simulation  
+**Part 1 Description**: Apply look-and-say sequence transformation 40 times, return final length  
+**Part 2 Type**: String Processing + Simulation  
+**Part 2 Description**: Apply look-and-say sequence transformation 50 times, return final length  
+**Key Concepts**: Run-length encoding, iterative string transformation, consecutive character counting, exponential growth patterns, while loop with manual index control, algorithm optimization analysis
+
+**Look-and-Say Sequence**:
+- Read previous term and describe what you see
+- "1" → "one 1" → "11"
+- "11" → "two 1s" → "21"
+- "21" → "one 2, one 1" → "1211"
+- "1211" → "one 1, one 2, two 1s" → "111221"
+
+**Algorithm Implementation**:
+- **Run-Length Encoding**: Count consecutive identical characters
+- **While Loop Pattern**: Manual index control for look-ahead and variable jumps
+- **Grouping Operation**: Inner while loop counts consecutive characters, outer while loop processes groups
+- **Skip Optimization**: `i += count` (not `i += 1`) to skip entire counted group
+- **Bounds Checking**: `i + count < len()` to prevent out-of-bounds access
+
+**Performance Analysis - Iterative vs Memoized**:
+- **Iterative Approach**: 340ms for 50 iterations ✅ (simple loop, minimal overhead)
+- **Memoized Approach**: 394ms for 50 iterations ❌ (15.7% slower due to overhead)
+- **Cache Hit Rate**: 0% (sequences never repeat - linear chain with exponential growth)
+- **Memory Comparison**: Iterative uses ~7MB (current string), Memoized uses ~10MB (all 50 intermediates cached)
+- **Key Insight**: Memoization hurts performance when subproblems don't repeat!
+
+**Why Memoization Fails Here**:
+1. **No Repeated Subproblems**: Each iteration produces unique string never seen again
+2. **Linear Sequence**: No branching or overlapping calls (unlike Fibonacci)
+3. **Pure Overhead**: String cloning, hashing, HashMap operations add ~54ms with zero cache hits
+4. **Exponential Growth**: Strings grow ~30% per iteration, ensuring uniqueness
+
+**String Growth Pattern**:
+- Iteration 0: 10 chars
+- Iteration 10: 222 chars (22x growth)
+- Iteration 20: 4,822 chars (22x growth)
+- Iteration 30: 102,814 chars (21x growth)
+- Iteration 40: 360,154 chars (3.5x growth)
+- Iteration 50: 5,103,798 chars (14x growth)
+- **Average**: ~30% growth per iteration
+
+**Rust-Specific Implementation Details**:
+- **For Loop vs While Loop**: While loop superior for grouping operations (needs look-ahead, variable jumps)
+- **Index Control**: Manual `i += count` provides flexibility for skipping groups
+- **String Building**: `push_str()` for count, `push()` for character
+- **Redundant Code Elimination**: User discovered `if chars.is_empty()` check unnecessary - while condition already handles it (DRY principle)
+- **Clean Code Principle**: Simpler code without redundant checks is more idiomatic Rust
+
+**Comprehensive Documentation Created**:
+- **DAY10_LEARNING_GUIDE.md**: Step-by-step implementation guide (200+ lines)
+- **DAY10_BENCHMARK_ANALYSIS.md**: Full performance comparison and analysis
+- **DAY10_MEMOIZATION_WALKTHROUGH.md**: Detailed explanation of memoized approach
+- **DAY10_EXECUTION_TRACE.md**: Visual side-by-side execution comparison
+- **DAY10_README.md**: Quick reference and command guide
+- **Benchmark Suite**: `benches/day10_comparison.rs` with Criterion integration
+
+**Educational Value**:
+- **Algorithm Selection**: Demonstrates when simple iterative beats "clever" memoization
+- **Benchmarking Importance**: "Premature optimization is the root of all evil" - measure first!
+- **Data Pattern Recognition**: Understanding when caching helps vs hurts
+- **Clean Code Principles**: Trust loop conditions, avoid redundant checks
+- **Mission 5 Integration**: Shows MemoCache usage even when not beneficial (educational contrast)
+
+**Results**:
+- Part 1 (40 iterations): 492,982 characters
+- Part 2 (50 iterations): 6,989,950 characters
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
-| String Processing | 4 | 4 |
+| String Processing | 5 | 5 |
 | Mathematical | 2 | 3 |
-| Simulation | 4 | 4 |
+| Simulation | 5 | 5 |
 | Search/Traversal | 1 | 1 |
 | Optimization | 1 | 2 |
 | Data Structures | 3 | 1 |
@@ -227,6 +299,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - Day 7: **Advanced HashMap memoization**, recursive algorithms, enum-based instruction modeling, `anyhow` error handling, comprehensive test coverage (36 tests), professional debug tooling, dependency analysis algorithms, architectural understanding of DAG structures, zero-cost abstraction validation
 - Day 8: **Critical UTF-8 vs byte array distinction**, escape sequence parsing, character counting vs byte counting, `chars()` iteration, understanding when `byte as char` fails, Rust strings are UTF-8 (not byte arrays like C), custom character counting logic
 - Day 9: **Advanced algorithmic problem solving**, Heap's algorithm implementation, lifetime management with string slices, `anyhow::Result` error handling, Mission 5 Dictionary integration, permutation generation, DRY principle in function design, comprehensive test coverage (11 tests), competitive programming patterns
+- Day 10: **Run-length encoding**, while loop with manual index control, iterative vs recursive performance comparison, benchmarking with Criterion, understanding when memoization hurts performance (0% cache hit rate), string growth patterns, clean code principles (avoiding redundant checks), comprehensive performance analysis documentation
 
 ---
 
@@ -254,9 +327,9 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations*
-*Links: [[../../zettelkasten/AoC Patterns MOC]] | [[../../zettelkasten/AoC Collection Problems]] | [[../README]] | [[../../Mission5/README]] | [[../../daily_study/rust_learning_week2_notes/Day10]] | [[../../zettelkasten/HashMap Internals]] | [[../../zettelkasten/Memory Address Analysis]] | [[../../zettelkasten/Heap's Algorithm Deep Dive]]*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis*
+*Links: [[../../zettelkasten/AoC Patterns MOC]] | [[../../zettelkasten/AoC Collection Problems]] | [[../README]] | [[../../Mission5/README]] | [[../../daily_study/rust_learning_week2_notes/Day10]] | [[../../zettelkasten/HashMap Internals]] | [[../../zettelkasten/Memory Address Analysis]] | [[../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]]*

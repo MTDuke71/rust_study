@@ -34,6 +34,7 @@ name = "aoc2015"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "criterion 0.5.1",
  "md5",
  "mission5",
  "mission6",

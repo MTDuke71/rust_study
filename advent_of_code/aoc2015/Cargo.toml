@@ -10,3 +10,10 @@ md5 = "0.8"
 regex = "1"
 mission5 = { path = "../../missions/Mission5" }
 mission6 = { path = "../../missions/Mission6" }
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "day10_comparison"
+harness = false

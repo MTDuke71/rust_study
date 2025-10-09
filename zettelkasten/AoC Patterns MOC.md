@@ -55,6 +55,9 @@
 - **[[Parsing Techniques]]** - Recursive descent and state machine parsing
 - **[[Text Processing]]** - Tokenization, normalization, and analysis
 - **[[Encoding/Decoding]]** - Caesar cipher, Base64, and custom encodings
+- **[[Run-Length Encoding]]** - AoC 2015 Day 10 look-and-say sequences
+  - **Performance Analysis**: [[../../advent_of_code/aoc2015/examples/DAY10_BENCHMARK_ANALYSIS]] - When NOT to use memoization
+  - **Algorithm Walkthrough**: [[../../advent_of_code/aoc2015/examples/DAY10_MEMOIZATION_WALKTHROUGH]]
 - **Stack-Based Validation** - [[../../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended]] - Configurable bracket matching with multi-error reporting
 
 ---
@@ -103,6 +106,10 @@
 - **[[Memory Optimization]]** - Allocation reduction and cache efficiency
 - **[[Parallel Processing]]** - Rayon integration for embarrassingly parallel problems
 - **[[Profiling Techniques]]** - Finding and fixing performance bottlenecks
+- **[[Benchmarking Best Practices]]** - AoC 2015 Day 10 case study: [[../../advent_of_code/aoc2015/examples/DAY10_BENCHMARK_ANALYSIS]]
+  - When simple iterative solutions outperform "clever" optimizations
+  - Measuring cache effectiveness (hit rate analysis)
+  - Criterion integration for release-mode benchmarking
 
 ---
 
@@ -113,6 +120,7 @@
 - **[[Physics Simulation]]** - Particle systems and collision detection
 - **[[Process Simulation]]** - Assembly execution and virtual machines
 - **[[Growth Simulation]]** - Population dynamics and exponential processes
+  - **Look-and-Say Sequences**: [[../../advent_of_code/aoc2015/examples/DAY10_EXECUTION_TRACE]] - Exponential string growth patterns
 - **[[Time-Based Simulation]]** - Event scheduling and temporal logic
 
 ### **Optimization Problems**

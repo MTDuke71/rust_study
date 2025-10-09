@@ -63,10 +63,27 @@ Each solution includes:
 **Problem**: Look-and-say sequence generation (run-length encoding iteration)
 
 **Implementations**:
-- **Basic solution** (`src/solver/day10.rs`) - String-based iteration
-- **Memoization approach** (`examples/day10_with_memo.rs`) - Mission5 `MemoCache` integration
+- **Iterative solution** (`src/solver/day10.rs`) - Simple loop, optimal performance (340ms for 50 iterations)
+- **Memoization approach** (`examples/day10_with_memo.rs`) - Mission5 `MemoCache` integration (394ms, 15.7% slower)
 
-**Mission Integration**: Demonstrates `mission5` HashMap-based memoization for optimization
+**Performance Analysis**:
+- **[DAY10_BENCHMARK_ANALYSIS.md](examples/DAY10_BENCHMARK_ANALYSIS.md)** - Comprehensive benchmark results showing when simple beats complex
+- **[DAY10_MEMOIZATION_WALKTHROUGH.md](examples/DAY10_MEMOIZATION_WALKTHROUGH.md)** - Line-by-line code explanation and cache analysis
+- **[DAY10_EXECUTION_TRACE.md](examples/DAY10_EXECUTION_TRACE.md)** - Side-by-side execution visualization
+- **[DAY10_README.md](examples/DAY10_README.md)** - Quick reference and commands
+
+**Learning Resources**:
+- **[DAY10_LEARNING_GUIDE.md](examples/DAY10_LEARNING_GUIDE.md)** - Step-by-step implementation guide
+- **[Problem Statement](Problem_Statements/day10.md)** - Original problem description
+
+**Key Insights**:
+- ✅ Simple iterative solution outperforms memoized approach by 15.7%
+- ✅ Cache hit rate: 0% (sequences never repeat - no overlapping subproblems)
+- ✅ Demonstrates when NOT to use memoization despite having caching infrastructure
+- ✅ String growth: ~30% per iteration (exponential pattern)
+- ✅ Benchmark suite with Criterion for release-mode testing
+
+**Mission Integration**: Educational example of Mission5 `MemoCache` usage where caching adds overhead without benefit
 
 ### **Additional Solutions**
 - **Day 1**: Not Quite Lisp (floor navigation)
@@ -85,12 +102,15 @@ Each solution includes:
 cargo run
 
 # Run specific day
-cargo run --bin day06
+cargo run -- 10  # Day 10: Look-and-say sequence
 
 # Run example implementations
 cargo run --example day06_visualizer
 cargo run --example day06_hashmap
 cargo run --example day10_with_memo
+
+# Run benchmarks (Day 10)
+cargo bench --bench day10_comparison
 ```
 
 ### **Run Tests**
@@ -233,7 +253,11 @@ cargo run --release --example optimized_brute_force
 - **Day 6**: Grid array vs HashMap sparse representation
   - Grid: O(1) access, 1MB memory, better for dense data
   - HashMap: O(1) average, dynamic memory, better for sparse data
-- **Day 10**: String manipulation vs memoized sequences
+- **Day 10**: **[Iterative vs Memoized](examples/DAY10_BENCHMARK_ANALYSIS.md)** - When simple beats complex
+  - Iterative: 340ms (optimal) ✅
+  - Memoized: 394ms (15.7% slower) ❌
+  - Cache hit rate: 0% (no repeated subproblems)
+  - Key lesson: Benchmark before assuming optimization helps!
 
 ---
 
