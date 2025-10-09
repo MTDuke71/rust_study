@@ -1,7 +1,7 @@
 # Day 3 - References & Borrowing
 
 **Quick Reference Note**
-*For full content, see: [[daily_study/rust_learning_week1_notes/Day3]]*
+*For full content, see: [[daily_study/rust_learning_week1_notes/Day03|Day03]]*
 
 ---
 
@@ -125,7 +125,7 @@ Owner:              Borrower:
 
 ## Quick Navigation
 
-- **Full Details**: [[daily_study/rust_learning_week1_notes/Day3]]
+- **Full Details**: [[daily_study/rust_learning_week1_notes/Day03|Day03]]
 - **Previous**: [[Day 02 - Ownership Basics]]
 - **Next**: [[Day 04 - Lifetimes]]
 - **Week**: [[Week 1 Overview]]

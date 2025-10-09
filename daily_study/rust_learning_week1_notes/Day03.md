@@ -31,7 +31,7 @@ Function signatures communicate ownership/borrowing clearly. This is how lifetim
 ## 🚀 **Complete Runnable Example**
 
 ```rust
-// Copy this entire block to Rust Playground or save as day3_demo.rs
+// Copy this entire block to Rust Playground or save as day03_demo.rs
 
 fn main() {
     println!("=== References & Borrowing Demo from Day 3 ===\n");
@@ -138,10 +138,10 @@ fn count_words(text: &String) -> usize {
 ### **🛠️ How to Run This Code:**
 
 1. **Online**: Copy to [Rust Playground](https://play.rust-lang.org/)
-2. **Local file**: Save as `day3_demo.rs` and run `rustc day3_demo.rs && ./day3_demo`
+2. **Local file**: Save as `day03_demo.rs` and run `rustc day03_demo.rs && ./day03_demo`
 3. **In this workspace**:
    ```bash
-   .\scripts\run_md.bat daily_study\rust_learning_week1_notes\Day3.md
+   .\scripts\run_md.bat daily_study\rust_learning_week1_notes\Day03.md
    ```
 
 ### **Key Borrowing Rules Demonstrated:**

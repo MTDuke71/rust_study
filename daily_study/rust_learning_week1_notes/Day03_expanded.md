@@ -2,7 +2,7 @@
 Used 1 reference
 I'll read the Day 3 notes to review the topics covered and provide you with information about them.
 
-Read Day3.md
+Read Day03.md
 
 Based on the Day 3 notes, here's a comprehensive review of the key topics covered:
 
