@@ -133,6 +133,42 @@ pub struct Grid<T> {
     height: usize,
 }
 
+impl<T> Grid<T> {
+    /// Converts 2D coordinates to 1D vector index
+    /// 
+    /// # Formula
+    /// index = row * width + column
+    /// 
+    /// This is "row-major order" - we store complete rows sequentially
+    /// 
+    /// # Panics
+    /// Panics if coordinates are out of bounds
+    fn to_index(&self, row: usize, col: usize) -> usize {
+        assert!(row < self.height, "Row {} out of bounds (height: {})", row, self.height);
+        assert!(col < self.width, "Column {} out of bounds (width: {})", col, self.width);
+        row * self.width + col
+    }
+    
+    /// Gets a reference to the cell at the given position
+    pub fn get(&self, row: usize, col: usize) -> Option<&T> {
+        if row < self.height && col < self.width {
+            Some(&self.data[self.to_index(row, col)])
+        } else {
+            None  // Out of bounds - return None instead of panicking
+        }
+    }
+    
+    /// Gets a mutable reference to the cell at the given position
+    pub fn get_mut(&mut self, row: usize, col: usize) -> Option<&mut T> {
+        if row < self.height && col < self.width {
+            let idx = self.to_index(row, col);
+            Some(&mut self.data[idx])
+        } else {
+            None
+        }
+    }
+}
+
 impl<T: Clone> Grid<T> {
     /// Creates a new grid filled with the given value
     /// 
@@ -153,40 +189,6 @@ impl<T: Clone> Grid<T> {
             height,
         }
     }
-    
-    /// Converts 2D coordinates to 1D vector index
-    /// 
-    /// # Formula
-    /// index = row * width + column
-    /// 
-    /// This is "row-major order" - we store complete rows sequentially
-    /// 
-    /// # Panics
-    /// Panics if coordinates are out of bounds
-    fn index(&self, row: usize, col: usize) -> usize {
-        assert!(row < self.height, "Row {} out of bounds (height: {})", row, self.height);
-        assert!(col < self.width, "Column {} out of bounds (width: {})", col, self.width);
-        row * self.width + col
-    }
-    
-    /// Gets a reference to the cell at the given position
-    pub fn get(&self, row: usize, col: usize) -> Option<&T> {
-        if row < self.height && col < self.width {
-            Some(&self.data[self.index(row, col)])
-        } else {
-            None  // Out of bounds - return None instead of panicking
-        }
-    }
-    
-    /// Gets a mutable reference to the cell at the given position
-    pub fn get_mut(&mut self, row: usize, col: usize) -> Option<&mut T> {
-        if row < self.height && col < self.width {
-            let idx = self.index(row, col);
-            Some(&mut self.data[idx])
-        } else {
-            None
-        }
-    }
 }
 
 // Index operator support for convenient access
@@ -196,13 +198,13 @@ impl<T> Index<(usize, usize)> for Grid<T> {
     type Output = T;
     
     fn index(&self, (row, col): (usize, usize)) -> &Self::Output {
-        &self.data[self.index(row, col)]
+        &self.data[self.to_index(row, col)]
     }
 }
 
 impl<T> IndexMut<(usize, usize)> for Grid<T> {
     fn index_mut(&mut self, (row, col): (usize, usize)) -> &mut Self::Output {
-        let idx = self.index(row, col);
+        let idx = self.to_index(row, col);
         &mut self.data[idx]
     }
 }
@@ -385,15 +387,7 @@ pub struct Grid<T> {
     height: usize,
 }
 
-impl<T: Clone> Grid<T> {
-    pub fn new(width: usize, height: usize, default: T) -> Self {
-        Self {
-            data: vec![default; width * height],
-            width,
-            height,
-        }
-    }
-    
+impl<T> Grid<T> {
     pub fn width(&self) -> usize {
         self.width
     }
@@ -402,14 +396,14 @@ impl<T: Clone> Grid<T> {
         self.height
     }
     
-    fn index(&self, row: usize, col: usize) -> usize {
+    fn to_index(&self, row: usize, col: usize) -> usize {
         assert!(row < self.height && col < self.width);
         row * self.width + col
     }
     
     pub fn get(&self, row: usize, col: usize) -> Option<&T> {
         if row < self.height && col < self.width {
-            Some(&self.data[self.index(row, col)])
+            Some(&self.data[self.to_index(row, col)])
         } else {
             None
         }
@@ -417,10 +411,20 @@ impl<T: Clone> Grid<T> {
     
     pub fn get_mut(&mut self, row: usize, col: usize) -> Option<&mut T> {
         if row < self.height && col < self.width {
-            let idx = self.index(row, col);
+            let idx = self.to_index(row, col);
             Some(&mut self.data[idx])
         } else {
             None
+        }
+    }
+}
+
+impl<T: Clone> Grid<T> {
+    pub fn new(width: usize, height: usize, default: T) -> Self {
+        Self {
+            data: vec![default; width * height],
+            width,
+            height,
         }
     }
 }
@@ -429,13 +433,13 @@ impl<T> Index<(usize, usize)> for Grid<T> {
     type Output = T;
     
     fn index(&self, (row, col): (usize, usize)) -> &Self::Output {
-        &self.data[self.index(row, col)]
+        &self.data[self.to_index(row, col)]
     }
 }
 
 impl<T> IndexMut<(usize, usize)> for Grid<T> {
     fn index_mut(&mut self, (row, col): (usize, usize)) -> &mut Self::Output {
-        let idx = self.index(row, col);
+        let idx = self.to_index(row, col);
         &mut self.data[idx]
     }
 }
