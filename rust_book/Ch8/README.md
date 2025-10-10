@@ -4,6 +4,7 @@
 *Navigation: [[zettel-index]] | [[Rust Book Progress]] | [[Collections MOC]] | [[Vec]] | [[String]] | [[HashMap]]*
 *Quick Links: [[Memory Management]] | [[Ownership]] | [[Borrowing]] | [[Daily Study MOC]]*
 *Related Concepts: [[Iterators]] | [[Generics]] | [[Heap Allocation]] | [[Performance Optimization]]*
+*Deep Dives: [[Unicode, UTF-8, and Rust]] | [[String Performance]]*
 ---
 
 ## 📚 Overview
@@ -105,6 +106,17 @@ for b in "नमस्ते".bytes() {
 - Use `.chars()` for Unicode scalar values
 - Use `.bytes()` for raw bytes
 - Use slicing with extreme caution
+
+**📖 Deep Dive:** For a comprehensive understanding of Unicode, UTF-8, and why Rust strings work the way they do, see the dedicated Zettelkasten article: **[[Unicode, UTF-8, and Rust]]** (`zettelkasten/unicode-utf8-rust.md`)
+
+This article covers:
+- Unicode fundamentals and code points
+- UTF-8 encoding rules and byte patterns
+- Why Rust disallows `string[index]`
+- The three string perspectives (bytes, scalar values, grapheme clusters)
+- Performance characteristics and common pitfalls
+- Real-world examples with multilingual text
+- Best practices for safe string handling
 
 ---
 
