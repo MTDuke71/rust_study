@@ -1,6 +1,25 @@
 
 *Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]]*
-*Quick Links: [[Week 1 Overview]] | [[Week 2 Overview]] | [[Mission5 Overview]] | [[Collections MOC]]*
+*Quick Links: ### **Thursday, October 10** 🔍
+**Mission Focus**: Mission 5 Core Operations (insert, get, remove)
+**Daily Study**: Week 2, Day 11 - HashSets (unique collections, set operations)
+**Rust Book**: Chapter 5.1 - Defining and Instantiating Structs
+
+**Evidence-Based Learning Tasks:**
+```bash
+# Morning Retrieval Practice (10 min)
+# → Explain HashMap collision handling from memory
+# → Code sketch: implement basic get() operation without looking
+# → Review spaced repetition cards due today
+
+# Core Learning Block (30 min)
+# WE→FE→BP: Work through HashSet implementation pattern
+cargo test req2_insert && cargo test req3_get && cargo test req4_remove
+
+# Evening Consolidation (10 min)  
+# → Log any compilation errors in error bank
+# → Exit ticket: What clicked about HashSets today?
+```verview]] | [[Week 2 Overview]] | [[Mission5 Overview]] | [[Collections MOC]]*
 *Related Concepts: [[V-Cycle Development]] | [[Learning Strategy]] | [[Time Management]] | [[Progressive Learning]]*
 
 
@@ -10,15 +29,49 @@
 
 ## 📊 Learning Tracks Overview
 
-| Track | Current Position | Goal |```
-
----
-
-## 📈 Progress Trackingus |
+| Track | Current Position | Goal | Status |
 |-------|------------------|------|--------|
 | **V-Cycle Missions** | Mission 5 (HashMaps & HashSets) | Complete Mission 8+ | 🔄 Active |
 | **Daily Study Track** | Week 2, Day 8 Ready | Complete Week 2 (Collections) | ✅ Week 1 Complete |
 | **Rust Book** | Chapter 5 (Method Syntax) | Reach Chapter 8 (Common Collections) | 🔄 Active |
+
+## 📈 Daily Learning Routine (45-75 minutes)
+
+**Evidence-Based Learning Protocol** *(Following cognitive science research)*:
+
+### **Morning Activation (15 minutes)**
+1. **Retrieval Practice** (10 min): 
+   - Review spaced repetition cards due today
+   - Explain 2-3 yesterday's concepts from memory (no looking!)
+   - Quick code sketch demonstrating one concept
+
+2. **Error Bank Review** (5 min):
+   - Check error bank for patterns to avoid
+   - Review prevention rules from recent mistakes
+
+### **Core Learning Block (30-40 minutes)**
+3. **Worked Example → Faded → Bare Problem** (25-35 min):
+   - **Phase 1**: Study annotated solution (10 min)
+   - **Phase 2**: Fill-in-the-blanks practice (10 min) 
+   - **Phase 3**: Solve from scratch (15 min)
+
+4. **Daily Mission Focus** (5 min):
+   - Execute today's mission task from weekly plan
+   - Apply learned concepts to V-Cycle requirements
+
+### **Evening Consolidation (10 minutes)**
+5. **Error Logging** (5 min):
+   - Add any bugs/mistakes to error bank
+   - Write one prevention rule
+
+6. **Metacognitive Reflection** (5 min):
+   - Daily exit ticket: What clicked? What confused?
+   - Schedule tomorrow's retrieval practice
+
+### **Weekly Retrospective** (15 minutes every Friday)
+- ROI analysis of learning habits
+- Spaced repetition calibration
+- Next week's focus areas
 
 ## 🔗 Track Alignment & Coordination
 

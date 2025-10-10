@@ -22,6 +22,16 @@ daily_study/
 
 ## 🚀 **Quick Start**
 
+### **Evidence-Based Learning Protocol**
+**Daily 45-minute routine following cognitive science research:**
+
+1. **Retrieval Practice** (10 min): Explain yesterday's concepts from memory
+2. **Spaced Repetition** (5 min): Review cards due today  
+3. **Worked → Faded → Bare Problem** (25 min): Progressive skill building
+4. **Error Banking** (5 min): Log mistakes with prevention rules
+
+**See [[../zettelkasten/developer-learning-habits]] for complete methodology**
+
 ### **Running Daily Examples**
 ```bash
 # From workspace root
@@ -29,6 +39,11 @@ daily_study/
 
 # Or with PowerShell script
 .\run_markdown_code.ps1 daily_study\rust_learning_week4_notes\Day24.md
+
+# After running examples, apply retrieval practice:
+# → Explain the main concept without looking at code
+# → Sketch a variation from memory
+# → Add any bugs to your error bank
 ```
 
 ### **Navigation**

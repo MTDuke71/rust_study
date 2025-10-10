@@ -4,9 +4,11 @@ A **systematic, engineering-driven approach** to mastering Rust through formal s
 
 ## 🎯 Learning Philosophy
 
-This is **not casual coding practice** - it's a **professional software engineering curriculum** that treats Rust learning as a formal discipline. Every feature is traced from requirements to implementation to validation, building both language mastery and engineering rigor.
+This is **not casual coding practice** - it's a **professional software engineering curriculum** enhanced with **evidence-based learning science**. Every feature is traced from requirements to implementation to validation, while incorporating cognitive science research for accelerated skill acquisition.
 
-### V-Cycle Methodology
+### Dual-Foundation Approach
+
+**1. V-Cycle Engineering Methodology**
 ```
 Requirements (REQ-1, REQ-2, etc.)
     ↓
@@ -21,9 +23,18 @@ Validation (Integration Tests)
 Traceability Matrix
 ```
 
-**Key Pattern**: Every feature starts with numbered requirements that are directly traceable to tests and implementation.
+**2. Cognitive Science Learning Protocol**
+```
+Retrieval Practice → Spaced Repetition → Error Analysis
+    ↓
+Worked Examples → Faded Guidance → Independent Problem Solving  
+    ↓
+Metacognitive Reflection → Strategy Optimization
+```
 
-## � Workspace Organization
+**Key Integration**: V-Cycle provides engineering rigor while learning science maximizes retention and transfer. See [[zettelkasten/developer-learning-habits]] for complete methodology.
+
+## 🏗️ Workspace Organization
 
 ### **Hybrid Learning Structure**
 ```
