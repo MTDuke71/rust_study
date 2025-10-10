@@ -19,8 +19,8 @@
 //! - Node storage and management
 //! - Memory efficiency considerations
 
-use mission7::{Graph, GraphType, NodeId};
-use mission7_tut::tutorial_utils;
+use mission7::{Graph};
+//use mission7_tut::tutorial_utils;
 
 fn main() {
     println!("=== Step 2: Adjacency Lists ===\n");
@@ -45,6 +45,9 @@ fn main() {
     
     println!("\n=== Step 2 Complete ===");
     println!("Next: Step 3 - Edge Management");
+
+    // Optional Exercise
+    exercise(); 
 }
 
 fn what_are_adjacency_lists() {
@@ -225,6 +228,7 @@ fn node_storage_patterns() {
     // Pattern 3: Complex data
     println!("Pattern 3: Complex Data (Struct)");
     #[derive(Debug, Clone)]
+    #[allow(dead_code)]
     struct Person {
         name: String,
         age: u32,
