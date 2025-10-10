@@ -21,12 +21,14 @@ fn example1_creating_vectors() {
     v3.push(5);
     v3.push(6);
     v3.push(7);
+    println!("Vector built with push: {:?}", v3);
+
      example6_multiple_types_with_enum();
     example6a_memory_efficiency_analysis();
     example6b_why_enums_are_needed();
     example6c_alternative_approaches();
     example6d_real_world_use_cases();
-    example7_vector_methods();intln!("Vector built with push: {:?}", v3);
+    example7_vector_methods();
 
     // Creating with capacity
     let v4: Vec<i32> = Vec::with_capacity(10);
@@ -237,6 +239,7 @@ fn example6a_memory_efficiency_analysis() {
     println!("=========================================");
     
     #[derive(Debug)]
+    #[allow(dead_code)]
     enum SpreadsheetCell {
         Int(i32),
         Float(f64),
@@ -400,9 +403,11 @@ fn example6c_alternative_approaches() {
     println!("==========================================");
     
     #[derive(Debug)]
+    #[allow(dead_code)]
     enum CellType { Int, Float, Text }
     
     #[derive(Debug)]
+    #[allow(dead_code)]
     struct TypedCell {
         cell_type: CellType,
         data: Box<dyn std::fmt::Debug>,
@@ -419,6 +424,7 @@ fn example6c_alternative_approaches() {
     println!("===============================");
     
     #[derive(Debug)]
+    #[allow(dead_code)]
     struct HybridSpreadsheet {
         // Small values stored inline
         small_values: Vec<(usize, SmallValue)>,
@@ -427,6 +433,7 @@ fn example6c_alternative_approaches() {
     }
     
     #[derive(Debug)]
+    #[allow(dead_code)]
     enum SmallValue {
         Int(i32),
         Float(f64),
@@ -441,6 +448,7 @@ fn example6c_alternative_approaches() {
     println!("\n📊 Approach 4: Column-Oriented (Database Style)");
     println!("===============================================");
     
+    #[allow(dead_code)]
     struct ColumnStore {
         // Each column is homogeneous
         int_columns: Vec<Vec<Option<i32>>>,
@@ -522,6 +530,7 @@ fn example6d_real_world_use_cases() {
     println!("\n📊 Use Case 2: Analytics Data (Large Scale)");
     println!("===========================================");
     
+    #[allow(dead_code)]
     struct AnalyticsData {
         // Separate vectors for memory efficiency
         user_ids: Vec<u64>,           // 8 bytes each
@@ -544,6 +553,7 @@ fn example6d_real_world_use_cases() {
     println!("====================================");
     
     #[derive(Debug)]
+    #[allow(dead_code)]
     enum JsonValue {
         Null,
         Boolean(bool),
@@ -579,6 +589,7 @@ fn example6d_real_world_use_cases() {
     // Vec<Component> - cache unfriendly!
     
     // Good approach: Separate component arrays
+    #[allow(dead_code)]
     struct EntityComponentSystem {
         positions: Vec<(f32, f32)>,    // Hot data together
         healths: Vec<i32>,             // Cache-friendly
