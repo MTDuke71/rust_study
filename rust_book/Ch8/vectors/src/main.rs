@@ -23,13 +23,6 @@ fn example1_creating_vectors() {
     v3.push(7);
     println!("Vector built with push: {:?}", v3);
 
-     example6_multiple_types_with_enum();
-    example6a_memory_efficiency_analysis();
-    example6b_why_enums_are_needed();
-    example6c_alternative_approaches();
-    example6d_real_world_use_cases();
-    example7_vector_methods();
-
     // Creating with capacity
     let v4: Vec<i32> = Vec::with_capacity(10);
     println!("Vector with capacity 10: capacity={}, len={}", v4.capacity(), v4.len());
@@ -645,6 +638,54 @@ fn example7_vector_methods() {
     // First and last
     println!("First: {:?}", v.first());
     println!("Last: {:?}", v.last());
+    
+    // Converting Option to plain values
+    println!("\n🔓 Unwrapping Option Values:");
+    println!("============================");
+    
+    // Method 1: unwrap() - panics if None
+    let first_val = v.first().unwrap();  // Returns &i32
+    println!("Method 1 (unwrap): first = {}", first_val);
+    
+    // Method 2: unwrap_or() - provides default if None
+    let empty_vec: Vec<i32> = vec![];
+    let first_or_default = empty_vec.first().unwrap_or(&0);
+    println!("Method 2 (unwrap_or): first of empty vec = {}", first_or_default);
+    
+    // Method 3: unwrap_or_else() - compute default lazily
+    let first_or_computed = empty_vec.first().unwrap_or_else(|| &-1);
+    println!("Method 3 (unwrap_or_else): {}", first_or_computed);
+    
+    // Method 4: match expression (safest, most explicit)
+    match v.first() {
+        Some(value) => println!("Method 4 (match): first = {}", value),
+        None => println!("Method 4 (match): vector is empty"),
+    }
+    
+    // Method 5: if let (concise when you only care about Some case)
+    if let Some(first) = v.first() {
+        println!("Method 5 (if let): first = {}", first);
+    }
+    
+    // Method 6: expect() - like unwrap but with custom panic message
+    let last_val = v.last().expect("Vector should not be empty!");
+    println!("Method 6 (expect): last = {}", last_val);
+    
+    // Method 7: Dereferencing to get owned value (when you need i32, not &i32)
+    let first_owned: i32 = *v.first().unwrap();  // Dereference &i32 to i32
+    println!("Method 7 (dereference): first_owned = {} (type: i32)", first_owned);
+    
+    // Method 8: copied() or cloned() - convert Option<&T> to Option<T>
+    let first_copied: Option<i32> = v.first().copied();  // Option<&i32> -> Option<i32>
+    println!("Method 8 (copied): {:?} can be unwrapped to {}", first_copied, first_copied.unwrap());
+    
+    println!("\n⚠️  When to use each method:");
+    println!("• unwrap(): When you're CERTAIN the Option is Some (or want to panic)");
+    println!("• unwrap_or(default): When you want a fallback value");
+    println!("• expect(msg): Like unwrap, but with helpful error message");
+    println!("• match: When you need to handle both Some and None cases");
+    println!("• if let: When you only care about the Some case");
+    println!("• copied()/cloned(): When you need Option<T> instead of Option<&T>");
 
     // Slicing
     let slice = &v[1..4];
@@ -719,6 +760,7 @@ fn main() {
     example6a_memory_efficiency_analysis();
     example6b_why_enums_are_needed();
     example6c_alternative_approaches();
+    example6d_real_world_use_cases();
     example7_vector_methods();
     example8_practical_use_case();
 
