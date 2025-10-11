@@ -664,6 +664,12 @@ pub struct Grid<T> {
     height: usize,
 }
 
+impl<T> Grid<T> {
+    fn to_index(&self, row: usize, col: usize) -> usize {
+        row * self.width + col
+    }
+}
+
 impl<T: Clone> Grid<T> {
     pub fn new(width: usize, height: usize, default: T) -> Self {
         Self {
@@ -671,10 +677,6 @@ impl<T: Clone> Grid<T> {
             width,
             height,
         }
-    }
-    
-    fn index(&self, row: usize, col: usize) -> usize {
-        row * self.width + col
     }
     
     pub fn contains(&self, coord: Coord) -> bool {
@@ -710,13 +712,13 @@ impl<T: Clone> Grid<T> {
 impl<T> std::ops::Index<(usize, usize)> for Grid<T> {
     type Output = T;
     fn index(&self, (row, col): (usize, usize)) -> &Self::Output {
-        &self.data[self.index(row, col)]
+        &self.data[self.to_index(row, col)]
     }
 }
 
 impl<T> std::ops::IndexMut<(usize, usize)> for Grid<T> {
     fn index_mut(&mut self, (row, col): (usize, usize)) -> &mut Self::Output {
-        let idx = self.index(row, col);
+        let idx = self.to_index(row, col);
         &mut self.data[idx]
     }
 }
