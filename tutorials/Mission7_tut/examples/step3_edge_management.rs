@@ -126,9 +126,11 @@ fn adding_edges() {
     
     undirected.add_edge(x, y);
     println!("  Add X <-> Y (undirected)");
-    println!("  X's neighbors: {:?}", undirected.neighbors(x));
-    println!("  Y's neighbors: {:?}", undirected.neighbors(y));
-    println!("  Edge count: {}", undirected.edge_count());
+    print_neighbors_with_data(&undirected, x, "X");
+    print_neighbors_with_data(&undirected, y, "Y");
+    println!("  Edge count: {} (ONE undirected edge, stored in both adjacency lists)", undirected.edge_count());
+    println!("  👆 Note: Same adjacency list structure as directed, but counts as 1 edge!");
+    println!("     Undirected: 1 bidirectional edge | Directed: would be 2 separate edges");
     println!();
 }
 
