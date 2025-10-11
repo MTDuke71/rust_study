@@ -49,7 +49,7 @@ fn explain_option_necessity() {
 
     // Demonstrate the problem
     println!("      Try 1: Vec<String> - but how to represent empty slots?");
-    let mut attempt1 = vec![String::new(); 5];
+    let attempt1 = vec![String::new(); 5];
     println!("      {:?}", attempt1);
     println!("      Problem: Empty strings look like empty slots, but they're not!");
 
@@ -151,7 +151,7 @@ fn demonstrate_safe_removal() {
     println!("\n   🎭 **take() vs Clone vs Move:**");
 
     let mut slot1 = Some("Hello".to_string());
-    let mut slot2 = Some("World".to_string());
+    let slot2 = Some("World".to_string());
     let mut slot3 = Some("Rust".to_string());
 
     println!("      Initial state:");

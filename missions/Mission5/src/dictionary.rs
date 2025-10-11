@@ -212,7 +212,7 @@ where
     pub fn add_to_list(&mut self, key: K, value: &str) {
         self.inner
             .entry(key)
-            .or_insert_with(Vec::new)
+            .or_default()
             .push(value.to_string());
     }
 

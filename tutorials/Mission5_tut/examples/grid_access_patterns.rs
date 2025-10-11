@@ -53,7 +53,7 @@ fn main() {
     // METHOD 3: Helper function for cleaner syntax
     println!("🔸 Method 3: Helper Function");
 
-    fn get_cell(grid: &Vec<Vec<char>>, row: usize, col: usize) -> Option<char> {
+    fn get_cell(grid: &[Vec<char>], row: usize, col: usize) -> Option<char> {
         grid.get(row)?.get(col).copied()
     }
 
@@ -64,7 +64,7 @@ fn main() {
     // METHOD 4: Bounds checking before access
     println!("🔹 Method 4: Manual Bounds Checking");
 
-    fn safe_get(grid: &Vec<Vec<char>>, row: usize, col: usize) -> Option<char> {
+    fn safe_get(grid: &[Vec<char>], row: usize, col: usize) -> Option<char> {
         if row < grid.len() && col < grid[row].len() {
             Some(grid[row][col])
         } else {
@@ -82,7 +82,7 @@ fn main() {
     // METHOD 5: Using coordinates as (x, y) tuples
     println!("🔸 Method 5: Coordinate-Based Access");
 
-    fn get_at_coord(grid: &Vec<Vec<char>>, coord: (usize, usize)) -> Option<char> {
+    fn get_at_coord(grid: &[Vec<char>], coord: (usize, usize)) -> Option<char> {
         let (x, y) = coord;
         // Note: grid[y][x] because grid is row-major (y=row, x=col)
         grid.get(y)?.get(x).copied()
@@ -100,7 +100,7 @@ fn main() {
 
     const DIRECTIONS: [(isize, isize); 4] = [(0, 1), (1, 0), (0, -1), (-1, 0)];
 
-    fn get_neighbors(grid: &Vec<Vec<char>>, row: usize, col: usize) -> Vec<(char, usize, usize)> {
+    fn get_neighbors(grid: &[Vec<char>], row: usize, col: usize) -> Vec<(char, usize, usize)> {
         let mut neighbors = Vec::new();
 
         for (dr, dc) in DIRECTIONS {

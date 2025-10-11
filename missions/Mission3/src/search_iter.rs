@@ -38,11 +38,7 @@ impl<'a, T> Iterator for RangeIter<'a, T> {
     }
 
     fn size_hint(&self) -> (usize, Option<usize>) {
-        let remaining = if self.current < self.end {
-            self.end - self.current
-        } else {
-            0
-        };
+        let remaining = self.end.saturating_sub(self.current);
         (remaining, Some(remaining))
     }
 }

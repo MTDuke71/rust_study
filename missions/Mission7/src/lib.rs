@@ -458,10 +458,10 @@ pub mod algorithms {
             let mut rec_stack = HashSet::new();
 
             for node in self.nodes() {
-                if !visited.contains(&node) {
-                    if self.has_cycle_dfs(node, &mut visited, &mut rec_stack) {
-                        return true;
-                    }
+                if !visited.contains(&node)
+                    && self.has_cycle_dfs(node, &mut visited, &mut rec_stack)
+                {
+                    return true;
                 }
             }
 

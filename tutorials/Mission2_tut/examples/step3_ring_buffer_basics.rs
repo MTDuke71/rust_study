@@ -339,7 +339,7 @@ fn demonstrate_full_empty_detection() {
     println!("\n   🎪 **Demonstration of States:**");
 
     // Show all possible states
-    let capacity = 3;
+    let _capacity = 3; // Used for reference in state documentation
     let states = [
         (0, 0, 0, "Empty"),
         (0, 1, 1, "Partially filled"),
