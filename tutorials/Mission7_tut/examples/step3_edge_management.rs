@@ -18,8 +18,28 @@
 //! - Add methods: add_edge, remove_edge, neighbors
 //! - Implement direction enums and bounds checking
 
-use mission7::{Graph, GraphType, NodeId};
-use mission7_tut::tutorial_utils;
+use mission7::Graph;
+// use mission7_tut::tutorial_utils;
+
+/// Helper function to print neighbors with their actual data
+fn print_neighbors_with_data(graph: &Graph<&str>, node_id: usize, node_name: &str) {
+    let neighbors = graph.neighbors(node_id);
+    let neighbor_names: Vec<&str> = neighbors.iter()
+        .filter_map(|&id| graph.get_node(id))
+        .copied()
+        .collect();
+    
+    println!("  {}'s neighbor IDs: {:?} → {} (count: {})", 
+        node_name, 
+        neighbors, 
+        if neighbor_names.is_empty() { 
+            "none".to_string() 
+        } else { 
+            neighbor_names.join(", ") 
+        },
+        neighbors.len()
+    );
+}
 
 fn main() {
     println!("=== Step 3: Edge Management ===\n");
@@ -41,6 +61,9 @@ fn main() {
     
     // 6. Edge Iteration
     edge_iteration();
+
+    exercise();
+
     
     println!("\n=== Step 3 Complete ===");
     println!("Next: Step 4 - Algorithm Foundation");
@@ -68,29 +91,31 @@ fn adding_edges() {
     
     let result1 = directed.add_edge(a, b);
     println!("  Add A -> B: {}", if result1 { "Success" } else { "Failed" });
-    println!("  A's neighbors: {:?}", directed.neighbors(a));
-    println!("  B's neighbors: {:?}", directed.neighbors(b));
-    println!("  Edge count: {}", directed.edge_count());
+    print_neighbors_with_data(&directed, a, "A");
+    print_neighbors_with_data(&directed, b, "B");
+    println!("  Total edge count: {}", directed.edge_count());
     println!();
     
     let result2 = directed.add_edge(b, c);
     println!("  Add B -> C: {}", if result2 { "Success" } else { "Failed" });
-    println!("  B's neighbors: {:?}", directed.neighbors(b));
-    println!("  C's neighbors: {:?}", directed.neighbors(c));
-    println!("  Edge count: {}", directed.edge_count());
+    print_neighbors_with_data(&directed, b, "B");
+    print_neighbors_with_data(&directed, c, "C");
+    println!("  Total edge count: {}", directed.edge_count());
     println!();
     
     let result3 = directed.add_edge(c, a);
     println!("  Add C -> A: {}", if result3 { "Success" } else { "Failed" });
-    println!("  C's neighbors: {:?}", directed.neighbors(c));
-    println!("  A's neighbors: {:?}", directed.neighbors(a));
-    println!("  Edge count: {}", directed.edge_count());
+    print_neighbors_with_data(&directed, c, "C");
+    print_neighbors_with_data(&directed, a, "A");
+    println!("  Total edge count: {}", directed.edge_count());
+    println!("  👆 Note: A's neighbor count is still 1 (only B)");
+    println!("     Adding C→A doesn't change who A points to!");
     println!();
     
     // Try adding duplicate edge
     let result4 = directed.add_edge(a, b);
     println!("  Add A -> B again: {}", if result4 { "Success" } else { "Failed" });
-    println!("  Edge count: {} (should be same)", directed.edge_count());
+    println!("  Total edge count: {} (unchanged - duplicate prevented)", directed.edge_count());
     println!();
     
     // Undirected graph example
