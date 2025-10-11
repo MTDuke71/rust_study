@@ -333,7 +333,7 @@ pub fn find_all_components<T: PartialEq + Clone>(
 }
 
 /// Explores a single connected component from a starting point
-fn explore_component<T: PartialEq>(
+fn explore_component<T: PartialEq + Clone>(
     grid: &Grid<T>,
     start: Coord,
     target: &T,
@@ -382,7 +382,7 @@ pub struct ComponentInfo {
 
 impl ComponentInfo {
     /// Analyzes a component and returns its properties
-    pub fn analyze<T>(grid: &Grid<T>, component: &[Coord]) -> Self {
+    pub fn analyze<T: Clone>(grid: &Grid<T>, component: &[Coord]) -> Self {
         let mut min_row = isize::MAX;
         let mut max_row = isize::MIN;
         let mut min_col = isize::MAX;
@@ -631,7 +631,7 @@ impl<T: Clone> Grid<T> {
     pub fn width(&self) -> usize { self.width }
     pub fn height(&self) -> usize { self.height }
     
-    fn index(&self, row: usize, col: usize) -> usize {
+    fn get_index(&self, row: usize, col: usize) -> usize {
         row * self.width + col
     }
     
@@ -660,13 +660,14 @@ impl<T: Clone> Grid<T> {
 impl<T> std::ops::Index<(usize, usize)> for Grid<T> {
     type Output = T;
     fn index(&self, (row, col): (usize, usize)) -> &Self::Output {
-        &self.data[self.index(row, col)]
+        let idx = row * self.width + col;
+        &self.data[idx]
     }
 }
 
 impl<T> std::ops::IndexMut<(usize, usize)> for Grid<T> {
     fn index_mut(&mut self, (row, col): (usize, usize)) -> &mut Self::Output {
-        let idx = self.index(row, col);
+        let idx = row * self.width + col;
         &mut self.data[idx]
     }
 }
@@ -817,7 +818,7 @@ fn find_all_components<T: PartialEq + Clone>(
     components
 }
 
-fn explore_component<T: PartialEq>(
+fn explore_component<T: PartialEq + Clone>(
     grid: &Grid<T>,
     start: Coord,
     target: &T,
@@ -858,7 +859,7 @@ pub struct ComponentInfo {
 }
 
 impl ComponentInfo {
-    pub fn analyze<T>(grid: &Grid<T>, component: &[Coord]) -> Self {
+    pub fn analyze<T: Clone>(grid: &Grid<T>, component: &[Coord]) -> Self {
         let mut min_row = isize::MAX;
         let mut max_row = isize::MIN;
         let mut min_col = isize::MAX;
