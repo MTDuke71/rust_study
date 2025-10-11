@@ -211,7 +211,10 @@ fn iterative_dfs_implementation() {
     graph.add_edge(c, e);
 
     // Iterative DFS implementation
-    fn dfs_iterative<T: std::fmt::Display>(graph: &Graph<T>, start: NodeId) -> (Vec<NodeId>, HashSet<NodeId>) {
+    fn dfs_iterative<T: std::fmt::Display>(
+        graph: &Graph<T>,
+        start: NodeId,
+    ) -> (Vec<NodeId>, HashSet<NodeId>) {
         let mut visited = HashSet::new();
         let mut path = Vec::new();
         let mut stack = Vec::new();

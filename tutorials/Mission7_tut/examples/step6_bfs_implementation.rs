@@ -142,7 +142,10 @@ fn bfs_implementation() {
     println!();
 
     // BFS implementation
-    fn bfs_traversal<T: std::fmt::Display>(graph: &Graph<T>, start: NodeId) -> (Vec<NodeId>, HashSet<NodeId>) {
+    fn bfs_traversal<T: std::fmt::Display>(
+        graph: &Graph<T>,
+        start: NodeId,
+    ) -> (Vec<NodeId>, HashSet<NodeId>) {
         let mut visited = HashSet::new();
         let mut path = Vec::new();
         let mut queue = VecDeque::new();
