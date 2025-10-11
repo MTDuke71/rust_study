@@ -62,8 +62,8 @@ fn example1_basic_enums() {
     // Enum in a struct - the OLD way (before we learned about enum data)
     // This pattern is common in other languages, but Rust has a better way!
     struct IpAddr {
-        kind: IpAddrKind,  // The type of IP address
-        address: String,    // The actual address as a string
+        kind: IpAddrKind, // The type of IP address
+        address: String,  // The actual address as a string
     }
 
     let home = IpAddr {
@@ -72,7 +72,7 @@ fn example1_basic_enums() {
     };
 
     println!("Home address: {} ({:?})", home.address, home.kind);
-    
+
     println!("\n💡 Note: This works, but Example 2 shows a better way!");
     println!("   Enums can hold data directly, eliminating the need for separate structs.");
     println!();
@@ -83,11 +83,11 @@ fn example2_enums_with_data() {
     println!("=========================================");
 
     // Enum variants can hold data directly
-    // 
+    //
     // ⚠️ WARNING EXPLANATION: The compiler warns about unused fields (0, 1, 2, 3 in V4)
     // This is INTENTIONAL for educational purposes - we're demonstrating enum structure,
     // not fully using all data. In real code, you'd access these fields with pattern matching.
-    // 
+    //
     // Example of accessing fields:
     //   if let IpAddr::V4(a, b, c, d) = home {
     //       println!("{}.{}.{}.{}", a, b, c, d);
@@ -95,8 +95,8 @@ fn example2_enums_with_data() {
     #[allow(dead_code)] // Allow unused enum variant data for educational examples
     #[derive(Debug)]
     enum IpAddr {
-        V4(u8, u8, u8, u8),  // Each field is a separate u8 (0-255)
-        V6(String),          // IPv6 uses string representation
+        V4(u8, u8, u8, u8), // Each field is a separate u8 (0-255)
+        V6(String),         // IPv6 uses string representation
     }
 
     let home = IpAddr::V4(127, 0, 0, 1);
@@ -106,7 +106,7 @@ fn example2_enums_with_data() {
     println!("Loopback IP: {:?}", loopback);
 
     // Different variants can have different types
-    // 
+    //
     // ⚠️ WARNING EXPLANATION: Similar to above - x, y fields and tuple fields aren't accessed
     // This demonstrates that enum variants can have:
     // - No data (Quit)
@@ -117,7 +117,7 @@ fn example2_enums_with_data() {
     #[derive(Debug)]
     enum Message {
         Quit,                       // No data - represents a simple signal
-        Move { x: i32, y: i32 },   // Named fields (like struct) - represents position
+        Move { x: i32, y: i32 },    // Named fields (like struct) - represents position
         Write(String),              // Single value - represents text message
         ChangeColor(i32, i32, i32), // Multiple values (tuple) - represents RGB color
     }
@@ -132,7 +132,7 @@ fn example2_enums_with_data() {
     println!("  {:?}", msg2);
     println!("  {:?}", msg3);
     println!("  {:?}", msg4);
-    
+
     // 💡 KEY CONCEPT: Each enum variant can hold completely different data!
     // This is much more flexible than structs, which have fixed fields.
     println!("\n💡 Note: Each variant has different data - this flexibility is");
@@ -147,7 +147,7 @@ fn example3_enum_methods() {
     // ⚠️ WARNING EXPLANATION: The enum variant data is accessed in the match arms,
     // but Rust sometimes warns if you don't use all parts. We use #[allow(dead_code)]
     // because this is an educational example focusing on method implementation patterns.
-    // 
+    //
     // 💡 KEY LEARNING: Enums can have impl blocks just like structs!
     // This allows you to add behavior specific to your enum type.
     #[allow(dead_code)] // Allow unused fields in match patterns for clarity
@@ -178,8 +178,8 @@ fn example3_enum_methods() {
         fn description(&self) -> &str {
             match self {
                 Message::Quit => "quit message",
-                Message::Move { .. } => "move message",  // .. ignores fields we don't need
-                Message::Write(_) => "write message",     // _ ignores single field
+                Message::Move { .. } => "move message", // .. ignores fields we don't need
+                Message::Write(_) => "write message",   // _ ignores single field
                 Message::ChangeColor(_, _, _) => "color change message", // _ for each tuple field
             }
         }
@@ -197,7 +197,7 @@ fn example3_enum_methods() {
         println!("\n{}: ", msg.description());
         msg.call();
     }
-    
+
     println!("\n💡 Note: Methods allow enums to have behavior, not just data!");
     println!("   This makes enums perfect for state machines and command patterns.");
     println!();

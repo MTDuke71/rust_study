@@ -7,7 +7,7 @@ fn main() {
     let mut config: HashMap<&str, i32> = HashMap::new();
     config.insert("debug_level", 1);
     config.insert("max_connections", 100);
-    
+
     println!("🏁 Initial HashMap contents:");
     for (key, value) in &config {
         println!("  {} -> {}", key, value);
@@ -42,7 +42,7 @@ fn main() {
     for (key, value) in &config {
         println!("    {} -> {}", key, value);
     }
-    
+
     println!("\n📚 Summary:");
     println!("  • unwrap_or: Returns default, HashMap unchanged");
     println!("  • or_insert: Inserts default if missing, returns reference");

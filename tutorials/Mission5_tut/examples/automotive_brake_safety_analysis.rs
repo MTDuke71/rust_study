@@ -7,7 +7,7 @@ use std::time::{Duration, Instant};
 
 fn main() {
     println!("=== Automotive Electronic Braking Systems: HashSet Safety Analysis ===\n");
-    
+
     demo_brake_system_timing_requirements();
     demo_catastrophic_rehashing_scenario();
     demo_safe_alternatives_for_automotive();
@@ -19,22 +19,22 @@ fn main() {
 fn demo_brake_system_timing_requirements() {
     println!("1. Automotive Braking System Timing Requirements");
     println!("   Safety-critical real-time constraints\n");
-    
+
     println!("   🚗 Electronic Braking System (EBS) Deadlines:");
     println!("   - Wheel sensor reading: 100-500 μs");
-    println!("   - Brake force calculation: 1-5 ms"); 
+    println!("   - Brake force calculation: 1-5 ms");
     println!("   - Actuator response: 5-20 ms");
     println!("   - Emergency brake: < 10 ms total (life or death!)");
     println!("   - System diagnostic: 10-100 ms");
     println!();
-    
+
     println!("   🛡️  Safety Standards (ISO 26262):");
     println!("   - ASIL D: Highest automotive safety level");
     println!("   - Fault tolerance: Must handle single point failures");
     println!("   - Deterministic timing: No unpredictable delays");
     println!("   - Worst Case Execution Time (WCET) analysis required");
     println!();
-    
+
     // Simulate brake system timing
     println!("   📊 Brake System Component Timing Analysis:");
     simulate_brake_component_timing();
@@ -46,68 +46,98 @@ fn simulate_brake_component_timing() {
         name: &'static str,
         max_allowed_time_us: u64,
     }
-    
+
     let components = [
-        BrakeComponent { name: "Wheel Speed Sensor", max_allowed_time_us: 500 },
-        BrakeComponent { name: "Brake Pressure Calc", max_allowed_time_us: 2000 },
-        BrakeComponent { name: "ABS Logic", max_allowed_time_us: 1000 },
-        BrakeComponent { name: "Actuator Control", max_allowed_time_us: 5000 },
+        BrakeComponent {
+            name: "Wheel Speed Sensor",
+            max_allowed_time_us: 500,
+        },
+        BrakeComponent {
+            name: "Brake Pressure Calc",
+            max_allowed_time_us: 2000,
+        },
+        BrakeComponent {
+            name: "ABS Logic",
+            max_allowed_time_us: 1000,
+        },
+        BrakeComponent {
+            name: "Actuator Control",
+            max_allowed_time_us: 5000,
+        },
     ];
-    
+
     for component in &components {
         let simulated_time = component.max_allowed_time_us / 2; // Normal case
-        let safety_margin = ((component.max_allowed_time_us - simulated_time) as f64 / component.max_allowed_time_us as f64) * 100.0;
-        
-        println!("   - {:<20}: {:4} μs (max: {:4} μs, safety margin: {:.1}%)", 
-                 component.name, simulated_time, component.max_allowed_time_us, safety_margin);
+        let safety_margin = ((component.max_allowed_time_us - simulated_time) as f64
+            / component.max_allowed_time_us as f64)
+            * 100.0;
+
+        println!(
+            "   - {:<20}: {:4} μs (max: {:4} μs, safety margin: {:.1}%)",
+            component.name, simulated_time, component.max_allowed_time_us, safety_margin
+        );
     }
 }
 
 fn demo_catastrophic_rehashing_scenario() {
     println!("2. Catastrophic Rehashing Scenario");
     println!("   How HashSet rehashing could cause brake failure\n");
-    
+
     println!("   🚨 DANGEROUS: Brake fault tracking with growing HashSet");
-    
+
     // Simulate a brake system that tracks active faults
     let mut active_faults = HashSet::new();
     let mut max_response_time_us = 0.0;
     let emergency_deadline_us = 10_000.0; // 10ms emergency brake deadline
-    
+
     println!("   Scenario: Emergency braking while fault tracking system is busy");
     println!("   Component | Time (μs) | Status | Deadline");
     println!("   ----------|-----------|--------|----------");
-    
+
     // Simulate adding fault codes during emergency braking
     let fault_codes = [
-        "WSS_FL_TIMEOUT",    // Front Left Wheel Speed Sensor
-        "WSS_FR_TIMEOUT",    // Front Right
-        "WSS_RL_TIMEOUT",    // Rear Left  
-        "WSS_RR_TIMEOUT",    // Rear Right
-        "BRAKE_PRESS_LOW",   // Brake pressure
-        "ABS_PUMP_FAULT",    // ABS pump
-        "ESC_FAULT",         // Electronic Stability Control
-        "VALVE_STUCK",       // Brake valve
+        "WSS_FL_TIMEOUT",  // Front Left Wheel Speed Sensor
+        "WSS_FR_TIMEOUT",  // Front Right
+        "WSS_RL_TIMEOUT",  // Rear Left
+        "WSS_RR_TIMEOUT",  // Rear Right
+        "BRAKE_PRESS_LOW", // Brake pressure
+        "ABS_PUMP_FAULT",  // ABS pump
+        "ESC_FAULT",       // Electronic Stability Control
+        "VALVE_STUCK",     // Brake valve
     ];
-    
+
     for (i, fault_code) in fault_codes.iter().enumerate() {
         let start = Instant::now();
         active_faults.insert(fault_code.to_string());
         let response_time = start.elapsed();
         let response_time_us = response_time.as_nanos() as f64 / 1000.0;
-        
+
         max_response_time_us = f64::max(max_response_time_us, response_time_us);
-        
-        let status = if response_time_us > 50.0 { "🔄 REHASH!" } else { "normal" };
-        let deadline_status = if response_time_us < 1000.0 { "✅" } else { "❌ BREACH!" };
-        
-        println!("   Fault {:2}   | {:9.1} | {:8} | {} ({:.0}μs limit)", 
-                 i + 1, response_time_us, status, deadline_status, 1000.0);
+
+        let status = if response_time_us > 50.0 {
+            "🔄 REHASH!"
+        } else {
+            "normal"
+        };
+        let deadline_status = if response_time_us < 1000.0 {
+            "✅"
+        } else {
+            "❌ BREACH!"
+        };
+
+        println!(
+            "   Fault {:2}   | {:9.1} | {:8} | {} ({:.0}μs limit)",
+            i + 1,
+            response_time_us,
+            status,
+            deadline_status,
+            1000.0
+        );
     }
-    
+
     println!("\n   💀 SAFETY ANALYSIS:");
     println!("   - Maximum response time: {:.1} μs", max_response_time_us);
-    
+
     if max_response_time_us > 1000.0 {
         println!("   - ❌ CRITICAL: Fault tracking exceeded 1ms deadline");
         println!("   - ❌ Could delay emergency brake response");
@@ -115,7 +145,7 @@ fn demo_catastrophic_rehashing_scenario() {
     } else {
         println!("   - ✅ All fault tracking within acceptable limits");
     }
-    
+
     println!("   - Total active faults: {}", active_faults.len());
     println!();
 }
@@ -123,17 +153,17 @@ fn demo_catastrophic_rehashing_scenario() {
 fn demo_safe_alternatives_for_automotive() {
     println!("3. Safe Alternatives for Automotive Systems");
     println!("   ASIL D compliant data structures\n");
-    
+
     println!("   🛡️ Strategy 1: Pre-allocated Fixed Arrays");
-    
+
     // Fixed-size fault tracking system
     const MAX_FAULTS: usize = 32;
-    
+
     struct SafeFaultTracker {
         faults: [Option<&'static str>; MAX_FAULTS],
         count: usize,
     }
-    
+
     impl SafeFaultTracker {
         fn new() -> Self {
             Self {
@@ -141,60 +171,72 @@ fn demo_safe_alternatives_for_automotive() {
                 count: 0,
             }
         }
-        
+
         fn add_fault(&mut self, fault_code: &'static str) -> Result<(), &'static str> {
             if self.count >= MAX_FAULTS {
                 return Err("FAULT_BUFFER_FULL"); // Defined failure mode
             }
-            
+
             // Check if already exists (O(n) but bounded and predictable)
             for fault in &self.faults[..self.count] {
                 if *fault == Some(fault_code) {
                     return Ok(()); // Already tracked
                 }
             }
-            
+
             self.faults[self.count] = Some(fault_code);
             self.count += 1;
             Ok(())
         }
-        
+
         fn has_fault(&self, fault_code: &'static str) -> bool {
-            self.faults[..self.count].iter().any(|f| *f == Some(fault_code))
+            self.faults[..self.count]
+                .iter()
+                .any(|f| *f == Some(fault_code))
         }
-        
+
         fn fault_count(&self) -> usize {
             self.count
         }
     }
-    
+
     let mut safe_tracker = SafeFaultTracker::new();
-    
+
     // Performance test
     let critical_faults = [
         "BRAKE_FAIL_PRIMARY",
-        "BRAKE_FAIL_SECONDARY", 
+        "BRAKE_FAIL_SECONDARY",
         "WSS_ALL_TIMEOUT",
         "ABS_DISABLED",
     ];
-    
+
     let mut max_time = Duration::ZERO;
     println!("   Fixed Array Fault Tracker Performance:");
-    
+
     for fault in &critical_faults {
         let start = Instant::now();
         let _ = safe_tracker.add_fault(fault);
         let duration = start.elapsed();
         max_time = max_time.max(duration);
-        
-        println!("   - {}: {:.2} μs", fault, duration.as_nanos() as f64 / 1000.0);
+
+        println!(
+            "   - {}: {:.2} μs",
+            fault,
+            duration.as_nanos() as f64 / 1000.0
+        );
     }
-    
-    println!("   - Max time: {:.2} μs ✅ (predictable)", max_time.as_nanos() as f64 / 1000.0);
+
+    println!(
+        "   - Max time: {:.2} μs ✅ (predictable)",
+        max_time.as_nanos() as f64 / 1000.0
+    );
     println!("   - Total faults: {}", safe_tracker.fault_count());
-    println!("   - Memory usage: {} bytes (fixed)", std::mem::size_of::<SafeFaultTracker>());
+    println!(
+        "   - Memory usage: {} bytes (fixed)",
+        std::mem::size_of::<SafeFaultTracker>()
+    );
     println!();
-    
+
     println!("   🛡️ Strategy 2: Ring Buffer for Sensor Data");
     demo_ring_buffer_sensor_data();
     println!();
@@ -203,13 +245,13 @@ fn demo_safe_alternatives_for_automotive() {
 fn demo_ring_buffer_sensor_data() {
     // Ring buffer for wheel speed sensor data
     const SENSOR_HISTORY_SIZE: usize = 100;
-    
+
     struct WheelSpeedBuffer {
         data: [f32; SENSOR_HISTORY_SIZE],
         write_index: usize,
         count: usize,
     }
-    
+
     impl WheelSpeedBuffer {
         fn new() -> Self {
             Self {
@@ -218,7 +260,7 @@ fn demo_ring_buffer_sensor_data() {
                 count: 0,
             }
         }
-        
+
         fn push(&mut self, speed: f32) {
             self.data[self.write_index] = speed;
             self.write_index = (self.write_index + 1) % SENSOR_HISTORY_SIZE;
@@ -226,7 +268,7 @@ fn demo_ring_buffer_sensor_data() {
                 self.count += 1;
             }
         }
-        
+
         fn latest(&self) -> Option<f32> {
             if self.count == 0 {
                 None
@@ -239,15 +281,15 @@ fn demo_ring_buffer_sensor_data() {
                 Some(self.data[latest_index])
             }
         }
-        
+
         fn average_recent(&self, samples: usize) -> f32 {
             if self.count == 0 {
                 return 0.0;
             }
-            
+
             let samples_to_use = samples.min(self.count);
             let mut sum = 0.0;
-            
+
             for i in 0..samples_to_use {
                 let index = if self.write_index >= i + 1 {
                     self.write_index - i - 1
@@ -256,39 +298,44 @@ fn demo_ring_buffer_sensor_data() {
                 };
                 sum += self.data[index];
             }
-            
+
             sum / samples_to_use as f32
         }
     }
-    
+
     let mut wheel_speed_fl = WheelSpeedBuffer::new();
-    
+
     // Simulate sensor readings
     let test_speeds = [45.5, 45.2, 44.8, 44.5, 44.0, 43.2, 42.1, 40.8]; // Braking scenario
-    
+
     println!("   Ring Buffer Wheel Speed Sensor (Front Left):");
     for (i, &speed) in test_speeds.iter().enumerate() {
         let start = Instant::now();
         wheel_speed_fl.push(speed);
         let avg_recent = wheel_speed_fl.average_recent(5);
         let duration = start.elapsed();
-        
-        println!("   Sample {}: {:.1} km/h, 5-sample avg: {:.1} km/h, time: {:.2} μs", 
-                 i + 1, speed, avg_recent, duration.as_nanos() as f64 / 1000.0);
+
+        println!(
+            "   Sample {}: {:.1} km/h, 5-sample avg: {:.1} km/h, time: {:.2} μs",
+            i + 1,
+            speed,
+            avg_recent,
+            duration.as_nanos() as f64 / 1000.0
+        );
     }
 }
 
 fn demo_wheel_sensor_data_processing() {
     println!("4. Wheel Sensor Data Processing");
     println!("   High-frequency sensor data with predictable timing\n");
-    
+
     // Simulate 4-wheel ABS system
     struct ABSSystem {
         wheel_speeds: [f32; 4], // FL, FR, RL, RR
         speed_deltas: [f32; 4], // Rate of change
         slip_detected: [bool; 4],
     }
-    
+
     impl ABSSystem {
         fn new() -> Self {
             Self {
@@ -297,41 +344,42 @@ fn demo_wheel_sensor_data_processing() {
                 slip_detected: [false; 4],
             }
         }
-        
+
         fn update_wheel_speeds(&mut self, new_speeds: [f32; 4]) {
             // Calculate speed deltas
             for i in 0..4 {
                 self.speed_deltas[i] = new_speeds[i] - self.wheel_speeds[i];
                 self.wheel_speeds[i] = new_speeds[i];
             }
-            
+
             // Detect slip (simplified logic)
             let avg_speed = self.wheel_speeds.iter().sum::<f32>() / 4.0;
             for i in 0..4 {
                 // Slip if wheel speed is >10% different from average
-                self.slip_detected[i] = (self.wheel_speeds[i] - avg_speed).abs() > (avg_speed * 0.1);
+                self.slip_detected[i] =
+                    (self.wheel_speeds[i] - avg_speed).abs() > (avg_speed * 0.1);
             }
         }
-        
+
         fn any_slip_detected(&self) -> bool {
             self.slip_detected.iter().any(|&slip| slip)
         }
-        
+
         fn get_brake_adjustments(&self) -> [f32; 4] {
             let mut adjustments = [1.0; 4]; // Default: full brake force
-            
+
             for i in 0..4 {
                 if self.slip_detected[i] {
                     adjustments[i] = 0.7; // Reduce brake force on slipping wheel
                 }
             }
-            
+
             adjustments
         }
     }
-    
+
     let mut abs_system = ABSSystem::new();
-    
+
     // Simulate emergency braking scenario
     let brake_scenarios = [
         ([50.0, 50.0, 50.0, 50.0], "Initial speed"),
@@ -341,30 +389,41 @@ fn demo_wheel_sensor_data_processing() {
         ([30.0, 30.0, 30.0, 30.0], "Controlled braking"),
         ([20.0, 20.0, 20.0, 20.0], "Final deceleration"),
     ];
-    
+
     println!("   Emergency Braking Scenario (ABS Active):");
     println!("   Step | FL   FR   RL   RR  | Slip Detection | Brake Adj | Time");
     println!("   -----|---------------------|----------------|-----------|------");
-    
+
     for (step, (speeds, _description)) in brake_scenarios.iter().enumerate() {
         let start = Instant::now();
-        
+
         abs_system.update_wheel_speeds(*speeds);
         let adjustments = abs_system.get_brake_adjustments();
-        
+
         let duration = start.elapsed();
-        
-        let slip_status = if abs_system.any_slip_detected() { "🚨 SLIP" } else { "✅ OK" };
-        
-        println!("   {:4} | {:4.0} {:4.0} {:4.0} {:4.0} | {:10} | {:4.1} {:4.1} {:4.1} {:4.1} | {:.1}μs", 
-                 step + 1,
-                 speeds[0], speeds[1], speeds[2], speeds[3],
-                 slip_status,
-                 adjustments[0], adjustments[1], adjustments[2], adjustments[3],
-                 duration.as_nanos() as f64 / 1000.0
+
+        let slip_status = if abs_system.any_slip_detected() {
+            "🚨 SLIP"
+        } else {
+            "✅ OK"
+        };
+
+        println!(
+            "   {:4} | {:4.0} {:4.0} {:4.0} {:4.0} | {:10} | {:4.1} {:4.1} {:4.1} {:4.1} | {:.1}μs",
+            step + 1,
+            speeds[0],
+            speeds[1],
+            speeds[2],
+            speeds[3],
+            slip_status,
+            adjustments[0],
+            adjustments[1],
+            adjustments[2],
+            adjustments[3],
+            duration.as_nanos() as f64 / 1000.0
         );
     }
-    
+
     println!("\n   ✅ All ABS calculations completed in < 1μs");
     println!("   ✅ Deterministic timing - no dynamic allocation");
     println!("   ✅ Suitable for ASIL D safety requirements\n");
@@ -373,7 +432,7 @@ fn demo_wheel_sensor_data_processing() {
 fn demo_fault_detection_system() {
     println!("5. Fault Detection System");
     println!("   Safety-critical diagnostics with bounded timing\n");
-    
+
     // Predefined fault codes for automotive systems
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     #[allow(dead_code)]
@@ -383,26 +442,26 @@ fn demo_fault_detection_system() {
         BrakeSecondaryCircuitFail = 0x1002,
         ABSPumpFault = 0x1003,
         BrakePadWear = 0x1004,
-        
+
         // Sensor faults
         WheelSpeedSensorFL = 0x2001,
         WheelSpeedSensorFR = 0x2002,
         WheelSpeedSensorRL = 0x2003,
         WheelSpeedSensorRR = 0x2004,
-        
+
         // System faults
         PowerSupplyFault = 0x3001,
         CANBusTimeout = 0x3002,
         WatchdogTimeout = 0x3003,
     }
-    
+
     // Fixed-size fault detection system
     struct FaultDetectionSystem {
         active_faults: [bool; 256], // Bit array for fault status
         fault_counters: [u16; 256], // Fault occurrence counters
         critical_fault_present: bool,
     }
-    
+
     impl FaultDetectionSystem {
         fn new() -> Self {
             Self {
@@ -411,45 +470,45 @@ fn demo_fault_detection_system() {
                 critical_fault_present: false,
             }
         }
-        
+
         fn report_fault(&mut self, fault: FaultCode) {
             let index = (fault as u16 % 256) as usize;
             self.active_faults[index] = true;
-            
+
             if self.fault_counters[index] < u16::MAX {
                 self.fault_counters[index] += 1;
             }
-            
+
             // Check if it's a critical fault
             match fault {
-                FaultCode::BrakePrimaryCircuitFail |
-                FaultCode::BrakeSecondaryCircuitFail |
-                FaultCode::PowerSupplyFault => {
+                FaultCode::BrakePrimaryCircuitFail
+                | FaultCode::BrakeSecondaryCircuitFail
+                | FaultCode::PowerSupplyFault => {
                     self.critical_fault_present = true;
                 }
                 _ => {}
             }
         }
-        
+
         #[allow(dead_code)]
         fn clear_fault(&mut self, fault: FaultCode) {
             let index = (fault as u16 % 256) as usize;
             self.active_faults[index] = false;
         }
-        
+
         fn has_critical_faults(&self) -> bool {
             self.critical_fault_present
         }
-        
+
         #[allow(dead_code)]
         fn get_fault_count(&self, fault: FaultCode) -> u16 {
             let index = (fault as u16 % 256) as usize;
             self.fault_counters[index]
         }
     }
-    
+
     let mut fault_system = FaultDetectionSystem::new();
-    
+
     // Simulate fault detection during system operation
     let test_faults = [
         FaultCode::WheelSpeedSensorFL,
@@ -457,62 +516,76 @@ fn demo_fault_detection_system() {
         FaultCode::ABSPumpFault,
         FaultCode::BrakePrimaryCircuitFail, // Critical!
     ];
-    
+
     println!("   Fault Detection Performance:");
     let mut total_time = Duration::ZERO;
-    
+
     for fault in &test_faults {
         let start = Instant::now();
         fault_system.report_fault(*fault);
         let duration = start.elapsed();
         total_time += duration;
-        
+
         let criticality = match fault {
-            FaultCode::BrakePrimaryCircuitFail | 
-            FaultCode::BrakeSecondaryCircuitFail |
-            FaultCode::PowerSupplyFault => "🚨 CRITICAL",
-            _ => "⚠️  WARNING"
+            FaultCode::BrakePrimaryCircuitFail
+            | FaultCode::BrakeSecondaryCircuitFail
+            | FaultCode::PowerSupplyFault => "🚨 CRITICAL",
+            _ => "⚠️  WARNING",
         };
-        
-        println!("   {:?}: {:.2}μs {}", fault, duration.as_nanos() as f64 / 1000.0, criticality);
+
+        println!(
+            "   {:?}: {:.2}μs {}",
+            fault,
+            duration.as_nanos() as f64 / 1000.0,
+            criticality
+        );
     }
-    
+
     println!("\n   System Status:");
-    println!("   - Total fault processing time: {:.2}μs", total_time.as_nanos() as f64 / 1000.0);
-    println!("   - Critical faults present: {}", fault_system.has_critical_faults());
-    println!("   - Memory footprint: {} bytes (fixed)", std::mem::size_of::<FaultDetectionSystem>());
+    println!(
+        "   - Total fault processing time: {:.2}μs",
+        total_time.as_nanos() as f64 / 1000.0
+    );
+    println!(
+        "   - Critical faults present: {}",
+        fault_system.has_critical_faults()
+    );
+    println!(
+        "   - Memory footprint: {} bytes (fixed)",
+        std::mem::size_of::<FaultDetectionSystem>()
+    );
     println!();
 }
 
 fn demo_iso26262_compliance_considerations() {
     println!("6. ISO 26262 Compliance Considerations");
     println!("   Functional Safety for Automotive Systems\n");
-    
+
     println!("   🔒 ASIL D Requirements for Electronic Braking:");
     println!("   ✅ Deterministic execution times");
-    println!("   ✅ Bounded worst-case execution time (WCET)"); 
+    println!("   ✅ Bounded worst-case execution time (WCET)");
     println!("   ✅ No dynamic memory allocation during operation");
     println!("   ✅ Fault detection and handling");
     println!("   ✅ Redundant safety mechanisms");
     println!("   ✅ Fail-safe behavior on faults");
     println!();
-    
+
     println!("   ❌ Why HashSet is Problematic for ASIL D:");
     println!("   - Unpredictable rehashing timing");
     println!("   - Dynamic memory allocation");
-    println!   ("   - No bounded worst-case execution time");
+    println!("   - No bounded worst-case execution time");
     println!("   - Could cause missed real-time deadlines");
     println!("   - Potential single point of failure");
     println!();
-    
+
     println!("   ✅ Recommended Safe Alternatives:");
     println!("   1. Pre-allocated fixed arrays");
     println!("   2. Ring buffers for sensor data");
-    println!("   3. Bit arrays for fault flags"); 
+    println!("   3. Bit arrays for fault flags");
     println!("   4. Static lookup tables");
     println!("   5. Lock-free data structures with bounded timing");
     println!();
-    
+
     println!("   🎯 Key Takeaways for Automotive Safety:");
     println!("   - Predictability > Performance");
     println!("   - Bounded execution time is mandatory");
@@ -525,53 +598,59 @@ fn demo_iso26262_compliance_considerations() {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_automotive_timing_requirements() {
         // Test that our safe alternatives meet automotive timing requirements
         const MAX_BRAKE_RESPONSE_TIME_US: f64 = 1000.0; // 1ms for brake calculations
-        
+
         let mut times = Vec::new();
-        
+
         // Simulate 100 brake calculations
         for i in 0..100 {
             let start = Instant::now();
-            
+
             // Simulate brake force calculation (simplified)
             let wheel_speed = 50.0 - (i as f32 * 0.5); // Deceleration
             let brake_force = if wheel_speed > 10.0 { 100.0 } else { 50.0 };
             let _ = brake_force; // Use the value
-            
+
             let duration = start.elapsed();
             times.push(duration.as_nanos() as f64 / 1000.0);
         }
-        
+
         let max_time = times.iter().fold(0.0_f64, |a, &b| f64::max(a, b));
-        
-        assert!(max_time < MAX_BRAKE_RESPONSE_TIME_US, 
-                "Brake calculation time {:.2}μs exceeds automotive requirement of {}μs", 
-                max_time, MAX_BRAKE_RESPONSE_TIME_US);
+
+        assert!(
+            max_time < MAX_BRAKE_RESPONSE_TIME_US,
+            "Brake calculation time {:.2}μs exceeds automotive requirement of {}μs",
+            max_time,
+            MAX_BRAKE_RESPONSE_TIME_US
+        );
     }
-    
+
     #[test]
     fn test_fault_system_bounded_timing() {
         // All fault operations must complete within 10μs
         const MAX_FAULT_PROCESSING_TIME_US: f64 = 10.0;
-        
+
         // Simple fault array instead of HashSet
         let mut faults = [false; 32];
-        
+
         let start = Instant::now();
-        faults[0] = true;  // Report fault
-        faults[1] = true;  // Report another fault
+        faults[0] = true; // Report fault
+        faults[1] = true; // Report another fault
         let has_any_fault = faults.iter().any(|&f| f);
         let duration = start.elapsed();
-        
+
         assert!(has_any_fault);
-        
+
         let time_us = duration.as_nanos() as f64 / 1000.0;
-        assert!(time_us < MAX_FAULT_PROCESSING_TIME_US,
-                "Fault processing time {:.2}μs exceeds automotive requirement of {}μs",
-                time_us, MAX_FAULT_PROCESSING_TIME_US);
+        assert!(
+            time_us < MAX_FAULT_PROCESSING_TIME_US,
+            "Fault processing time {:.2}μs exceeds automotive requirement of {}μs",
+            time_us,
+            MAX_FAULT_PROCESSING_TIME_US
+        );
     }
 }

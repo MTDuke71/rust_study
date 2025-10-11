@@ -1,12 +1,12 @@
 //! Direction enumeration for 2D navigation
-//! 
+//!
 //! Provides the Direction enum for representing movement directions
 //! with rotation operations and vector calculations.
 
 use std::fmt;
 
 /// Cardinal and diagonal directions for 2D navigation
-/// 
+///
 /// Uses standard compass directions with the following coordinate system:
 /// - North: decreases y (up on screen/grid)
 /// - South: increases y (down on screen/grid)  
@@ -27,7 +27,12 @@ pub enum Direction {
 impl Direction {
     /// Get all 4 cardinal directions (North, South, East, West)
     pub fn cardinals() -> [Direction; 4] {
-        [Direction::North, Direction::South, Direction::East, Direction::West]
+        [
+            Direction::North,
+            Direction::South,
+            Direction::East,
+            Direction::West,
+        ]
     }
 
     /// Get all 8 directions (cardinals + diagonals)
@@ -46,7 +51,10 @@ impl Direction {
 
     /// Check if this is a cardinal direction (not diagonal)
     pub fn is_cardinal(self) -> bool {
-        matches!(self, Direction::North | Direction::South | Direction::East | Direction::West)
+        matches!(
+            self,
+            Direction::North | Direction::South | Direction::East | Direction::West
+        )
     }
 
     /// Check if this is a diagonal direction
@@ -159,14 +167,19 @@ impl Direction {
 
     /// Get the direction from one coordinate to another
     /// Returns the primary direction (may not be exact for non-aligned coordinates)
-    pub fn from_coords(from_x: usize, from_y: usize, to_x: usize, to_y: usize) -> Option<Direction> {
+    pub fn from_coords(
+        from_x: usize,
+        from_y: usize,
+        to_x: usize,
+        to_y: usize,
+    ) -> Option<Direction> {
         let dx = to_x as isize - from_x as isize;
         let dy = to_y as isize - from_y as isize;
-        
+
         if dx == 0 && dy == 0 {
             return None; // Same coordinate
         }
-        
+
         Direction::from_delta(dx.signum(), dy.signum())
     }
 
@@ -189,7 +202,7 @@ impl Direction {
     pub fn from_angle_degrees(degrees: f64) -> Direction {
         let normalized = ((degrees % 360.0) + 360.0) % 360.0; // Normalize to [0, 360)
         let octant = ((normalized + 22.5) / 45.0) as usize % 8;
-        
+
         match octant {
             0 => Direction::North,
             1 => Direction::NorthEast,
@@ -273,7 +286,7 @@ mod tests {
     fn test_direction_basics() {
         assert!(Direction::North.is_cardinal());
         assert!(Direction::NorthEast.is_diagonal());
-        
+
         assert_eq!(Direction::North.opposite(), Direction::South);
         assert_eq!(Direction::NorthEast.opposite(), Direction::SouthWest);
     }
@@ -281,7 +294,7 @@ mod tests {
     #[test]
     fn test_rotation() {
         let dir = Direction::North;
-        
+
         assert_eq!(dir.rotate_clockwise(), Direction::NorthEast);
         assert_eq!(dir.rotate_90_clockwise(), Direction::East);
         assert_eq!(dir.rotate_counterclockwise(), Direction::NorthWest);
@@ -293,7 +306,7 @@ mod tests {
         assert_eq!(Direction::North.delta(), (0, -1));
         assert_eq!(Direction::East.delta(), (1, 0));
         assert_eq!(Direction::SouthWest.delta(), (-1, 1));
-        
+
         // Test round-trip conversion
         for direction in Direction::all() {
             let (dx, dy) = direction.delta();
@@ -307,7 +320,7 @@ mod tests {
         assert_eq!(Direction::East.angle_degrees(), 90.0);
         assert_eq!(Direction::South.angle_degrees(), 180.0);
         assert_eq!(Direction::West.angle_degrees(), 270.0);
-        
+
         // Test round-trip conversion
         for direction in Direction::all() {
             let angle = direction.angle_degrees();
@@ -320,7 +333,7 @@ mod tests {
         assert_eq!(Direction::from_char('^'), Some(Direction::North));
         assert_eq!(Direction::from_char('E'), Some(Direction::East));
         assert_eq!(Direction::from_char('x'), None);
-        
+
         assert_eq!("north".parse(), Ok(Direction::North));
         assert_eq!("NORTHEAST".parse(), Ok(Direction::NorthEast));
         assert_eq!("invalid".parse::<Direction>(), Err(()));
@@ -330,16 +343,22 @@ mod tests {
     fn test_from_coords() {
         // Same coordinate
         assert_eq!(Direction::from_coords(5, 5, 5, 5), None);
-        
+
         // Cardinal directions
         assert_eq!(Direction::from_coords(5, 5, 5, 3), Some(Direction::North));
         assert_eq!(Direction::from_coords(5, 5, 7, 5), Some(Direction::East));
         assert_eq!(Direction::from_coords(5, 5, 5, 8), Some(Direction::South));
         assert_eq!(Direction::from_coords(5, 5, 2, 5), Some(Direction::West));
-        
+
         // Diagonal directions
-        assert_eq!(Direction::from_coords(5, 5, 7, 3), Some(Direction::NorthEast));
-        assert_eq!(Direction::from_coords(5, 5, 3, 7), Some(Direction::SouthWest));
+        assert_eq!(
+            Direction::from_coords(5, 5, 7, 3),
+            Some(Direction::NorthEast)
+        );
+        assert_eq!(
+            Direction::from_coords(5, 5, 3, 7),
+            Some(Direction::SouthWest)
+        );
     }
 
     #[test]

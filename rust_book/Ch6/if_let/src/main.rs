@@ -407,11 +407,11 @@ fn example9_let_else_happy_path() {
     }
 
     let coins = vec![
-        Coin::Quarter(UsState::Alabama),  // 1819 - old
-        Coin::Quarter(UsState::Alaska),   // 1959 - new
+        Coin::Quarter(UsState::Alabama),    // 1819 - old
+        Coin::Quarter(UsState::Alaska),     // 1959 - new
         Coin::Quarter(UsState::California), // 1850 - old
-        Coin::Penny,                      // Not a quarter
-        Coin::Quarter(UsState::Texas),    // 1845 - old
+        Coin::Penny,                        // Not a quarter
+        Coin::Quarter(UsState::Texas),      // 1845 - old
     ];
 
     println!("Traditional approach (nested if let):");
@@ -443,22 +443,17 @@ fn example9_let_else_happy_path() {
 
     // Additional example with Option handling
     println!("\nOption handling with let...else:");
-    let config_values = vec![
-        Some(3u8),
-        Some(10u8),
-        None,
-        Some(255u8),
-    ];
+    let config_values = vec![Some(3u8), Some(10u8), None, Some(255u8)];
 
     for config in config_values {
         let Some(max) = config else {
             println!("  ❌ No maximum configured");
             continue;
         };
-        
+
         // We're on the happy path here - no nesting!
         println!("  ✅ Maximum configured to be {}", max);
-        
+
         if max > 100 {
             println!("    (That's a high maximum!)");
         }

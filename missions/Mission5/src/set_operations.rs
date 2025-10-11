@@ -2,24 +2,24 @@ use std::collections::HashSet;
 use std::hash::Hash;
 
 /// Set operations wrapper around `HashSet<T>` with mathematical operations
-/// 
+///
 /// Provides convenient methods for set theory operations including
 /// union, intersection, difference, and symmetric difference.
 /// Optimized for membership testing and deduplication.
-/// 
+///
 /// # Requirements Satisfied: REQ-2
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```rust
 /// use mission5::SetOperations;
-/// 
+///
 /// let set1 = SetOperations::from_iter([1, 2, 3, 4]);
 /// let set2 = SetOperations::from_iter([3, 4, 5, 6]);
-/// 
+///
 /// let union = set1.union(&set2);
 /// assert_eq!(union.len(), 6); // {1, 2, 3, 4, 5, 6}
-/// 
+///
 /// let intersection = set1.intersection(&set2);
 /// assert_eq!(intersection.len(), 2); // {3, 4}
 /// ```
@@ -36,12 +36,12 @@ where
     T: Eq + Hash,
 {
     /// Create a new empty set
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let set: SetOperations<i32> = SetOperations::new();
     /// assert!(set.is_empty());
     /// ```
@@ -59,14 +59,14 @@ where
     }
 
     /// Insert an element into the set
-    /// 
+    ///
     /// Returns `true` if the element was newly inserted
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let mut set = SetOperations::new();
     /// assert!(set.insert(1));  // New element
     /// assert!(!set.insert(1)); // Already exists
@@ -76,15 +76,15 @@ where
     }
 
     /// Check if set contains an element
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let mut set = SetOperations::new();
     /// set.insert(42);
-    /// 
+    ///
     /// assert!(set.contains(&42));
     /// assert!(!set.contains(&24));
     /// ```
@@ -93,7 +93,7 @@ where
     }
 
     /// Remove an element from the set
-    /// 
+    ///
     /// Returns `true` if the element was present
     pub fn remove(&mut self, value: &T) -> bool {
         self.inner.remove(value)
@@ -125,15 +125,15 @@ where
     T: Eq + Hash + Clone,
 {
     /// Create the union of two sets (all elements from both)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let set1 = SetOperations::from_iter([1, 2, 3]);
     /// let set2 = SetOperations::from_iter([3, 4, 5]);
-    /// 
+    ///
     /// let union = set1.union(&set2);
     /// assert_eq!(union.len(), 5); // {1, 2, 3, 4, 5}
     /// ```
@@ -146,15 +146,15 @@ where
     }
 
     /// Create the intersection of two sets (common elements)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let set1 = SetOperations::from_iter([1, 2, 3, 4]);
     /// let set2 = SetOperations::from_iter([3, 4, 5, 6]);
-    /// 
+    ///
     /// let intersection = set1.intersection(&set2);
     /// assert_eq!(intersection.len(), 2); // {3, 4}
     /// assert!(intersection.contains(&3));
@@ -171,15 +171,15 @@ where
     }
 
     /// Create the difference of two sets (elements in first but not second)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let set1 = SetOperations::from_iter([1, 2, 3, 4]);
     /// let set2 = SetOperations::from_iter([3, 4, 5, 6]);
-    /// 
+    ///
     /// let difference = set1.difference(&set2);
     /// assert_eq!(difference.len(), 2); // {1, 2}
     /// assert!(difference.contains(&1));
@@ -196,48 +196,48 @@ where
     }
 
     /// Create the symmetric difference of two sets (elements in either but not both)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let set1 = SetOperations::from_iter([1, 2, 3]);
     /// let set2 = SetOperations::from_iter([3, 4, 5]);
-    /// 
+    ///
     /// let sym_diff = set1.symmetric_difference(&set2);
     /// assert_eq!(sym_diff.len(), 4); // {1, 2, 4, 5}
     /// ```
     pub fn symmetric_difference(&self, other: &Self) -> Self {
         let mut result = SetOperations::new();
-        
+
         // Add elements from self that are not in other
         for item in self.iter() {
             if !other.contains(item) {
                 result.insert(item.clone());
             }
         }
-        
+
         // Add elements from other that are not in self
         for item in other.iter() {
             if !self.contains(item) {
                 result.insert(item.clone());
             }
         }
-        
+
         result
     }
 
     /// Check if this set is a subset of another
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let set1 = SetOperations::from_iter([1, 2]);
     /// let set2 = SetOperations::from_iter([1, 2, 3, 4]);
-    /// 
+    ///
     /// assert!(set1.is_subset(&set2));
     /// assert!(!set2.is_subset(&set1));
     /// ```
@@ -251,16 +251,16 @@ where
     }
 
     /// Check if two sets are disjoint (no common elements)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let set1 = SetOperations::from_iter([1, 2]);
     /// let set2 = SetOperations::from_iter([3, 4]);
     /// let set3 = SetOperations::from_iter([2, 3]);
-    /// 
+    ///
     /// assert!(set1.is_disjoint(&set2));
     /// assert!(!set1.is_disjoint(&set3));
     /// ```
@@ -269,15 +269,15 @@ where
     }
 
     /// Insert multiple elements from an iterator
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::SetOperations;
-    /// 
+    ///
     /// let mut set = SetOperations::new();
     /// set.insert_many([1, 2, 3, 2, 1]); // Duplicates ignored
-    /// 
+    ///
     /// assert_eq!(set.len(), 3);
     /// assert!(set.contains(&1));
     /// assert!(set.contains(&2));
@@ -348,16 +348,16 @@ mod tests {
     #[test]
     fn test_basic_operations() {
         let mut set = SetOperations::new();
-        
+
         assert!(set.insert(1));
         assert!(set.insert(2));
         assert!(!set.insert(1)); // Already exists
-        
+
         assert_eq!(set.len(), 2);
         assert!(set.contains(&1));
         assert!(set.contains(&2));
         assert!(!set.contains(&3));
-        
+
         assert!(set.remove(&1));
         assert!(!set.remove(&3)); // Doesn't exist
         assert_eq!(set.len(), 1);
@@ -367,10 +367,10 @@ mod tests {
     fn test_union() {
         let set1 = SetOperations::from_iter([1, 2, 3]);
         let set2 = SetOperations::from_iter([3, 4, 5]);
-        
+
         let union = set1.union(&set2);
         assert_eq!(union.len(), 5);
-        
+
         for i in 1..=5 {
             assert!(union.contains(&i));
         }
@@ -380,7 +380,7 @@ mod tests {
     fn test_intersection() {
         let set1 = SetOperations::from_iter([1, 2, 3, 4]);
         let set2 = SetOperations::from_iter([3, 4, 5, 6]);
-        
+
         let intersection = set1.intersection(&set2);
         assert_eq!(intersection.len(), 2);
         assert!(intersection.contains(&3));
@@ -393,7 +393,7 @@ mod tests {
     fn test_difference() {
         let set1 = SetOperations::from_iter([1, 2, 3, 4]);
         let set2 = SetOperations::from_iter([3, 4, 5, 6]);
-        
+
         let diff = set1.difference(&set2);
         assert_eq!(diff.len(), 2);
         assert!(diff.contains(&1));
@@ -406,7 +406,7 @@ mod tests {
     fn test_symmetric_difference() {
         let set1 = SetOperations::from_iter([1, 2, 3]);
         let set2 = SetOperations::from_iter([3, 4, 5]);
-        
+
         let sym_diff = set1.symmetric_difference(&set2);
         assert_eq!(sym_diff.len(), 4);
         assert!(sym_diff.contains(&1));
@@ -421,13 +421,13 @@ mod tests {
         let small = SetOperations::from_iter([1, 2]);
         let large = SetOperations::from_iter([1, 2, 3, 4]);
         let other = SetOperations::from_iter([2, 3]);
-        
+
         assert!(small.is_subset(&large));
         assert!(!large.is_subset(&small));
-        
+
         assert!(large.is_superset(&small));
         assert!(!small.is_superset(&large));
-        
+
         assert!(!small.is_subset(&other)); // {1,2} not subset of {2,3}
     }
 
@@ -436,7 +436,7 @@ mod tests {
         let set1 = SetOperations::from_iter([1, 2]);
         let set2 = SetOperations::from_iter([3, 4]);
         let set3 = SetOperations::from_iter([2, 3]);
-        
+
         assert!(set1.is_disjoint(&set2));
         assert!(!set1.is_disjoint(&set3)); // Share element 2
     }
@@ -445,7 +445,7 @@ mod tests {
     fn test_insert_many() {
         let mut set = SetOperations::new();
         set.insert_many([1, 2, 3, 2, 1]); // Duplicates should be ignored
-        
+
         assert_eq!(set.len(), 3);
         assert!(set.contains(&1));
         assert!(set.contains(&2));
@@ -456,7 +456,7 @@ mod tests {
     fn test_from_iterator() {
         let items = vec![1, 2, 3, 2, 1];
         let set: SetOperations<i32> = items.into_iter().collect();
-        
+
         assert_eq!(set.len(), 3);
         assert!(set.contains(&1));
         assert!(set.contains(&2));
@@ -468,7 +468,7 @@ mod tests {
         let set = SetOperations::from_iter([3, 1, 2]);
         let mut vec = set.to_vec();
         vec.sort(); // HashSet doesn't guarantee order
-        
+
         assert_eq!(vec, vec![1, 2, 3]);
     }
 }

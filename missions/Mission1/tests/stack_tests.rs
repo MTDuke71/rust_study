@@ -5,13 +5,13 @@ fn req1_generic_support() {
     // Test that Stack works with different types (separate stacks)
     let mut string_stack = Stack::new();
     string_stack.push("str");
-    
+
     let mut int_stack = Stack::new();
     int_stack.push(42);
-    
+
     let mut float_stack = Stack::new();
     float_stack.push(3.14);
-    
+
     // All should compile and work
     assert_eq!(string_stack.pop(), Some("str"));
     assert_eq!(int_stack.pop(), Some(42));

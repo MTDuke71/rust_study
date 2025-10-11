@@ -13,7 +13,7 @@
 //! ```rust
 //! use crates::greet;
 //! use crates::Calculator;
-//! 
+//!
 //! greet("World");
 //! let mut calc = Calculator::new();
 //! calc.add(42);
@@ -39,17 +39,17 @@ impl Calculator {
     pub fn new() -> Self {
         Calculator { value: 0 }
     }
-    
+
     /// Add a number to the current value
     pub fn add(&mut self, n: i32) {
         self.value += n;
     }
-    
+
     /// Get the current value
     pub fn get_value(&self) -> i32 {
         self.value
     }
-    
+
     /// Reset the calculator to zero
     pub fn reset(&mut self) {
         self.value = 0;
@@ -65,13 +65,13 @@ pub mod math {
             _ => n * factorial(n - 1),
         }
     }
-    
+
     /// Check if a number is prime
     pub fn is_prime(n: u32) -> bool {
         if n < 2 {
             return false;
         }
-        
+
         for i in 2..=(n as f64).sqrt() as u32 {
             if n % i == 0 {
                 return false;
@@ -89,13 +89,13 @@ mod tests {
     fn test_calculator() {
         let mut calc = Calculator::new();
         assert_eq!(calc.get_value(), 0);
-        
+
         calc.add(5);
         assert_eq!(calc.get_value(), 5);
-        
+
         calc.add(3);
         assert_eq!(calc.get_value(), 8);
-        
+
         calc.reset();
         assert_eq!(calc.get_value(), 0);
     }

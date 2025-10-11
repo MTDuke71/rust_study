@@ -1,12 +1,12 @@
 //! # Mission 6 Tutorial Library
-//! 
+//!
 //! This tutorial library provides step-by-step learning examples for mastering
 //! grids, 2D arrays, and spatial algorithms in Rust.
-//! 
+//!
 //! ## Tutorial Progression
-//! 
+//!
 //! The tutorial follows a 7-step progressive learning approach:
-//! 
+//!
 //! 1. **Grid Setup** - Basic grid creation and type safety
 //! 2. **Grid Indexing** - Safe access patterns and iterators  
 //! 3. **Coordinates** - Navigation and distance calculations
@@ -14,19 +14,19 @@
 //! 5. **AoC Utilities** - Flood fill and competitive programming patterns
 //! 6. **Performance** - Optimization and benchmarking techniques
 //! 7. **Documentation** - Integration and professional examples
-//! 
+//!
 //! ## Using This Library
-//! 
+//!
 //! Each tutorial step is designed to be self-contained and executable:
-//! 
+//!
 //! ```bash
 //! cargo run --example step1_grid_setup
 //! cargo run --example step2_grid_indexing
 //! # ... continue through step7
 //! ```
-//! 
+//!
 //! ## Learning Objectives
-//! 
+//!
 //! By the end of this tutorial you will have mastered:
 //! - 2D grid representation and memory layout
 //! - Coordinate system navigation and bounds checking
@@ -34,9 +34,9 @@
 //! - Flood fill operations and connected component analysis
 //! - Performance optimization for large grid operations
 //! - Integration patterns with other Rust data structures
-//! 
+//!
 //! ## Integration with Mission6
-//! 
+//!
 //! This tutorial is designed to complement Mission6 (the main implementation):
 //! - Tutorial provides guided learning and hands-on practice
 //! - Mission6 provides production-ready implementation with comprehensive testing

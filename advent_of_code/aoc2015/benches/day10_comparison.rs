@@ -1,5 +1,5 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
 use aoc2015::solver::day10;
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use mission5::MemoCache;
 
 /// Non-memoized iterative approach (your implementation)
@@ -49,9 +49,9 @@ fn look_and_say_recursive(
 /// Benchmark both approaches for Part 2 (50 iterations)
 fn benchmark_day10_part2(c: &mut Criterion) {
     let input = "1113122113"; // AoC 2015 Day 10 puzzle input
-    
+
     let mut group = c.benchmark_group("day10_part2_50_iterations");
-    
+
     // Benchmark iterative (no memoization)
     group.bench_with_input(
         BenchmarkId::new("iterative", "50_cycles"),
@@ -63,7 +63,7 @@ fn benchmark_day10_part2(c: &mut Criterion) {
             });
         },
     );
-    
+
     // Benchmark memoized (recursive with cache)
     group.bench_with_input(
         BenchmarkId::new("memoized", "50_cycles"),
@@ -75,16 +75,16 @@ fn benchmark_day10_part2(c: &mut Criterion) {
             });
         },
     );
-    
+
     group.finish();
 }
 
 /// Benchmark both approaches at different iteration counts
 fn benchmark_day10_scalability(c: &mut Criterion) {
     let input = "1113122113";
-    
+
     let mut group = c.benchmark_group("day10_scalability");
-    
+
     for iterations in [10, 20, 30, 40, 50].iter() {
         group.bench_with_input(
             BenchmarkId::new("iterative", iterations),
@@ -96,7 +96,7 @@ fn benchmark_day10_scalability(c: &mut Criterion) {
                 });
             },
         );
-        
+
         group.bench_with_input(
             BenchmarkId::new("memoized", iterations),
             iterations,
@@ -108,7 +108,7 @@ fn benchmark_day10_scalability(c: &mut Criterion) {
             },
         );
     }
-    
+
     group.finish();
 }
 
@@ -117,16 +117,16 @@ fn benchmark_day10_scalability(c: &mut Criterion) {
 fn analyze_cache_effectiveness() {
     let input = "1113122113";
     let mut cache = MemoCache::new();
-    
+
     println!("\n=== Cache Effectiveness Analysis ===");
     println!("Input: {}", input);
-    
+
     let result = look_and_say_recursive(input.to_string(), 50, &mut cache);
-    
+
     println!("After 50 iterations:");
     println!("- Final length: {}", result.len());
     println!("- Cache entries: {}", cache.len());
-    
+
     println!("\nNote: Look-and-say sequences grow exponentially and rarely repeat,");
     println!("so memoization provides minimal benefit despite memory overhead.");
 }

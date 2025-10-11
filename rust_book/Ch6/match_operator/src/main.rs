@@ -33,12 +33,7 @@ fn example1_basic_match() {
         }
     }
 
-    let coins = vec![
-        Coin::Penny,
-        Coin::Nickel,
-        Coin::Dime,
-        Coin::Quarter,
-    ];
+    let coins = vec![Coin::Penny, Coin::Nickel, Coin::Dime, Coin::Quarter];
 
     println!("Coin values:");
     for coin in coins {

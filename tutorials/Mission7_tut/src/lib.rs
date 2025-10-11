@@ -111,78 +111,82 @@
 /// Utility functions and helpers for tutorial examples
 pub mod tutorial_utils {
     use mission7::{Graph, NodeId};
-    
+
     /// Create a simple example graph for tutorial purposes
     pub fn create_example_graph() -> Graph<&'static str> {
         let mut graph = Graph::new_directed();
-        
+
         let a = graph.add_node("A");
         let b = graph.add_node("B");
         let c = graph.add_node("C");
         let d = graph.add_node("D");
-        
+
         graph.add_edge(a, b);
         graph.add_edge(b, c);
         graph.add_edge(c, d);
         graph.add_edge(d, a);
-        
+
         graph
     }
-    
+
     /// Create a tree-like graph for traversal examples
     pub fn create_tree_graph() -> Graph<&'static str> {
         let mut graph = Graph::new_directed();
-        
+
         let root = graph.add_node("Root");
         let left = graph.add_node("Left");
         let right = graph.add_node("Right");
         let left_left = graph.add_node("Left-Left");
         let left_right = graph.add_node("Left-Right");
         let right_left = graph.add_node("Right-Left");
-        
+
         graph.add_edge(root, left);
         graph.add_edge(root, right);
         graph.add_edge(left, left_left);
         graph.add_edge(left, left_right);
         graph.add_edge(right, right_left);
-        
+
         graph
     }
-    
+
     /// Print graph structure in a readable format
-    pub fn print_graph_structure<T>(graph: &Graph<T>) 
+    pub fn print_graph_structure<T>(graph: &Graph<T>)
     where
         T: std::fmt::Display,
     {
         println!("Graph Structure:");
         println!("  Nodes: {}", graph.node_count());
         println!("  Edges: {}", graph.edge_count());
-        
+
         for node_id in graph.nodes() {
             if let Some(data) = graph.get_node(node_id) {
-                let neighbors: Vec<String> = graph.neighbors(node_id)
+                let neighbors: Vec<String> = graph
+                    .neighbors(node_id)
                     .iter()
                     .map(|&id| {
-                        graph.get_node(id)
+                        graph
+                            .get_node(id)
                             .map(|d| d.to_string())
                             .unwrap_or_else(|| format!("Node{}", id))
                     })
                     .collect();
-                
+
                 println!("  {} -> [{}]", data, neighbors.join(", "));
             }
         }
     }
-    
+
     /// Print traversal results in a readable format
-    pub fn print_traversal_result<T>(graph: &Graph<T>, path: &[NodeId], algorithm: &str) 
+    pub fn print_traversal_result<T>(graph: &Graph<T>, path: &[NodeId], algorithm: &str)
     where
         T: std::fmt::Display,
     {
         println!("{} Traversal:", algorithm);
-        let path_str: Vec<String> = path.iter()
+        let path_str: Vec<String> = path
+            .iter()
             .map(|&id| {
-                graph.get_node(id)
+                graph
+                    .get_node(id)
                     .map(|d| d.to_string())
                     .unwrap_or_else(|| format!("Node{}", id))
             })

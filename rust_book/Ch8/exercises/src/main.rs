@@ -42,7 +42,8 @@ fn exercise1_statistics() {
             *frequency.entry(num).or_insert(0) += 1;
         }
 
-        frequency.iter()
+        frequency
+            .iter()
             .max_by_key(|(_, &count)| count)
             .map(|(&num, _)| num)
     }
@@ -104,11 +105,11 @@ fn exercise2_pig_latin() {
 
     // Test cases
     let test_words = vec![
-        "first",      // irst-fay
-        "apple",      // apple-hay
-        "Hello",      // ello-hay
-        "world",      // orld-way
-        "Rust",       // ust-ray
+        "first",       // irst-fay
+        "apple",       // apple-hay
+        "Hello",       // ello-hay
+        "world",       // orld-way
+        "Rust",        // ust-ray
         "programming", // rogramming-pay
     ];
 
@@ -126,7 +127,11 @@ fn exercise2_pig_latin() {
     ];
 
     for sentence in sentences {
-        println!("  '{}'\n  -> '{}'", sentence, sentence_to_pig_latin(sentence));
+        println!(
+            "  '{}'\n  -> '{}'",
+            sentence,
+            sentence_to_pig_latin(sentence)
+        );
     }
 
     println!();
@@ -143,7 +148,8 @@ fn exercise3_employee_system() {
 
     // Helper function to add employee
     fn add_employee(company: &mut HashMap<String, Vec<String>>, name: String, department: String) {
-        company.entry(department.clone())
+        company
+            .entry(department.clone())
             .or_insert(Vec::new())
             .push(name.clone());
         println!("✅ Added {} to {}", name, department);
@@ -186,12 +192,24 @@ fn exercise3_employee_system() {
     // Demonstrate the system with sample data
     println!("Sample Usage:\n");
 
-    add_employee(&mut company, String::from("Alice"), String::from("Engineering"));
+    add_employee(
+        &mut company,
+        String::from("Alice"),
+        String::from("Engineering"),
+    );
     add_employee(&mut company, String::from("Bob"), String::from("Sales"));
-    add_employee(&mut company, String::from("Charlie"), String::from("Engineering"));
+    add_employee(
+        &mut company,
+        String::from("Charlie"),
+        String::from("Engineering"),
+    );
     add_employee(&mut company, String::from("Diana"), String::from("HR"));
     add_employee(&mut company, String::from("Eve"), String::from("Sales"));
-    add_employee(&mut company, String::from("Frank"), String::from("Engineering"));
+    add_employee(
+        &mut company,
+        String::from("Frank"),
+        String::from("Engineering"),
+    );
     add_employee(&mut company, String::from("Grace"), String::from("HR"));
 
     // List specific department
@@ -244,7 +262,8 @@ fn interactive_mode() {
                 let name = parts[0].trim_start_matches("add ").trim();
                 let department = parts[1].trim();
 
-                company.entry(department.to_string())
+                company
+                    .entry(department.to_string())
                     .or_insert(Vec::new())
                     .push(name.to_string());
 

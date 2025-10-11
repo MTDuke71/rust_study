@@ -1,5 +1,5 @@
 //! # Brackets Basic - Simple Bracket Validation Library
-//! 
+//!
 //! A straightforward, efficient bracket validation library that checks for proper
 //! nesting and matching of parentheses `()`, square brackets `[]`, and curly braces `{}`.
 //! Perfect for syntax validation, expression parsing, and educational purposes.
@@ -85,5 +85,5 @@ pub mod brackets;
 // mod integration_tests;
 
 // Use Mission1's stack instead of our own duplicate
-pub use mission1::Stack;
 pub use brackets::*;
+pub use mission1::Stack;

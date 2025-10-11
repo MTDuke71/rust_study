@@ -17,7 +17,7 @@
 //             head: std::ptr::null_mut(),
 //         }
 //     }
-    
+
 //     fn push_front(&mut self, data: T) {
 //         // ❌ ERROR 1: Box::into_raw is unsafe
 //         let new_node = Box::into_raw(Box::new(Node {
@@ -26,7 +26,7 @@
 //         }));
 //         self.head = new_node;
 //     }
-    
+
 //     fn pop_front(&mut self) -> Option<T> {
 //         if self.head.is_null() {
 //             None
@@ -37,7 +37,7 @@
 //             Some(node.data)
 //         }
 //     }
-    
+
 //     fn peek_front(&self) -> Option<&T> {
 //         if self.head.is_null() {
 //             None
@@ -46,7 +46,7 @@
 //             Some(&(*self.head).data)
 //         }
 //     }
-    
+
 //     fn modify_front(&mut self, new_data: T) -> bool {
 //         if self.head.is_null() {
 //             false
@@ -59,11 +59,11 @@
 // }
 
 fn main() {
-//     let mut list = UnsafeLinkedList::new();
-//     list.push_front(42);
-//     list.push_front(24);
-    
-//     // Try to use the list
-//     println!("Popped: {:?}", list.pop_front());
-//     println!("Popped: {:?}", list.pop_front());
+    //     let mut list = UnsafeLinkedList::new();
+    //     list.push_front(42);
+    //     list.push_front(24);
+
+    //     // Try to use the list
+    //     println!("Popped: {:?}", list.pop_front());
+    //     println!("Popped: {:?}", list.pop_front());
 }

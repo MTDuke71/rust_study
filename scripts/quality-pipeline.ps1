@@ -285,6 +285,6 @@ Duration: $($duration.ToString('mm\:ss'))
 }
 
 # Main execution
-if ($MyInvocation.InvocationName -eq $MyInvocation.MyCommand.Name) {
+if ($MyInvocation.InvocationName -ne '.') {
     Start-QualityPipeline
 }

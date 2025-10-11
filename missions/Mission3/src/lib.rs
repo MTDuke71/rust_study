@@ -16,7 +16,7 @@
 //! use mission3::binary_search;
 //!
 //! let data = [1, 3, 5, 7, 9, 11];
-//! 
+//!
 //! // Basic search
 //! assert_eq!(binary_search::search_slice(&data, &5), Ok(2));
 //! assert_eq!(binary_search::search_slice(&data, &6), Err(3));
@@ -32,13 +32,13 @@
 //! - Space: O(1) for basic search, O(k) for range operations
 //! - Zero-cost abstractions: trait usage has no runtime overhead
 
-pub mod binary_search;
-pub mod searchable;
-pub mod search_iter;
 pub mod aoc_utils;
+pub mod binary_search;
+pub mod search_iter;
+pub mod searchable;
 
 // Re-export main functionality
-pub use binary_search::*;
-pub use searchable::Searchable;
-pub use search_iter::*;
 pub use aoc_utils::*;
+pub use binary_search::*;
+pub use search_iter::*;
+pub use searchable::Searchable;

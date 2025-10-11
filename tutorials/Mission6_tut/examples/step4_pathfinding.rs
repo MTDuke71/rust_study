@@ -11,9 +11,11 @@
 // "The system shall provide pathfinding algorithms including BFS for unweighted
 //  graphs and A* for weighted pathfinding with customizable heuristic functions."
 
-use mission6_tut::tutorial_helpers::{print_section, print_step_complete, TutorialGrid, TutorialCoord};
-use std::collections::{HashMap, HashSet, VecDeque, BinaryHeap};
+use mission6_tut::tutorial_helpers::{
+    print_section, print_step_complete, TutorialCoord, TutorialGrid,
+};
 use std::cmp::Reverse;
+use std::collections::{BinaryHeap, HashMap, HashSet, VecDeque};
 
 fn main() {
     println!("=== Mission 6 Tutorial - Step 4: Pathfinding Algorithms ===");
@@ -21,39 +23,44 @@ fn main() {
 
     // Section 1: Introduction to Pathfinding
     print_section("1. Introduction to Pathfinding");
-    
+
     println!("Pathfinding algorithms help find the shortest or best path between two points.");
     println!("Common algorithms:");
     println!("• BFS (Breadth-First Search): Guarantees shortest path for unweighted graphs");
     println!("• A* (A-star): Optimal pathfinding with heuristics for weighted graphs");
     println!("• Dijkstra's: General shortest path for weighted graphs (A* with h=0)");
-    
+
     // Create a test maze
     let mut maze = TutorialGrid::new(8, 6, '.');
     let obstacles = vec![
-        TutorialCoord::new(2, 1), TutorialCoord::new(2, 2), TutorialCoord::new(2, 3),
-        TutorialCoord::new(4, 1), TutorialCoord::new(4, 2), TutorialCoord::new(4, 3),
-        TutorialCoord::new(5, 3), TutorialCoord::new(6, 3),
+        TutorialCoord::new(2, 1),
+        TutorialCoord::new(2, 2),
+        TutorialCoord::new(2, 3),
+        TutorialCoord::new(4, 1),
+        TutorialCoord::new(4, 2),
+        TutorialCoord::new(4, 3),
+        TutorialCoord::new(5, 3),
+        TutorialCoord::new(6, 3),
     ];
-    
+
     for obstacle in &obstacles {
         maze.set(*obstacle, '#');
     }
-    
+
     let start = TutorialCoord::new(0, 0);
     let goal = TutorialCoord::new(7, 5);
     maze.set(start, 'S');
     maze.set(goal, 'G');
-    
+
     println!("\nTest maze (S=start, G=goal, #=obstacle):");
     println!("{}", maze);
-    
+
     // Section 2: Breadth-First Search (BFS) Implementation
     print_section("2. Breadth-First Search (BFS) Implementation");
-    
+
     println!("BFS explores all positions at distance d before exploring distance d+1");
     println!("This guarantees the shortest path in unweighted graphs.\n");
-    
+
     let bfs_result = bfs_pathfind(&maze, start, goal);
     match bfs_result {
         Some(path) => {
@@ -62,17 +69,23 @@ fn main() {
             println!("Path coordinates:");
             for (i, coord) in path.iter().enumerate() {
                 print!("{}", coord);
-                if i < path.len() - 1 { print!(" → "); }
-                if (i + 1) % 4 == 0 { println!(); }
+                if i < path.len() - 1 {
+                    print!(" → ");
+                }
+                if (i + 1) % 4 == 0 {
+                    println!();
+                }
             }
-            if path.len() % 4 != 0 { println!(); }
+            if path.len() % 4 != 0 {
+                println!();
+            }
         }
         None => println!("BFS found no path from {} to {}", start, goal),
     }
-    
+
     // Section 3: Understanding BFS Algorithm Steps
     print_section("3. Understanding BFS Algorithm Steps");
-    
+
     println!("BFS Algorithm Steps:");
     println!("1. Add start position to queue");
     println!("2. Mark start as visited");
@@ -83,11 +96,11 @@ fn main() {
     println!("      - Mark as visited");
     println!("      - Record parent for path reconstruction");
     println!("      - Add to queue");
-    
+
     // Demonstrate BFS exploration order
     let exploration_order = bfs_exploration_order(&maze, start);
     println!("\nBFS exploration order (visit sequence) from {}:", start);
-    
+
     let mut order_grid = maze.clone();
     for (step, coord) in exploration_order.iter().enumerate() {
         if maze.get(*coord) == Some(&'.') {
@@ -95,14 +108,17 @@ fn main() {
             order_grid.set(*coord, symbol);
         }
     }
-    
+
     println!("{}", order_grid);
     println!("(Numbers show visit order, not distance)");
-    
+
     // Demonstrate BFS distance from start
     let distance_map = bfs_distance_map(&maze, start);
-    println!("\nBFS distance from start {} (shortest path length):", start);
-    
+    println!(
+        "\nBFS distance from start {} (shortest path length):",
+        start
+    );
+
     let mut distance_grid = maze.clone();
     for y in 0..maze.height() {
         for x in 0..maze.width() {
@@ -115,119 +131,145 @@ fn main() {
             }
         }
     }
-    
+
     println!("{}", distance_grid);
     println!("(Numbers show actual distance from start - all neighbors have same distance + 1)");
-    
+
     // Section 4: A* Algorithm Introduction
     print_section("4. A* Algorithm Introduction");
-    
+
     println!("A* combines the guarantees of Dijkstra's with the efficiency of Greedy Best-First");
     println!("Formula: f(n) = g(n) + h(n)");
     println!("• g(n): Actual cost from start to n");
     println!("• h(n): Heuristic estimate from n to goal");
     println!("• f(n): Estimated total cost of path through n");
-    
+
     // Demonstrate different heuristics
     let test_coord = TutorialCoord::new(3, 2);
     let manhattan_h = manhattan_distance(test_coord, goal);
     let euclidean_h = euclidean_distance(test_coord, goal);
-    
+
     println!("\nHeuristic values for {} to {}:", test_coord, goal);
-    println!("• Manhattan heuristic: {} (admissible for 4-connected)", manhattan_h);
-    println!("• Euclidean heuristic: {:.2} (admissible for any movement)", euclidean_h);
-    
+    println!(
+        "• Manhattan heuristic: {} (admissible for 4-connected)",
+        manhattan_h
+    );
+    println!(
+        "• Euclidean heuristic: {:.2} (admissible for any movement)",
+        euclidean_h
+    );
+
     // Section 5: A* Algorithm Implementation
     print_section("5. A* Algorithm Implementation");
-    
+
     let astar_result = astar_pathfind(&maze, start, goal);
     match astar_result {
         Some((path, cost)) => {
-            println!("A* found path with cost {:.2} ({} steps):", cost, path.len() - 1);
+            println!(
+                "A* found path with cost {:.2} ({} steps):",
+                cost,
+                path.len() - 1
+            );
             visualize_path(&maze, &path);
-            
+
             // Compare with BFS result
             if let Some(bfs_path) = bfs_pathfind(&maze, start, goal) {
-                println!("Comparison: BFS {} steps, A* {} steps", 
-                        bfs_path.len() - 1, path.len() - 1);
+                println!(
+                    "Comparison: BFS {} steps, A* {} steps",
+                    bfs_path.len() - 1,
+                    path.len() - 1
+                );
             }
         }
         None => println!("A* found no path from {} to {}", start, goal),
     }
-    
+
     // Section 6: Heuristic Functions Deep Dive
     print_section("6. Heuristic Functions Deep Dive");
-    
+
     println!("Admissible heuristics never overestimate the true cost.");
     println!("This guarantees A* finds the optimal path.\n");
-    
+
     // Test different heuristics
     let test_positions = vec![
         TutorialCoord::new(1, 1),
         TutorialCoord::new(3, 3),
         TutorialCoord::new(6, 2),
     ];
-    
+
     println!("Heuristic comparison for goal {}:", goal);
-    println!("{:<10} {:>10} {:>12} {:>12}", "Position", "Manhattan", "Euclidean", "Chebyshev");
+    println!(
+        "{:<10} {:>10} {:>12} {:>12}",
+        "Position", "Manhattan", "Euclidean", "Chebyshev"
+    );
     for pos in test_positions {
         let manhattan = manhattan_distance(pos, goal);
         let euclidean = euclidean_distance(pos, goal);
         let chebyshev = chebyshev_distance(pos, goal);
-        println!("{:<10} {:>10} {:>12.2} {:>12}", 
-                format!("{}", pos), manhattan, euclidean, chebyshev);
+        println!(
+            "{:<10} {:>10} {:>12.2} {:>12}",
+            format!("{}", pos),
+            manhattan,
+            euclidean,
+            chebyshev
+        );
     }
-    
+
     // Section 7: Handling Different Terrain Types
     print_section("7. Handling Different Terrain Types");
-    
+
     // Create a weighted terrain grid
     let mut terrain_costs = HashMap::new();
-    terrain_costs.insert('.', 1.0);  // Normal terrain
-    terrain_costs.insert('~', 2.0);  // Water (slower)
-    terrain_costs.insert('^', 3.0);  // Mountain (much slower)
-    terrain_costs.insert('#', f64::INFINITY);  // Impassable
-    
+    terrain_costs.insert('.', 1.0); // Normal terrain
+    terrain_costs.insert('~', 2.0); // Water (slower)
+    terrain_costs.insert('^', 3.0); // Mountain (much slower)
+    terrain_costs.insert('#', f64::INFINITY); // Impassable
+
     let mut weighted_maze = TutorialGrid::new(6, 4, '.');
     weighted_maze.set(TutorialCoord::new(1, 1), '~');
     weighted_maze.set(TutorialCoord::new(1, 2), '~');
     weighted_maze.set(TutorialCoord::new(2, 1), '^');
     weighted_maze.set(TutorialCoord::new(3, 1), '#');
     weighted_maze.set(TutorialCoord::new(3, 2), '#');
-    
+
     let w_start = TutorialCoord::new(0, 0);
     let w_goal = TutorialCoord::new(5, 3);
     weighted_maze.set(w_start, 'S');
     weighted_maze.set(w_goal, 'G');
-    
+
     println!("Weighted terrain maze (.=1, ~=2, ^=3, #=∞):");
     println!("{}", weighted_maze);
-    
-    if let Some((path, total_cost)) = astar_weighted_pathfind(&weighted_maze, w_start, w_goal, &terrain_costs) {
-        println!("\nA* with terrain costs found path with total cost: {:.1}", total_cost);
+
+    if let Some((path, total_cost)) =
+        astar_weighted_pathfind(&weighted_maze, w_start, w_goal, &terrain_costs)
+    {
+        println!(
+            "\nA* with terrain costs found path with total cost: {:.1}",
+            total_cost
+        );
         visualize_weighted_path(&weighted_maze, &path);
     }
-    
+
     // Section 8: Performance Comparison
     print_section("8. Performance Comparison");
-    
+
     use std::time::Instant;
-    
+
     // Test on a larger maze
     let large_maze = create_large_maze(20, 15);
     let large_start = TutorialCoord::new(0, 0);
     let large_goal = TutorialCoord::new(19, 14);
-    
+
     // BFS timing
     let start_time = Instant::now();
     let bfs_large_result = bfs_pathfind(&large_maze, large_start, large_goal);
     let bfs_time = start_time.elapsed();
-    
+
     // A* timing
     let start_time = Instant::now();
     let astar_large_result = astar_pathfind(&large_maze, large_start, large_goal);
     let astar_time = start_time.elapsed();
-    
+
     println!("Performance on 20x15 maze:");
     if let Some(bfs_path) = bfs_large_result {
         println!("• BFS: {} steps in {:?}", bfs_path.len() - 1, bfs_time);
@@ -235,14 +277,14 @@ fn main() {
     if let Some((astar_path, _)) = astar_large_result {
         println!("• A*:  {} steps in {:?}", astar_path.len() - 1, astar_time);
     }
-    
+
     print_step_complete("Step 4: Pathfinding Algorithms");
-    
+
     // Next Steps Preview
     println!("\n🔄 Next: Step 5 - AoC Utilities & Flood Fill");
     println!("   Learn flood fill, connected components, and competitive programming patterns");
     println!("   Command: cargo run --example step5_aoc_utilities");
-    
+
     // Key Takeaways
     println!("\n📝 Key Takeaways from Step 4:");
     println!("   ✓ BFS guarantees shortest path for unweighted graphs");
@@ -253,19 +295,23 @@ fn main() {
 }
 
 // BFS implementation for unweighted pathfinding
-fn bfs_pathfind(maze: &TutorialGrid<char>, start: TutorialCoord, goal: TutorialCoord) -> Option<Vec<TutorialCoord>> {
+fn bfs_pathfind(
+    maze: &TutorialGrid<char>,
+    start: TutorialCoord,
+    goal: TutorialCoord,
+) -> Option<Vec<TutorialCoord>> {
     let mut queue = VecDeque::new();
     let mut visited = HashSet::new();
     let mut parent = HashMap::new();
-    
+
     queue.push_back(start);
     visited.insert(start);
-    
+
     while let Some(current) = queue.pop_front() {
         if current == goal {
             return Some(reconstruct_path(&parent, start, goal));
         }
-        
+
         for neighbor in get_neighbors(current, maze.width(), maze.height()) {
             if !visited.contains(&neighbor) && is_passable(maze, neighbor) {
                 visited.insert(neighbor);
@@ -274,85 +320,105 @@ fn bfs_pathfind(maze: &TutorialGrid<char>, start: TutorialCoord, goal: TutorialC
             }
         }
     }
-    
+
     None
 }
 
 // A* implementation with Manhattan heuristic
-fn astar_pathfind(maze: &TutorialGrid<char>, start: TutorialCoord, goal: TutorialCoord) -> Option<(Vec<TutorialCoord>, f64)> {
+fn astar_pathfind(
+    maze: &TutorialGrid<char>,
+    start: TutorialCoord,
+    goal: TutorialCoord,
+) -> Option<(Vec<TutorialCoord>, f64)> {
     let mut open_set = BinaryHeap::new();
     let mut g_score = HashMap::new();
     let mut f_score = HashMap::new();
     let mut parent = HashMap::new();
-    
+
     g_score.insert(start, 0.0);
     f_score.insert(start, manhattan_distance(start, goal) as f64);
-    open_set.push(Reverse(AStarNode { coord: start, f_score: f_score[&start] }));
-    
+    open_set.push(Reverse(AStarNode {
+        coord: start,
+        f_score: f_score[&start],
+    }));
+
     while let Some(Reverse(current_node)) = open_set.pop() {
         let current = current_node.coord;
-        
+
         if current == goal {
             return Some((reconstruct_path(&parent, start, goal), g_score[&current]));
         }
-        
+
         for neighbor in get_neighbors(current, maze.width(), maze.height()) {
-            if !is_passable(maze, neighbor) { continue; }
-            
+            if !is_passable(maze, neighbor) {
+                continue;
+            }
+
             let tentative_g_score = g_score[&current] + 1.0;
-            
+
             if tentative_g_score < *g_score.get(&neighbor).unwrap_or(&f64::INFINITY) {
                 parent.insert(neighbor, current);
                 g_score.insert(neighbor, tentative_g_score);
                 let f_score_val = tentative_g_score + manhattan_distance(neighbor, goal) as f64;
                 f_score.insert(neighbor, f_score_val);
-                open_set.push(Reverse(AStarNode { coord: neighbor, f_score: f_score_val }));
+                open_set.push(Reverse(AStarNode {
+                    coord: neighbor,
+                    f_score: f_score_val,
+                }));
             }
         }
     }
-    
+
     None
 }
 
 // A* with weighted terrain
 fn astar_weighted_pathfind(
-    maze: &TutorialGrid<char>, 
-    start: TutorialCoord, 
+    maze: &TutorialGrid<char>,
+    start: TutorialCoord,
     goal: TutorialCoord,
-    costs: &HashMap<char, f64>
+    costs: &HashMap<char, f64>,
 ) -> Option<(Vec<TutorialCoord>, f64)> {
     let mut open_set = BinaryHeap::new();
     let mut g_score = HashMap::new();
     let mut parent = HashMap::new();
-    
+
     g_score.insert(start, 0.0);
     let initial_f = manhattan_distance(start, goal) as f64;
-    open_set.push(Reverse(AStarNode { coord: start, f_score: initial_f }));
-    
+    open_set.push(Reverse(AStarNode {
+        coord: start,
+        f_score: initial_f,
+    }));
+
     while let Some(Reverse(current_node)) = open_set.pop() {
         let current = current_node.coord;
-        
+
         if current == goal {
             return Some((reconstruct_path(&parent, start, goal), g_score[&current]));
         }
-        
+
         for neighbor in get_neighbors(current, maze.width(), maze.height()) {
             let terrain = maze.get(neighbor).unwrap_or(&'#');
             let move_cost = *costs.get(terrain).unwrap_or(&f64::INFINITY);
-            
-            if move_cost == f64::INFINITY { continue; }
-            
+
+            if move_cost == f64::INFINITY {
+                continue;
+            }
+
             let tentative_g_score = g_score[&current] + move_cost;
-            
+
             if tentative_g_score < *g_score.get(&neighbor).unwrap_or(&f64::INFINITY) {
                 parent.insert(neighbor, current);
                 g_score.insert(neighbor, tentative_g_score);
                 let f_score_val = tentative_g_score + euclidean_distance(neighbor, goal);
-                open_set.push(Reverse(AStarNode { coord: neighbor, f_score: f_score_val }));
+                open_set.push(Reverse(AStarNode {
+                    coord: neighbor,
+                    f_score: f_score_val,
+                }));
             }
         }
     }
-    
+
     None
 }
 
@@ -380,16 +446,16 @@ impl Ord for AStarNode {
 fn get_neighbors(coord: TutorialCoord, width: usize, height: usize) -> Vec<TutorialCoord> {
     let directions = [(0, -1), (1, 0), (0, 1), (-1, 0)]; // N, E, S, W
     let mut neighbors = Vec::new();
-    
+
     for (dx, dy) in directions {
         let new_x = coord.x as i32 + dx;
         let new_y = coord.y as i32 + dy;
-        
+
         if new_x >= 0 && new_y >= 0 && (new_x as usize) < width && (new_y as usize) < height {
             neighbors.push(TutorialCoord::new(new_x as usize, new_y as usize));
         }
     }
-    
+
     neighbors
 }
 
@@ -401,10 +467,14 @@ fn is_passable(maze: &TutorialGrid<char>, coord: TutorialCoord) -> bool {
     }
 }
 
-fn reconstruct_path(parent: &HashMap<TutorialCoord, TutorialCoord>, start: TutorialCoord, goal: TutorialCoord) -> Vec<TutorialCoord> {
+fn reconstruct_path(
+    parent: &HashMap<TutorialCoord, TutorialCoord>,
+    start: TutorialCoord,
+    goal: TutorialCoord,
+) -> Vec<TutorialCoord> {
     let mut path = Vec::new();
     let mut current = goal;
-    
+
     while current != start {
         path.push(current);
         current = parent[&current];
@@ -439,13 +509,13 @@ fn bfs_exploration_order(maze: &TutorialGrid<char>, start: TutorialCoord) -> Vec
     let mut queue = VecDeque::new();
     let mut visited = HashSet::new();
     let mut order = Vec::new();
-    
+
     queue.push_back(start);
     visited.insert(start);
-    
+
     while let Some(current) = queue.pop_front() {
         order.push(current);
-        
+
         for neighbor in get_neighbors(current, maze.width(), maze.height()) {
             if !visited.contains(&neighbor) && is_passable(maze, neighbor) {
                 visited.insert(neighbor);
@@ -453,21 +523,24 @@ fn bfs_exploration_order(maze: &TutorialGrid<char>, start: TutorialCoord) -> Vec
             }
         }
     }
-    
+
     order
 }
 
 // BFS distance map - returns actual shortest distance from start to each reachable cell
-fn bfs_distance_map(maze: &TutorialGrid<char>, start: TutorialCoord) -> HashMap<TutorialCoord, usize> {
+fn bfs_distance_map(
+    maze: &TutorialGrid<char>,
+    start: TutorialCoord,
+) -> HashMap<TutorialCoord, usize> {
     let mut queue = VecDeque::new();
     let mut distance_map = HashMap::new();
-    
+
     queue.push_back(start);
     distance_map.insert(start, 0);
-    
+
     while let Some(current) = queue.pop_front() {
         let current_distance = distance_map[&current];
-        
+
         for neighbor in get_neighbors(current, maze.width(), maze.height()) {
             if !distance_map.contains_key(&neighbor) && is_passable(maze, neighbor) {
                 distance_map.insert(neighbor, current_distance + 1);
@@ -475,22 +548,22 @@ fn bfs_distance_map(maze: &TutorialGrid<char>, start: TutorialCoord) -> HashMap<
             }
         }
     }
-    
+
     distance_map
 }
 
 fn create_large_maze(width: usize, height: usize) -> TutorialGrid<char> {
     let mut maze = TutorialGrid::new(width, height, '.');
-    
+
     // Add some random obstacles
-    for y in 1..height-1 {
-        for x in 1..width-1 {
+    for y in 1..height - 1 {
+        for x in 1..width - 1 {
             if (x + y) % 7 == 0 {
                 maze.set(TutorialCoord::new(x, y), '#');
             }
         }
     }
-    
+
     maze
 }
 
@@ -527,7 +600,7 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 // ═══════════════════════════════════════════════════════════════════════════════
 //
 // ✅ USE BFS WHEN:
-// 
+//
 // 1. **UNWEIGHTED GRAPHS** (all edges cost 1)
 //    - BFS guarantees shortest path
 //    - Simpler implementation (no priority queue needed)
@@ -576,7 +649,7 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 // Scenario: 20x15 grid, start (0,0) → goal (19,14)
 // - BFS:  Explores ~150 nodes (all reachable)
 // - A*:   Explores ~50 nodes (guided by heuristic)
-// 
+//
 // Result: A* is 3x faster for single-goal pathfinding!
 //
 // 🎯 RULE OF THUMB:
@@ -727,14 +800,14 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 // **BTreeSet/BTreeMap** (if you need true decrease-key):
 // ```rust
 // let mut open_set = BTreeSet::new();
-// 
+//
 // // Insert
 // open_set.insert((f_score, coord));
-// 
+//
 // // Decrease-key (remove old, insert new)
 // open_set.remove(&(old_f_score, coord));
 // open_set.insert((new_f_score, coord));
-// 
+//
 // // Extract-min
 // let (f, coord) = open_set.pop_first().unwrap();
 // ```
@@ -824,7 +897,7 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 //     g: HashMap<Coord, f64>,      // Cost from start
 //     rhs: HashMap<Coord, f64>,    // One-step lookahead cost
 //     open_set: BinaryHeap<Node>,
-//     
+//
 //     fn update_vertex(&mut self, coord: Coord) {
 //         // Recalculate rhs based on neighbors
 //         if g[coord] != rhs[coord] {
@@ -833,7 +906,7 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 //             if g[coord] != rhs[coord] { insert into open_set }
 //         }
 //     }
-//     
+//
 //     fn handle_cost_change(&mut self, changed_edges: Vec<(Coord, Coord)>) {
 //         for (u, v) in changed_edges {
 //             self.update_vertex(u);
@@ -879,7 +952,7 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 //     // Find nearest valid points before and after blockage
 //     let start_repair = path[blocked_index - 1];
 //     let end_repair = path[blocked_index + 5];  // Look ahead
-//     
+//
 //     // Replan just this segment
 //     if let Some(segment) = astar_pathfind(maze, start_repair, end_repair) {
 //         // Splice in the new segment
@@ -919,18 +992,18 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 // struct HierarchicalMap {
 //     regions: Vec<Region>,          // Large areas (16x16 chunks)
 //     region_graph: Graph,           // Connections between regions
-//     
+//
 //     fn path_hierarchical(&self, start: Coord, goal: Coord) -> Path {
 //         // 1. Find which regions contain start/goal
 //         let start_region = self.find_region(start);
 //         let goal_region = self.find_region(goal);
-//         
+//
 //         // 2. High-level path (rare changes)
 //         let region_path = astar_pathfind(&self.region_graph, start_region, goal_region);
-//         
+//
 //         // 3. Low-level path in current region (frequent changes)
 //         let local_path = astar_pathfind(&self.regions[current], current_pos, region_exit);
-//         
+//
 //         // 4. Combine
 //         combine_paths(local_path, region_path)
 //     }

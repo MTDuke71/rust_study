@@ -101,10 +101,10 @@ fn example5_glob_operator() {
     // Now all public items from std::collections are available
     let mut map: HashMap<&str, i32> = HashMap::new();
     map.insert("example", 42);
-    
+
     let mut set: HashSet<&str> = HashSet::new();
     set.insert("item");
-    
+
     let mut vec_deque: VecDeque<i32> = VecDeque::new();
     vec_deque.push_back(1);
 
@@ -123,16 +123,16 @@ fn example6_use_best_practices() {
     // 3. Avoid glob operator in most cases
     // 4. Place use statements at the top of the file
 
-    use std::collections::HashMap;
-    use crate::front_of_house::hosting;
     use crate::back_of_house::Breakfast;
+    use crate::front_of_house::hosting;
+    use std::collections::HashMap;
 
     // Actually use the imports to demonstrate the concept
     let mut map: HashMap<&str, &str> = HashMap::new();
     map.insert("practice", "makes perfect");
-    
+
     hosting::add_to_waitlist();
-    
+
     let _meal = Breakfast::summer("Rye");
 
     println!("Best practices:");

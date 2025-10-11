@@ -109,9 +109,9 @@
 //! - **Diameter Algorithm**: O(n) since we do two BFS runs
 //! - **Space Complexity**: O(n) for adjacency list + queue + visited array
 
-pub mod tree;
 pub mod diameter;
+pub mod tree;
 
 // Re-export main types for convenient access
-pub use tree::{Tree, NodeId};
 pub use diameter::TreeDiameter;
+pub use tree::{NodeId, Tree};

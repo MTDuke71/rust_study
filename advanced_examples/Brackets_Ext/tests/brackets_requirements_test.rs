@@ -16,7 +16,7 @@ fn req2_correctness_proper_nesting() {
 #[test]
 fn req2_correctness_detects_incorrect_nesting() {
     let e = validate_brackets("([)]").unwrap_err();
-    matches!(e.kind, BracketErrorKind::MismatchedPair{..});
+    matches!(e.kind, BracketErrorKind::MismatchedPair { .. });
 }
 
 // REQ-3: earliest error with details
@@ -25,7 +25,7 @@ fn req3_unexpected_closing_earliest() {
     let e = validate_brackets("]abc").unwrap_err();
     match e.kind {
         BracketErrorKind::UnexpectedClosing { found } => {
-            assert_eq!(found, ']'); 
+            assert_eq!(found, ']');
             assert_eq!(e.index, 0);
         }
         _ => panic!("wrong kind"),
@@ -49,7 +49,10 @@ fn req3_mismatched_pair_details() {
 fn req3_unclosed_reports_top_of_stack() {
     let e = validate_brackets("(((").unwrap_err();
     match e.kind {
-        BracketErrorKind::UnclosedOpenings { expected, open_index } => {
+        BracketErrorKind::UnclosedOpenings {
+            expected,
+            open_index,
+        } => {
             assert_eq!(expected, ')');
             assert_eq!(open_index, 2);
             assert_eq!(e.index, 2);

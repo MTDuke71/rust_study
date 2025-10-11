@@ -1,13 +1,13 @@
 //! # Competitive Programming: BFS Maze Solver with RingBufferQueue
 //!
 //! This crate demonstrates the optimal use case for `RingBufferQueue` in competitive programming:
-//! **Breadth-First Search (BFS) on bounded grids** where queue capacity is known and 
+//! **Breadth-First Search (BFS) on bounded grids** where queue capacity is known and
 //! cache efficiency is critical for performance.
 //!
 //! ## Problem: Shortest Path in Grid Maze
 //!
-//! Classic competitive programming problem found in contests like Codeforces, AtCoder, 
-//! and ICPC. Given a grid maze with walls and open paths, find the shortest path from 
+//! Classic competitive programming problem found in contests like Codeforces, AtCoder,
+//! and ICPC. Given a grid maze with walls and open paths, find the shortest path from
 //! start to goal using BFS.
 //!
 //! ## Why RingBufferQueue is Perfect Here
@@ -24,7 +24,7 @@
 //!
 //! let maze = vec![
 //!     "S...".to_string(),
-//!     ".##.".to_string(), 
+//!     ".##.".to_string(),
 //!     "...G".to_string(),
 //! ];
 //!
@@ -95,5 +95,5 @@ pub mod maze;
 pub mod solver;
 
 // Re-export main types for convenient access
-pub use maze::{Position, Grid, Cell};
+pub use maze::{Cell, Grid, Position};
 pub use solver::MazeSolver;

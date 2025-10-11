@@ -2,21 +2,21 @@ use std::collections::HashMap;
 use std::hash::Hash;
 
 /// Frequency counter for tracking occurrences of items
-/// 
+///
 /// Specialized HashMap wrapper optimized for counting operations.
 /// Provides statistical analysis methods and efficient increment operations.
-/// 
+///
 /// # Requirements Satisfied: REQ-3
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```rust
 /// use mission5::Counter;
-/// 
+///
 /// let mut counter = Counter::new();
 /// let items = vec!["apple".to_string(), "banana".to_string(), "apple".to_string(), "cherry".to_string()];
 /// counter.count_multiple(items);
-/// 
+///
 /// assert_eq!(counter.get(&"apple".to_string()), 2);
 /// assert_eq!(counter.get(&"banana".to_string()), 1);
 /// assert_eq!(counter.total_count(), 4);
@@ -35,12 +35,12 @@ where
     K: Eq + Hash,
 {
     /// Create a new empty counter
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::Counter;
-    /// 
+    ///
     /// let counter: Counter<String> = Counter::new();
     /// assert_eq!(counter.total_count(), 0);
     /// ```
@@ -60,16 +60,16 @@ where
     }
 
     /// Increment count for a key by 1
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::Counter;
-    /// 
+    ///
     /// let mut counter = Counter::new();
     /// counter.increment("apple");
     /// counter.increment("apple");
-    /// 
+    ///
     /// assert_eq!(counter.get(&"apple"), 2);
     /// ```
     pub fn increment(&mut self, key: K) {
@@ -77,16 +77,16 @@ where
     }
 
     /// Increment count for a key by specified amount
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::Counter;
-    /// 
+    ///
     /// let mut counter = Counter::new();
     /// counter.increment_by("score", 10);
     /// counter.increment_by("score", 5);
-    /// 
+    ///
     /// assert_eq!(counter.get(&"score"), 15);
     /// ```
     pub fn increment_by(&mut self, key: K, amount: usize) {
@@ -95,15 +95,15 @@ where
     }
 
     /// Get count for a key (returns 0 if key doesn't exist)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::Counter;
-    /// 
+    ///
     /// let mut counter = Counter::new();
     /// counter.increment("existing");
-    /// 
+    ///
     /// assert_eq!(counter.get(&"existing"), 1);
     /// assert_eq!(counter.get(&"missing"), 0);
     /// ```
@@ -128,16 +128,16 @@ where
     }
 
     /// Get total count across all keys
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::Counter;
-    /// 
+    ///
     /// let mut counter = Counter::new();
     /// counter.increment_by("a", 5);
     /// counter.increment_by("b", 3);
-    /// 
+    ///
     /// assert_eq!(counter.total_count(), 8);
     /// ```
     pub fn total_count(&self) -> usize {
@@ -186,16 +186,16 @@ where
     K: Eq + Hash + Clone,
 {
     /// Count multiple items from an iterator
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::Counter;
-    /// 
+    ///
     /// let mut counter = Counter::new();
     /// let items = vec!["apple".to_string(), "banana".to_string(), "apple".to_string()];
     /// counter.count_multiple(items);
-    /// 
+    ///
     /// assert_eq!(counter.get(&"apple".to_string()), 2);
     /// assert_eq!(counter.get(&"banana".to_string()), 1);
     /// ```
@@ -209,36 +209,32 @@ where
     }
 
     /// Get the most common items with their counts
-    /// 
+    ///
     /// Returns items sorted by count (descending)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::Counter;
-    /// 
+    ///
     /// let mut counter = Counter::new();
     /// counter.count_multiple(&["a", "b", "a", "c", "a", "b"]);
-    /// 
+    ///
     /// let most_common = counter.most_common(2);
     /// assert_eq!(most_common[0].1, 3); // "a" appears 3 times
     /// assert_eq!(most_common[1].1, 2); // "b" appears 2 times
     /// ```
     pub fn most_common(&self, n: usize) -> Vec<(K, usize)> {
-        let mut items: Vec<_> = self.counts.iter()
-            .map(|(k, &v)| (k.clone(), v))
-            .collect();
-        
+        let mut items: Vec<_> = self.counts.iter().map(|(k, &v)| (k.clone(), v)).collect();
+
         items.sort_by(|a, b| b.1.cmp(&a.1));
         items.into_iter().take(n).collect()
     }
 
     /// Get the least common items with their counts
     pub fn least_common(&self, n: usize) -> Vec<(K, usize)> {
-        let mut items: Vec<_> = self.counts.iter()
-            .map(|(k, &v)| (k.clone(), v))
-            .collect();
-        
+        let mut items: Vec<_> = self.counts.iter().map(|(k, &v)| (k.clone(), v)).collect();
+
         items.sort_by(|a, b| a.1.cmp(&b.1));
         items.into_iter().take(n).collect()
     }
@@ -247,17 +243,17 @@ where
 // String-specific methods for text analysis
 impl Counter<String> {
     /// Count words in a text string
-    /// 
+    ///
     /// Splits on whitespace and counts each word
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::Counter;
-    /// 
+    ///
     /// let mut counter = Counter::new();
     /// counter.count_words("hello world hello rust");
-    /// 
+    ///
     /// assert_eq!(counter.get(&"hello".to_string()), 2);
     /// assert_eq!(counter.get(&"world".to_string()), 1);
     /// assert_eq!(counter.get(&"rust".to_string()), 1);
@@ -269,15 +265,15 @@ impl Counter<String> {
     }
 
     /// Count characters in a text string
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission5::Counter;
-    /// 
+    ///
     /// let mut counter = Counter::new();
     /// counter.count_chars("hello");
-    /// 
+    ///
     /// assert_eq!(counter.get(&"l".to_string()), 2);
     /// assert_eq!(counter.get(&"e".to_string()), 1);
     /// ```
@@ -328,11 +324,11 @@ mod tests {
     #[test]
     fn test_basic_counting() {
         let mut counter = Counter::new();
-        
+
         counter.increment("apple");
         counter.increment("banana");
         counter.increment("apple");
-        
+
         assert_eq!(counter.get(&"apple"), 2);
         assert_eq!(counter.get(&"banana"), 1);
         assert_eq!(counter.get(&"missing"), 0);
@@ -343,11 +339,11 @@ mod tests {
     #[test]
     fn test_increment_by() {
         let mut counter = Counter::new();
-        
+
         counter.increment_by("score", 10);
         counter.increment_by("score", 5);
         counter.increment_by("lives", 3);
-        
+
         assert_eq!(counter.get(&"score"), 15);
         assert_eq!(counter.get(&"lives"), 3);
         assert_eq!(counter.total_count(), 18);
@@ -356,9 +352,15 @@ mod tests {
     #[test]
     fn test_batch_counting() {
         let mut counter = Counter::new();
-        let items = vec!["a".to_string(), "b".to_string(), "a".to_string(), "c".to_string(), "a".to_string()];
+        let items = vec![
+            "a".to_string(),
+            "b".to_string(),
+            "a".to_string(),
+            "c".to_string(),
+            "a".to_string(),
+        ];
         counter.count_multiple(items);
-        
+
         assert_eq!(counter.get(&"a".to_string()), 3);
         assert_eq!(counter.get(&"b".to_string()), 1);
         assert_eq!(counter.get(&"c".to_string()), 1);
@@ -368,9 +370,16 @@ mod tests {
     #[test]
     fn test_most_common() {
         let mut counter = Counter::new();
-        let items = vec!["a".to_string(), "b".to_string(), "a".to_string(), "c".to_string(), "a".to_string(), "b".to_string()];
+        let items = vec![
+            "a".to_string(),
+            "b".to_string(),
+            "a".to_string(),
+            "c".to_string(),
+            "a".to_string(),
+            "b".to_string(),
+        ];
         counter.count_multiple(items);
-        
+
         let most_common = counter.most_common(3);
         assert_eq!(most_common.len(), 3);
         assert_eq!(most_common[0], ("a".to_string(), 3));
@@ -382,7 +391,7 @@ mod tests {
     fn test_word_counting() {
         let mut counter = Counter::new();
         counter.count_words("hello world hello rust world");
-        
+
         assert_eq!(counter.get(&"hello".to_string()), 2);
         assert_eq!(counter.get(&"world".to_string()), 2);
         assert_eq!(counter.get(&"rust".to_string()), 1);
@@ -393,7 +402,7 @@ mod tests {
     fn test_char_counting() {
         let mut counter = Counter::new();
         counter.count_chars("hello");
-        
+
         assert_eq!(counter.get(&"h".to_string()), 1);
         assert_eq!(counter.get(&"e".to_string()), 1);
         assert_eq!(counter.get(&"l".to_string()), 2);
@@ -406,13 +415,13 @@ mod tests {
         let mut counter = Counter::new();
         counter.increment("a");
         counter.increment("b");
-        
+
         assert_eq!(counter.total_count(), 2);
-        
+
         counter.set("a", 5);
         assert_eq!(counter.get(&"a"), 5);
         assert_eq!(counter.total_count(), 6);
-        
+
         let removed = counter.remove(&"b");
         assert_eq!(removed, 1);
         assert_eq!(counter.total_count(), 5);
@@ -423,7 +432,7 @@ mod tests {
     fn test_from_iterator() {
         let items = vec!["a", "b", "a", "c", "a"];
         let counter: Counter<&str> = items.into_iter().collect();
-        
+
         assert_eq!(counter.get(&"a"), 3);
         assert_eq!(counter.get(&"b"), 1);
         assert_eq!(counter.get(&"c"), 1);

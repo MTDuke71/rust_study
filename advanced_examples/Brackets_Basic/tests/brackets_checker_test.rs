@@ -1,5 +1,8 @@
-use std::{fs::File, io::{BufRead, BufReader}};
 use brackets_basic::{validate_brackets, BracketErrorKind};
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+};
 
 fn read_expected_csv(path: &str) -> anyhow::Result<Vec<ExpectedRow>> {
     let f = File::open(path)?;
@@ -8,7 +11,11 @@ fn read_expected_csv(path: &str) -> anyhow::Result<Vec<ExpectedRow>> {
     let header = lines.next().ok_or_else(|| anyhow::anyhow!("empty csv"))??;
     let expected_header = "line,ok,index,kind,expected,found,open_index";
     if header.trim() != expected_header {
-        anyhow::bail!("unexpected header: got `{}`, want `{}`", header, expected_header);
+        anyhow::bail!(
+            "unexpected header: got `{}`, want `{}`",
+            header,
+            expected_header
+        );
     }
 
     let mut out = Vec::new();
@@ -24,13 +31,37 @@ fn read_expected_csv(path: &str) -> anyhow::Result<Vec<ExpectedRow>> {
             "false" => false,
             other => anyhow::bail!("bad ok field: {}", other),
         };
-        let index = if cols[2].is_empty() { None } else { Some(cols[2].parse::<usize>()?) };
+        let index = if cols[2].is_empty() {
+            None
+        } else {
+            Some(cols[2].parse::<usize>()?)
+        };
         let kind = cols[3].to_string();
-        let expected = if cols[4].is_empty() { None } else { Some(cols[4].chars().next().unwrap()) };
-        let found = if cols[5].is_empty() { None } else { Some(cols[5].chars().next().unwrap()) };
-        let open_index = if cols[6].is_empty() { None } else { Some(cols[6].parse::<usize>()?) };
+        let expected = if cols[4].is_empty() {
+            None
+        } else {
+            Some(cols[4].chars().next().unwrap())
+        };
+        let found = if cols[5].is_empty() {
+            None
+        } else {
+            Some(cols[5].chars().next().unwrap())
+        };
+        let open_index = if cols[6].is_empty() {
+            None
+        } else {
+            Some(cols[6].parse::<usize>()?)
+        };
 
-        out.push(ExpectedRow { line_no, ok, index, kind, expected, found, open_index });
+        out.push(ExpectedRow {
+            line_no,
+            ok,
+            index,
+            kind,
+            expected,
+            found,
+            open_index,
+        });
     }
     Ok(out)
 }
@@ -39,10 +70,10 @@ fn read_expected_csv(path: &str) -> anyhow::Result<Vec<ExpectedRow>> {
 struct ExpectedRow {
     line_no: usize,
     ok: bool,
-    index: Option<usize>, 
+    index: Option<usize>,
     kind: String,
-    expected: Option<char>, 
-    found: Option<char>, 
+    expected: Option<char>,
+    found: Option<char>,
     open_index: Option<usize>,
 }
 
@@ -62,20 +93,65 @@ fn run_file_check(input_path: &str, expected_csv: &str) -> anyhow::Result<()> {
                 assert!(exp.ok, "line {} expected error but got OK", exp.line_no);
             }
             Err(e) => {
-                assert!(!exp.ok, "line {} expected OK but got error {:?}", exp.line_no, e);
-                assert_eq!(Some(e.index), exp.index, "line {}: index mismatch", exp.line_no);
+                assert!(
+                    !exp.ok,
+                    "line {} expected OK but got error {:?}",
+                    exp.line_no, e
+                );
+                assert_eq!(
+                    Some(e.index),
+                    exp.index,
+                    "line {}: index mismatch",
+                    exp.line_no
+                );
                 match (exp.kind.as_str(), &e.kind) {
                     ("UnexpectedClosing", BracketErrorKind::UnexpectedClosing { found }) => {
-                        assert_eq!(exp.found, Some(*found), "line {}: found char mismatch", exp.line_no);
+                        assert_eq!(
+                            exp.found,
+                            Some(*found),
+                            "line {}: found char mismatch",
+                            exp.line_no
+                        );
                     }
                     ("MismatchedPair", BracketErrorKind::MismatchedPair { expected, found }) => {
-                        assert_eq!(exp.expected, Some(*expected), "line {}: expected closer mismatch", exp.line_no);
-                        assert_eq!(exp.found, Some(*found), "line {}: found closer mismatch", exp.line_no);
+                        assert_eq!(
+                            exp.expected,
+                            Some(*expected),
+                            "line {}: expected closer mismatch",
+                            exp.line_no
+                        );
+                        assert_eq!(
+                            exp.found,
+                            Some(*found),
+                            "line {}: found closer mismatch",
+                            exp.line_no
+                        );
                     }
-                    ("UnclosedOpenings", BracketErrorKind::UnclosedOpenings { expected, open_index }) => {
-                        assert_eq!(exp.expected, Some(*expected), "line {}: expected closer mismatch", exp.line_no);
-                        assert_eq!(exp.open_index, Some(*open_index), "line {}: open_index mismatch", exp.line_no);
-                        assert_eq!(exp.index, Some(*open_index), "line {}: index should equal open_index", exp.line_no);
+                    (
+                        "UnclosedOpenings",
+                        BracketErrorKind::UnclosedOpenings {
+                            expected,
+                            open_index,
+                        },
+                    ) => {
+                        assert_eq!(
+                            exp.expected,
+                            Some(*expected),
+                            "line {}: expected closer mismatch",
+                            exp.line_no
+                        );
+                        assert_eq!(
+                            exp.open_index,
+                            Some(*open_index),
+                            "line {}: open_index mismatch",
+                            exp.line_no
+                        );
+                        assert_eq!(
+                            exp.index,
+                            Some(*open_index),
+                            "line {}: index should equal open_index",
+                            exp.line_no
+                        );
                     }
                     (other, _) => panic!("line {}: unexpected kind `{}`", exp.line_no, other),
                 }
@@ -87,10 +163,16 @@ fn run_file_check(input_path: &str, expected_csv: &str) -> anyhow::Result<()> {
 
 #[test]
 fn small_dataset_matches_expected() -> anyhow::Result<()> {
-    run_file_check("tests/data/brackets_small.txt", "tests/data/brackets_small.expected.csv")
+    run_file_check(
+        "tests/data/brackets_small.txt",
+        "tests/data/brackets_small.expected.csv",
+    )
 }
 
 #[test]
 fn large_dataset_matches_expected() -> anyhow::Result<()> {
-    run_file_check("tests/data/brackets_large.txt", "tests/data/brackets_large.expected.csv")
+    run_file_check(
+        "tests/data/brackets_large.txt",
+        "tests/data/brackets_large.expected.csv",
+    )
 }

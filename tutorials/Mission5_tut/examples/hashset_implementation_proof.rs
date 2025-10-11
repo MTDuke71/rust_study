@@ -1,5 +1,5 @@
 //! # HashSet Source Code Proof
-//! 
+//!
 //! This shows what the actual Rust HashSet implementation looks like
 //! (Simplified version of the real std::collections::HashSet)
 
@@ -8,7 +8,7 @@ use std::hash::Hash;
 
 // This is conceptually how HashSet is implemented in Rust's standard library
 pub struct MyHashSet<T> {
-    map: HashMap<T, ()>,  // The () is the key insight!
+    map: HashMap<T, ()>, // The () is the key insight!
 }
 
 impl<T> MyHashSet<T>
@@ -74,7 +74,7 @@ fn main() {
     println!("  3. All the logic is in the HashMap implementation");
     println!("  4. HashSet just provides a set-focused API");
     println!("  5. Same performance characteristics as HashMap");
-    
+
     // Show the memory efficiency
     println!("\n🧠 Memory Efficiency:");
     println!("  Size of (): {} bytes", std::mem::size_of::<()>());

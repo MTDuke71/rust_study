@@ -1,5 +1,5 @@
 //! # AoC Pattern Recognition Library
-//! 
+//!
 //! A comprehensive pattern recognition system for Advent of Code preparation.
 //! This library teaches you to identify and implement the most common AoC problem patterns.
 //!
@@ -16,7 +16,7 @@
 //! Most AoC problems involving 2D navigation, flood fill, pathfinding
 //! ```
 //! use aoc_pattern_recognition::grid_patterns::*;
-//! 
+//!
 //! // Identify grid navigation problems
 //! let grid = Grid::from_string("..#.\n.#..\n..#.");
 //! let start = Coord { x: 0, y: 0 };
@@ -49,9 +49,9 @@
 //! ```
 
 pub mod grid_patterns;
-pub mod parsing_patterns; 
-pub mod state_patterns;
+pub mod parsing_patterns;
 pub mod pattern_trainer;
+pub mod state_patterns;
 
 use std::fmt;
 
@@ -72,8 +72,12 @@ impl fmt::Display for PatternError {
         match self {
             PatternError::InvalidInput(msg) => write!(f, "Invalid input: {}", msg),
             PatternError::PatternNotFound(msg) => write!(f, "Pattern not found: {}", msg),
-            PatternError::PerformanceThresholdExceeded(msg) => write!(f, "Performance threshold exceeded: {}", msg),
-            PatternError::UnrecognizedStructure(msg) => write!(f, "Unrecognized structure: {}", msg),
+            PatternError::PerformanceThresholdExceeded(msg) => {
+                write!(f, "Performance threshold exceeded: {}", msg)
+            }
+            PatternError::UnrecognizedStructure(msg) => {
+                write!(f, "Unrecognized structure: {}", msg)
+            }
         }
     }
 }
@@ -84,16 +88,16 @@ impl std::error::Error for PatternError {}
 pub trait AocPattern {
     type Input;
     type Output;
-    
+
     /// Identify if the given input matches this pattern
     fn matches(&self, input: &Self::Input) -> bool;
-    
+
     /// Apply the pattern to solve the problem
     fn solve(&self, input: Self::Input) -> PatternResult<Self::Output>;
-    
+
     /// Get pattern complexity estimate (for performance awareness)
     fn complexity(&self) -> PatternComplexity;
-    
+
     /// Get pattern name for debugging/learning
     fn pattern_name(&self) -> &'static str;
 }
@@ -115,7 +119,7 @@ impl fmt::Display for PatternComplexity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             PatternComplexity::Constant => write!(f, "O(1) - Very Fast"),
-            PatternComplexity::Linear => write!(f, "O(n) - Fast"),  
+            PatternComplexity::Linear => write!(f, "O(n) - Fast"),
             PatternComplexity::Polynomial => write!(f, "O(n²) - Moderate"),
             PatternComplexity::Exponential => write!(f, "O(2^n) - Slow"),
         }

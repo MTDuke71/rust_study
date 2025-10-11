@@ -1,5 +1,5 @@
+use competitive_linked_tree::{Tree, TreeDiameter};
 use criterion::{criterion_group, criterion_main, Criterion};
-use competitive_linked_tree::{TreeDiameter, Tree};
 use std::hint::black_box;
 
 fn bench_tree_creation(c: &mut Criterion) {
@@ -67,7 +67,7 @@ fn bench_large_tree_diameter(c: &mut Criterion) {
 }
 
 criterion_group!(
-    benches, 
+    benches,
     bench_tree_creation,
     bench_diameter_line_graph,
     bench_diameter_star_graph,

@@ -11,110 +11,139 @@
 // "The system shall provide AoC-specific utilities including flood fill operations,
 //  connected component analysis, and grid parsing from text input formats."
 
-use mission6_tut::tutorial_helpers::{print_section, print_step_complete, TutorialGrid, TutorialCoord};
+use mission6_tut::tutorial_helpers::{
+    print_section, print_step_complete, TutorialCoord, TutorialGrid,
+};
 use std::collections::{HashSet, VecDeque};
 
 fn main() {
     println!("=== Mission 6 Tutorial - Step 5: AoC Utilities & Flood Fill ===");
-    println!("Day 5 Focus: Flood fill, connected components, and competitive programming patterns\n");
+    println!(
+        "Day 5 Focus: Flood fill, connected components, and competitive programming patterns\n"
+    );
 
     // Section 1: Introduction to Flood Fill
     print_section("1. Introduction to Flood Fill");
-    
+
     println!("Flood fill is an algorithm that fills connected regions with a value.");
     println!("Common applications:");
     println!("• Paint bucket tool in graphics software");
     println!("• Region detection in image processing");
     println!("• Connected component analysis");
     println!("• AoC problems: counting areas, detecting enclosed regions");
-    
+
     let mut demo_grid = TutorialGrid::new(8, 6, '.');
-    
+
     // Create some regions
     let obstacles = vec![
-        TutorialCoord::new(2, 1), TutorialCoord::new(3, 1), TutorialCoord::new(4, 1),
-        TutorialCoord::new(2, 2), TutorialCoord::new(4, 2),
-        TutorialCoord::new(2, 3), TutorialCoord::new(3, 3), TutorialCoord::new(4, 3),
-        TutorialCoord::new(6, 2), TutorialCoord::new(6, 3), TutorialCoord::new(6, 4),
+        TutorialCoord::new(2, 1),
+        TutorialCoord::new(3, 1),
+        TutorialCoord::new(4, 1),
+        TutorialCoord::new(2, 2),
+        TutorialCoord::new(4, 2),
+        TutorialCoord::new(2, 3),
+        TutorialCoord::new(3, 3),
+        TutorialCoord::new(4, 3),
+        TutorialCoord::new(6, 2),
+        TutorialCoord::new(6, 3),
+        TutorialCoord::new(6, 4),
     ];
-    
+
     for obstacle in obstacles {
         demo_grid.set(obstacle, '#');
     }
-    
+
     println!("\nDemo grid with regions:");
     println!("{}", demo_grid);
-    
+
     // Section 2: Basic Flood Fill Implementation
     print_section("2. Basic Flood Fill Implementation");
-    
+
     let mut fill_grid = demo_grid.clone();
     let fill_start = TutorialCoord::new(0, 0);
-    
-    println!("Starting flood fill from {} (filling '.' with 'X'):", fill_start);
+
+    println!(
+        "Starting flood fill from {} (filling '.' with 'X'):",
+        fill_start
+    );
     let filled_count = flood_fill_4(&mut fill_grid, fill_start, '.', 'X');
     println!("Filled {} cells:", filled_count);
     println!("{}", fill_grid);
-    
+
     // Section 3: 4-Connected vs 8-Connected Flood Fill
     print_section("3. 4-Connected vs 8-Connected Flood Fill");
-    
+
     // Create a diagonal test case
     let mut diagonal_grid = TutorialGrid::new(5, 5, '.');
     let diagonal_obstacles = vec![
-        TutorialCoord::new(1, 1), TutorialCoord::new(2, 2), TutorialCoord::new(3, 3),
+        TutorialCoord::new(1, 1),
+        TutorialCoord::new(2, 2),
+        TutorialCoord::new(3, 3),
     ];
     for obstacle in diagonal_obstacles {
         diagonal_grid.set(obstacle, '#');
     }
-    
+
     println!("Test grid with diagonal obstacles:");
     println!("{}", diagonal_grid);
-    
+
     // 4-connected flood fill
     let mut grid_4 = diagonal_grid.clone();
     let count_4 = flood_fill_4(&mut grid_4, TutorialCoord::new(0, 0), '.', 'A');
-    
-    // 8-connected flood fill  
+
+    // 8-connected flood fill
     let mut grid_8 = diagonal_grid.clone();
     let count_8 = flood_fill_8(&mut grid_8, TutorialCoord::new(0, 0), '.', 'B');
-    
+
     println!("\n4-connected fill (A): {} cells", count_4);
     println!("{}", grid_4);
-    
+
     println!("8-connected fill (B): {} cells", count_8);
     println!("{}", grid_8);
-    
+
     println!("4-connected treats diagonals as separate regions");
     println!("8-connected considers diagonal adjacency");
-    
+
     // Section 4: Connected Components Analysis
     print_section("4. Connected Components Analysis");
-    
+
     let mut island_grid = TutorialGrid::new(10, 6, '.');
-    
+
     // Create multiple islands
     let islands = vec![
         // Island 1
-        vec![TutorialCoord::new(1, 1), TutorialCoord::new(2, 1), TutorialCoord::new(1, 2)],
-        // Island 2  
-        vec![TutorialCoord::new(5, 1), TutorialCoord::new(6, 1), TutorialCoord::new(5, 2), TutorialCoord::new(6, 2)],
+        vec![
+            TutorialCoord::new(1, 1),
+            TutorialCoord::new(2, 1),
+            TutorialCoord::new(1, 2),
+        ],
+        // Island 2
+        vec![
+            TutorialCoord::new(5, 1),
+            TutorialCoord::new(6, 1),
+            TutorialCoord::new(5, 2),
+            TutorialCoord::new(6, 2),
+        ],
         // Island 3
-        vec![TutorialCoord::new(8, 3), TutorialCoord::new(9, 3), TutorialCoord::new(8, 4)],
+        vec![
+            TutorialCoord::new(8, 3),
+            TutorialCoord::new(9, 3),
+            TutorialCoord::new(8, 4),
+        ],
     ];
-    
+
     for island in &islands {
         for &coord in island {
             island_grid.set(coord, '#');
         }
     }
-    
+
     println!("Grid with multiple islands:");
     println!("{}", island_grid);
-    
+
     let components = find_connected_components(&island_grid, '#');
     println!("\nFound {} connected components:", components.len());
-    
+
     for (i, component) in components.iter().enumerate() {
         println!("Component {}: {} cells", i + 1, component.len());
         for coord in component {
@@ -122,31 +151,34 @@ fn main() {
         }
         println!();
     }
-    
-    // Section 5: Region Properties Analysis  
+
+    // Section 5: Region Properties Analysis
     print_section("5. Region Properties Analysis");
-    
+
     let test_coord = TutorialCoord::new(1, 1);
     if let Some(region) = get_region_4(&island_grid, test_coord, '#') {
         let area = region.len();
         let perimeter = calculate_perimeter(&island_grid, &region, '#');
         let bounding_box = calculate_bounding_box(&region);
-        
+
         println!("Region analysis for {}:", test_coord);
         println!("• Area: {} cells", area);
         println!("• Perimeter: {} units", perimeter);
-        println!("• Bounding box: {:?} to {:?}", bounding_box.0, bounding_box.1);
-        
+        println!(
+            "• Bounding box: {:?} to {:?}",
+            bounding_box.0, bounding_box.1
+        );
+
         // Calculate compactness (area / perimeter ratio)
         let compactness = area as f64 / perimeter as f64;
         println!("• Compactness: {:.2} (higher = more compact)", compactness);
     }
-    
+
     // Section 6: AoC Parsing Patterns
     print_section("6. AoC Parsing Patterns");
-    
+
     println!("Common AoC grid input patterns:");
-    
+
     // Pattern 1: Simple character grid
     let aoc_input1 = "\
 ..##..
@@ -154,95 +186,117 @@ fn main() {
 ##..##
 .####.
 ..##..";
-    
+
     println!("\nPattern 1: Character grid");
     println!("{}", aoc_input1);
-    
+
     let parsed_grid1 = parse_char_grid(aoc_input1);
-    println!("Parsed as {}x{} grid", parsed_grid1.width(), parsed_grid1.height());
-    
+    println!(
+        "Parsed as {}x{} grid",
+        parsed_grid1.width(),
+        parsed_grid1.height()
+    );
+
     let obstacle_count = count_chars(&parsed_grid1, '#');
     println!("Found {} obstacles", obstacle_count);
-    
+
     // Pattern 2: Coordinate list
     let aoc_input2 = "2,3\n4,1\n1,4\n5,2";
     println!("\nPattern 2: Coordinate list");
     println!("{}", aoc_input2);
-    
+
     let coordinates = parse_coordinate_list(aoc_input2);
     let coord_grid = coordinates_to_grid(&coordinates, 7, 6);
     println!("Created grid from {} coordinates:", coordinates.len());
     println!("{}", coord_grid);
-    
+
     // Section 7: Competitive Programming Utilities
     print_section("7. Competitive Programming Utilities");
-    
+
     let puzzle_grid = parse_char_grid(aoc_input1);
     println!("Original puzzle grid:");
     println!("{}", puzzle_grid);
-    
+
     // Count distinct regions
     let regions = find_connected_components(&puzzle_grid, '#');
     println!("\nRegion analysis:");
     println!("• {} distinct regions", regions.len());
-    
+
     let mut total_area = 0;
     let mut total_perimeter = 0;
-    
+
     for (i, region) in regions.iter().enumerate() {
         let area = region.len();
         let perimeter = calculate_perimeter(&puzzle_grid, region, '#');
         total_area += area;
         total_perimeter += perimeter;
-        
+
         println!("  Region {}: area={}, perimeter={}", i + 1, area, perimeter);
     }
-    
+
     println!("• Total area: {}", total_area);
     println!("• Total perimeter: {}", total_perimeter);
-    
+
     // Find largest region
     if let Some(largest) = regions.iter().max_by_key(|r| r.len()) {
         println!("• Largest region: {} cells", largest.len());
     }
-    
+
     // Section 8: Advanced Flood Fill Patterns
     print_section("8. Advanced Flood Fill Patterns");
-    
+
     // Pattern: Fill holes (flood fill from edges, then invert)
     let mut hole_grid = TutorialGrid::new(7, 5, '.');
     let border = vec![
-        TutorialCoord::new(1, 1), TutorialCoord::new(2, 1), TutorialCoord::new(3, 1), TutorialCoord::new(4, 1), TutorialCoord::new(5, 1),
-        TutorialCoord::new(1, 2), TutorialCoord::new(5, 2),
-        TutorialCoord::new(1, 3), TutorialCoord::new(2, 3), TutorialCoord::new(4, 3), TutorialCoord::new(5, 3),
+        TutorialCoord::new(1, 1),
+        TutorialCoord::new(2, 1),
+        TutorialCoord::new(3, 1),
+        TutorialCoord::new(4, 1),
+        TutorialCoord::new(5, 1),
+        TutorialCoord::new(1, 2),
+        TutorialCoord::new(5, 2),
+        TutorialCoord::new(1, 3),
+        TutorialCoord::new(2, 3),
+        TutorialCoord::new(4, 3),
+        TutorialCoord::new(5, 3),
     ];
-    
+
     for coord in border {
         hole_grid.set(coord, '#');
     }
-    
+
     println!("Grid with enclosed region:");
     println!("{}", hole_grid);
-    
+
     // Fill from all edges to mark exterior
     let mut exterior_grid = hole_grid.clone();
-    
+
     // Fill from edges
     let width = exterior_grid.width();
     let height = exterior_grid.height();
-    
+
     for x in 0..width {
         flood_fill_4(&mut exterior_grid, TutorialCoord::new(x, 0), '.', 'E'); // Top edge
-        flood_fill_4(&mut exterior_grid, TutorialCoord::new(x, height - 1), '.', 'E'); // Bottom edge
+        flood_fill_4(
+            &mut exterior_grid,
+            TutorialCoord::new(x, height - 1),
+            '.',
+            'E',
+        ); // Bottom edge
     }
     for y in 0..height {
         flood_fill_4(&mut exterior_grid, TutorialCoord::new(0, y), '.', 'E'); // Left edge
-        flood_fill_4(&mut exterior_grid, TutorialCoord::new(width - 1, y), '.', 'E'); // Right edge
+        flood_fill_4(
+            &mut exterior_grid,
+            TutorialCoord::new(width - 1, y),
+            '.',
+            'E',
+        ); // Right edge
     }
-    
+
     println!("\nAfter marking exterior (E):");
     println!("{}", exterior_grid);
-    
+
     // Count interior cells (not 'E' and not '#')
     let mut interior_count = 0;
     for y in 0..exterior_grid.height() {
@@ -254,43 +308,47 @@ fn main() {
             }
         }
     }
-    
+
     println!("Interior cells (holes): {}", interior_count);
-    
+
     // Section 9: Performance Considerations
     print_section("9. Performance Considerations");
-    
+
     use std::time::Instant;
-    
+
     // Test flood fill performance on large grid
     let mut large_grid = TutorialGrid::new(100, 100, '.');
-    
+
     // Add some obstacles
     for i in 0..50 {
         large_grid.set(TutorialCoord::new(i * 2, 50), '#');
     }
-    
+
     let start_time = Instant::now();
     let filled = flood_fill_4(&mut large_grid, TutorialCoord::new(0, 0), '.', 'X');
     let flood_time = start_time.elapsed();
-    
+
     println!("Large grid (100x100) flood fill:");
     println!("• Filled {} cells in {:?}", filled, flood_time);
-    
+
     // Test connected components performance
     let start_time = Instant::now();
     let components = find_connected_components(&large_grid, 'X');
     let components_time = start_time.elapsed();
-    
-    println!("• Found {} components in {:?}", components.len(), components_time);
-    
+
+    println!(
+        "• Found {} components in {:?}",
+        components.len(),
+        components_time
+    );
+
     print_step_complete("Step 5: AoC Utilities & Flood Fill");
-    
+
     // Next Steps Preview
     println!("\n🔄 Next: Step 6 - Performance Optimization");
     println!("   Learn benchmarking, memory optimization, and cache-friendly patterns");
     println!("   Command: cargo run --example step6_performance");
-    
+
     // Key Takeaways
     println!("\n📝 Key Takeaways from Step 5:");
     println!("   ✓ Flood fill detects and modifies connected regions");
@@ -302,22 +360,27 @@ fn main() {
 }
 
 // Flood fill implementation (4-connected)
-fn flood_fill_4<T: Clone + PartialEq>(grid: &mut TutorialGrid<T>, start: TutorialCoord, target: T, replacement: T) -> usize {
+fn flood_fill_4<T: Clone + PartialEq>(
+    grid: &mut TutorialGrid<T>,
+    start: TutorialCoord,
+    target: T,
+    replacement: T,
+) -> usize {
     if !grid.in_bounds(start) || grid.get(start) != Some(&target) || target == replacement {
         return 0;
     }
-    
+
     let mut stack = vec![start];
     let mut count = 0;
-    
+
     while let Some(coord) = stack.pop() {
         if !grid.in_bounds(coord) || grid.get(coord) != Some(&target) {
             continue;
         }
-        
+
         grid.set(coord, replacement.clone());
         count += 1;
-        
+
         // Add 4-connected neighbors
         let neighbors = [
             TutorialCoord::new(coord.x, coord.y.wrapping_sub(1)), // North
@@ -325,42 +388,49 @@ fn flood_fill_4<T: Clone + PartialEq>(grid: &mut TutorialGrid<T>, start: Tutoria
             TutorialCoord::new(coord.x, coord.y.wrapping_add(1)), // South
             TutorialCoord::new(coord.x.wrapping_sub(1), coord.y), // West
         ];
-        
+
         for neighbor in neighbors {
             if grid.in_bounds(neighbor) && grid.get(neighbor) == Some(&target) {
                 stack.push(neighbor);
             }
         }
     }
-    
+
     count
 }
 
 // Flood fill implementation (8-connected)
-fn flood_fill_8<T: Clone + PartialEq>(grid: &mut TutorialGrid<T>, start: TutorialCoord, target: T, replacement: T) -> usize {
+fn flood_fill_8<T: Clone + PartialEq>(
+    grid: &mut TutorialGrid<T>,
+    start: TutorialCoord,
+    target: T,
+    replacement: T,
+) -> usize {
     if !grid.in_bounds(start) || grid.get(start) != Some(&target) || target == replacement {
         return 0;
     }
-    
+
     let mut stack = vec![start];
     let mut count = 0;
-    
+
     while let Some(coord) = stack.pop() {
         if !grid.in_bounds(coord) || grid.get(coord) != Some(&target) {
             continue;
         }
-        
+
         grid.set(coord, replacement.clone());
         count += 1;
-        
+
         // Add 8-connected neighbors
         for dy in -1i32..=1 {
             for dx in -1i32..=1 {
-                if dx == 0 && dy == 0 { continue; }
-                
+                if dx == 0 && dy == 0 {
+                    continue;
+                }
+
                 let new_x = coord.x as i32 + dx;
                 let new_y = coord.y as i32 + dy;
-                
+
                 if new_x >= 0 && new_y >= 0 {
                     let neighbor = TutorialCoord::new(new_x as usize, new_y as usize);
                     if grid.in_bounds(neighbor) && grid.get(neighbor) == Some(&target) {
@@ -370,15 +440,18 @@ fn flood_fill_8<T: Clone + PartialEq>(grid: &mut TutorialGrid<T>, start: Tutoria
             }
         }
     }
-    
+
     count
 }
 
 // Find all connected components
-fn find_connected_components<T: Clone + PartialEq>(grid: &TutorialGrid<T>, target: T) -> Vec<Vec<TutorialCoord>> {
+fn find_connected_components<T: Clone + PartialEq>(
+    grid: &TutorialGrid<T>,
+    target: T,
+) -> Vec<Vec<TutorialCoord>> {
     let mut visited = HashSet::new();
     let mut components = Vec::new();
-    
+
     for y in 0..grid.height() {
         for x in 0..grid.width() {
             let coord = TutorialCoord::new(x, y);
@@ -393,26 +466,30 @@ fn find_connected_components<T: Clone + PartialEq>(grid: &TutorialGrid<T>, targe
             }
         }
     }
-    
+
     components
 }
 
 // Get a single connected region
-fn get_region_4<T: Clone + PartialEq>(grid: &TutorialGrid<T>, start: TutorialCoord, target: T) -> Option<Vec<TutorialCoord>> {
+fn get_region_4<T: Clone + PartialEq>(
+    grid: &TutorialGrid<T>,
+    start: TutorialCoord,
+    target: T,
+) -> Option<Vec<TutorialCoord>> {
     if grid.get(start) != Some(&target) {
         return None;
     }
-    
+
     let mut region = Vec::new();
     let mut visited = HashSet::new();
     let mut queue = VecDeque::new();
-    
+
     queue.push_back(start);
     visited.insert(start);
-    
+
     while let Some(coord) = queue.pop_front() {
         region.push(coord);
-        
+
         // Check 4-connected neighbors
         let neighbors = [
             TutorialCoord::new(coord.x, coord.y.wrapping_sub(1)),
@@ -420,25 +497,30 @@ fn get_region_4<T: Clone + PartialEq>(grid: &TutorialGrid<T>, start: TutorialCoo
             TutorialCoord::new(coord.x, coord.y.wrapping_add(1)),
             TutorialCoord::new(coord.x.wrapping_sub(1), coord.y),
         ];
-        
+
         for neighbor in neighbors {
-            if grid.in_bounds(neighbor) && 
-               !visited.contains(&neighbor) && 
-               grid.get(neighbor) == Some(&target) {
+            if grid.in_bounds(neighbor)
+                && !visited.contains(&neighbor)
+                && grid.get(neighbor) == Some(&target)
+            {
                 visited.insert(neighbor);
                 queue.push_back(neighbor);
             }
         }
     }
-    
+
     Some(region)
 }
 
 // Calculate perimeter of a region
-fn calculate_perimeter<T: Clone + PartialEq>(grid: &TutorialGrid<T>, region: &[TutorialCoord], target: T) -> usize {
+fn calculate_perimeter<T: Clone + PartialEq>(
+    grid: &TutorialGrid<T>,
+    region: &[TutorialCoord],
+    target: T,
+) -> usize {
     let region_set: HashSet<_> = region.iter().collect();
     let mut perimeter = 0;
-    
+
     for &coord in region {
         let neighbors = [
             TutorialCoord::new(coord.x, coord.y.wrapping_sub(1)),
@@ -446,16 +528,17 @@ fn calculate_perimeter<T: Clone + PartialEq>(grid: &TutorialGrid<T>, region: &[T
             TutorialCoord::new(coord.x, coord.y.wrapping_add(1)),
             TutorialCoord::new(coord.x.wrapping_sub(1), coord.y),
         ];
-        
+
         for neighbor in neighbors {
-            if !grid.in_bounds(neighbor) || 
-               grid.get(neighbor) != Some(&target) ||
-               !region_set.contains(&neighbor) {
+            if !grid.in_bounds(neighbor)
+                || grid.get(neighbor) != Some(&target)
+                || !region_set.contains(&neighbor)
+            {
                 perimeter += 1;
             }
         }
     }
-    
+
     perimeter
 }
 
@@ -464,20 +547,23 @@ fn calculate_bounding_box(region: &[TutorialCoord]) -> (TutorialCoord, TutorialC
     if region.is_empty() {
         return (TutorialCoord::new(0, 0), TutorialCoord::new(0, 0));
     }
-    
+
     let mut min_x = region[0].x;
     let mut max_x = region[0].x;
     let mut min_y = region[0].y;
     let mut max_y = region[0].y;
-    
+
     for coord in region {
         min_x = min_x.min(coord.x);
         max_x = max_x.max(coord.x);
         min_y = min_y.min(coord.y);
         max_y = max_y.max(coord.y);
     }
-    
-    (TutorialCoord::new(min_x, min_y), TutorialCoord::new(max_x, max_y))
+
+    (
+        TutorialCoord::new(min_x, min_y),
+        TutorialCoord::new(max_x, max_y),
+    )
 }
 
 // Parse character grid from string
@@ -486,23 +572,24 @@ fn parse_char_grid(input: &str) -> TutorialGrid<char> {
     if lines.is_empty() {
         return TutorialGrid::new(0, 0, '.');
     }
-    
+
     let height = lines.len();
     let width = lines[0].len();
     let mut grid = TutorialGrid::new(width, height, '.');
-    
+
     for (y, line) in lines.iter().enumerate() {
         for (x, ch) in line.chars().enumerate() {
             grid.set(TutorialCoord::new(x, y), ch);
         }
     }
-    
+
     grid
 }
 
 // Parse coordinate list from string
 fn parse_coordinate_list(input: &str) -> Vec<TutorialCoord> {
-    input.lines()
+    input
+        .lines()
         .filter_map(|line| {
             let parts: Vec<&str> = line.split(',').collect();
             if parts.len() == 2 {
@@ -516,7 +603,11 @@ fn parse_coordinate_list(input: &str) -> Vec<TutorialCoord> {
 }
 
 // Convert coordinate list to grid
-fn coordinates_to_grid(coords: &[TutorialCoord], width: usize, height: usize) -> TutorialGrid<char> {
+fn coordinates_to_grid(
+    coords: &[TutorialCoord],
+    width: usize,
+    height: usize,
+) -> TutorialGrid<char> {
     let mut grid = TutorialGrid::new(width, height, '.');
     for &coord in coords {
         if grid.in_bounds(coord) {
@@ -580,17 +671,17 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //     if !grid.in_bounds(coord) { return 0; }
 //     if grid.get(coord) != Some(&target) { return 0; }
 //     if target == replacement { return 0; }
-//     
+//
 //     // Fill this cell
 //     grid.set(coord, replacement.clone());
-//     
+//
 //     // Recursively fill neighbors (4-connected)
 //     let mut count = 1;
 //     count += flood_fill_recursive(grid, TutorialCoord::new(coord.x, coord.y - 1), target.clone(), replacement.clone());
 //     count += flood_fill_recursive(grid, TutorialCoord::new(coord.x + 1, coord.y), target.clone(), replacement.clone());
 //     count += flood_fill_recursive(grid, TutorialCoord::new(coord.x, coord.y + 1), target.clone(), replacement.clone());
 //     count += flood_fill_recursive(grid, TutorialCoord::new(coord.x - 1, coord.y), target.clone(), replacement.clone());
-//     
+//
 //     count
 // }
 // ```
@@ -623,11 +714,11 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 // ```rust
 // fn flood_fill_iterative(/* ... */) {
 //     let mut stack = vec![start];  // Heap allocation
-//     
+//
 //     while let Some(coord) = stack.pop() {
 //         // Process current cell
 //         grid.set(coord, replacement);
-//         
+//
 //         // Add neighbors to stack
 //         stack.push(north);
 //         stack.push(east);
@@ -642,7 +733,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 // fn flood_fill_bfs(/* ... */) {
 //     let mut queue = VecDeque::new();
 //     queue.push_back(start);
-//     
+//
 //     while let Some(coord) = queue.pop_front() {
 //         // Process current cell
 //         // Add neighbors to queue
@@ -745,22 +836,22 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 // ) -> usize {
 //     let mut stack = vec![start];  // Heap-allocated
 //     let mut count = 0;
-//     
+//
 //     while let Some(coord) = stack.pop() {
 //         if !grid.in_bounds(coord) || grid.get(coord) != Some(&target) {
 //             continue;
 //         }
-//         
+//
 //         grid.set(coord, replacement.clone());  // Mark as visited IN-PLACE
 //         count += 1;
-//         
+//
 //         // Add neighbors
 //         stack.push(north);
 //         stack.push(east);
 //         stack.push(south);
 //         stack.push(west);
 //     }
-//     
+//
 //     count
 // }
 // ```
@@ -795,27 +886,27 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 // ) -> usize {
 //     let mut stack = Vec::new();
 //     let mut count = 0;
-//     
+//
 //     // Start with initial scanline
 //     stack.push((start.y, start.x, start.x, 1));  // (y, left, right, dy)
-//     
+//
 //     while let Some((y, mut x_left, mut x_right, dy)) = stack.pop() {
 //         // Extend span left
 //         while x_left > 0 && grid.get(TutorialCoord::new(x_left - 1, y)) == Some(&target) {
 //             x_left -= 1;
 //         }
-//         
+//
 //         // Extend span right
 //         while x_right < grid.width() - 1 && grid.get(TutorialCoord::new(x_right + 1, y)) == Some(&target) {
 //             x_right += 1;
 //         }
-//         
+//
 //         // Fill this entire scanline
 //         for x in x_left..=x_right {
 //             grid.set(TutorialCoord::new(x, y), replacement.clone());
 //             count += 1;
 //         }
-//         
+//
 //         // Check for scanlines above and below
 //         for check_dy in [-1, 1] {
 //             let new_y = (y as i32 + check_dy) as usize;
@@ -833,7 +924,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //             }
 //         }
 //     }
-//     
+//
 //     count
 // }
 // ```
@@ -873,21 +964,21 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 // ) -> HashSet<TutorialCoord> {
 //     let mut visited = HashSet::new();
 //     let mut stack = vec![start];
-//     
+//
 //     while let Some(coord) = stack.pop() {
 //         if !grid.in_bounds(coord) || visited.contains(&coord) || grid.get(coord) != Some(&target) {
 //             continue;
 //         }
-//         
+//
 //         visited.insert(coord);  // Track separately
-//         
+//
 //         // Add neighbors
 //         stack.push(north);
 //         stack.push(east);
 //         stack.push(south);
 //         stack.push(west);
 //     }
-//     
+//
 //     visited
 // }
 // ```
@@ -934,14 +1025,14 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //             height,
 //         }
 //     }
-//     
+//
 //     fn set(&mut self, x: usize, y: usize) {
 //         let index = y * self.width + x;
 //         let u64_index = index / 64;
 //         let bit_index = index % 64;
 //         self.bits[u64_index] |= 1 << bit_index;
 //     }
-//     
+//
 //     fn get(&self, x: usize, y: usize) -> bool {
 //         let index = y * self.width + x;
 //         let u64_index = index / 64;
@@ -1029,16 +1120,16 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //     fn build_from_grid<T: Clone + PartialEq>(grid: &TutorialGrid<T>, target: T) -> Self {
 //         let mut regions = HashMap::new();
 //         let mut adjacencies = HashMap::new();
-//         
+//
 //         // Step 1: Find all connected components
 //         let components = find_connected_components(grid, target);
-//         
+//
 //         // Step 2: Assign IDs to regions
 //         for (id, component) in components.into_iter().enumerate() {
 //             regions.insert(id, component);
 //             adjacencies.insert(id, HashSet::new());
 //         }
-//         
+//
 //         // Step 3: Build adjacency map
 //         for (id, region) in &regions {
 //             for &coord in region {
@@ -1053,16 +1144,16 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //                 }
 //             }
 //         }
-//         
+//
 //         Self { regions, adjacencies }
 //     }
-//     
+//
 //     fn are_adjacent(&self, id1: usize, id2: usize) -> bool {
 //         self.adjacencies.get(&id1)
 //             .map(|neighbors| neighbors.contains(&id2))
 //             .unwrap_or(false)
 //     }
-//     
+//
 //     fn get_neighbors(&self, id: usize) -> Vec<usize> {
 //         self.adjacencies.get(&id)
 //             .map(|set| set.iter().copied().collect())
@@ -1106,28 +1197,28 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //         let mut labels = vec![vec![None; width]; height];
 //         let mut adjacencies: HashMap<usize, HashSet<usize>> = HashMap::new();
 //         let mut next_id = 0;
-//         
+//
 //         // Step 1: Label all regions with BFS
 //         for y in 0..height {
 //             for x in 0..width {
 //                 let coord = TutorialCoord::new(x, y);
-//                 
+//
 //                 if labels[y][x].is_none() && grid.get(coord) == Some(&target) {
 //                     // Start new region
 //                     let region_id = next_id;
 //                     next_id += 1;
 //                     adjacencies.insert(region_id, HashSet::new());
-//                     
+//
 //                     // BFS to label entire region
 //                     let mut queue = VecDeque::new();
 //                     queue.push_back(coord);
 //                     labels[y][x] = Some(region_id);
-//                     
+//
 //                     while let Some(current) = queue.pop_front() {
 //                         for neighbor in get_neighbors_4(current, width, height) {
 //                             let nx = neighbor.x;
 //                             let ny = neighbor.y;
-//                             
+//
 //                             if labels[ny][nx].is_none() && grid.get(neighbor) == Some(&target) {
 //                                 labels[ny][nx] = Some(region_id);
 //                                 queue.push_back(neighbor);
@@ -1137,7 +1228,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //                 }
 //             }
 //         }
-//         
+//
 //         // Step 2: Build adjacency map in single pass
 //         for y in 0..height {
 //             for x in 0..width {
@@ -1153,20 +1244,20 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //                 }
 //             }
 //         }
-//         
+//
 //         Self { labels, adjacencies, width, height }
 //     }
-//     
+//
 //     fn get_region_id(&self, coord: TutorialCoord) -> Option<usize> {
 //         self.labels[coord.y][coord.x]
 //     }
-//     
+//
 //     fn are_adjacent(&self, id1: usize, id2: usize) -> bool {
 //         self.adjacencies.get(&id1)
 //             .map(|neighbors| neighbors.contains(&id2))
 //             .unwrap_or(false)
 //     }
-//     
+//
 //     fn count_shared_boundary(&self, id1: usize, id2: usize) -> usize {
 //         let mut count = 0;
 //         for y in 0..self.height {
@@ -1225,22 +1316,22 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //             rank: vec![0; size],
 //         }
 //     }
-//     
+//
 //     fn find(&mut self, x: usize) -> usize {
 //         if self.parent[x] != x {
 //             self.parent[x] = self.find(self.parent[x]);  // Path compression
 //         }
 //         self.parent[x]
 //     }
-//     
+//
 //     fn union(&mut self, x: usize, y: usize) -> bool {
 //         let root_x = self.find(x);
 //         let root_y = self.find(y);
-//         
+//
 //         if root_x == root_y {
 //             return false;  // Already in same set
 //         }
-//         
+//
 //         // Union by rank
 //         if self.rank[root_x] < self.rank[root_y] {
 //             self.parent[root_x] = root_y;
@@ -1250,10 +1341,10 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //             self.parent[root_y] = root_x;
 //             self.rank[root_x] += 1;
 //         }
-//         
+//
 //         true
 //     }
-//     
+//
 //     fn same_set(&mut self, x: usize, y: usize) -> bool {
 //         self.find(x) == self.find(y)
 //     }
@@ -1267,13 +1358,13 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //     let width = grid.width();
 //     let height = grid.height();
 //     let mut uf = UnionFind::new(width * height);
-//     
+//
 //     for y in 0..height {
 //         for x in 0..width {
 //             let coord = TutorialCoord::new(x, y);
 //             if grid.get(coord) == Some(&target) {
 //                 let idx = y * width + x;
-//                 
+//
 //                 // Union with neighbors
 //                 if x > 0 {
 //                     let left = TutorialCoord::new(x - 1, y);
@@ -1290,7 +1381,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //             }
 //         }
 //     }
-//     
+//
 //     uf
 // }
 // ```
@@ -1408,7 +1499,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //         let mut labels = vec![vec![None; width]; height];
 //         let mut regions = HashMap::new();
 //         let mut next_id = 0;
-//         
+//
 //         // Label all regions in single pass
 //         for y in 0..height {
 //             for x in 0..width {
@@ -1416,26 +1507,26 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //                 if labels[y][x].is_none() && grid.get(coord) == Some(&target) {
 //                     let region_id = next_id;
 //                     next_id += 1;
-//                     
+//
 //                     // Flood fill to get all cells in this region
 //                     let region_cells = flood_fill_collect(grid, coord, &target, &mut labels, region_id);
 //                     regions.insert(region_id, region_cells);
 //                 }
 //             }
 //         }
-//         
+//
 //         Self { labels, regions, width, height }
 //     }
-//     
+//
 //     fn get_region(&self, coord: TutorialCoord) -> Option<&Vec<TutorialCoord>> {
 //         self.labels[coord.y][coord.x]
 //             .and_then(|id| self.regions.get(&id))
 //     }
-//     
+//
 //     fn get_region_id(&self, coord: TutorialCoord) -> Option<usize> {
 //         self.labels[coord.y][coord.x]
 //     }
-//     
+//
 //     fn region_size(&self, coord: TutorialCoord) -> usize {
 //         self.get_region(coord).map(|r| r.len()).unwrap_or(0)
 //     }
@@ -1443,7 +1534,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //
 // // Usage:
 // let precomputed = PrecomputedRegions::build(&grid, '#');
-// 
+//
 // // Now all queries are O(1)!
 // let region1 = precomputed.get_region(TutorialCoord::new(5, 5));  // O(1)
 // let region2 = precomputed.get_region(TutorialCoord::new(10, 3)); // O(1)
@@ -1493,7 +1584,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 // impl IncrementalRegions {
 //     fn modify_cell(&mut self, coord: TutorialCoord, new_value: bool) {
 //         let old_id = self.labels[coord.y][coord.x];
-//         
+//
 //         if new_value {
 //             // Cell becomes part of target
 //             // Check if any neighbor regions can merge
@@ -1503,7 +1594,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //                     neighbor_ids.insert(neighbor_id);
 //                 }
 //             }
-//             
+//
 //             if neighbor_ids.is_empty() {
 //                 // Create new region
 //                 let new_id = self.next_id;
@@ -1517,7 +1608,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //                 let primary_id = *neighbor_ids.iter().next().unwrap();
 //                 self.labels[coord.y][coord.x] = Some(primary_id);
 //                 self.regions.get_mut(&primary_id).unwrap().insert(coord);
-//                 
+//
 //                 // If multiple neighbors, mark for merge
 //                 if neighbor_ids.len() > 1 {
 //                     for id in neighbor_ids {
@@ -1535,7 +1626,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //             }
 //         }
 //     }
-//     
+//
 //     fn recompute_dirty_regions<T: Clone + PartialEq>(&mut self, grid: &TutorialGrid<T>, target: T) {
 //         for dirty_id in self.dirty_regions.drain() {
 //             // Recompute this region by flood filling from any cell
@@ -1545,7 +1636,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //                     for &coord in region {
 //                         self.labels[coord.y][coord.x] = None;
 //                     }
-//                     
+//
 //                     // Recompute region
 //                     let new_cells = flood_fill_collect(grid, start_coord, &target, &mut self.labels, dirty_id);
 //                     self.regions.insert(dirty_id, new_cells.into_iter().collect());
@@ -1597,18 +1688,18 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //             dirty: false,
 //         }
 //     }
-//     
+//
 //     fn get_region(&mut self, coord: TutorialCoord, target: char) -> &Vec<TutorialCoord> {
 //         if self.dirty {
 //             self.cache.clear();
 //             self.dirty = false;
 //         }
-//         
+//
 //         self.cache.entry(coord).or_insert_with(|| {
 //             flood_fill_collect_simple(&self.grid, coord, target)
 //         })
 //     }
-//     
+//
 //     fn modify_cell(&mut self, coord: TutorialCoord, value: char) {
 //         self.grid.set(coord, value);
 //         self.dirty = true;  // Invalidate cache
@@ -1650,21 +1741,21 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 // ) -> Vec<Vec<TutorialCoord>> {
 //     let width = grid.width();
 //     let height = grid.height();
-//     
+//
 //     // Divide grid into chunks (one per thread)
 //     let num_threads = rayon::current_num_threads();
 //     let chunk_height = (height + num_threads - 1) / num_threads;
-//     
+//
 //     // Process chunks in parallel
 //     let components: Vec<Vec<Vec<TutorialCoord>>> = (0..num_threads)
 //         .into_par_iter()
 //         .map(|thread_id| {
 //             let start_y = thread_id * chunk_height;
 //             let end_y = ((thread_id + 1) * chunk_height).min(height);
-//             
+//
 //             let mut local_components = Vec::new();
 //             let mut visited = HashSet::new();
-//             
+//
 //             for y in start_y..end_y {
 //                 for x in 0..width {
 //                     let coord = TutorialCoord::new(x, y);
@@ -1676,11 +1767,11 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 //                     }
 //                 }
 //             }
-//             
+//
 //             local_components
 //         })
 //         .collect();
-//     
+//
 //     // Flatten results
 //     components.into_iter().flatten().collect()
 // }
@@ -1758,10 +1849,10 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 // loop {
 //     // Game tick: terrain changes
 //     sim.modify_cell(eroded_cell, '.');
-//     
+//
 //     // Query reachable areas (cache hit if no change)
 //     let reachable = sim.get_region(player_pos, '.');
-//     
+//
 //     // ... game logic ...
 // }
 // ```
@@ -1784,7 +1875,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 
 fn get_neighbors_4(coord: TutorialCoord, width: usize, height: usize) -> Vec<TutorialCoord> {
     let mut neighbors = Vec::new();
-    
+
     // North
     if coord.y > 0 {
         neighbors.push(TutorialCoord::new(coord.x, coord.y - 1));
@@ -1801,7 +1892,7 @@ fn get_neighbors_4(coord: TutorialCoord, width: usize, height: usize) -> Vec<Tut
     if coord.x > 0 {
         neighbors.push(TutorialCoord::new(coord.x - 1, coord.y));
     }
-    
+
     neighbors
 }
 

@@ -3,7 +3,7 @@
 
 struct Node<T> {
     data: T,
-    next: *mut Node<T>,  // Raw pointer - still dangerous even with unsafe!
+    next: *mut Node<T>, // Raw pointer - still dangerous even with unsafe!
 }
 
 struct UnsafeLinkedList<T> {
@@ -16,7 +16,7 @@ impl<T> UnsafeLinkedList<T> {
             head: std::ptr::null_mut(),
         }
     }
-    
+
     fn push_front(&mut self, data: T) {
         // ⚠️ "Fixed" with unsafe block - but still dangerous!
         let new_node = unsafe {
@@ -27,7 +27,7 @@ impl<T> UnsafeLinkedList<T> {
         };
         self.head = new_node;
     }
-    
+
     fn pop_front(&mut self) -> Option<T> {
         if self.head.is_null() {
             None
@@ -40,18 +40,16 @@ impl<T> UnsafeLinkedList<T> {
             }
         }
     }
-    
+
     fn peek_front(&self) -> Option<&T> {
         if self.head.is_null() {
             None
         } else {
             // ⚠️ "Fixed" with unsafe block - but could return dangling reference!
-            unsafe {
-                Some(&(*self.head).data)
-            }
+            unsafe { Some(&(*self.head).data) }
         }
     }
-    
+
     fn modify_front(&mut self, new_data: T) -> bool {
         if self.head.is_null() {
             false
@@ -75,11 +73,11 @@ fn main() {
     let mut list = UnsafeLinkedList::new();
     list.push_front(42);
     list.push_front(24);
-    
+
     println!("Peeked: {:?}", list.peek_front());
     println!("Popped: {:?}", list.pop_front());
     println!("Popped: {:?}", list.pop_front());
-    
+
     // ⚠️ Memory leak! The nodes aren't properly cleaned up
     println!("✅ Compiles and runs, but unsafe and error-prone!");
     println!("🚨 This is why Rust prefers Box<T> and Rc<RefCell<T>>!");

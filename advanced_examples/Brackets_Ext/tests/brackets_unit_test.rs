@@ -19,7 +19,7 @@ fn unit_unexpected_closing() {
     let e = validate_brackets("]x").unwrap_err();
     match e.kind {
         BracketErrorKind::UnexpectedClosing { found } => {
-            assert_eq!(found, ']'); 
+            assert_eq!(found, ']');
             assert_eq!(e.index, 0);
         }
         _ => panic!("wrong kind"),
@@ -45,7 +45,10 @@ fn unit_unclosed_topmost_is_reported() {
     // "(((" leaves three opens; we report the most recent (index 2)
     let e = validate_brackets("(((").unwrap_err();
     match e.kind {
-        BracketErrorKind::UnclosedOpenings { expected, open_index } => {
+        BracketErrorKind::UnclosedOpenings {
+            expected,
+            open_index,
+        } => {
             assert_eq!(expected, ')');
             assert_eq!(open_index, 2);
             assert_eq!(e.index, 2);

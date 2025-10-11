@@ -20,7 +20,7 @@ impl<T> SimpleLinkedList<T> {
             length: 0,
         }
     }
-    
+
     pub fn push_front(&mut self, data: T) {
         let new_node = Box::new(Node {
             data,
@@ -29,31 +29,32 @@ impl<T> SimpleLinkedList<T> {
         self.head = Some(new_node);
         self.length += 1;
     }
-    
+
     // ✅ These methods READ the fields, eliminating warnings
     pub fn peek_front(&self) -> Option<&T> {
-        self.head.as_ref().map(|node| &node.data)  // Reads 'data' field
+        self.head.as_ref().map(|node| &node.data) // Reads 'data' field
     }
-    
+
     pub fn len(&self) -> usize {
         self.length
     }
-    
+
     pub fn is_empty(&self) -> bool {
         self.length == 0
     }
-    
+
     // ✅ Method that traverses the list (reads 'next' field)
-    pub fn contains(&self, target: &T) -> bool 
-    where 
-        T: PartialEq 
+    pub fn contains(&self, target: &T) -> bool
+    where
+        T: PartialEq,
     {
         let mut current = &self.head;
         while let Some(node) = current {
-            if node.data == *target {  // Reads 'data' field
+            if node.data == *target {
+                // Reads 'data' field
                 return true;
             }
-            current = &node.next;     // Reads 'next' field  
+            current = &node.next; // Reads 'next' field
         }
         false
     }
@@ -61,17 +62,17 @@ impl<T> SimpleLinkedList<T> {
 
 fn main() {
     println!("=== Step 2 Enhanced: No Warnings ===");
-    
+
     let mut list = SimpleLinkedList::new();
     list.push_front(42);
     list.push_front(24);
     list.push_front(13);
-    
+
     // ✅ Now we actually USE the fields
     if let Some(value) = list.peek_front() {
-        println!("Front value: {}", value);  // Uses 'data' field
+        println!("Front value: {}", value); // Uses 'data' field
     }
-    
-    println!("Contains 24: {}", list.contains(&24));  // Uses both fields
+
+    println!("Contains 24: {}", list.contains(&24)); // Uses both fields
     println!("List: {:?}", list);
 }

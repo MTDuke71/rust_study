@@ -106,7 +106,7 @@ pub struct RingBufferQueue<T> {
     buf: Vec<Option<T>>,
     /// Index of the next element to dequeue (front of queue)
     head: usize,
-    /// Index where the next element will be enqueued (back of queue) 
+    /// Index where the next element will be enqueued (back of queue)
     tail: usize,
     /// Current number of elements in the queue
     len: usize,
@@ -163,11 +163,11 @@ impl<T> RingBufferQueue<T> {
     /// # Time Complexity
     ///
     /// O(1) - length is maintained as queue operations occur.
-    #[inline] 
-    pub fn len(&self) -> usize { 
-        self.len 
+    #[inline]
+    pub fn len(&self) -> usize {
+        self.len
     }
-    
+
     /// Returns `true` if the queue contains no elements.
     ///
     /// # Examples
@@ -188,11 +188,11 @@ impl<T> RingBufferQueue<T> {
     /// # Time Complexity
     ///
     /// O(1) - simple length comparison.
-    #[inline] 
-    pub fn is_empty(&self) -> bool { 
-        self.len == 0 
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.len == 0
     }
-    
+
     /// Returns the maximum number of elements the queue can hold.
     ///
     /// The capacity is fixed at construction time and never changes.
@@ -209,11 +209,11 @@ impl<T> RingBufferQueue<T> {
     /// # Time Complexity
     ///
     /// O(1) - returns the length of the internal buffer.
-    #[inline] 
-    pub fn capacity(&self) -> usize { 
-        self.buf.len() 
+    #[inline]
+    pub fn capacity(&self) -> usize {
+        self.buf.len()
     }
-    
+
     /// Returns `true` if the queue has reached its maximum capacity.
     ///
     /// When full, `enqueue` operations will return `Err(value)` instead of adding the element.
@@ -237,9 +237,9 @@ impl<T> RingBufferQueue<T> {
     /// # Time Complexity
     ///
     /// O(1) - compares current length with capacity.
-    #[inline] 
-    pub fn is_full(&self) -> bool { 
-        self.len == self.capacity() 
+    #[inline]
+    pub fn is_full(&self) -> bool {
+        self.len == self.capacity()
     }
 
     /// Adds an element to the back of the queue.
@@ -376,10 +376,10 @@ impl<T> RingBufferQueue<T> {
     ///
     /// O(1) - direct array access without modification.
     pub fn peek(&self) -> Option<&T> {
-        if self.is_empty() { 
-            None 
-        } else { 
-            self.buf[self.head].as_ref() 
+        if self.is_empty() {
+            None
+        } else {
+            self.buf[self.head].as_ref()
         }
     }
 }
@@ -505,15 +505,15 @@ impl<T> LinkedQueue<T> {
     /// # Time Complexity
     ///
     /// O(1) - no allocation or initialization required.
-    #[inline] 
-    pub fn new() -> Self { 
-        Self { 
-            head: None, 
-            tail: None, 
-            len: 0 
-        } 
+    #[inline]
+    pub fn new() -> Self {
+        Self {
+            head: None,
+            tail: None,
+            len: 0,
+        }
     }
-    
+
     /// Returns the current number of elements in the queue.
     ///
     /// # Examples
@@ -535,11 +535,11 @@ impl<T> LinkedQueue<T> {
     /// # Time Complexity
     ///
     /// O(1) - length is maintained as queue operations occur.
-    #[inline] 
-    pub fn len(&self) -> usize { 
-        self.len 
+    #[inline]
+    pub fn len(&self) -> usize {
+        self.len
     }
-    
+
     /// Returns `true` if the queue contains no elements.
     ///
     /// # Examples
@@ -560,9 +560,9 @@ impl<T> LinkedQueue<T> {
     /// # Time Complexity
     ///
     /// O(1) - checks if head pointer is None.
-    #[inline] 
-    pub fn is_empty(&self) -> bool { 
-        self.head.is_none() 
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.head.is_none()
     }
 
     /// Adds an element to the back of the queue.
@@ -606,7 +606,10 @@ impl<T> LinkedQueue<T> {
     ///
     /// O(1) - single heap allocation and pointer manipulation.
     pub fn enqueue(&mut self, x: T) {
-        let mut new = Box::new(Node { elem: x, next: None });
+        let mut new = Box::new(Node {
+            elem: x,
+            next: None,
+        });
         let new_ptr = Some(unsafe { NonNull::new_unchecked(&mut *new) });
 
         match self.tail {
@@ -750,24 +753,24 @@ mod tests {
     #[test]
     fn ring_buffer_basic_operations() {
         let mut queue = RingBufferQueue::with_capacity(3);
-        
+
         // Test empty queue state
         assert!(queue.is_empty());
         assert_eq!(queue.len(), 0);
         assert_eq!(queue.capacity(), 3);
         assert!(queue.dequeue().is_none());
         assert!(queue.peek().is_none());
-        
+
         // Test enqueue operations
         assert!(queue.enqueue(1).is_ok());
         assert!(queue.enqueue(2).is_ok());
         assert!(!queue.is_empty());
         assert_eq!(queue.len(), 2);
-        
+
         // Test peek functionality
         assert_eq!(queue.peek(), Some(&1));
         assert_eq!(queue.len(), 2); // peek doesn't change length
-        
+
         // Test dequeue operations and FIFO ordering
         assert_eq!(queue.dequeue(), Some(1));
         assert_eq!(queue.dequeue(), Some(2));
@@ -785,20 +788,20 @@ mod tests {
     #[test]
     fn ring_buffer_wrap_around() {
         let mut queue = RingBufferQueue::with_capacity(3);
-        
+
         // Fill to capacity
         assert!(queue.enqueue(1).is_ok());
         assert!(queue.enqueue(2).is_ok());
         assert!(queue.enqueue(3).is_ok());
         assert!(queue.is_full());
-        
+
         // Test overflow behavior - should return the value that couldn't be inserted
         assert_eq!(queue.enqueue(4), Err(4));
-        
+
         // Create space and test wrap-around
         assert_eq!(queue.dequeue(), Some(1));
         assert!(queue.enqueue(4).is_ok());
-        
+
         // Verify FIFO order is maintained through wrap-around
         assert_eq!(queue.dequeue(), Some(2));
         assert_eq!(queue.dequeue(), Some(3));
@@ -817,23 +820,23 @@ mod tests {
     #[test]
     fn linked_queue_basic_operations() {
         let mut queue = LinkedQueue::new();
-        
+
         // Test empty queue state
         assert!(queue.is_empty());
         assert_eq!(queue.len(), 0);
         assert!(queue.dequeue().is_none());
         assert!(queue.peek().is_none());
-        
+
         // Test enqueue operations - no capacity limit
         queue.enqueue("first");
         queue.enqueue("second");
         assert!(!queue.is_empty());
         assert_eq!(queue.len(), 2);
-        
+
         // Test peek functionality
         assert_eq!(queue.peek(), Some(&"first"));
         assert_eq!(queue.len(), 2); // peek doesn't change length
-        
+
         // Test dequeue operations and FIFO ordering
         assert_eq!(queue.dequeue(), Some("first"));
         assert_eq!(queue.dequeue(), Some("second"));
@@ -851,13 +854,13 @@ mod tests {
     #[test]
     fn linked_queue_large_sequence() {
         let mut queue = LinkedQueue::new();
-        
+
         // Enqueue a large number of elements
         for i in 0..1000 {
             queue.enqueue(i);
         }
         assert_eq!(queue.len(), 1000);
-        
+
         // Dequeue all elements and verify FIFO order
         for i in 0..1000 {
             assert_eq!(queue.dequeue(), Some(i));

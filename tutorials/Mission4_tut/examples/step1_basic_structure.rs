@@ -20,11 +20,11 @@ impl<T> SimpleLinkedList<T> {
             length: 0,
         }
     }
-    
+
     pub fn len(&self) -> usize {
         self.length
     }
-    
+
     pub fn is_empty(&self) -> bool {
         self.length == 0
     }
@@ -32,16 +32,16 @@ impl<T> SimpleLinkedList<T> {
 
 fn main() {
     println!("=== Step 1: Basic Structure ===");
-    
+
     // Create an empty list
     let list: SimpleLinkedList<i32> = SimpleLinkedList::new();
     println!("Created empty list: {:?}", list);
     println!("Length: {}", list.len());
     println!("Is empty: {}", list.is_empty());
-    
+
     // Create a list with a specific type
     let string_list: SimpleLinkedList<String> = SimpleLinkedList::new();
     println!("Created empty string list: {:?}", string_list);
-    
+
     println!("✅ Basic structure works!");
 }

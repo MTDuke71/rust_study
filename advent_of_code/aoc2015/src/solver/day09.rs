@@ -19,9 +19,9 @@
 //! ## Space Complexity
 //! O(n! × n) for storing all permutations
 
+use anyhow::Result;
 use mission5::Dictionary;
 use std::collections::HashSet;
-use anyhow::Result;
 
 /// Parses the input string to extract cities and distances between them.
 ///
@@ -49,19 +49,19 @@ fn parse_input(input: &str) -> Result<(Vec<&str>, Dictionary<(&str, &str), usize
         if parts.len() != 2 {
             continue;
         }
-        
+
         let cities_part = parts[0];
         let distance_str = parts[1];
-        
+
         let city_parts: Vec<&str> = cities_part.split(" to ").collect();
         if city_parts.len() != 2 {
             continue;
         }
-        
+
         let city1 = city_parts[0];
         let city2 = city_parts[1];
         let distance = distance_str.parse::<usize>()?;
-        
+
         distances.insert((city1, city2), distance);
         cities.insert(city1);
         cities.insert(city2);
@@ -90,33 +90,38 @@ fn parse_input(input: &str) -> Result<(Vec<&str>, Dictionary<(&str, &str), usize
 /// let shortest = solve_part1(input).unwrap();
 /// assert_eq!(shortest, "605"); // London -> Dublin -> Belfast
 /// ```
-fn solve_tsp(cities: &[&str], distances: &Dictionary<(&str, &str), usize>, find_min: bool) -> usize {
+fn solve_tsp(
+    cities: &[&str],
+    distances: &Dictionary<(&str, &str), usize>,
+    find_min: bool,
+) -> usize {
     let mut best_distance = if find_min { usize::MAX } else { 0 };
-    
+
     // Generate all permutations
     for perm in generate_permutations(cities) {
         let mut total_distance = 0;
-        
+
         // Calculate distance for this route
         for window in perm.windows(2) {
             let city1 = window[0];
             let city2 = window[1];
-            
-            let dist = distances.get(&(city1, city2))
+
+            let dist = distances
+                .get(&(city1, city2))
                 .or_else(|| distances.get(&(city2, city1)))
                 .copied()
                 .unwrap_or(0);
-            
+
             total_distance += dist;
         }
-        
+
         if find_min {
             best_distance = best_distance.min(total_distance);
         } else {
             best_distance = best_distance.max(total_distance);
         }
     }
-    
+
     best_distance
 }
 
@@ -146,20 +151,20 @@ fn generate_permutations<'a>(cities: &'a [&'a str]) -> Vec<Vec<&'a str>> {
     if cities.is_empty() {
         return vec![vec![]];
     }
-    
+
     let mut result = Vec::new();
     let mut cities_copy = cities.to_vec();
-    
+
     // Heap's algorithm for generating permutations
     fn heap_permute<'a>(cities: &mut Vec<&'a str>, size: usize, result: &mut Vec<Vec<&'a str>>) {
         if size == 1 {
             result.push(cities.clone());
             return;
         }
-        
+
         for i in 0..size {
             heap_permute(cities, size - 1, result);
-            
+
             if size % 2 == 1 {
                 cities.swap(0, size - 1);
             } else {
@@ -167,11 +172,10 @@ fn generate_permutations<'a>(cities: &'a [&'a str]) -> Vec<Vec<&'a str>> {
             }
         }
     }
-    
+
     heap_permute(&mut cities_copy, cities.len(), &mut result);
     result
 }
-
 
 /// Day 09 Part 1: Find the shortest route that visits all cities exactly once.
 ///
@@ -194,9 +198,9 @@ fn generate_permutations<'a>(cities: &'a [&'a str]) -> Vec<Vec<&'a str>> {
 /// ```
 pub fn solve_part1(input: &str) -> Result<String> {
     let (cities, distances) = parse_input(input)?;
-    
+
     //println!("Cities: {:?}", cities);
-   // println!("Distances: {:?}", distances);
+    // println!("Distances: {:?}", distances);
 
     return Ok(solve_tsp(&cities, &distances, true).to_string());
 }
@@ -222,8 +226,6 @@ pub fn solve_part1(input: &str) -> Result<String> {
 /// ```
 pub fn solve_part2(input: &str) -> Result<String> {
     let (cities, distances) = parse_input(input)?;
-    
-
 
     Ok(solve_tsp(&cities, &distances, false).to_string())
 }
@@ -234,18 +236,19 @@ mod tests {
     use mission5::Dictionary;
 
     /// Test data from the problem statement example
-    const EXAMPLE_INPUT: &str = "London to Dublin = 464\nLondon to Belfast = 518\nDublin to Belfast = 141";
+    const EXAMPLE_INPUT: &str =
+        "London to Dublin = 464\nLondon to Belfast = 518\nDublin to Belfast = 141";
 
     #[test]
     fn test_parse_input() {
         let (cities, distances) = parse_input(EXAMPLE_INPUT).unwrap();
-        
+
         // Should have 3 unique cities
         assert_eq!(cities.len(), 3);
         assert!(cities.contains(&"London"));
         assert!(cities.contains(&"Dublin"));
         assert!(cities.contains(&"Belfast"));
-        
+
         // Should have 3 distance entries
         assert_eq!(distances.get(&("London", "Dublin")), Some(&464));
         assert_eq!(distances.get(&("London", "Belfast")), Some(&518));
@@ -256,17 +259,17 @@ mod tests {
     fn test_generate_permutations() {
         let cities = ["A", "B", "C"];
         let perms = generate_permutations(&cities);
-        
+
         // Should generate 3! = 6 permutations
         assert_eq!(perms.len(), 6);
-        
+
         // Verify all permutations are unique
         for i in 0..perms.len() {
             for j in (i + 1)..perms.len() {
                 assert_ne!(perms[i], perms[j]);
             }
         }
-        
+
         // Verify each permutation contains all cities
         for perm in &perms {
             assert_eq!(perm.len(), 3);
@@ -283,9 +286,9 @@ mod tests {
         distances.insert(("London", "Dublin"), 464);
         distances.insert(("London", "Belfast"), 518);
         distances.insert(("Dublin", "Belfast"), 141);
-        
+
         let shortest = solve_tsp(&cities, &distances, true);
-        
+
         // From problem statement: shortest is 605 (London -> Dublin -> Belfast)
         assert_eq!(shortest, 605);
     }
@@ -297,9 +300,9 @@ mod tests {
         distances.insert(("London", "Dublin"), 464);
         distances.insert(("London", "Belfast"), 518);
         distances.insert(("Dublin", "Belfast"), 141);
-        
+
         let longest = solve_tsp(&cities, &distances, false);
-        
+
         // From problem statement: longest is 982 (Dublin -> London -> Belfast)
         assert_eq!(longest, 982);
     }
@@ -311,13 +314,13 @@ mod tests {
         distances.insert(("A", "B"), 10);
         distances.insert(("A", "C"), 15);
         distances.insert(("B", "C"), 20);
-        
+
         let shortest = solve_tsp(&cities, &distances, true);
         let longest = solve_tsp(&cities, &distances, false);
-        
+
         // Calculate all possible routes:
         // A -> B -> C = 10 + 20 = 30
-        // A -> C -> B = 15 + 20 = 35  
+        // A -> C -> B = 15 + 20 = 35
         // B -> A -> C = 10 + 15 = 25 (shortest)
         // B -> C -> A = 20 + 15 = 35
         // C -> A -> B = 15 + 10 = 25
@@ -342,7 +345,7 @@ mod tests {
     fn test_solve_tsp_single_city() {
         let cities = ["OnlyCity"];
         let distances = Dictionary::new();
-        
+
         let result = solve_tsp(&cities, &distances, true);
         assert_eq!(result, 0); // No travel needed for single city
     }
@@ -352,10 +355,10 @@ mod tests {
         let cities = ["City1", "City2"];
         let mut distances = Dictionary::new();
         distances.insert(("City1", "City2"), 100);
-        
+
         let shortest = solve_tsp(&cities, &distances, true);
         let longest = solve_tsp(&cities, &distances, false);
-        
+
         // For two cities, shortest and longest are the same
         assert_eq!(shortest, 100);
         assert_eq!(longest, 100);
@@ -372,10 +375,9 @@ mod tests {
     fn test_parse_input_malformed_lines() {
         let input = "Good line: A to B = 100\nBad line\nAnother good: C to D = 200";
         let (cities, distances) = parse_input(input).unwrap();
-        
+
         // Should parse 4 cities and 2 distances (ignoring malformed line)
         assert_eq!(cities.len(), 4);
         assert_eq!(distances.len(), 2);
     }
 }
-

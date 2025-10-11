@@ -1,20 +1,19 @@
 //functions/src/main.rs
 
 fn main() {
+    println!("Hello, world!");
 
-      println!("Hello, world!");
+    another_function1();
 
-    another_function1();    
-    
-    another_function2(5);  
-    
+    another_function2(5);
+
     print_labeled_measurement(5, 'h');
 
     let y = 6;
 
-      println!("The value of y is: {y}");
+    println!("The value of y is: {y}");
 
-        let y = {
+    let y = {
         let x = 3;
         x + 1
     };
@@ -28,7 +27,6 @@ fn main() {
     let x = plus_one(5);
 
     println!("The value of x is: {x}");
-
 }
 
 fn another_function1() {
@@ -50,7 +48,6 @@ fn five() -> i32 {
 fn plus_one(x: i32) -> i32 {
     x + 1
 }
-
 
 //This function will throw an error because it does not return a value
 // fn plus_one_error(x: i32) -> i32 {

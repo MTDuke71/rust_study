@@ -1,7 +1,7 @@
 //! # Chapter 4: References and Borrowing
-//! 
+//!
 //! **Learning Objective**: Understand Rust's borrowing system and reference types
-//! 
+//!
 //! **Key Concepts**:
 //! - References (&T) for borrowing without taking ownership
 //! - Mutable references (&mut T) for borrowing with modification rights
@@ -45,17 +45,17 @@ fn main() {
 fn example_basic_references() {
     println!("📚 Example 1: Basic References");
     println!("==============================");
-    
+
     let s1 = String::from("hello");
-    let len = calculate_length(&s1);  // Pass reference, not ownership
-    
-    println!("The length of '{}' is {}.", s1, len);  // s1 still valid!
-    
+    let len = calculate_length(&s1); // Pass reference, not ownership
+
+    println!("The length of '{}' is {}.", s1, len); // s1 still valid!
+
     // Multiple immutable references are allowed
     let r1 = &s1;
     let r2 = &s1;
     println!("References r1: '{}', r2: '{}'", r1, r2);
-    
+
     println!();
 }
 
@@ -64,10 +64,10 @@ fn example_basic_references() {
 fn example_mutable_references() {
     println!("✏️  Example 2: Mutable References");
     println!("=================================");
-    
+
     let mut s = String::from("hello");
-    change_string(&mut s);  // Pass mutable reference
-    
+    change_string(&mut s); // Pass mutable reference
+
     println!("Modified string: '{}'", s);
     println!();
 }
@@ -77,23 +77,23 @@ fn example_mutable_references() {
 fn example_reference_rules() {
     println!("📋 Example 3: Reference Rules");
     println!("=============================");
-    
+
     let mut s = String::from("hello");
-    
+
     // Rule 1: Multiple immutable references OK
     {
         let r1 = &s;
         let r2 = &s;
         println!("Immutable refs: '{}' and '{}'", r1, r2);
     } // r1 and r2 go out of scope here
-    
+
     // Rule 2: One mutable reference OR multiple immutable references
     {
         let r3 = &mut s;
         r3.push_str(", world!");
         println!("Mutable ref result: '{}'", r3);
     } // r3 goes out of scope here
-    
+
     println!("Final string: '{}'", s);
     println!();
 }
@@ -103,7 +103,7 @@ fn example_reference_rules() {
 fn example_functions_with_references() {
     println!("🔧 Example 4: Functions with References");
     println!("=======================================");
-    
+
     let mut numbers = vec![1, 2, 3, 4, 5];
 
     // Read-only access (borrow as slice)
@@ -144,7 +144,10 @@ fn example_avoiding_dangles() {
     let safe_string = no_dangle();
     println!("Safe owned return: {}", safe_string);
 
-    println!("You can still borrow the result: {}", safe_string.to_uppercase());
+    println!(
+        "You can still borrow the result: {}",
+        safe_string.to_uppercase()
+    );
     println!("Original still available: {}", safe_string);
 
     println!();
@@ -169,7 +172,10 @@ fn example_method_receivers() {
     }
 
     counter.increment();
-    println!("Increment works once immutable borrow ends: {}", counter.peek());
+    println!(
+        "Increment works once immutable borrow ends: {}",
+        counter.peek()
+    );
 
     println!();
 }
@@ -186,7 +192,9 @@ fn example_lifetime_annotations() {
     let longest_part = longest(first_sentence, quote);
     println!("Longest borrowed part: '{}'", longest_part);
 
-    let highlight = Highlight { excerpt: longest_part };
+    let highlight = Highlight {
+        excerpt: longest_part,
+    };
     println!("Highlight holds: '{}'", highlight.excerpt);
 
     println!("Static reference example: {}", static_message());
@@ -198,7 +206,7 @@ fn example_lifetime_annotations() {
 
 /// Calculate the length of a string without taking ownership
 fn calculate_length(s: &String) -> usize {
-    s.len()  // s is a reference, so we don't drop the value when it goes out of scope
+    s.len() // s is a reference, so we don't drop the value when it goes out of scope
 }
 
 /// Modify a string through a mutable reference
@@ -228,7 +236,7 @@ fn get_first_word(s: &str) -> &str {
         }
     }
 
-    &s[..]  // Return entire string if no space found
+    &s[..] // Return entire string if no space found
 }
 
 /// Return owned data so the caller never receives a dangling reference
@@ -281,77 +289,77 @@ fn static_message() -> &'static str {
 fn example_printing_ownership() {
     println!("🖨️  Example 8: Printing and Ownership");
     println!("====================================");
-    
+
     // MYTH BUSTING: println! does NOT take ownership!
     let s1 = String::from("Hello, Rust!");
-    println!("Debug print 1: {}", s1);  // This borrows &s1, doesn't move
-    println!("Debug print 2: {}", s1);  // Can use s1 again!
-    println!("Debug print 3: {}", s1);  // Still works!
-    
+    println!("Debug print 1: {}", s1); // This borrows &s1, doesn't move
+    println!("Debug print 2: {}", s1); // Can use s1 again!
+    println!("Debug print 3: {}", s1); // Still works!
+
     println!("✅ String s1 is still valid: '{}'", s1);
-    
+
     // What actually happens under the hood:
     println!("\n🔍 What println! really does:");
     let s2 = String::from("Behind the scenes");
     println!("This: println!(\"Debug: {{}}\", s2)");
-    println!("Is really: println!(\"Debug: {{}}\", &s2)");  // Automatic referencing!
+    println!("Is really: println!(\"Debug: {{}}\", &s2)"); // Automatic referencing!
     println!("So s2 is still valid: '{}'", s2);
-    
+
     // Different ways to print the same string
     println!("\n📝 Different ways to print (all keep ownership):");
     let my_string = String::from("I can be printed many ways!");
-    
-    println!("Direct: {}", my_string);                    // Borrows automatically
-    println!("Reference: {}", &my_string);                // Explicit reference  
-    println!("Debug: {:?}", my_string);                   // Debug formatting
-    println!("Display again: {}", my_string);             // Still works!
-    
+
+    println!("Direct: {}", my_string); // Borrows automatically
+    println!("Reference: {}", &my_string); // Explicit reference
+    println!("Debug: {:?}", my_string); // Debug formatting
+    println!("Display again: {}", my_string); // Still works!
+
     // WHEN YOU ACTUALLY LOSE OWNERSHIP:
     println!("\n⚠️  When you DO lose ownership:");
     let s3 = String::from("This will move");
-    
+
     // These operations MOVE the string:
-    let s4 = s3;  // Move ownership to s4
-    // println!("s3: {}", s3);  // ❌ Would error - s3 no longer valid
-    println!("s4: {}", s4);     // ✅ s4 owns the string now
-    
+    let s4 = s3; // Move ownership to s4
+                 // println!("s3: {}", s3);  // ❌ Would error - s3 no longer valid
+    println!("s4: {}", s4); // ✅ s4 owns the string now
+
     // Function that takes ownership vs borrows
     let s5 = String::from("Function test");
-    takes_ownership_bad(s5.clone());  // Clone to keep original
-    println!("s5 after clone: {}", s5);  // Still works because we cloned
-    
-    takes_ownership_good(&s5);  // Borrow instead of move
-    println!("s5 after borrow: {}", s5);  // Still works!
-    
+    takes_ownership_bad(s5.clone()); // Clone to keep original
+    println!("s5 after clone: {}", s5); // Still works because we cloned
+
+    takes_ownership_good(&s5); // Borrow instead of move
+    println!("s5 after borrow: {}", s5); // Still works!
+
     // DEBUGGING PATTERNS:
     println!("\n🐛 Common debug patterns:");
     let debug_string = String::from("Debug me!");
-    
+
     // Pattern 1: Debug print without consuming
     println!("Before processing: {:?}", debug_string);
     let processed = debug_string.to_uppercase();
     println!("After processing: {:?}", processed);
-    
-    // Pattern 2: Multiple debug prints during development  
+
+    // Pattern 2: Multiple debug prints during development
     let mut data = vec!["apple", "banana", "cherry"];
-    println!("Initial data: {:?}", data);  // Borrow for printing
-    
+    println!("Initial data: {:?}", data); // Borrow for printing
+
     data.push("date");
-    println!("After adding: {:?}", data);  // Can print again
-    
+    println!("After adding: {:?}", data); // Can print again
+
     data.sort();
     println!("After sorting: {:?}", data); // And again!
-    
+
     // Pattern 3: Print and continue using in chain
     let result = "hello world"
         .to_string()
         .chars()
         .filter(|&c| c != ' ')
         .collect::<String>();
-    
+
     println!("Filtered result: {}", result);
-    println!("Length: {}", result.len());  // Can use result again
-    
+    println!("Length: {}", result.len()); // Can use result again
+
     println!();
 }
 
@@ -374,7 +382,7 @@ mod tests {
     fn test_calculate_length() {
         let s = String::from("hello");
         assert_eq!(calculate_length(&s), 5);
-        assert_eq!(s, "hello");  // s still valid after borrowing
+        assert_eq!(s, "hello"); // s still valid after borrowing
     }
 
     #[test]
@@ -445,7 +453,6 @@ mod tests {
 //fn main4() {
 //    let reference_to_nothing = dangle();
 //}
-
 
 //missing lifetime specifier
 //this function's return type contains a borrowed value, but there is no value for it to be borrowed from

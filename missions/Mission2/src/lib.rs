@@ -108,4 +108,4 @@ pub mod queue;
 pub mod queue_alt; // Alternative implementations from original specification
 
 // Re-export main types for convenient access
-pub use queue::{RingBufferQueue, LinkedQueue};
+pub use queue::{LinkedQueue, RingBufferQueue};

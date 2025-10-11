@@ -3,7 +3,7 @@ use brackets_extended::*;
 #[test]
 fn req7_configurable_alphabet_with_angles() {
     let mut opts = Options::default();
-    opts.alphabet = Alphabet::with_pairs(&[('(',')'),('[',']'),('{','}'),('<','>')]);
+    opts.alphabet = Alphabet::with_pairs(&[('(', ')'), ('[', ']'), ('{', '}'), ('<', '>')]);
     assert!(validate_with_options("<[()]>", &opts).is_ok());
     let errs = validate_with_options("<[()>", &opts).unwrap_err();
     assert!(!errs.is_empty());
@@ -17,7 +17,9 @@ fn req8_collect_all_errors() {
     let errs = validate_with_options(")](", &opts).unwrap_err();
     assert!(errs.len() >= 2);
     // Ensure we see at least one UnexpectedClosing
-    assert!(errs.iter().any(|e| matches!(e.kind, BracketErrorKind::UnexpectedClosing{..})));
+    assert!(errs
+        .iter()
+        .any(|e| matches!(e.kind, BracketErrorKind::UnexpectedClosing { .. })));
 }
 
 #[test]
@@ -35,8 +37,8 @@ fn req9_unclosed_policy_latest_vs_earliest() {
 #[test]
 fn iterator_api_char_positions() {
     let mut opts = Options::default();
-    opts.alphabet = Alphabet::with_pairs(&[('<','>')]); // only angle brackets
-    // characters positions: 0:'<',1:'>',2:')' ignored because not in alphabet
+    opts.alphabet = Alphabet::with_pairs(&[('<', '>')]); // only angle brackets
+                                                         // characters positions: 0:'<',1:'>',2:')' ignored because not in alphabet
     let res = validate_iter("<>)".chars(), &opts);
     assert!(res.is_ok());
 }
@@ -51,6 +53,9 @@ fn iterator_api_indexed_preserves_byte_indices() {
     opts.alphabet = Alphabet::with_pairs(&[('(', ')')]);
     let errs = validate_indexed(iter, &opts).unwrap_err();
     // Unexpected ')' at byte index 2
-    assert!(matches!(errs[0].kind, BracketErrorKind::UnexpectedClosing { found: ')' }));
+    assert!(matches!(
+        errs[0].kind,
+        BracketErrorKind::UnexpectedClosing { found: ')' }
+    ));
     assert_eq!(errs[0].index, 2);
 }

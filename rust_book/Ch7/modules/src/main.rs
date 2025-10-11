@@ -63,7 +63,7 @@ fn example3_using_structs() {
 
     // Create a breakfast using the public constructor
     let mut meal = back_of_house::Breakfast::summer("Rye");
-    
+
     // Can access public fields
     meal.toast = String::from("Wheat");
     println!("I'd like {} toast please", meal.toast);
@@ -116,7 +116,7 @@ fn example5_super_keyword() {
     // Useful for relative paths that go up the module tree
 
     super_example::back_of_house::fix_incorrect_order();
-    
+
     println!("super keyword refers to parent module");
     println!("Useful for going up the module tree");
     println!();

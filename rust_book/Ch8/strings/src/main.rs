@@ -69,7 +69,7 @@ fn example3_concatenation() {
     // Using + operator
     let s1 = String::from("Hello, ");
     let s2 = String::from("world!");
-    let s3 = s1 + &s2;  // s1 moved here, s2 borrowed
+    let s3 = s1 + &s2; // s1 moved here, s2 borrowed
     println!("s1 + &s2 = '{}'", s3);
     // s1 is no longer valid here
     println!("s2 still valid: '{}'", s2);
@@ -100,13 +100,13 @@ fn example4_indexing_not_allowed() {
     // let h = _s1[0];  // ❌ This won't compile!
 
     // Strings are UTF-8, so indexing is ambiguous
-    let hello = String::from("Hola");  // 4 bytes
+    let hello = String::from("Hola"); // 4 bytes
     println!("'{}' is {} bytes", hello, hello.len());
 
-    let hello = String::from("Здравствуйте");  // 24 bytes (12 Cyrillic chars, 2 bytes each)
+    let hello = String::from("Здравствуйте"); // 24 bytes (12 Cyrillic chars, 2 bytes each)
     println!("'{}' is {} bytes", hello, hello.len());
 
-    let hello = String::from("नमस्ते");  // Devanagari script
+    let hello = String::from("नमस्ते"); // Devanagari script
     println!("'{}' is {} bytes", hello, hello.len());
 
     println!("\nRust doesn't allow indexing because:");
@@ -124,10 +124,10 @@ fn example5_slicing_strings() {
     let hello = "Здравствуйте";
 
     // Valid slices (on character boundaries)
-    let s = &hello[0..4];  // "Зд" (each char is 2 bytes)
+    let s = &hello[0..4]; // "Зд" (each char is 2 bytes)
     println!("Slice [0..4]: '{}'", s);
 
-    let s = &hello[0..2];  // "З" (first character)
+    let s = &hello[0..2]; // "З" (first character)
     println!("Slice [0..2]: '{}'", s);
 
     // This would panic at runtime:
@@ -249,8 +249,8 @@ fn example8_string_vs_str() {
     let slice = "string slice";
 
     println!("\nFunction accepting &str:");
-    print_string(&owned);  // Pass String reference
-    print_string(slice);   // Pass string slice directly
+    print_string(&owned); // Pass String reference
+    print_string(slice); // Pass string slice directly
 
     println!();
 }

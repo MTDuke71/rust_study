@@ -1,8 +1,7 @@
 /// Advent of Code utilities for common search patterns
-/// 
+///
 /// # Requirements Satisfied
 /// - REQ-6: AoC-style problem support with coordinate search, range queries
-
 use crate::binary_search::search_by_key;
 use std::cmp::Ordering;
 
@@ -19,12 +18,12 @@ impl Coord {
     pub fn new(x: i32, y: i32) -> Self {
         Self { x, y }
     }
-    
+
     /// Manhattan distance between two coordinates.
     pub fn manhattan_distance(self, other: Coord) -> u32 {
         ((self.x - other.x).abs() + (self.y - other.y).abs()) as u32
     }
-    
+
     /// Euclidean distance squared (avoids floating point).
     pub fn distance_squared(self, other: Coord) -> i32 {
         (self.x - other.x).pow(2) + (self.y - other.y).pow(2)
@@ -113,13 +112,15 @@ where
         Ok(idx) => idx,
         Err(idx) => idx,
     };
-    
+
     let end_idx = match search_by_key(events, &end_time, |event| event.time) {
         Ok(idx) => idx + 1, // Include the exact match
         Err(idx) => idx,
     };
-    
-    events[start_idx..end_idx.min(events.len())].iter().collect()
+
+    events[start_idx..end_idx.min(events.len())]
+        .iter()
+        .collect()
 }
 
 /// Multi-criteria search for complex AoC objects.
@@ -134,7 +135,11 @@ pub struct AocItem {
 
 impl AocItem {
     pub fn new(id: u32, value: i32, category: String) -> Self {
-        Self { id, value, category }
+        Self {
+            id,
+            value,
+            category,
+        }
     }
 }
 
@@ -176,30 +181,28 @@ impl Grid {
                 coords.push(Coord::new(x, y));
             }
         }
-        Self { coords, width, height }
+        Self {
+            coords,
+            width,
+            height,
+        }
     }
-    
+
     /// Find coordinate by linear index (row-major order).
     pub fn coord_at_index(&self, index: usize) -> Option<&Coord> {
         self.coords.get(index)
     }
-    
+
     /// Find coordinates in a specific row.
     pub fn coords_in_row(&self, row: i32) -> Vec<&Coord> {
-        self.coords
-            .iter()
-            .filter(|coord| coord.y == row)
-            .collect()
+        self.coords.iter().filter(|coord| coord.y == row).collect()
     }
-    
+
     /// Find coordinates in a specific column.
     pub fn coords_in_column(&self, col: i32) -> Vec<&Coord> {
-        self.coords
-            .iter()
-            .filter(|coord| coord.x == col)
-            .collect()
+        self.coords.iter().filter(|coord| coord.x == col).collect()
     }
-    
+
     /// Check if coordinate is within grid bounds.
     pub fn contains(&self, coord: Coord) -> bool {
         coord.x >= 0 && coord.x < self.width && coord.y >= 0 && coord.y < self.height
@@ -220,12 +223,12 @@ mod tests {
     #[test]
     fn find_coords_within_distance_works() {
         let coords = vec![
-            Coord::new(0, 0),  // distance 0
-            Coord::new(1, 1),  // distance 2
-            Coord::new(5, 5),  // distance 10
-            Coord::new(2, 1),  // distance 3
+            Coord::new(0, 0), // distance 0
+            Coord::new(1, 1), // distance 2
+            Coord::new(5, 5), // distance 10
+            Coord::new(2, 1), // distance 3
         ];
-        
+
         let target = Coord::new(0, 0);
         let nearby = find_coords_within_distance(&coords, target, 3);
         assert_eq!(nearby.len(), 3); // Should exclude (5,5)
@@ -246,7 +249,7 @@ mod tests {
             TimedEvent::new(30, "c"),
             TimedEvent::new(40, "d"),
         ];
-        
+
         let window_events = find_events_in_window(&events, 15, 35);
         assert_eq!(window_events.len(), 2); // Should get "b" and "c"
     }

@@ -11,9 +11,9 @@
 //! 3. **Performance Analysis**: Understanding when to use each pattern
 //! 4. **Real AoC Problems**: Practice with actual past problems
 
-use crate::{PatternResult, AocPattern};
 use crate::grid_patterns::*;
 use crate::parsing_patterns::*;
+use crate::{AocPattern, PatternResult};
 
 /// Training exercise for pattern recognition
 #[derive(Debug, Clone)]
@@ -30,19 +30,19 @@ pub struct TrainingExercise {
 /// Difficulty levels for training exercises
 #[derive(Debug, Clone, PartialEq)]
 pub enum TrainingDifficulty {
-    Beginner,    // Single pattern, obvious choice
+    Beginner,     // Single pattern, obvious choice
     Intermediate, // Multiple patterns, clear primary
-    Advanced,    // Multiple patterns, optimization required
-    Expert,      // Multiple patterns, non-obvious combination
+    Advanced,     // Multiple patterns, optimization required
+    Expert,       // Multiple patterns, non-obvious combination
 }
 
 impl TrainingDifficulty {
     pub fn time_limit_seconds(&self) -> u32 {
         match self {
-            TrainingDifficulty::Beginner => 300,    // 5 minutes
+            TrainingDifficulty::Beginner => 300,     // 5 minutes
             TrainingDifficulty::Intermediate => 600, // 10 minutes
-            TrainingDifficulty::Advanced => 1200,   // 20 minutes
-            TrainingDifficulty::Expert => 1800,     // 30 minutes
+            TrainingDifficulty::Advanced => 1200,    // 20 minutes
+            TrainingDifficulty::Expert => 1800,      // 30 minutes
         }
     }
 }
@@ -71,34 +71,35 @@ impl TrainingScore {
             0.0
         }
     }
-    
+
     pub fn add_attempt(&mut self, correct: bool, time_seconds: f64) {
         self.total_attempts += 1;
         if correct {
             self.correct_identifications += 1;
         }
-        
+
         // Update rolling average
-        let total_time = self.average_time_seconds * (self.total_attempts - 1) as f64 + time_seconds;
+        let total_time =
+            self.average_time_seconds * (self.total_attempts - 1) as f64 + time_seconds;
         self.average_time_seconds = total_time / self.total_attempts as f64;
     }
 }
 
 impl PatternTrainer {
     /// Create new pattern trainer with built-in exercises
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-P5
     /// Provides comprehensive pattern recognition training
     pub fn new() -> Self {
         let exercises = Self::create_training_exercises();
-        
+
         Self {
             exercises,
             current_exercise: None,
             score: TrainingScore::default(),
         }
     }
-    
+
     /// Get next training exercise
     pub fn next_exercise(&mut self) -> Option<&TrainingExercise> {
         if let Some(current) = self.current_exercise {
@@ -111,28 +112,37 @@ impl PatternTrainer {
         } else {
             self.current_exercise = Some(0);
         }
-        
-        self.current_exercise.and_then(|idx| self.exercises.get(idx))
+
+        self.current_exercise
+            .and_then(|idx| self.exercises.get(idx))
     }
-    
+
     /// Get exercise by difficulty level
-    pub fn exercises_by_difficulty(&self, difficulty: TrainingDifficulty) -> Vec<&TrainingExercise> {
+    pub fn exercises_by_difficulty(
+        &self,
+        difficulty: TrainingDifficulty,
+    ) -> Vec<&TrainingExercise> {
         self.exercises
             .iter()
             .filter(|ex| ex.difficulty == difficulty)
             .collect()
     }
-    
+
     /// Submit answer for current exercise
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-P5
     /// Provides feedback on pattern recognition accuracy
-    pub fn submit_answer(&mut self, identified_patterns: Vec<String>, time_seconds: f64) -> TrainingResult {
+    pub fn submit_answer(
+        &mut self,
+        identified_patterns: Vec<String>,
+        time_seconds: f64,
+    ) -> TrainingResult {
         if let Some(current_idx) = self.current_exercise {
             if let Some(exercise) = self.exercises.get(current_idx) {
-                let correct = self.evaluate_answer(&exercise.expected_patterns, &identified_patterns);
+                let correct =
+                    self.evaluate_answer(&exercise.expected_patterns, &identified_patterns);
                 self.score.add_attempt(correct, time_seconds);
-                
+
                 let feedback = if correct {
                     "Correct! You identified the right patterns.".to_string()
                 } else {
@@ -141,7 +151,7 @@ impl PatternTrainer {
                         exercise.expected_patterns, identified_patterns
                     )
                 };
-                
+
                 return TrainingResult {
                     correct,
                     feedback,
@@ -152,7 +162,7 @@ impl PatternTrainer {
                 };
             }
         }
-        
+
         TrainingResult {
             correct: false,
             feedback: "No active exercise".to_string(),
@@ -162,51 +172,58 @@ impl PatternTrainer {
             hints: vec![],
         }
     }
-    
+
     /// Get current training statistics
     pub fn get_stats(&self) -> &TrainingScore {
         &self.score
     }
-    
+
     /// Reset training progress
     pub fn reset(&mut self) {
         self.current_exercise = None;
         self.score = TrainingScore::default();
     }
-    
+
     fn evaluate_answer(&self, expected: &[String], identified: &[String]) -> bool {
         // Check if at least one expected pattern was identified
-        expected.iter().any(|exp| identified.iter().any(|id| id.contains(exp)))
+        expected
+            .iter()
+            .any(|exp| identified.iter().any(|id| id.contains(exp)))
     }
-    
+
     fn generate_hints(&self, exercise: &TrainingExercise) -> Vec<String> {
         let mut hints = Vec::new();
-        
+
         // Analyze input sample for hints
         if exercise.input_sample.lines().any(|line| line.contains(',')) {
-            hints.push("Notice the comma-separated values - consider coordinate parsing".to_string());
+            hints.push(
+                "Notice the comma-separated values - consider coordinate parsing".to_string(),
+            );
         }
-        
-        if exercise.description.to_lowercase().contains("grid") || 
-           exercise.description.to_lowercase().contains("map") {
+
+        if exercise.description.to_lowercase().contains("grid")
+            || exercise.description.to_lowercase().contains("map")
+        {
             hints.push("Grid-based problem - consider pathfinding or flood fill".to_string());
         }
-        
-        if exercise.description.to_lowercase().contains("shortest") ||
-           exercise.description.to_lowercase().contains("path") {
+
+        if exercise.description.to_lowercase().contains("shortest")
+            || exercise.description.to_lowercase().contains("path")
+        {
             hints.push("Shortest path problem - BFS or Dijkstra might be needed".to_string());
         }
-        
-        if exercise.description.to_lowercase().contains("repeat") ||
-           exercise.description.to_lowercase().contains("cycle") {
+
+        if exercise.description.to_lowercase().contains("repeat")
+            || exercise.description.to_lowercase().contains("cycle")
+        {
             hints.push("Look for repeating patterns - cycle detection could be useful".to_string());
         }
-        
+
         hints
     }
-    
+
     /// Create comprehensive set of training exercises
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-P5
     /// Based on real AoC problem patterns
     fn create_training_exercises() -> Vec<TrainingExercise> {
@@ -313,7 +330,7 @@ pub struct TrainingResult {
 }
 
 /// Interactive pattern recognition quiz
-/// 
+///
 /// # Requirements Satisfied: REQ-P5
 /// Provides quick pattern identification practice
 pub struct PatternQuiz {
@@ -334,19 +351,19 @@ impl PatternQuiz {
     /// Create new pattern recognition quiz
     pub fn new() -> Self {
         let questions = Self::create_quiz_questions();
-        
+
         Self {
             questions,
             current_question: 0,
             score: 0,
         }
     }
-    
+
     /// Get current question
     pub fn current_question(&self) -> Option<&QuizQuestion> {
         self.questions.get(self.current_question)
     }
-    
+
     /// Submit answer and move to next question
     pub fn submit_answer(&mut self, answer: usize) -> bool {
         let correct = if let Some(question) = self.questions.get(self.current_question) {
@@ -354,25 +371,25 @@ impl PatternQuiz {
         } else {
             false
         };
-        
+
         if correct {
             self.score += 1;
         }
-        
+
         self.current_question += 1;
         correct
     }
-    
+
     /// Get final score
     pub fn final_score(&self) -> (usize, usize) {
         (self.score, self.questions.len())
     }
-    
+
     /// Check if quiz is complete
     pub fn is_complete(&self) -> bool {
         self.current_question >= self.questions.len()
     }
-    
+
     fn create_quiz_questions() -> Vec<QuizQuestion> {
         vec![
             QuizQuestion {
@@ -433,55 +450,69 @@ impl Default for PatternQuiz {
 }
 
 /// Performance benchmarking for pattern implementations
-/// 
+///
 /// # Requirements Satisfied: REQ-P4, REQ-P5
 /// Helps understand when each pattern is appropriate
 pub struct PatternBenchmark;
 
 impl PatternBenchmark {
     /// Benchmark different parsing approaches
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-P4
     /// Compare performance of parsing patterns
     pub fn benchmark_parsing(input: &str, iterations: usize) -> PatternResult<BenchmarkResults> {
         use std::time::Instant;
-        
+
         let mut results = BenchmarkResults::new();
-        
+
         // Benchmark simple line parsing
         let start = Instant::now();
         for _ in 0..iterations {
             let parser = SimpleLineParser;
             let _ = parser.parse_lines(input)?;
         }
-        results.add_result("Simple Line Parser", start.elapsed().as_nanos() as f64 / iterations as f64);
-        
+        results.add_result(
+            "Simple Line Parser",
+            start.elapsed().as_nanos() as f64 / iterations as f64,
+        );
+
         // Benchmark number extraction
         let start = Instant::now();
         for _ in 0..iterations {
             let parser = NumberExtractionParser;
             let _ = parser.parse_lines(input)?;
         }
-        results.add_result("Number Extraction", start.elapsed().as_nanos() as f64 / iterations as f64);
-        
+        results.add_result(
+            "Number Extraction",
+            start.elapsed().as_nanos() as f64 / iterations as f64,
+        );
+
         Ok(results)
     }
-    
+
     /// Benchmark grid algorithms
     pub fn benchmark_grid_algorithms(grid: &Grid<char>, iterations: usize) -> BenchmarkResults {
         use std::time::Instant;
-        
+
         let mut results = BenchmarkResults::new();
-        let start_coord = grid.cells.keys().next().copied().unwrap_or(Coord::new(0, 0));
-        
+        let start_coord = grid
+            .cells
+            .keys()
+            .next()
+            .copied()
+            .unwrap_or(Coord::new(0, 0));
+
         // Benchmark flood fill
         let start = Instant::now();
         for _ in 0..iterations {
             let pattern = FloodFillPattern;
             let _ = pattern.solve((grid.clone(), start_coord, '.'));
         }
-        results.add_result("Flood Fill", start.elapsed().as_nanos() as f64 / iterations as f64);
-        
+        results.add_result(
+            "Flood Fill",
+            start.elapsed().as_nanos() as f64 / iterations as f64,
+        );
+
         results
     }
 }
@@ -498,19 +529,24 @@ impl BenchmarkResults {
             results: Vec::new(),
         }
     }
-    
+
     pub fn add_result(&mut self, pattern_name: &str, avg_nanoseconds: f64) {
-        self.results.push((pattern_name.to_string(), avg_nanoseconds));
+        self.results
+            .push((pattern_name.to_string(), avg_nanoseconds));
     }
-    
+
     pub fn fastest(&self) -> Option<&(String, f64)> {
-        self.results.iter().min_by(|a, b| a.1.partial_cmp(&b.1).unwrap())
+        self.results
+            .iter()
+            .min_by(|a, b| a.1.partial_cmp(&b.1).unwrap())
     }
-    
+
     pub fn slowest(&self) -> Option<&(String, f64)> {
-        self.results.iter().max_by(|a, b| a.1.partial_cmp(&b.1).unwrap())
+        self.results
+            .iter()
+            .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap())
     }
-    
+
     pub fn results(&self) -> &[(String, f64)] {
         &self.results
     }

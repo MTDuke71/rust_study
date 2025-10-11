@@ -1,13 +1,12 @@
 fn main() {
+    const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 
-const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
-    
-let mut x = 5;
+    let mut x = 5;
     println!("The value of x is: {x}");
     x = 6;
     println!("The value of x is: {x}");
 
-    println!("THREE_HOURS_IN_SECONDS = {}",THREE_HOURS_IN_SECONDS);
+    println!("THREE_HOURS_IN_SECONDS = {}", THREE_HOURS_IN_SECONDS);
 
     let x = 5;
 
@@ -22,5 +21,5 @@ let mut x = 5;
 
     let spaces = "   ";
     let spaces = spaces.len();
-    println!("spaces: {}",spaces);
-}   
+    println!("spaces: {}", spaces);
+}

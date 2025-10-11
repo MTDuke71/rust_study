@@ -1,11 +1,11 @@
 //! Pathfinding algorithms for 2D grids
-//! 
+//!
 //! Provides BFS and A* implementations optimized for grid navigation
 //! with customizable cost functions and obstacle detection.
 
-use crate::{Grid, Coord};
-use std::collections::{VecDeque, BinaryHeap, HashMap, HashSet};
+use crate::{Coord, Grid};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet, VecDeque};
 
 /// Result of a BFS pathfinding operation
 #[derive(Debug, Clone)]
@@ -27,9 +27,9 @@ pub struct AStarResult {
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct AStarNode {
     coord: Coord,
-    g_cost: usize,      // Distance from start
-    h_cost: usize,      // Heuristic distance to goal
-    f_cost: usize,      // g_cost + h_cost
+    g_cost: usize, // Distance from start
+    h_cost: usize, // Heuristic distance to goal
+    f_cost: usize, // g_cost + h_cost
 }
 
 impl AStarNode {
@@ -46,7 +46,9 @@ impl AStarNode {
 impl Ord for AStarNode {
     fn cmp(&self, other: &Self) -> Ordering {
         // Reverse order for min-heap (BinaryHeap is max-heap by default)
-        other.f_cost.cmp(&self.f_cost)
+        other
+            .f_cost
+            .cmp(&self.f_cost)
             .then_with(|| other.h_cost.cmp(&self.h_cost))
     }
 }
@@ -58,37 +60,37 @@ impl PartialOrd for AStarNode {
 }
 
 /// Pathfinding algorithms for 2D grids
-/// 
+///
 /// # Requirements Satisfied: REQ-3
-/// 
+///
 /// Provides both BFS (optimal for unweighted graphs) and A* (optimal for weighted graphs)
 /// with support for custom traversability predicates and cost functions.
 pub struct PathFinder;
 
 impl PathFinder {
     /// Find shortest path using BFS (Breadth-First Search)
-    /// 
+    ///
     /// Returns the shortest path from start to goal, or None if no path exists.
     /// Uses 4-directional movement (cardinal directions only).
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `grid` - The grid to search in
     /// * `start` - Starting coordinate
     /// * `goal` - Goal coordinate  
     /// * `is_passable` - Function that returns true if a cell can be traversed
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission6::{Grid, Coord, PathFinder};
-    /// 
+    ///
     /// let mut grid = Grid::new(5, 5, '.');
     /// grid[(2, 2)] = '#'; // Obstacle
-    /// 
+    ///
     /// let start = Coord::new(0, 0);
     /// let goal = Coord::new(4, 4);
-    /// 
+    ///
     /// let path = PathFinder::bfs(&grid, start, goal, |&cell| cell != '#');
     /// assert!(path.is_some());
     /// ```
@@ -133,7 +135,7 @@ impl PathFinder {
                     // Reconstruct path
                     let mut path = Vec::new();
                     let mut current = goal;
-                    
+
                     while let Some(&prev) = parent.get(&current) {
                         path.push(current);
                         current = prev;
@@ -151,7 +153,7 @@ impl PathFinder {
     }
 
     /// Find shortest path using BFS with detailed results
-    /// 
+    ///
     /// Returns detailed information about the search including visit count.
     pub fn bfs_detailed<T, F>(
         grid: &Grid<T>,
@@ -198,14 +200,14 @@ impl PathFinder {
                     // Reconstruct path
                     let mut path = Vec::new();
                     let mut current = goal;
-                    
+
                     while let Some(&prev) = parent.get(&current) {
                         path.push(current);
                         current = prev;
                     }
                     path.push(start);
                     path.reverse();
-                    
+
                     return Some(BfsResult {
                         distance: path.len() - 1,
                         visited_count: visited.len(),
@@ -221,37 +223,37 @@ impl PathFinder {
     }
 
     /// Find shortest path using A* algorithm
-    /// 
+    ///
     /// Returns the optimal path from start to goal considering movement costs.
     /// Uses Manhattan distance as the heuristic by default.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `grid` - The grid to search in
     /// * `start` - Starting coordinate
     /// * `goal` - Goal coordinate
     /// * `is_passable` - Function that returns true if a cell can be traversed
     /// * `cost_fn` - Function that returns the movement cost for entering a cell
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission6::{Grid, Coord, PathFinder};
-    /// 
+    ///
     /// let mut grid = Grid::new(5, 5, 1u32); // Movement cost of 1
     /// grid[(2, 2)] = 999; // High cost area
-    /// 
+    ///
     /// let start = Coord::new(0, 0);
     /// let goal = Coord::new(4, 4);
-    /// 
+    ///
     /// let result = PathFinder::astar(
-    ///     &grid, 
-    ///     start, 
+    ///     &grid,
+    ///     start,
     ///     goal,
     ///     |&cost| cost < 999,  // Avoid high cost areas
     ///     |&cost| cost as usize  // Movement cost
     /// );
-    /// 
+    ///
     /// if let Some(path) = result {
     ///     println!("Found path with {} steps", path.len() - 1);
     /// }
@@ -267,8 +269,7 @@ impl PathFinder {
         F: Fn(&T) -> bool,
         C: Fn(&T) -> usize,
     {
-        Self::astar_detailed(grid, start, goal, is_passable, cost_fn)
-            .map(|result| result.path)
+        Self::astar_detailed(grid, start, goal, is_passable, cost_fn).map(|result| result.path)
     }
 
     /// Find shortest path using A* with detailed results
@@ -309,14 +310,14 @@ impl PathFinder {
                 // Reconstruct path
                 let mut path = Vec::new();
                 let mut current_coord = goal;
-                
+
                 while let Some(&prev) = parent.get(&current_coord) {
                     path.push(current_coord);
                     current_coord = prev;
                 }
                 path.push(start);
                 path.reverse();
-                
+
                 return Some(AStarResult {
                     path,
                     cost: current.g_cost,
@@ -326,7 +327,10 @@ impl PathFinder {
 
             closed_set.insert(current.coord);
 
-            for neighbor in current.coord.neighbors_4_bounded(grid.width(), grid.height()) {
+            for neighbor in current
+                .coord
+                .neighbors_4_bounded(grid.width(), grid.height())
+            {
                 if closed_set.contains(&neighbor) {
                     continue;
                 }
@@ -341,7 +345,7 @@ impl PathFinder {
                 if tentative_g < current_g {
                     parent.insert(neighbor, current.coord);
                     g_scores.insert(neighbor, tentative_g);
-                    
+
                     let h_cost = neighbor.manhattan_distance(goal);
                     open_set.push(AStarNode::new(neighbor, tentative_g, h_cost));
                 }
@@ -352,7 +356,7 @@ impl PathFinder {
     }
 
     /// Find all reachable coordinates from a starting point
-    /// 
+    ///
     /// Uses flood-fill algorithm to find all coordinates reachable from start
     /// within the given maximum distance.
     pub fn reachable<T, F>(
@@ -378,7 +382,7 @@ impl PathFinder {
 
         while let Some(current) = queue.pop_front() {
             let current_distance = distances[&current];
-            
+
             if let Some(max_dist) = max_distance {
                 if current_distance >= max_dist {
                     continue;
@@ -404,13 +408,9 @@ impl PathFinder {
     }
 
     /// Calculate distance map from a starting point
-    /// 
+    ///
     /// Returns a HashMap with the shortest distance to each reachable coordinate.
-    pub fn distance_map<T, F>(
-        grid: &Grid<T>,
-        start: Coord,
-        is_passable: F,
-    ) -> HashMap<Coord, usize>
+    pub fn distance_map<T, F>(grid: &Grid<T>, start: Coord, is_passable: F) -> HashMap<Coord, usize>
     where
         F: Fn(&T) -> bool,
     {
@@ -467,7 +467,7 @@ mod tests {
         let goal = Coord::new(2, 2);
 
         let path = PathFinder::bfs(&grid, start, goal, |&cell| cell == '.').unwrap();
-        
+
         assert!(path.len() >= 5); // At least 5 steps for shortest path
         assert_eq!(path[0], start);
         assert_eq!(path[path.len() - 1], goal);
@@ -480,10 +480,10 @@ mod tests {
         let goal = Coord::new(4, 4);
 
         let path = PathFinder::bfs(&grid, start, goal, |&cell| cell != '#').unwrap();
-        
+
         assert_eq!(path[0], start);
         assert_eq!(path[path.len() - 1], goal);
-        
+
         // Verify path doesn't go through obstacles
         for &coord in &path {
             assert_ne!(grid[coord], '#');
@@ -497,7 +497,7 @@ mod tests {
         grid[(1, 0)] = '#';
         grid[(1, 1)] = '#';
         grid[(1, 2)] = '#';
-        
+
         let start = Coord::new(0, 0);
         let goal = Coord::new(2, 0);
 
@@ -521,7 +521,7 @@ mod tests {
         let goal = Coord::new(2, 2);
 
         let result = PathFinder::bfs_detailed(&grid, start, goal, |&cell| cell == '.').unwrap();
-        
+
         assert!(result.distance > 0);
         assert!(result.visited_count > 0);
         assert_eq!(result.path[0], start);
@@ -534,13 +534,8 @@ mod tests {
         let start = Coord::new(0, 0);
         let goal = Coord::new(2, 2);
 
-        let path = PathFinder::astar(
-            &grid,
-            start,
-            goal,
-            |&cost| cost == 1,
-            |&cost| cost as usize,
-        ).unwrap();
+        let path = PathFinder::astar(&grid, start, goal, |&cost| cost == 1, |&cost| cost as usize)
+            .unwrap();
 
         assert_eq!(path[0], start);
         assert_eq!(path[path.len() - 1], goal);
@@ -560,7 +555,8 @@ mod tests {
             goal,
             |&cost| cost < 10,
             |&cost| cost as usize,
-        ).unwrap();
+        )
+        .unwrap();
 
         assert!(result.cost > 0);
         assert_eq!(result.path[0], start);
@@ -573,10 +569,10 @@ mod tests {
         let start = Coord::new(0, 0);
 
         let reachable = PathFinder::reachable(&grid, start, Some(3), |&cell| cell != '#');
-        
+
         assert!(reachable.contains(&start));
         assert!(reachable.len() > 1);
-        
+
         // Should not contain obstacles
         for coord in &reachable {
             assert_ne!(grid[*coord], '#');
@@ -589,7 +585,7 @@ mod tests {
         let start = Coord::new(1, 1); // Center
 
         let distances = PathFinder::distance_map(&grid, start, |&cell| cell == '.');
-        
+
         assert_eq!(distances[&start], 0);
         assert_eq!(distances[&Coord::new(0, 1)], 1); // Adjacent
         assert_eq!(distances[&Coord::new(0, 0)], 2); // Diagonal via manhattan

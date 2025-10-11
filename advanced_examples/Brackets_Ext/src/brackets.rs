@@ -49,7 +49,7 @@ use std::collections::HashMap;
 /// // Custom alphabet with angle brackets
 /// let custom = Alphabet::with_pairs(&[
 ///     ('(', ')'),
-///     ('[', ']'), 
+///     ('[', ']'),
 ///     ('<', '>'),  // Add angle brackets
 /// ]);
 /// assert!(custom.is_opener('<'));
@@ -69,9 +69,9 @@ use std::collections::HashMap;
 /// - `is_closer()`: O(n) where n is the number of bracket pairs
 /// - `expected_for()`: O(1) hash table lookup
 #[derive(Clone, Debug)]
-pub struct Alphabet { 
+pub struct Alphabet {
     /// Mapping from opening bracket characters to their corresponding closing characters
-    pub open_to_close: HashMap<char, char> 
+    pub open_to_close: HashMap<char, char>,
 }
 
 impl Alphabet {
@@ -105,10 +105,12 @@ impl Alphabet {
     /// ```
     pub fn with_pairs(pairs: &[(char, char)]) -> Self {
         let mut m = HashMap::new();
-        for &(o, c) in pairs { m.insert(o, c); }
+        for &(o, c) in pairs {
+            m.insert(o, c);
+        }
         Self { open_to_close: m }
     }
-    
+
     /// Creates the default ASCII alphabet with standard programming brackets.
     ///
     /// Supports the three most common bracket types:
@@ -135,7 +137,7 @@ impl Alphabet {
     pub fn default_ascii() -> Self {
         Self::with_pairs(&[('(', ')'), ('[', ']'), ('{', '}')])
     }
-    
+
     /// Checks if a character is an opening bracket in this alphabet.
     ///
     /// # Performance
@@ -153,11 +155,11 @@ impl Alphabet {
     /// assert!(!alphabet.is_opener(')'));
     /// assert!(!alphabet.is_opener('x'));
     /// ```
-    #[inline] 
-    pub fn is_opener(&self, ch: char) -> bool { 
-        self.open_to_close.contains_key(&ch) 
+    #[inline]
+    pub fn is_opener(&self, ch: char) -> bool {
+        self.open_to_close.contains_key(&ch)
     }
-    
+
     /// Checks if a character is a closing bracket in this alphabet.
     ///
     /// # Performance
@@ -176,11 +178,11 @@ impl Alphabet {
     /// assert!(!alphabet.is_closer('('));
     /// assert!(!alphabet.is_closer('x'));
     /// ```
-    #[inline] 
-    pub fn is_closer(&self, ch: char) -> bool { 
-        self.open_to_close.values().any(|&v| v == ch) 
+    #[inline]
+    pub fn is_closer(&self, ch: char) -> bool {
+        self.open_to_close.values().any(|&v| v == ch)
     }
-    
+
     /// Returns the expected closing character for a given opening bracket.
     ///
     /// # Arguments
@@ -208,9 +210,9 @@ impl Alphabet {
     /// assert_eq!(alphabet.expected_for('<'), None);
     /// assert_eq!(alphabet.expected_for('x'), None);
     /// ```
-    #[inline] 
-    pub fn expected_for(&self, opener: char) -> Option<char> { 
-        self.open_to_close.get(&opener).copied() 
+    #[inline]
+    pub fn expected_for(&self, opener: char) -> Option<char> {
+        self.open_to_close.get(&opener).copied()
     }
 }
 
@@ -238,7 +240,7 @@ impl Alphabet {
 /// if let Err(err) = validate_brackets("(]") {
 ///     match err.kind {
 ///         BracketErrorKind::MismatchedPair { expected, found } => {
-///             println!("Expected '{}' but found '{}' at position {}", 
+///             println!("Expected '{}' but found '{}' at position {}",
 ///                     expected, found, err.index);
 ///         }
 ///         _ => {}
@@ -256,11 +258,11 @@ pub enum BracketErrorKind {
     /// # Fields
     ///
     /// * `found` - The unexpected closing bracket character
-    UnexpectedClosing { 
+    UnexpectedClosing {
         /// The closing bracket character that was encountered unexpectedly
-        found: char 
+        found: char,
     },
-    
+
     /// A closing bracket doesn't match its corresponding opening bracket.
     ///
     /// This occurs when brackets are interleaved incorrectly, such as `([)]`
@@ -270,13 +272,13 @@ pub enum BracketErrorKind {
     ///
     /// * `expected` - The closing bracket that was expected
     /// * `found` - The closing bracket that was actually found
-    MismatchedPair { 
+    MismatchedPair {
         /// The closing bracket character that was expected
-        expected: char, 
+        expected: char,
         /// The closing bracket character that was actually found
-        found: char 
+        found: char,
     },
-    
+
     /// One or more opening brackets were never closed.
     ///
     /// This occurs at the end of input when there are still opening brackets
@@ -287,11 +289,11 @@ pub enum BracketErrorKind {
     ///
     /// * `expected` - The closing bracket that was needed
     /// * `open_index` - The position where the unclosed opening bracket appeared
-    UnclosedOpenings { 
+    UnclosedOpenings {
         /// The closing bracket character that was expected
-        expected: char, 
+        expected: char,
         /// The position in the input where the unclosed opening bracket appeared
-        open_index: usize 
+        open_index: usize,
     },
 }
 
@@ -318,11 +320,11 @@ pub enum BracketErrorKind {
 /// }
 /// ```
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct BracketError { 
+pub struct BracketError {
     /// The byte position in the input where the error occurred
-    pub index: usize, 
+    pub index: usize,
     /// The specific type of bracket error that occurred
-    pub kind: BracketErrorKind 
+    pub kind: BracketErrorKind,
 }
 
 /// Controls how the validator handles multiple errors during validation.
@@ -359,11 +361,11 @@ pub struct BracketError {
 /// - **StopAtFirst**: Best for performance-critical applications, traditional parsers
 /// - **CollectAll**: Best for IDEs, linters, educational tools, comprehensive error reporting
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ErrorMode { 
+pub enum ErrorMode {
     /// Stop validation immediately upon finding the first error
-    StopAtFirst, 
+    StopAtFirst,
     /// Continue validation and collect all errors found
-    CollectAll 
+    CollectAll,
 }
 
 /// Controls which unclosed bracket to report when multiple brackets remain unclosed.
@@ -399,11 +401,11 @@ pub enum ErrorMode {
 /// - **LatestOpen**: Natural for stack-based thinking, "what was I just working on?"
 /// - **EarliestOpen**: Better for structural analysis, "where did the problem start?"
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum UnclosedPolicy { 
+pub enum UnclosedPolicy {
     /// Report the most recently opened bracket (LIFO behavior)
-    LatestOpen, 
+    LatestOpen,
     /// Report the earliest opened bracket (FIFO behavior)
-    EarliestOpen 
+    EarliestOpen,
 }
 
 /// Configuration options for bracket validation.
@@ -527,14 +529,27 @@ where
         } else if alph.is_closer(ch) {
             match st.pop() {
                 None => {
-                    let e = BracketError { index: i, kind: BracketErrorKind::UnexpectedClosing { found: ch } };
-                    if matches!(opts.error_mode, ErrorMode::StopAtFirst) { return Err(vec![e]); }
+                    let e = BracketError {
+                        index: i,
+                        kind: BracketErrorKind::UnexpectedClosing { found: ch },
+                    };
+                    if matches!(opts.error_mode, ErrorMode::StopAtFirst) {
+                        return Err(vec![e]);
+                    }
                     errors.push(e);
                 }
                 Some((expected, _open_idx)) => {
                     if ch != expected {
-                        let e = BracketError { index: i, kind: BracketErrorKind::MismatchedPair { expected, found: ch } };
-                        if matches!(opts.error_mode, ErrorMode::StopAtFirst) { return Err(vec![e]); }
+                        let e = BracketError {
+                            index: i,
+                            kind: BracketErrorKind::MismatchedPair {
+                                expected,
+                                found: ch,
+                            },
+                        };
+                        if matches!(opts.error_mode, ErrorMode::StopAtFirst) {
+                            return Err(vec![e]);
+                        }
                         errors.push(e);
                     }
                 }
@@ -548,24 +563,46 @@ where
         match opts.unclosed_policy {
             UnclosedPolicy::LatestOpen => {
                 if let Some((expected, open_idx)) = st.pop() {
-                    let e = BracketError { index: open_idx, kind: BracketErrorKind::UnclosedOpenings { expected, open_index: open_idx } };
-                    if matches!(opts.error_mode, ErrorMode::StopAtFirst) { return Err(vec![e]); }
+                    let e = BracketError {
+                        index: open_idx,
+                        kind: BracketErrorKind::UnclosedOpenings {
+                            expected,
+                            open_index: open_idx,
+                        },
+                    };
+                    if matches!(opts.error_mode, ErrorMode::StopAtFirst) {
+                        return Err(vec![e]);
+                    }
                     errors.push(e);
                 }
             }
             UnclosedPolicy::EarliestOpen => {
                 let mut tmp: Vec<(char, usize)> = Vec::new();
-                while let Some(x) = st.pop() { tmp.push(x); }
+                while let Some(x) = st.pop() {
+                    tmp.push(x);
+                }
                 if let Some(&(expected, open_idx)) = tmp.last() {
-                    let e = BracketError { index: open_idx, kind: BracketErrorKind::UnclosedOpenings { expected, open_index: open_idx } };
-                    if matches!(opts.error_mode, ErrorMode::StopAtFirst) { return Err(vec![e]); }
+                    let e = BracketError {
+                        index: open_idx,
+                        kind: BracketErrorKind::UnclosedOpenings {
+                            expected,
+                            open_index: open_idx,
+                        },
+                    };
+                    if matches!(opts.error_mode, ErrorMode::StopAtFirst) {
+                        return Err(vec![e]);
+                    }
                     errors.push(e);
                 }
             }
         }
     }
 
-    if errors.is_empty() { Ok(()) } else { Err(errors) }
+    if errors.is_empty() {
+        Ok(())
+    } else {
+        Err(errors)
+    }
 }
 
 /// Traditional bracket validation API with single error reporting.
@@ -796,7 +833,7 @@ where
 ///     ((1, 7), ')'),  // Line 1, Column 7 - error!
 ///     ((1, 8), ']'),  // Line 1, Column 8
 /// ];
-/// 
+///
 /// // This example won't compile as-is since validate_indexed expects (usize, char)
 /// // but demonstrates the concept of custom position tracking
 /// ```

@@ -1,5 +1,5 @@
-use aoc2015::solver::day06;
 use anyhow::Result;
+use aoc2015::solver::day06;
 
 #[cfg(test)]
 mod day06_tests {
@@ -16,7 +16,7 @@ mod day06_tests {
         assert_eq!(result, "1"); // One light should be on
     }
 
-    #[test] 
+    #[test]
     fn test_single_light_turn_off() {
         // When we turn off a light that's already off, it should stay off
         let input = "turn off 0,0 through 0,0";
@@ -70,7 +70,7 @@ mod day06_tests {
         let input = "turn on 0,0 through 1,1\ntoggle 0,0 through 1,0";
         let result = day06::solve_part1(input).unwrap();
         // Start: 4 lights on in 2x2
-        // Toggle top row: turns off (0,0) and (1,0) 
+        // Toggle top row: turns off (0,0) and (1,0)
         // Result: only (0,1) and (1,1) remain on = 2 lights
         assert_eq!(result, "2");
     }
@@ -92,7 +92,7 @@ mod day06_tests {
         let input = "turn on 0,0 through 999,999\ntoggle 0,0 through 999,0\nturn off 499,499 through 500,500";
         let result = day06::solve_part1(input).unwrap();
         // Start: 1,000,000 lights on
-        // Toggle first row: turns off 1,000 lights  
+        // Toggle first row: turns off 1,000 lights
         // Turn off middle 4: turns off 4 lights (but they might already be off from toggle)
         // Need to calculate exact result based on implementation
         assert!(result.parse::<u32>().unwrap() < 1000000);
@@ -148,7 +148,7 @@ mod day06_tests {
         // Examples given in problem description
         let input = "turn on 0,0 through 0,0";
         assert_eq!(day06::solve_part2(input).unwrap(), "1");
-        
+
         let input = "toggle 0,0 through 999,999";
         assert_eq!(day06::solve_part2(input).unwrap(), "2000000"); // 2 * 1,000,000
     }
@@ -167,7 +167,7 @@ mod day06_tests {
         // This test ensures graceful handling of edge cases
         // Implementation should handle bounds checking
         let input = "turn on 1000,1000 through 1000,1000"; // Out of bounds
-        // Should either ignore invalid coordinates or handle gracefully
+                                                           // Should either ignore invalid coordinates or handle gracefully
         let result = day06::solve_part1(input);
         assert!(result.is_ok()); // Should not panic
     }
@@ -181,7 +181,7 @@ mod day06_tests {
         assert!(result.parse::<u32>().is_ok());
     }
 
-    #[test]  
+    #[test]
     fn test_single_coordinate_range() {
         // Same start and end coordinates
         let input = "turn on 5,5 through 5,5";
@@ -236,7 +236,8 @@ mod day06_tests {
 #[allow(dead_code)]
 fn print_grid_state(grid: &[[bool; 1000]; 1000], x1: usize, y1: usize, x2: usize, y2: usize) {
     println!("Grid state in region ({},{}) to ({},{}):", x1, y1, x2, y2);
-    for y in y1..=y2.min(y1 + 10) { // Limit output for readability
+    for y in y1..=y2.min(y1 + 10) {
+        // Limit output for readability
         for x in x1..=x2.min(x1 + 10) {
             print!("{}", if grid[y][x] { '█' } else { '░' });
         }

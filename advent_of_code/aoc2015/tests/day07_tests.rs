@@ -1,22 +1,24 @@
 //! # Day 7 Tests: Some Assembly Required
-//! 
+//!
 //! **Test-Driven Development for Circuit Simulation**
-//! 
+//!
 //! Following TDD principles with comprehensive test coverage for:
 //! - Wire input parsing (Direct values vs Wire references)
 //! - Operation parsing (AND, OR, NOT, LSHIFT, RSHIFT, Assign)
 //! - Instruction parsing and validation
 //! - Circuit evaluation with memoization
 //! - Dependency resolution and recursive evaluation
-//! 
+//!
 //! ## 🧪 **Test Strategy**
-//! 
+//!
 //! 1. **Unit Tests**: Individual component testing
 //! 2. **Integration Tests**: Full circuit simulation
 //! 3. **Edge Cases**: Error handling and boundary conditions
 //! 4. **Performance Tests**: Memoization effectiveness
 
-use aoc2015::solver::day07::{WireInput, Operation, Instruction, Circuit, parse_wire_input, parse_instruction};
+use aoc2015::solver::day07::{
+    parse_instruction, parse_wire_input, Circuit, Instruction, Operation, WireInput,
+};
 
 // ============================================================================
 // UNIT TESTS: WireInput Enum
@@ -49,7 +51,7 @@ mod wire_input_tests {
         // Test boundary values for u16
         let min_val = WireInput::Direct(0);
         let max_val = WireInput::Direct(65535);
-        
+
         assert_eq!(min_val, WireInput::Direct(0));
         assert_eq!(max_val, WireInput::Direct(65535));
     }
@@ -57,7 +59,10 @@ mod wire_input_tests {
     #[test]
     fn wire_input_equality_should_work_correctly() {
         assert_eq!(WireInput::Direct(123), WireInput::Direct(123));
-        assert_eq!(WireInput::Wire("x".to_string()), WireInput::Wire("x".to_string()));
+        assert_eq!(
+            WireInput::Wire("x".to_string()),
+            WireInput::Wire("x".to_string())
+        );
         assert_ne!(WireInput::Direct(123), WireInput::Wire("123".to_string()));
     }
 }
@@ -81,10 +86,7 @@ mod operation_tests {
 
     #[test]
     fn operation_and_should_store_two_inputs() {
-        let op = Operation::And(
-            WireInput::Wire("x".to_string()),
-            WireInput::Direct(456)
-        );
+        let op = Operation::And(WireInput::Wire("x".to_string()), WireInput::Direct(456));
         match op {
             Operation::And(WireInput::Wire(w), WireInput::Direct(v)) => {
                 assert_eq!(w, "x");
@@ -105,10 +107,7 @@ mod operation_tests {
 
     #[test]
     fn operation_lshift_should_store_input_and_amount() {
-        let op = Operation::LShift(
-            WireInput::Wire("p".to_string()),
-            WireInput::Direct(2)
-        );
+        let op = Operation::LShift(WireInput::Wire("p".to_string()), WireInput::Direct(2));
         match op {
             Operation::LShift(WireInput::Wire(w), WireInput::Direct(amt)) => {
                 assert_eq!(w, "p");
@@ -123,7 +122,7 @@ mod operation_tests {
         // Test case: "x RSHIFT y -> z" where y is also a wire
         let op = Operation::RShift(
             WireInput::Wire("x".to_string()),
-            WireInput::Wire("y".to_string())
+            WireInput::Wire("y".to_string()),
         );
         match op {
             Operation::RShift(WireInput::Wire(w1), WireInput::Wire(w2)) => {
@@ -149,7 +148,7 @@ mod instruction_tests {
             operation: Operation::Assign(WireInput::Direct(123)),
             output_wire: "x".to_string(),
         };
-        
+
         assert_eq!(instruction.output_wire, "x");
         match instruction.operation {
             Operation::Assign(WireInput::Direct(val)) => assert_eq!(val, 123),
@@ -162,11 +161,11 @@ mod instruction_tests {
         let instruction = Instruction {
             operation: Operation::And(
                 WireInput::Wire("x".to_string()),
-                WireInput::Wire("y".to_string())
+                WireInput::Wire("y".to_string()),
             ),
             output_wire: "z".to_string(),
         };
-        
+
         assert_eq!(instruction.output_wire, "z");
         match instruction.operation {
             Operation::And(WireInput::Wire(w1), WireInput::Wire(w2)) => {
@@ -342,14 +341,14 @@ mod circuit_evaluation_tests {
         // circuit.add_instruction("y RSHIFT 2 -> g").unwrap();
         // circuit.add_instruction("NOT x -> h").unwrap();
         // circuit.add_instruction("NOT y -> i").unwrap();
-        
+
         // let d = circuit.get_wire_value("d").unwrap(); // 72
         // let e = circuit.get_wire_value("e").unwrap(); // 507
         // let f = circuit.get_wire_value("f").unwrap(); // 492
         // let g = circuit.get_wire_value("g").unwrap(); // 114
         // let h = circuit.get_wire_value("h").unwrap(); // 65412
         // let i = circuit.get_wire_value("i").unwrap(); // 65079
-        
+
         // assert_eq!(d, 72);
         // assert_eq!(e, 507);
         // assert_eq!(f, 492);
@@ -363,10 +362,10 @@ mod circuit_evaluation_tests {
         // Test that repeated calls return cached values
         // let mut circuit = Circuit::new();
         // circuit.add_instruction("123 -> x").unwrap();
-        // 
+        //
         // let value1 = circuit.get_wire_value("x").unwrap();
         // let value2 = circuit.get_wire_value("x").unwrap();
-        // 
+        //
         // assert_eq!(value1, value2);
         // assert_eq!(value1, 123);
     }
@@ -413,7 +412,7 @@ mod performance_tests {
     fn circuit_should_handle_large_dependency_chains() {
         // Test deep dependency resolution doesn't cause stack overflow
         // let mut circuit = Circuit::new();
-        // 
+        //
         // // Create a chain: 0 -> x1 -> x2 -> ... -> x100
         // circuit.add_instruction("0 -> x1").unwrap();
         // for i in 2..=100 {
@@ -421,7 +420,7 @@ mod performance_tests {
         //     let curr = format!("x{}", i);
         //     circuit.add_instruction(&format!("{} -> {}", prev, curr)).unwrap();
         // }
-        // 
+        //
         // let value = circuit.get_wire_value("x100").unwrap();
         // assert_eq!(value, 0);
     }

@@ -78,22 +78,22 @@
 //! providing the spatial reasoning tools needed for complex competitive programming challenges.
 
 // Core grid functionality
-pub mod grid;
 pub mod coord;
 pub mod direction;
+pub mod grid;
 
 // Algorithms and utilities
-pub mod pathfinding;
-pub mod flood_fill;
 pub mod aoc_utils;
+pub mod flood_fill;
+pub mod pathfinding;
 
 // Re-export main types for convenience
-pub use grid::Grid;
+pub use aoc_utils::{AocAlgorithms, AocGridParser, GridVisualizer};
 pub use coord::Coord;
 pub use direction::Direction;
-pub use pathfinding::{PathFinder, AStarResult, BfsResult};
 pub use flood_fill::{FloodFill, FloodFillResult};
-pub use aoc_utils::{AocGridParser, GridVisualizer, AocAlgorithms};
+pub use grid::Grid;
+pub use pathfinding::{AStarResult, BfsResult, PathFinder};
 
 #[cfg(test)]
 mod tests {
@@ -102,20 +102,20 @@ mod tests {
     #[test] // REQ-1: Grid creation and basic operations
     fn req1_grid_creation_and_indexing() {
         let mut grid = Grid::new(3, 3, 0);
-        
+
         // Test dimensions
         assert_eq!(grid.width(), 3);
         assert_eq!(grid.height(), 3);
         assert_eq!(grid.len(), 9);
-        
+
         // Test indexing
         grid[(1, 1)] = 42;
         assert_eq!(grid[(1, 1)], 42);
-        
+
         // Test coordinate indexing
         let coord = Coord::new(1, 1);
         assert_eq!(grid[coord], 42);
-        
+
         // Test bounds checking
         assert!(!grid.in_bounds(Coord::new(3, 3)));
         assert!(grid.in_bounds(Coord::new(2, 2)));
@@ -124,18 +124,18 @@ mod tests {
     #[test] // REQ-2: Coordinate system and navigation
     fn req2_coordinate_navigation() {
         let start = Coord::new(5, 5);
-        
+
         // Test direction movement
         let north = start.move_in_direction(Direction::North, 1);
         assert_eq!(north, Coord::new(5, 4));
-        
+
         let east = start.move_in_direction(Direction::East, 2);
         assert_eq!(east, Coord::new(7, 5));
-        
+
         // Test distance calculations
         assert_eq!(start.manhattan_distance(north), 1);
         assert_eq!(start.manhattan_distance(east), 2);
-        
+
         // Test neighbor generation
         let neighbors: Vec<_> = start.neighbors_4().collect();
         assert_eq!(neighbors.len(), 4);
@@ -150,14 +150,14 @@ mod tests {
         grid[(1, 1)] = '#';
         grid[(1, 2)] = '#';
         grid[(1, 3)] = '#';
-        
+
         let start = Coord::new(0, 0);
         let end = Coord::new(4, 4);
-        
+
         // Test BFS pathfinding
         let path = PathFinder::bfs(&grid, start, end, |&cell| cell != '#');
         assert!(path.is_some());
-        
+
         let path = path.unwrap();
         assert!(path.len() > 0);
         assert_eq!(path[0], start);
@@ -167,14 +167,14 @@ mod tests {
     #[test] // REQ-4: AoC utilities
     fn req4_aoc_utilities() {
         let input = "..#..\n.#...\n....#";
-        
+
         // Test grid parsing
         let grid = AocGridParser::parse_char_grid(input);
         assert_eq!(grid.width(), 5);
         assert_eq!(grid.height(), 3);
         assert_eq!(grid[(2, 0)], '#');
         assert_eq!(grid[(1, 1)], '#');
-        
+
         // Test flood fill
         let mut fill_grid = grid.clone();
         let filled = FloodFill::fill_4(&mut fill_grid, Coord::new(0, 0), '.', 'X');
@@ -186,14 +186,14 @@ mod tests {
     fn req5_performance_characteristics() {
         let size = 100;
         let grid = Grid::new(size, size, 0u32);
-        
+
         // Test that large grids can be created efficiently
         assert_eq!(grid.len(), size * size);
-        
+
         // Test iterator performance (should not allocate)
         let sum: u32 = grid.iter().sum();
         assert_eq!(sum, 0);
-        
+
         // Test coordinate generation performance
         let coord_count = grid.enumerate().count();
         assert_eq!(coord_count, size * size);
@@ -202,15 +202,18 @@ mod tests {
     #[test] // REQ-6: Integration with Mission 5 patterns
     fn req6_mission5_integration() {
         use std::collections::{HashMap, HashSet};
-        
+
         let mut grid = Grid::new(3, 3, '.');
         grid[(1, 1)] = 'X';
-        
+
         // Test that Coord works as HashMap key
         let mut coord_map: HashMap<Coord, String> = HashMap::new();
         coord_map.insert(Coord::new(1, 1), "center".to_string());
-        assert_eq!(coord_map.get(&Coord::new(1, 1)), Some(&"center".to_string()));
-        
+        assert_eq!(
+            coord_map.get(&Coord::new(1, 1)),
+            Some(&"center".to_string())
+        );
+
         // Test that Coord works in HashSet
         let mut visited: HashSet<Coord> = HashSet::new();
         for (coord, value) in grid.enumerate() {

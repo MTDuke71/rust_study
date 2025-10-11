@@ -3,22 +3,22 @@
 //! This module contains the actual implementations of singly linked lists,
 //! demonstrating different ownership patterns in Rust.
 
-use std::rc::{Rc, Weak};
-use std::cell::{RefCell, Ref, RefMut};
+use std::cell::{Ref, RefCell, RefMut};
 use std::fmt;
+use std::rc::{Rc, Weak};
 
 /// Simple linked list using Box for owned pointers
-/// 
+///
 /// This implementation demonstrates the most straightforward approach to linked lists
 /// in Rust, using `Box<T>` for heap allocation and owned pointers.
-/// 
+///
 /// # Requirements Satisfied: REQ-1, REQ-3, REQ-5
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// use mission4::SimpleLinkedList;
-/// 
+///
 /// let mut list = SimpleLinkedList::new();
 /// list.push_front(1);
 /// list.push_front(2);
@@ -39,17 +39,17 @@ struct Node<T> {
 }
 
 /// Linked list using Rc<RefCell<T>> for shared ownership and interior mutability
-/// 
+///
 /// This implementation demonstrates advanced Rust patterns for scenarios requiring
 /// shared ownership of nodes. Uses reference counting and interior mutability.
-/// 
+///
 /// # Requirements Satisfied: REQ-2, REQ-3, REQ-5, REQ-6
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// use mission4::RcLinkedList;
-/// 
+///
 /// let mut list = RcLinkedList::new();
 /// list.push_front("hello");
 /// list.push_front("world");
@@ -99,16 +99,16 @@ impl std::error::Error for LinkedListError {}
 
 impl<T> SimpleLinkedList<T> {
     /// Creates a new empty linked list
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-1
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::SimpleLinkedList;
-    /// 
+    ///
     /// let list: SimpleLinkedList<i32> = SimpleLinkedList::new();
     /// assert!(list.is_empty());
     /// ```
@@ -120,16 +120,16 @@ impl<T> SimpleLinkedList<T> {
     }
 
     /// Adds an element to the front of the list
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::SimpleLinkedList;
-    /// 
+    ///
     /// let mut list = SimpleLinkedList::new();
     /// list.push_front(42);
     /// assert_eq!(list.len(), 1);
@@ -145,16 +145,16 @@ impl<T> SimpleLinkedList<T> {
     }
 
     /// Removes and returns the front element
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::SimpleLinkedList;
-    /// 
+    ///
     /// let mut list = SimpleLinkedList::new();
     /// list.push_front(42);
     /// assert_eq!(list.pop_front(), Some(42));
@@ -169,16 +169,16 @@ impl<T> SimpleLinkedList<T> {
     }
 
     /// Gets a reference to the front element without removing it
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::SimpleLinkedList;
-    /// 
+    ///
     /// let mut list = SimpleLinkedList::new();
     /// list.push_front(42);
     /// assert_eq!(list.peek_front(), Some(&42));
@@ -189,16 +189,16 @@ impl<T> SimpleLinkedList<T> {
     }
 
     /// Gets a mutable reference to the front element
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::SimpleLinkedList;
-    /// 
+    ///
     /// let mut list = SimpleLinkedList::new();
     /// list.push_front(42);
     /// if let Some(front) = list.peek_front_mut() {
@@ -211,34 +211,34 @@ impl<T> SimpleLinkedList<T> {
     }
 
     /// Returns true if the list is empty
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-1, REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
     pub fn is_empty(&self) -> bool {
         self.head.is_none()
     }
 
     /// Returns the number of elements in the list
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-1, REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
     pub fn len(&self) -> usize {
         self.length
     }
 
     /// Clears all elements from the list
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(n) where n is the number of elements
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::SimpleLinkedList;
-    /// 
+    ///
     /// let mut list = SimpleLinkedList::new();
     /// list.push_front(1);
     /// list.push_front(2);
@@ -251,20 +251,20 @@ impl<T> SimpleLinkedList<T> {
     }
 
     /// Returns an iterator over references to the elements
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-4
-    /// 
+    ///
     /// # Time Complexity: O(1) to create, O(n) to consume
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::SimpleLinkedList;
-    /// 
+    ///
     /// let mut list = SimpleLinkedList::new();
     /// list.push_front(1);
     /// list.push_front(2);
-    /// 
+    ///
     /// let collected: Vec<&i32> = list.iter().collect();
     /// assert_eq!(collected, vec![&2, &1]);
     /// ```
@@ -273,26 +273,26 @@ impl<T> SimpleLinkedList<T> {
             current: self.head.as_deref(),
         }
     }
-    
+
     /// Returns an iterator over mutable references to the elements
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-4
-    /// 
+    ///
     /// # Time Complexity: O(1) to create, O(n) to consume
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::SimpleLinkedList;
-    /// 
+    ///
     /// let mut list = SimpleLinkedList::new();
     /// list.push_front(1);
     /// list.push_front(2);
-    /// 
+    ///
     /// for item in list.iter_mut() {
     ///     *item *= 2;
     /// }
-    /// 
+    ///
     /// assert_eq!(list.pop_front(), Some(4));
     /// assert_eq!(list.pop_front(), Some(2));
     /// ```
@@ -330,11 +330,11 @@ pub struct IterMut<'a, T> {
 
 impl<T> Iterator for IntoIter<T> {
     type Item = T;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         self.list.pop_front()
     }
-    
+
     fn size_hint(&self) -> (usize, Option<usize>) {
         let len = self.list.len();
         (len, Some(len))
@@ -343,7 +343,7 @@ impl<T> Iterator for IntoIter<T> {
 
 impl<'a, T> Iterator for Iter<'a, T> {
     type Item = &'a T;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         self.current.map(|node| {
             self.current = node.next.as_deref();
@@ -354,7 +354,7 @@ impl<'a, T> Iterator for Iter<'a, T> {
 
 impl<'a, T> Iterator for IterMut<'a, T> {
     type Item = &'a mut T;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         self.current.take().map(|node| {
             self.current = node.next.as_deref_mut();
@@ -366,7 +366,7 @@ impl<'a, T> Iterator for IterMut<'a, T> {
 impl<T> IntoIterator for SimpleLinkedList<T> {
     type Item = T;
     type IntoIter = IntoIter<T>;
-    
+
     fn into_iter(self) -> Self::IntoIter {
         IntoIter { list: self }
     }
@@ -375,7 +375,7 @@ impl<T> IntoIterator for SimpleLinkedList<T> {
 impl<'a, T> IntoIterator for &'a SimpleLinkedList<T> {
     type Item = &'a T;
     type IntoIter = Iter<'a, T>;
-    
+
     fn into_iter(self) -> Self::IntoIter {
         self.iter()
     }
@@ -387,16 +387,16 @@ impl<'a, T> IntoIterator for &'a SimpleLinkedList<T> {
 
 impl<T> RcLinkedList<T> {
     /// Creates a new empty linked list
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-2
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::RcLinkedList;
-    /// 
+    ///
     /// let list: RcLinkedList<i32> = RcLinkedList::new();
     /// assert!(list.is_empty());
     /// ```
@@ -408,16 +408,16 @@ impl<T> RcLinkedList<T> {
     }
 
     /// Adds an element to the front of the list
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::RcLinkedList;
-    /// 
+    ///
     /// let mut list = RcLinkedList::new();
     /// list.push_front(42);
     /// assert_eq!(list.len(), 1);
@@ -439,18 +439,18 @@ impl<T> RcLinkedList<T> {
     }
 
     /// Removes and returns the front element
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// Returns an error if the node cannot be unwrapped due to multiple references.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::RcLinkedList;
-    /// 
+    ///
     /// let mut list = RcLinkedList::new();
     /// list.push_front(42);
     /// assert_eq!(list.pop_front(), Ok(Some(42)));
@@ -470,7 +470,7 @@ impl<T> RcLinkedList<T> {
                         }
                         self.length -= 1;
                         Ok(Some(node.data))
-                    },
+                    }
                     Err(rc_node) => {
                         // Put the node back and return error
                         self.head = Some(rc_node);
@@ -482,21 +482,21 @@ impl<T> RcLinkedList<T> {
     }
 
     /// Attempts to get a reference to the front element
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// Note: This operation can fail if the front node is currently mutably borrowed.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::RcLinkedList;
-    /// 
+    ///
     /// let mut list = RcLinkedList::new();
     /// list.push_front(42);
-    /// 
+    ///
     /// match list.try_peek_front() {
     ///     Ok(Some(value)) => println!("Front value: {}", *value),
     ///     Ok(None) => println!("List is empty"),
@@ -506,31 +506,29 @@ impl<T> RcLinkedList<T> {
     pub fn try_peek_front(&self) -> Result<Option<Ref<'_, T>>, LinkedListError> {
         match &self.head {
             None => Ok(None),
-            Some(node) => {
-                match node.try_borrow() {
-                    Ok(borrowed) => Ok(Some(Ref::map(borrowed, |n| &n.data))),
-                    Err(_) => Err(LinkedListError::BorrowError),
-                }
-            }
+            Some(node) => match node.try_borrow() {
+                Ok(borrowed) => Ok(Some(Ref::map(borrowed, |n| &n.data))),
+                Err(_) => Err(LinkedListError::BorrowError),
+            },
         }
     }
 
     /// Attempts to get a mutable reference to the front element
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
-    /// 
+    ///
     /// Note: This operation can fail if the front node is currently borrowed.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::RcLinkedList;
-    /// 
+    ///
     /// let mut list = RcLinkedList::new();
     /// list.push_front(42);
-    /// 
+    ///
     /// match list.try_peek_front_mut() {
     ///     Ok(Some(mut value)) => *value = 100,
     ///     Ok(None) => println!("List is empty"),
@@ -540,44 +538,42 @@ impl<T> RcLinkedList<T> {
     pub fn try_peek_front_mut(&self) -> Result<Option<RefMut<'_, T>>, LinkedListError> {
         match &self.head {
             None => Ok(None),
-            Some(node) => {
-                match node.try_borrow_mut() {
-                    Ok(borrowed) => Ok(Some(RefMut::map(borrowed, |n| &mut n.data))),
-                    Err(_) => Err(LinkedListError::BorrowError),
-                }
-            }
+            Some(node) => match node.try_borrow_mut() {
+                Ok(borrowed) => Ok(Some(RefMut::map(borrowed, |n| &mut n.data))),
+                Err(_) => Err(LinkedListError::BorrowError),
+            },
         }
     }
 
     /// Returns true if the list is empty
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
     pub fn is_empty(&self) -> bool {
         self.head.is_none()
     }
 
     /// Returns the number of elements in the list
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(1)
     pub fn len(&self) -> usize {
         self.length
     }
 
     /// Clears all elements from the list
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-2, REQ-3
-    /// 
+    ///
     /// # Time Complexity: O(n) where n is the number of elements
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::RcLinkedList;
-    /// 
+    ///
     /// let mut list = RcLinkedList::new();
     /// list.push_front(1);
     /// list.push_front(2);
@@ -590,20 +586,20 @@ impl<T> RcLinkedList<T> {
     }
 
     /// Gets a cloned reference to the head node for advanced operations
-    /// 
+    ///
     /// # Requirements Satisfied: REQ-6
-    /// 
+    ///
     /// This allows for advanced patterns where you need direct access to the Rc.
     /// Be careful not to create reference cycles.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use mission4::RcLinkedList;
-    /// 
+    ///
     /// let mut list = RcLinkedList::new();
     /// list.push_front(42);
-    /// 
+    ///
     /// if let Some(head_ref) = list.get_head_ref() {
     ///     // Can share this reference with other data structures
     ///     println!("Head ref count: {}", std::rc::Rc::strong_count(&head_ref));
@@ -643,12 +639,12 @@ impl<T: Clone> Clone for SimpleLinkedList<T> {
     fn clone(&self) -> Self {
         let mut new_list = SimpleLinkedList::new();
         let items: Vec<T> = self.iter().cloned().collect();
-        
+
         // Reverse to maintain order when pushing to front
         for item in items.into_iter().rev() {
             new_list.push_front(item);
         }
-        
+
         new_list
     }
 }
@@ -658,7 +654,7 @@ impl<T: PartialEq> PartialEq for SimpleLinkedList<T> {
         if self.len() != other.len() {
             return false;
         }
-        
+
         self.iter().eq(other.iter())
     }
 }
@@ -667,12 +663,12 @@ impl<T> std::iter::FromIterator<T> for SimpleLinkedList<T> {
     fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
         let mut list = SimpleLinkedList::new();
         let items: Vec<T> = iter.into_iter().collect();
-        
+
         // Reverse to maintain order when pushing to front
         for item in items.into_iter().rev() {
             list.push_front(item);
         }
-        
+
         list
     }
 }

@@ -1,31 +1,31 @@
 //! Coordinate system for 2D grid navigation
-//! 
+//!
 //! Provides the Coord type for representing positions in 2D space with
 //! arithmetic operations, distance calculations, and direction-based movement.
 
 use crate::direction::Direction;
-use std::ops::{Add, Sub, AddAssign, SubAssign};
 use std::fmt;
 use std::hash::{Hash, Hasher};
+use std::ops::{Add, AddAssign, Sub, SubAssign};
 
 /// A coordinate in 2D space with x (column) and y (row) components
-/// 
+///
 /// # Requirements Satisfied: REQ-2
-/// 
+///
 /// Coordinates use a standard (x, y) system where:
 /// - x increases moving right (East)
 /// - y increases moving down (South)
-/// 
+///
 /// This matches common screen/grid conventions and AoC problem formats.
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```rust
 /// use mission6::{Coord, Direction};
-/// 
+///
 /// let start = Coord::new(5, 10);
 /// let end = start.move_in_direction(Direction::North, 3);
-/// 
+///
 /// assert_eq!(end, Coord::new(5, 7)); // North decreases y
 /// assert_eq!(start.manhattan_distance(end), 3);
 /// ```
@@ -47,7 +47,7 @@ impl Coord {
     }
 
     /// Move in the given direction by the specified distance
-    /// 
+    ///
     /// Returns None if the movement would result in underflow (negative coordinates)
     pub fn try_move_in_direction(self, direction: Direction, distance: usize) -> Option<Self> {
         match direction {
@@ -93,14 +93,18 @@ impl Coord {
     }
 
     /// Move in the given direction by the specified distance
-    /// 
+    ///
     /// # Panics
-    /// 
+    ///
     /// Panics if the movement would result in underflow (negative coordinates)
     pub fn move_in_direction(self, direction: Direction, distance: usize) -> Self {
         self.try_move_in_direction(direction, distance)
-            .unwrap_or_else(|| panic!("Movement in direction {:?} by {} would underflow from {:?}", 
-                                    direction, distance, self))
+            .unwrap_or_else(|| {
+                panic!(
+                    "Movement in direction {:?} by {} would underflow from {:?}",
+                    direction, distance, self
+                )
+            })
     }
 
     /// Move one step in the given direction
@@ -333,20 +337,32 @@ mod tests {
     fn test_movement() {
         let start = Coord::new(5, 5);
 
-        assert_eq!(start.move_in_direction(Direction::North, 2), Coord::new(5, 3));
-        assert_eq!(start.move_in_direction(Direction::South, 1), Coord::new(5, 6));
-        assert_eq!(start.move_in_direction(Direction::East, 3), Coord::new(8, 5));
-        assert_eq!(start.move_in_direction(Direction::West, 1), Coord::new(4, 5));
+        assert_eq!(
+            start.move_in_direction(Direction::North, 2),
+            Coord::new(5, 3)
+        );
+        assert_eq!(
+            start.move_in_direction(Direction::South, 1),
+            Coord::new(5, 6)
+        );
+        assert_eq!(
+            start.move_in_direction(Direction::East, 3),
+            Coord::new(8, 5)
+        );
+        assert_eq!(
+            start.move_in_direction(Direction::West, 1),
+            Coord::new(4, 5)
+        );
     }
 
     #[test]
     fn test_movement_bounds() {
         let coord = Coord::new(2, 3);
-        
+
         // These should work
         assert!(coord.try_move_in_direction(Direction::North, 3).is_some());
         assert!(coord.try_move_in_direction(Direction::West, 2).is_some());
-        
+
         // These should fail (underflow)
         assert!(coord.try_move_in_direction(Direction::North, 4).is_none());
         assert!(coord.try_move_in_direction(Direction::West, 3).is_none());
@@ -365,13 +381,13 @@ mod tests {
     #[test]
     fn test_neighbors() {
         let center = Coord::new(5, 5);
-        
+
         let neighbors4: Vec<_> = center.neighbors_4().collect();
         assert!(neighbors4.contains(&Coord::new(5, 4))); // North
-        assert!(neighbors4.contains(&Coord::new(5, 6))); // South  
+        assert!(neighbors4.contains(&Coord::new(5, 6))); // South
         assert!(neighbors4.contains(&Coord::new(6, 5))); // East
         assert!(neighbors4.contains(&Coord::new(4, 5))); // West
-        
+
         let neighbors8: Vec<_> = center.neighbors_8().collect();
         assert!(neighbors8.len() == 8);
         assert!(neighbors8.contains(&Coord::new(4, 4))); // NorthWest
@@ -381,7 +397,7 @@ mod tests {
     #[test]
     fn test_neighbors_boundary() {
         let corner = Coord::new(0, 0);
-        
+
         // At corner, some neighbors will be invalid due to underflow
         let neighbors4: Vec<_> = corner.neighbors_4().collect();
         assert!(neighbors4.len() < 4);
@@ -396,7 +412,7 @@ mod tests {
 
         assert_eq!(a + b, Coord::new(4, 6));
         assert_eq!(a - b, Coord::new(2, 2));
-        
+
         let mut c = a;
         c += b;
         assert_eq!(c, Coord::new(4, 6));
@@ -405,10 +421,10 @@ mod tests {
     #[test]
     fn test_hash_map_compatibility() {
         let mut map: HashMap<Coord, String> = HashMap::new();
-        
+
         let coord1 = Coord::new(5, 10);
         let coord2 = Coord::new(5, 10); // Same coordinates
-        
+
         map.insert(coord1, "first".to_string());
         assert_eq!(map.get(&coord2), Some(&"first".to_string()));
     }
@@ -418,13 +434,13 @@ mod tests {
         let coord = Coord::new(3, 7);
         let tuple: (usize, usize) = coord.into();
         assert_eq!(tuple, (3, 7));
-        
+
         let coord2: Coord = (5, 2).into();
         assert_eq!(coord2, Coord::new(5, 2));
-        
+
         let (sx, sy) = coord.to_signed();
         assert_eq!((sx, sy), (3, 7));
-        
+
         let coord3 = Coord::from_signed(sx, sy).unwrap();
         assert_eq!(coord3, coord);
     }

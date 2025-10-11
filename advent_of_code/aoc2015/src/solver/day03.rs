@@ -1,9 +1,7 @@
-
 use anyhow::Result;
 use std::collections::HashSet;
 // use crate::parser::*;
 // use crate::grid::*;
-
 
 // Part 1: How many unique houses receive at least one present?
 // valid chars: ^ v < >
@@ -35,7 +33,7 @@ pub fn solve_part1(input: &str) -> Result<String> {
 }
 //The next year, to speed up the process, Santa creates a robot version of himself, Robo-Santa, to deliver presents with him.
 
-//Santa and Robo-Santa start at the same location (delivering two presents to the same starting house), 
+//Santa and Robo-Santa start at the same location (delivering two presents to the same starting house),
 //then take turns moving based on instructions from the elf, who is eggnoggedly reading from the same script as the previous year.
 
 //This year, how many houses receive at least one present?
@@ -49,13 +47,14 @@ pub fn solve_part2(input: &str) -> Result<String> {
     let mut robot_coordinate = (0, 0);
     let mut visited: HashSet<(i32, i32)> = HashSet::new();
     visited.insert(santa_coordinate);
-    
-    let even_chars = input.trim().chars()
-        .step_by(2);              // Take every 2nd element starting from 0
 
-    let odd_chars = input.trim().chars()
-        .skip(1)                 // Skip first element
-        .step_by(2);              // Then take every 2nd element
+    let even_chars = input.trim().chars().step_by(2); // Take every 2nd element starting from 0
+
+    let odd_chars = input
+        .trim()
+        .chars()
+        .skip(1) // Skip first element
+        .step_by(2); // Then take every 2nd element
 
     for c in even_chars {
         match c {
@@ -141,7 +140,3 @@ mod tests {
         assert_eq!(result, "1");
     }
 }
-
-
-
-

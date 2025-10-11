@@ -1,5 +1,5 @@
 //! # Brackets Extended - Advanced Bracket Validation Library
-//! 
+//!
 //! A comprehensive, configurable bracket validation system supporting custom alphabets,
 //! flexible error reporting, and multiple validation strategies. Designed for real-world
 //! applications including IDEs, linters, and educational tools.
@@ -36,7 +36,7 @@
 //! This library implements three key extended requirements:
 //!
 //! ### REQ-7: Configurable Alphabet
-//! 
+//!
 //! Define custom bracket pairs for specialized use cases:
 //!
 //! ```rust
@@ -46,7 +46,7 @@
 //! let html_alphabet = Alphabet::with_pairs(&[('<', '>')]);
 //! let mut opts = Options::default();
 //! opts.alphabet = html_alphabet;
-//! 
+//!
 //! assert!(validate_with_options("<div><span>content</span></div>", &opts).is_ok());
 //! ```
 //!
@@ -125,5 +125,5 @@
 pub mod brackets;
 
 // Use Mission1's stack instead of our own duplicate
-pub use mission1::Stack;
 pub use brackets::*;
+pub use mission1::Stack;

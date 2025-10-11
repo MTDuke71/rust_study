@@ -5,11 +5,11 @@ use regex::Regex;
 pub fn solve_part1(input: &str) -> Result<String> {
     // Process each line of input
     let nice_count = input
-        .lines()                          // Split input into lines
-        .filter(|line| !line.is_empty())  // Skip empty lines
-        .filter(|line| is_nice(line))     // Check if line is "nice"
-        .count();                         // Count the nice ones
-    
+        .lines() // Split input into lines
+        .filter(|line| !line.is_empty()) // Skip empty lines
+        .filter(|line| is_nice(line)) // Check if line is "nice"
+        .count(); // Count the nice ones
+
     Ok(nice_count.to_string())
 }
 
@@ -19,7 +19,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
         .filter(|line| !line.is_empty())
         .filter(|line| is_nice_part2(line))
         .count();
-    
+
     Ok(nice_count.to_string())
 }
 
@@ -27,11 +27,11 @@ pub fn solve_part2(input: &str) -> Result<String> {
 fn is_nice(s: &str) -> bool {
     let vowels = Regex::new(r"[aeiou]").unwrap();
     let forbidden = Regex::new(r"ab|cd|pq|xy").unwrap();
-    
+
     let vowel_count = vowels.find_iter(s).count();
     let has_double = s.chars().zip(s.chars().skip(1)).any(|(a, b)| a == b);
     let has_forbidden = forbidden.is_match(s);
-    
+
     vowel_count >= 3 && has_double && !has_forbidden
 }
 
@@ -41,17 +41,17 @@ fn is_nice_part2(s: &str) -> bool {
 }
 
 /// Rule 1: Contains a pair of letters that appears at least twice without overlapping
-/// Examples: 
+/// Examples:
 /// - "xyxy" -> true (xy appears twice, no overlap)
-/// - "aabcdefgaa" -> true (aa appears twice, no overlap) 
+/// - "aabcdefgaa" -> true (aa appears twice, no overlap)
 /// - "aaa" -> false (aa overlaps with itself)
 fn has_non_overlapping_pair(s: &str) -> bool {
     let chars: Vec<char> = s.chars().collect();
-    
+
     // Check every possible 2-character pair
     for i in 0..chars.len().saturating_sub(1) {
         let pair = (chars[i], chars[i + 1]);
-        
+
         // Look for the same pair later in the string (with no overlap)
         for j in (i + 2)..chars.len().saturating_sub(1) {
             if chars[j] == pair.0 && chars[j + 1] == pair.1 {
@@ -59,7 +59,7 @@ fn has_non_overlapping_pair(s: &str) -> bool {
             }
         }
     }
-    
+
     false
 }
 
@@ -70,13 +70,13 @@ fn has_non_overlapping_pair(s: &str) -> bool {
 /// - "aaa" -> true (a repeats with a between)
 fn has_letter_with_one_between(s: &str) -> bool {
     let chars: Vec<char> = s.chars().collect();
-    
+
     // Check every character with the character 2 positions ahead
     for i in 0..chars.len().saturating_sub(2) {
         if chars[i] == chars[i + 2] {
             return true;
         }
     }
-    
+
     false
 }

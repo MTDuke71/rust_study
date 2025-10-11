@@ -21,7 +21,8 @@ fn example1_creating_hashmaps() {
     let teams = vec![String::from("Blue"), String::from("Yellow")];
     let initial_scores = vec![10, 50];
 
-    let scores: HashMap<_, _> = teams.iter()
+    let scores: HashMap<_, _> = teams
+        .iter()
         .zip(initial_scores.iter())
         .map(|(team, score)| (team.clone(), *score))
         .collect();
@@ -125,7 +126,7 @@ fn example5_updating_values() {
 
     // Only insert if key doesn't exist
     scores.entry(String::from("Yellow")).or_insert(50);
-    scores.entry(String::from("Blue")).or_insert(50);  // Won't overwrite
+    scores.entry(String::from("Blue")).or_insert(50); // Won't overwrite
 
     println!("After or_insert: {:?}", scores);
 
@@ -147,7 +148,7 @@ fn example6_entry_api() {
     let score = scores.entry(String::from("Yellow")).or_insert(50);
     println!("Yellow score (new): {}", score);
 
-    *score += 10;  // Modify through mutable reference
+    *score += 10; // Modify through mutable reference
     println!("After modification: {:?}", scores);
 
     println!();
@@ -222,7 +223,7 @@ fn example9_caching_expensive_computation() {
 
     fn expensive_computation(n: u32) -> u32 {
         println!("  Computing for {}...", n);
-        n * n  // Simulating expensive operation
+        n * n // Simulating expensive operation
     }
 
     let mut cache: HashMap<u32, u32> = HashMap::new();
@@ -231,7 +232,8 @@ fn example9_caching_expensive_computation() {
 
     println!("Computing with cache:");
     for input in inputs {
-        let result = cache.entry(input)
+        let result = cache
+            .entry(input)
             .or_insert_with(|| expensive_computation(input));
         println!("Result for {}: {}", input, result);
     }
@@ -303,29 +305,40 @@ fn example11_practical_use_case() {
     let mut inventory: HashMap<u32, Item> = HashMap::new();
 
     // Add items
-    inventory.insert(101, Item {
-        name: String::from("Widget"),
-        quantity: 50,
-        price: 9.99,
-    });
+    inventory.insert(
+        101,
+        Item {
+            name: String::from("Widget"),
+            quantity: 50,
+            price: 9.99,
+        },
+    );
 
-    inventory.insert(102, Item {
-        name: String::from("Gadget"),
-        quantity: 30,
-        price: 14.99,
-    });
+    inventory.insert(
+        102,
+        Item {
+            name: String::from("Gadget"),
+            quantity: 30,
+            price: 14.99,
+        },
+    );
 
-    inventory.insert(103, Item {
-        name: String::from("Doohickey"),
-        quantity: 20,
-        price: 7.50,
-    });
+    inventory.insert(
+        103,
+        Item {
+            name: String::from("Doohickey"),
+            quantity: 20,
+            price: 7.50,
+        },
+    );
 
     // Display inventory
     println!("Current Inventory:");
     for (id, item) in &inventory {
-        println!("  ID {}: {} - Qty: {}, Price: ${:.2}",
-                 id, item.name, item.quantity, item.price);
+        println!(
+            "  ID {}: {} - Qty: {}, Price: ${:.2}",
+            id, item.name, item.quantity, item.price
+        );
     }
 
     // Update quantity
@@ -335,7 +348,8 @@ fn example11_practical_use_case() {
     }
 
     // Calculate total value
-    let total_value: f64 = inventory.values()
+    let total_value: f64 = inventory
+        .values()
         .map(|item| item.quantity as f64 * item.price)
         .sum();
 

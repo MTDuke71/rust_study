@@ -1,30 +1,30 @@
 //! Grid data structure for 2D spatial operations
-//! 
+//!
 //! Provides a generic Grid<T> with safe bounds checking, efficient access patterns,
 //! and iterator support optimized for competitive programming.
 
 use crate::coord::Coord;
-use std::ops::{Index, IndexMut};
 use std::fmt;
+use std::ops::{Index, IndexMut};
 
 /// Generic 2D grid with bounds checking and efficient access patterns
-/// 
+///
 /// # Requirements Satisfied: REQ-1
-/// 
+///
 /// The Grid uses row-major storage for cache-friendly access patterns.
 /// All indexing operations include bounds checking for safety.
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```rust
 /// use mission6::{Grid, Coord};
-/// 
+///
 /// let mut grid = Grid::new(3, 3, 0);
 /// grid[(1, 1)] = 42;
-/// 
+///
 /// let coord = Coord::new(1, 1);
 /// assert_eq!(grid[coord], 42);
-/// 
+///
 /// // Iterate over all cells
 /// for (coord, value) in grid.enumerate() {
 ///     println!("Cell at {:?}: {}", coord, value);
@@ -48,12 +48,12 @@ impl<T: std::hash::Hash> std::hash::Hash for Grid<T> {
 
 impl<T: Clone> Grid<T> {
     /// Create a new grid with the given dimensions, filled with the default value
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use mission6::Grid;
-    /// 
+    ///
     /// let grid = Grid::new(5, 3, '.');
     /// assert_eq!(grid.width(), 5);
     /// assert_eq!(grid.height(), 3);
@@ -68,25 +68,25 @@ impl<T: Clone> Grid<T> {
     }
 
     /// Create a grid from a 2D vector
-    /// 
+    ///
     /// # Panics
-    /// 
+    ///
     /// Panics if the input is empty or rows have different lengths
     pub fn from_vec2d(data: Vec<Vec<T>>) -> Self {
         if data.is_empty() || data[0].is_empty() {
             panic!("Cannot create grid from empty data");
         }
-        
+
         let height = data.len();
         let width = data[0].len();
-        
+
         // Verify all rows have the same length
         if !data.iter().all(|row| row.len() == width) {
             panic!("All rows must have the same length");
         }
-        
+
         let flat_data: Vec<T> = data.into_iter().flatten().collect();
-        
+
         Grid {
             data: flat_data,
             width,
@@ -219,7 +219,10 @@ impl<T> Index<(usize, usize)> for Grid<T> {
     fn index(&self, (x, y): (usize, usize)) -> &Self::Output {
         let coord = Coord::new(x, y);
         if !self.in_bounds(coord) {
-            panic!("Grid index ({}, {}) out of bounds ({}x{})", x, y, self.width, self.height);
+            panic!(
+                "Grid index ({}, {}) out of bounds ({}x{})",
+                x, y, self.width, self.height
+            );
         }
         let index = self.coord_to_index(coord);
         &self.data[index]
@@ -230,7 +233,10 @@ impl<T> IndexMut<(usize, usize)> for Grid<T> {
     fn index_mut(&mut self, (x, y): (usize, usize)) -> &mut Self::Output {
         let coord = Coord::new(x, y);
         if !self.in_bounds(coord) {
-            panic!("Grid index ({}, {}) out of bounds ({}x{})", x, y, self.width, self.height);
+            panic!(
+                "Grid index ({}, {}) out of bounds ({}x{})",
+                x, y, self.width, self.height
+            );
         }
         let index = self.coord_to_index(coord);
         &mut self.data[index]
@@ -243,7 +249,10 @@ impl<T> Index<Coord> for Grid<T> {
 
     fn index(&self, coord: Coord) -> &Self::Output {
         if !self.in_bounds(coord) {
-            panic!("Grid coord {:?} out of bounds ({}x{})", coord, self.width, self.height);
+            panic!(
+                "Grid coord {:?} out of bounds ({}x{})",
+                coord, self.width, self.height
+            );
         }
         let index = self.coord_to_index(coord);
         &self.data[index]
@@ -253,7 +262,10 @@ impl<T> Index<Coord> for Grid<T> {
 impl<T> IndexMut<Coord> for Grid<T> {
     fn index_mut(&mut self, coord: Coord) -> &mut Self::Output {
         if !self.in_bounds(coord) {
-            panic!("Grid coord {:?} out of bounds ({}x{})", coord, self.width, self.height);
+            panic!(
+                "Grid coord {:?} out of bounds ({}x{})",
+                coord, self.width, self.height
+            );
         }
         let index = self.coord_to_index(coord);
         &mut self.data[index]
@@ -323,11 +335,11 @@ impl<'a, T> Iterator for EnumerateMutIterator<'a, T> {
             let x = self.current % self.width;
             let y = self.current / self.width;
             let coord = Coord::new(x, y);
-            
+
             // This is safe because we're consuming elements one by one
             let data_ptr = self.data.as_mut_ptr();
             let value = unsafe { &mut *data_ptr.add(self.current) };
-            
+
             self.current += 1;
             Some((coord, value))
         } else {
@@ -435,19 +447,19 @@ mod tests {
         assert_eq!(grid.get(Coord::new(0, 0)), Some(&10));
         assert_eq!(grid.get(Coord::new(1, 0)), Some(&20));
         assert_eq!(grid.get(Coord::new(2, 1)), Some(&30));
-        assert_eq!(grid.get(Coord::new(0, 1)), Some(&0));  // Default value
+        assert_eq!(grid.get(Coord::new(0, 1)), Some(&0)); // Default value
 
         // Test out-of-bounds (should return None)
-        assert_eq!(grid.get(Coord::new(3, 0)), None);  // x out of bounds
-        assert_eq!(grid.get(Coord::new(0, 2)), None);  // y out of bounds
-        assert_eq!(grid.get(Coord::new(3, 2)), None);  // Both out of bounds
-        assert_eq!(grid.get(Coord::new(100, 100)), None);  // Way out of bounds
+        assert_eq!(grid.get(Coord::new(3, 0)), None); // x out of bounds
+        assert_eq!(grid.get(Coord::new(0, 2)), None); // y out of bounds
+        assert_eq!(grid.get(Coord::new(3, 2)), None); // Both out of bounds
+        assert_eq!(grid.get(Coord::new(100, 100)), None); // Way out of bounds
     }
 
     #[test]
     fn test_get_mut() {
         let mut grid = Grid::new(2, 2, 0);
-        
+
         // Test valid get_mut and modify
         if let Some(cell) = grid.get_mut(Coord::new(0, 0)) {
             *cell = 42;
@@ -487,31 +499,31 @@ mod tests {
     fn test_indexing() {
         // This test explicitly exercises line 220 (let index = coord_to_index)
         let mut grid = Grid::new(3, 3, 0);
-        
+
         // Test reading with tuple indexing (exercises line 220)
         grid[(1, 1)] = 42;
         assert_eq!(grid[(1, 1)], 42);
-        
+
         // Test writing and reading various positions to ensure line 220 executes multiple times
         grid[(0, 0)] = 10;
         grid[(2, 2)] = 30;
         grid[(1, 2)] = 25;
-        
-        assert_eq!(grid[(0, 0)], 10);  // Line 220 executed
-        assert_eq!(grid[(2, 2)], 30);  // Line 220 executed
-        assert_eq!(grid[(1, 2)], 25);  // Line 220 executed
-        
+
+        assert_eq!(grid[(0, 0)], 10); // Line 220 executed
+        assert_eq!(grid[(2, 2)], 30); // Line 220 executed
+        assert_eq!(grid[(1, 2)], 25); // Line 220 executed
+
         // Test with Coord indexing
         let coord = Coord::new(2, 0);
         grid[coord] = 99;
         assert_eq!(grid[coord], 99);
-        
+
         // Test all corners to thoroughly exercise indexing
         grid[(0, 0)] = 1;
         grid[(2, 0)] = 2;
         grid[(0, 2)] = 3;
         grid[(2, 2)] = 4;
-        
+
         assert_eq!(grid[(0, 0)], 1);
         assert_eq!(grid[(2, 0)], 2);
         assert_eq!(grid[(0, 2)], 3);
@@ -528,7 +540,7 @@ mod tests {
 
         let coords: Vec<_> = grid.coordinates().collect();
         assert_eq!(coords.len(), 4);
-        
+
         let values: Vec<_> = grid.iter().cloned().collect();
         assert_eq!(values, vec![1, 2, 3, 4]);
 
@@ -540,23 +552,23 @@ mod tests {
     #[test]
     fn test_iter_mut() {
         let mut grid = Grid::new(2, 2, 0);
-        
+
         // Modify all values using iter_mut
         for value in grid.iter_mut() {
             *value = 42;
         }
-        
+
         // Verify all values were changed
         assert_eq!(grid[(0, 0)], 42);
         assert_eq!(grid[(1, 0)], 42);
         assert_eq!(grid[(0, 1)], 42);
         assert_eq!(grid[(1, 1)], 42);
-        
+
         // Test with enumeration
         for (i, value) in grid.iter_mut().enumerate() {
             *value = i as i32;
         }
-        
+
         assert_eq!(grid[(0, 0)], 0);
         assert_eq!(grid[(1, 0)], 1);
         assert_eq!(grid[(0, 1)], 2);
@@ -566,17 +578,17 @@ mod tests {
     #[test]
     fn test_enumerate_mut() {
         let mut grid = Grid::new(2, 2, 0);
-        
+
         // Modify values based on coordinates
         for (coord, value) in grid.enumerate_mut() {
             *value = (coord.x + coord.y * 10) as i32;
         }
-        
-        assert_eq!(grid[(0, 0)], 0);   // 0 + 0*10 = 0
-        assert_eq!(grid[(1, 0)], 1);   // 1 + 0*10 = 1
-        assert_eq!(grid[(0, 1)], 10);  // 0 + 1*10 = 10
-        assert_eq!(grid[(1, 1)], 11);  // 1 + 1*10 = 11
-        
+
+        assert_eq!(grid[(0, 0)], 0); // 0 + 0*10 = 0
+        assert_eq!(grid[(1, 0)], 1); // 1 + 0*10 = 1
+        assert_eq!(grid[(0, 1)], 10); // 0 + 1*10 = 10
+        assert_eq!(grid[(1, 1)], 11); // 1 + 1*10 = 11
+
         // Test that we can iterate twice
         let mut sum = 0;
         for (_, value) in grid.enumerate_mut() {
@@ -588,52 +600,53 @@ mod tests {
     #[test]
     fn test_row_column_iteration() {
         let mut grid = Grid::new(3, 2, 0);
-        grid[(0, 0)] = 1; grid[(1, 0)] = 2; grid[(2, 0)] = 3;
-        grid[(0, 1)] = 4; grid[(1, 1)] = 5; grid[(2, 1)] = 6;
+        grid[(0, 0)] = 1;
+        grid[(1, 0)] = 2;
+        grid[(2, 0)] = 3;
+        grid[(0, 1)] = 4;
+        grid[(1, 1)] = 5;
+        grid[(2, 1)] = 6;
 
         // Test valid rows
         let row0: Vec<_> = grid.row(0).unwrap().cloned().collect();
         assert_eq!(row0, vec![1, 2, 3]);
-        
+
         let row1: Vec<_> = grid.row(1).unwrap().cloned().collect();
         assert_eq!(row1, vec![4, 5, 6]);
 
         // Test valid columns
         let col0: Vec<_> = grid.column(0).unwrap().cloned().collect();
         assert_eq!(col0, vec![1, 4]);
-        
+
         let col1: Vec<_> = grid.column(1).unwrap().cloned().collect();
         assert_eq!(col1, vec![2, 5]);
-        
+
         let col2: Vec<_> = grid.column(2).unwrap().cloned().collect();
         assert_eq!(col2, vec![3, 6]);
-        
+
         // Test out-of-bounds (these should return None)
-        assert!(grid.row(2).is_none());    // Only 2 rows (0, 1)
+        assert!(grid.row(2).is_none()); // Only 2 rows (0, 1)
         assert!(grid.row(100).is_none());
-        
-        assert!(grid.column(3).is_none());  // Only 3 columns (0, 1, 2)
+
+        assert!(grid.column(3).is_none()); // Only 3 columns (0, 1, 2)
         assert!(grid.column(100).is_none());
     }
 
     #[test]
     fn test_from_vec2d() {
         // This test explicitly exercises lines 80-81 (let height/width statements)
-        let data = vec![
-            vec![1, 2, 3],
-            vec![4, 5, 6],
-        ];
-        
+        let data = vec![vec![1, 2, 3], vec![4, 5, 6]];
+
         let grid = Grid::from_vec2d(data);
-        
+
         // Verify the let statements on lines 80-81 worked correctly
-        assert_eq!(grid.width(), 3);   // width = data[0].len() from line 81
-        assert_eq!(grid.height(), 2);  // height = data.len() from line 80
-        
+        assert_eq!(grid.width(), 3); // width = data[0].len() from line 81
+        assert_eq!(grid.height(), 2); // height = data.len() from line 80
+
         // Verify data was flattened correctly
         assert_eq!(grid[(0, 0)], 1);
         assert_eq!(grid[(2, 1)], 6);
-        
+
         // Test multiple sizes to ensure let statements work for various dimensions
         let large_data = vec![
             vec![10, 20, 30, 40],
@@ -641,8 +654,8 @@ mod tests {
             vec![90, 100, 110, 120],
         ];
         let large_grid = Grid::from_vec2d(large_data);
-        assert_eq!(large_grid.width(), 4);   // Tests line 81 again
-        assert_eq!(large_grid.height(), 3);  // Tests line 80 again
+        assert_eq!(large_grid.width(), 4); // Tests line 81 again
+        assert_eq!(large_grid.height(), 3); // Tests line 80 again
     }
 
     #[test]
@@ -650,23 +663,23 @@ mod tests {
         // Explicitly test lines 80-81 with various sizes
         // Line 80: let height = data.len();
         // Line 81: let width = data[0].len();
-        
+
         // 1x1 grid
         let tiny = Grid::from_vec2d(vec![vec![42]]);
-        assert_eq!(tiny.height(), 1);  // Line 80
-        assert_eq!(tiny.width(), 1);   // Line 81
+        assert_eq!(tiny.height(), 1); // Line 80
+        assert_eq!(tiny.width(), 1); // Line 81
         assert_eq!(tiny[(0, 0)], 42);
-        
+
         // Wide grid (1x5)
         let wide = Grid::from_vec2d(vec![vec![1, 2, 3, 4, 5]]);
-        assert_eq!(wide.height(), 1);  // Line 80: data.len() = 1
-        assert_eq!(wide.width(), 5);   // Line 81: data[0].len() = 5
-        
+        assert_eq!(wide.height(), 1); // Line 80: data.len() = 1
+        assert_eq!(wide.width(), 5); // Line 81: data[0].len() = 5
+
         // Tall grid (5x1)
         let tall = Grid::from_vec2d(vec![vec![1], vec![2], vec![3], vec![4], vec![5]]);
-        assert_eq!(tall.height(), 5);  // Line 80: data.len() = 5
-        assert_eq!(tall.width(), 1);   // Line 81: data[0].len() = 1
-        
+        assert_eq!(tall.height(), 5); // Line 80: data.len() = 5
+        assert_eq!(tall.width(), 1); // Line 81: data[0].len() = 1
+
         // Square grid (4x4)
         let square = Grid::from_vec2d(vec![
             vec![1, 2, 3, 4],
@@ -674,8 +687,8 @@ mod tests {
             vec![9, 10, 11, 12],
             vec![13, 14, 15, 16],
         ]);
-        assert_eq!(square.height(), 4);  // Line 80: data.len() = 4
-        assert_eq!(square.width(), 4);   // Line 81: data[0].len() = 4
+        assert_eq!(square.height(), 4); // Line 80: data.len() = 4
+        assert_eq!(square.width(), 4); // Line 81: data[0].len() = 4
     }
 
     #[test]
@@ -700,7 +713,7 @@ mod tests {
         // Test panic on line 85 - unequal row lengths
         let bad_data = vec![
             vec![1, 2, 3],
-            vec![4, 5],      // Different length!
+            vec![4, 5], // Different length!
             vec![6, 7, 8],
         ];
         let _grid = Grid::from_vec2d(bad_data);
@@ -711,7 +724,7 @@ mod tests {
     fn test_index_tuple_panics_on_out_of_bounds() {
         // Test panic on line 222 - Index<(usize, usize)> out of bounds
         let grid = Grid::new(3, 3, 0);
-        let _value = grid[(5, 0)];  // x out of bounds
+        let _value = grid[(5, 0)]; // x out of bounds
     }
 
     #[test]
@@ -719,7 +732,7 @@ mod tests {
     fn test_index_mut_tuple_panics_on_out_of_bounds() {
         // Test panic on line 233 - IndexMut<(usize, usize)> out of bounds
         let mut grid = Grid::new(3, 3, 0);
-        grid[(0, 5)] = 42;  // y out of bounds
+        grid[(0, 5)] = 42; // y out of bounds
     }
 
     #[test]

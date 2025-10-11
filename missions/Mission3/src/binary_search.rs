@@ -1,16 +1,15 @@
 /// Binary search implementation for slices and trait-based containers
-/// 
+///
 /// # Requirements Satisfied
 /// - REQ-1: Slice-based binary search with O(log n) complexity
 /// - REQ-4: Custom ordering support via key extraction
 /// - REQ-5: Lifetime-safe borrowing patterns
-
 use std::cmp::Ordering;
 
 /// Performs binary search on a sorted slice.
 ///
 /// # Requirements Satisfied: REQ-1, REQ-5
-/// 
+///
 /// Returns `Ok(index)` if the element is found, `Err(insertion_index)` otherwise.
 /// The insertion index indicates where the element should be inserted to maintain ordering.
 ///
@@ -20,7 +19,7 @@ use std::cmp::Ordering;
 /// # Examples
 /// ```
 /// use mission3::binary_search::search_slice;
-/// 
+///
 /// let data = [1, 3, 5, 7, 9];
 /// assert_eq!(search_slice(&data, &5), Ok(2));
 /// assert_eq!(search_slice(&data, &6), Err(3));
@@ -28,10 +27,10 @@ use std::cmp::Ordering;
 pub fn search_slice<T: Ord>(slice: &[T], target: &T) -> Result<usize, usize> {
     let mut left = 0;
     let mut right = slice.len();
-    
+
     while left < right {
         let mid = left + (right - left) / 2;
-        
+
         // SAFETY: mid is always within bounds due to our loop invariants
         match slice[mid].cmp(target) {
             Ordering::Equal => return Ok(mid),
@@ -39,7 +38,7 @@ pub fn search_slice<T: Ord>(slice: &[T], target: &T) -> Result<usize, usize> {
             Ordering::Greater => right = mid,
         }
     }
-    
+
     Err(left)
 }
 
@@ -52,7 +51,7 @@ pub fn search_slice<T: Ord>(slice: &[T], target: &T) -> Result<usize, usize> {
 /// # Examples
 /// ```
 /// use mission3::binary_search::search_by_key;
-/// 
+///
 /// let people = [(1, "Alice"), (2, "Bob"), (3, "Charlie")];
 /// assert_eq!(search_by_key(&people, &2, |person| person.0), Ok(1));
 /// ```
@@ -63,17 +62,17 @@ where
 {
     let mut left = 0;
     let mut right = slice.len();
-    
+
     while left < right {
         let mid = left + (right - left) / 2;
-        
+
         match key_fn(&slice[mid]).cmp(target) {
             Ordering::Equal => return Ok(mid),
             Ordering::Less => left = mid + 1,
             Ordering::Greater => right = mid,
         }
     }
-    
+
     Err(left)
 }
 
@@ -87,7 +86,7 @@ where
 /// ```
 /// use mission3::binary_search::search_by;
 /// use std::cmp::Ordering;
-/// 
+///
 /// let data = [5, 4, 3, 2, 1]; // reverse sorted
 /// let result = search_by(&data, &3, |a, b| b.cmp(a)); // reverse comparison
 /// assert_eq!(result, Ok(2));
@@ -98,17 +97,17 @@ where
 {
     let mut left = 0;
     let mut right = slice.len();
-    
+
     while left < right {
         let mid = left + (right - left) / 2;
-        
+
         match compare(&slice[mid], target) {
             Ordering::Equal => return Ok(mid),
             Ordering::Less => left = mid + 1,
             Ordering::Greater => right = mid,
         }
     }
-    
+
     Err(left)
 }
 
@@ -120,17 +119,17 @@ where
 pub fn search_left_bound<T: Ord>(slice: &[T], target: &T) -> usize {
     let mut left = 0;
     let mut right = slice.len();
-    
+
     while left < right {
         let mid = left + (right - left) / 2;
-        
+
         if slice[mid] < *target {
             left = mid + 1;
         } else {
             right = mid;
         }
     }
-    
+
     left
 }
 
@@ -142,17 +141,17 @@ pub fn search_left_bound<T: Ord>(slice: &[T], target: &T) -> usize {
 pub fn search_right_bound<T: Ord>(slice: &[T], target: &T) -> usize {
     let mut left = 0;
     let mut right = slice.len();
-    
+
     while left < right {
         let mid = left + (right - left) / 2;
-        
+
         if slice[mid] <= *target {
             left = mid + 1;
         } else {
             right = mid;
         }
     }
-    
+
     left
 }
 
@@ -177,12 +176,12 @@ mod tests {
     #[test]
     fn search_basic_cases() {
         let data = [1, 3, 5, 7, 9, 11, 13];
-        
+
         // Found cases
         assert_eq!(search_slice(&data, &1), Ok(0));
         assert_eq!(search_slice(&data, &7), Ok(3));
         assert_eq!(search_slice(&data, &13), Ok(6));
-        
+
         // Not found cases
         assert_eq!(search_slice(&data, &0), Err(0));
         assert_eq!(search_slice(&data, &4), Err(2));
