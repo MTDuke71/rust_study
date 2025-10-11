@@ -559,6 +559,20 @@ fn main() {
             i + 1, info.size, info.perimeter);
     }
     
+    // Visualize each island separately
+    println!("\nVisualized islands (marked as 'O'):");
+    for (i, island) in islands.iter().enumerate() {
+        let mut highlighted = ocean.clone();
+        // Mark this island with 'O'
+        for &pos in island {
+            let row = pos.row as usize;
+            let col = pos.col as usize;
+            highlighted[(row, col)] = 'O';
+        }
+        println!("\n  Island {}:", i + 1);
+        println!("{}", highlighted);
+    }
+    
     // 6. Practical Application: Room Detection
     println!("\n🔷 6. Room Detection in Dungeon");
     println!("===============================");
@@ -630,6 +644,14 @@ impl Grid<char> {
 impl<T: Clone> Grid<T> {
     pub fn width(&self) -> usize { self.width }
     pub fn height(&self) -> usize { self.height }
+    
+    pub fn clone(&self) -> Self {
+        Self {
+            data: self.data.clone(),
+            width: self.width,
+            height: self.height,
+        }
+    }
     
     #[allow(dead_code)]
     fn get_index(&self, row: usize, col: usize) -> usize {
