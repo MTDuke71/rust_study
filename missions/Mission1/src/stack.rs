@@ -18,7 +18,7 @@
 /// - Borrowing rules prevent data races and memory corruption
 #[derive(Debug, Default)]
 pub struct Stack<T> {
-    /// Internal storage using Vec<T> for dynamic sizing and efficient operations
+    /// Internal storage using `Vec<T>` for dynamic sizing and efficient operations
     /// Vec provides the amortized O(1) push and O(1) pop we need
     items: Vec<T>,
 }

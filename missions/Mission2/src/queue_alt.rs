@@ -102,7 +102,7 @@ use std::ptr::NonNull;
 /// - High-frequency trading systems needing minimal latency
 #[derive(Debug)]
 pub struct RingBufferQueue<T> {
-    /// Fixed-size buffer storing elements as Option<T> for safe removal
+    /// Fixed-size buffer storing elements as `Option<T>` for safe removal
     buf: Vec<Option<T>>,
     /// Index of the next element to dequeue (front of queue)
     head: usize,

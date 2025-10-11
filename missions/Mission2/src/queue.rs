@@ -58,10 +58,10 @@ use std::ptr::NonNull;
 /// # Requirements Satisfied
 /// - **REQ-R1**: Fixed capacity with backpressure via Err(value)
 /// - **REQ-R2**: Efficient wrap-around using modular arithmetic
-/// - **REQ-R3**: Contiguous Vec<Option<T>> with no reallocation
+/// - **REQ-R3**: Contiguous `Vec<Option<T>>` with no reallocation
 #[derive(Debug)]
 pub struct RingBufferQueue<T> {
-    /// Internal storage using Option<T> to allow moving values out safely
+    /// Internal storage using `Option<T>` to allow moving values out safely
     buf: Vec<Option<T>>,
     /// Index of next element to dequeue (front of queue)
     head: usize,

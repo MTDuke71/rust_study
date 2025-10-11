@@ -6,7 +6,7 @@
 //!
 //! ## Requirements Fulfilled
 //!
-//! - **REQ-1**: Generic Grid<T> with safe bounds checking and flexible indexing
+//! - **REQ-1**: Generic `Grid<T>` with safe bounds checking and flexible indexing
 //! - **REQ-2**: Coordinate system with direction navigation and distance calculations
 //! - **REQ-3**: Pathfinding algorithms (A*, BFS) optimized for 2D spaces
 //! - **REQ-4**: AoC-specific utilities (flood fill, connected components, parsing)
@@ -49,7 +49,7 @@
 //! - REQ-6: Integration with Mission 5 HashMap/HashSet patterns
 //!
 //! ### Design Phase
-//! - Generic Grid<T> struct with row-major storage
+//! - Generic `Grid<T>` struct with row-major storage
 //! - Coord struct with arithmetic operations and direction methods
 //! - Direction enum with rotation and vector operations
 //! - PathFinder trait-based system for algorithm composition
@@ -70,7 +70,7 @@
 //!
 //! ### Validation Phase
 //! - Integration with real AoC problems (2015 Day 3, Day 6, etc.)
-//! - Performance comparison with Vec<Vec<T>> naive implementations
+//! - Performance comparison with `Vec<Vec<T>>` naive implementations
 //! - Memory usage analysis and optimization verification
 //! - Cross-validation with Mission 5 caching patterns
 //!

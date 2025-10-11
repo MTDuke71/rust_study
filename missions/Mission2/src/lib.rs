@@ -5,14 +5,14 @@
 //!
 //! ## Implementations
 //!
-//! ### 🔄 **RingBufferQueue<T>**
+//! ### 🔄 **`RingBufferQueue<T>`**
 //! - **Fixed capacity** with contiguous memory layout
 //! - **Cache-friendly** with no pointer chasing
 //! - **O(1) operations** with predictable performance
 //! - **Perfect for bounded problems** (e.g., BFS on grids)
 //! - **Overwriting mode** for circular buffers (enqueue_overwrite)
 //!
-//! ### 🔗 **LinkedQueue<T>**
+//! ### 🔗 **`LinkedQueue<T>`**
 //! - **Dynamic size** growing as needed
 //! - **No capacity limits** beyond available memory
 //! - **O(1) operations** with ownership transfer

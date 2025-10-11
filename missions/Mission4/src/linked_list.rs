@@ -38,7 +38,7 @@ struct Node<T> {
     next: Option<Box<Node<T>>>,
 }
 
-/// Linked list using Rc<RefCell<T>> for shared ownership and interior mutability
+/// Linked list using `Rc<RefCell<T>>` for shared ownership and interior mutability
 ///
 /// This implementation demonstrates advanced Rust patterns for scenarios requiring
 /// shared ownership of nodes. Uses reference counting and interior mutability.

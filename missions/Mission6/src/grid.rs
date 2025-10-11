@@ -1,6 +1,6 @@
 //! Grid data structure for 2D spatial operations
 //!
-//! Provides a generic Grid<T> with safe bounds checking, efficient access patterns,
+//! Provides a generic `Grid<T>` with safe bounds checking, efficient access patterns,
 //! and iterator support optimized for competitive programming.
 
 use crate::coord::Coord;
