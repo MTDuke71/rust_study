@@ -210,10 +210,7 @@ where
     /// assert!(fruits.contains(&"apple".to_string()));
     /// ```
     pub fn add_to_list(&mut self, key: K, value: &str) {
-        self.inner
-            .entry(key)
-            .or_default()
-            .push(value.to_string());
+        self.inner.entry(key).or_default().push(value.to_string());
     }
 
     /// Get the list of values for a key

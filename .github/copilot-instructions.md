@@ -446,6 +446,86 @@ Day 5: Documentation → step5_final_project.rs (complete mission review)
 
 **⚠️ CRITICAL**: Every new zettelkasten file MUST include appropriate tags. This enables powerful filtering, discovery, and cross-referencing within the knowledge management system.
 
+### 🔗 **Zettelkasten Link Naming Convention**
+
+**MANDATORY** for all internal links in `zettelkasten/` directory to prevent naming collisions:
+
+#### **Link Format Standards**
+
+**Daily Study Notes:**
+- **Format**: `[[daily-study/DayXX]]` or `[[ds-dayXX]]`
+- **Examples**: 
+  - `[[daily-study/Day24]]` (full format)
+  - `[[ds-day24]]` (short format)
+- **Rationale**: Distinguishes from AoC days, matches directory structure
+
+**Advent of Code Problems:**
+- **Format**: `[[aoc-YYYY-dayDD]]` or `[[aocYY-DD]]`
+- **Examples**: 
+  - `[[aoc-2023-day12]]` (full format - unambiguous)
+  - `[[aoc23-12]]` (short format - compact)
+  - `[[aoc-2015-day01]]` (full format with zero-padded day)
+  - `[[aoc15-01]]` (short format)
+- **Rationale**: Year makes it unique and searchable, prevents confusion with daily study
+
+**Mission References:**
+- **Format**: `[[mission-X]]` or `[[mX]]`
+- **Examples**: 
+  - `[[mission-6]]` or `[[m6]]`
+  - `[[mission-5-tutorial]]` or `[[m5-tut]]`
+- **Rationale**: Clear mission identifier, supports tutorial sub-references
+
+**Rust Book Chapters:**
+- **Format**: `[[rust-book-chX]]` or `[[rb-chX]]`
+- **Examples**: 
+  - `[[rust-book-ch8]]` or `[[rb-ch8]]`
+  - `[[rust-book-ch4-ownership]]` or `[[rb-ch4-ownership]]`
+- **Rationale**: Disambiguates from chapters in other contexts
+
+**Concept/Implementation Notes:**
+- **Format**: `[[lowercase-with-dashes]]`
+- **Examples**: 
+  - `[[find-all-components]]`
+  - `[[hashmap-internals]]`
+  - `[[flood-fill]]`
+  - `[[4-connectivity]]`
+- **Rationale**: Standard wiki-style naming, easy to type and read
+
+#### **Naming Collision Prevention**
+
+| Ambiguous (❌ Avoid) | Clear (✅ Use) | Context |
+|----------------------|---------------|---------|
+| `[[Day24]]` | `[[daily-study/Day24]]` or `[[ds-day24]]` | Daily study |
+| `[[Day12]]` | `[[aoc-2023-day12]]` or `[[aoc23-12]]` | AoC problem |
+| `[[Mission6]]` | `[[mission-6]]` or `[[m6]]` | Mission reference |
+| `[[Ch8]]` | `[[rust-book-ch8]]` or `[[rb-ch8]]` | Rust Book |
+
+#### **Link Usage Examples**
+
+```markdown
+# Example Zettelkasten Note
+
+See [[daily-study/Day24]] for visual demonstrations.
+Compare with [[aoc-2023-day12]] for practical application.
+Implemented in [[mission-6]] using patterns from [[rust-book-ch8]].
+
+Related concepts: [[flood-fill]], [[4-connectivity]], [[dfs-patterns]]
+
+*Links: [[zettel-index]] | [[daily-study/Day24]] | [[mission-6]] | [[flood-fill]]*
+```
+
+#### **Quick Reference Table**
+
+| Content Type | Full Format | Short Format |
+|--------------|-------------|--------------|
+| Daily Study Day 24 | `[[daily-study/Day24]]` | `[[ds-day24]]` |
+| AoC 2023 Day 12 | `[[aoc-2023-day12]]` | `[[aoc23-12]]` |
+| Mission 6 | `[[mission-6]]` | `[[m6]]` |
+| Rust Book Ch 8 | `[[rust-book-ch8]]` | `[[rb-ch8]]` |
+| Concepts | `[[concept-name]]` | - |
+
+**⚠️ CRITICAL**: Always use the full or short format specified above. Never use ambiguous forms like `[[Day24]]` or `[[Mission6]]` which could refer to multiple content types.
+
 ### Quality Assurance
 - **Zero warnings tolerance** - `cargo clippy -- -D warnings` must pass
 - **Professional standards** - Every feature follows engineering discipline
