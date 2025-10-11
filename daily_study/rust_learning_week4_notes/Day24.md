@@ -573,6 +573,35 @@ fn main() {
         println!("{}", highlighted);
     }
     
+    // Visualize perimeter cells
+    println!("\nPerimeter visualization (P = perimeter cells, . = interior):");
+    for (i, island) in islands.iter().enumerate() {
+        let mut perimeter_vis = ocean.clone();
+        let island_set: HashSet<_> = island.iter().copied().collect();
+        
+        // Mark perimeter cells (cells with at least one neighbor that's not in the island)
+        for &pos in island {
+            let mut has_exposed_edge = false;
+            for neighbor in ocean.neighbors_4(pos) {
+                if !island_set.contains(&neighbor) {
+                    has_exposed_edge = true;
+                    break;
+                }
+            }
+            
+            let row = pos.row as usize;
+            let col = pos.col as usize;
+            if has_exposed_edge {
+                perimeter_vis[(row, col)] = 'P';  // Perimeter cell
+            } else {
+                perimeter_vis[(row, col)] = '.';  // Interior cell
+            }
+        }
+        
+        println!("\n  Island {} perimeter cells:", i + 1);
+        println!("{}", perimeter_vis);
+    }
+    
     // 6. Practical Application: Room Detection
     println!("\n🔷 6. Room Detection in Dungeon");
     println!("===============================");
