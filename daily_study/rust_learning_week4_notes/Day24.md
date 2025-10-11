@@ -573,33 +573,66 @@ fn main() {
         println!("{}", highlighted);
     }
     
-    // Visualize perimeter cells
-    println!("\nPerimeter visualization (P = perimeter cells, . = interior):");
+    // Visualize perimeter cells with edge counts
+    println!("\nPerimeter edge contribution per cell:");
+    println!("(Shows how many edges each cell contributes to total perimeter)");
     for (i, island) in islands.iter().enumerate() {
         let mut perimeter_vis = ocean.clone();
         let island_set: HashSet<_> = island.iter().copied().collect();
         
-        // Mark perimeter cells (cells with at least one neighbor that's not in the island)
+        // Calculate edge contribution for each cell
         for &pos in island {
-            let mut has_exposed_edge = false;
+            let mut exposed_edges = 0;
             for neighbor in ocean.neighbors_4(pos) {
                 if !island_set.contains(&neighbor) {
-                    has_exposed_edge = true;
-                    break;
+                    exposed_edges += 1;
                 }
             }
             
             let row = pos.row as usize;
             let col = pos.col as usize;
-            if has_exposed_edge {
-                perimeter_vis[(row, col)] = 'P';  // Perimeter cell
-            } else {
-                perimeter_vis[(row, col)] = '.';  // Interior cell
+            
+            // Display edge count: 0=interior, 1-4=perimeter with count
+            perimeter_vis[(row, col)] = match exposed_edges {
+                0 => '.',  // Interior cell (no exposed edges)
+                1 => '1',  // 1 edge exposed
+                2 => '2',  // 2 edges exposed
+                3 => '3',  // 3 edges exposed
+                4 => '4',  // 4 edges exposed (isolated cell)
+                _ => '?',  // Should never happen
+            };
+        }
+        
+        println!("\n  Island {} - Edge contributions per cell:", i + 1);
+        println!("{}", perimeter_vis);
+        
+        // Calculate and show statistics
+        let mut edge_counts = vec![0; 5]; // Index = number of exposed edges
+        for &pos in island {
+            let mut exposed_edges = 0;
+            for neighbor in ocean.neighbors_4(pos) {
+                if !island_set.contains(&neighbor) {
+                    exposed_edges += 1;
+                }
+            }
+            edge_counts[exposed_edges] += 1;
+        }
+        
+        println!("\n  Edge contribution breakdown:");
+        if edge_counts[0] > 0 {
+            println!("    . (0 edges): {} interior cells", edge_counts[0]);
+        }
+        for edges in 1..=4 {
+            if edge_counts[edges] > 0 {
+                println!("    {} ({} edges): {} cells contributing {} total edges",
+                    edges, edges, edge_counts[edges], edge_counts[edges] * edges);
             }
         }
         
-        println!("\n  Island {} perimeter cells:", i + 1);
-        println!("{}", perimeter_vis);
+        let total_perimeter: usize = (1..=4)
+            .map(|edges| edge_counts[edges] * edges)
+            .sum();
+        println!("  Total perimeter: {} edges", total_perimeter);
     }
     
     // 6. Practical Application: Room Detection
