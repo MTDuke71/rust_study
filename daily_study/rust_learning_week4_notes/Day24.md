@@ -494,7 +494,7 @@ fn main() {
     println!("Original grid:");
     println!("{}", grid3);
     
-    let filled_with_distance = flood_fill_bfs(&mut grid3, Coord::new(3, 3), &'.', 'X');
+    let filled_with_distance = flood_fill_bfs(&mut grid3, Coord::new(3, 2), &'.', 'X');
     
     println!("\nFill progression (coord, distance):");
     for (pos, dist) in filled_with_distance.iter().take(10) {
@@ -631,6 +631,7 @@ impl<T: Clone> Grid<T> {
     pub fn width(&self) -> usize { self.width }
     pub fn height(&self) -> usize { self.height }
     
+    #[allow(dead_code)]
     fn get_index(&self, row: usize, col: usize) -> usize {
         row * self.width + col
     }
@@ -770,15 +771,23 @@ fn flood_fill_bfs<T: PartialEq + Clone>(
     visited.insert(start);
     
     while let Some((pos, distance)) = queue.pop_front() {
-        if !grid.contains(pos) || grid.get_coord(pos) != Some(target) {
+        // Skip if out of bounds
+        if !grid.contains(pos) {
             continue;
         }
         
+        // Skip if doesn't match target (already replaced or wrong value)
+        if grid.get_coord(pos) != Some(target) {
+            continue;
+        }
+        
+        // Replace the cell
         let row = pos.row as usize;
         let col = pos.col as usize;
         grid[(row, col)] = replacement.clone();
         filled.push((pos, distance));
         
+        // Add unvisited neighbors to queue
         for neighbor in grid.neighbors_4(pos) {
             if !visited.contains(&neighbor) {
                 visited.insert(neighbor);
