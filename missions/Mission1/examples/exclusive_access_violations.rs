@@ -70,11 +70,11 @@ fn demonstrate_the_danger_rust_prevents() {
     println!("// DANGEROUS PSEUDOCODE (not actual Rust!)");
     println!("let mut_ref1 = stack.peek_mut().unwrap();  // Get mutable reference");
     println!("let mut_ref2 = stack.peek_mut().unwrap();  // Get ANOTHER mutable reference");
-    println!("");
+    println!();
     println!("// Now both references point to the same memory!");
     println!("*mut_ref1 = String::from(\"Thread 1 data\");");
     println!("*mut_ref2 = String::from(\"Thread 2 data\");");
-    println!("");
+    println!();
     println!("// Which value wins? Undefined behavior!");
     println!("// Could crash, corrupt data, or work 'by accident'");
     println!();
