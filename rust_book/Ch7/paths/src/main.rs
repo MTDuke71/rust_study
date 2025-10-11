@@ -14,7 +14,9 @@ mod front_of_house {
 
 mod back_of_house {
     pub struct Breakfast {
+        #[allow(dead_code)] // Public API demonstration field
         pub toast: String,
+        #[allow(dead_code)] // Used internally for educational example
         seasonal_fruit: String,
     }
 

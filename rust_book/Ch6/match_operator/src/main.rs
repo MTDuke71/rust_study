@@ -57,6 +57,7 @@ fn example2_pattern_binding() {
     }
 
     #[derive(Debug)]
+    #[allow(dead_code)] // Educational example - not all variants used
     enum Coin {
         Penny,
         Nickel,
