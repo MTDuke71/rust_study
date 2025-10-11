@@ -34,6 +34,12 @@ pub struct Calculator {
     value: i32,
 }
 
+impl Default for Calculator {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Calculator {
     /// Create a new calculator instance
     pub fn new() -> Self {

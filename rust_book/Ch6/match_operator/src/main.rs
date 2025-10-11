@@ -48,6 +48,7 @@ fn example2_pattern_binding() {
     println!("===========================================");
 
     #[derive(Debug)]
+    #[allow(dead_code)] // Example enum for demonstration
     enum UsState {
         Alabama,
         Alaska,

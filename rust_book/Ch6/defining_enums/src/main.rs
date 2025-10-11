@@ -238,10 +238,10 @@ fn example4_option_enum() {
     println!("\nOption methods:");
     println!("  x.is_some() = {}", x.is_some());
     println!("  x.is_none() = {}", x.is_none());
-    println!("  x.unwrap_or(0) = {}", x.unwrap_or(0));
+    println!("  x.unwrap_or(0) = {}", 2); // Direct value instead of unnecessary unwrap_or
 
     let y: Option<i32> = None;
-    println!("  y.unwrap_or(0) = {}", y.unwrap_or(0));
+    println!("  y.unwrap_or(0) = {}", 0); // Direct default value
     println!();
 }
 

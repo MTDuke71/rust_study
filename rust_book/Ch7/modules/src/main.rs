@@ -15,6 +15,7 @@ mod front_of_house {
 mod back_of_house {
     pub struct Breakfast {
         pub toast: String,
+        #[allow(dead_code)] // Used internally in summer() method
         seasonal_fruit: String,
     }
 

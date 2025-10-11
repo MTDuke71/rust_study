@@ -291,7 +291,7 @@ fn main() {
     // `first_word` works on slices of string literals, whether partial or
     // whole.
     let _word = first_word_best(&my_string_literal[0..6]);
-    let _word = first_word_best(&my_string_literal[..]);
+    let _word = first_word_best(my_string_literal);
 
     // Because string literals *are* string slices already,
     // this works too, without the slice syntax!
@@ -341,7 +341,7 @@ fn first_word_best(s: &str) -> &str {
         }
     }
 
-    &s[..]
+    s
 }
 
 //Returning a slice would also work for a second_word function:
