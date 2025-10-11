@@ -172,8 +172,11 @@ function Test-Clippy {
         $issueCount = ($issueLines | Measure-Object).Count
         $QualityReport.ClippyIssues = $issueCount
         
-        # Capture detailed issue information
-        $QualityReport.ClippyDetails = $clippyOutput | Where-Object { $_ -match "warning:|error:|note:|help:" }
+        # Capture detailed issue information including file paths and line numbers
+        # Include lines with: error/warning messages, file locations (-->), code context (|), and help/note
+        $QualityReport.ClippyDetails = $clippyOutput | Where-Object { 
+            $_ -match "warning:|error:|note:|help:|^\s*-->|^\s*\d+\s*\|"
+        }
         
         Write-Host $clippyOutput -ForegroundColor Yellow
         throw "Clippy found $issueCount issues"
