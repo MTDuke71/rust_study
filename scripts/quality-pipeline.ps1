@@ -30,11 +30,16 @@ function Write-QAError { param([string]$Message) Write-Host "❌ $Message" -Fore
 $QualityReport = @{
     StartTime = Get-Date
     CompilationStatus = $null
+    CompilationErrors = @()
     ClippyIssues = 0
+    ClippyDetails = @()
     TestResults = @{ Passed = 0; Failed = 0; Total = 0 }
+    FailedTests = @()
     Coverage = $null
     DocumentationWarnings = 0
+    DocumentationDetails = @()
     Formatting = $null
+    FormattingDetails = @()
 }
 
 function Start-QualityPipeline {
@@ -112,6 +117,11 @@ function Test-Compilation {
         Write-QASuccess "Compilation successful - no errors"
     } else {
         $QualityReport.CompilationStatus = "❌ Failed"
+        
+        # Capture error details
+        $errorLines = $result | Where-Object { $_ -match "error\[|error:" }
+        $QualityReport.CompilationErrors = $errorLines
+        
         Write-Host $result -ForegroundColor Red
         throw "Compilation failed with exit code $exitCode"
     }
@@ -126,6 +136,11 @@ function Format-Code {
     
     if ($needsFormatting) {
         Write-QAInfo "Code formatting required - applying changes..."
+        
+        # Capture files that need formatting
+        $formattingNeeded = & cargo fmt --all -- --check 2>&1 | Select-String "Diff in" | ForEach-Object { $_.Line }
+        $QualityReport.FormattingDetails = $formattingNeeded
+        
         & cargo fmt --all
         
         if ($LASTEXITCODE -eq 0) {
@@ -153,8 +168,12 @@ function Test-Clippy {
         Write-QASuccess "Clippy analysis passed - no issues found"
     } else {
         # Count issues in output
-        $issueCount = ($clippyOutput | Select-String "warning:" | Measure-Object).Count
+        $issueLines = $clippyOutput | Select-String "warning:|error:" 
+        $issueCount = ($issueLines | Measure-Object).Count
         $QualityReport.ClippyIssues = $issueCount
+        
+        # Capture detailed issue information
+        $QualityReport.ClippyDetails = $clippyOutput | Where-Object { $_ -match "warning:|error:|note:|help:" }
         
         Write-Host $clippyOutput -ForegroundColor Yellow
         throw "Clippy found $issueCount issues"
@@ -179,6 +198,12 @@ function Test-Suite {
         Total = $passed + $failed
     }
     
+    if ($exitCode -ne 0) {
+        # Capture failed test details
+        $failedTestDetails = $testOutput | Select-String "test result: FAILED|thread '.*' panicked|assertion" | ForEach-Object { $_.Line }
+        $QualityReport.FailedTests = $failedTestDetails
+    }
+    
     if ($exitCode -eq 0) {
         Write-QASuccess "All $($passed) tests passed"
     } else {
@@ -194,8 +219,14 @@ function Generate-Documentation {
     $exitCode = $LASTEXITCODE
     
     # Count documentation warnings
-    $warningCount = ($docOutput | Select-String "warning:" | Measure-Object).Count
+    $warningLines = $docOutput | Select-String "warning:"
+    $warningCount = ($warningLines | Measure-Object).Count
     $QualityReport.DocumentationWarnings = $warningCount
+    
+    # Capture warning details
+    if ($warningCount -gt 0) {
+        $QualityReport.DocumentationDetails = $warningLines | ForEach-Object { $_.Line }
+    }
     
     if ($exitCode -eq 0) {
         if ($warningCount -eq 0) {
@@ -249,6 +280,61 @@ function Generate-QualityReport {
     $endTime = Get-Date
     $duration = $endTime - $QualityReport.StartTime
     
+    # Build detailed report sections
+    $detailSections = @()
+    
+    # Compilation errors
+    if ($QualityReport.CompilationErrors.Count -gt 0) {
+        $detailSections += @"
+
+❌ COMPILATION ERRORS ($($QualityReport.CompilationErrors.Count)):
+$("-" * 50)
+$($QualityReport.CompilationErrors | ForEach-Object { "  $_" } | Out-String)
+"@
+    }
+    
+    # Formatting details
+    if ($QualityReport.FormattingDetails.Count -gt 0) {
+        $detailSections += @"
+
+⚠️  FORMATTING ISSUES ($($QualityReport.FormattingDetails.Count) files):
+$("-" * 50)
+$($QualityReport.FormattingDetails | ForEach-Object { "  $_" } | Out-String)
+"@
+    }
+    
+    # Clippy issues
+    if ($QualityReport.ClippyIssues -gt 0) {
+        $detailSections += @"
+
+⚠️  CLIPPY ISSUES ($($QualityReport.ClippyIssues)):
+$("-" * 50)
+$($QualityReport.ClippyDetails | Select-Object -First 50 | ForEach-Object { "  $_" } | Out-String)
+$(if ($QualityReport.ClippyDetails.Count -gt 50) { "  ... (showing first 50 of $($QualityReport.ClippyDetails.Count) lines)" })
+"@
+    }
+    
+    # Failed tests
+    if ($QualityReport.FailedTests.Count -gt 0) {
+        $detailSections += @"
+
+❌ FAILED TESTS:
+$("-" * 50)
+$($QualityReport.FailedTests | ForEach-Object { "  $_" } | Out-String)
+"@
+    }
+    
+    # Documentation warnings
+    if ($QualityReport.DocumentationWarnings -gt 0) {
+        $detailSections += @"
+
+⚠️  DOCUMENTATION WARNINGS ($($QualityReport.DocumentationWarnings)):
+$("-" * 50)
+$($QualityReport.DocumentationDetails | Select-Object -First 30 | ForEach-Object { "  $_" } | Out-String)
+$(if ($QualityReport.DocumentationDetails.Count -gt 30) { "  ... (showing first 30 of $($QualityReport.DocumentationDetails.Count) warnings)" })
+"@
+    }
+    
     $report = @"
 
 🎯 QUALITY ASSURANCE REPORT
@@ -264,11 +350,12 @@ Duration: $($duration.ToString('mm\:ss'))
   Coverage: $($QualityReport.Coverage)
   Doc Warnings: $($QualityReport.DocumentationWarnings)
 
-🎉 OVERALL STATUS: $(if ($QualityReport.TestResults.Failed -eq 0 -and $QualityReport.ClippyIssues -eq 0) { "✅ PASSED" } else { "❌ ISSUES FOUND" })
+🎉 OVERALL STATUS: $(if ($QualityReport.TestResults.Failed -eq 0 -and $QualityReport.ClippyIssues -eq 0 -and $QualityReport.CompilationErrors.Count -eq 0) { "✅ PASSED" } else { "❌ ISSUES FOUND" })
+$($detailSections -join "`n")
 
 "@
     
-    Write-Host $report -ForegroundColor $(if ($QualityReport.TestResults.Failed -eq 0 -and $QualityReport.ClippyIssues -eq 0) { "Green" } else { "Yellow" })
+    Write-Host $report -ForegroundColor $(if ($QualityReport.TestResults.Failed -eq 0 -and $QualityReport.ClippyIssues -eq 0 -and $QualityReport.CompilationErrors.Count -eq 0) { "Green" } else { "Yellow" })
     
     # Output to file if requested
     if ($OutputFile) {
@@ -277,7 +364,7 @@ Duration: $($duration.ToString('mm\:ss'))
     }
     
     # Return exit code based on results
-    if ($QualityReport.TestResults.Failed -gt 0 -or $QualityReport.ClippyIssues -gt 0) {
+    if ($QualityReport.TestResults.Failed -gt 0 -or $QualityReport.ClippyIssues -gt 0 -or $QualityReport.CompilationErrors.Count -gt 0) {
         exit 1
     } else {
         exit 0
