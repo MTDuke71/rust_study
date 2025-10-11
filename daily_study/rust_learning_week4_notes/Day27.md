@@ -845,4 +845,4 @@ let config: HashMap<&str, &str> = input
 ---
 
 *Tags: #string-parsing #regex #split #custom-parser #input-handling #mission3 #aoc-patterns #data-processing*
-*Links: [[Day26]] ← | [[../missions/Mission3/README|Mission3]] | [[zettel-index]] | [[Day28]] →*
+*Links: [[daily-study/Day26]] ← | [[../missions/Mission3/README|Mission3]] | [[zettel-index]] | [[daily-study/Day28]] →*

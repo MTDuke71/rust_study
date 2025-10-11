@@ -1076,4 +1076,4 @@ for current in bfs_iterator(&grid, start) {
 ---
 
 *Tags: #bfs #queues #shortest-path #level-traversal #vecdeque #mission2 #mission6 #graph-algorithms #aoc-patterns*
-*Links: [[Day24]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[Day26]] →*
+*Links: [[daily-study/Day24]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[daily-study/Day26]] →*

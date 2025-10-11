@@ -1079,4 +1079,4 @@ for (list_idx, list) in lists.iter().enumerate() {
 ---
 
 *Tags: #priority-queue #binary-heap #vecdeque #dijkstra #advanced-queues #mission2 #mission6 #graph-algorithms #aoc-patterns*
-*Links: [[Day25]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[Day27]] →*
+*Links: [[daily-study/Day25]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[daily-study/Day27]] →*

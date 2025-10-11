@@ -534,4 +534,4 @@ let index = row * width + col;  // Correct! Row-major
 ---
 
 *Tags: #grids #2d-arrays #coordinates #spatial-algorithms #mission6 #data-structures #aoc-patterns*
-*Links: [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[Collections MOC]] | [[Day23]] →*
+*Links: [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[Collections MOC]] | [[daily-study/Day23]] →*

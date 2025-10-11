@@ -1069,4 +1069,4 @@ fn are_connected(grid: &Grid<char>, pos1: Coord, pos2: Coord) -> bool {
 ---
 
 *Tags: #flood-fill #connected-components #dfs #bfs #grid-algorithms #mission6 #graph-theory #aoc-patterns*
-*Links: [[Day23]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[Day25]] →*
+*Links: [[daily-study/Day23]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[daily-study/Day25]] →*

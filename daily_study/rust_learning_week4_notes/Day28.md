@@ -870,4 +870,4 @@ fn test_edge_cases() {
 ---
 
 *Tags: #week4-review #integration #grids #bfs #dijkstra #flood-fill #parsing #mission6 #aoc-patterns #problem-solving*
-*Links: [[Day27]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[Week 5 Preview]] →*
+*Links: [[daily-study/Day27]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[Week 5 Preview]] →*

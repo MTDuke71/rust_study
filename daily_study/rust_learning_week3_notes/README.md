@@ -19,43 +19,43 @@ Week 3 explores Rust's powerful abstraction mechanisms that enable code reuse, p
 
 ## 🗓️ **Daily Breakdown**
 
-### [[Day15]] - Trait Basics
+### [[daily-study/Day15]] or [[ds-day15]] - Trait Basics
 **Topics**: Defining traits, implementing traits, trait bounds
 - Creating custom traits
 - Default implementations
 - Trait bounds in function signatures
 
-### [[Day16]] - Generic Types
+### [[daily-study/Day16]] or [[ds-day16]] - Generic Types
 **Topics**: Generic structs, generic functions, type parameters
 - Single and multiple type parameters
 - Generic implementations
 - Monomorphization and performance
 
-### [[Day17]] - Lifetimes Introduction
+### [[daily-study/Day17]] or [[ds-day17]] - Lifetimes Introduction
 **Topics**: Lifetime annotations, borrow checker, lifetime elision
 - Understanding lifetime parameters
 - Function signatures with lifetimes
 - Struct lifetimes
 
-### [[Day18]] - Advanced Traits
+### [[daily-study/Day18]] or [[ds-day18]] - Advanced Traits
 **Topics**: Associated types, associated constants, trait inheritance
 - When to use associated types vs generics
 - Supertraits and trait bounds
 - Marker traits
 
-### [[Day19]] - Trait Objects and Dynamic Dispatch
+### [[daily-study/Day19]] or [[ds-day19]] - Trait Objects and Dynamic Dispatch
 **Topics**: `dyn Trait`, vtables, object safety
 - Boxing trait objects
 - Performance implications of dynamic dispatch
 - When to use trait objects vs generics
 
-### [[Day20]] - Advanced Generics
+### [[daily-study/Day20]] or [[ds-day20]] - Advanced Generics
 **Topics**: Where clauses, higher-ranked trait bounds (HRTB)
 - Complex trait bounds with `where`
 - Conditional implementations
 - Generic associated types (GATs)
 
-### [[Day21]] - Lifetime Patterns
+### [[daily-study/Day21]] or [[ds-day21]] - Lifetime Patterns
 **Topics**: Multiple lifetimes, lifetime subtyping, static lifetime
 - Lifetime relationships in complex scenarios
 - `'static` lifetime use cases

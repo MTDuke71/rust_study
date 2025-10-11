@@ -20,19 +20,19 @@ Week 4 applies all previous concepts to solve complex, real-world problems. This
 
 ## 🗓️ **Daily Breakdown**
 
-### [[Day22]] - 2D Grid Fundamentals
+### [[daily-study/Day22]] or [[ds-day22]] - 2D Grid Fundamentals
 **Topics**: Grid representation, coordinate systems, indexing
 - Row-major vs column-major layout
 - Boundary checking patterns
 - Grid initialization strategies
 
-### [[Day23]] - Direction and Navigation
+### [[daily-study/Day23]] or [[ds-day23]] - Direction and Navigation
 **Topics**: Cardinal directions, movement vectors, rotation
 - Direction enums (North, South, East, West)
 - Applying movement deltas
 - 90-degree rotations
 
-### [[Day24]] - Flood Fill Algorithms
+### [[daily-study/Day24]] or [[ds-day24]] - Flood Fill Algorithms
 **Topics**: Recursive and iterative flood fill, connected components
 - Stack-based flood fill (DFS)
 - Queue-based flood fill (BFS)

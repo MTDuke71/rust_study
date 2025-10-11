@@ -820,4 +820,4 @@ for _ in 0..4 {
 ---
 
 *Tags: #navigation #directions #bounds-checking #neighbors #grid-algorithms #mission6 #pathfinding*
-*Links: [[Day22]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[Day24]] →*
+*Links: [[daily-study/Day22]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[daily-study/Day24]] →*

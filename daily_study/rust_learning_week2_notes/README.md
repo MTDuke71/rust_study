@@ -18,43 +18,43 @@ Week 2 builds on Week 1 foundations with deeper exploration of Rust's collection
 
 ## 🗓️ **Daily Breakdown**
 
-### [[Day08]] - Vector Advanced Patterns
+### [[daily-study/Day08]] or [[ds-day08]] - Vector Advanced Patterns
 **Topics**: Capacity management, slicing, efficient insertions
 - Pre-allocation strategies
 - Slice operations and borrowing
 - Zero-copy transformations
 
-### [[Day09]] - HashMap Deep Dive
+### [[daily-study/Day09]] or [[ds-day09]] - HashMap Deep Dive
 **Topics**: Entry API, custom hashers, performance tuning
 - Entry API for upsert patterns
 - Avoiding redundant lookups
 - Hash function selection
 
-### [[Day10]] - HashSet Advanced Operations
+### [[daily-study/Day10]] or [[ds-day10]] - HashSet Advanced Operations
 **Topics**: Set algebra, batch operations, custom equality
 - Symmetric difference and Cartesian products
 - Performance characteristics
 - Custom Hash and Eq implementations
 
-### [[Day11]] - BTreeMap Range Operations
+### [[daily-study/Day11]] or [[ds-day11]] - BTreeMap Range Operations
 **Topics**: Sorted traversal, range queries, ordered iteration
 - Split operations and partitioning
 - Range-based queries
 - Use cases for ordered data
 
-### [[Day12]] - Iterator Combinators
+### [[daily-study/Day12]] or [[ds-day12]] - Iterator Combinators
 **Topics**: `chain()`, `zip()`, `enumerate()`, `scan()`
 - Composing multiple iterators
 - Stateful iteration with `scan()`
 - Performance implications
 
-### [[Day13]] - Iterator Consumers
+### [[daily-study/Day13]] or [[ds-day13]] - Iterator Consumers
 **Topics**: `collect()`, `fold()`, `for_each()`, `partition()`
 - Terminal operations and consumption
 - Building custom collections
 - Efficient aggregation patterns
 
-### [[Day14]] - Error Handling with Collections
+### [[daily-study/Day14]] or [[ds-day14]] - Error Handling with Collections
 **Topics**: `Result<Vec<T>, E>`, `collect()` with fallible operations
 - Propagating errors through pipelines
 - Short-circuiting on first error
