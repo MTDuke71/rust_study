@@ -2,11 +2,13 @@
 
 **Comprehensive map of Rust language concepts and patterns across the workspace**
 
-## � Learning Foundation
+## 📖 Learning Foundation
 
 - [[PROJECT_ORIGIN]] - The founding philosophy and approach that shapes how concepts are learned
 - [[V-Cycle in Rust Development]] - Requirements-driven methodology applied to every concept
 - [[Rust Learning Roadmap - The Master Plan]] - The complete learning journey structure
+- [[rust-book-ch1-4-review]] - **Comprehensive Review**: Getting Started, Toolchain, Ownership System (Chapters 1-4)
+- [[rust-book-ch5-8-review]] - **Comprehensive Review**: Structs, Enums, Modules, Collections (Chapters 5-8)
 
 ---
 
@@ -17,6 +19,7 @@
 - [[../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded]] - **Deep dive** into variables, mutability, moves vs copies with detailed analogies
 - [[Day 03 - Borrowing]] - References and borrowing rules
 - [[../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded]] - **Deep dive** into functions, parameter passing, and reference system
+- [[hashmap-ownership-patterns]] - **HashMap Ownership** - Owned values vs references with lifetime constraints (NEW)
 - **Beginner-Friendly Resources**:
   - [[../missions/Mission1/QUICK_REFERENCE|Mission1 Quick Reference]] - 2-minute ownership essentials
   - [[../missions/Mission1/SIMPLE_GUIDE|Mission1 Simple Guide]] - Real-world mental models and analogies

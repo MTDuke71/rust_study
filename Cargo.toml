@@ -33,6 +33,7 @@ members = [
     "missions/Mission7",
     "tutorials/Mission1_tut",
     "tutorials/Mission2_tut",
+    "tutorials/Mission3_tut",
     "tutorials/Mission4_tut",
     "tutorials/Mission5_tut",
     "tutorials/Mission6_tut",

@@ -101,6 +101,8 @@
   - [[aoc-2015-day03]] or [[aoc15-03]] - Grid visited tracking
 
 ### **Rust Book Integration**
+- [[rust-book-ch1-4-review]] - **Comprehensive Review: Chapters 1-4** (Getting Started, Ownership Foundation)
+- [[rust-book-ch5-8-review]] - **Comprehensive Review: Chapters 5-8** (Structs, Enums, Modules, Collections)
 - [[rust-book-ch4]] or [[rb-ch4]] - Ownership chapter notes
 - [[rust-book-ch5]] or [[rb-ch5]] - Structs chapter notes
 - [[rust-book-ch6]] or [[rb-ch6]] - Enums and pattern matching
@@ -118,6 +120,8 @@
 - [[4-connectivity]] - Grid neighbor patterns and connectivity rules
 
 **Data Structures & Collections:**
+- [[entry-api-hashmap]] - **Entry API** - Efficient single-lookup HashMap patterns
+- [[hashmap-ownership-patterns]] - **HashMap Ownership Patterns** - Owned vs Reference Storage (NEW)
 - [[HashMap Internals]] or [[hashmap-internals]] - Hash table implementation details
 - [[hashset-operations]] - HashSet usage and patterns
 - [[btreemap-vs-hashmap]] - Ordered vs unordered maps comparison

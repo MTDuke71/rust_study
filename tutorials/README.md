@@ -10,6 +10,7 @@ This folder contains guided tutorials that provide scaffolded learning experienc
 
 ### **Available Learning Paths**
 - **[Mission1_tut/](Mission1_tut/)** - **Stack Tutorial** - LIFO principles, generics, and fundamental data structures
+- **[Mission3_tut/](Mission3_tut/)** - **Binary Search Tutorial** - Traits, iterators, and O(log n) algorithms (NEW)
 - **[Mission4_tut/](Mission4_tut/)** - **LinkedList Tutorial** - Box<T>, Option<T>, and pointer management
 - **[Mission5_tut/](Mission5_tut/)** - **HashMap Tutorial** - Hash-based collections and algorithms
 - **[Mission6_tut/](Mission6_tut/)** - **Grid Programming Tutorial** - 2D spatial data structures and pathfinding
@@ -51,6 +52,7 @@ Tutorials integrate with the workspace's 3-track learning system:
 
 | Tutorial | Mission Connection | Daily Study Alignment | Rust Book Integration |
 |----------|-------------------|----------------------|---------------------|
+| **Mission3_tut** | [missions/Mission3](../missions/Mission3/) | Week 2 traits & iterators | Ch10 generics/traits + Ch13 iterators |
 | **Mission4_tut** | [missions/Mission4](../missions/Mission4/) | Week 3 ownership patterns | Ch4 ownership + Ch15 smart pointers |
 | **Mission5_tut** | [missions/Mission5](../missions/Mission5/) | Week 2 collections | Ch8 collections + Ch13 iterators |
 | **Mission6_tut** | [missions/Mission6](../missions/Mission6/) | Week 4 algorithms | Ch7 packages + Ch11 testing |
@@ -153,12 +155,14 @@ All tutorials follow workspace documentation standards:
 
 ### 🎯 Tutorial-Specific Navigation
 - **[Mission1_tut](Mission1_tut/)** - Stack fundamentals and LIFO principles
+- **[Mission3_tut](Mission3_tut/)** - Binary search with traits and iterators (NEW)
 - **[Mission4_tut](Mission4_tut/)** - LinkedList with Box<T> and Option<T>
 - **[Mission5_tut](Mission5_tut/)** - HashMap internals and hash algorithms
 - **[Mission6_tut](Mission6_tut/)** - Grid programming and spatial algorithms
 
 ### 🏗️ Mission Integration
 - **[[../zettelkasten/Mission1 Overview|Mission1 Overview]]** - Stack implementation
+- **[[../zettelkasten/Mission3 Overview|Mission3 Overview]]** - Binary search implementation
 - **[[../zettelkasten/Mission4 Overview|Mission4 Overview]]** - LinkedList implementation
 - **[[../zettelkasten/Mission5 Overview|Mission5 Overview]]** - HashMap implementation
 - **[[../zettelkasten/Mission6 Overview|Mission6 Overview]]** - Grid algorithms

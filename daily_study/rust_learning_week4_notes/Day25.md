@@ -97,15 +97,21 @@ pub fn bfs_basic(grid: &Grid<char>, start: Coord) {
 ```
 Initial: Start at 'S'         Level 1: Distance 1          Level 2: Distance 2
 #####                          #####                        #####
-#S..#                          #1..#                        #12.#
+#S..#                          #01.#                        #012#
 #...#                          #1..#                        #12.#
 #####                          #####                        #####
 
-Level 3: Distance 3            Final: All reachable
+Level 3: Distance 3            Final: All reachable (3×2 interior grid)
 #####                          #####
-#123#                          #1234#
-#123#                          #1234#
+#012#                          #012#
+#123#                          #123#
 #####                          #####
+
+Legend: 
+- Grid dimensions: 5×4 (outer), 3×2 (interior passable cells)
+- Numbers show distance from S (0) using 4-connectivity
+- S at (1,1) expands: right(1,2)=1, down(2,1)=1, then diagonally opposite corners
+- Maximum distance in this grid: 3 steps to bottom-right corner
 ```
 
 ### Why Use VecDeque Instead of Vec?
@@ -201,12 +207,17 @@ pub fn bfs_distances(
 ```
 Grid:         Distances from S:
 #####         #####
-#S..#         #0123#
-#.#.#         #1#2#
-#..G#         #234G#
+#S..#         #012#
+#.#.#         #1#3#
+#..G#         #234#
 #####         #####
 
-Shortest path from S to G: 4 steps
+Shortest path from S to G: 4 steps (Manhattan distance)
+Path options (both equally short with 4-connectivity):
+- Top route: S → right → right → down → down to G
+- Bottom route: S → down → down → right → right to G
+Note: With 4-connectivity (up/down/left/right only), no diagonal moves allowed.
+Center wall doesn't affect these paths - they naturally go around it.
 ```
 
 ### Reconstructing the Shortest Path
@@ -284,15 +295,33 @@ fn reconstruct_path(
 **Path Reconstruction Example:**
 
 ```
-Parent Map:              Reconstructed Path:
-#####                    #####
-#S→→↓#                   #S123#
-#↑#↓#                    #4#5#
-#↑←←G#                   #678G#
-#####                    #####
+Grid (with obstacle):    Parent Map (bottom route):    Reconstructed Path:
+#####                    #####                         #####
+#S..#                    #S..#                         #S..#
+#.#.#                    #↓#.#                         #1#.#
+#..G#                    #→→G#                         #234#
+#####                    #####                         #####
 
-Path: [S, (0,1), (0,2), (1,2), (2,2), (3,2), (3,1), (3,0), G]
+Path coordinates: [S=(1,1), (2,1), (3,1), (3,2), (3,3)=G]
+Path length: 5 nodes = 4 steps
+Manhattan distance: 4 (verified: |3-1| + |3-1| = 2+2 = 4)
+
+Note: With neighbor order [UP, DOWN, LEFT, RIGHT], the DOWN direction is checked 
+before RIGHT at S, so the algorithm explores the bottom path first. This causes 
+(3,3) to be reached via the bottom route (DDRR), not the top route (RRDD).
+If neighbor order were [UP, RIGHT, DOWN, LEFT], top route would be recorded instead.
 ```
+
+**🔬 Interactive Demo Available:**
+
+A standalone demonstration program has been created to show how neighbor order affects path selection:
+- **File**: `bfs_path_demo.rs` (in this directory)
+- **Run**: `rustc bfs_path_demo.rs && ./bfs_path_demo` (or `.\bfs_path_demo.exe` on Windows)
+- **Shows**: 
+  - Complete BFS trace with step-by-step queue operations
+  - Two different neighbor orders producing two different paths
+  - Both paths are 4 steps, but BFS picks one based on exploration order
+  - Validates that visited check prevents multiple parents per node
 
 ---
 
@@ -361,12 +390,137 @@ pub fn bfs_by_levels(
 }
 ```
 
+**📊 How `current_level_nodes` Buffer Works:**
+
+The `current_level_nodes` temporary buffer is crucial for grouping nodes by level. Here's a detailed trace:
+
+```
+Grid Example:     S has neighbors: RIGHT(1,2), DOWN(2,1)
+#####
+#S..#  S=(1,1)
+#...#
+#####
+
+━━━ Initial State ━━━
+queue:               [(S, 0)]
+visited:             {S}
+current_level:       0
+current_level_nodes: []           ← Empty buffer
+levels:              []           ← Empty result
+
+━━━ Step 1: Process S (level 0) ━━━
+Pop: (S, 0)
+Check: level(0) == current_level(0) → Same level, keep accumulating
+Action: Add S to current_level_nodes
+Discover neighbors: (1,2), (2,1) at level 1
+
+queue:               [((1,2), 1), ((2,1), 1)]
+visited:             {S, (1,2), (2,1)}
+current_level:       0
+current_level_nodes: [S]          ← Accumulated level 0
+levels:              []
+
+━━━ Step 2: Process (1,2) (level 1) ━━━
+Pop: ((1,2), 1)
+Check: level(1) > current_level(0) → NEW LEVEL DETECTED!
+Actions:
+  1. Push current_level_nodes [S] to levels        ← Save level 0
+  2. Clear current_level_nodes → []                ← Reset buffer
+  3. Update current_level = 1                      ← Track new level
+  4. Add (1,2) to current_level_nodes              ← Start level 1
+Discover neighbors: (1,3), (2,2) at level 2
+
+queue:               [((2,1), 1), ((1,3), 2), ((2,2), 2)]
+visited:             {S, (1,2), (2,1), (1,3), (2,2)}
+current_level:       1
+current_level_nodes: [(1,2)]      ← Building level 1
+levels:              [[S]]        ← Level 0 saved ✅
+
+━━━ Step 3: Process (2,1) (level 1) ━━━
+Pop: ((2,1), 1)
+Check: level(1) == current_level(1) → Same level, keep accumulating
+Action: Add (2,1) to current_level_nodes
+Discover neighbors: (3,1) at level 2
+
+queue:               [((1,3), 2), ((2,2), 2), ((3,1), 2)]
+visited:             {S, (1,2), (2,1), (1,3), (2,2), (3,1)}
+current_level:       1
+current_level_nodes: [(1,2), (2,1)]  ← Both level 1 nodes ✅
+levels:              [[S]]
+
+━━━ Step 4: Process (1,3) (level 2) ━━━
+Pop: ((1,3), 2)
+Check: level(2) > current_level(1) → NEW LEVEL DETECTED!
+Actions:
+  1. Push current_level_nodes [(1,2), (2,1)] to levels  ← Save level 1
+  2. Clear current_level_nodes → []                     ← Reset buffer
+  3. Update current_level = 2                           ← Track new level
+  4. Add (1,3) to current_level_nodes                   ← Start level 2
+
+queue:               [((2,2), 2), ((3,1), 2)]
+visited:             {...}
+current_level:       2
+current_level_nodes: [(1,3)]             ← Building level 2
+levels:              [[S], [(1,2), (2,1)]]  ← Level 1 saved ✅
+
+━━━ Step 5: Process (2,2) (level 2) ━━━
+Pop: ((2,2), 2)
+Check: level(2) == current_level(2) → Same level, keep accumulating
+Action: Add (2,2) to current_level_nodes
+
+current_level_nodes: [(1,3), (2,2)]  ← Accumulating level 2
+
+━━━ Step 6: Process (3,1) (level 2) ━━━
+Pop: ((3,1), 2)
+Check: level(2) == current_level(2) → Same level, keep accumulating
+Action: Add (3,1) to current_level_nodes
+
+queue:               []  ← Empty!
+current_level_nodes: [(1,3), (2,2), (3,1)]  ← Complete level 2
+
+━━━ Final: Queue Empty - Don't Forget Last Level! ━━━
+While loop exits (queue empty)
+Check: !current_level_nodes.is_empty() → true
+Action: Push [(1,3), (2,2), (3,1)] to levels  ← Save final level ✅
+
+━━━ FINAL STATE ━━━
+levels: [
+    [S],                      // Level 0: 1 node
+    [(1,2), (2,1)],          // Level 1: 2 nodes
+    [(1,3), (2,2), (3,1)]    // Level 2: 3 nodes
+]
+```
+
+**🔑 Key Pattern - The Buffer Cycle:**
+
+```rust
+For each level transition:
+1. Detect: level > current_level
+2. Save:   push current_level_nodes to levels    ← Preserve previous level
+3. Reset:  clear current_level_nodes             ← Fresh buffer
+4. Track:  update current_level                  ← New level number
+5. Build:  accumulate nodes in buffer            ← Collect current level
+
+Special case at end:
+6. Flush:  push final current_level_nodes        ← Don't lose last level!
+```
+
+**💡 Why This Works:**
+- **Buffer accumulates** nodes at same level (level == current_level)
+- **Level transition triggers save** (level > current_level)
+- **FIFO queue guarantees** all level N processed before level N+1
+- **Final push** ensures last level not lost
+
 **Alternative: Size-Based Level Processing**
 
 ```rust
 /// Process levels using queue size instead of tracking level numbers
 /// 
 /// This is a common interview pattern that's more elegant in some cases.
+/// 
+/// **Key Advantage**: No need for final push! Since `levels.push()` happens
+/// inside the while loop, all levels (including the last one) are automatically
+/// saved before the loop exits.
 pub fn bfs_by_levels_size_based(
     grid: &Grid<char>,
     start: Coord,
@@ -379,10 +533,10 @@ pub fn bfs_by_levels_size_based(
     visited.insert(start);
     
     while !queue.is_empty() {
-        let level_size = queue.len(); // All nodes at current level
+        let level_size = queue.len(); // Snapshot: all nodes at current level
         let mut current_level = Vec::new();
         
-        // Process exactly level_size nodes
+        // Process exactly level_size nodes (even as new nodes are added)
         for _ in 0..level_size {
             let pos = queue.pop_front().unwrap();
             current_level.push(pos);
@@ -390,15 +544,15 @@ pub fn bfs_by_levels_size_based(
             for neighbor in grid.neighbors_4(pos) {
                 if !visited.contains(&neighbor) && grid.is_passable(neighbor) {
                     visited.insert(neighbor);
-                    queue.push_back(neighbor);
+                    queue.push_back(neighbor); // Goes into NEXT level
                 }
             }
         }
         
-        levels.push(current_level);
+        levels.push(current_level); // ✅ Automatic - no final push needed!
     }
     
-    levels
+    levels // All levels saved, including last one
 }
 ```
 
@@ -693,7 +847,7 @@ fn main() {
         "#...#.#...#",
         "###.#.#.###",
         "#.........#",
-        "#.###.###.#",
+        "#.#########",
         "#........G#",
         "###########",
     ]);
@@ -707,22 +861,46 @@ fn main() {
     if let Some(path) = bfs_shortest_path(&escape_grid, start, exit) {
         println!("\nEscape route found!");
         println!("Steps to exit: {}", path.len() - 1);
-        println!("Efficiency: {}%",
-            ((path.len() - 1) as f64 / 20.0 * 100.0) as usize);
+        
+        // Calculate efficiency using Manhattan distance as baseline
+        let manhattan = ((exit.row - start.row).abs() + 
+                         (exit.col - start.col).abs()) as f64;
+        let actual_steps = (path.len() - 1) as f64;
+        println!("Efficiency: {:.1}% (actual: {}, optimal: {})",
+            (manhattan / actual_steps * 100.0),
+            path.len() - 1,
+            manhattan as usize);
     }
     
     // 7. BFS Performance Comparison
     println!("\n🔷 7. Algorithm Comparison");
     println!("==========================");
     
-    let large_grid = Grid::from_pattern(vec![
-        "#".repeat(50),
-        format!("#S{}#", ".".repeat(48)),
-        format!("#{}.#", ".".repeat(48)),
-        // ... (truncated for brevity)
-        format!("#{}G#", ".".repeat(48)),
-        "#".repeat(50),
-    ].iter().map(|s| s.as_str()).collect::<Vec<_>>());
+    // Create a proper 50×50 grid with some obstacles
+    let mut large_grid_lines = vec!["#".repeat(50).to_string()]; // Top wall
+    
+    // First row with start
+    large_grid_lines.push(format!("#S{}#", ".".repeat(48)));
+    
+    // Middle rows (46 rows) with some obstacles
+    for i in 2..48 {
+        if i % 10 == 5 {
+            // Every 10th row has a partial wall (creates maze-like structure)
+            large_grid_lines.push(format!("#{}{}{}#", ".".repeat(20), "#".repeat(9), ".".repeat(19)));
+        } else {
+            large_grid_lines.push(format!("#{}#", ".".repeat(48)));
+        }
+    }
+    
+    // Last row with goal
+    large_grid_lines.push(format!("#{}G#", ".".repeat(48)));
+    
+    // Bottom wall
+    large_grid_lines.push("#".repeat(50));
+    
+    let large_grid = Grid::from_pattern(
+        large_grid_lines.iter().map(|s| s.as_str()).collect::<Vec<_>>()
+    );
     
     use std::time::Instant;
     
@@ -733,8 +911,17 @@ fn main() {
     let path = bfs_shortest_path(&large_grid, start, goal);
     let duration = timer.elapsed();
     
-    println!("Large grid (50x50):");
-    println!("  Path length: {}", path.map_or(0, |p| p.len()));
+    println!("Large grid (50×50 with obstacles):");
+    if let Some(path) = path {
+        println!("  Path found: {} steps", path.len() - 1);
+        let manhattan = ((goal.row - start.row).abs() + 
+                         (goal.col - start.col).abs()) as f64;
+        println!("  Manhattan distance: {}", manhattan as usize);
+        println!("  Path efficiency: {:.1}%", 
+                 (manhattan / (path.len() - 1) as f64 * 100.0));
+    } else {
+        println!("  No path found!");
+    }
     println!("  Time: {:?}", duration);
     println!("  Performance: Excellent for unweighted graphs! ✅");
 }
@@ -783,11 +970,11 @@ impl Grid<char> {
     }
 }
 
-impl<T: Clone> Grid<T> {
+impl<T> Grid<T> {
     pub fn width(&self) -> usize { self.width }
     pub fn height(&self) -> usize { self.height }
     
-    fn index(&self, row: usize, col: usize) -> usize {
+    fn to_index(&self, row: usize, col: usize) -> usize {
         row * self.width + col
     }
     
@@ -795,7 +982,9 @@ impl<T: Clone> Grid<T> {
         coord.row >= 0 && coord.row < self.height as isize &&
         coord.col >= 0 && coord.col < self.width as isize
     }
-    
+}
+
+impl<T: Clone> Grid<T> {
     pub fn get_coord(&self, coord: Coord) -> Option<&T> {
         if self.contains(coord) {
             Some(&self[(coord.row as usize, coord.col as usize)])
@@ -816,7 +1005,7 @@ impl<T: Clone> Grid<T> {
 impl<T> std::ops::Index<(usize, usize)> for Grid<T> {
     type Output = T;
     fn index(&self, (row, col): (usize, usize)) -> &Self::Output {
-        &self.data[self.index(row, col)]
+        &self.data[self.to_index(row, col)]
     }
 }
 
@@ -1052,6 +1241,135 @@ for current in bfs_iterator(&grid, start) {
     }
 }
 ```
+
+### 🎯 BFS in Game Search: The Foundation of AI Game Playing
+
+**Core Insight**: BFS naturally explores game states level-by-level, making it the **fundamental structure** for game tree search algorithms. At each depth (your turn, opponent's turn, your next turn, etc.), specialized pruning techniques eliminate bad moves.
+
+**Game Tree as BFS:**
+```
+Depth 0 (Current): Your position
+      ↓
+Depth 1 (Level 1): All your possible moves
+      ↓
+Depth 2 (Level 2): All opponent's responses to each of your moves
+      ↓
+Depth 3 (Level 3): Your responses to opponent's responses
+      ↓
+...and so on
+```
+
+**Key Connection:**
+- **BFS structure**: Process all moves at depth `d` before depth `d+1`
+- **Level-order processing**: Exactly what game search needs!
+- **Pruning at each level**: Discard bad moves before exploring deeper
+
+**Game Search = BFS + Pruning Strategies:**
+
+| Technique | What It Prunes | BFS Connection |
+|-----------|----------------|----------------|
+| **Alpha-Beta Pruning** | Moves proven worse than already-found options | Skips branches at each level |
+| **Move Ordering** | Explores best moves first to maximize pruning | Priority within each level |
+| **Iterative Deepening** | Searches depth 1, then 2, then 3... | Multiple BFS passes, increasing depth |
+| **Transposition Tables** | Duplicate game states | Like BFS's `visited` set |
+| **Evaluation Function** | Prunes moves with poor heuristic scores | Filters nodes at each level |
+
+**Example: Chess/Checkers Search**
+```rust
+/// Game search is BFS with pruning at each depth
+/// 
+/// Each "level" represents one ply (half-move) deeper in the game tree
+fn game_search_bfs(position: GameState, max_depth: usize) -> Move {
+    let mut queue = VecDeque::new();
+    let mut transposition_table = HashMap::new(); // Like visited set
+    
+    // Level 0: Current position
+    queue.push_back((position, 0, None));
+    
+    let mut best_move = None;
+    let mut best_score = f32::MIN;
+    
+    while let Some((state, depth, move_taken)) = queue.pop_front() {
+        // Pruning #1: Skip if already seen (transposition)
+        if transposition_table.contains_key(&state) {
+            continue;
+        }
+        transposition_table.insert(state.clone(), true);
+        
+        // Pruning #2: Max depth reached (don't explore deeper)
+        if depth >= max_depth {
+            let score = evaluate(&state);
+            if score > best_score {
+                best_score = score;
+                best_move = move_taken;
+            }
+            continue;
+        }
+        
+        // Generate all legal moves at this level
+        let mut legal_moves = state.generate_moves();
+        
+        // Pruning #3: Move ordering (explore best first)
+        legal_moves.sort_by_key(|m| -quick_evaluate(&state, m));
+        
+        // Pruning #4: Alpha-beta style cutoffs
+        for legal_move in legal_moves {
+            let new_state = state.apply_move(legal_move);
+            
+            // Pruning #5: Obvious bad moves (e.g., hanging pieces)
+            if is_obviously_bad(&new_state) {
+                continue; // Skip this branch entirely
+            }
+            
+            // Add to queue for next level
+            queue.push_back((new_state, depth + 1, Some(legal_move)));
+        }
+    }
+    
+    best_move.unwrap()
+}
+```
+
+**Why BFS Works for Games:**
+
+1. **Level-by-level = Turn-by-turn**: Each BFS level corresponds to one move deeper
+2. **Complete exploration**: BFS guarantees we consider all legal moves at each depth
+3. **Optimal with pruning**: Find best move while skipping provably bad branches
+4. **Natural minimax structure**: Alternating levels = alternating players
+
+**Iterative Deepening: Multiple BFS Passes**
+```rust
+/// Search depth 1, then depth 2, then depth 3...
+/// Each pass is a BFS to that depth
+fn iterative_deepening_search(position: GameState, time_limit: Duration) -> Move {
+    let mut best_move = None;
+    let start_time = Instant::now();
+    
+    // BFS to depth 1, then depth 2, then depth 3...
+    for depth in 1..100 {
+        if start_time.elapsed() > time_limit {
+            break; // Time's up!
+        }
+        
+        // Run BFS to current depth
+        best_move = Some(game_search_bfs(position.clone(), depth));
+        
+        println!("Depth {} complete, best move: {:?}", depth, best_move);
+    }
+    
+    best_move.unwrap()
+}
+```
+
+**Key Insight**: BFS provides the **search structure** (level-order exploration), while domain-specific **pruning techniques** provide the **intelligence** (skipping bad moves). Together, they create efficient game-playing AI!
+
+**Practical Applications:**
+- **Chess engines**: Minimax search with alpha-beta pruning (BFS + cutoffs)
+- **Go AI**: Monte Carlo Tree Search (BFS with statistical pruning)
+- **Puzzle solvers**: BFS with constraint propagation
+- **Pathfinding in games**: A* (BFS with heuristic pruning)
+
+**The Pattern**: Start with BFS's exhaustive level-order search, then add domain knowledge to prune aggressively at each level. This is how AI "thinks" efficiently! 🎯
 
 ---
 

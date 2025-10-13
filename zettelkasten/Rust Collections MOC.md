@@ -4,6 +4,13 @@
 
 ---
 
+## 📚 **Comprehensive Guides**
+
+- [[rust-book-ch1-4-review]] - **Foundation Review**: Getting Started, Toolchain, Ownership System (Rust Book Chapters 1-4)
+- [[rust-book-ch5-8-review]] - **Complete Foundation Review**: Structs, Enums, Modules, and Collections (Rust Book Chapters 5-8)
+
+---
+
 ## 🗂️ **Core Collection Types**
 
 ### **Dynamic Arrays & Sequences**
@@ -17,6 +24,8 @@
 - **[[../daily_study/rust_learning_week2_notes/Day10]]** - HashMap operations and entry API
 - **[[../daily_study/rust_learning_week2_notes/Day11]]** - HashSet operations and set theory
 - **[[../Mission5/README]]** - HashMap/HashSet implementation from scratch
+- **[[entry-api-hashmap]]** - **Entry API Deep Dive** - Efficient single-lookup patterns for HashMap
+- **[[hashmap-ownership-patterns]]** - **HashMap Ownership Patterns** - Owned vs Reference Storage (NEW)
 - **[[Hash Function Analysis]]** - Understanding Rust's default hasher
 - **[[HashMap Performance Guide]]** - Capacity, load factors, and optimization
 

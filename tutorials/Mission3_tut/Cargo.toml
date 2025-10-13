@@ -1,0 +1,34 @@
+[package]
+name = "mission3_tut"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[example]]
+name = "step1_basic_binary_search"
+path = "examples/step1_basic_binary_search.rs"
+
+[[example]]
+name = "step2_trait_abstraction"
+path = "examples/step2_trait_abstraction.rs"
+
+[[example]]
+name = "step3_iterator_patterns"
+path = "examples/step3_iterator_patterns.rs"
+
+[[example]]
+name = "step4_custom_ordering"
+path = "examples/step4_custom_ordering.rs"
+
+[[example]]
+name = "step5_lifetimes_and_borrowing"
+path = "examples/step5_lifetimes_and_borrowing.rs"
+
+[[example]]
+name = "step6_aoc_applications"
+path = "examples/step6_aoc_applications.rs"
+
+[[example]]
+name = "step7_integration_project"
+path = "examples/step7_integration_project.rs"

@@ -3,7 +3,20 @@
 ## 🎯 V-Cycle Overview
 This mission implements binary search algorithms with a focus on Rust's trait system, slice borrowing, and iterator patterns - all essential skills for Advent of Code problem solving.
 
-## � Deep Dive: Zettelkasten Knowledge Pages
+## 📚 Tutorial Available!
+
+**New to binary search, traits, or iterators?** Start with the step-by-step tutorial:
+
+👉 **[Mission3_tut Tutorial](../../tutorials/Mission3_tut/)** - Progressive learning path covering:
+- Binary search fundamentals (O(log n) algorithm)
+- Trait abstraction with `Searchable`
+- Custom iterator implementation
+- Lifetime management and borrowing
+- Real-world AoC applications
+
+The tutorial breaks down all Mission3 concepts into 7 progressive steps with runnable examples and self-assessment checkpoints.
+
+## 📖 Deep Dive: Zettelkasten Knowledge Pages
 
 The key insights and patterns from this mission have been distilled into focused knowledge pages:
 
