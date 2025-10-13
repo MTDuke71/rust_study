@@ -18,8 +18,7 @@
 //! - Prepare for BFS/DFS: visited tracking, queue/stack
 //! - Algorithm result structures and utilities
 
-use mission7::{Graph, GraphType, NodeId};
-use mission7_tut::tutorial_utils;
+use mission7::{Graph, NodeId};
 use std::collections::{HashSet, VecDeque};
 
 fn main() {
@@ -42,6 +41,8 @@ fn main() {
 
     // 6. Foundation for DFS and BFS
     foundation_for_traversal();
+
+    exercise();
 
     println!("\n=== Step 4 Complete ===");
     println!("Next: Step 5 - DFS Implementation");
@@ -253,20 +254,20 @@ fn algorithm_result_structures() {
     struct TraversalResult {
         path: Vec<NodeId>,
         visited: HashSet<NodeId>,
-        steps: usize,
+        _steps: usize,
     }
 
     #[derive(Debug)]
     struct PathfindingResult {
-        path: Vec<NodeId>,
+        _path: Vec<NodeId>,
         distance: usize,
-        visited: HashSet<NodeId>,
-        parents: Vec<Option<NodeId>>,
+        _visited: HashSet<NodeId>,
+        _parents: Vec<Option<NodeId>>,
     }
 
     #[derive(Debug)]
     struct ComponentResult {
-        components: Vec<Vec<NodeId>>,
+        _components: Vec<Vec<NodeId>>,
         component_count: usize,
         largest_component_size: usize,
     }
@@ -290,7 +291,7 @@ fn algorithm_result_structures() {
     let traversal_result = TraversalResult {
         path: vec![a, b, c],
         visited: [a, b, c].iter().cloned().collect(),
-        steps: 3,
+        _steps: 3,
     };
 
     println!("Traversal Result:");
@@ -299,10 +300,10 @@ fn algorithm_result_structures() {
 
     // Simulate pathfinding result
     let pathfinding_result = PathfindingResult {
-        path: vec![a, b, c],
+        _path: vec![a, b, c],
         distance: 2,
-        visited: [a, b, c].iter().cloned().collect(),
-        parents: vec![None, Some(a), Some(b), None, None],
+        _visited: [a, b, c].iter().cloned().collect(),
+        _parents: vec![None, Some(a), Some(b), None, None],
     };
 
     println!("Pathfinding Result:");
@@ -311,7 +312,7 @@ fn algorithm_result_structures() {
 
     // Simulate component result
     let component_result = ComponentResult {
-        components: vec![vec![a, b, c], vec![d, e]],
+        _components: vec![vec![a, b, c], vec![d, e]],
         component_count: 2,
         largest_component_size: 3,
     };
@@ -581,31 +582,31 @@ fn foundation_for_traversal() {
     println!();
 
     // 1. Visited tracking
-    let mut visited = HashSet::new();
+    let visited: HashSet<NodeId> = HashSet::new();
     println!("1. Visited tracking: {:?}", visited);
 
     // 2. Path reconstruction
-    let mut parents = vec![None; graph.node_count()];
+    let parents: Vec<Option<NodeId>> = vec![None; graph.node_count()];
     println!("2. Parent array: {:?}", parents);
 
     // 3. Queue for BFS
-    let mut queue = VecDeque::new();
+    let queue: VecDeque<NodeId> = VecDeque::new();
     println!("3. Queue: {:?}", queue);
 
     // 4. Stack for DFS
-    let mut stack = Vec::new();
+    let stack: Vec<NodeId> = Vec::new();
     println!("4. Stack: {:?}", stack);
 
     // 5. Result structure
     #[derive(Debug)]
     struct TraversalResult {
-        path: Vec<NodeId>,
-        visited: HashSet<NodeId>,
+        _path: Vec<NodeId>,
+        _visited: HashSet<NodeId>,
     }
 
     let result = TraversalResult {
-        path: Vec::new(),
-        visited: HashSet::new(),
+        _path: Vec::new(),
+        _visited: HashSet::new(),
     };
     println!("5. Result structure: {:?}", result);
     println!();

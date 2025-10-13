@@ -18,8 +18,7 @@
 //! - Build pathfinding examples combining graph + grid
 //! - Integration testing and performance optimization
 
-use mission7::{Graph, GraphType, NodeId};
-use mission7_tut::tutorial_utils;
+use mission7::{Graph, NodeId};
 use std::collections::{HashSet, VecDeque};
 
 fn main() {
@@ -560,7 +559,7 @@ fn mission7_integration() {
 
     // REQ-4: Algorithm foundation
     println!("REQ-4: Algorithm Foundation");
-    let mut visited = HashSet::new();
+    let mut visited: HashSet<NodeId> = HashSet::new();
     let mut path = Vec::new();
     println!("  Visited tracking: {:?}", visited);
     println!("  Path reconstruction: {:?}", path);
@@ -759,10 +758,10 @@ fn maze_to_graph(maze: &[&str]) -> (Graph<String>, NodeId, NodeId) {
 }
 
 fn print_maze_solution(maze: &[&str], path: &[NodeId]) {
-    let mut solution = maze.to_vec();
+    let solution = maze.to_vec();
 
     // Mark the path
-    for (i, &node_id) in path.iter().enumerate() {
+    for (i, &_node_id) in path.iter().enumerate() {
         if i == 0 {
             // Start
         } else if i == path.len() - 1 {
