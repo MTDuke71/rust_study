@@ -19,9 +19,8 @@
 //! - Path finding and cycle detection
 //! - Component analysis and connectivity
 
-use mission7::{Graph, GraphType, NodeId};
-use mission7_tut::tutorial_utils;
-use std::collections::{HashSet, VecDeque};
+use mission7::{Graph, NodeId};
+use std::collections::HashSet;
 
 fn main() {
     println!("=== Step 5: DFS Implementation ===\n");
@@ -321,10 +320,10 @@ fn path_finding_with_dfs() {
                 path.push(current);
 
                 for &neighbor in graph.neighbors(current) {
-                    if !visited.contains(&neighbor) {
-                        if dfs_helper(graph, neighbor, end, visited, path) {
-                            return true;
-                        }
+                    if !visited.contains(&neighbor)
+                        && dfs_helper(graph, neighbor, end, visited, path)
+                    {
+                        return true;
                     }
                 }
 
@@ -413,10 +412,10 @@ fn cycle_detection_with_dfs() {
         let mut rec_stack = HashSet::new();
 
         for node in graph.nodes() {
-            if !visited.contains(&node) {
-                if has_cycle_dfs_helper(graph, node, &mut visited, &mut rec_stack) {
-                    return true;
-                }
+            if !visited.contains(&node)
+                && has_cycle_dfs_helper(graph, node, &mut visited, &mut rec_stack)
+            {
+                return true;
             }
         }
 
@@ -487,7 +486,7 @@ fn component_analysis_with_dfs() {
     let c = graph.add_node("C");
     let d = graph.add_node("D");
     let e = graph.add_node("E");
-    let f = graph.add_node("F");
+    let _f = graph.add_node("F");
 
     // Component 1: A-B-C
     graph.add_edge(a, b);
@@ -596,8 +595,8 @@ fn component_analysis_with_dfs() {
     }
     println!();
 }
-
 // Exercise: Implement your own DFS
+#[allow(dead_code)]
 fn exercise() {
     println!("Exercise: Implement Your Own DFS");
     println!("===============================");
