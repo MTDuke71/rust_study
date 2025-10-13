@@ -306,6 +306,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "48c757948c5ede0e46177b7add2e67155f70e33c07fea8284df6576da70b3719"
 
 [[package]]
+name = "error_handling_exercises"
+version = "0.1.0"
+
+[[package]]
+name = "error_propagation"
+version = "0.1.0"
+
+[[package]]
 name = "functions"
 version = "0.1.0"
 
@@ -712,6 +720,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "recoverable_errors"
+version = "0.1.0"
+
+[[package]]
 name = "rectangles"
 version = "0.1.0"
 
@@ -842,6 +854,10 @@ name = "unicode-ident"
 version = "1.0.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f63a545481291138910575129486daeaf8ac54aee4387fe7906919f7830c7d9d"
+
+[[package]]
+name = "unrecoverable_errors"
+version = "0.1.0"
 
 [[package]]
 name = "variables"
