@@ -1,6 +1,319 @@
 # AI Agent Instructions for Rust Study Codebase
 
-This is a **V-Cycle learning workspace** for systematic Rust development using formal software engineering practices. The workspace follows a **3-track learning approach** with complete traceability from requirements through validation.
+## ⚡ Quick Start - Essential Knowledge
+
+**This is a V-Cycle learning workspace with 3 parallel tracks**. New agents should understand these critical patterns immediately:
+
+### Architecture Overview
+- **Workspace Structure**: `missions/` (core implementations) + `tutorials/` (step-by-step learning) + `advanced_examples/` (real-world apps) + `daily_study/` (concepts) + `rust_book/` (fundamentals) + `zettelkasten/` (knowledge management)
+- **Cargo Workspace**: 40+ independent crates, run with `cargo run -p <package-name> --example <example-name>`
+- **Requirements Traceability**: Every feature links to REQ-X statements, tests named `req{N}_*` verify specific requirements
+
+### Critical Workflows
+```powershell
+# Test mission implementations
+cargo test -p mission5                              # Run all tests for Mission 5
+cargo test -p mission5 req2                         # Test specific requirement
+cargo clippy -p mission5 -- -D warnings            # Zero-warnings enforcement
+
+# Run learning examples
+cargo run -p mission5_tut --example step3_hashmap  # Tutorial progression
+.\scripts\run_md.bat daily_study\rust_learning_week2_notes\Day10.md  # Execute markdown examples
+
+# Validate documentation
+cargo test --doc -p mission5                       # Run all doctests
+cargo doc -p mission5 --open                       # Generate and view docs
+```
+
+### Project-Specific Conventions
+1. **REQ-X Traceability**: All code/tests reference requirement IDs (REQ-1, REQ-2, etc.) from mission README.md
+2. **Complete Runnable Examples**: Every `daily_study/DayXX.md` must include self-contained executable code (use template in `.github/COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md`)
+3. **Documentation Standards**: Follow `.github/RUST_DOCUMENTATION_STANDARDS.md` (use `///` for items, `//!` for modules, always include Examples section)
+4. **Tutorial-Mission Alignment**: `MissionX_tut/` steps must map to main mission REQ-X and align with `MONTHLY_CALENDAR.md` daily focus
+5. **Zettelkasten Links**: All zettelkasten files use standardized link format: `[[mission-X]]`, `[[daily-study/DayXX]]`, `[[aoc-YYYY-dayDD]]`
+
+### Non-Obvious Integration Points
+- **MONTHLY_CALENDAR.md**: Master coordination file - check before creating Mission + Tutorial pairs
+- **Tutorial Synchronization**: Each `stepN_*.rs` in tutorials must advance toward specific main mission requirements
+- **Multi-Value Returns**: Tests often use `.unwrap()` freely since they're allowed to panic
+- **Performance Baselines**: Compare implementations against std library (`Vec`, `VecDeque`, `HashMap`) in demos
+- **AoC Patterns**: Real-world validation uses Advent of Code problems (`tests/data/*.txt` + `*.expected.csv`)
+
+### Quality Gates (Must Pass)
+```bash
+cargo clippy -- -D warnings        # Zero warnings required
+cargo test                          # All tests pass
+cargo test --doc                    # All doctests pass
+cargo build --workspace            # All crates compile
+```
+
+---
+
+## 🧭 Quick Decision Guide
+
+### When to Use What
+
+**Data Structure Choice**:
+- Need FIFO? → `VecDeque` (Mission2)
+- Need lookup? → `HashMap` (Mission5)
+- Need order? → `BTreeMap` (Day12)
+- Need uniqueness? → `HashSet` (Day11)
+- Need LIFO? → `Vec` as stack (Mission1)
+- Need graph? → `Vec<Vec<NodeId>>` adjacency list (Mission7)
+
+**Documentation Style**:
+- Public API function → `///` with Examples section (see RUST_DOCUMENTATION_STANDARDS.md)
+- Module/crate level → `//!` with Quick Start section
+- Test function → Descriptive name only (no `///` needed)
+- Implementation detail → `//` inline comment
+- Requirement reference → `// REQ-X: description`
+
+**Test Organization**:
+- Unit test → `tests/` directory, named `req{N}_*` for traceability
+- Integration → `tests/` directory, `*_integration.rs` or `*_checker_test.rs`
+- Doctest → `/// # Examples` in function docs
+- Tutorial → `examples/step{N}_*.rs` with progressive complexity
+
+**File Location Rules**:
+- Mission implementation → `missions/Mission{N}/src/lib.rs`
+- Mission tests → `missions/Mission{N}/tests/`
+- Tutorial steps → `tutorials/Mission{N}_tut/examples/step{N}_*.rs`
+- Daily concepts → `daily_study/rust_learning_week{N}_notes/Day{N}.md`
+- Rust book practice → `rust_book/Ch{N}/{topic}/`
+- Real-world apps → `advanced_examples/{name}/`
+- Knowledge notes → `zettelkasten/{topic}.md`
+- Scripts/tools → `scripts/{tool_name}.ps1` or `.bat`
+
+---
+
+## ✅ Pre-Completion Verification Checklist
+
+Before marking work complete or creating a pull request, verify:
+
+### Code Quality
+- [ ] `cargo test -p {package}` passes (all unit tests)
+- [ ] `cargo clippy -p {package} -- -D warnings` clean (zero warnings mandatory)
+- [ ] `cargo test --doc -p {package}` passes (all doctests execute)
+- [ ] `cargo build --workspace` succeeds (no breaking changes)
+
+### Documentation
+- [ ] README.md updated with REQ-X statements if new feature
+- [ ] All public functions have `///` documentation with Examples
+- [ ] Module-level `//!` docs updated if API changed
+- [ ] Doctests include error cases, not just happy path
+
+### Testing
+- [ ] Tests named `req{N}_*` for requirement traceability
+- [ ] Edge cases covered (empty input, boundary conditions)
+- [ ] Performance characteristics verified (O(1), O(n) claims)
+- [ ] Integration tests pass with real-world data
+
+### Project-Specific
+- [ ] `MONTHLY_CALENDAR.md` checked if creating tutorial content
+- [ ] Tutorial steps map to mission requirements (REQ-1 → step1_*, etc.)
+- [ ] Daily study files include "Complete Runnable Example" section
+- [ ] Zettelkasten links follow naming convention (`[[mission-X]]` not `[[MissionX]]`)
+- [ ] All struct field renames reflected in ALL instantiations
+- [ ] Unused fields prefixed with `_`, unused variables prefixed with `_`
+
+### Common Gotchas to Check
+- [ ] Type annotations added for generic `::new()` methods (e.g., `HashSet<T>::new()`)
+- [ ] Grid dimension calculations verified (format placeholders = arguments)
+- [ ] Imports cleaned up (remove unused imports caught by clippy)
+- [ ] Variables are `mut` only if actually modified
+- [ ] AoC test data files paired with `.expected.csv` results
+
+---
+
+## ⚠️ Common Error Patterns & Quick Fixes
+
+### Struct Field Renaming Issues
+**Problem**: Renamed struct fields but forgot to update instantiations
+```rust
+// ❌ WRONG - Will cause "no such field" error
+struct MyStruct { _unused_field: i32 }
+let s = MyStruct { unused_field: 5 };  // Error!
+
+// ✅ CORRECT - Field names must match exactly
+struct MyStruct { _unused_field: i32 }
+let s = MyStruct { _unused_field: 5 };  // Works!
+```
+**Fix**: Update ALL instantiations when renaming fields. Use global find-replace.
+
+### Type Annotation Required for Generics
+**Problem**: Compiler can't infer type for generic `::new()` methods
+```rust
+// ❌ WRONG - Compiler doesn't know what T is
+let visited = HashSet::new();
+
+// ✅ CORRECT - Explicit type annotation
+let visited: HashSet<NodeId> = HashSet::new();
+// OR use turbofish syntax
+let visited = HashSet::<NodeId>::new();
+```
+**Fix**: Always annotate types when using generic constructors.
+
+### Unnecessary Mutability Warnings
+**Problem**: Variable declared `mut` but never modified
+```rust
+// ❌ WRONG - Unnecessary mut for display-only variable
+let mut result = calculate_something();
+println!("{}", result);  // Never modified!
+
+// ✅ CORRECT - Remove mut if not modifying
+let result = calculate_something();
+println!("{}", result);
+```
+**Fix**: Only use `mut` when actually modifying the variable.
+
+### Grid Dimension Calculation Errors
+**Problem**: Format string placeholders don't match arguments
+```rust
+// ❌ WRONG - 3 placeholders but only 2 arguments
+format!("#{}{}{}", ".".repeat(20), ".".repeat(10));  // Missing 3rd arg!
+
+// ✅ CORRECT - Match placeholders to arguments
+format!("#{}{}#{}", ".".repeat(20), ".".repeat(19), "");  // Correct count
+```
+**Fix**: Count format `{}` placeholders and verify argument list matches.
+
+### Unused Import Warnings
+**Problem**: Imported items never used in code
+```rust
+// ❌ WRONG - GraphType imported but never used
+use crate::{GraphType, NodeId, Graph};  // GraphType not used!
+
+// ✅ CORRECT - Remove unused imports
+use crate::{NodeId, Graph};
+```
+**Fix**: Run `cargo clippy` and remove all unused imports it reports.
+
+---
+
+## 📝 Standard Commit Message Template
+
+Use this format for comprehensive commits:
+
+```
+[Category] Brief summary (50 characters max)
+
+Detailed changes:
+- ✅ Section/File 1: Specific change description
+- ✅ Section/File 2: Specific change description  
+- 🔧 Fixed: Issue that was resolved
+- 📝 Updated: Documentation improvements
+- ✨ Added: New features or functionality
+
+Context:
+- Why: Rationale for these changes
+- Impact: What improved (performance, clarity, correctness)
+- Related: Links to issues, requirements, or other commits
+
+Requirements: REQ-X, REQ-Y (if applicable)
+Testing: All tests pass, zero clippy warnings
+```
+
+**Example from actual session:**
+```
+[Daily Study] Enhance Day25 BFS documentation and fix Mission7_tut compilation
+
+Detailed changes:
+- ✅ Day25.md: Fixed efficiency calculation using Manhattan distance (was hardcoded 20)
+- ✅ Day25.md: Fixed Example 7 grid dimensions (50×50 now correct)
+- ✅ Day25.md: Added 120-line game AI search section
+- ✅ step4_algorithm_foundation.rs: Added type annotations for HashSet, Vec, VecDeque
+- ✅ step4_algorithm_foundation.rs: Removed unnecessary mut keywords
+- ✅ step4_algorithm_foundation.rs: Fixed unused struct field warnings
+- ✅ step7_integration_project.rs: Cleaned up unused imports
+
+Context:
+- Why: Improve learning materials accuracy and fix tutorial compilation
+- Impact: Examples now executable, meaningful metrics, zero compilation warnings
+- Related: BFS learning progression, Mission7 graph algorithms
+
+Testing: All tutorial examples compile cleanly with zero warnings
+```
+
+---
+
+## 💾 Session Handoff Template
+
+When work spans multiple sessions or needs continuation:
+
+```markdown
+### Session Context: [Brief Task Description]
+
+**Status**: 🔄 In Progress | ✅ Complete | ❌ Blocked
+
+**Files Modified**:
+- ✅ `path/to/file1.rs` - Description (COMPLETE)
+- ⏳ `path/to/file2.rs` - Description (IN PROGRESS - line X)
+- ❌ `path/to/file3.rs` - Description (BLOCKED - reason)
+
+**Current Position**: 
+Working on [specific function/section] in [file], currently at line [N].
+
+**Next Steps**:
+1. [Specific action required]
+2. [Verification step]
+3. [Documentation update]
+
+**Blockers**: 
+- [What's preventing completion]
+- [What information is needed]
+
+**Context & Decisions**:
+- Chose [approach A] over [approach B] because [reason]
+- Following pattern from [reference file/section]
+- Aligns with [requirement REQ-X]
+
+**Testing Status**:
+- [ ] Unit tests pass
+- [ ] Clippy clean  
+- [ ] Doctests pass
+- [ ] Integration tests verified
+
+**Commands to Resume**:
+```bash
+cd path/to/workspace
+cargo test -p package_name
+# ... other relevant commands
+```
+```
+
+**Example from today's session:**
+```markdown
+### Session Context: Fix Mission7_tut Compilation Warnings
+
+**Status**: ✅ Complete (step4 and step7 fixed)
+
+**Files Modified**:
+- ✅ `tutorials/Mission7_tut/examples/step7_integration_project.rs` (COMPLETE)
+- ✅ `tutorials/Mission7_tut/examples/step4_algorithm_foundation.rs` (COMPLETE)
+
+**Current Position**: 
+All warnings fixed, examples compile cleanly.
+
+**Completed Steps**:
+1. ✅ Removed unused imports (GraphType, tutorial_utils)
+2. ✅ Added type annotations for generic types
+3. ✅ Removed unnecessary `mut` keywords  
+4. ✅ Prefixed unused struct fields with underscore
+5. ✅ Updated all struct instantiations to match
+
+**Testing Status**:
+- ✅ Unit tests pass
+- ✅ Clippy clean (zero warnings)
+- ✅ Examples run successfully
+
+**Commands Used**:
+```bash
+cargo run -p mission7_tut --example step4_algorithm_foundation
+cargo clippy -p mission7_tut -- -D warnings
+```
+```
+
+---
 
 ## 🎯 Core Development Philosophy: 3-Track Learning System
 

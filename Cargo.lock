@@ -528,6 +528,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "mission8"
+version = "0.1.0"
+dependencies = [
+ "criterion 0.5.1",
+]
+
+[[package]]
+name = "mission8_tut"
+version = "0.1.0"
+
+[[package]]
 name = "modules"
 version = "0.1.0"
 
