@@ -238,7 +238,7 @@ impl PatternTrainer {
                 difficulty: TrainingDifficulty::Beginner,
                 aoc_reference: Some("AoC 2018 Day 6 (simplified)".to_string()),
             },
-            
+
             TrainingExercise {
                 id: 2,
                 title: "Instruction Following".to_string(),
@@ -248,7 +248,7 @@ impl PatternTrainer {
                 difficulty: TrainingDifficulty::Beginner,
                 aoc_reference: Some("AoC 2021 Day 2".to_string()),
             },
-            
+
             TrainingExercise {
                 id: 3,
                 title: "Grid Pathfinding".to_string(),
@@ -258,7 +258,7 @@ impl PatternTrainer {
                 difficulty: TrainingDifficulty::Intermediate,
                 aoc_reference: Some("AoC 2021 Day 15".to_string()),
             },
-            
+
             TrainingExercise {
                 id: 4,
                 title: "Connected Regions".to_string(),
@@ -268,7 +268,7 @@ impl PatternTrainer {
                 difficulty: TrainingDifficulty::Intermediate,
                 aoc_reference: Some("AoC 2017 Day 14".to_string()),
             },
-            
+
             TrainingExercise {
                 id: 5,
                 title: "Recursive Sequence".to_string(),
@@ -278,7 +278,7 @@ impl PatternTrainer {
                 difficulty: TrainingDifficulty::Advanced,
                 aoc_reference: Some("AoC 2021 Day 6".to_string()),
             },
-            
+
             TrainingExercise {
                 id: 6,
                 title: "Simulation with Cycles".to_string(),
@@ -288,7 +288,7 @@ impl PatternTrainer {
                 difficulty: TrainingDifficulty::Expert,
                 aoc_reference: Some("AoC 2020 Day 17".to_string()),
             },
-            
+
             TrainingExercise {
                 id: 7,
                 title: "Complex Parsing Challenge".to_string(),
@@ -298,7 +298,7 @@ impl PatternTrainer {
                 difficulty: TrainingDifficulty::Advanced,
                 aoc_reference: Some("AoC 2020 Day 4".to_string()),
             },
-            
+
             TrainingExercise {
                 id: 8,
                 title: "Optimization Problem".to_string(),
@@ -403,7 +403,7 @@ impl PatternQuiz {
                 correct_answer: 1,
                 explanation: "BFS guarantees shortest path in unweighted grids".to_string(),
             },
-            
+
             QuizQuestion {
                 question: "Your problem involves calculating f(1000000) where f(n) = f(n-1) + f(n-2). What pattern helps?".to_string(),
                 options: vec![
@@ -415,7 +415,7 @@ impl PatternQuiz {
                 correct_answer: 2,
                 explanation: "Memoization prevents recalculating the same values repeatedly".to_string(),
             },
-            
+
             QuizQuestion {
                 question: "You need to simulate 1 billion iterations but suspect patterns repeat. Which approach?".to_string(),
                 options: vec![
@@ -427,7 +427,7 @@ impl PatternQuiz {
                 correct_answer: 1,
                 explanation: "Cycle detection lets you skip ahead once you find the repeating pattern".to_string(),
             },
-            
+
             QuizQuestion {
                 question: "Input format: 'move 5 from stack2 to stack1'. Best parsing approach?".to_string(),
                 options: vec![

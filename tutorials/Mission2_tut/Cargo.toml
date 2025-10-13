@@ -23,13 +23,13 @@ name = "step4_ring_buffer_with_option"
 path = "examples/step4_ring_buffer_with_option.rs"
 
 [[example]]
-name = "step5_linked_queue_basics"
-path = "examples/step5_linked_queue_basics.rs"
+name = "step5_production_queue"
+path = "examples/step5_production_queue.rs"
 
 [[example]]
-name = "step6_advanced_linked_queue"
-path = "examples/step6_advanced_linked_queue.rs"
+name = "step6_linked_queues"
+path = "examples/step6_linked_queues.rs"
 
 [[example]]
-name = "step7_production_queues"
-path = "examples/step7_production_queues.rs"
+name = "step7_mission_integration"
+path = "examples/step7_mission_integration.rs"
