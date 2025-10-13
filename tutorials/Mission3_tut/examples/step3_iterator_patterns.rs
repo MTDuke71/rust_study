@@ -19,31 +19,29 @@ fn main() {
 
     // Section 2: Custom RangeIter
     println!("📖 Section 2: Custom Range Iterator\n");
-    
+
     let data = [1, 2, 2, 3, 4, 5, 5, 5, 6, 7];
     println!("Data: {:?}\n", data);
-    
+
     // Find all occurrences of 5
     let fives: Vec<_> = find_all_equal(&data, &5).collect();
     println!("All 5s at indices: {:?}", fives);
-    
+
     // Find range [3, 6)
     let range: Vec<_> = find_range(&data, &3, &6).collect();
     println!("Values in range [3,6): {:?}", range);
 
     // Section 3: Extension Trait Pattern
     println!("\n📖 Section 3: Extension Traits for Ergonomics\n");
-    
+
     use SearchExt;
-    
+
     // Method-style calls feel more natural
     let fives: Vec<_> = data.find_all_equal(&5).collect();
     println!("Using extension: {:?}", fives);
-    
+
     // Chainable operations
-    let sum: i32 = data.find_range(&2, &6)
-        .map(|&x| x * 2)
-        .sum();
+    let sum: i32 = data.find_range(&2, &6).map(|&x| x * 2).sum();
     println!("Sum of doubled range: {}", sum);
 
     // Section 4: Lazy Evaluation Demo
@@ -52,15 +50,16 @@ fn main() {
 
     // Section 5: Iterator Combinators
     println!("\n📖 Section 5: Iterator Composition\n");
-    
+
     let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    
+
     // Complex query: find even numbers > 3, squared
-    let result: Vec<_> = data.find_range(&4, &10)
+    let result: Vec<_> = data
+        .find_range(&4, &10)
         .filter(|&&x| x % 2 == 0)
         .map(|&x| x * x)
         .collect();
-    
+
     println!("Even squares in range [4,10): {:?}", result);
 
     println!("\n✅ Self-Assessment:");
@@ -90,7 +89,7 @@ impl<'a, T> RangeIter<'a, T> {
 /// Implement Iterator trait
 impl<'a, T> Iterator for RangeIter<'a, T> {
     type Item = &'a T;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         if self.start < self.end {
             let item = &self.slice[self.start];
@@ -100,7 +99,7 @@ impl<'a, T> Iterator for RangeIter<'a, T> {
             None
         }
     }
-    
+
     fn size_hint(&self) -> (usize, Option<usize>) {
         let remaining = self.end.saturating_sub(self.start);
         (remaining, Some(remaining))
@@ -119,13 +118,13 @@ fn find_all_equal<'a, T: Ord>(slice: &'a [T], target: &T) -> RangeIter<'a, T> {
         }
         Err(_) => return RangeIter::new(slice, 0, 0),
     };
-    
+
     // Find last occurrence
     let mut end = start;
     while end < slice.len() && slice[end] == *target {
         end += 1;
     }
-    
+
     RangeIter::new(slice, start, end)
 }
 
@@ -135,12 +134,12 @@ fn find_range<'a, T: Ord>(slice: &'a [T], low: &T, high: &T) -> RangeIter<'a, T>
         Ok(pos) => pos,
         Err(pos) => pos,
     };
-    
+
     let end = match slice.binary_search(high) {
         Ok(pos) => pos,
         Err(pos) => pos,
     };
-    
+
     RangeIter::new(slice, start, end)
 }
 
@@ -154,7 +153,7 @@ impl<T: Ord> SearchExt<T> for [T] {
     fn find_all_equal(&self, target: &T) -> RangeIter<'_, T> {
         find_all_equal(self, target)
     }
-    
+
     fn find_range(&self, low: &T, high: &T) -> RangeIter<'_, T> {
         find_range(self, low, high)
     }
@@ -162,13 +161,13 @@ impl<T: Ord> SearchExt<T> for [T] {
 
 fn demonstrate_lazy_evaluation() {
     let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    
+
     println!("Creating iterator (no work done yet)...");
     let iter = data.find_range(&3, &8);
-    
+
     println!("Iterator created - data not yet accessed!");
     println!("Now calling .take(2) to get first 2 elements...");
-    
+
     let first_two: Vec<_> = iter.take(2).collect();
     println!("Result: {:?}", first_two);
     println!("Notice: Only needed elements were accessed!");

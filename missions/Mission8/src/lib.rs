@@ -29,7 +29,7 @@
 //! // Create algorithm states (actual BFS/DFS implementations in REQ-1)
 //! let bfs_state: BFSState<u32> = BFSState::new(0);
 //! let dfs_state: DFSState<u32> = DFSState::new(0);
-//! 
+//!
 //! // Verify state initialization
 //! assert!(bfs_state.visited().contains(&0));
 //! assert!(dfs_state.visited().contains(&0));
@@ -179,7 +179,7 @@ use std::collections::{HashMap, HashSet, VecDeque};
 pub trait Graph {
     /// The node type used in this graph.
     type Node: Copy + Eq + std::hash::Hash;
-    
+
     /// Get all neighbors of a node.
     ///
     /// # Arguments
@@ -191,7 +191,7 @@ pub trait Graph {
     /// Vector of all nodes directly connected to the input node.
     /// Returns empty vector if node has no neighbors or doesn't exist.
     fn neighbors(&self, node: Self::Node) -> Vec<Self::Node>;
-    
+
     /// Check if graph contains a specific node.
     ///
     /// # Arguments
@@ -202,7 +202,7 @@ pub trait Graph {
     ///
     /// `true` if the node exists in the graph, `false` otherwise.
     fn contains(&self, node: Self::Node) -> bool;
-    
+
     /// Get all nodes in the graph.
     ///
     /// # Returns
@@ -219,7 +219,7 @@ pub trait Graph {
 pub enum GraphError {
     /// A requested node does not exist in the graph.
     NodeNotFound(String),
-    
+
     /// No path exists between two nodes.
     NoPathExists {
         /// The starting node
@@ -227,10 +227,10 @@ pub enum GraphError {
         /// The destination node
         to: String,
     },
-    
+
     /// A cycle was detected in the graph.
     CycleDetected(Vec<String>),
-    
+
     /// Invalid input provided to algorithm.
     InvalidInput(String),
 }
@@ -268,10 +268,10 @@ impl std::error::Error for GraphError {}
 pub struct BFSState<N: Copy + Eq + std::hash::Hash> {
     /// Nodes that have been visited
     visited: HashSet<N>,
-    
+
     /// Queue of nodes to process (FIFO)
     queue: VecDeque<N>,
-    
+
     /// Parent of each node (for path reconstruction) - will be used in REQ-2
     _parent: HashMap<N, N>,
 }
@@ -289,22 +289,22 @@ impl<N: Copy + Eq + std::hash::Hash> BFSState<N> {
     pub fn new(start: N) -> Self {
         let mut visited = HashSet::new();
         let mut queue = VecDeque::new();
-        
+
         visited.insert(start);
         queue.push_back(start);
-        
+
         Self {
             visited,
             queue,
             _parent: HashMap::new(),
         }
     }
-    
+
     /// Get all visited nodes so far.
     pub fn visited(&self) -> &HashSet<N> {
         &self.visited
     }
-    
+
     /// Check if there are more nodes to process.
     pub fn has_next(&self) -> bool {
         !self.queue.is_empty()
@@ -323,10 +323,10 @@ impl<N: Copy + Eq + std::hash::Hash> BFSState<N> {
 pub struct DFSState<N: Copy + Eq + std::hash::Hash> {
     /// Nodes that have been visited
     visited: HashSet<N>,
-    
+
     /// Stack of nodes to process (LIFO)
     stack: Vec<N>,
-    
+
     /// Parent of each node (for path reconstruction) - will be used in REQ-2
     _parent: HashMap<N, N>,
 }
@@ -344,22 +344,22 @@ impl<N: Copy + Eq + std::hash::Hash> DFSState<N> {
     pub fn new(start: N) -> Self {
         let mut visited = HashSet::new();
         let mut stack = Vec::new();
-        
+
         visited.insert(start);
         stack.push(start);
-        
+
         Self {
             visited,
             stack,
             _parent: HashMap::new(),
         }
     }
-    
+
     /// Get all visited nodes so far.
     pub fn visited(&self) -> &HashSet<N> {
         &self.visited
     }
-    
+
     /// Check if there are more nodes to process.
     pub fn has_next(&self) -> bool {
         !self.stack.is_empty()
@@ -377,21 +377,21 @@ mod tests {
     fn test_graph_error_display() {
         let err = GraphError::NodeNotFound("node5".to_string());
         assert_eq!(err.to_string(), "Node not found: node5");
-        
+
         let err = GraphError::NoPathExists {
             from: "A".to_string(),
             to: "B".to_string(),
         };
         assert_eq!(err.to_string(), "No path exists from A to B");
     }
-    
+
     #[test]
     fn test_bfs_state_creation() {
         let state: BFSState<u32> = BFSState::new(0);
         assert!(state.visited().contains(&0));
         assert!(state.has_next());
     }
-    
+
     #[test]
     fn test_dfs_state_creation() {
         let state: DFSState<u32> = DFSState::new(0);
