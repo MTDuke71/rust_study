@@ -296,7 +296,7 @@ fn solve_real_world_problems() {
     println!("\n   📡 **Problem 2: Network Packet Buffer**");
     println!("      Scenario: Router needs bounded buffer for incoming packets");
 
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     struct NetworkPacket {
         source_ip: [u8; 4],
         dest_ip: [u8; 4],
@@ -525,18 +525,18 @@ fn demonstrate_advanced_patterns() {
     println!("\n   1️⃣  **Priority Queue with Ring Buffer Base**");
 
     #[derive(Debug, Clone, PartialEq, Eq)]
-    struct PriorityItem<T> {
+    struct PriorityItem<T: PartialEq + Eq> {
         data: T,
         priority: u8, // 0 = highest priority
     }
 
-    impl<T> PartialOrd for PriorityItem<T> {
+    impl<T: PartialEq + Eq> PartialOrd for PriorityItem<T> {
         fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
             Some(self.cmp(other))
         }
     }
 
-    impl<T> Ord for PriorityItem<T> {
+    impl<T: PartialEq + Eq> Ord for PriorityItem<T> {
         fn cmp(&self, other: &Self) -> std::cmp::Ordering {
             // Reverse ordering: lower priority number = higher priority
             other.priority.cmp(&self.priority)
@@ -551,7 +551,7 @@ fn demonstrate_advanced_patterns() {
         capacity_per_level: usize,
     }
 
-    impl<T> PriorityRingQueue<T> {
+    impl<T: Clone> PriorityRingQueue<T> {
         fn new(capacity_per_level: usize) -> Self {
             Self {
                 buffers: [
@@ -628,7 +628,7 @@ fn demonstrate_advanced_patterns() {
         capacity: usize,
     }
 
-    impl<T> ThreadSafeRingQueue<T> {
+    impl<T: Clone> ThreadSafeRingQueue<T> {
         fn new(capacity: usize) -> Self {
             Self {
                 buffer: vec![None; capacity],
@@ -1032,7 +1032,7 @@ fn discuss_production_deployment() {
         dropped_items: u64,
     }
 
-    impl<T> ResilientQueue<T> {
+    impl<T: Clone> ResilientQueue<T> {
         fn new(capacity: usize) -> Self {
             Self {
                 primary: vec![None; capacity],

@@ -6,7 +6,7 @@
 //! - References (&T) for borrowing without taking ownership
 //! - Mutable references (&mut T) for borrowing with modification rights
 //! - Borrowing rules: multiple immutable OR one mutable reference
-//! - Slices (&[T] and &mut [T]) for working with parts of collections
+//! - Slices (&\[T\] and &mut \[T\]) for working with parts of collections
 //! - Method receivers (`&self`, `&mut self`) leverage borrowing in types
 //! - Dangling reference prevention
 //! - Reference lifetime basics with explicit annotations

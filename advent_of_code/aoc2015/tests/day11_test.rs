@@ -43,7 +43,7 @@ fn test_has_straight_embedded() {
 fn test_no_straight() {
     assert!(!has_increasing_straight("abd")); // Skips 'c'
     assert!(!has_increasing_straight("abbceffg")); // No consecutive run
-    assert!(!has_increasing_straight("aabccdef")); // No 3-letter straight
+    assert!(!has_increasing_straight("acegikm")); // No 3-letter straight
 }
 
 // ============================================================================
@@ -164,7 +164,6 @@ fn test_edge_case_three_in_row() {
 // ============================================================================
 
 #[test]
-#[ignore] // Remove #[ignore] once solve_part1 is implemented
 fn test_find_next_password_example1() {
     // abcdefgh → next valid should be abcdffaa
     let result = solve_part1("abcdefgh").unwrap();
@@ -172,7 +171,6 @@ fn test_find_next_password_example1() {
 }
 
 #[test]
-#[ignore] // Remove #[ignore] once solve_part1 is implemented
 fn test_find_next_password_example2() {
     // ghijklmn → next valid should be ghjaabcc
     let result = solve_part1("ghijklmn").unwrap();

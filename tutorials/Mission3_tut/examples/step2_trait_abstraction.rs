@@ -29,6 +29,17 @@ fn main() {
     println!("Vec:   {:?}", search_in(&vec_data, &6));
     println!("Array: {:?}", search_in(&array_data, &15));
 
+    // Demonstrate the is_empty method
+    println!("\n📖 Section 2.5: Default Methods in Traits\n");
+    println!("Traits can provide default implementations:");
+    let empty_slice: &[i32] = &[];
+    let non_empty_slice = &[1, 2, 3];
+
+    println!("Empty slice is_empty(): {}", empty_slice.is_empty());
+    println!("Non-empty slice is_empty(): {}", non_empty_slice.is_empty());
+    println!("Empty slice len(): {}", empty_slice.len());
+    println!("Non-empty slice len(): {}", non_empty_slice.len());
+
     // Section 3: Associated Types
     println!("\n📖 Section 3: Associated Types in Traits\n");
     println!("Associated types let traits specify:");

@@ -11,7 +11,7 @@
 //! 1. **Basic Enums**: Simple variants without data
 //! 2. **Enums with Data**: Each variant can hold different types of data
 //! 3. **Enum Methods**: Adding behavior with `impl` blocks
-//! 4. **Option<T>**: Rust's built-in enum for handling optional values (no null!)
+//! 4. **Option\<T\>**: Rust's built-in enum for handling optional values (no null!)
 //! 5. **Real-World Usage**: HTTP status codes, state machines
 //! 6. **AoC Patterns**: Direction enums for grid-based problems
 //!
@@ -27,7 +27,7 @@
 //! ## 💡 Why Enums Matter
 //!
 //! - **Type Safety**: Compiler ensures you handle all possible variants
-//! - **No Null Pointers**: Option<T> replaces null with compile-time checking
+//! - **No Null Pointers**: Option\<T\> replaces null with compile-time checking
 //! - **Pattern Matching**: Exhaustive matching prevents bugs
 //! - **Mission5 Connection**: Enum-based instruction modeling (Day 7 AoC)
 //!

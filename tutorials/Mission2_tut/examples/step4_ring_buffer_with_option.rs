@@ -231,7 +231,7 @@ fn demonstrate_complete_ring_buffer() {
         Empty,
     }
 
-    impl<T> RingBuffer<T> {
+    impl<T: Clone> RingBuffer<T> {
         fn new(capacity: usize) -> Self {
             Self {
                 buffer: vec![None; capacity],
@@ -410,7 +410,7 @@ fn demonstrate_error_handling() {
         length: usize,
     }
 
-    impl<T> SimpleQueue<T> {
+    impl<T: Clone> SimpleQueue<T> {
         fn new(capacity: usize) -> Self {
             Self {
                 buffer: vec![None; capacity],
@@ -477,7 +477,7 @@ fn demonstrate_real_world_usage() {
     println!("   🌍 **Real-World Ring Buffer Applications:**");
 
     println!("\n   1️⃣  **Audio Buffer Example:**");
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     struct AudioSample {
         left: f32,
         right: f32,
@@ -542,7 +542,7 @@ fn demonstrate_real_world_usage() {
     }
 
     println!("\n   2️⃣  **Network Packet Buffer:**");
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     struct Packet {
         id: u32,
         data: Vec<u8>,
@@ -620,7 +620,7 @@ fn demonstrate_real_world_usage() {
     }
 
     println!("\n   3️⃣  **Message Queue Example:**");
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     enum Message {
         Text(String),
         Image {

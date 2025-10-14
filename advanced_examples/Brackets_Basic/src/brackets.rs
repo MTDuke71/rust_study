@@ -158,7 +158,7 @@ pub struct BracketError {
 /// assert_eq!(opening_to_expected_closer('{'), Some('}'));
 /// assert_eq!(opening_to_expected_closer('a'), None);
 /// ```
-fn opening_to_expected_closer(c: char) -> Option<char> {
+pub fn opening_to_expected_closer(c: char) -> Option<char> {
     match c {
         '(' => Some(')'),
         '[' => Some(']'),
@@ -195,7 +195,7 @@ fn opening_to_expected_closer(c: char) -> Option<char> {
 /// assert_eq!(is_closing('('), false);
 /// assert_eq!(is_closing('a'), false);
 /// ```
-fn is_closing(c: char) -> bool {
+pub fn is_closing(c: char) -> bool {
     matches!(c, ')' | ']' | '}')
 }
 

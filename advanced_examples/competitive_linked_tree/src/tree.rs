@@ -9,7 +9,7 @@ pub type NodeId = usize;
 ///
 /// # Requirements Satisfied: REQ-T1, REQ-T2, REQ-T4
 ///
-/// Stores edges as Vec<Vec<NodeId>> where tree[u] contains all neighbors of node u.
+/// Stores edges as Vec\<Vec\<NodeId\>\> where tree\[u\] contains all neighbors of node u.
 /// Optimized for competitive programming where edges are given as pairs and
 /// we need fast neighbor iteration during BFS.
 pub struct Tree {

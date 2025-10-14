@@ -94,7 +94,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
 /// ```
 ///
 /// ## TODO: Implementation Steps
-/// 1. Convert string to Vec<char> for mutability
+/// 1. Convert string to Vec\<char\> for mutability
 /// 2. Start from the last character (rightmost)
 /// 3. Loop backwards through characters:
 ///    - If char < 'z': increment and return
@@ -182,9 +182,9 @@ pub fn is_valid_password(password: &str) -> bool {
 /// - "hijklmmn" → true (hij is a straight)
 ///
 /// ## TODO: Implementation Steps
-/// 1. Convert string to Vec<char> or iterate with windows
+/// 1. Convert string to Vec\<char\> or iterate with windows
 /// 2. Check every 3-character window
-/// 3. For each window, check if char[i+1] == char[i]+1 && char[i+2] == char[i]+2
+/// 3. For each window, check if char\[i+1\] == char\[i\]+1 && char\[i+2\] == char\[i\]+2
 /// 4. Return true if any window is a straight
 ///
 /// ## Optimization Ideas
@@ -242,7 +242,7 @@ pub fn has_no_forbidden_chars(password: &str) -> bool {
 ///
 /// ## TODO: Implementation Steps
 /// 1. Iterate through password characters
-/// 2. When you find a pair (char[i] == char[i+1]), record it
+/// 2. When you find a pair (char\[i\] == char\[i+1\]), record it
 /// 3. Skip the next character to avoid overlapping
 /// 4. Count distinct pairs found
 /// 5. Return true if count >= 2

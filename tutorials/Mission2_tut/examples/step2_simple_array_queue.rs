@@ -29,7 +29,7 @@ struct SimpleArrayQueue<T> {
     items: Vec<T>,
 }
 
-impl<T> SimpleArrayQueue<T> {
+impl<T: std::fmt::Debug> SimpleArrayQueue<T> {
     /// Create a new empty queue
     fn new() -> Self {
         SimpleArrayQueue { items: Vec::new() }

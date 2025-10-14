@@ -169,8 +169,7 @@ fn demonstrate_error_transformation() {
 }
 
 /// Custom error type for demonstration
-#[derive(Debug)]
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 enum MathError {
     DivisionByZero,
     NegativeSquareRoot,

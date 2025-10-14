@@ -1,0 +1,957 @@
+DETAILED COVERAGE REPORT
+========================
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/examples/advanced_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/examples/algorithm_analysis.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/examples/documentation_example.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/examples/documentation_standards.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/examples/simple_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/examples/test_documentation_standards.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/src/brackets.rs
+  Lines: 32 | Covered: 26 | Coverage: 81.25%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/tests/brackets_checker_test.rs
+  Lines: 66 | Covered: 58 | Coverage: 87.88%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Basic/tests/utf8_test.rs
+  Lines: 7 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Ext/examples/extended_features_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Ext/src/brackets.rs
+  Lines: 75 | Covered: 62 | Coverage: 82.67%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Ext/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Ext/src/stack.rs
+  Lines: 12 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Ext/tests/brackets_checker_test.rs
+  Lines: 63 | Covered: 54 | Coverage: 85.71%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Ext/tests/brackets_extended_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Ext/tests/brackets_requirements_test.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/Brackets_Ext/tests/brackets_unit_test.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_linked_tree/benches/tree_diameter_bench.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_linked_tree/examples/tree_diameter_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_linked_tree/src/diameter.rs
+  Lines: 47 | Covered: 42 | Coverage: 89.36%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_linked_tree/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_linked_tree/src/main.rs
+  Lines: 188 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_linked_tree/src/tree.rs
+  Lines: 38 | Covered: 33 | Coverage: 86.84%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_linked_tree/tests/integration_test.rs
+  Lines: 17 | Covered: 16 | Coverage: 94.12%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_ring_bfs/examples/maze_solver_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_ring_bfs/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_ring_bfs/src/main.rs
+  Lines: 155 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_ring_bfs/src/maze.rs
+  Lines: 52 | Covered: 49 | Coverage: 94.23%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_ring_bfs/src/solver.rs
+  Lines: 42 | Covered: 38 | Coverage: 90.48%
+
+File: D:/\/repos/rust_study/advanced_examples/competitive_ring_bfs/tests/integration_test.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/benches/day10_comparison.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day02alt.rs
+  Lines: 28 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day04_unit_test_examples.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day06_brightness_visualizer.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day06_hashmap.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day06_parser_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day06_verification.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day06_visualizer.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day07_debug/day07_debug_condensed.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day07_debug/day07_debug_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day07_debug/day07_part2_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day07_debug/day07_template_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day08_example.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day08_string_handling_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/day10_with_memo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/md5_analysis.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/examples/optimized_brute_force.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/grid.rs
+  Lines: 28 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/main.rs
+  Lines: 26 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/parser.rs
+  Lines: 12 | Covered: 1 | Coverage: 8.33%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day01.rs
+  Lines: 17 | Covered: 17 | Coverage: 100%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day02.rs
+  Lines: 31 | Covered: 4 | Coverage: 12.9%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day03.rs
+  Lines: 32 | Covered: 26 | Coverage: 81.25%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day04.rs
+  Lines: 18 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day05.rs
+  Lines: 33 | Covered: 33 | Coverage: 100%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day06.rs
+  Lines: 64 | Covered: 44 | Coverage: 68.75%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day07.rs
+  Lines: 187 | Covered: 19 | Coverage: 10.16%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day08.rs
+  Lines: 67 | Covered: 45 | Coverage: 67.16%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day09.rs
+  Lines: 39 | Covered: 32 | Coverage: 82.05%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day10.rs
+  Lines: 21 | Covered: 9 | Coverage: 42.86%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day10_sol.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day11.rs
+  Lines: 62 | Covered: 55 | Coverage: 88.71%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/day12.rs
+  Lines: 23 | Covered: 13 | Coverage: 56.52%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/src/solver/mod.rs
+  Lines: 15 | Covered: 3 | Coverage: 20%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/tests/day01_examples.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/tests/day05_examples.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/tests/day06_examples.rs
+  Lines: 6 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/tests/day06_parser_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/tests/day07_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/tests/day08_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/tests/day11_test.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/tests/day_template.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc2015/tests/integration.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/examples/grid_patterns_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/examples/parsing_patterns_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/examples/pattern_trainer_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/examples/real_aoc_solutions.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/examples/simple_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/examples/state_patterns_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/src/grid_patterns.rs
+  Lines: 157 | Covered: 63 | Coverage: 40.13%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/src/lib.rs
+  Lines: 14 | Covered: 3 | Coverage: 21.43%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/src/parsing_patterns.rs
+  Lines: 161 | Covered: 83 | Coverage: 51.55%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/src/pattern_trainer.rs
+  Lines: 241 | Covered: 155 | Coverage: 64.32%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/src/state_patterns.rs
+  Lines: 203 | Covered: 129 | Coverage: 63.55%
+
+File: D:/\/repos/rust_study/advent_of_code/aoc_pattern_recognition/tests/pattern_recognition_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/grid.rs
+  Lines: 16 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/main.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/parser.rs
+  Lines: 6 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/solver/day01.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/solver/day02.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/solver/day03.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/solver/day04.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/solver/day05.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/src/solver/mod.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/tests/day_template.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/archived/aoc_scaffold_templates_with_tests/tests/integration.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week4_notes/bfs_path_demo.rs
+  Lines: 29 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/Day29.rs
+  Lines: 4 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/Day30.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/Day31.rs
+  Lines: 6 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/Day32.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/Day33.rs
+  Lines: 13 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/Day34.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/Day35.rs
+  Lines: 48 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/examples/day29_custom_errors.rs
+  Lines: 3 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/examples/day30_error_propagation.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/examples/day31_anyhow_thiserror.rs
+  Lines: 6 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/examples/day32_result_combinators.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/examples/day33_panic_recovery.rs
+  Lines: 13 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/examples/day34_error_patterns.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/examples/day35_robust_parsing.rs
+  Lines: 52 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/examples/file_processor.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/daily_study/rust_learning_week5_notes/examples/web_api_errors.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/baby_steps.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/compare_with_vec.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/complete_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/constructors_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/copy_vs_move.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/exclusive_access_deep_dive.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/exclusive_access_violations.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/first_day.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/generics_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/lifo_integration.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/move_error_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/ownership_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/peek_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/peek_mut_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/performance_check.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/pop_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/second_day.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/examples/why_req1_failed.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/src/experiments.rs
+  Lines: 20 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/src/integration_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission1/src/stack.rs
+  Lines: 16 | Covered: 16 | Coverage: 100%
+
+File: D:/\/repos/rust_study/missions/Mission1/tests/stack_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission2/examples/overwrite_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission2/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission2/src/main.rs
+  Lines: 237 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission2/src/queue.rs
+  Lines: 68 | Covered: 60 | Coverage: 88.24%
+
+File: D:/\/repos/rust_study/missions/Mission2/src/queue_alt.rs
+  Lines: 59 | Covered: 52 | Coverage: 88.14%
+
+File: D:/\/repos/rust_study/missions/Mission2/tests/queue_alt_test.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission2/tests/queue_test.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission3/examples/aoc_style_examples.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission3/examples/demo.rs
+  Lines: 4 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission3/examples/performance_comparison.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission3/src/aoc_utils.rs
+  Lines: 42 | Covered: 38 | Coverage: 90.48%
+
+File: D:/\/repos/rust_study/missions/Mission3/src/binary_search.rs
+  Lines: 48 | Covered: 45 | Coverage: 93.75%
+
+File: D:/\/repos/rust_study/missions/Mission3/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission3/src/main.rs
+  Lines: 34 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission3/src/search_iter.rs
+  Lines: 35 | Covered: 31 | Coverage: 88.57%
+
+File: D:/\/repos/rust_study/missions/Mission3/src/searchable.rs
+  Lines: 51 | Covered: 50 | Coverage: 98.04%
+
+File: D:/\/repos/rust_study/missions/Mission3/tests/requirements_test.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission4/examples/demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission4/examples/interior_mutability_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission4/examples/performance_comparison.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission4/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission4/src/linked_list.rs
+  Lines: 124 | Covered: 103 | Coverage: 83.06%
+
+File: D:/\/repos/rust_study/missions/Mission4/tests/linked_list_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission5/examples/demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission5/src/counter.rs
+  Lines: 61 | Covered: 36 | Coverage: 59.02%
+
+File: D:/\/repos/rust_study/missions/Mission5/src/dictionary.rs
+  Lines: 48 | Covered: 30 | Coverage: 62.5%
+
+File: D:/\/repos/rust_study/missions/Mission5/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission5/src/memo_cache.rs
+  Lines: 67 | Covered: 49 | Coverage: 73.13%
+
+File: D:/\/repos/rust_study/missions/Mission5/src/set_operations.rs
+  Lines: 66 | Covered: 51 | Coverage: 77.27%
+
+File: D:/\/repos/rust_study/missions/Mission5/tests/hash_structures_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission6/benches/grid_benchmarks.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission6/examples/aoc_examples.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission6/examples/demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission6/examples/grid_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission6/examples/size_hint_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission6/src/aoc_utils.rs
+  Lines: 157 | Covered: 82 | Coverage: 52.23%
+
+File: D:/\/repos/rust_study/missions/Mission6/src/coord.rs
+  Lines: 95 | Covered: 87 | Coverage: 91.58%
+
+File: D:/\/repos/rust_study/missions/Mission6/src/direction.rs
+  Lines: 156 | Covered: 98 | Coverage: 62.82%
+
+File: D:/\/repos/rust_study/missions/Mission6/src/flood_fill.rs
+  Lines: 122 | Covered: 76 | Coverage: 62.3%
+
+File: D:/\/repos/rust_study/missions/Mission6/src/grid.rs
+  Lines: 136 | Covered: 126 | Coverage: 92.65%
+
+File: D:/\/repos/rust_study/missions/Mission6/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission6/src/pathfinding.rs
+  Lines: 159 | Covered: 76 | Coverage: 47.8%
+
+File: D:/\/repos/rust_study/missions/Mission7/examples/demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission7/src/lib.rs
+  Lines: 203 | Covered: 135 | Coverage: 66.5%
+
+File: D:/\/repos/rust_study/missions/Mission7/tests/graph_integration_tests.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/missions/Mission8/src/lib.rs
+  Lines: 29 | Covered: 25 | Coverage: 86.21%
+
+File: D:/\/repos/rust_study/rust_book/Ch1/hello_cargo/src/main.rs
+  Lines: 2 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch1/hello_world/main.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch2/guessing_game/src/main.rs
+  Lines: 16 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch3/control_flow/src/main.rs
+  Lines: 55 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch3/data_types/src/main.rs
+  Lines: 65 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch3/functions/src/main.rs
+  Lines: 25 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch3/variables/src/main.rs
+  Lines: 14 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch4/ownership/src/main.rs
+  Lines: 57 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch4/references/src/main.rs
+  Lines: 172 | Covered: 22 | Coverage: 12.79%
+
+File: D:/\/repos/rust_study/rust_book/Ch4/slices/src/main.rs
+  Lines: 46 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch5/method_syntax/examples/memory_address_demo.rs
+  Lines: 4 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch5/method_syntax/examples/virtual_memory_explained.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch5/method_syntax/src/main.rs
+  Lines: 59 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch5/rectangles/src/main.rs
+  Lines: 25 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch5/structs/src/main.rs
+  Lines: 22 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch6/defining_enums/src/main.rs
+  Lines: 157 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch6/if_let/generic_naming_demo.rs
+  Lines: 7 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch6/if_let/src/main.rs
+  Lines: 245 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch6/match_operator/src/main.rs
+  Lines: 186 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch7/crates/src/binary_example.rs
+  Lines: 20 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch7/crates/src/lib.rs
+  Lines: 24 | Covered: 18 | Coverage: 75%
+
+File: D:/\/repos/rust_study/rust_book/Ch7/crates/src/library_example.rs
+  Lines: 22 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch7/modules/src/main.rs
+  Lines: 73 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch7/packages/src/main.rs
+  Lines: 48 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch7/paths/src/main.rs
+  Lines: 82 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch7/visibility/src/main.rs
+  Lines: 89 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch8/exercises/src/main.rs
+  Lines: 176 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch8/hashmaps/src/main.rs
+  Lines: 210 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch8/strings/src/main.rs
+  Lines: 187 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch8/vectors/src/main.rs
+  Lines: 425 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch9/error_propagation/src/main.rs
+  Lines: 202 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch9/exercises/src/main.rs
+  Lines: 360 | Covered: 10 | Coverage: 2.78%
+
+File: D:/\/repos/rust_study/rust_book/Ch9/recoverable_errors/src/main.rs
+  Lines: 140 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/rust_book/Ch9/unrecoverable_errors/src/main.rs
+  Lines: 90 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission1_tut/examples/step1_basic_stack.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission1_tut/examples/step2_generic_stack.rs
+  Lines: 13 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission1_tut/examples/step3_ownership_patterns.rs
+  Lines: 14 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission1_tut/examples/step4_error_handling.rs
+  Lines: 30 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission1_tut/examples/step5_dynamic_growth.rs
+  Lines: 22 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission1_tut/examples/step6_real_world_applications.rs
+  Lines: 12 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission1_tut/examples/step7_final_project.rs
+  Lines: 63 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission2_tut/examples/step1_queue_basics.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission2_tut/examples/step2_simple_array_queue.rs
+  Lines: 22 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission2_tut/examples/step3_ring_buffer_basics.rs
+  Lines: 39 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission2_tut/examples/step4_ring_buffer_with_option.rs
+  Lines: 50 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission2_tut/examples/step5_production_queue.rs
+  Lines: 173 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission2_tut/examples/step6_linked_queues.rs
+  Lines: 140 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission2_tut/examples/step7_mission_integration.rs
+  Lines: 115 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission2_tut/src/lib.rs
+  Lines: 1 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission3_tut/examples/step1_basic_binary_search.rs
+  Lines: 54 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission3_tut/examples/step2_trait_abstraction.rs
+  Lines: 28 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission3_tut/examples/step3_iterator_patterns.rs
+  Lines: 34 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission3_tut/examples/step4_custom_ordering.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission3_tut/examples/step5_lifetimes_and_borrowing.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission3_tut/examples/step6_aoc_applications.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission3_tut/examples/step7_integration_project.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/get_data_comparison.rs
+  Lines: 40 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/memory_location_demo.rs
+  Lines: 15 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/simple_memory_demo.rs
+  Lines: 11 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step1_basic_structure.rs
+  Lines: 5 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step2_enhanced_no_warnings.rs
+  Lines: 17 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step2_push_front.rs
+  Lines: 10 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step3_enhanced_no_warnings.rs
+  Lines: 23 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step3_peeking.rs
+  Lines: 13 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step4_popping.rs
+  Lines: 18 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step5_enhanced_no_warnings.rs
+  Lines: 25 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step5_rc_basics.rs
+  Lines: 16 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step6_borrow_checking.rs
+  Lines: 31 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step6_enhanced_no_warnings.rs
+  Lines: 40 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/step7_performance.rs
+  Lines: 35 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/type_breakdown_demo.rs
+  Lines: 5 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/unsafe_fixed_but_dangerous.rs
+  Lines: 22 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/examples/unsafe_pointer_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/linked_list_practice/src/lib.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/linked_list_practice/src/linked_list.rs
+  Lines: 8 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/linked_list_practice/src/main.rs
+  Lines: 8 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/solutions/exercise1_solution.rs
+  Lines: 39 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/solutions/exercise2_solution.rs
+  Lines: 76 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission4_tut/solutions/exercise3_solution.rs
+  Lines: 200 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/automotive_brake_safety_analysis.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/challenge3_multiplayer.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/closure_tutorial.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/day11_custom_hash_tutorial.rs
+  Lines: 15 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/day11_hashset_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/debug_day5_part2.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/dictionary_wrapper_analysis.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/eq_vs_partial_eq_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/file_reading_patterns.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/final_project.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/grid_access_patterns.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/hashmap_order_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/hashmap_order_variance.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/hashmap_value_support.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/hashset_bucket_management.rs
+  Lines: 4 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/hashset_collision_deep_dive.rs
+  Lines: 9 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/hashset_implementation_proof.rs
+  Lines: 12 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/hashset_vs_hashmap_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/impl_block_organization.rs
+  Lines: 24 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/max_by_key_breakdown.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/realtime_hashset_issues.rs
+  Lines: 37 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/regex_tutorial.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/simple_even_odd_split.rs
+  Lines: 7 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/step1_basic_hashmap.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/step2_hashset_operations.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/step3_frequency_counting.rs
+  Lines: 20 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/step4_multi_value_patterns.rs
+  Lines: 23 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/step5_memoization_cache.rs
+  Lines: 41 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/string_split_even_odd.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/struct_bounds_explanation.rs
+  Lines: 2 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/type_inference_demo.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/unwrap_or_vs_or_insert.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/examples/wrapper_explanation.rs
+  Lines: 4 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission5_tut/src/lib.rs
+  Lines: 15 | Covered: 10 | Coverage: 66.67%
+
+File: D:/\/repos/rust_study/tutorials/Mission6_tut/examples/step1_grid_setup.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission6_tut/examples/step2_grid_indexing.rs
+  Lines: 6 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission6_tut/examples/step3_coordinates.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission6_tut/examples/step4_dijkstra.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission6_tut/examples/step4_pathfinding.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission6_tut/examples/step5_aoc_utilities.rs
+  Lines: 81 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission6_tut/examples/step6_performance.rs
+  Lines: 16 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission6_tut/examples/step7_documentation.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission6_tut/src/lib.rs
+  Lines: 38 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission7_tut/examples/step1_graph_fundamentals.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission7_tut/examples/step2_adjacency_lists.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission7_tut/examples/step3_edge_management.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission7_tut/examples/step4_algorithm_foundation.rs
+  Lines: 7 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission7_tut/examples/step5_dfs_implementation.rs
+  Lines: 74 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission7_tut/examples/step6_bfs_implementation.rs
+  Lines: 97 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission7_tut/examples/step7_integration_project.rs
+  Lines: 130 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission7_tut/src/lib.rs
+  Lines: 49 | Covered: 0 | Coverage: 0%
+
+File: D:/\/repos/rust_study/tutorials/Mission8_tut/examples/step1_algorithm_traits.rs
+  Lines: 0 | Covered: 0 | Coverage: 0%
+
+
+OVERALL SUMMARY
+===============
+Total Lines: 9995
+Covered Lines: 2438
+Overall Coverage: 24.39%

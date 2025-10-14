@@ -9,7 +9,7 @@
 //! ### REQ-1: Graph Structure and Node Storage
 //! - Generic graph implementation with adjacency list representation
 //! - Support for both directed and undirected graphs
-//! - Efficient node storage with Vec<Vec<usize>> adjacency lists
+//! - Efficient node storage with Vec\<Vec\<usize\>\> adjacency lists
 //! - Node metadata support for weighted graphs and additional properties
 //!
 //! ### REQ-2: Edge Management Operations

@@ -231,7 +231,6 @@ fn exercise_3_custom_errors() {
     // Problem 1: Calculator with custom errors
     println!("Problem 1: Calculator with Custom Errors");
 
-
     type CalculatorTest = (&'static str, Box<dyn Fn() -> Result<f64, CalculatorError>>);
     let calc_tests: Vec<CalculatorTest> = vec![
         ("10 ÷ 2", Box::new(|| Calculator::divide(10.0, 2.0))),
@@ -816,7 +815,7 @@ mod tests {
             Err(CalculatorError::DivisionByZero)
         );
         assert!(matches!(
-            Calculator::power(2.0, 1000.0),
+            Calculator::power(2.0, 10000.0),
             Err(CalculatorError::Overflow)
         ));
     }

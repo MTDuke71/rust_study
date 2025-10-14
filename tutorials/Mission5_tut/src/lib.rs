@@ -26,7 +26,7 @@
 //! - N-gram analysis for text processing
 //!
 //! ### Step 4: Multi-Value Patterns
-//! - One-to-many relationships with HashMap<K, Vec<V>>
+//! - One-to-many relationships with HashMap\<K, Vec\<V\>\>
 //! - Graph adjacency lists
 //! - Data grouping and categorization
 //! - Reverse indexing for search
@@ -69,6 +69,7 @@
 //! let alice_score = scores.get("Alice").unwrap_or(&0);
 //!
 //! // Frequency counting
+//! let text = "hello world hello rust";
 //! let mut word_count = HashMap::new();
 //! for word in text.split_whitespace() {
 //!     *word_count.entry(word).or_insert(0) += 1;
@@ -80,7 +81,8 @@
 //!
 //! // Memoization
 //! let mut cache = HashMap::new();
-//! let result = cache.entry(input).or_insert_with(|| expensive_computation(input));
+//! let input = "test_input";
+//! let result = cache.entry(input).or_insert_with(|| input.len());
 //! ```
 //!
 //! ### HashSet Usage Patterns
@@ -89,14 +91,19 @@
 //! use std::collections::HashSet;
 //!
 //! // Deduplication
+//! let data = vec![1, 2, 2, 3, 3, 3];
 //! let unique_items: HashSet<_> = data.into_iter().collect();
 //!
 //! // Set operations
-//! let intersection: HashSet<_> = set1.intersection(&set2).collect();
-//! let union: HashSet<_> = set1.union(&set2).collect();
-//! let difference: HashSet<_> = set1.difference(&set2).collect();
+//! let set1: HashSet<_> = [1, 2, 3].iter().cloned().collect();
+//! let set2: HashSet<_> = [2, 3, 4].iter().cloned().collect();
+//! let intersection: HashSet<_> = set1.intersection(&set2).cloned().collect();
+//! let union: HashSet<_> = set1.union(&set2).cloned().collect();
+//! let difference: HashSet<_> = set1.difference(&set2).cloned().collect();
 //!
 //! // Membership testing (O(1) average)
+//! let blacklist: HashSet<_> = ["bad", "evil"].iter().cloned().collect();
+//! let item = "bad";
 //! if blacklist.contains(&item) {
 //!     // Handle blacklisted item
 //! }

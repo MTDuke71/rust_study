@@ -245,28 +245,43 @@ function Test-Clippy {
 function Test-Suite {
     Write-QAInfo "🧪 Running test suite..."
     
-    # Run tests with JSON output for parsing
-    $testOutput = & cargo test --workspace --message-format=json 2>&1
+        # Run tests for all packages
+        $testOutput = & cargo test --workspace 2>&1
     $exitCode = $LASTEXITCODE
     
-    # Parse test results (simplified - could be more robust)
-    $testResults = $testOutput | Where-Object { $_ -match '"type":"test"' } | ConvertFrom-Json
-    $passed = ($testResults | Where-Object { $_.event -eq "ok" } | Measure-Object).Count
-    $failed = ($testResults | Where-Object { $_.event -eq "failed" } | Measure-Object).Count
+    # Parse test results from the human-readable output
+    $testResultLines = $testOutput | Select-String "test result:"
+    $totalPassed = 0
+    $totalFailed = 0
+    $totalIgnored = 0
+    
+    foreach ($line in $testResultLines) {
+        if ($line.Line -match "test result: ok\. (\d+) passed; (\d+) failed; (\d+) ignored") {
+            $totalPassed += [int]$matches[1]
+            $totalFailed += [int]$matches[2] 
+            $totalIgnored += [int]$matches[3]
+        } elseif ($line.Line -match "test result: FAILED\. (\d+) passed; (\d+) failed; (\d+) ignored") {
+            $totalPassed += [int]$matches[1]
+            $totalFailed += [int]$matches[2]
+            $totalIgnored += [int]$matches[3]
+        }
+    }
     
     $QualityReport.TestResults = @{
-        Passed = $passed
-        Failed = $failed  
-        Total = $passed + $failed
+        Passed = $totalPassed
+        Failed = $totalFailed  
+        Ignored = $totalIgnored
+        Total = $totalPassed + $totalFailed
     }
     
     # Save test results to file
     $additionalData = @{
-        "Passed" = $passed
-        "Failed" = $failed
-        "Total" = $passed + $failed
-        "Command" = "cargo test --workspace --message-format=json"
-        "Success Rate" = if (($passed + $failed) -gt 0) { [math]::Round(($passed / ($passed + $failed)) * 100, 2) } else { 0 }
+        "Passed" = $totalPassed
+        "Failed" = $totalFailed
+        "Ignored" = $totalIgnored
+        "Total" = $totalPassed + $totalFailed
+        "Command" = "cargo test --workspace"
+        "Success Rate" = if (($totalPassed + $totalFailed) -gt 0) { [math]::Round(($totalPassed / ($totalPassed + $totalFailed)) * 100, 2) } else { 0 }
     }
     Save-CheckResult -CheckName "Tests" -Output ($testOutput -join "`n") -ExitCode $exitCode -AdditionalData $additionalData
     
@@ -276,11 +291,11 @@ function Test-Suite {
         $QualityReport.FailedTests = $failedTestDetails
     }
     
-    if ($exitCode -eq 0) {
-        Write-QASuccess "All $($passed) tests passed"
+    if ($exitCode -eq 0 -and $totalFailed -eq 0) {
+        Write-QASuccess "All $($totalPassed) tests passed ($($totalIgnored) ignored)"
     } else {
         Write-Host $testOutput -ForegroundColor Red
-        throw "$failed tests failed out of $($passed + $failed) total"
+        throw "$totalFailed tests failed out of $($totalPassed + $totalFailed) total"
     }
 }
 
@@ -295,10 +310,62 @@ function Generate-Documentation {
     $warningCount = ($warningLines | Measure-Object).Count
     $QualityReport.DocumentationWarnings = $warningCount
     
-    # Capture warning details
+    # Save detailed documentation output
+    $docDetailedFile = Join-Path $ReportsDir "Documentation_Detailed_$Timestamp.txt"
+    $docOutput | Out-File -FilePath $docDetailedFile -Encoding UTF8
+    
+    # Create detailed documentation warnings report
+    $detailedDocReport = @()
+    $detailedDocReport += "DOCUMENTATION WARNINGS REPORT"
+    $detailedDocReport += "============================="
+    $detailedDocReport += ""
+    $detailedDocReport += "Total Warnings: $warningCount"
+    $detailedDocReport += ""
+    
     if ($warningCount -gt 0) {
+        $detailedDocReport += "WARNING DETAILS:"
+        $detailedDocReport += "================"
+        
+        # Group warnings by file
+        $warningsByFile = @{}
+        foreach ($warning in $warningLines) {
+            $line = $warning.Line
+            if ($line -match '(.+\.rs):(\d+):(\d+):') {
+                $file = $matches[1]
+                $lineNum = $matches[2]
+                $colNum = $matches[3]
+                
+                if (-not $warningsByFile.ContainsKey($file)) {
+                    $warningsByFile[$file] = @()
+                }
+                $warningsByFile[$file] += "  Line $lineNum`:$colNum - $line"
+            } else {
+                # Warning without file context
+                if (-not $warningsByFile.ContainsKey("General")) {
+                    $warningsByFile["General"] = @()
+                }
+                $warningsByFile["General"] += "  $line"
+            }
+        }
+        
+        # Add warnings grouped by file
+        foreach ($file in ($warningsByFile.Keys | Sort-Object)) {
+            $detailedDocReport += ""
+            $detailedDocReport += "File: $file"
+            $detailedDocReport += "----------------------------------------"
+            foreach ($warning in $warningsByFile[$file]) {
+                $detailedDocReport += $warning
+            }
+        }
+        
         $QualityReport.DocumentationDetails = $warningLines | ForEach-Object { $_.Line }
+    } else {
+        $detailedDocReport += "✅ No documentation warnings found!"
     }
+    
+    # Save detailed documentation warnings report
+    $docWarningsFile = Join-Path $ReportsDir "Documentation_Warnings_$Timestamp.txt"
+    $detailedDocReport | Out-File -FilePath $docWarningsFile -Encoding UTF8
     
     if ($exitCode -eq 0) {
         if ($warningCount -eq 0) {
@@ -323,20 +390,83 @@ function Test-Coverage {
     }
     
     try {
+        # Run tarpaulin and capture output
         $coverageOutput = & cargo tarpaulin --workspace --timeout 120 --out Json 2>&1
         $exitCode = $LASTEXITCODE
         
         if ($exitCode -eq 0) {
-            # Parse coverage percentage (simplified)
-            $coverageJson = $coverageOutput | Where-Object { $_ -match '"coverage":' } | ConvertFrom-Json
-            $coveragePercent = [math]::Round($coverageJson.coverage, 2)
+            # Save raw output to file
+            $coverageDetailedFile = Join-Path $ReportsDir "Coverage_Detailed_$Timestamp.txt"
+            $coverageOutput | Out-File -FilePath $coverageDetailedFile -Encoding UTF8
             
-            $QualityReport.Coverage = "$coveragePercent%"
-            
-            if ($coveragePercent -ge 85) {
-                Write-QASuccess "Test coverage: $coveragePercent% (target: ≥85%)"
-            } else {
-                Write-QAWarning "Test coverage: $coveragePercent% (below target of 85%)"
+            # Parse coverage from JSON file (tarpaulin creates tarpaulin-report.json)
+            try {
+                $jsonFile = "tarpaulin-report.json"
+                if (Test-Path $jsonFile) {
+                    $coverageData = Get-Content $jsonFile -Raw | ConvertFrom-Json
+                    
+                    # Calculate overall coverage
+                    $totalLines = 0
+                    $coveredLines = 0
+                
+                $detailedCoverage = @()
+                $detailedCoverage += "DETAILED COVERAGE REPORT"
+                $detailedCoverage += "========================"
+                $detailedCoverage += ""
+                
+                foreach ($file in $coverageData.files) {
+                    $fileCoverage = if ($file.coverable -gt 0) { [math]::Round(($file.covered / $file.coverable) * 100, 2) } else { 0 }
+                    $fileName = ($file.path -join "/")
+                    $detailedCoverage += "File: $fileName"
+                    $detailedCoverage += "  Lines: $($file.coverable) | Covered: $($file.covered) | Coverage: $fileCoverage%"
+                    $detailedCoverage += ""
+                    
+                    $totalLines += $file.coverable
+                    $coveredLines += $file.covered
+                }
+                
+                $overallCoverage = if ($totalLines -gt 0) { [math]::Round(($coveredLines / $totalLines) * 100, 2) } else { 0 }
+                $QualityReport.Coverage = "$overallCoverage%"
+                
+                # Save detailed coverage report
+                $detailedCoverage += ""
+                $detailedCoverage += "OVERALL SUMMARY"
+                $detailedCoverage += "==============="
+                $detailedCoverage += "Total Lines: $totalLines"
+                $detailedCoverage += "Covered Lines: $coveredLines"
+                    $detailedCoverage += "Overall Coverage: $overallCoverage%"
+                    
+                    $detailedCoverageFile = Join-Path $ReportsDir "Coverage_ByFile_$Timestamp.txt"
+                    $detailedCoverage | Out-File -FilePath $detailedCoverageFile -Encoding UTF8
+                    
+                    if ($overallCoverage -ge 85) {
+                        Write-QASuccess "Test coverage: $overallCoverage% (target: ≥85%)"
+                    } else {
+                        Write-QAWarning "Test coverage: $overallCoverage% (below target of 85%)"
+                    }
+                } else {
+                    Write-QAWarning "JSON coverage file not found, falling back to text parsing"
+                    throw "JSON file not found"
+                }
+            }
+            catch {
+                # Fallback to parsing human-readable output if JSON parsing fails
+                Write-QAWarning "JSON parsing failed, falling back to text parsing: $_"
+                $coverageOutput = & cargo tarpaulin --workspace --timeout 120 2>&1
+                $coverageLine = $coverageOutput | Where-Object { $_ -match 'coverage, \d+/\d+ lines covered' }
+                if ($coverageLine) {
+                    $match = [regex]::Match($coverageLine, '(\d+\.\d+)% coverage')
+                    if ($match.Success) {
+                        $coveragePercent = [math]::Round([double]$match.Groups[1].Value, 2)
+                        $QualityReport.Coverage = "$coveragePercent%"
+                        
+                        if ($coveragePercent -ge 85) {
+                            Write-QASuccess "Test coverage: $coveragePercent% (target: ≥85%)"
+                        } else {
+                            Write-QAWarning "Test coverage: $coveragePercent% (below target of 85%)"
+                        }
+                    }
+                }
             }
         } else {
             throw "Coverage analysis failed"

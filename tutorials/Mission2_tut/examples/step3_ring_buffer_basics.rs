@@ -274,7 +274,7 @@ fn demonstrate_wraparound() {
 
     // Fill the buffer
     println!("\n   📥 **Filling the buffer:**");
-    for (i, &item) in ["A", "B", "C", "D"].iter().enumerate() {
+    for (_i, &item) in ["A", "B", "C", "D"].iter().enumerate() {
         let _ = ring.enqueue(item);
         ring.show_state(&format!("enqueue '{}'", item));
     }
@@ -296,7 +296,7 @@ fn demonstrate_wraparound() {
 
     // Add more items to demonstrate wrap-around
     println!("\n   🔄 **Adding more items (tail wraps around):**");
-    for &item in ["E", "F"] {
+    for item in ["E", "F"] {
         let _ = ring.enqueue(item);
         ring.show_state(&format!("enqueue '{}' (wrapped!)", item));
     }

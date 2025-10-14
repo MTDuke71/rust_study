@@ -3,7 +3,7 @@
 //! Demonstrates pattern matching with match expressions including:
 //! - Basic match patterns
 //! - Pattern binding
-//! - Matching Option<T>
+//! - Matching Option\<T\>
 //! - Exhaustive matching
 //! - Wildcard patterns
 //!

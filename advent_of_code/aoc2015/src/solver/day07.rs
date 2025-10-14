@@ -13,7 +13,7 @@
 //! ## 🎯 **Problem Analysis**
 //!
 //! **Input Format**:
-//! ```
+//! ```text
 //! 123 -> x              // Direct value assignment
 //! x AND y -> z          // Bitwise AND gate
 //! p LSHIFT 2 -> q       // Left shift operation

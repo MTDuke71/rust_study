@@ -7,7 +7,7 @@ use serde_json::Value;
 /// ## Problem Description
 /// Santa's Accounting-Elves need help balancing books from a JSON document.
 /// The document contains:
-/// - Arrays: [1,2,3]
+/// - Arrays: \[1,2,3\]
 /// - Objects: {"a":1, "b":2}
 /// - Numbers: integers (positive and negative)
 /// - Strings: text values
@@ -16,9 +16,9 @@ use serde_json::Value;
 /// Find all numbers in the JSON document and sum them.
 ///
 /// ### Examples:
-/// - [1,2,3] → 6
+/// - \[1,2,3\] → 6
 /// - {"a":2,"b":4} → 6
-/// - [[[3]]] → 3
+/// - \[\[\[3\]\]\] → 3
 /// - {"a":{"b":4},"c":-1} → 3
 /// - {"a":[-1,1]} → 0
 /// - [-1,{"a":1}] → 0
@@ -29,10 +29,10 @@ use serde_json::Value;
 /// any property with the value "red".
 ///
 /// ### Examples with "red" filtering:
-/// - [1,2,3] → 6 (no objects)
-/// - [1,{"c":"red","b":2},3] → 4 (1+3, object ignored)
-/// - {"d":"red","e":[1,2,3,4],"f":5} → 0 (entire object ignored)
-/// - [1,"red",5] → 6 (string in array doesn't trigger filtering)
+/// - \[1,2,3\] → 6 (no objects)
+/// - \[1,{"c":"red","b":2},3\] → 4 (1+3, object ignored)
+/// - {"d":"red","e":\[1,2,3,4\],"f":5} → 0 (entire object ignored)
+/// - \[1,"red",5\] → 6 (string in array doesn't trigger filtering)
 pub fn solve_part1(input: &str) -> Result<String> {
     println!("🎄 Day 12 Part 1: Sum all numbers in JSON");
 
@@ -113,14 +113,14 @@ pub fn sum_numbers(value: &Value, filter_red: bool) -> i64 {
 /// # use serde_json::json;
 /// # use aoc2015::solver::day12::has_red_value;
 ///
-/// let obj = json!({"a": 1, "b": "red"}).as_object().unwrap();
-/// assert!(has_red_value(obj));
+/// let obj1 = json!({"a": 1, "b": "red"});
+/// assert!(has_red_value(obj1.as_object().unwrap()));
 ///
-/// let obj = json!({"a": 1, "b": "blue"}).as_object().unwrap();
-/// assert!(!has_red_value(obj));
+/// let obj2 = json!({"a": 1, "b": "blue"});
+/// assert!(!has_red_value(obj2.as_object().unwrap()));
 ///
-/// let obj = json!({"a": [1, "red", 3]}).as_object().unwrap();
-/// assert!(!has_red_value(obj));  // "red" in array, not direct value
+/// let obj3 = json!({"a": [1, "red", 3]});
+/// assert!(!has_red_value(obj3.as_object().unwrap()));  // "red" in array, not direct value
 /// ```
 pub fn has_red_value(obj: &serde_json::Map<String, Value>) -> bool {
     obj.values().any(|v| {

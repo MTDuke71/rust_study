@@ -398,7 +398,7 @@ fn demonstrate_optimized_linked_queue() {
         length: usize,
     }
 
-    impl<T> SafeLinkedQueue<T> {
+    impl<T: std::fmt::Debug> SafeLinkedQueue<T> {
         fn new() -> Self {
             SafeLinkedQueue {
                 head: None,
@@ -634,7 +634,7 @@ fn benchmark_implementations() {
         length: usize,
     }
 
-    impl<T> RingQueue<T> {
+    impl<T: Clone> RingQueue<T> {
         fn new(capacity: usize) -> Self {
             Self {
                 buffer: vec![None; capacity],

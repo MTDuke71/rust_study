@@ -105,7 +105,7 @@ fn demonstrate_trait_implementations() {
         length: usize,
     }
 
-    impl<T> RingQueue<T> {
+    impl<T: Clone> RingQueue<T> {
         fn new(capacity: usize) -> Self {
             Self {
                 buffer: vec![None; capacity],
@@ -180,7 +180,7 @@ fn demonstrate_trait_implementations() {
     }
 
     // Debug implementation
-    impl<T: fmt::Debug> fmt::Debug for RingQueue<T> {
+    impl<T: fmt::Debug + Clone> fmt::Debug for RingQueue<T> {
         fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
             f.debug_struct("RingQueue")
                 .field("capacity", &self.capacity())
@@ -190,7 +190,7 @@ fn demonstrate_trait_implementations() {
         }
     }
 
-    impl<T: fmt::Debug> RingQueue<T> {
+    impl<T: fmt::Debug + Clone> RingQueue<T> {
         fn debug_items(&self) -> Vec<&T> {
             let mut items = Vec::new();
             if self.is_empty() {
@@ -209,7 +209,7 @@ fn demonstrate_trait_implementations() {
     }
 
     // PartialEq implementation
-    impl<T: PartialEq> PartialEq for RingQueue<T> {
+    impl<T: PartialEq + Clone> PartialEq for RingQueue<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.length != other.length {
                 return false;
@@ -238,10 +238,10 @@ fn demonstrate_trait_implementations() {
         }
     }
 
-    impl<T: PartialEq> Eq for RingQueue<T> {}
+    impl<T: PartialEq + Clone> Eq for RingQueue<T> {}
 
     // Default implementation
-    impl<T> Default for RingQueue<T> {
+    impl<T: Clone> Default for RingQueue<T> {
         fn default() -> Self {
             Self::new(16) // Reasonable default capacity
         }
@@ -290,14 +290,14 @@ fn demonstrate_iterator_support() {
     println!("   🔄 **Iterator Support and Integration:**");
 
     // Implement iterator for our RingQueue
-    struct RingQueue<T> {
+    struct IteratorRingQueue<T> {
         buffer: Vec<Option<T>>,
         head: usize,
         tail: usize,
         length: usize,
     }
 
-    impl<T> RingQueue<T> {
+    impl<T: Clone> IteratorRingQueue<T> {
         fn new(capacity: usize) -> Self {
             Self {
                 buffer: vec![None; capacity],
@@ -332,12 +332,12 @@ fn demonstrate_iterator_support() {
 
     // Iterator implementation
     struct RingQueueIter<'a, T> {
-        queue: &'a RingQueue<T>,
+        queue: &'a IteratorRingQueue<T>,
         current: usize,
         remaining: usize,
     }
 
-    impl<T> RingQueue<T> {
+    impl<T: Clone> IteratorRingQueue<T> {
         fn iter(&self) -> RingQueueIter<T> {
             RingQueueIter {
                 queue: self,
@@ -347,7 +347,7 @@ fn demonstrate_iterator_support() {
         }
     }
 
-    impl<'a, T> Iterator for RingQueueIter<'a, T> {
+    impl<'a, T: Clone> Iterator for RingQueueIter<'a, T> {
         type Item = &'a T;
 
         fn next(&mut self) -> Option<Self::Item> {
@@ -366,10 +366,10 @@ fn demonstrate_iterator_support() {
         }
     }
 
-    impl<'a, T> ExactSizeIterator for RingQueueIter<'a, T> {}
+    impl<'a, T: Clone> ExactSizeIterator for RingQueueIter<'a, T> {}
 
     // IntoIterator for references
-    impl<'a, T> IntoIterator for &'a RingQueue<T> {
+    impl<'a, T: Clone> IntoIterator for &'a IteratorRingQueue<T> {
         type Item = &'a T;
         type IntoIter = RingQueueIter<'a, T>;
 
@@ -381,7 +381,7 @@ fn demonstrate_iterator_support() {
     // Demonstrate iterator usage
     println!("\n   🔄 **Iterator Usage Patterns:**");
 
-    let mut queue = RingQueue::new(5);
+    let mut queue = IteratorRingQueue::new(5);
     for i in 1..=4 {
         let _ = queue.push_back(i);
     }
@@ -431,7 +431,7 @@ fn demonstrate_advanced_operations() {
         length: usize,
     }
 
-    impl<T> AdvancedRingQueue<T> {
+    impl<T: Clone> AdvancedRingQueue<T> {
         fn new(capacity: usize) -> Self {
             Self {
                 buffer: vec![None; capacity],
@@ -551,7 +551,7 @@ fn demonstrate_advanced_operations() {
         queue: &'a mut AdvancedRingQueue<T>,
     }
 
-    impl<'a, T> Iterator for DrainIterator<'a, T> {
+    impl<'a, T: Clone> Iterator for DrainIterator<'a, T> {
         type Item = T;
 
         fn next(&mut self) -> Option<Self::Item> {
@@ -564,7 +564,7 @@ fn demonstrate_advanced_operations() {
         }
     }
 
-    impl<'a, T> ExactSizeIterator for DrainIterator<'a, T> {}
+    impl<'a, T: Clone> ExactSizeIterator for DrainIterator<'a, T> {}
 
     // Demonstrate advanced operations
     println!("\n   🧪 **Testing Advanced Operations:**");
@@ -763,7 +763,7 @@ fn benchmark_comparison() {
         length: usize,
     }
 
-    impl<T> SimpleRingQueue<T> {
+    impl<T: Clone> SimpleRingQueue<T> {
         fn new(capacity: usize) -> Self {
             Self {
                 buffer: vec![None; capacity],
