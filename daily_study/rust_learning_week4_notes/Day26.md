@@ -335,8 +335,8 @@ S 9 9 9 G                  S 9 9 9 G
 1 1 1 1 1                  1 1 1 1 1
 
 BFS: 4 steps (counts moves)
-Dijkstra: Cost 6 (going around vs 27 straight)
-Around path: S→1→1→1→1→1→G = 0+1+1+1+1+1+0 = 6
+Dijkstra: Cost 5 (going around vs 27 straight)
+Around path: S→1→1→1→1→G = 0+1+1+1+1+0 = 5
 Straight path: S→9→9→9→G = 0+9+9+9+0 = 27
 ```
 
