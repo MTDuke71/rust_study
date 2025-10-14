@@ -730,10 +730,6 @@ impl Grid<usize> {
 }
 
 impl<T: Clone> Grid<T> {
-    fn index(&self, row: usize, col: usize) -> usize {
-        row * self.width + col
-    }
-    
     pub fn contains(&self, coord: Coord) -> bool {
         coord.row >= 0 && coord.row < self.height as isize &&
         coord.col >= 0 && coord.col < self.width as isize
