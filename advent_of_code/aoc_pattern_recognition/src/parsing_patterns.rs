@@ -181,7 +181,7 @@ impl ParsePattern<Instruction> for InstructionParser {
     /// assert_eq!(inst.parameters, vec!["3", "from", "stack2", "to", "stack1"]);
     /// ```
     fn parse_line(&self, line: &str) -> PatternResult<Instruction> {
-        let parts: Vec<&str> = line.trim().split_whitespace().collect();
+        let parts: Vec<&str> = line.split_whitespace().collect();
 
         if parts.is_empty() {
             return Err(PatternError::InvalidInput(
@@ -286,7 +286,15 @@ impl StructuredParser {
             sections: HashMap::new(),
         }
     }
+}
 
+impl Default for StructuredParser {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl StructuredParser {
     /// Parse input with section headers and content
     ///
     /// # Example
@@ -305,7 +313,7 @@ impl StructuredParser {
                 // Section header
                 let section_name = trimmed[1..trimmed.len() - 1].to_string();
                 self.current_section = Some(section_name.clone());
-                self.sections.entry(section_name).or_insert_with(Vec::new);
+                self.sections.entry(section_name).or_default();
             } else if !trimmed.is_empty() {
                 // Section content
                 if let Some(ref section) = self.current_section {

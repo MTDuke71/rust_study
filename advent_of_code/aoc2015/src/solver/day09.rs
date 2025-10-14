@@ -202,7 +202,7 @@ pub fn solve_part1(input: &str) -> Result<String> {
     //println!("Cities: {:?}", cities);
     // println!("Distances: {:?}", distances);
 
-    return Ok(solve_tsp(&cities, &distances, true).to_string());
+    Ok(solve_tsp(&cities, &distances, true).to_string())
 }
 
 /// Day 09 Part 2: Find the longest route that visits all cities exactly once.

@@ -18,8 +18,8 @@ fn example1_creating_hashmaps() {
     println!("Scores: {:?}", scores);
 
     // Creating from vectors with collect()
-    let teams = vec![String::from("Blue"), String::from("Yellow")];
-    let initial_scores = vec![10, 50];
+    let teams = [String::from("Blue"), String::from("Yellow")];
+    let initial_scores = [10, 50];
 
     let scores: HashMap<_, _> = teams
         .iter()
@@ -206,7 +206,7 @@ fn example8_grouping_data() {
     let mut by_subject: HashMap<&str, Vec<&str>> = HashMap::new();
 
     for (name, subject) in students {
-        by_subject.entry(subject).or_insert(Vec::new()).push(name);
+        by_subject.entry(subject).or_default().push(name);
     }
 
     println!("Students by subject:");

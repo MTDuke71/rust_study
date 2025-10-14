@@ -14,7 +14,6 @@
 /// - Custom Result types
 /// - Error transformation and chaining
 /// - Best practices for Result handling
-
 use std::fs::File;
 use std::io::{self, Write};
 use std::fmt;
@@ -208,7 +207,8 @@ fn demonstrate_custom_result_types() {
         }
     }
     
-    let test_cases: Vec<(&str, Box<dyn Fn() -> Result<f64, MathError>>)> = vec![
+    type MathTest = (&'static str, Box<dyn Fn() -> Result<f64, MathError>>);
+    let test_cases: Vec<MathTest> = vec![
         ("10.0 ÷ 2.0", Box::new(|| safe_divide(10.0, 2.0))),
         ("10.0 ÷ 0.0", Box::new(|| safe_divide(10.0, 0.0))),
         ("√16.0", Box::new(|| safe_sqrt(16.0))),

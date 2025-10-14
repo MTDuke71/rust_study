@@ -17,10 +17,7 @@ fn example1_creating_vectors() {
     println!("Vector with values: {:?}", v2);
 
     // Type inference from initial values
-    let mut v3 = Vec::new();
-    v3.push(5);
-    v3.push(6);
-    v3.push(7);
+    let v3 = vec![5, 6, 7];
     println!("Vector built with push: {:?}", v3);
 
     // Creating with capacity
@@ -79,7 +76,7 @@ fn example3_reading_elements() {
     println!("🔍 Example 3: Reading Elements");
     println!("==============================");
 
-    let v = vec![1, 2, 3, 4, 5];
+    let v = [1, 2, 3, 4, 5];
 
     // Method 1: Indexing (panics if out of bounds)
     let third: &i32 = &v[2];
@@ -125,7 +122,7 @@ fn example4_ownership_and_borrowing() {
     println!("After push: {:?}", v);
 
     // Demonstrating why the borrowing rule matters
-    let v2 = vec![1, 2, 3];
+    let v2 = [1, 2, 3];
     let first_ref = &v2[0];
     println!("First element before potential reallocation: {}", first_ref);
     // If we could push here, v2 might reallocate, invalidating first_ref
@@ -165,7 +162,7 @@ fn example5_iterating() {
     // v3 is no longer valid here
 
     // Using enumerate for index + value
-    let v4 = vec!["a", "b", "c"];
+    let v4 = ["a", "b", "c"];
     println!("With enumerate:");
     for (index, value) in v4.iter().enumerate() {
         println!("  Index {}: {}", index, value);
@@ -185,7 +182,7 @@ fn example6_multiple_types_with_enum() {
         Text(String),
     }
 
-    let row = vec![
+      let row = [
         SpreadsheetCell::Int(3),
         SpreadsheetCell::Text(String::from("blue")),
         SpreadsheetCell::Float(10.12),
@@ -293,18 +290,18 @@ fn example6a_memory_efficiency_analysis() {
     );
 
     // Demonstrate with actual data
-    let mixed_row = vec![
+      let mixed_row = [
         SpreadsheetCell::Int(42),
         SpreadsheetCell::Int(100),
-        SpreadsheetCell::Float(3.14159),
+        SpreadsheetCell::Float(std::f64::consts::PI),
         SpreadsheetCell::Text(String::from("Hello")),
         SpreadsheetCell::Int(7),
     ];
 
     let total_enum_memory = mixed_row.len() * enum_size;
     let actual_memory_needed = 3 * actual_sizes.0 +  // 3 ints
-        1 * actual_sizes.1 +  // 1 float  
-        1 * actual_sizes.2; // 1 string
+        actual_sizes.1 +  // 1 float  
+        actual_sizes.2; // 1 string
 
     println!("\n📈 Real example with {} elements:", mixed_row.len());
     println!("  Enum approach: {} bytes", total_enum_memory);
@@ -354,7 +351,7 @@ fn example6b_why_enums_are_needed() {
     use std::fmt::Display;
 
     let trait_objects: Vec<Box<dyn Display>> =
-        vec![Box::new(42), Box::new(3.14), Box::new(String::from("text"))];
+        vec![Box::new(42), Box::new(std::f64::consts::PI), Box::new(String::from("text"))];
 
     println!("\n📦 Trait object approach (Vec<Box<dyn Display>>):");
     for (i, item) in trait_objects.iter().enumerate() {
@@ -397,7 +394,7 @@ fn example6c_alternative_approaches() {
 
     let separated = SeparatedSpreadsheet {
         ints: vec![(0, 42), (1, 100), (4, 7)],
-        floats: vec![(2, 3.14159)],
+        floats: vec![(2, std::f64::consts::PI)],
         texts: vec![(3, String::from("Hello"))],
     };
 
@@ -690,7 +687,7 @@ fn example7_vector_methods() {
     );
 
     // Method 3: unwrap_or_else() - compute default lazily
-    let first_or_computed = empty_vec.first().unwrap_or_else(|| &-1);
+    let first_or_computed = empty_vec.first().unwrap_or(&-1);
     println!("Method 3 (unwrap_or_else): {}", first_or_computed);
 
     // Method 4: match expression (safest, most explicit)
@@ -781,8 +778,8 @@ fn example8_practical_use_case() {
 
     // Count grades in ranges
     let a_count = grades.iter().filter(|&&g| g >= 90).count();
-    let b_count = grades.iter().filter(|&&g| g >= 80 && g < 90).count();
-    let c_count = grades.iter().filter(|&&g| g >= 70 && g < 80).count();
+    let b_count = grades.iter().filter(|&&g| (80..90).contains(&g)).count();
+    let c_count = grades.iter().filter(|&&g| (70..80).contains(&g)).count();
 
     println!("Grade distribution:");
     println!("  A's (90-100): {}", a_count);

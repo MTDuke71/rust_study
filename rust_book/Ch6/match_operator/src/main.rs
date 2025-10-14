@@ -98,10 +98,7 @@ fn example3_matching_option() {
     println!("======================================");
 
     fn plus_one(x: Option<i32>) -> Option<i32> {
-        match x {
-            None => None,
-            Some(i) => Some(i + 1),
-        }
+        x.map(|i| i + 1)
     }
 
     fn describe_option(x: Option<i32>) -> String {
@@ -133,7 +130,7 @@ fn example4_exhaustive_matching() {
     fn classify_number(x: i32) -> &'static str {
         match x {
             0 => "zero",
-            1 | 2 | 3 => "small positive",
+            1..=3 => "small positive",
             4..=10 => "medium positive",
             11..=100 => "large positive",
             // Must handle negative numbers
@@ -159,10 +156,7 @@ fn example4_exhaustive_matching() {
 
     // ✅ This compiles - all cases covered
     fn good_match(x: Option<i32>) -> i32 {
-        match x {
-            Some(i) => i,
-            None => 0,
-        }
+        x.unwrap_or_default()
     }
 
     println!("\nGood match with default:");
@@ -179,9 +173,9 @@ fn example5_wildcard_patterns() {
         match roll {
             1 => println!("  Critical failure!"),
             2 | 3 => println!("  Low roll"),
-            4 | 5 | 6 => println!("  Medium roll"),
-            7 | 8 | 9 => println!("  Good roll"),
-            10 | 11 | 12 => println!("  Excellent roll!"),
+            4..=6 => println!("  Medium roll"),
+            7..=9 => println!("  Good roll"),
+            10..=12 => println!("  Excellent roll!"),
             _ => println!("  Invalid dice roll"),
         }
     }

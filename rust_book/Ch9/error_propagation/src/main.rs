@@ -75,10 +75,7 @@ fn demonstrate_manual_vs_automatic_propagation() {
 fn read_username_manual() -> Result<String, io::Error> {
     let username_file_result = File::open("username.txt");
     
-    let mut username_file = match username_file_result {
-        Ok(file) => file,
-        Err(e) => return Err(e),
-    };
+    let mut username_file = username_file_result?;
     
     let mut username = String::new();
     match username_file.read_to_string(&mut username) {
@@ -157,7 +154,7 @@ fn demonstrate_option_propagation() {
     
     // Option propagation in calculations
     fn calculate_average(numbers: &[i32]) -> Option<f64> {
-        let first = numbers.get(0)?;  // Returns None if empty
+        let first = numbers.first()?;  // Returns None if empty
         let last = numbers.get(numbers.len().checked_sub(1)?)?;  // Safe subtraction
         
         Some((*first + *last) as f64 / 2.0)

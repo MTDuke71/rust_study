@@ -152,6 +152,7 @@ impl Grid<char> {
     }
 
     /// Convert grid back to string representation
+    #[allow(clippy::inherent_to_string)]
     pub fn to_string(&self) -> String {
         let mut result = String::new();
 

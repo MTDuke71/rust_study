@@ -205,7 +205,7 @@ fn example_lifetime_annotations() {
 // Helper functions
 
 /// Calculate the length of a string without taking ownership
-fn calculate_length(s: &String) -> usize {
+fn calculate_length(s: &str) -> usize {
     s.len() // s is a reference, so we don't drop the value when it goes out of scope
 }
 
@@ -236,14 +236,12 @@ fn get_first_word(s: &str) -> &str {
         }
     }
 
-    &s[..] // Return entire string if no space found
+    s // Return entire string if no space found
 }
 
 /// Return owned data so the caller never receives a dangling reference
 fn no_dangle() -> String {
-    let s = String::from("hello");
-
-    s
+    String::from("hello")
 }
 
 /// Simple counter demonstrating `&self` and `&mut self` receivers

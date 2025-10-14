@@ -16,9 +16,8 @@ fn example1_basic_if_let() {
 
     // Using match (verbose for one case)
     println!("Using match:");
-    match some_value {
-        Some(3) => println!("  Found three!"),
-        _ => (),
+    if let Some(3) = some_value {
+        println!("  Found three!");
     }
 
     // Using if let (concise)
@@ -31,9 +30,8 @@ fn example1_basic_if_let() {
     let config_max = Some(3u8);
 
     println!("\nChecking config_max with match:");
-    match config_max {
-        Some(max) => println!("  The maximum is configured to be {}", max),
-        _ => (),
+    if let Some(max) = config_max {
+        println!("  The maximum is configured to be {}", max);
     }
 
     println!("\nChecking config_max with if let:");
