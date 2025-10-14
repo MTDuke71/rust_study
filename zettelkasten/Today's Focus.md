@@ -19,6 +19,7 @@
 ## 🔗 Quick Navigation
 
 - **[[Daily Notes/2025-10-14]]** - Today's detailed plan ⭐
+- **[[rust_book/Ch9/README]]** - Error Handling Chapter
 - **[[MONTHLY_CALENDAR]]** - Full monthly calendar
 - **[[zettel-index]]** - Main knowledge hub
 - **[[Daily Study MOC]]** - Current week overview
@@ -47,4 +48,4 @@
 ---
 
 *Tags: #daily-focus #navigation #daily-notes*
-*Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions MOC]] | [[Daily Notes/2025-10-14]]*
+*Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions MOC]] | [[Daily Notes/2025-10-14]] | [[rust_book/Ch9/README]]*

@@ -117,7 +117,7 @@
 - [[rust-book-ch6]] or [[rb-ch6]] - Enums and pattern matching
 - [[rust-book-ch7]] or [[rb-ch7]] - Modules and packages
 - [[rust-book-ch8]] or [[rb-ch8]] - Common collections
-- [[rust-book-ch9]] or [[rb-ch9]] - Error handling
+- [[rust_book/Ch9/README]] - Error handling
 - [[rust-book-ch10]] or [[rb-ch10]] - Generics, traits, lifetimes
 
 ### **Key Concept Areas**
@@ -169,7 +169,7 @@
 ### **Mission ↔ Rust Book Connections**  
 - Struct design connects to [[rust-book-ch5]] or [[rb-ch5]]
 - Generic implementation connects to [[rust-book-ch10]] or [[rb-ch10]]
-- Error handling connects to [[rust-book-ch9]] or [[rb-ch9]]
+- Error handling connects to [[rust_book/Ch9/README]]
 - Module organization connects to [[rust-book-ch7]] or [[rb-ch7]]
 - Collections fundamentals connect to [[rust-book-ch8]] or [[rb-ch8]]
 
