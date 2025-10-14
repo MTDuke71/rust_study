@@ -11,7 +11,7 @@ edition = "2021"
 rand = "0.8"
 
 [[example]]
-name = "demo"
+name = "mission3_demo"
 path = "examples/demo.rs"
 
 [[example]]
@@ -19,5 +19,5 @@ name = "aoc_style_examples"
 path = "examples/aoc_style_examples.rs"
 
 [[example]]
-name = "performance_comparison"
+name = "mission3_performance_comparison"
 path = "examples/performance_comparison.rs"

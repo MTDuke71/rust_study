@@ -560,7 +560,7 @@ fn mission7_integration() {
     // REQ-4: Algorithm foundation
     println!("REQ-4: Algorithm Foundation");
     let mut visited: HashSet<NodeId> = HashSet::new();
-    let mut path = Vec::new();
+    let mut path: Vec<NodeId> = Vec::new();
     println!("  Visited tracking: {:?}", visited);
     println!("  Path reconstruction: {:?}", path);
     println!();

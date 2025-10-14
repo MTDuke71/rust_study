@@ -30,5 +30,5 @@ name = "step6_aoc_applications"
 path = "examples/step6_aoc_applications.rs"
 
 [[example]]
-name = "step7_integration_project"
+name = "mission3_step7_integration_project"
 path = "examples/step7_integration_project.rs"

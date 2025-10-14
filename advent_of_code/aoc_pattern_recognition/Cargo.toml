@@ -23,7 +23,7 @@ name = "state_patterns_demo"
 path = "examples/state_patterns_demo.rs"
 
 [[example]]
-name = "simple_demo"
+name = "aoc_pattern_simple_demo"
 path = "examples/simple_demo.rs"
 
 [[example]]

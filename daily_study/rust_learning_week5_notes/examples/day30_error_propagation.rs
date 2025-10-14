@@ -1,9 +1,9 @@
 // Day 30 - Error Propagation
 // Runnable examples demonstrating error propagation with the ? operator
 
+use std::collections::HashMap;
 use std::error::Error;
 use std::fmt;
-use std::collections::HashMap;
 
 // Custom error types for examples
 #[derive(Debug)]
@@ -126,7 +126,7 @@ fn parse_config(content: &str) -> Result<Config, AppError> {
     if lines.is_empty() {
         return Err(AppError::Custom("Empty config file".to_string()));
     }
-    
+
     let port = lines[0].parse::<u16>()?;
     Ok(Config { port })
 }
@@ -135,31 +135,35 @@ fn process_line(line: &str) -> Result<(), AppError> {
     if line.is_empty() {
         return Ok(());
     }
-    
+
     let parts: Vec<&str> = line.split(',').collect();
     if parts.len() != 2 {
         return Err(AppError::Custom("Invalid format".to_string()));
     }
-    
+
     let _id = parts[0].parse::<u32>()?;
     let _name = parts[1].to_string();
-    
+
     Ok(())
 }
 
 fn process_user_input(input: &str) -> Result<UserData, AppError> {
     let lines: Vec<&str> = input.lines().collect();
-    
+
     for (line_num, line) in lines.iter().enumerate() {
         if let Err(e) = process_line(line) {
             return Err(AppError::Custom(format!(
-                "Error processing line {}: {}", 
-                line_num + 1, e
+                "Error processing line {}: {}",
+                line_num + 1,
+                e
             )));
         }
     }
-    
-    Ok(UserData { id: 1, name: "John Doe".to_string() })
+
+    Ok(UserData {
+        id: 1,
+        name: "John Doe".to_string(),
+    })
 }
 
 fn robust_file_processor(path: &str) -> Result<Vec<String>, AppError> {
@@ -172,8 +176,9 @@ fn robust_file_processor(path: &str) -> Result<Vec<String>, AppError> {
         }
         Err(e) => return Err(AppError::from(e)), // Propagate other errors
     };
-    
-    let lines: Vec<String> = content.lines()
+
+    let lines: Vec<String> = content
+        .lines()
         .filter_map(|line| {
             if line.trim().is_empty() {
                 None
@@ -182,20 +187,23 @@ fn robust_file_processor(path: &str) -> Result<Vec<String>, AppError> {
             }
         })
         .collect();
-    
+
     Ok(lines)
 }
 
 fn process_single_file(path: &str) -> Result<ProcessedFile, AppError> {
     let content = std::fs::read_to_string(path)?;
     let processed = content.to_uppercase();
-    Ok(ProcessedFile { path: path.to_string(), content: processed })
+    Ok(ProcessedFile {
+        path: path.to_string(),
+        content: processed,
+    })
 }
 
 fn batch_process_files(paths: &[String]) -> Result<Vec<ProcessedFile>, AppError> {
     let mut results = Vec::new();
     let mut errors = Vec::new();
-    
+
     for path in paths {
         match process_single_file(path) {
             Ok(result) => results.push(result),
@@ -205,15 +213,15 @@ fn batch_process_files(paths: &[String]) -> Result<Vec<ProcessedFile>, AppError>
             }
         }
     }
-    
+
     if !errors.is_empty() {
         return Err(AppError::Custom(format!(
-            "Batch processing failed with {} errors: {}", 
-            errors.len(), 
+            "Batch processing failed with {} errors: {}",
+            errors.len(),
             errors.join("; ")
         )));
     }
-    
+
     Ok(results)
 }
 
@@ -223,11 +231,11 @@ fn make_request(url: &str) -> Result<String, WebError> {
     if url.contains("unauthorized") {
         return Err(WebError::Auth("Invalid credentials".to_string()));
     }
-    
+
     if url.contains("error") {
         return Err(WebError::Http(500));
     }
-    
+
     Ok(r#"{"status": "success", "data": {"user_id": 123}}"#.to_string())
 }
 
@@ -241,13 +249,17 @@ fn fetch_user_data(user_id: u32) -> Result<UserData, WebError> {
     let url = format!("https://api.example.com/users/{}", user_id);
     let response = make_request(&url)?;
     let data = parse_json_response(&response)?;
-    
-    let user_id = data.get("data")
+
+    let user_id = data
+        .get("data")
         .and_then(|d| d.get("user_id"))
         .and_then(|v| v.as_u64())
         .ok_or_else(|| WebError::Parse("Missing user_id".to_string()))?;
-    
-    Ok(UserData { id: user_id as u32, name: "John Doe".to_string() })
+
+    Ok(UserData {
+        id: user_id as u32,
+        name: "John Doe".to_string(),
+    })
 }
 
 // Database simulation
@@ -274,16 +286,18 @@ struct Transaction;
 impl Transaction {
     fn execute(&self, query: &str) -> Result<QueryResult, DatabaseError> {
         if query.contains("CONSTRAINT") {
-            return Err(DatabaseError::Constraint("Unique constraint violated".to_string()));
+            return Err(DatabaseError::Constraint(
+                "Unique constraint violated".to_string(),
+            ));
         }
-        
+
         if query.is_empty() {
             return Err(DatabaseError::Query("Empty query".to_string()));
         }
-        
+
         Ok(QueryResult { rows_affected: 1 })
     }
-    
+
     fn commit(self) -> Result<(), DatabaseError> {
         // Simulate commit
         Ok(())
@@ -293,32 +307,41 @@ impl Transaction {
 fn transfer_money(from_account: u32, to_account: u32, amount: i32) -> Result<(), DatabaseError> {
     let db = Database::connect()?;
     let tx = db.begin_transaction()?;
-    
+
     // Debit from source account
-    tx.execute(&format!("UPDATE accounts SET balance = balance - {} WHERE id = {}", amount, from_account))?;
-    
+    tx.execute(&format!(
+        "UPDATE accounts SET balance = balance - {} WHERE id = {}",
+        amount, from_account
+    ))?;
+
     // Credit to destination account
-    tx.execute(&format!("UPDATE accounts SET balance = balance + {} WHERE id = {}", amount, to_account))?;
-    
+    tx.execute(&format!(
+        "UPDATE accounts SET balance = balance + {} WHERE id = {}",
+        amount, to_account
+    ))?;
+
     // Commit transaction
     tx.commit()?;
-    
+
     Ok(())
 }
 
 fn load_user_profile(user_id: u32) -> Result<UserProfile, AppError> {
     let user_data = fetch_user_data(user_id)
         .map_err(|e| AppError::Custom(format!("Failed to fetch user {}: {}", user_id, e)))?;
-    
+
     let mut preferences = HashMap::new();
     preferences.insert("theme".to_string(), "dark".to_string());
-    
-    Ok(UserProfile { user_data, preferences })
+
+    Ok(UserProfile {
+        user_data,
+        preferences,
+    })
 }
 
 fn main() {
     println!("=== Day 30: Error Propagation Examples ===\n");
-    
+
     // Example 1: Basic error propagation
     println!("1. Basic Error Propagation:");
     let config_content = "8080\n";
@@ -327,7 +350,7 @@ fn main() {
         Err(e) => println!("Config error: {}", e),
     }
     println!();
-    
+
     // Example 2: Context preservation
     println!("2. Error Context Preservation:");
     let user_input = "1,John\n2,Jane\ninvalid";
@@ -336,7 +359,7 @@ fn main() {
         Err(e) => println!("Processing error: {}", e),
     }
     println!();
-    
+
     // Example 3: Error recovery
     println!("3. Error Recovery:");
     match robust_file_processor("nonexistent.txt") {
@@ -344,7 +367,7 @@ fn main() {
         Err(e) => println!("Processing error: {}", e),
     }
     println!();
-    
+
     // Example 4: Batch processing with error aggregation
     println!("4. Batch Processing:");
     let files = vec!["file1.txt".to_string(), "file2.txt".to_string()];
@@ -353,35 +376,35 @@ fn main() {
         Err(e) => println!("Batch processing failed: {}", e),
     }
     println!();
-    
+
     // Example 5: Web request chain
     println!("5. Web Request Chain:");
     match fetch_user_data(123) {
         Ok(user_data) => println!("User data fetched: {:?}", user_data),
         Err(e) => println!("Web request failed: {}", e),
     }
-    
+
     // Simulate auth error
     match fetch_user_data(999) {
         Ok(user_data) => println!("User data fetched: {:?}", user_data),
         Err(e) => println!("Web request failed: {}", e),
     }
     println!();
-    
+
     // Example 6: Database transaction
     println!("6. Database Transaction:");
     match transfer_money(1, 2, 100) {
         Ok(()) => println!("Money transfer successful"),
         Err(e) => println!("Transfer failed: {}", e),
     }
-    
+
     // Simulate constraint violation
     match transfer_money(1, 2, -100) {
         Ok(()) => println!("Money transfer successful"),
         Err(e) => println!("Transfer failed: {}", e),
     }
     println!();
-    
+
     // Example 7: Complex error propagation chain
     println!("7. Complex Error Propagation:");
     match load_user_profile(123) {
@@ -389,6 +412,6 @@ fn main() {
         Err(e) => println!("Profile loading failed: {}", e),
     }
     println!();
-    
+
     println!("=== End of Day 30 Examples ===");
 }

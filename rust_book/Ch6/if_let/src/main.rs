@@ -198,7 +198,10 @@ fn example6_enum_variants() {
     #[derive(Debug)]
     enum Event {
         KeyPress(char),
-        Click { x: i32, y: i32 },
+        Click {
+            x: i32,
+            y: i32,
+        },
         #[allow(dead_code)]
         Scroll(i32),
         Quit,

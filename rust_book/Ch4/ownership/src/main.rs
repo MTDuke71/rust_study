@@ -101,8 +101,8 @@ fn gives_ownership() -> String {
     // that calls it
 
     String::from("yours") // some_string is returned and
-                // moves out to the calling
-                // function
+                          // moves out to the calling
+                          // function
 }
 
 // This function takes a String and returns a String.

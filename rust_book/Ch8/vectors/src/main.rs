@@ -182,7 +182,7 @@ fn example6_multiple_types_with_enum() {
         Text(String),
     }
 
-      let row = [
+    let row = [
         SpreadsheetCell::Int(3),
         SpreadsheetCell::Text(String::from("blue")),
         SpreadsheetCell::Float(10.12),
@@ -290,7 +290,7 @@ fn example6a_memory_efficiency_analysis() {
     );
 
     // Demonstrate with actual data
-      let mixed_row = [
+    let mixed_row = [
         SpreadsheetCell::Int(42),
         SpreadsheetCell::Int(100),
         SpreadsheetCell::Float(std::f64::consts::PI),
@@ -350,8 +350,11 @@ fn example6b_why_enums_are_needed() {
     // Show trait object approach
     use std::fmt::Display;
 
-    let trait_objects: Vec<Box<dyn Display>> =
-        vec![Box::new(42), Box::new(std::f64::consts::PI), Box::new(String::from("text"))];
+    let trait_objects: Vec<Box<dyn Display>> = vec![
+        Box::new(42),
+        Box::new(std::f64::consts::PI),
+        Box::new(String::from("text")),
+    ];
 
     println!("\n📦 Trait object approach (Vec<Box<dyn Display>>):");
     for (i, item) in trait_objects.iter().enumerate() {

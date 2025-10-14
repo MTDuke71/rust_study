@@ -1,7 +1,6 @@
 // Day 31 - anyhow and thiserror
 // Runnable examples demonstrating practical error handling crates
 
-
 // Simulate anyhow and thiserror functionality with standard library
 // In real usage, you would add these to Cargo.toml:
 // anyhow = "1.0"
@@ -16,7 +15,7 @@ trait Context<T, E> {
     fn context<C>(self, context: C) -> AnyhowResult<T>
     where
         C: std::fmt::Display + Send + Sync + 'static;
-    
+
     fn with_context<C, F>(self, f: F) -> AnyhowResult<T>
     where
         C: std::fmt::Display + Send + Sync + 'static,
@@ -36,7 +35,7 @@ where
             Err(e) => Err(Box::new(SimpleError::new(format!("{}: {}", context, e)))),
         }
     }
-    
+
     fn with_context<C, F>(self, f: F) -> AnyhowResult<T>
     where
         C: std::fmt::Display + Send + Sync + 'static,
@@ -85,8 +84,12 @@ impl std::fmt::Display for ConfigError {
         match self {
             ConfigError::FileNotFound { path } => write!(f, "File not found: {}", path),
             ConfigError::Io { source } => write!(f, "IO error: {}", source),
-            ConfigError::Parse { line, message } => write!(f, "Parse error at line {}: {}", line, message),
-            ConfigError::Validation { field, reason } => write!(f, "Validation error: {} - {}", field, reason),
+            ConfigError::Parse { line, message } => {
+                write!(f, "Parse error at line {}: {}", line, message)
+            }
+            ConfigError::Validation { field, reason } => {
+                write!(f, "Validation error: {} - {}", field, reason)
+            }
             ConfigError::Config { message } => write!(f, "Configuration error: {}", message),
         }
     }
@@ -174,7 +177,9 @@ impl std::fmt::Display for ProcessingError {
             ProcessingError::InvalidFormat { expected, actual } => {
                 write!(f, "Invalid file format: {}, got {}", expected, actual)
             }
-            ProcessingError::ProcessingFailed { stage } => write!(f, "Processing failed: {}", stage),
+            ProcessingError::ProcessingFailed { stage } => {
+                write!(f, "Processing failed: {}", stage)
+            }
         }
     }
 }
@@ -215,14 +220,17 @@ struct Permissions {
 // Example functions demonstrating anyhow-style error handling
 #[allow(dead_code)]
 fn process_file(path: &str) -> AnyhowResult<String> {
-    let content = std::fs::read_to_string(path)
-        .context(format!("Failed to read file: {}", path))?;
-    
+    let content =
+        std::fs::read_to_string(path).context(format!("Failed to read file: {}", path))?;
+
     let processed = content.trim();
     if processed.is_empty() {
-        return Err(Box::new(SimpleError::new(format!("File is empty: {}", path))));
+        return Err(Box::new(SimpleError::new(format!(
+            "File is empty: {}",
+            path
+        ))));
     }
-    
+
     Ok(processed.to_uppercase())
 }
 
@@ -230,14 +238,17 @@ fn process_line(line: &str) -> AnyhowResult<()> {
     let parts: Vec<&str> = line.split(',').collect();
     if parts.len() != 2 {
         return Err(Box::new(SimpleError::new(format!(
-            "Invalid format: expected 'key,value', got '{}'", line
+            "Invalid format: expected 'key,value', got '{}'",
+            line
         ))));
     }
-    
+
     let key = parts[0].trim();
-    let value = parts[1].trim().parse::<i32>()
+    let value = parts[1]
+        .trim()
+        .parse::<i32>()
         .with_context(|| format!("Invalid number: '{}'", parts[1]))?;
-    
+
     println!("Key: {}, Value: {}", key, value);
     Ok(())
 }
@@ -247,12 +258,13 @@ fn process_user_input(input: &str) -> AnyhowResult<()> {
     if lines.is_empty() {
         return Err(Box::new(SimpleError::new("Input is empty".to_string())));
     }
-    
+
     for (line_num, line) in lines.iter().enumerate() {
-        process_line(line)
-            .map_err(|e| anyhow::anyhow!("Failed to process line {} of input: {}", line_num + 1, e))?;
+        process_line(line).map_err(|e| {
+            anyhow::anyhow!("Failed to process line {} of input: {}", line_num + 1, e)
+        })?;
     }
-    
+
     println!("Successfully processed {} lines", lines.len());
     Ok(())
 }
@@ -264,17 +276,17 @@ impl Config {
         let content = std::fs::read_to_string(path)?;
         Self::parse(&content)
     }
-    
+
     pub fn parse(content: &str) -> Result<Self, ConfigError> {
         let mut host = None;
         let mut port = None;
-        
+
         for (line_num, line) in content.lines().enumerate() {
             let line = line.trim();
             if line.is_empty() || line.starts_with('#') {
                 continue;
             }
-            
+
             if let Some((key, value)) = parse_key_value(line) {
                 match key.as_str() {
                     "host" => {
@@ -287,11 +299,10 @@ impl Config {
                         host = Some(value);
                     }
                     "port" => {
-                        port = Some(value.parse::<u16>()
-                            .map_err(|_| ConfigError::Parse {
-                                line: line_num + 1,
-                                message: format!("Invalid port number: {}", value),
-                            })?);
+                        port = Some(value.parse::<u16>().map_err(|_| ConfigError::Parse {
+                            line: line_num + 1,
+                            message: format!("Invalid port number: {}", value),
+                        })?);
                     }
                     _ => {
                         return Err(ConfigError::Parse {
@@ -307,7 +318,7 @@ impl Config {
                 });
             }
         }
-        
+
         Ok(Config {
             host: host.ok_or_else(|| ConfigError::Config {
                 message: "Missing required field: host".to_string(),
@@ -335,13 +346,13 @@ async fn fetch_user_from_database(user_id: u32) -> Result<User, WebError> {
             message: "Invalid user ID".to_string(),
         });
     }
-    
+
     if user_id == 999 {
         return Err(WebError::Database {
             source: DatabaseError::ConnectionFailed,
         });
     }
-    
+
     Ok(User {
         id: user_id,
         name: format!("User {}", user_id),
@@ -359,49 +370,55 @@ fn check_user_permissions(user: &User) -> Result<Permissions, anyhow::Error> {
 
 #[allow(dead_code)]
 fn generate_response(user: &User) -> Result<String, anyhow::Error> {
-    Ok(format!(r#"{{"id": {}, "name": "{}", "email": "{}"}}"#, 
-               user.id, user.name, user.email))
+    Ok(format!(
+        r#"{{"id": {}, "name": "{}", "email": "{}"}}"#,
+        user.id, user.name, user.email
+    ))
 }
 
 // File processing pipeline
 fn list_input_files(dir: &str) -> AnyhowResult<Vec<String>> {
     let mut files = Vec::new();
-    
+
     // Simulate directory listing
     if dir == "empty" {
         return Ok(files);
     }
-    
+
     files.push(format!("{}/data1.csv", dir));
     files.push(format!("{}/data2.csv", dir));
-    
+
     Ok(files)
 }
 
 fn process_single_file(input_path: &str, output_dir: &str) -> Result<(), ProcessingError> {
-    let content = std::fs::read_to_string(input_path)
-        .map_err(|_| ProcessingError::FileNotFound {
+    let content =
+        std::fs::read_to_string(input_path).map_err(|_| ProcessingError::FileNotFound {
             path: input_path.to_string(),
         })?;
-    
+
     if !content.contains("CSV") {
         return Err(ProcessingError::InvalidFormat {
             expected: "CSV".to_string(),
             actual: "Unknown".to_string(),
         });
     }
-    
+
     let processed = transform_data(&content)?;
-    
-    let output_path = format!("{}/processed_{}", 
-                             output_dir, 
-                             std::path::Path::new(input_path).file_name().unwrap().to_string_lossy());
-    
-    std::fs::write(&output_path, processed)
-        .map_err(|_| ProcessingError::ProcessingFailed {
-            stage: "Writing output file".to_string(),
-        })?;
-    
+
+    let output_path = format!(
+        "{}/processed_{}",
+        output_dir,
+        std::path::Path::new(input_path)
+            .file_name()
+            .unwrap()
+            .to_string_lossy()
+    );
+
+    std::fs::write(&output_path, processed).map_err(|_| ProcessingError::ProcessingFailed {
+        stage: "Writing output file".to_string(),
+    })?;
+
     println!("Processed: {} -> {}", input_path, output_path);
     Ok(())
 }
@@ -412,13 +429,13 @@ fn transform_data(content: &str) -> Result<String, ProcessingError> {
             stage: "Data transformation".to_string(),
         });
     }
-    
+
     Ok(content.to_uppercase())
 }
 
 fn main() {
     println!("=== Day 31: anyhow and thiserror Examples ===\n");
-    
+
     // Example 1: anyhow-style error handling
     println!("1. anyhow-style Error Handling:");
     let input_data = "key1,100\nkey2,200\nkey3,invalid";
@@ -427,7 +444,7 @@ fn main() {
         Err(e) => println!("Processing failed: {}", e),
     }
     println!();
-    
+
     // Example 2: thiserror-style error handling
     println!("2. thiserror-style Error Handling:");
     let config_content = "host=example.com\nport=9090\ninvalid_key=should_fail";
@@ -436,21 +453,21 @@ fn main() {
         Err(e) => println!("Config error: {}", e),
     }
     println!();
-    
+
     // Example 3: Web server error handling
     println!("3. Web Server Error Handling:");
     match futures::executor::block_on(fetch_user_from_database(123)) {
         Ok(user) => println!("User fetched: {:?}", user),
         Err(e) => println!("Fetch error: {}", e),
     }
-    
+
     // Simulate database error
     match futures::executor::block_on(fetch_user_from_database(999)) {
         Ok(user) => println!("User fetched: {:?}", user),
         Err(e) => println!("Fetch error: {}", e),
     }
     println!();
-    
+
     // Example 4: File processing pipeline
     println!("4. File Processing Pipeline:");
     let files = match list_input_files("data") {
@@ -460,7 +477,7 @@ fn main() {
             Vec::new()
         }
     };
-    
+
     for file in files {
         match process_single_file(&file, "output") {
             Ok(()) => println!("File processed successfully"),
@@ -468,6 +485,6 @@ fn main() {
         }
     }
     println!();
-    
+
     println!("=== End of Day 31 Examples ===");
 }

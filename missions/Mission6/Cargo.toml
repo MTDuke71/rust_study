@@ -14,7 +14,7 @@ rand = "0.9"
 criterion = { version = "0.7", features = ["html_reports"] }
 
 [[example]]
-name = "demo"
+name = "mission6_demo"
 path = "examples/demo.rs"
 
 [[example]]

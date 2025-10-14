@@ -14,8 +14,11 @@ struct ParseError {
 
 impl fmt::Display for ParseError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Parse error at line {}, column {}: {}", 
-               self.line, self.column, self.message)
+        write!(
+            f,
+            "Parse error at line {}, column {}: {}",
+            self.line, self.column, self.message
+        )
     }
 }
 
@@ -90,7 +93,11 @@ pub struct ValidationError {
 }
 
 impl ValidationError {
-    pub fn new(field: impl Into<String>, value: impl Into<String>, reason: impl Into<String>) -> Self {
+    pub fn new(
+        field: impl Into<String>,
+        value: impl Into<String>,
+        reason: impl Into<String>,
+    ) -> Self {
         Self {
             field: field.into(),
             value: value.into(),
@@ -101,8 +108,11 @@ impl ValidationError {
 
 impl fmt::Display for ValidationError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Validation failed for field '{}' with value '{}': {}", 
-               self.field, self.value, self.reason)
+        write!(
+            f,
+            "Validation failed for field '{}' with value '{}': {}",
+            self.field, self.value, self.reason
+        )
     }
 }
 
@@ -111,10 +121,21 @@ impl Error for ValidationError {}
 // Example 5: Configuration Error
 #[derive(Debug)]
 pub enum ConfigError {
-    FileNotFound { path: String },
-    ParseError { line: usize, message: String },
-    InvalidFormat { key: String, expected: String, found: String },
-    IoError { source: std::io::Error },
+    FileNotFound {
+        path: String,
+    },
+    ParseError {
+        line: usize,
+        message: String,
+    },
+    InvalidFormat {
+        key: String,
+        expected: String,
+        found: String,
+    },
+    IoError {
+        source: std::io::Error,
+    },
 }
 
 impl fmt::Display for ConfigError {
@@ -126,9 +147,16 @@ impl fmt::Display for ConfigError {
             ConfigError::ParseError { line, message } => {
                 write!(f, "Parse error at line {}: {}", line, message)
             }
-            ConfigError::InvalidFormat { key, expected, found } => {
-                write!(f, "Invalid format for '{}': expected {}, found {}", 
-                       key, expected, found)
+            ConfigError::InvalidFormat {
+                key,
+                expected,
+                found,
+            } => {
+                write!(
+                    f,
+                    "Invalid format for '{}': expected {}, found {}",
+                    key, expected, found
+                )
             }
             ConfigError::IoError { source } => {
                 write!(f, "IO error: {}", source)
@@ -165,19 +193,19 @@ impl Config {
             host: None,
         }
     }
-    
+
     pub fn set_port(&mut self, port: u16) {
         self.port = Some(port);
     }
-    
+
     pub fn set_host(&mut self, host: String) {
         self.host = Some(host);
     }
-    
+
     pub fn port(&self) -> Option<u16> {
         self.port
     }
-    
+
     pub fn host(&self) -> Option<&str> {
         self.host.as_deref()
     }
@@ -201,17 +229,18 @@ fn parse_key_value(line: &str) -> Option<(String, String)> {
 
 fn parse_config(content: &str, _path: &str) -> Result<Config, ConfigError> {
     let mut config = Config::new();
-    
+
     for (line_num, line) in content.lines().enumerate() {
         let line = line.trim();
         if line.is_empty() || line.starts_with('#') {
             continue;
         }
-        
+
         if let Some((key, value)) = parse_key_value(line) {
             match key.as_str() {
                 "port" => {
-                    let port = value.parse::<u16>()
+                    let port = value
+                        .parse::<u16>()
                         .map_err(|_| ConfigError::InvalidFormat {
                             key: "port".to_string(),
                             expected: "u16".to_string(),
@@ -236,7 +265,7 @@ fn parse_config(content: &str, _path: &str) -> Result<Config, ConfigError> {
             });
         }
     }
-    
+
     Ok(config)
 }
 
@@ -245,28 +274,36 @@ fn divide(a: i32, b: i32) -> Result<f64, CalculatorError> {
     if b == 0 {
         return Err(CalculatorError::DivisionByZero);
     }
-    
+
     let result = a as f64 / b as f64;
     if result.is_infinite() {
         return Err(CalculatorError::Overflow);
     }
-    
+
     Ok(result)
 }
 
 fn validate_age(age: i32) -> Result<i32, ValidationError> {
     if age < 0 {
-        return Err(ValidationError::new("age", age.to_string(), "Age cannot be negative"));
+        return Err(ValidationError::new(
+            "age",
+            age.to_string(),
+            "Age cannot be negative",
+        ));
     }
     if age > 150 {
-        return Err(ValidationError::new("age", age.to_string(), "Age cannot exceed 150"));
+        return Err(ValidationError::new(
+            "age",
+            age.to_string(),
+            "Age cannot exceed 150",
+        ));
     }
     Ok(age)
 }
 
 fn main() {
     println!("=== Day 29: Custom Error Types Examples ===\n");
-    
+
     // Example 1: Basic Parse Error
     println!("1. Basic Parse Error:");
     let parse_err = ParseError {
@@ -276,25 +313,25 @@ fn main() {
     };
     println!("Error: {}", parse_err);
     println!("Debug: {:?}\n", parse_err);
-    
+
     // Example 2: Calculator Errors
     println!("2. Calculator Error Handling:");
     match divide(10, 0) {
         Ok(result) => println!("10 / 0 = {}", result),
         Err(e) => println!("Error: {}", e),
     }
-    
+
     match divide(i32::MAX, 1) {
         Ok(result) => println!("MAX / 1 = {}", result),
         Err(e) => println!("Error: {}", e),
     }
-    
+
     match divide(10, 2) {
         Ok(result) => println!("10 / 2 = {}", result),
         Err(e) => println!("Error: {}", e),
     }
     println!();
-    
+
     // Example 3: Validation Errors
     println!("3. Validation Error Handling:");
     for age in [-5, 25, 200] {
@@ -304,7 +341,7 @@ fn main() {
         }
     }
     println!();
-    
+
     // Example 4: Configuration Parsing
     println!("4. Configuration Parsing:");
     let config_content = r#"
@@ -313,7 +350,7 @@ host=localhost
 port=8080
 invalid_key=should_fail
 "#;
-    
+
     match parse_config(config_content, "config.txt") {
         Ok(config) => {
             println!("Configuration loaded successfully:");
@@ -323,21 +360,18 @@ invalid_key=should_fail
         Err(e) => println!("Configuration error: {}", e),
     }
     println!();
-    
+
     // Example 5: Error Chaining
     println!("5. Error Chaining Example:");
     let file_operation_error = FileOperationError::IoError {
-        source: std::io::Error::new(
-            std::io::ErrorKind::NotFound,
-            "File not found"
-        ),
+        source: std::io::Error::new(std::io::ErrorKind::NotFound, "File not found"),
     };
-    
+
     println!("File operation error: {}", file_operation_error);
     if let Some(source) = file_operation_error.source() {
         println!("Source error: {}", source);
     }
     println!();
-    
+
     println!("=== End of Day 29 Examples ===");
 }

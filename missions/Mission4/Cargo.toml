@@ -12,7 +12,7 @@ edition = "2021"
 rand = "0.9"
 
 [[example]]
-name = "demo"
+name = "mission4_demo"
 path = "examples/demo.rs"
 
 [[example]]
@@ -20,5 +20,5 @@ name = "interior_mutability_demo"
 path = "examples/interior_mutability_demo.rs"
 
 [[example]]
-name = "performance_comparison"
+name = "mission4_performance_comparison"
 path = "examples/performance_comparison.rs"

@@ -33,5 +33,5 @@ name = "step6_bfs_implementation"
 path = "examples/step6_bfs_implementation.rs"
 
 [[example]]
-name = "step7_integration_project"
+name = "mission7_step7_integration_project"
 path = "examples/step7_integration_project.rs"

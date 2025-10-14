@@ -12,5 +12,5 @@ edition = "2021"
 rand = "0.9"
 
 [[example]]
-name = "demo"
+name = "mission5_demo"
 path = "examples/demo.rs"
