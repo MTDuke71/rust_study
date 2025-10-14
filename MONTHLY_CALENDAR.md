@@ -1,6 +1,46 @@
 
-*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]]*
-*Quick Links: ### **Thursday, October 10** 🔍
+*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]] | [[Today's Focus]]*
+*Quick Links: [[Today's Focus]] - Auto-navigate to current day*
+
+---
+
+# 🚀 **Quick Start - Today's Focus**
+
+**Current Date**: `=dateformat(date(today), "EEEE, MMMM d, yyyy")`
+
+**Today's Section**: `=dateformat(date(today), "MMMM d")`
+
+---
+
+## 📅 **Jump to Today's Learning**
+
+Click the date below to jump directly to today's learning plan:
+
+- **[[#October 10 - Thursday]]** 🔍
+- **[[#October 11 - Friday]]** 🎯  
+- **[[#October 12 - Saturday]]** ⭐
+- **[[#October 13 - Sunday]]** 🧠
+- **[[#October 14 - Monday]]** 🚀
+- **[[#October 15 - Tuesday]]** 🔧
+- **[[#October 16 - Wednesday]]** 📊
+- **[[#October 17 - Thursday]]** 🎯
+- **[[#October 18 - Friday]]** 🏁
+- **[[#October 19 - Saturday]]** 🌟
+- **[[#October 20 - Sunday]]** 🧠
+- **[[#October 21 - Monday]]** 🚀
+- **[[#October 22 - Tuesday]]** 🚨
+- **[[#October 23 - Wednesday]]** 🎯
+- **[[#October 24 - Thursday]]** 🗺️
+- **[[#October 25 - Friday]]** ⭐
+- **[[#October 26 - Saturday]]** 🧠
+- **[[#October 27 - Sunday]]** 🚀
+- **[[#October 28 - Monday]]** 🏁
+
+---
+
+## 📚 **Today's Learning Plan**
+
+### **Thursday, October 10** 🔍
 **Mission Focus**: Mission 5 Core Operations (insert, get, remove)
 **Daily Study**: Week 2, Day 11 - HashSets (unique collections, set operations)
 **Rust Book**: Chapter 5.1 - Defining and Instantiating Structs
@@ -361,7 +401,8 @@ cargo run --example graph_demo
 
 ---
 
-## 🗓️ Week 4: October 15-21, 2025
+## 🗓️ Week 4: October 15-21, 2025 
+This intentionally only has 1 day of Daily Study (Day 28)
 
 ### **Wednesday, October 15** 📝
 **Mission Focus**: Mission 8 Setup (BFS/DFS Algorithms)
@@ -377,73 +418,61 @@ cd Mission8 && cargo init
 
 ### **Thursday, October 16** 🎯
 **Mission Focus**: Mission 8 Generic Algorithm Implementation
-**Daily Study**: Week 5, Day 29 - Custom error types (std::error::Error)
 **Rust Book**: Chapter 10.1 - Generic Data Types
 ```bash
 # Daily Tasks
 # Implement generic BFS/DFS that works on any graph type
 cargo test req1_generic_algorithms
-# Create custom error types for graph algorithms
 # Deep dive into generic syntax: functions, structs, enums
 ```
 
 ### **Friday, October 17** 🔄
 **Mission Focus**: Mission 8 Algorithm Composition
-**Daily Study**: Week 5, Day 30 - Error propagation (? operator, conversions)
 **Rust Book**: Chapter 10.2 - Traits: Defining Shared Behavior
 ```bash
 # Daily Tasks
 # Combine algorithms: shortest path, cycle detection
 cargo test req2_algorithm_composition
-# Master ? operator and From/Into for error conversion
 # Learn trait definitions, implementations, bounds
 ```
 
 ### **Saturday, October 18** 📊
 **Mission Focus**: Mission 8 Performance Analysis
-**Daily Study**: Week 5, Day 31 - anyhow and thiserror (practical error handling)
 **Rust Book**: Chapter 10.3 - Validating References with Lifetimes
 ```bash
 # Daily Tasks
 cargo criterion                             # Benchmark algorithm performance
 # Compare recursive vs iterative implementations
-# Learn practical error handling with popular crates
 # Master lifetime parameters in generic contexts
 ```
 
 ### **Sunday, October 19** 🧪
 **Mission Focus**: Mission 8 Real-world Applications
-**Daily Study**: Week 5, Day 32 - Result combinators (and_then, or_else, map_err)
 **Rust Book**: Chapter 11.1 - How to Write Tests
 ```bash
 # Daily Tasks
 # Build maze solver, network analyzer examples
 cargo run --example maze_solver
-# Practice functional error handling patterns
 # Learn test organization, unit vs integration tests
 ```
 
 ### **Monday, October 20** 🔧
 **Mission Focus**: Mission 8 Integration Testing
-**Daily Study**: Week 5, Day 33 - Panic recovery (catch_unwind, panic hooks)
 **Rust Book**: Chapter 11.2 - Controlling How Tests Are Run
 ```bash
 # Daily Tasks
 cargo test --workspace                      # Full integration testing
 # Test algorithm correctness with known graphs
-# Learn panic handling for robust applications
 # Master cargo test options and parallel execution
 ```
 
 ### **Tuesday, October 21** 📋
 **Mission Focus**: Mission 8 Documentation & Review
-**Daily Study**: Week 5, Day 34 - Error handling patterns (panic vs Result)
 **Rust Book**: Chapter 11.3 - Test Organization
 ```bash
 # Daily Tasks
 cargo doc --open
 # Complete Mission 8 with comprehensive examples
-# Solidify error handling decision making
 # Learn test module organization and conventions
 ```
 
