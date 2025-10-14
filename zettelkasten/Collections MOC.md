@@ -41,6 +41,12 @@
 
 ### **Mission 1: Stack** → [[Stack Implementation Patterns]]
 - **Application**: [[../../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended Validator]] - Advanced bracket validation with configurable alphabet and multi-error reporting
+
+### **Mission 2: Queue & Ring Buffer**
+- **Tutorial**: [[../../tutorials/Mission2_tut/README]] - Progressive queue learning with 7 comprehensive steps
+- Ring buffer algorithms and circular indexing
+- FIFO queue implementation with Option<T> patterns
+- Linked queue with raw pointer optimization
 - **Basic Implementation**: [[../../advanced_examples/Brackets_Basic/README_BASIC]] - V-Cycle bracket validation with requirements traceability
 - **Extended Features**: [[../../advanced_examples/Brackets_Ext/README (2)]] - Advanced bracket validation with comprehensive error handling
 

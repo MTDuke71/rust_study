@@ -53,7 +53,7 @@ Traceability Matrix
 - **Location**: `Mission2/`
 - **Key Concepts**: Ring buffer algorithms, modular arithmetic, Option<T>, raw pointers, unsafe code
 - **Requirements**: REQ-G1 (FIFO), REQ-R1 (Ring buffer), REQ-R2 (Fixed capacity), REQ-R5 (Overwriting)
-- **Tutorial**: Queue algorithms and performance optimization
+- **Tutorial**: [[../../tutorials/Mission2_tut/README]] - Progressive queue learning with 7 comprehensive steps
 - **Deep Dives**:
   - [[While Let Pattern Deep Dive]] - Consuming collection patterns
   - [[Ring Buffer Overwriting Semantics]] - Capacity management strategies

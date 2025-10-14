@@ -18,6 +18,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - String iteration and character counting
 - Running sum pattern
 - Early termination conditions
+- **Implementation Discussion**: [[../../advent_of_code/aoc2015/discussions/day1]] - Complete walkthrough of scaffold usage and Rust vs Python comparison
 
 ### **Day 2: I Was Told There Would Be No Math**
 - Parsing structured input (`split()`, `parse()`)

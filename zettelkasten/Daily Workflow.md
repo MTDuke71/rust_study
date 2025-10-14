@@ -77,6 +77,8 @@ Create a dashboard note with:
 - Progress tracking widgets
 - Calendar view
 
+*See [[Daily Focus Dashboard]] for an automated Dataview-based dashboard example.*
+
 ### **Automation Ideas**
 - **Templater Plugin**: Auto-generate daily notes with current day's plan
 - **Dataview Plugin**: Create dynamic views of current progress
