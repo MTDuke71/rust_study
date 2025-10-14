@@ -313,6 +313,7 @@ struct Node<T> {
 - **Documentation**: `missions/Mission4/README.md`
 - **Tutorial**: `Mission4_tut/` directory
 - **Complete Solutions**: [[../../tutorials/Mission4_tut/solutions/solutions]] - Comprehensive exercise solutions with Rc/RefCell patterns
+- **Development Process**: [[../../tutorials/Mission4_tut/Chat]] - Tutorial creation and development discussions
 
 ## 🔮 Next Steps After Mission4
 

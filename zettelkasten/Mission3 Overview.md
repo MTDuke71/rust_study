@@ -273,6 +273,7 @@ fn search<'a, T>(slice: &'a [T], target: &T) -> Option<&'a T>
 - **Examples**: `missions/Mission3/examples/demo.rs`
 - **Documentation**: `missions/Mission3/README.md`
 - **Key Learnings**: `missions/Mission3/KEY_LEARNINGS.md`
+- **Tutorial**: [[../../tutorials/Mission3_tut/README]] - Progressive learning path for binary search mastery
 
 ## 🔮 Next Steps After Mission3
 

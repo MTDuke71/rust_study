@@ -197,6 +197,7 @@ let value = match some_option {
 
 3. **Review related daily study**
    - [[Day 14 - Error Handling Patterns]] for Result enum
+   - [[../../rust_book/Ch6/defining_enums/WARNINGS_EXPLAINED]] - Understanding enum compiler warnings
    - [[Day 10 - HashMap Basics]] for Option in APIs
    - Practice exercises combining enums and collections
 

@@ -915,6 +915,7 @@ fn test_iterator_methods() {
 - [[Rust Iterators]] - General iterator patterns
 - [[Const Evaluation]] - Compile-time computation in Rust
 - [[Derive Macros]] - Understanding procedural macros
+- [[../../rust_book/Ch6/defining_enums/WARNINGS_EXPLAINED]] - Understanding and resolving enum compiler warnings
 
 ---
 
