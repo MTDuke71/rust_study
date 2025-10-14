@@ -621,6 +621,7 @@ impl VCycleMission {
 - [[Test Quality Framework]] - Effective testing strategies and coverage requirements  
 - [[Documentation Standards]] - API documentation and code comment best practices
 - [[Automated Quality Pipeline]] - Tools and scripts for consistent quality enforcement
+- **Scripts Documentation**: [[../../scripts/README]] - Workspace automation tools and utilities
 
 *Learning Quality Framework:*  
 - [[Learning Process Quality]] - Session effectiveness and focus maintenance standards

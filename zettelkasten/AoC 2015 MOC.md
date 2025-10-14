@@ -80,6 +80,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - **Learning Guide**: [[../advent_of_code/aoc2015/examples/DAY10_LEARNING_GUIDE]] - Step-by-step implementation
 - **Quick Reference**: [[../advent_of_code/aoc2015/examples/DAY10_README]] - Commands and summary
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day10]]
+- **Integration Summary**: [[../advent_of_code/aoc2015/examples/DAY10_INTEGRATION_SUMMARY]] - Complete knowledge graph integration documentation
 - While loop with manual index control
 - Benchmarking with Criterion (340ms vs 394ms)
 - Understanding when memoization hurts performance (0% cache hit rate)
