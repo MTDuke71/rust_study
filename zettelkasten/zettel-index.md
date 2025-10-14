@@ -121,6 +121,10 @@
 - [[rust_book/Ch9/README]] - Error handling
 - [[rust-book-ch10]] or [[rb-ch10]] - Generics, traits, lifetimes
 
+### **Detailed Chapter Guides**
+- [[../../rust_book/Ch5/README]] - **Chapter 5 Complete Guide** - Structs with mission integration examples
+- [[../../rust_book/Ch7/README]] - **Chapter 7 Complete Guide** - Modules and project organization
+
 ### **Key Concept Areas**
 
 **Grid Algorithms:**

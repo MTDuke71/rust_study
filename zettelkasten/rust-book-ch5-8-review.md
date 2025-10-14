@@ -10,6 +10,7 @@ This review covers four critical chapters that form the foundation of practical 
 - **Chapter 5**: Structs - Creating custom composite data types
 - **Chapter 6**: Enums and Pattern Matching - Modeling variant data and control flow
 - **Chapter 7**: Packages, Crates, and Modules - Code organization and visibility
+  - *See [[../../rust_book/Ch7/README]] for detailed module system guide with practical examples*
 - **Chapter 8**: Common Collections - Dynamic, heap-allocated data structures
 
 ## 🏗️ Chapter 5: Structs - Building Custom Data Types
@@ -17,6 +18,8 @@ This review covers four critical chapters that form the foundation of practical 
 ### **Core Concepts**
 
 Structs are Rust's primary mechanism for creating custom data types that group related data together. They serve as the foundation for domain modeling, allowing developers to represent real-world entities with named fields that convey semantic meaning.
+
+*For comprehensive examples and detailed explanations, see [[../../rust_book/Ch5/README]] - Complete Chapter 5 guide with mission integration.*
 
 ### **Three Struct Variants**
 
