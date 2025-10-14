@@ -1149,12 +1149,6 @@ I’ll stay quiet until you’re ready for the next nugget, mission, or aha mome
 
 You’re on exactly the right track — keep going at your own pace.
 
-
-
-
-No file chosenNo file chosen
-ChatGPT can make mistakes. Check important info.
-
 ---
 
 ## 🔗 Related Resources & Navigation

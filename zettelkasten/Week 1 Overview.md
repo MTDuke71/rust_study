@@ -19,7 +19,7 @@ Master the **fundamental pillars** of Rust that make it unique:
 
 ## 📚 Daily Progression
 
-### **Day 1: Setup & Toolchain** [[Day 01 - Setup]]
+### **Day 1: Setup & Toolchain** [[daily-study/Day01]]
 - Install Rust toolchain (rustup, cargo, rustc)
 - Understand project structure (Cargo.toml, src/)
 - Run first "Hello, World!" program
@@ -27,7 +27,7 @@ Master the **fundamental pillars** of Rust that make it unique:
 
 **Key Takeaway**: Rust toolchain is unified and ergonomic
 
-### **Day 2: Ownership & Move Semantics** [[Day 02 - Ownership Basics]]
+### **Day 2: Ownership & Move Semantics** [[daily-study/Day02]]
 - Ownership rules: each value has one owner
 - Move semantics for heap types (String)
 - Copy semantics for stack types (i32, bool)
@@ -35,7 +35,7 @@ Master the **fundamental pillars** of Rust that make it unique:
 
 **Key Takeaway**: Ownership replaces garbage collection
 
-### **Day 3: References & Borrowing** [[Day 03 - Borrowing]]
+### **Day 3: References & Borrowing** [[daily-study/Day03]]
 - Immutable references (&T) - many allowed
 - Mutable references (&mut T) - only one at a time
 - Borrowing rules prevent data races
@@ -43,7 +43,7 @@ Master the **fundamental pillars** of Rust that make it unique:
 
 **Key Takeaway**: Borrowing enables safe sharing without ownership transfer
 
-### **Day 4: Lifetimes** [[Day 04 - Lifetimes]]
+### **Day 4: Lifetimes** [[daily-study/Day04]]
 - Lifetime annotations ('a syntax)
 - Lifetime elision rules (compiler inference)
 - Structs with references need lifetimes
@@ -51,7 +51,7 @@ Master the **fundamental pillars** of Rust that make it unique:
 
 **Key Takeaway**: Lifetimes prevent dangling references at compile time
 
-### **Day 5: Option & Result** [[Day 05 - Option and Result]]
+### **Day 5: Option & Result** [[daily-study/Day05]]
 - Option<T> for nullable values (no null pointers!)
 - Result<T, E> for recoverable errors
 - The ? operator for error propagation
@@ -59,7 +59,7 @@ Master the **fundamental pillars** of Rust that make it unique:
 
 **Key Takeaway**: Explicit error handling makes programs reliable
 
-### **Day 6: Pattern Matching** [[Day 06 - Pattern Matching]]
+### **Day 6: Pattern Matching** [[daily-study/Day06]]
 - match expressions for exhaustive matching
 - Destructuring tuples, structs, enums
 - if let and while let shortcuts
@@ -67,7 +67,7 @@ Master the **fundamental pillars** of Rust that make it unique:
 
 **Key Takeaway**: Pattern matching is both control flow and data extraction
 
-### **Day 7: Week Summary** [[Day 07 - Week 1 Summary]]
+### **Day 7: Week Summary** [[daily-study/Day07]]
 - Code cheat sheet for all concepts
 - Mental models for ownership and borrowing
 - Common patterns for competitive programming
@@ -315,5 +315,5 @@ fn choose<'a>(x: &'a str, y: &'a str) -> &'a str {
 
 ---
 
-*Links: [[Day 01 - Setup]] | [[Day 07 - Week 1 Summary]] | [[Week 2 Overview]] | [[Rust Concepts MOC]] | [[zettel-index]]*
+*Links: [[daily-study/Day01]] | [[daily-study/Day07]] | [[Week 2 Overview]] | [[Rust Concepts MOC]] | [[zettel-index]]*
 *Tags: #week-overview #week1 #foundations #ownership #borrowing #lifetimes #daily-study #learning-path*
