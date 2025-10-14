@@ -78,6 +78,7 @@ fn main() {
     println!("==================================");
     
     #[derive(Debug)]
+    #[allow(dead_code)]
     struct Point {
         x: i32,
         y: i32,
@@ -117,6 +118,7 @@ fn main() {
     println!("================================");
     
     #[derive(Debug)]
+    #[allow(dead_code)]
     enum Command {
         Move { direction: String, distance: i32 },
         Turn { angle: i32 },
