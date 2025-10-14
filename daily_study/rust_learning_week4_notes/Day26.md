@@ -321,7 +321,7 @@ S 9 9 9 G                  S 9 9 9 G
 1 1 1 1 1                  1 1 1 1 1
 
 Without weights (BFS): 4 steps
-With weights (Dijkstra): Cost of 5 (going around: 1+1+1+1+1 vs straight: 9+9+9+1=28)
+With weights (Dijkstra): Cost of 6 (going around: 1+1+1+1+1+1 vs straight: 9+9+9+1=28)
 ```
 
 ---
