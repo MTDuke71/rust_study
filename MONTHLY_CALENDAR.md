@@ -1,6 +1,6 @@
 
-*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]] | [[Today's Focus]]*
-*Quick Links: [[Today's Focus]] - Auto-navigate to current day*
+*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]] | [[zettelkasten/Today's Focus]]*
+*Quick Links: [[zettelkasten/Today's Focus]] - Auto-navigate to current day*
 
 ---
 
@@ -16,25 +16,25 @@
 
 Click the date below to jump directly to today's learning plan:
 
-- **[[#October 10 - Thursday]]** 🔍
-- **[[#October 11 - Friday]]** 🎯  
-- **[[#October 12 - Saturday]]** ⭐
-- **[[#October 13 - Sunday]]** 🧠
-- **[[#October 14 - Monday]]** 🚀
-- **[[#October 15 - Tuesday]]** 🔧
-- **[[#October 16 - Wednesday]]** 📊
-- **[[#October 17 - Thursday]]** 🎯
-- **[[#October 18 - Friday]]** 🏁
-- **[[#October 19 - Saturday]]** 🌟
-- **[[#October 20 - Sunday]]** 🧠
-- **[[#October 21 - Monday]]** 🚀
-- **[[#October 22 - Tuesday]]** 🚨
-- **[[#October 23 - Wednesday]]** 🎯
-- **[[#October 24 - Thursday]]** 🗺️
-- **[[#October 25 - Friday]]** ⭐
-- **[[#October 26 - Saturday]]** 🧠
-- **[[#October 27 - Sunday]]** 🚀
-- **[[#October 28 - Monday]]** 🏁
+- **[[#Thursday, October 10]]** 🔍
+- **[[#Friday, October 11]]** 🎯  
+- **[[#Saturday, October 12]]** ⭐
+- **[[#Sunday, October 13]]** 🧠
+- **[[#Tuesday, October 14]]** 🚀
+- **[[#Wednesday, October 15]]** 🔧
+- **[[#Thursday, October 16]]** 📊
+- **[[#Friday, October 17]]** 🎯
+- **[[#Saturday, October 18]]** 🏁
+- **[[#Sunday, October 19]]** 🌟
+- **[[#Monday, October 20]]** 🧠
+- **[[#Tuesday, October 21]]** 🚀
+- **[[#Wednesday, October 22]]** 🚨
+- **[[#Thursday, October 23]]** 🎯
+- **[[#Friday, October 24]]** 🗺️
+- **[[#Saturday, October 25]]** ⭐
+- **[[#Sunday, October 26]]** 🧠
+- **[[#Monday, October 27]]** 🚀
+- **[[#Tuesday, October 28]]** 🏁
 
 ---
 
