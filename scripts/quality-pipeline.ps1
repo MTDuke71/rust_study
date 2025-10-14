@@ -20,11 +20,54 @@ param(
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
+# Create reports directory if it doesn't exist
+$ReportsDir = "reports"
+if (-not (Test-Path $ReportsDir)) {
+    New-Item -ItemType Directory -Path $ReportsDir | Out-Null
+}
+
+# Generate timestamp for file naming
+$Timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+
 # Color output functions
 function Write-QAInfo { param([string]$Message) Write-Host "🔍 $Message" -ForegroundColor Cyan }
 function Write-QASuccess { param([string]$Message) Write-Host "✅ $Message" -ForegroundColor Green }
 function Write-QAWarning { param([string]$Message) Write-Host "⚠️ $Message" -ForegroundColor Yellow }
 function Write-QAError { param([string]$Message) Write-Host "❌ $Message" -ForegroundColor Red }
+
+# Function to save check results to individual files
+function Save-CheckResult {
+    param(
+        [string]$CheckName,
+        [string]$Output,
+        [int]$ExitCode,
+        [hashtable]$AdditionalData = @{}
+    )
+    
+    $safeName = $CheckName -replace '[^\w\-]', '_'
+    $fileName = "$ReportsDir\${safeName}_$Timestamp.txt"
+    
+    $report = @"
+$CheckName Report
+================
+Timestamp: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+Exit Code: $ExitCode
+Status: $(if ($ExitCode -eq 0) { "SUCCESS" } else { "FAILED" })
+
+$Output
+
+"@
+    
+    # Add additional structured data if provided
+    if ($AdditionalData.Count -gt 0) {
+        $report += "`nADDITIONAL DATA:`n"
+        $report += ($AdditionalData.GetEnumerator() | ForEach-Object { "$($_.Key): $($_.Value)" }) -join "`n"
+        $report += "`n"
+    }
+    
+    $report | Out-File -FilePath $fileName -Encoding UTF8
+    Write-QAInfo "Results saved to $fileName"
+}
 
 # Quality metrics tracking
 $QualityReport = @{
@@ -112,6 +155,13 @@ function Test-Compilation {
     $result = & cargo check --workspace --message-format=json 2>&1
     $exitCode = $LASTEXITCODE
     
+    # Save compilation results to file
+    $additionalData = @{
+        "Workspace" = (Get-Location).Path
+        "Command" = "cargo check --workspace --message-format=json"
+    }
+    Save-CheckResult -CheckName "Compilation" -Output ($result -join "`n") -ExitCode $exitCode -AdditionalData $additionalData
+    
     if ($exitCode -eq 0) {
         $QualityReport.CompilationStatus = "✅ Clean"
         Write-QASuccess "Compilation successful - no errors"
@@ -163,13 +213,22 @@ function Test-Clippy {
     $clippyOutput = & cargo clippy --workspace -- -D warnings 2>&1
     $exitCode = $LASTEXITCODE
     
+    # Count issues in output
+    $issueLines = $clippyOutput | Select-String "warning:|error:" 
+    $issueCount = ($issueLines | Measure-Object).Count
+    
+    # Save clippy results to file
+    $additionalData = @{
+        "Issue Count" = $issueCount
+        "Command" = "cargo clippy --workspace -- -D warnings"
+        "Status" = if ($exitCode -eq 0) { "Clean" } else { "Issues Found" }
+    }
+    Save-CheckResult -CheckName "Clippy" -Output ($clippyOutput -join "`n") -ExitCode $exitCode -AdditionalData $additionalData
+    
     if ($exitCode -eq 0) {
         $QualityReport.ClippyIssues = 0
         Write-QASuccess "Clippy analysis passed - no issues found"
     } else {
-        # Count issues in output
-        $issueLines = $clippyOutput | Select-String "warning:|error:" 
-        $issueCount = ($issueLines | Measure-Object).Count
         $QualityReport.ClippyIssues = $issueCount
         
         # Capture detailed issue information including file paths and line numbers
@@ -200,6 +259,16 @@ function Test-Suite {
         Failed = $failed  
         Total = $passed + $failed
     }
+    
+    # Save test results to file
+    $additionalData = @{
+        "Passed" = $passed
+        "Failed" = $failed
+        "Total" = $passed + $failed
+        "Command" = "cargo test --workspace --message-format=json"
+        "Success Rate" = if (($passed + $failed) -gt 0) { [math]::Round(($passed / ($passed + $failed)) * 100, 2) } else { 0 }
+    }
+    Save-CheckResult -CheckName "Tests" -Output ($testOutput -join "`n") -ExitCode $exitCode -AdditionalData $additionalData
     
     if ($exitCode -ne 0) {
         # Capture failed test details
@@ -360,11 +429,28 @@ $($detailSections -join "`n")
     
     Write-Host $report -ForegroundColor $(if ($QualityReport.TestResults.Failed -eq 0 -and $QualityReport.ClippyIssues -eq 0 -and $QualityReport.CompilationErrors.Count -eq 0) { "Green" } else { "Yellow" })
     
-    # Output to file if requested
+    # Always save comprehensive report to timestamped file
+    $comprehensiveReportFile = "$ReportsDir\Quality_Report_$Timestamp.txt"
+    $report | Out-File -FilePath $comprehensiveReportFile -Encoding UTF8
+    Write-QAInfo "Comprehensive report saved to $comprehensiveReportFile"
+    
+    # Output to file if requested (additional file)
     if ($OutputFile) {
         $report | Out-File -FilePath $OutputFile -Encoding UTF8
-        Write-QAInfo "Report saved to $OutputFile"
+        Write-QAInfo "Additional report saved to $OutputFile"
     }
+    
+    # Create a latest symlink for easy access
+    $latestReportFile = "$ReportsDir\latest_quality_report.txt"
+    Copy-Item -Path $comprehensiveReportFile -Destination $latestReportFile -Force
+    Write-QAInfo "Latest report also saved as $latestReportFile"
+    
+    # Show summary of generated files
+    Write-Host "`n📁 Generated Report Files:" -ForegroundColor Blue
+    Get-ChildItem -Path $ReportsDir -Filter "*$Timestamp*" | ForEach-Object {
+        Write-Host "  📄 $($_.Name)" -ForegroundColor White
+    }
+    Write-Host "  📄 latest_quality_report.txt (symlink to latest)" -ForegroundColor Gray
     
     # Return exit code based on results
     if ($QualityReport.TestResults.Failed -gt 0 -or $QualityReport.ClippyIssues -gt 0 -or $QualityReport.CompilationErrors.Count -gt 0) {
