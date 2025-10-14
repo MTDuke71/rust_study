@@ -1,0 +1,82 @@
+[package]
+name = "rust_learning_week5_error_handling"
+version = "0.1.0"
+edition = "2021"
+authors = ["Rust Learning Student"]
+description = "Week 5: Error Handling Mastery - Comprehensive error handling strategies and patterns"
+
+[dependencies]
+# Error handling crates
+anyhow = "1.0"           # For application-level error handling
+thiserror = "1.0"        # For library-level error types
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"       # For JSON parsing examples
+
+# Additional utilities
+tokio = { version = "1.0", features = ["full"], optional = true }  # For async examples (optional)
+futures = "0.3"  # For async/await examples
+
+[features]
+default = []
+async = ["tokio"]        # Enable async examples with: cargo run --features async
+
+[[example]]
+name = "day29_custom_errors"
+path = "examples/day29_custom_errors.rs"
+
+[[example]]
+name = "day30_error_propagation"
+path = "examples/day30_error_propagation.rs"
+
+[[example]]
+name = "day31_anyhow_thiserror"
+path = "examples/day31_anyhow_thiserror.rs"
+
+[[example]]
+name = "day32_result_combinators"
+path = "examples/day32_result_combinators.rs"
+
+[[example]]
+name = "day33_panic_recovery"
+path = "examples/day33_panic_recovery.rs"
+
+[[example]]
+name = "day34_error_patterns"
+path = "examples/day34_error_patterns.rs"
+
+[[example]]
+name = "day35_robust_parsing"
+path = "examples/day35_robust_parsing.rs"
+
+# Additional examples
+[[example]]
+name = "web_api_errors"
+path = "examples/web_api_errors.rs"
+
+[[example]]
+name = "file_processor"
+path = "examples/file_processor.rs"
+
+[dev-dependencies]
+# Testing utilities
+tempfile = "3.0"         # For temporary file creation in tests
+criterion = "0.5"        # For benchmarking error handling performance
+
+# Documentation
+# These are only needed if you want to generate docs
+# mdbook = "0.4"         # For generating documentation
+
+# Development tools (these are typically installed via rustup, not as dependencies)
+# clippy and rustfmt are installed as rustup components, not cargo dependencies
+
+# Note: The examples in Day29.rs through Day35.rs are designed to work
+# with just the standard library for educational purposes.
+# 
+# To run the actual examples with real crates, use:
+# cargo run --example day31_anyhow_thiserror
+# 
+# To run individual day files directly:
+# rustc Day29.rs && ./Day29
+# 
+# To use the real crates in your own code, uncomment the dependencies
+# and use the patterns shown in the .md files.

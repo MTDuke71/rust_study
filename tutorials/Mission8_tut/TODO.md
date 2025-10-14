@@ -662,3 +662,9 @@ cargo doc -p mission8_tut --open
 
 **Last Updated**: October 12, 2025  
 **Status**: Step 1 Complete - Ready for Step 2 (BFS/DFS Implementation Tutorial)
+
+---
+
+*Tags: #mission8 #tutorial #bfs #dfs #graph-algorithms #todo #progress*
+
+*Links: [[../README]] | [[../../missions/Mission8/TODO]] | [[../../missions/Mission8/README]] | [[Mission7 Overview]] | [[Mission8 Overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Graph Network Density]] | [[A-Star-Algorithm-Deep-Dive]] | [[Missions MOC]] | [[Daily Study MOC]] | [[zettel-index]]*

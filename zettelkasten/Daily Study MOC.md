@@ -104,6 +104,31 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 ---
 
+### **Week 5: Error Handling Mastery** (Days 29-35) ✅ **COMPLETED**
+**Focus**: Production-Ready Error Handling & Recovery
+
+| Day | Topic | Key Concepts | Links |
+|-----|-------|--------------|-------|
+| [[Day 29 - Custom Error Types\|Day 29]] | Custom Error Types | `Display`, `Error` traits, error chains | [[Error Handling Deep Dive]] |
+| [[Day 30 - Error Propagation\|Day 30]] | Error Propagation | `?` operator, `From` trait, early returns | [[../rust_book/Ch9\|Ch9]] |
+| [[Day 31 - anyhow and thiserror\|Day 31]] | Error Crates | `anyhow`, `thiserror`, real-world patterns | [[../daily_study/rust_learning_week5_notes/examples\|Week 5 Examples]] |
+| [[Day 32 - Result Combinators\|Day 32]] | Result Combinators | `map`, `and_then`, `or_else`, chaining | [[../daily_study/rust_learning_week5_notes/examples/day32_result_combinators\|Combinator Examples]] |
+| [[Day 33 - Panic Recovery\|Day 33]] | Panic Recovery | `catch_unwind`, graceful failure handling | [[../daily_study/rust_learning_week5_notes/examples/day33_panic_recovery\|Recovery Examples]] |
+| [[Day 34 - Error Handling Patterns\|Day 34]] | Error Patterns | Panic vs errors, best practices, patterns | [[../daily_study/rust_learning_week5_notes/examples/day34_error_patterns\|Pattern Examples]] |
+| [[Day 35 - Robust Parsing\|Day 35]] | Robust Parsing | Error recovery, fault-tolerant parsers | [[Text Parsing Patterns]] |
+
+**Mission Integration**: 
+- Error handling patterns used across all missions for robust implementations
+- Custom error types enable better debugging and user experience
+- Panic recovery essential for Mission 6 (grid navigation edge cases)
+
+**Real-World Applications**:
+- **Web APIs**: [[../daily_study/rust_learning_week5_notes/examples/web_api_errors\|API Error Handling]] - HTTP status codes, validation errors
+- **File Processing**: [[../daily_study/rust_learning_week5_notes/examples/file_processor\|File Processing Pipeline]] - Multi-format parsing with recovery
+- **AoC Problems**: Robust input parsing, graceful handling of malformed data
+
+---
+
 ## 🚀 **How to Use This MOC**
 
 ### **Find Your Current Day**
@@ -248,13 +273,23 @@ Deep language understanding
 
 ## 📈 **Future Weeks Preview**
 
-### **Week 5: Advanced Algorithms** (Planned)
+### **Week 5: Error Handling Mastery** ✅ **COMPLETED**
+- [[Day 29 - Custom Error Types]] - Building robust error types with `Display` and `Error` traits
+- [[Day 30 - Error Propagation]] - Mastering the `?` operator and `From` trait conversions
+- [[Day 31 - anyhow and thiserror]] - Real-world error handling with industry-standard crates
+- [[Day 32 - Result Combinators]] - Chaining operations with `map`, `and_then`, `or_else`
+- [[Day 33 - Panic Recovery]] - `catch_unwind` and graceful error recovery
+- [[Day 34 - Error Handling Patterns]] - When to panic vs return errors, best practices
+- [[Day 35 - Robust Parsing]] - Building fault-tolerant parsers with error recovery
+- **Advanced Examples**: [[../daily_study/rust_learning_week5_notes/examples/web_api_errors|Web API Error Handling]] | [[../daily_study/rust_learning_week5_notes/examples/file_processor|File Processing Pipeline]]
+
+### **Week 6: Advanced Algorithms** (Planned)
 - Graph representations
 - A* pathfinding with heuristics
 - Topological sorting
 - Minimum spanning trees
 
-### **Week 6: Performance & Optimization** (Planned)
+### **Week 7: Performance & Optimization** (Planned)
 - Benchmarking techniques
 - Memory optimization
 - Cache-friendly data structures

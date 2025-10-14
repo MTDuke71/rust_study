@@ -860,7 +860,7 @@ println!("Total links: {}", web.edge_count());  // 3
 
 *Tags: #graph-theory #directed-graph #undirected-graph #edge-counting #data-structures #mission7 #concept*
 
-*Links: [[zettel-index]] | [[mission7-graph-implementation]] | [[graph-traversal]] | [[adjacency-list]]*
+*Links: [[zettel-index]] | [[mission7-graph-implementation]] | [[graph-traversal]] | [[adjacency-list]] | [[Missions MOC]] | [[AoC Patterns MOC]] | [[Mission7 Overview]]*
 
 ---
 

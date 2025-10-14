@@ -158,6 +158,23 @@ fn process_data() -> Result<(), Box<dyn Error>> {
 }
 ```
 
+## 🚀 **Advanced Error Handling (Week 5)**
+
+### **Production-Ready Error Handling**
+For comprehensive error handling patterns and real-world examples, see [[Week 5 Overview]]:
+
+- **[[Day 29 - Custom Error Types]]** - Building robust error types with `Display` and `Error` traits
+- **[[Day 30 - Error Propagation]]** - Mastering the `?` operator and `From` trait conversions  
+- **[[Day 31 - anyhow and thiserror]]** - Real-world error handling with industry-standard crates
+- **[[Day 32 - Result Combinators]]** - Chaining operations with `map`, `and_then`, `or_else`
+- **[[Day 33 - Panic Recovery]]** - `catch_unwind` and graceful error recovery
+- **[[Day 34 - Error Handling Patterns]]** - When to panic vs return errors, best practices
+- **[[Day 35 - Robust Parsing]]** - Building fault-tolerant parsers with error recovery
+
+### **Real-World Examples**
+- **[[../daily_study/rust_learning_week5_notes/examples/web_api_errors|Web API Error Handling]]** - HTTP status codes, validation errors
+- **[[../daily_study/rust_learning_week5_notes/examples/file_processor|File Processing Pipeline]]** - Multi-format parsing with recovery
+
 ## 🎯 AoC-Specific Error Patterns
 
 ### **Input Parsing Errors**

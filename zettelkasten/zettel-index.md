@@ -85,6 +85,14 @@
   - [[daily-study/Day23]] or [[ds-day23]] - Grid parsing
   - [[daily-study/Day24]] or [[ds-day24]] - Flood fill & connected components
   - [[daily-study/Day25]] or [[ds-day25]] - Queue applications
+- [[Week 5 Overview]] - Error Handling Mastery ✅ **COMPLETED**
+  - [[daily-study/Day29]] or [[ds-day29]] - Custom error types
+  - [[daily-study/Day30]] or [[ds-day30]] - Error propagation
+  - [[daily-study/Day31]] or [[ds-day31]] - anyhow & thiserror crates
+  - [[daily-study/Day32]] or [[ds-day32]] - Result combinators
+  - [[daily-study/Day33]] or [[ds-day33]] - Panic recovery
+  - [[daily-study/Day34]] or [[ds-day34]] - Error handling patterns
+  - [[daily-study/Day35]] or [[ds-day35]] - Robust parsing
 
 ### **Advent of Code Track**
 - [[AoC Patterns MOC]] - Common competitive programming patterns
