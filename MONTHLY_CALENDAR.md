@@ -1,79 +1,8 @@
 
-*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]] | [[zettelkasten/Today's Focus]]*
-*Quick Links: [[zettelkasten/Today's Focus]] - Auto-navigate to current day*
-
+*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]] 
 ---
+# 🗓️ Monthly Learning Calendar 
 
-# 🚀 **Quick Start - Today's Focus**
-
-**Current Date**: `=dateformat(date(today), "EEEE, MMMM d, yyyy")`
-
-**Today's Section**: `=dateformat(date(today), "MMMM d")`
-
----
-
-## 📅 **Jump to Today's Learning**
-
-Click the date below to jump directly to today's learning plan:
-
-- **[[#Thursday, October 10]]** 🔍
-- **[[#Friday, October 11]]** 🎯  
-- **[[#Saturday, October 12]]** ⭐
-- **[[#Sunday, October 13]]** 🧠
-- **[[#Tuesday, October 14]]** 🚀
-- **[[#Wednesday, October 15]]** 🔧
-- **[[#Thursday, October 16]]** 📊
-- **[[#Friday, October 17]]** 🎯
-- **[[#Saturday, October 18]]** 🏁
-- **[[#Sunday, October 19]]** 🌟
-- **[[#Monday, October 20]]** 🧠
-- **[[#Tuesday, October 21]]** 🚀
-- **[[#Wednesday, October 22]]** 🚨
-- **[[#Thursday, October 23]]** 🎯
-- **[[#Friday, October 24]]** 🗺️
-- **[[#Saturday, October 25]]** ⭐
-- **[[#Sunday, October 26]]** 🧠
-- **[[#Monday, October 27]]** 🚀
-- **[[#Tuesday, October 28]]** 🏁
-
----
-
-## 📚 **Today's Learning Plan**
-
-### **Thursday, October 10** 🔍
-**Mission Focus**: Mission 5 Core Operations (insert, get, remove)
-**Daily Study**: Week 2, Day 11 - HashSets (unique collections, set operations)
-**Rust Book**: Chapter 5.1 - Defining and Instantiating Structs
-
-**Evidence-Based Learning Tasks:**
-```bash
-# Morning Retrieval Practice (10 min)
-# → Explain HashMap collision handling from memory
-# → Code sketch: implement basic get() operation without looking
-# → Review spaced repetition cards due today
-
-# Core Learning Block (30 min)
-# WE→FE→BP: Work through HashSet implementation pattern
-cargo test req2_insert && cargo test req3_get && cargo test req4_remove
-
-# Evening Consolidation (10 min)  
-# → Log any compilation errors in error bank
-# → Exit ticket: What clicked about HashSets today?
-```verview]] | [[Week 2 Overview]] | [[Mission5 Overview]] | [[Collections MOC]]*
-*Related Concepts: [[V-Cycle Development]] | [[Learning Strategy]] | [[Time Management]] | [[Progressive Learning]]*
-
-
-# 🗓️ Monthly Learning Calendar - October 2025
-
-**Current Status**: Mission 5 Active, Daily Study Week 2 Ready, Rust Book Chapter 5 (Method Syntax)
-
-## 📊 Learning Tracks Overview
-
-| Track | Current Position | Goal | Status |
-|-------|------------------|------|--------|
-| **V-Cycle Missions** | Mission 5 (HashMaps & HashSets) | Complete Mission 8+ | 🔄 Active |
-| **Daily Study Track** | Week 2, Day 8 Ready | Complete Week 2 (Collections) | ✅ Week 1 Complete |
-| **Rust Book** | Chapter 5 (Method Syntax) | Reach Chapter 8 (Common Collections) | 🔄 Active |
 
 ## 📈 Daily Learning Routine (45-75 minutes)
 
@@ -136,7 +65,7 @@ cargo test req2_insert && cargo test req3_get && cargo test req4_remove
 - Day 5: Documentation → `step5_memoization_cache.rs` + Complete Mission 5 V-Cycle
 
 ---
-
+---
 ## 🗓️ Week 1: September 24-September 30, 2025
 
 > **✅ WEEK 1 COMPLETED** *(September 30, 2025)*  
