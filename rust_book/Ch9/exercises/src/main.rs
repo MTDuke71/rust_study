@@ -14,9 +14,7 @@
 /// - Run tests with: cargo test
 /// - Each exercise builds on previous concepts
 /// - Solutions are provided with detailed explanations
-
-use std::fs::File;
-use std::io::{self, Read, Write};
+use std::io;
 use std::fmt;
 use std::error::Error;
 use std::collections::HashMap;
@@ -203,6 +201,7 @@ fn exercise_2_file_operations() {
 #[derive(Debug, Clone, PartialEq)]
 enum CalculatorError {
     DivisionByZero,
+    #[allow(dead_code)]
     InvalidOperation(String),
     Overflow,
     UnderFlow,
@@ -265,12 +264,13 @@ fn exercise_3_custom_errors() {
         }
     }
     
-    let calc_tests = vec![
-        ("10 ÷ 2", || Calculator::divide(10.0, 2.0)),
-        ("10 ÷ 0", || Calculator::divide(10.0, 0.0)),
-        ("2^10", || Calculator::power(2.0, 10.0)),
-        ("2^1000", || Calculator::power(2.0, 1000.0)),
-        ("0^(-1)", || Calculator::power(0.0, -1.0)),
+    type CalculatorTest = (&'static str, Box<dyn Fn() -> Result<f64, CalculatorError>>);
+    let calc_tests: Vec<CalculatorTest> = vec![
+        ("10 ÷ 2", Box::new(|| Calculator::divide(10.0, 2.0))),
+        ("10 ÷ 0", Box::new(|| Calculator::divide(10.0, 0.0))),
+        ("2^10", Box::new(|| Calculator::power(2.0, 10.0))),
+        ("2^1000", Box::new(|| Calculator::power(2.0, 1000.0))),
+        ("0^(-1)", Box::new(|| Calculator::power(0.0, -1.0))),
     ];
     
     for (desc, operation) in calc_tests {
@@ -327,7 +327,7 @@ fn exercise_3_custom_errors() {
     fn process_calculation_from_file(filename: &str) -> Result<f64, AppError> {
         let content = std::fs::read_to_string(filename)?;  // Auto-converts io::Error
         
-        let parts: Vec<&str> = content.trim().split_whitespace().collect();
+        let parts: Vec<&str> = content.split_whitespace().collect();
         if parts.len() != 2 {
             return Err(AppError::Parse("Expected two numbers".to_string()));
         }
@@ -468,8 +468,11 @@ fn exercise_5_config_parser() {
         host: String,
         port: u16,
         database: String,
+        #[allow(dead_code)]
         max_connections: u32,
+        #[allow(dead_code)]
         timeout_seconds: u64,
+        #[allow(dead_code)]
         debug_mode: bool,
     }
     

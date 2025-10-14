@@ -14,7 +14,6 @@
 /// - File operations with ? operator
 /// - Option propagation patterns
 /// - Custom error type conversions
-
 use std::fs::File;
 use std::io::{self, Read, Write};
 use std::fmt;
@@ -164,7 +163,7 @@ fn demonstrate_option_propagation() {
         Some((*first + *last) as f64 / 2.0)
     }
     
-    let test_cases = vec![
+    let test_cases = [
         vec![1, 2, 3, 4, 5],
         vec![10],
         vec![],  // Empty vector

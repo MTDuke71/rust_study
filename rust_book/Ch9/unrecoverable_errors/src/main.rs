@@ -13,7 +13,6 @@
 /// - Index bounds checking
 /// - Safe alternatives to panicking operations
 /// - Backtrace debugging techniques
-
 fn main() {
     println!("=== Chapter 9.1: Unrecoverable Errors with panic! ===\n");
     
@@ -81,7 +80,7 @@ fn demonstrate_bounds_checking() {
 fn demonstrate_safe_alternatives() {
     println!("3. Safe alternatives to panicking operations:");
     
-    let v = vec![10, 20, 30];
+    let v = [10, 20, 30];
     
     // Instead of v[index] which panics on invalid index
     println!("   Using .get() instead of direct indexing:");

@@ -49,8 +49,11 @@ fn example2_if_let_with_else() {
 
     #[derive(Debug)]
     enum Coin {
+        #[allow(dead_code)]
         Penny,
+        #[allow(dead_code)]
         Nickel,
+        #[allow(dead_code)]
         Dime,
         Quarter(String),
     }
@@ -198,6 +201,7 @@ fn example6_enum_variants() {
     enum Event {
         KeyPress(char),
         Click { x: i32, y: i32 },
+        #[allow(dead_code)]
         Scroll(i32),
         Quit,
     }
@@ -359,8 +363,11 @@ fn example9_let_else_happy_path() {
 
     #[derive(Debug, Clone)]
     enum Coin {
+        #[allow(dead_code)]
         Penny,
+        #[allow(dead_code)]
         Nickel,
+        #[allow(dead_code)]
         Dime,
         Quarter(UsState),
     }

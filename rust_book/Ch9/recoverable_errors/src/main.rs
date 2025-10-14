@@ -16,7 +16,7 @@
 /// - Best practices for Result handling
 
 use std::fs::File;
-use std::io::{self, Read, Write};
+use std::io::{self, Write};
 use std::fmt;
 
 fn main() {
@@ -174,6 +174,7 @@ fn demonstrate_error_transformation() {
 enum MathError {
     DivisionByZero,
     NegativeSquareRoot,
+    #[allow(dead_code)]
     Overflow,
 }
 
@@ -207,11 +208,11 @@ fn demonstrate_custom_result_types() {
         }
     }
     
-    let test_cases = vec![
-        ("10.0 ÷ 2.0", || safe_divide(10.0, 2.0)),
-        ("10.0 ÷ 0.0", || safe_divide(10.0, 0.0)),
-        ("√16.0", || safe_sqrt(16.0)),
-        ("√(-4.0)", || safe_sqrt(-4.0)),
+    let test_cases: Vec<(&str, Box<dyn Fn() -> Result<f64, MathError>>)> = vec![
+        ("10.0 ÷ 2.0", Box::new(|| safe_divide(10.0, 2.0))),
+        ("10.0 ÷ 0.0", Box::new(|| safe_divide(10.0, 0.0))),
+        ("√16.0", Box::new(|| safe_sqrt(16.0))),
+        ("√(-4.0)", Box::new(|| safe_sqrt(-4.0))),
     ];
     
     for (description, operation) in test_cases {

@@ -98,7 +98,7 @@ fn exercise2_pig_latin() {
     fn sentence_to_pig_latin(sentence: &str) -> String {
         sentence
             .split_whitespace()
-            .map(|word| to_pig_latin(word))
+            .map(to_pig_latin)
             .collect::<Vec<_>>()
             .join(" ")
     }
@@ -150,7 +150,7 @@ fn exercise3_employee_system() {
     fn add_employee(company: &mut HashMap<String, Vec<String>>, name: String, department: String) {
         company
             .entry(department.clone())
-            .or_insert(Vec::new())
+            .or_default()
             .push(name.clone());
         println!("✅ Added {} to {}", name, department);
     }
@@ -231,6 +231,7 @@ fn exercise3_employee_system() {
 
 // ==================== Bonus: Interactive Mode ====================
 
+#[allow(dead_code)]
 fn interactive_mode() {
     println!("🎮 Bonus: Interactive Employee System");
     println!("=====================================");
@@ -264,7 +265,7 @@ fn interactive_mode() {
 
                 company
                     .entry(department.to_string())
-                    .or_insert(Vec::new())
+                    .or_default()
                     .push(name.to_string());
 
                 println!("✅ Added {} to {}\n", name, department);

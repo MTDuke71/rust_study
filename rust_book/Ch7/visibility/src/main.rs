@@ -11,20 +11,24 @@ mod front_of_house {
             println!("Adding customer to waitlist");
         }
 
+        #[allow(dead_code)]
         fn seat_at_table() {
             println!("Seating customer at table");
         }
     }
 
     pub mod serving {
+        #[allow(dead_code)]
         fn take_order() {
             println!("Taking order");
         }
 
+        #[allow(dead_code)]
         fn serve_order() {
             println!("Serving order");
         }
 
+        #[allow(dead_code)]
         fn take_payment() {
             println!("Taking payment");
         }
@@ -32,12 +36,14 @@ mod front_of_house {
 }
 
 mod back_of_house {
+    #[allow(dead_code)]
     pub struct Breakfast {
         pub toast: String,
         seasonal_fruit: String,
     }
 
     impl Breakfast {
+        #[allow(dead_code)]
         pub fn summer(toast: &str) -> Breakfast {
             Breakfast {
                 toast: String::from(toast),
@@ -46,6 +52,7 @@ mod back_of_house {
         }
     }
 
+    #[allow(dead_code)]
     pub enum Appetizer {
         Soup,
         Salad,

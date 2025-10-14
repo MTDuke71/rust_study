@@ -240,7 +240,7 @@ fn example4_option_enum() {
     println!("  x.is_none() = {}", x.is_none());
     println!("  x.unwrap_or(0) = {}", 2); // Direct value instead of unnecessary unwrap_or
 
-    let y: Option<i32> = None;
+    let _y: Option<i32> = None;
     println!("  y.unwrap_or(0) = {}", 0); // Direct default value
     println!();
 }
@@ -306,6 +306,7 @@ fn example6_aoc_pattern() {
     }
 
     impl Direction {
+        #[allow(clippy::wrong_self_convention)]
         fn to_vector(&self) -> (i32, i32) {
             match self {
                 Direction::North => (0, -1),
