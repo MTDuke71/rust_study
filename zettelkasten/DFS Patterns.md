@@ -629,6 +629,7 @@ fn safe_dfs(
 - [[A* Search]] - Heuristic-guided search
 - [[Mission7 Overview]] - Graph algorithms including DFS
 - [[Week 4 Overview]] - Day 24 covers DFS for region detection
+- [[directed-vs-undirected-graphs]] - Understanding graph types for DFS
 
 ### **Related Algorithms**
 - **Backtracking**: Subset problems, constraint satisfaction

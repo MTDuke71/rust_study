@@ -44,6 +44,11 @@ Master the `|node| &node.elem` pattern and functional programming with `map`, `f
 
 Distilled insights from extensive code review discussions covering patterns, performance, and best practices.
 
+### **[Debugging Lessons](../../zettelkasten/Debugging%20Lessons.md)** 🔍
+*Real-world debugging strategies from Mission 2 development*
+
+Learn to distinguish between test issues and implementation issues, with systematic debugging approaches.
+
 ---
 
 ## 1) Requirements

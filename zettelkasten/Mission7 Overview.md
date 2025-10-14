@@ -10,6 +10,7 @@
 - Support for both directed and undirected graphs
 - **Implementation**: [[Mission7 Overview]]
 - **Testing**: [[REQ-1 Test Strategy]]
+- **Graph Types**: [[directed-vs-undirected-graphs]]
 
 ### **REQ-2: Edge Management Operations**
 - Add/remove edges with validation and error handling

@@ -462,6 +462,7 @@ if !visited.contains(&neighbor) {
 - [[Mission2 Overview]] - Queue implementation for BFS
 - [[Mission6 Overview]] - Grid pathfinding with BFS
 - [[Week 4 Overview]] - Day 25 covers BFS applications
+- [[directed-vs-undirected-graphs]] - Understanding graph types for BFS
 
 ### **Related Data Structures**
 - [[Mission2 Overview]] - Queue/VecDeque for BFS

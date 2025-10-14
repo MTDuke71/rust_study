@@ -20,6 +20,8 @@
 
 **Related Notes:**
 - [[zettel-index]] - Main knowledge hub
+- [[bounds-checking-performance]] - Performance considerations for grid operations
+- [[enum-iteration-patterns]] - Direction enum iteration techniques
 
 ---
 

@@ -17,6 +17,7 @@ This directory contains the **Zettelkasten overlay** for the Rust Study workspac
 ### **Core Navigation**
 - **`zettel-index.md`** - Master entry point for all knowledge navigation
 - **`Obsidian Demo Guide.md`** - Getting started guide and workflows
+- **[[Obsidian Demo Guide]]** - Interactive walkthrough of knowledge graph navigation
 
 ### **Maps of Content (MOCs)**  
 - **`Collections MOC.md`** - Comprehensive data structures overview

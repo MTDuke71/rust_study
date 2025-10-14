@@ -23,6 +23,7 @@
 ## 🌟 Foundational Documents
 
 - [[PROJECT_ORIGIN]] - **The Genesis** - How this learning system was born (founding conversation, philosophy, "The Pact")
+- [[Obsidian Demo Guide]] - **Getting Started** - Interactive walkthrough of knowledge graph navigation
 
 ---
 

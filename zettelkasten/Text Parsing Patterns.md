@@ -579,6 +579,7 @@ fn parse_int_grid(filename: &str) -> Vec<Vec<i32>> {
 - **[[Grid Input Handling]]** - 2D data ingestion patterns
 - **[[Multi-Format Parsing]]** - Handling diverse input formats
 - **[[JSON Processing with serde_json]]** - Structured data parsing
+- **[[unicode-utf8-rust]]** - Understanding UTF-8 encoding for text parsing
 
 ### **Algorithm Integration**
 - **[[BFS Patterns]]** - Parsing graph structures for BFS

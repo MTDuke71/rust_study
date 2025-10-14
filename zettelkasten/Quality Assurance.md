@@ -633,6 +633,7 @@ impl VCycleMission {
 - [[Automated Quality Scripts]] - Daily and weekly quality assessment automation
 - [[Quality Gate Checklists]] - Pre-commit and session-end quality verification
 - [[Standards Evolution Framework]] - Adaptive quality requirements based on skill progression
+- [[Jenkins Setup Guide]] - Automated CI/CD pipeline setup for quality assurance
 
 *Learning System Integration:*
 - [[V-Cycle Methodology]] - Quality gates embedded in requirements-driven development

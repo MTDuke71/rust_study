@@ -582,7 +582,7 @@ fn measure_performance() {
 - **[[Zero-Cost Abstractions]]** - How Rust achieves performance without runtime overhead
 - **[[Generic Programming]]** - Monomorphization and compile-time optimization
 - **[[Iterator Traits]]** - Efficient functional programming patterns
-- **[[Bounds Checking Performance]]** - Eliminating runtime checks in hot paths
+- **[[bounds-checking-performance]]** - Eliminating runtime checks in hot paths
 
 ### **Data Structure Performance**
 - **[[HashMap Internals]]** - Hash table optimization strategies

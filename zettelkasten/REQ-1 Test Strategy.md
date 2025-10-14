@@ -4,7 +4,7 @@
 
 ---
 *Navigation: [[zettel-index]] | [[V-Cycle Methodology]] | [[Test-Driven Development]]*
-*Related: [[Missions MOC]] | [[Testing Patterns]] | [[Requirements Engineering]]*
+*Related: [[Missions MOC]] | [[Testing Patterns]] | [[Requirements Engineering]] | [[Debugging Lessons]]*
 ---
 
 ## 🎯 Purpose

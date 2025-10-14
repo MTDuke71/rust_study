@@ -256,6 +256,7 @@ Understanding these concepts is essential for testing:
 - [[pattern-matching]] - Enum decomposition and control flow
 - [[trait-derivation]] - Automatic implementation of common behavior
 - [[api-design]] - Building maintainable public interfaces
+- [[unicode-utf8-rust]] - Deep dive into string encoding and UTF-8 handling
 
 ## 🏗️ Architectural Principles
 

@@ -19,6 +19,7 @@
 - Distance calculations (Manhattan, Euclidean, Chebyshev)
 - Neighbor finding (4-connected and 8-connected)
 - Safe boundary handling and wraparound options
+- **Pattern**: [[enum-iteration-patterns]] for efficient direction traversal
 
 **REQ-3 (Pathfinding Algorithms)**: The system shall implement efficient pathfinding:
 - Breadth-First Search (BFS) for unweighted shortest paths
