@@ -1,6 +1,6 @@
-# 🎯 Today's Focus
+# 🎯 Daily Focus Dashboard
 
-*Auto-generated daily learning focus*
+*Automated daily learning focus using Dataview*
 
 ---
 
@@ -16,8 +16,9 @@ TABLE WITHOUT ID
 
 ```dataview
 LIST
-FROM "Daily Notes"
-WHERE file.name = dateformat(date(today), "yyyy-MM-dd")
+WHERE file.name = "MONTHLY_CALENDAR"
+FLATTEN file.content as content
+WHERE contains(content, dateformat(date(today), "MMMM d"))
 ```
 
 ---
@@ -31,25 +32,5 @@ WHERE file.name = dateformat(date(today), "yyyy-MM-dd")
 
 ---
 
-## 📝 Session Tracking
-
-### **Completed Today**
-- [ ] Morning retrieval practice
-- [ ] Mission focus work
-- [ ] Daily study content
-- [ ] Rust Book reading
-- [ ] Evening consolidation
-
-### **Key Learnings**
-- 
-
-### **Challenges**
-- 
-
-### **Next Steps**
-- 
-
----
-
-*Tags: #daily-focus #navigation #auto-generated*
+*Tags: #dashboard #auto-generated #daily-focus*
 *Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions MOC]]*
