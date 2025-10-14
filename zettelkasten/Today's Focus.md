@@ -5,25 +5,25 @@
 ---
 
 ## 📅 Current Date
-```dataview
-TABLE WITHOUT ID
-  dateformat(date(today), "EEEE, MMMM d, yyyy") as "Today"
-```
+**Today**: Tuesday, October 14, 2025
 
 ---
 
 ## 📚 Today's Learning Plan
 
 ```dataview
-LIST
+TABLE WITHOUT ID
+  "📅 " + file.name as "Date",
+  file.content as "Learning Plan"
 FROM "Daily Notes"
-WHERE file.name = dateformat(date(today), "yyyy-MM-dd")
+WHERE file.name = "2025-10-14"
 ```
 
 ---
 
 ## 🔗 Quick Navigation
 
+- **[[Daily Notes/2025-10-14]]** - Today's detailed plan
 - **[[MONTHLY_CALENDAR]]** - Full monthly calendar
 - **[[zettel-index]]** - Main knowledge hub
 - **[[Daily Study MOC]]** - Current week overview
@@ -52,4 +52,4 @@ WHERE file.name = dateformat(date(today), "yyyy-MM-dd")
 ---
 
 *Tags: #daily-focus #navigation #auto-generated*
-*Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions MOC]]*
+*Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions MOC]] | [[Daily Notes/2025-10-14]]*
