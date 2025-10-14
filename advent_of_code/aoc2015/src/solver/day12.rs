@@ -33,7 +33,6 @@ use serde_json::Value;
 /// - [1,{"c":"red","b":2},3] → 4 (1+3, object ignored)
 /// - {"d":"red","e":[1,2,3,4],"f":5} → 0 (entire object ignored)
 /// - [1,"red",5] → 6 (string in array doesn't trigger filtering)
-
 pub fn solve_part1(input: &str) -> Result<String> {
     println!("🎄 Day 12 Part 1: Sum all numbers in JSON");
 

@@ -99,7 +99,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
 /// - Wrap the entire string in quotes: +2
 /// - Escape each backslash: \ becomes \\ (+1 per backslash)
 /// - Escape each quote: " becomes \" (+1 per quote)
-/// Example: "abc" becomes "\"abc\""
+///   Example: "abc" becomes "\"abc\""
 ///   Original: "abc" = 5 chars
 ///   Encoded: "\"abc\"" = 9 chars (quote + backslash + quote + a + b + c + backslash + quote + quote)
 fn encode_string_length(input: &str) -> usize {

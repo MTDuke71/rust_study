@@ -76,6 +76,12 @@ pub struct Circuit {
     debug: bool,                                // Enable debug output
 }
 
+impl Default for Circuit {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Circuit {
     /// Create a new empty circuit
     pub fn new() -> Self {
@@ -372,7 +378,7 @@ pub fn solve_part2_with_debug(input: &str, debug: bool) -> Result<String> {
 
     // Step 1: Get the signal from wire 'a' in the original circuit (Part 1 result)
     let part1_result = {
-        let mut circuit = Circuit::new_with_debug(debug && false); // Don't debug Part 1 calculation
+        let mut circuit = Circuit::new_with_debug(false); // Don't debug Part 1 calculation
         for line in input.lines().filter(|line| !line.is_empty()) {
             circuit.add_instruction(line)?;
         }

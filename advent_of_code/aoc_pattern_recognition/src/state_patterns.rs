@@ -374,8 +374,8 @@ impl DynamicProgramming {
         let mut dp = vec![vec![0; n + 1]; m + 1];
 
         // Initialize base cases
-        for i in 0..=m {
-            dp[i][0] = i;
+        for (i, row) in dp.iter_mut().enumerate().take(m + 1) {
+            row[0] = i;
         }
         for j in 0..=n {
             dp[0][j] = j;
@@ -447,8 +447,8 @@ impl SlidingWindow {
         let mut result = Vec::new();
 
         // Initialize first window
-        for i in 0..pattern_len {
-            *window_count.entry(text_chars[i]).or_insert(0) += 1;
+        for &char in text_chars.iter().take(pattern_len) {
+            *window_count.entry(char).or_insert(0) += 1;
         }
 
         if window_count == pattern_count {

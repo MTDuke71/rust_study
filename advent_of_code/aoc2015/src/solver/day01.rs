@@ -5,7 +5,7 @@ use anyhow::Result;
 /// The directions specify which floor to go to, using parentheses:
 /// - '(' = go up one floor
 /// - ')' = go down one floor
-/// Start at floor 0 (ground floor).
+///   Start at floor 0 (ground floor).
 ///
 /// Part 1: What floor does Santa end up on?
 /// Part 2: What is the position of the first character that causes Santa to enter the basement (floor -1)?

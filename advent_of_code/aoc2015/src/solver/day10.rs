@@ -16,7 +16,6 @@ use anyhow::Result;
 ///
 /// ## Part 2
 /// Apply the process 50 times instead.
-
 // TODO: Implement solve_part1
 // 1. Trim the input to get the starting sequence
 // 2. Apply look_and_say transformation 40 times

@@ -23,7 +23,6 @@ use anyhow::Result;
 ///
 /// ## Part 2
 /// Find the next valid password after the one from Part 1.
-
 // TODO: Implement solve_part1
 // 1. Parse the input to get the current password
 // 2. Increment the password repeatedly until you find a valid one
@@ -313,8 +312,8 @@ pub fn skip_forbidden_char(password: &str) -> String {
             };
 
             // Reset everything to the right to 'a'
-            for j in (i + 1)..chars.len() {
-                chars[j] = 'a';
+            for char_ref in chars.iter_mut().skip(i + 1) {
+                *char_ref = 'a';
             }
 
             break;

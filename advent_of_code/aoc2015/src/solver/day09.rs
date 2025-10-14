@@ -40,7 +40,9 @@ use std::collections::HashSet;
 /// let result = solve_part1(input).unwrap();
 /// assert_eq!(result, "605");
 /// ```
-fn parse_input(input: &str) -> Result<(Vec<&str>, Dictionary<(&str, &str), usize>)> {
+type ParseResult<'a> = (Vec<&'a str>, Dictionary<(&'a str, &'a str), usize>);
+
+fn parse_input(input: &str) -> Result<ParseResult<'_>> {
     let mut cities = HashSet::new();
     let mut distances = Dictionary::new();
 
