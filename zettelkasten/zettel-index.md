@@ -67,33 +67,33 @@
 
 ### **Daily Study Track** - Systematic Learning
 - [[Week 1 Overview]] - Collections Fundamentals
-  - [[daily-study/Day10]] or [[ds-day10]] - HashMap basics
-  - [[daily-study/Day11]] or [[ds-day11]] - HashSet operations  
-  - [[daily-study/Day12]] or [[ds-day12]] - BTreeMap usage
-  - [[daily-study/Day13]] or [[ds-day13]] - Advanced iterators
-  - [[daily-study/Day14]] or [[ds-day14]] - Error handling patterns
+  - [[daily_study/rust_learning_week2_notes/Day10]] - HashMap basics
+  - [[daily_study/rust_learning_week2_notes/Day11]] - HashSet operations  
+  - [[daily_study/rust_learning_week2_notes/Day12]] - BTreeMap usage
+  - [[daily_study/rust_learning_week2_notes/Day13]] - Advanced iterators
+  - [[daily_study/rust_learning_week2_notes/Day14]] - Error handling patterns
 - [[Week 2 Overview]] - Advanced Collections
-  - [[daily-study/Day15]] or [[ds-day15]] - Trait basics
-  - [[daily-study/Day16]] or [[ds-day16]] - Generics introduction
-  - [[daily-study/Day17]] or [[ds-day17]] - Lifetimes fundamentals
-  - [[daily-study/Day18]] or [[ds-day18]] - Advanced traits
+  - [[daily_study/rust_learning_week3_notes/Day15]] - Trait basics
+  - [[daily_study/rust_learning_week3_notes/Day16]] - Generics introduction
+  - [[daily_study/rust_learning_week3_notes/Day17]] - Lifetimes fundamentals
+  - [[daily_study/rust_learning_week3_notes/Day18]] - Advanced traits
 - [[Week 3 Overview]] - Traits & Type System
 - [[Week 4 Overview]] - Applied Problem Solving (AoC)
-  - [[daily-study/Day19]] or [[ds-day19]] - Grid navigation
-  - [[daily-study/Day20]] or [[ds-day20]] - Coordinate systems
-  - [[daily-study/Day21]] or [[ds-day21]] - BFS algorithms
-  - [[daily-study/Day22]] or [[ds-day22]] - DFS algorithms
-  - [[daily-study/Day23]] or [[ds-day23]] - Grid parsing
-  - [[daily-study/Day24]] or [[ds-day24]] - Flood fill & connected components
-  - [[daily-study/Day25]] or [[ds-day25]] - Queue applications
+  - [[daily_study/rust_learning_week3_notes/Day19]] - Grid navigation
+  - [[daily_study/rust_learning_week3_notes/Day20]] - Coordinate systems
+  - [[daily_study/rust_learning_week3_notes/Day21]] - BFS algorithms
+  - [[daily_study/rust_learning_week4_notes/Day22]] - DFS algorithms
+  - [[daily_study/rust_learning_week4_notes/Day23]] - Grid parsing
+  - [[daily_study/rust_learning_week4_notes/Day24]] - Flood fill & connected components
+  - [[daily_study/rust_learning_week4_notes/Day25]] - Queue applications
 - [[Week 5 Overview]] - Error Handling Mastery ✅ **COMPLETED**
-  - [[daily-study/Day29]] or [[ds-day29]] - Custom error types
-  - [[daily-study/Day30]] or [[ds-day30]] - Error propagation
-  - [[daily-study/Day31]] or [[ds-day31]] - anyhow & thiserror crates
-  - [[daily-study/Day32]] or [[ds-day32]] - Result combinators
-  - [[daily-study/Day33]] or [[ds-day33]] - Panic recovery
-  - [[daily-study/Day34]] or [[ds-day34]] - Error handling patterns
-  - [[daily-study/Day35]] or [[ds-day35]] - Robust parsing
+  - [[daily_study/rust_learning_week5_notes/Day29]] - Custom error types
+  - [[daily_study/rust_learning_week5_notes/Day30]] - Error propagation
+  - [[daily_study/rust_learning_week5_notes/Day31]] - anyhow & thiserror crates
+  - [[daily_study/rust_learning_week5_notes/Day32]] - Result combinators
+  - [[daily_study/rust_learning_week5_notes/Day33]] - Panic recovery
+  - [[daily_study/rust_learning_week5_notes/Day34]] - Error handling patterns
+  - [[daily_study/rust_learning_week5_notes/Day35]] - Robust parsing
 
 ### **Advent of Code Track**
 - [[AoC Patterns MOC]] - Common competitive programming patterns
@@ -160,11 +160,11 @@
 ### **Mission ↔ Daily Study Alignment**
 - Ownership fundamentals connect to [[../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded - Variables & Ownership Deep Dive]]
 - Borrowing and references connect to [[../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded - Functions & References Deep Dive]]
-- HashMap implementation ([[mission-5]]) connects to [[daily-study/Day10]] or [[ds-day10]]
-- HashSet wrapper connects to [[daily-study/Day11]] or [[ds-day11]]
-- Memory patterns connect to [[daily-study/Day02]] or [[ds-day02]]
-- Iterator patterns connect to [[daily-study/Day13]] or [[ds-day13]]
-- Grid algorithms ([[mission-6]]) connect to [[daily-study/Day24]] or [[ds-day24]]
+- HashMap implementation ([[mission-5]]) connects to [[daily_study/rust_learning_week2_notes/Day10]]
+- HashSet wrapper connects to [[daily_study/rust_learning_week2_notes/Day11]]
+- Memory patterns connect to [[daily_study/rust_learning_week1_notes/Day02]]
+- Iterator patterns connect to [[daily_study/rust_learning_week2_notes/Day13]]
+- Grid algorithms ([[mission-6]]) connect to [[daily_study/rust_learning_week4_notes/Day24]]
 
 ### **Mission ↔ Rust Book Connections**  
 - Struct design connects to [[rust-book-ch5]] or [[rb-ch5]]

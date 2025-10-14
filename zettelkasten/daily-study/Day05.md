@@ -1,4 +1,4 @@
-# Day05 - Iterator Patterns
+# Day05 - Option and Result
 
 > **Redirect Page**: This is a navigation helper. See full content in the actual daily study file.
 
@@ -14,7 +14,7 @@
 
 ## 🎯 **Quick Summary**
 
-**Topics**: Lazy evaluation, map/filter/fold, chaining
+**Topics**: Option<T>, Result<T,E>, error handling, null safety
 
 **Week**: Week 1
 

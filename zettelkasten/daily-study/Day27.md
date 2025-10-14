@@ -1,4 +1,4 @@
-# Day27 - Binary Search Applications
+# Day27 - String Parsing
 
 > **Redirect Page**: This is a navigation helper. See full content in the actual daily study file.
 
@@ -14,7 +14,7 @@
 
 ## 🎯 **Quick Summary**
 
-**Topics**: Search variants, boundary conditions
+**Topics**: String splitting, regex patterns, custom parsers
 
 **Week**: Week 4
 
