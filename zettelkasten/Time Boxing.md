@@ -46,6 +46,7 @@ Weekend warrior 8 hours × 3 sessions = 24 hours of unfocused effort
 ```bash
 # Quick environment check
 cd rust_study && git pull                   # Sync latest changes
+# Follow [[Daily Workflow]] or [[Daily Workflow - Simple]] for systematic startup
 cargo test --workspace --quiet              # Verify current state
 # Review yesterday's progress (if needed)
 ```

@@ -33,6 +33,7 @@
 ├─ 🧠 Mental Setup (2 min): Review yesterday's progress, set today's target
 ├─ 🛠️ Tool Preparation (2 min): Open IDE, files, documentation  
 └─ 🎯 Focus Definition (1 min): "Today I will accomplish X"
+   └─ Follow [[Daily Workflow]] or [[Daily Workflow - Simple]] for systematic startup sequence
 
 ⚡ Core Learning Block (35 min)
 ├─ 🔄 Retrieval Practice (5 min): Recall yesterday's concepts

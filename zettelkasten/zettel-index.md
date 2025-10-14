@@ -48,6 +48,7 @@
 - **Current Day**: See [[../MONTHLY_CALENDAR]] Day activities
 - **Latest Study Notes**: [[Daily Study MOC]] → Current Week
 - **Recent Work**: Check most recently modified files
+- **Daily Workflow**: [[Daily Workflow]] - Systematic learning routine setup
 
 ### **Mission Track** - Engineering Projects
 - [[Mission1 Overview]] or [[mission-1]] - Stack Implementation  
