@@ -1,6 +1,6 @@
 # 🎯 Today's Focus
 
-*Auto-generated daily learning focus*
+*Quick navigation to today's learning plan*
 
 ---
 
@@ -11,19 +11,14 @@
 
 ## 📚 Today's Learning Plan
 
-```dataview
-TABLE WITHOUT ID
-  "📅 " + file.name as "Date",
-  file.content as "Learning Plan"
-FROM "Daily Notes"
-WHERE file.name = "2025-10-14"
-```
+**👉 Click here to open today's learning plan:**
+# [[Daily Notes/2025-10-14]]
 
 ---
 
 ## 🔗 Quick Navigation
 
-- **[[Daily Notes/2025-10-14]]** - Today's detailed plan
+- **[[Daily Notes/2025-10-14]]** - Today's detailed plan ⭐
 - **[[MONTHLY_CALENDAR]]** - Full monthly calendar
 - **[[zettel-index]]** - Main knowledge hub
 - **[[Daily Study MOC]]** - Current week overview
@@ -51,5 +46,5 @@ WHERE file.name = "2025-10-14"
 
 ---
 
-*Tags: #daily-focus #navigation #auto-generated*
+*Tags: #daily-focus #navigation #daily-notes*
 *Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions MOC]] | [[Daily Notes/2025-10-14]]*
