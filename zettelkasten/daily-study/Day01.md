@@ -1,39 +1,47 @@
-# Day01 - Vec and Basic Collections
+# Day 1 - Setup & Toolchain
 
-> **Redirect Page**: This is a navigation helper. See full content in the actual daily study file.
-
----
-
-## 📍 **Location**
-
-**Full Content**: [rust_learning_week1_notes/Day01.md](../../daily_study/rust_learning_week1_notes/Day01.md)
-
-**Direct Link**: [[../../daily_study/rust_learning_week1_notes/Day01]]
+**Quick Reference Note**
+*For full content, see: [[daily_study/rust_learning_week1_notes/Day01]]*
 
 ---
 
-## 🎯 **Quick Summary**
+## Core Concepts
 
-**Topics**: Vector basics, push/pop, iteration
+### Rust Toolchain Components
+- **rustup**: Toolchain installer and version manager
+- **cargo**: Build system and package manager
+- **rustc**: Rust compiler
+- **rust-analyzer**: IDE language server
 
-**Week**: Week 1
+### Essential Cargo Commands
+```bash
+cargo new project_name    # Create new project
+cargo build              # Compile project
+cargo run                # Build and run
+cargo test               # Run tests
+cargo clippy             # Lint code
+cargo fmt                # Format code
+```
 
-**Related Notes:**
-- [[zettel-index]] - Main knowledge hub
+### Project Structure
+```
+my_project/
+├── Cargo.toml           # Package manifest
+├── src/
+│   ├── main.rs         # Binary entry point
+│   └── lib.rs          # Library root
+└── tests/              # Integration tests
+```
 
 ---
 
-## 🔗 **Navigation**
+## Quick Navigation
 
-**Previous**: [[Week 1 Overview]]
-**Next**: [[Day02]]
-
-**Week Overview**: [[../../daily_study/rust_learning_week1_notes/README|Week 1 Overview]]
-
-**Main Index**: [[zettel-index]]
+- **Full Details**: [[daily_study/rust_learning_week1_notes/Day01]]
+- **Next**: [[Day 02 - Ownership Basics]]
+- **Week**: [[Week 1 Overview]]
+- **MOC**: [[Rust Concepts MOC]]
 
 ---
 
-*Tags: #daily-study #week1 #redirect*
-
-*This redirect enables clean `[[daily-study/Day01]]` links throughout the zettelkasten*
+*Tags: #toolchain #setup #cargo #rustup #quick-ref*
