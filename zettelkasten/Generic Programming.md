@@ -39,7 +39,7 @@ string_stack.push("hello".to_string());
 ```
 
 **Mission Applications:**
-- [[Mission1]] - Generic Stack<T> implementation
+- [[Mission1 Overview]] - Generic Stack<T> implementation
 - [[Mission2]] - Generic Queue<T> with RingBuffer<T>
 - [[Mission5]] - HashMap<K, V> with generic keys and values
 
@@ -409,7 +409,7 @@ let mut stack = Stack::<String>::new();
 stack.push("AoC".to_string());
 ```
 
-Related: [[Mission1]] | [[Stack Data Structure]]
+Related: [[Mission1 Overview]] | [[Stack Data Structure]]
 
 ### **Mission5: Generic HashMap**
 
@@ -614,7 +614,7 @@ Related: [[Day 19 - Trait Objects]]
 - [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn Trait`
 
 ### **Mission Applications**
-- [[Mission1]] - Generic Stack<T> implementation
+- [[Mission1 Overview]] - Generic Stack<T> implementation
 - [[Mission2]] - Generic Queue<T> and RingBuffer<T>
 - [[Mission3]] - Generic binary search algorithms
 - [[Mission4]] - Generic LinkedList<T> with smart pointers
@@ -657,7 +657,7 @@ Related: [[Day 19 - Trait Objects]]
 1. **Foundations** → [[Day 16 - Generic Types]]
 2. **Trait Bounds** → [[Day 15 - Traits Fundamentals]]
 3. **Associated Types** → [[Day 18 - Advanced Traits]]
-4. **Practice** → [[Mission1]], [[Mission5 Overview]]
+4. **Practice** → [[Mission1 Overview]], [[Mission5 Overview]]
 5. **Advanced** → [[PhantomData Type Safety Patterns]]
 
 ---

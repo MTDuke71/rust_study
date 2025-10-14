@@ -47,7 +47,7 @@ This project follows the workspace documentation standards:
 
 ### **Related Projects**
 - [[Brackets_Basic]] - Foundation implementation (REQ-1 through REQ-6)
-- [[Mission1]] - Stack data structure foundation
+- [[Mission1 Overview]] - Stack data structure foundation
 
 ### **Learning Resources**
 - [[V-Cycle Methodology]] - Requirements-driven development

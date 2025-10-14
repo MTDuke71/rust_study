@@ -418,7 +418,7 @@ for item in data.iter().filter(|x| **x > 0).map(|x| x * 2) {
 
 ### **Mission Examples:**
 
-- **[[Mission1]]** - Stack with 5 requirements, full traceability
+- **[[Mission1 Overview]]** - Stack with 5 requirements, full traceability
 - **[[Mission3]]** - Binary search with REQ-1 through REQ-6
 - **[[Mission7]]** - Graph algorithms with comprehensive tests
 
@@ -444,4 +444,4 @@ for item in data.iter().filter(|x| **x > 0).map(|x| x * 2) {
 
 *Tags: #v-cycle #software-engineering #testing #requirements #verification #validation #methodology*
 
-*Links: [[zettel-index]] | [[Project Origin Story]] | [[Mission1]] | [[Rust Testing Strategies]]*
+*Links: [[zettel-index]] | [[Project Origin Story]] | [[Mission1 Overview]] | [[Rust Testing Strategies]]*

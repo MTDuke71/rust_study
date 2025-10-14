@@ -321,7 +321,7 @@ The **Brackets_Extended** project demonstrates sophisticated Rust development pr
 
 ### Mission Integration
 - [[Brackets Basic]] - Foundation implementation
-- [[Mission1]] - Stack implementation
+- [[Mission1 Overview]] - Stack implementation
 - [[V-Cycle Methodology]] - Requirements-driven development
 - [[Missions MOC]] - Mission overview
 

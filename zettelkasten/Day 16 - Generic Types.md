@@ -42,7 +42,7 @@ From the daily study file, Day 16 covers:
 - [[Day 17 - Lifetime Annotations]] - Next day (lifetime parameters)
 
 ### Mission Applications
-- [[Mission1]] - Generic Stack<T>
+- [[Mission1 Overview]] - Generic Stack<T>
 - [[Mission5 Overview]] - Generic HashMap<K, V>
 - [[Mission6 Overview]] - Generic Grid<T>
 

@@ -47,7 +47,7 @@ This project follows the workspace documentation standards:
 
 ### **Related Projects**
 - [[Brackets_Ext]] - Full implementation with extended requirements
-- [[Mission1]] - Stack data structure (foundational for bracket validation)
+- [[Mission1 Overview]] - Stack data structure (foundational for bracket validation)
 
 ### **Learning Resources**
 - [[V-Cycle Methodology]] - Requirements-driven development approach

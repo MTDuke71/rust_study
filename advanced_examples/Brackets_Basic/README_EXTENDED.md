@@ -90,7 +90,7 @@ enum UnclosedPolicy { LatestOpen, EarliestOpen }
 
 ### Mission Integration
 - [[Brackets Basic]] - Foundation implementation
-- [[Mission1]] - Stack implementation
+- [[Mission1 Overview]] - Stack implementation
 - [[Brackets Extended]] - Full implementation
 - [[Missions MOC]] - V-Cycle projects
 
