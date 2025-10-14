@@ -72,6 +72,7 @@
 - **[[../aoc2015/discussions/README]]** - Year-specific implementation notes
 - **[[2015 Day Summaries]]** - Quick reference for each day's pattern
 - **[[2015 Performance Notes]]** - Optimization lessons learned
+- **[[../aoc2015/examples/day07_debug/DAY07_DEBUG_TOOLS_README]]** - Advanced debugging tools for circuit simulation analysis
 
 ### **AoC 2020 Patterns**
 - **[[2020 Problem Analysis]]** - Parsing complexity and algorithm variety

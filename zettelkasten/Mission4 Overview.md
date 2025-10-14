@@ -312,6 +312,7 @@ struct Node<T> {
   - `missions/Mission4/examples/performance_comparison.rs`
 - **Documentation**: `missions/Mission4/README.md`
 - **Tutorial**: `Mission4_tut/` directory
+- **Complete Solutions**: [[../../tutorials/Mission4_tut/solutions/solutions]] - Comprehensive exercise solutions with Rc/RefCell patterns
 
 ## 🔮 Next Steps After Mission4
 

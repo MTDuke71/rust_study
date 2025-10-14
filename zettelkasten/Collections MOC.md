@@ -27,6 +27,7 @@
 - [[../../tutorials/Mission4_tut/README]] - Complete linked list tutorial
 - [[../../tutorials/Mission4_tut/examples/README]] - Step-by-step runnable examples
 - [[../../tutorials/Mission4_tut/compilation_stages/VISUAL_COMPILATION_PROCESS]] - Visual compilation: Rust → LLVM → Assembly → Machine Code
+- [[../../tutorials/Mission4_tut/solutions/solutions]] - Complete exercise solutions with Rc/RefCell patterns
 - Box<T> vs Rc<RefCell<T>> patterns
 - Interior mutability and shared ownership
 - 7 progressive examples from basic to performance analysis

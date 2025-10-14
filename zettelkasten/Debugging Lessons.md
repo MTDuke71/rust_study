@@ -94,6 +94,7 @@ The full document includes:
 - [[Stack Traces]] - Following execution paths
 - [[Print Debugging]] - Strategic use of debug output
 - [[Debugger Usage]] - Using rust-gdb or lldb
+- [[../../advent_of_code/aoc2015/examples/day07_debug/DAY07_DEBUG_TOOLS_README]] - Advanced debug tools for AoC problem analysis
 
 ### **Software Engineering Practices**
 - [[Clean Code Principles]] - Writing testable, maintainable code
