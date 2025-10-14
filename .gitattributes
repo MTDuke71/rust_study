@@ -1,0 +1,42 @@
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Rust files - always use LF line endings
+*.rs text eol=lf
+
+# Markdown files - use LF for consistency across platforms
+*.md text eol=lf
+
+# Configuration files - use LF
+*.toml text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+
+# Scripts - use LF
+*.sh text eol=lf
+*.ps1 text eol=lf
+*.bat text eol=lf
+
+# Documentation - use LF
+*.txt text eol=lf
+*.rst text eol=lf
+
+# Binary files - ensure they're not treated as text
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+
+# Windows-specific files - use CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
