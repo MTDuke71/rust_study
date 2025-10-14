@@ -302,6 +302,19 @@ fn reconstruct_path(
 
 ### Dijkstra Visualization
 
+**Important: Understanding Cost Models**
+
+In grid-based pathfinding, there are two common cost interpretations:
+
+1. **Steps vs Costs**: 
+   - **BFS counts steps** (number of moves, all edges cost 1)
+   - **Dijkstra counts total cost** (sum of destination cell costs)
+
+2. **Cost Assumptions**:
+   - Moving to a cell costs the **value in that cell**
+   - **Goal (G) typically costs 0** (reaching it is free)
+   - **Start (S) costs 0** (no cost to begin there)
+
 **Example 1: When straight path is still optimal**
 ```
 Grid with costs:           Dijkstra result:
@@ -309,8 +322,9 @@ S 1 1 1 G                  S * * * G
 1 9 9 1 1                  1 9 9 1 1
 1 1 1 1 1                  1 1 1 1 1
 
-Without weights (BFS): 4 steps
-With weights (Dijkstra): Cost of 4 (1+1+1+1, straight path is optimal)
+BFS: 4 steps (counts moves)
+Dijkstra: Cost 3 (1+1+1+0, paying destination cell costs)
+Path: S→1→1→1→G = 0+1+1+1+0 = 3
 ```
 
 **Example 2: When going around is better**
@@ -320,8 +334,10 @@ S 9 9 9 G                  S 9 9 9 G
 1 1 1 1 1                  * * * * *
 1 1 1 1 1                  1 1 1 1 1
 
-Without weights (BFS): 4 steps
-With weights (Dijkstra): Cost of 6 (going around: 1+1+1+1+1+1 vs straight: 9+9+9+1=28)
+BFS: 4 steps (counts moves)
+Dijkstra: Cost 6 (going around vs 27 straight)
+Around path: S→1→1→1→1→1→G = 0+1+1+1+1+1+0 = 6
+Straight path: S→9→9→9→G = 0+9+9+9+0 = 27
 ```
 
 ---
