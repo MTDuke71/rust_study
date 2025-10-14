@@ -24,13 +24,13 @@
 - [x] **Chat** (17 links) - `tutorials/Mission4_tut` ✅
 - [x] **README** (16 links) - `tutorials/Mission3_tut` ✅
 - [x] **Daily Workflow** (16 links) - `zettelkasten` ✅
-- [x] **Daily Workflow - Simple** (16 links) - `zettelkasten` ✅
+- [x] **Daily Workflow - Simple** (16 links) - `zettelkasten` ✅ (FIXED - now has incoming links)
 
 ### **Medium Priority (10-15 links)**
 - [x] **README** (15 links) - `rust_book/Ch5` ✅
 - [x] **README** (14 links) - `rust_book/Ch7` ✅
-- [x] **CREATION_SUMMARY** (14 links) - `rust_book/Ch9` ✅ (already had links)
-- [x] **README** (12 links) - `daily_study/rust_learning_week5_notes/examples` ✅ (already had links)
+- [x] **CREATION_SUMMARY** (14 links) - `rust_book/Ch9` ✅ (FIXED - now has incoming links)
+- [x] **README** (12 links) - `daily_study/rust_learning_week5_notes/examples` ✅ (FIXED - now has incoming links)
 
 ### **Low Priority (4-10 links)**
 - [x] **Daily Focus Dashboard** (8 links) - `zettelkasten` ✅

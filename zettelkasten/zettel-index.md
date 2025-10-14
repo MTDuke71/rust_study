@@ -124,6 +124,8 @@
 ### **Detailed Chapter Guides**
 - [[../../rust_book/Ch5/README]] - **Chapter 5 Complete Guide** - Structs with mission integration examples
 - [[../../rust_book/Ch7/README]] - **Chapter 7 Complete Guide** - Modules and project organization
+- [[../../rust_book/Ch9/README]] - **Chapter 9 Complete Guide** - Error handling with comprehensive examples
+- [[../../rust_book/Ch9/CREATION_SUMMARY]] - **Chapter 9 Creation Process** - Development documentation and implementation details
 
 ### **Key Concept Areas**
 

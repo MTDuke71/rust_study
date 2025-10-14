@@ -98,6 +98,8 @@ cargo run --example file_processor
 cargo run -p rust_learning_week5_error_handling --examples
 ```
 
+*For detailed examples documentation, see [[../../daily_study/rust_learning_week5_notes/examples/README]] - Comprehensive guide to all Week 5 error handling examples.*
+
 ## 🔄 **Next Steps**
 
 After completing Week 5:

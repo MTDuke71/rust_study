@@ -362,6 +362,7 @@ fn panic_calculation(x: i32) -> i32 {
 - [[Day 06 - Pattern Matching]] - Using match for error handling
 - [[Mission5 API Reference]] - Error handling in HashMap implementation
 - [[Performance Optimization Guide]] - Zero-cost error handling
+- **Week 5 Examples**: [[../../daily_study/rust_learning_week5_notes/examples/README]] - Comprehensive examples documentation and usage instructions
 
 ---
 

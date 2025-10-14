@@ -455,6 +455,7 @@ Actual This Week:
 - [[Energy Tracking Systems]] - Optimizing session timing based on personal patterns
 - [[Distraction Management]] - Techniques for maintaining focus in time-limited sessions
 - [[Daily Focus Dashboard]] - Automated daily learning focus using Dataview
+- [[Daily Workflow - Simple]] - Non-Dataview daily workflow approach
 
 ---
 
