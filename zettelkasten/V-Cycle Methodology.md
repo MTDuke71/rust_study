@@ -346,4 +346,4 @@ pub fn solve_part1(input: &str) -> Result<String> {
 
 ---
 *Tags: #v-cycle #methodology #software-engineering #requirements #testing #traceability #quality-assurance #professional-development*
-*Links: [[zettel-index]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission3 Overview]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]] | [[Mission7 Overview]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission3 Overview]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]] | [[Mission7 Overview]] | [[MONTHLY_CALENDAR]] | [[../../advanced_examples/Brackets_Basic/README_BASIC]] | [[../../advanced_examples/Brackets_Ext/README (2)]]*

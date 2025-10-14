@@ -454,6 +454,7 @@ Ep 5: "Duplicate Edge Handling - Graph API Design"
 | **Microphone** | Blue Yeti USB | $100-130 | Clear audio, USB simplicity |
 | **Diagrams** | Excalidraw | Free | Hand-drawn style, fast creation |
 | **Hosting** | YouTube | Free | Built-in audience, monetization |
+| **AI Assistance** | [[../../advanced_examples/Brackets_Ext/Copilot_chat]] - GitHub Copilot | $10/month | Code completion and learning support |
 
 **Recording Setup:**
 ```

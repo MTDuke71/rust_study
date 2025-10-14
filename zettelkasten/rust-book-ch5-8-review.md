@@ -38,6 +38,8 @@ The `impl` block syntax separates data definition from behavior, promoting clean
 
 **Associated functions** don't take `self` and are typically used for constructors or factory methods. The conventional `new()` function creates a new instance, though Rust doesn't enforce this naming. Associated functions are called using `StructName::function()` syntax, clearly indicating they're associated with the type rather than a specific instance.
 
+*See [[rust_book/Ch5/method_syntax/README]] for comprehensive examples and Mission5 integration patterns.*
+
 ### **Architectural Considerations**
 
 Structs enable information hiding through Rust's module system. Fields default to private, exposing only what's necessary through public methods. This encapsulation allows implementation changes without breaking dependent code - a critical property for maintainable software.

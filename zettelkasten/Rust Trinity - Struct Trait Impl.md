@@ -419,4 +419,4 @@ for (Drawable shape : shapes) {
 ---
 
 *Tags: #struct #trait #impl #type-system #polymorphism #data-structures #behavior-contracts #rust-trinity*
-*Links: [[Day 15 - Traits Fundamentals]] | [[Day 16 - Generic Types]] | [[Box Smart Pointer Patterns]] | [[Rust Concepts MOC]]*
+*Links: [[Day 15 - Traits Fundamentals]] | [[Day 16 - Generic Types]] | [[Box Smart Pointer Patterns]] | [[Rust Concepts MOC]] | [[rust_book/Ch5/method_syntax/README]]*

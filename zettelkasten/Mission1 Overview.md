@@ -60,8 +60,8 @@ Mission1 is where the entire learning journey began. It established:
 - **Chapter 10 - Generics**: Generic type parameter T
 
 ### **Extensions & Applications**
-- **Brackets_Basic**: Stack-based bracket validation (basic)
-- **Brackets_Ext**: Advanced validation with error reporting
+- **Brackets_Basic**: [[../../advanced_examples/Brackets_Basic/README_BASIC]] - Stack-based bracket validation (basic)
+- **Brackets_Ext**: [[../../advanced_examples/Brackets_Ext/README (2)]] - Advanced validation with error reporting
 - **competitive_ring_bfs**: Stack for DFS traversal patterns
 
 ## 📊 Current Progress

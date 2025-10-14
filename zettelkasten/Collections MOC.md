@@ -40,6 +40,8 @@
 
 ### **Mission 1: Stack** → [[Stack Implementation Patterns]]
 - **Application**: [[../../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended Validator]] - Advanced bracket validation with configurable alphabet and multi-error reporting
+- **Basic Implementation**: [[../../advanced_examples/Brackets_Basic/README_BASIC]] - V-Cycle bracket validation with requirements traceability
+- **Extended Features**: [[../../advanced_examples/Brackets_Ext/README (2)]] - Advanced bracket validation with comprehensive error handling
 
 ### **Mission 2: Queue** → [[Queue Implementation Strategies]] 
 ### **Mission 6: Grids** → [[2D Array Navigation Patterns]]

@@ -60,6 +60,8 @@
   - **Performance Analysis**: [[../../advent_of_code/aoc2015/examples/DAY10_BENCHMARK_ANALYSIS]] - When NOT to use memoization
   - **Algorithm Walkthrough**: [[../../advent_of_code/aoc2015/examples/DAY10_MEMOIZATION_WALKTHROUGH]]
 - **Stack-Based Validation** - [[../../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended]] - Configurable bracket matching with multi-error reporting
+  - **Basic Implementation**: [[../../advanced_examples/Brackets_Basic/README_BASIC]] - V-Cycle bracket validation with requirements traceability
+  - **Extended Features**: [[../../advanced_examples/Brackets_Ext/README (2)]] - Advanced bracket validation with comprehensive error handling
 
 ---
 
