@@ -43,6 +43,8 @@ fn main() {
     // 6. Component Analysis with DFS
     component_analysis_with_dfs();
 
+    exercise();
+
     println!("\n=== Step 5 Complete ===");
     println!("Next: Step 6 - BFS Implementation");
 }

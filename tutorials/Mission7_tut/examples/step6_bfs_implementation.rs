@@ -19,8 +19,7 @@
 //! - Shortest path finding (unweighted)
 //! - Level-order traversal
 
-use mission7::{Graph, GraphType, NodeId};
-use mission7_tut::tutorial_utils;
+use mission7::{Graph, NodeId};
 use std::collections::{HashSet, VecDeque};
 
 fn main() {
@@ -43,6 +42,8 @@ fn main() {
 
     // 6. BFS vs DFS Comparison
     bfs_vs_dfs_comparison();
+
+    exercise();
 
     println!("\n=== Step 6 Complete ===");
     println!("Next: Step 7 - Integration Project");
