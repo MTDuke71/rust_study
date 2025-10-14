@@ -302,14 +302,26 @@ fn reconstruct_path(
 
 ### Dijkstra Visualization
 
+**Example 1: When straight path is still optimal**
 ```
-Grid with costs:           Distances from S:
-S 1 1 1 G                  0 1 2 3 4
-1 9 9 1 1                  1 10 11 4 5
-1 1 1 1 1                  2 3 4 5 6
+Grid with costs:           Dijkstra result:
+S 1 1 1 G                  S * * * G
+1 9 9 1 1                  1 9 9 1 1
+1 1 1 1 1                  1 1 1 1 1
 
 Without weights (BFS): 4 steps
-With weights (Dijkstra): Cost of 13 (going around the 9s)
+With weights (Dijkstra): Cost of 3 (1+1+1, straight path is optimal)
+```
+
+**Example 2: When going around is better**
+```
+Grid with costs:           Dijkstra result:
+S 9 9 9 G                  S 9 9 9 G
+1 1 1 1 1                  * * * * *
+1 1 1 1 1                  1 1 1 1 1
+
+Without weights (BFS): 4 steps
+With weights (Dijkstra): Cost of 5 (going around: 1+1+1+1+1 vs straight: 9+9+9=27)
 ```
 
 ---
