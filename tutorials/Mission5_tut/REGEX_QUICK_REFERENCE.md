@@ -1,6 +1,8 @@
 # Regular Expressions Quick Reference
 
 > **Navigation**: [[../../zettelkasten/zettel-index|zettel-index]] | [[../../zettelkasten/Collections MOC|Collections MOC]] | [[../../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]] | [[README|Mission5_tut Overview]]
+> 
+> **Related**: [[../../daily_study/rust_learning_week4_notes/Day27|Day 27 - String Parsing]] (comprehensive parsing tutorial with regex examples)
 
 ## 🧠 Mental Model
 **Regex = Pattern Matching Language**

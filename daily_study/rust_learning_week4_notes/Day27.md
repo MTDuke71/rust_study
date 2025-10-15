@@ -320,6 +320,8 @@ fn main() {
 | `()` | Capturing group | `(\d+)` captures numbers |
 | `(?P<name>)` | Named capture | `(?P<num>\d+)` |
 
+> **📚 Extended Reference**: For a comprehensive regex cheat sheet with more patterns and examples, see [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE.md|Regex Quick Reference]].
+
 ---
 
 ## 🏗️ Custom Parser Implementations
