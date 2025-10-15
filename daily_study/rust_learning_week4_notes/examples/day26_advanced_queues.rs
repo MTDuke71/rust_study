@@ -51,11 +51,11 @@ fn main() {
     
     // Grid where each cell contains movement cost
     let cost_grid = Grid::from_costs(vec![
-        vec![1, 1, 1, 1, 1],
-        vec![1, 9, 9, 9, 1],
-        vec![1, 9, 1, 9, 1],
-        vec![1, 1, 1, 9, 1],
-        vec![1, 1, 1, 1, 1],
+        vec![1, 1, 1, 1, 1, 1],
+        vec![1, 9, 9, 9, 9, 9],
+        vec![1, 9, 1, 9, 9, 9],
+        vec![1, 9, 1, 1, 1, 9],
+        vec![1, 1, 1, 9, 1, 1],
     ]);
     
     println!("Cost grid:");
