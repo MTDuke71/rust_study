@@ -358,6 +358,7 @@ fn panic_calculation(x: i32) -> i32 {
 
 ## 📚 Further Reading
 
+- [[../rust_book/Ch9/README]] - Complete Chapter 9 implementation with runnable examples
 - [[Day 05 - Option and Result]] - Basic error handling concepts
 - [[Day 06 - Pattern Matching]] - Using match for error handling
 - [[Mission5 API Reference]] - Error handling in HashMap implementation

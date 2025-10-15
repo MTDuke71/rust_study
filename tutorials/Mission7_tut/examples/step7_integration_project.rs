@@ -82,10 +82,8 @@ fn social_network_analysis() {
 
     println!("Social Network Structure:");
     println!("  Alice - Bob - Diana - Eve - Frank");
-    println!("    |      |      |");
-    println!("  Charlie  |    Diana");
-    println!("           |");
-    println!("         Diana");
+    println!("    |            |            ");
+    println!("  Charlie  ----- |");
     println!();
     println!("  Grace - Henry (separate group)");
     println!();
@@ -283,6 +281,10 @@ fn dependency_resolution() {
         println!("  {}. {}", i + 1, task);
     }
     println!();
+    println!("Note: Test and Document can be executed in parallel!");
+    println!("  Both depend only on Code, so their order is arbitrary.");
+    println!("  In practice, they could run simultaneously to save time.");
+    println!();
 
     // Find critical path
     println!("Critical Path Analysis:");
@@ -333,7 +335,7 @@ fn network_topology_analysis() {
     println!("Network Topology:");
     println!("  A - B - D - E - F");
     println!("  |   |   |");
-    println!("  C   |   D");
+    println!("  C   |   |");
     println!("      |");
     println!("      F (redundant path)");
     println!();
@@ -559,8 +561,8 @@ fn mission7_integration() {
 
     // REQ-4: Algorithm foundation
     println!("REQ-4: Algorithm Foundation");
-    let mut visited: HashSet<NodeId> = HashSet::new();
-    let mut path: Vec<NodeId> = Vec::new();
+    let visited: HashSet<NodeId> = HashSet::new();
+    let path: Vec<NodeId> = Vec::new();
     println!("  Visited tracking: {:?}", visited);
     println!("  Path reconstruction: {:?}", path);
     println!();

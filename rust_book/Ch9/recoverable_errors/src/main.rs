@@ -100,7 +100,10 @@ fn demonstrate_specific_error_handling() {
         },
     };
 
-    println!();
+     // Clean up
+     std::fs::remove_file(filename).ok();
+     println!();
+
 }
 
 /// Demonstrates Result shortcuts: unwrap() and expect()
