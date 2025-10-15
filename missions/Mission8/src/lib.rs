@@ -366,8 +366,181 @@ impl<N: Copy + Eq + std::hash::Hash> DFSState<N> {
     }
 }
 
-// Placeholder for actual algorithm implementations (to be implemented in REQ-1)
-// These will be completed during Day 2 (Oct 16) of the mission
+// REQ-1: Generic BFS/DFS Algorithm Implementations
+// Completed on Day 2 (Oct 16) of the mission
+
+/// Performs breadth-first search on any graph type.
+/// 
+/// BFS explores nodes level by level, using a queue (FIFO) to process nodes.
+/// This guarantees that nodes are visited in order of their distance from the start.
+/// 
+/// # Time Complexity
+/// O(V + E) where V = number of vertices, E = number of edges
+/// 
+/// # Space Complexity  
+/// O(V) for the visited set and queue
+/// 
+/// # Arguments
+/// 
+/// * `graph` - Any type implementing the Graph trait
+/// * `start` - The starting node for traversal
+/// 
+/// # Returns
+/// 
+/// Vector of nodes in the order they were visited (level-order traversal)
+/// 
+/// # Examples
+/// 
+/// ```rust
+/// use mission8::{Graph, bfs};
+/// use std::collections::HashMap;
+/// 
+/// // Create adjacency list representation
+/// let mut adj_list: HashMap<u32, Vec<u32>> = HashMap::new();
+/// adj_list.insert(0, vec![1, 2]);
+/// adj_list.insert(1, vec![3]);
+/// adj_list.insert(2, vec![3]); 
+/// adj_list.insert(3, vec![]);
+/// 
+/// let visited = bfs(&adj_list, 0);
+/// assert_eq!(visited, vec![0, 1, 2, 3]);  // Level-order traversal
+/// ```
+pub fn bfs<G: Graph>(graph: &G, start: G::Node) -> Vec<G::Node> {
+    let mut visited = HashSet::new();
+    let mut queue = VecDeque::new();
+    let mut result = Vec::new();
+    
+    // Start with the initial node
+    queue.push_back(start);
+    visited.insert(start);
+    
+    while let Some(current) = queue.pop_front() {
+        result.push(current);
+        
+        // Add all unvisited neighbors to queue
+        for neighbor in graph.neighbors(current) {
+            if !visited.contains(&neighbor) {
+                visited.insert(neighbor);
+                queue.push_back(neighbor);
+            }
+        }
+    }
+    
+    result
+}
+
+/// Performs depth-first search on any graph type.
+/// 
+/// DFS explores as far as possible along each branch before backtracking,
+/// using an explicit stack (LIFO) to avoid recursion and stack overflow.
+/// 
+/// # Time Complexity
+/// O(V + E) where V = number of vertices, E = number of edges
+/// 
+/// # Space Complexity
+/// O(V) for the visited set and stack
+/// 
+/// # Arguments
+/// 
+/// * `graph` - Any type implementing the Graph trait
+/// * `start` - The starting node for traversal
+/// 
+/// # Returns
+/// 
+/// Vector of nodes in the order they were visited (depth-first order)
+/// 
+/// # Examples
+/// 
+/// ```rust
+/// use mission8::{Graph, dfs};
+/// use std::collections::HashMap;
+/// 
+/// // Create adjacency list representation
+/// let mut adj_list: HashMap<u32, Vec<u32>> = HashMap::new();
+/// adj_list.insert(0, vec![1, 2]);
+/// adj_list.insert(1, vec![3]);
+/// adj_list.insert(2, vec![3]);
+/// adj_list.insert(3, vec![]);
+/// 
+/// let visited = dfs(&adj_list, 0);
+/// // DFS order depends on neighbor order, but will explore deeply first
+/// assert!(visited.contains(&0) && visited.contains(&1) && visited.contains(&2) && visited.contains(&3));
+/// assert_eq!(visited[0], 0);  // Always starts with start node
+/// ```
+pub fn dfs<G: Graph>(graph: &G, start: G::Node) -> Vec<G::Node> {
+    let mut visited = HashSet::new();
+    let mut stack = Vec::new();
+    let mut result = Vec::new();
+    
+    // Start with the initial node
+    stack.push(start);
+    
+    while let Some(current) = stack.pop() {
+        if !visited.contains(&current) {
+            visited.insert(current);
+            result.push(current);
+            
+            // Add all unvisited neighbors to stack
+            // Note: We reverse to maintain consistent ordering across runs
+            let mut neighbors = graph.neighbors(current);
+            neighbors.reverse();
+            
+            for neighbor in neighbors {
+                if !visited.contains(&neighbor) {
+                    stack.push(neighbor);
+                }
+            }
+        }
+    }
+    
+    result
+}
+
+/// Implementation of Graph trait for HashMap-based adjacency lists.
+/// 
+/// This allows BFS/DFS algorithms to work directly on HashMap<Node, Vec<Node>>
+/// structures, which is the most common graph representation.
+/// 
+/// # Examples
+/// 
+/// ```rust
+/// use mission8::{Graph, bfs, dfs};
+/// use std::collections::HashMap;
+/// 
+/// let mut graph: HashMap<i32, Vec<i32>> = HashMap::new();
+/// graph.insert(1, vec![2, 3]);
+/// graph.insert(2, vec![4]);
+/// graph.insert(3, vec![4]);
+/// graph.insert(4, vec![]);
+/// 
+/// // Now we can use BFS/DFS directly
+/// let bfs_result = bfs(&graph, 1);
+/// let dfs_result = dfs(&graph, 1);
+/// 
+/// assert_eq!(bfs_result[0], 1);  // Starts with node 1
+/// assert_eq!(dfs_result[0], 1);  // Starts with node 1
+/// ```
+impl<N> Graph for HashMap<N, Vec<N>>
+where
+    N: Copy + Eq + std::hash::Hash,
+{
+    type Node = N;
+
+    fn neighbors(&self, node: Self::Node) -> Vec<Self::Node> {
+        match self.get(&node) {
+            Some(neighbors) => neighbors.clone(),
+            None => Vec::new(),
+        }
+    }
+
+    fn contains(&self, node: Self::Node) -> bool {
+        self.contains_key(&node)
+    }
+
+    fn nodes(&self) -> Vec<Self::Node> {
+        self.keys().copied().collect()
+    }
+}
 
 #[cfg(test)]
 mod tests {

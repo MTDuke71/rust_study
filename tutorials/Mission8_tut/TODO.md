@@ -9,7 +9,7 @@
 ## 🎯 **Overall Progress**
 
 - [x] **Step 1** (Day 1): Algorithm Trait Design ✅
-- [ ] **Step 2** (Day 2): Generic BFS & DFS Implementation
+- [x] **Day 2** (Oct 16): Step 2 - Generic BFS/DFS Tutorial ✅
 - [ ] **Step 3** (Day 3): Algorithm Composition
 - [ ] **Step 4** (Day 4): Performance Benchmarking
 - [ ] **Step 5** (Day 5): Maze Solver Application

@@ -9,7 +9,7 @@
 ## 🎯 **Overall Progress**
 
 - [x] **Day 1** (Oct 15): Setup & Foundation ✅
-- [ ] **Day 2** (Oct 16): REQ-1 - Generic BFS/DFS Implementation
+- [x] **Day 2** (Oct 16): REQ-1 - Generic BFS/DFS Implementation ✅
 - [ ] **Day 3** (Oct 17): REQ-2 - Algorithm Composition
 - [ ] **Day 4** (Oct 18): REQ-3 - Performance Analysis
 - [ ] **Day 5** (Oct 19): REQ-4 - Real-World Applications
