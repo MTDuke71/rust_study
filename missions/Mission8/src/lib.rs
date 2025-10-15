@@ -542,6 +542,378 @@ where
     }
 }
 
+/// REQ-2: Finds the shortest path between two nodes using BFS.
+/// 
+/// This function uses BFS with parent tracking to find the shortest path
+/// in an unweighted graph. BFS guarantees the shortest path because it
+/// explores level by level.
+/// 
+/// # Arguments
+/// 
+/// * `graph` - The graph to search
+/// * `start` - The starting node
+/// * `end` - The destination node
+/// 
+/// # Returns
+/// 
+/// * `Ok(Vec<Node>)` - Path from start to end (inclusive)
+/// * `Err(GraphError::NoPathExists)` - If no path exists
+/// 
+/// # Time Complexity
+/// 
+/// O(V + E) where V is the number of vertices and E is the number of edges
+/// 
+/// # Space Complexity
+/// 
+/// O(V) for the visited set, parent map, and queue
+/// 
+/// # Examples
+/// 
+/// ```rust
+/// use mission8::{Graph, shortest_path};
+/// use std::collections::HashMap;
+/// 
+/// let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+/// graph.insert(0, vec![1, 2]);
+/// graph.insert(1, vec![3]);
+/// graph.insert(2, vec![3]);
+/// graph.insert(3, vec![]);
+/// 
+/// let path = shortest_path(&graph, 0, 3);
+/// assert!(path.is_ok());
+/// let path = path.unwrap();
+/// assert_eq!(path[0], 0);  // Starts at source
+/// assert_eq!(path[path.len() - 1], 3);  // Ends at destination
+/// assert_eq!(path.len(), 3);  // Path length is 3
+/// ```
+pub fn shortest_path<G: Graph>(
+    graph: &G,
+    start: G::Node,
+    end: G::Node,
+) -> Result<Vec<G::Node>, GraphError> {
+    // Quick check: start node must exist
+    if !graph.contains(start) {
+        return Err(GraphError::InvalidInput("Start node not found in graph".to_string()));
+    }
+    
+    // If start and end are the same, path is just that node
+    if start == end {
+        return Ok(vec![start]);
+    }
+    
+    let mut visited = HashSet::new();
+    let mut queue = VecDeque::new();
+    let mut parent: HashMap<G::Node, G::Node> = HashMap::new();
+    
+    queue.push_back(start);
+    visited.insert(start);
+    
+    while let Some(current) = queue.pop_front() {
+        if current == end {
+            // Reconstruct path from end to start
+            let mut path = vec![end];
+            let mut node = end;
+            
+            while let Some(&p) = parent.get(&node) {
+                path.push(p);
+                node = p;
+            }
+            
+            path.reverse();
+            return Ok(path);
+        }
+        
+        for neighbor in graph.neighbors(current) {
+            if !visited.contains(&neighbor) {
+                visited.insert(neighbor);
+                parent.insert(neighbor, current);
+                queue.push_back(neighbor);
+            }
+        }
+    }
+    
+    Err(GraphError::NoPathExists {
+        from: "start".to_string(),
+        to: "end".to_string(),
+    })
+}
+
+/// REQ-2: Detects if a graph contains a cycle using DFS.
+/// 
+/// This function uses DFS with three-color node tracking to detect cycles.
+/// Nodes can be in three states:
+/// - White (unvisited)
+/// - Gray (currently visiting)
+/// - Black (completely visited)
+/// 
+/// A back edge (edge to a gray node) indicates a cycle.
+/// 
+/// # Arguments
+/// 
+/// * `graph` - The graph to check for cycles
+/// 
+/// # Returns
+/// 
+/// `true` if a cycle exists, `false` otherwise
+/// 
+/// # Time Complexity
+/// 
+/// O(V + E) where V is the number of vertices and E is the number of edges
+/// 
+/// # Space Complexity
+/// 
+/// O(V) for the color tracking and recursion stack
+/// 
+/// # Examples
+/// 
+/// ```rust
+/// use mission8::{Graph, has_cycle};
+/// use std::collections::HashMap;
+/// 
+/// // Acyclic graph (DAG)
+/// let mut acyclic: HashMap<u32, Vec<u32>> = HashMap::new();
+/// acyclic.insert(0, vec![1]);
+/// acyclic.insert(1, vec![2]);
+/// acyclic.insert(2, vec![]);
+/// assert!(!has_cycle(&acyclic));
+/// 
+/// // Cyclic graph
+/// let mut cyclic: HashMap<u32, Vec<u32>> = HashMap::new();
+/// cyclic.insert(0, vec![1]);
+/// cyclic.insert(1, vec![2]);
+/// cyclic.insert(2, vec![0]);  // Creates cycle
+/// assert!(has_cycle(&cyclic));
+/// ```
+pub fn has_cycle<G: Graph>(graph: &G) -> bool {
+    let mut color: HashMap<G::Node, Color> = HashMap::new();
+    
+    // Initialize all nodes as white (unvisited)
+    for node in graph.nodes() {
+        color.insert(node, Color::White);
+    }
+    
+    // Check each node (to handle disconnected components)
+    for node in graph.nodes() {
+        if *color.get(&node).unwrap_or(&Color::White) == Color::White {
+            if has_cycle_dfs(graph, node, &mut color) {
+                return true;
+            }
+        }
+    }
+    
+    false
+}
+
+/// Helper for cycle detection using DFS with three-color tracking
+#[allow(dead_code)]
+fn has_cycle_dfs<G: Graph>(
+    graph: &G,
+    node: G::Node,
+    color: &mut HashMap<G::Node, Color>,
+) -> bool {
+    color.insert(node, Color::Gray);
+    
+    for neighbor in graph.neighbors(node) {
+        match color.get(&neighbor).unwrap_or(&Color::White) {
+            Color::Gray => {
+                // Back edge found - indicates a cycle
+                return true;
+            }
+            Color::White => {
+                if has_cycle_dfs(graph, neighbor, color) {
+                    return true;
+                }
+            }
+            Color::Black => {
+                // Already processed this subtree
+                continue;
+            }
+        }
+    }
+    
+    color.insert(node, Color::Black);
+    false
+}
+
+/// Node color states for DFS-based cycle detection
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[allow(dead_code)]
+enum Color {
+    White, // Unvisited
+    Gray,  // Currently visiting
+    Black, // Completely visited
+}
+
+/// REQ-2: Finds a cycle in the graph if one exists.
+/// 
+/// This function returns the actual cycle path if a cycle is detected.
+/// Returns `None` if the graph is acyclic (a DAG).
+/// 
+/// # Arguments
+/// 
+/// * `graph` - The graph to search for cycles
+/// 
+/// # Returns
+/// 
+/// * `Some(Vec<Node>)` - Nodes that form a cycle
+/// * `None` - If graph is acyclic
+/// 
+/// # Time Complexity
+/// 
+/// O(V + E)
+/// 
+/// # Space Complexity
+/// 
+/// O(V)
+/// 
+/// # Examples
+/// 
+/// ```rust
+/// use mission8::{Graph, find_cycle};
+/// use std::collections::HashMap;
+/// 
+/// let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+/// graph.insert(0, vec![1]);
+/// graph.insert(1, vec![2]);
+/// graph.insert(2, vec![0]);  // Cycle: 0 -> 1 -> 2 -> 0
+/// 
+/// let cycle = find_cycle(&graph);
+/// assert!(cycle.is_some());
+/// let cycle = cycle.unwrap();
+/// assert!(cycle.len() >= 3);  // At least 3 nodes in cycle
+/// ```
+pub fn find_cycle<G: Graph>(graph: &G) -> Option<Vec<G::Node>> {
+    let mut color: HashMap<G::Node, Color> = HashMap::new();
+    let mut parent: HashMap<G::Node, G::Node> = HashMap::new();
+    let mut path: Vec<G::Node> = Vec::new();
+    
+    for node in graph.nodes() {
+        color.insert(node, Color::White);
+    }
+    
+    for node in graph.nodes() {
+        if *color.get(&node).unwrap_or(&Color::White) == Color::White {
+            path.clear();
+            if find_cycle_dfs(graph, node, &mut color, &mut parent, &mut path) {
+                return Some(path.clone());
+            }
+        }
+    }
+    
+    None
+}
+
+/// Helper for finding cycle path using DFS
+#[allow(dead_code)]
+fn find_cycle_dfs<G: Graph>(
+    graph: &G,
+    node: G::Node,
+    color: &mut HashMap<G::Node, Color>,
+    parent: &mut HashMap<G::Node, G::Node>,
+    path: &mut Vec<G::Node>,
+) -> bool {
+    color.insert(node, Color::Gray);
+    path.push(node);
+    
+    for neighbor in graph.neighbors(node) {
+        if *color.get(&neighbor).unwrap_or(&Color::White) == Color::Gray {
+            // Found back edge - construct cycle
+            if let Some(pos) = path.iter().position(|&n| n == neighbor) {
+                path.truncate(pos + 1);
+                return true;
+            }
+        } else if *color.get(&neighbor).unwrap_or(&Color::White) == Color::White {
+            parent.insert(neighbor, node);
+            if find_cycle_dfs(graph, neighbor, color, parent, path) {
+                return true;
+            }
+        }
+    }
+    
+    path.pop();
+    color.insert(node, Color::Black);
+    false
+}
+
+/// REQ-2: Finds all connected components in the graph.
+/// 
+/// A connected component is a maximal set of nodes where there is a path
+/// between any two nodes in the set. This function returns a vector where
+/// each element is a vector of nodes forming one component.
+/// 
+/// # Arguments
+/// 
+/// * `graph` - The graph to analyze
+/// 
+/// # Returns
+/// 
+/// Vector of components, where each component is a vector of nodes
+/// 
+/// # Time Complexity
+/// 
+/// O(V + E)
+/// 
+/// # Space Complexity
+/// 
+/// O(V)
+/// 
+/// # Examples
+/// 
+/// ```rust
+/// use mission8::{Graph, connected_components};
+/// use std::collections::HashMap;
+/// 
+/// // Graph with 2 components
+/// let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+/// graph.insert(0, vec![1]);
+/// graph.insert(1, vec![0]);  // Component 1: {0, 1}
+/// graph.insert(2, vec![3]);
+/// graph.insert(3, vec![2]);  // Component 2: {2, 3}
+/// 
+/// let components = connected_components(&graph);
+/// assert_eq!(components.len(), 2);  // Two components
+/// assert_eq!(components[0].len() + components[1].len(), 4);  // 4 nodes total
+/// ```
+pub fn connected_components<G: Graph>(graph: &G) -> Vec<Vec<G::Node>> {
+    let mut visited = HashSet::new();
+    let mut components = Vec::new();
+    
+    for node in graph.nodes() {
+        if !visited.contains(&node) {
+            let component = bfs_collect_component(graph, node, &mut visited);
+            components.push(component);
+        }
+    }
+    
+    components
+}
+
+/// Helper function to collect nodes in a connected component using BFS
+fn bfs_collect_component<G: Graph>(
+    graph: &G,
+    start: G::Node,
+    visited: &mut HashSet<G::Node>,
+) -> Vec<G::Node> {
+    let mut component = Vec::new();
+    let mut queue = VecDeque::new();
+    
+    queue.push_back(start);
+    visited.insert(start);
+    
+    while let Some(current) = queue.pop_front() {
+        component.push(current);
+        
+        for neighbor in graph.neighbors(current) {
+            if !visited.contains(&neighbor) {
+                visited.insert(neighbor);
+                queue.push_back(neighbor);
+            }
+        }
+    }
+    
+    component
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

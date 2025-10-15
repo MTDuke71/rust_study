@@ -370,3 +370,86 @@ pub fn show_common_mistakes() {
     println!("  ✅ Use explicit stack/queue data structures");
     println!("  ✅ Handle edge cases (empty graph, single node)");
 }
+
+/// Explains how BFS finds shortest paths using parent tracking.
+///
+/// This educational function clarifies the parent tracking technique
+/// that enables path reconstruction in BFS.
+pub fn explain_shortest_path_technique() {
+    println!("🎯 Parent Tracking for Path Reconstruction:");
+    println!("  1. As we visit each node, record where it came from");
+    println!("  2. When we find the destination, we have the path!");
+    println!("  3. Walk backwards from destination to source using parent map");
+    println!("  4. Reverse to get source-to-destination path");
+    println!();
+    println!("  Example: 0 -> 1 -> 3");
+    println!("           parent[1] = 0");
+    println!("           parent[3] = 1");
+    println!("           Walk: 3 <- 1 <- 0, reverse -> [0, 1, 3]");
+}
+
+/// Explains cycle detection using DFS state tracking.
+///
+/// This educational function clarifies the three-color approach for
+/// detecting cycles in directed graphs.
+pub fn explain_cycle_detection() {
+    println!("🎯 Three-Color Cycle Detection (DFS):");
+    println!("  White = Unvisited");
+    println!("  Gray = Currently processing (in recursion stack)");
+    println!("  Black = Finished processing (all children explored)");
+    println!();
+    println!("  Back Edge = Edge to gray node = CYCLE!");
+    println!("  Why? Gray node is ancestor on current path");
+    println!("  Edge back to it completes a cycle");
+    println!();
+    println!("  Example: 0 -> 1 -> 2");
+    println!("           When at 2, edge 2->0 is back edge (0 is gray)");
+    println!("           Cycle found: 0 -> 1 -> 2 -> 0");
+}
+
+/// Explains connected components conceptually.
+///
+/// This educational function helps students understand what connected
+/// components are and why they matter.
+pub fn explain_connected_components() {
+    println!("🎯 Connected Components:");
+    println!("  = Maximal groups of nodes that can reach each other");
+    println!("  = Isolated \"islands\" in the graph");
+    println!("  = Finding components = BFS/DFS from each unvisited node");
+    println!();
+    println!("  Example: 3 components");
+    println!("  Component 1: {{0, 1, 2}} <- all reachable");
+    println!("  Component 2: {{3, 4}}   <- isolated pair");
+    println!("  Component 3: {{5}}      <- lone node");
+    println!();
+    println!("  Application: Network analysis, social graphs, etc.");
+}
+
+/// Shows common composition patterns.
+///
+/// This educational function demonstrates how to combine algorithms
+/// to solve higher-level problems.
+pub fn explain_algorithm_composition() {
+    println!("🎯 Composing Algorithms:");
+    println!("  Shortest Path = BFS + parent tracking");
+    println!("  Cycle Detection = DFS + state tracking");
+    println!("  Components = BFS/DFS from multiple starts");
+    println!("  Topological Sort = DFS + finishing times");
+    println!();
+    println!("  Key Insight: Basic algorithms are building blocks");
+    println!("  Combine them to solve complex problems");
+}
+
+/// Compares algorithm approaches for common problems.
+pub fn compare_approaches() {
+    println!("📊 Algorithm Comparison Matrix:");
+    println!();
+    println!("  Problem              | BFS         | DFS         | Notes");
+    println!("  -------------------- | ----------- | ----------- | --------");
+    println!("  Shortest Path        | ✅ Best     | ⚠️  Suboptimal| BFS guarantees");
+    println!("  Cycle Detection      | ❌ Complex  | ✅ Best     | DFS detects back edges");
+    println!("  Connectivity         | ✅ Works    | ✅ Works    | Either works");
+    println!("  Components          | ✅ Works    | ✅ Works    | Either works");
+    println!("  Topological Sort     | ❌ N/A     | ✅ Best     | DFS finishing times");
+}
+
