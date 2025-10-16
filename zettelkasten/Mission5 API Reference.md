@@ -45,7 +45,7 @@ See: [[../missions/Mission5/README|Mission5 README.md]] - Scroll to "API Documen
 - [[HashSet Wrapper Pattern]] - Set abstraction
 
 **Daily Study Integration:**
-- [[Day 10 - HashMap Basics|../daily_study/rust_learning_week2_notes/Day10]] - Foundational concepts
+- [[daily-study/Day10]] - Foundational concepts
 - [[Day 11 - HashSet Operations|../daily_study/rust_learning_week2_notes/Day11]] - Set operations
 - [[Day 13 - Advanced Iterators|../daily_study/rust_learning_week2_notes/Day13]] - Iterator patterns
 

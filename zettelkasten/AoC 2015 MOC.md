@@ -168,7 +168,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 
 ### **Daily Study Connections**
 - Day 8 → [[Day 09 - String Patterns]] - String vs &str
-- Day 7 → [[Day 10 - HashMap Basics]] - Key-value storage
+- Day 7 → [[daily-study/Day10]] - Key-value storage
 - Day 3 → [[Day 11 - HashSet Operations]] - Set operations
 - Day 10 → [[../daily_study/rust_learning_week2_notes/Day10]] - HashMap and iteration patterns
 - Day 11 → [[../daily_study/rust_learning_week2_notes/Day09]] - Password validation patterns and string rule composition

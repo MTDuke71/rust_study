@@ -388,7 +388,7 @@ fn deduplicate_normalized(strings: Vec<String>) -> Vec<String> {
 - **[[Collections MOC]]** - Complete data structures overview
 - **[[HashMap Internals]]** - How HashSet is implemented (HashSet = HashMap with unit values)
 - **[[Iterator Traits]]** - Understanding filter and collect patterns
-- **[[Day 10 - HashMap Basics]]** - HashMap operations for frequency counting
+- **[[daily-study/Day10]]** - HashMap operations for frequency counting
 - **[[Vec Patterns]]** - Working with dynamic arrays
 
 ---
@@ -406,7 +406,7 @@ fn deduplicate_normalized(strings: Vec<String>) -> Vec<String> {
 - **[[Iterator Traits]]** - Iterator-based transformations
 
 ### 📖 Learning Path
-- **[[Day 10 - HashMap Basics]]** - Hash-based collections introduction
+- **[[daily-study/Day10]]** - Hash-based collections introduction
 - **[[Day 09 - Iterators]]** - Iterator patterns for deduplication
 - **[[Performance Optimization]]** - Choosing the right strategy
 

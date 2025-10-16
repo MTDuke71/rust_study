@@ -170,7 +170,7 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 - **Mission1 Stack** connects to [[Day 01 - Setup]] and [[Day 02 - Ownership Basics]]
 - **Mission2 Queue** connects to [[Vec Patterns]] and performance concepts
 - **Mission4 LinkedList** connects to [[Interior Mutability Deep Dive]]
-- **Mission5 HashMap** connects to [[Day 10 - HashMap Basics]] and [[HashMap Internals]]
+- **Mission5 HashMap** connects to [[daily-study/Day10]] and [[HashMap Internals]]
 
 ### **Mission ↔ AoC Applications**
 - **Stack**: Bracket validation, expression parsing, undo operations

@@ -190,7 +190,7 @@ match result {
 ### **What's Next:**
 - [[Day 08 - Vectors]] - Dynamic arrays with ownership
 - [[Day 09 - Strings]] - UTF-8 text and String vs &str
-- [[Day 10 - HashMap Basics]] - Key-value storage
+- [[daily-study/Day10]] - Key-value storage
 - [[Week 2 Overview]] - Collections mastery
 
 ### **How Week 1 Prepares You:**

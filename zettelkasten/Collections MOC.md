@@ -60,7 +60,7 @@
 - [[Day 08 - Vec Fundamentals]] - Dynamic arrays, capacity vs length
 - [[Day 09 - String Patterns]] - String vs &str, UTF-8 handling
   - **Pattern Matching**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Comprehensive regex guide
-- [[Day 10 - HashMap Basics]] - Key-value storage, borrowing keys  
+- [[daily-study/Day10]] - Key-value storage, borrowing keys  
 - [[Day 11 - HashSet Operations]] - Unique collections, set operations
 - [[Day 12 - BTreeMap]] - Ordered collections, range queries
 - [[Day 13 - Advanced Iterators]] - Transforming and processing

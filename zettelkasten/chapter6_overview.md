@@ -42,7 +42,7 @@ These features work together to eliminate null pointer errors (the "billion doll
   - Pattern matching with match for error propagation
   - if let for selective error handling
 
-- **[[Day 10 - HashMap Basics]]** - HashMap API methods return Option
+- **[[daily-study/Day10]]** - HashMap API methods return Option
   - Handling missing keys with pattern matching
   - Using unwrap_or for default values
 
@@ -198,7 +198,7 @@ let value = match some_option {
 3. **Review related daily study**
    - [[Day 14 - Error Handling Patterns]] for Result enum
    - [[../../rust_book/Ch6/defining_enums/WARNINGS_EXPLAINED]] - Understanding enum compiler warnings
-   - [[Day 10 - HashMap Basics]] for Option in APIs
+   - [[daily-study/Day10]] for Option in APIs
    - Practice exercises combining enums and collections
 
 4. **Continue to next chapter**

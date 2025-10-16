@@ -39,7 +39,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 
 **Key Takeaway**: Strings are UTF-8 and require special handling
 
-### **Day 10: HashMap Basics** [[Day 10 - HashMap Basics]]
+### **Day 10: HashMap Basics** [[daily-study/Day10]]
 - Key-value storage with O(1) average access
 - Trait requirements: K: Eq + Hash
 - Entry API patterns

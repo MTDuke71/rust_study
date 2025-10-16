@@ -36,7 +36,7 @@
 ## 🔗 Learning Track Integration
 
 ### **Daily Study Connections**
-- Builds on [[Day 10 - HashMap Basics]] theoretical foundation
+- Builds on [[daily-study/Day10]] theoretical foundation
 - Reinforces [[Day 01 - Ownership Basics]] through collection ownership
 - Applies [[Day 09 - String Patterns]] in key handling
 - Prepares for [[Day 13 - Advanced Iterators]] practical usage

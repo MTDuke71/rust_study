@@ -43,7 +43,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 |-----|-------|--------------|-------|
 | Day 8 | Vectors | Dynamic arrays, capacity vs length | [[../missions/Mission1/README\|Mission1]] |
 | Day 9 | Strings | String vs &str, UTF-8, manipulation | [[../rust_book/Ch8\|Ch8]] |
-| [[Day 10 - HashMap Basics\|Day 10]] | HashMaps | Key-value storage, borrowing | [[../missions/Mission5/README\|Mission5]] |
+| [[daily-study/Day10\|Day 10]] | HashMaps | Key-value storage, borrowing | [[../missions/Mission5/README\|Mission5]] |
 | [[Day 11 - HashSet Operations\|Day 11]] | HashSets | Unique collections, set ops | [[Mission5 Overview]] |
 | [[Day 12 - BTreeMap\|Day 12]] | BTreeMap & BTreeSet | Ordered collections | [[Collections MOC]] |
 | [[Day 13 - Advanced Iterators\|Day 13]] | Advanced Iterators | Transforming collections | [[../missions/Mission6/SIZE_HINT_EXPLAINED]] |

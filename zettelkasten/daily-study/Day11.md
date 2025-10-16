@@ -35,7 +35,7 @@ Or navigate directly to: `daily_study/rust_learning_week2_notes/Day11.md`
 - [[Collections MOC]] - All collection types overview
 
 ### Daily Study Progression
-- [[Day 10 - HashMap Basics]] - Previous day (key-value storage)
+- [[daily-study/Day10]] - Previous day (key-value storage)
 - **Current**: [[../daily_study/rust_learning_week2_notes/Day11|Day 11 - HashSet Operations]]
 - [[Day 12 - BTreeMap]] - Next day (ordered collections)
 

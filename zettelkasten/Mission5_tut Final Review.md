@@ -284,7 +284,7 @@ If you've worked through all steps and can confidently tackle the challenges abo
 - [[Performance Patterns]] - Optimization strategies
 
 **Daily Study Integration:**
-- [[Day 10 - HashMap Basics|../daily_study/rust_learning_week2_notes/Day10]] - Foundational theory
+- [[daily-study/Day10]] - Foundational theory
 - [[Day 11 - HashSet Operations|../daily_study/rust_learning_week2_notes/Day11]] - Set operations
 - [[Day 12 - BTreeMap|../daily_study/rust_learning_week2_notes/Day12]] - Ordered maps
 - [[Day 13 - Advanced Iterators|../daily_study/rust_learning_week2_notes/Day13]] - Iterator chains

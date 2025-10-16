@@ -25,7 +25,7 @@
 | **Sept 25** | Setup & Planning | [[Step 1 - Basic HashMap Structure]] | [[Day 07 - Practice Day]] |
 | **Sept 26** | Requirements | [[Step 2 - Collision Handling]] | [[Day 08 - Vec Fundamentals]] |  
 | **Sept 27** | Basic Structure | [[Step 3 - Advanced Operations]] | [[Day 09 - String Patterns]] |
-| **Sept 28** | Hash & Collision | [[Step 4 - Multi-Value Patterns]] | [[Day 10 - HashMap Basics]] |
+| **Sept 28** | Hash & Collision | [[Step 4 - Multi-Value Patterns]] | [[daily-study/Day10]] |
 | **Sept 29** | Core Operations | [[Step 5 - MemoCache Integration]] | [[Day 11 - HashSet Operations]] |
 | **Sept 30** | Iterator Implementation | [[Final Project Review]] | [[Day 12 - BTreeMap]] |
 
@@ -39,7 +39,7 @@
 - **Step 5** optimizes → [[Mission5 REQ-6 AoC Utilities]]
 
 ### **Tutorial → Daily Study Links**
-- **Step 1** applies concepts from → [[Day 10 - HashMap Basics]]
+- **Step 1** applies concepts from → [[daily-study/Day10]]
 - **Step 2** reinforces → [[Day 01 - Ownership Basics]] 
 - **Step 3** builds on → [[Day 09 - String Patterns]]
 - **Step 4** connects to → [[Day 11 - HashSet Operations]]

@@ -1,9 +1,5 @@
 # Day 10 - HashMap Basics
 
-> **📍 This is a navigation page. See the full daily study content:**
-> 
-> **[[../daily_study/rust_learning_week2_notes/Day10|📖 Day 10 - HashMap Basics (Full Content)]]**
-
 ---
 
 ## 🎯 Quick Reference
