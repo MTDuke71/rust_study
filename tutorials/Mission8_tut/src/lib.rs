@@ -218,13 +218,13 @@ pub fn print_traversal<T: Debug>(algorithm_name: &str, visited_nodes: &[T]) {
 ///
 /// visualize_bfs_state(1, 0, &queue, &visited);
 /// ```
-pub fn visualize_bfs_state<T: Debug + Clone>(
+pub fn visualize_bfs_state<T>(
     step: usize, 
     current_node: T, 
     queue: &std::collections::VecDeque<T>,
     visited: &std::collections::HashSet<T>
 ) where
-    T: std::hash::Hash + Eq,
+    T: Debug + Clone + std::hash::Hash + Eq,
 {
     println!("  Step {}: Processing node {:?}", step, current_node);
     println!("    Queue: {:?}", queue);
@@ -256,13 +256,13 @@ pub fn visualize_bfs_state<T: Debug + Clone>(
 ///
 /// visualize_dfs_state(1, 0, &stack, &visited);
 /// ```
-pub fn visualize_dfs_state<T: Debug + Clone>(
+pub fn visualize_dfs_state<T>(
     step: usize,
     current_node: T,
     stack: &[T],
     visited: &std::collections::HashSet<T>
 ) where
-    T: std::hash::Hash + Eq,
+    T: Debug + Clone + std::hash::Hash + Eq,
 {
     println!("  Step {}: Processing node {:?}", step, current_node);
     println!("    Stack: {:?}", stack);
