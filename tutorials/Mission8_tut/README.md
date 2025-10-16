@@ -359,6 +359,13 @@ This tutorial is designed to **directly support** completing Mission 8 requireme
 
 ---
 
+## 📚 **Exercise Solutions**
+
+For comprehensive solutions to all student exercises, see:
+- **[Exercise Solutions Guide](EXERCISE_SOLUTIONS.md)** - Complete solutions for Day 2 and Day 3 exercises
+- **[Day 2 Solutions](examples/day2_exercises_solutions.rs)** - BFS with levels, recursive DFS, all paths, grid BFS
+- **[Day 3 Solutions](examples/day3_exercises_solutions.rs)** - All cycles, longest path in DAG, bidirectional BFS, bridges
+
 ## 🚀 **Quick Commands Reference**
 
 ```bash
@@ -367,6 +374,10 @@ This tutorial is designed to **directly support** completing Mission 8 requireme
 
 # Run specific step
 cargo run -p mission8_tut --example step3_composition
+
+# Run exercise solutions
+cargo run -p mission8_tut --example day2_exercises_solutions
+cargo run -p mission8_tut --example day3_exercises_solutions
 
 # Run all tutorial tests
 cargo test -p mission8_tut

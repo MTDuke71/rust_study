@@ -147,6 +147,9 @@
 
 ### Files to Create
 - [x] `examples/step3_composition.rs` - Algorithm composition tutorial
+- [x] `examples/day2_exercises_solutions.rs` - Day 2 exercise solutions
+- [x] `examples/day3_exercises_solutions.rs` - Day 3 exercise solutions
+- [x] `EXERCISE_SOLUTIONS.md` - Comprehensive exercise solutions guide
 
 ### Tutorial Content (`examples/step3_composition.rs`)
 
@@ -218,6 +221,12 @@
 - [x] Supports Mission8 REQ-2 implementation
 - [x] Shows algorithm composition patterns
 - [x] Demonstrates error handling
+
+### Exercise Solutions Added
+- [x] **Day 2 Solutions**: BFS with levels, recursive DFS, all paths, grid BFS
+- [x] **Day 3 Solutions**: All cycles, longest path in DAG, bidirectional BFS, bridges
+- [x] **Documentation**: Complete solutions guide with explanations
+- [x] **Verification**: All solutions compile and run successfully
 
 ---
 
