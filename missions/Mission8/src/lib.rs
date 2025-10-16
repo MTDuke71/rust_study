@@ -178,7 +178,7 @@ use std::collections::{HashMap, HashSet, VecDeque};
 /// ```
 pub trait Graph {
     /// The node type used in this graph.
-    type Node: Copy + Eq + std::hash::Hash;
+    type Node: Copy + Eq + std::hash::Hash + std::fmt::Debug;
 
     /// Get all neighbors of a node.
     ///
@@ -265,7 +265,7 @@ impl std::error::Error for GraphError {}
 ///
 /// * `N` - The node type (must match the graph's node type)
 #[derive(Debug, Clone)]
-pub struct BFSState<N: Copy + Eq + std::hash::Hash> {
+pub struct BFSState<N: Copy + Eq + std::hash::Hash + std::fmt::Debug> {
     /// Nodes that have been visited
     visited: HashSet<N>,
 
@@ -276,7 +276,7 @@ pub struct BFSState<N: Copy + Eq + std::hash::Hash> {
     _parent: HashMap<N, N>,
 }
 
-impl<N: Copy + Eq + std::hash::Hash> BFSState<N> {
+impl<N: Copy + Eq + std::hash::Hash + std::fmt::Debug> BFSState<N> {
     /// Create a new BFS state starting from a given node.
     ///
     /// # Arguments
@@ -320,7 +320,7 @@ impl<N: Copy + Eq + std::hash::Hash> BFSState<N> {
 ///
 /// * `N` - The node type (must match the graph's node type)
 #[derive(Debug, Clone)]
-pub struct DFSState<N: Copy + Eq + std::hash::Hash> {
+pub struct DFSState<N: Copy + Eq + std::hash::Hash + std::fmt::Debug> {
     /// Nodes that have been visited
     visited: HashSet<N>,
 
@@ -331,7 +331,7 @@ pub struct DFSState<N: Copy + Eq + std::hash::Hash> {
     _parent: HashMap<N, N>,
 }
 
-impl<N: Copy + Eq + std::hash::Hash> DFSState<N> {
+impl<N: Copy + Eq + std::hash::Hash + std::fmt::Debug> DFSState<N> {
     /// Create a new DFS state starting from a given node.
     ///
     /// # Arguments
@@ -522,7 +522,7 @@ pub fn dfs<G: Graph>(graph: &G, start: G::Node) -> Vec<G::Node> {
 /// ```
 impl<N> Graph for HashMap<N, Vec<N>>
 where
-    N: Copy + Eq + std::hash::Hash,
+    N: Copy + Eq + std::hash::Hash + std::fmt::Debug,
 {
     type Node = N;
 
@@ -633,8 +633,8 @@ pub fn shortest_path<G: Graph>(
     }
     
     Err(GraphError::NoPathExists {
-        from: "start".to_string(),
-        to: "end".to_string(),
+        from: format!("{:?}", start),
+        to: format!("{:?}", end),
     })
 }
 
@@ -941,6 +941,11 @@ fn bfs_collect_component<G: Graph>(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashMap;
+
+    // ============================================================================
+    // GRAPH ERROR TESTS
+    // ============================================================================
 
     #[test]
     fn test_graph_error_display() {
@@ -954,6 +959,135 @@ mod tests {
         assert_eq!(err.to_string(), "No path exists from A to B");
     }
 
+    // ============================================================================
+    // GRAPH TRAIT IMPLEMENTATION TESTS
+    // ============================================================================
+
+    #[test]
+    fn test_hashmap_graph_implementation() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1, 2]);
+        graph.insert(1, vec![3]);
+        graph.insert(2, vec![3]);
+        graph.insert(3, vec![]);
+
+        // Test neighbors
+        assert_eq!(graph.neighbors(0), vec![1, 2]);
+        assert_eq!(graph.neighbors(1), vec![3]);
+        assert_eq!(graph.neighbors(2), vec![3]);
+        assert_eq!(graph.neighbors(3), vec![]);
+        assert_eq!(graph.neighbors(99), vec![]); // Non-existent node
+
+        // Test contains
+        assert!(graph.contains(0));
+        assert!(graph.contains(1));
+        assert!(graph.contains(2));
+        assert!(graph.contains(3));
+        assert!(!graph.contains(99));
+
+        // Test nodes
+        let mut nodes = graph.nodes();
+        nodes.sort();
+        assert_eq!(nodes, vec![0, 1, 2, 3]);
+    }
+
+    #[test]
+    fn test_hashmap_graph_with_string_slices() {
+        let mut graph: HashMap<&str, Vec<&str>> = HashMap::new();
+        graph.insert("A", vec!["B"]);
+        graph.insert("B", vec!["C"]);
+        graph.insert("C", vec![]);
+
+        assert_eq!(graph.neighbors("A"), vec!["B"]);
+        assert!(graph.contains("A"));
+        assert!(!graph.contains("D"));
+    }
+
+    #[test]
+    fn test_empty_graph() {
+        let graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        
+        assert_eq!(graph.neighbors(0), vec![]);
+        assert!(!graph.contains(0));
+        assert_eq!(graph.nodes(), vec![]);
+    }
+
+    // ============================================================================
+    // BFS/DFS CORE ALGORITHM TESTS
+    // ============================================================================
+
+    #[test]
+    fn test_bfs_simple_graph() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1, 2]);
+        graph.insert(1, vec![3]);
+        graph.insert(2, vec![3]);
+        graph.insert(3, vec![]);
+
+        let result = bfs(&graph, 0);
+        assert_eq!(result[0], 0); // Start node first
+        assert_eq!(result.len(), 4); // All nodes visited
+        assert!(result.contains(&0));
+        assert!(result.contains(&1));
+        assert!(result.contains(&2));
+        assert!(result.contains(&3));
+    }
+
+    #[test]
+    fn test_dfs_simple_graph() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1, 2]);
+        graph.insert(1, vec![3]);
+        graph.insert(2, vec![3]);
+        graph.insert(3, vec![]);
+
+        let result = dfs(&graph, 0);
+        assert_eq!(result[0], 0); // Start node first
+        assert_eq!(result.len(), 4); // All nodes visited
+        assert!(result.contains(&0));
+        assert!(result.contains(&1));
+        assert!(result.contains(&2));
+        assert!(result.contains(&3));
+    }
+
+    #[test]
+    fn test_bfs_single_node() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(42, vec![]);
+
+        let result = bfs(&graph, 42);
+        assert_eq!(result, vec![42]);
+    }
+
+    #[test]
+    fn test_dfs_single_node() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(42, vec![]);
+
+        let result = dfs(&graph, 42);
+        assert_eq!(result, vec![42]);
+    }
+
+    #[test]
+    fn test_bfs_disconnected_graph() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![0]);
+        graph.insert(2, vec![3]);
+        graph.insert(3, vec![2]);
+
+        let result = bfs(&graph, 0);
+        assert_eq!(result.len(), 2); // Only nodes 0 and 1
+        assert!(result.contains(&0));
+        assert!(result.contains(&1));
+        assert!(!result.contains(&2));
+        assert!(!result.contains(&3));
+    }
+
+    // ============================================================================
+    // STATE MANAGEMENT TESTS
+    // ============================================================================
+
     #[test]
     fn test_bfs_state_creation() {
         let state: BFSState<u32> = BFSState::new(0);
@@ -966,5 +1100,254 @@ mod tests {
         let state: DFSState<u32> = DFSState::new(0);
         assert!(state.visited().contains(&0));
         assert!(state.has_next());
+    }
+
+    #[test]
+    fn test_bfs_state_with_string_slices() {
+        let state: BFSState<&str> = BFSState::new("start");
+        assert!(state.visited().contains(&"start"));
+        assert!(state.has_next());
+    }
+
+    // ============================================================================
+    // SHORTEST PATH TESTS
+    // ============================================================================
+
+    #[test]
+    fn test_shortest_path_simple() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![2]);
+        graph.insert(2, vec![]);
+
+        let path = shortest_path(&graph, 0, 2);
+        assert!(path.is_ok());
+        assert_eq!(path.unwrap(), vec![0, 1, 2]);
+    }
+
+    #[test]
+    fn test_shortest_path_same_node() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![]);
+
+        let path = shortest_path(&graph, 0, 0);
+        assert!(path.is_ok());
+        assert_eq!(path.unwrap(), vec![0]);
+    }
+
+    #[test]
+    fn test_shortest_path_no_path() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![]);
+        graph.insert(2, vec![3]);
+        graph.insert(3, vec![]);
+
+        let path = shortest_path(&graph, 0, 2);
+        assert!(path.is_err());
+        match path {
+            Err(GraphError::NoPathExists { from, to }) => {
+                assert_eq!(from, "0");
+                assert_eq!(to, "2");
+            }
+            _ => panic!("Expected NoPathExists error"),
+        }
+    }
+
+    #[test]
+    fn test_shortest_path_invalid_start() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![]);
+
+        let path = shortest_path(&graph, 99, 1);
+        assert!(path.is_err());
+        match path {
+            Err(GraphError::InvalidInput(_)) => {}
+            _ => panic!("Expected InvalidInput error"),
+        }
+    }
+
+    // ============================================================================
+    // CYCLE DETECTION TESTS
+    // ============================================================================
+
+    #[test]
+    fn test_has_cycle_acyclic() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![2]);
+        graph.insert(2, vec![]);
+
+        assert!(!has_cycle(&graph));
+    }
+
+    #[test]
+    fn test_has_cycle_cyclic() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![2]);
+        graph.insert(2, vec![0]);
+
+        assert!(has_cycle(&graph));
+    }
+
+    #[test]
+    fn test_has_cycle_self_loop() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![0]);
+
+        assert!(has_cycle(&graph));
+    }
+
+    #[test]
+    fn test_find_cycle_acyclic() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![2]);
+        graph.insert(2, vec![]);
+
+        assert!(find_cycle(&graph).is_none());
+    }
+
+    #[test]
+    fn test_find_cycle_cyclic() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![2]);
+        graph.insert(2, vec![0]);
+
+        let cycle = find_cycle(&graph);
+        assert!(cycle.is_some());
+        let cycle_nodes = cycle.unwrap();
+        assert!(cycle_nodes.len() >= 3);
+        assert!(cycle_nodes.contains(&0));
+        assert!(cycle_nodes.contains(&1));
+        assert!(cycle_nodes.contains(&2));
+    }
+
+    #[test]
+    fn test_find_cycle_self_loop() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![0]);
+
+        let cycle = find_cycle(&graph);
+        assert!(cycle.is_some());
+        assert_eq!(cycle.unwrap().len(), 1);
+    }
+
+    // ============================================================================
+    // CONNECTED COMPONENTS TESTS
+    // ============================================================================
+
+    #[test]
+    fn test_connected_components_single() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![2]);
+        graph.insert(2, vec![3]);
+        graph.insert(3, vec![]);
+
+        let components = connected_components(&graph);
+        assert_eq!(components.len(), 1);
+        assert_eq!(components[0].len(), 4);
+    }
+
+    #[test]
+    fn test_connected_components_multiple() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1]);
+        graph.insert(1, vec![0]);
+        graph.insert(2, vec![3]);
+        graph.insert(3, vec![2]);
+
+        let components = connected_components(&graph);
+        assert_eq!(components.len(), 2);
+        
+        // Find component sizes
+        let mut sizes: Vec<usize> = components.iter().map(|c| c.len()).collect();
+        sizes.sort();
+        assert_eq!(sizes, vec![2, 2]);
+    }
+
+    #[test]
+    fn test_connected_components_isolated() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![]);
+        graph.insert(1, vec![]);
+        graph.insert(2, vec![]);
+
+        let components = connected_components(&graph);
+        assert_eq!(components.len(), 3);
+        
+        for component in components {
+            assert_eq!(component.len(), 1);
+        }
+    }
+
+    #[test]
+    fn test_connected_components_empty() {
+        let graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        let components = connected_components(&graph);
+        assert_eq!(components.len(), 0);
+    }
+
+    // ============================================================================
+    // INTEGRATION TESTS
+    // ============================================================================
+
+    #[test]
+    fn test_all_algorithms_on_same_graph() {
+        let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
+        graph.insert(0, vec![1, 2]);
+        graph.insert(1, vec![3]);
+        graph.insert(2, vec![3]);
+        graph.insert(3, vec![]);
+
+        // Test BFS
+        let bfs_result = bfs(&graph, 0);
+        assert_eq!(bfs_result.len(), 4);
+
+        // Test DFS
+        let dfs_result = dfs(&graph, 0);
+        assert_eq!(dfs_result.len(), 4);
+
+        // Test shortest path
+        let path = shortest_path(&graph, 0, 3);
+        assert!(path.is_ok());
+        assert_eq!(path.unwrap().len(), 3);
+
+        // Test cycle detection
+        assert!(!has_cycle(&graph));
+        assert!(find_cycle(&graph).is_none());
+
+        // Test connected components
+        let components = connected_components(&graph);
+        assert_eq!(components.len(), 1);
+        assert_eq!(components[0].len(), 4);
+    }
+
+    #[test]
+    fn test_algorithms_with_string_slice_nodes() {
+        let mut graph: HashMap<&str, Vec<&str>> = HashMap::new();
+        graph.insert("A", vec!["B"]);
+        graph.insert("B", vec!["C"]);
+        graph.insert("C", vec![]);
+
+        // Test BFS with string slices
+        let bfs_result = bfs(&graph, "A");
+        assert_eq!(bfs_result.len(), 3);
+        assert_eq!(bfs_result[0], "A");
+
+        // Test shortest path with string slices
+        let path = shortest_path(&graph, "A", "C");
+        assert!(path.is_ok());
+        assert_eq!(path.unwrap(), vec!["A", "B", "C"]);
+
+        // Test connected components with string slices
+        let components = connected_components(&graph);
+        assert_eq!(components.len(), 1);
+        assert_eq!(components[0].len(), 3);
     }
 }
