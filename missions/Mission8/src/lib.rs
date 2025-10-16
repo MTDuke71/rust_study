@@ -818,8 +818,20 @@ fn find_cycle_dfs<G: Graph>(
     for neighbor in graph.neighbors(node) {
         if *color.get(&neighbor).unwrap_or(&Color::White) == Color::Gray {
             // Found back edge - construct cycle
+            // Find the position of the neighbor in the current path
             if let Some(pos) = path.iter().position(|&n| n == neighbor) {
-                path.truncate(pos + 1);
+                // Keep only the cycle part: from neighbor to current node
+                let cycle_start = pos;
+                let mut cycle = Vec::new();
+                
+                // Add nodes from the cycle start to the end
+                for i in cycle_start..path.len() {
+                    cycle.push(path[i]);
+                }
+                
+                // Replace the path with the cycle
+                path.clear();
+                path.extend(cycle);
                 return true;
             }
         } else if *color.get(&neighbor).unwrap_or(&Color::White) == Color::White {
@@ -889,6 +901,9 @@ pub fn connected_components<G: Graph>(graph: &G) -> Vec<Vec<G::Node>> {
 }
 
 /// Helper function to collect nodes in a connected component using BFS
+/// 
+/// This function treats the graph as undirected for connected components.
+/// It follows both outgoing and incoming edges to find all reachable nodes.
 fn bfs_collect_component<G: Graph>(
     graph: &G,
     start: G::Node,
@@ -903,10 +918,19 @@ fn bfs_collect_component<G: Graph>(
     while let Some(current) = queue.pop_front() {
         component.push(current);
         
+        // Follow outgoing edges (current -> neighbor)
         for neighbor in graph.neighbors(current) {
             if !visited.contains(&neighbor) {
                 visited.insert(neighbor);
                 queue.push_back(neighbor);
+            }
+        }
+        
+        // Follow incoming edges (neighbor -> current) for undirected behavior
+        for node in graph.nodes() {
+            if graph.neighbors(node).contains(&current) && !visited.contains(&node) {
+                visited.insert(node);
+                queue.push_back(node);
             }
         }
     }
