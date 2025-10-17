@@ -890,8 +890,7 @@ git add . && git commit -m "Day X progress" # Save daily progress
 - [[Mission8 Overview]] - Advanced Data Structures
 
 *Core Learning Concepts:*
-- [[Ownership]] - Rust's memory safety foundation
-- [[Borrowing]] - Reference rules and lifetime management
+- [[Ownership and Borrowing]] - Rust's memory safety foundation and reference rules
 - [[Traits]] - Behavior abstraction and polymorphism
 - [[Generics]] - Type parameterization for reusable code
 - [[Collections MOC]] - Standard library collection types

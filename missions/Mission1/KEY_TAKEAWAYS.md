@@ -98,8 +98,7 @@ The concepts learned here form the foundation for all Rust programming!
 - [[stack_tests.rs]] - Comprehensive test suite
 
 ### **Core Concepts (Zettelkasten)**
-- [[Ownership]] - Rust ownership system fundamentals
-- [[Borrowing]] - Borrowing rules and lifetimes
+- [[Ownership and Borrowing]] - Rust ownership system and borrowing rules
 - [[Move Semantics]] - Value movement and Copy trait
 - [[Memory Safety]] - Compile-time memory safety guarantees
 - [[Generic Types]] - Generic programming in Rust

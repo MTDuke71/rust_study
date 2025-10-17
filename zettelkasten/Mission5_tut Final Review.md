@@ -217,7 +217,7 @@ Now that you've mastered the tutorial, you should be able to:
 - [[Collections MOC]] - Overview of all Rust collection types
 - [[Generic Programming]] - Understanding `<K, V>` type parameters
 - [[Trait Bounds]] - Hash + Eq requirements for HashMap keys
-- [[Ownership]] - How ownership works with collections
+- [[Ownership and Borrowing]] - How ownership and borrowing work with collections
 - [[Performance Optimization]] - Benchmarking and profiling techniques
 
 ### **Mission Integration**

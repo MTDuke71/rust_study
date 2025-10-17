@@ -2,7 +2,7 @@
 
 ---
 *Navigation: [[zettel-index]] | [[Rust Book Progress]] | [[Collections MOC]] | [[Vec]] | [[String]] | [[HashMap]]*
-*Quick Links: [[Memory Management]] | [[Ownership]] | [[Borrowing]] | [[Daily Study MOC]]*
+*Quick Links: [[Memory Management]] | [[Ownership and Borrowing]] | [[Daily Study MOC]]*
 *Related Concepts: [[Iterators]] | [[Generics]] | [[Heap Allocation]] | [[Performance Optimization]]*
 *Deep Dives: [[Unicode, UTF-8, and Rust]] | [[String Performance]]*
 ---
