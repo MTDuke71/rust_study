@@ -93,7 +93,7 @@ fn main() {
 
 - **Full Details**: [[daily_study/rust_learning_week1_notes/Day04]]
 - **Previous**: [[Day 03 - Borrowing]]
-- **Next**: [[Day 05 - Option and Result]]
+- **Next**: [[daily-study/Day05]]
 - **Week**: [[Week 1 Overview]]
 - **MOC**: [[Rust Concepts MOC]]
 

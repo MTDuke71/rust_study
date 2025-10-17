@@ -47,7 +47,7 @@ See: [[../missions/Mission5/README|Mission5 README.md]] - Scroll to "API Documen
 **Daily Study Integration:**
 - [[daily-study/Day10]] - Foundational concepts
 - [[daily-study/Day11]] - Set operations
-- [[Day 13 - Advanced Iterators|../daily_study/rust_learning_week2_notes/Day13]] - Iterator patterns
+- [[daily-study/Day13]] - Iterator patterns
 
 **Rust Book:**
 - [[Chapter 8|../rust_book/Ch8/README]] - Collections chapter

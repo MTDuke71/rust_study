@@ -287,7 +287,7 @@ If you've worked through all steps and can confidently tackle the challenges abo
 - [[daily-study/Day10]] - Foundational theory
 - [[daily-study/Day11]] - Set operations
 - [[Day 12 - BTreeMap|../daily_study/rust_learning_week2_notes/Day12]] - Ordered maps
-- [[Day 13 - Advanced Iterators|../daily_study/rust_learning_week2_notes/Day13]] - Iterator chains
+- [[daily-study/Day13]] - Iterator chains
 
 **Rust Book:**
 - [[Chapter 8|../rust_book/Ch8/README]] - Collections (Vec, String, HashMap)

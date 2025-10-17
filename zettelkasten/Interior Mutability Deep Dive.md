@@ -581,7 +581,7 @@ impl GameState {
 ## 🔗 Related Learning
 
 - **[[daily-study/Day04]]** - Understanding reference lifetimes
-- **[[Day 05 - Option and Result]]** - Error handling patterns
+- **[[daily-study/Day05]]** - Error handling patterns
 - **[[Mission 5.md]]** - HashMap/HashSet implementation
 - **[[Thread Safety]]** - Concurrent programming patterns
 - **[[Memory Management]]** - Rust's ownership system

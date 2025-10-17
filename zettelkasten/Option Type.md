@@ -312,7 +312,7 @@ assert_eq!(add_two_numbers(Some(3), None), None);
 - [[Pattern Matching]] - How to safely extract Option values
 - [[RUST_VS_C_ENUMS]] - Why Rust enums are superior to C enums
 - [[Error Handling Deep Dive]] - Comprehensive error handling strategies
-- [[Day 05 - Option and Result]] - Daily study introduction
+- [[daily-study/Day05]] - Daily study introduction
 
 ---
 
@@ -324,7 +324,7 @@ assert_eq!(add_two_numbers(Some(3), None), None);
 - **[[Collections MOC]]** - HashMap, Vec operations that return Option
 
 ### 🎯 Related Learning
-- **[[Day 05 - Option and Result]]** - Foundational introduction
+- **[[daily-study/Day05]]** - Foundational introduction
 - **[[Error Handling Deep Dive]]** - Advanced patterns
 - **[[Pattern Matching]]** - Essential for working with Option
 

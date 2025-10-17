@@ -17,7 +17,7 @@ Generics allow you to write code that works with multiple types using type param
 - Used in [[Mission3 Overview]] for trait-based binary search algorithms
 - Applied in [[Mission5 Overview]] for generic HashMap implementation
 - Reinforced in [[Day 15 - Traits]] for practical trait implementations
-- Foundation for [[Day 16 - Generic Types]] in generic programming patterns
+- Foundation for [[daily-study/Day16]] in generic programming patterns
 - Essential for [[Day 17 - Lifetimes]] in lifetime management exercises
 
 ## Code Examples
@@ -44,7 +44,7 @@ Located in: `rust_book/Ch10/`
 1. Complete all section exercises in `Ch10/generics/`, `Ch10/traits/`, and `Ch10/lifetimes/`
 2. Apply concepts in [[Mission3 Overview]] for trait-based algorithms
 3. Review [[Chapter 11 Overview]] when ready for testing concepts
-4. Practice with [[Day 15 - Traits]], [[Day 16 - Generic Types]], and [[Day 17 - Lifetimes]]
+4. Practice with [[Day 15 - Traits]], [[daily-study/Day16]], and [[Day 17 - Lifetimes]]
 
 ## Related Concepts
 - **Generic Programming**: Advanced patterns using generics

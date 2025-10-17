@@ -609,7 +609,7 @@ Related: [[Day 19 - Trait Objects]]
 ### **Type System Foundations**
 - [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks
 - [[Day 15 - Traits Fundamentals]] - Trait definition and implementation
-- [[Day 16 - Generic Types]] - Generic type parameters and constraints
+- [[daily-study/Day16]] - Generic type parameters and constraints
 - [[Day 18 - Advanced Traits]] - Associated types and advanced patterns
 - [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn Trait`
 
@@ -623,7 +623,7 @@ Related: [[Day 19 - Trait Objects]]
 
 ### **Collections & Iterators**
 - [[Collections MOC]] - Overview of generic collections
-- [[Day 13 - Advanced Iterators]] - Generic iterator patterns
+- [[daily-study/Day13]] - Generic iterator patterns
 - [[Iterator Traits]] - Custom iterator implementations
 - [[HashMap Internals]] - Generic hash table implementation
 
@@ -654,7 +654,7 @@ Related: [[Day 19 - Trait Objects]]
 
 ## 🎓 Learning Path
 
-1. **Foundations** → [[Day 16 - Generic Types]]
+1. **Foundations** → [[daily-study/Day16]]
 2. **Trait Bounds** → [[Day 15 - Traits Fundamentals]]
 3. **Associated Types** → [[Day 18 - Advanced Traits]]
 4. **Practice** → [[Mission1 Overview]], [[Mission5 Overview]]
@@ -664,4 +664,4 @@ Related: [[Day 19 - Trait Objects]]
 
 *Tags: #generics #type-parameters #trait-bounds #associated-types #monomorphization #zero-cost-abstractions #rust-type-system #reusable-code*
 
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Rust Trinity - Struct Trait Impl]] | [[Day 16 - Generic Types]] | [[Collections MOC]]*
+*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Rust Trinity - Struct Trait Impl]] | [[daily-study/Day16]] | [[Collections MOC]]*

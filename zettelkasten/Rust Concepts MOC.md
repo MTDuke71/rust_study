@@ -33,7 +33,7 @@
 
 ### **Error Handling**
 - [[Option Type]] - Rust's null safety solution
-- [[Day 05 - Option and Result]] - Basic error handling concepts
+- [[daily-study/Day05]] - Basic error handling concepts
 - [[Error Handling Deep Dive]] - Advanced patterns and best practices
 - [[AoC Error Patterns]] - Input parsing and validation strategies
 
@@ -61,7 +61,7 @@
 ### **Generics & Traits**
 - [[Chapter 10 Overview]] - **Complete Chapter 10 Summary**: Generics, traits, and lifetimes integration
 - [[Day 15 - Traits Fundamentals]] - Defining and implementing traits
-- [[Day 16 - Generic Types]] - Type parameters and constraints
+- [[daily-study/Day16]] - Type parameters and constraints
 - [[Day 18 - Advanced Traits]] - Associated types and defaults
 - [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn`
 - [[Day 21 - Generics + Traits Practice]] - Integrated mastery project
@@ -116,7 +116,7 @@
 - [[daily-study/Day02]] - Memory management foundation
 - [[Day 03 - Borrowing]] - Reference semantics
 - [[daily-study/Day04]] - Reference lifetime management
-- [[Day 05 - Option and Result]] - Error handling introduction
+- [[daily-study/Day05]] - Error handling introduction
 - [[Day 06 - Pattern Matching]] - Control flow patterns
 - [[Day 07 - Week 1 Summary]] - Integration and review
 
@@ -126,11 +126,11 @@
 - [[daily-study/Day10]] - Key-value storage
 - [[daily-study/Day11]] - Unique collections
 - [[Day 12 - BTreeMap]] - Ordered collections
-- [[Day 13 - Advanced Iterators]] - Collection processing
+- [[daily-study/Day13]] - Collection processing
 
 ### **Week 3: Advanced Type System**
 - [[Day 15 - Traits Fundamentals]] - Defining and implementing traits
-- [[Day 16 - Generic Types]] - Type parameters and constraints
+- [[daily-study/Day16]] - Type parameters and constraints
 - [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
 - [[Day 18 - Advanced Traits]] - Associated types and defaults
 - [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn`

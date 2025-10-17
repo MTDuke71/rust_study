@@ -60,8 +60,8 @@ This mission bridges algorithmic thinking with Rust's type system and zero-cost 
 ## 🔗 Learning Track Integration
 
 ### **Daily Study Connections**
-- Applies [[Day 16 - Generic Types]] in trait design
-- Demonstrates [[Day 13 - Advanced Iterators]] integration
+- Applies [[daily-study/Day16]] in trait design
+- Demonstrates [[daily-study/Day13]] integration
 - Uses [[daily-study/Day11]] for deduplication
 - Builds on [[Day 09 - String Patterns]] for parsing
 

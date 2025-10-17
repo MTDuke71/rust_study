@@ -41,7 +41,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 
 ---
 
-### **Day 16 - Generic Types**
+### **Day 16 - Generic Types** [[daily-study/Day16]]
 *Type parameters and constraints*
 
 **Key Concepts:**

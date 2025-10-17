@@ -38,7 +38,7 @@ Or navigate directly to: `daily_study/rust_learning_week2_notes/Day12.md`
 ### Daily Study Progression
 - [[daily-study/Day11]] - Previous day (unique collections)
 - **Current**: [[../daily_study/rust_learning_week2_notes/Day12|Day 12 - BTreeMap & BTreeSet]]
-- [[Day 13 - Advanced Iterators]] - Next day (iterator patterns)
+- [[daily-study/Day13]] - Next day (iterator patterns)
 
 ### Mission Applications
 - [[Mission5 Overview]] - Collection performance comparison

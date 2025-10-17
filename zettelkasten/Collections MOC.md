@@ -63,13 +63,13 @@
 - [[daily-study/Day10]] - Key-value storage, borrowing keys  
 - [[daily-study/Day11]] - Unique collections, set operations
 - [[Day 12 - BTreeMap]] - Ordered collections, range queries
-- [[Day 13 - Advanced Iterators]] - Transforming and processing
+- [[daily-study/Day13]] - Transforming and processing
 - [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
 
 ## 🔄 Iterator Patterns
 
 ### **Core Iterator Concepts**
-- [[Day 13 - Advanced Iterators]] - Iterator adaptors and chains
+- [[daily-study/Day13]] - Iterator adaptors and chains
 - [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - size_hint() for performance optimization
 - [[../../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - When size_hint() is actually invoked
 - [[Mission5 Iterator]] - Custom iteration patterns

@@ -28,7 +28,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 | [[daily-study/Day02\|Day 2]] | Ownership Basics | Move semantics, stack vs heap | [[../rust_book/Ch4\|Ch4]] · [[../daily_study/rust_learning_week1_notes/Day02_expanded\|**Expanded Deep Dive**]] |
 | [[Day 03 - Borrowing\|Day 3]] | Borrowing Rules | Immutable/mutable references | [[../rust_book/Ch4\|Ch4]] · [[../daily_study/rust_learning_week1_notes/Day03_expanded\|**Expanded Deep Dive**]] |
 | [[daily-study/Day04\|Day 4]] | Lifetimes | Reference validity, scope | [[../rust_book/Ch10\|Ch10]] |
-| [[Day 05 - Option and Result\|Day 5]] | Error Handling | Option, Result, ? operator | [[../rust_book/Ch9\|Ch9]] |
+| [[daily-study/Day05\|Day 5]] | Error Handling | Option, Result, ? operator | [[../rust_book/Ch9\|Ch9]] |
 | [[Day 06 - Pattern Matching\|Day 6]] | Pattern Matching | match, if let, destructuring | [[../rust_book/Ch6\|Ch6]] |
 | [[Day 07 - Week 1 Summary\|Day 7]] | Week 1 Review | Practice & consolidation | [[Week 1 Overview]] |
 
@@ -46,7 +46,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 | [[daily-study/Day10\|Day 10]] | HashMaps | Key-value storage, borrowing | [[../missions/Mission5/README\|Mission5]] |
 | [[daily-study/Day11\|Day 11]] | HashSets | Unique collections, set ops | [[Mission5 Overview]] |
 | [[Day 12 - BTreeMap\|Day 12]] | BTreeMap & BTreeSet | Ordered collections | [[Collections MOC]] |
-| [[Day 13 - Advanced Iterators\|Day 13]] | Advanced Iterators | Transforming collections | [[../missions/Mission6/SIZE_HINT_EXPLAINED]] |
+| [[daily-study/Day13\|Day 13]] | Advanced Iterators | Transforming collections | [[../missions/Mission6/SIZE_HINT_EXPLAINED]] |
 | Day 14 | Error Handling | Robust error management | [[Error Handling Deep Dive]] |
 
 **Mission Integration**: Collections mastery → Mission 5 (HashMap implementation from scratch)

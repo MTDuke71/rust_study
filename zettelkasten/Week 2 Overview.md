@@ -66,7 +66,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 
 **Key Takeaway**: BTreeMap provides guaranteed performance with ordering
 
-### **Day 13: Advanced Iterators** [[Day 13 - Advanced Iterators]]
+### **Day 13: Advanced Iterators** [[daily-study/Day13]]
 - Lazy evaluation and zero-cost abstractions
 - Iterator adaptors (map, filter, chain)
 - Consuming adaptors (collect, fold, sum)

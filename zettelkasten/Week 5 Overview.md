@@ -62,7 +62,7 @@ By the end of Week 5, you will master:
 
 ### **Core Concepts**
 - [[Error Handling Deep Dive]] - Comprehensive error handling philosophy
-- [[Day 05 - Option and Result]] - Foundation concepts review
+- [[daily-study/Day05]] - Foundation concepts review
 - [[../rust_book/Ch9]] - Rust Book error handling chapter
 
 ### **Practical Examples**

@@ -43,7 +43,7 @@
 - **Step 2** reinforces → [[Day 01 - Ownership Basics]] 
 - **Step 3** builds on → [[Day 09 - String Patterns]]
 - **Step 4** connects to → [[daily-study/Day11]]
-- **Step 5** prepares for → [[Day 13 - Advanced Iterators]]
+- **Step 5** prepares for → [[daily-study/Day13]]
 
 ## 🧪 Learning Objectives
 

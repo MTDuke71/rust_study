@@ -408,7 +408,7 @@ for (Drawable shape : shapes) {
 
 ### **Advanced Type System**
 - [[Day 15 - Traits Fundamentals]] - Deep dive into traits
-- [[Day 16 - Generic Types]] - Generic structs and traits
+- [[daily-study/Day16]] - Generic structs and traits
 - [[Day 18 - Advanced Traits]] - Associated types and defaults
 - [[Day 19 - Trait Objects]] - Dynamic dispatch patterns
 
@@ -419,4 +419,4 @@ for (Drawable shape : shapes) {
 ---
 
 *Tags: #struct #trait #impl #type-system #polymorphism #data-structures #behavior-contracts #rust-trinity*
-*Links: [[Day 15 - Traits Fundamentals]] | [[Day 16 - Generic Types]] | [[Box Smart Pointer Patterns]] | [[Rust Concepts MOC]] | [[rust_book/Ch5/method_syntax/README]]*
+*Links: [[Day 15 - Traits Fundamentals]] | [[daily-study/Day16]] | [[Box Smart Pointer Patterns]] | [[Rust Concepts MOC]] | [[rust_book/Ch5/method_syntax/README]]*

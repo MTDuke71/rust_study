@@ -60,7 +60,7 @@ This mission demonstrates why Rust makes certain patterns difficult - and how to
 - Applies [[Day 15 - Box Smart Pointer]] for heap allocation
 - Demonstrates [[Day 15 - Rc Smart Pointer]] for sharing
 - Uses [[Day 15 - RefCell Interior Mutability]] for mutation
-- Implements [[Day 13 - Advanced Iterators]] traits
+- Implements [[daily-study/Day13]] traits
 
 ### **Rust Book Integration**
 - **Chapter 15 - Smart Pointers**: Box, Rc, RefCell, Weak

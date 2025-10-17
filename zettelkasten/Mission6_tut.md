@@ -25,7 +25,7 @@
 |------|---------------|---------------|-------------|
 | **Oct 1** | Mission 6 Setup | [[Step 1 - Grid Setup]] | [[Day 14 - Error Handling Patterns]] |
 | **Oct 2** | Grid Representation | [[Step 2 - Grid Indexing]] | [[Day 15 - Traits Fundamentals]] |
-| **Oct 3** | Coordinate Systems | [[Step 3 - Coordinates]] | [[Day 16 - Generic Types]] |
+| **Oct 3** | Coordinate Systems | [[Step 3 - Coordinates]] | [[daily-study/Day16]] |
 | **Oct 4** | Path Finding Helpers | [[Step 4 - Pathfinding]] | [[Day 17 - Lifetime Annotations]] |
 | **Oct 5** | AoC Grid Utilities | [[Step 5 - AoC Utilities]] | [[Day 18 - Advanced Traits]] |
 | **Oct 6** | Performance Optimization | [[Step 6 - Performance]] | [[Day 19 - Trait Objects]] |
@@ -45,7 +45,7 @@
 ### **Tutorial → Daily Study Links**
 - **Step 1** applies concepts from → [[Day 14 - Error Handling Patterns]]
 - **Step 2** reinforces → [[Day 15 - Traits Fundamentals]] (Index trait)
-- **Step 3** builds on → [[Day 16 - Generic Types]] (Generic coordinates)
+- **Step 3** builds on → [[daily-study/Day16]] (Generic coordinates)
 - **Step 4** connects to → [[Day 25 - Queue Applications]] (BFS)
 - **Step 5** applies → [[Day 24 - Grid Algorithms]]
 - **Step 6** uses → [[Day 19 - Trait Objects]] for algorithm abstraction

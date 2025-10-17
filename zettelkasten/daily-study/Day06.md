@@ -160,7 +160,7 @@ while let Some(top) = stack.pop() {
 ## Quick Navigation
 
 - **Full Details**: [[daily_study/rust_learning_week1_notes/Day06]]
-- **Previous**: [[Day 05 - Option and Result]]
+- **Previous**: [[daily-study/Day05]]
 - **Next**: [[Day 07 - Week 1 Summary]]
 - **Week**: [[Week 1 Overview]]
 - **MOC**: [[Rust Concepts MOC]]

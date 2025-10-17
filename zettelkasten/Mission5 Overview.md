@@ -22,7 +22,7 @@
 
 ### **REQ-4: Iterator Implementation** 
 - Custom iteration over keys, values, entries
-- **Connected to**: [[Day 13 - Advanced Iterators]]
+- **Connected to**: [[daily-study/Day13]]
 - **Pattern**: [[Iterator Design Patterns]]
 
 ### **REQ-5: Multi-Value Support**
@@ -39,7 +39,7 @@
 - Builds on [[daily-study/Day10]] theoretical foundation
 - Reinforces [[Day 01 - Ownership Basics]] through collection ownership
 - Applies [[Day 09 - String Patterns]] in key handling
-- Prepares for [[Day 13 - Advanced Iterators]] practical usage
+- Prepares for [[daily-study/Day13]] practical usage
 
 ### **Rust Book Integration** 
 - **Chapter 5 - Structs**: HashMap struct design patterns
