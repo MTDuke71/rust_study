@@ -46,7 +46,7 @@ These features work together to eliminate null pointer errors (the "billion doll
   - Handling missing keys with pattern matching
   - Using unwrap_or for default values
 
-- **[[Day 11 - HashSet Operations]]** - Set operations use Option for lookups
+- **[[daily-study/Day11]]** - Set operations use Option for lookups
   - contains returns bool, but iteration uses Option internally
   - Pattern matching for set membership tests
 

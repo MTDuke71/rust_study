@@ -24,7 +24,7 @@ When you open Obsidian and enable the Graph view, you'll see:
 2. Click [[Mission5 Overview]] → See today's iterator implementation task
 3. Check [[Mission5_tut Overview]] → Find Step 5 tutorial alignment
 4. Reference [[HashMap Internals]] → Understand implementation details
-5. Connect to [[Day 11 - HashSet Operations]] → Reinforce theoretical concepts
+5. Connect to [[daily-study/Day11]] → Reinforce theoretical concepts
 
 ### **Knowledge Discovery**
 - Start at [[Collections MOC]] → Explore all data structure relationships
@@ -63,7 +63,7 @@ When you encounter HashMap performance questions:
 `zettel-index` → `Collections MOC` → `HashMap Internals` → `Mission5 Overview` → `Mission5_tut Overview`
 
 ### **Path 2: Daily Study Integration**  
-`Day 11 - HashSet Operations` → `Mission5 HashSet` → `AoC HashSet Patterns` → `Collections MOC`
+`daily-study/Day11` → `Mission5 HashSet` → `AoC HashSet Patterns` → `Collections MOC`
 
 ### **Path 3: Progress Review**
 `MONTHLY_CALENDAR` → `Mission5 Overview` → `Mission5_tut Overview` → Today's alignment check

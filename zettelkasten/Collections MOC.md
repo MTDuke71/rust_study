@@ -61,7 +61,7 @@
 - [[Day 09 - String Patterns]] - String vs &str, UTF-8 handling
   - **Pattern Matching**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Comprehensive regex guide
 - [[daily-study/Day10]] - Key-value storage, borrowing keys  
-- [[Day 11 - HashSet Operations]] - Unique collections, set operations
+- [[daily-study/Day11]] - Unique collections, set operations
 - [[Day 12 - BTreeMap]] - Ordered collections, range queries
 - [[Day 13 - Advanced Iterators]] - Transforming and processing
 - [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization

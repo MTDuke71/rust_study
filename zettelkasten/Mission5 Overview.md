@@ -17,7 +17,7 @@
 
 ### **REQ-3: HashSet Wrapper**
 - Set abstraction using HashMap as backing store
-- **Connected to**: [[Day 11 - HashSet Operations]]
+- **Connected to**: [[daily-study/Day11]]
 - **Implementation**: [[HashSet Wrapper Pattern]]
 
 ### **REQ-4: Iterator Implementation** 

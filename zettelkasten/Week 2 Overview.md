@@ -48,7 +48,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 
 **Key Takeaway**: HashMap provides fast lookups with hash-based indexing
 
-### **Day 11: HashSet Operations** [[Day 11 - HashSet Operations]]
+### **Day 11: HashSet Operations** [[daily-study/Day11]]
 - Unique value collections
 - Set theory operations (union, intersection, difference)
 - HashSet<T> = HashMap<T, ()> zero-cost abstraction

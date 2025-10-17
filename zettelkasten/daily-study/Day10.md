@@ -36,7 +36,7 @@ From the daily study file, Day 10 covers:
 ### Daily Study Progression
 - [[Day 09 - String Patterns]] - Previous day (string manipulation)
 - **Current**: [[../daily_study/rust_learning_week2_notes/Day10|Day 10 - HashMap Basics]]
-- [[Day 11 - HashSet Operations]] - Next day (unique collections)
+- [[daily-study/Day11]] - Next day (unique collections)
 
 ### Mission Applications
 - [[Mission5 Overview]] - Custom HashMap<K, V> implementation

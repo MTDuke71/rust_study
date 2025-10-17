@@ -62,7 +62,7 @@ This mission bridges algorithmic thinking with Rust's type system and zero-cost 
 ### **Daily Study Connections**
 - Applies [[Day 16 - Generic Types]] in trait design
 - Demonstrates [[Day 13 - Advanced Iterators]] integration
-- Uses [[Day 11 - HashSet Operations]] for deduplication
+- Uses [[daily-study/Day11]] for deduplication
 - Builds on [[Day 09 - String Patterns]] for parsing
 
 ### **Rust Book Integration**

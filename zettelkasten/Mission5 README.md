@@ -15,7 +15,7 @@ See: [[../missions/Mission5/README|Mission5 README.md]]
 
 - **Concepts**: [[HashMap Internals]] - Deep dive into hash table implementation
 - **Collections**: [[Collections MOC]] - Broader data structures context
-- **Daily Study**: [[daily-study/Day10]] | [[Day 11 - HashSet Operations]]
+- **Daily Study**: [[daily-study/Day10]] | [[daily-study/Day11]]
 - **Missions**: [[Missions MOC]] - All V-Cycle projects
 
 ---

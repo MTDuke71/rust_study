@@ -124,7 +124,7 @@
 - [[Day 08 - Vec Fundamentals]] - Dynamic arrays
 - [[Day 09 - String Patterns]] - String handling
 - [[daily-study/Day10]] - Key-value storage
-- [[Day 11 - HashSet Operations]] - Unique collections
+- [[daily-study/Day11]] - Unique collections
 - [[Day 12 - BTreeMap]] - Ordered collections
 - [[Day 13 - Advanced Iterators]] - Collection processing
 

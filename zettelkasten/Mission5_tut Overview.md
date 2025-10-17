@@ -26,7 +26,7 @@
 | **Sept 26** | Requirements | [[Step 2 - Collision Handling]] | [[Day 08 - Vec Fundamentals]] |  
 | **Sept 27** | Basic Structure | [[Step 3 - Advanced Operations]] | [[Day 09 - String Patterns]] |
 | **Sept 28** | Hash & Collision | [[Step 4 - Multi-Value Patterns]] | [[daily-study/Day10]] |
-| **Sept 29** | Core Operations | [[Step 5 - MemoCache Integration]] | [[Day 11 - HashSet Operations]] |
+| **Sept 29** | Core Operations | [[Step 5 - MemoCache Integration]] | [[daily-study/Day11]] |
 | **Sept 30** | Iterator Implementation | [[Final Project Review]] | [[Day 12 - BTreeMap]] |
 
 ## 🔗 Cross-Reference Network
@@ -42,7 +42,7 @@
 - **Step 1** applies concepts from → [[daily-study/Day10]]
 - **Step 2** reinforces → [[Day 01 - Ownership Basics]] 
 - **Step 3** builds on → [[Day 09 - String Patterns]]
-- **Step 4** connects to → [[Day 11 - HashSet Operations]]
+- **Step 4** connects to → [[daily-study/Day11]]
 - **Step 5** prepares for → [[Day 13 - Advanced Iterators]]
 
 ## 🧪 Learning Objectives
