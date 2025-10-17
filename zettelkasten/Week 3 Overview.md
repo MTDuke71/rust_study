@@ -120,7 +120,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 
 ---
 
-### **Day 19 - Trait Objects**
+### **Day 19 - Trait Objects** [[daily-study/Day19]]
 *Dynamic dispatch with `dyn` keyword*
 
 **Key Concepts:**

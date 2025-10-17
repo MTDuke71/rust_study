@@ -17,7 +17,7 @@
 ### **Ownership & Memory Management**
 - [[daily-study/Day02]] - Single ownership, move semantics
 - [[../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded]] - **Deep dive** into variables, mutability, moves vs copies with detailed analogies
-- [[Day 03 - Borrowing]] - References and borrowing rules
+- [[daily-study/Day03]] - References and borrowing rules
 - [[../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded]] - **Deep dive** into functions, parameter passing, and reference system
 - [[hashmap-ownership-patterns]] - **HashMap Ownership** - Owned values vs references with lifetime constraints (NEW)
 - **Beginner-Friendly Resources**:
@@ -63,7 +63,7 @@
 - [[Day 15 - Traits Fundamentals]] - Defining and implementing traits
 - [[daily-study/Day16]] - Type parameters and constraints
 - [[Day 18 - Advanced Traits]] - Associated types and defaults
-- [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn`
+- [[daily-study/Day19]] - Dynamic dispatch with `dyn`
 - [[Day 21 - Generics + Traits Practice]] - Integrated mastery project
 - [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks
 - [[Generic Programming]] - Type parameterization
@@ -114,11 +114,11 @@
 ### **Week 1: Fundamentals**
 - [[Day 01 - Setup]] - Environment and toolchain
 - [[daily-study/Day02]] - Memory management foundation
-- [[Day 03 - Borrowing]] - Reference semantics
+- [[daily-study/Day03]] - Reference semantics
 - [[daily-study/Day04]] - Reference lifetime management
 - [[daily-study/Day05]] - Error handling introduction
 - [[Day 06 - Pattern Matching]] - Control flow patterns
-- [[Day 07 - Week 1 Summary]] - Integration and review
+- [[daily-study/Day07]] - Integration and review
 
 ### **Week 2: Collections Mastery**
 - [[Day 08 - Vec Fundamentals]] - Dynamic arrays
@@ -133,7 +133,7 @@
 - [[daily-study/Day16]] - Type parameters and constraints
 - [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
 - [[Day 18 - Advanced Traits]] - Associated types and defaults
-- [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn`
+- [[daily-study/Day19]] - Dynamic dispatch with `dyn`
 - [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships
 - [[Day 21 - Generics + Traits Practice]] - Integrated mastery project
 

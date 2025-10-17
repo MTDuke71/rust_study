@@ -52,7 +52,7 @@
 ### **Daily Study Connections**
 - Builds on [[Day 17 - Lifetime Annotations]] for reference management
 - Reinforces [[Day 18 - Advanced Traits]] through algorithm traits
-- Applies [[Day 19 - Trait Objects]] for dynamic algorithm selection
+- Applies [[daily-study/Day19]] for dynamic algorithm selection
 - Connects to [[Day 20 - Advanced Lifetimes]] for complex data structures
 - Prepares for [[Mission8 BFS/DFS Algorithms]] with advanced patterns
 

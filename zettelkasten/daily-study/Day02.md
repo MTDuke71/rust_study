@@ -79,7 +79,7 @@ takes_ownership(s);  // s moved into function
 
 - **Full Details**: [[daily_study/rust_learning_week1_notes/Day02]]
 - **Previous**: [[Day 01 - Setup]]
-- **Next**: [[Day 03 - Borrowing]]
+- **Next**: [[daily-study/Day03]]
 - **Week**: [[Week 1 Overview]]
 - **MOC**: [[Rust Concepts MOC]]
 

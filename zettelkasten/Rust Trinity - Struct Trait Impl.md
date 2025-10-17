@@ -410,7 +410,7 @@ for (Drawable shape : shapes) {
 - [[Day 15 - Traits Fundamentals]] - Deep dive into traits
 - [[daily-study/Day16]] - Generic structs and traits
 - [[Day 18 - Advanced Traits]] - Associated types and defaults
-- [[Day 19 - Trait Objects]] - Dynamic dispatch patterns
+- [[daily-study/Day19]] - Dynamic dispatch patterns
 
 ### **Collections & Data Structures**
 - [[Collections MOC]] - How structs and traits work in collections

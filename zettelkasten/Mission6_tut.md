@@ -28,7 +28,7 @@
 | **Oct 3** | Coordinate Systems | [[Step 3 - Coordinates]] | [[daily-study/Day16]] |
 | **Oct 4** | Path Finding Helpers | [[Step 4 - Pathfinding]] | [[Day 17 - Lifetime Annotations]] |
 | **Oct 5** | AoC Grid Utilities | [[Step 5 - AoC Utilities]] | [[Day 18 - Advanced Traits]] |
-| **Oct 6** | Performance Optimization | [[Step 6 - Performance]] | [[Day 19 - Trait Objects]] |
+| **Oct 6** | Performance Optimization | [[Step 6 - Performance]] | [[daily-study/Day19]] |
 | **Oct 7** | Documentation | [[Step 7 - Documentation]] | [[Day 20 - Advanced Lifetimes]] |
 
 ## 🔗 Cross-Reference Network
@@ -48,7 +48,7 @@
 - **Step 3** builds on → [[daily-study/Day16]] (Generic coordinates)
 - **Step 4** connects to → [[Day 25 - Queue Applications]] (BFS)
 - **Step 5** applies → [[Day 24 - Grid Algorithms]]
-- **Step 6** uses → [[Day 19 - Trait Objects]] for algorithm abstraction
+- **Step 6** uses → [[daily-study/Day19]] for algorithm abstraction
 
 ## 🧪 Learning Objectives
 

@@ -277,11 +277,11 @@ let single_boxed = Box::new(42);
 
 ### **Memory Management**
 - [[daily-study/Day02]] - Ownership fundamentals
-- [[Day 03 - Borrowing]] - Reference semantics
+- [[daily-study/Day03]] - Reference semantics
 - [[daily-study/Day04]] - Reference lifetime management
 
 ### **Trait Objects**
-- [[Day 19 - Trait Objects]] - Dynamic dispatch patterns
+- [[daily-study/Day19]] - Dynamic dispatch patterns
 - [[Object Safety Patterns]] - Making traits object-safe
 
 ## 🧪 Practice Exercises
@@ -357,7 +357,7 @@ for animal in animals {
 ---
 
 *Tags: #box #smart-pointers #heap-allocation #ownership #memory-management #trait-objects #recursive-structures*
-*Links: [[daily-study/Day02]] | [[Day 19 - Trait Objects]] | [[Rust Concepts MOC]] | [[Collections MOC]]*
+*Links: [[daily-study/Day02]] | [[daily-study/Day19]] | [[Rust Concepts MOC]] | [[Collections MOC]]*
 
 
 

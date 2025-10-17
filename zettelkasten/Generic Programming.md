@@ -602,7 +602,7 @@ trait ObjectSafe {
 }
 ```
 
-Related: [[Day 19 - Trait Objects]]
+Related: [[daily-study/Day19]]
 
 ## 🔗 Related Concepts
 
@@ -611,7 +611,7 @@ Related: [[Day 19 - Trait Objects]]
 - [[Day 15 - Traits Fundamentals]] - Trait definition and implementation
 - [[daily-study/Day16]] - Generic type parameters and constraints
 - [[Day 18 - Advanced Traits]] - Associated types and advanced patterns
-- [[Day 19 - Trait Objects]] - Dynamic dispatch with `dyn Trait`
+- [[daily-study/Day19]] - Dynamic dispatch with `dyn Trait`
 
 ### **Mission Applications**
 - [[Mission1 Overview]] - Generic Stack<T> implementation

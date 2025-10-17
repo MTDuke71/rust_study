@@ -25,7 +25,7 @@
 |------|---------------|---------------|-------------|
 | **Oct 8** | Mission 7 Setup | [[Step 1 - Graph Fundamentals]] | [[Day 17 - Lifetime Annotations]] |
 | **Oct 9** | Adjacency Lists & Node Storage | [[Step 2 - Adjacency Lists]] | [[Day 18 - Advanced Traits]] |
-| **Oct 10** | Graph Building & Edge Management | [[Step 3 - Edge Management]] | [[Day 19 - Trait Objects]] |
+| **Oct 10** | Graph Building & Edge Management | [[Step 3 - Edge Management]] | [[daily-study/Day19]] |
 | **Oct 11** | Graph Algorithms Foundation | [[Step 4 - Algorithm Foundation]] | [[Day 20 - Advanced Lifetimes]] |
 | **Oct 12** | DFS Implementation | [[Step 5 - DFS Implementation]] | [[Day 21 - Generics + Traits Practice]] |
 | **Oct 13** | BFS Implementation | [[Step 6 - BFS Implementation]] | [[Day 22 - Grid Fundamentals]] |
@@ -45,7 +45,7 @@
 ### **Tutorial → Daily Study Links**
 - **Step 1** applies concepts from → [[Day 17 - Lifetime Annotations]]
 - **Step 2** reinforces → [[Day 18 - Advanced Traits]] (Generic graph types)
-- **Step 3** builds on → [[Day 19 - Trait Objects]] (Algorithm traits)
+- **Step 3** builds on → [[daily-study/Day19]] (Algorithm traits)
 - **Step 4** connects to → [[Day 20 - Advanced Lifetimes]] (Complex lifetimes)
 - **Step 5** applies → [[Day 21 - Generics + Traits Practice]]
 - **Step 6** uses → [[Day 22 - Grid Fundamentals]] for spatial applications
