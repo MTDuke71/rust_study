@@ -1720,7 +1720,7 @@ The two-pass approach is both **mathematically necessary** and **perfectly suite
 
 ### 📚 Zettelkasten Navigation
 - **[[zettel-index]]** - Main knowledge base entry point
-- **[[Missions MOC]]** - V-Cycle project implementations
+- **[[Missions Overview]]** - V-Cycle project implementations
 - **[[Collections MOC]]** - Data structures and algorithms
 
 ### 🎯 LinkedQueue Resources

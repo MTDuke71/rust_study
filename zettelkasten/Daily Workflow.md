@@ -49,7 +49,7 @@
 - [[Daily Study MOC]] - Current week overview
 
 ### **Learning Resources**
-- [[Missions MOC]] - Active mission overview
+- [[Missions Overview]] - Active mission overview
 - [[zettel-index]] - Main knowledge hub
 - [[Rust Concepts MOC]] - Core concepts reference
 
@@ -88,4 +88,4 @@ Create a dashboard note with:
 ---
 
 *Tags: #workflow #automation #daily-routine #navigation*
-*Links: [[Today's Focus]] | [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions MOC]]*
+*Links: [[Today's Focus]] | [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions Overview]]*

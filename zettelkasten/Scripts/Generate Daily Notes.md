@@ -40,7 +40,7 @@ ${section}
 ---
 
 *Tags: #daily-note #${today} #${dayName.toLowerCase()}*
-*Links: [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions MOC]]*`;
+*Links: [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions Overview]]*`;
 
 // Create file
 await tp.file.create_new(template, filename);
@@ -74,7 +74,7 @@ $content
 ---
 
 *Tags: #daily-note #$today #$($dayName.ToLower())*
-*Links: [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions MOC]]*
+*Links: [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions Overview]]*
 "@
 
 $template | Out-File -FilePath $filename -Encoding UTF8

@@ -180,4 +180,4 @@ SORT length(file.inlinks) DESC
 ---
 
 *Tags: #maintenance #validation #dataview #links #health-check*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Missions MOC]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Missions Overview]]*

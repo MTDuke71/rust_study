@@ -323,7 +323,7 @@ The **Brackets_Extended** project demonstrates sophisticated Rust development pr
 - [[Brackets Basic]] - Foundation implementation
 - [[Mission1 Overview]] - Stack implementation
 - [[V-Cycle Methodology]] - Requirements-driven development
-- [[Missions MOC]] - Mission overview
+- [[Missions Overview]] - Mission overview
 
 ### AoC Applications
 - [[Bracket Validation]] - AoC-style problems
@@ -337,6 +337,6 @@ The **Brackets_Extended** project demonstrates sophisticated Rust development pr
 - [[AoC Patterns]] - Problem-solving strategies
 - [[RUST_DOCUMENTATION_STANDARDS]] - Documentation guide
 
-*Links: [[zettel-index]] | [[Brackets Basic]] | [[Brackets Extended]] | [[Missions MOC]] | [[V-Cycle Methodology]]*
+*Links: [[zettel-index]] | [[Brackets Basic]] | [[Brackets Extended]] | [[Missions Overview]] | [[V-Cycle Methodology]]*
 
 *Tags: #brackets-extended #req7 #req8 #req9 #configuration #iterator-api #error-collection #aoc-patterns #walkthrough*

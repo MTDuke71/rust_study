@@ -1,6 +1,6 @@
 # Mission3_tut Quick Start Guide
 
-*Navigation: [[zettel-index]] | [[Mission3 Overview]] | [[Missions MOC]] | [[Trait Design Patterns - Mission3 Lessons]]*
+*Navigation: [[zettel-index]] | [[Mission3 Overview]] | [[Missions Overview]] | [[Trait Design Patterns - Mission3 Lessons]]*
 
 ## 🚀 Get Started in 5 Minutes
 
@@ -102,7 +102,7 @@ cargo run --example
 ### **Learning Context**
 - **[[Mission3 Overview]]** - Mission3's objectives and scope
 - **[[Week 3 Overview]]** - Where Mission3 fits in your learning journey
-- **[[Missions MOC]]** - All missions overview
+- **[[Missions Overview]]** - All missions overview
 - **[[AoC Patterns MOC]]** - Competitive programming patterns
 
 ### **Navigation**

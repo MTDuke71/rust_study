@@ -197,4 +197,4 @@ You've mastered this tutorial when you can:
 **🚀 Ready to build your first production-ready data structure? Let's start with Step 1!**
 
 *Tags: #mission1 #tutorial #stack #lifo #ownership #generics #data-structures #step-by-step*
-*Links: [[Mission1 README]] | [[Collections MOC]] | [[Missions MOC]] | [[zettel-index]]*
+*Links: [[Mission1 README]] | [[Collections MOC]] | [[Missions Overview]] | [[zettel-index]]*

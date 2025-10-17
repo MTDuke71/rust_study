@@ -92,7 +92,7 @@ enum UnclosedPolicy { LatestOpen, EarliestOpen }
 - [[Brackets Basic]] - Foundation implementation
 - [[Mission1 Overview]] - Stack implementation
 - [[Brackets Extended]] - Full implementation
-- [[Missions MOC]] - V-Cycle projects
+- [[Missions Overview]] - V-Cycle projects
 
 ### AoC Applications
 - [[Custom Delimiters]] - HTML/XML tag validation

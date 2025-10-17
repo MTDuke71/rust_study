@@ -29,7 +29,7 @@
 - **[[MONTHLY_CALENDAR]]** - Full monthly calendar
 - **[[Today's Focus]]** - Auto-navigate to current day
 - **[[Daily Study MOC]]** - Current week overview
-- **[[Missions MOC]]** - Active missions
+- **[[Missions Overview]]** - Active missions
 
 ---
 
@@ -47,4 +47,4 @@
 ---
 
 *Tags: #daily-learning #session-notes #<% tp.date.now("YYYY-MM-DD") %>*
-*Links: [[MONTHLY_CALENDAR]] | [[Today's Focus]] | [[Daily Study MOC]] | [[Missions MOC]]*
+*Links: [[MONTHLY_CALENDAR]] | [[Today's Focus]] | [[Daily Study MOC]] | [[Missions Overview]]*

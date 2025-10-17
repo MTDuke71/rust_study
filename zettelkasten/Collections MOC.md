@@ -117,4 +117,4 @@
 
 ---
 *Tags: #collections #overview #data-structures #cross-track #algorithms #performance*
-*Links: [[zettel-index]] | [[Missions MOC]] | [[Rust Concepts MOC]]*
+*Links: [[zettel-index]] | [[Missions Overview]] | [[Rust Concepts MOC]]*

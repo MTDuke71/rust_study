@@ -22,9 +22,9 @@ This directory contains automated reports and analysis files for the zettelkaste
 ## 🔗 Navigation
 
 - Return to: [[../zettel-index|Zettel Index]]
-- Main MOCs: [[Collections MOC]] | [[Missions MOC]] | [[Daily Study MOC]]
+- Main MOCs: [[Collections MOC]] | [[Missions Overview]] | [[Daily Study MOC]]
 
 ---
 
 *Tags: #reports #maintenance #zettelkasten-management*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Missions MOC]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Missions Overview]]*

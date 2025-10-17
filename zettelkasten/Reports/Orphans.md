@@ -1,6 +1,6 @@
 # 📊 Orphaned Files Report
 
-> **Navigation**: [[zettel-index]] | [[Collections MOC]] | [[Missions MOC]]
+> **Navigation**: [[zettel-index]] | [[Collections MOC]] | [[Missions Overview]]
 
 This dashboard shows files that need integration into the knowledge graph.
 
@@ -118,4 +118,4 @@ GROUP BY
 
 *Tags: #meta #dashboard #knowledge-management #graph-analysis #orphans*
 
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Missions MOC]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Missions Overview]]*

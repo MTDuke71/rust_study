@@ -4,7 +4,7 @@
 
 ---
 *Navigation: [[zettel-index]] | [[V-Cycle Methodology]] | [[TDD (Test-Driven Development]]*
-*Related: [[Missions MOC]] | [[Testing Patterns]] | [[Requirements Engineering]] | [[Debugging Lessons]]*
+*Related: [[Missions Overview]] | [[Testing Patterns]] | [[Requirements Engineering]] | [[Debugging Lessons]]*
 ---
 
 ## 🎯 Purpose
@@ -269,7 +269,7 @@ Confirm REQ-1 meets user needs
 - [[Mission1 Overview]] - Stack REQ-1 testing
 - [[Mission2 Overview]] - Queue REQ-1 testing
 - [[Mission5 Overview]] - HashMap REQ-1 testing
-- [[Missions MOC]] - All mission overviews
+- [[Missions Overview]] - All mission overviews
 
 **Quality Assurance:**
 - [[Testing Patterns]] - Common test patterns
@@ -293,7 +293,7 @@ Confirm REQ-1 meets user needs
 ---
 
 *Tags: #req-1 #test-strategy #v-cycle #requirements #testing #validation #tdd*
-*Links: [[zettel-index]] | [[V-Cycle Methodology]] | [[TDD (Test-Driven Development]] | [[Missions MOC]]*
+*Links: [[zettel-index]] | [[V-Cycle Methodology]] | [[TDD (Test-Driven Development]] | [[Missions Overview]]*
 
 ---
 

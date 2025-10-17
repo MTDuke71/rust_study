@@ -2,7 +2,7 @@
 
 **V-Cycle data structure implementations with development workflows**
 
-This folder contains production-ready data structure implementations following formal software engineering practices. For **learning navigation and progress tracking**, see **[[Missions MOC]]** in the zettelkasten.
+This folder contains production-ready data structure implementations following formal software engineering practices. For **learning navigation and progress tracking**, see **[[Missions Overview]]** in the zettelkasten.
 
 ## 🚀 **Quick Development Commands**
 
@@ -110,7 +110,7 @@ cargo rustc -p mission1 -- --emit asm
 - **[RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)** - API documentation rules
 - **[RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)** - Test naming conventions
 - **[[V-Cycle Methodology]]** - Requirements engineering process
-- **[[Missions MOC]]** - Learning navigation and progress tracking
+- **[[Missions Overview]]** - Learning navigation and progress tracking
 
 ---
 
@@ -171,7 +171,7 @@ members = [
 - **[[Collections MOC]]** - Data structure theory and cross-references
 - **[[AoC Patterns MOC]]** - Competitive programming applications
 - **[[Daily Study MOC]]** - Learning schedule coordination
-- **[[Missions MOC]]** - Progress tracking and learning navigation
+- **[[Missions Overview]]** - Progress tracking and learning navigation
 
 ---
 
@@ -219,4 +219,4 @@ cargo audit --db ./advisory-db
 
 ---
 
-**🎯 Technical Focus**: Production-ready implementations with comprehensive testing, benchmarking, and documentation. For learning guidance, see **[[Missions MOC]]**.
+**🎯 Technical Focus**: Production-ready implementations with comprehensive testing, benchmarking, and documentation. For learning guidance, see **[[Missions Overview]]**.

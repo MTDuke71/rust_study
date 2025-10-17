@@ -186,4 +186,4 @@
 *This MOC provides comprehensive coverage of Rust language concepts with clear connections to practical applications in missions, daily study, and competitive programming.*
 
 *Tags: #rust-concepts #moc #overview #language-features #cross-track #learning-progression*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Missions MOC]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Missions Overview]] | [[Daily Study MOC]]*

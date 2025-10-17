@@ -320,7 +320,7 @@ Run `cargo run --example day06_visualizer` to generate:
 ### **Zettelkasten Core**
 - [[zettel-index]] - Master knowledge graph entry point
 - [[AoC Patterns MOC]] - Algorithm pattern catalog
-- [[Missions MOC]] - V-Cycle mission implementations
+- [[Missions Overview]] - V-Cycle mission implementations
 
 ### **Related Projects**
 - [AoC Pattern Recognition](../aoc_pattern_recognition/README.md) - Pattern library and trainer

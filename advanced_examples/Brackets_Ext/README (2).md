@@ -77,7 +77,7 @@ cargo clippy -- -D warnings
 ### Mission Integration
 - [[Mission1 Overview]] - Stack implementation foundation
 - [[Brackets Extended]] - Advanced features building on this
-- [[Missions MOC]] - V-Cycle mission overview
+- [[Missions Overview]] - V-Cycle mission overview
 
 ### AoC Patterns
 - [[Bracket Validation]] - Classic AoC pattern
@@ -89,6 +89,6 @@ cargo clippy -- -D warnings
 - [[Daily Study MOC]] - Structured learning
 - [[Competitive Programming]] - AoC-style problems
 
-*Links: [[zettel-index]] | [[Brackets Extended]] | [[Missions MOC]] | [[V-Cycle Methodology]]*
+*Links: [[zettel-index]] | [[Brackets Extended]] | [[Missions Overview]] | [[V-Cycle Methodology]]*
 
 *Tags: #brackets #validation #v-cycle #requirements #stack #testing #error-handling #aoc-patterns*

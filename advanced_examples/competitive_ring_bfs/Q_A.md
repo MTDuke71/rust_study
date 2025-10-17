@@ -1934,7 +1934,7 @@ Your observation shows you're thinking like a computer scientist - recognizing t
 
 ### 📚 Zettelkasten Navigation
 - **[[zettel-index]]** - Main knowledge base entry point
-- **[[Missions MOC]]** - V-Cycle project implementations
+- **[[Missions Overview]]** - V-Cycle project implementations
 - **[[Collections MOC]]** - Data structures and algorithms
 
 ### 🎯 RingBufferQueue Resources

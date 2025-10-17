@@ -1,13 +1,5 @@
-# 🎯 Missions MOC - V-Cycle Engineering Projects
-*Master overview of engineering mis### **Mission 6: 2D Grids & Navigation** 🗺️
-- **Focus**: Grid-based algorithms for AoC-style problems
-- **Location**: `Mission6/`
-- **Key Concepts**: 2D arrays, pathfinding, BFS/DFS on grids
-- **Requirements**: Grid representation, neighbor traversal, pathfinding algorithms
-- **Tutorial**: Grid algorithms and spatial data structures
-- **Applications**: AoC grid problems, game boards, maze solving, pathfinding
-- **Resources**: [Tarpaulin Coverage Guide](../missions/Mission6/TARPAULIN_USAGE_GUIDE.md) - Testing and code coverage
-- **Status**: Active development - current learning focusplementing core Rust concepts*
+# 🎯 Missions Overview - V-Cycle Engineering Projects
+*Master overview of engineering missions implementing core Rust concepts*
 
 ## 🌟 Foundational Context
 
@@ -32,6 +24,24 @@ Validation (Integration Tests)
     ↓
 Traceability Matrix
 ```
+
+## � Quick Navigation
+
+### By Difficulty Level
+- **🟢 Beginner**: Mission1_tut, Mission2_tut - Start here for foundations
+- **� Intermediate**: Mission3_tut, Mission4_tut, Mission5_tut - Core concepts mastery
+- **� Advanced**: Mission6_tut, Mission7_tut, Mission8_tut - Complex algorithms
+
+### By Learning Style
+- **Tutorial-First**: Start with MissionX_tut, then MissionX
+- **Implementation-First**: Go directly to MissionX
+- **Mixed Approach**: Alternate between tutorial and implementation
+
+### By Topic Area
+- **Memory Management**: Mission1, Mission2, Mission4
+- **Error Handling**: Mission2, Mission3, Mission4
+- **Data Structures**: Mission5, Mission6, Mission7
+- **Algorithms**: Mission6, Mission8
 
 ## 📋 Active Missions
 
@@ -71,7 +81,6 @@ Traceability Matrix
 - **Requirements**: REQ-1 (Ordering), REQ-2 (Search efficiency), REQ-3 (Balancing)
 - **Tutorial**: [[../../tutorials/Mission3_tut/README]] - Progressive binary search learning with 7 comprehensive steps
 - **Creation Process**: [[../../tutorials/Mission3_tut/CREATION_SUMMARY]] - Development documentation and implementation details
-- **Tutorial**: [[../../tutorials/Mission3_tut/README]] - Progressive learning path for binary search mastery
 - **Status**: Complete with traversal implementations
 
 ### **Mission 4: Linked Lists** ✅
@@ -94,13 +103,14 @@ Traceability Matrix
 - **Tutorial**: Hash table internals and performance optimization
 - **Status**: Complete with advanced iterator patterns and operations
 
-### **Mission 6: 2D Grids & Navigation** �
+### **Mission 6: 2D Grids & Navigation** 🗺️
 - **Focus**: Grid-based algorithms for AoC-style problems
 - **Location**: `Mission6/`
 - **Key Concepts**: 2D arrays, pathfinding, BFS/DFS on grids
 - **Requirements**: Grid representation, neighbor traversal, pathfinding algorithms
 - **Tutorial**: Grid algorithms and spatial data structures
 - **Applications**: AoC grid problems, game boards, maze solving, pathfinding
+- **Resources**: [Tarpaulin Coverage Guide](../missions/Mission6/TARPAULIN_USAGE_GUIDE.md) - Testing and code coverage
 - **Status**: Active development - current learning focus
 
 ## 🔮 Planned Missions
@@ -130,15 +140,20 @@ Traceability Matrix
 - **Concurrent Data Structures**: Thread-safe collections
 - **All Mission implementations following V-Cycle methodology**
 
-## 🎓 Tutorial Integration
+## 📚 Mission Tutorials (Step-by-Step Learning)
 
 ### **Companion Tutorial Projects**
 Each mission includes a companion `tutorials/MissionX_tut/` project following pedagogical design principles:
 
 - **[Tutorials Overview](../tutorials/README.md)** - Complete tutorial system documentation and learning framework
 - **[[Mission1_tut Overview]]** - Stack fundamentals with LIFO principles and generics
+- **[[Mission2_tut Overview]]** - Advanced ownership with smart pointers  
+- **[[Mission3_tut Overview]]** - Robust error handling strategies
 - **[[Mission4_tut Overview]]** - Linked list deep dive with ownership patterns
 - **[[Mission5_tut Overview]]** - Hash table tutorial with step-by-step progression
+- **[[Mission6_tut Overview]]** - Grid-based algorithms and pathfinding
+- **[[Mission7_tut Overview]]** - Advanced collection patterns
+- **[[Mission8_tut Overview]]** - Generic algorithms and composition
 
 ### **Tutorial Design Principles**
 - **Progressive Disclosure**: Complex concepts broken into digestible steps
@@ -196,12 +211,35 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 - **Error Handling**: Chapter 9 - Error Handling with Result<T, E>
 - **Smart Pointers**: Chapter 15 - Smart Pointers
 
+### **Related Zettelkasten Pages**
+- **[[Rust Concepts MOC]]** - Core Rust language concepts
+- **[[Daily Study MOC]]** - Daily learning progression
+- **[[AoC 2015 MOC]]** - Advent of Code integration
+- **[[Collections MOC]]** - Collection types and patterns
+
+### **Mission-Specific Concepts**
+- **[[Error Handling Patterns]]** - Mission 2, 3, 4 focus
+- **[[Smart Pointer Patterns]]** - Mission 2, 4, 7 focus  
+- **[[Iterator Patterns]]** - Mission 5, 7 focus
+- **[[Graph Algorithms]]** - Mission 6, 8 focus
+- **[[Generic Programming]]** - Mission 8 focus
+
 ## 📊 Progress Tracking
 
 ### **Completion Status**
 - ✅ **Mission 1-5**: Complete implementations with comprehensive testing and tutorials
 - 🚧 **Mission 6**: Active development - grid algorithms and 2D navigation patterns
 - 📅 **Mission 7**: Planned - graph structures and advanced algorithms
+
+### **Tutorial Status**
+- ✅ **Mission1_tut** - Complete
+- ✅ **Mission2_tut** - Complete  
+- ✅ **Mission3_tut** - Complete
+- ✅ **Mission4_tut** - Complete
+- ✅ **Mission5_tut** - Complete
+- ✅ **Mission6_tut** - Complete
+- ✅ **Mission7_tut** - Complete
+- 🔄 **Mission8_tut** - In progress (Step 3/7)
 
 ### **Quality Metrics**
 - **Test Coverage**: 100% requirement coverage across all missions
@@ -216,6 +254,26 @@ By mission completion, learners master:
 3. **Algorithm Design**: Time/space complexity analysis
 4. **Testing Discipline**: Requirements-driven test development
 5. **Architecture Skills**: Component design and quality attributes
+
+## 🎯 Learning Objectives by Mission
+
+### **Foundation (Missions 1-2)**
+- **Ownership & Borrowing**: Memory safety without garbage collection
+- **Smart Pointers**: Advanced memory management patterns
+
+### **Error Handling (Missions 3-4)**  
+- **Result & Option**: Safe error handling without exceptions
+- **Interior Mutability**: Mutable data in immutable contexts
+
+### **Collections (Missions 5-7)**
+- **Basic Collections**: `Vec<T>`, `HashMap<K,V>`, `HashSet<T>`
+- **Advanced Patterns**: Performance optimization, complex algorithms
+- **Iterator Mastery**: Functional programming patterns
+
+### **Algorithms (Mission 8)**
+- **Generic Programming**: Type-safe algorithm composition
+- **Graph Algorithms**: BFS, DFS, pathfinding, cycle detection
+- **Trait Design**: Reusable, composable algorithm interfaces
 
 ## 🎯 Mission Selection Guide
 
@@ -237,6 +295,16 @@ By mission completion, learners master:
 - Complex traversal patterns
 - Performance-critical implementations
 
+### **Learning Progression**
+- **[[Week 1 Overview]]** → Mission1_tut → Mission1
+- **[[Week 2 Overview]]** → Mission2_tut → Mission2  
+- **[[Week 3 Overview]]** → Mission3_tut → Mission3
+- **[[Week 4 Overview]]** → Mission4_tut → Mission4
+- **[[Week 5 Overview]]** → Mission5_tut → Mission5
+
 ---
+
+> **💡 Tip**: Use this MOC to navigate between related missions and find the right learning path for your current skill level and interests.
+
 *Tags: #missions #overview #v-cycle #engineering #projects #requirements #testing #architecture*
 *Links: [[zettel-index]] | [[Collections MOC]] | [[Rust Concepts MOC]] | [[V-Cycle Methodology]] | [[Mission Progress Tracker]]*

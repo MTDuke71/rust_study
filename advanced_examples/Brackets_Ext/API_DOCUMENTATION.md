@@ -799,7 +799,7 @@ Choose the API that best fits your use case, configure options for your specific
 
 ### 📚 Zettelkasten Navigation
 - **[[zettel-index]]** - Main knowledge base entry point
-- **[[Missions MOC]]** - V-Cycle project implementations
+- **[[Missions Overview]]** - V-Cycle project implementations
 - **[[Rust Concepts MOC]]** - Core language features and patterns
 
 ### 🎯 Brackets Extended Resources

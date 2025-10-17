@@ -6934,6 +6934,6 @@ Similar code found with 2 license types
 - [[Rust Book]] - The Rust Programming Language guide
 - [[AoC Patterns]] - Advent of Code problem-solving patterns
 
-*Links: [[zettel-index]] | [[Missions MOC]] | [[Rust Concepts MOC]]*
+*Links: [[zettel-index]] | [[Missions Overview]] | [[Rust Concepts MOC]]*
 
 *Tags: #brackets #stack #validation #copilot-chat #development-process #zero-cost-abstractions #error-handling #utf8*

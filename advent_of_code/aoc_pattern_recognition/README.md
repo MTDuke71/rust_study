@@ -214,7 +214,7 @@ See [examples/README.md](examples/README.md) for detailed demonstrations of each
 ### **Zettelkasten Core**
 - [[zettel-index]] - Master knowledge graph entry point
 - [[AoC Patterns MOC]] - Algorithm pattern catalog
-- [[Missions MOC]] - V-Cycle mission implementations
+- [[Missions Overview]] - V-Cycle mission implementations
 
 ### **Related Projects**
 - [AoC 2015 Solutions](../aoc2015/README.md) - Historical problems using these patterns

@@ -24,7 +24,7 @@
 - **[[MONTHLY_CALENDAR]]** - Full monthly calendar
 - **[[zettel-index]]** - Main knowledge hub
 - **[[Daily Study MOC]]** - Current week overview
-- **[[Missions MOC]]** - Active missions
+- **[[Missions Overview]]** - Active missions
 
 ---
 
@@ -49,4 +49,4 @@
 ---
 
 *Tags: #daily-focus #navigation #daily-notes*
-*Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions MOC]] | [[Daily Notes/2025-10-14]] | [[rust_book/Ch9/README]] | [[daily_study/rust_learning_week4_notes/Day27]]*
+*Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Daily Notes/2025-10-14]] | [[rust_book/Ch9/README]] | [[daily_study/rust_learning_week4_notes/Day27]]*

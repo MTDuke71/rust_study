@@ -1420,7 +1420,7 @@ Every improvement compounds.
 
 *Tags: #course-creation #youtube #teaching #business-strategy #content-creation #monetization #rust-education #mission-based-learning*
 
-*Links: [[zettel-index]] | [[Missions MOC]] | [[Daily Study MOC]] | [[Rust Concepts MOC]] | [[developer-learning-habits]] | [[PROJECT_ORIGIN]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Missions Overview]] | [[Daily Study MOC]] | [[Rust Concepts MOC]] | [[developer-learning-habits]] | [[PROJECT_ORIGIN]] | [[MONTHLY_CALENDAR]]*
 
 ---
 

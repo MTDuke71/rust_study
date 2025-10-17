@@ -244,4 +244,4 @@ The dual API design follows Rust's principle of **"explicit over implicit"**:
 
 *Tags: #ring-buffer #circular-buffer #overwrite-semantics #mission2 #data-structures #capacity-management*
 
-*Links: [[zettel-index]] | [[Missions MOC]] | [[../missions/Mission2/README|Mission2 Queue]] | [[Ring Buffer Implementation Patterns]] | [[Bounded vs Unbounded Collections]]*
+*Links: [[zettel-index]] | [[Missions Overview]] | [[../missions/Mission2/README|Mission2 Queue]] | [[Ring Buffer Implementation Patterns]] | [[Bounded vs Unbounded Collections]]*

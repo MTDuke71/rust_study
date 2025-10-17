@@ -28,9 +28,9 @@ WHERE contains(content, dateformat(date(today), "MMMM d"))
 - **[[MONTHLY_CALENDAR]]** - Full monthly calendar
 - **[[zettel-index]]** - Main knowledge hub
 - **[[Daily Study MOC]]** - Current week overview
-- **[[Missions MOC]]** - Active missions
+- **[[Missions Overview]]** - Active missions
 
 ---
 
 *Tags: #dashboard #auto-generated #daily-focus*
-*Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions MOC]]*
+*Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions Overview]]*

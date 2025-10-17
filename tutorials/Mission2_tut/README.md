@@ -161,4 +161,4 @@ Complete all steps, paying special attention to Step 7 performance comparisons.
 ---
 
 *Tags: #queue #fifo #ring-buffer #linked-list #data-structures #mission2 #tutorial #rust #ownership*
-*Links: [[../Mission2/README]] | [[zettel-index]] | [[Missions MOC]] | [[Collections MOC]]*
+*Links: [[../Mission2/README]] | [[zettel-index]] | [[Missions Overview]] | [[Collections MOC]]*

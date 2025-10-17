@@ -89,7 +89,7 @@ cargo clippy -- -D warnings
 ### Mission Integration
 - [[Mission1 Overview]] - Stack implementation foundation
 - [[Brackets Extended]] - Advanced features extension
-- [[Missions MOC]] - V-Cycle mission overview
+- [[Missions Overview]] - V-Cycle mission overview
 
 ### AoC Patterns
 - [[Bracket Validation]] - Classic competitive programming pattern

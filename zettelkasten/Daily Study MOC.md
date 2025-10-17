@@ -147,7 +147,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 ```
 
 ### **Cross-Track Navigation**
-- **Mission Work** → See [[Missions MOC]] for V-Cycle engineering projects
+- **Mission Work** → See [[Missions Overview]] for V-Cycle engineering projects
 - **Rust Book** → See [[Rust Concepts MOC]] for chapter-by-chapter notes
 - **AoC Practice** → See [[AoC Patterns MOC]] for problem-solving techniques
 
@@ -235,7 +235,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 ### **Progress Tracking**
 - Mark completed days in [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]]
-- Track mission implementations in [[Missions MOC]]
+- Track mission implementations in [[Missions Overview]]
 - Note patterns discovered in personal notes
 
 ---
@@ -315,4 +315,4 @@ Daily notes provide detailed task breakdowns and learning objectives that align 
 
 *Tags: #daily-study #moc #learning-progression #rust-fundamentals #collections #algorithms #competitive-programming #3-track-system*
 
-*Links: [[zettel-index]] | [[Missions MOC]] | [[Collections MOC]] | [[AoC Patterns MOC]] | [[Rust Concepts MOC]] | [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Missions Overview]] | [[Collections MOC]] | [[AoC Patterns MOC]] | [[Rust Concepts MOC]] | [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]]*
