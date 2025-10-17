@@ -105,6 +105,8 @@ let r3 = &mut s; // ❌ Error - cannot borrow as mutable
 - **Multiple people can read the same book (immutable borrows)**
 - **Only one person can write in it at a time (mutable borrow)**
 
+> **💡 Deep Dive**: For a comprehensive mental model using the library analogy, see [[Ownership Mental Model - The Library Analogy]]
+
 ### **Scope as Lifecycle**
 - **Values are born when they come into scope**
 - **Values live as long as they're in scope**
