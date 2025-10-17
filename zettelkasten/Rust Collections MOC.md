@@ -76,7 +76,7 @@
 ### **Type System Integration**
 - **[[Generic Collections]]** - Writing collection-generic code
 - **[[Trait Implementations]]** - Iterator, IntoIterator, and collection traits
-- **[[Error Handling]]** - Result patterns with collections
+- **[[Error Handling Patterns]]** - Result patterns with collections
 - **[[Lifetime Patterns]]** - Borrowing from collections safely
 
 ---

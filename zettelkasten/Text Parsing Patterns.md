@@ -590,7 +590,7 @@ fn parse_int_grid(filename: &str) -> Vec<Vec<i32>> {
 ### **Performance and Testing**
 - **[[Performance Optimization]]** - Efficient parsing strategies
 - **[[Testing Patterns]]** - Validating parser correctness
-- **[[Error Handling]]** - Robust parsing with error recovery
+- **[[Error Handling Patterns]]** - Robust parsing with error recovery
 - **[[Stream Processing]]** - Memory-efficient large file parsing
 
 ### **Advanced Patterns**
@@ -614,4 +614,4 @@ fn parse_int_grid(filename: &str) -> Vec<Vec<i32>> {
 
 *Tags: #parsing #text-processing #aoc #input-handling #regex #validation #error-handling #performance*
 
-*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[Number Processing]] | [[Grid Input Handling]] | [[Pattern Matching]] | [[Performance Optimization]] | [[Error Handling]] | [[Testing Patterns]]*
+*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[Number Processing]] | [[Grid Input Handling]] | [[Pattern Matching]] | [[Performance Optimization]] | [[Error Handling Patterns]] | [[Testing Patterns]]*

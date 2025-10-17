@@ -194,7 +194,7 @@ Build a comprehensive data processing system that demonstrates:
 - **[[Week 8 Overview]]** - Concurrency and parallelism
 
 ### **Related Concepts**
-- **[[Error Handling]]** - Core error handling patterns
+- **[[Error Handling Patterns]]** - Core error handling patterns
 - **[[Result Type]]** - The Result<T, E> type
 - **[[Option Type]]** - The Option<T> type
 - **[[Testing Strategies]]** - Testing error conditions
@@ -261,4 +261,4 @@ After completing Week 5, you'll be ready to:
 
 *Tags: #week5 #error-handling #custom-errors #error-propagation #anyhow #thiserror #result-combinators #panic-recovery #error-patterns #robust-parsing*
 
-*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 1 Overview]] | [[Week 2 Overview]] | [[Week 3 Overview]] | [[Week 4 Overview]] | [[Week 6 Overview]] | [[Error Handling]] | [[Result Type]] | [[Testing Strategies]]*
+*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 1 Overview]] | [[Week 2 Overview]] | [[Week 3 Overview]] | [[Week 4 Overview]] | [[Week 6 Overview]] | [[Error Handling Patterns]] | [[Result Type]] | [[Testing Strategies]]*

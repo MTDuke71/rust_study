@@ -305,7 +305,7 @@ This chapter's concepts are fundamental to all missions:
 - [[Drop Trait]] - Automatic cleanup and RAII
 
 ### **Practical Applications**
-- [[Error Handling]] - Ownership in Result and Option
+- [[Error Handling Patterns]] - Ownership in Result and Option
 - [[Iterator Pattern]] - Borrowing in iterator chains
 - [[Collections MOC]] - Ownership in Vec, String, HashMap
 - [[Zero-Cost Abstractions]] - Performance without runtime overhead

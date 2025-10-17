@@ -100,7 +100,7 @@
 
 ### **Rust-Specific Techniques**
 - **[[Iterator Patterns]]** - Functional approaches to problem solving
-- **[[Error Handling]]** - Result types and graceful failure handling
+- **[[Error Handling Patterns]]** - Result types and graceful failure handling
 - **[[Memory Management]]** - Ownership patterns for complex data structures
 - **[[Trait Usage]]** - Custom traits for problem domain modeling
 - **[[Macro Patterns]]** - Code generation for repetitive problems

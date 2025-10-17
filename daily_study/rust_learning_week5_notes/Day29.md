@@ -479,7 +479,7 @@ fn load_config_simple(path: &str) -> Result<Config, ConfigError> {
 
 ## 🔗 Related Concepts
 
-- **[[Error Handling]]** - Core error handling patterns
+- **[[Error Handling Patterns]]** - Core error handling patterns
 - **[[Result Type]]** - The Result<T, E> type for error handling
 - **[[Option Type]]** - The Option<T> type for nullable values
 - **[[anyhow and thiserror]]** - Advanced error handling crates
@@ -489,4 +489,4 @@ fn load_config_simple(path: &str) -> Result<Config, ConfigError> {
 
 *Tags: #error-handling #custom-errors #std-error #error-trait #error-chaining #error-context*
 
-*Links: [[zettel-index]] | [[Error Handling]] | [[Result Type]] | [[anyhow and thiserror]] | [[Error Propagation]] | [[Week 5 Overview]]*
+*Links: [[zettel-index]] | [[Error Handling Patterns]] | [[Result Type]] | [[anyhow and thiserror]] | [[Error Propagation]] | [[Week 5 Overview]]*

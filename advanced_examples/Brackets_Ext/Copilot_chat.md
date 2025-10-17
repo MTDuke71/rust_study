@@ -6898,7 +6898,7 @@ Similar code found with 2 license types
 - [[Stack Data Structure]] - LIFO structure used for bracket validation
 - [[Ownership and Borrowing]] - Memory safety guarantees in Rust
 - [[Iterator Patterns]] - Zero-cost abstractions and iterator chains
-- [[Error Handling]] - Result types and error propagation
+- [[Error Handling Patterns]] - Result types and error propagation
 - [[Zero-Cost Abstractions]] - Compiler optimizations in Rust
 
 ### Data Structures
