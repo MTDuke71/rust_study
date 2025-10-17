@@ -114,6 +114,17 @@ Traceability Matrix
 - **Applications**: Network analysis, dependency resolution, routing
 - **Graph Metrics**: [[Graph Network Density]] - Network connectivity and completeness measurement
 
+### **Mission 8: Generic Graph Algorithms** 📅
+- **Focus**: Generic BFS/DFS algorithms with trait-based design
+- **Location**: `Mission8/`
+- **Key Concepts**: Generic algorithms, trait composition, algorithm flexibility
+- **Requirements**: REQ-1 (Generic algorithms), REQ-2 (Algorithm composition)
+- **Daily Notes**: 
+  - [[zettelkasten/Daily Notes/2025-10-16]] - Generic Algorithm Implementation
+  - [[zettelkasten/Daily Notes/2025-10-17]] - Algorithm Composition
+- **Applications**: Pathfinding, cycle detection, connected components
+- **Status**: Active development - current learning focus
+
 ### **Future Missions** 📅
 - **Advanced Algorithms**: Dijkstra's, A*, topological sort
 - **Concurrent Data Structures**: Thread-safe collections
