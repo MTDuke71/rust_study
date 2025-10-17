@@ -3,7 +3,7 @@
 **Systematic testing approach for validating the first fundamental requirement of each mission**
 
 ---
-*Navigation: [[zettel-index]] | [[V-Cycle Methodology]] | [[Test-Driven Development]]*
+*Navigation: [[zettel-index]] | [[V-Cycle Methodology]] | [[TDD (Test-Driven Development]]*
 *Related: [[Missions MOC]] | [[Testing Patterns]] | [[Requirements Engineering]] | [[Debugging Lessons]]*
 ---
 
@@ -260,7 +260,7 @@ Confirm REQ-1 meets user needs
 ## 🔗 Related Concepts
 
 **Testing Approaches:**
-- [[Test-Driven Development]] - Write tests before implementation
+- [[TDD (Test-Driven Development]] - Write tests before implementation
 - [[Requirements Traceability]] - Link tests to requirements
 - [[V-Cycle Methodology]] - Requirements-driven development
 - [[Unit Testing Patterns]] - Effective test organization
@@ -293,7 +293,7 @@ Confirm REQ-1 meets user needs
 ---
 
 *Tags: #req-1 #test-strategy #v-cycle #requirements #testing #validation #tdd*
-*Links: [[zettel-index]] | [[V-Cycle Methodology]] | [[Test-Driven Development]] | [[Missions MOC]]*
+*Links: [[zettel-index]] | [[V-Cycle Methodology]] | [[TDD (Test-Driven Development]] | [[Missions MOC]]*
 
 ---
 

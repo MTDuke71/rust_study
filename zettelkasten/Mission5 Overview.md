@@ -69,7 +69,7 @@ See [[Mission5_tut Overview]] for step-by-step learning path
 
 ### **Engineering Skills** 
 - [[V-Cycle Methodology]] - Requirements-driven development
-- [[Test-Driven Development]] - Requirement-based testing
+- [[TDD (Test-Driven Development]] - Requirement-based testing
 - [[Performance Analysis]] - Big-O analysis and benchmarking
 - [[Documentation Patterns]] - Professional code documentation
 
