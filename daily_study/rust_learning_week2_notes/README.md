@@ -87,7 +87,7 @@ By the end of Week 2, you should be able to:
 
 ### **Mission 6: Grid Systems**
 **Connection**: 2D collections and iteration patterns
-- [[../../missions/Mission6/README|Mission6 README]] - Multi-dimensional data
+- [[Mission6 Overview]] - Multi-dimensional data
 
 ---
 

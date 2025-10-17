@@ -9,7 +9,7 @@
 
 **Related Zettelkasten Notes:**
 - [[../missions/Mission2/README|Mission2 - Ring Buffer Queue]]
-- [[../missions/Mission6/README|Mission6 - Dijkstra's Algorithm]]
+- [[Mission6 Overview]]
 - [[Priority Queue Patterns]] - Heap-based algorithms
 - [[zettel-index]] - Main learning hub
 
@@ -1104,4 +1104,4 @@ for (list_idx, list) in lists.iter().enumerate() {
 ---
 
 *Tags: #priority-queue #binary-heap #vecdeque #dijkstra #advanced-queues #mission2 #mission6 #graph-algorithms #aoc-patterns*
-*Links: [[daily-study/Day25]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[daily-study/Day27]] →*
+*Links: [[daily-study/Day25]] ← | [[Mission6 Overview]] | [[zettel-index]] | [[daily-study/Day27]] →*

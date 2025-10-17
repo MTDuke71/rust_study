@@ -81,7 +81,7 @@ By the end of Week 4, you should be able to:
 
 ### **Mission 6: Grid Systems and Pathfinding**
 **Connection**: Core 2D data structures and algorithms
-- [[../../missions/Mission6/README|Mission6 README]] - Complete grid implementation
+- [[Mission6 Overview]] - Complete grid implementation
 - BFS/DFS implementations on grids
 
 ### **Mission 2: Ring Buffer Queue**

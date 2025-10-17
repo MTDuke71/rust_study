@@ -8,7 +8,7 @@
 - **Rust Book**: Applies Chapter 8 (Collections) with HashSet for visited tracking
 
 **Related Zettelkasten Notes:**
-- [[../missions/Mission6/README|Mission6 - Flood Fill Implementation]]
+- [[Mission6 Overview]]
 - [[BFS Patterns]] - Breadth-first search applications
 - [[DFS Patterns]] - Depth-first search applications
 - [[zettel-index]] - Main learning hub
@@ -1069,4 +1069,4 @@ fn are_connected(grid: &Grid<char>, pos1: Coord, pos2: Coord) -> bool {
 ---
 
 *Tags: #flood-fill #connected-components #dfs #bfs #grid-algorithms #mission6 #graph-theory #aoc-patterns*
-*Links: [[daily-study/Day23]] ← | [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[daily-study/Day25]] →*
+*Links: [[daily-study/Day23]] ← | [[Mission6 Overview]] | [[zettel-index]] | [[daily-study/Day25]] →*

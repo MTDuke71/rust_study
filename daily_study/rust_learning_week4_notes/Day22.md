@@ -8,7 +8,7 @@
 - **Rust Book**: Builds on Chapter 8.1 (Vectors) for 2D array storage
 
 **Related Zettelkasten Notes:**
-- [[../missions/Mission6/README|Mission6 - 2D Grids & Navigation]] - Real-world grid implementation
+- [[Mission6 Overview]] - Real-world grid implementation
 - [[Collections MOC]] - Grid as specialized collection type
 - [[zettel-index]] - Main learning hub
 
@@ -534,4 +534,4 @@ let index = row * width + col;  // Correct! Row-major
 ---
 
 *Tags: #grids #2d-arrays #coordinates #spatial-algorithms #mission6 #data-structures #aoc-patterns*
-*Links: [[../missions/Mission6/README|Mission6]] | [[zettel-index]] | [[Collections MOC]] | [[daily-study/Day23]] →*
+*Links: [[Mission6 Overview]] | [[zettel-index]] | [[Collections MOC]] | [[daily-study/Day23]] →*
