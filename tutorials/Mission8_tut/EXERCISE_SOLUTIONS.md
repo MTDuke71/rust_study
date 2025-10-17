@@ -103,9 +103,44 @@ After completing these exercises, students will understand:
 - Educational comments explaining key concepts
 - Multiple test cases demonstrating functionality
 
+## 🔗 **Related Concepts**
+
+### **Algorithm Patterns**
+- **[[BFS Patterns]]** - Breadth-first search fundamentals and applications
+- **[[DFS Patterns]]** - Depth-first search techniques and use cases
+- **[[A-Star-Algorithm-Deep-Dive]]** - Advanced pathfinding with heuristics
+
+### **Graph Theory**
+- **[[directed-vs-undirected-graphs]]** - Understanding graph types for algorithms
+- **[[Graph Network Density]]** - Network connectivity analysis
+- **[[find-all-components]]** - Connected components algorithms
+
+### **Mission Integration**
+- **[[missions/Mission8/README]]** - Main Mission 8 implementation
+- **[[tutorials/Mission8_tut/README]]** - Tutorial overview and progression
+- **[[zettelkasten/Daily Notes/2025-10-16]]** - Generic algorithm implementation
+- **[[zettelkasten/Daily Notes/2025-10-17]]** - Algorithm composition
+
+### **Learning Resources**
+- **[[Testing Strategies]]** - Testing graph algorithms
+- **[[Generic Programming]]** - Generic algorithm design
+- **[[daily-study/Day24]]** - Grid algorithms and flood fill
+- **[[daily-study/Day25]]** - Queue applications and BFS
+- **[[daily-study/Day26]]** - Advanced queues and priority queues
+
+### **Algorithm Applications**
+- **[[AoC Patterns MOC]]** - Competitive programming patterns
+- **[[Mission6 Overview]]** - Grid-based pathfinding
+- **[[Mission7 Overview]]** - Graph algorithms and traversal
+
 ## 📚 **Further Reading**
 
 - **Graph Theory**: Cormen et al. "Introduction to Algorithms"
 - **Network Analysis**: Newman "Networks: An Introduction"
 - **Algorithm Design**: Kleinberg & Tardos "Algorithm Design"
 - **Rust Patterns**: Stepanov & McJones "Elements of Programming"
+
+---
+
+*Tags: #exercise-solutions #mission8 #tutorial #graph-algorithms #bfs #dfs #pathfinding*
+*Links: [[zettel-index]] | [[BFS Patterns]] | [[DFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[directed-vs-undirected-graphs]] | [[Graph Network Density]] | [[find-all-components]] | [[missions/Mission8/README]] | [[tutorials/Mission8_tut/README]] | [[zettelkasten/Daily Notes/2025-10-16]] | [[zettelkasten/Daily Notes/2025-10-17]] | [[Testing Strategies]] | [[Generic Programming]] | [[daily-study/Day24]] | [[daily-study/Day25]] | [[daily-study/Day26]] | [[AoC Patterns MOC]] | [[Mission6 Overview]] | [[Mission7 Overview]]*
