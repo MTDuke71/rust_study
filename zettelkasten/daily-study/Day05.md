@@ -118,7 +118,7 @@ fn process_data(input: &str) -> Result<String, String> {
 ## Quick Navigation
 
 - **Full Details**: [[daily_study/rust_learning_week1_notes/Day05]]
-- **Previous**: [[Day 04 - Lifetimes]]
+- **Previous**: [[daily-study/Day04]]
 - **Next**: [[Day 06 - Pattern Matching]]
 - **Week**: [[Week 1 Overview]]
 - **MOC**: [[Rust Concepts MOC]]

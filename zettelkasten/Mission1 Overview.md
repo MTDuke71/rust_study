@@ -51,7 +51,7 @@ Mission1 is where the entire learning journey began. It established:
 - **Foundation for**: [[Day 01 - Ownership Basics]] practical application
 - **Demonstrates**: [[Day 02 - Borrowing Patterns]] through peek operations
 - **Applies**: [[Day 03 - Move Semantics]] in push/pop
-- **Prepares for**: [[Day 04 - Lifetimes]] in more complex structures
+- **Prepares for**: [[daily-study/Day04]] in more complex structures
 
 ### **Rust Book Integration**
 - **Chapter 4 - Ownership**: Core concepts demonstrated through stack operations

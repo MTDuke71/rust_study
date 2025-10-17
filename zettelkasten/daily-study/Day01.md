@@ -38,7 +38,7 @@ my_project/
 ## Quick Navigation
 
 - **Full Details**: [[daily_study/rust_learning_week1_notes/Day01]]
-- **Next**: [[Day 02 - Ownership Basics]]
+- **Next**: [[daily-study/Day02]]
 - **Week**: [[Week 1 Overview]]
 - **MOC**: [[Rust Concepts MOC]]
 

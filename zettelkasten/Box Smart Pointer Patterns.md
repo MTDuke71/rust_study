@@ -276,9 +276,9 @@ let single_boxed = Box::new(42);
 - `RefCell<T>` - Interior mutability, runtime borrowing
 
 ### **Memory Management**
-- [[Day 02 - Ownership Basics]] - Ownership fundamentals
+- [[daily-study/Day02]] - Ownership fundamentals
 - [[Day 03 - Borrowing]] - Reference semantics
-- [[Day 04 - Lifetimes]] - Reference lifetime management
+- [[daily-study/Day04]] - Reference lifetime management
 
 ### **Trait Objects**
 - [[Day 19 - Trait Objects]] - Dynamic dispatch patterns
@@ -357,7 +357,7 @@ for animal in animals {
 ---
 
 *Tags: #box #smart-pointers #heap-allocation #ownership #memory-management #trait-objects #recursive-structures*
-*Links: [[Day 02 - Ownership Basics]] | [[Day 19 - Trait Objects]] | [[Rust Concepts MOC]] | [[Collections MOC]]*
+*Links: [[daily-study/Day02]] | [[Day 19 - Trait Objects]] | [[Rust Concepts MOC]] | [[Collections MOC]]*
 
 
 

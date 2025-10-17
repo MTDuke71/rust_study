@@ -15,7 +15,7 @@
 ## �🎯 Core Language Features
 
 ### **Ownership & Memory Management**
-- [[Day 02 - Ownership Basics]] - Single ownership, move semantics
+- [[daily-study/Day02]] - Single ownership, move semantics
 - [[../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded]] - **Deep dive** into variables, mutability, moves vs copies with detailed analogies
 - [[Day 03 - Borrowing]] - References and borrowing rules
 - [[../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded]] - **Deep dive** into functions, parameter passing, and reference system
@@ -23,7 +23,7 @@
 - **Beginner-Friendly Resources**:
   - [[../missions/Mission1/QUICK_REFERENCE|Mission1 Quick Reference]] - 2-minute ownership essentials
   - [[../missions/Mission1/SIMPLE_GUIDE|Mission1 Simple Guide]] - Real-world mental models and analogies
-- [[Day 04 - Lifetimes]] - Reference lifetime management
+- [[daily-study/Day04]] - Reference lifetime management
 - [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
 - [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns and scenarios
@@ -113,9 +113,9 @@
 
 ### **Week 1: Fundamentals**
 - [[Day 01 - Setup]] - Environment and toolchain
-- [[Day 02 - Ownership Basics]] - Memory management foundation
+- [[daily-study/Day02]] - Memory management foundation
 - [[Day 03 - Borrowing]] - Reference semantics
-- [[Day 04 - Lifetimes]] - Reference lifetime management
+- [[daily-study/Day04]] - Reference lifetime management
 - [[Day 05 - Option and Result]] - Error handling introduction
 - [[Day 06 - Pattern Matching]] - Control flow patterns
 - [[Day 07 - Week 1 Summary]] - Integration and review

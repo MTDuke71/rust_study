@@ -570,7 +570,7 @@ fn first_ref_elided<T>(slice: &[T]) -> Option<&T> {
 }
 ```
 
-Related: [[Day 04 - Lifetimes]] | [[Multiple Lifetimes Deep Dive]]
+Related: [[daily-study/Day04]] | [[Multiple Lifetimes Deep Dive]]
 
 ### **Generic Type Inference**
 

@@ -78,8 +78,8 @@ println!("{}", s);  // "hello, world"
 ## Quick Navigation
 
 - **Full Details**: [[daily_study/rust_learning_week1_notes/Day03]]
-- **Previous**: [[Day 02 - Ownership Basics]]
-- **Next**: [[Day 04 - Lifetimes]]
+- **Previous**: [[daily-study/Day02]]
+- **Next**: [[daily-study/Day04]]
 - **Week**: [[Week 1 Overview]]
 - **MOC**: [[Rust Concepts MOC]]
 
