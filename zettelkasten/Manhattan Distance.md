@@ -76,7 +76,7 @@ Points at distance 3 from center (C):
 Forms a diamond/rhombus shape!
 ```
 
-### **vs Euclidean Distance**
+### **vs [[Euclidean Distance]]**
 ```
 Manhattan: |3-0| + |4-0| = 7
 Euclidean: √(3² + 4²) = 5

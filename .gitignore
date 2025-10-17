@@ -56,3 +56,5 @@ desktop.ini
 .obsidian/
 .claude/settings.local.json
 nul
+
+.smart-env

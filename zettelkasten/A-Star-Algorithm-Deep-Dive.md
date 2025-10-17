@@ -1,8 +1,6 @@
 # A* Algorithm Deep Dive
 
-**Tags**: #algorithms #pathfinding #heuristics #grid-navigation #mission6
-
-**Related**: [[Mission6 Overview]], [[Grid algorithms (flood fill, connected components).md]], [[Queue applications (BFS, level traversal).md]]
+*Comprehensive analysis of the A* pathfinding algorithm with practical implementation guidance*
 
 ## Overview
 
@@ -32,7 +30,7 @@ A heuristic is **consistent** if:
 
 ## Common Heuristics for Grids
 
-### Euclidean Distance (Straight-line)
+### [[Euclidean Distance]] (Straight-line)
 ```rust
 fn euclidean_distance(a: TutorialCoord, b: TutorialCoord) -> f64 {
     let dx = (a.x as f64) - (b.x as f64);
@@ -44,7 +42,7 @@ fn euclidean_distance(a: TutorialCoord, b: TutorialCoord) -> f64 {
 - **Properties**: Admissible, consistent
 - **Performance**: More accurate but computationally expensive
 
-### Manhattan Distance
+### [[Manhattan Distance]]
 ```rust
 fn manhattan_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
     let dx = a.x.abs_diff(b.x);
@@ -56,7 +54,7 @@ fn manhattan_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 - **Properties**: Admissible, consistent
 - **Performance**: Fast computation, good for most grid problems
 
-### Chebyshev Distance
+### [[Chebyshev Distance]]
 ```rust
 fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
     let dx = a.x.abs_diff(b.x);
@@ -291,7 +289,7 @@ mod bench_tests {
 ## Mission 6 Checklist
 
 - [ ] Implement basic A* with Euclidean heuristic
-- [ ] Add Manhattan distance heuristic option
+- [ ] Add [[Manhattan distance]] heuristic option
 - [ ] Test with simple grid scenarios
 - [ ] Handle blocked paths gracefully
 - [ ] Optimize for large grids (100x100+)
@@ -303,4 +301,5 @@ mod bench_tests {
 
 ---
 
-**Next Steps**: This knowledge will be applied in Mission 6 on October 4th, 2025, when implementing pathfinding helpers for grid navigation.
+*Tags: #astar #algorithms #pathfinding #heuristics #grid-navigation #mission6 #concept #implementation*
+*Links: [[zettel-index]] | [[Mission6 Overview]] | [[BFS Patterns]] | [[Manhattan Distance]] | [[Euclidean Distance]]*
