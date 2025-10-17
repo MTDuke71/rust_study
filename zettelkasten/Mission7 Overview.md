@@ -199,4 +199,4 @@ See [[Mission7_tut]] for step-by-step learning path
 
 ---
 *Tags: #mission7 #graphs #algorithms #dfs #bfs #pathfinding #overview #v-cycle #graph-algorithms #aoc*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Mission6] | [[Mission7_tut]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Mission6 Overview]] | [[Mission7_tut]] | [[MONTHLY_CALENDAR]]*

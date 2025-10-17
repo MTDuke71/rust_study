@@ -911,7 +911,7 @@ fn test_iterator_methods() {
 ## Related Zettelkasten Notes
 
 - [[Day23]] - Grid Navigation using Direction enum
-- [[Mission6]] - Pathfinding with direction iteration
+- [[Mission6 Overview]] - Pathfinding with direction iteration
 - [[Rust Iterators]] - General iterator patterns
 - [[Const Evaluation]] - Compile-time computation in Rust
 - [[Derive Macros]] - Understanding procedural macros
@@ -921,7 +921,7 @@ fn test_iterator_methods() {
 
 *Tags: #enums #iteration #patterns #design-patterns #strum #iterators #performance #best-practices #daily-study #mission-integration*
 
-*Links: [[zettel-index]] | [[Day23]] | [[Mission6]] | [[Rust Iterators]] | [[Design Patterns MOC]]*
+*Links: [[zettel-index]] | [[Day23]] | [[Mission6 Overview]] | [[Rust Iterators]] | [[Design Patterns MOC]]*
 
 ---
 
