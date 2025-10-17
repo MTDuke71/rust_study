@@ -133,7 +133,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 - [[Mission2 Overview]] - Queue implementation
 - [[Mission6 Overview]] - BFS pathfinding utilities
 - [[BFS Patterns]] - Breadth-first applications
-- [[A* Search]] - Heuristic improvement over BFS
+- [[A-Star-Algorithm-Deep-Dive]] - Heuristic improvement over BFS
 
 **Real-World Applications:**
 - GPS navigation (shortest route)
@@ -165,7 +165,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 
 **Connected to:**
 - [[Mission2 Overview]] - Ring buffer deque
-- [[A* Search]] - Priority queue with heuristic
+- [[A-Star-Algorithm-Deep-Dive]] - Priority queue with heuristic
 - Dijkstra's algorithm for weighted shortest paths
 
 **Real-World Applications:**
@@ -442,7 +442,7 @@ for line in input.lines() {
 - [[DFS Patterns]] - Depth-first applications
 - [[Manhattan Distance]] - Grid distance metrics
 - [[Chebyshev Distance]] - Diagonal distance
-- [[A* Search]] - Heuristic pathfinding
+- [[A-Star-Algorithm-Deep-Dive]] - Heuristic pathfinding
 
 ---
 

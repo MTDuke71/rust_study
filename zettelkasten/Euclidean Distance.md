@@ -497,7 +497,7 @@ let dist_squared = dx * dx + dy * dy;
 ### **Related Zettelkasten Pages**
 - [[Manhattan Distance]] - Grid-based 4-connected distance
 - [[Chebyshev Distance]] - Grid-based 8-connected distance
-- [[A* Search]] - Can use Euclidean distance as heuristic
+- [[A-Star-Algorithm-Deep-Dive]] - Can use Euclidean distance as heuristic
 - [[Week 4 Overview]] - Spatial algorithms and distance metrics
 - [[Mission6 Overview]] - Grid navigation (usually uses Manhattan/Chebyshev)
 
@@ -550,4 +550,4 @@ If need actual distance: Use distance() with sqrt()
 
 *Tags: #euclidean-distance #continuous-space #pythagorean-theorem #metrics #algorithms #physics #clustering*
 
-*Links: [[zettel-index]] | [[Manhattan Distance]] | [[Chebyshev Distance]] | [[A* Search]] | [[Week 4 Overview]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[Manhattan Distance]] | [[Chebyshev Distance]] | [[A-Star-Algorithm-Deep-Dive]] | [[Week 4 Overview]] | [[Mission6 Overview]]*

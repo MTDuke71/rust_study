@@ -87,7 +87,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 | Day 23 | Grid Navigation | Directions, bounds checking | [[Chebyshev Distance]], [[Manhattan Distance]] |
 | Day 24 | Grid Algorithms | Flood fill, connected components | [[DFS Patterns]], [[BFS Patterns]] |
 | Day 25 | Queue Applications | BFS, level traversal | [[../missions/Mission2/README\|Mission2]] |
-| Day 26 | Advanced Queues | Priority queues, deque patterns | [[A* Search]], [[Mission6 Overview]] |
+| Day 26 | Advanced Queues | Priority queues, deque patterns | [[A-Star-Algorithm-Deep-Dive]], [[Mission6 Overview]] |
 | Day 27 | String Parsing | Splitting, regex, custom parsers | [[AoC Patterns MOC]] |
 | Day 28 | Week 4 Integration | Complete problem solving | [[Mission6 Overview]] |
 

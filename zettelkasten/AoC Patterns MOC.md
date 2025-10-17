@@ -28,7 +28,7 @@
 ### **Search Algorithms**
 - **[[BFS Patterns]]** - Shortest path, level-order, and state exploration
 - **[[DFS Patterns]]** - Recursive exploration, backtracking, and cycle detection
-- **[[A* Search]]** - Heuristic search for optimal pathfinding
+- **[[A-Star-Algorithm-Deep-Dive]]** - Heuristic search for optimal pathfinding
   - **[[Chebyshev Distance]]** - Chessboard/8-connected distance metric
   - **[[Manhattan Distance]]** - 4-connected grid distance
   - **[[Euclidean Distance]]** - Continuous space distance
