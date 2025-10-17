@@ -5,7 +5,7 @@
 - **Next**: [[Day 04 - Lifetimes]] - Lifetime annotations
 - **Concept**: [[Rust Concepts MOC]] - Borrowing rules
 - **Rust Book**: [[Chapter 4.2 - References and Borrowing]] - Reference rules
-- **Week Summary**: [[Day 07 - Week 1 Summary]] - Foundations review
+- **Week Summary**: [[zettelkasten/daily-study/Day07]] - Foundations review
 
 ## Key Points
 - Functions declared with `fn`.

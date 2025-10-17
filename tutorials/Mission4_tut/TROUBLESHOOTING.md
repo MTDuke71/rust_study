@@ -442,7 +442,7 @@ impl<T> ListBuilder<T> {
 - [[QUICK_DEBUG_START|QUICK_DEBUG_START]] - Fast debugging reference
 
 **Mission4 Implementation:**
-- [[Mission4 README|../../missions/Mission4/README]] - Main linked list V-Cycle documentation
+- [[Mission4 Overview|../../missions/Mission4/README]] - Main linked list V-Cycle documentation
 
 **Zettelkasten Core Concepts:**
 - [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership rules
@@ -474,4 +474,4 @@ impl<T> ListBuilder<T> {
 ---
 
 *Tags: #mission4 #troubleshooting #linked-list #borrowing #rc #refcell #error-solutions #debugging*
-*Links: [[README|README]] | [[Mission4 README|../../missions/Mission4/README]] | [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]]*
+*Links: [[README|README]] | [[Mission4 Overview|../../missions/Mission4/README]] | [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]]*

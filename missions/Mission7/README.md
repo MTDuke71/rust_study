@@ -336,7 +336,7 @@ println!("Density: {:.2}", stats.density);
 - **Daily Study**: Week 3, Days 15-21 (Traits, Generics, Lifetimes)
 - **Rust Book**: [[../../rust_book/Ch7/crates/README|Chapter 7 - Packages and Crates]]
 - **AoC Applications**: Grid navigation, pathfinding problems
-- **Zettelkasten**: [[../../zettelkasten/zettel-index|Knowledge Index]] | [[../../zettelkasten/Missions MOC|Missions Overview]]
+- **Zettelkasten**: [[../../zettelkasten/zettel-index|Knowledge Index]] | [[../../zettelkasten/Missions Overview|Missions Overview]]
 
 ---
 
@@ -344,4 +344,4 @@ println!("Density: {:.2}", stats.density);
 
 ---
 *Tags: #mission7 #graphs #algorithms #dfs #bfs #adjacency-list #v-cycle #data-structures*
-*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../zettelkasten/Missions MOC|Missions MOC]] | [[../../tutorials/Mission7_tut/README|Mission7 Tutorial]] | [[../Mission6/README|Mission6]] | [[../../zettelkasten/Collections MOC|Collections MOC]]*
+*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../zettelkasten/Missions Overview|Missions Overview]] | [[../../tutorials/Mission7_tut/README|Mission7 Tutorial]] | [[../Mission6/README|Mission6]] | [[../../zettelkasten/Collections MOC|Collections MOC]]*

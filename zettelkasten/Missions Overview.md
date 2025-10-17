@@ -84,7 +84,7 @@ Traceability Matrix
 - **Status**: Complete with traversal implementations
 
 ### **Mission 4: Linked Lists** ✅
-- **Documentation**: [[Mission4 README]] - Linked list implementation with smart pointers
+- **Documentation**: [[Mission4 Overview]] - Linked list implementation with smart pointers
 - **Focus**: Node-based dynamic data structure with pointer management
 - **Location**: `Mission4/` + `tutorials/Mission4_tut/`
 - **Key Concepts**: Box<T>, Rc<T>, RefCell<T>, ownership patterns
@@ -193,7 +193,7 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 ## 🔗 Cross-Track Integration
 
 ### **Mission ↔ Daily Study Alignment**
-- **Mission1 Stack** connects to [[Day 01 - Setup]] and [[daily-study/Day02]]
+- **Mission1 Stack** connects to [[zettelkasten/daily-study/Day01]] and [[daily-study/Day02]]
 - **Mission2 Queue** connects to [[Vec Patterns]] and performance concepts
 - **Mission4 LinkedList** connects to [[Interior Mutability Deep Dive]]
 - **Mission5 HashMap** connects to [[daily-study/Day10]] and [[HashMap Internals]]

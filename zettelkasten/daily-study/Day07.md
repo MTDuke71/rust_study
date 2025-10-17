@@ -138,7 +138,7 @@ let result = maybe_value
 ## Quick Navigation
 
 - **Full Details**: [[daily_study/rust_learning_week1_notes/Day07]]
-- **Previous**: [[Day 06 - Pattern Matching]]
+- **Previous**: [[zettelkasten/daily-study/Day06]]
 - **Next**: [[Week 2 Overview]]
 - **Week**: [[Week 1 Overview]]
 - **MOC**: [[Rust Concepts MOC]]

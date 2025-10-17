@@ -62,7 +62,7 @@
   - **Pattern Matching**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Comprehensive regex guide
 - [[daily-study/Day10]] - Key-value storage, borrowing keys  
 - [[daily-study/Day11]] - Unique collections, set operations
-- [[daily-study/Day12]] - Ordered collections, range queries
+- [[daily_study/rust_learning_week2_notes/Day12]] - Ordered collections, range queries
 - [[daily-study/Day13]] - Transforming and processing
 - [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
 

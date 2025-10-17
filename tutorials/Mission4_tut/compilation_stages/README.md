@@ -55,7 +55,7 @@ Each file shows a different stage of compilation with explanations!
 - [[TYPE_BREAKDOWN|../TYPE_BREAKDOWN]] - Type system deep dive
 
 **Mission4 Implementation:**
-- [[Mission4 README|../../../missions/Mission4/README]] - Main linked list V-Cycle documentation
+- [[Mission4 Overview|../../../missions/Mission4/README]] - Main linked list V-Cycle documentation
 
 **Zettelkasten Knowledge:**
 - [[Compilation Process|../../../zettelkasten/Compilation Process]] - Rust compilation stages

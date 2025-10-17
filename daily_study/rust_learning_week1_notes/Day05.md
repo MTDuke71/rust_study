@@ -2,11 +2,11 @@
 
 ## 🔗 Zettelkasten Links
 - **Previous**: [[Day 04 - Lifetimes]] - Lifetime annotations
-- **Next**: [[Day 06 - Pattern Matching]] - Match expressions
+- **Next**: [[zettelkasten/daily-study/Day06]] - Match expressions
 - **Concept**: [[Rust Concepts MOC]] - Error handling system
 - **Rust Book**: [[Chapter 6 - Enums]] - Option and pattern matching
 - **Rust Book**: [[Chapter 9 - Error Handling]] - Result and ? operator
-- **Week Summary**: [[Day 07 - Week 1 Summary]] - Foundations review
+- **Week Summary**: [[zettelkasten/daily-study/Day07]] - Foundations review
 
 ## Overview
 Rust eliminates null pointer exceptions and unchecked exceptions through two powerful enum types: `Option<T>` and `Result<T, E>`. These types force explicit handling of absence and errors at compile time.
@@ -419,7 +419,7 @@ These types are fundamental to Rust's approach to safety and make programs more 
 
 ---
 
-*Links: [[Day 04 - Lifetimes]] | [[Day 06 - Pattern Matching]] | [[Rust Concepts MOC]]*
+*Links: [[Day 04 - Lifetimes]] | [[zettelkasten/daily-study/Day06]] | [[Rust Concepts MOC]]*
 *Tags: #option #result #error-handling #daily-study #rust-book #chapter6 #chapter9 #foundation*
 
 ---

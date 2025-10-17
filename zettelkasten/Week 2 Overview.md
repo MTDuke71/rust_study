@@ -57,7 +57,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 
 **Key Takeaway**: HashSet enables efficient uniqueness and set operations
 
-### **Day 12: BTreeMap & BTreeSet** [[daily-study/Day12]]
+### **Day 12: BTreeMap & BTreeSet** [[daily_study/rust_learning_week2_notes/Day12]]
 - Ordered collections with O(log n) operations
 - Range queries (impossible with HashMap)
 - Custom Ord implementations

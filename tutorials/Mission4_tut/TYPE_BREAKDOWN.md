@@ -143,7 +143,7 @@ This type signature embodies Rust's philosophy: **"Fast, safe, expressive - pick
 - [[COMPLETE_ANALYSIS|compilation_stages/COMPLETE_ANALYSIS]] - Full compilation breakdown
 
 **Mission4 Implementation:**
-- [[Mission4 README|../../missions/Mission4/README]] - Linked list V-Cycle implementation
+- [[Mission4 Overview|../../missions/Mission4/README]] - Linked list V-Cycle implementation
 
 **Zettelkasten Type System:**
 - [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Heap allocation with Box

@@ -453,7 +453,7 @@ cargo tarpaulin --out html
 
 ### 📚 Zettelkasten
 - **[[../../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
-- **[[../../zettelkasten/Missions MOC|Missions MOC]]** - V-Cycle projects navigation
+- **[[../../zettelkasten/Missions Overview|Missions Overview]]** - V-Cycle projects navigation
 - **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
 
 ### 🎯 Mission 6 Context

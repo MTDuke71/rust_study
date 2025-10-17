@@ -166,7 +166,7 @@ After running each example, try these modifications:
 - [[../../Mission4/README]] - Mission4 main implementation
 
 ### **Zettelkasten Knowledge Base**
-- [[../../../zettelkasten/Missions MOC]] - All mission overviews
+- [[../../../zettelkasten/Missions Overview]] - All mission overviews
 - [[../../../zettelkasten/Collections MOC]] - Data structure patterns
 - [[../../../zettelkasten/Box Smart Pointer Patterns]] - Box<T> deep dive
 - [[../../../zettelkasten/zettel-index]] - Main knowledge index
@@ -185,7 +185,7 @@ After running each example, try these modifications:
 
 *Tags: #mission4 #linked-list #tutorial #examples #box #rc #refcell #ownership #borrowing*
 
-*Links: [[../README]] | [[../../Mission4/README]] | [[../../../zettelkasten/Missions MOC]] | [[../../../zettelkasten/Collections MOC]] | [[../../../zettelkasten/zettel-index]]*
+*Links: [[../README]] | [[../../Mission4/README]] | [[../../../zettelkasten/Missions Overview]] | [[../../../zettelkasten/Collections MOC]] | [[../../../zettelkasten/zettel-index]]*
 
 ---
 

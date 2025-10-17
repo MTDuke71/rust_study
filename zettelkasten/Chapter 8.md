@@ -53,7 +53,7 @@ Collections are fundamental to all missions:
 
 - **[[daily-study/Day10]]** - HashMap fundamentals
 - **[[daily-study/Day11]]** - HashSet operations
-- **[[daily-study/Day12]]** - BTreeMap ordered collections
+- **[[daily_study/rust_learning_week2_notes/Day12]]** - BTreeMap ordered collections
 - **[[Week 2 Overview]]** - Collections mastery week
 
 ## 🔗 **Related Concepts**
@@ -66,4 +66,4 @@ Collections are fundamental to all missions:
 ---
 
 *Tags: #chapter8 #collections #redirect #rust-book #vector #string #hashmap*
-*Links: [[zettel-index]] | [[../rust_book/Ch8/README.md|Complete Chapter 8]] | [[Collections MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]] | [[daily-study/Day10]] | [[daily-study/Day11]] | [[daily-study/Day12]] | [[Week 2 Overview]] | [[Unicode, UTF-8, and Rust]] | [[Heap Allocation]] | [[Performance Optimization]]*
+*Links: [[zettel-index]] | [[../rust_book/Ch8/README.md|Complete Chapter 8]] | [[Collections MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]] | [[daily-study/Day10]] | [[daily-study/Day11]] | [[daily_study/rust_learning_week2_notes/Day12]] | [[Week 2 Overview]] | [[Unicode, UTF-8, and Rust]] | [[Heap Allocation]] | [[Performance Optimization]]*

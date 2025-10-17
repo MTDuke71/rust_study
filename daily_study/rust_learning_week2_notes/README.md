@@ -42,7 +42,7 @@ Week 2 builds on Week 1 foundations with deeper exploration of Rust's collection
 - Range-based queries
 - Use cases for ordered data
 
-### [[daily-study/Day12]] or [[ds-day12]] - Iterator Combinators
+### [[daily_study/rust_learning_week2_notes/Day12]] or [[ds-day12]] - Iterator Combinators
 **Topics**: `chain()`, `zip()`, `enumerate()`, `scan()`
 - Composing multiple iterators
 - Stateful iteration with `scan()`

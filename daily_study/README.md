@@ -137,7 +137,7 @@ Each day file (`DayXX.md`) includes:
 
 ### **Core MOCs**
 - **[[../zettelkasten/Daily Study MOC]]** - Complete daily study navigation hub
-- **[[../zettelkasten/Missions MOC]]** - V-Cycle engineering projects
+- **[[../zettelkasten/Missions Overview]]** - V-Cycle engineering projects
 - **[[../zettelkasten/Collections MOC]]** - Data structures deep dives
 - **[[../zettelkasten/AoC Patterns MOC]]** - Competitive programming patterns
 

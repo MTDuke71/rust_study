@@ -149,7 +149,7 @@ All tutorials follow workspace documentation standards:
 
 ### 📚 Zettelkasten
 - **[[../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
-- **[[../zettelkasten/Missions MOC|Missions MOC]]** - V-Cycle projects navigation
+- **[[../zettelkasten/Missions Overview|Missions Overview]]** - V-Cycle projects navigation
 - **[[../zettelkasten/Daily Study MOC|Daily Study MOC]]** - Progressive learning track
 - **[[../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
 

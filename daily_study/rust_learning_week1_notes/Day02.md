@@ -1,11 +1,11 @@
 # Day 2 · Variables, Mutability, Moves vs Copies
 
 ## 🔗 Zettelkasten Links
-- **Previous**: [[Day 01 - Setup]] - Toolchain basics
+- **Previous**: [[zettelkasten/daily-study/Day01]] - Toolchain basics
 - **Next**: [[Day 03 - Borrowing]] - Reference rules
 - **Concept**: [[Rust Concepts MOC]] - Ownership system
 - **Rust Book**: [[Chapter 4.1 - Ownership]] - What is Ownership?
-- **Week Summary**: [[Day 07 - Week 1 Summary]] - Foundations review
+- **Week Summary**: [[zettelkasten/daily-study/Day07]] - Foundations review
 
 ## Key Points
 - Variables immutable by default (`let`), mutable with `mut`.
@@ -110,5 +110,5 @@ fn takes_and_gives_back(s: String) -> String {
 
 ---
 
-*Links: [[Day 01 - Setup]] | [[Day 03 - Borrowing]] | [[Rust Concepts MOC]]*
+*Links: [[zettelkasten/daily-study/Day01]] | [[Day 03 - Borrowing]] | [[Rust Concepts MOC]]*
 *Tags: #ownership #moves #copy #daily-study #rust-book #chapter4 #foundation*

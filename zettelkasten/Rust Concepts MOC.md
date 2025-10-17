@@ -38,7 +38,7 @@
 - [[AoC Error Patterns]] - Input parsing and validation strategies
 
 ### **Pattern Matching & Control Flow**
-- [[Day 06 - Pattern Matching]] - Match expressions and destructuring
+- [[zettelkasten/daily-study/Day06]] - Match expressions and destructuring
 - [[Match Operator Examples]] - Practical pattern matching patterns
 - [[if let Patterns]] - Concise control flow
 - [[While Let Pattern Deep Dive]] - Consuming collections idiomatically
@@ -112,12 +112,12 @@
 ## 📚 Learning Progression
 
 ### **Week 1: Fundamentals**
-- [[Day 01 - Setup]] - Environment and toolchain
+- [[zettelkasten/daily-study/Day01]] - Environment and toolchain
 - [[daily-study/Day02]] - Memory management foundation
 - [[daily-study/Day03]] - Reference semantics
 - [[daily-study/Day04]] - Reference lifetime management
 - [[daily-study/Day05]] - Error handling introduction
-- [[Day 06 - Pattern Matching]] - Control flow patterns
+- [[zettelkasten/daily-study/Day06]] - Control flow patterns
 - [[daily-study/Day07]] - Integration and review
 
 ### **Week 2: Collections Mastery**
@@ -125,7 +125,7 @@
 - [[Day 09 - String Patterns]] - String handling
 - [[daily-study/Day10]] - Key-value storage
 - [[daily-study/Day11]] - Unique collections
-- [[daily-study/Day12]] - Ordered collections
+- [[daily_study/rust_learning_week2_notes/Day12]] - Ordered collections
 - [[daily-study/Day13]] - Collection processing
 
 ### **Week 3: Advanced Type System**

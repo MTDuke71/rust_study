@@ -125,7 +125,7 @@ All projects follow the workspace documentation standards:
 
 ### 📚 Zettelkasten
 - **[[../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
-- **[[../zettelkasten/Missions MOC|Missions MOC]]** - V-Cycle projects navigation
+- **[[../zettelkasten/Missions Overview|Missions Overview]]** - V-Cycle projects navigation
 - **[[../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - Competitive programming patterns
 
 ### 🎯 Core Mission Integration

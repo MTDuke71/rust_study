@@ -326,7 +326,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 
 ---
 
-### [[day12.md|Day 12: JSAbacusFramework.io]]
+### [[advent_of_code/aoc2015/Problem_Statements/day12|Day 12: JSAbacusFramework.io]]
 **Title**: JSAbacusFramework.io  
 **Part 1 Type**: Parsing + Mathematical + Data Structures  
 **Part 1 Description**: Parse JSON document and sum all numeric values (arrays, objects, nested structures)  

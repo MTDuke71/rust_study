@@ -5,7 +5,7 @@
 - **Next**: [[Day 05 - Option and Result]] - Error handling types
 - **Concept**: [[Rust Concepts MOC]] - Lifetime system
 - **Rust Book**: [[Chapter 10.3 - Lifetimes]] - Validating references with lifetimes
-- **Week Summary**: [[Day 07 - Week 1 Summary]] - Foundations review
+- **Week Summary**: [[zettelkasten/daily-study/Day07]] - Foundations review
 
 ## What Are Lifetimes?
 Lifetimes are Rust's way of ensuring that references are valid for as long as we need them. They prevent **dangling references** - pointers to memory that has been freed or is no longer valid.

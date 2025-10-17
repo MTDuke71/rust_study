@@ -377,4 +377,4 @@ You have successfully completed this tutorial when you can:
 
 ---
 *Tags: #mission7-tut #tutorial #graphs #dfs #bfs #algorithms #step-by-step #learning-path*
-*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../zettelkasten/Missions MOC|Missions MOC]] | [[../../missions/Mission7/README|Mission7 Main]] | [[../../zettelkasten/Collections MOC|Collections MOC]] | [[../../zettelkasten/AoC Patterns MOC|AoC Patterns]]*
+*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../zettelkasten/Missions Overview|Missions Overview]] | [[../../missions/Mission7/README|Mission7 Main]] | [[../../zettelkasten/Collections MOC|Collections MOC]] | [[../../zettelkasten/AoC Patterns MOC|AoC Patterns]]*

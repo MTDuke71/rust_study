@@ -108,7 +108,7 @@ The concepts learned here form the foundation for all Rust programming!
 ### **Related Missions**
 - [[Mission2 README]] - Queue (FIFO) implementation
 - [[Mission3 README]] - Search algorithms
-- [[Mission4 README]] - Linked list implementation
+- [[Mission4 Overview]] - Linked list implementation
 - [[Mission5 README]] - HashMap implementation
 - [[Mission6 README]] - Grid systems
 

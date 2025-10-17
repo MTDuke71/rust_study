@@ -896,7 +896,7 @@ You used Tarpaulin to identify, test, and verify untested code!
 - [[Mission1 README]] - Stack implementation
 - [[Mission2 README]] - Queue implementation
 - [[Mission3 README]] - Search algorithms
-- [[Mission4 README]] - Linked list
+- [[Mission4 Overview]] - Linked list
 - [[Mission5 README]] - HashMap implementation
 
 ### **Rust Learning Integration**

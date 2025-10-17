@@ -37,7 +37,7 @@ Or navigate directly to: `daily_study/rust_learning_week2_notes/Day11.md`
 ### Daily Study Progression
 - [[daily-study/Day10]] - Previous day (key-value storage)
 - **Current**: [[../daily_study/rust_learning_week2_notes/Day11|Day 11 - HashSet Operations]]
-- [[daily-study/Day12]] - Next day (ordered collections)
+- [[daily_study/rust_learning_week2_notes/Day12]] - Next day (ordered collections)
 
 ### Mission Applications
 - [[Mission5 Overview]] - Custom HashMap<K, V> and HashSet<T> implementation

@@ -3,7 +3,7 @@
 ## 🔗 Zettelkasten Links
 - **Overview**: [[Rust Concepts MOC]] - Foundation concepts
 - **Next**: [[Day 02 - Ownership Basics]] - Core ownership concepts
-- **Week Summary**: [[Day 07 - Week 1 Summary]] - Review all foundations
+- **Week Summary**: [[zettelkasten/daily-study/Day07]] - Review all foundations
 - **Rust Book**: [[Chapter 1 - Getting Started]] - Installation and Hello World
 
 ## Key Points

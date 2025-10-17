@@ -1,7 +1,7 @@
 # Day 7 · Week 1 Summary & Code Cheat Sheet
 
 ## 🔗 Zettelkasten Links
-- **Previous**: [[Day 06 - Pattern Matching]] - Match expressions
+- **Previous**: [[zettelkasten/daily-study/Day06]] - Match expressions
 - **Next**: [[Day 08 - Vectors]] - Dynamic arrays (Week 2 start)
 - **Concept**: [[Rust Concepts MOC]] - All foundation concepts
 - **Rust Book**: [[Chapter 1-6 Overview]] - Foundations complete
@@ -297,5 +297,5 @@ let slice = &vec[1..3];  // Borrowing without copying
 
 ---
 
-*Links: [[Day 06 - Pattern Matching]] | [[Day 08 - Vectors]] | [[Rust Concepts MOC]] | [[Week 1 Overview]]*
+*Links: [[zettelkasten/daily-study/Day06]] | [[Day 08 - Vectors]] | [[Rust Concepts MOC]] | [[Week 1 Overview]]*
 *Tags: #week-summary #review #cheatsheet #daily-study #foundation #rust-book*

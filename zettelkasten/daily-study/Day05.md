@@ -119,7 +119,7 @@ fn process_data(input: &str) -> Result<String, String> {
 
 - **Full Details**: [[daily_study/rust_learning_week1_notes/Day05]]
 - **Previous**: [[daily-study/Day04]]
-- **Next**: [[Day 06 - Pattern Matching]]
+- **Next**: [[zettelkasten/daily-study/Day06]]
 - **Week**: [[Week 1 Overview]]
 - **MOC**: [[Rust Concepts MOC]]
 

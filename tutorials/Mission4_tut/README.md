@@ -618,7 +618,7 @@ pub struct DoublyLinkedList<T> {
 ### Related Internal Documentation
 
 - [[../Mission4/README]] - Mission4 main implementation
-- [[../../zettelkasten/Missions MOC]] - All mission overviews
+- [[../../zettelkasten/Missions Overview]] - All mission overviews
 - [[../../zettelkasten/Box Smart Pointer Patterns]] - Box<T> deep dive
 - [[../../zettelkasten/Collections MOC]] - Data structure patterns
 - [[compilation_stages/README]] - Understanding Rust compilation
@@ -629,7 +629,7 @@ pub struct DoublyLinkedList<T> {
 
 *Tags: #mission4 #tutorial #linked-list #box #rc #refcell #ownership #smart-pointers #interior-mutability*
 
-*Links: [[examples/README]] | [[../Mission4/README]] | [[../../zettelkasten/Missions MOC]] | [[../../zettelkasten/Collections MOC]] | [[../../zettelkasten/zettel-index]]*
+*Links: [[examples/README]] | [[../Mission4/README]] | [[../../zettelkasten/Missions Overview]] | [[../../zettelkasten/Collections MOC]] | [[../../zettelkasten/zettel-index]]*
 
 ---
 

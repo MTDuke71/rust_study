@@ -159,7 +159,7 @@ The Mission 2 implementation demonstrates mastery of:
 
 ### 📚 Zettelkasten
 - **[[../../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
-- **[[../../zettelkasten/Missions MOC|Missions MOC]]** - V-Cycle projects navigation
+- **[[../../zettelkasten/Missions Overview|Missions Overview]]** - V-Cycle projects navigation
 - **[[../../zettelkasten/Mission2 Overview|Mission2 Overview]]** - Queue conceptual overview
 
 ### 🎯 Mission 2 Resources

@@ -165,7 +165,7 @@ For linked lists, `Box<T>` and `Rc<RefCell<T>>` provide the same functionality w
 - [[COMPLETE_ANALYSIS|compilation_stages/COMPLETE_ANALYSIS]] - Full compilation breakdown
 
 **Mission4 Implementation:**
-- [[Mission4 README|../../missions/Mission4/README]] - Main linked list implementation
+- [[Mission4 Overview|../../missions/Mission4/README]] - Main linked list implementation
 
 **Zettelkasten Concepts:**
 - [[Unsafe Rust|../../zettelkasten/Unsafe Rust]] - When and why to use unsafe
