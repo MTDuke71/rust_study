@@ -125,7 +125,7 @@
 - [[Day 09 - String Patterns]] - String handling
 - [[daily-study/Day10]] - Key-value storage
 - [[daily-study/Day11]] - Unique collections
-- [[Day 12 - BTreeMap]] - Ordered collections
+- [[daily-study/Day12]] - Ordered collections
 - [[daily-study/Day13]] - Collection processing
 
 ### **Week 3: Advanced Type System**

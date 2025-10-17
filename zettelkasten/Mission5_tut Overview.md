@@ -27,7 +27,7 @@
 | **Sept 27** | Basic Structure | [[Step 3 - Advanced Operations]] | [[Day 09 - String Patterns]] |
 | **Sept 28** | Hash & Collision | [[Step 4 - Multi-Value Patterns]] | [[daily-study/Day10]] |
 | **Sept 29** | Core Operations | [[Step 5 - MemoCache Integration]] | [[daily-study/Day11]] |
-| **Sept 30** | Iterator Implementation | [[Final Project Review]] | [[Day 12 - BTreeMap]] |
+| **Sept 30** | Iterator Implementation | [[Final Project Review]] | [[daily-study/Day12]] |
 
 ## 🔗 Cross-Reference Network
 

@@ -36,7 +36,7 @@ Or navigate directly to: `daily_study/rust_learning_week2_notes/Day13.md`
 - [[Collections MOC]] - Iterator integration with collections
 
 ### Daily Study Progression
-- [[Day 12 - BTreeMap]] - Previous day (ordered collections)
+- [[daily-study/Day12]] - Previous day (ordered collections)
 - **Current**: [[../daily_study/rust_learning_week2_notes/Day13|Day 13 - Advanced Iterators]]
 - [[Day 14 - Error Handling]] - Next day (error handling patterns)
 

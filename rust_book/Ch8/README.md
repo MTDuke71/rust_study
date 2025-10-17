@@ -319,7 +319,7 @@ Collections are fundamental to all missions:
 ### **Daily Study Connections**
 - [[Day 10 - HashMap Basics]] - HashMap fundamentals
 - [[Day 11 - HashSet Operations]] - Set-based collections
-- [[Day 12 - BTreeMap]] - Ordered collections comparison
+- [[daily-study/Day12]] - Ordered collections comparison
 - [[Week 2 Overview]] - Collections mastery week
 
 ### **Related Rust Book Chapters**
