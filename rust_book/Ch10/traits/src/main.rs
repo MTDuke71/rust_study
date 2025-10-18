@@ -31,7 +31,9 @@ fn example1_basic_trait_definition() {
 
     impl Summary for NewsArticle {
         fn summarize(&self) -> String {
-            format!("{}, by {} ({})", self.headline, self.author, self.location)
+            format!("{}, by {} ({}). Content: {}...", 
+                     self.headline, self.author, self.location, 
+                     &self.content[..self.content.len().min(50)])
         }
     }
 
@@ -49,7 +51,14 @@ fn example1_basic_trait_definition() {
 
     impl Summary for Tweet {
         fn summarize(&self) -> String {
-            format!("{}: {}", self.username, self.content)
+            let tweet_type = if self.reply {
+                "Reply"
+            } else if self.retweet {
+                "Retweet"
+            } else {
+                "Tweet"
+            };
+            format!("{} by {}: {}", tweet_type, self.username, self.content)
         }
     }
 
@@ -108,10 +117,6 @@ fn example2_trait_bounds() {
 
     // Multiple trait bounds
     use std::fmt::Display;
-    pub fn notify_and_display<T: Summary + Display>(item: &T) {
-        println!("Breaking news! {}", item.summarize());
-        println!("Item: {}", item);
-    }
 
     // Where clause for cleaner syntax
     pub fn some_function<T, U>(t: &T, u: &U) -> i32 
@@ -130,6 +135,12 @@ fn example2_trait_bounds() {
     };
 
     notify(&article);
+
+    // Demonstrate the unused functions
+    let test_string = String::from("Hello");
+    let test_number = 42;
+    let result = some_function(&test_string, &test_number);
+    println!("Function result: {}", result);
 
     println!();
 }
@@ -276,6 +287,10 @@ fn example5_default_implementations() {
     }
 
     impl Summary for NewsArticle {
+        fn summarize(&self) -> String {
+            format!("News: {}", self.headline)
+        }
+
         fn summarize_author(&self) -> String {
             self.author.clone()
         }
@@ -360,6 +375,265 @@ fn example6_trait_bounds_with_impl() {
     println!();
 }
 
+fn example_encapsulation() {
+    println!("🔒 Example 7: Encapsulation in Rust");
+    println!("===================================");
+
+    pub struct BankAccount {
+        balance: f64,        // Private field
+        account_number: u32, // Private field
+    }
+
+    impl BankAccount {
+        pub fn new(initial_balance: f64, account_number: u32) -> Self {
+            BankAccount { 
+                balance: initial_balance,
+                account_number,
+            }
+        }
+
+        pub fn deposit(&mut self, amount: f64) {  // Public method
+            if amount > 0.0 {
+                self.balance += amount;
+            }
+        }
+
+        pub fn withdraw(&mut self, amount: f64) -> Result<(), String> {
+            if self.validate_transaction(amount) {
+                self.balance -= amount;
+                Ok(())
+            } else {
+                Err("Insufficient funds or invalid amount".to_string())
+            }
+        }
+
+        pub fn get_balance(&self) -> f64 {  // Controlled access
+            self.balance
+        }
+
+        pub fn get_account_info(&self) -> String {
+            format!("Account #{}: Balance ${:.2}", self.account_number, self.balance)
+        }
+
+        // Private helper method
+        fn validate_transaction(&self, amount: f64) -> bool {
+            amount > 0.0 && amount <= self.balance
+        }
+    }
+
+    let mut account = BankAccount::new(100.0, 12345);
+    println!("Created: {}", account.get_account_info());
+    
+    account.deposit(50.0);
+    println!("Balance after deposit: ${:.2}", account.get_balance());
+    
+    match account.withdraw(25.0) {
+        Ok(()) => println!("Withdrawal successful. New balance: ${:.2}", account.get_balance()),
+        Err(e) => println!("Withdrawal failed: {}", e),
+    }
+    
+    // account.balance = 1000.0; // ❌ Compile error - private field
+    // account.validate_transaction(50.0); // ❌ Compile error - private method
+
+    println!();
+}
+
+fn example_polymorphism_enhanced() {
+    println!("🎪 Example 8: Enhanced Polymorphism");
+    println!("===================================");
+
+    // Like an interface in Java/C#
+    pub trait Animal {
+        fn make_sound(&self) -> String;
+        fn get_species(&self) -> &str;
+        
+        // Default implementation (like default methods in Java interfaces)
+        fn introduce(&self) -> String {
+            format!("I am a {} and I go {}", self.get_species(), self.make_sound())
+        }
+    }
+
+    pub struct Dog { name: String }
+    pub struct Cat { name: String }
+    pub struct Bird { name: String }
+
+    impl Animal for Dog {
+        fn make_sound(&self) -> String { "Woof!".to_string() }
+        fn get_species(&self) -> &str { "Dog" }
+        
+        fn introduce(&self) -> String {
+            format!("I'm {} the {} and I go {}", self.name, self.get_species(), self.make_sound())
+        }
+    }
+
+    impl Animal for Cat {
+        fn make_sound(&self) -> String { "Meow!".to_string() }
+        fn get_species(&self) -> &str { "Cat" }
+        
+        fn introduce(&self) -> String {
+            format!("I'm {} the {} and I go {}", self.name, self.get_species(), self.make_sound())
+        }
+    }
+
+    impl Animal for Bird {
+        fn make_sound(&self) -> String { "Tweet!".to_string() }
+        fn get_species(&self) -> &str { "Bird" }
+        
+        // Override default implementation
+        fn introduce(&self) -> String {
+            format!("I'm {} the {} and I sing {}", self.name, self.get_species(), self.make_sound())
+        }
+    }
+
+    // Polymorphic function - works with any Animal
+    fn pet_all_animals(animals: &[Box<dyn Animal>]) {
+        for animal in animals {
+            println!("{}", animal.introduce());
+        }
+    }
+
+    let zoo: Vec<Box<dyn Animal>> = vec![
+        Box::new(Dog { name: "Buddy".to_string() }),
+        Box::new(Cat { name: "Whiskers".to_string() }),
+        Box::new(Bird { name: "Tweety".to_string() }),
+    ];
+
+    pet_all_animals(&zoo);
+
+    println!();
+}
+
+fn example_composition_over_inheritance() {
+    println!("🏗️ Example 9: Composition Over Inheritance");
+    println!("==========================================");
+
+    // Instead of inheritance, use composition
+    struct Engine {
+        horsepower: u32,
+        fuel_type: String,
+    }
+
+    struct Vehicle {
+        engine: Engine,      // Composition
+        wheels: u8,
+        make: String,
+    }
+
+    // Multiple traits instead of inheritance
+    trait Drivable {
+        fn drive(&self) -> String;
+    }
+
+    trait Maintainable {
+        fn service(&self) -> String;
+    }
+
+    trait Insurable {
+        fn get_insurance_rate(&self) -> f64;
+    }
+
+    impl Drivable for Vehicle {
+        fn drive(&self) -> String {
+            format!("Driving {}-wheel {} with {} HP engine", 
+                    self.wheels, self.make, self.engine.horsepower)
+        }
+    }
+
+    impl Maintainable for Vehicle {
+        fn service(&self) -> String {
+            format!("Servicing {} engine", self.engine.fuel_type)
+        }
+    }
+
+    impl Insurable for Vehicle {
+        fn get_insurance_rate(&self) -> f64 {
+            self.engine.horsepower as f64 * 0.01
+        }
+    }
+
+    let car = Vehicle {
+        engine: Engine {
+            horsepower: 250,
+            fuel_type: "Gasoline".to_string(),
+        },
+        wheels: 4,
+        make: "Toyota".to_string(),
+    };
+
+    println!("{}", car.drive());
+    println!("{}", car.service());
+    println!("Insurance rate: ${:.2}", car.get_insurance_rate());
+
+    println!();
+}
+
+fn example_advanced_oop_patterns() {
+    println!("🎨 Example 10: Advanced OOP-Style Patterns (Strategy Pattern)");
+    println!("=============================================================");
+
+    // Strategy Pattern with traits
+    trait PaymentProcessor {
+        fn process_payment(&self, amount: f64) -> String;
+        fn get_fee(&self) -> f64;
+    }
+
+    struct CreditCardProcessor { card_type: String }
+    struct PayPalProcessor { email: String }
+    struct BankTransferProcessor { account: String }
+
+    impl PaymentProcessor for CreditCardProcessor {
+        fn process_payment(&self, amount: f64) -> String {
+            format!("Processing ${:.2} via {} credit card", amount, self.card_type)
+        }
+        fn get_fee(&self) -> f64 { 0.029 }
+    }
+
+    impl PaymentProcessor for PayPalProcessor {
+        fn process_payment(&self, amount: f64) -> String {
+            format!("Processing ${:.2} via PayPal ({})", amount, self.email)
+        }
+        fn get_fee(&self) -> f64 { 0.034 }
+    }
+
+    impl PaymentProcessor for BankTransferProcessor {
+        fn process_payment(&self, amount: f64) -> String {
+            format!("Processing ${:.2} via bank transfer ({})", amount, self.account)
+        }
+        fn get_fee(&self) -> f64 { 0.005 }
+    }
+
+    // Context class that uses strategy
+    struct PaymentContext {
+        processor: Box<dyn PaymentProcessor>,
+    }
+
+    impl PaymentContext {
+        fn new(processor: Box<dyn PaymentProcessor>) -> Self {
+            PaymentContext { processor }
+        }
+
+        fn execute_payment(&self, amount: f64) -> String {
+            let fee = amount * self.processor.get_fee();
+            format!("{}\nProcessing fee: ${:.2}", 
+                   self.processor.process_payment(amount), fee)
+        }
+    }
+
+    // Using different strategies
+    let payment_methods: Vec<Box<dyn PaymentProcessor>> = vec![
+        Box::new(CreditCardProcessor { card_type: "Visa".to_string() }),
+        Box::new(PayPalProcessor { email: "user@example.com".to_string() }),
+        Box::new(BankTransferProcessor { account: "12345678".to_string() }),
+    ];
+
+    for processor in payment_methods {
+        let context = PaymentContext::new(processor);
+        println!("{}\n", context.execute_payment(100.0));
+    }
+
+    println!();
+}
+
 fn main() {
     println!("📚 Chapter 10.2: Traits - Defining Shared Behavior\n");
 
@@ -369,6 +643,12 @@ fn main() {
     example4_associated_types();
     example5_default_implementations();
     example6_trait_bounds_with_impl();
+    
+    // New OOP-style examples
+    example_encapsulation();
+    example_polymorphism_enhanced();
+    example_composition_over_inheritance();
+    example_advanced_oop_patterns();
 
     println!("✅ All examples completed!");
     println!("📖 Next: Read Chapter 10.3 (Lifetimes) or run examples in ../lifetimes/");
