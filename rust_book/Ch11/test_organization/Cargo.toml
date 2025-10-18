@@ -1,0 +1,12 @@
+[package]
+name = "test_organization"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "test_organization"
+path = "src/main.rs"
+
+[lib]
+name = "test_organization"
+path = "src/lib.rs"
