@@ -255,7 +255,8 @@ fn example7_common_lifetime_patterns() {
     
     println!("Text: {}", holder.text);
     println!("Word count: {}", holder.word_count);
-    println!("First word: {}", holder.get_first_word());
+    println!("First word (from method): {}", holder.get_first_word());
+    println!("First word (from function): {}", get_first_word(&text));
     println!("Combined: {}", combine_strings("Hello", "Rust"));
 
     println!();
