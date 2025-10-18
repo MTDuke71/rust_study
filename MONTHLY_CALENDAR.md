@@ -727,37 +727,37 @@ cargo test req3_parser_combinators && cargo test req4_custom_formats
 ### **Sunday, November 16** 🎮
 **Mission Focus**: Mission 12 AoC Utilities & Grid Parsing
 **Daily Study**: Week 8, Day 54 - Thread-safe collections (concurrent data structures)
-**Rust Book**: Chapter 17.1 - Characteristics of Object-Oriented Languages
+**Rust Book**: Chapter 17.1 - Futures and the Async Syntax
 ```bash
 # Daily Tasks
 # Build AoC-specific parsers: grids, coordinates, custom number formats
 cargo test req5_aoc_utilities
 # Learn thread-safe collections and concurrent data structures
-# Understand object-oriented programming concepts in Rust
+# Understand Futures and async/await syntax fundamentals
 ```
 
 ### **Monday, November 17** ⚡
 **Mission Focus**: Mission 12 Performance Optimization & Error Handling
 **Daily Study**: Week 8, Day 55 - Parallel iterators (`rayon` for CPU-bound work)
-**Rust Book**: Chapter 17.2 - Using Trait Objects That Allow for Values of Different Types
+**Rust Book**: Chapter 17.2 - Applying Concurrency with Async
 ```bash
 # Daily Tasks
 # Optimize parsing performance and implement robust error handling
 cargo criterion                             # Benchmark parsing performance
 # Learn parallel iterators with rayon
-# Master trait objects for heterogeneous collections
+# Master async concurrency patterns and execution models
 ```
 
 ### **Tuesday, November 18** 📚
 **Mission Focus**: Mission 12 Testing & Documentation  
 **Daily Study**: Week 8, Day 56 - Concurrency practice (building thread-safe systems)
-**Rust Book**: Chapter 17.3 - Implementing an Object-Oriented Design Pattern
+**Rust Book**: Chapter 17.3 - Working With Any Number of Futures
 ```bash
 # Daily Tasks
 cargo test --all                            # Complete Mission 12 tests
 cargo doc --open                            # Generate documentation
 # Practice building thread-safe systems
-# Learn object-oriented design patterns in Rust
+# Learn managing multiple futures and async streams
 ```
 
 ---
