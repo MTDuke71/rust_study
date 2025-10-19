@@ -101,7 +101,7 @@ fn estimate_graph_memory(graph: &HashMap<u32, Vec<u32>>) -> usize {
     let element_size = 4;    // u32 size
     
     let mut total = base_overhead;
-    for (_, neighbors) in graph {
+    for neighbors in graph.values() {
         total += entry_overhead + vec_overhead + (neighbors.len() * element_size);
     }
     total
