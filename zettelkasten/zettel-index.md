@@ -65,6 +65,9 @@
   - **Coverage**: [[../missions/Mission6/COVERAGE_IMPROVEMENT_LOG]] - Test coverage strategies and improvements
 - [[Mission7 Overview]] or [[mission-7]] - Graph Algorithms & Traversal (DFS/BFS)
   - **Tutorial**: [[../tutorials/Mission7_tut/README|Mission7 Tutorial]] - 7-step graph learning progression
+- [[mission8_overview]] or [[mission-8]] - Advanced Graph Algorithms & Composition (BFS/DFS)
+  - **Tutorial**: [[../tutorials/Mission8_tut/README|Mission8 Tutorial]] - 7-step advanced algorithm composition
+  - **Exercise Solutions**: [[Day 5 Exercise Solutions]] - Advanced maze solving techniques
 
 ### **Daily Study Track** - Systematic Learning
 - [[Week 1 Overview]] - Collections Fundamentals

@@ -505,4 +505,4 @@ if !visited.contains(&neighbor) {
 
 *Tags: #bfs #breadth-first-search #shortest-path #level-order #graph-algorithms #grid-navigation #queue #aoc-patterns*
 
-*Links: [[zettel-index]] | [[DFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[Manhattan Distance]] | [[Mission2 Overview]] | [[Mission6 Overview]] | [[Week 4 Overview]]*
+*Links: [[zettel-index]] | [[DFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[Manhattan Distance]] | [[Mission2 Overview]] | [[Mission6 Overview]] | [[mission8_overview]] | [[Day 5 Exercise Solutions]] | [[Week 4 Overview]]*

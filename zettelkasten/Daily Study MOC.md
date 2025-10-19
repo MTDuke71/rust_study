@@ -315,4 +315,4 @@ Daily notes provide detailed task breakdowns and learning objectives that align 
 
 *Tags: #daily-study #moc #learning-progression #rust-fundamentals #collections #algorithms #competitive-programming #3-track-system*
 
-*Links: [[zettel-index]] | [[Missions Overview]] | [[Collections MOC]] | [[AoC Patterns MOC]] | [[Rust Concepts MOC]] | [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Missions Overview]] | [[Collections MOC]] | [[AoC Patterns MOC]] | [[Rust Concepts MOC]] | [[Day 5 Exercise Solutions]] | [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]]*
