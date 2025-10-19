@@ -139,6 +139,48 @@ Components:
 - Graph storage: 16 bytes per edge (pointer + value)
 ```
 
+#### Memory Scaling and Hardware Limits
+
+**Graph Size vs Memory Usage (HashSet-based):**
+| Nodes | Edges (sparse) | Graph Memory | Visited Memory | Total Memory | Time to Exhaust |
+|-------|----------------|--------------|----------------|--------------|-----------------|
+| 1,000 | 3,000 | 72 KB | 24 KB | ~100 KB | Instant |
+| 10,000 | 30,000 | 720 KB | 240 KB | ~1 MB | Instant |
+| 100,000 | 300,000 | 7.2 MB | 2.4 MB | ~10 MB | Instant |
+| 1,000,000 | 3,000,000 | 72 MB | 24 MB | ~100 MB | <1 second |
+| 10,000,000 | 30,000,000 | 720 MB | 240 MB | ~1 GB | ~10 seconds |
+| 50,000,000 | 150,000,000 | 3.6 GB | 1.2 GB | ~5 GB | ~1 minute |
+| 100,000,000 | 300,000,000 | 7.2 GB | 2.4 GB | ~10 GB | ~5 minutes |
+
+**Hardware Memory Constraints:**
+- **8 GB RAM System**: ~50-70 million nodes maximum (after OS overhead)
+- **16 GB RAM System**: ~100-150 million nodes maximum
+- **32 GB RAM System**: ~200-300 million nodes maximum
+- **64+ GB RAM System**: Limited by virtual memory and processing time
+
+**Memory Optimization Impact:**
+```rust
+// HashSet visited tracking: 24 bytes per node
+let mut visited = HashSet::new();  // 1M nodes = 24 MB
+
+// Vec visited tracking: 1 byte per node  
+let mut visited = vec![false; max_node_id + 1];  // 1M nodes = 1 MB
+// 24x memory reduction!
+```
+
+**Real-World Memory Limits (Your 32GB System):**
+- **Small graphs** (<10,000 nodes): Trivial - uses <1 MB total
+- **Medium graphs** (10K-1M nodes): Comfortable - uses 1-100 MB total  
+- **Large graphs** (1M-50M nodes): Manageable - uses 0.1-5 GB total
+- **Very large graphs** (50M-200M nodes): Maximum capacity - uses 5-20 GB total
+- **Massive graphs** (>200M nodes): Requires distributed computing or disk-based algorithms
+
+**Performance vs Memory Trade-offs:**
+- **Creation time** scales linearly: 1M nodes = ~440ms to create
+- **Memory efficiency**: Vec<bool> visited = 24x less memory than HashSet<u32>
+- **System overhead**: Reserve 25-30% RAM for OS and other processes
+- **Practical limit**: Your system can handle most real-world graph problems!
+
 ---
 
 ## ⚡ Optimization Recommendations
