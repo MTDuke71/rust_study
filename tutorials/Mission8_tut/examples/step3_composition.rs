@@ -340,6 +340,7 @@ fn section_7_error_handling() {
     
     println!("🧪 Robust shortest_path implementation:");
     
+    #[allow(dead_code)]
     fn robust_shortest_path<N>(
         graph: &HashMap<N, Vec<N>>,
         start: N,
@@ -497,6 +498,7 @@ fn create_disconnected_components() -> HashMap<u32, Vec<u32>> {
     graph
 }
 
+#[allow(dead_code)]
 fn have_cycle<N>(_graph: &HashMap<N, Vec<N>>) -> bool
 where
     N: Copy + Eq + std::hash::Hash,

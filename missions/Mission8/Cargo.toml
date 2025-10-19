@@ -8,7 +8,6 @@ edition = "2021"
 [dev-dependencies]
 criterion = "0.5"
 
-# Benchmarks will be added in REQ-3 (Day 4)
-# [[bench]]
-# name = "algorithm_benchmarks"
-# harness = false
+[[bench]]
+name = "algorithm_benchmarks"
+harness = false

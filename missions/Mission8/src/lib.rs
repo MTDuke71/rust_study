@@ -694,10 +694,9 @@ pub fn has_cycle<G: Graph>(graph: &G) -> bool {
     
     // Check each node (to handle disconnected components)
     for node in graph.nodes() {
-        if *color.get(&node).unwrap_or(&Color::White) == Color::White {
-            if has_cycle_dfs(graph, node, &mut color) {
-                return true;
-            }
+        if *color.get(&node).unwrap_or(&Color::White) == Color::White
+            && has_cycle_dfs(graph, node, &mut color) {
+            return true;
         }
     }
     
@@ -825,8 +824,8 @@ fn find_cycle_dfs<G: Graph>(
                 let mut cycle = Vec::new();
                 
                 // Add nodes from the cycle start to the end
-                for i in cycle_start..path.len() {
-                    cycle.push(path[i]);
+                for &node in path.iter().skip(cycle_start) {
+                    cycle.push(node);
                 }
                 
                 // Replace the path with the cycle

@@ -289,10 +289,10 @@
 - [ ] Apply optimization strategies
 
 ### Exercises for Students
-- [ ] Exercise 1: Benchmark shortest_path function
-- [ ] Exercise 2: Compare HashSet vs Vec for visited tracking
-- [ ] Exercise 3: Measure memory allocation patterns
-- [ ] Exercise 4: Optimize cycle detection
+- [x] Exercise 1: Benchmark shortest_path function ✅
+- [x] Exercise 2: Compare HashSet vs Vec for visited tracking ✅
+- [x] Exercise 3: Measure memory allocation patterns ✅
+- [x] Exercise 4: Optimize cycle detection ✅
 
 ### Verification Checklist
 - [ ] `cargo run -p mission8_tut --example step4_benchmarking` (runs)
@@ -589,6 +589,8 @@
 - [ ] `examples/step5_maze_solver.rs`
 - [ ] `examples/step6_integration.rs`
 - [ ] `examples/step7_final_review.rs`
+- [x] `examples/day4_exercises_solutions.rs` ✅
+- [x] `DAY4_EXERCISE_SOLUTIONS.md` ✅
 - [x] `TODO.md` - This file
 
 ### Quality Metrics

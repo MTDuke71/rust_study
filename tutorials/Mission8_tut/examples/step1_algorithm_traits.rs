@@ -68,7 +68,7 @@ impl AdjacencyList {
     }
 
     fn add_edge(&mut self, from: u32, to: u32) {
-        self.edges.entry(from).or_insert_with(Vec::new).push(to);
+        self.edges.entry(from).or_default().push(to);
     }
 
     // Simulate Graph trait methods (actual trait impl would be in mission8)

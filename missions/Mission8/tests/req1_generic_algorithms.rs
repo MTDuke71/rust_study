@@ -1,9 +1,9 @@
-/// Tests for REQ-1: Generic BFS/DFS Algorithm Implementation
-/// 
-/// This test suite verifies that the BFS and DFS algorithms work correctly
-/// on different graph types and handle various edge cases properly.
+//! Tests for REQ-1: Generic BFS/DFS Algorithm Implementation
+//!
+//! This test suite verifies that the BFS and DFS algorithms work correctly
+//! on different graph types and handle various edge cases properly.
 
-use mission8::{Graph, bfs, dfs, GraphError};
+use mission8::{Graph, bfs, dfs};
 use std::collections::HashMap;
 
 /// Create a simple 4-node test graph for algorithm validation
@@ -157,7 +157,7 @@ fn req1_test_dfs_depth_first_behavior() {
     
     // DFS explores depth first, so should visit one branch completely
     // before exploring the other branch
-    let pos_1_dfs = dfs_result.iter().position(|&x| x == 1).unwrap();
+    let _pos_1_dfs = dfs_result.iter().position(|&x| x == 1).unwrap();
     let pos_3_dfs = dfs_result.iter().position(|&x| x == 3).unwrap();
     let pos_2_dfs = dfs_result.iter().position(|&x| x == 2).unwrap();
     

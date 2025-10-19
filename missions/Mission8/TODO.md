@@ -193,7 +193,7 @@ cargo run -p mission8 --example demo  # Show algorithm composition
   - [ ] Cache-friendliness analysis
 
 ### Verification Checklist
-- [ ] `cargo criterion -p mission8` (all benchmarks run)
+- [ ] `cargo bench -p mission8` (all benchmarks run)
 - [ ] `cargo test -p mission8 req3` (performance tests pass)
 - [ ] Algorithms scale linearly with graph size
 - [ ] Memory usage is within O(V) bounds
@@ -201,7 +201,7 @@ cargo run -p mission8 --example demo  # Show algorithm composition
 
 ### Commands
 ```bash
-cargo criterion -p mission8
+cargo bench -p mission8
 cargo test -p mission8 req3_performance
 ```
 
@@ -393,7 +393,7 @@ cargo test -p mission8 integration -- --nocapture  # See output
 - [ ] `cargo clippy -p mission8 -- -D warnings` (zero warnings)
 - [ ] `cargo build --workspace` (no breaking changes)
 - [ ] `cargo doc -p mission8 --open` (docs render correctly)
-- [ ] `cargo criterion -p mission8` (benchmarks complete)
+- [ ] `cargo bench -p mission8` (benchmarks complete)
 - [ ] All examples run successfully
 - [ ] README.md V-Cycle summary complete
 - [ ] PERFORMANCE_REPORT.md finalized
@@ -448,7 +448,62 @@ cargo test --doc -p mission8
 
 ---
 
-## 🔗 **Related Files**
+## � **Performance Optimization Roadmap** (Based on PERFORMANCE_REPORT.md)
+
+*Note: These optimizations are identified from benchmarking results but not currently scheduled for Mission 8. Could be implemented as extensions or in future missions.*
+
+### High-Impact Optimizations (2-5x Performance Gains)
+- [ ] **Vec-based visited tracking** - Replace `HashSet<NodeId>` with `vec![false; max_node_id + 1]`
+  - **Expected**: 2-3x faster, 6x less memory usage
+  - **Requirement**: Max node ID must be known in advance
+  - **Implementation**: Modify BFS/DFS to accept `max_node_id` parameter
+  - **File to modify**: `src/lib.rs` - update `bfs()` and `dfs()` signatures
+
+- [ ] **Early termination for search algorithms** - Stop BFS/DFS when target is found
+  - **Expected**: 3x improvement for targeted searches
+  - **Use case**: Shortest path, specific node searches
+  - **Implementation**: Add optional `target` parameter to traversal functions
+
+### Medium-Impact Optimizations (10-50% Performance Gains)
+- [ ] **Pre-allocation with capacity hints**
+  - **Expected**: 10-15% improvement, reduces allocations
+  - **Implementation**: 
+    - `VecDeque::with_capacity(estimated_queue_size)`
+    - `HashSet::with_capacity(node_count)`
+  - **Files**: All BFS/DFS implementations
+
+- [ ] **Bidirectional BFS for shortest path**
+  - **Expected**: 50% reduction in search space
+  - **Use case**: Large graphs with distant start/end points
+  - **Implementation**: New function `bidirectional_shortest_path()`
+
+### Advanced Optimizations (15-30% Performance Gains)
+- [ ] **Graph representation optimization** - Use `Vec<Vec<NodeId>>` for dense node IDs
+  - **Expected**: 15-20% improvement for dense graphs
+  - **Memory**: 24 bytes per node vs 56 bytes (HashMap)
+  - **Requirement**: Dense, sequential node IDs (0, 1, 2, 3, ...)
+
+- [ ] **Algorithm specialization** - Separate optimized versions for different graph types
+  - **Sparse graphs**: Current HashMap implementation
+  - **Dense graphs**: Vec-based adjacency lists
+  - **Complete graphs**: Adjacency matrix representation
+
+### Research-Level Optimizations (Future Work)
+- [ ] **Parallel algorithms** - Multi-threaded BFS/DFS using Rayon
+- [ ] **GPU acceleration** - CUDA/OpenCL for very large graphs (>1M nodes)
+- [ ] **Advanced data structures** - Compressed Sparse Row (CSR), cache-optimized layouts
+
+### Implementation Priority Guide
+1. **Vec-based visited tracking** - Highest ROI, relatively simple
+2. **Early termination** - High impact for specific use cases
+3. **Pre-allocation** - Low-hanging fruit, easy to implement
+4. **Bidirectional BFS** - Moderate complexity, high payoff for large graphs
+
+**Note**: All optimizations should be benchmarked before and after implementation to verify actual performance gains.
+
+---
+
+## �🔗 **Related Files**
 
 - **Tutorial**: `tutorials/Mission8_tut/TODO.md` - Tutorial progression plan
 - **Calendar**: `MONTHLY_CALENDAR.md` - Overall learning schedule
@@ -468,7 +523,7 @@ cargo test -p mission8 req1
 cargo test -p mission8 req2
 
 # Run benchmarks
-cargo criterion -p mission8
+cargo bench -p mission8
 
 # Run examples
 cargo run -p mission8 --example demo

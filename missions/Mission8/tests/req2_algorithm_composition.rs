@@ -1,8 +1,8 @@
-/// Tests for REQ-2: Algorithm Composition
-/// 
-/// This test suite validates that composed algorithms (shortest_path, has_cycle,
-/// find_cycle, connected_components) work correctly on various graph types and
-/// handle edge cases properly.
+//! Tests for REQ-2: Algorithm Composition
+//!
+//! This test suite validates that composed algorithms (shortest_path, has_cycle,
+//! find_cycle, connected_components) work correctly on various graph types and
+//! handle edge cases properly.
 
 use mission8::{
     Graph, connected_components, find_cycle, has_cycle, shortest_path, GraphError,
@@ -497,7 +497,7 @@ fn req2_cycle_detection_and_components_consistency() {
     assert!(has_cycle(&graph));
 
     let components = connected_components(&graph);
-    assert!(components.len() >= 1);
+    assert!(!components.is_empty());
 }
 
 #[test]
