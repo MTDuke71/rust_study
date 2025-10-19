@@ -287,3 +287,9 @@ cargo run -p mission8_tut --example day4_exercises_solutions
 ---
 
 *This solutions guide demonstrates advanced benchmarking techniques and performance optimization strategies for graph algorithms. The implementations serve as both educational examples and practical optimization patterns for real-world applications.*
+
+---
+
+*Tags: #mission8 #tutorial #performance #benchmarking #exercises #solutions #optimization #criterion*
+
+*Links: [[zettel-index]] | [[mission8_overview]] | [[Performance Optimization Guide]] | [[Mission8 Performance Report]] | [[Day 5 Exercise Solutions]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Daily Study MOC]]*

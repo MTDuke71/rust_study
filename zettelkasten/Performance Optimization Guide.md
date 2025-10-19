@@ -550,4 +550,4 @@ rustflags = ["-C", "target-cpu=native"] # Use all CPU features
 ---
 
 *Tags: #performance #optimization #algorithms #memory #benchmarking #profiling #competitive-programming #rust-specific*
-*Links: [[AoC Collection Problems]] | [[Rust Collections MOC]] | [[AoC Patterns MOC]] | [[../Mission5/README]] | [[Algorithm Complexity Analysis]]*
+*Links: [[zettel-index]] | [[AoC Collection Problems]] | [[Rust Collections MOC]] | [[AoC Patterns MOC]] | [[Mission8 Performance Report]] | [[Day 4 Exercise Solutions]] | [[mission8_overview]] | [[Algorithm Complexity Analysis]]*
