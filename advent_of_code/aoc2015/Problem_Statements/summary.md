@@ -334,6 +334,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 **Part 2 Description**: Sum all numbers, but ignore any object (and all its children) that has any property with value "red"  
 **Key Concepts**: JSON parsing, recursive traversal, tree structures, numeric extraction, conditional filtering, deep object inspection
 
+
 **JSON Structure Types**:
 - **Arrays**: `[1, 2, 3]` - List of values
 - **Objects**: `{"a": 1, "b": 2}` - Key-value pairs
@@ -427,6 +428,19 @@ fn sum_with_regex(json: &str) -> i64 {
 
 ---
 
+### [[day13.md|Day 13: Knights of the Dinner Table]]
+**Title**: Knights of the Dinner Table  
+**Part 1 Type**: Brute Force + Optimization + Graph Algorithms  
+**Part 1 Description**: Find optimal circular seating arrangement that maximizes total happiness (TSP variant)  
+**Part 2 Type**: Brute Force + Optimization + Graph Algorithms  
+**Part 2 Description**: Add yourself (neutral happiness) and find new optimal arrangement  
+**Key Concepts**: Traveling Salesman Problem, weighted directed complete adjacency graph, Heap's algorithm for permutations, circular seating constraints, symmetry exploitation for optimization, global vs. local optimization strategies
+
+**📖 Complete Analysis**: [[../examples/day13_analysis|Day 13 Implementation Analysis]] - Comprehensive TSP algorithms, graph theory, optimization techniques, and mathematical proofs
+
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -435,13 +449,13 @@ fn sum_with_regex(json: &str) -> i64 {
 | Mathematical | 3 | 4 |
 | Simulation | 6 | 6 |
 | Search/Traversal | 1 | 1 |
-| Optimization | 1 | 2 |
+| Optimization | 2 | 3 |
 | Data Structures | 4 | 2 |
-| Brute Force | 2 | 2 |
+| Brute Force | 3 | 3 |
 | Cryptographic | 1 | 1 |
 | Pattern Matching | 2 | 2 |
 | Advanced Pattern Matching | 0 | 1 |
-| Graph Algorithms | 2 | 3 |
+| Graph Algorithms | 3 | 4 |
 | Parsing | 2 | 1 |
 | Encoding | 0 | 1 |
 
@@ -467,6 +481,7 @@ fn sum_with_regex(json: &str) -> i64 {
 - Day 10: **Run-length encoding**, while loop with manual index control, iterative vs recursive performance comparison, benchmarking with Criterion, understanding when memoization hurts performance (0% cache hit rate), string growth patterns, clean code principles (avoiding redundant checks), comprehensive performance analysis documentation
 - Day 11: **Base-26 counting with carry**, string validation with multiple rules, sliding window for pattern detection, non-overlapping pair constraints, optimization through range skipping, forbidden character handling, password incrementing algorithms
 - Day 12: **JSON parsing with serde_json**, recursive tree traversal, pattern matching on Value enum, conditional filtering (red objects), regex vs structured parsing trade-offs, external crate integration, data structure selection (string scanning vs tree building)
+- Day 13: **Advanced graph theory implementation**, weighted directed complete adjacency graph using HashMap composite keys, Traveling Salesman Problem recognition and solution, Heap's algorithm for efficient permutation generation, circular seating constraint handling, mathematical symmetry exploitation for 9× performance optimization, global vs. local optimization analysis (why greedy "weakest link" fails), comprehensive verification testing proving optimization equivalence, HashMap adjacency list implementation, modular arithmetic for circular indexing
 
 ---
 
@@ -494,9 +509,9 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]]*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]]*
