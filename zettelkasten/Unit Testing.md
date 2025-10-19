@@ -565,4 +565,4 @@ criterion_main!(benches);
 ---
 
 *Tags: #unit-testing #function-testing #component-testing #requirement-testing #assertions #mocking #coverage*
-*Links: [[zettel-index]] | [[Integration Testing]] | [[Testing Strategies]] | [[TDD (Test-Driven Development)]] | [[REQ-1 Test Strategy]] | [[V-Cycle Methodology]] | [[Chapter 11 Complete]] | [[Debugging Lessons]] | [[Error Handling Patterns]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[Integration Testing]] | [[Testing Strategies]] | [[TDD (Test-Driven Development)]] | [[REQ-1 Test Strategy]] | [[V-Cycle Methodology]] | [[../rust_book/Ch11/CHAPTER_COMPLETE]] | [[Debugging Lessons]] | [[Error Handling Patterns]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*

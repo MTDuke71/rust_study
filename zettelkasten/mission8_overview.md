@@ -194,7 +194,7 @@ All algorithms achieve optimal asymptotic complexity through careful implementat
 
 *Tags: #mission8 #graph-algorithms #traits #composition #generics #bfs-dfs #algorithm-design #mission #mission-track*
 
-*Links: [[zettel-index]] | [[mission-7]] | [[mission-9]] | [[rust-book-ch10]] | [[daily-study/Day30]] | [[Day 5 Exercise Solutions]] | [[Day 4 Exercise Solutions]] | [[Mission8 Performance Report]] | [[BFS Patterns]] | [[DFS Patterns]] | [[algorithms]]* 
+*Links: [[zettel-index]] | [[mission-7]] | [[mission-9]] | [[rust-book-ch10]] | [[daily-study/Day30]] | [[../tutorials/Mission8_tut/DAY5_EXERCISE_SOLUTIONS]] | [[../tutorials/Mission8_tut/DAY4_EXERCISE_SOLUTIONS]] | [[../missions/Mission8/PERFORMANCE_REPORT]] | [[BFS Patterns]] | [[DFS Patterns]] | [[algorithms]]* 
 
 ---
 

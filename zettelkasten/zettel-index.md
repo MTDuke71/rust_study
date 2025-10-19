@@ -67,9 +67,9 @@
   - **Tutorial**: [[../tutorials/Mission7_tut/README|Mission7 Tutorial]] - 7-step graph learning progression
 - [[mission8_overview]] or [[mission-8]] - Advanced Graph Algorithms & Composition (BFS/DFS)
   - **Tutorial**: [[../tutorials/Mission8_tut/README|Mission8 Tutorial]] - 7-step advanced algorithm composition
-  - **Exercise Solutions**: [[Day 5 Exercise Solutions]] - Advanced maze solving techniques
-  - **Performance Report**: [[Mission8 Performance Report]] - Comprehensive benchmarking analysis
-  - **Day 4 Solutions**: [[Day 4 Exercise Solutions]] - Performance optimization exercises
+  - **Exercise Solutions**: [[../tutorials/Mission8_tut/DAY5_EXERCISE_SOLUTIONS|Day 5 Exercise Solutions]] - Advanced maze solving techniques
+  - **Performance Report**: [[../missions/Mission8/PERFORMANCE_REPORT|Mission8 Performance Report]] - Comprehensive benchmarking analysis
+  - **Day 4 Solutions**: [[../tutorials/Mission8_tut/DAY4_EXERCISE_SOLUTIONS|Day 4 Exercise Solutions]] - Performance optimization exercises
 
 ### **Daily Study Track** - Systematic Learning
 - [[Week 1 Overview]] - Collections Fundamentals
@@ -126,7 +126,7 @@
 - [[rust_book/Ch9/README]] - Error handling
 - [[rust-book-ch10]] or [[rb-ch10]] - Generics, traits, lifetimes
 - [[rust-book-ch11]] or [[rb-ch11]] - Testing ✅
-  - **Complete**: [[Chapter 11 Complete]] - Automated testing mastery
+  - **Complete**: [[../rust_book/Ch11/CHAPTER_COMPLETE|Chapter 11 Complete]] - Automated testing mastery
 
 ### **Detailed Chapter Guides**
 - [[../../rust_book/Ch5/README]] - **Chapter 5 Complete Guide** - Structs with mission integration examples
