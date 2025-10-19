@@ -1,6 +1,6 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use mission8::{bfs, dfs, shortest_path, has_cycle, find_cycle, connected_components};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 /// Create a small graph (10 nodes) for quick benchmarks
 fn create_small_graph() -> HashMap<u32, Vec<u32>> {
@@ -49,6 +49,38 @@ fn create_complete_graph(size: u32) -> HashMap<u32, Vec<u32>> {
         graph.insert(i, neighbors);
     }
     graph
+}
+
+/// Recursive DFS implementation for comparison with iterative version
+fn dfs_recursive_helper<N>(
+    graph: &HashMap<N, Vec<N>>,
+    node: N,
+    visited: &mut HashSet<N>,
+    result: &mut Vec<N>,
+) where
+    N: Copy + Eq + std::hash::Hash,
+{
+    if visited.contains(&node) {
+        return;
+    }
+    
+    visited.insert(node);
+    result.push(node);
+    
+    for &neighbor in graph.get(&node).unwrap_or(&Vec::new()) {
+        dfs_recursive_helper(graph, neighbor, visited, result);
+    }
+}
+
+fn dfs_recursive<N>(graph: &HashMap<N, Vec<N>>, start: N) -> Vec<N>
+where
+    N: Copy + Eq + std::hash::Hash,
+{
+    let mut visited = HashSet::new();
+    let mut result = Vec::new();
+    
+    dfs_recursive_helper(graph, start, &mut visited, &mut result);
+    result
 }
 
 /// Create a cyclic graph for cycle detection benchmarks
@@ -114,6 +146,103 @@ fn bench_dfs_large_graph(c: &mut Criterion) {
     c.bench_function("dfs_large_graph", |b| {
         b.iter(|| dfs(black_box(&graph), black_box(0)))
     });
+}
+
+// ============================================================================
+// RECURSIVE vs ITERATIVE DFS COMPARISON BENCHMARKS
+// ============================================================================
+
+fn bench_dfs_iterative_vs_recursive_small(c: &mut Criterion) {
+    let graph = create_small_graph();
+    let mut group = c.benchmark_group("dfs_small_recursive_vs_iterative");
+    
+    group.bench_function("iterative_dfs", |b| {
+        b.iter(|| dfs(black_box(&graph), black_box(0)))
+    });
+    
+    group.bench_function("recursive_dfs", |b| {
+        b.iter(|| dfs_recursive(black_box(&graph), black_box(0)))
+    });
+    
+    group.finish();
+}
+
+fn bench_dfs_iterative_vs_recursive_medium(c: &mut Criterion) {
+    let graph = create_medium_graph();
+    let mut group = c.benchmark_group("dfs_medium_recursive_vs_iterative");
+    
+    group.bench_function("iterative_dfs", |b| {
+        b.iter(|| dfs(black_box(&graph), black_box(0)))
+    });
+    
+    group.bench_function("recursive_dfs", |b| {
+        b.iter(|| dfs_recursive(black_box(&graph), black_box(0)))
+    });
+    
+    group.finish();
+}
+
+fn bench_dfs_iterative_vs_recursive_large(c: &mut Criterion) {
+    let graph = create_large_graph();
+    let mut group = c.benchmark_group("dfs_large_recursive_vs_iterative");
+    
+    group.bench_function("iterative_dfs", |b| {
+        b.iter(|| dfs(black_box(&graph), black_box(0)))
+    });
+    
+    group.bench_function("recursive_dfs", |b| {
+        b.iter(|| dfs_recursive(black_box(&graph), black_box(0)))
+    });
+    
+    group.finish();
+}
+
+/// Create a deep linear graph to test stack overflow resistance
+fn create_deep_linear_graph(depth: u32) -> HashMap<u32, Vec<u32>> {
+    let mut graph = HashMap::new();
+    for i in 0..depth-1 {
+        graph.insert(i, vec![i + 1]);
+    }
+    graph.insert(depth-1, vec![]); // End node
+    graph
+}
+
+fn bench_dfs_deep_graph_stack_safety(c: &mut Criterion) {
+    let shallow_graph = create_deep_linear_graph(100);
+    let deep_graph = create_deep_linear_graph(1000);
+    let very_deep_graph = create_deep_linear_graph(5000);
+    
+    let mut group = c.benchmark_group("dfs_stack_safety");
+    
+    // Shallow graph - both should work fine
+    group.bench_function("shallow_iterative", |b| {
+        b.iter(|| dfs(black_box(&shallow_graph), black_box(0)))
+    });
+    
+    group.bench_function("shallow_recursive", |b| {
+        b.iter(|| dfs_recursive(black_box(&shallow_graph), black_box(0)))
+    });
+    
+    // Deep graph - recursive might start to show overhead
+    group.bench_function("deep_iterative", |b| {
+        b.iter(|| dfs(black_box(&deep_graph), black_box(0)))
+    });
+    
+    group.bench_function("deep_recursive", |b| {
+        b.iter(|| dfs_recursive(black_box(&deep_graph), black_box(0)))
+    });
+    
+    // Very deep graph - only iterative should handle this well
+    group.bench_function("very_deep_iterative", |b| {
+        b.iter(|| dfs(black_box(&very_deep_graph), black_box(0)))
+    });
+    
+    // Note: Commenting out very deep recursive to avoid potential stack overflow in benchmark
+    // group.bench_function("very_deep_recursive", |b| {
+    //     b.iter(|| dfs_recursive(black_box(&very_deep_graph), black_box(0)))
+    // });
+    
+    group.finish();
 }
 
 fn bench_shortest_path_small(c: &mut Criterion) {
@@ -226,11 +355,20 @@ criterion_group!(
     bench_complete_graph_dfs
 );
 
+criterion_group!(
+    recursive_vs_iterative_benchmarks,
+    bench_dfs_iterative_vs_recursive_small,
+    bench_dfs_iterative_vs_recursive_medium,
+    bench_dfs_iterative_vs_recursive_large,
+    bench_dfs_deep_graph_stack_safety
+);
+
 criterion_main!(
     bfs_benchmarks,
     dfs_benchmarks,
     shortest_path_benchmarks,
     cycle_detection_benchmarks,
     component_benchmarks,
-    worst_case_benchmarks
+    worst_case_benchmarks,
+    recursive_vs_iterative_benchmarks
 );

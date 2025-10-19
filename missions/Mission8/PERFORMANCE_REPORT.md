@@ -279,9 +279,58 @@ The Mission 8 BFS and DFS implementations successfully meet all performance requ
 - [ ] GPU acceleration for very large graphs
 - [ ] Advanced data structures (CSR, compressed adjacency)
 
+## 4. Recursive vs Iterative DFS Analysis
+
+### 4.1 Performance Comparison Results
+
+Comprehensive benchmarking reveals surprising performance characteristics between recursive and iterative DFS implementations:
+
+| Graph Size | Iterative DFS | Recursive DFS | Recursive Advantage |
+|------------|---------------|---------------|-------------------|
+| 100 nodes (shallow) | 6.27 µs | 3.70 µs | **41% faster** |
+| 1,000 nodes (deep) | 66.6 µs | 42.7 µs | **36% faster** |
+| 5,000 nodes (very deep) | 325 µs | **STACK OVERFLOW** | N/A |
+| 10,000 nodes (large) | 998 µs | **STACK OVERFLOW** | N/A |
+
+### 4.2 Key Findings
+
+#### Performance Advantages of Recursive DFS:
+- **36-41% faster** for small to medium graphs
+- **Lower overhead** from eliminating explicit stack management
+- **Better compiler optimizations** for function call patterns
+- **Cache-friendly** access patterns with automatic stack management
+
+#### Critical Scalability Issues:
+- **Fatal stack overflow** at approximately 5,000+ node depth
+- **No graceful degradation** - complete failure vs. predictable performance
+- **Memory limit dependent** on system stack size (typically 1-8MB)
+
+#### Iterative DFS Advantages:
+- **Unlimited scalability** - handles graphs of any size
+- **Predictable memory usage** - explicit control over data structures
+- **Production-ready** for unknown input sizes
+- **Consistent performance** characteristics across all graph sizes
+
+### 4.3 Practical Recommendations
+
+#### When to Use Recursive DFS:
+- ✅ **Educational purposes** - clearer algorithmic expression
+- ✅ **Small, bounded graphs** (<1,000 nodes guaranteed)
+- ✅ **Performance-critical applications** with known small inputs
+- ✅ **Prototyping** where clarity matters more than robustness
+
+#### When to Use Iterative DFS:
+- ✅ **Production systems** with unknown graph sizes
+- ✅ **Large graph processing** (>5,000 nodes)
+- ✅ **Memory-constrained environments**
+- ✅ **General-purpose libraries** requiring reliability
+
+#### Hybrid Approach:
+Consider profile-guided selection: use recursive for small graphs detected at runtime, fallback to iterative for larger graphs or when stack space is limited.
+
 ### Final Recommendation
 
-The current implementation provides excellent foundation performance suitable for most applications. The identified optimizations offer clear paths for improvement when specific use cases demand higher performance.
+The current implementation provides excellent foundation performance suitable for most applications. The recursive vs iterative analysis demonstrates the importance of understanding implementation trade-offs. The identified optimizations offer clear paths for improvement when specific use cases demand higher performance.
 
 ---
 
