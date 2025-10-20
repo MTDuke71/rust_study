@@ -1,7 +1,7 @@
 # 10 Common Coding Interview Problems - Patterns and Solutions
 
 *Tags: #coding-interviews #leetcode #algorithms #data-structures #problem-solving #competitive-programming*  
-*Links: [[zettel-index]] | [[Algorithm Analysis]] | [[Pattern Matching]] | [[Dynamic Programming]] | [[Graph Algorithms]] | [[String Algorithms]]*
+*Links: [[zettel-index]] | [[Algorithm Analysis]] | [[Pattern Matching]] | [[Dynamic Programming]] | [[Graph Algorithms]] | [[String Algorithms]] | [[monotonic-stack]]*
 
 ---
 
@@ -684,7 +684,7 @@ Rectangle: 2×5 = 10 or 2×6 = 12? No, it's limited by minimum height
 
 ### **Approach**
 
-**Monotonic Stack (Optimal)**
+**Monotonic Stack (Optimal)** - See [[monotonic-stack]] for detailed pattern explanation
 ```rust
 fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
     let mut stack = Vec::new();
@@ -796,6 +796,7 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 - **[[Greedy Algorithms]]** - Gas station
 - **[[String Algorithms]]** - Anagram, minimum window
 - **[[Stack & Queue]]** - Largest rectangle, parentheses
+- **[[monotonic-stack]]** - Detailed pattern for Problem #10
 
 ---
 
