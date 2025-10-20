@@ -386,7 +386,7 @@ Don't forget that creating the file from here may create the file in the wrong d
 - [[capacity-management]] in [[missions/Mission1/LEARNING_JOURNEY]]
 - [[mission1]] in [[missions/Mission1/LEARNING_JOURNEY]]
 - [[mission2]] in [[missions/Mission1/LEARNING_JOURNEY]]
-- [[test-driven-development]] in [[missions/Mission1/LEARNING_JOURNEY]], [[missions/Mission6/COVERAGE_IMPROVEMENT_LOG]]
+- [[TDD (Test-Driven Development)]] in [[missions/Mission1/LEARNING_JOURNEY]], [[missions/Mission6/COVERAGE_IMPROVEMENT_LOG]]
 - [[v-cycle]] in [[missions/Mission1/LEARNING_JOURNEY]], [[missions/Mission6/COVERAGE_IMPROVEMENT_LOG]]
 - [[Copy vs Clone vs Move]] in [[missions/Mission1/QUICK_REFERENCE]], [[missions/Mission1/SIMPLE_GUIDE]], [[tutorials/Mission4_tut/TROUBLESHOOTING]]
 - [[Chapter 4]] in [[missions/Mission1/QUICK_REFERENCE]], [[missions/Mission1/SIMPLE_GUIDE]], [[tutorials/Mission4_tut/TROUBLESHOOTING]]

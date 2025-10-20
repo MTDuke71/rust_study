@@ -392,7 +392,7 @@ These concepts form the foundation for safe systems programming in Rust, enablin
 - [[rust-book-ch10]] - Generic types, traits, and lifetimes
 
 **Testing & Quality:**
-- [[test-driven-development]] - Requirement-based testing
+- [[TDD (Test-Driven Development)]] - Requirement-based testing
 - [[v-cycle]] - Software engineering methodology used
 
 *Tags: #mission1 #stack #ownership #borrowing #generics #data-structures #copy-vs-move*

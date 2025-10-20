@@ -920,7 +920,7 @@ You used Tarpaulin to identify, test, and verify untested code!
 **Testing & Quality Assurance:**
 - [[test-coverage]] - Measuring code coverage metrics
 - [[tarpaulin]] - Code coverage tool for Rust
-- [[test-driven-development]] - Testing methodology and best practices
+- [[TDD (Test-Driven Development)]] - Testing methodology and best practices
 - [[edge-case-testing]] - Testing boundary conditions
 - [[property-based-testing]] - Testing invariants and properties
 
