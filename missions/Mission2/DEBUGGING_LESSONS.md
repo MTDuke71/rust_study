@@ -371,7 +371,7 @@ Error messages don't lie. Read them carefully and trace the actual failure point
 
 ### **Software Engineering**
 - [[Clean Code Principles]] - Writing testable code
-- [[Test Pyramid]] - Balancing unit, integration, and system tests
+- [[test-pyramid]] - Balancing unit, integration, and system tests
 - [[Refactoring]] - Improving code while maintaining behavior
 
 ---
