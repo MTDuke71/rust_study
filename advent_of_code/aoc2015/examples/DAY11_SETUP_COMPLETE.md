@@ -257,7 +257,7 @@ All tools are in place:
 - [[String Manipulation|../../../zettelkasten/String Manipulation]] - String processing patterns
 - [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Windowing and loops
 - [[Validation Patterns|../../../zettelkasten/Validation Patterns]] - Rule-based validation
-- [[Test-Driven Development|../../../zettelkasten/Test-Driven Development]] - TDD workflow
+- [[TDD (Test-Driven Development)|../../../zettelkasten/Test-Driven Development]] - TDD workflow
 
 **Rust Concepts:**
 - [[Chapter 8|../../../rust_book/Ch8/README]] - Collections and string handling

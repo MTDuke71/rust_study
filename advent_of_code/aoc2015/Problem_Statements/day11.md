@@ -52,7 +52,7 @@ You can also [Share] this puzzle.
 - [[String Manipulation|../../../zettelkasten/String Manipulation]] - String processing in Rust
 - [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Windowing and loops
 - [[Validation Patterns|../../../zettelkasten/Validation Patterns]] - Rule-based validation
-- [[Test-Driven Development|../../../zettelkasten/Test-Driven Development]] - TDD workflow
+- [[TDD (Test-Driven Development)|../../../zettelkasten/Test-Driven Development]] - TDD workflow
 - [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - All 2015 problems
 - [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common algorithms
 

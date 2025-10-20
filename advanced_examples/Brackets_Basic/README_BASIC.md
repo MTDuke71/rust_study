@@ -79,12 +79,12 @@ cargo clippy -- -D warnings
 - [[Traceability Matrix]] - Requirements to tests mapping
 
 ### Requirements Engineering
-- [[REQ-1]] - Bracket recognition and character filtering
-- [[REQ-2]] - Proper matching and nesting rules
-- [[REQ-3]] - Earliest error detection
-- [[REQ-4]] - Complexity guarantees (O(n) time, O(n) space)
-- [[REQ-5]] - API contract definition
-- [[REQ-6]] - Deterministic behavior
+- REQ-1 - Bracket recognition and character filtering
+- REQ-2 - Proper matching and nesting rules
+- REQ-3 - Earliest error detection
+- REQ-4 - Complexity guarantees (O(n) time, O(n) space)
+- REQ-5 - API contract definition
+- REQ-6 - Deterministic behavior
 
 ### Mission Integration
 - [[Mission1 Overview]] - Stack implementation foundation

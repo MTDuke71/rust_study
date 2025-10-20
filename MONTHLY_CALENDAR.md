@@ -1,5 +1,5 @@
 
-*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Book Progress]] 
+*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] 
 ---
 # 🗓️ Monthly Learning Calendar 
 
@@ -873,7 +873,6 @@ git add . && git commit -m "Day X progress" # Save daily progress
 *Related Learning Plans:*
 - [[Daily Study MOC]] - Day-by-day systematic learning structure
 - [[Missions Overview]] - V-Cycle engineering discipline missions
-- [[Rust Book Progress]] - Chapter-by-chapter foundation building
 - [[Week 1 Overview]] - Collections fundamentals (HashMap, HashSet, BTreeMap)
 - [[Week 2 Overview]] - Advanced collections and iterators
 - [[Week 3 Overview]] - Traits, generics, and lifetimes

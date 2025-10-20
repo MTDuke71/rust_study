@@ -269,7 +269,7 @@ Remember: The goal is learning, not speed. Take your time, test incrementally, a
 **Zettelkasten Learning:**
 - [[String Manipulation|../../../zettelkasten/String Manipulation]] - Rust string patterns
 - [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Loop techniques
-- [[Test-Driven Development|../../../zettelkasten/Test-Driven Development]] - TDD in Rust
+- [[TDD (Test-Driven Development)|../../../zettelkasten/Test-Driven Development]] - TDD in Rust
 - [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - Navigate all 2015 problems
 - [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common AoC algorithms
 

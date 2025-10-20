@@ -1,7 +1,7 @@
 # Chapter 8: Common Collections
 
 ---
-*Navigation: [[zettel-index]] | [[Rust Book Progress]] | [[Collections MOC]] | [[Vec]] | [[String]] | [[HashMap]]*
+*Navigation: [[zettel-index]] | [[Collections MOC]] | [[Vec]] | [[String]] | [[HashMap]]*
 *Quick Links: [[Memory Management]] | [[Ownership and Borrowing]] | [[Daily Study MOC]]*
 *Related Concepts: [[Iterators]] | [[Generics]] | [[Heap Allocation]] | [[Performance Optimization]]*
 *Deep Dives: [[Unicode, UTF-8, and Rust]] | [[String Performance]]*
@@ -398,7 +398,7 @@ Collections are fundamental to all missions:
 
 *Tags: #rust-book #chapter8 #collections #vector #string #hashmap #heap-allocation #dynamic-data*
 
-*Links: [[zettel-index]] | [[Rust Book Progress]] | [[Collections MOC]] | [[Vec]] | [[String]] | [[HashMap]] | [[Mission5 Overview]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Vec]] | [[String]] | [[HashMap]] | [[Mission5 Overview]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
 
 ---
 

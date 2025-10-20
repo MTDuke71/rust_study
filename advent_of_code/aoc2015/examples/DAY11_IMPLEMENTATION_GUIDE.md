@@ -496,7 +496,7 @@ Good luck! 🚀
 - [[String Manipulation|../../../zettelkasten/String Manipulation]] - String processing in Rust
 - [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Loop and windowing techniques
 - [[Validation Patterns|../../../zettelkasten/Validation Patterns]] - Rule-based validation
-- [[Test-Driven Development|../../../zettelkasten/Test-Driven Development]] - TDD approach
+- [[TDD (Test-Driven Development)|../../../zettelkasten/Test-Driven Development]] - TDD approach
 - [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - Navigate all 2015 problems
 - [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common AoC patterns
 

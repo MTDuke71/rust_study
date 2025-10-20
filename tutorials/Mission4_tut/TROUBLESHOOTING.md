@@ -469,7 +469,7 @@ impl<T> ListBuilder<T> {
 
 **Learning Support:**
 - [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
-- [[Test-Driven Development|../../zettelkasten/Test-Driven Development]] - TDD approach
+- [[TDD (Test-Driven Development)|../../zettelkasten/Test-Driven Development]] - TDD approach
 
 ---
 

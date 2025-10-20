@@ -1,5 +1,5 @@
 ---
-*Navigation: [[zettel-index]] | [[Rust Book Progress]] | [[Ownership and Borrowing]]*
+*Navigation: [[zettel-index]] | [[Ownership and Borrowing]]*
 *Quick Links: [[Memory Management]] | [[References]] | [[Slices]] | [[Daily Study MOC]]*
 *Related Concepts: [[Move Semantics]] | [[Copy vs Clone]] | [[Lifetimes]] | [[Smart Pointers]]*
 ---
@@ -328,7 +328,7 @@ This chapter's concepts are fundamental to all missions:
 
 *Tags: #rust-book #chapter4 #ownership #borrowing #references #slices #memory-management #foundation*
 
-*Links: [[zettel-index]] | [[Rust Book Progress]] | [[Ownership and Borrowing]] | [[Memory Management]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Ownership and Borrowing]] | [[Memory Management]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
 
 ---
 
