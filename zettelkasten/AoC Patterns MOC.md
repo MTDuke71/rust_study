@@ -104,6 +104,7 @@
 - **[[Memory Management]]** - Ownership patterns for complex data structures
 - **[[Trait Usage]]** - Custom traits for problem domain modeling
 - **[[Macro Patterns]]** - Code generation for repetitive problems
+- **[[Rest Patterns]]** - Forward-compatible pattern matching with `{ .. }`
 
 ### **Performance Optimization**
 - **[[Algorithmic Optimization]]** - Choosing better algorithms

@@ -42,6 +42,7 @@
 - [[Match Operator Examples]] - Practical pattern matching patterns
 - [[if let Patterns]] - Concise control flow
 - [[While Let Pattern Deep Dive]] - Consuming collections idiomatically
+- [[Rest Patterns]] - Forward-compatible pattern matching with `{ .. }`
 
 ### **Functional Programming**
 - [[Closures in Rust]] - Anonymous functions with environment capture
