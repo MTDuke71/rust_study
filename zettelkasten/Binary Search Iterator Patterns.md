@@ -237,7 +237,7 @@ let iter = data.iter().filter(|&&x| x > 5).map(|&x| x * 2);
 
 ## 🔗 **Related Concepts**
 
-- [[Mission3]] - Binary search implementation with this pattern
+- [[mission-3]] - Binary search implementation with this pattern
 - [[Zero-Cost Abstractions]] - How Rust achieves performance + ergonomics
 - [[Iterator Trait Deep Dive]] - Understanding the Iterator trait system
 - [[Lifetime Annotations in Practice]] - Practical lifetime management patterns
@@ -246,4 +246,4 @@ let iter = data.iter().filter(|&&x| x > 5).map(|&x| x * 2);
 
 *Tags: #binary-search #iterators #mission3 #performance #aoc #zero-cost-abstractions #competitive-programming*
 
-*Links: [[zettel-index]] | [[Mission3]] | [[Trait-Based Design Patterns]]*
+*Links: [[zettel-index]] | [[mission-3]] | [[Trait-Based Design Patterns]]*

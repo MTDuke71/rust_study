@@ -318,7 +318,7 @@ If you answered "yes" to 2+ questions, consider binary search!
 ## 🔗 **Related Patterns**
 
 - [[Binary Search Iterator Patterns]] - Iterator integration techniques
-- [[Mission3]] - Complete implementation with tests
+- [[mission-3]] - Complete implementation with tests
 - [[Trait Design Patterns - Mission3 Lessons]] - API design insights
 - [[AoC Pattern Recognition]] - Other common AoC patterns
 
@@ -326,4 +326,4 @@ If you answered "yes" to 2+ questions, consider binary search!
 
 *Tags: #binary-search #aoc #competitive-programming #algorithms #mission3 #performance #optimization*
 
-*Links: [[zettel-index]] | [[Mission3]] | [[Algorithm Complexity Analysis]]*
+*Links: [[zettel-index]] | [[mission-3]] | [[Algorithm Complexity Analysis]]*

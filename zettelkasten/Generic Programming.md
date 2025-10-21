@@ -614,12 +614,12 @@ Related: [[daily-study/Day19]]
 - [[daily-study/Day19]] - Dynamic dispatch with `dyn Trait`
 
 ### **Mission Applications**
-- [[Mission1 Overview]] - Generic Stack<T> implementation
-- [[Mission2]] - Generic Queue<T> and RingBuffer<T>
-- [[Mission3]] - Generic binary search algorithms
-- [[Mission4]] - Generic LinkedList<T> with smart pointers
-- [[Mission5 Overview]] - Generic HashMap<K, V> and HashSet<T>
-- [[Mission6 Overview]] - Generic Grid<T> for 2D arrays
+- [[mission-1]] - Generic Stack<T> implementation
+- [[mission-2]] - Generic Queue<T> and RingBuffer<T>
+- [[mission-3]] - Generic binary search algorithms
+- [[mission-4]] - Generic LinkedList<T> with smart pointers
+- [[mission-5]] - Generic HashMap<K, V> and HashSet<T>
+- [[mission-6]] - Generic Grid<T> for 2D arrays
 
 ### **Collections & Iterators**
 - [[Collections MOC]] - Overview of generic collections

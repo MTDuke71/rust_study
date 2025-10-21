@@ -294,7 +294,7 @@ fn find_all<'a, T: Ord>(data: &'a [T], target: &T) -> Vec<&'a T> {
 ## 🔗 **Related Concepts**
 
 - [[Binary Search Iterator Patterns]] - Iterator integration with these traits
-- [[Mission3]] - Complete implementation example
+- [[mission-3]] - Complete implementation example
 - [[Zero-Cost Abstractions]] - How trait dispatch is optimized
 - [[Lifetime Annotations in Practice]] - Deeper dive into lifetimes
 
@@ -302,4 +302,4 @@ fn find_all<'a, T: Ord>(data: &'a [T], target: &T) -> Vec<&'a T> {
 
 *Tags: #traits #generics #lifetimes #design-patterns #mission3 #clean-code #deep-modules*
 
-*Links: [[zettel-index]] | [[Mission3]] | [[Rust Trait System Overview]]*
+*Links: [[zettel-index]] | [[mission-3]] | [[Rust Trait System Overview]]*
