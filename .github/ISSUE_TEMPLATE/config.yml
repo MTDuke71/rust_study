@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Ask a Question
+    url: https://github.com/MTDuke71/rust_study/discussions
+    about: Ask questions, share ideas, or discuss the project
+  - name: 📚 Documentation
+    url: https://github.com/MTDuke71/rust_study/tree/main/.github
+    about: Read the comprehensive guides in the .github directory
+  - name: 🔍 Common Errors
+    url: https://github.com/MTDuke71/rust_study/blob/main/.github/COMMON_ERRORS.md
+    about: Check if your issue is a known error with a solution

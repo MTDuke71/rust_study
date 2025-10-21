@@ -6,12 +6,18 @@
 
 ## 🚀 **Quick Access to Standards**
 
-This page serves as a gateway to all documentation standards maintained in the `_github` directory (now visible to Obsidian!).
+This page serves as a gateway to all documentation standards maintained in the `_github` directory (visible to Obsidian) and GitHub-native files in `.github`.
 
 ### **Primary Documentation Standards**
 - **[[_github/RUST_DOCUMENTATION_STANDARDS]]** - Official Rust documentation best practices
 - **[[_github/RUST_TEST_DOCUMENTATION_STANDARDS]]** - How to document tests vs production code
 - **[[_github/COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE]]** - Standards for executable examples in daily study
+
+### **GitHub Platform Integration**
+- **Issue Templates** (.github/ISSUE_TEMPLATE/) - Bug reports and feature requests
+- **Pull Request Template** (.github/PULL_REQUEST_TEMPLATE.md) - PR description format
+- **Contributing Guidelines** (.github/CONTRIBUTING.md) - Contributor guidelines
+- **GitHub Directory Overview** (.github/README.md) - Hybrid directory explanation
 
 ### **Documentation Workflow Guides**
 - **[[_github/WORKFLOW_DOCUMENTATION_INDEX]]** - Master workflow index - **START HERE**
