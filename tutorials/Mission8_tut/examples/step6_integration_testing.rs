@@ -437,8 +437,6 @@ mod property_tests {
         let graph = create_complete_graph(5);
         
         for start in 0..5 {
-            let bfs_result = bfs(&graph, start);
-            
             for end in 0..5 {
                 if start != end {
                     let path = shortest_path(&graph, start, end).unwrap();
