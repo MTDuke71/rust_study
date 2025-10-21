@@ -316,12 +316,12 @@ Include:
 
 ## 🔗 Additional Resources
 
-- **Full Developer Guide**: `.github/copilot-instructions.md`
-- **Error Troubleshooting**: `.github/COMMON_ERRORS.md`
-- **Documentation Standards**: `.github/RUST_DOCUMENTATION_STANDARDS.md`
-- **Test Documentation**: `.github/RUST_TEST_DOCUMENTATION_STANDARDS.md`
-- **Runnable Example Template**: `.github/COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md`
-- **Learning Calendar**: `MONTHLY_CALENDAR.md`
+- **Full Developer Guide**: [[copilot-instructions.md]]
+- **Error Troubleshooting**: [[COMMON_ERRORS.md]]
+- **Documentation Standards**: [[RUST_DOCUMENTATION_STANDARDS.md]]
+- **Test Documentation**: [[RUST_TEST_DOCUMENTATION_STANDARDS.md]]
+- **Runnable Example Template**: [[COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md]]
+- **Learning Calendar**: [[../MONTHLY_CALENDAR.md]]
 
 ---
 

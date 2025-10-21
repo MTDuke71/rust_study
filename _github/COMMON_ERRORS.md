@@ -481,8 +481,8 @@ If you encounter a new recurring error:
 - [Rust Error Index](https://doc.rust-lang.org/error-index.html) - Official error explanations
 - [Rust Compiler Error Messages](https://doc.rust-lang.org/stable/error_codes/) - Detailed error codes
 - [Common Rust Lifetime Misconceptions](https://github.com/pretzelhammer/rust-blog/blob/master/posts/common-rust-lifetime-misconceptions.md)
-- `.github/RUST_DOCUMENTATION_STANDARDS.md` - Documentation requirements
-- `.github/copilot-instructions.md` - Full development guide
+- [[RUST_DOCUMENTATION_STANDARDS.md]] - Documentation requirements
+- [[copilot-instructions.md]] - Full development guide
 
 ---
 
