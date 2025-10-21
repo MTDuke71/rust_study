@@ -50,7 +50,7 @@
 - **[[Minimum Spanning Tree]]** - Kruskal's and Prim's algorithms
 
 ### **String Algorithms**
-- **[[Pattern Matching]]** - KMP, Boyer-Moore, and regex approaches
+- **[[pattern-matching]]** - KMP, Boyer-Moore, and regex approaches
   - **Quick Reference**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Comprehensive regex guide with AoC examples
 - **[[String Manipulation]]** - Rotation, palindromes, and transformation
 - **[[Parsing Techniques]]** - Recursive descent and state machine parsing

@@ -44,7 +44,7 @@ fn main() {
 # Git Bash example  
 ./scripts/run_md.bat daily_study/rust_learning_week1_notes/Day01.md
 ```
-````
+```
 4. **As Cargo example**: `cargo run --example day[X]_[topic]_demo` (if you add it to Mission5_tut)
 ```
 
@@ -253,3 +253,32 @@ cargo fmt --check
 - 🔍 Look for "Common Errors" sections within examples
 - 📚 Reference Mission README files for context
 - 💡 See [MISSION5_CASE_STUDY.md](.github/MISSION5_CASE_STUDY.md) for working patterns
+
+---
+
+
+
+## 🔗 Related Documentation
+
+*This document is part of the comprehensive Rust Study documentation system.*
+
+### **Core Documentation**
+- **[[../zettelkasten/Documentation Standards]]** - Complete documentation standards and guidelines
+- **[[../zettelkasten/Project Management and Session Reports]]** - Project tracking and session summaries
+- **[[../zettelkasten/API Design Patterns]]** - Code interface design principles
+- **[[../zettelkasten/Quality Assurance]]** - Testing and quality standards
+
+### **Learning System Integration**
+- **[[../zettelkasten/Rust Concepts MOC]]** - Core Rust language concepts
+- **[[../zettelkasten/Daily Study MOC]]** - Daily learning progression
+- **[[../zettelkasten/Missions Overview]]** - Hands-on project implementations  
+- **[[../zettelkasten/V-Cycle Methodology]]** - Requirements-driven development approach
+
+### **Workspace Navigation**
+- **[[../zettelkasten/zettel-index]]** - Master index of all zettelkasten notes
+- **[[WORKFLOW_DOCUMENTATION_INDEX]]** - Complete workflow documentation index
+
+---
+
+*Tags: #documentation #standards #workflow #rust-study #project-management*
+*Part of: [[../zettelkasten/Documentation Standards]] | [[../zettelkasten/Project Management and Session Reports]]*

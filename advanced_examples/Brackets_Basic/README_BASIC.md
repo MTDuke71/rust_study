@@ -56,7 +56,7 @@ cargo clippy -- -D warnings
 ### Rust Fundamentals
 - [[Result Type]] - Error handling with Result<(), BracketError>
 - [[String Processing]] - Working with &str and char_indices
-- [[Pattern Matching]] - Match expressions for validation logic
+- [[pattern-matching]] - Match expressions for validation logic
 - [[UTF-8 Handling]] - Unicode string processing
 
 ### Data Structures

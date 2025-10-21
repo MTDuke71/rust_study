@@ -437,7 +437,7 @@ Rust enums are closer to **ML/Haskell sum types** than C enums. They're one of R
 
 ## 🔗 **Related Concepts**
 
-- [[Pattern Matching]] - How to safely extract enum data
+- [[pattern-matching]] - How to safely extract enum data
 - [[Option Type]] - Rust's replacement for null pointers
 - [[Result Type]] - Error handling with enums
 - [[Tagged Unions]] - The theory behind Rust enums

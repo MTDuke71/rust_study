@@ -56,7 +56,7 @@ cargo clippy -- -D warnings
 ### Rust Fundamentals
 - [[Result Type]] - Error handling with Result<(), E>
 - [[String Slicing]] - Working with &str
-- [[Pattern Matching]] - Match expressions for error handling
+- [[pattern-matching]] - Match expressions for error handling
 - [[Unit Testing]] - Test organization and naming
 
 ### Data Structures

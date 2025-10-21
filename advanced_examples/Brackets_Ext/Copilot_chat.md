@@ -6909,7 +6909,7 @@ Similar code found with 2 license types
 ### Rust Patterns
 - [[Builder Pattern]] - Options configuration with defaults
 - [[Trait Objects]] - Generic iterator support
-- [[Pattern Matching]] - Exhaustive error handling
+- [[pattern-matching]] - Exhaustive error handling
 - [[Type Safety]] - Compile-time guarantees
 
 ### Development Process

@@ -318,7 +318,7 @@ echo '[1,2,3]' | cargo run -- --day 12
 ### **Core Concepts (Zettelkasten)**
 - [[JSON Parsing Patterns]] - Structured data parsing techniques
 - [[Recursive Tree Traversal]] - Tree traversal algorithms
-- [[Pattern Matching]] - Rust pattern matching for JSON types
+- [[pattern-matching]] - Rust pattern matching for JSON types
 - [[Conditional Filtering]] - Filter strategies in recursive algorithms
 - [[External Crate Integration]] - Using serde_json in Rust projects
 - [[String Manipulation Patterns]] - Text processing patterns

@@ -25,7 +25,7 @@ Enums allow you to define types by enumerating possible variants. Pattern matchi
 
 ## Cross-References
 
-- **[[Pattern Matching]]** - Advanced matching techniques
+- **[[pattern-matching]]** - Advanced matching techniques
 - **[[Error Handling Deep Dive]]** - Result<T, E> and error propagation
 - **[[While Let Pattern Deep Dive]]** - Specialized pattern matching loops
 
@@ -40,4 +40,4 @@ Enums allow you to define types by enumerating possible variants. Pattern matchi
 
 *Tags: #rust-book #enums #pattern-matching #option #result #ch6*
 
-*Links: [[rust-book-ch5-8-review]] | [[../../rust_book/Ch6/README]] | [[Pattern Matching]] | [[Option Type]] | [[zettel-index]]*
+*Links: [[rust-book-ch5-8-review]] | [[../../rust_book/Ch6/README]] | [[pattern-matching]] | [[Option Type]] | [[zettel-index]]*

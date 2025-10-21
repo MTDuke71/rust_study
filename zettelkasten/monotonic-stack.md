@@ -1,7 +1,7 @@
 # Monotonic Stack Pattern
 
 *Tags: #data-structures #stack #algorithms #pattern #competitive-programming #optimization*  
-*Links: [[zettel-index]] | [[10-common-interview-problems]] | [[Stack & Queue]] | [[Largest Rectangle in Histogram]] | [[Pattern Matching]] | [[Algorithm Analysis]]*
+*Links: [[zettel-index]] | [[10-common-interview-problems]] | [[Stack & Queue]] | [[Largest Rectangle in Histogram]] | [[pattern-matching]] | [[Algorithm Analysis]]*
 
 ---
 
@@ -575,7 +575,7 @@ fn test_histogram_mixed_pattern() {
 
 ### **Related Zettelkasten Pages**
 - **[[Stack & Queue]]** - Fundamental data structure theory
-- **[[Pattern Matching]]** - Pattern recognition in algorithms
+- **[[pattern-matching]]** - Pattern recognition in algorithms
 - **[[Algorithm Analysis]]** - Complexity analysis framework
 - **[[Largest Rectangle in Histogram]]** - Detailed explanation of Problem #10
 - **[[Daily Temperatures]]** - Temperature sequence problem
@@ -722,7 +722,7 @@ Daily Temperatures:
 
 *Tags: #data-structures #stack #algorithms #pattern #competitive-programming #optimization #interview-prep #monotonic-stack*
 
-*Navigation: [[zettel-index]] | [[10-common-interview-problems]] | [[Stack & Queue]] | [[Algorithm Analysis]] | [[Pattern Matching]]*
+*Navigation: [[zettel-index]] | [[10-common-interview-problems]] | [[Stack & Queue]] | [[Algorithm Analysis]] | [[pattern-matching]]*
 
 ---
 

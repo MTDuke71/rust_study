@@ -1,7 +1,7 @@
 # 10 Common Coding Interview Problems - Patterns and Solutions
 
 *Tags: #coding-interviews #leetcode #algorithms #data-structures #problem-solving #competitive-programming*  
-*Links: [[zettel-index]] | [[Algorithm Analysis]] | [[Pattern Matching]] | [[Dynamic Programming]] | [[Graph Algorithms]] | [[String Algorithms]] | [[monotonic-stack]]*
+*Links: [[zettel-index]] | [[Algorithm Analysis]] | [[pattern-matching]] | [[Dynamic Programming]] | [[Graph Algorithms]] | [[String Algorithms]] | [[monotonic-stack]]*
 
 ---
 
@@ -841,7 +841,7 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 
 *Tags: #coding-interviews #leetcode #algorithms #data-structures #problem-solving #competitive-programming #interview-prep #rust*
 
-*Navigation: [[zettel-index]] | [[Algorithm Analysis]] | [[Pattern Matching]] | [[Dynamic Programming]] | [[Graph Algorithms]]*
+*Navigation: [[zettel-index]] | [[Algorithm Analysis]] | [[pattern-matching]] | [[Dynamic Programming]] | [[Graph Algorithms]]*
 
 ---
 
