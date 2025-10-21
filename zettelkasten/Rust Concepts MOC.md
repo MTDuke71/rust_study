@@ -162,6 +162,13 @@
 - [[String Processing]] - Text parsing and manipulation
 - [[Algorithm Optimization]] - Performance-critical solutions
 
+**🎄 AoC 2015 Day 14 Examples:**
+- [[advent_of_code/aoc2015/Problem_Statements/Day14-Analysis]] - State machine & cyclic systems
+- [[advent_of_code/aoc2015/Problem_Statements/Day14-Algorithmic-Complexity-Comparison]] - Performance comparison
+- [[advent_of_code/aoc2015/Problem_Statements/Day14-Performance-Comparison]] - Implementation analysis
+- [[advent_of_code/aoc2015/Problem_Statements/Day14-Graphics-Guide]] - Data visualization
+- [[advent_of_code/aoc2015/Problem_Statements/Day14-Documentation-Enhancement-Guide]] - Technical documentation
+
 ### **Mission Development**
 - [[V-Cycle Methodology]] - Requirements-driven development
 - [[Testing Strategies]] - Comprehensive validation approaches

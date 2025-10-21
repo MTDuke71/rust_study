@@ -16,6 +16,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **Cryptographic**: Hash functions, encryption, cryptographic puzzles
 - **Parsing**: Escape sequence parsing, character-level analysis
 - **Encoding**: String encoding, character escaping
+- **Real-time Analysis**: Temporal scoring, moment-by-moment leader tracking, time-dependent calculations
 
 ---
 
@@ -438,6 +439,69 @@ fn sum_with_regex(json: &str) -> i64 {
 
 **📖 Complete Analysis**: [[../examples/day13_analysis|Day 13 Implementation Analysis]] - Comprehensive TSP algorithms, graph theory, optimization techniques, and mathematical proofs
 
+---
+
+### [[day14.md|Day 14: Reindeer Olympics]]
+**Title**: Reindeer Olympics  
+**Part 1 Type**: Simulation + Mathematical + Optimization  
+**Part 1 Description**: Calculate maximum distance traveled by reindeer with cyclic flight/rest patterns over 2503 seconds  
+**Part 2 Type**: Simulation + Data Structures + Real-time Analysis  
+**Part 2 Description**: Award points each second to leading reindeer(s), find highest point total after 2503 seconds  
+**Key Concepts**: Cyclic behavior simulation, state machine implementation, mathematical optimization vs brute force, real-time leader tracking, different scoring systems producing different winners
+
+**Cyclic Flight/Rest Pattern**:
+- Reindeer alternate between flying (constant speed) and resting (stationary)
+- Each reindeer has fixed flight duration, rest duration, and flight speed
+- Pattern repeats: fly → rest → fly → rest (predictable cycles)
+- Example: Comet flies 14 km/s for 10s, then rests 127s (137s total cycle)
+
+**Algorithm Approaches**:
+- **Part 1 - Cycle-Based Calculation**: O(n × c) where c = race_duration / cycle_length
+  - Calculate complete cycles + partial cycle remainder
+  - Mathematical optimization using modular arithmetic
+  - Much faster than second-by-second simulation for distance-only calculation
+- **Part 2 - Real-time Simulation**: O(n × m) where m = race_duration
+  - Track position of each reindeer at every second
+  - Award points to current leader(s) each second
+  - Handle tie-breaking (multiple leaders get points simultaneously)
+  - Cannot optimize since scoring depends on moment-by-moment leadership
+
+**Key Insights**:
+1. **Different Winners**: Distance winner ≠ Points winner (different scoring systems)
+2. **Lead Changes**: Frequent leadership changes create complex point accumulation
+3. **Cyclic Optimization**: Part 1 benefits from mathematical cycle analysis
+4. **State Tracking**: Part 2 requires full simulation due to temporal scoring rules
+
+**Rust-Specific Implementation Details**:
+- **Struct Design**: `Reindeer` with `speed`, `flight_time`, `rest_time` fields
+- **Cycle Methods**: `cycle_length()`, `distance_per_cycle()` for mathematical optimization
+- **State Simulation**: while loop with alternating flight/rest phases
+- **Vector Tracking**: Points array updated each second for all reindeer
+- **Iterator Usage**: `iter().enumerate().max_by()` for finding leaders
+- **Performance Analysis**: Comparing O(n×c) vs O(n×m) algorithmic approaches
+
+**Performance Characteristics**:
+- **Part 1 Optimization**: ~2500× faster using cycles vs simulation (2503s → 18 cycles for example data)
+- **Part 2 Required Simulation**: Cannot optimize due to temporal scoring dependency
+- **Memory Efficiency**: O(n) space for storing reindeer data and point tracking
+- **Real-world Applications**: Resource scheduling, traffic optimization, manufacturing cycles
+
+**Example Race Results**:
+- **Part 1 (Distance)**: Comet wins with 1120 km after 1000s
+- **Part 2 (Points)**: Dancer wins with 689 points (had more leading moments)
+- **Lesson**: Consistent performers can accumulate more points than fastest finishers
+
+**Educational Value**:
+- **Algorithm Selection**: When to optimize mathematically vs simulate directly  
+- **Scoring System Design**: How different metrics produce different winners
+- **State Machine Patterns**: Cyclic behavior modeling in software
+- **Performance Analysis**: Understanding complexity trade-offs between approaches
+- **Real-time Systems**: Temporal scoring and leader tracking implementations
+
+**📖 Complete Analysis**: [[../examples/day14_analysis|Day 14 Implementation Analysis]] - Comprehensive cyclic behavior simulation and mathematical optimization techniques
+**📋 Complete Summary**: [[../examples/DAY14_COMPLETE_SUMMARY|Day 14 Complete Summary]] - Full problem walkthrough with solution approach
+**📚 Documentation Guide**: [[../examples/DOCUMENTATION_ENHANCEMENTS|Documentation Enhancement Guide]] - Best practices for AoC solution documentation  
+**🎨 Graphics Guide**: [[../examples/GRAPHICS_GUIDE|Graphics and Visualization Guide]] - Visual representation techniques for algorithm analysis
 
 ---
 
@@ -446,11 +510,11 @@ fn sum_with_regex(json: &str) -> i64 {
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
 | String Processing | 6 | 6 |
-| Mathematical | 3 | 4 |
-| Simulation | 6 | 6 |
+| Mathematical | 4 | 4 |
+| Simulation | 7 | 7 |
 | Search/Traversal | 1 | 1 |
-| Optimization | 2 | 3 |
-| Data Structures | 4 | 2 |
+| Optimization | 3 | 3 |
+| Data Structures | 4 | 3 |
 | Brute Force | 3 | 3 |
 | Cryptographic | 1 | 1 |
 | Pattern Matching | 2 | 2 |
@@ -458,6 +522,7 @@ fn sum_with_regex(json: &str) -> i64 {
 | Graph Algorithms | 3 | 4 |
 | Parsing | 2 | 1 |
 | Encoding | 0 | 1 |
+| Real-time Analysis | 0 | 1 |
 
 ## Implementation Notes
 
@@ -482,6 +547,7 @@ fn sum_with_regex(json: &str) -> i64 {
 - Day 11: **Base-26 counting with carry**, string validation with multiple rules, sliding window for pattern detection, non-overlapping pair constraints, optimization through range skipping, forbidden character handling, password incrementing algorithms
 - Day 12: **JSON parsing with serde_json**, recursive tree traversal, pattern matching on Value enum, conditional filtering (red objects), regex vs structured parsing trade-offs, external crate integration, data structure selection (string scanning vs tree building)
 - Day 13: **Advanced graph theory implementation**, weighted directed complete adjacency graph using HashMap composite keys, Traveling Salesman Problem recognition and solution, Heap's algorithm for efficient permutation generation, circular seating constraint handling, mathematical symmetry exploitation for 9× performance optimization, global vs. local optimization analysis (why greedy "weakest link" fails), comprehensive verification testing proving optimization equivalence, HashMap adjacency list implementation, modular arithmetic for circular indexing
+- Day 14: **Cyclic behavior simulation and mathematical optimization**, state machine implementation for flight/rest cycles, algorithmic complexity comparison (O(n×c) vs O(n×m)), struct design with behavior methods (`cycle_length()`, `distance_per_cycle()`), real-time leader tracking with tie handling, different scoring systems analysis, performance optimization through cycle mathematics, while loop state transitions, vector-based point accumulation, iterator methods for leader detection (`max_by()`), temporal vs final scoring trade-offs
 
 ---
 
@@ -509,9 +575,9 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]]*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]]*

@@ -66,3 +66,28 @@ Parse multiple lines and verify the Vec:
 Then your simulation tests (with the small time calculations) would test that the parsed data is being used correctly in the simulation.
 
 So ideally: Parser tests (verify parsing is correct) + Simulation tests (verify logic is correct) = comprehensive coverage! 🎯
+
+---
+
+## 🔗 **Zettelkasten Links**
+
+**Core Concepts:**
+- [[aoc-2015-day14]] - Main Day 14 problem statement and solution
+- [[simulation-patterns]] - State machine simulation techniques
+- [[testing-strategies]] - Unit testing and integration testing approaches
+- [[state-machines]] - Flight/rest cycle implementation patterns
+
+**Algorithm Analysis:**
+- [[cyclic-algorithms]] - Algorithms for repeating behavior patterns
+- [[mathematical-optimization]] - O(1) cycle calculations vs O(n) simulation
+- [[parser-testing]] - Input parsing and validation strategies
+- [[test-driven-development]] - Test-first development methodology
+
+**Related Topics:**
+- [[AoC 2015 MOC]] - Complete overview of 2015 problems
+- [[AoC Patterns MOC]] - Common algorithm patterns in competitive programming
+- [[performance-analysis]] - Benchmarking and complexity analysis
+
+*Tags: #aoc-2015-day14 #analysis #simulation #testing #state-machines #cyclic-algorithms #parser-testing*
+
+*Links: [[zettel-index]] | [[aoc-2015-day14]] | [[simulation-patterns]] | [[testing-strategies]] | [[AoC 2015 MOC]]*

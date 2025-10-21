@@ -1216,4 +1216,4 @@ fn estimate_cache_performance(access_pattern: &[usize], data_size: usize) -> f64
 
 *Tags: #algorithm-analysis #big-o #performance #complexity #optimization #benchmarking #profiling #space-time-tradeoffs #amortized-analysis #empirical-analysis #cache-performance #memory-hierarchy*
 
-*Links: [[Big-O Notation]] | [[Amortized Analysis]] | [[Performance Optimization]] | [[Benchmarking]] | [[Cache Efficiency]] | [[Memory Layout]] | [[AoC Patterns MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission5 Overview]] | [[Testing Strategies]] | [[Quality Assurance]] | [[Rust Collections MOC]]*
+*Links: [[Big-O Notation]] | [[Amortized Analysis]] | [[Performance Optimization]] | [[Benchmarking]] | [[Cache Efficiency]] | [[Memory Layout]] | [[AoC Patterns MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission5 Overview]] | [[Testing Strategies]] | [[Quality Assurance]] | [[Rust Collections MOC]] | [[../advent_of_code/aoc2015/examples/day14_analysis]] | [[../advent_of_code/aoc2015/examples/DAY14_COMPLETE_SUMMARY]] | [[../advent_of_code/aoc2015/examples/DOCUMENTATION_ENHANCEMENTS]]*

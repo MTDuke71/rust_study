@@ -495,6 +495,39 @@ This workspace follows strict V-Cycle methodology. When adding new missions:
 
 ---
 
+---
+
+## 🔗 **Zettelkasten Links**
+
+**Navigation & Overview:**
+- [[zettel-index]] - Main knowledge base entry point and navigation hub
+- [[3-Track Integration]] - Comprehensive learning system architecture
+- [[V-Cycle Methodology]] - Requirements-driven development approach
+- [[Daily Study MOC]] - Progressive learning track coordination
+
+**Mission Overviews:**
+- [[mission-1]] - Stack implementation with LIFO semantics
+- [[mission-2]] - Queue with ring buffer optimization
+- [[mission-5]] - HashMap with collision resolution strategies
+- [[mission-8]] - Graph algorithms with trait composition
+
+**Learning Resources:**
+- [[Rust Concepts MOC]] - Core language features and patterns
+- [[AoC Patterns MOC]] - Competitive programming algorithm patterns
+- [[Tutorial Engineering]] - Pedagogical design for step-by-step learning
+- [[Quality Assurance]] - Testing, documentation, and validation standards
+
+**Development Philosophy:**
+- [[developer-learning-habits]] - Evidence-based learning methodology
+- [[V-Cycle in Rust Development]] - Engineering discipline application
+- [[Zero-Cost Abstractions]] - Performance-first design principles
+
+*Tags: #rust-study #v-cycle #competitive-programming #aoc #learning-system #engineering-discipline #3-track-integration*
+
+*Links: [[zettel-index]] | [[3-Track Integration]] | [[V-Cycle Methodology]] | [[Daily Study MOC]] | [[AoC Patterns MOC]]*
+
+---
+
 **Status**: 🚀 **Production Ready** - All core missions complete with comprehensive testing and documentation.
 
 **Goal**: 🎄 **AoC 2025 Domination** - Building the skills and tools to excel in competitive programming while mastering Rust engineering principles.

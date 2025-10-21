@@ -413,6 +413,37 @@ cargo clean && cargo build -p mission8_tut
 
 ---
 
+## 🔗 **Zettelkasten Links**
+
+**Tutorial Concepts:**
+- [[mission8_overview]] - Mission 8 architectural overview and design decisions
+- [[BFS Patterns]] - Breadth-first search algorithm patterns and template code
+- [[DFS Patterns]] - Depth-first search algorithm patterns and recursion techniques
+- [[trait-composition]] - Composable algorithm design using Rust traits
+
+**Learning Resources:**
+- [[Tutorial Engineering]] - Pedagogical design principles for step-by-step learning
+- [[3-Track Integration]] - How tutorials align with missions and daily study
+- [[Daily Study MOC]] - Daily study coordination for Week 3
+- [[Algorithm Analysis]] - Performance analysis and complexity theory foundations
+
+**Related Missions:**
+- [[mission-7]] - Grid-based BFS/DFS preparation
+- [[mission-2]] - Queue foundations for BFS implementation
+- [[mission-5]] - HashMap for graph adjacency representation
+
+**Implementation Patterns:**
+- [[generic-programming]] - Type-safe generic algorithm implementations
+- [[error-handling]] - Robust error propagation with Result types
+- [[testing-strategies]] - Property-based testing for algorithm correctness
+- [[benchmarking-patterns]] - Criterion.rs performance measurement techniques
+
+*Tags: #mission8-tutorial #graph-algorithms #bfs #dfs #tutorial #step-by-step #traits #generics #algorithm-composition #learning*
+
+*Links: [[zettel-index]] | [[mission8_overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Tutorial Engineering]] | [[3-Track Integration]]*
+
+---
+
 **Happy Learning! 🎉**
 
 *Remember: The goal isn't just to complete the tutorial, but to deeply understand graph algorithms and their applications.*

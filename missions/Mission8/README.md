@@ -331,5 +331,35 @@ See `tutorials/Mission8_tut/` for step-by-step progression:
 - [CONTRIBUTING.md](../../.github/CONTRIBUTING.md) - Development workflow
 - [Mission8_tut README](../../tutorials/Mission8_tut/README.md) - Tutorial guide
 
+---
+
+## 🔗 **Zettelkasten Links**
+
+**Core Concepts:**
+- [[mission8_overview]] - Mission 8 architectural overview and learning objectives
+- [[BFS Patterns]] - Breadth-first search algorithm patterns and applications
+- [[DFS Patterns]] - Depth-first search algorithm patterns and backtracking
+- [[Graph Theory MOC]] - Map of content for graph algorithms and data structures
+
+**Related Missions:**
+- [[mission-2]] - Queue implementation foundational for BFS
+- [[mission-7]] - Grid-based BFS/DFS as preparation for generic algorithms
+- [[V-Cycle Methodology]] - Requirements-driven development approach
+
+**Algorithm Concepts:**
+- [[trait-composition]] - Composable algorithm design patterns
+- [[generic-programming]] - Type-safe generic implementations
+- [[Algorithm Analysis]] - Performance analysis and complexity theory
+- [[Zero-Cost Abstractions]] - Rust's compile-time optimization guarantees
+
+**Learning Resources:**
+- [[Daily Study MOC]] - Daily study integration points
+- [[3-Track Integration]] - Mission-Tutorial-Book coordination
+- [[Weekly Quality Review]] - Quality assurance processes
+
+*Tags: #mission8 #graph-algorithms #bfs #dfs #traits #generics #algorithm-composition #performance-analysis #v-cycle #pathfinding*
+
+*Links: [[zettel-index]] | [[mission8_overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Graph Theory MOC]] | [[Algorithm Analysis]]*
+
 **Last Updated**: October 15, 2025  
 **Status**: 🔄 Active Development

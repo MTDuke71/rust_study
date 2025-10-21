@@ -190,6 +190,9 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 - **Architecture Documentation**: Quality attribute trade-offs and design rationale
 - **V-Cycle Summary**: Complete development lifecycle documentation
 
+**🎯 Advanced Documentation Examples:**
+- [[advent_of_code/aoc2015/Problem_Statements/Day14-Documentation-Enhancement-Guide]] - Technical writing best practices and documentation enhancement techniques
+
 ## 🔗 Cross-Track Integration
 
 ### **Mission ↔ Daily Study Alignment**

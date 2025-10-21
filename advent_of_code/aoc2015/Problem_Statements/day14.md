@@ -13,9 +13,48 @@ In this example, after the 1000th second, both reindeer are resting, and Comet i
 
 Given the descriptions of each reindeer (in your puzzle input), after exactly 2503 seconds, what distance has the winning reindeer traveled?
 
-To begin, get your puzzle input.
+Your puzzle answer was 2655.
 
-Answer: 
- 
+--- Part Two ---
+Seeing how reindeer move in bursts, Santa decides he's not pleased with the old scoring system.
+
+Instead, at the end of each second, he awards one point to the reindeer currently in the lead. (If there are multiple reindeer tied for the lead, they each get one point.) He keeps the traditional 2503 second time limit, of course, as doing otherwise would be entirely ridiculous.
+
+Given the example reindeer from above, after the first second, Dancer is in the lead and gets one point. He stays in the lead until several seconds into Comet's second burst: after the 140th second, Comet pulls into the lead and gets his first point. Of course, since Dancer had been in the lead for the 139 seconds before that, he has accumulated 139 points by the 140th second.
+
+After the 1000th second, Dancer has accumulated 689 points, while poor Comet, our old champion, only has 312. So, with the new scoring system, Dancer would win (if the race ended at 1000 seconds).
+
+Again given the descriptions of each reindeer (in your puzzle input), after exactly 2503 seconds, how many points does the winning reindeer have?
+
+Your puzzle answer was 1059.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
+
+At this point, you should return to your Advent calendar and try another puzzle.
+
+If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## 🔗 Zettelkasten Links
+
+**Core Concepts:**
+- [[AoC 2015 MOC]] - Complete overview of 2015 problems and solutions
+- [[AoC Patterns MOC]] - Algorithm patterns commonly used in AoC problems
+- [[Algorithm Analysis]] - Performance analysis and mathematical optimization techniques
+
+**Related Topics:**
+- [[mathematical-optimization]] - O(1) cycle-based calculations vs O(n) simulation
+- [[simulation-patterns]] - State-based simulation and real-time analysis
+- [[performance-comparison]] - Benchmarking simulation vs mathematical approaches
+
+**Implementation Patterns:**
+- [[modular-arithmetic]] - Cycle detection and remainder calculations
+- [[state-machines]] - Flight/rest cycle state transitions
+- [[real-time-visualization]] - 2D scrolling race animation concepts
+
+*Tags: #aoc-2015-day14 #reindeer-olympics #simulation #mathematical-optimization #cycle-detection #performance-analysis #state-machines*
+
+*Links: [[zettel-index]] | [[AoC 2015 MOC]] | [[AoC Patterns MOC]] | [[Algorithm Analysis]] | [[mathematical-optimization]] | [[simulation-patterns]]*

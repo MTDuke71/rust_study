@@ -104,6 +104,25 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Conditional filtering (Part 2: "red" object exclusion)
 - Dynamic typing in statically-typed language
 
+### **Day 13: Knights of the Dinner Table**
+- **Traveling Salesman Problem** with circular seating constraints
+- **Complete Analysis**: [[../advent_of_code/aoc2015/examples/day13_analysis]] - TSP algorithms, graph theory, and mathematical proofs
+- Weighted directed complete adjacency graph
+- Heap's algorithm for permutation generation
+- Mathematical symmetry exploitation (9× performance optimization)
+- Global vs. local optimization strategies
+
+### **Day 14: Reindeer Olympics**
+- **Cyclic Behavior Simulation** and mathematical optimization
+- **Complete Analysis**: [[../advent_of_code/aoc2015/examples/day14_analysis]] - Comprehensive implementation guide for cyclic systems
+- **Complete Summary**: [[../advent_of_code/aoc2015/examples/DAY14_COMPLETE_SUMMARY]] - Full problem walkthrough
+- **Documentation Guide**: [[../advent_of_code/aoc2015/examples/DOCUMENTATION_ENHANCEMENTS]] - Best practices for AoC documentation
+- **Graphics Guide**: [[../advent_of_code/aoc2015/examples/GRAPHICS_GUIDE]] - Visualization techniques for algorithm analysis
+- State machine implementation for flight/rest cycles
+- Algorithmic complexity comparison (O(n×c) vs O(n×m))
+- Real-time leader tracking with different scoring systems
+- Performance optimization through cycle mathematics
+
 ---
 
 ## 🎓 Key Learnings by Concept
@@ -149,6 +168,8 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 11: Generation with validation loop - increment until valid pattern found
 - Day 12: Recursive tree traversal with conditional filtering
 - Day 9: TSP with permutation generation
+- Day 13: TSP variant with circular constraints and symmetry optimization
+- Day 14: Cyclic state machines with mathematical optimization vs simulation
 
 ### **Algorithms & Problem Solving**
 - Day 9: Heap's algorithm for permutations
