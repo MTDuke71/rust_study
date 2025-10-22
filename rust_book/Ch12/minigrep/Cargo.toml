@@ -1,0 +1,14 @@
+[package]
+name = "minigrep"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[lib]
+name = "minigrep"
+path = "src/lib.rs"
+
+[[bin]]
+name = "minigrep"
+path = "src/main.rs"
