@@ -32,8 +32,6 @@
 //! - Performance optimization techniques
 //! - Real-world application patterns
 
-pub mod utils;
-
 /// Common utilities and helper functions for tutorial examples
 pub mod utils {
     use std::time::Instant;

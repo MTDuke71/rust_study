@@ -25,11 +25,53 @@
 //! Rust's `BinaryHeap` is a max-heap, so we need to reverse ordering for min-heap behavior.
 
 use std::collections::BinaryHeap;
-use std::cmp::{Ordering, Reverse};
+use std::cmp::Ordering;
 use std::hash::Hash;
 
+/// Ordered wrapper for floating-point costs
+/// Required because f64 doesn't implement Ord due to NaN values
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct OrderedFloat(pub f64);
+
+impl OrderedFloat {
+    pub fn new(value: f64) -> Self {
+        assert!(!value.is_nan(), "Cannot create OrderedFloat from NaN");
+        Self(value)
+    }
+    
+    pub fn get(self) -> f64 {
+        self.0
+    }
+}
+
+impl PartialOrd for OrderedFloat {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.0.partial_cmp(&other.0)
+    }
+}
+
+impl Ord for OrderedFloat {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.partial_cmp(other).unwrap_or(Ordering::Equal)
+    }
+}
+
+impl Eq for OrderedFloat {}
+
+impl From<f64> for OrderedFloat {
+    fn from(value: f64) -> Self {
+        Self::new(value)
+    }
+}
+
+impl std::fmt::Display for OrderedFloat {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:.1}", self.0)
+    }
+}
+
 /// Priority item that wraps a value with its priority/cost
-/// Uses Reverse to convert BinaryHeap (max-heap) to min-heap behavior
+/// Implements custom ordering to convert BinaryHeap (max-heap) to min-heap behavior
 #[derive(Debug, Clone, PartialEq)]
 pub struct PriorityItem<T, P> {
     pub item: T,
@@ -43,21 +85,21 @@ impl<T, P> PriorityItem<T, P> {
 }
 
 // Implement ordering based on priority (reversed for min-heap)
-impl<T, P: PartialOrd> PartialOrd for PriorityItem<T, P> {
+impl<T: PartialEq, P: PartialOrd> PartialOrd for PriorityItem<T, P> {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         // Reverse ordering: smaller priority = higher precedence
         other.priority.partial_cmp(&self.priority)
     }
 }
 
-impl<T, P: Ord> Ord for PriorityItem<T, P> {
+impl<T: PartialEq, P: Ord> Ord for PriorityItem<T, P> {
     fn cmp(&self, other: &Self) -> Ordering {
         // Reverse ordering: smaller priority = higher precedence  
         other.priority.cmp(&self.priority)
     }
 }
 
-impl<T, P: PartialEq> Eq for PriorityItem<T, P> {}
+impl<T: PartialEq, P: PartialEq> Eq for PriorityItem<T, P> {}
 
 /// Pathfinding-optimized priority queue
 /// Wrapper around BinaryHeap with pathfinding-specific operations
@@ -135,7 +177,7 @@ where
 fn exercise_1_basic_operations() {
     println!("🔧 Exercise 1: Basic Priority Queue Operations");
     
-    let mut queue: PathfindingQueue<u32, f64> = PathfindingQueue::new();
+    let mut queue: PathfindingQueue<u32, OrderedFloat> = PathfindingQueue::new();
     
     // TODO: Add these nodes with their costs
     // Node 0: cost 5.0
@@ -144,10 +186,10 @@ fn exercise_1_basic_operations() {
     // Node 3: cost 1.0
     
     // YOUR CODE HERE:
-    queue.push(0, 5.0);
-    queue.push(1, 2.0);
-    queue.push(2, 8.0);
-    queue.push(3, 1.0);
+    queue.push(0, OrderedFloat::new(5.0));
+    queue.push(1, OrderedFloat::new(2.0));
+    queue.push(2, OrderedFloat::new(8.0));
+    queue.push(3, OrderedFloat::new(1.0));
     
     println!("Queue size after insertions: {}", queue.len());
     
@@ -226,9 +268,9 @@ impl Coordinate {
 fn exercise_3_custom_node_types() {
     println!("\n📍 Exercise 3: Custom Node Types (Coordinates)");
     
-    let mut queue: PathfindingQueue<Coordinate, f64> = PathfindingQueue::new();
+    let mut queue: PathfindingQueue<Coordinate, OrderedFloat> = PathfindingQueue::new();
     
-    let start = Coordinate::new(0, 0);
+    let _start = Coordinate::new(0, 0);
     let goal = Coordinate::new(5, 5);
     
     // Add some coordinates with distances as priorities
@@ -241,14 +283,14 @@ fn exercise_3_custom_node_types() {
     
     println!("Adding coordinates with Manhattan distance to goal as priority:");
     for coord in coordinates {
-        let distance = coord.manhattan_distance(&goal) as f64;
+        let distance = OrderedFloat::new(coord.manhattan_distance(&goal) as f64);
         queue.push(coord, distance);
-        println!("  {:?}: distance {:.0}", coord, distance);
+        println!("  {:?}: distance {}", coord, distance);
     }
     
     println!("\nProcessing coordinates by distance to goal:");
     while let Some((coord, distance)) = queue.pop() {
-        println!("  {:?}: distance {:.0}", coord, distance);
+        println!("  {:?}: distance {}", coord, distance);
     }
     
     println!("✅ Custom node types working correctly!");
@@ -263,13 +305,13 @@ fn advanced_exercise_performance_analysis() {
     let sizes = vec![100, 1000, 10000];
     
     for size in sizes {
-        let mut queue: PathfindingQueue<usize, f64> = PathfindingQueue::with_capacity(size);
+        let mut queue: PathfindingQueue<usize, OrderedFloat> = PathfindingQueue::with_capacity(size);
         
         // Time insertions
         let start = Instant::now();
         for i in 0..size {
             // Insert in reverse order to test heap performance
-            queue.push(i, (size - i) as f64);
+            queue.push(i, OrderedFloat::new((size - i) as f64));
         }
         let insert_time = start.elapsed();
         
@@ -282,7 +324,7 @@ fn advanced_exercise_performance_analysis() {
                 // Verify ordering (first should be node size-1 with cost 1.0)
                 if extracted == 1 {
                     assert_eq!(node, size - 1);
-                    assert_eq!(cost, 1.0);
+                    assert_eq!(cost, OrderedFloat::new(1.0));
                 }
             }
         }
@@ -302,19 +344,19 @@ mod step1_tests {
     
     #[test]
     fn test_priority_queue_ordering() {
-        let mut queue: PathfindingQueue<i32, f64> = PathfindingQueue::new();
+        let mut queue: PathfindingQueue<i32, OrderedFloat> = PathfindingQueue::new();
         
         // Insert in random order
-        queue.push(1, 5.0);
-        queue.push(2, 1.0);
-        queue.push(3, 3.0);
-        queue.push(4, 2.0);
+        queue.push(1, OrderedFloat::new(5.0));
+        queue.push(2, OrderedFloat::new(1.0));
+        queue.push(3, OrderedFloat::new(3.0));
+        queue.push(4, OrderedFloat::new(2.0));
         
         // Should come out in cost order
-        assert_eq!(queue.pop(), Some((2, 1.0)));
-        assert_eq!(queue.pop(), Some((4, 2.0)));
-        assert_eq!(queue.pop(), Some((3, 3.0)));
-        assert_eq!(queue.pop(), Some((1, 5.0)));
+        assert_eq!(queue.pop(), Some((2, OrderedFloat::new(1.0))));
+        assert_eq!(queue.pop(), Some((4, OrderedFloat::new(2.0))));
+        assert_eq!(queue.pop(), Some((3, OrderedFloat::new(3.0))));
+        assert_eq!(queue.pop(), Some((1, OrderedFloat::new(5.0))));
         assert_eq!(queue.pop(), None);
     }
     
@@ -372,6 +414,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     exercise_3_custom_node_types();
     advanced_exercise_performance_analysis();
     
+    // Show solutions if feature is enabled
+    #[cfg(feature = "solutions")]
+    {
+        println!("\n🔍 Solutions Available:");
+        solutions::exercise_1_solution();
+        println!();
+        solutions::pathfinding_explanation();
+    }
+    
     println!("\n🎉 Step 1 Complete!");
     println!("Next: cargo run --example step2_dijkstra_basics");
     
@@ -390,17 +441,17 @@ mod solutions {
         println!("but pathfinding needs a min-heap (process lowest cost first).");
         println!("We reverse the ordering in our PriorityItem implementation.");
         
-        let mut queue: PathfindingQueue<u32, f64> = PathfindingQueue::new();
+        let mut queue: PathfindingQueue<u32, OrderedFloat> = PathfindingQueue::new();
         
         // Add nodes with costs
-        queue.push(0, 5.0);
-        queue.push(1, 2.0);
-        queue.push(2, 8.0);
-        queue.push(3, 1.0);
+        queue.push(0, OrderedFloat::new(5.0));
+        queue.push(1, OrderedFloat::new(2.0));
+        queue.push(2, OrderedFloat::new(8.0));
+        queue.push(3, OrderedFloat::new(1.0));
         
         // Pop in min-cost order
         while let Some((node, cost)) = queue.pop() {
-            println!("  Process node {} with cost {:.1}", node, cost);
+            println!("  Process node {} with cost {}", node, cost);
         }
     }
     
