@@ -50,6 +50,67 @@ fn test_stack_performance() {
 }
 
 #[test]
+fn test_large_stack_operations() {
+    // Use the common utility to create a large stack
+    let mut large_stack = common::create_large_stack(5000);
+    
+    // Verify the stack was created correctly
+    assert_eq!(large_stack.len(), 5000);
+    assert!(!large_stack.is_empty());
+    
+    // Test that elements are in correct LIFO order (last pushed = first popped)
+    // Should get 4999, 4998, 4997, ... down to 0
+    for expected_value in (0..5000).rev() {
+        match large_stack.pop() {
+            Some(actual) => assert_eq!(actual, expected_value),
+            None => panic!("Stack became empty before all elements were popped"),
+        }
+    }
+    
+    // Stack should now be empty
+    assert!(large_stack.is_empty());
+    assert_eq!(large_stack.len(), 0);
+}
+
+#[test]
+fn test_multiple_large_stacks() {
+    // Test creating multiple large stacks to ensure no interference
+    let stack1 = common::create_large_stack(1000);
+    let stack2 = common::create_large_stack(2000);
+    let stack3 = common::create_large_stack(1500);
+    
+    // Verify each stack has correct size
+    assert_eq!(stack1.len(), 1000);
+    assert_eq!(stack2.len(), 2000);
+    assert_eq!(stack3.len(), 1500);
+    
+    // Test peek functionality on large stacks
+    assert_eq!(stack1.peek(), Some(&999));  // Last element pushed (0..1000)
+    assert_eq!(stack2.peek(), Some(&1999)); // Last element pushed (0..2000)
+    assert_eq!(stack3.peek(), Some(&1499)); // Last element pushed (0..1500)
+}
+
+#[test]
+fn test_large_stack_memory_efficiency() {
+    use std::time::Instant;
+    
+    let start_time = Instant::now();
+    
+    // Create a very large stack to test memory allocation efficiency
+    let large_stack = common::create_large_stack(10000);
+    
+    let creation_time = start_time.elapsed();
+    
+    // Basic verification
+    assert_eq!(large_stack.len(), 10000);
+    assert_eq!(large_stack.peek(), Some(&9999)); // Last element
+    
+    // Creation should be reasonably fast (less than 100ms for 10k elements)
+    assert!(creation_time.as_millis() < 100, 
+            "Stack creation took too long: {:?}", creation_time);
+}
+
+#[test]
 fn test_interleaved_operations() {
     let mut calc = Calculator::new();
     let mut stack = Stack::new();
