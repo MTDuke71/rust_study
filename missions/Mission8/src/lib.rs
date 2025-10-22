@@ -498,7 +498,7 @@ pub fn dfs<G: Graph>(graph: &G, start: G::Node) -> Vec<G::Node> {
 
 /// Implementation of Graph trait for HashMap-based adjacency lists.
 /// 
-/// This allows BFS/DFS algorithms to work directly on HashMap<Node, Vec<Node>>
+/// This allows BFS/DFS algorithms to work directly on `HashMap<Node, Vec<Node>>`
 /// structures, which is the most common graph representation.
 /// 
 /// # Examples

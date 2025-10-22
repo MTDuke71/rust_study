@@ -672,6 +672,8 @@
 ## 💡 **Quick Reference Commands**
 
 ```bash
+# NOTE: Run these commands from the workspace root (d:\repos\rust_study)
+
 # Run tutorial steps in order
 cargo run -p mission8_tut --example step1_algorithm_traits
 cargo run -p mission8_tut --example step2_generic_bfs_dfs
