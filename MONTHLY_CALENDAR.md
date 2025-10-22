@@ -417,6 +417,7 @@ cargo doc --open
 **Mission Focus**: Mission 9 Setup (Dijkstra & A* Pathfinding)
 **Daily Study**: Week 5, Day 29 - Custom error types (implementing `std::error::Error`)
 **Rust Book**: Chapter 12.1 - Accepting Command Line Arguments
+**📝 Daily Note**: [[zettelkasten/Daily Notes/2025-10-22]] - Detailed daily learning plan and task breakdown
 ```bash
 # Daily Tasks
 cd Mission9 && cargo init                    # Initialize pathfinding mission
