@@ -2,6 +2,8 @@
 //!
 //! **Quick Reference**: Clean utility functions for splitting strings by index
 
+#![allow(dead_code)]
+
 fn main() {
     println!("🚀 Quick String Splitting Examples");
     println!("==================================\n");

@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::collections::HashMap;
 
 /// This demonstrates what a "wrapper" does in Rust

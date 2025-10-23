@@ -1,6 +1,8 @@
 // Visual breakdown of head: Option<Box<Node<T>>>
 // Run with: cargo run --example type_breakdown_demo
 
+#![allow(dead_code)]
+
 #[derive(Debug)]
 struct Node<T> {
     data: T,

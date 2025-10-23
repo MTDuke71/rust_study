@@ -3,6 +3,8 @@
 //! **Learning Path**: From simple functions to advanced closure patterns
 //! **Focus**: Build intuition step by step with concrete examples
 
+#![allow(dead_code)]
+
 fn main() {
     println!("🧠 Understanding Closures Step-by-Step");
     println!("======================================\n");

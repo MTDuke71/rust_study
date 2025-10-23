@@ -2,6 +2,8 @@
 //!
 //! **Demonstrates**: Different ways to write the same max_by_key operation
 
+#![allow(dead_code)]
+
 use std::collections::HashMap;
 
 fn main() {

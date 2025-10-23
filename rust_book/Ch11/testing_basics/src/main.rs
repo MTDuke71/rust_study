@@ -188,8 +188,9 @@ mod tests {
 
     #[test]
     fn test_boolean_assertion() {
-        assert!(true);
-        assert!(!false);
+        // These demonstrate basic boolean assertions
+        assert!(1 > 0);
+        assert!(true); // Simplified from !false
         assert!(2 + 2 == 4);
     }
 

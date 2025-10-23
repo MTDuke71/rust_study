@@ -3,6 +3,8 @@
 //! **Learning Objective**: Master HashSet fundamentals and set theory operations
 //!
 //! **Time Estimate**: 25 minutes
+
+#![allow(dead_code)]
 //!
 //! **What You'll Learn**:
 //! - Creating and manipulating HashSets

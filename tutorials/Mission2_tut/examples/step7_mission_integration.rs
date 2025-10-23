@@ -1,6 +1,8 @@
 // Mission2_tut Step 7: Mission2 Integration and Real-World Applications
 // Apply tutorial knowledge to Mission2 implementation and solve practical problems
 
+#![allow(dead_code)]
+
 fn main() {
     println!("=== Mission2_tut Step 7: Mission2 Integration & Real-World Applications ===\n");
 

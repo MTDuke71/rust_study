@@ -3,6 +3,8 @@
 //! **Learning Objective**: Master HashMap<K, Vec<V>> patterns for one-to-many relationships
 //!
 //! **Time Estimate**: 25 minutes
+
+#![allow(dead_code)]
 //!
 //! **What You'll Learn**:
 //! - Building adjacency lists for graph algorithms

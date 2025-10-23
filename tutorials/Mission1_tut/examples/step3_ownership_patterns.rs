@@ -222,7 +222,7 @@ fn demonstrate_borrowing_rules() {
     println!("   Exclusive mutable ref: {:?}", mut_ref);
 
     // After mutable reference goes out of scope, immutable refs OK again
-    drop(mut_ref); // Explicitly drop to show scope
+    // Explicitly end the scope to demonstrate
     let new_ref = stack.peek();
     println!("   Immutable ref after mut_ref dropped: {:?}", new_ref);
 }

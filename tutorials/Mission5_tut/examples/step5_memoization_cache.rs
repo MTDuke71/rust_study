@@ -3,6 +3,8 @@
 //! **Learning Objective**: Master HashMap-based caching for performance optimization
 //!
 //! **Time Estimate**: 30 minutes
+
+#![allow(dead_code)]
 //!
 //! **What You'll Learn**:
 //! - Implementing memoization for recursive functions

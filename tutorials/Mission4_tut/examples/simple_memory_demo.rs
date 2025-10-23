@@ -43,6 +43,10 @@ impl<T> SimpleLinkedList<T> {
     pub fn len(&self) -> usize {
         self.length
     }
+
+    pub fn is_empty(&self) -> bool {
+        self.length == 0
+    }
 }
 
 fn demonstrate_simple_memory_locations() {

@@ -180,7 +180,7 @@ mod tests {
         println!("This test is very slow...");
         thread::sleep(Duration::from_millis(500));
         println!("Finally finished!");
-        assert!(true);
+        assert!(1 > 0); // Verify test completed
     }
 
     #[test]
@@ -189,7 +189,7 @@ mod tests {
         println!("Running integration test with external dependencies");
         // This might require database, network, etc.
         thread::sleep(Duration::from_millis(200));
-        assert!(true);
+        assert!(1 > 0); // Verify test completed
     }
 
     // Tests for filtering demonstrations

@@ -1,6 +1,8 @@
 // Step 1: Basic Box<T> Structure
 // Run with: cargo run --example step1_basic_structure
 
+#![allow(dead_code)]
+
 #[derive(Debug)]
 struct Node<T> {
     data: T,

@@ -45,6 +45,10 @@ impl<T> BoxLinkedList<T> {
         self.length
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.length == 0
+    }
+
     // ✅ YES - get_data() IS possible with Box<T>!
     pub fn get_data(&self, index: usize) -> Option<T>
     where
@@ -122,6 +126,10 @@ impl<T> RcLinkedList<T> {
 
     pub fn len(&self) -> usize {
         self.length
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.length == 0
     }
 
     // ✅ get_data() - clones the data (no sharing)

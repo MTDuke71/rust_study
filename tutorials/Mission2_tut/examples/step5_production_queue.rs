@@ -1,6 +1,8 @@
 // Mission2_tut Step 5: Production-Ready Queue
 // Build a complete, optimized queue with full API surface and trait implementations
 
+#![allow(dead_code)]
+
 use std::collections::VecDeque;
 use std::fmt;
 
@@ -338,7 +340,7 @@ fn demonstrate_iterator_support() {
     }
 
     impl<T: Clone> IteratorRingQueue<T> {
-        fn iter(&self) -> RingQueueIter<T> {
+        fn iter(&self) -> RingQueueIter<'_, T> {
             RingQueueIter {
                 queue: self,
                 current: self.head,
@@ -495,7 +497,7 @@ fn demonstrate_advanced_operations() {
         }
 
         // Advanced: Drain all items
-        fn drain(&mut self) -> DrainIterator<T> {
+        fn drain(&mut self) -> DrainIterator<'_, T> {
             DrainIterator { queue: self }
         }
 

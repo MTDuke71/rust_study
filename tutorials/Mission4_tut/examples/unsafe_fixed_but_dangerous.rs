@@ -1,6 +1,8 @@
 // Demonstration: Raw pointers "work" with unsafe blocks, but are dangerous!
 // This compiles but is prone to memory bugs, data races, and undefined behavior
 
+#![allow(dead_code)]
+
 struct Node<T> {
     data: T,
     next: *mut Node<T>, // Raw pointer - still dangerous even with unsafe!
@@ -18,13 +20,11 @@ impl<T> UnsafeLinkedList<T> {
     }
 
     fn push_front(&mut self, data: T) {
-        // ⚠️ "Fixed" with unsafe block - but still dangerous!
-        let new_node = unsafe {
-            Box::into_raw(Box::new(Node {
-                data,
-                next: self.head,
-            }))
-        };
+        // ⚠️ "Fixed" - but still dangerous!
+        let new_node = Box::into_raw(Box::new(Node {
+            data,
+            next: self.head,
+        }));
         self.head = new_node;
     }
 

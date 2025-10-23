@@ -45,6 +45,10 @@ impl<T> RcLinkedList<T> {
         self.length
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.length == 0
+    }
+
     // Safe method to get a shared reference to a node
     pub fn get_node_ref(&self, index: usize) -> Option<NodeRef<T>> {
         if index >= self.length {

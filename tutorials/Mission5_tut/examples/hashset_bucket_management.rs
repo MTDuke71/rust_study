@@ -205,6 +205,7 @@ fn demo_rehashing_process() {
     println!("   What happens when HashSet needs to grow\n");
 
     #[derive(Debug, Clone, PartialEq, Eq)]
+    #[allow(clippy::mutable_key_type)]
     struct TrackedItem {
         value: i32,
         hash_calls: std::cell::Cell<usize>,

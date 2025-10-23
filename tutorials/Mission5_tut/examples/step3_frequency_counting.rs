@@ -3,6 +3,8 @@
 //! **Learning Objective**: Build statistical analysis tools using HashMap frequency patterns
 //!
 //! **Time Estimate**: 30 minutes
+
+#![allow(dead_code)]
 //!
 //! **What You'll Learn**:
 //! - Word frequency analysis for text processing

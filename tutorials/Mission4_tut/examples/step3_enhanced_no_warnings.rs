@@ -64,14 +64,14 @@ impl<T> SimpleLinkedList<T> {
     // ✅ Iterator that traverses using 'next' fields
     pub fn iter(&self) -> impl Iterator<Item = &T> {
         LinkedListIter {
-            current: self.head.as_ref(),
+            current: self.head.as_deref(),
         }
     }
 }
 
 // ✅ Iterator implementation that reads 'next' fields
 struct LinkedListIter<'a, T> {
-    current: Option<&'a Box<Node<T>>>,
+    current: Option<&'a Node<T>>,
 }
 
 impl<'a, T> Iterator for LinkedListIter<'a, T> {
@@ -79,7 +79,7 @@ impl<'a, T> Iterator for LinkedListIter<'a, T> {
 
     fn next(&mut self) -> Option<Self::Item> {
         self.current.map(|node| {
-            self.current = node.next.as_ref(); // ← Reads 'next' field!
+            self.current = node.next.as_deref(); // ← Reads 'next' field!
             &node.data
         })
     }

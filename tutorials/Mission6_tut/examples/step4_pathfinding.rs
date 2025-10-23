@@ -433,7 +433,7 @@ impl Eq for AStarNode {}
 
 impl PartialOrd for AStarNode {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.f_score.partial_cmp(&other.f_score)
+        Some(self.cmp(other))
     }
 }
 
