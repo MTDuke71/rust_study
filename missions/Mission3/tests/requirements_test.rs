@@ -64,7 +64,8 @@ fn req2_trait_based_search() {
     // Verify trait methods work
     assert_eq!(slice_data.len(), 5);
     assert_eq!(slice_data.get(2), Some(&5));
-    assert!(!slice_data.is_empty());
+    // slice_data is a fixed-size array, so it's never empty
+    // No need to test is_empty() on a const array
 }
 
 #[test] // REQ-2: Custom searchable container

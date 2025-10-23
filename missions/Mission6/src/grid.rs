@@ -482,7 +482,9 @@ mod tests {
         assert!(grid.get_mut(Coord::new(2, 2)).is_none());
 
         // Verify we can chain operations
-        grid.get_mut(Coord::new(1, 0)).map(|cell| *cell = 55);
+        if let Some(cell) = grid.get_mut(Coord::new(1, 0)) {
+            *cell = 55;
+        }
         assert_eq!(grid[(1, 0)], 55);
     }
 

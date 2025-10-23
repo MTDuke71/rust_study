@@ -1,6 +1,8 @@
 // Eq vs PartialEq - Understanding the Difference
 // A focused example showing why the distinction matters
 
+#![allow(clippy::eq_op)] // Intentional self-comparisons to demonstrate reflexivity
+
 use std::collections::HashMap;
 
 fn main() {

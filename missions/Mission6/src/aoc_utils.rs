@@ -582,7 +582,7 @@ mod tests {
 
         // Should be somewhere around (2, 1) to minimize total distance
         assert!(centroid.x >= 1 && centroid.x <= 3);
-        assert!(centroid.y >= 0 && centroid.y <= 2);
+        assert!(centroid.y <= 2); // y is usize, so always >= 0
     }
 
     #[test]
