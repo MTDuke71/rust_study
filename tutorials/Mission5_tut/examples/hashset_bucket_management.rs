@@ -233,6 +233,7 @@ fn demo_rehashing_process() {
         }
     }
 
+    #[allow(clippy::mutable_key_type)]
     let mut set = HashSet::new();
     let items: Vec<TrackedItem> = (0..10).map(TrackedItem::new).collect();
 

@@ -17,6 +17,7 @@ use std::rc::Rc;
 type NodeRef<T> = Rc<RefCell<RcNode<T>>>;
 
 #[derive(Debug)]
+#[allow(private_interfaces)]
 struct RcNode<T> {
     data: T,
     next: Option<NodeRef<T>>,
@@ -92,6 +93,7 @@ impl<T> RcLinkedList<T> {
         }
     }
 
+    #[allow(private_interfaces)]
     pub fn get_node_ref(&self, index: usize) -> Result<NodeRef<T>, LinkedListError> {
         if index >= self.length {
             return Err(LinkedListError::IndexOutOfBounds);

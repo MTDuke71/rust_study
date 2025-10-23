@@ -7,6 +7,7 @@ use std::rc::Rc;
 type NodeRef<T> = Rc<RefCell<RcNode<T>>>;
 
 #[derive(Debug)]
+#[allow(private_interfaces)]
 struct RcNode<T> {
     data: T,
     next: Option<NodeRef<T>>,
@@ -50,6 +51,7 @@ impl<T> RcLinkedList<T> {
     }
 
     // Safe method to get a shared reference to a node
+    #[allow(private_interfaces)]
     pub fn get_node_ref(&self, index: usize) -> Option<NodeRef<T>> {
         if index >= self.length {
             return None;

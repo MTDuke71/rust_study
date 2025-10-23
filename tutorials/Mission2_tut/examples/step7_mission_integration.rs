@@ -393,6 +393,7 @@ fn solve_real_world_problems() {
         );
     }
 
+    println!("      📈 Total packets processed: {}", processed);
     let (bytes, dropped, remaining) = packet_buffer.stats();
     println!(
         "      📊 Stats: {} bytes processed, {} dropped, {} remaining",
