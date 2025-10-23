@@ -1,11 +1,11 @@
 /// Day 13 Seating Visualization Demo
-/// 
+///
 /// This example demonstrates the seating optimization algorithm by:
 /// 1. Parsing happiness relationships between people
 /// 2. Finding the optimal (maximum happiness) arrangement  
 /// 3. Finding the worst (minimum happiness) arrangement
 /// 4. Displaying both arrangements visually around a circular table
-/// 
+///
 /// Usage: cargo run --example day13_seating_visualization
 ///
 use aoc2015::solver::day13::*;
@@ -13,13 +13,13 @@ use aoc2015::solver::day13::*;
 fn main() {
     println!("🎄 Day 13: Knights of the Dinner Table - Seating Visualization");
     println!("================================================================");
-    
+
     // Example 1: Simple 4-person example
     demonstrate_simple_example();
-    
+
     // Example 2: Complex example with more people
     demonstrate_complex_example();
-    
+
     // Example 3: Adding yourself (Part 2)
     demonstrate_part2_example();
 }
@@ -27,7 +27,7 @@ fn main() {
 fn demonstrate_simple_example() {
     println!("\n🪑 **Example 1: Simple 4-Person Dinner Party**");
     println!("==============================================");
-    
+
     let input = r#"Alice would gain 54 happiness units by sitting next to Bob.
 Alice would lose 79 happiness units by sitting next to Carol.
 Alice would lose 2 happiness units by sitting next to David.
@@ -42,23 +42,26 @@ David would lose 7 happiness units by sitting next to Bob.
 David would gain 41 happiness units by sitting next to Carol."#;
 
     let graph = parse_happiness_graph(input).unwrap();
-    
+
     // Show the happiness matrix
     print_happiness_matrix(&graph);
-    
+
     // Find optimal and worst arrangements
     let (best_happiness, best_arrangement) = find_optimal_seating(&graph);
     let (worst_happiness, worst_arrangement) = find_worst_seating(&graph);
-    
+
     println!("\n📊 **Results:**");
     println!("  🏆 Best arrangement happiness: {}", best_happiness);
     println!("  💀 Worst arrangement happiness: {}", worst_happiness);
-    println!("  📈 Difference: {} happiness units", best_happiness - worst_happiness);
-    
+    println!(
+        "  📈 Difference: {} happiness units",
+        best_happiness - worst_happiness
+    );
+
     // Visualize both arrangements
     println!("\n🏆 **OPTIMAL SEATING ARRANGEMENT**");
     visualize_seating_arrangement(&graph, &best_arrangement, best_happiness);
-    
+
     println!("\n💀 **WORST SEATING ARRANGEMENT**");
     visualize_seating_arrangement(&graph, &worst_arrangement, worst_happiness);
 }
@@ -66,7 +69,7 @@ David would gain 41 happiness units by sitting next to Carol."#;
 fn demonstrate_complex_example() {
     println!("\n\n🍽️ **Example 2: Larger Dinner Party (6 People)**");
     println!("===============================================");
-    
+
     let input = r#"Alice would gain 2 happiness units by sitting next to Bob.
 Alice would gain 26 happiness units by sitting next to Carol.
 Alice would lose 82 happiness units by sitting next to David.
@@ -99,16 +102,22 @@ Frank would gain 45 happiness units by sitting next to David.
 Frank would lose 15 happiness units by sitting next to Eric."#;
 
     let graph = parse_happiness_graph(input).unwrap();
-    
+
     let (best_happiness, best_arrangement) = find_optimal_seating(&graph);
     let (worst_happiness, _worst_arrangement) = find_worst_seating(&graph);
-    
+
     println!("📊 **Results for {} people:**", graph.people.len());
     println!("  🏆 Best arrangement happiness: {}", best_happiness);
     println!("  💀 Worst arrangement happiness: {}", worst_happiness);
-    println!("  📈 Difference: {} happiness units", best_happiness - worst_happiness);
-    println!("  🔢 Total permutations analyzed: {}", factorial(graph.people.len()));
-    
+    println!(
+        "  📈 Difference: {} happiness units",
+        best_happiness - worst_happiness
+    );
+    println!(
+        "  🔢 Total permutations analyzed: {}",
+        factorial(graph.people.len())
+    );
+
     println!("\n🏆 **OPTIMAL ARRANGEMENT (Top 6 People)**");
     visualize_seating_arrangement(&graph, &best_arrangement, best_happiness);
 }
@@ -116,7 +125,7 @@ Frank would lose 15 happiness units by sitting next to Eric."#;
 fn demonstrate_part2_example() {
     println!("\n\n👤 **Example 3: Adding Yourself (Part 2)**");
     println!("========================================");
-    
+
     let input = r#"Alice would gain 54 happiness units by sitting next to Bob.
 Alice would lose 79 happiness units by sitting next to Carol.
 Bob would gain 83 happiness units by sitting next to Alice.
@@ -127,20 +136,20 @@ Carol would gain 60 happiness units by sitting next to Bob."#;
     // Part 1: Original arrangement
     let graph1 = parse_happiness_graph(input).unwrap();
     let (best1, arrangement1) = find_optimal_seating(&graph1);
-    
+
     // Part 2: Add yourself
     let mut graph2 = parse_happiness_graph(input).unwrap();
     graph2.add_neutral_person("You");
     let (best2, arrangement2) = find_optimal_seating(&graph2);
-    
+
     println!("📊 **Comparison:**");
     println!("  🥇 Part 1 (without you): {} happiness", best1);
     println!("  🥈 Part 2 (with you):    {} happiness", best2);
     println!("  📉 Impact of adding you: {} happiness", best2 - best1);
-    
+
     println!("\n🥇 **PART 1: Original Optimal Arrangement**");
     visualize_seating_arrangement(&graph1, &arrangement1, best1);
-    
+
     println!("\n🥈 **PART 2: Optimal Arrangement (With You)**");
     visualize_seating_arrangement(&graph2, &arrangement2, best2);
 }
@@ -152,16 +161,16 @@ Carol would gain 60 happiness units by sitting next to Bob."#;
 /// Prints a happiness matrix showing relationships between all people
 fn print_happiness_matrix(graph: &HappinessGraph) {
     let people: Vec<String> = graph.get_people();
-    
+
     println!("\n💝 **Happiness Matrix** (row = person, column = sitting next to):");
-    
+
     // Header row
     print!("        ");
     for person in &people {
         print!("{:>8}", person);
     }
     println!();
-    
+
     // Data rows
     for person1 in &people {
         print!("{:>8}", person1);
@@ -178,37 +187,43 @@ fn print_happiness_matrix(graph: &HappinessGraph) {
 }
 
 /// Visualizes a seating arrangement around a circular table
-fn visualize_seating_arrangement(graph: &HappinessGraph, arrangement: &[String], total_happiness: i32) {
+fn visualize_seating_arrangement(
+    graph: &HappinessGraph,
+    arrangement: &[String],
+    total_happiness: i32,
+) {
     if arrangement.is_empty() {
         println!("  (No people to seat)");
         return;
     }
-    
+
     println!("  🎯 Total Happiness: {}", total_happiness);
     println!("  👥 Seating Order: {}", arrangement.join(" → "));
-    
+
     // Draw the circular table
     draw_circular_table(arrangement);
-    
+
     // Show individual happiness contributions
     println!("\n  📋 **Individual Happiness Contributions:**");
     for (i, person) in arrangement.iter().enumerate() {
         let left_neighbor = &arrangement[(i + arrangement.len() - 1) % arrangement.len()];
         let right_neighbor = &arrangement[(i + 1) % arrangement.len()];
-        
+
         let left_happiness = graph.get_happiness(person, left_neighbor);
         let right_happiness = graph.get_happiness(person, right_neighbor);
         let person_total = left_happiness + right_happiness;
-        
-        println!("    {} → {} (left: {:+3}) + {} (right: {:+3}) = {:+3}", 
-                 person, left_neighbor, left_happiness, right_neighbor, right_happiness, person_total);
+
+        println!(
+            "    {} → {} (left: {:+3}) + {} (right: {:+3}) = {:+3}",
+            person, left_neighbor, left_happiness, right_neighbor, right_happiness, person_total
+        );
     }
 }
 
 /// Draws a visual representation of people sitting around a circular table
 fn draw_circular_table(arrangement: &[String]) {
     let n = arrangement.len();
-    
+
     match n {
         2 => draw_table_2_people(arrangement),
         3 => draw_table_3_people(arrangement),
@@ -222,7 +237,10 @@ fn draw_circular_table(arrangement: &[String]) {
 fn draw_table_2_people(arrangement: &[String]) {
     println!("\n      ┌─────────────────┐");
     println!("      │                 │");
-    println!("   {:>8}  🪑       🪑  {:<8}", arrangement[0], arrangement[1]);
+    println!(
+        "   {:>8}  🪑       🪑  {:<8}",
+        arrangement[0], arrangement[1]
+    );
     println!("      │                 │");
     println!("      └─────────────────┘");
 }
@@ -275,9 +293,13 @@ fn draw_table_6_people(arrangement: &[String]) {
 fn draw_table_many_people(arrangement: &[String]) {
     println!("\n  ⭕ **Circular Table ({} people)**", arrangement.len());
     println!("     Seating clockwise:");
-    
+
     for (i, person) in arrangement.iter().enumerate() {
-        let arrow = if i == arrangement.len() - 1 { "↻" } else { "→" };
+        let arrow = if i == arrangement.len() - 1 {
+            "↻"
+        } else {
+            "→"
+        };
         println!("     {}: {} {}", i + 1, person, arrow);
     }
 }
@@ -289,30 +311,30 @@ fn draw_table_many_people(arrangement: &[String]) {
 /// Finds the worst possible seating arrangement (minimum happiness)
 fn find_worst_seating(graph: &HappinessGraph) -> (i32, Vec<String>) {
     let people: Vec<String> = graph.get_people();
-    
+
     if people.is_empty() {
         return (0, Vec::new());
     }
-    
+
     if people.len() == 1 {
         return (0, people);
     }
-    
+
     let mut worst_happiness = i32::MAX;
     let mut worst_arrangement = people.clone();
-    
+
     // Generate all permutations and find the one with minimum happiness
     let all_permutations = generate_permutations(&people);
-    
+
     for arrangement in all_permutations {
         let total_happiness = calculate_circular_happiness(graph, &arrangement);
-        
+
         if total_happiness < worst_happiness {
             worst_happiness = total_happiness;
             worst_arrangement = arrangement;
         }
     }
-    
+
     (worst_happiness, worst_arrangement)
 }
 

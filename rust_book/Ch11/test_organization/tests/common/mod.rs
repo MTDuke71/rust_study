@@ -28,11 +28,11 @@ pub fn create_large_stack(size: usize) -> Stack<usize> {
 pub fn calculate_factorial(n: u32) -> f64 {
     let mut calc = Calculator::new();
     calc.add(1.0); // Start with 1
-    
+
     for i in 2..=n {
         calc.multiply(i as f64);
     }
-    
+
     calc.get_value()
 }
 
@@ -58,26 +58,26 @@ mod common_tests {
     fn test_setup_functions() {
         let calc = setup_test_calculator();
         assert_eq!(calc.get_value(), 10.0);
-        
+
         let mut stack = setup_test_stack();
         assert_eq!(stack.len(), 3);
         assert_eq!(stack.pop(), Some(3));
     }
-    
+
     #[test]
     fn test_factorial_calculation() {
         assert_eq!(calculate_factorial(5), 120.0);
         assert_eq!(calculate_factorial(0), 1.0);
         assert_eq!(calculate_factorial(1), 1.0);
     }
-    
+
     #[test]
     fn test_verify_stack_order() {
         let mut stack = Stack::new();
         stack.push(1);
         stack.push(2);
         stack.push(3);
-        
+
         assert!(verify_stack_order(&mut stack, vec![1, 2, 3]));
     }
 }

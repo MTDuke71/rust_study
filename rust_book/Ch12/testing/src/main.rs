@@ -87,7 +87,7 @@ Pick three.";
     println!("\n🔍 Testing search for '{}':", query);
     println!("Expected: [\"safe, fast, productive.\"]");
     println!("Actual: {:?}", results);
-    
+
     assert_eq!(vec!["safe, fast, productive."], results);
     println!("✅ Test passed!");
 
@@ -168,7 +168,10 @@ fn example4_performance_testing() {
         .collect::<Vec<_>>()
         .join("\n");
 
-    println!("🚀 Performance test with {} lines", large_content.lines().count());
+    println!(
+        "🚀 Performance test with {} lines",
+        large_content.lines().count()
+    );
 
     let start = std::time::Instant::now();
     let results = search("500", &large_content);

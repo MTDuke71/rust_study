@@ -28,10 +28,7 @@ fn example_basic_multi_value() {
     student_courses.insert("Bob", vec!["Biology", "Chemistry"]);
 
     // Method 2: Build vectors incrementally
-    student_courses
-        .entry("Charlie")
-        .or_default()
-        .push("Math");
+    student_courses.entry("Charlie").or_default().push("Math");
     student_courses
         .entry("Charlie")
         .or_default()
@@ -154,10 +151,7 @@ fn example_grouping() {
     for items in categories.values() {
         for &item in items {
             if let Some(first_char) = item.chars().next() {
-                by_first_letter
-                    .entry(first_char)
-                    .or_default()
-                    .push(item);
+                by_first_letter.entry(first_char).or_default().push(item);
             }
         }
     }

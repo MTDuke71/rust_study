@@ -5,7 +5,12 @@ use aoc2015::solver::day06;
 #[allow(clippy::needless_range_loop)]
 fn print_grid_state(grid: &[[bool; 1000]; 1000], x1: usize, y1: usize, x2: usize, y2: usize) {
     println!("Grid state in region ({},{}) to ({},{}):", x1, y1, x2, y2);
-    for (_y, row) in grid.iter().enumerate().skip(y1).take(y2.min(y1 + 10) - y1 + 1) {
+    for (_y, row) in grid
+        .iter()
+        .enumerate()
+        .skip(y1)
+        .take(y2.min(y1 + 10) - y1 + 1)
+    {
         // Limit output for readability
         for x in x1..=x2.min(x1 + 10) {
             print!("{}", if row[x] { '█' } else { '░' });

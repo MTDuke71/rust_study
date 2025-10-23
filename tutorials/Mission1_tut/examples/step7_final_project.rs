@@ -47,15 +47,13 @@ pub struct ProductionStack<T> {
     stats: OperationStats,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct OperationStats {
     push_count: usize,
     pop_count: usize,
     peek_count: usize,
     total_allocations: usize,
 }
-
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum StackError<T> {

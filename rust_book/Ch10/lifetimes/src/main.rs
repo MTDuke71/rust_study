@@ -60,14 +60,14 @@ fn example2_lifetime_in_structs() {
 
     let novel = String::from("Call me Ishmael. Some years ago...");
     let first_sentence = novel.split('.').next().expect("Could not find a '.'");
-    
+
     let i = ImportantExcerpt {
         part: first_sentence,
     };
 
     println!("Excerpt: {}", i.part);
     println!("First word: {}", i.first_word());
-    
+
     let announcement = "This is an important announcement!";
     let part = i.announce_and_return_part(announcement);
     println!("Returned part: {}", part);
@@ -104,10 +104,10 @@ fn example3_lifetime_elision_rules() {
     }
 
     let text = String::from("hello world rust");
-    
+
     let word1 = first_word_explicit(&text);
     let word2 = first_word_elided(&text);
-    
+
     println!("First word (explicit): {}", word1);
     println!("First word (elided): {}", word2);
     println!("Both functions work identically!");
@@ -120,13 +120,9 @@ fn example4_multiple_lifetime_parameters() {
     println!("==========================================");
 
     // Function with multiple lifetime parameters
-    fn longest_with_an_announcement<'a, 'b>(
-        x: &'a str,
-        y: &'a str,
-        ann: &'b str,
-    ) -> &'a str
+    fn longest_with_an_announcement<'a, 'b>(x: &'a str, y: &'a str, ann: &'b str) -> &'a str
     where
-        'b: 'a,  // Lifetime bound: 'b must live at least as long as 'a
+        'b: 'a, // Lifetime bound: 'b must live at least as long as 'a
     {
         println!("Attention! {}", ann);
         if x.len() > y.len() {
@@ -140,12 +136,8 @@ fn example4_multiple_lifetime_parameters() {
     let string2 = "xyz";
     let announcement = String::from("This is an important announcement!");
 
-    let result = longest_with_an_announcement(
-        string1.as_str(),
-        string2,
-        &announcement,
-    );
-    
+    let result = longest_with_an_announcement(string1.as_str(), string2, &announcement);
+
     println!("The longest string is {}", result);
 
     println!();
@@ -158,11 +150,7 @@ fn example5_lifetime_bounds() {
     use std::fmt::Display;
 
     // Generic function with lifetime and trait bounds
-    fn longest_with_an_announcement<'a, T>(
-        x: &'a str,
-        y: &'a str,
-        ann: T,
-    ) -> &'a str
+    fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
     where
         T: Display,
     {
@@ -176,18 +164,10 @@ fn example5_lifetime_bounds() {
 
     let string1 = String::from("abcd");
     let string2 = "xyz";
-    
-    let result1 = longest_with_an_announcement(
-        string1.as_str(),
-        string2,
-        "String announcement",
-    );
-    
-    let result2 = longest_with_an_announcement(
-        string1.as_str(),
-        string2,
-        42,
-    );
+
+    let result1 = longest_with_an_announcement(string1.as_str(), string2, "String announcement");
+
+    let result2 = longest_with_an_announcement(string1.as_str(), string2, 42);
 
     println!("Result 1: {}", result1);
     println!("Result 2: {}", result2);
@@ -252,7 +232,7 @@ fn example7_common_lifetime_patterns() {
 
     let text = String::from("Hello world from Rust");
     let holder = TextHolder::new(&text);
-    
+
     println!("Text: {}", holder.text);
     println!("Word count: {}", holder.word_count);
     println!("First word (from method): {}", holder.get_first_word());
@@ -281,13 +261,16 @@ fn example8_lifetime_errors_demonstration() {
 
     // ✅ Correct approach - return owned data instead of reference
     fn no_dangle() -> String {
-        
-        String::from("hello")  // Move ownership instead of returning reference
+        String::from("hello") // Move ownership instead of returning reference
     }
 
     // ✅ Correct approach - ensure both parameters have same lifetime
     fn longest_correct<'a>(x: &'a str, y: &'a str) -> &'a str {
-        if x.len() > y.len() { x } else { y }
+        if x.len() > y.len() {
+            x
+        } else {
+            y
+        }
     }
 
     let result = no_dangle();

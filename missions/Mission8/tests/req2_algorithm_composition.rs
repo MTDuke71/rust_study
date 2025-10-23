@@ -4,9 +4,7 @@
 //! find_cycle, connected_components) work correctly on various graph types and
 //! handle edge cases properly.
 
-use mission8::{
-    Graph, connected_components, find_cycle, has_cycle, shortest_path, GraphError,
-};
+use mission8::{connected_components, find_cycle, has_cycle, shortest_path, Graph, GraphError};
 use std::collections::HashMap;
 
 /// Create a simple 4-node test graph
@@ -207,7 +205,7 @@ fn req2_has_cycle_cyclic_graph() {
 #[test]
 fn req2_has_cycle_simple_self_loop() {
     let mut graph = HashMap::new();
-    graph.insert(0, vec![0]);  // Self-loop
+    graph.insert(0, vec![0]); // Self-loop
 
     assert!(has_cycle(&graph));
 }
@@ -255,7 +253,7 @@ fn req2_has_cycle_complex_cycle() {
     graph.insert(0, vec![1, 2]);
     graph.insert(1, vec![3]);
     graph.insert(2, vec![3]);
-    graph.insert(3, vec![0]);  // Back edge creating cycle
+    graph.insert(3, vec![0]); // Back edge creating cycle
 
     assert!(has_cycle(&graph));
 }
@@ -267,7 +265,7 @@ fn req2_has_cycle_multiple_components_with_cycle_in_one() {
     graph.insert(0, vec![1]);
     graph.insert(1, vec![2]);
     graph.insert(2, vec![]);
-    
+
     // Component 2: cyclic
     graph.insert(3, vec![4]);
     graph.insert(4, vec![3]);
@@ -331,7 +329,7 @@ fn req2_find_cycle_larger_graph() {
     graph.insert(1, vec![2]);
     graph.insert(2, vec![3]);
     graph.insert(3, vec![4]);
-    graph.insert(4, vec![2]);  // Cycle starts here: 2 -> 3 -> 4 -> 2
+    graph.insert(4, vec![2]); // Cycle starts here: 2 -> 3 -> 4 -> 2
 
     let cycle = find_cycle(&graph);
     assert!(cycle.is_some());
@@ -432,16 +430,16 @@ fn req2_connected_components_with_cycles() {
 #[test]
 fn req2_connected_components_three_components() {
     let mut graph = HashMap::new();
-    
+
     // Component 1: 0 <-> 1
     graph.insert(0, vec![1]);
     graph.insert(1, vec![0]);
-    
+
     // Component 2: 2 -> 3 -> 4
     graph.insert(2, vec![3]);
     graph.insert(3, vec![4]);
     graph.insert(4, vec![]);
-    
+
     // Component 3: isolated 5
     graph.insert(5, vec![]);
 
@@ -523,7 +521,7 @@ fn req2_algorithms_consistent_on_string_nodes() {
 fn req2_large_graph_performance() {
     // Create a larger graph to ensure algorithms scale
     let mut graph: HashMap<u32, Vec<u32>> = HashMap::new();
-    
+
     // Create a chain: 0 -> 1 -> 2 -> ... -> 99
     for i in 0..99 {
         graph.insert(i, vec![i + 1]);

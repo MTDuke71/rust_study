@@ -164,7 +164,7 @@ pub fn create_cyclic_graph() -> HashMap<u32, Vec<u32>> {
     let mut graph = HashMap::new();
     graph.insert(0, vec![1]);
     graph.insert(1, vec![2]);
-    graph.insert(2, vec![0]);  // Creates cycle back to 0
+    graph.insert(2, vec![0]); // Creates cycle back to 0
     graph
 }
 
@@ -212,17 +212,17 @@ pub fn print_traversal<T: Debug>(algorithm_name: &str, visited_nodes: &[T]) {
 /// let mut queue = VecDeque::new();
 /// queue.push_back(1);
 /// queue.push_back(2);
-/// 
+///
 /// let mut visited = HashSet::new();
 /// visited.insert(0);
 ///
 /// visualize_bfs_state(1, 0, &queue, &visited);
 /// ```
 pub fn visualize_bfs_state<T>(
-    step: usize, 
-    current_node: T, 
+    step: usize,
+    current_node: T,
     queue: &std::collections::VecDeque<T>,
-    visited: &std::collections::HashSet<T>
+    visited: &std::collections::HashSet<T>,
 ) where
     T: Debug + Clone + std::hash::Hash + Eq,
 {
@@ -250,7 +250,7 @@ pub fn visualize_bfs_state<T>(
 /// use std::collections::HashSet;
 ///
 /// let stack = vec![1, 2];
-/// 
+///
 /// let mut visited = HashSet::new();
 /// visited.insert(0);
 ///
@@ -260,7 +260,7 @@ pub fn visualize_dfs_state<T>(
     step: usize,
     current_node: T,
     stack: &[T],
-    visited: &std::collections::HashSet<T>
+    visited: &std::collections::HashSet<T>,
 ) where
     T: Debug + Clone + std::hash::Hash + Eq,
 {
@@ -292,13 +292,13 @@ pub fn visualize_dfs_state<T>(
 /// ```
 pub fn compare_algorithms<T: Debug + PartialEq>(
     graph_name: &str,
-    bfs_result: &[T], 
-    dfs_result: &[T]
+    bfs_result: &[T],
+    dfs_result: &[T],
 ) {
     println!("\n📊 Algorithm Comparison on {}:", graph_name);
     print_traversal("BFS (Level-Order)", bfs_result);
     print_traversal("DFS (Depth-First)", dfs_result);
-    
+
     if bfs_result == dfs_result {
         println!("  ℹ️  Note: Both algorithms produce the same order for this graph");
     } else {
@@ -452,4 +452,3 @@ pub fn compare_approaches() {
     println!("  Components          | ✅ Works    | ✅ Works    | Either works");
     println!("  Topological Sort     | ❌ N/A     | ✅ Best     | DFS finishing times");
 }
-

@@ -2,7 +2,6 @@
 //!
 //! While Day 4 is primarily a brute-force problem, there are still valuable unit tests possible.
 
-
 /// Example of how Day 4 could be tested
 #[cfg(test)]
 mod day04_tests {

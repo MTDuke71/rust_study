@@ -31,9 +31,13 @@ fn example1_basic_trait_definition() {
 
     impl Summary for NewsArticle {
         fn summarize(&self) -> String {
-            format!("{}, by {} ({}). Content: {}...", 
-                     self.headline, self.author, self.location, 
-                     &self.content[..self.content.len().min(50)])
+            format!(
+                "{}, by {} ({}). Content: {}...",
+                self.headline,
+                self.author,
+                self.location,
+                &self.content[..self.content.len().min(50)]
+            )
         }
     }
 
@@ -73,7 +77,9 @@ fn example1_basic_trait_definition() {
         headline: String::from("Penguins win the Stanley Cup Championship!"),
         location: String::from("Pittsburgh, PA, USA"),
         author: String::from("Iceburgh"),
-        content: String::from("The Pittsburgh Penguins once again are the best hockey team in the NHL."),
+        content: String::from(
+            "The Pittsburgh Penguins once again are the best hockey team in the NHL.",
+        ),
     };
 
     let tweet = Tweet {
@@ -119,7 +125,7 @@ fn example2_trait_bounds() {
     use std::fmt::Display;
 
     // Where clause for cleaner syntax
-    pub fn some_function<T, U>(t: &T, u: &U) -> i32 
+    pub fn some_function<T, U>(t: &T, u: &U) -> i32
     where
         T: Display + Clone,
         U: Clone + std::fmt::Debug,
@@ -163,8 +169,10 @@ fn example3_trait_objects() {
 
     impl Draw for Button {
         fn draw(&self) {
-            println!("Drawing a button: {}x{} with label '{}'", 
-                     self.width, self.height, self.label);
+            println!(
+                "Drawing a button: {}x{} with label '{}'",
+                self.width, self.height, self.label
+            );
         }
     }
 
@@ -176,8 +184,12 @@ fn example3_trait_objects() {
 
     impl Draw for SelectBox {
         fn draw(&self) {
-            println!("Drawing a select box: {}x{} with {} options", 
-                     self.width, self.height, self.options.len());
+            println!(
+                "Drawing a select box: {}x{} with {} options",
+                self.width,
+                self.height,
+                self.options.len()
+            );
         }
     }
 
@@ -386,13 +398,14 @@ fn example_encapsulation() {
 
     impl BankAccount {
         pub fn new(initial_balance: f64, account_number: u32) -> Self {
-            BankAccount { 
+            BankAccount {
                 balance: initial_balance,
                 account_number,
             }
         }
 
-        pub fn deposit(&mut self, amount: f64) {  // Public method
+        pub fn deposit(&mut self, amount: f64) {
+            // Public method
             if amount > 0.0 {
                 self.balance += amount;
             }
@@ -407,12 +420,16 @@ fn example_encapsulation() {
             }
         }
 
-        pub fn get_balance(&self) -> f64 {  // Controlled access
+        pub fn get_balance(&self) -> f64 {
+            // Controlled access
             self.balance
         }
 
         pub fn get_account_info(&self) -> String {
-            format!("Account #{}: Balance ${:.2}", self.account_number, self.balance)
+            format!(
+                "Account #{}: Balance ${:.2}",
+                self.account_number, self.balance
+            )
         }
 
         // Private helper method
@@ -423,15 +440,18 @@ fn example_encapsulation() {
 
     let mut account = BankAccount::new(100.0, 12345);
     println!("Created: {}", account.get_account_info());
-    
+
     account.deposit(50.0);
     println!("Balance after deposit: ${:.2}", account.get_balance());
-    
+
     match account.withdraw(25.0) {
-        Ok(()) => println!("Withdrawal successful. New balance: ${:.2}", account.get_balance()),
+        Ok(()) => println!(
+            "Withdrawal successful. New balance: ${:.2}",
+            account.get_balance()
+        ),
         Err(e) => println!("Withdrawal failed: {}", e),
     }
-    
+
     // account.balance = 1000.0; // ❌ Compile error - private field
     // account.validate_transaction(50.0); // ❌ Compile error - private method
 
@@ -446,42 +466,79 @@ fn example_polymorphism_enhanced() {
     pub trait Animal {
         fn make_sound(&self) -> String;
         fn get_species(&self) -> &str;
-        
+
         // Default implementation (like default methods in Java interfaces)
         fn introduce(&self) -> String {
-            format!("I am a {} and I go {}", self.get_species(), self.make_sound())
+            format!(
+                "I am a {} and I go {}",
+                self.get_species(),
+                self.make_sound()
+            )
         }
     }
 
-    pub struct Dog { name: String }
-    pub struct Cat { name: String }
-    pub struct Bird { name: String }
+    pub struct Dog {
+        name: String,
+    }
+    pub struct Cat {
+        name: String,
+    }
+    pub struct Bird {
+        name: String,
+    }
 
     impl Animal for Dog {
-        fn make_sound(&self) -> String { "Woof!".to_string() }
-        fn get_species(&self) -> &str { "Dog" }
-        
+        fn make_sound(&self) -> String {
+            "Woof!".to_string()
+        }
+        fn get_species(&self) -> &str {
+            "Dog"
+        }
+
         fn introduce(&self) -> String {
-            format!("I'm {} the {} and I go {}", self.name, self.get_species(), self.make_sound())
+            format!(
+                "I'm {} the {} and I go {}",
+                self.name,
+                self.get_species(),
+                self.make_sound()
+            )
         }
     }
 
     impl Animal for Cat {
-        fn make_sound(&self) -> String { "Meow!".to_string() }
-        fn get_species(&self) -> &str { "Cat" }
-        
+        fn make_sound(&self) -> String {
+            "Meow!".to_string()
+        }
+        fn get_species(&self) -> &str {
+            "Cat"
+        }
+
         fn introduce(&self) -> String {
-            format!("I'm {} the {} and I go {}", self.name, self.get_species(), self.make_sound())
+            format!(
+                "I'm {} the {} and I go {}",
+                self.name,
+                self.get_species(),
+                self.make_sound()
+            )
         }
     }
 
     impl Animal for Bird {
-        fn make_sound(&self) -> String { "Tweet!".to_string() }
-        fn get_species(&self) -> &str { "Bird" }
-        
+        fn make_sound(&self) -> String {
+            "Tweet!".to_string()
+        }
+        fn get_species(&self) -> &str {
+            "Bird"
+        }
+
         // Override default implementation
         fn introduce(&self) -> String {
-            format!("I'm {} the {} and I sing {}", self.name, self.get_species(), self.make_sound())
+            format!(
+                "I'm {} the {} and I sing {}",
+                self.name,
+                self.get_species(),
+                self.make_sound()
+            )
         }
     }
 
@@ -493,9 +550,15 @@ fn example_polymorphism_enhanced() {
     }
 
     let zoo: Vec<Box<dyn Animal>> = vec![
-        Box::new(Dog { name: "Buddy".to_string() }),
-        Box::new(Cat { name: "Whiskers".to_string() }),
-        Box::new(Bird { name: "Tweety".to_string() }),
+        Box::new(Dog {
+            name: "Buddy".to_string(),
+        }),
+        Box::new(Cat {
+            name: "Whiskers".to_string(),
+        }),
+        Box::new(Bird {
+            name: "Tweety".to_string(),
+        }),
     ];
 
     pet_all_animals(&zoo);
@@ -514,7 +577,7 @@ fn example_composition_over_inheritance() {
     }
 
     struct Vehicle {
-        engine: Engine,      // Composition
+        engine: Engine, // Composition
         wheels: u8,
         make: String,
     }
@@ -534,8 +597,10 @@ fn example_composition_over_inheritance() {
 
     impl Drivable for Vehicle {
         fn drive(&self) -> String {
-            format!("Driving {}-wheel {} with {} HP engine", 
-                    self.wheels, self.make, self.engine.horsepower)
+            format!(
+                "Driving {}-wheel {} with {} HP engine",
+                self.wheels, self.make, self.engine.horsepower
+            )
         }
     }
 
@@ -577,29 +642,47 @@ fn example_advanced_oop_patterns() {
         fn get_fee(&self) -> f64;
     }
 
-    struct CreditCardProcessor { card_type: String }
-    struct PayPalProcessor { email: String }
-    struct BankTransferProcessor { account: String }
+    struct CreditCardProcessor {
+        card_type: String,
+    }
+    struct PayPalProcessor {
+        email: String,
+    }
+    struct BankTransferProcessor {
+        account: String,
+    }
 
     impl PaymentProcessor for CreditCardProcessor {
         fn process_payment(&self, amount: f64) -> String {
-            format!("Processing ${:.2} via {} credit card", amount, self.card_type)
+            format!(
+                "Processing ${:.2} via {} credit card",
+                amount, self.card_type
+            )
         }
-        fn get_fee(&self) -> f64 { 0.029 }
+        fn get_fee(&self) -> f64 {
+            0.029
+        }
     }
 
     impl PaymentProcessor for PayPalProcessor {
         fn process_payment(&self, amount: f64) -> String {
             format!("Processing ${:.2} via PayPal ({})", amount, self.email)
         }
-        fn get_fee(&self) -> f64 { 0.034 }
+        fn get_fee(&self) -> f64 {
+            0.034
+        }
     }
 
     impl PaymentProcessor for BankTransferProcessor {
         fn process_payment(&self, amount: f64) -> String {
-            format!("Processing ${:.2} via bank transfer ({})", amount, self.account)
+            format!(
+                "Processing ${:.2} via bank transfer ({})",
+                amount, self.account
+            )
         }
-        fn get_fee(&self) -> f64 { 0.005 }
+        fn get_fee(&self) -> f64 {
+            0.005
+        }
     }
 
     // Context class that uses strategy
@@ -614,16 +697,25 @@ fn example_advanced_oop_patterns() {
 
         fn execute_payment(&self, amount: f64) -> String {
             let fee = amount * self.processor.get_fee();
-            format!("{}\nProcessing fee: ${:.2}", 
-                   self.processor.process_payment(amount), fee)
+            format!(
+                "{}\nProcessing fee: ${:.2}",
+                self.processor.process_payment(amount),
+                fee
+            )
         }
     }
 
     // Using different strategies
     let payment_methods: Vec<Box<dyn PaymentProcessor>> = vec![
-        Box::new(CreditCardProcessor { card_type: "Visa".to_string() }),
-        Box::new(PayPalProcessor { email: "user@example.com".to_string() }),
-        Box::new(BankTransferProcessor { account: "12345678".to_string() }),
+        Box::new(CreditCardProcessor {
+            card_type: "Visa".to_string(),
+        }),
+        Box::new(PayPalProcessor {
+            email: "user@example.com".to_string(),
+        }),
+        Box::new(BankTransferProcessor {
+            account: "12345678".to_string(),
+        }),
     ];
 
     for processor in payment_methods {
@@ -643,7 +735,7 @@ fn main() {
     example4_associated_types();
     example5_default_implementations();
     example6_trait_bounds_with_impl();
-    
+
     // New OOP-style examples
     example_encapsulation();
     example_polymorphism_enhanced();

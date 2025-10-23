@@ -33,10 +33,9 @@ fn ring_randomized_matches_vecdeque() {
         if pseudo_random != 0 {
             // enqueue
             let x = (i as i32) % 100 - 50;
-            if q.enqueue(x).is_ok()
-                && v.len() < q.capacity() {
-                    v.push_back(x);
-                }
+            if q.enqueue(x).is_ok() && v.len() < q.capacity() {
+                v.push_back(x);
+            }
         } else {
             // dequeue
             assert_eq!(q.dequeue(), v.pop_front());

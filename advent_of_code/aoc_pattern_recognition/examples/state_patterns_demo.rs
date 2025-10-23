@@ -157,10 +157,14 @@ fn demo_cycle_detection() {
                     let nx = x as i32 + dx;
                     let ny = y as i32 + dy;
 
-                    if nx >= 0 && nx < width && ny >= 0 && ny < height
-                        && self.grid[ny as usize][nx as usize] {
-                            count += 1;
-                        }
+                    if nx >= 0
+                        && nx < width
+                        && ny >= 0
+                        && ny < height
+                        && self.grid[ny as usize][nx as usize]
+                    {
+                        count += 1;
+                    }
                 }
             }
             count
@@ -169,7 +173,8 @@ fn demo_cycle_detection() {
 
     impl fmt::Display for LifeState {
         fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            let display_str = self.grid
+            let display_str = self
+                .grid
                 .iter()
                 .map(|row| {
                     row.iter()

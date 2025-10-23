@@ -14,7 +14,7 @@ pub struct MyHashSet<T> {
 impl<T> Default for MyHashSet<T>
 where
     T: Eq + Hash,
- {
+{
     fn default() -> Self {
         Self::new()
     }

@@ -61,9 +61,16 @@ fn example2_generic_structs() {
     let integer_point = Point { x: 5, y: 10 };
     let float_point = Point { x: 1.0, y: 4.0 };
 
-    println!("Integer point: x={}, y={}", integer_point.x(), integer_point.y);
+    println!(
+        "Integer point: x={}, y={}",
+        integer_point.x(),
+        integer_point.y
+    );
     println!("Float point: x={}, y={}", float_point.x(), float_point.y);
-    println!("Distance from origin: {}", float_point.distance_from_origin());
+    println!(
+        "Distance from origin: {}",
+        float_point.distance_from_origin()
+    );
 
     // Generic struct with multiple type parameters
     struct Point2<T, U> {
@@ -153,7 +160,10 @@ fn example5_performance_considerations() {
 
     // Generic function that gets specialized at compile time
     fn identity<T>(x: T) -> T {
-        println!("Identity function called with type: {}", std::any::type_name::<T>());
+        println!(
+            "Identity function called with type: {}",
+            std::any::type_name::<T>()
+        );
         x
     }
 
@@ -167,17 +177,28 @@ fn example5_performance_considerations() {
     let float_result = identity(42.0f64);
     let string_result = identity(String::from("hello"));
 
-    println!("Integer identity: {} (type: {})", int_result, std::any::type_name::<i32>());
-    println!("Float identity: {} (type: {}) - Note: displays as 42 but is actually f64!", 
-             float_result, std::any::type_name::<f64>());
-    println!("String identity: {} (type: {})", string_result, std::any::type_name::<String>());
+    println!(
+        "Integer identity: {} (type: {})",
+        int_result,
+        std::any::type_name::<i32>()
+    );
+    println!(
+        "Float identity: {} (type: {}) - Note: displays as 42 but is actually f64!",
+        float_result,
+        std::any::type_name::<f64>()
+    );
+    println!(
+        "String identity: {} (type: {})",
+        string_result,
+        std::any::type_name::<String>()
+    );
 
     // Show that 42.0 and 42 are different types even though they display the same
     println!("\n🔍 Float Display vs Type:");
     println!("42.0 displays as: {}", 42.0);
     println!("42.0 debug format: {:?}", 42.0);
     println!("42.0 type: {}", std::any::type_name::<f64>());
-    
+
     // This is zero-cost abstraction - no runtime overhead!
     println!("\nNo runtime cost for generics!");
 
@@ -230,7 +251,9 @@ fn example7_user_input_and_generics() {
     fn get_user_input<T: std::str::FromStr>() -> Result<T, T::Err> {
         let mut input = String::new();
         println!("Enter a number: ");
-        io::stdin().read_line(&mut input).expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
         input.trim().parse::<T>()
     }
 
@@ -256,20 +279,20 @@ fn example7_user_input_and_generics() {
 
     // Example 3: The key insight - each call creates a different specialized function
     println!("\n=== Type Specialization at Compile Time ===");
-    
+
     // These create DIFFERENT specialized versions of process_number:
     let int_val: i32 = 42;
     let float_val: f64 = 42.0;
-    
+
     let processed_int = process_number(int_val);
     let processed_float = process_number(float_val);
-    
+
     println!("Processed integer: {}", processed_int);
     println!("Processed float: {}", processed_float);
-    
+
     // ❌ This would NOT work - you can't mix types in the same generic call:
     // process_number(42, 42.0);  // Compile error!
-    
+
     // ✅ But you CAN convert between types:
     let converted_float = process_number(42_f64);
     println!("Converted and processed: {}", converted_float);
@@ -287,11 +310,14 @@ fn example8_parsing_and_conversion() {
     fn parse_input<T: std::str::FromStr + std::fmt::Display>(prompt: &str) -> Result<T, String> {
         let mut input = String::new();
         println!("{}", prompt);
-        io::stdin().read_line(&mut input).expect("Failed to read line");
-        
-        input.trim().parse::<T>().map_err(|_| {
-            format!("Failed to parse '{}' as the expected type", input.trim())
-        })
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
+
+        input
+            .trim()
+            .parse::<T>()
+            .map_err(|_| format!("Failed to parse '{}' as the expected type", input.trim()))
     }
 
     // Function that can work with different numeric types
@@ -324,8 +350,10 @@ fn example8_parsing_and_conversion() {
             // Convert to float for calculation
             let float_val = int_val as f64;
             let square_float = calculate_square(float_val);
-            println!("Integer {} converted to float {} has square {}", 
-                     int_val, float_val, square_float);
+            println!(
+                "Integer {} converted to float {} has square {}",
+                int_val, float_val, square_float
+            );
         }
         Err(e) => println!("Error: {}", e),
     }

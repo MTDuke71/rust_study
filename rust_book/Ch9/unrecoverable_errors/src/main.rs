@@ -194,7 +194,6 @@ fn demonstrate_panic_hook() {
 
 #[cfg(test)]
 mod tests {
-    
 
     #[test]
     #[should_panic(expected = "This should panic")]

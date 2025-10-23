@@ -60,7 +60,10 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     };
 
     if results.is_empty() {
-        println!("No matches found for '{}' ({} search)", config.query, search_type);
+        println!(
+            "No matches found for '{}' ({} search)",
+            config.query, search_type
+        );
     } else {
         println!(
             "Found {} matches for '{}' ({} search):",
@@ -129,17 +132,23 @@ fn example2_config_with_environment() {
     println!("=============================================");
 
     // Simulate different argument scenarios
-    let _test_args = ["minigrep".to_string(),
+    let _test_args = [
+        "minigrep".to_string(),
         "rust".to_string(),
-        "poem.txt".to_string()];
+        "poem.txt".to_string(),
+    ];
 
     // Create a mock config for demonstration
     let query = "rust".to_string();
     let filename = "poem.txt".to_string();
     let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
-    
-    let config = Config { query, filename, case_sensitive };
-    
+
+    let config = Config {
+        query,
+        filename,
+        case_sensitive,
+    };
+
     // Show the config
     {
         println!("✅ Config created:");
@@ -150,13 +159,8 @@ fn example2_config_with_environment() {
 
     // Demonstrate manual environment variable checking
     println!("\n🔍 Manual environment variable checking:");
-    
-    let env_vars_to_check = vec![
-        "CASE_INSENSITIVE",
-        "RUST_LOG", 
-        "DEBUG",
-        "NONEXISTENT_VAR"
-    ];
+
+    let env_vars_to_check = vec!["CASE_INSENSITIVE", "RUST_LOG", "DEBUG", "NONEXISTENT_VAR"];
 
     for var_name in env_vars_to_check {
         match env::var(var_name) {
@@ -188,7 +192,7 @@ Must learn Rust.";
     }
 
     println!("\n🔍 Searching for '{}':", query);
-    
+
     // Case-sensitive search
     let results_sensitive = search(query, sample_text);
     println!("   Case-sensitive results:");
@@ -213,7 +217,10 @@ Must learn Rust.";
     if case_sensitive {
         println!("   → Case-sensitive ({} matches)", results_sensitive.len());
     } else {
-        println!("   → Case-insensitive ({} matches)", results_insensitive.len());
+        println!(
+            "   → Case-insensitive ({} matches)",
+            results_insensitive.len()
+        );
     }
 
     println!();
@@ -224,7 +231,7 @@ fn example4_environment_best_practices() {
     println!("===================================================");
 
     println!("🎯 Best practices for environment variables:");
-    
+
     // 1. Provide defaults
     println!("\n1️⃣  Provide sensible defaults:");
     let debug_mode = env::var("DEBUG").unwrap_or_else(|_| "false".to_string());
@@ -232,7 +239,10 @@ fn example4_environment_best_practices() {
 
     // 2. Handle different value types
     println!("\n2️⃣  Handle boolean-like values:");
-    let is_verbose = matches!(env::var("VERBOSE").as_deref(), Ok("1") | Ok("true") | Ok("yes") | Ok("on"));
+    let is_verbose = matches!(
+        env::var("VERBOSE").as_deref(),
+        Ok("1") | Ok("true") | Ok("yes") | Ok("on")
+    );
     println!("   Verbose mode: {}", is_verbose);
 
     // 3. Parse numeric values safely
@@ -255,7 +265,10 @@ fn example4_environment_best_practices() {
     for (key, value) in env::vars().take(5) {
         println!("   {}={}", key, value);
     }
-    println!("   ... ({} total environment variables)", env::vars().count());
+    println!(
+        "   ... ({} total environment variables)",
+        env::vars().count()
+    );
 
     println!();
 }

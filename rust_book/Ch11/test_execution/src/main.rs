@@ -11,12 +11,12 @@ use std::time::Duration;
 fn main() {
     println!("🎯 Chapter 11.2: Controlling How Tests Are Run");
     println!("===============================================");
-    
+
     example1_test_output();
     example2_parallel_execution();
     example3_filtering_tests();
     example4_ignoring_tests();
-    
+
     println!("✅ All examples completed!");
     println!("📖 Try these commands:");
     println!("  cargo test                    # Run all tests");
@@ -29,49 +29,52 @@ fn main() {
 fn example1_test_output() {
     println!("📺 Example 1: Test Output Control");
     println!("=================================");
-    
+
     println!("By default, cargo test captures output from successful tests.");
     println!("Use --nocapture to see println! statements from passing tests.");
-    
+
     println!();
 }
 
 fn example2_parallel_execution() {
     println!("⚡ Example 2: Parallel vs Sequential Execution");
     println!("==============================================");
-    
+
     println!("Tests run in parallel by default for speed.");
     println!("Use --test-threads=1 for sequential execution.");
     println!("This is useful when tests share resources.");
-    
+
     println!();
 }
 
 fn example3_filtering_tests() {
     println!("🔍 Example 3: Filtering Tests");
     println!("=============================");
-    
+
     println!("You can run specific tests by name:");
     println!("  cargo test test_name");
     println!("  cargo test partial_name  # Runs all matching tests");
-    
+
     println!();
 }
 
 fn example4_ignoring_tests() {
     println!("⏭️ Example 4: Ignoring Expensive Tests");
     println!("======================================");
-    
+
     println!("Use #[ignore] for slow tests that run only when requested.");
     println!("Run with: cargo test -- --ignored");
-    
+
     // Demonstrate the functions that are tested
     println!("\nDemonstrating functions used in tests:");
     println!("add_numbers(5, 3) = {}", add_numbers(5, 3));
     println!("slow_operation() = {}", slow_operation());
     println!("expensive_computation(4) = {}", expensive_computation(4));
-    println!("shared_resource_operation(42) = {}", shared_resource_operation(42));
-    
+    println!(
+        "shared_resource_operation(42) = {}",
+        shared_resource_operation(42)
+    );
+
     println!();
 }
 
@@ -268,7 +271,7 @@ mod tests {
     fn performance_test_hashmap() {
         use std::collections::HashMap;
         println!("Testing HashMap performance");
-        
+
         let mut map = HashMap::new();
         for i in 0..100 {
             map.insert(i, i * 2);
@@ -281,13 +284,13 @@ mod tests {
     #[ignore]
     fn flaky_test() {
         use std::time::{SystemTime, UNIX_EPOCH};
-        
+
         println!("Running potentially flaky test");
         let timestamp = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap()
             .as_millis();
-        
+
         // This test might be flaky based on timing
         // We ignore it to prevent CI failures
         assert!(timestamp > 0);
@@ -295,9 +298,9 @@ mod tests {
 
     // Documentation tests (these run with `cargo test --doc`)
     /// Example function that demonstrates doc tests
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// let result = test_execution::doc_test_example(5);
     /// assert_eq!(result, 10);

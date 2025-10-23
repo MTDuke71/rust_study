@@ -36,30 +36,30 @@ impl Calculator {
     pub fn new() -> Self {
         Calculator { value: 0.0 }
     }
-    
+
     pub fn add(&mut self, n: f64) -> &mut Self {
         if self.validate_input(n) {
             self.value += n;
         }
         self
     }
-    
+
     pub fn multiply(&mut self, n: f64) -> &mut Self {
         if self.validate_input(n) {
             self.value *= n;
         }
         self
     }
-    
+
     pub fn get_value(&self) -> f64 {
         self.value
     }
-    
+
     pub fn reset(&mut self) -> &mut Self {
         self.value = 0.0;
         self
     }
-    
+
     // Private method
     fn validate_input(&self, input: f64) -> bool {
         !input.is_nan() && !input.is_infinite()
@@ -82,23 +82,23 @@ impl<T> Stack<T> {
     pub fn new() -> Self {
         Stack { items: Vec::new() }
     }
-    
+
     pub fn push(&mut self, item: T) {
         self.items.push(item);
     }
-    
+
     pub fn pop(&mut self) -> Option<T> {
         self.items.pop()
     }
-    
+
     pub fn peek(&self) -> Option<&T> {
         self.items.last()
     }
-    
+
     pub fn is_empty(&self) -> bool {
         self.items.is_empty()
     }
-    
+
     pub fn len(&self) -> usize {
         self.items.len()
     }
@@ -227,7 +227,7 @@ mod tests {
             let mut stack = Stack::new();
             stack.push(1);
             stack.push(2);
-            
+
             assert_eq!(stack.pop(), Some(2));
             assert_eq!(stack.pop(), Some(1));
             assert_eq!(stack.pop(), None);
@@ -237,13 +237,13 @@ mod tests {
         fn test_stack_peek() {
             let mut stack = Stack::new();
             assert_eq!(stack.peek(), None);
-            
+
             stack.push(1);
             assert_eq!(stack.peek(), Some(&1));
-            
+
             stack.push(2);
             assert_eq!(stack.peek(), Some(&2));
-            
+
             // Peek doesn't remove the item
             assert_eq!(stack.len(), 2);
         }
@@ -253,7 +253,7 @@ mod tests {
             let mut stack = Stack::new();
             stack.push("hello".to_string());
             stack.push("world".to_string());
-            
+
             assert_eq!(stack.pop(), Some("world".to_string()));
             assert_eq!(stack.peek(), Some(&"hello".to_string()));
         }
@@ -266,30 +266,30 @@ mod tests {
         #[test]
         fn test_large_stack_operations() {
             let mut stack = Stack::new();
-            
+
             // Push many items
             for i in 0..1000 {
                 stack.push(i);
             }
-            
+
             assert_eq!(stack.len(), 1000);
-            
+
             // Pop all items
             for i in (0..1000).rev() {
                 assert_eq!(stack.pop(), Some(i));
             }
-            
+
             assert!(stack.is_empty());
         }
 
         #[test]
         fn test_calculator_many_operations() {
             let mut calc = Calculator::new();
-            
+
             for i in 1..=100 {
                 calc.add(i as f64);
             }
-            
+
             // Sum of 1 to 100 is 5050
             assert_eq!(calc.get_value(), 5050.0);
         }
@@ -303,11 +303,11 @@ mod tests {
         fn test_divide_edge_cases() {
             // Test positive division
             assert!(divide(1.0, 1.0).is_ok());
-            
+
             // Test negative numbers
             assert!(divide(-10.0, 2.0).is_ok());
             assert_eq!(divide(-10.0, 2.0).unwrap(), -5.0);
-            
+
             // Test division by zero
             assert!(divide(5.0, 0.0).is_err());
             assert!(divide(-5.0, 0.0).is_err());
@@ -331,14 +331,14 @@ mod tests {
         #[test]
         fn test_calculator_and_functions_together() {
             let mut calc = Calculator::new();
-            
+
             // Use both Calculator and free functions
             let value = add_two(3); // = 5
             calc.add(value as f64);
-            
+
             let multiplied = multiply(2, 3); // = 6
             calc.multiply(multiplied as f64);
-            
+
             // calc should now have (0 + 5) * 6 = 30
             assert_eq!(calc.get_value(), 30.0);
         }
@@ -347,13 +347,13 @@ mod tests {
         fn test_stack_with_calculated_values() {
             let mut stack = Stack::new();
             let mut calc = Calculator::new();
-            
+
             // Calculate some values and put them in stack
             for i in 1..=5 {
                 calc.reset().add(i as f64).multiply(2.0);
                 stack.push(calc.get_value() as i32);
             }
-            
+
             // Stack should contain [2, 4, 6, 8, 10]
             assert_eq!(stack.pop(), Some(10));
             assert_eq!(stack.pop(), Some(8));

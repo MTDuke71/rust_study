@@ -1,6 +1,5 @@
 //! Copy this file to `tests/dayNN_examples.rs` and adjust day number & expectations.
 
-
 #[test]
 #[allow(non_snake_case)]
 fn dayNN_example() {

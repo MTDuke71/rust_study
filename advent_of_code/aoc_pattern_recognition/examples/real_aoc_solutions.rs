@@ -99,9 +99,11 @@ fn demo_aoc_2022_day6() {
     println!("  🎯 Pattern: Sliding Window");
     println!();
 
-    let datastreams = ["mjqjpqmgbljsphdztnvjfqwrcgsmlb",
+    let datastreams = [
+        "mjqjpqmgbljsphdztnvjfqwrcgsmlb",
         "bvwbjplbgvbhsrlpgdmjqwftvncz",
-        "nppdvjthqldpwncqszvftbrmjlhg"];
+        "nppdvjthqldpwncqszvftbrmjlhg",
+    ];
 
     for (i, datastream) in datastreams.iter().enumerate() {
         println!("  📡 Datastream {}: {}", i + 1, datastream);
@@ -495,7 +497,8 @@ fn navigate_ship_direct(instructions: &[Instruction]) -> (i32, i32) {
     for instr in instructions {
         // For navigation instructions like "F10", "N3", the first parameter contains the value
         let value = instr
-            .parameters.first()
+            .parameters
+            .first()
             .and_then(|s| s.parse::<i32>().ok())
             .unwrap_or(0);
 
@@ -529,7 +532,8 @@ fn navigate_ship_waypoint(instructions: &[Instruction]) -> (i32, i32) {
     for instr in instructions {
         // For navigation instructions like "F10", "N3", the first parameter contains the value
         let value = instr
-            .parameters.first()
+            .parameters
+            .first()
             .and_then(|s| s.parse::<i32>().ok())
             .unwrap_or(0);
 

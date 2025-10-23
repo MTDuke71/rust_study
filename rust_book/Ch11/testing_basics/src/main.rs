@@ -8,13 +8,13 @@
 fn main() {
     println!("📚 Chapter 11.1: How to Write Tests");
     println!("====================================");
-    
+
     example1_basic_assertions();
     example2_assertion_macros();
     example3_custom_messages();
     example4_testing_results();
     example5_testing_panics();
-    
+
     println!("✅ All examples completed!");
     println!("📖 Next: Run `cargo test` to see the actual tests in action");
 }
@@ -22,73 +22,80 @@ fn main() {
 fn example1_basic_assertions() {
     println!("🧪 Example 1: Basic Assertion Macros");
     println!("====================================");
-    
+
     // These are examples of what assertions look like
     // The actual tests are in the #[cfg(test)] module below
-    
+
     let result = add_two(2);
     println!("add_two(2) = {}", result);
-    
+
     let greeting = greeting("World");
     println!("greeting(\"World\") = \"{}\"", greeting);
-    
+
     println!();
 }
 
 fn example2_assertion_macros() {
     println!("🔍 Example 2: Different Assertion Types");
     println!("======================================");
-    
+
     println!("assert!()     - Tests boolean conditions");
     println!("assert_eq!()  - Tests equality");
     println!("assert_ne!()  - Tests inequality");
     println!("panic!()      - Forces a panic for testing");
-    
+
     println!();
 }
 
 fn example3_custom_messages() {
     println!("💬 Example 3: Custom Error Messages");
     println!("===================================");
-    
+
     println!("Tests can include custom messages for better debugging:");
     println!("assert_eq!(result, expected, \"Operation {{}} failed\", operation);");
-    
+
     println!();
 }
 
 fn example4_testing_results() {
     println!("📦 Example 4: Testing with Result Types");
     println!("=======================================");
-    
+
     let result = divide(10.0, 2.0);
     println!("divide(10.0, 2.0) = {:?}", result);
-    
+
     let error_result = divide(10.0, 0.0);
     println!("divide(10.0, 0.0) = {:?}", error_result);
-    
+
     println!();
 }
 
 fn example5_testing_panics() {
     println!("💥 Example 5: Testing Expected Panics");
     println!("=====================================");
-    
+
     println!("Some functions are expected to panic under certain conditions.");
     println!("We can test these with #[should_panic] attribute.");
-    
+
     // Demonstrate the panic function with safe input
     let safe_result = panics_on_zero(5);
     println!("panics_on_zero(5) = {}", safe_result);
-    
+
     // Demonstrate Rectangle usage
     let rect = Rectangle::new(10, 5);
-    println!("Rectangle {{width: {}, height: {}}} has area: {}", 
-             rect.width, rect.height, rect.area());
-    
+    println!(
+        "Rectangle {{width: {}, height: {}}} has area: {}",
+        rect.width,
+        rect.height,
+        rect.area()
+    );
+
     let smaller_rect = Rectangle::new(3, 2);
-    println!("Can larger rectangle hold smaller? {}", rect.can_hold(&smaller_rect));
-    
+    println!(
+        "Can larger rectangle hold smaller? {}",
+        rect.can_hold(&smaller_rect)
+    );
+
     println!();
 }
 
@@ -127,11 +134,11 @@ impl Rectangle {
     fn new(width: u32, height: u32) -> Self {
         Rectangle { width, height }
     }
-    
+
     fn area(&self) -> u32 {
         self.width * self.height
     }
-    
+
     fn can_hold(&self, other: &Rectangle) -> bool {
         self.width > other.width && self.height > other.height
     }
@@ -201,9 +208,8 @@ mod tests {
     fn test_custom_message() {
         let result = add_two(10);
         assert_eq!(
-            result, 
-            12, 
-            "add_two(10) should equal 12, but got {}", 
+            result, 12,
+            "add_two(10) should equal 12, but got {}",
             result
         );
     }
@@ -259,7 +265,7 @@ mod tests {
         let rect1 = Rectangle::new(10, 20);
         let rect2 = Rectangle::new(10, 20);
         let rect3 = Rectangle::new(15, 25);
-        
+
         assert_eq!(rect1, rect2);
         assert_ne!(rect1, rect3);
     }
@@ -308,7 +314,7 @@ mod tests {
     #[test]
     fn test_multiple_operations() {
         let rect = Rectangle::new(10, 5);
-        
+
         assert_eq!(rect.width, 10);
         assert_eq!(rect.height, 5);
         assert_eq!(rect.area(), 50);
@@ -320,11 +326,11 @@ mod tests {
     fn test_vector_operations() {
         let mut vec = Vec::new();
         assert!(vec.is_empty());
-        
+
         vec.push(1);
         vec.push(2);
         vec.push(3);
-        
+
         assert_eq!(vec.len(), 3);
         assert_eq!(vec[0], 1);
         assert_eq!(vec.pop(), Some(3));
@@ -337,7 +343,7 @@ mod tests {
         let numbers = [1, 2, 3, 4, 5];
         let doubled: Vec<i32> = numbers.iter().map(|x| x * 2).collect();
         let expected = vec![2, 4, 6, 8, 10];
-        
+
         assert_eq!(doubled, expected);
     }
 
@@ -346,7 +352,7 @@ mod tests {
     fn test_string_operations() {
         let mut s = String::from("Hello");
         s.push_str(", World!");
-        
+
         assert_eq!(s, "Hello, World!");
         assert!(s.contains("World"));
         assert!(s.starts_with("Hello"));

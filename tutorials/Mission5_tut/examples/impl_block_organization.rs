@@ -17,7 +17,7 @@ where
 impl<K> Default for Counter<K>
 where
     K: Eq + Hash,
- {
+{
     fn default() -> Self {
         Self::new()
     }
@@ -83,7 +83,7 @@ where
 impl<K> Default for AlternativeCounter<K>
 where
     K: Eq + Hash,
- {
+{
     fn default() -> Self {
         Self::new()
     }

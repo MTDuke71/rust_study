@@ -97,10 +97,7 @@ fn main() {
     // Pattern 2: HashSet<T> values (for uniqueness)
     use std::collections::HashSet;
     let mut unique_tags: HashMap<&str, HashSet<&str>> = HashMap::new();
-    unique_tags
-        .entry("post1")
-        .or_default()
-        .insert("rust");
+    unique_tags.entry("post1").or_default().insert("rust");
     unique_tags
         .entry("post1")
         .or_default()

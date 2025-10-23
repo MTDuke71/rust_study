@@ -3,7 +3,7 @@
 //! This demo showcases the graph data structure implementation with
 //! various graph types, traversal algorithms, and real-world applications.
 
-use mission7::{utils, Graph,};
+use mission7::{utils, Graph};
 
 fn main() {
     println!("=== Mission 7: Graph Representation Demo ===\n");

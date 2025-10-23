@@ -798,10 +798,9 @@ fn dfs_path_finding<T>(graph: &Graph<T>, start: NodeId, end: NodeId) -> Option<V
             path.push(current);
 
             for &neighbor in graph.neighbors(current) {
-                if !visited.contains(&neighbor)
-                    && dfs_helper(graph, neighbor, end, visited, path) {
-                        return true;
-                    }
+                if !visited.contains(&neighbor) && dfs_helper(graph, neighbor, end, visited, path) {
+                    return true;
+                }
             }
 
             path.pop();
@@ -823,9 +822,10 @@ fn has_cycle_dfs<T>(graph: &Graph<T>) -> bool {
 
     for node in graph.nodes() {
         if !visited.contains(&node)
-            && has_cycle_dfs_helper(graph, node, &mut visited, &mut rec_stack) {
-                return true;
-            }
+            && has_cycle_dfs_helper(graph, node, &mut visited, &mut rec_stack)
+        {
+            return true;
+        }
     }
 
     false
@@ -886,7 +886,7 @@ fn topological_sort<T>(graph: &Graph<T>) -> Vec<NodeId> {
 
 fn find_critical_path<T>(graph: &Graph<T>) -> Vec<NodeId> {
     // Simplified critical path - in practice, you'd need to consider task durations
-    
+
     topological_sort(graph)
 }
 

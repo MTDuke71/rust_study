@@ -25,7 +25,6 @@
 //! This solution optimizes for **character counting only** - no string building required.
 //! Memory efficient approach suitable for large inputs and AoC competitive programming.
 
-
 /// Represents the character count comparison between code and memory representations
 #[derive(Debug, Clone, PartialEq)]
 pub struct CharacterCounts {

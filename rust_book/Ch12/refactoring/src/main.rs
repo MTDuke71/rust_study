@@ -55,7 +55,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     println!("========================================");
 
     let results = search(&config.query, &contents);
-    
+
     if results.is_empty() {
         println!("No matches found.");
     } else {
@@ -131,18 +131,20 @@ fn example2_iterator_constructor() {
     println!("===========================================");
 
     // Simulate command line args
-    let _mock_args = ["minigrep".to_string(),
+    let _mock_args = [
+        "minigrep".to_string(),
         "search_term".to_string(),
-        "target_file.txt".to_string()];
+        "target_file.txt".to_string(),
+    ];
 
     // For demonstration purposes, create a simple config
     println!("✅ Iterator config created (mock):");
     println!("   Query: 'search_term'");
     println!("   File: 'target_file.txt'");
-    
+
     // Show how the real iterator version would work
     println!("   📝 Note: Config::from_iterator() would work with env::args()");
-    
+
     // Test the from_iterator method with actual env::args (if available)
     match Config::from_iterator(env::args()) {
         Ok(config) => {
@@ -234,7 +236,10 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     let config = Config::new(&args).unwrap_or_else(|err| {
         eprintln!("Problem parsing arguments: {}", err);
-        eprintln!("Usage: {} <query> <filename>", env::args().next().unwrap_or_else(|| "minigrep".to_string()));
+        eprintln!(
+            "Usage: {} <query> <filename>",
+            env::args().next().unwrap_or_else(|| "minigrep".to_string())
+        );
         process::exit(1);
     });
 
