@@ -336,7 +336,7 @@ See `tutorials/Mission8_tut/` for step-by-step progression:
 ## 🔗 **Zettelkasten Links**
 
 **Core Concepts:**
-- [[mission8_overview]] - Mission 8 architectural overview and learning objectives
+- [[mission8 Overview]] - Mission 8 architectural overview and learning objectives
 - [[BFS Patterns]] - Breadth-first search algorithm patterns and applications
 - [[DFS Patterns]] - Depth-first search algorithm patterns and backtracking
 - [[Graph Theory MOC]] - Map of content for graph algorithms and data structures
@@ -359,7 +359,7 @@ See `tutorials/Mission8_tut/` for step-by-step progression:
 
 *Tags: #mission8 #graph-algorithms #bfs #dfs #traits #generics #algorithm-composition #performance-analysis #v-cycle #pathfinding*
 
-*Links: [[zettel-index]] | [[mission8_overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Graph Theory MOC]] | [[Algorithm Analysis]]*
+*Links: [[zettel-index]] | [[mission8 Overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Graph Theory MOC]] | [[Algorithm Analysis]]*
 
 **Last Updated**: October 15, 2025  
 **Status**: 🔄 Active Development

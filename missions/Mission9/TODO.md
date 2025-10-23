@@ -138,7 +138,7 @@ Advanced pathfinding algorithms implementation covering Dijkstra's and A* algori
 
 ### Cross-Mission Dependencies
 - [ ] **[[Mission7 Overview]]**: Leverage graph structures from previous missions
-- [ ] **[[Mission8 Overview]]**: Apply concurrent patterns where beneficial  
+- [ ] **[[mission8 Overview]]**: Apply concurrent patterns where beneficial  
 - [ ] **Tutorial Alignment**: Ensure [[Mission 9 Tutorial]] steps support all requirements
 
 ### Learning Objectives Validation

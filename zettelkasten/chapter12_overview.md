@@ -11,7 +11,7 @@ Chapter 12 builds a complete command-line program (minigrep) that combines many 
 - **Environment Variables**: Using `std::env::var()` for configuration and runtime behavior modification
 
 ## Practical Applications
-- Used in [[Mission8 Overview]] - Advanced project structure mirrors Ch12 organization patterns
+- Used in [[mission8 Overview]] - Advanced project structure mirrors Ch12 organization patterns
 - Used in [[Mission9 Overview]] - CLI pathfinding tools with argument parsing and file operations
 - Reinforced in [[Day 42 - CLI Applications]] - Hands-on CLI development exercises
 - Foundation for [[Chapter 13 Overview]] - Functional programming patterns applied to iterators

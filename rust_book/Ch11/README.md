@@ -4,7 +4,7 @@
 - **Overview**: [[Chapter 11 Overview]]
 - **Previous**: [[Chapter 10 Overview]]
 - **Next**: [[Chapter 12 Overview]]
-- **Missions**: [[Mission8 Overview]] - Testing algorithm implementations | [[Mission1 Overview]] - Unit testing data structures
+- **Missions**: [[mission8 Overview]] - Testing algorithm implementations | [[Mission1 Overview]] - Unit testing data structures
 - **Daily Study**: [[Day 25 - Unit Testing]] | [[Day 26 - Integration Testing]] | [[Day 27 - Test Organization]]
 - **Book MOC**: [[Rust Book MOC]]
 

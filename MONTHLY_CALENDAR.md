@@ -889,7 +889,7 @@ git add . && git commit -m "Day X progress" # Save daily progress
 - [[Mission5 Overview]] - HashMap & HashSet (Current focus)
 - [[Mission6 Overview]] - Grid Systems (2D spatial algorithms)
 - [[Mission7 Overview]] - Graph Algorithms (BFS/DFS)
-- [[Mission8 Overview]] - Advanced Data Structures
+- [[mission8 Overview]] - Advanced Data Structures
 
 *Core Learning Concepts:*
 - [[Ownership and Borrowing]] - Rust's memory safety foundation and reference rules

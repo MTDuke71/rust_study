@@ -159,7 +159,7 @@ This MOC provides complete access to both:
 - **[[Mission5 Overview]]** - HashMap (Ch5-6 Structs/Enums + Ch8 Collections)
 - **[[Mission6 Overview]]** - Advanced Algorithms (Ch7 Modules + Ch10 Generics)
 - **[[Mission7 Overview]]** - Graph Algorithms (Ch16 Concurrency + Ch19 Advanced)
-- **[[Mission8 Overview]]** - Performance Optimization (Ch19 Unsafe + Ch20 Systems)
+- **[[mission8 Overview]]** - Performance Optimization (Ch19 Unsafe + Ch20 Systems)
 
 ### **Daily Study Connections**
 - **[[Daily Study MOC]]** - Complete daily study overview with book integration

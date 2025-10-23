@@ -292,4 +292,4 @@ cargo run -p mission8_tut --example day4_exercises_solutions
 
 *Tags: #mission8 #tutorial #performance #benchmarking #exercises #solutions #optimization #criterion*
 
-*Links: [[../../zettelkasten/zettel-index]] | [[../../zettelkasten/mission8_overview]] | [[../../zettelkasten/Performance Optimization Guide]] | [[../../missions/Mission8/PERFORMANCE_REPORT]] | [[DAY5_EXERCISE_SOLUTIONS]] | [[../../zettelkasten/BFS Patterns]] | [[../../zettelkasten/DFS Patterns]] | [[../../zettelkasten/Daily Study MOC]]*
+*Links: [[../../zettelkasten/zettel-index]] | [[mission8 Overview]] | [[../../zettelkasten/Performance Optimization Guide]] | [[../../missions/Mission8/PERFORMANCE_REPORT]] | [[DAY5_EXERCISE_SOLUTIONS]] | [[../../zettelkasten/BFS Patterns]] | [[../../zettelkasten/DFS Patterns]] | [[../../zettelkasten/Daily Study MOC]]*

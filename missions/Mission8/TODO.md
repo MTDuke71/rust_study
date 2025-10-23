@@ -547,4 +547,4 @@ cargo test -p mission8 integration
 
 *Tags: #mission8 #bfs #dfs #graph-algorithms #todo #progress #v-cycle*
 
-*Links: [[../README]] | [[../../tutorials/Mission8_tut/TODO]] | [[../../tutorials/Mission8_tut/README]] | [[Mission7 Overview]] | [[Mission8 Overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Graph Network Density]] | [[A-Star-Algorithm-Deep-Dive]] | [[Missions Overview]] | [[Daily Study MOC]] | [[zettel-index]]*
+*Links: [[../README]] | [[../../tutorials/Mission8_tut/TODO]] | [[../../tutorials/Mission8_tut/README]] | [[Mission7 Overview]] | [[mission8 Overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Graph Network Density]] | [[A-Star-Algorithm-Deep-Dive]] | [[Missions Overview]] | [[Daily Study MOC]] | [[zettel-index]]*

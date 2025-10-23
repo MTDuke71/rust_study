@@ -283,7 +283,7 @@ This complete implementation demonstrates:
 
 ### **Next Steps**
 - [[Chapter 13 Overview]] - Functional programming with iterators
-- [[Mission8 Overview]] - Advanced project structure  
+- [[mission8 Overview]] - Advanced project structure  
 - [[Mission 9 Overview]] - CLI pathfinding tools
 
 ### **Rust Book Integration**

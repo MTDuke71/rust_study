@@ -4,7 +4,7 @@
 - **Overview**: [[Chapter 12 Overview]]
 - **Previous**: [[Chapter 11 Overview]]
 - **Next**: [[Chapter 13 Overview]]
-- **Missions**: [[Mission8 Overview]] - Advanced project structure | [[Mission9 Overview]] - CLI pathfinding tools
+- **Missions**: [[mission8 Overview]] - Advanced project structure | [[Mission9 Overview]] - CLI pathfinding tools
 - **Daily Study**: [[Day 42 - CLI Applications]] - Reinforces this chapter
 - **Book MOC**: [[Rust Book MOC]]
 
@@ -291,7 +291,7 @@ fn main() {
 ## 🔗 Related Content
 
 **Missions:**
-- [[Mission8 Overview]] - Advanced project structure patterns
+- [[mission8 Overview]] - Advanced project structure patterns
 - [[Mission9 Overview]] - CLI pathfinding tools with argument parsing
 
 **Daily Study:**

@@ -321,4 +321,4 @@ By mission completion, learners master:
 > **💡 Tip**: Use this MOC to navigate between related missions and find the right learning path for your current skill level and interests.
 
 *Tags: #missions #overview #v-cycle #engineering #projects #requirements #testing #architecture*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Rust Concepts MOC]] | [[V-Cycle Methodology]] | [[mission8_overview]] | [[Day 5 Exercise Solutions]] | [[Mission Progress Tracker]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Rust Concepts MOC]] | [[V-Cycle Methodology]] | [[mission8 Overview]] | [[Day 5 Exercise Solutions]] | [[Mission Progress Tracker]]*
