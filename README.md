@@ -484,6 +484,25 @@ This workspace follows strict V-Cycle methodology. When adding new missions:
 4. Document with examples
 5. Validate against real-world scenarios
 
+## 🤖 Automated Code Quality
+
+This repository includes **advanced automated workflows** for continuous code quality improvement:
+
+### **Nightly Clippy Automation**
+- **🔧 Auto-Fix Workflow:** Automatically applies safe clippy fixes and creates PRs
+- **📊 Analysis Workflow:** Comprehensive reporting and issue tracking  
+- **⏰ Schedule:** Runs nightly at 2-3 AM EST for hands-off maintenance
+- **🎯 Benefits:** Consistent code quality, learning opportunities, time savings
+
+**Key Features:**
+- Automatically fixes common issues (unused imports, inefficient patterns, etc.)
+- Creates detailed Pull Requests with before/after analysis
+- Opens GitHub issues for manual fixes needed
+- Provides comprehensive artifacts and reports
+- Zero maintenance overhead for developers
+
+**📚 Full Documentation:** [Clippy Automation Guide](.github/CLIPPY_AUTOMATION.md)
+
 ## 📖 Learning Resources
 
 - **Primary**: Each mission's README.md contains complete V-Cycle documentation
