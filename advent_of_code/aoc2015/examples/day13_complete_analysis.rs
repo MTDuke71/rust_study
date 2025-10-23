@@ -4,6 +4,7 @@
 /// 1. Is this an adjacency graph?
 /// 2. Why doesn't "weakest link" work?  
 /// 3. Can we cut permutations using symmetry?
+///
 use aoc2015::solver::day13::*;
 use std::fs;
 use std::time::Instant;

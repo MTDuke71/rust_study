@@ -83,7 +83,7 @@ fn find_all_cycles_dfs<N>(
 /// 
 /// This finds the longest path in a Directed Acyclic Graph (DAG).
 /// Uses dynamic programming with topological sorting.
-
+///
 fn find_longest_path_in_dag<N>(
     graph: &HashMap<N, Vec<N>>,
     start: N,

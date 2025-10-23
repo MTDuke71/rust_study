@@ -109,7 +109,7 @@ fn main() {
     println!("-------------------------------------------------------\n");
 
     let grid = Grid::new(10, 10, 0);
-    let iter = grid.coordinates();
+    let _iter = grid.coordinates();
 
     println!("✅ Operations that CALL size_hint():");
     println!("   • .collect::<Vec<_>>()        - Pre-allocates Vec");
