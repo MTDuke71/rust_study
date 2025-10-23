@@ -1,5 +1,9 @@
 # MiniGrep - A Rust Command-Line Search Tool
 
+**Tags:** #rust-book #chapter12 #cli #environment-variables #minigrep  
+**Created:** 2025-10-22  
+**Related:** [[Chapter 12 Overview]], [[CLI Design Patterns]], [[Environment Variables]], [[Error Handling Patterns]], [[Rust Book MOC]]
+
 **Chapter 12.5: Complete Standalone Implementation**
 
 A simplified version of the `grep` command-line tool, demonstrating Rust's capabilities for building robust CLI applications with environment variable configuration.
@@ -278,14 +282,15 @@ This complete implementation demonstrates:
 - `../testing/` - Test-driven development
 
 ### **Next Steps**
-- **Chapter 13** - Functional programming with iterators
-- **Mission 8** - Advanced project structure
-- **Mission 9** - CLI pathfinding tools
+- [[Chapter 13 Overview]] - Functional programming with iterators
+- [[Mission8 Overview]] - Advanced project structure  
+- [[Mission 9 Overview]] - CLI pathfinding tools
 
 ### **Rust Book Integration**
 - Applies concepts from Chapters 1-11
 - Foundation for advanced topics in Chapters 13+
 - Real-world demonstration of Rust's capabilities
+- See [[Chapter 12 Overview]] for complete learning path
 
 ---
 
