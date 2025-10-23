@@ -782,7 +782,7 @@ fn benchmark_implementations() {
     let vecdeque_ns = vecdeque_time.as_nanos() as f64;
 
     println!("      Relative performance (lower is better):");
-    println!("      RingQueue: {:.2}x baseline", ring_ns / ring_ns);
+    println!("      RingQueue: {:.2}x baseline", 1.0);
     println!("      LinkedQueue: {:.2}x baseline", linked_ns / ring_ns);
     println!("      VecDeque: {:.2}x baseline", vecdeque_ns / ring_ns);
 

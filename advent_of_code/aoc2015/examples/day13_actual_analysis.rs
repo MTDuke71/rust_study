@@ -6,7 +6,6 @@
 /// 3. Comparison table showing the difference
 /// 
 /// Usage: cargo run --example day13_actual_analysis
-
 use aoc2015::solver::day13::*;
 use std::fs;
 
