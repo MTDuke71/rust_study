@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "zettelkasten/Reports/Orphans.md",
+                "file": "zettelkasten/Ownership and Borrowing.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Orphans"
+              "title": "Ownership and Borrowing"
             }
           }
         ]
@@ -184,6 +184,8 @@
   },
   "active": "bc9c16a7fd468589",
   "lastOpenFiles": [
+    "zettelkasten/Lifetime Parameters.md",
+    "zettelkasten/Reports/Orphans.md",
     "target/debug/incremental/type_inference_demo-2aqvimt119upt/s-hcaeltgmc2-08hck24-en27butervaoc9loewhzun9y6/work-products.bin",
     "target/debug/incremental/type_inference_demo-2aqvimt119upt/s-hcaeltgmc2-08hck24-en27butervaoc9loewhzun9y6/query-cache.bin",
     "target/debug/incremental/type_inference_demo-2aqvimt119upt/s-hcaeltgmc2-08hck24-en27butervaoc9loewhzun9y6/evzxrxm5sfz0e1ejh724ulk37.o",
@@ -194,9 +196,7 @@
     "target/debug/incremental/type_inference_demo-2aqvimt119upt/s-hcaeltgmc2-08hck24-en27butervaoc9loewhzun9y6/dzbtekgywbcdrxevdpmw48nbr.o",
     "target/debug/incremental/type_inference_demo-2aqvimt119upt/s-hcaeltgmc2-08hck24-en27butervaoc9loewhzun9y6/dj0hsnmtijgshe5w62f8ku35d.o",
     "target/debug/incremental/type_inference_demo-2aqvimt119upt/s-hcaeltgmc2-08hck24-en27butervaoc9loewhzun9y6/dkw29wi4fm0aweyc2mubrmx4i.o",
-    "target/debug/incremental/type_inference_demo-2aqvimt119upt/s-hcaeltgmc2-08hck24-en27butervaoc9loewhzun9y6/diydg1eucuf5cmtrhvm1spne2.o",
     "zettelkasten/Clippy Fix Summary - October 2025.md",
-    "zettelkasten/Reports/Orphans.md",
     "zettelkasten/Reports/Link Validation Report.md",
     "rust_book/Ch12/environment_variables/README.md",
     "missions/Mission9/TODO.md",
@@ -207,7 +207,6 @@
     "zettelkasten/Project Management and Session Reports.md",
     "zettelkasten/Rust Study Dashboard.md",
     "broken links output.md",
-    "zettelkasten/Lifetime Parameters.md",
     "zettelkasten/Chapter 9 Overview.md",
     "fix-summary.md",
     "zettelkasten/Day 15 - Traits.md",
