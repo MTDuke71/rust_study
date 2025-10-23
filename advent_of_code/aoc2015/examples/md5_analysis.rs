@@ -175,6 +175,7 @@ fn why_rainbow_tables_dont_help() {
 }
 
 /// Show the fundamental cryptographic principle
+#[allow(dead_code)]
 fn cryptographic_principle() {
     println!("🔐 Cryptographic Principle");
     println!("=========================");

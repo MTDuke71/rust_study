@@ -40,13 +40,15 @@ fn demo_configurable_alphabet() {
     }
 
     // Extended alphabet with angle brackets
-    let mut extended_opts = Options::default();
-    extended_opts.alphabet = Alphabet::with_pairs(&[
-        ('(', ')'),
-        ('[', ']'),
-        ('{', '}'),
-        ('<', '>'), // Add angle brackets!
-    ]);
+    let extended_opts = Options {
+        alphabet: Alphabet::with_pairs(&[
+            ('(', ')'),
+            ('[', ']'),
+            ('{', '}'),
+            ('<', '>'), // Add angle brackets!
+        ]),
+        ..Default::default()
+    };
 
     println!("\nExtended alphabet: (),[],({{}}),<>");
     match validate_with_options("<[()]>", &extended_opts) {
@@ -77,8 +79,10 @@ fn demo_error_collection() {
     let test_input = ")]((["; // Multiple errors: unexpected closers + unclosed opener
 
     // Mode 1: Stop at first error (default)
-    let mut stop_first_opts = Options::default();
-    stop_first_opts.error_mode = ErrorMode::StopAtFirst;
+    let stop_first_opts = Options {
+        error_mode: ErrorMode::StopAtFirst,
+        ..Default::default()
+    };
 
     match validate_with_options(test_input, &stop_first_opts) {
         Ok(_) => println!("✅ No errors found"),
@@ -91,8 +95,10 @@ fn demo_error_collection() {
     }
 
     // Mode 2: Collect all errors
-    let mut collect_all_opts = Options::default();
-    collect_all_opts.error_mode = ErrorMode::CollectAll;
+    let collect_all_opts = Options {
+        error_mode: ErrorMode::CollectAll,
+        ..Default::default()
+    };
 
     match validate_with_options(test_input, &collect_all_opts) {
         Ok(_) => println!("✅ No errors found"),
@@ -114,8 +120,10 @@ fn demo_unclosed_policies() {
     let test_input = "(((["; // Multiple nested unclosed brackets
 
     // Policy 1: Latest Open (default - LIFO stack behavior)
-    let mut latest_opts = Options::default();
-    latest_opts.unclosed_policy = UnclosedPolicy::LatestOpen;
+    let latest_opts = Options {
+        unclosed_policy: UnclosedPolicy::LatestOpen,
+        ..Default::default()
+    };
 
     match validate_with_options(test_input, &latest_opts) {
         Ok(_) => println!("✅ No errors found"),
@@ -142,8 +150,10 @@ fn demo_unclosed_policies() {
     }
 
     // Policy 2: Earliest Open (FIFO behavior)
-    let mut earliest_opts = Options::default();
-    earliest_opts.unclosed_policy = UnclosedPolicy::EarliestOpen;
+    let earliest_opts = Options {
+        unclosed_policy: UnclosedPolicy::EarliestOpen,
+        ..Default::default()
+    };
 
     match validate_with_options(test_input, &earliest_opts) {
         Ok(_) => println!("✅ No errors found"),
