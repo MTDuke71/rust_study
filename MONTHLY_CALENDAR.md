@@ -878,7 +878,8 @@ git add . && git commit -m "Day X progress" # Save daily progress
 - [[Week 1 Overview]] - Collections fundamentals (HashMap, HashSet, BTreeMap)
 - [[Week 2 Overview]] - Advanced collections and iterators
 - [[Week 3 Overview]] - Traits, generics, and lifetimes
-- [[Week 4-5 Overview]] - Grids, parsing, and error handling
+- [[Week 4 Overview]] - Grids and parsing
+- [[Week 5 Overview]] - Error handling
 
 *Mission Integration:*
 - [[Mission1 Overview]] - Stack Implementation (V-Cycle foundation)
