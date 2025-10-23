@@ -96,6 +96,7 @@ This MOC provides complete access to both:
 - **📝 Study Notes**: [[rust_book/rust-book-ch10]] - Type system mastery and abstraction
 - **🎯 Key Skills**: Generic programming, trait design, lifetime management
 - **🔗 Integration**: [[chapter10_overview]] - Complete Chapter 10 summary
+- **🔗 Core Concepts**: [[Lifetime Parameters]] - Comprehensive lifetime theory and patterns
 
 ### **Chapter 11: Writing Automated Tests**
 - **📁 Implementations**: [[../rust_book/Ch11/README]] - Unit tests, integration tests, test organization
@@ -105,6 +106,7 @@ This MOC provides complete access to both:
 ### **Chapter 12: I/O Project - Command Line Program**
 - **📁 Implementations**: [[../rust_book/Ch12/README]] - Building a grep-like command line tool
 - **📝 Study Notes**: [[rust_book/rust-book-ch12]] - Project design and implementation patterns
+- **🔗 Environment Setup**: [[../rust_book/Ch12/environment_variables/README]] - Environment variable handling patterns
 
 ---
 
