@@ -159,7 +159,7 @@ impl GridPosition {
 }
 
 fn bfs_on_grid(
-    grid: &Vec<Vec<bool>>, // true = walkable, false = wall
+    grid: &[Vec<bool>], // true = walkable, false = wall
     start: GridPosition,
     end: GridPosition,
 ) -> Option<Vec<GridPosition>> {

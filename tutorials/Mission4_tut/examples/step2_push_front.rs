@@ -1,6 +1,8 @@
 // Step 2: Adding Elements with push_front
 // Run with: cargo run --example step2_push_front
 
+#![allow(dead_code)]
+
 #[derive(Debug)]
 struct Node<T> {
     data: T,

@@ -78,10 +78,7 @@ impl Maze {
             return false;
         }
         
-        match self.grid[row][col] {
-            Cell::Wall => false,
-            _ => true,
-        }
+        !matches!(self.grid[row][col], Cell::Wall)
     }
     
     /// Display the maze with optional solution path

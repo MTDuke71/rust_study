@@ -188,9 +188,13 @@ mod tests {
 
     #[test]
     fn test_boolean_assertion() {
-        assert!(true);
-        assert!(!false);
-        assert!(2 + 2 == 4);
+        // These demonstrate basic boolean assertions
+        let value = 1;
+        assert!(value > 0);
+        let flag = true;
+        assert!(flag);
+        let result = add_two(2);
+        assert!(result == 4);
     }
 
     #[test]

@@ -262,11 +262,15 @@ pub fn find_all_shortest_paths(
         }
         
         if current_pos == end {
-            if shortest_length.is_none() {
-                shortest_length = Some(current_length);
-                paths.push(current_path);
-            } else if current_length == shortest_length.unwrap() {
-                paths.push(current_path);
+            match shortest_length {
+                None => {
+                    shortest_length = Some(current_length);
+                    paths.push(current_path);
+                }
+                Some(len) if current_length == len => {
+                    paths.push(current_path);
+                }
+                _ => {}
             }
             continue;
         }

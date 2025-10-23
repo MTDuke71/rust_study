@@ -341,7 +341,6 @@ where
 /// 
 /// A bridge is an edge whose removal increases the number of connected components.
 /// Uses DFS with discovery times and low values.
-
 fn find_bridges<N>(graph: &HashMap<N, Vec<N>>) -> Vec<(N, N)>
 where
     N: Copy + Eq + std::hash::Hash + Debug,
@@ -370,6 +369,7 @@ where
     bridges
 }
 
+#[allow(clippy::too_many_arguments)]
 fn find_bridges_dfs<N>(
     graph: &HashMap<N, Vec<N>>,
     node: N,

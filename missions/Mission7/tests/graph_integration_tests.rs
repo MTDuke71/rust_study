@@ -172,8 +172,8 @@ fn req2_neighbor_lookup() {
 
     // Verify all neighbors
     let neighbors = graph.neighbors(center);
-    for i in 1..5 {
-        assert!(neighbors.contains(&nodes[i]));
+    for node in &nodes[1..5] {
+        assert!(neighbors.contains(node));
     }
 
     // Leaf nodes have no outgoing edges

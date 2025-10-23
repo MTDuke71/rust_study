@@ -3,6 +3,8 @@
 //! This step introduces the basic concepts of graphs, their types, and why they're important
 //! in computer science and real-world applications.
 //!
+
+#![allow(dead_code)]
 //! ## Learning Objectives
 //! - Understand what graphs are and their components
 //! - Learn the difference between directed and undirected graphs

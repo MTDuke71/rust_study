@@ -3,6 +3,8 @@
 //! **Objective**: Build a complete application combining all learned patterns
 //!
 //! **Time Estimate**: 20 minutes to understand, practice as long as needed
+
+#![allow(dead_code)]
 //!
 //! **What This Demonstrates**:
 //! - Integration of all HashMap and HashSet patterns
@@ -276,6 +278,7 @@ pub struct SystemStats {
 /// Coordinate-based Game State System
 /// Demonstrates HashMap for spatial data and game logic
 #[derive(Debug)]
+#[allow(clippy::type_complexity)]
 pub struct GameWorld {
     grid: HashMap<(i32, i32), CellType>,
     entities: HashMap<String, (i32, i32)>,

@@ -171,6 +171,7 @@ fn split_even_odd_simple(s: &str) -> (String, String) {
 
 /// Advanced: Split into even/odd with original indices preserved
 #[allow(dead_code)]
+#[allow(clippy::type_complexity)]
 fn split_with_indices(s: &str) -> (Vec<(usize, char)>, Vec<(usize, char)>) {
     s.chars().enumerate().partition(|(i, _)| i % 2 == 0)
 }

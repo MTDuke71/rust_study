@@ -232,10 +232,7 @@ fn example4_environment_best_practices() {
 
     // 2. Handle different value types
     println!("\n2️⃣  Handle boolean-like values:");
-    let is_verbose = match env::var("VERBOSE").as_deref() {
-        Ok("1") | Ok("true") | Ok("yes") | Ok("on") => true,
-        _ => false,
-    };
+    let is_verbose = matches!(env::var("VERBOSE").as_deref(), Ok("1") | Ok("true") | Ok("yes") | Ok("on"));
     println!("   Verbose mode: {}", is_verbose);
 
     // 3. Parse numeric values safely

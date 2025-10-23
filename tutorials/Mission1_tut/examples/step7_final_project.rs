@@ -470,6 +470,7 @@ fn demonstrate_calculator() {
     use ProductionStack as Stack;
 
     #[derive(Debug, Clone)]
+    #[allow(clippy::enum_variant_names)]
     enum CalcError {
         StackError(String),
         ParseError(String),

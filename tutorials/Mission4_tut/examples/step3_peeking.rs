@@ -1,6 +1,8 @@
 // Step 3: Safe Peeking at Elements
 // Run with: cargo run --example step3_peeking
 
+#![allow(dead_code)]
+
 #[derive(Debug)]
 struct Node<T> {
     data: T,
@@ -46,6 +48,10 @@ impl<T> SimpleLinkedList<T> {
 
     pub fn len(&self) -> usize {
         self.length
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.length == 0
     }
 }
 

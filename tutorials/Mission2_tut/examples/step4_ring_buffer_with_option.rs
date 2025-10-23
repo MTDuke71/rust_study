@@ -1,6 +1,8 @@
 // Mission2_tut Step 4: Ring Buffer with Option<T>
 // Master Rust ownership patterns for safe element storage and removal
 
+#![allow(dead_code)]
+
 fn main() {
     println!("=== Mission2_tut Step 4: Ring Buffer with Option<T> ===\n");
 
@@ -122,8 +124,8 @@ fn demonstrate_option_memory_layout() {
 
     // Fill with values
     let start = std::time::Instant::now();
-    for i in 0..10000 {
-        buffer[i] = Some(i);
+    for (i, slot) in buffer.iter_mut().enumerate() {
+        *slot = Some(i);
     }
     let fill_time = start.elapsed();
 
@@ -190,7 +192,7 @@ fn demonstrate_safe_removal() {
     println!("      4. Return owned value to caller");
 
     // Show the pattern
-    fn safe_dequeue_pattern<T>(buffer: &mut Vec<Option<T>>, head: usize) -> Option<T> {
+    fn safe_dequeue_pattern<T>(buffer: &mut [Option<T>], head: usize) -> Option<T> {
         buffer[head].take()
     }
 

@@ -3,6 +3,8 @@
 //! **Learning Objective**: Master fundamental HashMap operations and understand when to use them
 //!
 //! **Time Estimate**: 20 minutes
+
+#![allow(dead_code)]
 //!
 //! **What You'll Learn**:
 //! - Creating and initializing HashMaps

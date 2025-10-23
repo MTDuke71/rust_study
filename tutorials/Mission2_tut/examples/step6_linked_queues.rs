@@ -1,6 +1,8 @@
 // Mission2_tut Step 6: Linked Queue Implementations
 // Explore unbounded queues using linked structures and compare trade-offs
 
+#![allow(dead_code)]
+
 use std::collections::VecDeque;
 
 fn main() {

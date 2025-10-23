@@ -291,9 +291,9 @@ fn main() {
     // Vec<Vec<T>> - pointer indirection
     let start = Instant::now();
     let mut sum_vec_vec = 0i64;
-    for y in 0..grid_size {
-        for x in 0..grid_size {
-            sum_vec_vec += vec_of_vecs[y][x] as i64; // Two indirections!
+    for row in &vec_of_vecs {
+        for &val in row {
+            sum_vec_vec += val as i64; // Two indirections!
         }
     }
     std::hint::black_box(sum_vec_vec);
