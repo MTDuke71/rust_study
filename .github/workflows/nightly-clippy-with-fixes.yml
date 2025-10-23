@@ -53,15 +53,26 @@ jobs:
       continue-on-error: true
       run: |
         echo "Running initial clippy check..."
-        cargo clippy --workspace --all-targets --all-features --message-format=json > initial-clippy-output.json 2>&1 || true
+        
+        # Ensure output file exists
+        echo '{"message": "clippy-start", "timestamp": "'$(date -u +"%Y-%m-%d %H:%M:%S UTC")'"}' > initial-clippy-output.json
+        
+        # Run clippy on workspace with proper error handling
+        cargo clippy --workspace --all-targets --all-features --message-format=json 2>&1 | tee -a initial-clippy-output.json || true
         
         # Also run on individual packages
         for dir in missions/Mission* tutorials/Mission*_tut rust_book/Ch* advent_of_code/aoc*; do
           if [ -d "$dir" ] && [ -f "$dir/Cargo.toml" ]; then
             echo "Checking $dir"
-            (cd "$dir" && cargo clippy --all-targets --all-features --message-format=json >> ../initial-clippy-output.json 2>&1 || true)
+            echo '{"message": "checking-dir", "directory": "'$dir'"}' >> initial-clippy-output.json
+            (cd "$dir" && cargo clippy --all-targets --all-features --message-format=json 2>&1 | tee -a ../initial-clippy-output.json || true)
           fi
         done
+        
+        # Ensure file has content even if clippy produces no output
+        if [ ! -s initial-clippy-output.json ]; then
+          echo '{"message": "no-clippy-output", "note": "Clippy produced no JSON output"}' > initial-clippy-output.json
+        fi
     
     - name: Apply automatic clippy fixes
       id: apply-fixes
@@ -107,6 +118,10 @@ jobs:
           echo "" >> fix-summary.md
           echo "## Summary of Changes:" >> fix-summary.md
           git diff --cached --stat >> fix-summary.md
+        else
+          # Create empty summary file for consistent artifact upload
+          echo "No changes were made by clippy --fix" > fix-summary.md
+        fi
         fi
     
     - name: Run clippy after fixes (for remaining issues)
@@ -115,15 +130,26 @@ jobs:
       continue-on-error: true
       run: |
         echo "Running clippy after fixes to check remaining issues..."
-        cargo clippy --workspace --all-targets --all-features --message-format=json > post-fix-clippy-output.json 2>&1 || true
+        
+        # Ensure output file exists
+        echo '{"message": "post-fix-clippy-start", "timestamp": "'$(date -u +"%Y-%m-%d %H:%M:%S UTC")'"}' > post-fix-clippy-output.json
+        
+        # Run clippy after fixes with proper error handling
+        cargo clippy --workspace --all-targets --all-features --message-format=json 2>&1 | tee -a post-fix-clippy-output.json || true
         
         # Also check individual packages
         for dir in missions/Mission* tutorials/Mission*_tut rust_book/Ch* advent_of_code/aoc*; do
           if [ -d "$dir" ] && [ -f "$dir/Cargo.toml" ]; then
             echo "Post-fix checking $dir"
-            (cd "$dir" && cargo clippy --all-targets --all-features --message-format=json >> ../post-fix-clippy-output.json 2>&1 || true)
+            echo '{"message": "post-fix-checking-dir", "directory": "'$dir'"}' >> post-fix-clippy-output.json
+            (cd "$dir" && cargo clippy --all-targets --all-features --message-format=json 2>&1 | tee -a ../post-fix-clippy-output.json || true)
           fi
         done
+        
+        # Ensure file has content even if clippy produces no output
+        if [ ! -s post-fix-clippy-output.json ]; then
+          echo '{"message": "no-post-fix-clippy-output", "note": "Post-fix clippy produced no JSON output"}' > post-fix-clippy-output.json
+        fi
     
     - name: Create Pull Request with automatic fixes
       if: steps.check-changes.outputs.changes == 'true'
@@ -181,6 +207,17 @@ jobs:
         assignees: |
           MTDuke71
     
+    - name: Ensure all artifact files exist
+      if: always()
+      run: |
+        # Ensure all expected files exist for artifact upload
+        [ ! -f initial-clippy-output.json ] && echo '{"message": "initial-clippy-missing"}' > initial-clippy-output.json
+        [ ! -f post-fix-clippy-output.json ] && echo '{"message": "post-fix-clippy-missing"}' > post-fix-clippy-output.json
+        [ ! -f fix-summary.md ] && echo "No clippy fixes were applied in this run." > fix-summary.md
+        
+        echo "Artifact files prepared:"
+        ls -la *.json *.md || true
+    
     - name: Upload clippy artifacts
       uses: actions/upload-artifact@v4
       if: always()
@@ -205,7 +242,14 @@ jobs:
           let errors = [];
           
           try {
-            const results = fs.readFileSync('post-fix-clippy-output.json', 'utf8');
+            let results = '';
+            if (fs.existsSync('post-fix-clippy-output.json')) {
+              results = fs.readFileSync('post-fix-clippy-output.json', 'utf8');
+            } else {
+              console.log('post-fix-clippy-output.json does not exist, assuming no clippy output');
+              results = '{"message": "no-output"}';
+            }
+            
             const lines = results.split('\n').filter(line => line.trim());
             
             for (const line of lines) {
@@ -219,11 +263,12 @@ jobs:
                   }
                 }
               } catch (e) {
-                // Skip non-JSON lines
+                // Skip non-JSON lines - could be plain text output from cargo
               }
             }
           } catch (error) {
             console.log('Could not read post-fix clippy results:', error);
+            console.log('This might be expected if clippy produced no output');
           }
           
           // Only create issue if there are remaining problems
