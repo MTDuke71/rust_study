@@ -42,9 +42,13 @@ jobs:
           ${{ runner.os }}-cargo-
     
     - name: Run Clippy on workspace
+      id: workspace-clippy
+      continue-on-error: true
       run: cargo clippy --workspace --all-targets --all-features -- -D warnings
     
     - name: Run Clippy on individual packages
+      id: individual-clippy
+      continue-on-error: true
       run: |
         # Get all packages in the workspace
         packages=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.source == null) | .name')
@@ -52,14 +56,24 @@ jobs:
         echo "Found packages:"
         echo "$packages"
         
-        # Run clippy on each package individually
+        # Run clippy on each package individually, continue on errors
+        exit_code=0
         for package in $packages; do
           echo "Running clippy on package: $package"
-          cargo clippy -p "$package" --all-targets --all-features -- -D warnings
+          if ! cargo clippy -p "$package" --all-targets --all-features -- -D warnings; then
+            echo "❌ Clippy failed for package: $package"
+            exit_code=1
+          else
+            echo "✅ Clippy passed for package: $package"
+          fi
         done
+        
+        # Set final exit code but don't fail the step (continue-on-error handles this)
+        exit $exit_code
     
     - name: Generate Clippy report
       id: clippy-report
+      if: always()
       run: |
         echo "# Nightly Clippy Report - $(date)" > clippy-report.md
         echo "" >> clippy-report.md
@@ -70,6 +84,15 @@ jobs:
         echo "- Clippy version: $(cargo clippy --version)" >> clippy-report.md
         echo "" >> clippy-report.md
         
+        # Check results from previous steps
+        workspace_result="${{ steps.workspace-clippy.outcome }}"
+        individual_result="${{ steps.individual-clippy.outcome }}"
+        
+        echo "## Step Results" >> clippy-report.md
+        echo "- Workspace clippy: $workspace_result" >> clippy-report.md
+        echo "- Individual packages clippy: $individual_result" >> clippy-report.md
+        echo "" >> clippy-report.md
+        
         # Run clippy with JSON output for detailed reporting
         echo "## Detailed Results" >> clippy-report.md
         set +e  # Don't exit on error
@@ -77,11 +100,12 @@ jobs:
         clippy_exit_code=$?
         set -e  # Re-enable exit on error
         
-        if [ $clippy_exit_code -eq 0 ]; then
-          echo "✅ No clippy warnings found!" >> clippy-report.md
+        # Determine overall success based on all steps
+        if [ "$workspace_result" = "success" ] && [ "$individual_result" = "success" ] && [ $clippy_exit_code -eq 0 ]; then
+          echo "✅ All clippy checks passed!" >> clippy-report.md
           echo "success=true" >> $GITHUB_OUTPUT
         else
-          echo "⚠️ Clippy warnings detected. Please review and fix." >> clippy-report.md
+          echo "⚠️ Clippy issues detected in one or more checks. Please review and fix." >> clippy-report.md
           echo "success=false" >> $GITHUB_OUTPUT
         fi
         
@@ -146,3 +170,14 @@ jobs:
               body: '## New Failure Report\n\n' + body
             });
           }
+    
+    # Fail the job if any clippy issues were found (after collecting all results)
+    - name: Final status check
+      if: always()
+      run: |
+        if [ "${{ steps.clippy-report.outputs.success }}" = "false" ]; then
+          echo "❌ Clippy checks failed. See report for details."
+          exit 1
+        else
+          echo "✅ All clippy checks passed successfully!"
+        fi
