@@ -27,7 +27,7 @@ fn exercise1_statistics() {
             return 0.0;
         }
 
-        if len % 2 == 0 {
+        if len.is_multiple_of(2) {
             let mid = len / 2;
             (sorted[mid - 1] + sorted[mid]) as f64 / 2.0
         } else {
