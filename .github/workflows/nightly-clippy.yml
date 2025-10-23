@@ -59,6 +59,7 @@ jobs:
         done
     
     - name: Generate Clippy report
+      id: clippy-report
       run: |
         echo "# Nightly Clippy Report - $(date)" > clippy-report.md
         echo "" >> clippy-report.md
@@ -71,11 +72,21 @@ jobs:
         
         # Run clippy with JSON output for detailed reporting
         echo "## Detailed Results" >> clippy-report.md
-        if cargo clippy --workspace --all-targets --all-features --message-format=json > clippy-output.json 2>&1; then
+        set +e  # Don't exit on error
+        cargo clippy --workspace --all-targets --all-features --message-format=json > clippy-output.json 2>&1
+        clippy_exit_code=$?
+        set -e  # Re-enable exit on error
+        
+        if [ $clippy_exit_code -eq 0 ]; then
           echo "✅ No clippy warnings found!" >> clippy-report.md
+          echo "success=true" >> $GITHUB_OUTPUT
         else
           echo "⚠️ Clippy warnings detected. Please review and fix." >> clippy-report.md
+          echo "success=false" >> $GITHUB_OUTPUT
         fi
+        
+        # Always ensure files exist for upload
+        touch clippy-report.md clippy-output.json
     
     - name: Upload Clippy report
       uses: actions/upload-artifact@v4
@@ -83,13 +94,13 @@ jobs:
       with:
         name: clippy-report-${{ github.run_number }}
         path: |
-          clippy-report.md
-          clippy-output.json
+          ./clippy-report.md
+          ./clippy-output.json
         retention-days: 30
     
     # Optional: Create an issue if clippy finds problems
     - name: Create issue on clippy warnings
-      if: failure()
+      if: steps.clippy-report.outputs.success == 'false'
       uses: actions/github-script@v6
       with:
         script: |
