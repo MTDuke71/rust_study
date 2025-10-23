@@ -1,0 +1,154 @@
+/* Rust Study Theme Enhancements */
+
+/* Code block styling for Rust */
+.language-rust {
+    background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+    border-left: 4px solid #ff6b35;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Tag styling for different categories */
+.tag[href="#rust"] {
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    color: white;
+}
+
+.tag[href="#mission"] {
+    background: linear-gradient(135deg, #4e79a7, #6baed6);
+    color: white;
+}
+
+.tag[href="#daily-study"] {
+    background: linear-gradient(135deg, #59a14f, #86c670);
+    color: white;
+}
+
+.tag[href="#aoc"] {
+    background: linear-gradient(135deg, #af7aa1, #d4a6c8);
+    color: white;
+}
+
+.tag[href="#data-structures"] {
+    background: linear-gradient(135deg, #e15759, #ff9d98);
+    color: white;
+}
+
+/* Headers for different note types */
+h1:has(+ p:contains("daily-study")) {
+    color: #59a14f;
+    border-bottom: 3px solid #86c670;
+    padding-bottom: 0.5rem;
+}
+
+h1:has(+ p:contains("mission")) {
+    color: #4e79a7;
+    border-bottom: 3px solid #6baed6;
+    padding-bottom: 0.5rem;
+}
+
+h1:has(+ p:contains("chapter-overview")) {
+    color: #ff6b35;
+    border-bottom: 3px solid #f7931e;
+    padding-bottom: 0.5rem;
+}
+
+/* MOC (Map of Contents) styling */
+.mod-header:has(h1:contains("MOC")) {
+    background: linear-gradient(135deg, #2d2d44, #404060);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Dashboard enhancements */
+.markdown-preview-view:has(h1:contains("Dashboard")) {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+/* Code inline styling */
+code {
+    background: #2d2d44;
+    color: #ff6b35;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Blockquote enhancements for key takeaways */
+blockquote {
+    border-left: 4px solid #ff6b35;
+    background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(247,147,30,0.05));
+    border-radius: 0 8px 8px 0;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* Table styling for better readability */
+table {
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+table th {
+    background: linear-gradient(135deg, #4e79a7, #6baed6);
+    color: white;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+table tr:nth-child(even) {
+    background: rgba(78,121,167,0.05);
+}
+
+/* Progress indicators */
+.progress-bar {
+    background: linear-gradient(135deg, #e9ecef, #dee2e6);
+    border-radius: 10px;
+    height: 20px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+}
+
+.progress-fill {
+    background: linear-gradient(135deg, #59a14f, #86c670);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+/* Link styling for internal links */
+.internal-link {
+    color: #4e79a7;
+    text-decoration: none;
+    border-bottom: 1px dotted #6baed6;
+    transition: all 0.2s ease;
+}
+
+.internal-link:hover {
+    color: #6baed6;
+    border-bottom: 1px solid #6baed6;
+    background: rgba(78,121,167,0.1);
+    padding: 0.1rem 0.2rem;
+    border-radius: 4px;
+}
+
+/* External link styling */
+.external-link {
+    color: #ff6b35;
+    border-bottom: 1px dotted #f7931e;
+}
+
+.external-link:hover {
+    color: #f7931e;
+    border-bottom: 1px solid #f7931e;
+}

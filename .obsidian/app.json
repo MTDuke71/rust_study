@@ -1,0 +1,22 @@
+{
+  "alwaysUpdateLinks": true,
+  "userIgnoreFilters": [
+    "target/",
+    "*.rs",
+    "*.json",
+    "*.toml",
+    ".git/",
+    ".github/"
+  ],
+  "newFileLocation": "folder",
+  "newFileFolderPath": "zettelkasten",
+  "showUnsupportedFiles": true,
+  "defaultViewMode": "preview",
+  "attachmentFolderPath": "attachments",
+  "useTab": false,
+  "tabSize": 2,
+  "foldHeading": true,
+  "foldIndent": true,
+  "showLineNumber": true,
+  "spellcheck": true
+}
