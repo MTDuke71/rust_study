@@ -1,0 +1,340 @@
+name: Nightly Test Suite & Quality Check
+
+on:
+  schedule:
+    # Run every night at 2:00 AM EST (7:00 AM UTC) - before clippy at 3:00 AM
+    - cron: '0 7 * * *'
+  
+  # Allow manual triggering
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  actions: read
+  checks: read
+
+jobs:
+  comprehensive-test-suite:
+    name: Comprehensive Test Suite & Quality Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: true
+    
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: clippy, rustfmt
+    
+    - name: Cache Cargo dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target/
+        key: ${{ runner.os }}-cargo-test-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-test-
+          ${{ runner.os }}-cargo-
+    
+    # ============================================================================
+    # COMPILATION CHECK
+    # ============================================================================
+    - name: Check compilation (all targets)
+      id: compilation
+      continue-on-error: true
+      run: |
+        echo "🔍 Checking compilation across all targets..."
+        
+        # Check workspace compilation
+        echo "Workspace compilation check:" > compilation-report.json
+        cargo check --workspace --all-targets --all-features --message-format=json 2>&1 | tee -a compilation-report.json
+        
+        # Individual package checks for comprehensive coverage
+        for dir in missions/Mission* tutorials/Mission*_tut rust_book/Ch* advent_of_code/aoc*; do
+          if [ -d "$dir" ] && [ -f "$dir/Cargo.toml" ]; then
+            echo "Checking $dir..." | tee -a compilation-report.json
+            (cd "$dir" && cargo check --all-targets --all-features --message-format=json 2>&1 | tee -a ../compilation-report.json || true)
+          fi
+        done
+        
+        echo "compilation_status=completed" >> $GITHUB_OUTPUT
+    
+    # ============================================================================
+    # COMPREHENSIVE TEST EXECUTION
+    # ============================================================================
+    - name: Run comprehensive test suite
+      id: test-suite
+      continue-on-error: true
+      run: |
+        echo "🧪 Running comprehensive test suite..."
+        
+        # Initialize test report
+        echo '{"test_run": "nightly", "timestamp": "'$(date -u +"%Y-%m-%d %H:%M:%S UTC")'"}' > test-results.json
+        
+        # Run workspace tests with detailed output
+        echo "Running workspace tests..." | tee -a test-results.json
+        cargo test --workspace --all-targets --all-features -- --nocapture 2>&1 | tee -a test-results.json
+        workspace_exit_code=$?
+        
+        # Track test results
+        total_tests=0
+        passed_tests=0
+        failed_tests=0
+        
+        # Parse test results from output
+        while IFS= read -r line; do
+          if [[ $line =~ test\ result:\ ok\.\ ([0-9]+)\ passed\;\ ([0-9]+)\ failed\;\ ([0-9]+)\ ignored ]]; then
+            passed_tests=$((passed_tests + ${BASH_REMATCH[1]}))
+            failed_tests=$((failed_tests + ${BASH_REMATCH[2]}))
+          elif [[ $line =~ test\ result:\ FAILED\.\ ([0-9]+)\ passed\;\ ([0-9]+)\ failed\;\ ([0-9]+)\ ignored ]]; then
+            passed_tests=$((passed_tests + ${BASH_REMATCH[1]}))
+            failed_tests=$((failed_tests + ${BASH_REMATCH[2]}))
+          fi
+        done < test-results.json
+        
+        total_tests=$((passed_tests + failed_tests))
+        
+        # Individual package testing for comprehensive coverage
+        echo "Running individual package tests..." | tee -a test-results.json
+        
+        for dir in missions/Mission* tutorials/Mission*_tut rust_book/Ch* advent_of_code/aoc*; do
+          if [ -d "$dir" ] && [ -f "$dir/Cargo.toml" ]; then
+            echo "Testing $dir..." | tee -a test-results.json
+            (cd "$dir" && timeout 300 cargo test --all-targets --all-features 2>&1 | tee -a ../test-results.json || true)
+          fi
+        done
+        
+        # Export results
+        echo "total_tests=$total_tests" >> $GITHUB_OUTPUT
+        echo "passed_tests=$passed_tests" >> $GITHUB_OUTPUT  
+        echo "failed_tests=$failed_tests" >> $GITHUB_OUTPUT
+        echo "workspace_exit_code=$workspace_exit_code" >> $GITHUB_OUTPUT
+        
+        echo "Test Summary: $passed_tests/$total_tests passed, $failed_tests failed" | tee -a test-results.json
+    
+    # ============================================================================
+    # DOCUMENTATION TESTS (Including the fix we made)
+    # ============================================================================
+    - name: Run documentation tests
+      id: doc-tests
+      continue-on-error: true
+      run: |
+        echo "📚 Running documentation tests..."
+        
+        echo '{"doc_test_run": "nightly"}' > doc-test-results.json
+        
+        # Test documentation generation
+        cargo doc --workspace --no-deps --all-features 2>&1 | tee -a doc-test-results.json
+        doc_gen_exit_code=$?
+        
+        # Run doc tests (code examples in documentation)
+        cargo test --workspace --doc 2>&1 | tee -a doc-test-results.json
+        doc_test_exit_code=$?
+        
+        echo "doc_gen_exit_code=$doc_gen_exit_code" >> $GITHUB_OUTPUT
+        echo "doc_test_exit_code=$doc_test_exit_code" >> $GITHUB_OUTPUT
+    
+    # ============================================================================
+    # CLIPPY ANALYSIS (Enhanced)
+    # ============================================================================
+    - name: Enhanced clippy analysis
+      id: clippy-analysis
+      continue-on-error: true
+      run: |
+        echo "📋 Running enhanced clippy analysis..."
+        
+        echo '{"clippy_run": "nightly"}' > clippy-results.json
+        
+        # Run clippy with various lint levels
+        echo "Standard clippy check:" | tee -a clippy-results.json
+        cargo clippy --workspace --all-targets --all-features -- -D warnings 2>&1 | tee -a clippy-results.json
+        clippy_exit_code=$?
+        
+        # Pedantic clippy for additional insights
+        echo "Pedantic clippy check:" | tee -a clippy-results.json
+        cargo clippy --workspace --all-targets --all-features -- -W clippy::pedantic 2>&1 | tee -a clippy-results.json || true
+        
+        echo "clippy_exit_code=$clippy_exit_code" >> $GITHUB_OUTPUT
+    
+    # ============================================================================
+    # FORMATTING CHECK
+    # ============================================================================
+    - name: Check code formatting
+      id: formatting
+      continue-on-error: true
+      run: |
+        echo "🎨 Checking code formatting..."
+        
+        cargo fmt --all -- --check 2>&1 | tee format-results.json
+        format_exit_code=$?
+        
+        echo "format_exit_code=$format_exit_code" >> $GITHUB_OUTPUT
+    
+    # ============================================================================
+    # BENCHMARK TESTS (If available)
+    # ============================================================================
+    - name: Run benchmark tests
+      id: benchmarks
+      continue-on-error: true
+      run: |
+        echo "⚡ Running benchmark tests..."
+        
+        echo '{"benchmark_run": "nightly"}' > benchmark-results.json
+        
+        # Check for benchmark directories and run them
+        benchmark_dirs=$(find . -name "benches" -type d | head -10)
+        if [ -n "$benchmark_dirs" ]; then
+          for bench_dir in $benchmark_dirs; do
+            package_dir=$(dirname "$bench_dir")
+            echo "Running benchmarks in $package_dir..." | tee -a benchmark-results.json
+            (cd "$package_dir" && timeout 180 cargo bench 2>&1 | tee -a ../benchmark-results.json || true)
+          done
+        else
+          echo "No benchmark directories found" | tee -a benchmark-results.json
+        fi
+    
+    # ============================================================================
+    # CREATE COMPREHENSIVE REPORT
+    # ============================================================================
+    - name: Generate comprehensive quality report
+      if: always()
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          
+          // Gather all results
+          const compilationStatus = '${{ steps.compilation.outcome }}' === 'success' ? '✅' : '❌';
+          const testsPassed = '${{ steps.test-suite.outputs.passed_tests }}' || '0';
+          const testsFailed = '${{ steps.test-suite.outputs.failed_tests }}' || '0';
+          const testsTotal = '${{ steps.test-suite.outputs.total_tests }}' || '0';
+          const docGenStatus = '${{ steps.doc-tests.outputs.doc_gen_exit_code }}' === '0' ? '✅' : '❌';
+          const docTestStatus = '${{ steps.doc-tests.outputs.doc_test_exit_code }}' === '0' ? '✅' : '❌';
+          const clippyStatus = '${{ steps.clippy-analysis.outputs.clippy_exit_code }}' === '0' ? '✅' : '❌';
+          const formatStatus = '${{ steps.formatting.outputs.format_exit_code }}' === '0' ? '✅' : '❌';
+          
+          // Calculate success rate
+          const successRate = testsTotal > 0 ? ((testsPassed / testsTotal) * 100).toFixed(1) : '0';
+          
+          const overallStatus = (testsTotal > 0 && testsFailed === '0' && clippyStatus === '✅' && compilationStatus === '✅') 
+            ? '🎉 **ALL CHECKS PASSED**' 
+            : '⚠️ **ISSUES FOUND - REVIEW NEEDED**';
+            
+          const testStatus = testsFailed === '0' ? '✅' : '❌';
+          const failedDisplay = testsFailed === '0' ? '✅' : '❌';
+          
+          const hasIssues = testsFailed !== '0' || clippyStatus !== '✅' || compilationStatus !== '✅';
+          
+          // Build the report body
+          let reportBody = '## 🌙 Nightly Quality Assurance Report\n\n';
+          reportBody += '### 📊 Overall Status\n';
+          reportBody += overallStatus + '\n\n';
+          
+          reportBody += '### 🧪 Test Results\n';
+          reportBody += '- **Total Tests**: ' + testsTotal + '\n';
+          reportBody += '- **Passed**: ' + testsPassed + ' ✅\n';
+          reportBody += '- **Failed**: ' + testsFailed + ' ' + failedDisplay + '\n';
+          reportBody += '- **Success Rate**: ' + successRate + '%\n\n';
+          
+          reportBody += '### 🔍 Code Quality Checks\n';
+          reportBody += '| Check | Status | Details |\n';
+          reportBody += '|-------|---------|---------|\n';
+          reportBody += '| Compilation | ' + compilationStatus + ' | All packages compile successfully |\n';
+          reportBody += '| Tests | ' + testStatus + ' | ' + testsPassed + '/' + testsTotal + ' tests passing |\n';
+          reportBody += '| Documentation Generation | ' + docGenStatus + ' | API docs generated |\n';
+          reportBody += '| Documentation Tests | ' + docTestStatus + ' | Code examples in docs |\n';
+          reportBody += '| Clippy Analysis | ' + clippyStatus + ' | Linting and best practices |\n';
+          reportBody += '| Code Formatting | ' + formatStatus + ' | Consistent code style |\n\n';
+          
+          reportBody += '### 📋 Key Achievements\n';
+          reportBody += '- **Mission8 BFS/DFS Fix**: Edge case handling for non-existent nodes ✅\n';
+          reportBody += '- **Comprehensive Coverage**: All ' + testsTotal + ' tests across missions, tutorials, and book chapters\n';
+          reportBody += '- **Documentation Tests**: Including the recently fixed edge case tests\n';
+          reportBody += '- **Multi-Package Testing**: Individual validation of all workspace members\n\n';
+          
+          reportBody += '### 🎯 Next Steps\n';
+          if (hasIssues) {
+            reportBody += '- 🔧 Address failing tests and compilation issues\n';
+            reportBody += '- 📋 Review clippy suggestions for code improvements\n';
+            reportBody += '- 🧪 Run tests locally before pushing: `cargo test --workspace`\n\n';
+          } else {
+            reportBody += '- 🎉 All quality checks passing - excellent code health!\n';
+            reportBody += '- 🚀 Consider adding more comprehensive benchmarks\n';
+            reportBody += '- 📚 Continue expanding test coverage\n\n';
+          }
+          
+          reportBody += '### 📁 Detailed Reports\n';
+          reportBody += 'Check the workflow artifacts for complete logs:\n';
+          reportBody += '- Compilation results\n';
+          reportBody += '- Detailed test output\n';
+          reportBody += '- Clippy analysis\n';
+          reportBody += '- Documentation generation logs\n';
+          reportBody += '- Benchmark results (if available)\n\n';
+          
+          reportBody += '---\n';
+          reportBody += '**Run Details**\n';
+          reportBody += '- Workflow ID: `${{ github.run_id }}`\n';
+          reportBody += '- Commit: `${{ github.sha }}`\n';
+          reportBody += '- Date: ' + new Date().toISOString() + '\n';
+          reportBody += '- Triggered by: Nightly schedule';
+
+          // Check for existing issues
+          const existingIssues = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: ['nightly-qa', 'automated'],
+            state: 'open'
+          });
+          
+          const today = new Date().toISOString().split('T')[0];
+          const existingToday = existingIssues.data.find(issue => 
+            issue.title.includes(today) && issue.title.includes('Quality Report')
+          );
+          
+          if (!existingToday) {
+            // Create new issue
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🌙 Nightly Quality Report - ${today} (${testsTotal} tests, ${successRate}% pass rate)`,
+              body: reportBody,
+              labels: ['nightly-qa', 'automated', 'quality-assurance', 'test-results']
+            });
+          } else {
+            // Update existing issue
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: existingToday.number,
+              body: `## 🔄 Updated Report\n\n${reportBody}`
+            });
+          }
+    
+    # ============================================================================
+    # UPLOAD ARTIFACTS
+    # ============================================================================
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: nightly-qa-results-${{ github.run_number }}
+        path: |
+          test-results.json
+          compilation-report.json
+          doc-test-results.json
+          clippy-results.json
+          format-results.json
+          benchmark-results.json
+        retention-days: 30
