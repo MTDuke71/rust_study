@@ -56,15 +56,18 @@ jobs:
       run: |
         echo "🔍 Checking compilation across all targets..."
         
+        # Create reports directory
+        mkdir -p reports
+        
         # Check workspace compilation
-        echo "Workspace compilation check:" > compilation-report.json
-        cargo check --workspace --all-targets --all-features --message-format=json 2>&1 | tee -a compilation-report.json
+        echo "Workspace compilation check:" > reports/compilation-report.json
+        cargo check --workspace --all-targets --all-features --message-format=json 2>&1 | tee -a reports/compilation-report.json
         
         # Individual package checks for comprehensive coverage
         for dir in missions/Mission* tutorials/Mission*_tut rust_book/Ch* advent_of_code/aoc*; do
           if [ -d "$dir" ] && [ -f "$dir/Cargo.toml" ]; then
-            echo "Checking $dir..." | tee -a compilation-report.json
-            (cd "$dir" && cargo check --all-targets --all-features --message-format=json 2>&1 | tee -a ../compilation-report.json || true)
+            echo "Checking $dir..." | tee -a reports/compilation-report.json
+            (cd "$dir" && cargo check --all-targets --all-features --message-format=json 2>&1 | tee -a ../reports/compilation-report.json || true)
           fi
         done
         
@@ -79,17 +82,20 @@ jobs:
       run: |
         echo "🧪 Running comprehensive test suite..."
         
+        # Ensure reports directory exists
+        mkdir -p reports
+        
         # Initialize test report
-        echo '{"test_run": "nightly", "timestamp": "'$(date -u +"%Y-%m-%d %H:%M:%S UTC")'"}' > test-results.json
+        echo '{"test_run": "nightly", "timestamp": "'$(date -u +"%Y-%m-%d %H:%M:%S UTC")'"}' > reports/test-results.json
         
         # Run workspace tests with detailed output
-        echo "Running workspace tests..." | tee -a test-results.json
-        cargo test --workspace --all-targets --all-features -- --nocapture 2>&1 | tee -a test-results.json
+        echo "Running workspace tests..." | tee -a reports/test-results.json
+        cargo test --workspace --all-targets --all-features -- --nocapture 2>&1 | tee -a reports/test-results.json
         workspace_exit_code=$?
         
         # Parse test results from the complete output file
         # Count all "test result:" lines to get accurate totals
-        echo "Parsing test results..." | tee -a test-results.json
+        echo "Parsing test results..." | tee -a reports/test-results.json
         
         total_tests=0
         passed_tests=0
@@ -106,11 +112,11 @@ jobs:
           if [[ $line =~ ([0-9]+)\ failed ]]; then
             failed_tests=$((failed_tests + ${BASH_REMATCH[1]}))
           fi
-        done < test-results.json
+        done < reports/test-results.json
         
         total_tests=$((passed_tests + failed_tests))
         
-        echo "Parsed results: $passed_tests passed, $failed_tests failed, $total_tests total" | tee -a test-results.json
+        echo "Parsed results: $passed_tests passed, $failed_tests failed, $total_tests total" | tee -a reports/test-results.json
         
         # Export results
         echo "total_tests=$total_tests" >> $GITHUB_OUTPUT
@@ -118,7 +124,7 @@ jobs:
         echo "failed_tests=$failed_tests" >> $GITHUB_OUTPUT
         echo "workspace_exit_code=$workspace_exit_code" >> $GITHUB_OUTPUT
         
-        echo "Test Summary: $passed_tests/$total_tests passed, $failed_tests failed" | tee -a test-results.json
+        echo "Test Summary: $passed_tests/$total_tests passed, $failed_tests failed" | tee -a reports/test-results.json
     
     # ============================================================================
     # DOCUMENTATION TESTS (Including the fix we made)
@@ -129,14 +135,17 @@ jobs:
       run: |
         echo "📚 Running documentation tests..."
         
-        echo '{"doc_test_run": "nightly"}' > doc-test-results.json
+        # Ensure reports directory exists
+        mkdir -p reports
+        
+        echo '{"doc_test_run": "nightly"}' > reports/doc-test-results.json
         
         # Test documentation generation
-        cargo doc --workspace --no-deps --all-features 2>&1 | tee -a doc-test-results.json
+        cargo doc --workspace --no-deps --all-features 2>&1 | tee -a reports/doc-test-results.json
         doc_gen_exit_code=$?
         
         # Run doc tests (code examples in documentation)
-        cargo test --workspace --doc 2>&1 | tee -a doc-test-results.json
+        cargo test --workspace --doc 2>&1 | tee -a reports/doc-test-results.json
         doc_test_exit_code=$?
         
         echo "doc_gen_exit_code=$doc_gen_exit_code" >> $GITHUB_OUTPUT
@@ -328,10 +337,10 @@ jobs:
       with:
         name: nightly-qa-results-${{ github.run_number }}
         path: |
-          test-results.json
-          compilation-report.json
-          doc-test-results.json
-          clippy-results.json
-          format-results.json
-          benchmark-results.json
+          reports/test-results.json
+          reports/compilation-report.json
+          reports/doc-test-results.json
+          reports/clippy-results.json
+          reports/format-results.json
+          reports/benchmark-results.json
         retention-days: 30

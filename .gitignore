@@ -60,5 +60,14 @@ nul
 
 # Generated output files
 broken links output.md
+initial-clippy-output.json
+post-fix-clippy-output.json
+fix-summary.json
+clippy_warnings.txt
+clippy-report.md
+clippy-output.json
+compilation-report.json
+test-results.json
+doc-test-results.json
 
 .smart-env

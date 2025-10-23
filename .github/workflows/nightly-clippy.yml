@@ -75,42 +75,45 @@ jobs:
       id: clippy-report
       if: always()
       run: |
-        echo "# Nightly Clippy Report - $(date)" > clippy-report.md
-        echo "" >> clippy-report.md
-        echo "## Summary" >> clippy-report.md
-        echo "- Workspace: $(cargo metadata --no-deps --format-version 1 | jq -r '.workspace_root')" >> clippy-report.md
-        echo "- Packages: $(cargo metadata --no-deps --format-version 1 | jq -r '.packages | length')" >> clippy-report.md
-        echo "- Rust version: $(rustc --version)" >> clippy-report.md
-        echo "- Clippy version: $(cargo clippy --version)" >> clippy-report.md
-        echo "" >> clippy-report.md
+        # Create reports directory
+        mkdir -p reports
+        
+        echo "# Nightly Clippy Report - $(date)" > reports/clippy-report.md
+        echo "" >> reports/clippy-report.md
+        echo "## Summary" >> reports/clippy-report.md
+        echo "- Workspace: $(cargo metadata --no-deps --format-version 1 | jq -r '.workspace_root')" >> reports/clippy-report.md
+        echo "- Packages: $(cargo metadata --no-deps --format-version 1 | jq -r '.packages | length')" >> reports/clippy-report.md
+        echo "- Rust version: $(rustc --version)" >> reports/clippy-report.md
+        echo "- Clippy version: $(cargo clippy --version)" >> reports/clippy-report.md
+        echo "" >> reports/clippy-report.md
         
         # Check results from previous steps
         workspace_result="${{ steps.workspace-clippy.outcome }}"
         individual_result="${{ steps.individual-clippy.outcome }}"
         
-        echo "## Step Results" >> clippy-report.md
-        echo "- Workspace clippy: $workspace_result" >> clippy-report.md
-        echo "- Individual packages clippy: $individual_result" >> clippy-report.md
-        echo "" >> clippy-report.md
+        echo "## Step Results" >> reports/clippy-report.md
+        echo "- Workspace clippy: $workspace_result" >> reports/clippy-report.md
+        echo "- Individual packages clippy: $individual_result" >> reports/clippy-report.md
+        echo "" >> reports/clippy-report.md
         
         # Run clippy with JSON output for detailed reporting
-        echo "## Detailed Results" >> clippy-report.md
+        echo "## Detailed Results" >> reports/clippy-report.md
         set +e  # Don't exit on error
-        cargo clippy --workspace --all-targets --all-features --message-format=json > clippy-output.json 2>&1
+        cargo clippy --workspace --all-targets --all-features --message-format=json > reports/clippy-output.json 2>&1
         clippy_exit_code=$?
         set -e  # Re-enable exit on error
         
         # Determine overall success based on all steps
         if [ "$workspace_result" = "success" ] && [ "$individual_result" = "success" ] && [ $clippy_exit_code -eq 0 ]; then
-          echo "✅ All clippy checks passed!" >> clippy-report.md
+          echo "✅ All clippy checks passed!" >> reports/clippy-report.md
           echo "success=true" >> $GITHUB_OUTPUT
         else
-          echo "⚠️ Clippy issues detected in one or more checks. Please review and fix." >> clippy-report.md
+          echo "⚠️ Clippy issues detected in one or more checks. Please review and fix." >> reports/clippy-report.md
           echo "success=false" >> $GITHUB_OUTPUT
         fi
         
         # Always ensure files exist for upload
-        touch clippy-report.md clippy-output.json
+        touch reports/clippy-report.md reports/clippy-output.json
     
     - name: Upload Clippy report
       uses: actions/upload-artifact@v4
@@ -118,8 +121,8 @@ jobs:
       with:
         name: clippy-report-${{ github.run_number }}
         path: |
-          ./clippy-report.md
-          ./clippy-output.json
+          ./reports/clippy-report.md
+          ./reports/clippy-output.json
         retention-days: 30
     
     # Optional: Create an issue if clippy finds problems
@@ -129,7 +132,7 @@ jobs:
       with:
         script: |
           const fs = require('fs');
-          const path = './clippy-report.md';
+          const path = './reports/clippy-report.md';
           
           let body = '🚨 **Nightly Clippy Check Failed**\n\n';
           body += 'The automated clippy check found issues that need attention.\n\n';
