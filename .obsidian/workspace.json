@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "43fea6e3cfa33918",
+        "id": "f71019c8cc957c85",
         "type": "tabs",
         "children": [
           {
-            "id": "2ec25825eb080dc7",
+            "id": "bc9c16a7fd468589",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "broken links output.md",
-                "mode": "source",
+                "file": "zettelkasten/Reports/Orphans.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "broken links output"
+              "title": "Orphans"
             }
           }
         ]
@@ -182,11 +182,17 @@
       "smart-connections:Smart Connections: Open random connection": true
     }
   },
-  "active": "2ec25825eb080dc7",
+  "active": "bc9c16a7fd468589",
   "lastOpenFiles": [
+    "zettelkasten/Mission 9 Tutorial.md",
+    "zettelkasten/Mission 9 Overview.md",
+    "zettelkasten/Chapter 12 Overview.md",
+    "zettelkasten/Clippy Fix Summary - October 2025.md",
+    "zettelkasten/Project Management and Session Reports.md",
+    "zettelkasten/Rust Study Dashboard.md",
+    "broken links output.md",
     "zettelkasten/Lifetime Parameters.md",
     "scripts/new-obsidian-note.ps1",
-    "zettelkasten/Rust Study Dashboard.md",
     "scripts/quick-recent.ps1",
     "scripts/recent-activity-report.ps1",
     "zettelkasten/Chapter 9 Overview.md",
@@ -213,13 +219,7 @@
     "zettelkasten/missions/mission-2.md",
     "zettelkasten/missions/mission-1.md",
     "zettelkasten/Mission3.md",
-    "broken links output.md",
     "zettelkasten/Rust Collections MOC.md",
-    "zettelkasten/Testing Patterns.md",
-    "zettelkasten/Rust Book MOC.md",
-    "_github/CONTRIBUTING.md",
-    "_github/copilot-instructions.md",
-    "_github/COMMON_ERRORS.md",
     "target/criterion/dfs_stack_safety/report/violin.svg",
     "target/criterion/dfs_stack_safety/very_deep_iterative/report/typical.svg",
     "target/criterion/dfs_stack_safety/very_deep_iterative/report/slope.svg",

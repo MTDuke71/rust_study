@@ -3,33 +3,51 @@
   "search": "",
   "showTags": true,
   "showAttachments": false,
-  "hideUnresolved": true,
-  "showOrphans": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
   "collapse-color-groups": false,
   "colorGroups": [
     {
       "query": "tag:#rust-book",
-      "color": {"a":1,"rgb":14701138}
+      "color": {
+        "a": 1,
+        "rgb": 14701138
+      }
     },
     {
-      "query": "tag:#daily-study", 
-      "color": {"a":1,"rgb":14725458}
+      "query": "tag:#daily-study",
+      "color": {
+        "a": 1,
+        "rgb": 14725458
+      }
     },
     {
       "query": "tag:#mission",
-      "color": {"a":1,"rgb":11621088}
+      "color": {
+        "a": 1,
+        "rgb": 11621088
+      }
     },
     {
       "query": "tag:#aoc",
-      "color": {"a":1,"rgb":15105570}
+      "color": {
+        "a": 1,
+        "rgb": 15105570
+      }
     },
     {
       "query": "tag:#data-structures",
-      "color": {"a":1,"rgb":5431378}
+      "color": {
+        "a": 1,
+        "rgb": 5431378
+      }
     },
     {
       "query": "path:zettelkasten/",
-      "color": {"a":1,"rgb":5431473}
+      "color": {
+        "a": 1,
+        "rgb": 5431473
+      }
     }
   ],
   "collapse-display": false,
@@ -42,6 +60,6 @@
   "repelStrength": 13.4375,
   "linkStrength": 1,
   "linkDistance": 150,
-  "scale": 0.04778763710962622,
-  "close": true
+  "scale": 0.04778763710962623,
+  "close": false
 }
