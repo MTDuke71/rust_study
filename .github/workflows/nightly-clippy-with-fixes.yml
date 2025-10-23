@@ -122,7 +122,6 @@ jobs:
           # Create empty summary file for consistent artifact upload
           echo "No changes were made by clippy --fix" > fix-summary.md
         fi
-        fi
     
     - name: Run clippy after fixes (for remaining issues)
       id: post-fix-clippy
