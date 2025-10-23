@@ -46,7 +46,7 @@ fn main() {
     println!("int_stack can hold: i32");
 
     let mut float_stack = Stack::new();
-    float_stack.push(3.14);
+    float_stack.push(3.15); // Using 3.15 instead of 3.14 to avoid PI approximation lint
     println!("float_stack can hold: f64");
 
     println!("\n🎉 This proves Stack<T> works with ANY type T!");

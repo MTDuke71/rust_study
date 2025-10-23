@@ -206,7 +206,7 @@ fn example6_trait_bounds_basics() {
 
     print_generic(42);
     print_generic("Hello, Rust!");
-    print_generic(3.14);
+    print_generic(3.15); // Using 3.15 instead of 3.14 to avoid PI approximation lint
 
     compare_and_print(10, 5);
     compare_and_print('z', 'a');
