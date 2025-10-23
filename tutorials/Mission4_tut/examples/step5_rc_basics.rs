@@ -81,8 +81,8 @@ fn demonstrate_reference_counting() {
     );
 
     // Create additional references
-    let another_ref_to_first = first_node.clone();
-    let yet_another_ref = first_node.clone();
+    let _another_ref_to_first = first_node.clone();
+    let _yet_another_ref = first_node.clone();
 
     println!("After creating more references:");
     println!(

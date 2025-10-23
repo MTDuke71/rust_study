@@ -443,7 +443,7 @@ impl Eq for DijkstraNode {}
 
 impl PartialOrd for DijkstraNode {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.cost.partial_cmp(&other.cost)
+        Some(self.cmp(other))
     }
 }
 

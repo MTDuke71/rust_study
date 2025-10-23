@@ -178,7 +178,7 @@ fn split_with_indices(s: &str) -> (Vec<(usize, char)>, Vec<(usize, char)>) {
 /// Performance comparison function
 #[allow(dead_code)]
 fn performance_comparison() {
-    let test_string = "A".repeat(1000);
+    let _test_string = "A".repeat(1000);
 
     // These would be used for actual benchmarking
     println!("Performance notes:");

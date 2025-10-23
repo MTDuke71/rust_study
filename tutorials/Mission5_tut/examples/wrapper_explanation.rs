@@ -6,7 +6,6 @@ use std::collections::HashMap;
 /// 1. Take an existing type (HashMap)
 /// 2. Wrap it inside your own struct  
 /// 3. Add additional functionality while preserving the original behavior
-
 fn main() {
     println!("🎁 Understanding the Dictionary Wrapper Pattern");
     println!("===============================================\n");

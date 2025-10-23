@@ -28,7 +28,7 @@ fn main() {
     println!("\n🔸 get_or_default() - No more unwrap_or!");
 
     // HashMap way (what you'd normally write):
-    let default_score = 0;
+    let _default_score = 0;
     let score1 = raw_map.get("player1").copied().unwrap_or("default_value");
     println!(
         "  HashMap: map.get(\"player1\").copied().unwrap_or(\"default\") = {}",

@@ -161,7 +161,7 @@ fn example4_file_operations() {
                 println!("   ✅ Raw bytes read: {} bytes", bytes.len());
                 // Check if it's valid UTF-8
                 match String::from_utf8(bytes) {
-                    Ok(string) => println!("   ✅ Valid UTF-8 content"),
+                    Ok(_string) => println!("   ✅ Valid UTF-8 content"),
                     Err(_) => println!("   ⚠️  Contains non-UTF-8 bytes"),
                 }
             }

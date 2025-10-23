@@ -129,7 +129,7 @@ fn example2_config_with_environment() {
     println!("=============================================");
 
     // Simulate different argument scenarios
-    let test_args = ["minigrep".to_string(),
+    let _test_args = ["minigrep".to_string(),
         "rust".to_string(),
         "poem.txt".to_string()];
 

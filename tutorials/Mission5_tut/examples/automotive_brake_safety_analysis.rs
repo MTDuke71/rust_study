@@ -88,7 +88,7 @@ fn demo_catastrophic_rehashing_scenario() {
     // Simulate a brake system that tracks active faults
     let mut active_faults = HashSet::new();
     let mut max_response_time_us = 0.0;
-    let emergency_deadline_us = 10_000.0; // 10ms emergency brake deadline
+    let _emergency_deadline_us = 10_000.0; // 10ms emergency brake deadline
 
     println!("   Scenario: Emergency braking while fault tracking system is busy");
     println!("   Component | Time (μs) | Status | Deadline");

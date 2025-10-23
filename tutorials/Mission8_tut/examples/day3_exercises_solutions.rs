@@ -232,7 +232,6 @@ fn topological_sort_dfs<N>(
 /// 
 /// This is an optimization for finding shortest paths by searching
 /// from both start and end simultaneously.
-
 fn bidirectional_bfs<N>(
     graph: &HashMap<N, Vec<N>>,
     start: N,

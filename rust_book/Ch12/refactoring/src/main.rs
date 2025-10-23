@@ -131,7 +131,7 @@ fn example2_iterator_constructor() {
     println!("===========================================");
 
     // Simulate command line args
-    let mock_args = ["minigrep".to_string(),
+    let _mock_args = ["minigrep".to_string(),
         "search_term".to_string(),
         "target_file.txt".to_string()];
 
