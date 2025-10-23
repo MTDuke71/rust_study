@@ -1,0 +1,132 @@
+name: Nightly Clippy Check
+
+on:
+  schedule:
+    # Run every night at 3:00 AM EST (8:00 AM UTC)
+    - cron: '0 8 * * *'
+  
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  clippy:
+    name: Clippy Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: clippy
+    
+    - name: Cache Cargo dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-
+    
+    - name: Run Clippy on workspace
+      run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+    
+    - name: Run Clippy on individual packages
+      run: |
+        # Get all packages in the workspace
+        packages=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.source == null) | .name')
+        
+        echo "Found packages:"
+        echo "$packages"
+        
+        # Run clippy on each package individually
+        for package in $packages; do
+          echo "Running clippy on package: $package"
+          cargo clippy -p "$package" --all-targets --all-features -- -D warnings
+        done
+    
+    - name: Generate Clippy report
+      run: |
+        echo "# Nightly Clippy Report - $(date)" > clippy-report.md
+        echo "" >> clippy-report.md
+        echo "## Summary" >> clippy-report.md
+        echo "- Workspace: $(cargo metadata --no-deps --format-version 1 | jq -r '.workspace_root')" >> clippy-report.md
+        echo "- Packages: $(cargo metadata --no-deps --format-version 1 | jq -r '.packages | length')" >> clippy-report.md
+        echo "- Rust version: $(rustc --version)" >> clippy-report.md
+        echo "- Clippy version: $(cargo clippy --version)" >> clippy-report.md
+        echo "" >> clippy-report.md
+        
+        # Run clippy with JSON output for detailed reporting
+        echo "## Detailed Results" >> clippy-report.md
+        if cargo clippy --workspace --all-targets --all-features --message-format=json > clippy-output.json 2>&1; then
+          echo "✅ No clippy warnings found!" >> clippy-report.md
+        else
+          echo "⚠️ Clippy warnings detected. Please review and fix." >> clippy-report.md
+        fi
+    
+    - name: Upload Clippy report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: clippy-report-${{ github.run_number }}
+        path: |
+          clippy-report.md
+          clippy-output.json
+        retention-days: 30
+    
+    # Optional: Create an issue if clippy finds problems
+    - name: Create issue on clippy warnings
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const path = './clippy-report.md';
+          
+          let body = '🚨 **Nightly Clippy Check Failed**\n\n';
+          body += 'The automated clippy check found issues that need attention.\n\n';
+          
+          if (fs.existsSync(path)) {
+            const report = fs.readFileSync(path, 'utf8');
+            body += '## Report\n\n' + report;
+          }
+          
+          body += '\n\n**Run Details:**\n';
+          body += `- Run ID: ${context.runId}\n`;
+          body += `- Commit: ${context.sha}\n`;
+          body += `- Triggered: ${new Date().toISOString()}\n`;
+          
+          // Check if there's already an open issue for clippy failures
+          const issues = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: ['clippy-failure', 'automated'],
+            state: 'open'
+          });
+          
+          if (issues.data.length === 0) {
+            // Create new issue
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 Nightly Clippy Check Failed - ${new Date().toISOString().split('T')[0]}`,
+              body: body,
+              labels: ['clippy-failure', 'automated', 'bug']
+            });
+          } else {
+            // Update existing issue
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issues.data[0].number,
+              body: '## New Failure Report\n\n' + body
+            });
+          }
