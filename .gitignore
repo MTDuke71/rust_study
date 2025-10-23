@@ -58,4 +58,7 @@ desktop.ini
 .claude/settings.local.json
 nul
 
+# Generated output files
+"broken links output.md"
+
 .smart-env
