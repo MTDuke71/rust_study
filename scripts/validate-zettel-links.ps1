@@ -15,9 +15,25 @@ $content = Get-Content $zettelIndexPath -Raw
 $linkPattern = '\[\[([^\]]+)\]\]'
 $matches = [regex]::Matches($content, $linkPattern)
 
+# Define patterns to skip (these are examples/templates, not actual links)
+$skipPatterns = @(
+    'daily-study/DayXX',
+    'ds-dayXX',
+    'aoc-YYYY-dayDD', 
+    'aocYY-DD',
+    'mission-X',
+    'mX',
+    'rust_book/rust-book-chX',
+    'lowercase-with-dashes',
+    'Day24',  # This is an example in the naming guide
+    'Mission6', # This is an example in the naming guide
+    'Ch8'     # This is an example in the naming guide
+)
+
 $totalLinks = 0
 $validLinks = 0
 $brokenLinks = @()
+$skippedLinks = @()
 
 foreach ($match in $matches) {
     $totalLinks++
@@ -30,6 +46,13 @@ foreach ($match in $matches) {
     
     # Trim whitespace
     $linkText = $linkText.Trim()
+    
+    # Skip template/example links
+    if ($linkText -in $skipPatterns) {
+        $skippedLinks += $linkText
+        Write-Host "  ⏭️  $linkText (template/example)" -ForegroundColor DarkYellow
+        continue
+    }
     
     # Determine search locations
     $possiblePaths = @()
@@ -48,15 +71,27 @@ foreach ($match in $matches) {
         # Check in rust_book
         $possiblePaths += Join-Path $workspaceRoot "rust_book\$linkText.md"
         $possiblePaths += Join-Path $workspaceRoot "rust_book\$linkText\README.md"
+        
+        # Check in daily_study with proper path resolution
+        if ($linkText -match '^daily_study/') {
+            $dailyPath = $linkText -replace '^daily_study/', ''
+            $possiblePaths += Join-Path $workspaceRoot "daily_study\$dailyPath.md"
+            $possiblePaths += Join-Path $workspaceRoot "daily_study\$dailyPath\README.md"
+        }
+        
+        # Check in missions directory for direct mission links
+        if ($linkText -match '^missions/') {
+            $missionPath = $linkText -replace '^missions/', ''
+            $possiblePaths += Join-Path $workspaceRoot "missions\$missionPath"
+            $possiblePaths += Join-Path $workspaceRoot "missions\$missionPath.md"
+        }
     }
     
     # Check if any of the possible paths exist
     $found = $false
-    $foundPath = ""
     foreach ($path in $possiblePaths) {
         if (Test-Path $path) {
             $found = $true
-            $foundPath = $path
             break
         }
     }
@@ -77,11 +112,21 @@ Write-Host ""
 Write-Host "═══════════════════════════════════════════════" -ForegroundColor Cyan
 Write-Host "📊 Summary:" -ForegroundColor Yellow
 Write-Host "═══════════════════════════════════════════════" -ForegroundColor Cyan
-Write-Host "  Total Links:  $totalLinks"
-Write-Host "  Valid Links:  $validLinks" -ForegroundColor Green
-Write-Host "  Broken Links: $($brokenLinks.Count)" -ForegroundColor Red
-Write-Host "  Success Rate: $([math]::Round(($validLinks / $totalLinks) * 100, 2))%"
+Write-Host "  Total Links:    $totalLinks"
+Write-Host "  Valid Links:    $validLinks" -ForegroundColor Green
+Write-Host "  Broken Links:   $($brokenLinks.Count)" -ForegroundColor Red
+Write-Host "  Skipped Links:  $($skippedLinks.Count)" -ForegroundColor DarkYellow
+Write-Host "  Success Rate:   $([math]::Round(($validLinks / ($totalLinks - $skippedLinks.Count)) * 100, 2))%" -ForegroundColor Cyan
 Write-Host ""
+
+if ($skippedLinks.Count -gt 0) {
+    Write-Host "⏭️ Skipped Template/Example Links:" -ForegroundColor DarkYellow
+    Write-Host "═══════════════════════════════════════════════" -ForegroundColor Cyan
+    foreach ($skipped in $skippedLinks) {
+        Write-Host "  $skipped" -ForegroundColor DarkGray
+    }
+    Write-Host ""
+}
 
 if ($brokenLinks.Count -gt 0) {
     Write-Host "❌ Broken Links Details:" -ForegroundColor Red
