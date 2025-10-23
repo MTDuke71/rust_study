@@ -271,7 +271,7 @@ fn example7_user_input_and_generics() {
     // process_number(42, 42.0);  // Compile error!
     
     // ✅ But you CAN convert between types:
-    let converted_float = process_number(42 as f64);
+    let converted_float = process_number(42_f64);
     println!("Converted and processed: {}", converted_float);
 
     println!();

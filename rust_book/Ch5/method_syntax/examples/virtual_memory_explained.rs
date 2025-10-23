@@ -6,7 +6,7 @@ fn main() {
 
     // Let's examine those "impossible" addresses more carefully
     let stack_var = 42i32;
-    let heap_vec = vec![1, 2, 3, 4, 5];
+    let heap_vec = [1, 2, 3, 4, 5];
 
     let stack_addr = &stack_var as *const i32 as usize;
     let heap_addr = heap_vec.as_ptr() as usize;
@@ -15,11 +15,7 @@ fn main() {
     println!("   Stack address: 0x{:x} ({})", stack_addr, stack_addr);
     println!("   Heap address:  0x{:x} ({})", heap_addr, heap_addr);
 
-    let distance = if heap_addr > stack_addr {
-        heap_addr - stack_addr
-    } else {
-        stack_addr - heap_addr
-    };
+    let distance = heap_addr.abs_diff(stack_addr);
 
     println!("   Distance: {} bytes", distance);
     println!("   That's {:.2} GB", distance as f64 / 1_073_741_824.0);

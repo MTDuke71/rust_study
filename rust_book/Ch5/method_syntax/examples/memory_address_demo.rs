@@ -61,11 +61,7 @@ fn main() {
     let heap_addr = heap_vec.as_ptr() as usize;
     println!(
         "   Stack-to-heap distance: {} bytes",
-        if heap_addr > stack_addr {
-            heap_addr - stack_addr
-        } else {
-            stack_addr - heap_addr
-        }
+        heap_addr.abs_diff(stack_addr)
     );
 
     // =======================================================================

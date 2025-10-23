@@ -54,7 +54,7 @@ fn example2_lifetime_in_structs() {
                     return &self.part[0..i];
                 }
             }
-            &self.part[..]
+            self.part
         }
     }
 
@@ -82,14 +82,14 @@ fn example3_lifetime_elision_rules() {
     // These functions have the same signature due to lifetime elision
 
     // Explicit lifetime annotations
-    fn first_word_explicit<'a>(s: &'a str) -> &'a str {
+    fn first_word_explicit(s: &str) -> &str {
         let bytes = s.as_bytes();
         for (i, &item) in bytes.iter().enumerate() {
             if item == b' ' {
                 return &s[0..i];
             }
         }
-        &s[..]
+        s
     }
 
     // Implicit lifetime annotations (elision rules apply)
@@ -100,7 +100,7 @@ fn example3_lifetime_elision_rules() {
                 return &s[0..i];
             }
         }
-        &s[..]
+        s
     }
 
     let text = String::from("hello world rust");
@@ -281,8 +281,8 @@ fn example8_lifetime_errors_demonstration() {
 
     // ✅ Correct approach - return owned data instead of reference
     fn no_dangle() -> String {
-        let s = String::from("hello");
-        s  // Move ownership instead of returning reference
+        
+        String::from("hello")  // Move ownership instead of returning reference
     }
 
     // ✅ Correct approach - ensure both parameters have same lifetime

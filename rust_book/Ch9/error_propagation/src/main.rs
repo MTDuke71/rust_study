@@ -459,7 +459,7 @@ mod tests {
     #[test]
     fn test_question_mark_with_option() {
         fn get_first_char(s: &str) -> Option<char> {
-            s.chars().nth(0)
+            s.chars().next()
         }
 
         fn process_string(s: &str) -> Option<String> {

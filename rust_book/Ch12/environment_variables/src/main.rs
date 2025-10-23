@@ -129,11 +129,9 @@ fn example2_config_with_environment() {
     println!("=============================================");
 
     // Simulate different argument scenarios
-    let test_args = vec![
-        "minigrep".to_string(),
+    let test_args = ["minigrep".to_string(),
         "rust".to_string(),
-        "poem.txt".to_string(),
-    ];
+        "poem.txt".to_string()];
 
     // Create a mock config for demonstration
     let query = "rust".to_string();
@@ -265,38 +263,6 @@ fn example4_environment_best_practices() {
     println!();
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn case_sensitive() {
-        let query = "duct";
-        let contents = "\
-Rust:
-safe, fast, productive.
-Pick three.
-Duct tape.";
-
-        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-    }
-
-    #[test]
-    fn case_insensitive() {
-        let query = "rUsT";
-        let contents = "\
-Rust:
-safe, fast, productive.
-Pick three.
-Trust me.";
-
-        assert_eq!(
-            vec!["Rust:", "Trust me."],
-            search_case_insensitive(query, contents)
-        );
-    }
-}
-
 fn main() {
     println!("📚 Chapter 12.5: Working with Environment Variables\n");
 
@@ -345,4 +311,36 @@ To an admiring bog!";
     println!("\n✅ All examples completed!");
     println!("💡 Try setting CASE_INSENSITIVE=1 and run again!");
     println!("📖 Next: Review this chapter or proceed to Chapter 13");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn case_sensitive() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.
+Duct tape.";
+
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+    }
+
+    #[test]
+    fn case_insensitive() {
+        let query = "rUsT";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.
+Trust me.";
+
+        assert_eq!(
+            vec!["Rust:", "Trust me."],
+            search_case_insensitive(query, contents)
+        );
+    }
 }

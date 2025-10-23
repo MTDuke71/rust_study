@@ -794,7 +794,7 @@ mod tests {
     #[test]
     fn test_option_chaining() {
         fn get_first_even(numbers: &[i32]) -> Option<i32> {
-            let first = numbers.get(0)?;
+            let first = numbers.first()?;
             if first % 2 == 0 {
                 Some(*first)
             } else {

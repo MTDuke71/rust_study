@@ -191,6 +191,36 @@ fn example4_performance_testing() {
     println!();
 }
 
+fn main() {
+    println!("📚 Chapter 12.4: Test-Driven Development\n");
+
+    example1_test_demonstration();
+    example2_case_sensitivity_tests();
+    example3_edge_case_testing();
+    example4_performance_testing();
+
+    println!("🧪 Running built-in tests:");
+    println!("Run `cargo test` to see all tests pass!");
+
+    // Run the actual application
+    println!("\n🚀 Running minigrep application:");
+    println!("=================================");
+
+    let config = Config::new(env::args()).unwrap_or_else(|err| {
+        eprintln!("Problem parsing arguments: {}", err);
+        eprintln!("Usage: minigrep <query> <filename>");
+        process::exit(1);
+    });
+
+    if let Err(e) = run(config) {
+        eprintln!("Application error: {}", e);
+        process::exit(1);
+    }
+
+    println!("\n✅ All examples completed!");
+    println!("📖 Next: Read Chapter 12.5 or run examples in ../environment_variables/");
+}
+
 // Tests module - this is where the actual tests live
 #[cfg(test)]
 mod tests {
@@ -246,34 +276,4 @@ Trust me.";
         let results = search("test", "test line\nanother test\ntest again");
         assert_eq!(3, results.len());
     }
-}
-
-fn main() {
-    println!("📚 Chapter 12.4: Test-Driven Development\n");
-
-    example1_test_demonstration();
-    example2_case_sensitivity_tests();
-    example3_edge_case_testing();
-    example4_performance_testing();
-
-    println!("🧪 Running built-in tests:");
-    println!("Run `cargo test` to see all tests pass!");
-
-    // Run the actual application
-    println!("\n🚀 Running minigrep application:");
-    println!("=================================");
-
-    let config = Config::new(env::args()).unwrap_or_else(|err| {
-        eprintln!("Problem parsing arguments: {}", err);
-        eprintln!("Usage: minigrep <query> <filename>");
-        process::exit(1);
-    });
-
-    if let Err(e) = run(config) {
-        eprintln!("Application error: {}", e);
-        process::exit(1);
-    }
-
-    println!("\n✅ All examples completed!");
-    println!("📖 Next: Read Chapter 12.5 or run examples in ../environment_variables/");
 }

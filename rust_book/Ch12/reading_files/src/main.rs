@@ -8,7 +8,6 @@
 
 use std::env;
 use std::fs;
-use std::process;
 
 fn example1_basic_file_reading() {
     println!("🦀 Example 1: Basic File Reading");

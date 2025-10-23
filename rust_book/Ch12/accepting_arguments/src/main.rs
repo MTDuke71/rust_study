@@ -62,7 +62,7 @@ fn example3_argument_validation() {
             println!("   Query: '{}' (length: {})", query, query.len());
             println!("   File: '{}' (extension: {})", 
                     filename, 
-                    filename.split('.').last().unwrap_or("none"));
+                    filename.split('.').next_back().unwrap_or("none"));
         }
         Err(error_msg) => {
             println!("❌ Validation error: {}", error_msg);

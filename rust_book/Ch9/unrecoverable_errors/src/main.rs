@@ -194,7 +194,7 @@ fn demonstrate_panic_hook() {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    
 
     #[test]
     #[should_panic(expected = "This should panic")]
@@ -212,8 +212,8 @@ mod tests {
 
     #[test]
     fn test_safe_indexing() {
-        let v = vec![1, 2, 3];
-        assert_eq!(v.get(0), Some(&1));
+        let v = [1, 2, 3];
+        assert_eq!(v.first(), Some(&1));
         assert_eq!(v.get(10), None);
     }
 }

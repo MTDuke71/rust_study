@@ -131,11 +131,9 @@ fn example2_iterator_constructor() {
     println!("===========================================");
 
     // Simulate command line args
-    let mock_args = vec![
-        "minigrep".to_string(),
+    let mock_args = ["minigrep".to_string(),
         "search_term".to_string(),
-        "target_file.txt".to_string(),
-    ];
+        "target_file.txt".to_string()];
 
     // For demonstration purposes, create a simple config
     println!("✅ Iterator config created (mock):");

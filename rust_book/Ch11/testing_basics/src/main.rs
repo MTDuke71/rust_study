@@ -330,7 +330,7 @@ mod tests {
     // Testing with iterators
     #[test]
     fn test_iterator_behavior() {
-        let numbers = vec![1, 2, 3, 4, 5];
+        let numbers = [1, 2, 3, 4, 5];
         let doubled: Vec<i32> = numbers.iter().map(|x| x * 2).collect();
         let expected = vec![2, 4, 6, 8, 10];
         
