@@ -7,7 +7,6 @@
 /// 4. Displaying both arrangements visually around a circular table
 /// 
 /// Usage: cargo run --example day13_seating_visualization
-
 use aoc2015::solver::day13::*;
 
 fn main() {

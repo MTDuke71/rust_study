@@ -4,6 +4,7 @@
 //! using optimization and state management patterns.
 
 use aoc_pattern_recognition::state_patterns::*;
+use std::fmt;
 
 fn main() {
     println!("=== State Management Pattern Recognition Demo ===\n");
@@ -123,12 +124,12 @@ fn demo_cycle_detection() {
             let width = self.grid[0].len();
             let mut new_grid = vec![vec![false; width]; height];
 
-            for y in 0..height {
-                for x in 0..width {
+            for (y, row) in new_grid.iter_mut().enumerate().take(height) {
+                for (x, cell) in row.iter_mut().enumerate().take(width) {
                     let neighbors = self.count_neighbors(x, y);
                     let alive = self.grid[y][x];
 
-                    new_grid[y][x] = match (alive, neighbors) {
+                    *cell = match (alive, neighbors) {
                         (true, 2) | (true, 3) => true, // Stay alive
                         (false, 3) => true,            // Born
                         _ => false,                    // Die or stay dead
@@ -164,9 +165,11 @@ fn demo_cycle_detection() {
             }
             count
         }
+    }
 
-        fn to_string(&self) -> String {
-            self.grid
+    impl fmt::Display for LifeState {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            let display_str = self.grid
                 .iter()
                 .map(|row| {
                     row.iter()
@@ -174,7 +177,8 @@ fn demo_cycle_detection() {
                         .collect::<String>()
                 })
                 .collect::<Vec<_>>()
-                .join("\n")
+                .join("\n");
+            write!(f, "{}", display_str)
         }
     }
 

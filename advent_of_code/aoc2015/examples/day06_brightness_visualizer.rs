@@ -265,9 +265,7 @@ fn create_brightness_bitmap(grid: &Grid<u32>, filename: &str) -> Result<()> {
         }
 
         // Add row padding
-        for _ in 0..row_padding {
-            row_data.push(0);
-        }
+        row_data.resize(row_data.len() + row_padding as usize, 0);
 
         file.write_all(&row_data)?;
     }

@@ -2,7 +2,6 @@
 /// 
 /// This demonstrates that our HappinessGraph is indeed an adjacency graph
 /// and explores optimization strategies for the TSP variant.
-
 use aoc2015::solver::day13::*;
 use std::fs;
 

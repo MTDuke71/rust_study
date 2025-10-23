@@ -2,6 +2,7 @@
 
 
 #[test]
+#[allow(non_snake_case)]
 fn dayNN_example() {
     // Put an example input in `inputs/dayNN_example.txt` and include it here:
     // let input = include_str!("../inputs/dayNN_example.txt");
@@ -9,5 +10,4 @@ fn dayNN_example() {
     // assert_eq!(p1, "EXPECTED_P1");
     // assert_eq!(p2, "EXPECTED_P2");
     // This template intentionally does not compile until you fill it in for a real day.
-    assert!(true);
 }
