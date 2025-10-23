@@ -133,7 +133,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 ## 🚀 **How to Use This MOC**
 
 ### **Find Your Current Day**
-1. Check [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]] for today's focus
+1. Check [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]] for today's daily note
 2. Navigate to the corresponding Day file
 3. Complete the runnable example
 4. Explore cross-references to related content

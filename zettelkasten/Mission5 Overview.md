@@ -55,7 +55,7 @@ See [[Mission5_tut Overview]] for step-by-step learning path
 - ✅ **REQ-1**: Basic structure implemented
 - ✅ **REQ-2**: Core operations working  
 - ✅ **REQ-3**: HashSet wrapper complete
-- 🔄 **REQ-4**: Iterator implementation (TODAY'S FOCUS)
+- 🔄 **REQ-4**: Iterator implementation (CURRENT FOCUS)
 - ⏳ **REQ-5**: Multi-value support pending
 - ⏳ **REQ-6**: AoC utilities pending
 

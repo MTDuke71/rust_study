@@ -44,7 +44,7 @@
 - [[Daily Study MOC]] - Week 1-4 systematic progression  
 - [[AoC Patterns MOC]] - Competitive programming techniques
 
-### **Find Today's Focus**
+### **Find Today's Content**
 - **Current Day**: See [[../MONTHLY_CALENDAR]] Day activities
 - **Latest Study Notes**: [[Daily Study MOC]] → Current Week
 - **Recent Work**: Check most recently modified files

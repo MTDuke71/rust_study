@@ -4,7 +4,7 @@
 
 ---
 
-## 📅 Today's Focus
+## 📅 Daily Focus
 
 **Date**: <% tp.date.now("dddd, MMMM Do, YYYY") %>
 **Week**: <% tp.date.now("[Week] W") %>
@@ -27,7 +27,7 @@
 ## 🔗 Quick Links
 
 - **[[MONTHLY_CALENDAR]]** - Full monthly calendar
-- **[[Today's Focus]]** - Auto-navigate to current day
+- **[[MONTHLY_CALENDAR]]** - Navigate to any day
 - **[[Daily Study MOC]]** - Current week overview
 - **[[Missions Overview]]** - Active missions
 
@@ -47,4 +47,4 @@
 ---
 
 *Tags: #daily-learning #session-notes #<% tp.date.now("YYYY-MM-DD") %>*
-*Links: [[MONTHLY_CALENDAR]] | [[Today's Focus]] | [[Daily Study MOC]] | [[Missions Overview]]*
+*Links: [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions Overview]]*

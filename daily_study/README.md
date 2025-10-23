@@ -48,7 +48,7 @@ daily_study/
 
 ### **Navigation**
 - **📚 Full Learning Guide**: [[../zettelkasten/Daily Study MOC]] - Complete weekly breakdown
-- **📅 Today's Focus**: [[../MONTHLY_CALENDAR]] - Current day activities
+- **📅 Daily Navigation**: [[../MONTHLY_CALENDAR]] - Current day activities
 - **🗺️ Central Hub**: [[../zettelkasten/zettel-index]] - Knowledge network entry point
 
 ---

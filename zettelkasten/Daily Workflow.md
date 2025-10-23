@@ -10,7 +10,7 @@
 
 | Action | Suggested Key | Purpose |
 |--------|---------------|---------|
-| **Open Today's Focus** | `Ctrl+Shift+T` | Quick access to current day |
+| **Open Monthly Calendar** | `Ctrl+Shift+M` | Quick access to current day |
 | **Open Monthly Calendar** | `Ctrl+Shift+M` | Full calendar view |
 | **Create Daily Note** | `Ctrl+Shift+D` | New learning session note |
 | **Open Graph View** | `Ctrl+Shift+G` | Visualize connections |
@@ -19,8 +19,8 @@
 
 ## 🎯 **Daily Startup Sequence**
 
-### **1. Open Today's Focus** 
-- Press `Ctrl+Shift+T` or click [[Today's Focus]]
+### **1. Open Monthly Calendar** 
+- Press `Ctrl+Shift+M` or click [[MONTHLY_CALENDAR]]
 - Review today's learning objectives
 - Check mission focus and daily study topics
 
@@ -44,7 +44,7 @@
 ## 🔗 **Quick Navigation Links**
 
 ### **Daily Focus**
-- [[Today's Focus]] - Auto-generated current day focus
+- [[MONTHLY_CALENDAR]] - Calendar with daily notes navigation
 - [[MONTHLY_CALENDAR]] - Full monthly calendar with jump links
 - [[Daily Study MOC]] - Current week overview
 
@@ -64,7 +64,7 @@
 ### **Obsidian Mobile Setup**
 1. **Sync**: Enable Obsidian Sync or use Git sync
 2. **Quick Capture**: Use daily note template for mobile notes
-3. **Review**: Check [[Today's Focus]] for mobile-friendly daily plan
+3. **Review**: Check [[MONTHLY_CALENDAR]] for today's daily note
 
 ---
 
@@ -72,7 +72,7 @@
 
 ### **Dashboard Setup**
 Create a dashboard note with:
-- Today's focus embedded
+- Daily notes linked from calendar
 - Quick links to active missions
 - Progress tracking widgets
 - Calendar view
@@ -88,4 +88,4 @@ Create a dashboard note with:
 ---
 
 *Tags: #workflow #automation #daily-routine #navigation*
-*Links: [[Today's Focus]] | [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions Overview]]*
+*Links: [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions Overview]]*

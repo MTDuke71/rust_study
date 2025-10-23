@@ -107,9 +107,9 @@ Write-Host "Created daily note: $filename"
 ## 📅 **Daily Workflow**
 
 ### **Automated Workflow:**
-1. **Morning**: Open [[Today's Focus]] (auto-shows today's daily note)
+1. **Morning**: Open [[MONTHLY_CALENDAR]] and navigate to today's daily note
 2. **Work**: Follow daily tasks and commands
-3. **Evening**: Update session tracking in Today's Focus
+3. **Evening**: Update session tracking in today's daily note
 
 ### **Manual Workflow:**
 1. **Morning**: Run daily note generation script
@@ -130,4 +130,4 @@ Write-Host "Created daily note: $filename"
 ---
 
 *Tags: #automation #daily-notes #templater #scripts*
-*Links: [[Today's Focus]] | [[MONTHLY_CALENDAR]] | [[Daily Study MOC]]*
+*Links: [[MONTHLY_CALENDAR]] | [[Daily Study MOC]]*
