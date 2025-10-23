@@ -45,10 +45,10 @@ mod documentation_tests {
         let components = connected_components(&graph);
         assert!(!components.is_empty(), "Connected components should find components");
         
-        let has_cycle_result = has_cycle(&graph);
+        let _has_cycle_result = has_cycle(&graph);
         // Result depends on graph structure - documentation should explain this
         
-        let cycle_path = find_cycle(&graph);
+        let _cycle_path = find_cycle(&graph);
         // Documentation should explain when Some vs None is returned
         
         println!("✅ Algorithm composition functions are documented");
@@ -63,13 +63,13 @@ mod documentation_tests {
         assert!(error_result.is_err(), "Should return error for unreachable nodes");
         
         match error_result {
-            Err(GraphError::NodeNotFound) => {
+            Err(GraphError::NodeNotFound(_)) => {
                 println!("✅ NodeNotFound error properly documented and returned");
             }
-            Err(GraphError::PathNotFound) => {
-                println!("✅ PathNotFound error properly documented and returned");
+            Err(GraphError::NoPathExists { .. }) => {
+                println!("✅ NoPathExists error properly documented and returned");
             }
-            Ok(_) => panic!("Should not find path to unreachable node"),
+            _ => panic!("Should not find path to unreachable node"),
         }
     }
     
@@ -269,8 +269,8 @@ impl AdjacencyMatrix {
 impl Graph for AdjacencyMatrix {
     type Node = i32;
     
-    fn neighbors(&self, node: &Self::Node) -> Vec<Self::Node> {
-        if let Some(index) = self.nodes.iter().position(|&n| n == *node) {
+    fn neighbors(&self, node: Self::Node) -> Vec<Self::Node> {
+        if let Some(index) = self.nodes.iter().position(|&n| n == node) {
             self.edges[index]
                 .iter()
                 .enumerate()
@@ -281,8 +281,12 @@ impl Graph for AdjacencyMatrix {
         }
     }
     
-    fn contains(&self, node: &Self::Node) -> bool {
-        self.nodes.contains(node)
+    fn contains(&self, node: Self::Node) -> bool {
+        self.nodes.contains(&node)
+    }
+    
+    fn nodes(&self) -> Vec<Self::Node> {
+        self.nodes.clone()
     }
 }
 

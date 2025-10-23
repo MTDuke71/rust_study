@@ -10,12 +10,12 @@ fn req1_generic_support() {
     int_stack.push(42);
 
     let mut float_stack = Stack::new();
-    float_stack.push(3.14);
+    float_stack.push(3.15); // Using 3.15 instead of 3.14 to avoid PI approximation lint
 
     // All should compile and work
     assert_eq!(string_stack.pop(), Some("str"));
     assert_eq!(int_stack.pop(), Some(42));
-    assert_eq!(float_stack.pop(), Some(3.14));
+    assert_eq!(float_stack.pop(), Some(3.15));
 }
 
 #[test] // REQ-2

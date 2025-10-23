@@ -215,10 +215,10 @@ fn voronoi_regions_simulation() {
     }
 
     // Calculate distance map from all seeds
-    let distance_info = AocAlgorithms::multi_source_bfs(&grid, &seeds, |&cell| true);
+    let distance_info = AocAlgorithms::multi_source_bfs(&grid, &seeds, |&_cell| true);
 
     // Color the grid based on closest seed
-    for (coord, &(distance, closest_seed)) in &distance_info {
+    for (coord, &(_distance, closest_seed)) in &distance_info {
         if !seeds.contains(coord) {
             // Find which seed this is closest to
             if let Some(seed_idx) = seeds.iter().position(|&s| s == closest_seed) {

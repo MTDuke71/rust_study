@@ -3,6 +3,7 @@
 /// This program proves that the symmetry-optimized solver produces
 /// exactly the same results as the brute force method on the actual
 /// Day 13 example dataset.
+///
 use aoc2015::solver::day13::*;
 use std::fs;
 use std::time::Instant;

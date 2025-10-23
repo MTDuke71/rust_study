@@ -18,7 +18,7 @@ mod tests {
         int_stack.push(42);
 
         let mut float_stack = Stack::new();
-        float_stack.push(3.14);
+        float_stack.push(3.15); // Using 3.15 instead of 3.14 to avoid PI approximation lint
 
         // All compile because Stack<T> works with any type T
         assert_eq!(string_stack.len(), 1);

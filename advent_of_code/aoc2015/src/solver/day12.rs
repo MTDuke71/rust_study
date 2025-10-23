@@ -141,24 +141,24 @@ pub fn has_red_value(obj: &serde_json::Map<String, Value>) -> bool {
 
 // use regex::Regex;
 
-/// Alternative approach using regex to extract all numbers
-///
-/// ## Pros
-/// - Simple and fast for Part 1
-/// - No JSON parsing overhead
-///
-/// ## Cons
-/// - Cannot handle Part 2 filtering (no structure awareness)
-/// - Only works for simple numeric extraction
-///
-/// ## Examples
-/// ```ignore
-/// use aoc2015::solver::day12::sum_with_regex;
-///
-/// assert_eq!(sum_with_regex("[1,2,3]"), 6);
-/// assert_eq!(sum_with_regex(r#"{"a":2,"b":4}"#), 6);
-/// assert_eq!(sum_with_regex("[[[3]]]"), 3);
-/// ```
+// Alternative approach using regex to extract all numbers
+//
+// ## Pros
+// - Simple and fast for Part 1
+// - No JSON parsing overhead
+//
+// ## Cons
+// - Cannot handle Part 2 filtering (no structure awareness)
+// - Only works for simple numeric extraction
+//
+// ## Examples
+// ```ignore
+// use aoc2015::solver::day12::sum_with_regex;
+//
+// assert_eq!(sum_with_regex("[1,2,3]"), 6);
+// assert_eq!(sum_with_regex(r#"{"a":2,"b":4}"#), 6);
+// assert_eq!(sum_with_regex("[[[3]]]"), 3);
+// ```
 /*
 pub fn sum_with_regex(json: &str) -> i64 {
     let re = Regex::new(r"-?\d+").unwrap();

@@ -12,7 +12,7 @@ use std::fmt::Debug;
 /// 
 /// Extend the basic BFS to also track which level each node is at.
 /// This is useful for applications like finding nodes at specific distances.
-
+///
 fn bfs_with_levels<N>(graph: &HashMap<N, Vec<N>>, start: N) -> Vec<(N, usize)>
 where
     N: Copy + Eq + std::hash::Hash + Debug,
@@ -43,7 +43,7 @@ where
 /// 
 /// This shows the difference between recursive and iterative DFS implementations.
 /// Recursive DFS is more natural but can cause stack overflow on deep graphs.
-
+///
 fn dfs_recursive<N>(
     graph: &HashMap<N, Vec<N>>,
     node: N,
@@ -79,7 +79,7 @@ where
 /// 
 /// This is more complex than shortest path - we need to find ALL possible paths.
 /// Uses DFS with backtracking to explore all routes.
-
+///
 fn find_all_paths<N>(
     graph: &HashMap<N, Vec<N>>,
     start: N,

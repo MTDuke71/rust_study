@@ -2,6 +2,7 @@
 /// 
 /// This demonstrates how to optimize the TSP solver by exploiting
 /// rotational and reflectional symmetry in circular seating arrangements.
+///
 use aoc2015::solver::day13::*;
 use std::fs;
 use std::time::Instant;

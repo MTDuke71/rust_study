@@ -1873,6 +1873,7 @@ fn count_chars(grid: &TutorialGrid<char>, target: char) -> usize {
 // 📚 HELPER FUNCTIONS FOR EXAMPLES ABOVE
 // ═══════════════════════════════════════════════════════════════════════════════
 
+#[allow(dead_code)]
 fn get_neighbors_4(coord: TutorialCoord, width: usize, height: usize) -> Vec<TutorialCoord> {
     let mut neighbors = Vec::new();
 
