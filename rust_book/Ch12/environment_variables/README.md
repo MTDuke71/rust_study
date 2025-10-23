@@ -43,6 +43,9 @@ CASE_INSENSITIVE=1 cargo run nobody poem.txt
 
 # Windows PowerShell
 $env:CASE_INSENSITIVE="1"; cargo run nobody poem.txt
+
+# Or run the specific binary directly
+cargo run --bin minigrep_env nobody poem.txt
 ```
 
 ---
@@ -80,6 +83,9 @@ cargo run "frog" poem.txt
 # Test error handling
 cargo run                          # Shows usage message
 cargo run search nonexistent.txt   # Shows file not found error
+
+# Using specific binary name
+cargo run --bin minigrep_env rust poem.txt
 ```
 
 ---
