@@ -274,7 +274,7 @@ fn demonstrate_wraparound() {
 
     // Fill the buffer
     println!("\n   📥 **Filling the buffer:**");
-    for (_i, &item) in ["A", "B", "C", "D"].iter().enumerate() {
+    for &item in ["A", "B", "C", "D"].iter() {
         let _ = ring.enqueue(item);
         ring.show_state(&format!("enqueue '{}'", item));
     }

@@ -432,7 +432,7 @@ impl PanicRecovery {
             return Err(RecoveryError::TooManyPanics);
         }
 
-        let result = panic::catch_unwind(|| operation());
+        let result = panic::catch_unwind(operation);
 
         match result {
             Ok(value) => {

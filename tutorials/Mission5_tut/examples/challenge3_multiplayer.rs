@@ -156,6 +156,12 @@ pub struct GameStats {
     pub proximity_checks: u32,
 }
 
+impl Default for MultiplayerGameManager {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl MultiplayerGameManager {
     pub fn new() -> Self {
         MultiplayerGameManager {
@@ -203,7 +209,7 @@ impl MultiplayerGameManager {
         let grid_pos = self.position_to_grid(position);
         self.position_grid
             .entry(grid_pos)
-            .or_insert_with(HashSet::new)
+            .or_default()
             .insert(player_id.clone());
 
         // Try to assign to appropriate room
@@ -222,11 +228,10 @@ impl MultiplayerGameManager {
         player_id: &PlayerId,
         new_position: Position,
     ) -> Result<(), String> {
-        let old_position = self
+        let old_position = *self
             .player_positions
             .get(player_id)
-            .ok_or_else(|| format!("Player {} not found", player_id))?
-            .clone();
+            .ok_or_else(|| format!("Player {} not found", player_id))?;
 
         // Update position
         self.player_positions
@@ -248,7 +253,7 @@ impl MultiplayerGameManager {
             }
             self.position_grid
                 .entry(new_grid_pos)
-                .or_insert_with(HashSet::new)
+                .or_default()
                 .insert(player_id.clone());
         }
 

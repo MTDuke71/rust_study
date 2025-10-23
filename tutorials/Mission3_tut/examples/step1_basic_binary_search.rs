@@ -148,7 +148,7 @@ fn main() {
         basic_binary_search(&unsorted, &7)
     );
 
-    let mut sorted = unsorted.clone();
+    let mut sorted = unsorted;
     sorted.sort();
     println!("   After sorting: {:?}", sorted);
     println!(

@@ -53,7 +53,7 @@ mod integration_tests {
         document.push_str(" World");
 
         undo_stack.push(document.clone()); // Save "Hello World"
-        document.push_str("!");
+        document.push('!');
 
         // Document now contains "Hello World!"
         assert_eq!(document, "Hello World!");

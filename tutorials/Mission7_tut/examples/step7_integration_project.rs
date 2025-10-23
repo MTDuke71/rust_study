@@ -386,10 +386,8 @@ fn network_topology_analysis() {
     let mut max_distance = 0;
     for start_router in network.nodes() {
         let distances = bfs_distances(&network, start_router);
-        for distance in distances {
-            if let Some(dist) = distance {
-                max_distance = max_distance.max(dist);
-            }
+        for dist in distances.into_iter().flatten() {
+            max_distance = max_distance.max(dist);
         }
     }
     println!("  Network diameter: {} hops", max_distance);
@@ -800,11 +798,10 @@ fn dfs_path_finding<T>(graph: &Graph<T>, start: NodeId, end: NodeId) -> Option<V
             path.push(current);
 
             for &neighbor in graph.neighbors(current) {
-                if !visited.contains(&neighbor) {
-                    if dfs_helper(graph, neighbor, end, visited, path) {
+                if !visited.contains(&neighbor)
+                    && dfs_helper(graph, neighbor, end, visited, path) {
                         return true;
                     }
-                }
             }
 
             path.pop();
@@ -825,11 +822,10 @@ fn has_cycle_dfs<T>(graph: &Graph<T>) -> bool {
     let mut rec_stack = HashSet::new();
 
     for node in graph.nodes() {
-        if !visited.contains(&node) {
-            if has_cycle_dfs_helper(graph, node, &mut visited, &mut rec_stack) {
+        if !visited.contains(&node)
+            && has_cycle_dfs_helper(graph, node, &mut visited, &mut rec_stack) {
                 return true;
             }
-        }
     }
 
     false
@@ -890,8 +886,8 @@ fn topological_sort<T>(graph: &Graph<T>) -> Vec<NodeId> {
 
 fn find_critical_path<T>(graph: &Graph<T>) -> Vec<NodeId> {
     // Simplified critical path - in practice, you'd need to consider task durations
-    let topo_order = topological_sort(graph);
-    topo_order
+    
+    topological_sort(graph)
 }
 
 fn dfs_traversal<T>(graph: &Graph<T>, start: NodeId) -> Vec<NodeId> {

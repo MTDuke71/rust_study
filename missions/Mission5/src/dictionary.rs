@@ -341,10 +341,10 @@ mod tests {
         assert_eq!(values.len(), 3);
 
         for (key, value) in dict.iter() {
-            match key {
-                &"a" => assert_eq!(*value, 1),
-                &"b" => assert_eq!(*value, 2),
-                &"c" => assert_eq!(*value, 3),
+            match *key {
+                "a" => assert_eq!(*value, 1),
+                "b" => assert_eq!(*value, 2),
+                "c" => assert_eq!(*value, 3),
                 _ => panic!("Unexpected key: {}", key),
             }
         }

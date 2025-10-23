@@ -3,7 +3,7 @@
 
 use anyhow::Result;
 use std::fs;
-use std::io::{self, BufRead, BufReader};
+use std::io::{BufRead, BufReader};
 
 fn main() -> Result<()> {
     println!("📁 File Reading Patterns in Rust");

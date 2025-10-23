@@ -18,6 +18,12 @@ pub struct RcLinkedList<T> {
     length: usize,
 }
 
+impl<T> Default for RcLinkedList<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> RcLinkedList<T> {
     pub fn new() -> Self {
         Self {

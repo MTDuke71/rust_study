@@ -1,5 +1,4 @@
 // Debug Day 5 Part 2 logic
-use regex::Regex;
 
 fn main() {
     println!("🔍 Debugging Day 5 Part 2 Logic");

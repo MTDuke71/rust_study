@@ -5,7 +5,6 @@
 
 use aoc2015::solver::day13::*;
 use std::fs;
-use std::collections::HashMap;
 
 fn main() {
     println!("🕸️ Day 13: Graph Theory Analysis");

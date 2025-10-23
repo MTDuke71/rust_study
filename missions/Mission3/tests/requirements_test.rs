@@ -81,7 +81,7 @@ fn req2_custom_container() {
     assert_eq!(
         search_in_by(&people, &(0, "Bob"), |person, target| person
             .1
-            .cmp(&target.1)),
+            .cmp(target.1)),
         Ok(1)
     );
 }
@@ -193,7 +193,7 @@ fn req5_lifetime_safety() {
 
 #[test] // REQ-5: Slice lifetime annotations work correctly
 fn req5_slice_lifetimes() {
-    fn search_and_return<'a>(slice: &'a [i32], target: i32) -> Option<&'a i32> {
+    fn search_and_return(slice: &[i32], target: i32) -> Option<&i32> {
         match binary_search::search_slice(slice, &target) {
             Ok(idx) => slice.get(idx),
             Err(_) => None,

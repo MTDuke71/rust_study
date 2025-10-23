@@ -190,9 +190,7 @@ fn demo_safe_alternatives_for_automotive() {
         }
 
         fn has_fault(&self, fault_code: &'static str) -> bool {
-            self.faults[..self.count]
-                .iter()
-                .any(|f| *f == Some(fault_code))
+            self.faults[..self.count].contains(&Some(fault_code))
         }
 
         fn fault_count(&self) -> usize {
@@ -291,7 +289,7 @@ fn demo_ring_buffer_sensor_data() {
             let mut sum = 0.0;
 
             for i in 0..samples_to_use {
-                let index = if self.write_index >= i + 1 {
+                let index = if self.write_index > i {
                     self.write_index - i - 1
                 } else {
                     SENSOR_HISTORY_SIZE + self.write_index - i - 1
@@ -475,9 +473,7 @@ fn demo_fault_detection_system() {
             let index = (fault as u16 % 256) as usize;
             self.active_faults[index] = true;
 
-            if self.fault_counters[index] < u16::MAX {
-                self.fault_counters[index] += 1;
-            }
+            self.fault_counters[index] = self.fault_counters[index].saturating_add(1);
 
             // Check if it's a critical fault
             match fault {

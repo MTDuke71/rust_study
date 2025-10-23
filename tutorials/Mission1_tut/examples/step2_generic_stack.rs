@@ -189,7 +189,7 @@ fn demonstrate_compilation_differences() {
     println!("   // For Stack<i32>");
     println!("   struct StackI32 {{ items: Vec<i32> }}");
     println!("   impl StackI32 {{ fn push(&mut self, item: i32) {{ ... }} }}");
-    println!("");
+    println!();
     println!("   // For Stack<String>");
     println!("   struct StackString {{ items: Vec<String> }}");
     println!("   impl StackString {{ fn push(&mut self, item: String) {{ ... }} }}");

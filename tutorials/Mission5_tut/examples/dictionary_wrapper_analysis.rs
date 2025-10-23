@@ -58,11 +58,11 @@ fn main() {
     let mut multi_map: HashMap<&str, Vec<String>> = HashMap::new();
     multi_map
         .entry("fruits")
-        .or_insert_with(Vec::new)
+        .or_default()
         .push("apple".to_string());
     multi_map
         .entry("fruits")
-        .or_insert_with(Vec::new)
+        .or_default()
         .push("banana".to_string());
     println!("  HashMap: map.entry(\"fruits\").or_insert_with(Vec::new).push(...)");
 

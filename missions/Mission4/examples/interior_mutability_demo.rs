@@ -43,7 +43,7 @@ fn demo_basic_interior_mutability() {
     match list.try_peek_front_mut() {
         Ok(Some(mut value_ref)) => {
             println!("Before mutation: '{}'", *value_ref);
-            value_ref.push_str("!");
+            value_ref.push('!');
             println!("After mutation: '{}'", *value_ref);
         }
         Ok(None) => println!("List is empty"),

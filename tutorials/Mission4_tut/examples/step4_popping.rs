@@ -13,6 +13,12 @@ pub struct SimpleLinkedList<T> {
     length: usize,
 }
 
+impl<T> Default for SimpleLinkedList<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> SimpleLinkedList<T> {
     pub fn new() -> Self {
         Self {
@@ -63,7 +69,7 @@ fn demonstrate_ownership_transfer() {
     // Pop returns owned data - we can modify it
     if let Some(mut popped) = list.pop_front() {
         println!("Popped (owned): {}", popped);
-        popped.push_str("!");
+        popped.push('!');
         println!("Modified popped value: {}", popped);
     }
 

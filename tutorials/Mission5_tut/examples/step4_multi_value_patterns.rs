@@ -28,15 +28,15 @@ fn example_basic_multi_value() {
     // Method 2: Build vectors incrementally
     student_courses
         .entry("Charlie")
-        .or_insert(Vec::new())
+        .or_default()
         .push("Math");
     student_courses
         .entry("Charlie")
-        .or_insert(Vec::new())
+        .or_default()
         .push("Computer Science");
     student_courses
         .entry("Charlie")
-        .or_insert(Vec::new())
+        .or_default()
         .push("Physics");
 
     println!("👨‍🎓 Student Enrollments:");
@@ -112,7 +112,7 @@ fn example_graph_adjacency() {
     let to = "Portland";
     let has_direct_path = graph
         .get(from)
-        .map_or(false, |connections| connections.contains(&to));
+        .is_some_and(|connections| connections.contains(&to));
 
     println!("🛣️  Direct path {} -> {}: {}", from, to, has_direct_path);
 
@@ -139,7 +139,7 @@ fn example_grouping() {
     // Group items by category
     let mut categories: HashMap<&str, Vec<&str>> = HashMap::new();
     for (item, category) in items {
-        categories.entry(category).or_insert(Vec::new()).push(item);
+        categories.entry(category).or_default().push(item);
     }
 
     println!("🛒 Grocery Categories:");
@@ -149,12 +149,12 @@ fn example_grouping() {
 
     // Alternative grouping: by first letter
     let mut by_first_letter: HashMap<char, Vec<&str>> = HashMap::new();
-    for (_category, items) in &categories {
+    for items in categories.values() {
         for &item in items {
             if let Some(first_char) = item.chars().next() {
                 by_first_letter
                     .entry(first_char)
-                    .or_insert(Vec::new())
+                    .or_default()
                     .push(item);
             }
         }
@@ -187,7 +187,7 @@ fn example_reverse_index() {
 
     for (doc_id, content) in &documents {
         for word in content.split_whitespace() {
-            word_index.entry(word).or_insert(Vec::new()).push(doc_id);
+            word_index.entry(word).or_default().push(doc_id);
         }
     }
 
@@ -213,7 +213,7 @@ fn example_reverse_index() {
     }
 
     // Find documents containing multiple terms
-    let _query_terms = vec!["rust", "programming"];
+    let _query_terms = ["rust", "programming"];
     println!("\n🎯 Documents containing both 'rust' AND 'programming':");
 
     if let Some(rust_docs) = word_index.get("rust") {
@@ -248,11 +248,11 @@ where
     }
 
     fn add(&mut self, key: K, value: V) {
-        self.data.entry(key).or_insert(Vec::new()).push(value);
+        self.data.entry(key).or_default().push(value);
     }
 
     fn add_all(&mut self, key: K, values: Vec<V>) {
-        self.data.entry(key).or_insert(Vec::new()).extend(values);
+        self.data.entry(key).or_default().extend(values);
     }
 
     fn get(&self, key: &K) -> Option<&Vec<V>> {
@@ -262,7 +262,7 @@ where
     fn contains_value(&self, key: &K, value: &V) -> bool {
         self.data
             .get(key)
-            .map_or(false, |values| values.contains(value))
+            .is_some_and(|values| values.contains(value))
     }
 
     fn remove_value(&mut self, key: &K, value: &V) -> bool {
@@ -482,7 +482,7 @@ fn exercise_course_prerequisites() {
     );
 
     // Find all courses a student can take if they've completed CS101 and MATH101
-    let completed = vec!["CS101", "MATH101"];
+    let completed = ["CS101", "MATH101"];
     let mut available_courses = Vec::new();
 
     for (&course, prereqs) in &course_prereqs {
@@ -678,7 +678,7 @@ fn exercise_file_system() {
         let path_name = if path == "/" {
             "/"
         } else {
-            path.split('/').last().unwrap_or(path)
+            path.split('/').next_back().unwrap_or(path)
         };
 
         println!("{}{}{}", prefix, current_prefix, path_name);
@@ -711,7 +711,7 @@ fn exercise_file_system() {
             // Print directories first
             for (i, (_dir_name, full_path)) in directories.iter().enumerate() {
                 let is_last_dir = i == directories.len() - 1 && files.is_empty();
-                print_directory_tree(&full_path, fs, &next_prefix, is_last_dir);
+                print_directory_tree(full_path, fs, &next_prefix, is_last_dir);
             }
 
             // Then print files

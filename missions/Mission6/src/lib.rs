@@ -159,7 +159,7 @@ mod tests {
         assert!(path.is_some());
 
         let path = path.unwrap();
-        assert!(path.len() > 0);
+        assert!(!path.is_empty());
         assert_eq!(path[0], start);
         assert_eq!(path[path.len() - 1], end);
     }
@@ -178,7 +178,7 @@ mod tests {
         // Test flood fill
         let mut fill_grid = grid.clone();
         let filled = FloodFill::fill_4(&mut fill_grid, Coord::new(0, 0), '.', 'X');
-        assert!(filled.len() > 0);
+        assert!(!filled.is_empty());
         assert_eq!(fill_grid[(0, 0)], 'X');
     }
 

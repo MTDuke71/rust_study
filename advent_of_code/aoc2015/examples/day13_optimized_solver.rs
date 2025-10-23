@@ -156,7 +156,7 @@ fn heap_permute<T: Clone, F: FnMut(&[T])>(items: &mut [T], k: usize, callback: &
     for i in 0..k {
         heap_permute(items, k - 1, callback);
         
-        if k % 2 == 0 {
+        if k.is_multiple_of(2) {
             items.swap(i, k - 1);
         } else {
             items.swap(0, k - 1);

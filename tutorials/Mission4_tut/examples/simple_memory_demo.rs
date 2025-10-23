@@ -13,6 +13,12 @@ pub struct SimpleLinkedList<T> {
     length: usize,
 }
 
+impl<T> Default for SimpleLinkedList<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> SimpleLinkedList<T> {
     pub fn new() -> Self {
         Self {
@@ -71,11 +77,7 @@ fn demonstrate_simple_memory_locations() {
             println!("Second node address (HEAP): 0x{:x}", second_heap_addr);
 
             // Distance between nodes
-            let distance = if heap_addr > second_heap_addr {
-                heap_addr - second_heap_addr
-            } else {
-                second_heap_addr - heap_addr
-            };
+            let distance = heap_addr.abs_diff(second_heap_addr);
             println!("Distance between nodes: {} bytes", distance);
         }
     }

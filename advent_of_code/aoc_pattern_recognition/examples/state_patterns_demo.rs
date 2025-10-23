@@ -156,11 +156,10 @@ fn demo_cycle_detection() {
                     let nx = x as i32 + dx;
                     let ny = y as i32 + dy;
 
-                    if nx >= 0 && nx < width && ny >= 0 && ny < height {
-                        if self.grid[ny as usize][nx as usize] {
+                    if nx >= 0 && nx < width && ny >= 0 && ny < height
+                        && self.grid[ny as usize][nx as usize] {
                             count += 1;
                         }
-                    }
                 }
             }
             count
@@ -453,7 +452,7 @@ fn demo_state_tracking() {
         println!("      → {:?}", current_state);
 
         // Check if we've been in this state before
-        if tracker.has_seen_state(&current_state) {
+        if tracker.has_seen_state(current_state) {
             println!("      🔄 State revisited! Potential loop detected.");
         }
     }

@@ -1,5 +1,17 @@
-use anyhow::Result;
 use aoc2015::solver::day06;
+
+// Helper function for manual testing during development
+#[allow(dead_code)]
+fn print_grid_state(grid: &[[bool; 1000]; 1000], x1: usize, y1: usize, x2: usize, y2: usize) {
+    println!("Grid state in region ({},{}) to ({},{}):", x1, y1, x2, y2);
+    for y in y1..=y2.min(y1 + 10) {
+        // Limit output for readability
+        for x in x1..=x2.min(x1 + 10) {
+            print!("{}", if grid[y][x] { '█' } else { '░' });
+        }
+        println!();
+    }
+}
 
 #[cfg(test)]
 mod day06_tests {
@@ -229,18 +241,5 @@ mod day06_tests {
         let input = "turn on 0,0 through 1,1\nturn off 0,0 through 0,0\ntoggle 1,1 through 1,1";
         let result = day06::solve_part1(input);
         assert!(result.is_ok());
-    }
-}
-
-// Helper function for manual testing during development
-#[allow(dead_code)]
-fn print_grid_state(grid: &[[bool; 1000]; 1000], x1: usize, y1: usize, x2: usize, y2: usize) {
-    println!("Grid state in region ({},{}) to ({},{}):", x1, y1, x2, y2);
-    for y in y1..=y2.min(y1 + 10) {
-        // Limit output for readability
-        for x in x1..=x2.min(x1 + 10) {
-            print!("{}", if grid[y][x] { '█' } else { '░' });
-        }
-        println!();
     }
 }

@@ -281,7 +281,7 @@ mod tests {
         // Should timeout (though might complete if very fast)
         if let Err(PathfindingError::Timeout { .. }) = result {
             // Expected timeout error
-        } else if let Ok(_) = result {
+        } else if result.is_ok() {
             // Algorithm completed before timeout - also acceptable
         } else {
             panic!("Unexpected error type");
