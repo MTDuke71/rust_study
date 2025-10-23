@@ -311,6 +311,13 @@ Daily notes provide detailed task breakdowns and learning objectives that align 
 - **Rust Book**: Chapter-by-chapter foundation building
 - **Tutorial Alignment**: Mission tutorial step coordination
 
+### **Study Dashboard**
+- [[zettelkasten/Rust Study Dashboard]] - Comprehensive overview of learning progress across all tracks
+  - Mission progress tracking with completion status
+  - Daily study coordination with advanced guides
+  - Book chapter alignment and review priorities
+  - AoC pattern discovery and application tracking
+
 ---
 
 *Tags: #daily-study #moc #learning-progression #rust-fundamentals #collections #algorithms #competitive-programming #3-track-system*

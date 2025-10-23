@@ -6,7 +6,8 @@
     "*.json",
     "*.toml",
     ".git/",
-    ".github/"
+    ".github/",
+    "fix-summary.md"
   ],
   "newFileLocation": "folder",
   "newFileFolderPath": "zettelkasten",

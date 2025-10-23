@@ -622,6 +622,7 @@ impl VCycleMission {
 - [[Documentation Standards]] - API documentation and code comment best practices
 - [[Automated Quality Pipeline]] - Tools and scripts for consistent quality enforcement
 - **Scripts Documentation**: [[../../scripts/README]] - Workspace automation tools and utilities
+- [[broken links output]] - Zettelkasten maintenance and link integrity reporting
 
 *Learning Quality Framework:*  
 - [[Learning Process Quality]] - Session effectiveness and focus maintenance standards

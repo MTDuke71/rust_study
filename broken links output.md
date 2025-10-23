@@ -1,4 +1,10 @@
-Don't forget that creating the file from here may create the file in the wrong directory!
+# Broken Links Output - Zettelkasten Maintenance
+
+**Tags:** #broken-links #maintenance #knowledge-graph #obsidian-queries #zettelkasten-system  
+**Created:** 2025-10-22  
+**Related:** [[Zettelkasten System]], [[Reports MOC]], [[Daily Workflow]], [[Quality Assurance]], [[Documentation Standards]]
+
+> **Note**: Don't forget that creating the file from here may create the file in the wrong directory!
 - [[.github/AUDIT_SUMMARY.txt]] in [[_github/AUDIT_DOCUMENTATION_GUIDE]]
 - [[.github/SESSION_SUMMARY]] in [[_github/AUDIT_DOCUMENTATION_GUIDE]]
 - [[.github/COMPLETION_REPORT]] in [[_github/AUDIT_DOCUMENTATION_GUIDE]]

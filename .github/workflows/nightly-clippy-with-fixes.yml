@@ -104,7 +104,7 @@ jobs:
         echo "No changes were made by clippy --fix"
         
         # Create empty summary file for consistent artifact upload
-        echo "No changes were made by clippy --fix" > fix-summary.md
+        echo "No changes were made by clippy --fix" > fix-summary.json
         else
         echo "changes=true" >> $GITHUB_OUTPUT
         echo "Changes were made by clippy --fix"
@@ -116,11 +116,11 @@ jobs:
         echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
         
         # Create a detailed summary of changes
-        echo "## Changed Files:" > fix-summary.md
-        git diff --cached --name-only | sed 's/^/- /' >> fix-summary.md
-        echo "" >> fix-summary.md
-        echo "## Summary of Changes:" >> fix-summary.md
-        git diff --cached --stat >> fix-summary.md
+        echo "## Changed Files:" > fix-summary.json
+        git diff --cached --name-only | sed 's/^/- /' >> fix-summary.json
+        echo "" >> fix-summary.json
+        echo "## Summary of Changes:" >> fix-summary.json
+        git diff --cached --stat >> fix-summary.json
         fi
     
     - name: Run clippy after fixes (for remaining issues)
@@ -184,7 +184,7 @@ jobs:
           - [ ] Tests still pass (will be verified in CI)
           
           ### Files Changed
-          $(if [ -f fix-summary.md ]; then cat fix-summary.md; fi)
+          $(if [ -f fix-summary.json ]; then cat fix-summary.json; fi)
           
           ---
           
@@ -212,10 +212,10 @@ jobs:
         # Ensure all expected files exist for artifact upload
         [ ! -f initial-clippy-output.json ] && echo '{"message": "initial-clippy-missing"}' > initial-clippy-output.json
         [ ! -f post-fix-clippy-output.json ] && echo '{"message": "post-fix-clippy-missing"}' > post-fix-clippy-output.json
-        [ ! -f fix-summary.md ] && echo "No clippy fixes were applied in this run." > fix-summary.md
+        [ ! -f fix-summary.json ] && echo "No clippy fixes were applied in this run." > fix-summary.json
         
         echo "Artifact files prepared:"
-        ls -la *.json *.md || true
+        ls -la *.json || true
     
     - name: Upload clippy artifacts
       uses: actions/upload-artifact@v4
@@ -225,7 +225,7 @@ jobs:
         path: |
           initial-clippy-output.json
           post-fix-clippy-output.json
-          fix-summary.md
+          fix-summary.json
         retention-days: 30
     
     - name: Create GitHub Issue for remaining warnings

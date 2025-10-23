@@ -1,5 +1,9 @@
 # Rust Study Dashboard
 
+**Tags:** #dashboard #learning-hub #overview #progress-tracking #zettelkasten-system  
+**Created:** 2025-10-22  
+**Related:** [[Daily Study MOC]], [[Missions Overview]], [[Progress Tracking]], [[Quality Assurance]], [[Rust Concepts MOC]], [[3-Track Integration]]
+
 *Your central hub for Rust learning and development*
 
 ---

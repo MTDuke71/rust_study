@@ -1,0 +1,1078 @@
+warning: non-canonical implementation of `partial_cmp` on an `Ord` type
+   --> tutorials\Mission6_tut\examples\step4_dijkstra.rs:444:1
+    |
+444 | /  impl PartialOrd for DijkstraNode {
+445 | |      fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+    | | _______________________________________________________________________-
+446 | ||         self.cost.partial_cmp(&other.cost)
+447 | ||     }
+    | ||_____- help: change this to: `{ Some(self.cmp(other)) }`
+448 | |  }
+    | |__^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#non_canonical_partial_ord_impl
+    = note: `#[warn(clippy::non_canonical_partial_ord_impl)]` on by default
+
+warning: `mission6_tut` (example "step4_dijkstra") generated 1 warning
+warning: function `split_even_odd_vec` is never used
+  --> tutorials\Mission5_tut\examples\simple_even_odd_split.rs:67:4
+   |
+67 | fn split_even_odd_vec(s: &str) -> (Vec<char>, Vec<char>) {
+   |    ^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `split_by_predicate` is never used
+   --> tutorials\Mission5_tut\examples\simple_even_odd_split.rs:120:4
+    |
+120 | fn split_by_predicate<F>(s: &str, predicate: F) -> (String, String)
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: method `add_multiple` is never used
+   --> tutorials\Mission5_tut\examples\step3_frequency_counting.rs:109:8
+    |
+93  | / impl<T> FrequencyCounter<T>
+94  | | where
+95  | |     T: std::hash::Hash + Eq + Clone,
+    | |____________________________________- method in this implementation
+...
+109 |       fn add_multiple(&mut self, item: T, count: usize) {
+    |          ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `exercise_grade_analysis_solution` is never used
+   --> tutorials\Mission5_tut\examples\step3_frequency_counting.rs:444:8
+    |
+444 |     fn exercise_grade_analysis_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `exercise_dna_analysis_solution` is never used
+   --> tutorials\Mission5_tut\examples\step3_frequency_counting.rs:474:8
+    |
+474 |     fn exercise_dna_analysis_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `exercise_recursive_optimization_solution` is never used
+   --> tutorials\Mission5_tut\examples\step5_memoization_cache.rs:927:8
+    |
+927 |     fn exercise_recursive_optimization_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: field `inner` is never read
+   --> tutorials\Mission5_tut\examples\struct_bounds_explanation.rs:127:5
+    |
+123 | struct Dictionary<K, V>
+    |        ---------- field in this struct
+...
+127 |     inner: HashMap<K, V>,
+    |     ^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `exercise_email_domains_solution` is never used
+   --> tutorials\Mission5_tut\examples\step2_hashset_operations.rs:316:8
+    |
+316 |     fn exercise_email_domains_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `exercise_permission_analysis_solution` is never used
+   --> tutorials\Mission5_tut\examples\step2_hashset_operations.rs:340:8
+    |
+340 |     fn exercise_permission_analysis_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `exercise_word_relationships_solution` is never used
+   --> tutorials\Mission5_tut\examples\step2_hashset_operations.rs:366:8
+    |
+366 |     fn exercise_word_relationships_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `default_score`
+  --> tutorials\Mission5_tut\examples\dictionary_wrapper_analysis.rs:31:9
+   |
+31 |     let default_score = 0;
+   |         ^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_default_score`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: `mission5_tut` (example "simple_even_odd_split") generated 2 warnings
+warning: `mission5_tut` (example "step3_frequency_counting") generated 3 warnings
+warning: `mission5_tut` (example "step5_memoization_cache") generated 1 warning
+warning: `mission5_tut` (example "struct_bounds_explanation") generated 1 warning
+warning: `mission5_tut` (example "step2_hashset_operations") generated 3 warnings
+warning: `mission5_tut` (example "dictionary_wrapper_analysis") generated 1 warning
+warning: fields `scores` and `achievements` are never read
+   --> tutorials\Mission5_tut\examples\hashmap_value_support.rs:110:9
+    |
+109 |     struct PlayerData {
+    |            ---------- fields in this struct
+110 |         scores: Vec<i32>,
+    |         ^^^^^^
+111 |         achievements: Vec<String>,
+    |         ^^^^^^^^^^^^
+    |
+    = note: `PlayerData` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` on by default
+
+warning: fields `most_common_words` and `computed_at` are never read
+  --> tutorials\Mission5_tut\examples\final_project.rs:40:5
+   |
+37 | pub struct AnalysisResult {
+   |            -------------- fields in this struct
+...
+40 |     most_common_words: Vec<(String, usize)>,
+   |     ^^^^^^^^^^^^^^^^^
+41 |     readability_score: f32,
+42 |     computed_at: Instant,
+   |     ^^^^^^^^^^^
+   |
+   = note: `AnalysisResult` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
+
+warning: very complex type used. Consider factoring parts into `type` definitions
+   --> tutorials\Mission5_tut\examples\final_project.rs:283:17
+    |
+283 |     path_cache: HashMap<((i32, i32), (i32, i32)), Option<Vec<(i32, i32)>>>,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+    = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: empty line after doc comment
+  --> tutorials\Mission5_tut\examples\wrapper_explanation.rs:8:1
+   |
+8  | / /// 3. Add additional functionality while preserving the original behavior
+9  | |
+   | |_^
+10 |   fn main() {
+   |   ------- the comment documents this function
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#empty_line_after_doc_comments
+   = note: `#[warn(clippy::empty_line_after_doc_comments)]` on by default
+   = help: if the empty line is unintentional, remove it
+
+warning: method `get` is never used
+  --> tutorials\Mission5_tut\examples\wrapper_explanation.rs:72:12
+   |
+57 | /     impl<K, V> SimpleWrapper<K, V>
+58 | |     where
+59 | |         K: std::hash::Hash + Eq,
+   | |________________________________- method in this implementation
+...
+72 |           fn get(&self, key: &K) -> Option<&V> {
+   |              ^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `exercise_phone_book_solution` is never used
+   --> tutorials\Mission5_tut\examples\step1_basic_hashmap.rs:344:8
+    |
+344 |     fn exercise_phone_book_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `exercise_shopping_cart_solution` is never used
+   --> tutorials\Mission5_tut\examples\step1_basic_hashmap.rs:363:8
+    |
+363 |     fn exercise_shopping_cart_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `exercise_letter_frequency_solution` is never used
+   --> tutorials\Mission5_tut\examples\step1_basic_hashmap.rs:394:8
+    |
+394 |     fn exercise_letter_frequency_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `test_string`
+   --> tutorials\Mission5_tut\examples\string_split_even_odd.rs:181:9
+    |
+181 |     let test_string = "A".repeat(1000);
+    |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_test_string`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: very complex type used. Consider factoring parts into `type` definitions
+   --> tutorials\Mission5_tut\examples\string_split_even_odd.rs:174:35
+    |
+174 | fn split_with_indices(s: &str) -> (Vec<(usize, char)>, Vec<(usize, char)>) {
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+    = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: mutable key type
+   --> tutorials\Mission5_tut\examples\hashset_bucket_management.rs:235:5
+    |
+235 |     let mut set = HashSet::new();
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: ... because it contains `TrackedItem`, which has interior mutability
+    = note: ... because it contains `Cell<usize>`, which has interior mutability
+    = note: ... because it contains `UnsafeCell<usize>`, which has interior mutability
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#mutable_key_type
+    = note: `#[warn(clippy::mutable_key_type)]` on by default
+
+warning: `mission5_tut` (example "hashmap_value_support") generated 1 warning
+warning: `mission5_tut` (example "final_project") generated 2 warnings
+warning: `mission5_tut` (example "wrapper_explanation") generated 2 warnings
+warning: `mission5_tut` (example "step1_basic_hashmap") generated 3 warnings
+warning: `mission5_tut` (example "string_split_even_odd") generated 2 warnings
+warning: `mission5_tut` (example "hashset_bucket_management") generated 1 warning
+warning: the loop variable `i` is only used to index `nodes`
+   --> missions\Mission7\tests\graph_integration_tests.rs:175:14
+    |
+175 |     for i in 1..5 {
+    |              ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator
+    |
+175 -     for i in 1..5 {
+175 +     for <item> in nodes.iter().take(5).skip(1) {
+    |
+
+warning: `mission7` (test "graph_integration_tests") generated 1 warning
+warning: unused variable: `emergency_deadline_us`
+  --> tutorials\Mission5_tut\examples\automotive_brake_safety_analysis.rs:91:9
+   |
+91 |     let emergency_deadline_us = 10_000.0; // 10ms emergency brake deadline
+   |         ^^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_emergency_deadline_us`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: method `has_fault` is never used
+   --> tutorials\Mission5_tut\examples\automotive_brake_safety_analysis.rs:192:12
+    |
+167 |     impl SafeFaultTracker {
+    |     --------------------- method in this implementation
+...
+192 |         fn has_fault(&self, fault_code: &'static str) -> bool {
+    |            ^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `latest` is never used
+   --> tutorials\Mission5_tut\examples\automotive_brake_safety_analysis.rs:270:12
+    |
+253 |     impl WheelSpeedBuffer {
+    |     --------------------- method in this implementation
+...
+270 |         fn latest(&self) -> Option<f32> {
+    |            ^^^^^^
+
+warning: the loop variable `i` is used to index `new_speeds`
+   --> tutorials\Mission5_tut\examples\automotive_brake_safety_analysis.rs:348:22
+    |
+348 |             for i in 0..4 {
+    |                      ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator and enumerate()
+    |
+348 -             for i in 0..4 {
+348 +             for (i, <item>) in new_speeds.iter().enumerate() {
+    |
+
+warning: the loop variable `i` is used to index `adjustments`
+   --> tutorials\Mission5_tut\examples\automotive_brake_safety_analysis.rs:369:22
+    |
+369 |             for i in 0..4 {
+    |                      ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+369 -             for i in 0..4 {
+369 +             for (i, <item>) in adjustments.iter_mut().enumerate() {
+    |
+
+warning: method `get` is never used
+   --> tutorials\Mission5_tut\examples\step4_multi_value_patterns.rs:258:8
+    |
+239 | / impl<K, V> MultiValueMap<K, V>
+240 | | where
+241 | |     K: std::hash::Hash + Eq + Clone,
+242 | |     V: Clone + PartialEq,
+    | |_________________________- method in this implementation
+...
+258 |       fn get(&self, key: &K) -> Option<&Vec<V>> {
+    |          ^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `exercise_social_network_solution` is never used
+   --> tutorials\Mission5_tut\examples\step4_multi_value_patterns.rs:742:8
+    |
+742 |     fn exercise_social_network_solution() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `pattern_matching_explanation` is never used
+   --> tutorials\Mission5_tut\examples\max_by_key_breakdown.rs:173:4
+    |
+173 | fn pattern_matching_explanation() {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `bonus_exercises` is never used
+   --> tutorials\Mission5_tut\examples\closure_tutorial.rs:331:4
+    |
+331 | fn bonus_exercises() {
+    |    ^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `mission5_tut` (example "automotive_brake_safety_analysis") generated 5 warnings
+warning: `mission5_tut` (example "step4_multi_value_patterns") generated 2 warnings
+warning: `mission5_tut` (example "max_by_key_breakdown") generated 1 warning
+warning: `mission5_tut` (example "closure_tutorial") generated 1 warning
+warning: function `exercise` is never used
+   --> tutorials\Mission7_tut\examples\step1_graph_fundamentals.rs:308:4
+    |
+308 | fn exercise() {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: non-canonical implementation of `partial_cmp` on an `Ord` type
+   --> tutorials\Mission6_tut\examples\step4_pathfinding.rs:434:1
+    |
+434 | /  impl PartialOrd for AStarNode {
+435 | |      fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+    | | _______________________________________________________________________-
+436 | ||         self.f_score.partial_cmp(&other.f_score)
+437 | ||     }
+    | ||_____- help: change this to: `{ Some(self.cmp(other)) }`
+438 | |  }
+    | |__^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#non_canonical_partial_ord_impl
+    = note: `#[warn(clippy::non_canonical_partial_ord_impl)]` on by default
+
+warning: methods `len`, `pop_front`, `front`, `front_mut`, and `clear` are never used
+   --> tutorials\Mission2_tut\examples\step5_production_queue.rs:118:12
+    |
+108 |     impl<T: Clone> RingQueue<T> {
+    |     --------------------------- methods in this implementation
+...
+118 |         fn len(&self) -> usize {
+    |            ^^^
+...
+145 |         fn pop_front(&mut self) -> Option<T> {
+    |            ^^^^^^^^^
+...
+156 |         fn front(&self) -> Option<&T> {
+    |            ^^^^^
+...
+164 |         fn front_mut(&mut self) -> Option<&mut T> {
+    |            ^^^^^^^^^
+...
+172 |         fn clear(&mut self) {
+    |            ^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: methods `len` and `is_empty` are never used
+   --> tutorials\Mission2_tut\examples\step5_production_queue.rs:320:12
+    |
+300 |     impl<T: Clone> IteratorRingQueue<T> {
+    |     ----------------------------------- methods in this implementation
+...
+320 |         fn len(&self) -> usize {
+    |            ^^^
+...
+324 |         fn is_empty(&self) -> bool {
+    |            ^^^^^^^^
+
+warning: function `optimized_next_index` is never used
+   --> tutorials\Mission2_tut\examples\step5_production_queue.rs:630:8
+    |
+630 |     fn optimized_next_index(current: usize, capacity: usize) -> usize {
+    |        ^^^^^^^^^^^^^^^^^^^^
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> tutorials\Mission2_tut\examples\step5_production_queue.rs:341:17
+    |
+341 |         fn iter(&self) -> RingQueueIter<T> {
+    |                 ^^^^^     ---------------- the same lifetime is hidden here
+    |                 |
+    |                 the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+341 |         fn iter(&self) -> RingQueueIter<'_, T> {
+    |                                         +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> tutorials\Mission2_tut\examples\step5_production_queue.rs:498:18
+    |
+498 |         fn drain(&mut self) -> DrainIterator<T> {
+    |                  ^^^^^^^^^     ---------------- the same lifetime is hidden here
+    |                  |
+    |                  the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+498 |         fn drain(&mut self) -> DrainIterator<'_, T> {
+    |                                              +++
+
+warning: the loop variable `y` is only used to index `vec_of_vecs`
+   --> tutorials\Mission6_tut\examples\step6_performance.rs:294:14
+    |
+294 |     for y in 0..grid_size {
+    |              ^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator
+    |
+294 -     for y in 0..grid_size {
+294 +     for <item> in vec_of_vecs.iter().take(grid_size) {
+    |
+
+warning: `mission7_tut` (example "step1_graph_fundamentals") generated 1 warning
+warning: `mission6_tut` (example "step4_pathfinding") generated 1 warning
+warning: `mission2_tut` (example "step5_production_queue") generated 5 warnings
+warning: `mission6_tut` (example "step6_performance") generated 1 warning
+warning: method `peek_mut` is never used
+   --> tutorials\Mission2_tut\examples\step4_ring_buffer_with_option.rs:300:12
+    |
+234 |     impl<T: Clone> RingBuffer<T> {
+    |     ---------------------------- method in this implementation
+...
+300 |         fn peek_mut(&mut self) -> Option<&mut T> {
+    |            ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: fields `left` and `right` are never read
+   --> tutorials\Mission2_tut\examples\step4_ring_buffer_with_option.rs:482:9
+    |
+481 |     struct AudioSample {
+    |            ----------- fields in this struct
+482 |         left: f32,
+    |         ^^^^
+483 |         right: f32,
+    |         ^^^^^
+    |
+    = note: `AudioSample` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `data` is never read
+   --> tutorials\Mission2_tut\examples\step4_ring_buffer_with_option.rs:629:13
+    |
+626 |         Image {
+    |         ----- field in this variant
+...
+629 |             data: Vec<u8>,
+    |             ^^^^
+    |
+    = note: `Message` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: the loop variable `i` is used to index `buffer`
+   --> tutorials\Mission2_tut\examples\step4_ring_buffer_with_option.rs:125:14
+    |
+125 |     for i in 0..10000 {
+    |              ^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator and enumerate()
+    |
+125 -     for i in 0..10000 {
+125 +     for (i, <item>) in buffer.iter_mut().enumerate().take(10000) {
+    |
+
+warning: writing `&mut Vec` instead of `&mut [_]` involves a new object where a slice will do
+   --> tutorials\Mission2_tut\examples\step4_ring_buffer_with_option.rs:193:40
+    |
+193 |     fn safe_dequeue_pattern<T>(buffer: &mut Vec<Option<T>>, head: usize) -> Option<T> {
+    |                                        ^^^^^^^^^^^^^^^^^^^ help: change this to: `&mut [Option<T>]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#ptr_arg
+    = note: `#[warn(clippy::ptr_arg)]` on by default
+
+warning: method `is_empty` is never used
+   --> tutorials\Mission2_tut\examples\step6_linked_queues.rs:131:12
+    |
+126 |     impl<T> SimpleLinkedQueue<T> {
+    |     ---------------------------- method in this implementation
+...
+131 |         fn is_empty(&self) -> bool {
+    |            ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: methods `is_empty` and `peek` are never used
+   --> tutorials\Mission2_tut\examples\step6_linked_queues.rs:266:12
+    |
+257 |     impl<T> OptimizedLinkedQueue<T> {
+    |     ------------------------------- methods in this implementation
+...
+266 |         fn is_empty(&self) -> bool {
+    |            ^^^^^^^^
+...
+309 |         fn peek(&self) -> Option<&T> {
+    |            ^^^^
+
+warning: variable `processed` is assigned to, but never used
+   --> tutorials\Mission2_tut\examples\step7_mission_integration.rs:384:13
+    |
+384 |     let mut processed = 0;
+    |             ^^^^^^^^^
+    |
+    = note: consider using `_processed` instead
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: variant `PlayerDeath` is never constructed
+   --> tutorials\Mission2_tut\examples\step7_mission_integration.rs:189:9
+    |
+175 |     enum GameMessage {
+    |          ----------- variant in this enum
+...
+189 |         PlayerDeath {
+    |         ^^^^^^^^^^^
+    |
+    = note: `GameMessage` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` on by default
+
+warning: fields `dest_ip` and `timestamp` are never read
+   --> tutorials\Mission2_tut\examples\step7_mission_integration.rs:302:9
+    |
+300 |     struct NetworkPacket {
+    |            ------------- fields in this struct
+301 |         source_ip: [u8; 4],
+302 |         dest_ip: [u8; 4],
+    |         ^^^^^^^
+303 |         payload: Vec<u8>,
+304 |         timestamp: u64,
+    |         ^^^^^^^^^
+    |
+    = note: `NetworkPacket` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: struct `PriorityItem` is never constructed
+   --> tutorials\Mission2_tut\examples\step7_mission_integration.rs:528:12
+    |
+528 |     struct PriorityItem<T: PartialEq + Eq> {
+    |            ^^^^^^^^^^^^
+
+warning: method `pop` is never used
+   --> tutorials\Mission2_tut\examples\step7_mission_integration.rs:760:12
+    |
+736 |     impl<T: Clone> OverwriteQueue<T> {
+    |     -------------------------------- method in this implementation
+...
+760 |         fn pop(&mut self) -> Option<T> {
+    |            ^^^
+
+warning: method `push` is never used
+   --> tutorials\Mission2_tut\examples\step7_mission_integration.rs:932:12
+    |
+927 |     impl<T> DemoQueue<T> {
+    |     -------------------- method in this implementation
+...
+932 |         fn push(&mut self, item: T) {
+    |            ^^^^
+
+warning: field `head` is never read
+    --> tutorials\Mission2_tut\examples\step7_mission_integration.rs:1024:9
+     |
+1022 |     struct ResilientQueue<T> {
+     |            -------------- field in this struct
+1023 |         primary: Vec<Option<T>>,
+1024 |         head: usize,
+     |         ^^^^
+
+warning: fields `length`, `capacity`, and `circuit_breaker_open` are never read
+    --> tutorials\Mission2_tut\examples\step7_mission_integration.rs:1116:9
+     |
+1115 |     struct QueueHealth {
+     |            ----------- fields in this struct
+1116 |         length: usize,
+     |         ^^^^^^
+1117 |         capacity: usize,
+     |         ^^^^^^^^
+...
+1120 |         circuit_breaker_open: bool,
+     |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: writing `&Vec` instead of `&[_]` involves a new object where a slice will do
+   --> tutorials\Mission8_tut\examples\day2_exercises_solutions.rs:162:11
+    |
+162 |     grid: &Vec<Vec<bool>>, // true = walkable, false = wall
+    |           ^^^^^^^^^^^^^^^ help: change this to: `&[Vec<bool>]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#ptr_arg
+    = note: `#[warn(clippy::ptr_arg)]` on by default
+
+warning: empty line after doc comment
+   --> tutorials\Mission8_tut\examples\day3_exercises_solutions.rs:234:1
+    |
+234 | / /// from both start and end simultaneously.
+235 | |
+    | |_^
+236 |   fn bidirectional_bfs<N>(
+    |   -------------------- the comment documents this function
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#empty_line_after_doc_comments
+    = note: `#[warn(clippy::empty_line_after_doc_comments)]` on by default
+    = help: if the empty line is unintentional, remove it
+
+warning: empty line after doc comment
+   --> tutorials\Mission8_tut\examples\day3_exercises_solutions.rs:344:1
+    |
+344 | / /// Uses DFS with discovery times and low values.
+345 | |
+    | |_^
+346 |   fn find_bridges<N>(graph: &HashMap<N, Vec<N>>) -> Vec<(N, N)>
+    |   --------------- the comment documents this function
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#empty_line_after_doc_comments
+    = help: if the empty line is unintentional, remove it
+
+warning: this function has too many arguments (8/7)
+   --> tutorials\Mission8_tut\examples\day3_exercises_solutions.rs:374:1
+    |
+374 | / fn find_bridges_dfs<N>(
+375 | |     graph: &HashMap<N, Vec<N>>,
+376 | |     node: N,
+377 | |     parent: N,
+...   |
+382 | |     bridges: &mut Vec<(N, N)>,
+383 | | ) where
+    | |_^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_many_arguments
+    = note: `#[warn(clippy::too_many_arguments)]` on by default
+
+warning: match expression looks like `matches!` macro
+  --> tutorials\Mission8_tut\examples\step5_maze_solver.rs:81:9
+   |
+81 | /         match self.grid[row][col] {
+82 | |             Cell::Wall => false,
+83 | |             _ => true,
+84 | |         }
+   | |_________^ help: try: `!matches!(self.grid[row][col], Cell::Wall)`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#match_like_matches_macro
+   = note: `#[warn(clippy::match_like_matches_macro)]` on by default
+
+warning: empty line after doc comment
+  --> tutorials\Mission8_tut\examples\step3_composition.rs:29:1
+   |
+29 | / /// 7. Error Handling - Robust implementations
+30 | |
+   | |_^
+31 |   use std::collections::{HashMap, HashSet, VecDeque};
+   |   - the comment documents this `use` import
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#empty_line_after_doc_comments
+   = note: `#[warn(clippy::empty_line_after_doc_comments)]` on by default
+   = help: if the empty line is unintentional, remove it
+help: if the comment should document the crate use an inner doc comment
+   |
+1  ~ //! # Mission 8 Tutorial - Step 3: Algorithm Composition
+2  ~ //! 
+3  ~ //! This tutorial teaches how to compose basic BFS/DFS algorithms to solve
+4  ~ //! higher-level problems like shortest path finding, cycle detection,
+5  ~ //! and component analysis.
+6  ~ //! 
+7  ~ //! ## Learning Objectives
+8  ~ //! 
+9  ~ //! By the end of this tutorial, you will:
+10 ~ //! - Understand shortest path using BFS + parent tracking
+11 ~ //! - Detect cycles using DFS + state tracking
+12 ~ //! - Find connected components
+13 ~ //! - Compose algorithms for complex problems
+14 ~ //! 
+15 ~ //! ## Prerequisites
+16 ~ //! 
+17 ~ //! - Complete Steps 1-2 (trait design and basic algorithms)
+18 ~ //! - Understand BFS and DFS traversal patterns
+19 ~ //! - Familiar with HashSet and HashMap usage
+20 ~ //! 
+21 ~ //! ## Tutorial Structure
+22 ~ //! 
+23 ~ //! 1. Shortest Path with BFS - Using parent tracking
+24 ~ //! 2. Cycle Detection with DFS - Three-color state tracking
+25 ~ //! 3. Connected Components - Multiple algorithm runs
+26 ~ //! 4. Algorithm Composition Patterns - Combining techniques
+27 ~ //! 5. Real-World Applications - Practical uses
+28 ~ //! 6. Performance Considerations - Scaling behavior
+29 ~ //! 7. Error Handling - Robust implementations
+   |
+
+warning: `mission2_tut` (example "step4_ring_buffer_with_option") generated 5 warnings
+warning: `mission2_tut` (example "step6_linked_queues") generated 2 warnings
+warning: `mission2_tut` (example "step7_mission_integration") generated 8 warnings
+warning: `mission8_tut` (example "day2_exercises_solutions") generated 1 warning
+warning: `mission8_tut` (example "day3_exercises_solutions") generated 3 warnings
+warning: `mission8_tut` (example "step5_maze_solver") generated 1 warning
+warning: `mission8_tut` (example "step3_composition") generated 1 warning
+warning: struct `SimpleLinkedList` has a public `len` method, but no `is_empty` method
+  --> tutorials\Mission4_tut\examples\step7_performance.rs:52:5
+   |
+52 |     pub fn len(&self) -> usize {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#len_without_is_empty
+   = note: `#[warn(clippy::len_without_is_empty)]` on by default
+
+warning: struct `RcLinkedList` has a public `len` method, but no `is_empty` method
+   --> tutorials\Mission4_tut\examples\step7_performance.rs:116:5
+    |
+116 |     pub fn len(&self) -> usize {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#len_without_is_empty
+
+warning: unused variable: `test_args`
+   --> rust_book\Ch12\environment_variables\src\main.rs:132:9
+    |
+132 |     let test_args = ["minigrep".to_string(),
+    |         ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_test_args`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: match expression looks like `matches!` macro
+   --> rust_book\Ch12\environment_variables\src\main.rs:235:22
+    |
+235 |       let is_verbose = match env::var("VERBOSE").as_deref() {
+    |  ______________________^
+236 | |         Ok("1") | Ok("true") | Ok("yes") | Ok("on") => true,
+237 | |         _ => false,
+238 | |     };
+    | |_____^ help: try: `matches!(env::var("VERBOSE").as_deref(), Ok("1") | Ok("true") | Ok("yes") | Ok("on"))`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#match_like_matches_macro
+    = note: `#[warn(clippy::match_like_matches_macro)]` on by default
+
+warning: unused variable: `another_ref_to_first`
+  --> tutorials\Mission4_tut\examples\step5_rc_basics.rs:84:9
+   |
+84 |     let another_ref_to_first = first_node.clone();
+   |         ^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_another_ref_to_first`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `yet_another_ref`
+  --> tutorials\Mission4_tut\examples\step5_rc_basics.rs:85:9
+   |
+85 |     let yet_another_ref = first_node.clone();
+   |         ^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_yet_another_ref`
+
+warning: type `RcNode<T>` is more private than the item `RcLinkedList::<T>::get_node_ref`
+  --> tutorials\Mission4_tut\examples\step5_rc_basics.rs:49:5
+   |
+49 |     pub fn get_node_ref(&self, index: usize) -> Option<NodeRef<T>> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ method `RcLinkedList::<T>::get_node_ref` is reachable at visibility `pub`
+   |
+note: but type `RcNode<T>` is only usable at visibility `pub(crate)`
+  --> tutorials\Mission4_tut\examples\step5_rc_basics.rs:10:1
+   |
+10 | struct RcNode<T> {
+   | ^^^^^^^^^^^^^^^^
+   = note: `#[warn(private_interfaces)]` on by default
+
+warning: struct `RcLinkedList` has a public `len` method, but no `is_empty` method
+  --> tutorials\Mission4_tut\examples\step5_rc_basics.rs:44:5
+   |
+44 |     pub fn len(&self) -> usize {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#len_without_is_empty
+   = note: `#[warn(clippy::len_without_is_empty)]` on by default
+
+warning: fields `data` and `next` are never read
+ --> tutorials\Mission4_tut\examples\step1_basic_structure.rs:6:5
+  |
+5 | struct Node<T> {
+  |        ---- fields in this struct
+6 |     data: T,
+  |     ^^^^
+7 |     next: Option<Box<Node<T>>>,
+  |     ^^^^
+  |
+  = note: `Node` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+  = note: `#[warn(dead_code)]` on by default
+
+warning: field `head` is never read
+  --> tutorials\Mission4_tut\examples\step1_basic_structure.rs:12:5
+   |
+11 | pub struct SimpleLinkedList<T> {
+   |            ---------------- field in this struct
+12 |     head: Option<Box<Node<T>>>,
+   |     ^^^^
+   |
+   = note: `SimpleLinkedList` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `mission4_tut` (example "step7_performance") generated 2 warnings
+warning: `chapter12_environment_variables` (bin "minigrep") generated 2 warnings
+warning: `mission4_tut` (example "step5_rc_basics") generated 4 warnings
+warning: `mission4_tut` (example "step1_basic_structure") generated 2 warnings
+warning: unused variable: `mock_args`
+   --> rust_book\Ch12\refactoring\src\main.rs:134:9
+    |
+134 |     let mock_args = ["minigrep".to_string(),
+    |         ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_mock_args`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: field `next` is never read
+ --> tutorials\Mission4_tut\examples\step3_peeking.rs:7:5
+  |
+5 | struct Node<T> {
+  |        ---- field in this struct
+6 |     data: T,
+7 |     next: Option<Box<Node<T>>>,
+  |     ^^^^
+  |
+  = note: `Node` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+  = note: `#[warn(dead_code)]` on by default
+
+warning: struct `SimpleLinkedList` has a public `len` method, but no `is_empty` method
+  --> tutorials\Mission4_tut\examples\step3_peeking.rs:47:5
+   |
+47 |     pub fn len(&self) -> usize {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#len_without_is_empty
+   = note: `#[warn(clippy::len_without_is_empty)]` on by default
+
+warning: `chapter12_refactoring` (bin "minigrep") generated 1 warning
+warning: `mission4_tut` (example "step3_peeking") generated 2 warnings
+warning: this boolean expression can be simplified
+   --> rust_book\Ch11\testing_basics\src\main.rs:192:17
+    |
+192 |         assert!(!false);
+    |                 ^^^^^^ help: try: `true`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#nonminimal_bool
+    = note: `#[warn(clippy::nonminimal_bool)]` on by default
+
+warning: `assert!(true)` will be optimized out by the compiler
+   --> rust_book\Ch11\testing_basics\src\main.rs:191:9
+    |
+191 |         assert!(true);
+    |         ^^^^^^^^^^^^^
+    |
+    = help: remove it
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
+    = note: `#[warn(clippy::assertions_on_constants)]` on by default
+
+warning: `assert!(true)` will be optimized out by the compiler
+   --> rust_book\Ch11\testing_basics\src\main.rs:192:9
+    |
+192 |         assert!(!false);
+    |         ^^^^^^^^^^^^^^^
+    |
+    = help: remove it
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
+
+warning: `assert!(true)` will be optimized out by the compiler
+   --> rust_book\Ch11\testing_basics\src\main.rs:193:9
+    |
+193 |         assert!(2 + 2 == 4);
+    |         ^^^^^^^^^^^^^^^^^^^
+    |
+    = help: remove it
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
+
+warning: `assert!(true)` will be optimized out by the compiler
+   --> rust_book\Ch11\test_execution\src\main.rs:183:9
+    |
+183 |         assert!(true);
+    |         ^^^^^^^^^^^^^
+    |
+    = help: remove it
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
+    = note: `#[warn(clippy::assertions_on_constants)]` on by default
+
+warning: `assert!(true)` will be optimized out by the compiler
+   --> rust_book\Ch11\test_execution\src\main.rs:192:9
+    |
+192 |         assert!(true);
+    |         ^^^^^^^^^^^^^
+    |
+    = help: remove it
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
+
+warning: all variants have the same postfix: `Error`
+   --> tutorials\Mission1_tut\examples\step7_final_project.rs:473:5
+    |
+473 | /     enum CalcError {
+474 | |         StackError(String),
+475 | |         ParseError(String),
+476 | |         MathError(String),
+477 | |     }
+    | |_____^
+    |
+    = help: remove the postfixes and use full paths to the variants instead of glob imports
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#enum_variant_names
+    = note: `#[warn(clippy::enum_variant_names)]` on by default
+
+warning: call to `std::mem::drop` with a value that does not implement `Drop`. Dropping such a type only extends its contained lifetimes
+   --> tutorials\Mission1_tut\examples\step3_ownership_patterns.rs:225:5
+    |
+225 |     drop(mut_ref); // Explicitly drop to show scope
+    |     ^^^^^^^^^^^^^
+    |
+note: argument has type `std::option::Option<&mut i32>`
+   --> tutorials\Mission1_tut\examples\step3_ownership_patterns.rs:225:10
+    |
+225 |     drop(mut_ref); // Explicitly drop to show scope
+    |          ^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#drop_non_drop
+    = note: `#[warn(clippy::drop_non_drop)]` on by default
+
+warning: type `RcNode<T>` is more private than the item `RcLinkedList::<T>::get_node_ref`
+  --> tutorials\Mission4_tut\examples\step6_borrow_checking.rs:95:5
+   |
+95 |     pub fn get_node_ref(&self, index: usize) -> Result<NodeRef<T>, LinkedListError> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ method `RcLinkedList::<T>::get_node_ref` is reachable at visibility `pub`
+   |
+note: but type `RcNode<T>` is only usable at visibility `pub(crate)`
+  --> tutorials\Mission4_tut\examples\step6_borrow_checking.rs:20:1
+   |
+20 | struct RcNode<T> {
+   | ^^^^^^^^^^^^^^^^
+   = note: `#[warn(private_interfaces)]` on by default
+
+warning: struct `RcLinkedList` has a public `len` method, but no `is_empty` method
+   --> tutorials\Mission4_tut\examples\step6_borrow_checking.rs:112:5
+    |
+112 |     pub fn len(&self) -> usize {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#len_without_is_empty
+    = note: `#[warn(clippy::len_without_is_empty)]` on by default
+
+warning: `testing_basics` (bin "testing_basics" test) generated 4 warnings
+warning: `chapter12_environment_variables` (bin "minigrep" test) generated 2 warnings (2 duplicates)
+warning: `test_execution` (bin "test_execution" test) generated 2 warnings
+warning: `mission1_tut` (example "step7_final_project") generated 1 warning
+warning: `mission1_tut` (example "step3_ownership_patterns") generated 1 warning
+warning: `mission4_tut` (example "step6_borrow_checking") generated 2 warnings
+warning: struct `SimpleLinkedList` has a public `len` method, but no `is_empty` method
+  --> tutorials\Mission4_tut\examples\simple_memory_demo.rs:43:5
+   |
+43 |     pub fn len(&self) -> usize {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#len_without_is_empty
+   = note: `#[warn(clippy::len_without_is_empty)]` on by default
+
+warning: unused variable: `string`
+   --> rust_book\Ch12\reading_files\src\main.rs:164:24
+    |
+164 |                     Ok(string) => println!("   Γ£à Valid UTF-8 content"),
+    |                        ^^^^^^ help: if this is intentional, prefix it with an underscore: `_string`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: struct `BoxLinkedList` has a public `len` method, but no `is_empty` method
+  --> tutorials\Mission4_tut\examples\get_data_comparison.rs:44:5
+   |
+44 |     pub fn len(&self) -> usize {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#len_without_is_empty
+   = note: `#[warn(clippy::len_without_is_empty)]` on by default
+
+warning: struct `RcLinkedList` has a public `len` method, but no `is_empty` method
+   --> tutorials\Mission4_tut\examples\get_data_comparison.rs:123:5
+    |
+123 |     pub fn len(&self) -> usize {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#len_without_is_empty
+
+warning: fields `data` and `next` are never read
+ --> tutorials\Mission4_tut\examples\type_breakdown_demo.rs:6:5
+  |
+5 | struct Node<T> {
+  |        ---- fields in this struct
+6 |     data: T,
+  |     ^^^^
+7 |     next: Option<Box<Node<T>>>,
+  |     ^^^^
+  |
+  = note: `Node` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+  = note: `#[warn(dead_code)]` on by default
+
+warning: fields `data` and `next` are never read
+ --> tutorials\Mission4_tut\examples\step2_push_front.rs:6:5
+  |
+5 | struct Node<T> {
+  |        ---- fields in this struct
+6 |     data: T,
+  |     ^^^^
+7 |     next: Option<Box<Node<T>>>,
+  |     ^^^^
+  |
+  = note: `Node` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+  = note: `#[warn(dead_code)]` on by default
+
+warning: module has the same name as its containing module
+  --> missions\Mission1\src\integration_tests.rs:2:1
+   |
+2  | / mod integration_tests {
+3  | |     use crate::Stack;
+4  | |
+5  | |     #[test]
+...  |
+82 | | }
+   | |_^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#module_inception
+   = note: `#[warn(clippy::module_inception)]` on by default
+
+warning: `mission4_tut` (example "simple_memory_demo") generated 1 warning
+warning: `chapter12_reading_files` (bin "minigrep") generated 1 warning
+warning: `chapter12_refactoring` (bin "minigrep" test) generated 1 warning (1 duplicate)
+warning: `chapter12_reading_files` (bin "minigrep" test) generated 1 warning (1 duplicate)
+warning: `mission4_tut` (example "get_data_comparison") generated 2 warnings
+warning: `mission4_tut` (example "type_breakdown_demo") generated 1 warning
+warning: `mission4_tut` (example "step2_push_front") generated 1 warning
+warning: `mission1` (lib test) generated 1 warning
+warning: you seem to be trying to use `&Box<T>`. Consider using just `&T`
+  --> tutorials\Mission4_tut\examples\step3_enhanced_no_warnings.rs:74:21
+   |
+74 |     current: Option<&'a Box<Node<T>>>,
+   |                     ^^^^^^^^^^^^^^^^ help: try: `&'a Node<T>`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#borrowed_box
+   = note: `#[warn(clippy::borrowed_box)]` on by default
+
+warning: unnecessary `unsafe` block
+  --> tutorials\Mission4_tut\examples\unsafe_fixed_but_dangerous.rs:22:24
+   |
+22 |         let new_node = unsafe {
+   |                        ^^^^^^ unnecessary `unsafe` block
+   |
+   = note: `#[warn(unused_unsafe)]` on by default
+
+warning: method `modify_front` is never used
+  --> tutorials\Mission4_tut\examples\unsafe_fixed_but_dangerous.rs:53:8
+   |
+13 | impl<T> UnsafeLinkedList<T> {
+   | --------------------------- method in this implementation
+...
+53 |     fn modify_front(&mut self, new_data: T) -> bool {
+   |        ^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `mission4_tut` (example "step3_enhanced_no_warnings") generated 1 warning
+warning: `mission4_tut` (example "unsafe_fixed_but_dangerous") generated 2 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.18s
