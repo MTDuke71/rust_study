@@ -1,0 +1,320 @@
+name: Nightly Clippy Check with Auto-Fixes
+
+on:
+  schedule:
+    # Run every night at 3:00 AM EST (8:00 AM UTC)
+    - cron: '0 8 * * *'
+  
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  clippy-with-fixes:
+    name: Clippy Analysis with Auto-Fixes
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: clippy
+    
+    - name: Cache Cargo dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-
+    
+    - name: Run initial clippy check (for reporting)
+      id: initial-clippy
+      continue-on-error: true
+      run: |
+        echo "Running initial clippy check..."
+        cargo clippy --workspace --all-targets --all-features --message-format=json > initial-clippy-output.json 2>&1 || true
+        
+        # Also run on individual packages
+        for dir in missions/Mission* tutorials/Mission*_tut rust_book/Ch* advent_of_code/aoc*; do
+          if [ -d "$dir" ] && [ -f "$dir/Cargo.toml" ]; then
+            echo "Checking $dir"
+            (cd "$dir" && cargo clippy --all-targets --all-features --message-format=json >> ../initial-clippy-output.json 2>&1 || true)
+          fi
+        done
+    
+    - name: Apply automatic clippy fixes
+      id: apply-fixes
+      continue-on-error: true
+      run: |
+        echo "Applying automatic clippy fixes..."
+        
+        # Apply fixes to the workspace
+        cargo clippy --workspace --all-targets --all-features --fix --allow-dirty --allow-staged || true
+        
+        # Apply fixes to individual packages that might not be included in workspace
+        for dir in missions/Mission* tutorials/Mission*_tut rust_book/Ch* advent_of_code/aoc*; do
+          if [ -d "$dir" ] && [ -f "$dir/Cargo.toml" ]; then
+            echo "Fixing $dir"
+            (cd "$dir" && cargo clippy --all-targets --all-features --fix --allow-dirty --allow-staged || true)
+          fi
+        done
+        
+        echo "Fixes applied successfully!"
+    
+    - name: Check for changes after fixes
+      id: check-changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        if git diff --quiet; then
+          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "No changes were made by clippy --fix"
+        else
+          echo "changes=true" >> $GITHUB_OUTPUT
+          echo "Changes were made by clippy --fix"
+          git add -A
+          git status --porcelain
+          
+          # Count changed files
+          changed_files=$(git diff --cached --name-only | wc -l)
+          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
+          
+          # Create a detailed summary of changes
+          echo "## Changed Files:" > fix-summary.md
+          git diff --cached --name-only | sed 's/^/- /' >> fix-summary.md
+          echo "" >> fix-summary.md
+          echo "## Summary of Changes:" >> fix-summary.md
+          git diff --cached --stat >> fix-summary.md
+        fi
+    
+    - name: Run clippy after fixes (for remaining issues)
+      id: post-fix-clippy
+      if: always()
+      continue-on-error: true
+      run: |
+        echo "Running clippy after fixes to check remaining issues..."
+        cargo clippy --workspace --all-targets --all-features --message-format=json > post-fix-clippy-output.json 2>&1 || true
+        
+        # Also check individual packages
+        for dir in missions/Mission* tutorials/Mission*_tut rust_book/Ch* advent_of_code/aoc*; do
+          if [ -d "$dir" ] && [ -f "$dir/Cargo.toml" ]; then
+            echo "Post-fix checking $dir"
+            (cd "$dir" && cargo clippy --all-targets --all-features --message-format=json >> ../post-fix-clippy-output.json 2>&1 || true)
+          fi
+        done
+    
+    - name: Create Pull Request with automatic fixes
+      if: steps.check-changes.outputs.changes == 'true'
+      id: create-pr
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: |
+          🔧 Apply automatic clippy fixes from nightly run
+          
+          - Fixed ${{ steps.check-changes.outputs.changed_files }} files
+          - Applied clippy suggestions automatically
+          - Run ID: ${{ github.run_id }}
+        title: "🔧 Nightly Clippy Auto-Fixes (${{ github.run_id }})"
+        body: |
+          ## 🔧 Automatic Clippy Fixes
+          
+          This PR contains **${{ steps.check-changes.outputs.changed_files }}** files with automatic fixes applied by `cargo clippy --fix`.
+          
+          ### What was fixed
+          - Clippy suggestions that can be safely applied automatically
+          - Code style improvements (unused variables, imports, etc.)
+          - Performance optimizations (clone removal, iterator improvements)
+          - Idiomatic Rust patterns
+          
+          ### Review Checklist
+          - [ ] Changes look correct and maintain functionality
+          - [ ] No breaking changes introduced
+          - [ ] Tests still pass (will be verified in CI)
+          
+          ### Files Changed
+          $(if [ -f fix-summary.md ]; then cat fix-summary.md; fi)
+          
+          ---
+          
+          **Workflow Details:**
+          - Run ID: `${{ github.run_id }}`
+          - Trigger: Nightly scheduled run
+          - Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          
+          *This PR was automatically created by the nightly clippy workflow. Please review before merging.*
+        branch: "clippy-auto-fixes-${{ github.run_id }}"
+        branch-suffix: short-commit-hash
+        labels: |
+          clippy
+          automated
+          code-quality
+          auto-fix
+        reviewers: |
+          MTDuke71
+        assignees: |
+          MTDuke71
+    
+    - name: Upload clippy artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: clippy-analysis-${{ github.run_number }}
+        path: |
+          initial-clippy-output.json
+          post-fix-clippy-output.json
+          fix-summary.md
+        retention-days: 30
+    
+    - name: Create GitHub Issue for remaining warnings
+      if: always()
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          
+          // Parse post-fix clippy results
+          let warnings = [];
+          let errors = [];
+          
+          try {
+            const results = fs.readFileSync('post-fix-clippy-output.json', 'utf8');
+            const lines = results.split('\n').filter(line => line.trim());
+            
+            for (const line of lines) {
+              try {
+                const parsed = JSON.parse(line);
+                if (parsed.message && parsed.message.level) {
+                  if (parsed.message.level === 'warning') {
+                    warnings.push(parsed);
+                  } else if (parsed.message.level === 'error') {
+                    errors.push(parsed);
+                  }
+                }
+              } catch (e) {
+                // Skip non-JSON lines
+              }
+            }
+          } catch (error) {
+            console.log('Could not read post-fix clippy results:', error);
+          }
+          
+          // Only create issue if there are remaining problems
+          if (warnings.length > 0 || errors.length > 0) {
+            let body = '## 🔍 Nightly Clippy Report - Remaining Issues\n\n';
+            
+            const hadAutoFixes = '${{ steps.check-changes.outputs.changes }}' === 'true';
+            const prNumber = '${{ steps.create-pr.outputs.pull-request-number }}';
+            
+            if (hadAutoFixes) {
+              body += `### ✅ Automatic Fixes Applied\n`;
+              body += `- **${{ steps.check-changes.outputs.changed_files }}** files were automatically fixed\n`;
+              body += `- Pull Request created: #${prNumber}\n`;
+              body += `- Please review and merge the auto-fixes first\n\n`;
+            }
+            
+            body += `### 📊 Remaining Issues\n`;
+            body += `- **${warnings.length}** warnings still need manual attention\n`;
+            body += `- **${errors.length}** errors require immediate fixing\n\n`;
+            
+            if (errors.length > 0) {
+              body += '### ❌ Compilation Errors\n';
+              body += '*These prevent the code from compiling and need immediate attention*\n\n';
+              errors.slice(0, 10).forEach(error => {
+                const span = error.message.spans[0];
+                if (span) {
+                  body += `- **${error.message.message}**\n`;
+                  body += `  - 📍 \`${span.file_name}:${span.line_start}:${span.column_start}\`\n`;
+                  body += `  - 🔗 [View File](../blob/main/${span.file_name}#L${span.line_start})\n\n`;
+                }
+              });
+              if (errors.length > 10) {
+                body += `*... and ${errors.length - 10} more errors*\n\n`;
+              }
+            }
+            
+            if (warnings.length > 0) {
+              body += '### ⚠️ Clippy Warnings\n';
+              body += '*These improve code quality but don\'t prevent compilation*\n\n';
+              warnings.slice(0, 15).forEach(warning => {
+                const span = warning.message.spans[0];
+                if (span) {
+                  body += `- **${warning.message.message}**\n`;
+                  body += `  - 📍 \`${span.file_name}:${span.line_start}:${span.column_start}\`\n`;
+                  body += `  - 🔗 [View File](../blob/main/${span.file_name}#L${span.line_start})\n\n`;
+                }
+              });
+              if (warnings.length > 15) {
+                body += `*... and ${warnings.length - 15} more warnings*\n\n`;
+              }
+            }
+            
+            body += `### 🎯 Next Steps\n`;
+            if (hadAutoFixes) {
+              body += `1. Review and merge PR #${prNumber} with automatic fixes\n`;
+              body += `2. Address the remaining ${errors.length + warnings.length} issues manually\n`;
+            } else {
+              body += `1. Address the ${errors.length + warnings.length} issues listed above\n`;
+              body += `2. Run \`cargo clippy --workspace --all-targets --all-features --fix\` locally for auto-fixable issues\n`;
+            }
+            body += `3. Consider running \`cargo clippy --workspace -- -D warnings\` locally before pushing\n\n`;
+            
+            body += `### 📋 Workflow Information\n`;
+            body += `- **Run ID:** \`${{ github.run_id }}\`\n`;
+            body += `- **Commit:** \`${{ github.sha }}\`\n`;
+            body += `- **Date:** ${new Date().toISOString()}\n`;
+            body += `- **Artifacts:** [Download clippy analysis](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n`;
+            
+            body += '---\n*This issue was automatically created by the nightly clippy workflow with auto-fixes enabled.*';
+            
+            // Check for existing open issues to avoid spam
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['clippy', 'automated'],
+              state: 'open'
+            });
+            
+            const today = new Date().toISOString().split('T')[0];
+            const existingToday = existingIssues.data.find(issue => 
+              issue.title.includes(today) && issue.title.includes('Clippy')
+            );
+            
+            if (!existingToday) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🔍 Clippy Report - ${today} (${warnings.length + errors.length} issues${hadAutoFixes ? ', auto-fixes applied' : ''})`,
+                body: body,
+                labels: ['clippy', 'automated', 'code-quality']
+              });
+            } else {
+              // Add comment to existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingToday.number,
+                body: `## 🔄 Updated Report\n\n${body}`
+              });
+            }
+          } else {
+            console.log('✅ No clippy issues found after auto-fixes!');
+          }
