@@ -252,7 +252,7 @@ cargo fmt --check
 - 📋 Check the example's `//!` documentation at top of file
 - 🔍 Look for "Common Errors" sections within examples
 - 📚 Reference Mission README files for context
-- 💡 See [MISSION5_CASE_STUDY.md](.github/MISSION5_CASE_STUDY.md) for working patterns
+- 💡 See [MISSION5_CASE_STUDY.md](_github/MISSION5_CASE_STUDY.md) for working patterns
 
 ---
 

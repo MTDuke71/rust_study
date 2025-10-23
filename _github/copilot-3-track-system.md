@@ -80,4 +80,4 @@ run_markdown_code.ps1         # Tool to execute examples from .md files
 
 ## 📚 Reference
 
-For concrete implementation example, see [Mission 5 Case Study](.github/MISSION5_CASE_STUDY.md)
+For concrete implementation example, see [Mission 5 Case Study](_github/MISSION5_CASE_STUDY.md)
