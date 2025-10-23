@@ -102,7 +102,7 @@ impl DijkstraPathfinder {
                 let new_distance = current_distance + edge_weight;
                 let is_better_path = distances
                     .get(&neighbor_id)
-                    .map_or(true, |&existing_distance| new_distance < existing_distance);
+                    .is_none_or(|&existing_distance| new_distance < existing_distance);
                 
                 if is_better_path {
                     distances.insert(neighbor_id, new_distance);

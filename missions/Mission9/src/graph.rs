@@ -74,7 +74,7 @@ impl SimpleWeightedGraph {
     pub fn add_node(&mut self, node: NodeId) {
         if !self.nodes.contains(&node) {
             self.nodes.insert(node);
-            self.adjacency.entry(node).or_insert_with(Vec::new);
+            self.adjacency.entry(node).or_default();
         }
     }
     
@@ -85,7 +85,7 @@ impl SimpleWeightedGraph {
         
         self.adjacency
             .entry(from)
-            .or_insert_with(Vec::new)
+            .or_default()
             .push((to, weight));
         
         self.edge_count += 1;
@@ -102,7 +102,7 @@ impl SimpleWeightedGraph {
         if let Some(edges) = self.adjacency.get(&node) {
             self.edge_count -= edges.len();
         }
-        self.adjacency.entry(node).or_insert_with(Vec::new).clear();
+        self.adjacency.entry(node).or_default().clear();
     }
     
     /// Get the weight of a specific edge
@@ -135,8 +135,7 @@ impl Default for SimpleWeightedGraph {
 impl WeightedGraph for SimpleWeightedGraph {
     fn neighbors(&self, node: NodeId) -> Vec<(NodeId, Weight)> {
         self.adjacency
-            .get(&node)
-            .map(|neighbors| neighbors.clone())
+            .get(&node).cloned()
             .unwrap_or_default()
     }
     

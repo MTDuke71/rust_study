@@ -72,7 +72,7 @@ pub fn solve_part2_from_file<P: AsRef<Path>>(file_path: P) -> Result<String> {
         let (l, w, h) = parse_dimensions(&line)?;
 
         // Calculate ribbon needed: smallest perimeter + bow (volume)
-        let mut sides = vec![l, w, h];
+        let mut sides = [l, w, h];
         sides.sort();
         let smallest_perimeter = 2 * sides[0] + 2 * sides[1];
         let bow = l * w * h;
@@ -120,7 +120,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
         let (l, w, h) = parse_dimensions(line)?;
 
         // Calculate ribbon needed: smallest perimeter + bow (volume)
-        let mut sides = vec![l, w, h];
+        let mut sides = [l, w, h];
         sides.sort();
         let smallest_perimeter = 2 * sides[0] + 2 * sides[1];
         let bow = l * w * h;

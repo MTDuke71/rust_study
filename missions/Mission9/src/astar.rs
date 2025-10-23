@@ -117,7 +117,7 @@ impl<H: Heuristic> AstarPathfinder<H> {
                 
                 let is_better_path = g_scores
                     .get(&neighbor)
-                    .map_or(true, |&existing_g| tentative_g < existing_g);
+                    .is_none_or(|&existing_g| tentative_g < existing_g);
                 
                 if is_better_path {
                     // Update scores and path
