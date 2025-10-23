@@ -215,13 +215,13 @@ mod tests {
 
         // Test the original pattern
         if let Some((word, &count)) = map.iter().max_by_key(|(_, &count)| count) {
-            assert_eq!(word, "b");
+            assert_eq!(*word, "b");
             assert_eq!(count, 3);
         }
 
         // Test alternative pattern
         if let Some((word, count_ref)) = map.iter().max_by_key(|(_, count_ref)| *count_ref) {
-            assert_eq!(word, "b");
+            assert_eq!(*word, "b");
             assert_eq!(*count_ref, 3);
         }
     }
