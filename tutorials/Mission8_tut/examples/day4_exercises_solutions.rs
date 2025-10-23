@@ -679,11 +679,10 @@ fn basic_has_cycle(graph: &HashMap<u32, Vec<u32>>) -> bool {
     let mut rec_stack = HashSet::new();
     
     for &start in graph.keys() {
-        if !visited.contains(&start) {
-            if basic_dfs_cycle(&graph, start, &mut visited, &mut rec_stack) {
+        if !visited.contains(&start)
+            && basic_dfs_cycle(graph, start, &mut visited, &mut rec_stack) {
                 return true;
             }
-        }
     }
     
     false
@@ -714,11 +713,10 @@ fn optimized_has_cycle(graph: &HashMap<u32, Vec<u32>>) -> bool {
     let mut state = vec![NodeState::White; max_node + 1];
     
     for &start in graph.keys() {
-        if state[start as usize] == NodeState::White {
-            if optimized_dfs_cycle(&graph, start, &mut state) {
+        if state[start as usize] == NodeState::White
+            && optimized_dfs_cycle(graph, start, &mut state) {
                 return true;
             }
-        }
     }
     
     false
@@ -755,11 +753,10 @@ fn early_termination_has_cycle(graph: &HashMap<u32, Vec<u32>>) -> bool {
     
     // Early termination: stop at first cycle found
     for &start in graph.keys() {
-        if state[start as usize] == NodeState::White {
-            if early_termination_dfs_cycle(&graph, start, &mut state) {
+        if state[start as usize] == NodeState::White
+            && early_termination_dfs_cycle(graph, start, &mut state) {
                 return true; // Found cycle, terminate immediately
             }
-        }
     }
     
     false

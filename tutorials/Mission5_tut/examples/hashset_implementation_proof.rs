@@ -11,6 +11,15 @@ pub struct MyHashSet<T> {
     map: HashMap<T, ()>, // The () is the key insight!
 }
 
+impl<T> Default for MyHashSet<T>
+where
+    T: Eq + Hash,
+ {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> MyHashSet<T>
 where
     T: Eq + Hash,

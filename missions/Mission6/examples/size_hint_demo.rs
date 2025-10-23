@@ -97,7 +97,7 @@ fn main() {
 
     println!("Using manual loop:");
     let mut iter = grid.coordinates();
-    while let Some(coord) = iter.next() {
+    for coord in iter {
         print!("  {:?} ", coord);
     }
     println!("\n  (size_hint() not called - just uses next())\n");

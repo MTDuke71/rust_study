@@ -568,8 +568,8 @@ fn create_large_maze(width: usize, height: usize) -> TutorialGrid<char> {
 }
 
 fn manhattan_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
-    let dx = if a.x > b.x { a.x - b.x } else { b.x - a.x };
-    let dy = if a.y > b.y { a.y - b.y } else { b.y - a.y };
+    let dx = a.x.abs_diff(b.x);
+    let dy = a.y.abs_diff(b.y);
     dx + dy
 }
 
@@ -580,8 +580,8 @@ fn euclidean_distance(a: TutorialCoord, b: TutorialCoord) -> f64 {
 }
 
 fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
-    let dx = if a.x > b.x { a.x - b.x } else { b.x - a.x };
-    let dy = if a.y > b.y { a.y - b.y } else { b.y - a.y };
+    let dx = a.x.abs_diff(b.x);
+    let dy = a.y.abs_diff(b.y);
     dx.max(dy)
 }
 

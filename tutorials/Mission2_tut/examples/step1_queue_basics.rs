@@ -45,7 +45,7 @@ fn demonstrate_fifo_vs_lifo() {
     let mut stack_simulation = vec!["Alice", "Bob", "Charlie"];
 
     println!("\n   Queue Processing (FIFO):");
-    while let Some(person) = queue_simulation.get(0).copied() {
+    while let Some(person) = queue_simulation.first().copied() {
         queue_simulation.remove(0); // Remove from front (not efficient, just for demo)
         println!("   Serving: {}", person);
     }

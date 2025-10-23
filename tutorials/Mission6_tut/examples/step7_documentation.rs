@@ -470,8 +470,8 @@ fn main() {
 /// assert_eq!(distance, 7); // 3 + 4 = 7
 /// ```
 fn manhattan_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
-    let dx = if a.x > b.x { a.x - b.x } else { b.x - a.x };
-    let dy = if a.y > b.y { a.y - b.y } else { b.y - a.y };
+    let dx = a.x.abs_diff(b.x);
+    let dy = a.y.abs_diff(b.y);
     dx + dy
 }
 

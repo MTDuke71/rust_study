@@ -19,8 +19,7 @@
 //! - Basic graph terminology and concepts
 //! - Introduction to graph representations
 
-use mission7::{Graph, GraphType};
-use mission7_tut::tutorial_utils;
+use mission7::Graph;
 
 fn main() {
     println!("=== Step 1: Graph Fundamentals ===\n");

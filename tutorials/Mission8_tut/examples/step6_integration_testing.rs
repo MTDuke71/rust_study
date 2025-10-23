@@ -69,6 +69,15 @@ where
     pub discovery_time: HashMap<T, usize>,
 }
 
+impl<T> Default for TraversalResult<T>
+where
+    T: Clone + Eq + Hash,
+ {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> TraversalResult<T> 
 where
     T: Clone + Eq + Hash,

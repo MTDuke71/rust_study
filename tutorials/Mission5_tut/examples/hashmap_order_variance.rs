@@ -18,7 +18,7 @@ fn main() {
         map.insert("Fifth", 5);
 
         print!("   Order: ");
-        for (key, _) in &map {
+        for key in map.keys() {
             print!("{} ", key);
         }
         println!();

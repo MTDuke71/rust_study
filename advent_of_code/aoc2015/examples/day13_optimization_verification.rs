@@ -203,7 +203,7 @@ fn generate_permutations_heap<T: Clone>(items: &mut [T], callback: &mut impl FnM
         for i in 0..k {
             heap_permute(items, k - 1, callback);
             
-            if k % 2 == 0 {
+            if k.is_multiple_of(2) {
                 items.swap(i, k - 1);
             } else {
                 items.swap(0, k - 1);

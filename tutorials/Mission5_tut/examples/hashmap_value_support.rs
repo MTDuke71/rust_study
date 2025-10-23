@@ -38,11 +38,11 @@ fn main() {
     // Adding to a list - the manual way
     raw_map
         .entry("animals")
-        .or_insert_with(Vec::new)
+        .or_default()
         .push("cat".to_string());
     raw_map
         .entry("animals")
-        .or_insert_with(Vec::new)
+        .or_default()
         .push("dog".to_string());
 
     println!("  map.entry(\"animals\").or_insert_with(Vec::new).push(\"cat\".to_string());");
@@ -85,11 +85,11 @@ fn main() {
     let mut word_groups: HashMap<char, Vec<String>> = HashMap::new();
     word_groups
         .entry('a')
-        .or_insert_with(Vec::new)
+        .or_default()
         .push("apple".to_string());
     word_groups
         .entry('a')
-        .or_insert_with(Vec::new)
+        .or_default()
         .push("avocado".to_string());
 
     // Pattern 2: HashSet<T> values (for uniqueness)
@@ -97,11 +97,11 @@ fn main() {
     let mut unique_tags: HashMap<&str, HashSet<&str>> = HashMap::new();
     unique_tags
         .entry("post1")
-        .or_insert_with(HashSet::new)
+        .or_default()
         .insert("rust");
     unique_tags
         .entry("post1")
-        .or_insert_with(HashSet::new)
+        .or_default()
         .insert("programming");
 
     // Pattern 3: Custom struct values

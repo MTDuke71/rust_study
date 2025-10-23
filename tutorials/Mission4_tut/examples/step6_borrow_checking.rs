@@ -47,6 +47,12 @@ impl From<std::cell::BorrowMutError> for LinkedListError {
     }
 }
 
+impl<T> Default for RcLinkedList<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> RcLinkedList<T> {
     pub fn new() -> Self {
         Self {

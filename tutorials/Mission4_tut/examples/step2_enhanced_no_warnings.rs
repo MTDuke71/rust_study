@@ -13,6 +13,12 @@ pub struct SimpleLinkedList<T> {
     length: usize,
 }
 
+impl<T> Default for SimpleLinkedList<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> SimpleLinkedList<T> {
     pub fn new() -> Self {
         Self {

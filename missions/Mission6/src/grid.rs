@@ -594,7 +594,7 @@ mod tests {
         for (_, value) in grid.enumerate_mut() {
             sum += *value;
         }
-        assert_eq!(sum, 0 + 1 + 10 + 11);
+        assert_eq!(sum, 1 + 10 + 11);
     }
 
     #[test]

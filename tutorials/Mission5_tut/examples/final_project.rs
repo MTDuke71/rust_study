@@ -42,6 +42,12 @@ pub struct AnalysisResult {
     computed_at: Instant,
 }
 
+impl Default for TextAnalysisEngine {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl TextAnalysisEngine {
     pub fn new() -> Self {
         TextAnalysisEngine {
@@ -78,7 +84,7 @@ impl TextAnalysisEngine {
             *self.word_frequencies.entry(word.clone()).or_insert(0) += 1;
             self.document_index
                 .entry(word.clone())
-                .or_insert_with(HashSet::new)
+                .or_default()
                 .insert(doc_id.clone());
         }
 
@@ -284,6 +290,12 @@ pub enum CellType {
     Treasure,
     Monster,
     Player,
+}
+
+impl Default for GameWorld {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl GameWorld {

@@ -64,8 +64,8 @@ fn santa_delivery_simulation() {
 
     if max_x - min_x <= 20 && max_y - min_y <= 20 {
         // Only visualize if grid is small enough
-        let width = (max_x - min_x + 1);
-        let height = (max_y - min_y + 1);
+        let width = max_x - min_x + 1;
+        let height = max_y - min_y + 1;
         let mut grid = Grid::new(width, height, '.');
 
         // Mark visited houses
@@ -219,7 +219,7 @@ fn voronoi_regions_simulation() {
 
     // Color the grid based on closest seed
     for (coord, &(distance, closest_seed)) in &distance_info {
-        if !seeds.contains(&coord) {
+        if !seeds.contains(coord) {
             // Find which seed this is closest to
             if let Some(seed_idx) = seeds.iter().position(|&s| s == closest_seed) {
                 grid[*coord] = seed_chars[seed_idx].to_ascii_lowercase();

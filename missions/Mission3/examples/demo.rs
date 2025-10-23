@@ -123,7 +123,7 @@ fn custom_ordering_search() {
         (25, "cheap"),
         (75, "moderate"),
     ];
-    let mut sorted_items = items.clone();
+    let mut sorted_items = items;
     sorted_items.sort_by_key(|item| item.0); // Sort by price
 
     println!("Items sorted by price: {:?}", sorted_items);
@@ -194,7 +194,7 @@ fn lifetime_safety_demo() {
     let data = vec![10, 20, 30, 40, 50];
 
     // Function that returns a reference with proper lifetime
-    fn find_and_return<'a>(slice: &'a [i32], target: i32) -> Option<&'a i32> {
+    fn find_and_return(slice: &[i32], target: i32) -> Option<&i32> {
         match binary_search::search_slice(slice, &target) {
             Ok(idx) => slice.get(idx),
             Err(_) => None,

@@ -157,11 +157,10 @@ where
     }
     
     for &node in graph.keys() {
-        if color[&node] == NodeColor::White {
-            if has_cycle_dfs(graph, node, &mut color) {
+        if color[&node] == NodeColor::White
+            && has_cycle_dfs(graph, node, &mut color) {
                 return true;
             }
-        }
     }
     
     false
@@ -294,8 +293,8 @@ where
     }
     
     for &neighbor in graph.get(&current).unwrap_or(&Vec::new()) {
-        if !visited_this.contains_key(&neighbor) {
-            visited_this.insert(neighbor, current);
+        if let std::collections::hash_map::Entry::Vacant(e) = visited_this.entry(neighbor) {
+            e.insert(current);
             queue.push_back(neighbor);
         }
     }

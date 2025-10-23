@@ -25,7 +25,6 @@
 //! This solution optimizes for **character counting only** - no string building required.
 //! Memory efficient approach suitable for large inputs and AoC competitive programming.
 
-use std::collections::HashMap;
 
 /// Represents the character count comparison between code and memory representations
 #[derive(Debug, Clone, PartialEq)]
@@ -324,7 +323,7 @@ fn main() {
     println!("📊 Basic Character Counting Examples:");
     println!("{:-<60}", "");
 
-    let basic_examples = vec![r#""""#, r#""abc""#, r#""aaa\"aaa""#, r#""\x27""#];
+    let basic_examples = [r#""""#, r#""abc""#, r#""aaa\"aaa""#, r#""\x27""#];
 
     for (i, input) in basic_examples.iter().enumerate() {
         let counts = count_processed_characters(input);

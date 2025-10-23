@@ -222,7 +222,7 @@ fn req4_graph_adjacency_representation() {
     // Count total edges
     let total_edges: usize = ["A", "B", "C", "D"]
         .iter()
-        .map(|node| graph.list_len(&node))
+        .map(|node| graph.list_len(node))
         .sum();
     assert_eq!(total_edges, 5);
 }

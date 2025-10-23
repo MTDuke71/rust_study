@@ -484,7 +484,7 @@ fn stress_alternating_patterns() {
         let linked_val = linked.dequeue();
         assert_eq!(Some(ring_val), linked_val);
     }
-    while let Some(_) = linked.dequeue() {
+    while linked.dequeue().is_some() {
         // Linked might have more due to capacity constraints during test
     }
 

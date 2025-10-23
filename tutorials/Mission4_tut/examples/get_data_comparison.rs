@@ -18,6 +18,12 @@ pub struct BoxLinkedList<T> {
     length: usize,
 }
 
+impl<T> Default for BoxLinkedList<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> BoxLinkedList<T> {
     pub fn new() -> Self {
         Self {
@@ -89,6 +95,12 @@ pub struct RcNode<T> {
 pub struct RcLinkedList<T> {
     head: Option<NodeRef<T>>,
     length: usize,
+}
+
+impl<T> Default for RcLinkedList<T> {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl<T> RcLinkedList<T> {

@@ -28,11 +28,11 @@ fn main() {
     // println!("{:?}", empty_map);
 
     // Solution 1: Explicit annotation
-    let mut empty_explicit: HashMap<String, i32> = HashMap::new();
+    let empty_explicit: HashMap<String, i32> = HashMap::new();
     println!("  Empty explicit map: {:?}", empty_explicit);
 
     // Solution 2: Turbofish syntax
-    let mut empty_turbofish = HashMap::<String, i32>::new();
+    let empty_turbofish = HashMap::<String, i32>::new();
     println!("  Empty turbofish map: {:?}", empty_turbofish);
 
     // Solution 3: Insert something to help inference

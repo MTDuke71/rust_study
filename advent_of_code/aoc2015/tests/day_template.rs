@@ -1,6 +1,5 @@
 //! Copy this file to `tests/dayNN_examples.rs` and adjust day number & expectations.
 
-use aoc2015::prelude::*;
 
 #[test]
 fn dayNN_example() {

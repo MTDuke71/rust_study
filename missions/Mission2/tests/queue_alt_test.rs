@@ -33,11 +33,10 @@ fn ring_randomized_matches_vecdeque() {
         if pseudo_random != 0 {
             // enqueue
             let x = (i as i32) % 100 - 50;
-            if q.enqueue(x).is_ok() {
-                if v.len() < q.capacity() {
+            if q.enqueue(x).is_ok()
+                && v.len() < q.capacity() {
                     v.push_back(x);
                 }
-            }
         } else {
             // dequeue
             assert_eq!(q.dequeue(), v.pop_front());
@@ -253,9 +252,9 @@ fn determinism_test() {
 
             // Both should have deterministic behavior
             if ring_result.is_ok() {
-                assert_eq!(ring.peek().is_some(), true);
+                assert!(ring.peek().is_some());
             }
-            assert_eq!(linked.peek().is_some(), true);
+            assert!(linked.peek().is_some());
         }
 
         // Dequeue order should be deterministic

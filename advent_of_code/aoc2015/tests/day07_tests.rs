@@ -291,7 +291,7 @@ mod parsing_integration_tests {
 
 #[cfg(test)]
 mod circuit_evaluation_tests {
-    use super::*;
+    
 
     #[test]
     fn circuit_should_evaluate_simple_assignment() {
@@ -377,7 +377,7 @@ mod circuit_evaluation_tests {
 
 #[cfg(test)]
 mod error_handling_tests {
-    use super::*;
+    
 
     #[test]
     fn circuit_should_error_on_undefined_wire() {
@@ -406,7 +406,7 @@ mod error_handling_tests {
 
 #[cfg(test)]
 mod performance_tests {
-    use super::*;
+    
 
     #[test]
     fn circuit_should_handle_large_dependency_chains() {
@@ -432,7 +432,7 @@ mod performance_tests {
 
 #[cfg(test)]
 mod bitwise_operation_tests {
-    use super::*;
+    
 
     #[test]
     fn test_16_bit_and_operation() {

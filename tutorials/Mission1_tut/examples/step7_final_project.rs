@@ -48,6 +48,7 @@ pub struct ProductionStack<T> {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Default)]
 pub struct OperationStats {
     push_count: usize,
     pop_count: usize,
@@ -55,16 +56,6 @@ pub struct OperationStats {
     total_allocations: usize,
 }
 
-impl Default for OperationStats {
-    fn default() -> Self {
-        OperationStats {
-            push_count: 0,
-            pop_count: 0,
-            peek_count: 0,
-            total_allocations: 0,
-        }
-    }
-}
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum StackError<T> {

@@ -18,6 +18,12 @@ pub struct RcLinkedList<T> {
     length: usize,
 }
 
+impl<T> Default for RcLinkedList<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> RcLinkedList<T> {
     pub fn new() -> Self {
         Self {
@@ -84,11 +90,7 @@ fn demonstrate_memory_locations() {
     if let (Some(first), Some(second)) = (list.get_node_ref(0), list.get_node_ref(1)) {
         let addr1 = first.as_ptr() as usize;
         let addr2 = second.as_ptr() as usize;
-        let diff = if addr1 > addr2 {
-            addr1 - addr2
-        } else {
-            addr2 - addr1
-        };
+        let diff = addr1.abs_diff(addr2);
         println!("Distance between nodes: {} bytes", diff);
     }
 }

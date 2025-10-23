@@ -478,11 +478,10 @@ where
     }
     
     for node in graph.keys() {
-        if *color.get(node).unwrap_or(&Color::White) == Color::White {
-            if dfs(graph, *node, &mut color) {
+        if *color.get(node).unwrap_or(&Color::White) == Color::White
+            && dfs(graph, *node, &mut color) {
                 return true;
             }
-        }
     }
     
     false

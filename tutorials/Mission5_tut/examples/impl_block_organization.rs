@@ -14,6 +14,15 @@ where
 // =====================================
 // CURRENT APPROACH: Group by Functionality
 // =====================================
+impl<K> Default for Counter<K>
+where
+    K: Eq + Hash,
+ {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<K> Counter<K>
 where
     K: Eq + Hash,
@@ -71,6 +80,15 @@ where
 }
 
 // Block 1: Basic operations (Eq + Hash only)
+impl<K> Default for AlternativeCounter<K>
+where
+    K: Eq + Hash,
+ {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<K> AlternativeCounter<K>
 where
     K: Eq + Hash,
