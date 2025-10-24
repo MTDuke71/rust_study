@@ -365,11 +365,10 @@ fn req2_connected_components_multiple_components() {
     // Should have 2 components
     assert_eq!(components.len(), 2);
 
-    // First component has 3 nodes
-    assert_eq!(components[0].len(), 3);
-
-    // Second component has 2 nodes
-    assert_eq!(components[1].len(), 2);
+    // One component has 3 nodes, the other has 2 nodes (order may vary)
+    let mut sizes: Vec<usize> = components.iter().map(|c| c.len()).collect();
+    sizes.sort();
+    assert_eq!(sizes, vec![2, 3]);
 }
 
 #[test]
