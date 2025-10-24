@@ -113,6 +113,12 @@ pub struct SimpleGraph {
     nodes: HashSet<NodeId>,
 }
 
+impl Default for SimpleGraph {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl SimpleGraph {
     pub fn new() -> Self {
         Self {
@@ -124,7 +130,7 @@ impl SimpleGraph {
     /// Add a node to the graph
     pub fn add_node(&mut self, node: NodeId) {
         self.nodes.insert(node);
-        self.edges.entry(node).or_insert_with(Vec::new);
+        self.edges.entry(node).or_default();
     }
 
     /// Add an edge (automatically adds nodes if they don't exist)
