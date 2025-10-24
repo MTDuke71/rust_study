@@ -414,84 +414,105 @@ cargo doc --open
 ## �️ Week 5: October 22-28, 2025
 
 ### **Wednesday, October 22** 🚨
-**Mission Focus**: Mission 9 Setup (Dijkstra & A* Pathfinding)
+**Mission Focus**: Mission 9 Setup & Step 1 - Priority Queue Foundation
+**Mission Tutorial**: `step1_priority_queue_foundation.rs` (REQ-1, REQ-2 support)
 **Daily Study**: Week 5, Day 29 - Custom error types (implementing `std::error::Error`)
 **Rust Book**: Chapter 12.1 - Accepting Command Line Arguments
 **📝 Daily Note**: [[zettelkasten/Daily Notes/2025-10-22]] - Detailed daily learning plan and task breakdown
 ```bash
 # Daily Tasks
 cd Mission9 && cargo init                    # Initialize pathfinding mission
-# Design Dijkstra and A* algorithm traits
+cd Mission9_tut && cargo run --example step1_* # Priority queue foundations
+# Learn binary heap operations and pathfinding data structures
 # Create custom error types for pathfinding failures
 # Learn command line argument parsing with std::env
 ```
 
 ### **Thursday, October 23** 🎯
-**Mission Focus**: Mission 9 Priority Queue Implementation
+**Mission Focus**: Mission 9 Step 2 - Dijkstra Basics (REQ-1 Implementation)
+**Mission Tutorial**: `step2_dijkstra_basics.rs` (Core Dijkstra algorithm)
 **Daily Study**: Week 5, Day 30 - Error propagation (? operator chains, error conversion)
 **Rust Book**: Chapter 12.2 - Reading a File
 ```bash
 # Daily Tasks
-# Implement priority queue using BinaryHeap for Dijkstra
-cargo test req1_priority_queue
+cd Mission9_tut && cargo run --example step2_* # Dijkstra implementation
+# Implement Dijkstra shortest path algorithm
+# Practice graph traversal with weighted edges and path reconstruction
+cargo test req1_dijkstra_implementation
 # Master ? operator error conversion patterns
 # Practice file I/O and error handling
 ```
 
 ### **Friday, October 24** 🗺️
-**Mission Focus**: Mission 9 Dijkstra Algorithm Implementation
+**Mission Focus**: Mission 9 Step 3 - A* Implementation (REQ-2 Implementation)
+**Mission Tutorial**: `step3_astar_implementation.rs` (A* with heuristics)
 **Daily Study**: Week 5, Day 31 - `anyhow` and `thiserror` (practical error handling crates)
 **Rust Book**: Chapter 12.3 - Refactoring to Improve Modularity and Error Handling
 ```bash
 # Daily Tasks
-# Implement Dijkstra shortest path algorithm
-cargo test req2_dijkstra_pathfinding
+cd Mission9_tut && cargo run --example step3_* # A* algorithm with heuristics
+# Implement A* with admissible heuristic design
+# Master f(n) = g(n) + h(n) cost functions
+cargo test req2_astar_pathfinding
 # Learn practical error handling with popular crates
 # Refactor code for better error handling and modularity
 ```
 
 ### **Saturday, October 25** ⭐
-**Mission Focus**: Mission 9 A* Heuristic Implementation
+**Mission Focus**: Mission 9 Step 4 - Performance Optimizations (REQ-3, REQ-4 support)
+**Mission Tutorial**: `step4_performance_optimizations.rs` (Bidirectional search, memory optimization)
 **Daily Study**: Week 5, Day 32 - Result combinators (`and_then`, `or_else`, `map_err`)
 **Rust Book**: Chapter 12.4 - Developing the Library's Functionality with TDD
 ```bash
 # Daily Tasks
-# Implement A* algorithm with Manhattan/Euclidean heuristics
-cargo test req3_astar_pathfinding
+cd Mission9_tut && cargo run --example step4_* # Performance optimization techniques
+# Implement bidirectional search and early termination strategies
+# Practice memory optimization and cache-friendly data structures
+cargo test req3_performance_optimizations
 # Practice functional error handling patterns
 # Learn test-driven development methodology
 ```
 
 ### **Sunday, October 26** 🔗
-**Mission Focus**: Mission 9 Graph Integration & Performance
+**Mission Focus**: Mission 9 Step 5 - Advanced Heuristics & Multi-Objective (REQ-4, REQ-5 support)
+**Mission Tutorial**: `step5_advanced_heuristics.rs` (Custom heuristics, multi-objective optimization)
 **Daily Study**: Week 5, Day 33 - Panic recovery (`catch_unwind`, panic hooks)
 **Rust Book**: Chapter 12.5 - Working with Environment Variables
 ```bash
 # Daily Tasks
-# Integrate pathfinding with Mission7 graph structures
-cargo criterion                             # Benchmark pathfinding performance
+cd Mission9_tut && cargo run --example step5_* # Advanced heuristic design
+# Implement custom heuristics and multi-objective optimization
+# Learn Pareto-optimal solutions and constraint satisfaction
+cargo test req4_advanced_heuristics && cargo test req5_multi_objective
 # Learn panic handling for robust applications
 # Practice environment variable configuration
 ```
 
 ### **Monday, October 27** 🔧
-**Mission Focus**: Mission 9 Performance Optimization & Benchmarking
+**Mission Focus**: Mission 9 Step 6 - Hierarchical Pathfinding (REQ-5, REQ-6 support)
+**Mission Tutorial**: `step6_hierarchical_pathfinding.rs` (Graph preprocessing, contraction hierarchies)
 **Daily Study**: Week 5, Day 34 - Error handling patterns (when to panic vs return errors)
 **Rust Book**: Chapter 12.6 - Writing Error Messages to Standard Error Instead of Standard Output
 ```bash
 # Daily Tasks
-# Optimize pathfinding algorithms for performance
-cargo criterion                             # Benchmark Dijkstra vs A* performance
+cd Mission9_tut && cargo run --example step6_* # Hierarchical pathfinding methods
+# Implement graph preprocessing and contraction hierarchies
+# Practice large-scale pathfinding techniques
+cargo test req5_hierarchical_methods && cargo test req6_preprocessing
 # Solidify error handling decision making
 # Learn stderr vs stdout for proper error reporting
 ```
 
-### **Tuesday, October 28** �
-**Mission Focus**: Mission 9 Testing & Documentation
+### **Tuesday, October 28** 📋
+**Mission Focus**: Mission 9 Step 7 - Real-World Applications & CLI (REQ-6 Implementation)
+**Mission Tutorial**: `step7_real_world_applications.rs` (Production systems, CLI integration)
 **Daily Study**: Week 5, Day 35 - Error handling practice (building robust parsers)
 **Rust Book**: Review Chapters 9-12 (Error Handling & I/O Project)
 ```bash
 # Daily Tasks
+cd Mission9_tut && cargo run --example step7_* # Production-ready pathfinding
+# Build CLI integration and graph data format handling
+# Implement performance monitoring and metrics
 cargo test --all                            # Complete Mission 9 tests
 cargo doc --open                            # Generate documentation
 # Build robust parsers with comprehensive error handling
@@ -500,9 +521,26 @@ cargo doc --open                            # Generate documentation
 
 ---
 
-## 🗓️ Week 6: October 29 - November 4, 2025
+## � Transition Period: October 29 - November 1, 2025
 
-### **Wednesday, October 29** �
+**Focus**: General Review & Advent of Code Problem Solving
+
+Use these days to consolidate Mission 9 learning, review pathfinding concepts, and practice with AoC problems. No specific daily tasks - explore areas where you need more practice and work on problems that interest you.
+
+```bash
+# Suggested Activities
+# - Review Mission 9 implementations
+# - Solve AoC pathfinding problems from previous years
+# - Experiment with different heuristic functions
+# - Benchmark and optimize your implementations
+# - Work on any incomplete exercises from Week 5
+```
+
+---
+
+## 🗓️ Week 6: November 2-8, 2025
+
+### **Sunday, November 2** 🚀
 **Mission Focus**: Mission 10 Setup & Planning (Union-Find Disjoint Sets)
 **Daily Study**: Week 6, Day 36 - Module basics (`mod`, `pub`, visibility rules)
 **Rust Book**: Chapter 13.1 - Closures: Anonymous Functions that Capture Their Environment
@@ -514,7 +552,7 @@ cd Mission10 && cargo init                   # Initialize Union-Find mission
 # Master closure syntax and environment capture
 ```
 
-### **Thursday, October 30** �
+### **Monday, November 3** 📐
 **Mission Focus**: Mission 10 Requirements Definition & Basic Structure
 **Daily Study**: Week 6, Day 37 - Crate organization (lib vs bin, module trees)
 **Rust Book**: Chapter 13.2 - Processing a Series of Items with Iterators
@@ -526,7 +564,7 @@ cargo test req1_basic_union_find
 # Deep dive into iterator patterns and lazy evaluation
 ```
 
-### **Friday, October 31** 🎃
+### **Tuesday, November 4** 🔗
 **Mission Focus**: Mission 10 Union & Find Operations
 **Daily Study**: Week 6, Day 38 - Cargo features (conditional compilation, feature flags)
 **Rust Book**: Chapter 13.3 - Improving Our I/O Project
@@ -538,7 +576,7 @@ cargo test req2_union_find_operations
 # Improve I/O project with iterators and closures
 ```
 
-### **Saturday, November 1** 🚀
+### **Wednesday, November 5** 🎯
 **Mission Focus**: Mission 10 Path Compression Optimization
 **Daily Study**: Week 6, Day 39 - Workspace management (multi-crate projects)
 **Rust Book**: Chapter 13.4 - Comparing Performance: Loops vs Iterators
@@ -550,7 +588,7 @@ cargo test req3_path_compression
 # Benchmark loops vs iterators performance
 ```
 
-### **Sunday, November 2** ⚖️
+### **Thursday, November 6** ⚖️
 **Mission Focus**: Mission 10 Union by Rank Optimization
 **Daily Study**: Week 6, Day 40 - Publishing crates (`Cargo.toml`, documentation, versioning)
 **Rust Book**: Chapter 14.1 - Customizing Builds with Release Profiles
@@ -562,7 +600,7 @@ cargo test req4_union_by_rank
 # Understand release profiles and optimization levels
 ```
 
-### **Monday, November 3** 🧪
+### **Friday, November 7** 🧪
 **Mission Focus**: Mission 10 Connected Components & Applications
 **Daily Study**: Week 6, Day 41 - External dependencies (choosing and using crates)
 **Rust Book**: Chapter 14.2 - Publishing a Crate to Crates.io
@@ -574,7 +612,7 @@ cargo test req5_connected_components
 # Understand crate publishing workflow
 ```
 
-### **Tuesday, November 4** 📋
+### **Saturday, November 8** 📋
 **Mission Focus**: Mission 10 Testing & Documentation
 **Daily Study**: Week 6, Day 42 - Module practice (organizing a complex project)
 **Rust Book**: Chapter 14.3 - Cargo Workspaces
@@ -588,9 +626,9 @@ cargo doc --open                            # Generate documentation
 
 ---
 
-## 🗓️ Week 7: November 5-11, 2025
+## 🗓️ Week 7: November 9-15, 2025
 
-### **Wednesday, November 5** 🧮
+### **Sunday, November 9** 🧮
 **Mission Focus**: Mission 11 Setup & Planning (Dynamic Programming & Memoization)
 **Daily Study**: Week 7, Day 43 - Associated types vs generics (when to use which)
 **Rust Book**: Chapter 15.1 - Using Box<T> to Point to Data on the Heap
@@ -602,7 +640,7 @@ cd Mission11 && cargo init                   # Initialize DP mission
 # Master Box<T> for heap allocation and recursive types
 ```
 
-### **Thursday, November 6** 💾
+### **Monday, November 10** 💾
 **Mission Focus**: Mission 11 Requirements Definition & Memoization Framework
 **Daily Study**: Week 7, Day 44 - Higher-ranked trait bounds (`for<'a>` syntax)
 **Rust Book**: Chapter 15.2 - Treating Smart Pointers Like Regular References with Deref
@@ -614,7 +652,7 @@ cd Mission11 && cargo init                   # Initialize DP mission
 # Master Deref trait for smart pointer behavior
 ```
 
-### **Friday, November 7** 🎯
+### **Tuesday, November 11** 🎯
 **Mission Focus**: Mission 11 Classic DP Problems Implementation
 **Daily Study**: Week 7, Day 45 - Phantom types (zero-cost type safety)
 **Rust Book**: Chapter 15.3 - Running Code on Cleanup with Drop
@@ -626,7 +664,7 @@ cargo test req1_classic_dp && cargo test req2_memoization
 # Master Drop trait for resource cleanup
 ```
 
-### **Saturday, November 8** 🗂️
+### **Wednesday, November 12** 🗂️
 **Mission Focus**: Mission 11 Grid DP & Path Problems
 **Daily Study**: Week 7, Day 46 - Const generics (compile-time parameters)
 **Rust Book**: Chapter 15.4 - Rc<T>, the Reference Counted Smart Pointer
@@ -638,7 +676,7 @@ cargo test req3_grid_dp && cargo test req4_path_problems
 # Master Rc<T> for shared ownership
 ```
 
-### **Sunday, November 9** ⚡
+### **Thursday, November 13** ⚡
 **Mission Focus**: Mission 11 Advanced DP Patterns & Optimization
 **Daily Study**: Week 7, Day 47 - Type-level programming (const functions, compile-time computation)
 **Rust Book**: Chapter 15.5 - RefCell<T> and the Interior Mutability Pattern
@@ -650,7 +688,7 @@ cargo test req5_advanced_dp
 # Master RefCell<T> for interior mutability
 ```
 
-### **Monday, November 10** 📊
+### **Friday, November 14** 📊
 **Mission Focus**: Mission 11 Performance Analysis & Benchmarking
 **Daily Study**: Week 7, Day 48 - Trait objects deep dive (`dyn Trait`, object safety)
 **Rust Book**: Chapter 15.6 - Reference Cycles Can Leak Memory
@@ -662,7 +700,7 @@ cargo criterion                             # Performance analysis
 # Learn about reference cycles and memory leaks
 ```
 
-### **Tuesday, November 11** 📋
+### **Saturday, November 15** 📋
 **Mission Focus**: Mission 11 Testing & Documentation
 **Daily Study**: Week 7, Day 49 - Advanced types practice (building type-safe APIs)
 **Rust Book**: Review Chapters 12-15 (I/O Project & Smart Pointers)
@@ -676,9 +714,9 @@ cargo doc --open                            # Generate documentation
 
 ---
 
-## 🗓️ Week 8: November 12-18, 2025
+## 🗓️ Week 8: November 16-22, 2025
 
-### **Wednesday, November 12** 📝
+### **Sunday, November 16** 📝
 **Mission Focus**: Mission 12 Setup & Planning (Custom Parsers & Input Processing)
 **Daily Study**: Week 8, Day 50 - Thread basics (`std::thread`, `JoinHandle`, thread safety)
 **Rust Book**: Chapter 16.1 - Using Threads to Run Code Simultaneously
@@ -690,7 +728,7 @@ cd Mission12 && cargo init                   # Initialize parser mission
 # Master thread spawning and joining
 ```
 
-### **Thursday, November 13** 🔍
+### **Monday, November 17** 🔍
 **Mission Focus**: Mission 12 Requirements Definition & String Parsing Foundation
 **Daily Study**: Week 8, Day 51 - Message passing (`mpsc` channels, producer-consumer patterns)
 **Rust Book**: Chapter 16.2 - Using Message Passing to Transfer Data Between Threads
@@ -702,7 +740,7 @@ cd Mission12 && cargo init                   # Initialize parser mission
 # Master producer-consumer patterns
 ```
 
-### **Friday, November 14** 🧩
+### **Tuesday, November 18** 🧩
 **Mission Focus**: Mission 12 Regex Integration & Pattern Matching
 **Daily Study**: Week 8, Day 52 - Shared state (`Arc<Mutex<T>>`, avoiding deadlocks)
 **Rust Book**: Chapter 16.3 - Shared-State Concurrency
@@ -714,7 +752,7 @@ cargo test req1_regex_parsing && cargo test req2_pattern_extraction
 # Master deadlock avoidance techniques
 ```
 
-### **Saturday, November 15** 🏗️
+### **Wednesday, November 19** 🏗️
 **Mission Focus**: Mission 12 Parser Combinators & Custom Formats
 **Daily Study**: Week 8, Day 53 - `RwLock` and atomic operations (`AtomicUsize`, memory ordering)
 **Rust Book**: Chapter 16.4 - Extensible Concurrency with the Sync and Send Traits
@@ -726,7 +764,7 @@ cargo test req3_parser_combinators && cargo test req4_custom_formats
 # Master Sync and Send traits for thread safety
 ```
 
-### **Sunday, November 16** 🎮
+### **Thursday, November 20** 🎮
 **Mission Focus**: Mission 12 AoC Utilities & Grid Parsing
 **Daily Study**: Week 8, Day 54 - Thread-safe collections (concurrent data structures)
 **Rust Book**: Chapter 17.1 - Futures and the Async Syntax
@@ -738,7 +776,7 @@ cargo test req5_aoc_utilities
 # Understand Futures and async/await syntax fundamentals
 ```
 
-### **Monday, November 17** ⚡
+### **Friday, November 21** ⚡
 **Mission Focus**: Mission 12 Performance Optimization & Error Handling
 **Daily Study**: Week 8, Day 55 - Parallel iterators (`rayon` for CPU-bound work)
 **Rust Book**: Chapter 17.2 - Applying Concurrency with Async
@@ -750,7 +788,7 @@ cargo criterion                             # Benchmark parsing performance
 # Master async concurrency patterns and execution models
 ```
 
-### **Tuesday, November 18** 📚
+### **Saturday, November 22** 📚
 **Mission Focus**: Mission 12 Testing & Documentation  
 **Daily Study**: Week 8, Day 56 - Concurrency practice (building thread-safe systems)
 **Rust Book**: Chapter 17.3 - Working With Any Number of Futures
@@ -767,14 +805,15 @@ cargo doc --open                            # Generate documentation
 ## �📈 Progress Tracking
 
 ### Weekly Checkpoints
-- **Week 1**: Complete Mission 5 (HashMaps & HashSets)
-- **Week 2**: Complete Mission 6 (Grids & 2D Arrays) 
-- **Week 3**: Complete Mission 7 (Graph Representation)
-- **Week 4**: Complete Mission 8 (BFS/DFS Algorithms)
-- **Week 5**: Complete Mission 9 (Dijkstra & A* Pathfinding)
-- **Week 6**: Complete Mission 10 (Union-Find Disjoint Sets)
-- **Week 7**: Complete Mission 11 (Dynamic Programming & Memoization)
-- **Week 8**: Complete Mission 12 (Custom Parsers & Input Processing)
+- **Week 1**: Complete Mission 5 (HashMaps & HashSets) *(Sept 24-30)*
+- **Week 2**: Complete Mission 6 (Grids & 2D Arrays) *(Oct 1-7)*
+- **Week 3**: Complete Mission 7 (Graph Representation) *(Oct 8-14)*
+- **Week 4**: Complete Mission 8 (BFS/DFS Algorithms) *(Oct 15-21)*
+- **Week 5**: Complete Mission 9 (Dijkstra & A* Pathfinding) *(Oct 22-28)*
+- **Transition Period**: General Review & AoC Problem Solving *(Oct 29-Nov 1)*
+- **Week 6**: Complete Mission 10 (Union-Find Disjoint Sets) *(Nov 2-8, Sunday start)*
+- **Week 7**: Complete Mission 11 (Dynamic Programming & Memoization) *(Nov 9-15)*
+- **Week 8**: Complete Mission 12 (Custom Parsers & Input Processing) *(Nov 16-22)*
 
 ### Daily Study Track Progress
 - **Current**: Week 1, Day 7 → **Target**: Week 8, Day 56
