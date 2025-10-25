@@ -18,6 +18,8 @@ Chapter 12 builds a complete command-line program that combines many Rust concep
 ### 1. **Command-Line Arguments**
 Rust provides access to command-line arguments through `std::env::args()`.
 
+For detailed examples of different argument handling methods, see: [[Command Line Argument Methods]]
+
 ```rust
 use std::env;
 
@@ -285,6 +287,11 @@ fn main() {
 - [std::env documentation](https://doc.rust-lang.org/std/env/)
 - [std::fs documentation](https://doc.rust-lang.org/std/fs/)
 - [Error Handling in Rust](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
+
+## 📁 Chapter Examples
+- **Accepting Arguments**: `Ch12/accepting_arguments/` - [[Command Line Argument Methods]] with detailed examples
+- **Reading Files**: `Ch12/reading_files/` - File I/O demonstrations
+- **Refactoring**: `Ch12/refactoring/` - Project organization patterns
 
 ---
 

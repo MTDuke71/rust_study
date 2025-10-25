@@ -23,12 +23,12 @@ fn example1_basic_file_reading() {
 
     // Now read it back
     match fs::read_to_string("poem.txt") {
-        Ok(contents) => {
+        Ok(file_contents) => {
             println!("✅ Successfully read file:");
-            println!("   File size: {} bytes", contents.len());
-            println!("   Line count: {}", contents.lines().count());
+            println!("   File size: {} bytes", file_contents.len());
+            println!("   Line count: {}", file_contents.lines().count());
             println!("\n📄 Contents:");
-            for (i, line) in contents.lines().enumerate() {
+            for (i, line) in file_contents.lines().enumerate() {
                 println!("   {}: {}", i + 1, line);
             }
         }
