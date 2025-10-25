@@ -229,8 +229,6 @@ impl BidirectionalAstar {
 
         let mut best_path_cost = u32::MAX;
         let mut meeting_point: Option<(usize, usize)> = None;
-        let mut best_forward_g = 0;
-        let mut best_backward_g = 0;
 
         // Main bidirectional search loop
         while !forward_open.is_empty() && !backward_open.is_empty() {
@@ -256,8 +254,6 @@ impl BidirectionalAstar {
                     if total_cost < best_path_cost {
                         best_path_cost = total_cost;
                         meeting_point = Some(forward_current.position);
-                        best_forward_g = forward_current.g_cost;
-                        best_backward_g = backward_g;
                     }
                 }
 
@@ -304,8 +300,6 @@ impl BidirectionalAstar {
                     if total_cost < best_path_cost {
                         best_path_cost = total_cost;
                         meeting_point = Some(backward_current.position);
-                        best_forward_g = forward_g;
-                        best_backward_g = backward_current.g_cost;
                     }
                 }
 
@@ -359,8 +353,6 @@ impl BidirectionalAstar {
                 start,
                 goal,
                 meeting,
-                best_forward_g,
-                best_backward_g,
             );
 
             self.metrics.path_length = path.len();
@@ -378,8 +370,6 @@ impl BidirectionalAstar {
         start: (usize, usize),
         goal: (usize, usize),
         meeting: (usize, usize),
-        _forward_g: u32,
-        _backward_g: u32,
     ) -> Vec<(usize, usize)> {
         let mut path = Vec::new();
 
