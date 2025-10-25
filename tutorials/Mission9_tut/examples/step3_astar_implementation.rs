@@ -47,16 +47,16 @@ impl PartialOrd for AstarNode {
 /// Manhattan distance heuristic
 /// Useful for grid-based pathfinding where only 4-way movement is allowed
 fn manhattan_distance(from: (usize, usize), to: (usize, usize)) -> usize {
-    let dx = if from.0 > to.0 { from.0 - to.0 } else { to.0 - from.0 };
-    let dy = if from.1 > to.1 { from.1 - to.1 } else { to.1 - from.1 };
+    let dx = from.0.abs_diff(to.0);
+    let dy = from.1.abs_diff(to.1);
     dx + dy
 }
 
 /// Euclidean distance heuristic
 /// More accurate for grid-based pathfinding with diagonal movement
 fn euclidean_distance(from: (usize, usize), to: (usize, usize)) -> usize {
-    let dx = if from.0 > to.0 { from.0 - to.0 } else { to.0 - from.0 };
-    let dy = if from.1 > to.1 { from.1 - to.1 } else { to.1 - from.1 };
+    let dx = from.0.abs_diff(to.0);
+    let dy = from.1.abs_diff(to.1);
     ((dx * dx + dy * dy) as f64).sqrt().ceil() as usize
 }
 
