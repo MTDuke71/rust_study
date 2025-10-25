@@ -327,9 +327,9 @@ fn demonstrate_error_downcasting() -> AnyhowResult<()> {
     });
     
     // Convert to anyhow::Error
-    let anyhow_error = result.context("Config loading failed")?;
+    result.context("Config loading failed")?;
     
-    Ok(anyhow_error)
+    Ok(())
 }
 
 // Main function 
