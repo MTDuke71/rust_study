@@ -17,6 +17,10 @@ criterion = "0.5"
 name = "pathfinding_benchmarks"
 harness = false
 
+[[example]]
+name = "step4_performance_demo"
+path = "examples/step4_performance_demo.rs"
+
 [features]
 default = []
 visualize = ["petgraph"]
