@@ -57,6 +57,11 @@ path = "examples/web_api_errors.rs"
 name = "file_processor"
 path = "examples/file_processor.rs"
 
+# Binary targets for comparison
+[[bin]]
+name = "day31_alt"
+path = "Day31_alt.rs"
+
 [dev-dependencies]
 # Testing utilities
 tempfile = "3.0"         # For temporary file creation in tests
