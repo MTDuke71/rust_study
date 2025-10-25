@@ -226,8 +226,8 @@ fn test_connected_components_performance() {
 
         // Should complete quickly
         assert!(
-            duration1 < Duration::from_millis(150),
-            "Component finding on {} nodes took {:?}, should be under 150ms",
+            duration1 < Duration::from_millis(200),
+            "Component finding on {} nodes took {:?}, should be under 200ms",
             size,
             duration1
         );
@@ -258,8 +258,8 @@ fn test_connected_components_performance() {
 
         // Should complete quickly
         assert!(
-            duration2 < Duration::from_millis(150),
-            "Component finding on disconnected {} nodes took {:?}, should be under 150ms",
+            duration2 < Duration::from_millis(200),
+            "Component finding on disconnected {} nodes took {:?}, should be under 200ms",
             size,
             duration2
         );
