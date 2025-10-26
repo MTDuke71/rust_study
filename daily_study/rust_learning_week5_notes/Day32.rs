@@ -274,8 +274,14 @@ fn transform_data(raw: RawData) -> Result<ProcessedData, ProcessError> {
 fn fetch_user_profile(user_id: u32) -> Result<UserProfile, ApiError> {
     validate_user_id(user_id)
         .and_then(|id| fetch_user_data(id))
-        .and_then(|user| fetch_user_preferences(user.id))
-        .and_then(|(user, prefs)| fetch_user_avatar(user.id).map(|avatar| (user, prefs, avatar)))
+        .and_then(|user| {
+            fetch_user_preferences(user.id)
+                .map(|prefs| (user, prefs))
+        })
+        .and_then(|(user, prefs)| {
+            fetch_user_avatar(user.id)
+                .map(|avatar| (user, prefs, avatar))
+        })
         .map(|(user, prefs, avatar)| UserProfile {
             user,
             preferences: prefs,
@@ -308,7 +314,7 @@ fn fetch_user_data(user_id: u32) -> Result<User, ApiError> {
     }
 }
 
-fn fetch_user_preferences(user_id: u32) -> Result<HashMap<String, String>, ApiError> {
+fn fetch_user_preferences(_user_id: u32) -> Result<HashMap<String, String>, ApiError> {
     // Simulate API call
     let mut prefs = HashMap::new();
     prefs.insert("theme".to_string(), "dark".to_string());
@@ -336,7 +342,7 @@ fn create_default_profile(user_id: u32) -> Result<UserProfile, ApiError> {
 // Pattern 5: File Processing Pipeline
 fn process_file_pipeline(input_path: &str, output_path: &str) -> Result<ProcessedFile, PipelineError> {
     read_file(input_path)
-        .and_then(validate_file_format)
+        .and_then(|content| validate_file_format(&content))
         .and_then(parse_file_content)
         .and_then(transform_content)
         .and_then(|content| write_file(output_path, &content))
@@ -472,12 +478,12 @@ fn validate_age(age: u32) -> Result<(), ValidationError> {
 // Pattern 7: Optional Error Recovery
 fn process_with_recovery(input: &str) -> Result<String, ProcessError> {
     parse_input(input)
-        .map_err(|e| ProcessError::ParseError(std::num::ParseIntError { kind: std::num::IntErrorKind::Empty }))
-        .or_else(|e| {
+        .map_err(|_e| ProcessError::ValidationError("Parse failed".to_string()))
+        .or_else(|_e| {
             // Try to recover by cleaning the input
             let cleaned = clean_input(input);
             parse_input(&cleaned)
-                .map_err(|_| ProcessError::ParseError(std::num::ParseIntError { kind: std::num::IntErrorKind::Empty }))
+                .map_err(|_| ProcessError::ValidationError("Recovery parse failed".to_string()))
         })
         .and_then(process_data)
         .map(|data| format!("Processed: {}", data))
