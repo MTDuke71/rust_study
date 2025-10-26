@@ -60,6 +60,7 @@ nul
 
 # Generated output files
 broken links output.md
+initial-clippy.json
 initial-clippy-output.json
 post-fix-clippy-output.json
 fix-summary.json
