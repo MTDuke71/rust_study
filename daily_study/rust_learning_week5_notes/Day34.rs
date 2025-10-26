@@ -1,6 +1,7 @@
 // Day 34 - Error Handling Patterns
 // Runnable examples demonstrating when to panic vs return errors
 
+#[allow(dead_code, unused_variables, unused_imports)]
 use std::collections::HashMap;
 use std::path::Path;
 
@@ -41,6 +42,21 @@ enum FileProcessingError {
     OutputNotWritable { path: String },
     Io { source: String },
 }
+
+impl std::fmt::Display for FileProcessingError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            FileProcessingError::FileNotFound { path } => write!(f, "File not found: {}", path),
+            FileProcessingError::PermissionDenied { path } => write!(f, "Permission denied: {}", path),
+            FileProcessingError::InvalidFormat { expected, actual } => write!(f, "Invalid format: expected {}, got {}", expected, actual),
+            FileProcessingError::ProcessingFailed { stage, reason } => write!(f, "Processing failed at {}: {}", stage, reason),
+            FileProcessingError::OutputNotWritable { path } => write!(f, "Output not writable: {}", path),
+            FileProcessingError::Io { source } => write!(f, "IO error: {}", source),
+        }
+    }
+}
+
+impl std::error::Error for FileProcessingError {}
 
 #[derive(Debug)]
 enum UserServiceError {

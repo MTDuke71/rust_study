@@ -1,6 +1,7 @@
 // Day 35 - Error Handling Practice
 // Runnable examples demonstrating robust parsers with comprehensive error handling
 
+#[allow(dead_code, unused_variables, unused_assignments, unused_mut)]
 use std::collections::HashMap;
 
 // Custom error types and structures
@@ -28,7 +29,7 @@ pub struct ParseResult<T> {
     pub errors: Vec<ParseError>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum ParseError {
     UnexpectedToken { expected: String, found: String, line: usize, column: usize },
     InvalidFormat { field: String, value: String, line: usize },
@@ -66,6 +67,17 @@ pub enum ConfigValue {
     Boolean(bool),
 }
 
+impl std::fmt::Display for ConfigValue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ConfigValue::String(s) => write!(f, "{}", s),
+            ConfigValue::Integer(i) => write!(f, "{}", i),
+            ConfigValue::Float(fl) => write!(f, "{}", fl),
+            ConfigValue::Boolean(b) => write!(f, "{}", b),
+        }
+    }
+}
+
 // Error recovery trait and implementation
 pub trait ErrorRecovery {
     fn can_recover(&self, error: &ParseError) -> bool;
@@ -92,9 +104,9 @@ impl ErrorRecovery for StandardErrorRecovery {
         }
     }
     
-    fn recover(&self, error: ParseError, context: &ParseContext) -> Result<(), ParseError> {
-        match error {
-            ParseError::InvalidFormat { field, value, line } => {
+    fn recover(&self, error: ParseError, _context: &ParseContext) -> Result<(), ParseError> {
+        match &error {
+            ParseError::InvalidFormat { field: _, value, line: _ } => {
                 // Try to clean the value
                 let cleaned_value = value.trim().to_lowercase();
                 if !cleaned_value.is_empty() {
@@ -161,7 +173,7 @@ impl CsvParser {
                 Ok(row) => results.push(row),
                 Err(mut error) => {
                     if self.error_recovery.can_recover(&error) {
-                        match self.error_recovery.recover(error, &ParseContext {
+                        match self.error_recovery.recover(error.clone(), &ParseContext {
                             line_number,
                             column: 0,
                             field_name: None,

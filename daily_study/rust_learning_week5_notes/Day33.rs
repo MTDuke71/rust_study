@@ -1,6 +1,7 @@
 // Day 33 - Panic Recovery
 // Runnable examples demonstrating panic handling with catch_unwind and panic hooks
 
+#[allow(dead_code, clippy::useless_vec)]
 use std::panic;
 use std::sync::{Arc, Mutex};
 use std::collections::HashMap;
@@ -345,9 +346,9 @@ impl PluginManager {
     
     fn execute_plugin(&self, name: &str, input: &str) -> PluginResult {
         if let Some(plugin) = self.plugins.get(name) {
-            let result = panic::catch_unwind(|| {
+            let result = panic::catch_unwind(panic::AssertUnwindSafe(|| {
                 plugin.execute(input)
-            });
+            }));
             
             match result {
                 Ok(output) => PluginResult::Success(output),
@@ -568,7 +569,7 @@ fn main() {
     
     // First execution (should succeed)
     match recovery.execute_with_recovery(|| "Hello, World!") {
-        Ok(value) => println!("Recovery execution succeeded: {}", value),
+        Ok(value) => println!("Recovery execution succeeded: {:?}", value),
         Err(e) => println!("Recovery execution failed: {:?}", e),
     }
     
@@ -576,13 +577,13 @@ fn main() {
     match recovery.execute_with_recovery(|| {
         panic!("This will panic!");
     }) {
-        Ok(value) => println!("Recovery execution succeeded: {}", value),
+        Ok(value) => println!("Recovery execution succeeded: {:?}", value),
         Err(e) => println!("Recovery execution failed: {:?}", e),
     }
     
     // Third execution (should fail due to previous panic)
     match recovery.execute_with_recovery(|| "Should not execute") {
-        Ok(value) => println!("Recovery execution succeeded: {}", value),
+        Ok(value) => println!("Recovery execution succeeded: {:?}", value),
         Err(e) => println!("Recovery execution failed: {:?}", e),
     }
     println!();

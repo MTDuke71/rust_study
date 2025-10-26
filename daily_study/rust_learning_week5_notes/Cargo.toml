@@ -41,6 +41,35 @@ path = "examples/day32_result_combinators.rs"
 name = "day32_standalone"
 path = "Day32.rs"
 
+# Add all other standalone Day files as examples
+[[example]]
+name = "day29_standalone"
+path = "Day29.rs"
+
+[[example]]
+name = "day30_standalone"
+path = "Day30.rs"
+
+[[example]]
+name = "day30_simple_standalone"
+path = "Day30_simple.rs"
+
+[[example]]
+name = "day31_standalone"
+path = "Day31.rs"
+
+[[example]]
+name = "day33_standalone"
+path = "Day33.rs"
+
+[[example]]
+name = "day34_standalone"
+path = "Day34.rs"
+
+[[example]]
+name = "day35_standalone"
+path = "Day35.rs"
+
 [[example]]
 name = "day33_panic_recovery"
 path = "examples/day33_panic_recovery.rs"

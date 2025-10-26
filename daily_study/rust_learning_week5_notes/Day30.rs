@@ -1,6 +1,7 @@
 // Day 30 - Error Propagation
 // Runnable examples demonstrating error propagation with the ? operator
 
+#[allow(dead_code, unused_mut)]
 use std::error::Error;
 use std::fmt;
 use std::collections::HashMap;

@@ -390,24 +390,21 @@ fn validate_file_format(content: &str) -> Result<String, PipelineError> {
 fn parse_file_content(content: String) -> Result<Vec<Record>, PipelineError> {
     let mut records = Vec::new();
     
-    for (line_num, line) in content.lines().enumerate() {
+    for (_line_num, line) in content.lines().enumerate() {
         if line.trim().is_empty() {
             continue;
         }
         
         let parts: Vec<&str> = line.split(',').collect();
-        if parts.len() != 3 {
-            return Err(PipelineError::ParseError(format!(
-                "Invalid record format at line {}: expected 3 fields, got {}", 
-                line_num + 1, parts.len()
-            )));
+        if parts.len() == 3 {
+            // Only process lines with exactly 3 fields (skip headers, comments, etc.)
+            records.push(Record {
+                id: parts[0].to_string(),
+                name: parts[1].to_string(),
+                value: parts[2].to_string(),
+            });
         }
-        
-        records.push(Record {
-            id: parts[0].to_string(),
-            name: parts[1].to_string(),
-            value: parts[2].to_string(),
-        });
+        // Skip lines that don't have 3 fields (headers, comments, etc.)
     }
     
     if records.is_empty() {
@@ -575,7 +572,7 @@ fn main() {
     
     // Example 5: File Processing Pipeline
     println!("5. File Processing Pipeline:");
-    let csv_content = "ID1,Name1,Value1\nID2,Name2,Value2";
+    let csv_content = "CSV Header: ID,Name,Value\nID1,Name1,Value1\nID2,Name2,Value2";
     std::fs::write("temp_input.csv", csv_content).unwrap();
     
     match process_file_pipeline("temp_input.csv", "temp_output.txt") {
@@ -586,6 +583,45 @@ fn main() {
     // Clean up
     let _ = std::fs::remove_file("temp_input.csv");
     let _ = std::fs::remove_file("temp_output.txt");
+    println!();
+    
+    // Example 5a: File Processing Pipeline with Errors
+    println!("5a. File Processing Pipeline - Error Cases:");
+    
+    // Case 1: File not found
+    match process_file_pipeline("nonexistent.csv", "output.txt") {
+        Ok(processed) => println!("File processed: {:?}", processed),
+        Err(e) => println!("Pipeline error (file not found): {:?}", e),
+    }
+    
+    // Case 2: Empty file
+    std::fs::write("empty.csv", "").unwrap();
+    match process_file_pipeline("empty.csv", "output.txt") {
+        Ok(processed) => println!("File processed: {:?}", processed),
+        Err(e) => println!("Pipeline error (empty file): {:?}", e),
+    }
+    
+    // Case 3: Invalid format (missing required format indicator)
+    let invalid_content = "Just some text\nNot a proper format\nNo required header";
+    std::fs::write("invalid.txt", invalid_content).unwrap();
+    match process_file_pipeline("invalid.txt", "output.txt") {
+        Ok(processed) => println!("File processed: {:?}", processed),
+        Err(e) => println!("Pipeline error (invalid format): {:?}", e),
+    }
+    
+    // Case 4: Valid format indicator but no valid records
+    let no_records_content = "CSV Header: This is a CSV file\nSingle Column\nAnother Single Column";
+    std::fs::write("no_records.csv", no_records_content).unwrap();
+    match process_file_pipeline("no_records.csv", "output.txt") {
+        Ok(processed) => println!("File processed: {:?}", processed),
+        Err(e) => println!("Pipeline error (no valid records): {:?}", e),
+    }
+    
+    // Clean up error test files
+    let _ = std::fs::remove_file("empty.csv");
+    let _ = std::fs::remove_file("invalid.txt");
+    let _ = std::fs::remove_file("no_records.csv");
+    let _ = std::fs::remove_file("output.txt");
     println!();
     
     // Example 6: Error Accumulation

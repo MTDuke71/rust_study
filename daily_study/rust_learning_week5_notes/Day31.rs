@@ -1,7 +1,7 @@
 // Day 31 - anyhow and thiserror
 // Runnable examples demonstrating practical error handling crates
 
-use std::collections::HashMap;
+#[allow(dead_code, unused_imports)]
 
 // Simulate anyhow and thiserror functionality with standard library
 // In real usage, you would add these to Cargo.toml:
@@ -9,7 +9,7 @@ use std::collections::HashMap;
 // thiserror = "1.0"
 
 // Simulate anyhow::Result
-type AnyhowResult<T> = Result<T, Box<dyn std::error::Error + Send + Sync>>;
+type AnyhowResult<T> = Result<T, Box<dyn std::error::Error + Send + Sync + 'static>>;
 
 // Simulate anyhow::Context
 trait Context<T, E> {
@@ -229,7 +229,7 @@ fn process_line(line: &str) -> AnyhowResult<()> {
     
     let key = parts[0].trim();
     let value = parts[1].trim().parse::<i32>()
-        .with_context(|| format!("Invalid number: '{}'", parts[1]))?;
+        .map_err(|e| Box::new(SimpleError::new(format!("Invalid number '{}': {}", parts[1], e))) as Box<dyn std::error::Error + Send + Sync + 'static>)?;
     
     println!("Key: {}, Value: {}", key, value);
     Ok(())
@@ -243,7 +243,7 @@ fn process_user_input(input: &str) -> AnyhowResult<()> {
     
     for (line_num, line) in lines.iter().enumerate() {
         process_line(line)
-            .with_context(|| format!("Failed to process line {} of input", line_num + 1))?;
+            .map_err(|e| Box::new(SimpleError::new(format!("Failed to process line {}: {}", line_num + 1, e))) as Box<dyn std::error::Error + Send + Sync + 'static>)?;
     }
     
     println!("Successfully processed {} lines", lines.len());
@@ -341,14 +341,14 @@ async fn fetch_user_from_database(user_id: u32) -> Result<User, WebError> {
     })
 }
 
-fn check_user_permissions(user: &User) -> Result<Permissions> {
+fn check_user_permissions(user: &User) -> Result<Permissions, WebError> {
     // Simulate permission check
     Ok(Permissions {
         can_access_api: !user.email.contains("blocked"),
     })
 }
 
-fn generate_response(user: &User) -> Result<String> {
+fn generate_response(user: &User) -> Result<String, WebError> {
     Ok(format!(r#"{{"id": {}, "name": "{}", "email": "{}"}}"#, 
                user.id, user.name, user.email))
 }

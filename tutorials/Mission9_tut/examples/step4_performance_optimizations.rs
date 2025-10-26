@@ -19,7 +19,7 @@
 //! - **Early Termination**: Stop search when optimal solution found
 //! - **Cache Locality**: Arrange data for better CPU cache usage
 
-use std::collections::{BinaryHeap, HashSet, HashMap, VecDeque};
+use std::collections::{BinaryHeap, HashSet, HashMap};
 use std::cmp::Ordering;
 use std::time::Instant;
 
@@ -137,6 +137,7 @@ impl Grid {
         (id % self.width, id / self.width)
     }
 
+    #[allow(dead_code)]
     fn is_valid_pos(&self, pos: (usize, usize)) -> bool {
         pos.0 < self.width && pos.1 < self.height && !self.obstacles.contains(&pos)
     }
@@ -144,8 +145,8 @@ impl Grid {
 
 /// Manhattan distance heuristic
 fn manhattan_distance(from: (usize, usize), to: (usize, usize)) -> u32 {
-    let dx = if from.0 > to.0 { from.0 - to.0 } else { to.0 - from.0 };
-    let dy = if from.1 > to.1 { from.1 - to.1 } else { to.1 - from.1 };
+    let dx = from.0.abs_diff(to.0);
+    let dy = from.1.abs_diff(to.1);
     (dx + dy) as u32
 }
 
@@ -646,7 +647,6 @@ impl MemoryOptimizedAStar {
 }
 
 /// Demonstration functions
-
 fn create_test_grid() -> Grid {
     let mut grid = Grid::new(50, 50);
     

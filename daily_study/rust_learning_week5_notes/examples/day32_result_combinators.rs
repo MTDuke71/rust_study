@@ -497,12 +497,12 @@ fn validate_age(age: u32) -> Result<(), ValidationError> {
 // Pattern 7: Optional Error Recovery
 fn process_with_recovery(input: &str) -> Result<String, ProcessError> {
     parse_input(input)
-        .map_err(|_e| ProcessError::ParseError("0".parse::<i32>().unwrap_err()))
+        .map_err(|_e| ProcessError::ValidationError("Parse failed".to_string()))
         .or_else(|_e| {
             // Try to recover by cleaning the input
             let cleaned = clean_input(input);
             parse_input(&cleaned)
-                .map_err(|_| ProcessError::ParseError("0".parse::<i32>().unwrap_err()))
+                .map_err(|_| ProcessError::ValidationError("Recovery parse failed".to_string()))
         })
         .and_then(process_data)
         .map(|data| format!("Processed: {}", data))
