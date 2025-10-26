@@ -54,10 +54,18 @@
 ### **🎯 Pathfinding Algorithms**
 
 #### **Dijkstra's Algorithm**
-- **[[Dijkstra Algorithm]]** - Optimal shortest path for weighted graphs
+- **[[Dijkstra Algorithm]]** - Optimal shortest path for graphs with non-negative edges
+- **Key Requirement**: Non-negative edge weights for correctness guarantee
 - **Implementation**: [[../missions/Mission9/README]] - Production-ready pathfinder
 - **Tutorial**: [[../tutorials/Mission9_tut/examples/step2_dijkstra_basics]] - Learning progression
-- **Optimization**: [[Priority Queue Patterns]] - Efficient implementation techniques
+- **Optimization**: [[Priority Queue Patterns]] - Min-heap conversion and efficient implementation
+
+#### **Bellman-Ford Algorithm**
+- **[[Bellman-Ford Algorithm]]** - Shortest path with negative edge support
+- **Key Features**: Handles negative edges, detects negative cycles
+- **Trade-off**: `O(V·E)` complexity vs Dijkstra's `O(E log V)`
+- **Use Cases**: Currency arbitrage, network protocols, constraint systems
+- **Comparison**: [[Pathfinding Strategies]] - Choosing the right algorithm
 
 #### **A* Search Algorithm**
 - **[[A* Algorithm]]** - Heuristic-guided pathfinding optimization
@@ -248,4 +256,4 @@ pub trait WeightedGraph {
 
 *Tags: #graph-algorithms #data-structures #pathfinding #network-analysis #algorithm-design #performance-optimization #graph-theory*
 
-*Links: [[Mission7 Overview]] | [[Mission9 Overview]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] | [[Dijkstra Algorithm]] | [[A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*
+*Links: [[Mission7 Overview]] | [[Mission9 Overview]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] | [[Dijkstra Algorithm]] | [[Bellman-Ford Algorithm]] | [[A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*
