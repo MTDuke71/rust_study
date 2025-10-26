@@ -39,6 +39,8 @@ members = [
     "rust_book/Ch12/refactoring",
     "rust_book/Ch12/testing",
     "rust_book/Ch12/environment_variables",
+    "rust_book/Ch12/error_messages",
+    "rust_book/Ch12/minigrep",
     "missions/Mission1",
     "missions/Mission2",
     "missions/Mission3",

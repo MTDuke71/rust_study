@@ -1,4 +1,4 @@
-//! # Chapter 12.5: Working with Environment Variables
+ //! # Chapter 12.5: Working with Environment Variables
 //!
 //! Demonstrates how to use environment variables to control program behavior.
 //! Shows case-sensitive vs case-insensitive search based on environment settings.
@@ -320,6 +320,8 @@ To an admiring bog!";
 
     println!("\n✅ All examples completed!");
     println!("💡 Try setting CASE_INSENSITIVE=1 and run again!");
+    println!("💡 $Env:CASE_INSENSITIVE=1; cargo run to poem.txt");
+    println!("💡 Remove-Item Env:CASE_INSENSITIVE to disable it");
     println!("📖 Next: Review this chapter or proceed to Chapter 13");
 }
 
