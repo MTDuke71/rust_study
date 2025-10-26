@@ -5,6 +5,7 @@ use std::collections::HashMap;
 
 // Custom error types for examples
 #[derive(Debug)]
+#[allow(dead_code)]
 enum ProcessError {
     ParseError(std::num::ParseIntError),
     EmptyInput,
@@ -14,6 +15,7 @@ enum ProcessError {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum ConfigError {
     FileNotFound(String),
     EmptyFile(String),
@@ -21,6 +23,7 @@ enum ConfigError {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum ApiError {
     InvalidId,
     NotFound,
@@ -29,6 +32,7 @@ enum ApiError {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum PipelineError {
     FileNotFound(String),
     EmptyFile,
@@ -40,6 +44,7 @@ enum PipelineError {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum ValidationError {
     EmptyName,
     NameTooLong,
@@ -50,6 +55,7 @@ enum ValidationError {
 
 // Data structures
 #[derive(Debug)]
+#[allow(dead_code)]
 struct Config {
     host: String,
     port: u16,
@@ -86,6 +92,7 @@ impl Config {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct ProcessOptions {
     validate: bool,
     transform: bool,
@@ -93,11 +100,13 @@ struct ProcessOptions {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct RawData {
     content: String,
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct ProcessedData {
     content: String,
 }
@@ -114,6 +123,7 @@ impl ProcessedData {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct User {
     id: u32,
     name: String,
@@ -121,6 +131,7 @@ struct User {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct UserProfile {
     user: User,
     preferences: HashMap<String, String>,
@@ -128,6 +139,7 @@ struct UserProfile {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct RawUser {
     name: String,
     email: String,
@@ -135,6 +147,7 @@ struct RawUser {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct ValidatedUser {
     name: String,
     email: String,
@@ -142,6 +155,7 @@ struct ValidatedUser {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct Record {
     id: String,
     name: String,
@@ -149,6 +163,7 @@ struct Record {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct ProcessedFile {
     input_path: String,
     output_path: String,
@@ -156,6 +171,7 @@ struct ProcessedFile {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct ParsedData {
     content: String,
 }
@@ -179,7 +195,7 @@ fn process_numbers(input: &str) -> Result<Vec<i32>, ProcessError> {
         .split(',')
         .map(|s| s.trim().parse::<i32>())
         .collect::<Result<Vec<i32>, _>>()
-        .map_err(|e| ProcessError::ParseError(e))
+        .map_err(ProcessError::ParseError)
         .and_then(|numbers| {
             if numbers.is_empty() {
                 Err(ProcessError::EmptyInput)
@@ -273,7 +289,7 @@ fn transform_data(raw: RawData) -> Result<ProcessedData, ProcessError> {
 // Pattern 4: API Request Pipeline
 fn fetch_user_profile(user_id: u32) -> Result<UserProfile, ApiError> {
     validate_user_id(user_id)
-        .and_then(|id| fetch_user_data(id))
+        .and_then(fetch_user_data)
         .and_then(|user| {
             fetch_user_preferences(user.id)
                 .map(|prefs| (user, prefs))

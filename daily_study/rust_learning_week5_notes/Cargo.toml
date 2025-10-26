@@ -36,6 +36,11 @@ path = "examples/day31_anyhow_thiserror.rs"
 name = "day32_result_combinators"
 path = "examples/day32_result_combinators.rs"
 
+# Add the standalone Day files as examples
+[[example]]
+name = "day32_standalone"
+path = "Day32.rs"
+
 [[example]]
 name = "day33_panic_recovery"
 path = "examples/day33_panic_recovery.rs"
