@@ -344,7 +344,7 @@ impl ConfigParser {
     
     pub fn parse_config(&self, content: &str) -> ParseResult<HashMap<String, ConfigValue>> {
         let mut config = HashMap::new();
-        let mut warnings = Vec::new();
+        let warnings = Vec::new();
         let mut errors = Vec::new();
         
         for (line_number, line) in content.lines().enumerate() {

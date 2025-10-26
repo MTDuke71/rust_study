@@ -390,7 +390,7 @@ fn validate_file_format(content: &str) -> Result<String, PipelineError> {
 fn parse_file_content(content: String) -> Result<Vec<Record>, PipelineError> {
     let mut records = Vec::new();
     
-    for (_line_num, line) in content.lines().enumerate() {
+    for line in content.lines() {
         if line.trim().is_empty() {
             continue;
         }
