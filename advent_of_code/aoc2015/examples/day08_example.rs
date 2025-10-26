@@ -440,7 +440,7 @@ mod tests {
     #[test] // REQ-STATS1: Statistics generation
     fn test_processing_stats() {
         let stats = analyze_character_processing(r#""Test\t\x41""#);
-        assert_eq!(stats.original_chars, 11);
+        assert_eq!(stats.original_chars, 12);
         assert_eq!(stats.processed_chars, 6); // Test + tab + A
         assert_eq!(stats.quotes_removed, 2);
         assert_eq!(stats.standard_escapes, 1); // \t

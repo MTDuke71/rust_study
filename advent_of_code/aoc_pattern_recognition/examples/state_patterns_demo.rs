@@ -624,6 +624,6 @@ mod tests {
         let text = "abab";
         let pattern = "ab";
         let anagrams = SlidingWindow::find_anagrams(text, pattern);
-        assert_eq!(anagrams, vec![0, 2]); // "ab" at positions 0 and 2
+        assert_eq!(anagrams, vec![0, 1, 2]); // "ab" at position 0, "ba" at position 1, "ab" at position 2
     }
 }
