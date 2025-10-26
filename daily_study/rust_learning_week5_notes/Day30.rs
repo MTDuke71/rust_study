@@ -286,7 +286,7 @@ impl Transaction {
 
 fn transfer_money(from_account: u32, to_account: u32, amount: i32) -> Result<(), DatabaseError> {
     let db = Database::connect()?;
-    let mut tx = db.begin_transaction()?;
+    let tx = db.begin_transaction()?;
     
     // Debit from source account
     tx.execute(&format!("UPDATE accounts SET balance = balance - {} WHERE id = {}", amount, from_account))?;
