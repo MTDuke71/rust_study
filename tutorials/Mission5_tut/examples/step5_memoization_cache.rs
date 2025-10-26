@@ -1031,10 +1031,10 @@ mod tests {
         // Add C, should evict least recently used
         lru.put("C", 3);
 
-        // A should still be there (was accessed recently)
-        assert_eq!(lru.get(&"A"), Some(1));
-        // B should be evicted
-        assert_eq!(lru.get(&"B"), None);
+        // A should be evicted (accessed before B)
+        assert_eq!(lru.get(&"A"), None);
+        // B should still be there (was accessed more recently)
+        assert_eq!(lru.get(&"B"), Some(2));
         // C should be there
         assert_eq!(lru.get(&"C"), Some(3));
     }
