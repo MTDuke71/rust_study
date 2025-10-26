@@ -28,6 +28,18 @@ pub enum PathfindingError {
 
     #[error("Algorithm timeout after {seconds} seconds")]
     Timeout { seconds: u64 },
+
+    #[error("Invalid node: {node}")]
+    InvalidNode { node: u32 },
+
+    #[error("Maximum iterations exceeded")]
+    MaxIterationsExceeded,
+
+    #[error("Invalid configuration: {message}")]
+    InvalidConfiguration { message: String },
+
+    #[error("Constraint violation: {constraint}")]
+    ConstraintViolation { constraint: String },
 }
 
 impl PathfindingError {
@@ -38,6 +50,8 @@ impl PathfindingError {
             PathfindingError::NoPathExists { .. }
                 | PathfindingError::InvalidHeuristic { .. }
                 | PathfindingError::Timeout { .. }
+                | PathfindingError::MaxIterationsExceeded
+                | PathfindingError::ConstraintViolation { .. }
         )
     }
 
@@ -46,13 +60,17 @@ impl PathfindingError {
         match self {
             PathfindingError::NoPathExists { .. } => ErrorSeverity::Warning,
             PathfindingError::InvalidStartNode { .. }
-            | PathfindingError::InvalidGoalNode { .. } => ErrorSeverity::Fatal,
+            | PathfindingError::InvalidGoalNode { .. }
+            | PathfindingError::InvalidNode { .. } => ErrorSeverity::Fatal,
             PathfindingError::NegativeWeights | PathfindingError::InvalidGraph => {
                 ErrorSeverity::Fatal
             }
             PathfindingError::InvalidHeuristic { .. } => ErrorSeverity::Warning,
             PathfindingError::QueueError { .. } => ErrorSeverity::Fatal,
             PathfindingError::Timeout { .. } => ErrorSeverity::Recoverable,
+            PathfindingError::MaxIterationsExceeded => ErrorSeverity::Recoverable,
+            PathfindingError::InvalidConfiguration { .. } => ErrorSeverity::Fatal,
+            PathfindingError::ConstraintViolation { .. } => ErrorSeverity::Warning,
         }
     }
 }

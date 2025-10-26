@@ -33,20 +33,24 @@
 //! - `parallel`: Enable parallel pathfinding algorithms
 
 pub mod astar;
+pub mod constraint_based;
 pub mod dijkstra;
 pub mod error;
 pub mod graph;
 pub mod heuristic;
+pub mod multi_objective;
 pub mod pathfinder;
 pub mod performance_optimization;
 pub mod priority_queue;
 
 // Re-export main types for convenience
 pub use astar::AstarPathfinder;
+pub use constraint_based::{ConstrainedAstar, PathConstraint, PathContext};
 pub use dijkstra::DijkstraPathfinder;
 pub use error::PathfindingError;
 pub use graph::{SimpleWeightedGraph, WeightedGraph};
 pub use heuristic::{EuclideanHeuristic, Heuristic, HeuristicContext, ManhattanHeuristic};
+pub use multi_objective::{MultiObjectiveAstar, MultiObjectiveResult, ObjectiveFunction};
 pub use pathfinder::Pathfinder;
 pub use performance_optimization::{BidirectionalAstar, BidirectionalDijkstra, MemoryOptimizedAstar, NodePool, PerformanceMetrics};
 pub use priority_queue::PathfindingQueue;
