@@ -4,8 +4,6 @@
 #[allow(dead_code, unused_imports)]
 use std::error::Error;
 use std::fmt;
-use std::fs;
-use std::path::Path;
 
 // Example 1: Basic Custom Error Type
 #[derive(Debug)]
@@ -158,6 +156,12 @@ impl From<std::io::Error> for ConfigError {
 pub struct Config {
     port: Option<u16>,
     host: Option<String>,
+}
+
+impl Default for Config {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl Config {

@@ -726,8 +726,8 @@ mod tests {
     use super::*;
 
     fn manhattan_distance(a: (usize, usize), b: (usize, usize)) -> u32 {
-        let dx = if a.0 > b.0 { a.0 - b.0 } else { b.0 - a.0 };
-        let dy = if a.1 > b.1 { a.1 - b.1 } else { b.1 - a.1 };
+        let dx = a.0.abs_diff(b.0);
+        let dy = a.1.abs_diff(b.1);
         (dx + dy) as u32
     }
 

@@ -104,7 +104,7 @@ fn safe_divide(a: i32, b: i32) -> Result<i32, String> {
 fn recover_from_panic() {
     let result = panic::catch_unwind(|| {
         // This code might panic
-        let x = vec![1, 2, 3];
+        let x = [1, 2, 3];
         println!("{}", x[10]); // This will panic (index out of bounds)
     });
     
