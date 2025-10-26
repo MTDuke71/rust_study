@@ -171,6 +171,8 @@ This example complements:
 - **Chapter 12.5** - Environment variables
 - **Chapter 9** - Comprehensive error handling
 
+**📖 Deep Dive:** See [[../../../zettelkasten/Standard Error and Stream Separation]] for comprehensive stream separation patterns and advanced CLI design principles.
+
 ## 💡 Try These Experiments
 
 1. **Redirect streams separately:**

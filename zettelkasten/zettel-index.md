@@ -172,6 +172,7 @@
 
 **Advanced Topics:**
 - [[Error Handling Deep Dive]] - Comprehensive error handling
+- [[Standard Error and Stream Separation]] - CLI stdout/stderr patterns and testing
 - [[Generic Programming]] - Type parameterization techniques
 - [[Trait Objects]] - Dynamic dispatch patterns
 - [[Unsafe Rust - Raw Pointers and Safety Contracts]] - Building safe abstractions from unsafe code

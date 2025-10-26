@@ -221,6 +221,8 @@ fn main() {
 - Proper Unix conventions for CLI tools
 - Shell redirection compatibility
 
+**📖 See Also:** [[Standard Error and Stream Separation]] - Comprehensive guide to CLI stream separation patterns and testing
+
 ## Complete MiniGrep Implementation
 
 The final implementation in `rust_book/Ch12/environment_variables/` demonstrates:

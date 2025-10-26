@@ -359,6 +359,7 @@ fn panic_calculation(x: i32) -> i32 {
 ## 📚 Further Reading
 
 - [[../rust_book/Ch9/README]] - Complete Chapter 9 implementation with runnable examples
+- [[Standard Error and Stream Separation]] - CLI error output and stream separation patterns
 - [[daily-study/Day05]] - Basic error handling concepts
 - [[zettelkasten/daily-study/Day06]] - Using match for error handling
 - [[Mission5 API Reference]] - Error handling in HashMap implementation

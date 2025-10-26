@@ -35,6 +35,7 @@
 - [[Option Type]] - Rust's null safety solution
 - [[daily-study/Day05]] - Basic error handling concepts
 - [[Error Handling Deep Dive]] - Advanced patterns and best practices
+- [[Standard Error and Stream Separation]] - CLI stdout/stderr patterns and testing
 - [[AoC Error Patterns]] - Input parsing and validation strategies
 
 ### **Pattern Matching & Control Flow**
