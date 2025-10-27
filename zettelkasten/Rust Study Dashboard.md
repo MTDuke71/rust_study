@@ -8,14 +8,6 @@
 
 ---
 
-## 🎯 Current Focus
-
-- **Active Mission:** [[Mission]]
-- **Current Chapter:** [[Chapter]]
-- **Today's Study:** [[Daily Focus Dashboard]]
-
----
-
 ## 📚 Learning Tracks
 
 ### Core Rust Book
