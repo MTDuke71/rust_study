@@ -60,7 +60,7 @@ Ch10/
    - ✅ Each has src/main.rs with examples
 
 3. **Zettelkasten Integration**
-   - ✅ Links to [[Chapter 9 Overview]] and [[Chapter 11 Overview]]
+   - ✅ Links to [[Chapter 9 Overview]] and [[zettelkasten/rust_book/rust-book-ch11]]
    - ✅ Links to missions: [[Mission3 Overview]], [[Mission5 Overview]]
    - ✅ Links to daily study: [[Day 15 - Traits]], [[Day 16 - Generic Types]], [[Day 17 - Lifetimes]]
    - ✅ Links to [[Rust Book MOC]]

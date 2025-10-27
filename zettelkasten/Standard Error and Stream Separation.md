@@ -431,7 +431,7 @@ test_stream_separation() {
 ### **Cross-References**
 - **[[Error Handling Deep Dive]]** - Advanced error handling patterns
 - **[[CLI Design Patterns]]** - Command-line interface best practices  
-- **[[Chapter 12 Overview]]** - Complete minigrep implementation
+- **[[zettelkasten/rust_book/rust-book-ch12]]** - Complete minigrep implementation
 - **[[../rust_book/Ch12/error_messages/README_DEMO]]** - Hands-on examples
 - **[[../daily_study/rust_learning_week5_notes/README]]** - Advanced error handling
 
@@ -489,4 +489,4 @@ test_stream_separation() {
 
 *Created: 2025-10-26*  
 *Tags: #cli #stdout #stderr #streams #error-handling #rust #chapter12 #testing*  
-*Links: [[Error Handling Deep Dive]] | [[CLI Design Patterns]] | [[Chapter 12 Overview]] | [[Rust Concepts MOC]]*
+*Links: [[Error Handling Deep Dive]] | [[CLI Design Patterns]] | [[zettelkasten/rust_book/rust-book-ch12]] | [[Rust Concepts MOC]]*

@@ -213,9 +213,9 @@ let value = match some_option {
 - **[[Chapter 4 Overview]]** - Ownership rules apply to enum data
 
 ### Leads To
-- **[[Chapter 7 Overview]]** - Using enums across module boundaries
+- **[[zettelkasten/rust_book/rust-book-ch7]]** - Using enums across module boundaries
 - **[[Chapter 9 Overview]]** - Result<T, E> for error handling
-- **[[Chapter 10 Overview]]** - Generic enums like Option<T> and Result<T, E>
+- **[[zettelkasten/rust_book/rust-book-ch10]]** - Generic enums like Option<T> and Result<T, E>
 - **[[Chapter 17 Overview]]** - Trait objects with enum dispatch
 
 ### Related Patterns
@@ -246,5 +246,5 @@ Chapter 6 concepts are essential for clean, safe AoC solutions.
 
 ---
 
-*Links: [[Rust Book MOC]] | [[Chapter 5 Overview]] | [[Chapter 7 Overview]] | [[Mission3 Overview]] | [[Day 14 - Error Handling Patterns]] | [[3-Track Integration]]*
+*Links: [[Rust Book MOC]] | [[Chapter 5 Overview]] | [[zettelkasten/rust_book/rust-book-ch7]] | [[Mission3 Overview]] | [[Day 14 - Error Handling Patterns]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter6 #enums #pattern-matching #option #result #match #if-let #overview #foundation*

@@ -424,4 +424,4 @@ Perfect for learning and reference! 🦀
 ---
 
 *Tags: #rust-book #chapter12 #cli #complete-project #testing #error-handling #best-practices*
-*Links: [[Chapter 12 Overview]] | [[Rust Book MOC]]*
+*Links: [[zettelkasten/rust_book/rust-book-ch12]] | [[Rust Book MOC]]*

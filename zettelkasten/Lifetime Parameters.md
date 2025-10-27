@@ -2,7 +2,7 @@
 
 **Tags:** #rust #lifetimes #memory-safety #concept #rust-book #chapter10  
 **Created:** 2025-10-22  
-**Related:** [[Ownership and Borrowing]], [[Day 17 - Lifetimes]], [[Chapter 10 Overview]], [[Generic Programming]], [[Mission3 Overview]], [[Mission4 Overview]], [[Rust Concepts MOC]]
+**Related:** [[Ownership and Borrowing]], [[Day 17 - Lifetimes]], [[zettelkasten/rust_book/rust-book-ch10]], [[Generic Programming]], [[Mission3 Overview]], [[Mission4 Overview]], [[Rust Concepts MOC]]
 
 ## Overview
 
@@ -138,7 +138,7 @@ mod tests {
 
 - [[Ownership and Borrowing]] - Foundation for understanding lifetimes
 - [[Day 17 - Lifetimes]] - Daily study progression  
-- [[Chapter 10 Overview]] - Generics, traits, and lifetimes together
+- [[zettelkasten/rust_book/rust-book-ch10]] - Generics, traits, and lifetimes together
 - [[Generic Programming]] - Lifetimes as generic parameters
 - [[Mission3 Overview]] - Practical lifetime usage
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns

@@ -777,7 +777,7 @@ let first_large = numbers.iter().find(|&&x| x > 2);
 ### **Rust Book Integration**
 - **[[Rust Book MOC]]** - Chapter 13 covers functional programming and iterators
 - **[[Chapter 4 Overview]]** - Ownership patterns in iterator implementation
-- **[[Chapter 8 Overview]]** - Collection iterators and common patterns
+- **[[zettelkasten/rust_book/rust-book-ch8]]** - Collection iterators and common patterns
 
 ### **Pattern Integration**
 - **[[API Design Patterns]]** - Iterator as core API design pattern

@@ -428,7 +428,7 @@ fn handle_response(response: ApiResponse) {
 
 **Next Steps:**
 - Complete exercises in `Ch6/defining_enums/`, `Ch6/match_operator/`, `Ch6/if_let/`
-- Review [[Chapter 7 Overview]] - Organizing code with modules
+- Review [[zettelkasten/rust_book/rust-book-ch7]] - Organizing code with modules
 - Practice: Implement a state machine for a game or application
 
 ---

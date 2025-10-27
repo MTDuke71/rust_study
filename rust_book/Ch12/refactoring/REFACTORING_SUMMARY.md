@@ -1,7 +1,7 @@
 # Chapter 12.3 Refactoring Summary
 
 ## 🔗 Zettelkasten Links
-- **Chapter Context**: [[Chapter 12 Overview]] - Parent chapter overview
+- **Chapter Context**: [[zettelkasten/rust_book/rust-book-ch12]] - Parent chapter overview
 - **Related Concepts**: [[Separation of Concerns]], [[Rust Module System]], [[Library vs Binary]]
 - **Testing**: [[Unit Testing in Rust]], [[Documentation Testing]]
 
@@ -164,5 +164,5 @@ cargo doc --open
 
 *This refactoring demonstrates how to evolve a Rust project from a simple script to a well-structured, testable, and maintainable application following Rust best practices.*
 
-*Links: [[Chapter 12 Overview]] | [[Separation of Concerns]] | [[Rust Module System]]*
+*Links: [[zettelkasten/rust_book/rust-book-ch12]] | [[Separation of Concerns]] | [[Rust Module System]]*
 *Tags: #rust #refactoring #testing #modularity #separation-of-concerns #cli*

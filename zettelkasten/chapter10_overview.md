@@ -43,7 +43,7 @@ Located in: `rust_book/Ch10/`
 ## Next Steps
 1. Complete all section exercises in `Ch10/generics/`, `Ch10/traits/`, and `Ch10/lifetimes/`
 2. Apply concepts in [[Mission3 Overview]] for trait-based algorithms
-3. Review [[Chapter 11 Overview]] when ready for testing concepts
+3. Review [[zettelkasten/rust_book/rust-book-ch11]] when ready for testing concepts
 4. Practice with [[Day 15 - Traits]], [[daily-study/Day16]], and [[Day 17 - Lifetimes]]
 
 ## Related Concepts
@@ -60,5 +60,5 @@ Located in: `rust_book/Ch10/`
 - Practical examples that connect to real-world usage
 - Common mistake patterns shown as comments
 
-*Links: [[Rust Book MOC]] | [[Chapter 9 Overview]] | [[Chapter 11 Overview]] | [[3-Track Integration]]*
+*Links: [[Rust Book MOC]] | [[Chapter 9 Overview]] | [[zettelkasten/rust_book/rust-book-ch11]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter10 #overview #generics #traits #lifetimes #foundation*

@@ -379,7 +379,7 @@ Traceability Matrix
 - **[rust_book/Ch5/](rust_book/Ch5/)** - Structs, methods, and associated functions
 - **[rust_book/Ch6/](rust_book/Ch6/)** - Enums, pattern matching, and control flow
 - **[rust_book/Ch7/](rust_book/Ch7/)** - Modules, packages, crates, and paths
-- **[rust_book/Ch10/](rust_book/Ch10/)** - **Generics, traits, and lifetimes** - See [[Chapter 10 Overview]] for comprehensive summary
+- **[rust_book/Ch10/](rust_book/Ch10/)** - **Generics, traits, and lifetimes** - See [[zettelkasten/rust_book/rust-book-ch10]] for comprehensive summary
 
 ## 🛠️ Development Environment
 

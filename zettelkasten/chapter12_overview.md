@@ -14,7 +14,7 @@ Chapter 12 builds a complete command-line program (minigrep) that combines many 
 - Used in [[mission8 Overview]] - Advanced project structure mirrors Ch12 organization patterns
 - Used in [[Mission9 Overview]] - CLI pathfinding tools with argument parsing and file operations
 - Reinforced in [[Day 42 - CLI Applications]] - Hands-on CLI development exercises
-- Foundation for [[Chapter 13 Overview]] - Functional programming patterns applied to iterators
+- Foundation for [[zettelkasten/rust_book/rust-book-ch13]] - Functional programming patterns applied to iterators
 
 ## Code Examples
 Located in: `Ch12/`
@@ -47,8 +47,8 @@ Located in: `Ch12/`
 ## Next Steps
 1. Complete all section exercises in Ch12 directories
 2. Apply CLI patterns to Mission projects 
-3. Review [[Chapter 13 Overview]] for functional programming with iterators
+3. Review [[zettelkasten/rust_book/rust-book-ch13]] for functional programming with iterators
 4. Practice TDD workflow with [[Mission9 Overview]] pathfinding project
 
-*Links: [[Rust Book MOC]] | [[Chapter 11 Overview]] | [[Chapter 13 Overview]] | [[3-Track Integration]]*
+*Links: [[Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch11]] | [[zettelkasten/rust_book/rust-book-ch13]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter12 #cli #io #error-handling #tdd #project-structure #overview #foundation*

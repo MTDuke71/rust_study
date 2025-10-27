@@ -1,9 +1,9 @@
 # Chapter 11: Writing Automated Tests
 
 ## 🔗 Zettelkasten Links
-- **Overview**: [[Chapter 11 Overview]]
-- **Previous**: [[Chapter 10 Overview]]
-- **Next**: [[Chapter 12 Overview]]
+- **Overview**: [[zettelkasten/rust_book/rust-book-ch11]]
+- **Previous**: [[zettelkasten/rust_book/rust-book-ch10]]
+- **Next**: [[zettelkasten/rust_book/rust-book-ch12]]
 - **Missions**: [[mission8 Overview]] - Testing algorithm implementations | [[Mission1 Overview]] - Unit testing data structures
 - **Daily Study**: [[Day 25 - Unit Testing]] | [[Day 26 - Integration Testing]] | [[Day 27 - Test Organization]]
 - **Book MOC**: [[Rust Book MOC]]

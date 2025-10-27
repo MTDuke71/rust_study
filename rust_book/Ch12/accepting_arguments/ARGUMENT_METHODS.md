@@ -2,7 +2,7 @@
 
 ## 🔗 Zettelkasten Links
 - **Knowledge Hub**: [[Command Line Argument Methods]] - Comprehensive zettelkasten entry
-- **Chapter Context**: [[Chapter 12 Overview]] - Parent chapter overview
+- **Chapter Context**: [[zettelkasten/rust_book/rust-book-ch12]] - Parent chapter overview
 - **Related**: [[Rust CLI Applications]], [[Error Handling Patterns]], [[Input Validation]]
 
 This document demonstrates different approaches to handling command-line arguments in Rust, based on the examples in `main.rs`.

@@ -1,9 +1,9 @@
 # Chapter 10: Generic Types, Traits, and Lifetimes
 
 ## 🔗 Zettelkasten Links
-- **Overview**: [[Chapter 10 Overview]]
+- **Overview**: [[zettelkasten/rust_book/rust-book-ch10]]
 - **Previous**: [[Chapter 9 Overview]]
-- **Next**: [[Chapter 11 Overview]]
+- **Next**: [[zettelkasten/rust_book/rust-book-ch11]]
 - **Missions**: [[Mission3 Overview]] - Trait-based algorithms | [[Mission5 Overview]] - Generic collections
 - **Daily Study**: [[Day 15 - Traits]] | [[Day 16 - Generic Types]] | [[Day 17 - Lifetimes]]
 - **Book MOC**: [[Rust Book MOC]]
@@ -430,11 +430,11 @@ Before moving to Chapter 11, ensure you can:
 
 **Next Steps:**
 - Complete exercises in `Ch10/generics/`, `Ch10/traits/`, and `Ch10/lifetimes/` directories
-- Review [[Chapter 11 Overview]] when ready
+- Review [[zettelkasten/rust_book/rust-book-ch11]] when ready
 
 ---
 
 *This chapter forms the foundation for writing reusable, type-safe Rust code. Essential for understanding Rust's type system and memory safety guarantees.*
 
-*Links: [[Rust Book MOC]] | [[Chapter 9 Overview]] | [[Chapter 11 Overview]]*
+*Links: [[Rust Book MOC]] | [[Chapter 9 Overview]] | [[zettelkasten/rust_book/rust-book-ch11]]*
 *Tags: #rust-book #chapter10 #generics #traits #lifetimes #foundation*

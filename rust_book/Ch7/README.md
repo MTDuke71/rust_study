@@ -1,9 +1,10 @@
 # Chapter 7: Managing Growing Projects with Packages, Crates, and Modules
 
-## 🔗 Zettelkasten Links
-- **Overview**: [[Chapter 7 Overview]]
-- **Previous**: [[Chapter 6 Overview]]
-- **Next**: [[Chapter 8 Overview]]
+## � Navigation
+
+- **Overview**: [[zettelkasten/rust_book/rust-book-ch7]]
+- **Previous**: [[zettelkasten/rust_book/rust-book-ch6]]
+- **Next**: [[zettelkasten/rust_book/rust-book-ch8]]
 - **Missions**: [[Mission6 Overview]] - Applies module organization concepts
 - **Daily Study**: [[Day 15 - Module System]] - Reinforces this chapter
 - **Book MOC**: [[Rust Book MOC]]
@@ -167,7 +168,7 @@ The module tree is like a file system where you navigate from root to find what 
 
 **Next Steps:**
 - Complete exercises in `Ch7/section_name/` directories
-- Review [[Chapter 8 Overview]] when ready
+- Review [[zettelkasten/rust_book/rust-book-ch8]] when ready
 
 ---
 

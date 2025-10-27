@@ -1,7 +1,7 @@
 # Command Line Argument Methods
 
 ## 🔗 Zettelkasten Links
-- **Source**: [[Chapter 12 Overview]] - Detailed implementation in Ch12/accepting_arguments
+- **Source**: [[zettelkasten/rust_book/rust-book-ch12]] - Detailed implementation in Ch12/accepting_arguments
 - **Related Concepts**: [[Error Handling Patterns]], [[Rust CLI Applications]], [[Input Validation]]
 - **Examples**: [[CLI Best Practices]], [[Defensive Programming]]
 - **Book Connection**: [[Rust Book MOC]]
@@ -144,5 +144,5 @@ For complex applications, consider:
 
 *Comprehensive guide to command-line argument handling in Rust, demonstrating the evolution from basic to production-ready patterns.*
 
-*Links: [[Chapter 12 Overview]] | [[Rust CLI Applications]] | [[Error Handling Patterns]]*
+*Links: [[zettelkasten/rust_book/rust-book-ch12]] | [[Rust CLI Applications]] | [[Error Handling Patterns]]*
 *Tags: #rust #cli #arguments #error-handling #validation #defensive-programming #learning-progression*

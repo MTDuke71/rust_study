@@ -194,8 +194,8 @@ let world = &s[6..11];
 
 ### **Rust Book Integration**
 - **[[Chapter 4 Overview]]** - Ownership and borrowing chapter
-- **[[Chapter 8 Overview]]** - Collections and ownership
-- **[[Chapter 10 Overview]]** - Generics and ownership
+- **[[zettelkasten/rust_book/rust-book-ch8]]** - Collections and ownership
+- **[[zettelkasten/rust_book/rust-book-ch10]]** - Generics and ownership
 
 ## 🧪 Common Pitfalls and Solutions
 

@@ -55,13 +55,13 @@ The broken links fall into **4 main categories**:
 - [x] `[[Generic Programming]]` - **EXISTS** - Verified existing file
 
 #### **Chapter Overview Pages** (Naming Mismatch Issues)
-- [ ] `[[Chapter 10 Overview]]` - **EXISTS as `chapter10_overview.md`** - Fix capitalization in links (7+ references)
-- [ ] `[[Chapter 11 Overview]]` - Check if exists or create (referenced 7+ times)
-- [ ] `[[Chapter 6 Overview]]` - **EXISTS as `chapter6_overview.md`** - Fix capitalization
-- [ ] `[[Chapter 7 Overview]]` - Check if exists or create
-- [ ] `[[Chapter 8 Overview]]` - **EXISTS as `Chapter 8.md`** - Standardize naming
-- [ ] `[[Chapter 12 Overview]]` - Check if exists or create
-- [ ] `[[Chapter 13 Overview]]` - Check if exists or create
+- [x] `[[Chapter 10 Overview]]` - **FIXED** - Updated all references to `[[zettelkasten/rust_book/rust-book-ch10]]`
+- [x] `[[Chapter 11 Overview]]` - **FIXED** - Updated all references to `[[zettelkasten/rust_book/rust-book-ch11]]`
+- [x] `[[Chapter 6 Overview]]` - **FIXED** - Updated all references to `[[zettelkasten/rust_book/rust-book-ch6]]`
+- [x] `[[Chapter 7 Overview]]` - **FIXED** - Updated all references to `[[zettelkasten/rust_book/rust-book-ch7]]`
+- [x] `[[Chapter 8 Overview]]` - **FIXED** - Updated all references to `[[zettelkasten/rust_book/rust-book-ch8]]`
+- [x] `[[Chapter 12 Overview]]` - **FIXED** - Updated all references to `[[zettelkasten/rust_book/rust-book-ch12]]`
+- [x] `[[Chapter 13 Overview]]` - **FIXED** - Updated all references to `[[zettelkasten/rust_book/rust-book-ch13]]`
 
 ---
 

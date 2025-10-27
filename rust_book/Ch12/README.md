@@ -1,9 +1,9 @@
 # Chapter 12: An I/O Project: Building a Command Line Program
 
 ## 🔗 Zettelkasten Links
-- **Overview**: [[Chapter 12 Overview]]
-- **Previous**: [[Chapter 11 Overview]]
-- **Next**: [[Chapter 13 Overview]]
+- **Overview**: [[zettelkasten/rust_book/rust-book-ch12]]
+- **Previous**: [[zettelkasten/rust_book/rust-book-ch11]]
+- **Next**: [[zettelkasten/rust_book/rust-book-ch13]]
 - **Missions**: [[mission8 Overview]] - Advanced project structure | [[Mission9 Overview]] - CLI pathfinding tools
 - **Daily Study**: [[Day 42 - CLI Applications]] - Reinforces this chapter
 - **Book MOC**: [[Rust Book MOC]]
@@ -307,7 +307,7 @@ fn main() {
 
 **Next Steps:**
 - Complete exercises in `Ch12/accepting_arguments/`, `Ch12/reading_files/`, and `Ch12/refactoring/` directories
-- Review [[Chapter 13 Overview]] when ready
+- Review [[zettelkasten/rust_book/rust-book-ch13]] when ready
 
 ---
 

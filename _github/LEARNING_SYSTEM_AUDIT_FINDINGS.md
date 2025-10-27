@@ -47,7 +47,7 @@ Ch10/
    - ✅ **Title**: "# Chapter 10: Generic Types, Traits, and Lifetimes" (Perfect format)
    - ✅ **Zettelkasten Links at TOP** (Template requirement):
      - Previous: [[Chapter 9 Overview]]
-     - Next: [[Chapter 11 Overview]]
+     - Next: [[zettelkasten/rust_book/rust-book-ch11]]
      - Missions: [[Mission3 Overview]], [[Mission5 Overview]]
      - Daily Study: [[Day 15 - Traits]], [[Day 16 - Generic Types]], [[Day 17 - Lifetimes]]
      - Book MOC: [[Rust Book MOC]]
