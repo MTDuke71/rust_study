@@ -5,7 +5,7 @@
 - **Previous**: [[zettelkasten/rust_book/rust-book-ch10]]
 - **Next**: [[zettelkasten/rust_book/rust-book-ch12]]
 - **Missions**: [[mission8 Overview]] - Testing algorithm implementations | [[Mission1 Overview]] - Unit testing data structures
-- **Daily Study**: [[../../zettelkasten/daily-study/Day25]] | [[../../zettelkasten/daily-study/Day26]] | [[../../zettelkasten/daily-study/Day27]]
+- **Daily Study**: [[daily-study/Day25]] | [[daily-study/Day26]] | [[daily-study/Day27]]
 - **Book MOC**: [[Rust Book MOC]]
 
 ## 📚 Overview
