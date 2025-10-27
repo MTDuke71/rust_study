@@ -105,8 +105,10 @@ This MOC provides complete access to both:
 
 ### **Chapter 12: I/O Project - Command Line Program**
 - **📁 Implementations**: [[../rust_book/Ch12/README]] - Building a grep-like command line tool
+  - **Complete Project**: [[../rust_book/Ch12/minigrep/README]] - Production-quality text search tool
 - **📝 Study Notes**: [[rust_book/rust-book-ch12]] - Project design and implementation patterns
 - **🔗 Environment Setup**: [[../rust_book/Ch12/environment_variables/README]] - Environment variable handling patterns
+- **🎯 Key Skills**: CLI development, file I/O, error handling, testing, project organization
 
 ---
 
