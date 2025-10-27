@@ -91,7 +91,8 @@ jobs:
         # Run workspace tests with detailed output
         echo "Running workspace tests..." | tee -a reports/test-results.json
         cargo test --workspace --all-targets --all-features -- --nocapture 2>&1 | tee -a reports/test-results.json
-        workspace_exit_code=$?
+        # Capture the exit code from cargo test, not tee
+        workspace_exit_code=${PIPESTATUS[0]}
         
         # Check for compilation failures
         compilation_failed="false"
