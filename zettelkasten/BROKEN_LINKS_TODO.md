@@ -289,6 +289,8 @@ Get-ChildItem -Recurse -Filter "*.md" | ForEach-Object {
 - [[3-Track Integration]] - Learning system architecture
 - [[Documentation Standards]] - File creation guidelines
 - [[Quality Assurance]] - Validation workflows
+- [[Mission9 Overview]] - Mission 9 pathfinding implementation
+- [[Rust Book MOC]] - Rust book chapter integration
 
 ---
 
