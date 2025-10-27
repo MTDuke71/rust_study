@@ -266,13 +266,13 @@ fn main() {
             grid.display_with_path(None, start, goal);
         }
 
-        let mut results = Vec::new();
-
         // Benchmark all algorithms
-        results.push(run_bidirectional_astar_manhattan(&grid, start, goal));
-        results.push(run_bidirectional_astar_euclidean(&grid, start, goal));
-        results.push(run_bidirectional_dijkstra(&grid, start, goal));
-        results.push(run_memory_optimized_astar(&grid, start, goal));
+        let results = vec![
+            run_bidirectional_astar_manhattan(&grid, start, goal),
+            run_bidirectional_astar_euclidean(&grid, start, goal),
+            run_bidirectional_dijkstra(&grid, start, goal),
+            run_memory_optimized_astar(&grid, start, goal),
+        ];
 
         // Display results table
         println!("\n📊 Performance Comparison:");

@@ -12,22 +12,28 @@ use mission9::performance_optimization::{
 };
 use std::time::Instant;
 
+/// Type alias for a grid position (x, y)
+type Position = (usize, usize);
+
+/// Type alias for a neighbor with cost (position, cost)
+type Neighbor = (Position, u32);
+
 /// Test helper: Manhattan distance heuristic for grid-based pathfinding
-fn manhattan_distance(a: (usize, usize), b: (usize, usize)) -> u32 {
+fn manhattan_distance(a: Position, b: Position) -> u32 {
     let dx = a.0.abs_diff(b.0);
     let dy = a.1.abs_diff(b.1);
     (dx + dy) as u32
 }
 
 /// Test helper: Euclidean distance heuristic (rounded up)
-fn euclidean_distance(a: (usize, usize), b: (usize, usize)) -> u32 {
+fn euclidean_distance(a: Position, b: Position) -> u32 {
     let dx = (a.0 as f64) - (b.0 as f64);
     let dy = (a.1 as f64) - (b.1 as f64);
     (dx * dx + dy * dy).sqrt().ceil() as u32
 }
 
 /// Test helper: Generate 4-connected grid neighbors
-fn grid_neighbors_4(pos: (usize, usize), width: usize, height: usize) -> Vec<((usize, usize), u32)> {
+fn grid_neighbors_4(pos: Position, width: usize, height: usize) -> Vec<Neighbor> {
     let mut neighbors = Vec::new();
     let (x, y) = pos;
 
@@ -49,7 +55,7 @@ fn grid_neighbors_4(pos: (usize, usize), width: usize, height: usize) -> Vec<((u
 
 /// Test helper: Generate 8-connected grid neighbors (including diagonals)
 #[allow(dead_code)]
-fn grid_neighbors_8(pos: (usize, usize), width: usize, height: usize) -> Vec<((usize, usize), u32)> {
+fn grid_neighbors_8(pos: Position, width: usize, height: usize) -> Vec<Neighbor> {
     let mut neighbors = Vec::new();
     let (x, y) = pos;
 
@@ -89,7 +95,7 @@ fn create_maze_neighbors(
     obstacles: &[(usize, usize)],
     width: usize,
     height: usize,
-) -> impl Fn((usize, usize)) -> Vec<((usize, usize), u32)> + '_ {
+) -> impl Fn(Position) -> Vec<Neighbor> + '_ {
     move |pos| {
         grid_neighbors_4(pos, width, height)
             .into_iter()
