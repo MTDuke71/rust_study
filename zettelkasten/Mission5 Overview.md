@@ -91,4 +91,4 @@ See [[Mission5_tut Overview]] for step-by-step learning path
 
 ---
 *Tags: #mission5 #hashmap #hashset #overview #v-cycle #data-structures*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Mission5_tut Overview]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Collections MOC]] | [[Mission5_tut Overview]] | [[MONTHLY_CALENDAR]]*

@@ -26,9 +26,10 @@
 
 **Related Notes:**
 - [[../../daily_study/rust_learning_week5_notes/README|Week 5 Overview]]
-- [[Error Handling Patterns]]
+- [[../rust-book-ch9-12-review]] - Rust Book Chapters 9-12 comprehensive review (especially Chapter 9: Error Handling)
+- [[../Error Handling Patterns]]
 - [[Day34]] - Error Handling Patterns
-- [[zettel-index]] - Main knowledge hub
+- [[../zettel-index]] - Main knowledge hub
 
 ---
 

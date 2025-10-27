@@ -54,6 +54,7 @@ By the end of Week 5, you will master:
 - **File Format Variations** - Parsing different input formats with recovery
 
 ### **Rust Book Integration**
+- **[[rust-book-ch9-12-review]]** - **Comprehensive Chapters 9-12 Review** - Deep dive into error handling (Ch9), generics/traits/lifetimes (Ch10), testing (Ch11), and CLI projects (Ch12)
 - **Chapter 9** - Error handling fundamentals
 - **Chapter 10** - Error trait implementations
 - **Advanced Patterns** - Custom error types and propagation

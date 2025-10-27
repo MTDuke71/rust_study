@@ -305,6 +305,12 @@ These are the building blocks of all Rust applications:
 
 ---
 
+## 📖 Continue Reading
+
+**Next Review**: [[rust-book-ch9-12-review]] - Chapters 9-12: Error Handling, Generics/Traits/Lifetimes, Testing, and CLI Projects
+
+---
+
 *Created: October 12, 2025*  
 *Context: Rust Book review session, comprehensive conceptual synthesis*  
 *Next: Chapter 9 (Error Handling) or Chapter 10 (Generics, Traits, Lifetimes)*

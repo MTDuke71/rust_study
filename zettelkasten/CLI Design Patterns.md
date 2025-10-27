@@ -824,4 +824,4 @@ enum AnalysisCommands {
 ---
 
 *Tags: #cli #command-line #clap #argument-parsing #user-experience #mission9 #pathfinding #rust #terminal*
-*Links: [[zettel-index]] | [[Standard Error and Stream Separation]] | [[Custom Error Types]] | [[API Design Patterns]] | [[Testing Patterns]] | [[Mission9 Overview]] | [[Mission7 Overview]] | [[Rust Book MOC]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Standard Error and Stream Separation]] | [[Custom Error Types]] | [[API Design Patterns]] | [[Testing Patterns]] | [[Mission9 Overview]] | [[Mission7 Overview]] | [[Rust Book MOC]] | [[Daily Study MOC]]*

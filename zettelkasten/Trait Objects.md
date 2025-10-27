@@ -704,4 +704,4 @@ fn test_query(db: &dyn Database) {
 
 *Tags: #trait-objects #dynamic-dispatch #polymorphism #vtable #object-safety #design-patterns #week3 #advanced-traits*
 
-*Links: [[zettel-index]] | [[Week 3 Overview]] | [[Generic Programming]] | [[Mission5 Overview]] | [[Collections MOC]] | [[Rust Trinity - Struct Trait Impl]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Week 3 Overview]] | [[Generic Programming]] | [[Mission5 Overview]] | [[Collections MOC]] | [[Rust Trinity - Struct Trait Impl]]*

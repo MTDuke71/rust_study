@@ -353,4 +353,4 @@ fn process_data(data: &str) -> Result<Data, ProcessingError> {
 ---
 
 *Tags: #error-handling #result #panic #patterns #best-practices #anyhow #thiserror #recovery #propagation*
-*Links: [[zettel-index]] | [[Error Handling Deep Dive]] | [[daily-study/Day05]] | [[daily-study/Day30]] | [[daily-study/Day31]] | [[daily-study/Day32]] | [[daily-study/Day33]] | [[daily-study/Day34]] | [[daily-study/Day35]] | [[Rust Concepts MOC]] | [[../rust_book/Ch9/README]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Error Handling Deep Dive]] | [[daily-study/Day05]] | [[daily-study/Day30]] | [[daily-study/Day31]] | [[daily-study/Day32]] | [[daily-study/Day33]] | [[daily-study/Day34]] | [[daily-study/Day35]] | [[Rust Concepts MOC]] | [[../rust_book/Ch9/README]]*

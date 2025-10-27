@@ -220,4 +220,4 @@ pub trait Pathfinder<G: WeightedGraph> {
 
 *Tags: #mission9 #pathfinding #dijkstra #astar #algorithms #graphs #optimization #data-structures*
 
-*Links: [[Mission7 Overview]] | [[Mission10 Overview]] | [[Graph Algorithms]] | [[Algorithm Design Patterns]] | [[Performance Analysis]] | [[Priority Queue Patterns]] | [[Dijkstra Algorithm]] | [[A* Algorithm]] | [[Pathfinding Strategies]] | [[../missions/Mission9/day2_completion_summary]] | [[Daily Notes/2025-10-23]] | [[zettel-index]]*
+*Links: [[rust-book-ch9-12-review]] | [[Mission7 Overview]] | [[Mission10 Overview]] | [[Graph Algorithms]] | [[Algorithm Design Patterns]] | [[Performance Analysis]] | [[Priority Queue Patterns]] | [[Dijkstra Algorithm]] | [[A* Algorithm]] | [[Pathfinding Strategies]] | [[../missions/Mission9/day2_completion_summary]] | [[Daily Notes/2025-10-23]] | [[zettel-index]]*

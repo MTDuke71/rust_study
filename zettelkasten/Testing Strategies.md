@@ -571,4 +571,4 @@ cargo tarpaulin --out xml
 ---
 
 *Tags: #testing #unit-testing #integration-testing #requirement-testing #v-cycle #doctests #error-testing #performance-testing*
-*Links: [[zettel-index]] | [[REQ-1 Test Strategy]] | [[V-Cycle Methodology]] | [[Debugging Lessons]] | [[../rust_book/Ch11/CHAPTER_COMPLETE]] | [[daily-study/Day05]] | [[daily-study/Day33]] | [[daily-study/Day34]] | [[daily-study/Day35]] | [[Error Handling Patterns]] | [[TDD (Test-Driven Development)]] | [[Unit Testing]] | [[Integration Testing]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[REQ-1 Test Strategy]] | [[V-Cycle Methodology]] | [[Debugging Lessons]] | [[../rust_book/Ch11/CHAPTER_COMPLETE]] | [[daily-study/Day05]] | [[daily-study/Day33]] | [[daily-study/Day34]] | [[daily-study/Day35]] | [[Error Handling Patterns]] | [[TDD (Test-Driven Development)]] | [[Unit Testing]] | [[Integration Testing]]*

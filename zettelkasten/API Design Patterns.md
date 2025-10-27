@@ -763,4 +763,4 @@ impl MyString {
 ---
 
 *Tags: #api-design #patterns #rust #public-interface #ergonomics #performance #forward-compatibility #best-practices*
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Mission5 Overview]] | [[Error Handling Patterns]] | [[Iterator Patterns]] | [[anyhow and thiserror]] | [[Rest Patterns]] | [[Memory Address Analysis]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Rust Concepts MOC]] | [[Mission5 Overview]] | [[Error Handling Patterns]] | [[Iterator Patterns]] | [[anyhow and thiserror]] | [[Rest Patterns]] | [[Memory Address Analysis]]*

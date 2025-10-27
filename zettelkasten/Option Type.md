@@ -331,3 +331,4 @@ assert_eq!(add_two_numbers(Some(3), None), None);
 ---
 
 *Tags: #option #enums #null-safety #type-safety #error-handling #rust-fundamentals #rust-book #ch6*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Result Type]] | [[Error Handling Patterns]]*

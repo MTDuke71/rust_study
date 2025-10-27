@@ -714,4 +714,4 @@ impl std::error::Error for ServiceError {}
 ---
 
 *Tags: #tdd #test-driven-development #red-green-refactor #test-first #development-methodology #v-cycle*
-*Links: [[zettel-index]] | [[Unit Testing]] | [[Integration Testing]] | [[Testing Strategies]] | [[V-Cycle Methodology]] | [[REQ-1 Test Strategy]] | [[Debugging Lessons]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Unit Testing]] | [[Integration Testing]] | [[Testing Strategies]] | [[V-Cycle Methodology]] | [[REQ-1 Test Strategy]] | [[Debugging Lessons]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*

@@ -436,4 +436,4 @@ trait ObjectSafe {
 ---
 
 *Tags: #rust #traits #polymorphism #generics #interfaces #type-system*
-*Links: [[Generic Programming]] | [[zettelkasten/rust_book/rust-book-ch10]] | [[Rust Concepts MOC]]*
+*Links: [[rust-book-ch9-12-review]] | [[Generic Programming]] | [[zettelkasten/rust_book/rust-book-ch10]] | [[Rust Concepts MOC]]*

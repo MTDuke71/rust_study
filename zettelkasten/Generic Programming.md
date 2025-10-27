@@ -664,4 +664,4 @@ Related: [[daily-study/Day19]]
 
 *Tags: #generics #type-parameters #trait-bounds #associated-types #monomorphization #zero-cost-abstractions #rust-type-system #reusable-code*
 
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Rust Trinity - Struct Trait Impl]] | [[daily-study/Day16]] | [[Collections MOC]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Rust Concepts MOC]] | [[Rust Trinity - Struct Trait Impl]] | [[daily-study/Day16]] | [[Collections MOC]]*

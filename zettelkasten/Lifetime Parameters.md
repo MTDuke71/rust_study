@@ -136,6 +136,7 @@ mod tests {
 
 ## Related Concepts
 
+- [[rust-book-ch9-12-review]] - Comprehensive review of generics, traits, and lifetimes (Chapter 10)
 - [[Ownership and Borrowing]] - Foundation for understanding lifetimes
 - [[Day 17 - Lifetimes]] - Daily study progression  
 - [[zettelkasten/rust_book/rust-book-ch10]] - Generics, traits, and lifetimes together
