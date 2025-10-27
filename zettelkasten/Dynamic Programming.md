@@ -350,8 +350,7 @@ let result = dp[n]; // OK
 
 **Applications:**
 - [[AoC Patterns MOC]] - DP in competitive programming
-- [[mission-11]] - Formal DP implementation (planned)
-- [[Optimization Techniques]] - When and how to optimize DP
+- [[Performance Optimization Guide]] - When and how to optimize DP
 
 **Navigation:**
 - [[zettel-index]] - Main knowledge base
