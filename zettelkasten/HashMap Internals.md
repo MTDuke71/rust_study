@@ -8,7 +8,7 @@
 - **Purpose**: Transform keys into array indices
 - **Requirements**: Fast, deterministic, uniform distribution
 - **Rust Implementation**: Uses `std::hash::Hash` trait
-- **Connected to**: [[Mission5 Hash Function Design]]
+- **Connected to**: [[Hash Function Design]]
 
 ### **Bucket Array Structure**
 ```rust
@@ -27,6 +27,8 @@ struct HashMap<K, V> {
 - **Implementation**: [[Mission5 Resize Strategy]]
 
 ## ⚙️ Collision Resolution
+
+**See [[Collision Resolution]] for detailed strategies and implementation patterns.**
 
 ### **Chaining (Mission5 Approach)**
 - **Method**: Each bucket contains a list of key-value pairs

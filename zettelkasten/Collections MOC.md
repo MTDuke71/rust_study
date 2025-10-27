@@ -7,7 +7,7 @@
 ### **Hash-Based Collections**
 - [[HashMap Internals]] - Hash table implementation details
 - [[HashSet Applications]] - Unique collection use cases
-- [[Collision Resolution]] - Chaining vs open addressing
+- [[Collision Resolution]] - Chaining vs open addressing strategies
 - [[Hash Function Design]] - Creating good hash functions
 - [[Predicates and Higher-Order Functions Deep Dive]] - Filtering and searching with predicates
 
