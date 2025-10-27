@@ -35,6 +35,11 @@ Progressive chapter-by-chapter study:
 - Integrated with practical mission work
 - Hands-on exercises and examples
 
+#### **Next Book in Series**
+- **Title**: *Rust for Rustaceans: Idiomatic Programming for Experienced Developers*
+- **Author**: Jon Gjengset
+- **Purpose**: Transition from foundational knowledge to professional, idiomatic Rust development.
+
 **Key Pattern**: All three tracks reinforce each other - missions provide depth, daily study provides breadth, and the Rust book provides foundational understanding.
 
 ## 📂 Workspace Architecture

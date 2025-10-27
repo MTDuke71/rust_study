@@ -166,23 +166,50 @@ Metacognitive Reflection → Strategy Optimization
 - **Day 69**: Advanced macro techniques - recursion, parsing
 - **Day 70**: Macro practice - building code generation tools
 
-### **Week 11: Memory Management Advanced**
-- **Day 71**: Custom allocators - `GlobalAlloc` trait
-- **Day 72**: `Pin` and `Unpin` - self-referential types
-- **Day 73**: `Cow` (Clone on Write) - efficient string/data handling
-- **Day 74**: `MaybeUninit` - working with uninitialized memory
-- **Day 75**: Memory layout - `#[repr]`, padding, alignment
-- **Day 76**: Unsafe Rust basics - raw pointers, safety invariants
-- **Day 77**: Memory management practice - optimization techniques
+### **Week 11: Build Scripts & Procedural Macros**
+- **Day 71**: Build script basics (`build.rs`) - running code before compilation
+- **Day 72**: Code generation with `build.rs` - creating Rust files at build time
+- **Day 73**: Real-world `build.rs` - `tonic` (gRPC) and `bindgen` (FFI)
+- **Day 74**: Procedural macros deep dive - parsing token streams
+- **Day 75**: Advanced procedural macros - error handling and diagnostics
+- **Day 76**: Combining build scripts and macros
+- **Day 77**: Build script practice - creating a custom code generator
 
-### **Week 12: Foreign Function Interface (FFI)**
-- **Day 78**: FFI basics - calling C from Rust
-- **Day 79**: Memory safety across boundaries - raw pointers, lifetimes
-- **Day 80**: Calling Rust from C - `#[no_mangle]`, `extern "C" fn`
-- **Day 81**: Bindgen - automatically generating FFI bindings
-- **Day 82**: Error handling across FFI boundaries
-- **Day 83**: Performance considerations - zero-cost abstractions
-- **Day 84**: FFI practice - integrating with C libraries
+### **Week 12: Memory Management Advanced**
+- **Day 78**: Custom allocators - `GlobalAlloc` trait
+- **Day 79**: `Pin` and `Unpin` - self-referential types
+- **Day 80**: `Cow` (Clone on Write) - efficient string/data handling
+- **Day 81**: `MaybeUninit` - working with uninitialized memory
+- **Day 82**: Memory layout - `#[repr]`, padding, alignment
+- **Day 83**: Advanced `unsafe` - implementing `Vec<T>` with raw pointers
+- **Day 84**: Memory management practice - optimization techniques
+
+### **Week 13: SIMD (Single Instruction, Multiple Data)**
+- **Day 85**: SIMD fundamentals - processing data in parallel chunks
+- **Day 86**: Using `std::simd` - portable SIMD operations
+- **Day 87**: Auto-vectorization - helping the compiler generate SIMD code
+- **Day 88**: Benchmarking SIMD - `criterion` for performance measurement
+- **Day 89**: Real-world SIMD - image processing or numerical computation
+- **Day 90**: SIMD error handling and edge cases
+- **Day 91**: SIMD practice - optimizing a numerical algorithm
+
+### **Week 14: Foreign Function Interface (FFI)**
+- **Day 92**: FFI basics - calling C from Rust
+- **Day 93**: Memory safety across boundaries - raw pointers, lifetimes
+- **Day 94**: Calling Rust from C - `#[no_mangle]`, `extern "C" fn`
+- **Day 95**: `bindgen` - automatically generating FFI bindings
+- **Day 96**: Error handling across FFI boundaries
+- **Day 97**: Performance considerations - zero-cost abstractions
+- **Day 98**: FFI practice - integrating with a C library
+
+### **Week 15: WebAssembly (WASM)**
+- **Day 99**: WASM fundamentals - `wasm-pack` and `wasm-bindgen`
+- **Day 100**: High-performance Rust in the browser
+- **Day 101**: Interacting with JavaScript and Web APIs
+- **Day 102**: Optimizing for code size and performance
+- **Day 103**: Debugging and testing WASM modules
+- **Day 104**: Real-world WASM - building a browser-based tool
+- **Day 105**: WASM practice - creating an interactive web application
 
 ## 📚 Learning Progression
 
@@ -295,6 +322,14 @@ Traceability Matrix
 - 🔄 **Mission 23: Factory Pattern** - Object creation with associated types
 - 🔄 **Mission 24: Decorator Pattern** - Composable behavior with wrapper types
 - 🔄 **Mission 25: Adapter Pattern** - Interface compatibility between incompatible APIs
+
+#### **Phase 6: Advanced Systems & Specializations**
+*Beyond standard applications: systems programming, web, and high-performance computing*
+
+- 🔄 **Mission 26: Build-Time Code Generation (`build.rs`)** - Procedural macros and build scripts
+- 🔄 **Mission 27: Unsafe Data Structures** - Implementing a core data structure with raw pointers
+- 🔄 **Mission 28: High-Performance Computing (SIMD)** - Parallel data processing with SIMD
+- 🔄 **Mission 29: WebAssembly Integration (WASM)** - Building high-performance browser applications
 
 ### 🎮 Completed Problem-Solving Applications
 
