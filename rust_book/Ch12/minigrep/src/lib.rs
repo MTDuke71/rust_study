@@ -37,7 +37,10 @@ impl Config {
     /// let args = std::env::args();
     /// let config = Config::new(args)?;
     /// ```
-    pub fn new(mut args: std::env::Args) -> Result<Config, &'static str> {
+    pub fn new<T>(mut args: T) -> Result<Config, &'static str>
+    where
+        T: Iterator<Item = String>,
+    {
         args.next(); // Skip program name
 
         let query = match args.next() {
