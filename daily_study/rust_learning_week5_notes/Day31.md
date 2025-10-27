@@ -610,6 +610,17 @@ fn main() -> Result<()> {
 - **[[Result Combinators]]** - Functional error handling methods
 - **[[Error Handling Patterns]]** - When to propagate vs handle
 - **[[Error Handling Practice]]** - Building robust error handling systems
+- **[[../../zettelkasten/daily-study/Day31]]** - Zettelkasten redirect page
+
+---
+
+## 🔗 Navigation
+
+**Previous**: [[Day30]] | **Next**: [[Day32]]
+
+**Week Overview**: [[README|Week 5 Overview]]
+
+**Zettelkasten**: [[../../zettelkasten/daily-study/Day31|Day31 (Zettelkasten)]]
 
 ---
 

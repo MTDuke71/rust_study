@@ -563,6 +563,17 @@ enum ProcessError {
 - **[[Error Handling Patterns]]** - When to propagate vs handle
 - **[[Error Handling Practice]]** - Building robust error handling systems
 - **[[Functional Programming]]** - Functional error handling patterns
+- **[[../../zettelkasten/daily-study/Day32]]** - Zettelkasten redirect page
+
+---
+
+## 🔗 Navigation
+
+**Previous**: [[Day31]] | **Next**: [[Day33]]
+
+**Week Overview**: [[README|Week 5 Overview]]
+
+**Zettelkasten**: [[../../zettelkasten/daily-study/Day32|Day32 (Zettelkasten)]]
 
 ---
 

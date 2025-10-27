@@ -1020,6 +1020,17 @@ mod tests {
 - **[[anyhow and thiserror]]** - Advanced error handling crates
 - **[[Result Combinators]]** - Functional error handling methods
 - **[[Error Handling Patterns]]** - When to panic vs handle errors
+- **[[../../zettelkasten/daily-study/Day35]]** - Zettelkasten redirect page
+
+---
+
+## 🔗 Navigation
+
+**Previous**: [[Day34]] | **Next**: [[Week 6 Preview]]
+
+**Week Overview**: [[README|Week 5 Overview]]
+
+**Zettelkasten**: [[../../zettelkasten/daily-study/Day35|Day35 (Zettelkasten)]]
 
 ---
 

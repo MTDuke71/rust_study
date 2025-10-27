@@ -479,6 +479,17 @@ fn load_config_with_fallback(path: &str) -> Result<Config, AppError> {
 - **[[anyhow and thiserror]]** - Advanced error handling crates
 - **[[Result Combinators]]** - Functional error handling methods
 - **[[Error Handling Patterns]]** - When to propagate vs handle
+- **[[../../zettelkasten/daily-study/Day30]]** - Zettelkasten redirect page
+
+---
+
+## 🔗 Navigation
+
+**Previous**: [[Day29]] | **Next**: [[Day31]]
+
+**Week Overview**: [[README|Week 5 Overview]]
+
+**Zettelkasten**: [[../../zettelkasten/daily-study/Day30|Day30 (Zettelkasten)]]
 
 ---
 

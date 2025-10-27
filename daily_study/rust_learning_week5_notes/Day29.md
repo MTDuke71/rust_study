@@ -484,6 +484,17 @@ fn load_config_simple(path: &str) -> Result<Config, ConfigError> {
 - **[[Option Type]]** - The Option<T> type for nullable values
 - **[[anyhow and thiserror]]** - Advanced error handling crates
 - **[[Error Propagation]]** - The ? operator and error forwarding
+- **[[../../zettelkasten/daily-study/Day29]]** - Zettelkasten redirect page
+
+---
+
+## 🔗 Navigation
+
+**Previous**: [[Day28]] | **Next**: [[Day30]]
+
+**Week Overview**: [[README|Week 5 Overview]]
+
+**Zettelkasten**: [[../../zettelkasten/daily-study/Day29|Day29 (Zettelkasten)]]
 
 ---
 
