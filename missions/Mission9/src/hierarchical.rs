@@ -113,6 +113,7 @@ pub struct Shortcut {
 #[derive(Debug, Clone)]
 pub struct ContractionHierarchy {
     /// Node ordering (index = rank, value = node_id)
+    #[allow(dead_code)]
     node_order: Vec<NodeId>,
     /// Rank of each node (node_id -> rank)
     node_rank: HashMap<NodeId, usize>,
@@ -512,6 +513,7 @@ pub struct JumpPointSearch {
     /// Grid height
     height: usize,
     /// Diagonal movement allowed?
+    #[allow(dead_code)]
     allow_diagonal: bool,
 }
 

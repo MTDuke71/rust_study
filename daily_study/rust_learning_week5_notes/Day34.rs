@@ -6,23 +6,27 @@ use std::collections::HashMap;
 use std::path::Path;
 
 // Custom error types for examples
+#[allow(dead_code)]
 #[derive(Debug)]
 enum ParseError {
     EmptyInput,
     InvalidFormat,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 enum WithdrawalError {
     InsufficientFunds { requested: u64, available: u64 },
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 enum PreferenceError {
     PrimaryStorageFailed,
     SecondaryStorageFailed,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 enum ApiError {
     AuthenticationFailed { reason: String },
@@ -33,6 +37,7 @@ enum ApiError {
     ExternalServiceError { service: String },
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 enum FileProcessingError {
     FileNotFound { path: String },
@@ -58,6 +63,7 @@ impl std::fmt::Display for FileProcessingError {
 
 impl std::error::Error for FileProcessingError {}
 
+#[allow(dead_code)]
 #[derive(Debug)]
 enum UserServiceError {
     NotFound,
@@ -66,32 +72,38 @@ enum UserServiceError {
 }
 
 // Data structures
+#[allow(dead_code)]
 #[derive(Debug)]
 struct BankAccount {
     balance: i64,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Default)]
 struct UserPreferences {
     theme: String,
     language: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct ParsedUserData {
     content: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct ValidatedUserData {
     content: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct ProcessedData {
     content: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct User {
     id: u32,
@@ -99,6 +111,7 @@ struct User {
     email: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct UserResponse {
     id: u32,
@@ -106,23 +119,27 @@ struct UserResponse {
     email: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct CreateUserRequest {
     name: String,
     email: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct AuthenticatedUser {
     id: u32,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct ParsedData {
     records: usize,
     content: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct ProcessedFile {
     input_path: String,
@@ -130,6 +147,7 @@ struct ProcessedFile {
     size: usize,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct ProcessingSummary {
     success_count: usize,
@@ -138,6 +156,7 @@ struct ProcessingSummary {
     errors: Vec<ProcessingError>,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct ProcessingError {
     file: String,
@@ -147,6 +166,7 @@ struct ProcessingError {
 // Example functions demonstrating error handling patterns
 
 // Pattern 1: Panic vs Result
+#[allow(dead_code)]
 fn get_element(slice: &[i32], index: usize) -> i32 {
     if index >= slice.len() {
         panic!("Index {} out of bounds for slice of length {}", index, slice.len());
@@ -154,6 +174,7 @@ fn get_element(slice: &[i32], index: usize) -> i32 {
     slice[index]
 }
 
+#[allow(dead_code)]
 fn parse_age(input: &str) -> Result<u32, ParseError> {
     if input.is_empty() {
         return Err(ParseError::EmptyInput);
@@ -164,6 +185,7 @@ fn parse_age(input: &str) -> Result<u32, ParseError> {
 }
 
 impl BankAccount {
+    #[allow(dead_code)]
     fn withdraw(&mut self, amount: u64) {
         // This should never happen in correct code
         if amount > self.balance as u64 {
@@ -174,6 +196,7 @@ impl BankAccount {
         self.balance -= amount as i64;
     }
     
+    #[allow(dead_code)]
     fn safe_withdraw(&mut self, amount: u64) -> Result<(), WithdrawalError> {
         if amount > self.balance as u64 {
             return Err(WithdrawalError::InsufficientFunds {
@@ -187,6 +210,7 @@ impl BankAccount {
     }
 }
 
+#[allow(dead_code)]
 fn load_user_preferences(user_id: u32) -> Result<UserPreferences, PreferenceError> {
     // Try primary storage
     match load_from_primary_storage(user_id) {
@@ -204,6 +228,7 @@ fn load_user_preferences(user_id: u32) -> Result<UserPreferences, PreferenceErro
     }
 }
 
+#[allow(dead_code)]
 fn load_from_primary_storage(user_id: u32) -> Result<UserPreferences, PreferenceError> {
     if user_id == 0 {
         Err(PreferenceError::PrimaryStorageFailed)
@@ -215,6 +240,7 @@ fn load_from_primary_storage(user_id: u32) -> Result<UserPreferences, Preference
     }
 }
 
+#[allow(dead_code)]
 fn load_from_secondary_storage(user_id: u32) -> Result<UserPreferences, PreferenceError> {
     if user_id == 999 {
         Err(PreferenceError::SecondaryStorageFailed)
@@ -227,6 +253,7 @@ fn load_from_secondary_storage(user_id: u32) -> Result<UserPreferences, Preferen
 }
 
 // Pattern 2: Error Context and Wrapping
+#[allow(dead_code)]
 fn process_user_data(user_id: u32, data: &str) -> Result<ProcessedData, String> {
     // Add context at each step
     let parsed = parse_user_data(data)
@@ -241,11 +268,13 @@ fn process_user_data(user_id: u32, data: &str) -> Result<ProcessedData, String> 
     Ok(enriched)
 }
 
+#[allow(dead_code)]
 fn parse_user_data(data: &str) -> Result<ParsedUserData, ParseError> {
     // Parsing logic
     Ok(ParsedUserData { content: data.to_string() })
 }
 
+#[allow(dead_code)]
 fn validate_user_data(data: &ParsedUserData) -> Result<ValidatedUserData, String> {
     // Validation logic
     if data.content.is_empty() {
@@ -255,6 +284,7 @@ fn validate_user_data(data: &ParsedUserData) -> Result<ValidatedUserData, String
     }
 }
 
+#[allow(dead_code)]
 fn enrich_user_data(data: ValidatedUserData) -> Result<ProcessedData, String> {
     // Enrichment logic
     Ok(ProcessedData { content: data.content })
@@ -262,6 +292,7 @@ fn enrich_user_data(data: ValidatedUserData) -> Result<ProcessedData, String> {
 
 // Pattern 3: API Error Handling
 impl ApiError {
+    #[allow(dead_code)]
     fn status_code(&self) -> u16 {
         match self {
             ApiError::AuthenticationFailed { .. } => 401,
@@ -273,6 +304,7 @@ impl ApiError {
         }
     }
     
+    #[allow(dead_code)]
     fn error_code(&self) -> &'static str {
         match self {
             ApiError::AuthenticationFailed { .. } => "AUTH_FAILED",
@@ -285,12 +317,14 @@ impl ApiError {
     }
 }
 
+#[allow(dead_code)]
 struct ApiHandler {
     user_service: UserService,
     auth_service: AuthService,
 }
 
 impl ApiHandler {
+    #[allow(dead_code)]
     fn new() -> Self {
         Self {
             user_service: UserService,
@@ -298,6 +332,7 @@ impl ApiHandler {
         }
     }
     
+    #[allow(dead_code)]
     fn handle_get_user(&self, user_id: u32, token: &str) -> Result<UserResponse, ApiError> {
         // Authentication
         let auth_user = self.auth_service.authenticate(token)
@@ -325,6 +360,7 @@ impl ApiHandler {
         })
     }
     
+    #[allow(dead_code)]
     fn handle_create_user(&self, request: CreateUserRequest, token: &str) -> Result<UserResponse, ApiError> {
         // Authentication
         let auth_user = self.auth_service.authenticate(token)
@@ -374,9 +410,11 @@ impl ApiHandler {
     }
 }
 
+#[allow(dead_code)]
 struct UserService;
 
 impl UserService {
+    #[allow(dead_code)]
     fn get_user(&self, user_id: u32) -> Result<User, UserServiceError> {
         // Simulate database lookup
         if user_id == 0 {
@@ -390,6 +428,7 @@ impl UserService {
         }
     }
     
+    #[allow(dead_code)]
     fn create_user(&self, request: CreateUserRequest) -> Result<User, UserServiceError> {
         // Simulate user creation
         if request.email.contains("duplicate") {
@@ -406,9 +445,11 @@ impl UserService {
     }
 }
 
+#[allow(dead_code)]
 struct AuthService;
 
 impl AuthService {
+    #[allow(dead_code)]
     fn authenticate(&self, token: &str) -> Result<AuthenticatedUser, String> {
         if token == "invalid" {
             Err("Invalid token".to_string())
@@ -417,16 +458,19 @@ impl AuthService {
         }
     }
     
+    #[allow(dead_code)]
     fn can_read_user(&self, _auth_user: &AuthenticatedUser, _target_user_id: u32) -> bool {
         true // Simplified
     }
     
+    #[allow(dead_code)]
     fn can_create_user(&self, _auth_user: &AuthenticatedUser) -> bool {
         true // Simplified
     }
 }
 
 // Pattern 4: File Processing with Error Recovery
+#[allow(dead_code)]
 struct FileProcessor {
     input_dir: String,
     output_dir: String,
@@ -434,6 +478,7 @@ struct FileProcessor {
 }
 
 impl FileProcessor {
+    #[allow(dead_code)]
     fn new(input_dir: String, output_dir: String, temp_dir: String) -> Self {
         Self {
             input_dir,
@@ -442,6 +487,7 @@ impl FileProcessor {
         }
     }
     
+    #[allow(dead_code)]
     fn process_all_files(&self) -> Result<ProcessingSummary, FileProcessingError> {
         let files = self.list_input_files()?;
         let mut summary = ProcessingSummary::new();
@@ -465,6 +511,7 @@ impl FileProcessor {
         Ok(summary)
     }
     
+    #[allow(dead_code)]
     fn process_single_file(&self, file_path: &str) -> Result<ProcessedFile, FileProcessingError> {
         // Read file
         let content = std::fs::read_to_string(file_path)
@@ -492,6 +539,7 @@ impl FileProcessor {
         })
     }
     
+    #[allow(dead_code)]
     fn list_input_files(&self) -> Result<Vec<String>, FileProcessingError> {
         // Simulate file listing
         Ok(vec![
@@ -501,6 +549,7 @@ impl FileProcessor {
         ])
     }
     
+    #[allow(dead_code)]
     fn validate_format(&self, content: &str, file_path: &str) -> Result<String, FileProcessingError> {
         if content.trim().is_empty() {
             return Err(FileProcessingError::ProcessingFailed {
@@ -539,6 +588,7 @@ impl FileProcessor {
         Ok(content.to_string())
     }
     
+    #[allow(dead_code)]
     fn parse_content(&self, content: &str, file_path: &str) -> Result<ParsedData, FileProcessingError> {
         let extension = Path::new(file_path)
             .extension()
@@ -552,6 +602,7 @@ impl FileProcessor {
         }
     }
     
+    #[allow(dead_code)]
     fn parse_csv(&self, content: &str) -> Result<ParsedData, FileProcessingError> {
         let lines: Vec<&str> = content.lines().collect();
         if lines.is_empty() {
@@ -567,6 +618,7 @@ impl FileProcessor {
         })
     }
     
+    #[allow(dead_code)]
     fn parse_json(&self, content: &str) -> Result<ParsedData, FileProcessingError> {
         // Simple JSON parsing simulation
         if content.contains("invalid") {
@@ -582,6 +634,7 @@ impl FileProcessor {
         })
     }
     
+    #[allow(dead_code)]
     fn parse_text(&self, content: &str) -> Result<ParsedData, FileProcessingError> {
         Ok(ParsedData {
             records: content.lines().count(),
@@ -589,7 +642,8 @@ impl FileProcessor {
         })
     }
     
-    fn transform_data(&self, data: ParsedData, file_path: &str) -> Result<String, FileProcessingError> {
+    #[allow(dead_code)]
+    fn transform_data(&self, data: ParsedData, _file_path: &str) -> Result<String, FileProcessingError> {
         if data.content.contains("TRANSFORM_ERROR") {
             return Err(FileProcessingError::ProcessingFailed {
                 stage: "transformation".to_string(),
@@ -600,6 +654,7 @@ impl FileProcessor {
         Ok(format!("PROCESSED: {}\nRecords: {}", data.content, data.records))
     }
     
+    #[allow(dead_code)]
     fn generate_output_path(&self, input_path: &str) -> Result<String, FileProcessingError> {
         let filename = Path::new(input_path)
             .file_name()
@@ -609,6 +664,7 @@ impl FileProcessor {
         Ok(format!("{}/processed_{}", self.output_dir, filename))
     }
     
+    #[allow(dead_code)]
     fn write_output(&self, content: &str, output_path: &str) -> Result<(), FileProcessingError> {
         std::fs::write(output_path, content)
             .map_err(|_| FileProcessingError::Io { 
@@ -619,6 +675,7 @@ impl FileProcessor {
 }
 
 impl ProcessingSummary {
+    #[allow(dead_code)]
     fn new() -> Self {
         Self {
             success_count: 0,
