@@ -24,12 +24,12 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 | Day | Topic | Key Concepts | Links |
 |-----|-------|--------------|-------|
-| [[zettelkasten/daily-study/Day01\|Day 1]] | Setup & Tooling | Cargo, rustc, project structure | [[../rust_book/Ch1\|Rust Book Ch1]] |
+| [[daily-study/Day01\|Day 1]] | Setup & Tooling | Cargo, rustc, project structure | [[../rust_book/Ch1\|Rust Book Ch1]] |
 | [[daily-study/Day02\|Day 2]] | Ownership Basics | Move semantics, stack vs heap | [[../rust_book/Ch4\|Ch4]] · [[../daily_study/rust_learning_week1_notes/Day02_expanded\|**Expanded Deep Dive**]] |
 | [[daily-study/Day03\|Day 3]] | Borrowing Rules | Immutable/mutable references | [[../rust_book/Ch4\|Ch4]] · [[../daily_study/rust_learning_week1_notes/Day03_expanded\|**Expanded Deep Dive**]] |
 | [[daily-study/Day04\|Day 4]] | Lifetimes | Reference validity, scope | [[../rust_book/Ch10\|Ch10]] |
 | [[daily-study/Day05\|Day 5]] | Error Handling | Option, Result, ? operator | [[../rust_book/Ch9\|Ch9]] |
-| [[zettelkasten/daily-study/Day06\|Day 6]] | Pattern Matching | match, if let, destructuring | [[../rust_book/Ch6\|Ch6]] |
+| [[daily-study/Day06\|Day 6]] | Pattern Matching | match, if let, destructuring | [[../rust_book/Ch6\|Ch6]] |
 | [[daily-study/Day07\|Day 7]] | Week 1 Review | Practice & consolidation | [[Week 1 Overview]] |
 
 **Mission Integration**: Ownership concepts → Mission 1 (Stack), Mission 4 (Linked Lists)
@@ -41,13 +41,13 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 | Day | Topic | Key Concepts | Links |
 |-----|-------|--------------|-------|
-| Day 8 | Vectors | Dynamic arrays, capacity vs length | [[../missions/Mission1/README\|Mission1]] |
-| Day 9 | Strings | String vs &str, UTF-8, manipulation | [[../rust_book/Ch8\|Ch8]] |
+| [[daily-study/Day08\|Day 8]] | Vectors | Dynamic arrays, capacity vs length | [[../missions/Mission1/README\|Mission1]] |
+| [[daily-study/Day09\|Day 9]] | Strings | String vs &str, UTF-8, manipulation | [[../rust_book/Ch8\|Ch8]] |
 | [[daily-study/Day10\|Day 10]] | HashMaps | Key-value storage, borrowing | [[../missions/Mission5/README\|Mission5]] |
 | [[daily-study/Day11\|Day 11]] | HashSets | Unique collections, set ops | [[Mission5 Overview]] |
-| [[Day 12 - BTreeMap\|Day 12]] | BTreeMap & BTreeSet | Ordered collections | [[Collections MOC]] |
+| [[daily-study/Day12\|Day 12]] | BTreeMap & BTreeSet | Ordered collections | [[Collections MOC]] |
 | [[daily-study/Day13\|Day 13]] | Advanced Iterators | Transforming collections | [[../missions/Mission6/SIZE_HINT_EXPLAINED]] |
-| Day 14 | Error Handling | Robust error management | [[Error Handling Deep Dive]] |
+| [[daily-study/Day14\|Day 14]] | Error Handling | Robust error management | [[Error Handling Deep Dive]] |
 
 **Mission Integration**: Collections mastery → Mission 5 (HashMap implementation from scratch)
 
@@ -63,13 +63,13 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 | Day | Topic | Key Concepts | Links |
 |-----|-------|--------------|-------|
-| Day 15 | Traits Fundamentals | Defining/implementing behavior | [[../rust_book/Ch10\|Ch10]] |
-| Day 16 | Generic Types | Type parameters, constraints | [[Generic Programming]] |
-| Day 17 | Lifetime Annotations | Explicit lifetime syntax | [[Multiple Lifetimes Deep Dive]] |
-| Day 18 | Advanced Traits | Associated types, defaults | [[Rust Trinity - Struct Trait Impl]] |
-| Day 19 | Trait Objects | Dynamic dispatch with dyn | [[Trait Objects]] |
-| Day 20 | Advanced Lifetimes | Elision, 'static | [[Multiple Lifetimes Deep Dive]] |
-| Day 21 | Generics Practice | Building flexible APIs | [[PhantomData Type Safety Patterns]] |
+| [[daily-study/Day15\|Day 15]] | Traits Fundamentals | Defining/implementing behavior | [[../rust_book/Ch10\|Ch10]] |
+| [[daily-study/Day16\|Day 16]] | Generic Types | Type parameters, constraints | [[Generic Programming]] |
+| [[daily-study/Day17\|Day 17]] | Lifetime Annotations | Explicit lifetime syntax | [[Multiple Lifetimes Deep Dive]] |
+| [[daily-study/Day18\|Day 18]] | Advanced Traits | Associated types, defaults | [[Rust Trinity - Struct Trait Impl]] |
+| [[daily-study/Day19\|Day 19]] | Trait Objects | Dynamic dispatch with dyn | [[Trait Objects]] |
+| [[daily-study/Day20\|Day 20]] | Advanced Lifetimes | Elision, 'static | [[Multiple Lifetimes Deep Dive]] |
+| [[daily-study/Day21\|Day 21]] | Generics Practice | Building flexible APIs | [[PhantomData Type Safety Patterns]] |
 
 **Mission Integration**: 
 - Generic implementations → Mission 1 (generic Stack\<T\>)
@@ -83,13 +83,13 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 | Day | Topic | Key Concepts | Links |
 |-----|-------|--------------|-------|
-| Day 22 | Grid Fundamentals | 2D arrays, coordinates, storage | [[Mission6 Overview]] |
-| Day 23 | Grid Navigation | Directions, bounds checking | [[Chebyshev Distance]], [[Manhattan Distance]] |
-| Day 24 | Grid Algorithms | Flood fill, connected components | [[DFS Patterns]], [[BFS Patterns]] |
-| Day 25 | Queue Applications | BFS, level traversal | [[../missions/Mission2/README\|Mission2]] |
-| Day 26 | Advanced Queues | Priority queues, deque patterns | [[A-Star-Algorithm-Deep-Dive]], [[Mission6 Overview]] |
-| Day 27 | String Parsing | Splitting, regex, custom parsers | [[AoC Patterns MOC]] |
-| Day 28 | Week 4 Integration | Complete problem solving | [[Mission6 Overview]] |
+| [[daily-study/Day22\|Day 22]] | Grid Fundamentals | 2D arrays, coordinates, storage | [[Mission6 Overview]] |
+| [[daily-study/Day23\|Day 23]] | Grid Navigation | Directions, bounds checking | [[Chebyshev Distance]], [[Manhattan Distance]] |
+| [[daily-study/Day24\|Day 24]] | Grid Algorithms | Flood fill, connected components | [[DFS Patterns]], [[BFS Patterns]] |
+| [[daily-study/Day25\|Day 25]] | Queue Applications | BFS, level traversal | [[../missions/Mission2/README\|Mission2]] |
+| [[daily-study/Day26\|Day 26]] | Advanced Queues | Priority queues, deque patterns | [[A-Star-Algorithm-Deep-Dive]], [[Mission6 Overview]] |
+| [[daily-study/Day27\|Day 27]] | String Parsing | Splitting, regex, custom parsers | [[AoC Patterns MOC]] |
+| [[daily-study/Day28\|Day 28]] | Week 4 Integration | Complete problem solving | [[Mission6 Overview]] |
 
 **Mission Integration**: 
 - Week 4 provides complete toolkit for Mission 6 (2D grids + pathfinding)
@@ -109,13 +109,13 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 | Day | Topic | Key Concepts | Links |
 |-----|-------|--------------|-------|
-| [[Day 29 - Custom Error Types\|Day 29]] | Custom Error Types | `Display`, `Error` traits, error chains | [[Error Handling Deep Dive]] |
-| [[Day 30 - Error Propagation\|Day 30]] | Error Propagation | `?` operator, `From` trait, early returns | [[../rust_book/Ch9\|Ch9]] |
-| [[Day 31 - anyhow and thiserror\|Day 31]] | Error Crates | `anyhow`, `thiserror`, real-world patterns | [[../daily_study/rust_learning_week5_notes/examples\|Week 5 Examples]] |
-| [[Day 32 - Result Combinators\|Day 32]] | Result Combinators | `map`, `and_then`, `or_else`, chaining | [[../daily_study/rust_learning_week5_notes/examples/day32_result_combinators\|Combinator Examples]] |
-| [[Day 33 - Panic Recovery\|Day 33]] | Panic Recovery | `catch_unwind`, graceful failure handling | [[../daily_study/rust_learning_week5_notes/examples/day33_panic_recovery\|Recovery Examples]] |
-| [[Day 34 - Error Handling Patterns\|Day 34]] | Error Patterns | Panic vs errors, best practices, patterns | [[../daily_study/rust_learning_week5_notes/examples/day34_error_patterns\|Pattern Examples]] |
-| [[Day 35 - Robust Parsing\|Day 35]] | Robust Parsing | Error recovery, fault-tolerant parsers | [[Text Parsing Patterns]] |
+| [[daily-study/Day29\|Day 29]] | Custom Error Types | `Display`, `Error` traits, error chains | [[Error Handling Deep Dive]] |
+| [[daily-study/Day30\|Day 30]] | Error Propagation | `?` operator, `From` trait, early returns | [[../rust_book/Ch9\|Ch9]] |
+| [[daily-study/Day31\|Day 31]] | Error Crates | `anyhow`, `thiserror`, real-world patterns | [[../daily_study/rust_learning_week5_notes/examples\|Week 5 Examples]] |
+| [[daily-study/Day32\|Day 32]] | Result Combinators | `map`, `and_then`, `or_else`, chaining | [[../daily_study/rust_learning_week5_notes/examples/day32_result_combinators\|Combinator Examples]] |
+| [[daily-study/Day33\|Day 33]] | Panic Recovery | `catch_unwind`, graceful failure handling | [[../daily_study/rust_learning_week5_notes/examples/day33_panic_recovery\|Recovery Examples]] |
+| [[daily-study/Day34\|Day 34]] | Error Patterns | Panic vs errors, best practices, patterns | [[../daily_study/rust_learning_week5_notes/examples/day34_error_patterns\|Pattern Examples]] |
+| [[daily-study/Day35\|Day 35]] | Robust Parsing | Error recovery, fault-tolerant parsers | [[Text Parsing Patterns]] |
 
 **Mission Integration**: 
 - Error handling patterns used across all missions for robust implementations
@@ -275,13 +275,13 @@ Deep language understanding
 ## 📈 **Future Weeks Preview**
 
 ### **Week 5: Error Handling Mastery** ✅ **COMPLETED**
-- [[Day 29 - Custom Error Types]] - Building robust error types with `Display` and `Error` traits
-- [[Day 30 - Error Propagation]] - Mastering the `?` operator and `From` trait conversions
-- [[Day 31 - anyhow and thiserror]] - Real-world error handling with industry-standard crates
-- [[Day 32 - Result Combinators]] - Chaining operations with `map`, `and_then`, `or_else`
-- [[Day 33 - Panic Recovery]] - `catch_unwind` and graceful error recovery
-- [[Day 34 - Error Handling Patterns]] - When to panic vs return errors, best practices
-- [[Day 35 - Robust Parsing]] - Building fault-tolerant parsers with error recovery
+- [[daily-study/Day29|Day 29]] - Building robust error types with `Display` and `Error` traits
+- [[daily-study/Day30|Day 30]] - Mastering the `?` operator and `From` trait conversions
+- [[daily-study/Day31|Day 31]] - Real-world error handling with industry-standard crates
+- [[daily-study/Day32|Day 32]] - Chaining operations with `map`, `and_then`, `or_else`
+- [[daily-study/Day33|Day 33]] - `catch_unwind` and graceful error recovery
+- [[daily-study/Day34|Day 34]] - When to panic vs return errors, best practices
+- [[daily-study/Day35|Day 35]] - Building fault-tolerant parsers with error recovery
 - **Advanced Examples**: [[../daily_study/rust_learning_week5_notes/examples/web_api_errors|Web API Error Handling]] | [[../daily_study/rust_learning_week5_notes/examples/file_processor|File Processing Pipeline]]
 
 ### **Week 6: Advanced Algorithms** (Planned)
