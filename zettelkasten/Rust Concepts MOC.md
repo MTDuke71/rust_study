@@ -61,7 +61,7 @@
 ## 🏗️ Advanced Concepts
 
 ### **Generics & Traits**
-- [[chapter10_overview]] - **Complete Chapter 10 Summary**: Generics, traits, and lifetimes integration
+- [[zettelkasten/rust_book/rust-book-ch10]] - **Complete Chapter 10 Summary**: Generics, traits, and lifetimes integration
 - [[Day 15 - Traits Fundamentals]] - Defining and implementing traits
 - [[daily-study/Day16]] - Type parameters and constraints
 - [[Day 18 - Advanced Traits]] - Associated types and defaults

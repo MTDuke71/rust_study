@@ -130,7 +130,7 @@ The code now compiles without warnings while maintaining its educational value! 
 
 **Rust Book Integration:**
 - [[rust-book-ch6]] - Enums and Pattern Matching chapter
-- [[chapter6_overview]] - Overview of enum concepts
+- [[zettelkasten/rust_book/rust-book-ch6]] - Overview of enum concepts
 - [[rust-book-ch9]] - Result<T, E> enum with proper data usage
 
 **Best Practices:**

@@ -313,5 +313,5 @@ fn main() {
 
 *This chapter demonstrates how to combine multiple Rust concepts into a cohesive, real-world application. Essential for understanding how to structure larger Rust projects and handle I/O operations safely.*
 
-*Links: [[Rust Book MOC]] | [[Chapter 11 Overview]] | [[Chapter 13 Overview]]*
+*Links: [[Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch11]] | [[zettelkasten/rust_book/rust-book-ch13]]*
 *Tags: #rust-book #chapter12 #cli #io #error-handling #project-structure #testing #foundation*

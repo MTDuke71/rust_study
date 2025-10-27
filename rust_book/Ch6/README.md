@@ -1,9 +1,9 @@
 # Chapter 6: Enums and Pattern Matching
 
 ## 🔗 Zettelkasten Links
-- **Overview**: [[Chapter 6 Overview]]
-- **Previous**: [[Chapter 5 Overview]] - Structs and methods
-- **Next**: [[Chapter 7 Overview]] - Packages, crates, and modules
+- **Overview**: [[zettelkasten/rust_book/rust-book-ch6]]
+- **Previous**: [[zettelkasten/rust_book/rust-book-ch5]] - Structs and methods
+- **Next**: [[zettelkasten/rust_book/rust-book-ch7]] - Packages, crates, and modules
 - **Missions**: [[Mission3 Overview]] (LinkedList with Option) | [[Mission2 Overview]] (Queue with Result)
 - **Daily Study**: [[Day 14 - Error Handling Patterns]] - Uses Result enum extensively
 - **Book MOC**: [[Rust Book MOC]]
@@ -435,5 +435,5 @@ fn handle_response(response: ApiResponse) {
 
 *This chapter introduces Rust's approach to null safety and algebraic data types, which are fundamental to writing safe, expressive Rust code. Enums combined with pattern matching eliminate entire classes of bugs common in other languages.*
 
-*Links: [[Rust Book MOC]] | [[Chapter 5 Overview]] | [[Chapter 7 Overview]] | [[3-Track Integration]]*
+*Links: [[Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch5]] | [[zettelkasten/rust_book/rust-book-ch7]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter6 #enums #pattern-matching #option #result #match #if-let #foundation*

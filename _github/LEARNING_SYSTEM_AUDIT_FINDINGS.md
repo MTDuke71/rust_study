@@ -46,7 +46,7 @@ Ch10/
 1. **README.md Structure**
    - ✅ **Title**: "# Chapter 10: Generic Types, Traits, and Lifetimes" (Perfect format)
    - ✅ **Zettelkasten Links at TOP** (Template requirement):
-     - Previous: [[Chapter 9 Overview]]
+     - Previous: [[zettelkasten/rust_book/rust-book-ch9]]
      - Next: [[zettelkasten/rust_book/rust-book-ch11]]
      - Missions: [[Mission3 Overview]], [[Mission5 Overview]]
      - Daily Study: [[daily-study/Day15]], [[Day 16 - Generic Types]], [[Day 17 - Lifetimes]]

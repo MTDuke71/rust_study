@@ -416,7 +416,7 @@ trait ObjectSafe {
 ## 📚 Related Concepts
 
 - [[Generic Programming]] - Using traits with generics
-- [[chapter10_overview]] - Rust Book Chapter 10: Traits and Generics
+- [[zettelkasten/rust_book/rust-book-ch10]] - Rust Book Chapter 10: Traits and Generics
 - [[Ownership and Borrowing]] - Trait implementations and ownership
 - [[Error Handling Patterns]] - Result and Option traits
 - [[Rust Concepts MOC]] - Core language features overview
@@ -436,4 +436,4 @@ trait ObjectSafe {
 ---
 
 *Tags: #rust #traits #polymorphism #generics #interfaces #type-system*
-*Links: [[Generic Programming]] | [[chapter10_overview]] | [[Rust Concepts MOC]]*
+*Links: [[Generic Programming]] | [[zettelkasten/rust_book/rust-book-ch10]] | [[Rust Concepts MOC]]*

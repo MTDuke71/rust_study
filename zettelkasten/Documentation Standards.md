@@ -335,7 +335,7 @@ Each mission includes:
 ### **Rust Book Integration**  
 - **[[rust-book-ch5-8-review]]** - Comprehensive documentation review
 - **[[rust-book-ch14]]** - Cargo and documentation integration
-- **[[chapter10_overview]]** - Generics documentation patterns
+- **[[zettelkasten/rust_book/rust-book-ch10]]** - Generics documentation patterns
 
 ---
 
