@@ -84,7 +84,7 @@ The broken links fall into **4 main categories**:
 - [ ] `[[Day 10 - HashMap Basics]]` - Collections foundation (Mission5)
 - [ ] `[[Day 13 - Advanced Iterators]]` - Iterator patterns (Mission6)
 - [ ] `[[Day 14 - Error Handling Patterns]]` - Ch6, Mission6
-- [ ] `[[Day 15 - Traits]]` - Trait system foundation
+- [x] `[[daily-study/Day15]]` - Trait system foundation (✅ redirect exists)
 - [ ] `[[Day 16 - Generic Types]]` - Ch10 generics
 - [ ] `[[Day 17 - Lifetimes]]` - Ch10 lifetimes (referenced 5+ times)
 

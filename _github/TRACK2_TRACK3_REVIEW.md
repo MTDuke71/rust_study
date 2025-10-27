@@ -62,7 +62,7 @@ Ch10/
 3. **Zettelkasten Integration**
    - ✅ Links to [[Chapter 9 Overview]] and [[zettelkasten/rust_book/rust-book-ch11]]
    - ✅ Links to missions: [[Mission3 Overview]], [[Mission5 Overview]]
-   - ✅ Links to daily study: [[Day 15 - Traits]], [[Day 16 - Generic Types]], [[Day 17 - Lifetimes]]
+   - ✅ Links to daily study: [[daily-study/Day15]], [[Day 16 - Generic Types]], [[Day 17 - Lifetimes]]
    - ✅ Links to [[Rust Book MOC]]
 
 #### ⚠️ **What Needs Improvement**

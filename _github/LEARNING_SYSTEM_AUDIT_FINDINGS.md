@@ -49,7 +49,7 @@ Ch10/
      - Previous: [[Chapter 9 Overview]]
      - Next: [[zettelkasten/rust_book/rust-book-ch11]]
      - Missions: [[Mission3 Overview]], [[Mission5 Overview]]
-     - Daily Study: [[Day 15 - Traits]], [[Day 16 - Generic Types]], [[Day 17 - Lifetimes]]
+     - Daily Study: [[daily-study/Day15]], [[Day 16 - Generic Types]], [[Day 17 - Lifetimes]]
      - Book MOC: [[Rust Book MOC]]
    - ✅ **Overview Section** (clear, 2-3 sentences)
    - ✅ **Key Concepts Section** (3 major subsections: Generics, Traits, Lifetimes)

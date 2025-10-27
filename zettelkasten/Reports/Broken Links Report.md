@@ -6,19 +6,6 @@ This page tracks all **non-existent pages** (broken wiki links) in the zettelkas
 
 ---
 
-## 📊 Summary Statistics
-
-```dataview
-TABLE WITHOUT ID
-	length(file.outlinks) as "Total Outgoing Links",
-	length(filter(file.outlinks, (l) => !l.file)) as "Broken Links",
-	round((length(filter(file.outlinks, (l) => !l.file)) / length(file.outlinks)) * 100, 1) + "%" as "Broken %"
-FROM "zettelkasten" OR "missions" OR "advanced_examples" OR "advent_of_code" OR "rust_book" OR "daily_study" OR "tutorials"
-WHERE file.name != "Broken Links Report"
-GROUP BY file.folder
-```
-
----
 
 ## 🚨 Most Referenced Missing Pages
 

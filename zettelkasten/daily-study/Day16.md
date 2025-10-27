@@ -38,7 +38,7 @@ From the daily study file, Day 16 covers:
 - [[Trait Design Patterns]] - Combining generics with traits
 
 ### Daily Study Progression
-- [[Day 15 - Traits]] - Previous day (trait fundamentals)
+- [[daily-study/Day15]] - Previous day (trait fundamentals)
 - **Current**: [[../daily_study/rust_learning_week3_notes/Day16|Day 16 - Generic Types]]
 - [[Day 17 - Lifetimes]] - Next day (lifetime parameters)
 
