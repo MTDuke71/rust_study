@@ -2,7 +2,7 @@
 
 **Tags:** #rust #collections #data-structures #hash-table #performance
 **Created:** 2025-10-22  
-**Related:** [[Vec]], [[Collections MOC]], [[HashMap Deep Dive]], [[Ownership and Borrowing]], [[Chapter 8]]
+**Related:** [[Vec]], [[Collections MOC]], [[HashMap Deep Dive]], [[Ownership and Borrowing]], [[zettelkasten/rust_book/rust-book-ch8]]
 
 ## Overview
 
@@ -351,7 +351,7 @@ impl std::hash::Hash for BadKey {
 - [[HashMap Deep Dive]] - Advanced implementation details
 - [[Collections MOC]] - Overview of all Rust collections  
 - [[Ownership and Borrowing]] - Memory management in collections
-- [[Chapter 8]] - Collections chapter in The Rust Book
+- [[zettelkasten/rust_book/rust-book-ch8]] - Collections chapter in The Rust Book
 - [[Day 10 - HashMap Basics]] - Learning progression reference
 
 ## Quick Reference

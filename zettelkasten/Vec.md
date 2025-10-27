@@ -2,7 +2,7 @@
 
 **Tags:** #rust #collections #data-structures #memory #ownership
 **Created:** 2025-10-22
-**Related:** [[HashMap]], [[Collections MOC]], [[Ownership and Borrowing]], [[Chapter 8]]
+**Related:** [[HashMap]], [[Collections MOC]], [[Ownership and Borrowing]], [[zettelkasten/rust_book/rust-book-ch8]]
 
 ## Overview
 
@@ -213,7 +213,7 @@ let x = v.get(10);        // Safe: returns None
 - [[HashMap]] - Key-value alternative to indexed access  
 - [[Stack Data Structure]] - Vec as stack implementation
 - [[Collections MOC]] - Overview of all Rust collections
-- [[Chapter 8]] - The Rust Book's collections chapter
+- [[zettelkasten/rust_book/rust-book-ch8]] - The Rust Book's collections chapter
 
 ## Quick Reference
 

@@ -79,7 +79,7 @@ This MOC provides complete access to both:
 ## 🚀 **Intermediate Chapters (8-12)**
 
 ### **Chapter 8: Common Collections**
-- **📁 Implementations**: [[../rust_book/Ch8/README]] - Vectors, strings, and hash maps
+- **📁 Implementations**: [[zettelkasten/rust_book/rust-book-ch8|rust-book-ch8]] - Vectors, strings, and hash maps
 - **📝 Study Notes**: [[rust_book/rust-book-ch8]] - Collection usage patterns and ownership
 - **🔗 Collection Connection**: [[Rust Collections MOC]] - Complete collections overview
 

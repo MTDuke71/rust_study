@@ -42,7 +42,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 | Day | Topic | Key Concepts | Links |
 |-----|-------|--------------|-------|
 | [[daily-study/Day08\|Day 8]] | Vectors | Dynamic arrays, capacity vs length | [[../missions/Mission1/README\|Mission1]] |
-| [[daily-study/Day09\|Day 9]] | Strings | String vs &str, UTF-8, manipulation | [[../rust_book/Ch8\|Ch8]] |
+| [[daily-study/Day09\|Day 9]] | Strings | String vs &str, UTF-8, manipulation | [[zettelkasten/rust_book/rust-book-ch8\|Ch8]] |
 | [[daily-study/Day10\|Day 10]] | HashMaps | Key-value storage, borrowing | [[../missions/Mission5/README\|Mission5]] |
 | [[daily-study/Day11\|Day 11]] | HashSets | Unique collections, set ops | [[Mission5 Overview]] |
 | [[daily-study/Day12\|Day 12]] | BTreeMap & BTreeSet | Ordered collections | [[Collections MOC]] |
@@ -198,7 +198,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 ### **Rust Book Coordination**
 - [[../rust_book/Ch4/ownership/README|Ch4 - Ownership]] → Week 1
-- [[../rust_book/Ch8/collections/README|Ch8 - Collections]] → Week 2
+- [[zettelkasten/rust_book/rust-book-ch8|Ch8 - Collections]] → Week 2
 - [[../rust_book/Ch10/generics/README|Ch10 - Generics & Traits]] → Week 3
 
 ---
