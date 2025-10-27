@@ -8,6 +8,8 @@
 
 **Big-O notation** describes the **upper bound** of an algorithm's growth rate as input size approaches infinity. It answers: *"How does runtime/memory scale as input grows?"*
 
+*For comprehensive algorithm analysis including empirical methods and profiling, see [[Algorithm Analysis]]*
+
 **Key Idea:** We care about the **shape of the curve**, not exact timings.
 
 ```
@@ -782,6 +784,7 @@ fn fibonacci_optimal(n: u32) -> u64 {
 
 ## 🔗 **Related Concepts**
 
+- **[[Algorithm Analysis]]** - Comprehensive algorithm analysis techniques including empirical analysis and profiling
 - **[[Performance Optimization]]** - Practical optimization techniques
 - **[[Rust Collections MOC]]** - Collection performance characteristics
 - **[[Mission5 Overview]]** - HashMap complexity analysis
@@ -809,4 +812,4 @@ fn fibonacci_optimal(n: u32) -> u64 {
 
 *Tags: #big-o #complexity-analysis #algorithms #performance #time-complexity #space-complexity #optimization #computer-science*
 
-*Links: [[Performance Optimization]] | [[Rust Collections MOC]] | [[Mission5 Overview]] | [[Mission9 Overview]] | [[AoC Patterns MOC]] | [[Algorithm Design Patterns]] | [[zettel-index]]*
+*Links: [[Algorithm Analysis]] | [[Performance Optimization]] | [[Rust Collections MOC]] | [[Mission5 Overview]] | [[Mission9 Overview]] | [[AoC Patterns MOC]] | [[Algorithm Design Patterns]] | [[zettel-index]]*
