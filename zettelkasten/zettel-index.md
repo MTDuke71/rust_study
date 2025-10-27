@@ -58,9 +58,9 @@
 - **[[missions/mission-2.md|Mission 2]]** or **[[mission-2]]** - Queue & Ring Buffer
 - **[[missions/mission-3.md|Mission 3]]** or **[[mission-3]]** - Binary Search Trees
 - **[[missions/mission-4.md|Mission 4]]** or **[[mission-4]]** - Linked Lists
-  - **Tutorial**: [[mission-4-tutorial]] or [[m4-tut]] - Step-by-step linked list construction
+  - **Tutorial**: [[tutorials/Mission4_tut/README]] - Step-by-step linked list construction
 - **[[missions/mission-5.md|Mission 5]]** or **[[mission-5]]** - HashMap & HashSet
-  - **Tutorial**: [[mission-5-tutorial]] or [[m5-tut]] - HashMap from scratch guide
+  - **Tutorial**: [[tutorials/Mission5_tut/README]] - HashMap from scratch guide
 - **[[missions/mission-6.md|Mission 6]]** or **[[mission-6]]** - 2D Grids & Navigation
   - **Coverage**: [[../missions/Mission6/COVERAGE_IMPROVEMENT_LOG]] - Test coverage strategies and improvements
 - **[[missions/mission-7.md|Mission 7]]** or **[[mission-7]]** - Graph Algorithms & Traversal (DFS/BFS)
@@ -103,17 +103,10 @@
 
 ### **Advent of Code Track**
 - [[AoC Patterns MOC]] - Common competitive programming patterns
-- **2023 Solutions:**
-  - [[aoc-2023-day10]] or [[aoc23-10]] - Pipe maze navigation
-  - [[aoc-2023-day12]] or [[aoc23-12]] - Spring arrangement patterns
-- **2022 Solutions:**
-  - [[aoc-2022-day12]] or [[aoc22-12]] - Hill climbing algorithm
-- **2021 Solutions:**
-  - [[aoc-2021-day09]] or [[aoc21-09]] - Basin detection (flood fill)
 - **2015 Solutions:**
   - [[AoC 2015 MOC]] - Complete 2015 challenge overview
-  - [[aoc-2015-day01]] or [[aoc15-01]] - Floor navigation
-  - [[aoc-2015-day03]] or [[aoc15-03]] - Grid visited tracking
+  - [[advent_of_code/aoc2015/Problem_Statements/day01]] - Floor navigation (Day 1)
+  - [[advent_of_code/aoc2015/Problem_Statements/day03]] - Grid visited tracking (Day 3)
 
 ### **Rust Book Integration**
 - [[rust_book/rust-book-ch1]] - **Getting Started** - Installation and first programs ✅
@@ -159,8 +152,8 @@
 - [[entry-api-hashmap]] - **Entry API** - Efficient single-lookup HashMap patterns
 - [[hashmap-ownership-patterns]] - **HashMap Ownership Patterns** - Owned vs Reference Storage (NEW)
 - [[HashMap Internals]] or [[hashmap-internals]] - Hash table implementation details
-- [[hashset-operations]] - HashSet usage and patterns
-- [[btreemap-vs-hashmap]] - Ordered vs unordered maps comparison
+- [[daily-study/Day11]] - HashSet usage and patterns
+- [[daily-study/Day12]] - BTreeMap vs HashMap comparison
 - [[Ring Buffer Overwriting Semantics]] - Circular buffer capacity management strategies
 
 **Language Features:**
@@ -230,7 +223,7 @@
 
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
 - [[zero-cost-abstractions]] - Rust's performance guarantees
-- [[amortized-analysis]] - Complexity analysis patterns
+- [[Algorithm Analysis]] - Complexity analysis patterns including amortized analysis
 - Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
 
 ## 📊 System Reports & Analysis
