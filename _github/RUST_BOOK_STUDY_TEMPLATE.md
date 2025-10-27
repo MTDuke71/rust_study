@@ -310,7 +310,7 @@ fn main() {
 
 **For Rust Book overall:**
 - Create `[[Rust Book MOC]]` (Map of Content) linking all chapters
-- Connect to `[[3-Track System MOC]]`
+- Connect to `[[3-Track Integration]]`
 
 ### Chapter Overview Zettelkasten Note Template
 
@@ -350,7 +350,7 @@ Located in: `Ch{X}/`
 2. Review [[Chapter {X+1} Overview]]
 3. Apply concepts in [[Mission{Y} Overview]]
 
-*Links: [[Rust Book MOC]] | [[Chapter {X-1} Overview]] | [[Chapter {X+1} Overview]] | [[3-Track System MOC]]*
+*Links: [[Rust Book MOC]] | [[Chapter {X-1} Overview]] | [[Chapter {X+1} Overview]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter{X} #overview #foundation*
 ```
 
@@ -514,5 +514,5 @@ Each section's main.rs could follow the pattern shown in Mission5_tut examples w
 
 ---
 
-*Links: [[Rust Book MOC]] | [[3-Track System MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[Rust Book MOC]] | [[3-Track Integration]] | [[MONTHLY_CALENDAR]]*
 *Tags: #rust-book #template #standards #3-track #foundation*

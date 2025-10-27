@@ -60,5 +60,5 @@ Located in: `rust_book/Ch10/`
 - Practical examples that connect to real-world usage
 - Common mistake patterns shown as comments
 
-*Links: [[Rust Book MOC]] | [[Chapter 9 Overview]] | [[Chapter 11 Overview]] | [[3-Track System MOC]]*
+*Links: [[Rust Book MOC]] | [[Chapter 9 Overview]] | [[Chapter 11 Overview]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter10 #overview #generics #traits #lifetimes #foundation*

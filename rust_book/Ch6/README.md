@@ -435,5 +435,5 @@ fn handle_response(response: ApiResponse) {
 
 *This chapter introduces Rust's approach to null safety and algebraic data types, which are fundamental to writing safe, expressive Rust code. Enums combined with pattern matching eliminate entire classes of bugs common in other languages.*
 
-*Links: [[Rust Book MOC]] | [[Chapter 5 Overview]] | [[Chapter 7 Overview]] | [[3-Track System MOC]]*
+*Links: [[Rust Book MOC]] | [[Chapter 5 Overview]] | [[Chapter 7 Overview]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter6 #enums #pattern-matching #option #result #match #if-let #foundation*

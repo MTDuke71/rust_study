@@ -246,22 +246,22 @@ Before submitting, I have:
 *This document is part of the comprehensive Rust Study documentation system.*
 
 ### **Core Documentation**
-- **[[../zettelkasten/Documentation Standards]]** - Complete documentation standards and guidelines
-- **[[../zettelkasten/Project Management and Session Reports]]** - Project tracking and session summaries
-- **[[../zettelkasten/API Design Patterns]]** - Code interface design principles
-- **[[../zettelkasten/Quality Assurance]]** - Testing and quality standards
+- **[[Documentation Standards]]** - Complete documentation standards and guidelines
+- **[[Project Management and Session Reports]]** - Project tracking and session summaries
+- **[[API Design Patterns]]** - Code interface design principles
+- **[[Quality Assurance]]** - Testing and quality standards
 
 ### **Learning System Integration**
-- **[[../zettelkasten/Rust Concepts MOC]]** - Core Rust language concepts
-- **[[../zettelkasten/Daily Study MOC]]** - Daily learning progression
-- **[[../zettelkasten/Missions Overview]]** - Hands-on project implementations  
-- **[[../zettelkasten/V-Cycle Methodology]]** - Requirements-driven development approach
+- **[[Rust Concepts MOC]]** - Core Rust language concepts
+- **[[Daily Study MOC]]** - Daily learning progression
+- **[[Missions Overview]]** - Hands-on project implementations  
+- **[[V-Cycle Methodology]]** - Requirements-driven development approach
 
 ### **Workspace Navigation**
-- **[[../zettelkasten/zettel-index]]** - Master index of all zettelkasten notes
+- **[[zettel-index]]** - Master index of all zettelkasten notes
 - **[[WORKFLOW_DOCUMENTATION_INDEX]]** - Complete workflow documentation index
 
 ---
 
 *Tags: #documentation #standards #workflow #rust-study #project-management*
-*Part of: [[../zettelkasten/Documentation Standards]] | [[../zettelkasten/Project Management and Session Reports]]*
+*Part of: [[Documentation Standards]] | [[Project Management and Session Reports]]*

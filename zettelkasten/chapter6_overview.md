@@ -246,5 +246,5 @@ Chapter 6 concepts are essential for clean, safe AoC solutions.
 
 ---
 
-*Links: [[Rust Book MOC]] | [[Chapter 5 Overview]] | [[Chapter 7 Overview]] | [[Mission3 Overview]] | [[Day 14 - Error Handling Patterns]] | [[3-Track System MOC]]*
+*Links: [[Rust Book MOC]] | [[Chapter 5 Overview]] | [[Chapter 7 Overview]] | [[Mission3 Overview]] | [[Day 14 - Error Handling Patterns]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter6 #enums #pattern-matching #option #result #match #if-let #overview #foundation*

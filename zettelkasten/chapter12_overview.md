@@ -50,5 +50,5 @@ Located in: `Ch12/`
 3. Review [[Chapter 13 Overview]] for functional programming with iterators
 4. Practice TDD workflow with [[Mission9 Overview]] pathfinding project
 
-*Links: [[Rust Book MOC]] | [[Chapter 11 Overview]] | [[Chapter 13 Overview]] | [[3-Track System MOC]]*
+*Links: [[Rust Book MOC]] | [[Chapter 11 Overview]] | [[Chapter 13 Overview]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter12 #cli #io #error-handling #tdd #project-structure #overview #foundation*
