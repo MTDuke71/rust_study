@@ -238,6 +238,7 @@
 - [[Reports/README|Reports Directory]] - Automated zettelkasten health reports
   - [[Reports/Orphans|Orphaned Files]] - Files needing better integration
   - [[Reports/Broken Links Report|Broken Links]] - Missing concepts to create
+  - [[BROKEN_LINKS_TODO]] - **Active broken links repair tracker** - Prioritized action plan for fixing 1,500+ broken links
 - [[../../archived/README]] - Archived projects and workspace management insights
   - [[Reports/Link Validation Report|Link Validation]] - Overall link health
 
