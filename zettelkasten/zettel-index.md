@@ -196,11 +196,11 @@
 - Grid algorithms ([[mission-6]]) connect to [[daily_study/rust_learning_week4_notes/Day24]]
 
 ### **Mission ↔ Rust Book Connections**  
-- Struct design connects to [[rust-book-ch5]] or [[rb-ch5]]
-- Generic implementation connects to [[rust-book-ch10]] or [[rb-ch10]]
+- Struct design connects to [[rust-book-ch5]]
+- Generic implementation connects to [[rust-book-ch10]]
 - Error handling connects to [[rust_book/Ch9/README]]
-- Module organization connects to [[rust-book-ch7]] or [[rb-ch7]]
-- Collections fundamentals connect to [[rust-book-ch8]] or [[rb-ch8]]
+- Module organization connects to [[rust-book-ch7]]
+- Collections fundamentals connect to [[rust-book-ch8]]
 
 ### **Progress Tracking**
 - **Live Progress**: See [[../MONTHLY_CALENDAR]] for today's activities
