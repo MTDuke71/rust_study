@@ -10,25 +10,25 @@
 
 ### For Different Audiences:
 
-**📊 Executives/Stakeholders** → [AUDIT_SUMMARY.txt](.github/AUDIT_SUMMARY.txt)
+**📊 Executives/Stakeholders** → [AUDIT_SUMMARY.txt](_github/AUDIT_SUMMARY.txt)
 - High-level overview (5 min read)
 - Compliance scores and key findings
 - Production readiness assessment
 - Next steps summary
 
-**👨‍💻 Developers/Learners** → [SESSION_SUMMARY.md](.github/SESSION_SUMMARY.md)
+**👨‍💻 Developers/Learners** → [SESSION_SUMMARY.md](_github/SESSION_SUMMARY.md)
 - What was accomplished (15 min read)
 - How to use the system
 - Verification procedures
 - Implementation details
 
-**📋 Comprehensive Review** → [COMPLETION_REPORT.md](.github/COMPLETION_REPORT.md)
+**📋 Comprehensive Review** → [COMPLETION_REPORT.md](_github/COMPLETION_REPORT.md)
 - Complete audit findings (30 min read)
 - Detailed compliance matrix
 - Full verification results
 - All supporting details
 
-**🎓 Future Learning Content** → [DAILY_STUDY_CREATION_GUIDE.md](.github/DAILY_STUDY_CREATION_GUIDE.md)
+**🎓 Future Learning Content** → [DAILY_STUDY_CREATION_GUIDE.md](_github/DAILY_STUDY_CREATION_GUIDE.md)
 - How to create new weeks (20 min read)
 - Two-file structure explained
 - Quality checklist
