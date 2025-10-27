@@ -23,10 +23,10 @@ pub struct Config {
 }
 
 impl Config {
-    /// Creates a new Config from command-line arguments
+    /// Creates a new Config from an iterator of arguments
     ///
     /// # Arguments
-    /// * `args` - Iterator over command-line arguments
+    /// * `args` - Iterator yielding String arguments (e.g., from command-line or tests)
     ///
     /// # Returns
     /// * `Ok(Config)` - Successfully parsed configuration
