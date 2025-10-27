@@ -93,6 +93,13 @@ jobs:
         cargo test --workspace --all-targets --all-features -- --nocapture 2>&1 | tee -a reports/test-results.json
         workspace_exit_code=$?
         
+        # Check for compilation failures
+        compilation_failed="false"
+        if grep -q "could not compile" reports/test-results.json; then
+          compilation_failed="true"
+          echo "⚠️ Compilation failures detected" | tee -a reports/test-results.json
+        fi
+        
         # Parse test results from the complete output file
         # Count all "test result:" lines to get accurate totals
         echo "Parsing test results..." | tee -a reports/test-results.json
@@ -116,6 +123,12 @@ jobs:
         
         total_tests=$((passed_tests + failed_tests))
         
+        # If no tests were found but exit code is non-zero, check for compilation issues
+        if [ "$total_tests" -eq 0 ] && [ "$workspace_exit_code" -ne 0 ]; then
+          echo "⚠️ No tests executed - likely due to compilation failures" | tee -a reports/test-results.json
+          compilation_failed="true"
+        fi
+        
         echo "Parsed results: $passed_tests passed, $failed_tests failed, $total_tests total" | tee -a reports/test-results.json
         
         # Export results
@@ -123,6 +136,7 @@ jobs:
         echo "passed_tests=$passed_tests" >> $GITHUB_OUTPUT  
         echo "failed_tests=$failed_tests" >> $GITHUB_OUTPUT
         echo "workspace_exit_code=$workspace_exit_code" >> $GITHUB_OUTPUT
+        echo "compilation_failed=$compilation_failed" >> $GITHUB_OUTPUT
         
         echo "Test Summary: $passed_tests/$total_tests passed, $failed_tests failed" | tee -a reports/test-results.json
     
@@ -226,6 +240,7 @@ jobs:
           const testsPassed = '${{ steps.test-suite.outputs.passed_tests }}' || '0';
           const testsFailed = '${{ steps.test-suite.outputs.failed_tests }}' || '0';
           const testsTotal = '${{ steps.test-suite.outputs.total_tests }}' || '0';
+          const compilationFailed = '${{ steps.test-suite.outputs.compilation_failed }}' === 'true';
           const docGenStatus = '${{ steps.doc-tests.outputs.doc_gen_exit_code }}' === '0' ? '✅' : '❌';
           const docTestStatus = '${{ steps.doc-tests.outputs.doc_test_exit_code }}' === '0' ? '✅' : '❌';
           const clippyStatus = '${{ steps.clippy-analysis.outputs.clippy_exit_code }}' === '0' ? '✅' : '❌';
@@ -234,21 +249,31 @@ jobs:
           // Calculate success rate
           const successRate = testsTotal > 0 ? ((testsPassed / testsTotal) * 100).toFixed(1) : '0';
           
-          const overallStatus = (testsTotal > 0 && testsFailed === '0' && clippyStatus === '✅' && compilationStatus === '✅') 
+          const overallStatus = (testsTotal > 0 && testsFailed === '0' && clippyStatus === '✅' && compilationStatus === '✅' && !compilationFailed) 
             ? '🎉 **ALL CHECKS PASSED**' 
             : '⚠️ **ISSUES FOUND - REVIEW NEEDED**';
             
-          const testStatus = testsFailed === '0' ? '✅' : '❌';
+          const testStatus = (testsFailed === '0' && !compilationFailed) ? '✅' : '❌';
           const failedDisplay = testsFailed === '0' ? '✅' : '❌';
           
-          const hasIssues = testsFailed !== '0' || clippyStatus !== '✅' || compilationStatus !== '✅';
+          const hasIssues = testsFailed !== '0' || clippyStatus !== '✅' || compilationStatus !== '✅' || compilationFailed;
           
           // Build the report body
           let reportBody = '## 🌙 Nightly Quality Assurance Report\n\n';
           reportBody += '### 📊 Overall Status\n';
           reportBody += overallStatus + '\n\n';
           
+          // Add compilation warning if tests failed to compile
+          if (compilationFailed) {
+            reportBody += '### ⚠️ Compilation Issues\n';
+            reportBody += '**Tests failed to compile!** Some packages have compilation errors that prevented tests from running.\n';
+            reportBody += 'Check the workflow logs for detailed error messages.\n\n';
+          }
+          
           reportBody += '### 🧪 Test Results\n';
+          if (compilationFailed && testsTotal === '0') {
+            reportBody += '⚠️ **No tests executed due to compilation failures**\n\n';
+          }
           reportBody += '- **Total Tests**: ' + testsTotal + '\n';
           reportBody += '- **Passed**: ' + testsPassed + ' ✅\n';
           reportBody += '- **Failed**: ' + testsFailed + ' ' + failedDisplay + '\n';
@@ -257,7 +282,8 @@ jobs:
           reportBody += '### 🔍 Code Quality Checks\n';
           reportBody += '| Check | Status | Details |\n';
           reportBody += '|-------|---------|---------|\n';
-          reportBody += '| Compilation | ' + compilationStatus + ' | All packages compile successfully |\n';
+          const compilationDetails = compilationFailed ? 'Test compilation failed' : 'All packages compile successfully';
+          reportBody += '| Compilation | ' + compilationStatus + ' | ' + compilationDetails + ' |\n';
           reportBody += '| Tests | ' + testStatus + ' | ' + testsPassed + '/' + testsTotal + ' tests passing |\n';
           reportBody += '| Documentation Generation | ' + docGenStatus + ' | API docs generated |\n';
           reportBody += '| Documentation Tests | ' + docTestStatus + ' | Code examples in docs |\n';
@@ -272,6 +298,9 @@ jobs:
           
           reportBody += '### 🎯 Next Steps\n';
           if (hasIssues) {
+            if (compilationFailed) {
+              reportBody += '- 🔧 **URGENT**: Fix test compilation errors\n';
+            }
             reportBody += '- 🔧 Address failing tests and compilation issues\n';
             reportBody += '- 📋 Review clippy suggestions for code improvements\n';
             reportBody += '- 🧪 Run tests locally before pushing: `cargo test --workspace`\n\n';
