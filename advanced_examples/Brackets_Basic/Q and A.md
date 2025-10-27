@@ -196,7 +196,6 @@ Claude Sonnet 4 • 1x
 - [[Rust Book]] - Language fundamentals
 - [[Daily Study MOC]] - Structured learning
 - [[Clean Code Principles]] - Code quality standards
-- [[Claude AI]] - AI-assisted learning
 
 *Links: [[zettel-index]] | [[Brackets Basic]] | [[Stack Invariants]] | [[UTF-8 Handling]] | [[Memory Safety]]*
 
