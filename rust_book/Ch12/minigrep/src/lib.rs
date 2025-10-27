@@ -23,10 +23,10 @@ pub struct Config {
 }
 
 impl Config {
-    /// Creates a new Config from command-line arguments
+    /// Creates a new Config from an iterator of arguments
     ///
     /// # Arguments
-    /// * `args` - Iterator over command-line arguments
+    /// * `args` - Iterator yielding String arguments (e.g., from command-line or tests)
     ///
     /// # Returns
     /// * `Ok(Config)` - Successfully parsed configuration
@@ -37,7 +37,10 @@ impl Config {
     /// let args = std::env::args();
     /// let config = Config::new(args)?;
     /// ```
-    pub fn new(mut args: std::env::Args) -> Result<Config, &'static str> {
+    pub fn new<T>(mut args: T) -> Result<Config, &'static str>
+    where
+        T: Iterator<Item = String>,
+    {
         args.next(); // Skip program name
 
         let query = match args.next() {
