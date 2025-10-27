@@ -57,6 +57,8 @@ fn find_duplicates_optimized(arr: &[i32]) -> Vec<i32> {
 
 *For comprehensive Big-O notation coverage, see [[Big-O Analysis]]*
 
+**Important Distinction:** Big-O describes **algorithm** complexity (how fast a specific algorithm runs), while **[[Computational Complexity Classes]]** (P, NP, NP-Complete) describe **problem** complexity (how hard a problem is to solve by ANY algorithm).
+
 ### Common Complexity Classes
 
 | Notation | Name | Example | Description |
@@ -1210,6 +1212,48 @@ fn estimate_cache_performance(access_pattern: &[usize], data_size: usize) -> f64
 - **Grid Problems**: 2D traversal and pathfinding analysis  
 - **Graph Problems**: BFS/DFS complexity in different graph types
 - **Dynamic Programming**: Memoization trade-offs and space optimization
+- **NP-Complete-Like Problems**: Recognizing when AoC problems resemble hard problems (see [[Computational Complexity Classes]])
+
+## Computational Complexity Theory
+
+*For detailed coverage of P, NP, NP-Complete, and problem hardness, see [[Computational Complexity Classes]]*
+
+While Big-O analysis measures how fast a specific algorithm runs, computational complexity classes categorize problems based on their inherent difficulty:
+
+### **Quick Reference**
+
+| Class | Meaning | Example |
+|-------|---------|---------|
+| **P** | Solvable in polynomial time | Sorting, shortest path, binary search |
+| **NP** | Solutions verifiable in polynomial time | Subset sum, Boolean satisfiability |
+| **NP-Complete** | Hardest problems in NP | Traveling salesman (decision), graph coloring |
+| **NP-Hard** | At least as hard as NP problems | Halting problem, optimization TSP |
+
+**Key Insight:** If a problem is NP-Complete, don't expect to find an efficient exact solution. Use:
+- Approximation algorithms
+- Heuristics (simulated annealing, genetic algorithms)
+- Dynamic programming (if problem has special structure)
+- Constraint solvers (SAT/SMT solvers)
+
+```rust
+// Example: Recognizing problem difficulty
+
+// ✅ P Problem - Use standard algorithm
+fn shortest_path(graph: &Graph, start: NodeId, end: NodeId) -> Option<Vec<NodeId>> {
+    dijkstra(graph, start, end)  // O((V + E) log V) - polynomial
+}
+
+// ❌ NP-Complete Problem - Use approximation or heuristic
+fn traveling_salesman(cities: &[City]) -> Vec<City> {
+    if cities.len() < 12 {
+        brute_force_optimal(cities)  // O(n!) - only for small inputs
+    } else {
+        nearest_neighbor_heuristic(cities)  // Fast approximation
+    }
+}
+```
+
+See [[Computational Complexity Classes]] for comprehensive coverage of P, NP, NP-Complete, Co-NP, and NP-Hard problems.
 
 ---
 
@@ -1218,4 +1262,4 @@ fn estimate_cache_performance(access_pattern: &[usize], data_size: usize) -> f64
 
 *Tags: #algorithm-analysis #big-o #performance #complexity #optimization #benchmarking #profiling #space-time-tradeoffs #amortized-analysis #empirical-analysis #cache-performance #memory-hierarchy*
 
-*Links: [[Big-O Analysis]] | [[Big-O Notation]] | [[Amortized Analysis]] | [[Performance Optimization]] | [[Benchmarking]] | [[Cache Efficiency]] | [[Memory Layout]] | [[AoC Patterns MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission5 Overview]] | [[Testing Strategies]] | [[Quality Assurance]] | [[Rust Collections MOC]] | [[../advent_of_code/aoc2015/examples/day14_analysis]] | [[../advent_of_code/aoc2015/examples/DAY14_COMPLETE_SUMMARY]] | [[../advent_of_code/aoc2015/examples/DOCUMENTATION_ENHANCEMENTS]]*
+*Links: [[Big-O Analysis]] | [[Computational Complexity Classes]] | [[Big-O Notation]] | [[Amortized Analysis]] | [[Performance Optimization]] | [[Benchmarking]] | [[Cache Efficiency]] | [[Memory Layout]] | [[AoC Patterns MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission5 Overview]] | [[Testing Strategies]] | [[Quality Assurance]] | [[Rust Collections MOC]] | [[../advent_of_code/aoc2015/examples/day14_analysis]] | [[../advent_of_code/aoc2015/examples/DAY14_COMPLETE_SUMMARY]] | [[../advent_of_code/aoc2015/examples/DOCUMENTATION_ENHANCEMENTS]]*
