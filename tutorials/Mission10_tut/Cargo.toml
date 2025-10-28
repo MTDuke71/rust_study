@@ -1,0 +1,19 @@
+[package]
+name = "mission10_tut"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[example]]
+name = "step1_basic_union_find"
+path = "examples/step1_basic_union_find.rs"
+
+# Future tutorial steps (to be added):
+# [[example]]
+# name = "step2_path_compression"
+# path = "examples/step2_path_compression.rs"
+# 
+# [[example]]
+# name = "step3_union_by_rank"
+# path = "examples/step3_union_by_rank.rs"

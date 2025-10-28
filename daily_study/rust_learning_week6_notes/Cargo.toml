@@ -1,0 +1,18 @@
+[package]
+name = "rust_learning_week6"
+version = "0.1.0"
+edition = "2021"
+
+# Mark as standalone package (not part of workspace)
+[workspace]
+
+[dependencies]
+
+[[bin]]
+name = "day36_standalone"
+path = "Day36.rs"
+
+# Note: As more days are added, we'll include them as examples:
+# [[example]]
+# name = "day37_crate_structure"
+# path = "examples/day37_crate_structure.rs"

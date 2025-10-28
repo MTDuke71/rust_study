@@ -1,0 +1,25 @@
+[package]
+name = "ch13_closures_iterators"
+version = "0.1.0"
+edition = "2021"
+
+# Standalone package
+[workspace]
+
+[dependencies]
+
+[[example]]
+name = "ch13_1_closures"
+path = "examples/ch13_1_closures.rs"
+
+[[example]]
+name = "closure_basics"
+path = "examples/closure_basics.rs"
+
+[[example]]
+name = "closure_capture"
+path = "examples/closure_capture.rs"
+
+[[example]]
+name = "workout_planner"
+path = "examples/workout_planner.rs"

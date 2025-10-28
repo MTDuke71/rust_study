@@ -1,0 +1,33 @@
+[package]
+name = "mission10"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "performance"
+harness = false
+
+[lib]
+name = "mission10"
+path = "src/lib.rs"
+
+[[example]]
+name = "demo"
+path = "examples/demo.rs"
+
+[[example]]
+name = "connected_components"
+path = "examples/connected_components.rs"
+
+[[example]]
+name = "network_connectivity"
+path = "examples/network_connectivity.rs"
