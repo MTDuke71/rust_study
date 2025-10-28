@@ -33,10 +33,12 @@
 //! - `parallel`: Enable parallel pathfinding algorithms
 
 pub mod astar;
+pub mod cli;
 pub mod constraint_based;
 pub mod dijkstra;
 pub mod error;
 pub mod graph;
+pub mod graph_loader;
 pub mod heuristic;
 pub mod hierarchical;
 pub mod multi_objective;
@@ -46,15 +48,22 @@ pub mod priority_queue;
 
 // Re-export main types for convenience
 pub use astar::AstarPathfinder;
+pub use cli::{AlgorithmType, Cli, Commands, GraphFormat, GraphType, HeuristicType, OutputFormat};
 pub use constraint_based::{ConstrainedAstar, PathConstraint, PathContext};
 pub use dijkstra::DijkstraPathfinder;
 pub use error::PathfindingError;
 pub use graph::{SimpleWeightedGraph, WeightedGraph};
+pub use graph_loader::{
+    generate_graph, load_graph_csv, load_graph_json, load_queries_csv, save_graph_csv,
+    save_graph_json, save_visualization,
+};
 pub use heuristic::{EuclideanHeuristic, Heuristic, HeuristicContext, ManhattanHeuristic};
-pub use hierarchical::{ContractionHierarchy, ImportanceStrategy, JumpPointSearch, CHStats};
+pub use hierarchical::{CHStats, ContractionHierarchy, ImportanceStrategy, JumpPointSearch};
 pub use multi_objective::{MultiObjectiveAstar, MultiObjectiveResult, ObjectiveFunction};
 pub use pathfinder::Pathfinder;
-pub use performance_optimization::{BidirectionalAstar, BidirectionalDijkstra, MemoryOptimizedAstar, NodePool, PerformanceMetrics};
+pub use performance_optimization::{
+    BidirectionalAstar, BidirectionalDijkstra, MemoryOptimizedAstar, NodePool, PerformanceMetrics,
+};
 pub use priority_queue::PathfindingQueue;
 
 /// Common result type for pathfinding operations

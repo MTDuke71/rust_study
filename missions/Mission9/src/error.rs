@@ -40,6 +40,9 @@ pub enum PathfindingError {
 
     #[error("Constraint violation: {constraint}")]
     ConstraintViolation { constraint: String },
+
+    #[error("Invalid input: {0}")]
+    InvalidInput(String),
 }
 
 impl PathfindingError {
@@ -71,6 +74,7 @@ impl PathfindingError {
             PathfindingError::MaxIterationsExceeded => ErrorSeverity::Recoverable,
             PathfindingError::InvalidConfiguration { .. } => ErrorSeverity::Fatal,
             PathfindingError::ConstraintViolation { .. } => ErrorSeverity::Warning,
+            PathfindingError::InvalidInput(_) => ErrorSeverity::Fatal,
         }
     }
 }
