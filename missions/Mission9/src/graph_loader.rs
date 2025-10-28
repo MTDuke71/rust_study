@@ -1,7 +1,6 @@
 /// Graph loading utilities for various file formats
 ///
 /// REQ-7: Support for loading graphs from JSON, CSV, and other formats
-
 use crate::error::PathfindingError;
 use crate::graph::{SimpleWeightedGraph, WeightedGraph};
 use crate::heuristic::HeuristicContext;
@@ -429,7 +428,6 @@ impl SimpleRng {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::io::Write;
     use tempfile::NamedTempFile;
 
     #[test]
@@ -442,7 +440,7 @@ mod tests {
         context.add_coordinates(0, 0.0, 0.0);
         context.add_coordinates(1, 1.0, 0.0);
 
-        let mut temp_file = NamedTempFile::new().unwrap();
+        let temp_file = NamedTempFile::new().unwrap();
         let path = temp_file.path();
 
         // Save
@@ -463,7 +461,7 @@ mod tests {
         graph.add_edge(0, 1, 2.0);
         graph.add_edge(1, 2, 3.0);
 
-        let mut temp_file = NamedTempFile::new().unwrap();
+        let temp_file = NamedTempFile::new().unwrap();
         let path = temp_file.path();
 
         // Save

@@ -30,6 +30,7 @@ use std::time::Instant;
 // ============================================================================
 
 /// Represents a graph with preprocessing support
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 struct PreprocessedGraph {
     /// Adjacency list: node -> (neighbor, weight)
@@ -40,6 +41,7 @@ struct PreprocessedGraph {
     metadata: PreprocessingMetadata,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 struct PreprocessingMetadata {
     /// Time spent on preprocessing
@@ -89,6 +91,7 @@ impl PreprocessedGraph {
 // ============================================================================
 
 /// Different strategies for determining node importance
+#[allow(dead_code)]
 #[derive(Debug, Clone, Copy)]
 enum ImportanceStrategy {
     /// Number of edges (degree)
@@ -174,6 +177,7 @@ fn approximate_betweenness(graph: &PreprocessedGraph, node: usize) -> f64 {
 
 /// Represents a contraction hierarchy
 /// This is a preprocessed graph structure that allows very fast queries
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 struct ContractionHierarchy {
     /// Original graph
@@ -526,6 +530,7 @@ impl ContractionHierarchy {
 
 /// Highway hierarchy: another preprocessing technique
 /// Groups nodes into levels based on distance from "highways"
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 struct HighwayHierarchy {
     graph: PreprocessedGraph,
@@ -537,7 +542,8 @@ struct HighwayHierarchy {
 
 impl HighwayHierarchy {
     /// Build highway hierarchy using neighborhood size
-    fn build(graph: PreprocessedGraph, neighborhood_radius: f64) -> Self {
+    #[allow(dead_code)]
+    fn build(graph: PreprocessedGraph, _neighborhood_radius: f64) -> Self {
         println!("🛣️  Building Highway Hierarchy...");
         
         let mut node_levels = vec![0; graph.node_count];
@@ -547,9 +553,9 @@ impl HighwayHierarchy {
         // This is a simplified version for tutorial purposes
         
         // Strategy: nodes with high degree become highways
-        for node in 0..graph.node_count {
+        for (node, level) in node_levels.iter_mut().enumerate().take(graph.node_count) {
             let degree = graph.neighbors(node).len();
-            node_levels[node] = if degree > 10 {
+            *level = if degree > 10 {
                 3
             } else if degree > 5 {
                 2

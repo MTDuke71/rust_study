@@ -4,7 +4,6 @@
 /// 
 /// This CLI works with grid-based pathfinding algorithms that use
 /// coordinate-based representations (BidirectionalDijkstra, BidirectionalAstar).
-
 use clap::Parser;
 use mission9::*;
 use std::collections::HashMap;

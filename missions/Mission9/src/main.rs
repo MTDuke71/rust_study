@@ -23,7 +23,6 @@
 /// ```bash
 /// cargo run -- generate --graph-type grid --nodes 100 --output grid.json
 /// ```
-
 use clap::Parser;
 use mission9::*;
 use std::path::Path;
