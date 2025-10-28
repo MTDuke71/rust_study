@@ -20,7 +20,7 @@
   - **[[Euclidean Distance]]** - Continuous space distance
 - Neighbor finding (4-connected and 8-connected)
 - **Connected to**: [[Coordinate Systems]]
-- **Tutorial**: [[Mission6_tut Step 3 - Coordinates]]
+- **Tutorial**: Mission6_tut Step 3 - Coordinates
 
 ### **REQ-3: Pathfinding Algorithms**
 - BFS for unweighted shortest paths
@@ -34,7 +34,7 @@
 - Flood fill operations (4-connected and 8-connected)
 - Connected component analysis
 - Pattern recognition and cellular automaton simulation
-- **Tutorial**: [[Mission6_tut Step 5 - AoC Utilities]]
+- **Tutorial**: Mission6_tut Step 5 - AoC Utilities
 - **Applications**: [[AoC Grid Patterns]]
 
 ### **REQ-5: Performance Optimization**

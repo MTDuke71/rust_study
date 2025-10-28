@@ -13,7 +13,7 @@ Seventh mission implementing graph representation and fundamental traversal algo
 ### **Main Implementation**
 - **[[../../missions/Mission7/README.md|Mission 7 README]]** - Complete V-Cycle documentation
 - **[[../../missions/Mission7/src/lib.rs|Graph Implementation]]** - Adjacency lists and algorithms
-- **[[../../missions/Mission7/tests/|Test Suite]]** - Graph property and algorithm validation
+- **[[../../missions/Mission7/tests/unit_tests.rs|Test Suite]]** - Graph property and algorithm validation
 
 ### **Tutorial Integration**
 - **[[../../tutorials/Mission7_tut/README.md|Mission 7 Tutorial]]** - Graph learning progression
@@ -28,8 +28,8 @@ Seventh mission implementing graph representation and fundamental traversal algo
 - **Graph traversal**: Building on grid navigation concepts
 
 ### **Daily Study Links**
-- **[[../daily_study/rust_learning_week3_notes/Day21.md|Day 21]]** - BFS algorithms
-- **[[../daily_study/rust_learning_week4_notes/Day22.md|Day 22]]** - DFS algorithms
+- **[[daily-study/Day21|Day 21]]** - BFS algorithms
+- **[[daily-study/Day22|Day 22]]** - DFS algorithms
 - **Graph theory**: Vertices, edges, and connectivity
 
 ### **Algorithm Concepts**

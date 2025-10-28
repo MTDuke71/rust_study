@@ -61,4 +61,4 @@ Eighth mission implementing advanced graph algorithms with composition patterns,
 ---
 
 *Tags: #mission8 #advanced-graphs #algorithm-composition #performance #optimization #pathfinding #ai*
-*Links: [[../zettel-index.md]] | [[mission-7.md]] | [[A-Star-Algorithm-Deep-Dive.md]] | [[../daily_study/rust_learning_week4_notes/Day22.md]]*
+*Links: [[../zettel-index.md]] | [[mission-7.md]] | [[A-Star-Algorithm-Deep-Dive.md]] | [[daily-study/Day22]]*

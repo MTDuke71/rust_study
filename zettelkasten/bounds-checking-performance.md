@@ -1,7 +1,7 @@
 # Bounds Checking in Performance-Critical Code: Chess Engines & Game Development
 
 *Created: 2025-10-10*  
-*Context: Day 23 Grid Navigation - Bounds checking strategy trade-offs in hot paths*
+*Context: [[daily-study/Day23]] Grid Navigation - Bounds checking strategy trade-offs in hot paths*
 
 ---
 
@@ -400,7 +400,7 @@ fn rook_attacks(sq: Square, occupied: BitBoard) -> BitBoard {
 ## When Each Strategy Is Appropriate
 
 ### Use Strategy 1 (Check Before) When:
-- 📚 **Learning/educational code** (Day 23 grid navigation)
+- 📚 **Learning/educational code** ([[daily-study/Day23]] grid navigation)
 - 🔒 **Safety-critical systems** (medical devices, aerospace)
 - 🧪 **Prototyping** new algorithms
 - 📊 **Data processing** (not hot path)
@@ -863,7 +863,7 @@ criterion_main!(benches);
 - **Pipeline stalls:** Bounds checks can stall instruction pipeline
 
 ### Related Zettelkasten Notes
-- [[Day23 Grid Navigation]] - Where this pattern originates
+- [[daily-study/Day23]] - Where this pattern originates
 - [[BitBoard Techniques]] - Advanced chess engine patterns
 - [[Unsafe Rust Guidelines]] - When and how to use unsafe
 - [[Performance Optimization]] - General optimization strategies
@@ -891,7 +891,7 @@ criterion_main!(benches);
 
 *Tags: #performance #optimization #bounds-checking #chess-engines #game-development #unsafe-rust #hot-paths #bitboards #magic-bitboards*
 
-*Links: [[zettel-index]] | [[Day23]] | [[Mission6 Overview]] | [[Unsafe Rust]] | [[Performance Optimization]] | [[Chess Engine Architecture]]*
+*Links: [[zettel-index]] | [[daily-study/Day23]] | [[Mission6 Overview]] | [[Unsafe Rust]] | [[Performance Optimization]] | [[Chess Engine Architecture]]*
 
 ---
 

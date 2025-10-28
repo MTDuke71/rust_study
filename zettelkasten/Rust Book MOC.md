@@ -115,38 +115,38 @@ This MOC provides complete access to both:
 ## 🏗️ **Advanced Chapters (13-20)**
 
 ### **Chapter 13: Functional Language Features**
-- **📁 Implementations**: [[../rust_book/Ch13/README]] - Closures and iterators
+- **📁 Implementations**: [[../rust_book/Ch13/README.md|Ch13 README]] - Closures and iterators
 - **📝 Study Notes**: [[rust_book/rust-book-ch13]] - Functional programming in Rust
 - **🔗 Functional Connection**: [[Closures in Rust]] - Anonymous functions and environment capture
 
 ### **Chapter 14: Cargo and Crates.io**
-- **📁 Implementations**: [[../rust_book/Ch14/README]] - Publishing crates and workspace management
+- **📁 Implementations**: [[../rust_book/Ch14/README.md|Ch14 README]] - Publishing crates and workspace management
 - **📝 Study Notes**: [[rust_book/rust-book-ch14]] - Package management and publishing
 
 ### **Chapter 15: Smart Pointers**
-- **📁 Implementations**: [[../rust_book/Ch15/README]] - Box<T>, Rc<T>, RefCell<T>
+- **📁 Implementations**: [[../rust_book/Ch15/README.md|Ch15 README]] - Box<T>, Rc<T>, RefCell<T>
 - **📝 Study Notes**: [[rust_book/rust-book-ch15]] - Memory management with smart pointers
 - **🔗 Pointer Connection**: [[Box Smart Pointer Patterns]] - Heap allocation patterns
 
 ### **Chapter 16: Fearless Concurrency**
-- **📁 Implementations**: [[../rust_book/Ch16/README]] - Threads, message passing, shared state
+- **📁 Implementations**: [[../rust_book/Ch16/README.md|Ch16 README]] - Threads, message passing, shared state
 - **📝 Study Notes**: [[rust_book/rust-book-ch16]] - Concurrent programming patterns
 
 ### **Chapter 17: Object-Oriented Programming Features**
-- **📁 Implementations**: [[../rust_book/Ch17/README]] - Encapsulation, inheritance patterns, polymorphism
+- **📁 Implementations**: [[../rust_book/Ch17/README.md|Ch17 README]] - Encapsulation, inheritance patterns, polymorphism
 - **📝 Study Notes**: [[rust_book/rust-book-ch17]] - OOP design patterns in Rust
 
 ### **Chapter 18: Patterns and Matching**
-- **📁 Implementations**: [[../rust_book/Ch18/README]] - Advanced pattern matching techniques
+- **📁 Implementations**: [[../rust_book/Ch18/README.md|Ch18 README]] - Advanced pattern matching techniques
 - **📝 Study Notes**: [[rust_book/rust-book-ch18]] - Pattern syntax and matching strategies
 
 ### **Chapter 19: Advanced Features**
-- **📁 Implementations**: [[../rust_book/Ch19/README]] - Unsafe Rust, advanced traits, types
+- **📁 Implementations**: [[../rust_book/Ch19/README.md|Ch19 README]] - Unsafe Rust, advanced traits, types
 - **📝 Study Notes**: [[rust_book/rust-book-ch19]] - Advanced language features
 - **🔗 Advanced Connection**: [[Unsafe Rust - Raw Pointers and Safety Contracts]] - Safe abstractions
 
 ### **Chapter 20: Final Project - Multithreaded Web Server**
-- **📁 Implementations**: [[../rust_book/Ch20/README]] - Building a web server with thread pools
+- **📁 Implementations**: [[../rust_book/Ch20/README.md|Ch20 README]] - Building a web server with thread pools
 - **📝 Study Notes**: [[rust_book/rust-book-ch20]] - System design and implementation
 
 ---

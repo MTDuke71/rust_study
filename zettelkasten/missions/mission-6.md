@@ -27,9 +27,9 @@ Sixth mission implementing 2D grids with navigation algorithms, coordinate syste
 - **Spatial algorithms**: Foundation for graph traversal
 
 ### **Daily Study Links**
-- **[[../daily_study/rust_learning_week3_notes/Day19.md|Day 19]]** - Grid navigation patterns
-- **[[../daily_study/rust_learning_week3_notes/Day20.md|Day 20]]** - Coordinate systems
-- **[[../daily_study/rust_learning_week4_notes/Day24.md|Day 24]]** - Flood fill algorithms
+- **[[daily-study/Day19|Day 19]]** - Grid navigation patterns
+- **[[daily-study/Day20|Day 20]]** - Coordinate systems
+- **[[daily-study/Day24|Day 24]]** - Flood fill algorithms
 
 ### **Algorithm Concepts**
 - **[[flood-fill.md|Flood Fill]]** - Connected region algorithms
@@ -51,4 +51,4 @@ Sixth mission implementing 2D grids with navigation algorithms, coordinate syste
 ---
 
 *Tags: #mission6 #2d-grids #navigation #spatial-algorithms #pathfinding #coordinates*
-*Links: [[../zettel-index.md]] | [[mission-5.md]] | [[mission-7.md]] | [[flood-fill.md]] | [[../daily_study/rust_learning_week4_notes/Day24.md]]*
+*Links: [[../zettel-index.md]] | [[mission-5.md]] | [[mission-7.md]] | [[flood-fill.md]] | [[daily-study/Day24]]*
