@@ -1,8 +1,8 @@
----
-*Navigation: [[zettel-index]] | [[Ownership and Borrowing]]*
-*Quick Links: [[Memory Management]] | [[References]] | [[Slices]] | [[Daily Study MOC]]*
-*Related Concepts: [[Move Semantics]] | [[Copy vs Clone]] | [[Lifetimes]] | [[Smart Pointers]]*
----
+
+Navigation: [[zettel-index]] | [[Ownership and Borrowing]]
+Quick Links: [[Memory Management]] | [[References]] | [[Slices]] | [[Daily Study MOC]]
+Related Concepts: [[Move Semantics]] | [[Copy vs Clone]] | [[Lifetimes]] | [[Smart Pointers]]
+
 
 # Chapter 4: Understanding Ownership
 

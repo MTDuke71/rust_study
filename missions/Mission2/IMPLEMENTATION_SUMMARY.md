@@ -160,7 +160,7 @@ The Mission 2 implementation demonstrates mastery of:
 ### 📚 Zettelkasten
 - **[[../../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
 - **[[../../zettelkasten/Missions Overview|Missions Overview]]** - V-Cycle projects navigation
-- **[[../../zettelkasten/Mission2 Overview|Mission2 Overview]]** - Queue conceptual overview
+- **[[Mission2 Overview|Mission2 Overview]]** - Queue conceptual overview
 
 ### 🎯 Mission 2 Resources
 - **[Mission2 README](README.md)** - Main mission documentation and requirements
@@ -170,9 +170,9 @@ The Mission 2 implementation demonstrates mastery of:
 - **[tests/queue_test.rs](tests/queue_test.rs)** - Comprehensive test suite
 
 ### 🏗️ Related Missions
-- **[[../../zettelkasten/Mission1 Overview|Mission1 Overview]]** - Stack (LIFO) foundations
-- **[[../../zettelkasten/Mission3 Overview|Mission3 Overview]]** - Binary search patterns
-- **[[../../zettelkasten/Mission4 Overview|Mission4 Overview]]** - LinkedList deep dive
+- **[[Mission1 Overview|Mission1 Overview]]** - Stack (LIFO) foundations
+- **[[Mission3 Overview|Mission3 Overview]]** - Binary search patterns
+- **[[Mission4 Overview|Mission4 Overview]]** - LinkedList deep dive
 
 ### 🧠 Related Concepts
 - **[[../../zettelkasten/Ring Buffer Overwriting Semantics|Ring Buffer Semantics]]** - Circular buffer strategies

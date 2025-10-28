@@ -27,7 +27,7 @@ The foundation of your Rust journey! This chapter covers installing Rust, writin
 ## Cross-References
 
 - **[[rust_book/rust-book-ch2]]** - Next: Programming a Guessing Game
-- **[[mission-1]]** - Apply Cargo workflow in first mission
+- **[[missions/Mission1 Overview|Mission1]]** - Apply Cargo workflow in first mission
 - **[[rust_book/rust-book-ch14]]** - Advanced Cargo and crates.io
 - **[[Daily Study MOC]]** - Systematic daily learning progression
 
@@ -35,7 +35,7 @@ The foundation of your Rust journey! This chapter covers installing Rust, writin
 
 1. Read [[../../rust_book/Ch1/README]] for complete installation guide ✅
 2. Progress to [[rust_book/rust-book-ch2]] for first program
-3. Apply development workflow in [[mission-1]] stack implementation
+3. Apply development workflow in [[missions/Mission1 Overview|Mission1]] stack implementation
 4. Explore advanced Cargo features in [[rust_book/rust-book-ch14]]
 
 ## Achievement Status
@@ -46,4 +46,4 @@ The foundation of your Rust journey! This chapter covers installing Rust, writin
 
 *Tags: #rust-book #getting-started #installation #cargo #hello-world #ch1 #completed*
 
-*Links: [[../../rust_book/Ch1/README]] | [[rust_book/rust-book-ch2]] | [[mission-1]] | [[rust_book/rust-book-ch14]] | [[zettel-index]]*
+*Links: [[../../rust_book/Ch1/README]] | [[rust_book/rust-book-ch2]] | [[missions/Mission1 Overview|Mission1]] | [[rust_book/rust-book-ch14]] | [[zettel-index]]*

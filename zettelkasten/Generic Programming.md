@@ -614,7 +614,7 @@ Related: [[daily-study/Day19]]
 - [[daily-study/Day19]] - Dynamic dispatch with `dyn Trait`
 
 ### **Mission Applications**
-- [[mission-1]] - Generic Stack<T> implementation
+- [[missions/Mission1 Overview|Mission1]] - Generic Stack<T> implementation
 - [[mission-2]] - Generic Queue<T> and RingBuffer<T>
 - [[mission-3]] - Generic binary search algorithms
 - [[mission-4]] - Generic LinkedList<T> with smart pointers

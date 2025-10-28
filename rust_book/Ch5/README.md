@@ -288,4 +288,4 @@ Ch5 Structs → Ch6 Enums → Ch7 Modules → Ch8 Collections
 
 *Tags: #rust-book #chapter5 #structs #methods #impl #api-design #custom-types #ownership*
 
-*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../zettelkasten/Rust Concepts MOC|Rust Concepts]] | [[../../zettelkasten/Missions Overview|Missions Overview]] | [[../../zettelkasten/Mission1 Overview|Mission1]] | [[../../zettelkasten/Mission5 Overview|Mission5]]*
+*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../zettelkasten/Rust Concepts MOC|Rust Concepts]] | [[../../zettelkasten/Missions Overview|Missions Overview]] | [[Mission1 Overview|Mission1]] | [[Mission5 Overview|Mission5]]*

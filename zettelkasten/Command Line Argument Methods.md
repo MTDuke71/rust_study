@@ -5,7 +5,7 @@
 - **Related Concepts**: [[Error Handling Patterns]], [[Rust CLI Applications]], [[Input Validation]]
 - **Examples**: [[CLI Best Practices]], [[Defensive Programming]]
 - **Book Connection**: [[Rust Book MOC]]
-- **Missions**: [[Mission8 Overview]] - Advanced argument parsing | [[Mission9 TUT]] - CLI pathfinding args
+- **Missions**: [[mission8 Overview]] - Advanced argument parsing | [[Mission9 TUT]] - CLI pathfinding args
 
 ## 📋 Overview
 Four progressive methods for handling command-line arguments in Rust applications, from basic collection to robust validation with proper error handling.

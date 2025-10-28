@@ -458,7 +458,7 @@ cargo tarpaulin --out html
 
 ### 🎯 Mission 6 Context
 - **[Mission 6 README](README.md)** - Main mission documentation
-- **[[../../zettelkasten/Mission6 Overview|Mission6 Overview]]** - Conceptual overview (if exists)
+- **[[Mission6 Overview|Mission6 Overview]]** - Conceptual overview (if exists)
 
 ### 🧪 Related Testing Concepts
 - **[RUST_TEST_DOCUMENTATION_STANDARDS.md](../../Brackets_Basic/RUST_TEST_DOCUMENTATION_STANDARDS.md)** - Test documentation best practices

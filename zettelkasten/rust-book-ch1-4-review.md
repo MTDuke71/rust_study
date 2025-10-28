@@ -274,7 +274,7 @@ Understanding these foundations is critical for testing:
 - [[rust-book-ch16]] - Concurrency (ownership prevents data races)
 
 **Related Mission Work:**
-- [[mission-1]] - Stack implementation (ownership through push/pop)
+- [[missions/Mission1 Overview|Mission1]] - Stack implementation (ownership through push/pop)
 - [[mission-2]] - Queue implementation (borrowing through peek operations)
 - [[mission-4]] - Linked lists (complex ownership relationships)
 

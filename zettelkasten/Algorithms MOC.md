@@ -157,7 +157,7 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 
 ### **Mission Implementations**
 
-- [[mission-1]] - Stack with LIFO operations
+- [[missions/Mission1 Overview|Mission1]] - Stack with LIFO operations
 - [[mission-2]] - Queue with ring buffer optimization
 - [[mission-3]] - Binary search with traits and generics
 - [[mission-4]] - Linked list with interior mutability

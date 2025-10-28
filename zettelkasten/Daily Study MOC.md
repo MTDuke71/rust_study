@@ -197,9 +197,9 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 - [[../aoc2015/README|AoC 2015 Solutions]] - Real problems using daily concepts
 
 ### **Rust Book Coordination**
-- [[../rust_book/Ch4/ownership/README|Ch4 - Ownership]] → Week 1
+- [[zettelkasten/rust_book/rust-book-ch4|Ch4 - Ownership]] → Week 1
 - [[zettelkasten/rust_book/rust-book-ch8|Ch8 - Collections]] → Week 2
-- [[../rust_book/Ch10/generics/README|Ch10 - Generics & Traits]] → Week 3
+- [[[zettelkasten/rust_book/rust-book-ch10|rust-book-ch10]] → Week 3
 
 ---
 

@@ -583,7 +583,7 @@ fn test_histogram_mixed_pattern() {
 
 ### **Workspace Integration**
 - **[[10-common-interview-problems]]** - Problem #10 uses monotonic stack
-- **[[mission-1]]** - Stack fundamentals
+- **[[missions/Mission1 Overview|Mission1]]** - Stack fundamentals
 - **[[mission-2]]** - Queue and sequence problems
 - **[[daily-study/Day-??]]** - Stack pattern practice
 

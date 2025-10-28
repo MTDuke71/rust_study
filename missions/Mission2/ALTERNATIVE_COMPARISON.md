@@ -243,7 +243,7 @@ Both are valuable for understanding different aspects of Rust systems programmin
 ### 📚 Zettelkasten
 - **[[../../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
 - **[[../../zettelkasten/Missions Overview|Missions Overview]]** - V-Cycle projects navigation
-- **[[../../zettelkasten/Mission2 Overview|Mission2 Overview]]** - Queue conceptual overview
+- **[[Mission2 Overview|Mission2 Overview]]** - Queue conceptual overview
 
 ### 🎯 Mission 2 Resources
 - **[Mission2 README](README.md)** - Main mission documentation

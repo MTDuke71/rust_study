@@ -219,8 +219,4 @@ Brief description of the concept...
 
 ---
 
-*Last Updated: [[Today]]*
-
-*This is a dynamic report - refresh Obsidian to see latest data*
-
 *Tags: #meta #maintenance #broken-links #knowledge-graph #obsidian-queries #dataview*

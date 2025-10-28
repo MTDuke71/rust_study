@@ -129,8 +129,8 @@ All projects follow the workspace documentation standards:
 - **[[../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - Competitive programming patterns
 
 ### 🎯 Core Mission Integration
-- **[[../zettelkasten/Mission1 Overview|Mission1 Overview]]** - Stack foundations (Brackets applications)
-- **[[../zettelkasten/Mission2 Overview|Mission2 Overview]]** - Queue foundations (BFS applications)
+- **[[Mission1 Overview|Mission1 Overview]]** - Stack foundations (Brackets applications)
+- **[[Mission2 Overview|Mission2 Overview]]** - Queue foundations (BFS applications)
 - **[Mission1 README](../Mission1/readme.md)** - Stack implementation details
 - **[Mission2 README](../Mission2/README.md)** - Queue implementation details
 

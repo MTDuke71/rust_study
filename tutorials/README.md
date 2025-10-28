@@ -161,11 +161,11 @@ All tutorials follow workspace documentation standards:
 - **[Mission6_tut](Mission6_tut/)** - Grid programming and spatial algorithms
 
 ### 🏗️ Mission Integration
-- **[[../zettelkasten/Mission1 Overview|Mission1 Overview]]** - Stack implementation
-- **[[../zettelkasten/Mission3 Overview|Mission3 Overview]]** - Binary search implementation
-- **[[../zettelkasten/Mission4 Overview|Mission4 Overview]]** - LinkedList implementation
-- **[[../zettelkasten/Mission5 Overview|Mission5 Overview]]** - HashMap implementation
-- **[[../zettelkasten/Mission6 Overview|Mission6 Overview]]** - Grid algorithms
+- **[[Mission1 Overview|Mission1 Overview]]** - Stack implementation
+- **[[Mission3 Overview|Mission3 Overview]]** - Binary search implementation
+- **[[Mission4 Overview|Mission4 Overview]]** - LinkedList implementation
+- **[[Mission5 Overview|Mission5 Overview]]** - HashMap implementation
+- **[[Mission6 Overview|Mission6 Overview]]** - Grid algorithms
 - **[missions/](../missions/)** - Full V-Cycle implementations
 
 ### 📖 Learning Resources

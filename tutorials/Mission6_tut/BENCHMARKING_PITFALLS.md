@@ -294,7 +294,7 @@ This will give you **reliable, monotonic timing** that actually reflects memory 
 - **[Mission6_tut README](README.md)** - Tutorial overview
 - **[step6_performance.rs](examples/step6_performance.rs)** - Performance benchmarking example
 - **[Mission6 README](../../missions/Mission6/README.md)** - Main mission documentation
-- **[[../../zettelkasten/Mission6 Overview|Mission6 Overview]]** - Conceptual overview
+- **[[Mission6 Overview|Mission6 Overview]]** - Conceptual overview
 
 ### 🔬 Related Performance Topics
 - **[[../../missions/Mission6/TARPAULIN_USAGE_GUIDE|Tarpaulin Coverage Guide]]** - Testing and code coverage

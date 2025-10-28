@@ -18,45 +18,45 @@ Week 1 establishes the foundational concepts of Rust's ownership system, which m
 
 ## 🗓️ **Daily Breakdown**
 
-### [[daily-study/Day01]] or [[ds-day01]] - Vec and Basic Collections
+### [[daily-study/Day01]] - Vec and Basic Collections
 **Topics**: Vector basics, push/pop operations, iteration patterns
 - Introduction to owned collections
 - Basic CRUD operations
 - Memory layout and capacity management
 
-### [[daily-study/Day02]] or [[ds-day02]] - HashMap Fundamentals  
+### [[daily-study/Day02]]  - HashMap Fundamentals  
 **Topics**: Key-value storage, hash functions, lookup operations
 - Creating and populating HashMaps
 - Entry API patterns
 - Ownership with HashMap keys and values
 - 📘 **Expanded**: [[Day02_expanded]] - Additional examples and edge cases
 
-### [[daily-study/Day03]] or [[ds-day03]] - HashSet Operations
+### [[daily-study/Day03]]  - HashSet Operations
 **Topics**: Unique value storage, set operations, deduplication
 - Set creation and membership testing
 - Union, intersection, difference operations
 - Practical deduplication patterns
 - 📘 **Expanded**: [[Day03_expanded]] - Advanced set algorithms
 
-### [[daily-study/Day04]] or [[ds-day04]] - BTreeMap Sorted Storage
+### [[daily-study/Day04]]  - BTreeMap Sorted Storage
 **Topics**: Ordered maps, range queries, sorted iteration
 - Differences from HashMap (O(log n) vs O(1))
 - Range operations and ordered traversal
 - Use cases for sorted data
 
-### [[daily-study/Day05]] or [[ds-day05]] - Iterator Patterns
+### [[daily-study/Day05]]  - Iterator Patterns
 **Topics**: Lazy evaluation, iterator adapters, collection pipelines
 - `map()`, `filter()`, `fold()` patterns
 - Iterator chaining for data transformation
 - Performance benefits of lazy evaluation
 
-### [[daily-study/Day06]] or [[ds-day06]] - Error Handling Basics
+### [[daily-study/Day06]]  - Error Handling Basics
 **Topics**: `Result<T, E>`, `Option<T>`, `?` operator
 - Representing fallible operations
 - Error propagation patterns
 - Converting between Option and Result
 
-### [[daily-study/Day07]] or [[ds-day07]] - Pattern Matching Deep Dive
+### [[daily-study/Day07]]  - Pattern Matching Deep Dive
 **Topics**: `match` expressions, destructuring, guard clauses
 - Exhaustive pattern matching
 - Destructuring structs and enums

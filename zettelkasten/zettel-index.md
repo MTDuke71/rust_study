@@ -51,7 +51,7 @@
 - **Daily Workflow**: [[Daily Workflow]] - Systematic learning routine setup
 
 ### **Mission Track** - Engineering Projects
-- **[[missions/mission-1.md|Mission 1]]** or **[[mission-1]]** - Stack Implementation  
+- **[[missions/Mission1 Overview.md|Mission 1]]** or **[[Mission1 Overview]]** - Stack Implementation  
   - **Quick Start**: [[../missions/Mission1/QUICK_REFERENCE|Quick Reference]] - 2-minute ownership essentials
   - **Beginner Guide**: [[../missions/Mission1/SIMPLE_GUIDE|Simple Guide]] - Mental models for ownership
   - **Application**: [[../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended Validator]] - Real-world stack usage

@@ -418,7 +418,7 @@ for item in data.iter().filter(|x| **x > 0).map(|x| x * 2) {
 
 ### **Mission Examples:**
 
-- **[[mission-1]]** - Stack with 5 requirements, full traceability
+- **[[missions/Mission1 Overview|Mission1]]** - Stack with 5 requirements, full traceability
 - **[[mission-3]]** - Binary search with REQ-1 through REQ-6
 - **[[mission-7]]** - Graph algorithms with comprehensive tests
 

@@ -40,7 +40,7 @@ Second mission implementing FIFO (First In, First Out) queue with ring buffer op
 - **Performance optimization**: Cache-friendly access patterns
 
 ### **Mission Connections**
-- **[[mission-1.md|Mission 1]]** - Previous: Stack implementation foundations
+- **[[Mission1 Overview.md|Mission 1]]** - Previous: Stack implementation foundations
 - **[[mission-3.md|Mission 3]]** - Next: Binary search trees
 - **Comparison**: LIFO (Stack) vs FIFO (Queue) semantics
 
@@ -97,7 +97,7 @@ Second mission implementing FIFO (First In, First Out) queue with ring buffer op
 ## 🔄 **Mission Progression**
 
 ### **Prerequisites**
-- **[[mission-1.md|Mission 1]]** - Stack implementation completed
+- **[[Mission1 Overview.md|Mission 1]]** - Stack implementation completed
 - **Basic indexing**: Array and Vec manipulation
 - **Modular arithmetic**: Wraparound calculations
 
@@ -109,4 +109,4 @@ Second mission implementing FIFO (First In, First Out) queue with ring buffer op
 ---
 
 *Tags: #mission2 #queue #ring-buffer #fifo #performance #memory-optimization #data-structures*
-*Links: [[../zettel-index.md|Zettel Index]] | [[mission-1.md]] | [[mission-3.md]] | [[../daily_study/rust_learning_week4_notes/Day25.md]]*
+*Links: [[../zettel-index.md|Zettel Index]] | [[Mission1 Overview.md|Mission 1]] | [[mission-3.md]] | [[../daily_study/rust_learning_week4_notes/Day25.md]]*
