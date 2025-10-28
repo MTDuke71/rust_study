@@ -77,22 +77,22 @@ The broken links fall into **4 main categories**:
 - [ ] `[[Week 8 Overview]]` - Concurrency week
 
 #### **Critical Daily Study Pages**
-- [ ] `[[Day 01 - Ownership Basics]]` - Foundation (Ch4, multiple missions)
-- [ ] `[[Day 02 - Borrowing Rules]]` - Essential concept
-- [ ] `[[Day 05 - Option and Result]]` - Error handling foundation
-- [ ] `[[Day 09 - String Patterns]]` - String manipulation (Ch8, Mission5, AoC)
-- [ ] `[[Day 10 - HashMap Basics]]` - Collections foundation (Mission5)
-- [ ] `[[Day 13 - Advanced Iterators]]` - Iterator patterns (Mission6)
-- [ ] `[[Day 14 - Error Handling Patterns]]` - Ch6, Mission6
+- [ ] `[[daily-study/Day01]]` - Foundation (Ch4, multiple missions)
+- [ ] `[[daily-study/Day02]]` - Essential concept
+- [ ] `[[daily-study/Day05]]` - Error handling foundation
+- [ ] `[[daily-study/Day09]]` - String manipulation (Ch8, Mission5, AoC)
+- [ ] `[[daily-study/Day10]]` - Collections foundation (Mission5)
+- [ ] `[[daily-study/Day13]]` - Iterator patterns (Mission6)
+- [ ] `[[daily-study/Day14]]` - Ch6, Mission6
 - [x] `[[daily-study/Day15]]` - Trait system foundation (✅ redirect exists)
-- [ ] `[[Day 16 - Generic Types]]` - Ch10 generics
-- [ ] `[[Day 17 - Lifetimes]]` - Ch10 lifetimes (referenced 5+ times)
+- [ ] `[[daily-study/Day16]]` - Ch10 generics
+- [ ] `[[daily-study/Day17]]` - Ch10 lifetimes (referenced 5+ times)
 
 #### **Week 5 Error Handling Series**
-- [ ] `[[Day 29 - Custom Error Types]]` - Ch9, daily studies
-- [ ] `[[Day 30 - Error Propagation]]` - Ch9, daily studies
-- [ ] `[[Day 31 - anyhow and thiserror]]` - Ch9, daily studies
-- [ ] `[[Day 32 - Result Combinators]]` - Ch9, daily studies
+- [ ] `[[daily-study/Day29]]` - Ch9, daily studies
+- [ ] `[[daily-study/Day30]]` - Ch9, daily studies
+- [ ] `[[daily-study/Day31]]` - Ch9, daily studies
+- [ ] `[[daily-study/Day32]]` - Ch9, daily studies
 
 ---
 

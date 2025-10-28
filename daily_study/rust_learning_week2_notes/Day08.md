@@ -2,12 +2,12 @@
 
 ## 🔗 Zettelkasten Links
 - **Previous**: [[zettelkasten/daily-study/Day07]] - Foundations complete
-- **Next**: [[Day 09 - Strings]] - String types and UTF-8
+- **Next**: [[daily-study/Day09]] - String types and UTF-8
 - **Concept**: [[Collections MOC]] - Dynamic arrays and collections
 - **Mission**: [[Mission1 Overview]] - Stack uses Vec internally
 - **Mission**: [[Mission2 Overview]] - Queue ring buffer with Vec
 - **Rust Book**: [[Chapter 8.1 - Vectors]] - Storing lists of values
-- **Week Summary**: [[Day 14 - Week 2 Summary]] - Collections review
+- **Week Summary**: [[daily-study/Day14]] - Collections review
 
 ## 📋 Overview
 `Vec<T>` is Rust's **dynamic array** - a growable, heap-allocated sequence that's fundamental to Rust programming. It's owned, generic, and provides both safety and performance.
@@ -395,5 +395,5 @@ let numbers: Vec<i32> = (1..=10)
 
 ---
 
-*Links: [[zettelkasten/daily-study/Day07]] | [[Day 09 - Strings]] | [[Collections MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]]*
+*Links: [[zettelkasten/daily-study/Day07]] | [[daily-study/Day09]] | [[Collections MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]]*
 *Tags: #vector #vec #collections #dynamic-arrays #daily-study #week2 #rust-book #chapter8 #foundation*

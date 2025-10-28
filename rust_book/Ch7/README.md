@@ -6,7 +6,7 @@
 - **Previous**: [[zettelkasten/rust_book/rust-book-ch6]]
 - **Next**: [[zettelkasten/rust_book/rust-book-ch8]]
 - **Missions**: [[Mission6 Overview]] - Applies module organization concepts
-- **Daily Study**: [[Day 15 - Module System]] - Reinforces this chapter
+- **Daily Study**: [[daily-study/Day15]] - Reinforces this chapter
 - **Book MOC**: [[Rust Book MOC]]
 
 ## 📚 Overview
@@ -163,8 +163,8 @@ The module tree is like a file system where you navigate from root to find what 
 - [[Mission5 Overview]] - Uses module structure for HashMap implementations
 
 **Daily Study:**
-- [[Day 15 - Module System]] - Practical exercises for module organization
-- [[Day 16 - Package Management]] - Advanced module patterns
+- [[daily-study/Day15]] - Practical exercises for module organization
+- [[daily-study/Day16]] - Advanced module patterns
 
 **Next Steps:**
 - Complete exercises in `Ch7/section_name/` directories

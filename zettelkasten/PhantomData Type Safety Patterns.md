@@ -322,8 +322,8 @@ mod tests {
 
 ## 📚 Further Reading
 
-- [[Day 15 - Traits and Generics]] - Foundation for PhantomData
-- [[Day 16 - Advanced Type Patterns]] - Complex type system usage
+- [[daily-study/Day15]] - Foundation for PhantomData
+- [[daily-study/Day16]] - Complex type system usage
 - [[Zero-Cost Abstractions]] - Performance characteristics
 - [[Type Safety Patterns]] - Compile-time guarantees
 
@@ -340,4 +340,4 @@ mod tests {
 *PhantomData enables powerful type-level programming patterns that provide compile-time safety without runtime overhead. Essential for building robust, type-safe systems.*
 
 *Tags: #phantomdata #type-safety #generics #zero-cost #compile-time #patterns #advanced*
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Day 15 - Traits and Generics]] | [[Zero-Cost Abstractions]]*
+*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[daily-study/Day15]] | [[Zero-Cost Abstractions]]*

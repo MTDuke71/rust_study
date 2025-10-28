@@ -398,4 +398,4 @@ fn is_flying(&self) -> bool {
 
 *Tags: #rust-patterns #pattern-matching #rest-patterns #struct-destructuring #enum-patterns #matches-macro #state-machines #code-clarity #forward-compatibility #best-practices #aoc2015 #day14 #reindeer-olympics*
 
-*Links: [[zettel-index]] | [[Pattern Matching MOC]] | [[Matches Macro]] | [[Enum Patterns]] | [[State Machine Patterns]] | [[AoC 2015 MOC]] | [[Day 14 - Reindeer Olympics]] | [[Rust Concepts MOC]] | [[Mission System Architecture]]*
+*Links: [[zettel-index]] | [[Pattern Matching MOC]] | [[Matches Macro]] | [[Enum Patterns]] | [[State Machine Patterns]] | [[AoC 2015 MOC]] | [[daily-study/Day14]] | [[Rust Concepts MOC]] | [[Mission System Architecture]]*

@@ -252,9 +252,9 @@ This transformation shows how Rust's high-level safety features compile into eff
 - **[[COMPLETE_ANALYSIS]]** - Complete compilation stages overview
 
 ### **Core Concepts**
-- **[[Day 02 - Ownership Basics]]** - Ownership fundamentals needed for Box<T>
-- **[[Day 03 - Borrowing]]** - Reference rules in linked structures
-- **[[Day 04 - Lifetimes]]** - Lifetime management in recursive types
+- **[[daily-study/Day02]]** - Ownership fundamentals needed for Box<T>
+- **[[daily-study/Day03]]** - Reference rules in linked structures
+- **[[daily-study/Day04]]** - Lifetime management in recursive types
 - **[[Box Smart Pointer Patterns]]** - Box<T> usage patterns and heap allocation
 - **[[Performance Optimization Guide]]** - Compilation level optimizations
 

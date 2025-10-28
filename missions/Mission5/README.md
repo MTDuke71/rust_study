@@ -7,7 +7,7 @@
 - **Concepts**: [[HashMap Internals]] - Deep dive into hash table implementation
 - **Tutorial**: [[Mission5_tut Overview]] - Step-by-step guided learning
 - **Integration**: [[Collections MOC]] - Broader data structures context
-- **Daily Study**: [[Day 10 - HashMap Basics]] | [[Day 11 - HashSet Operations]]
+- **Daily Study**: [[daily-study/Day10]] | [[daily-study/Day11]]
 
 ## �📋 V-Cycle Summary
 

@@ -283,8 +283,8 @@ This chapter's concepts are fundamental to all missions:
 - [[Mission5 Overview]] - HashMap key/value ownership patterns
 
 ### **Daily Study Connections**
-- [[Day 01 - Ownership Basics]] - Reinforces ownership rules
-- [[Day 02 - Borrowing Rules]] - Practical borrowing patterns
+- [[daily-study/Day01]] - Reinforces ownership rules
+- [[daily-study/Day02]] - Practical borrowing patterns
 - [[Week 1 Overview]] - Ownership fundamentals in daily practice
 
 ### **Related Rust Book Chapters**

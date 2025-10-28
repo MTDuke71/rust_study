@@ -188,8 +188,8 @@ match result {
 **Week 2** shows you how Rust's **collections** leverage these rules.
 
 ### **What's Next:**
-- [[Day 08 - Vectors]] - Dynamic arrays with ownership
-- [[Day 09 - Strings]] - UTF-8 text and String vs &str
+- [[daily-study/Day08]] - Dynamic arrays with ownership
+- [[daily-study/Day09]] - UTF-8 text and String vs &str
 - [[daily-study/Day10]] - Key-value storage
 - [[Week 2 Overview]] - Collections mastery
 

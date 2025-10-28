@@ -1,8 +1,8 @@
 # Day 4 · Lifetimes Basics
 
 ## 🔗 Zettelkasten Links
-- **Previous**: [[Day 03 - Borrowing]] - Reference rules
-- **Next**: [[Day 05 - Option and Result]] - Error handling types
+- **Previous**: [[daily-study/Day03]] - Reference rules
+- **Next**: [[daily-study/Day05]] - Error handling types
 - **Concept**: [[Rust Concepts MOC]] - Lifetime system
 - **Rust Book**: [[Chapter 10.3 - Lifetimes]] - Validating references with lifetimes
 - **Week Summary**: [[zettelkasten/daily-study/Day07]] - Foundations review
@@ -268,6 +268,6 @@ The lifetimes concept builds directly on the ownership and borrowing concepts fr
 
 ---
 
-*Links: [[Day 03 - Borrowing]] | [[Day 05 - Option and Result]] | [[Rust Concepts MOC]]*
+*Links: [[daily-study/Day03]] | [[daily-study/Day05]] | [[Rust Concepts MOC]]*
 *Tags: #lifetimes #references #daily-study #rust-book #chapter10 #foundation*
 

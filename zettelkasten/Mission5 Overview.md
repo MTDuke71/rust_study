@@ -37,8 +37,8 @@
 
 ### **Daily Study Connections**
 - Builds on [[daily-study/Day10]] theoretical foundation
-- Reinforces [[Day 01 - Ownership Basics]] through collection ownership
-- Applies [[Day 09 - String Patterns]] in key handling
+- Reinforces [[daily-study/Day01]] through collection ownership
+- Applies [[daily-study/Day09]] in key handling
 - Prepares for [[daily-study/Day13]] practical usage
 
 ### **Rust Book Integration** 

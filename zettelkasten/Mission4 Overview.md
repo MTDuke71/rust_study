@@ -57,9 +57,9 @@ This mission demonstrates why Rust makes certain patterns difficult - and how to
 ## 🔗 Learning Track Integration
 
 ### **Daily Study Connections**
-- Applies [[Day 15 - Box Smart Pointer]] for heap allocation
-- Demonstrates [[Day 15 - Rc Smart Pointer]] for sharing
-- Uses [[Day 15 - RefCell Interior Mutability]] for mutation
+- Applies [[daily-study/Day15]] for heap allocation
+- Demonstrates [[daily-study/Day15]] for sharing
+- Uses [[daily-study/Day15]] for mutation
 - Implements [[daily-study/Day13]] traits
 
 ### **Rust Book Integration**

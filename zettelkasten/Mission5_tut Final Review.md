@@ -286,7 +286,7 @@ If you've worked through all steps and can confidently tackle the challenges abo
 **Daily Study Integration:**
 - [[daily-study/Day10]] - Foundational theory
 - [[daily-study/Day11]] - Set operations
-- [[Day 12 - BTreeMap|../daily_study/rust_learning_week2_notes/Day12]] - Ordered maps
+- [[daily-study/Day12]] - Ordered maps
 - [[daily-study/Day13]] - Iterator chains
 
 **Rust Book:**

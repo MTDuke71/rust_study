@@ -26,7 +26,7 @@
 - BFS for unweighted shortest paths
 - A* algorithm with customizable heuristics
 - Dijkstra's algorithm for weighted graphs
-- **Connected to**: [[Day 22 - Grid Fundamentals]]
+- **Connected to**: [[daily-study/Day22]]
 - **Implementation**: [[Pathfinding Algorithms]]
 
 ### **REQ-4: AoC Utilities**
@@ -53,10 +53,10 @@
 ## 🔗 Learning Track Integration
 
 ### **Daily Study Connections**
-- Builds on [[Day 22 - Grid Fundamentals]] for 2D array foundations
-- Reinforces [[Day 23 - Grid Navigation]] through direction-based movement
-- Applies [[Day 24 - Grid Algorithms]] in flood fill and pathfinding
-- Connects to [[Day 25 - Queue Applications]] for BFS implementation
+- Builds on [[daily-study/Day22]] for 2D array foundations
+- Reinforces [[daily-study/Day23]] through direction-based movement
+- Applies [[daily-study/Day24]] in flood fill and pathfinding
+- Connects to [[daily-study/Day25]] for BFS implementation
 - Prepares for [[Mission7 Graph Representation]] with graph algorithms
 
 ### **Rust Book Integration**

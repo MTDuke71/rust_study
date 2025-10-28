@@ -23,13 +23,13 @@
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
-| **Oct 8** | Mission 7 Setup | Step 1 - Graph Fundamentals | [[Day 17 - Lifetime Annotations]] |
-| **Oct 9** | Adjacency Lists & Node Storage | Step 2 - Adjacency Lists | [[Day 18 - Advanced Traits]] |
+| **Oct 8** | Mission 7 Setup | Step 1 - Graph Fundamentals | [[daily-study/Day17]] |
+| **Oct 9** | Adjacency Lists & Node Storage | Step 2 - Adjacency Lists | [[daily-study/Day18]] |
 | **Oct 10** | Graph Building & Edge Management | Step 3 - Edge Management | [[daily-study/Day19]] |
-| **Oct 11** | Graph Algorithms Foundation | Step 4 - Algorithm Foundation | [[Day 20 - Advanced Lifetimes]] |
-| **Oct 12** | DFS Implementation | Step 5 - DFS Implementation | [[Day 21 - Generics + Traits Practice]] |
-| **Oct 13** | BFS Implementation | Step 6 - BFS Implementation | [[Day 22 - Grid Fundamentals]] |
-| **Oct 14** | Integration & Examples | Step 7 - Integration Project | [[Day 23 - Grid Navigation]] |
+| **Oct 11** | Graph Algorithms Foundation | Step 4 - Algorithm Foundation | [[daily-study/Day20]] |
+| **Oct 12** | DFS Implementation | Step 5 - DFS Implementation | [[daily-study/Day21]] |
+| **Oct 13** | BFS Implementation | Step 6 - BFS Implementation | [[daily-study/Day22]] |
+| **Oct 14** | Integration & Examples | Step 7 - Integration Project | [[daily-study/Day23]] |
 
 ## 🔗 Cross-Reference Network
 
@@ -43,13 +43,13 @@
 - **Step 7** validates Mission 7 REQ-3 Graph Building and Validation
 
 ### **Tutorial → Daily Study Links**
-- **Step 1** applies concepts from → [[Day 17 - Lifetime Annotations]]
-- **Step 2** reinforces → [[Day 18 - Advanced Traits]] (Generic graph types)
+- **Step 1** applies concepts from → [[daily-study/Day17]]
+- **Step 2** reinforces → [[daily-study/Day18]] (Generic graph types)
 - **Step 3** builds on → [[daily-study/Day19]] (Algorithm traits)
-- **Step 4** connects to → [[Day 20 - Advanced Lifetimes]] (Complex lifetimes)
-- **Step 5** applies → [[Day 21 - Generics + Traits Practice]]
-- **Step 6** uses → [[Day 22 - Grid Fundamentals]] for spatial applications
-- **Step 7** integrates → [[Day 23 - Grid Navigation]] with graph algorithms
+- **Step 4** connects to → [[daily-study/Day20]] (Complex lifetimes)
+- **Step 5** applies → [[daily-study/Day21]]
+- **Step 6** uses → [[daily-study/Day22]] for spatial applications
+- **Step 7** integrates → [[daily-study/Day23]] with graph algorithms
 
 ## 🧪 Learning Objectives
 

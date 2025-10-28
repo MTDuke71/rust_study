@@ -330,7 +330,7 @@ Each mission includes:
 ### **Daily Study Documentation**
 - **[[daily-study/Day10]]** - HashMap concepts with runnable examples
 - **[[daily-study/Day11]]** - HashSet patterns with complete examples
-- **[[Day 08 - Vec Fundamentals]]** - Vec documentation following standards
+- **[[daily-study/Day08]]** - Vec documentation following standards
 
 ### **Rust Book Integration**  
 - **[[rust-book-ch5-8-review]]** - Comprehensive documentation review

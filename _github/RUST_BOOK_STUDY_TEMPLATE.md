@@ -472,7 +472,7 @@ Add at top:
 - **Previous**: [[Chapter 3 Overview]]
 - **Next**: [[Chapter 5 Overview]]
 - **Missions**: [[Mission2 Overview]] (Queue ownership) | [[Mission3 Overview]] (LinkedList borrowing)
-- **Daily Study**: [[Day 07 - Ownership Puzzles]]
+- **Daily Study**: [[daily-study/Day07]]
 - **Book MOC**: [[Rust Book MOC]]
 ```
 

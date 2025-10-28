@@ -5,7 +5,7 @@
 - **Implementation**: [[Mission5 HashSet]] - Custom HashSet wrapper in mission
 - **Tutorial**: [[Mission5_tut Step 5]] - MemoCache integration (today's tutorial step)
 - **Theory**: [[HashMap Internals]] - Understanding the backing HashMap structure
-- **Previous**: [[Day 10 - HashMap Basics]] - Foundation concepts
+- **Previous**: [[daily-study/Day10]] - Foundation concepts
 - **Next**: [[daily_study/rust_learning_week2_notes/Day12]] - Ordered collections comparison
 - **Applications**: [[AoC HashSet Patterns]] - Competitive programming applications
 

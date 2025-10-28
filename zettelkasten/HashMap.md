@@ -352,7 +352,7 @@ impl std::hash::Hash for BadKey {
 - [[Collections MOC]] - Overview of all Rust collections  
 - [[Ownership and Borrowing]] - Memory management in collections
 - [[zettelkasten/rust_book/rust-book-ch8]] - Collections chapter in The Rust Book
-- [[Day 10 - HashMap Basics]] - Learning progression reference
+- [[daily-study/Day10]] - Learning progression reference
 
 ## Quick Reference
 

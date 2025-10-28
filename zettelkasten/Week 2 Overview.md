@@ -21,7 +21,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 
 ## 📚 Daily Progression
 
-### **Day 8: Vectors (Vec<T>)** [[Day 08 - Vectors]]
+### **Day 8: Vectors (Vec<T>)** [[daily-study/Day08]]
 - Growable, heap-allocated sequences
 - Creation: Vec::new(), vec![], with_capacity()
 - Operations: push, pop, insert, remove
@@ -30,7 +30,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 
 **Key Takeaway**: Vec<T> is the workhorse data structure in Rust
 
-### **Day 9: Strings** [[Day 09 - Strings]]
+### **Day 9: Strings** [[daily-study/Day09]]
 - String vs &str distinction (owned vs borrowed)
 - UTF-8 encoding and Unicode handling
 - String manipulation: split, trim, replace
@@ -75,7 +75,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 
 **Key Takeaway**: Iterators enable expressive, efficient data processing
 
-### **Day 14: Error Handling Patterns** [[Day 14 - Error Handling]]
+### **Day 14: Error Handling Patterns** [[daily-study/Day14]]
 - Result<T, E> deep dive
 - Custom error types with enums
 - Error propagation with ? operator
@@ -461,5 +461,5 @@ where
 
 ---
 
-*Links: [[Day 08 - Vectors]] | [[Day 14 - Error Handling]] | [[Week 1 Overview]] | [[Week 3 Overview]] | [[Collections MOC]] | [[Mission5 Overview]] | [[zettel-index]]*
+*Links: [[daily-study/Day08]] | [[daily-study/Day14]] | [[Week 1 Overview]] | [[Week 3 Overview]] | [[Collections MOC]] | [[Mission5 Overview]] | [[zettel-index]]*
 *Tags: #week-overview #week2 #collections #hashmap #iterators #daily-study #learning-path #mission5*

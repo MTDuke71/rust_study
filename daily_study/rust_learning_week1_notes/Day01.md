@@ -2,7 +2,7 @@
 
 ## 🔗 Zettelkasten Links
 - **Overview**: [[Rust Concepts MOC]] - Foundation concepts
-- **Next**: [[Day 02 - Ownership Basics]] - Core ownership concepts
+- **Next**: [[daily-study/Day02]] - Core ownership concepts
 - **Week Summary**: [[zettelkasten/daily-study/Day07]] - Review all foundations
 - **Rust Book**: [[Chapter 1 - Getting Started]] - Installation and Hello World
 
@@ -91,5 +91,5 @@ fn add(a: i32, b: i32) -> i32 {
 
 ---
 
-*Links: [[Day 02 - Ownership Basics]] | [[Rust Concepts MOC]]*
+*Links: [[daily-study/Day02]] | [[Rust Concepts MOC]]*
 *Tags: #rust-book #chapter1 #toolchain #setup #daily-study #foundation*

@@ -40,7 +40,7 @@ From the daily study file, Day 16 covers:
 ### Daily Study Progression
 - [[daily-study/Day15]] - Previous day (trait fundamentals)
 - **Current**: [[../daily_study/rust_learning_week3_notes/Day16|Day 16 - Generic Types]]
-- [[Day 17 - Lifetimes]] - Next day (lifetime parameters)
+- [[daily-study/Day17]] - Next day (lifetime parameters)
 
 ### Mission Applications
 - [[Mission5 Overview]] - Generic HashMap<K, V> design

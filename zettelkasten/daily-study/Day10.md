@@ -34,7 +34,7 @@ From the daily study file, Day 10 covers:
 - [[Generic Programming]] - HashMap<K, V> generic design
 
 ### Daily Study Progression
-- [[Day 09 - String Patterns]] - Previous day (string manipulation)
+- [[daily-study/Day09]] - Previous day (string manipulation)
 - **Current**: [[../daily_study/rust_learning_week2_notes/Day10|Day 10 - HashMap Basics]]
 - [[daily-study/Day11]] - Next day (unique collections)
 

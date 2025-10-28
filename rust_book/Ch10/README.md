@@ -5,7 +5,7 @@
 - **Previous**: [[zettelkasten/rust_book/rust-book-ch9]]
 - **Next**: [[zettelkasten/rust_book/rust-book-ch11]]
 - **Missions**: [[Mission3 Overview]] - Trait-based algorithms | [[Mission5 Overview]] - Generic collections
-- **Daily Study**: [[daily-study/Day15]] | [[Day 16 - Generic Types]] | [[Day 17 - Lifetimes]]
+- **Daily Study**: [[daily-study/Day15]] | [[daily-study/Day16]] | [[daily-study/Day17]]
 - **Book MOC**: [[Rust Book MOC]]
 
 ## 📚 Overview
@@ -425,8 +425,8 @@ Before moving to Chapter 11, ensure you can:
 
 **Daily Study:**
 - [[daily-study/Day15]] - Practical trait implementations
-- [[Day 16 - Generic Types]] - Generic programming patterns
-- [[Day 17 - Lifetimes]] - Lifetime management exercises
+- [[daily-study/Day16]] - Generic programming patterns
+- [[daily-study/Day17]] - Lifetime management exercises
 
 **Next Steps:**
 - Complete exercises in `Ch10/generics/`, `Ch10/traits/`, and `Ch10/lifetimes/` directories

@@ -2,7 +2,7 @@
 
 **Tags:** #rust #predicates #closures #higher-order-functions #functional-programming #iterators
 
-**Related:** [[Day 17 - Lifetime Annotations]] | [[Collections MOC]] | [[Rust Concepts MOC]]
+**Related:** [[daily-study/Day17]] | [[Collections MOC]] | [[Rust Concepts MOC]]
 
 ## Overview
 
@@ -552,7 +552,7 @@ Predicates and higher-order functions are fundamental to Rust's functional progr
 ---
 
 **References:**
-- [[Day 17 - Lifetime Annotations]] for lifetime patterns with predicates
+- [[daily-study/Day17]] for lifetime patterns with predicates
 - [[Collections MOC]] for collection-specific predicate patterns
 - [The Rust Book - Chapter 13: Functional Language Features](https://doc.rust-lang.org/book/ch13-00-functional-features.html)
 - [Iterator Documentation](https://doc.rust-lang.org/std/iter/trait.Iterator.html)

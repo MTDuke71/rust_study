@@ -22,7 +22,7 @@ By completing this tutorial, you will:
 - Familiarity with `Vec<T>` and basic collections
 
 ### **Recommended Background**
-- Completed [[Day 02 - Ownership Basics]] from daily study
+- Completed [[daily-study/Day02]] from daily study
 - Read Rust Book Chapter 4 (Understanding Ownership)
 - Basic understanding of data structure concepts
 
@@ -177,7 +177,7 @@ fn peek(&self) -> Option<&T> {
 
 ### **Related Concepts**
 - **[[Collections MOC]]** - Stack in context of other data structures
-- **[[Day 02 - Ownership Basics]]** - Deeper ownership understanding
+- **[[daily-study/Day02]]** - Deeper ownership understanding
 - **[[Mission2 Queue]]** - Complementary FIFO data structure
 - **[[AoC Patterns MOC]]** - Stack applications in competitive programming
 

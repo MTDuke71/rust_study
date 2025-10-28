@@ -22,9 +22,9 @@
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
-| **Sept 25** | Setup & Planning | [[Step 1 - Basic HashMap Structure]] | [[Day 07 - Practice Day]] |
-| **Sept 26** | Requirements | [[Step 2 - Collision Handling]] | [[Day 08 - Vec Fundamentals]] |  
-| **Sept 27** | Basic Structure | [[Step 3 - Advanced Operations]] | [[Day 09 - String Patterns]] |
+| **Sept 25** | Setup & Planning | [[Step 1 - Basic HashMap Structure]] | [[daily-study/Day07]] |
+| **Sept 26** | Requirements | [[Step 2 - Collision Handling]] | [[daily-study/Day08]] |  
+| **Sept 27** | Basic Structure | [[Step 3 - Advanced Operations]] | [[daily-study/Day09]] |
 | **Sept 28** | Hash & Collision | [[Step 4 - Multi-Value Patterns]] | [[daily-study/Day10]] |
 | **Sept 29** | Core Operations | [[Step 5 - MemoCache Integration]] | [[daily-study/Day11]] |
 | **Sept 30** | Iterator Implementation | [[Final Project Review]] | [[daily_study/rust_learning_week2_notes/Day12]] |
@@ -40,8 +40,8 @@
 
 ### **Tutorial → Daily Study Links**
 - **Step 1** applies concepts from → [[daily-study/Day10]]
-- **Step 2** reinforces → [[Day 01 - Ownership Basics]] 
-- **Step 3** builds on → [[Day 09 - String Patterns]]
+- **Step 2** reinforces → [[daily-study/Day01]] 
+- **Step 3** builds on → [[daily-study/Day09]]
 - **Step 4** connects to → [[daily-study/Day11]]
 - **Step 5** prepares for → [[daily-study/Day13]]
 

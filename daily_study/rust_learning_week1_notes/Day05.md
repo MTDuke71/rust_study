@@ -1,7 +1,7 @@
 # Day 5 · Option and Result - Expanded
 
 ## 🔗 Zettelkasten Links
-- **Previous**: [[Day 04 - Lifetimes]] - Lifetime annotations
+- **Previous**: [[daily-study/Day04]] - Lifetime annotations
 - **Next**: [[zettelkasten/daily-study/Day06]] - Match expressions
 - **Concept**: [[Rust Concepts MOC]] - Error handling system
 - **Rust Book**: [[Chapter 6 - Enums]] - Option and pattern matching
@@ -419,7 +419,7 @@ These types are fundamental to Rust's approach to safety and make programs more 
 
 ---
 
-*Links: [[Day 04 - Lifetimes]] | [[zettelkasten/daily-study/Day06]] | [[Rust Concepts MOC]]*
+*Links: [[daily-study/Day04]] | [[zettelkasten/daily-study/Day06]] | [[Rust Concepts MOC]]*
 *Tags: #option #result #error-handling #daily-study #rust-book #chapter6 #chapter9 #foundation*
 
 ---

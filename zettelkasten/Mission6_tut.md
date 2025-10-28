@@ -23,13 +23,13 @@
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
-| **Oct 1** | Mission 6 Setup | [[Step 1 - Grid Setup]] | [[Day 14 - Error Handling Patterns]] |
-| **Oct 2** | Grid Representation | [[Step 2 - Grid Indexing]] | [[Day 15 - Traits Fundamentals]] |
+| **Oct 1** | Mission 6 Setup | [[Step 1 - Grid Setup]] | [[daily-study/Day14]] |
+| **Oct 2** | Grid Representation | [[Step 2 - Grid Indexing]] | [[daily-study/Day15]] |
 | **Oct 3** | Coordinate Systems | [[Step 3 - Coordinates]] | [[daily-study/Day16]] |
-| **Oct 4** | Path Finding Helpers | [[Step 4 - Pathfinding]] | [[Day 17 - Lifetime Annotations]] |
-| **Oct 5** | AoC Grid Utilities | [[Step 5 - AoC Utilities]] | [[Day 18 - Advanced Traits]] |
+| **Oct 4** | Path Finding Helpers | [[Step 4 - Pathfinding]] | [[daily-study/Day17]] |
+| **Oct 5** | AoC Grid Utilities | [[Step 5 - AoC Utilities]] | [[daily-study/Day18]] |
 | **Oct 6** | Performance Optimization | [[Step 6 - Performance]] | [[daily-study/Day19]] |
-| **Oct 7** | Documentation | [[Step 7 - Documentation]] | [[Day 20 - Advanced Lifetimes]] |
+| **Oct 7** | Documentation | [[Step 7 - Documentation]] | [[daily-study/Day20]] |
 
 ## 🔗 Cross-Reference Network
 
@@ -43,11 +43,11 @@
 - **Step 7** validates → [[Mission6 REQ-6 Mission Integration]]
 
 ### **Tutorial → Daily Study Links**
-- **Step 1** applies concepts from → [[Day 14 - Error Handling Patterns]]
-- **Step 2** reinforces → [[Day 15 - Traits Fundamentals]] (Index trait)
+- **Step 1** applies concepts from → [[daily-study/Day14]]
+- **Step 2** reinforces → [[daily-study/Day15]] (Index trait)
 - **Step 3** builds on → [[daily-study/Day16]] (Generic coordinates)
-- **Step 4** connects to → [[Day 25 - Queue Applications]] (BFS)
-- **Step 5** applies → [[Day 24 - Grid Algorithms]]
+- **Step 4** connects to → [[daily-study/Day25]] (BFS)
+- **Step 5** applies → [[daily-study/Day24]]
 - **Step 6** uses → [[daily-study/Day19]] for algorithm abstraction
 
 ## 🧪 Learning Objectives

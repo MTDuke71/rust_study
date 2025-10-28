@@ -5,7 +5,7 @@
 - **Previous**: [[zettelkasten/rust_book/rust-book-ch11]]
 - **Next**: [[zettelkasten/rust_book/rust-book-ch13]]
 - **Missions**: [[mission8 Overview]] - Advanced project structure | [[Mission9 Overview]] - CLI pathfinding tools
-- **Daily Study**: [[Day 42 - CLI Applications]] - Reinforces this chapter
+- **Daily Study**: [[daily-study/Day42]] - Reinforces this chapter
 - **Book MOC**: [[Rust Book MOC]]
 
 ## 📚 Overview
@@ -302,8 +302,8 @@ fn main() {
 - [[Mission9 Overview]] - CLI pathfinding tools with argument parsing
 
 **Daily Study:**
-- [[Day 42 - CLI Applications]] - Practical CLI development exercises
-- [[Day 38 - Error Handling]] - Comprehensive error management strategies
+- [[daily-study/Day42]] - Practical CLI development exercises
+- [[daily-study/Day38]] - Comprehensive error management strategies
 
 **Next Steps:**
 - Complete exercises in `Ch12/accepting_arguments/`, `Ch12/reading_files/`, and `Ch12/refactoring/` directories

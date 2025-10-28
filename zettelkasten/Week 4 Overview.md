@@ -243,7 +243,7 @@ let cmd = parse_command(line)?;
 - Create input test fixtures
 
 **Connected to:**
-- [[Day 27 - String Parsing]] - Core parsing techniques
+- [[daily-study/Day27]] - Core parsing techniques
 - [[Mission6 Overview]] - Grid input parsing
 - All AoC problem implementations
 

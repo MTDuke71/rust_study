@@ -17,13 +17,13 @@ By the end of Week 5, you will master:
 
 | Day | Focus | Key Concepts | Examples |
 |-----|-------|--------------|----------|
-| [[Day 29 - Custom Error Types\|Day 29]] | Custom Error Types | `Display`, `Error` traits, error chains | Basic error enums and structs |
-| [[Day 30 - Error Propagation\|Day 30]] | Error Propagation | `?` operator, `From` trait, early returns | Database and web request chains |
-| [[Day 31 - anyhow and thiserror\|Day 31]] | Error Crates | `anyhow`, `thiserror`, real-world patterns | Library vs application errors |
-| [[Day 32 - Result Combinators\|Day 32]] | Result Combinators | `map`, `and_then`, `or_else`, chaining | API request pipelines |
-| [[Day 33 - Panic Recovery\|Day 33]] | Panic Recovery | `catch_unwind`, graceful failure handling | Plugin systems, FFI |
-| [[Day 34 - Error Handling Patterns\|Day 34]] | Error Patterns | Panic vs errors, best practices, patterns | Banking, file processing |
-| [[Day 35 - Robust Parsing\|Day 35]] | Robust Parsing | Error recovery, fault-tolerant parsers | CSV, JSON, config parsing |
+| [[daily-study/Day29]] | Custom Error Types | `Display`, `Error` traits, error chains | Basic error enums and structs |
+| [[daily-study/Day30]] | Error Propagation | `?` operator, `From` trait, early returns | Database and web request chains |
+| [[daily-study/Day31]] | Error Crates | `anyhow`, `thiserror`, real-world patterns | Library vs application errors |
+| [[daily-study/Day32]] | Result Combinators | `map`, `and_then`, `or_else`, chaining | API request pipelines |
+| [[daily-study/Day33]] | Panic Recovery | `catch_unwind`, graceful failure handling | Plugin systems, FFI |
+| [[daily-study/Day34]] | Error Patterns | Panic vs errors, best practices, patterns | Banking, file processing |
+| [[daily-study/Day35]] | Robust Parsing | Error recovery, fault-tolerant parsers | CSV, JSON, config parsing |
 
 ## 🛠️ **Advanced Examples**
 

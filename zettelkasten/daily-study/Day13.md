@@ -38,7 +38,7 @@ Or navigate directly to: `daily_study/rust_learning_week2_notes/Day13.md`
 ### Daily Study Progression
 - [[daily_study/rust_learning_week2_notes/Day12]] - Previous day (ordered collections)
 - **Current**: [[../daily_study/rust_learning_week2_notes/Day13|Day 13 - Advanced Iterators]]
-- [[Day 14 - Error Handling]] - Next day (error handling patterns)
+- [[daily-study/Day14]] - Next day (error handling patterns)
 
 ### Mission Applications
 - [[Mission5 Overview]] - Iterator integration with HashMap

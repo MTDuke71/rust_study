@@ -48,9 +48,9 @@ Mission1 is where the entire learning journey began. It established:
 ## 🔗 Learning Track Integration
 
 ### **Daily Study Connections**
-- **Foundation for**: [[Day 01 - Ownership Basics]] practical application
-- **Demonstrates**: [[Day 02 - Borrowing Patterns]] through peek operations
-- **Applies**: [[Day 03 - Move Semantics]] in push/pop
+- **Foundation for**: [[daily-study/Day01]] practical application
+- **Demonstrates**: [[daily-study/Day02]] through peek operations
+- **Applies**: [[daily-study/Day03]] in push/pop
 - **Prepares for**: [[daily-study/Day04]] in more complex structures
 
 ### **Rust Book Integration**

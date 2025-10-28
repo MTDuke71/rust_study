@@ -63,7 +63,7 @@ This mission bridges algorithmic thinking with Rust's type system and zero-cost 
 - Applies [[daily-study/Day16]] in trait design
 - Demonstrates [[daily-study/Day13]] integration
 - Uses [[daily-study/Day11]] for deduplication
-- Builds on [[Day 09 - String Patterns]] for parsing
+- Builds on [[daily-study/Day09]] for parsing
 
 ### **Rust Book Integration**
 - **Chapter 10 - Generics**: Trait design and bounds

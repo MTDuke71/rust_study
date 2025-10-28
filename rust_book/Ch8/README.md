@@ -317,8 +317,8 @@ Collections are fundamental to all missions:
 - [[Mission6 Overview]] - Grid storage with Vec<Vec<T>>
 
 ### **Daily Study Connections**
-- [[Day 10 - HashMap Basics]] - HashMap fundamentals
-- [[Day 11 - HashSet Operations]] - Set-based collections
+- [[daily-study/Day10]] - HashMap fundamentals
+- [[daily-study/Day11]] - Set-based collections
 - [[daily_study/rust_learning_week2_notes/Day12]] - Ordered collections comparison
 - [[Week 2 Overview]] - Collections mastery week
 

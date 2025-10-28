@@ -95,7 +95,7 @@ let query = match args.get(1) { Some(q) => q, None => return };
 ### Mission Connections
 - **Mission 8**: Advanced CLI argument structures
 - **Mission 9**: Pathfinding tools with complex argument parsing
-- **Daily Study**: [[Day 42 - CLI Applications]]
+- **Daily Study**: [[daily-study/Day42]]
 
 ### Error Handling Links
 - **Patterns**: [[Error Propagation]], [[Result Type Usage]]

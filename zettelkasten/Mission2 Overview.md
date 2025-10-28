@@ -84,10 +84,10 @@ This dual approach demonstrates trade-offs between memory efficiency, performanc
 ## 🔗 Learning Track Integration
 
 ### **Daily Study Connections**
-- Builds on [[Day 01 - Ownership Basics]] through move semantics
-- Demonstrates [[Day 02 - Borrowing Patterns]] in peek operations
-- Applies [[Day 05 - Option Type]] for empty queue handling
-- Uses [[Day 08 - Result Type]] for capacity errors
+- Builds on [[daily-study/Day01]] through move semantics
+- Demonstrates [[daily-study/Day02]] in peek operations
+- Applies [[daily-study/Day05]] for empty queue handling
+- Uses [[daily-study/Day08]] for capacity errors
 
 ### **Rust Book Integration**
 - **Chapter 4 - Ownership**: Queue ownership transfer

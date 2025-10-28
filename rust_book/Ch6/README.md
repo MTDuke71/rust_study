@@ -5,7 +5,7 @@
 - **Previous**: [[zettelkasten/rust_book/rust-book-ch5]] - Structs and methods
 - **Next**: [[zettelkasten/rust_book/rust-book-ch7]] - Packages, crates, and modules
 - **Missions**: [[Mission3 Overview]] (LinkedList with Option) | [[Mission2 Overview]] (Queue with Result)
-- **Daily Study**: [[Day 14 - Error Handling Patterns]] - Uses Result enum extensively
+- **Daily Study**: [[daily-study/Day14]] - Uses Result enum extensively
 - **Book MOC**: [[Rust Book MOC]]
 
 ## 📚 Overview
@@ -422,9 +422,9 @@ fn handle_response(response: ApiResponse) {
 - [[Mission5 Overview]] - HashMap uses `Option<&V>` for get operations
 
 **Daily Study:**
-- [[Day 14 - Error Handling Patterns]] - Uses `Result<T, E>` enum extensively
-- [[Day 10 - HashMap Basics]] - HashMap methods return `Option<T>`
-- [[Day 11 - HashSet Operations]] - Set methods use `Option` for lookups
+- [[daily-study/Day14]] - Uses `Result<T, E>` enum extensively
+- [[daily-study/Day10]] - HashMap methods return `Option<T>`
+- [[daily-study/Day11]] - Set methods use `Option` for lookups
 
 **Next Steps:**
 - Complete exercises in `Ch6/defining_enums/`, `Ch6/match_operator/`, `Ch6/if_let/`

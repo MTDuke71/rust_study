@@ -170,4 +170,4 @@ cargo test -p error_handling_exercises
 
 *Tags: #rust-book #chapter9 #creation-summary #error-handling #complete*
 
-*Links: [[../README]] | [[../../README]] | [[Error Handling Deep Dive]] | [[Week 5 Overview]] | [[Day 29 - Custom Error Types]] | [[Day 30 - Error Propagation]] | [[Day 31 - anyhow and thiserror]] | [[Day 32 - Result Combinators]] | [[Day 33 - Panic Recovery]] | [[Day 34 - Error Handling Patterns]] | [[Day 35 - Robust Parsing]] | [[Rust Concepts MOC]] | [[Daily Study MOC]] | [[zettel-index]]*
+*Links: [[../README]] | [[../../README]] | [[Error Handling Deep Dive]] | [[Week 5 Overview]] | [[daily-study/Day29]] | [[daily-study/Day30]] | [[daily-study/Day31]] | [[daily-study/Day32]] | [[daily-study/Day33]] | [[daily-study/Day34]] | [[daily-study/Day35]] | [[Rust Concepts MOC]] | [[Daily Study MOC]] | [[zettel-index]]*

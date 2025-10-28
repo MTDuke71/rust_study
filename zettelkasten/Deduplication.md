@@ -407,7 +407,7 @@ fn deduplicate_normalized(strings: Vec<String>) -> Vec<String> {
 
 ### 📖 Learning Path
 - **[[daily-study/Day10]]** - Hash-based collections introduction
-- **[[Day 09 - Iterators]]** - Iterator patterns for deduplication
+- **[[daily-study/Day09]]** - Iterator patterns for deduplication
 - **[[Performance Optimization]]** - Choosing the right strategy
 
 ### 🎄 AoC Applications

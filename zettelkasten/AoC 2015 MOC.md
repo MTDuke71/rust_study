@@ -188,7 +188,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 10 → [[Mission5 Overview]] - MemoCache usage (educational example of when NOT to cache)
 
 ### **Daily Study Connections**
-- Day 8 → [[Day 09 - String Patterns]] - String vs &str
+- Day 8 → [[daily-study/Day09]] - String vs &str
 - Day 7 → [[daily-study/Day10]] - Key-value storage
 - Day 3 → [[daily-study/Day11]] - Set operations
 - Day 10 → [[../daily_study/rust_learning_week2_notes/Day10]] - HashMap and iteration patterns

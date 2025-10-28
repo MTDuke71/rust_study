@@ -2,7 +2,7 @@
 
 ## 🔗 Zettelkasten Links
 - **Previous**: [[zettelkasten/daily-study/Day06]] - Match expressions
-- **Next**: [[Day 08 - Vectors]] - Dynamic arrays (Week 2 start)
+- **Next**: [[daily-study/Day08]] - Dynamic arrays (Week 2 start)
 - **Concept**: [[Rust Concepts MOC]] - All foundation concepts
 - **Rust Book**: [[Chapter 1-6 Overview]] - Foundations complete
 - **Daily Study**: [[Week 1 Overview]] - Summary of week 1
@@ -297,5 +297,5 @@ let slice = &vec[1..3];  // Borrowing without copying
 
 ---
 
-*Links: [[zettelkasten/daily-study/Day06]] | [[Day 08 - Vectors]] | [[Rust Concepts MOC]] | [[Week 1 Overview]]*
+*Links: [[zettelkasten/daily-study/Day06]] | [[daily-study/Day08]] | [[Rust Concepts MOC]] | [[Week 1 Overview]]*
 *Tags: #week-summary #review #cheatsheet #daily-study #foundation #rust-book*

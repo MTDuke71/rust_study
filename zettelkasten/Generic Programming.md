@@ -608,9 +608,9 @@ Related: [[daily-study/Day19]]
 
 ### **Type System Foundations**
 - [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks
-- [[Day 15 - Traits Fundamentals]] - Trait definition and implementation
+- [[daily-study/Day15]] - Trait definition and implementation
 - [[daily-study/Day16]] - Generic type parameters and constraints
-- [[Day 18 - Advanced Traits]] - Associated types and advanced patterns
+- [[daily-study/Day18]] - Associated types and advanced patterns
 - [[daily-study/Day19]] - Dynamic dispatch with `dyn Trait`
 
 ### **Mission Applications**
@@ -655,8 +655,8 @@ Related: [[daily-study/Day19]]
 ## 🎓 Learning Path
 
 1. **Foundations** → [[daily-study/Day16]]
-2. **Trait Bounds** → [[Day 15 - Traits Fundamentals]]
-3. **Associated Types** → [[Day 18 - Advanced Traits]]
+2. **Trait Bounds** → [[daily-study/Day15]]
+3. **Associated Types** → [[daily-study/Day18]]
 4. **Practice** → [[Mission1 Overview]], [[Mission5 Overview]]
 5. **Advanced** → [[PhantomData Type Safety Patterns]]
 

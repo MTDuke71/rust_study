@@ -57,8 +57,8 @@
 ## 📖 Daily Study Integration
 
 ### **Week 2: Collections Mastery**
-- [[Day 08 - Vec Fundamentals]] - Dynamic arrays, capacity vs length
-- [[Day 09 - String Patterns]] - String vs &str, UTF-8 handling
+- [[daily-study/Day08]] - Dynamic arrays, capacity vs length
+- [[daily-study/Day09]] - String vs &str, UTF-8 handling
   - **Pattern Matching**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Comprehensive regex guide
 - [[daily-study/Day10]] - Key-value storage, borrowing keys  
 - [[daily-study/Day11]] - Unique collections, set operations

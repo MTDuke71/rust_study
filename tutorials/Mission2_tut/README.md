@@ -24,7 +24,7 @@ By completing this tutorial, you will:
 - Basic understanding of generics and pattern matching
 
 ### **Recommended Background**
-- Completed [[Day 02 - Ownership Basics]] and [[Day 03 - Borrowing]] from daily study
+- Completed [[daily-study/Day02]] and [[daily-study/Day03]] from daily study
 - Read Rust Book Chapter 4 (Understanding Ownership) and Chapter 15 (Smart Pointers)
 - Basic understanding of data structure concepts (arrays, linked structures)
 - Familiarity with Mission1 (Stack implementation) concepts

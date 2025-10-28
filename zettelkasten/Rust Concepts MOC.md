@@ -24,8 +24,8 @@
   - [[../missions/Mission1/QUICK_REFERENCE|Mission1 Quick Reference]] - 2-minute ownership essentials
   - [[../missions/Mission1/SIMPLE_GUIDE|Mission1 Simple Guide]] - Real-world mental models and analogies
 - [[daily-study/Day04]] - Reference lifetime management
-- [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
-- [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships
+- [[daily-study/Day17]] - Explicit lifetime syntax
+- [[daily-study/Day20]] - Elision rules and complex relationships
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns and scenarios
 - [[Ownership in Collections]] - Memory management with data structures
 - [[Box Smart Pointer Patterns]] - Heap allocation and smart pointer usage
@@ -62,11 +62,11 @@
 
 ### **Generics & Traits**
 - [[zettelkasten/rust_book/rust-book-ch10]] - **Complete Chapter 10 Summary**: Generics, traits, and lifetimes integration
-- [[Day 15 - Traits Fundamentals]] - Defining and implementing traits
+- [[daily-study/Day15]] - Defining and implementing traits
 - [[daily-study/Day16]] - Type parameters and constraints
-- [[Day 18 - Advanced Traits]] - Associated types and defaults
+- [[daily-study/Day18]] - Associated types and defaults
 - [[daily-study/Day19]] - Dynamic dispatch with `dyn`
-- [[Day 21 - Generics + Traits Practice]] - Integrated mastery project
+- [[daily-study/Day21]] - Integrated mastery project
 - [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks
 - [[Generic Programming]] - Type parameterization
 - [[Iterator Traits]] - Custom iteration implementations
@@ -123,21 +123,21 @@
 - [[daily-study/Day07]] - Integration and review
 
 ### **Week 2: Collections Mastery**
-- [[Day 08 - Vec Fundamentals]] - Dynamic arrays
-- [[Day 09 - String Patterns]] - String handling
+- [[daily-study/Day08]] - Dynamic arrays
+- [[daily-study/Day09]] - String handling
 - [[daily-study/Day10]] - Key-value storage
 - [[daily-study/Day11]] - Unique collections
 - [[daily_study/rust_learning_week2_notes/Day12]] - Ordered collections
 - [[daily-study/Day13]] - Collection processing
 
 ### **Week 3: Advanced Type System**
-- [[Day 15 - Traits Fundamentals]] - Defining and implementing traits
+- [[daily-study/Day15]] - Defining and implementing traits
 - [[daily-study/Day16]] - Type parameters and constraints
-- [[Day 17 - Lifetime Annotations]] - Explicit lifetime syntax
-- [[Day 18 - Advanced Traits]] - Associated types and defaults
+- [[daily-study/Day17]] - Explicit lifetime syntax
+- [[daily-study/Day18]] - Associated types and defaults
 - [[daily-study/Day19]] - Dynamic dispatch with `dyn`
-- [[Day 20 - Advanced Lifetimes]] - Elision rules and complex relationships
-- [[Day 21 - Generics + Traits Practice]] - Integrated mastery project
+- [[daily-study/Day20]] - Elision rules and complex relationships
+- [[daily-study/Day21]] - Integrated mastery project
 
 ## 🔗 Cross-Concept Connections
 

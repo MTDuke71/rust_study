@@ -1,11 +1,11 @@
 # Day 9 · Strings - `String` vs `&str`, UTF-8, Manipulation
 
 ## 🔗 Zettelkasten Links
-- **Previous**: [[Day 08 - Vectors]] - Dynamic arrays
-- **Next**: [[Day 10 - HashMap Basics]] - Key-value storage
+- **Previous**: [[daily-study/Day08]] - Dynamic arrays
+- **Next**: [[daily-study/Day10]] - Key-value storage
 - **Concept**: [[Rust Concepts MOC]] - String types and UTF-8
 - **Rust Book**: [[Chapter 8.2 - Strings]] - Storing UTF-8 text
-- **Week Summary**: [[Day 14 - Week 2 Summary]] - Collections review
+- **Week Summary**: [[daily-study/Day14]] - Collections review
 
 ## 🎯 Learning Objectives
 - Understand the difference between `String` and `&str`
@@ -515,5 +515,5 @@ fn test_parse_coordinates() {
 
 ---
 
-*Links: [[Day 08 - Vectors]] | [[Day 10 - HashMap Basics]] | [[Rust Concepts MOC]]*
+*Links: [[daily-study/Day08]] | [[daily-study/Day10]] | [[Rust Concepts MOC]]*
 *Tags: #string #str #utf8 #text-processing #daily-study #week2 #rust-book #chapter8 #parsing*
