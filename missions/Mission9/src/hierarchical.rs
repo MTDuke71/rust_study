@@ -530,6 +530,7 @@ impl JumpPointSearch {
     /// Find jump point in a given direction
     ///
     /// Returns the jump point coordinates if found
+    #[allow(clippy::too_many_arguments)]
     pub fn jump(
         &self,
         x: isize,
