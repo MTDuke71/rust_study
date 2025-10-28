@@ -88,6 +88,7 @@ impl ObjectiveWeights {
 }
 
 /// Enhanced node with multi-objective costs and constraints
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 struct MultiObjectiveNode {
     id: u32,
@@ -104,6 +105,7 @@ impl MultiObjectiveNode {
         self.costs.distance + weight * self.heuristic
     }
 
+    #[allow(dead_code)]
     fn weighted_f_score(&self, weights: &ObjectiveWeights, heuristic_weight: f64) -> f64 {
         self.costs.weighted_sum(weights) + heuristic_weight * self.heuristic
     }
@@ -379,6 +381,7 @@ impl MultiObjectiveAStar {
         }
     }
 
+    #[allow(clippy::type_complexity)]
     fn find_path(
         &mut self,
         grid: &AdvancedGrid,
@@ -618,6 +621,7 @@ impl ParetoPathfinder {
 }
 
 /// Enhanced search statistics
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 struct SearchStats {
     nodes_explored: usize,
