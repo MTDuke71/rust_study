@@ -191,7 +191,11 @@ jumps over the lazy dog
 the end of the story";
 
         let results = search(query, contents);
-        assert_eq!(results.len(), 0); // Case-sensitive, no lowercase "the"
+        assert_eq!(results.len(), 2); // Case-sensitive, finds two lowercase "the" on lines 2 and 3
+        assert_eq!(results[0].0, 2); // Line 2: "jumps over the lazy dog"
+        assert!(results[0].1.contains("the"));
+        assert_eq!(results[1].0, 3); // Line 3: "the end of the story"
+        assert!(results[1].1.contains("the"));
     }
 
     #[test]
