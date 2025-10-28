@@ -224,7 +224,7 @@ impl ContractionHierarchy {
                         
                         upward_edges
                             .entry(from_id)
-                            .or_insert_with(Vec::new)
+                            .or_default()
                             .push((to_id, shortcut_weight));
                     }
                 }

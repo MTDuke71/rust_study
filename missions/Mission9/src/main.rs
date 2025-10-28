@@ -45,7 +45,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             algorithm,
             heuristic,
             ref visualize,
-        } => handle_find_path(graph, *start, *goal, *algorithm, *heuristic, visualize.as_ref().map(|p| p.clone()), &cli)?,
+        } => handle_find_path(graph, *start, *goal, *algorithm, *heuristic, visualize.clone(), &cli)?,
 
         Commands::Batch {
             ref graph,
@@ -222,7 +222,7 @@ fn handle_batch(
 
     // Write results to CSV
     let mut writer = csv::Writer::from_path(output_path)?;
-    writer.write_record(&["start", "goal", "cost", "path_length", "nodes_explored", "time_ms"])?;
+    writer.write_record(["start", "goal", "cost", "path_length", "nodes_explored", "time_ms"])?;
 
     for (start, goal, result) in results {
         match result {

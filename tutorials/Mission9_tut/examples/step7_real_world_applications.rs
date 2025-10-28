@@ -152,7 +152,7 @@ pub fn save_graph_to_json(
 
     let file = File::create(path)?;
     serde_json::to_writer_pretty(file, &data)
-        .map_err(|e| io::Error::new(io::ErrorKind::Other, e))
+        .map_err(io::Error::other)
 }
 
 /// Load batch queries from CSV file
@@ -331,7 +331,7 @@ impl BatchProcessor {
         let mut writer = csv::Writer::from_writer(file);
 
         // Write header
-        writer.write_record(&["start", "goal", "cost", "path_length", "nodes_explored", "time_ms"])?;
+        writer.write_record(["start", "goal", "cost", "path_length", "nodes_explored", "time_ms"])?;
 
         // Write results
         for (i, result) in results.iter().enumerate() {
@@ -372,6 +372,12 @@ pub struct PerformanceMonitor {
     successful_queries: usize,
     total_time_ms: f64,
     total_nodes_explored: usize,
+}
+
+impl Default for PerformanceMonitor {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl PerformanceMonitor {

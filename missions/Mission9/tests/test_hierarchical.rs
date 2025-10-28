@@ -74,7 +74,7 @@ fn test_importance_edge_difference() {
     let importance = calculate_node_importance(&graph, ImportanceStrategy::EdgeDifference);
     
     // Just verify we get some importance values calculated
-    assert!(importance.len() > 0);
+    assert!(!importance.is_empty());
     assert!(importance.iter().any(|(_, imp)| *imp >= 0.0));
 }
 
