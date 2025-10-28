@@ -23,24 +23,24 @@
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
-| **Oct 1** | Mission 6 Setup | [[Step 1 - Grid Setup]] | [[daily-study/Day14]] |
-| **Oct 2** | Grid Representation | [[Step 2 - Grid Indexing]] | [[daily-study/Day15]] |
-| **Oct 3** | Coordinate Systems | [[Step 3 - Coordinates]] | [[daily-study/Day16]] |
-| **Oct 4** | Path Finding Helpers | [[Step 4 - Pathfinding]] | [[daily-study/Day17]] |
-| **Oct 5** | AoC Grid Utilities | [[Step 5 - AoC Utilities]] | [[daily-study/Day18]] |
-| **Oct 6** | Performance Optimization | [[Step 6 - Performance]] | [[daily-study/Day19]] |
-| **Oct 7** | Documentation | [[Step 7 - Documentation]] | [[daily-study/Day20]] |
+| **Oct 1** | Mission 6 Setup | Step 1 - Grid Setup | [[daily-study/Day14]] |
+| **Oct 2** | Grid Representation | Step 2 - Grid Indexing | [[daily-study/Day15]] |
+| **Oct 3** | Coordinate Systems | Step 3 - Coordinates | [[daily-study/Day16]] |
+| **Oct 4** | Path Finding Helpers | Step 4 - Pathfinding | [[daily-study/Day17]] |
+| **Oct 5** | AoC Grid Utilities | Step 5 - AoC Utilities | [[daily-study/Day18]] |
+| **Oct 6** | Performance Optimization | Step 6 - Performance | [[daily-study/Day19]] |
+| **Oct 7** | Documentation | Step 7 - Documentation | [[daily-study/Day20]] |
 
 ## 🔗 Cross-Reference Network
 
 ### **Tutorial → Main Mission Links**
-- **Step 1** builds toward → [[Mission6 REQ-1 Grid Structure]]
-- **Step 2** reinforces → [[Mission6 REQ-1 Grid Structure]] (safe indexing)
-- **Step 3** enables → [[Mission6 REQ-2 Coordinate Navigation]]
-- **Step 4** implements → [[Mission6 REQ-3 Pathfinding Algorithms]]
-- **Step 5** completes → [[Mission6 REQ-4 AoC Utilities]]
-- **Step 6** optimizes → [[Mission6 REQ-5 Performance Optimization]]
-- **Step 7** validates → [[Mission6 REQ-6 Mission Integration]]
+- **Step 1** builds toward → Mission6 REQ-1 Grid Structure
+- **Step 2** reinforces → Mission6 REQ-1 Grid Structure (safe indexing)
+- **Step 3** enables → Mission6 REQ-2 Coordinate Navigation
+- **Step 4** implements → Mission6 REQ-3 Pathfinding Algorithms
+- **Step 5** completes → Mission6 REQ-4 AoC Utilities
+- **Step 6** optimizes → Mission6 REQ-5 Performance Optimization
+- **Step 7** validates → Mission6 REQ-6 Mission Integration
 
 ### **Tutorial → Daily Study Links**
 - **Step 1** applies concepts from → [[daily-study/Day14]]

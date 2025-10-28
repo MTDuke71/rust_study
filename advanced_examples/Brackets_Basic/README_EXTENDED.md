@@ -76,9 +76,6 @@ enum UnclosedPolicy { LatestOpen, EarliestOpen }
 - [[Flexible Interfaces]] - validate_iter, validate_indexed
 
 ### Requirements Engineering
-- [[REQ-7]] - Configurable alphabet extension
-- [[REQ-8]] - Error collection mode
-- [[REQ-9]] - Unclosed bracket policy
 - [[Iterator API Requirements]] - Streaming support
 - [[V-Cycle Methodology]] - Requirements-driven development
 

@@ -13,7 +13,7 @@
 ### **REQ-2: Core Operations**
 - Insert, get, remove with O(1) average complexity  
 - **Connected to**: [[HashMap Performance Analysis]]
-- **Tutorial**: [[Mission5_tut Step 3 - Advanced Operations]]
+- **Tutorial**: Mission5_tut Step 3 - Advanced Operations
 
 ### **REQ-3: HashSet Wrapper**
 - Set abstraction using HashMap as backing store
@@ -27,7 +27,7 @@
 
 ### **REQ-5: Multi-Value Support**
 - One-to-many mappings for complex scenarios
-- **Tutorial**: [[Mission5_tut Step 4 - Multi-Value Patterns]]
+- **Tutorial**: Mission5_tut Step 4 - Multi-Value Patterns
 
 ### **REQ-6: AoC Utilities**
 - Frequency counting, deduplication patterns
