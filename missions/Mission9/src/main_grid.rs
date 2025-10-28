@@ -177,8 +177,8 @@ fn handle_find_path(
 
     // Manhattan distance heuristic
     let manhattan = |a: (usize, usize), b: (usize, usize)| -> u32 {
-        let dx = if a.0 > b.0 { a.0 - b.0 } else { b.0 - a.0 };
-        let dy = if a.1 > b.1 { a.1 - b.1 } else { b.1 - a.1 };
+        let dx = a.0.abs_diff(b.0);
+        let dy = a.1.abs_diff(b.1);
         (dx + dy) as u32
     };
 
@@ -261,8 +261,8 @@ fn handle_benchmark(
     };
 
     let manhattan = |a: (usize, usize), b: (usize, usize)| -> u32 {
-        let dx = if a.0 > b.0 { a.0 - b.0 } else { b.0 - a.0 };
-        let dy = if a.1 > b.1 { a.1 - b.1 } else { b.1 - a.1 };
+        let dx = a.0.abs_diff(b.0);
+        let dy = a.1.abs_diff(b.1);
         (dx + dy) as u32
     };
 
@@ -272,7 +272,7 @@ fn handle_benchmark(
     let mut bidir_dijkstra = BidirectionalDijkstra::new(width * height);
     let dijkstra_start = std::time::Instant::now();
     for _ in 0..iterations {
-        let _ = bidir_dijkstra.find_path(start, goal, &neighbors);
+        let _ = bidir_dijkstra.find_path(start, goal, neighbors);
     }
     let dijkstra_time = dijkstra_start.elapsed();
 
@@ -280,7 +280,7 @@ fn handle_benchmark(
     let mut bidir_astar = BidirectionalAstar::new(width * height);
     let astar_start = std::time::Instant::now();
     for _ in 0..iterations {
-        let _ = bidir_astar.find_path(start, goal, manhattan, &neighbors);
+        let _ = bidir_astar.find_path(start, goal, manhattan, neighbors);
     }
     let astar_time = astar_start.elapsed();
 

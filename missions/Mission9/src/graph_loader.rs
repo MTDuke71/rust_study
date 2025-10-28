@@ -186,7 +186,7 @@ pub fn save_graph_csv(path: &Path, graph: &SimpleWeightedGraph) -> Result<(), Pa
 
     // Write header
     writer
-        .write_record(&["from", "to", "weight"])
+        .write_record(["from", "to", "weight"])
         .map_err(|e| PathfindingError::InvalidInput(format!("Failed to write CSV: {}", e)))?;
 
     // Write edges

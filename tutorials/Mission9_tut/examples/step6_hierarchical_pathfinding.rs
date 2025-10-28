@@ -56,7 +56,7 @@ impl PreprocessedGraph {
         let mut edges: HashMap<usize, Vec<(usize, f64)>> = HashMap::new();
         
         for (from, to, weight) in edge_list {
-            edges.entry(from).or_insert_with(Vec::new).push((to, weight));
+            edges.entry(from).or_default().push((to, weight));
         }
         
         PreprocessedGraph {
@@ -266,7 +266,7 @@ impl ContractionHierarchy {
                     // Check if this shortcut is necessary (witness search)
                     if Self::is_shortcut_necessary(graph, from, to, shortcut_weight, node, contracted) {
                         shortcuts.entry(from)
-                            .or_insert_with(Vec::new)
+                            .or_default()
                             .push((to, shortcut_weight, node));
                     }
                 }
