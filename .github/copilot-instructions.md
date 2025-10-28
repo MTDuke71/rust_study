@@ -2,6 +2,48 @@
 
 **Context**: A professional Rust learning workspace following V-Cycle software engineering methodology with integrated zettelkasten knowledge management.
 
+## ⚡ Quick Start for AI Agents
+
+### Essential Commands
+```bash
+# Build entire workspace
+cargo build --workspace
+
+# Run tests for specific mission/package
+cargo test -p mission5
+cargo test --workspace          # All tests
+
+# Lint and format checks (MUST pass before committing)
+cargo clippy --workspace -- -D warnings
+cargo fmt --all --check
+
+# Run specific examples
+cargo run -p mission5 --example demo
+cd tutorials/Mission5_tut && cargo run --example step1_basic_hashmap
+
+# Test markdown code blocks
+.\scripts\run_md.bat daily_study\rust_learning_week5_notes\Day34.md
+```
+
+### Repository Type
+This is a **LEARNING WORKSPACE**, not a production application. It contains:
+- 60+ independent crate members in `Cargo.toml`
+- Multiple learning tracks (missions, tutorials, daily study, Rust book exercises)
+- Formal V-Cycle engineering methodology for missions
+- Zettelkasten knowledge management system
+
+### Before Making Changes
+1. **Check workspace builds**: `cargo build --workspace`
+2. **Run existing tests**: `cargo test --workspace`
+3. **Verify clippy passes**: `cargo clippy --workspace -- -D warnings`
+4. **Understand V-Cycle**: Mission code requires REQ-IDs and traceability
+
+### Critical Conventions
+- **Mission tests** MUST be named `req{N}_*` (e.g., `req1_generic_support`)
+- **Zero warnings policy**: Clippy must pass with `-D warnings`
+- **Traceability required**: Every mission feature maps to REQ-X in README.md
+- **Zettelkasten links**: Use `[[mission-5]]` NOT `[[Mission5]]`, `[[daily-study/Day24]]` NOT `[[Day24]]`
+
 ## 🏗️ Architecture Overview
 
 This is NOT a typical Rust project - it's a **comprehensive learning system** with three integrated tracks:
@@ -263,3 +305,155 @@ This workspace treats Rust learning as **professional software engineering disci
 - Evidence-based learning protocols (see `MONTHLY_CALENDAR.md` header)
 
 When working in this codebase, maintain this professional standard - every change should trace to a requirement, have tests, and integrate with the knowledge system.
+
+## 🔧 Troubleshooting Common Issues
+
+### Build Failures
+```bash
+# If workspace fails to build, try building packages individually
+cargo build -p mission1
+cargo build -p mission2
+# ... continue with failing packages
+
+# Check for circular dependencies
+cargo tree -p mission5
+
+# Clean and rebuild
+cargo clean
+cargo build --workspace
+```
+
+### Test Failures
+```bash
+# Run tests with output for debugging
+cargo test -p mission5 -- --nocapture
+
+# Run specific test
+cargo test -p mission5 req1_generic_support
+
+# Run only unit tests (exclude integration tests)
+cargo test -p mission5 --lib
+```
+
+### Clippy Issues
+```bash
+# Get detailed clippy output
+cargo clippy -p mission5 -- -D warnings -W clippy::all
+
+# Common fixes:
+# - Remove unused imports
+# - Add #[allow(dead_code)] for demo code in daily_study/
+# - Prefix unused variables with underscore: _unused_var
+# - Make variables non-mut if not modified
+```
+
+### Markdown Code Examples
+```powershell
+# If markdown code extraction fails, check for:
+# - "Complete Runnable Example" section header
+# - Proper ```rust code fences
+# - Self-contained code (includes all imports)
+
+# Run with verbose output
+.\scripts\run_markdown_code.ps1 -Verbose missions\Mission5\README.md
+```
+
+### Zettelkasten Link Issues
+Common link format errors:
+- ❌ `[[Day24]]` → ✅ `[[daily-study/Day24]]`
+- ❌ `[[Mission5]]` → ✅ `[[mission-5]]`
+- ❌ `[[Ch8]]` → ✅ `[[rust_book/rust-book-ch8]]`
+
+## 📊 Quality Assurance
+
+### Pre-Commit Checklist
+```bash
+# MUST pass all before committing:
+cargo fmt --all --check              # Code formatting
+cargo clippy --workspace -- -D warnings  # Linting (zero warnings)
+cargo test --workspace               # All tests pass
+cargo build --workspace              # No breaking changes
+```
+
+### CI/CD Workflows
+The repository uses nightly automated checks:
+- **nightly-clippy.yml** - Runs clippy on all packages
+- **nightly-comprehensive-tests.yml** - Full test suite
+- All workflows must pass for merging
+
+### Performance Validation
+For missions with performance requirements (REQ-X specifying Big-O):
+```bash
+# Run benchmarks
+cargo bench -p mission5
+
+# Verify O(1) amortized operations
+# Check that timing doesn't scale with input size
+```
+
+## 🎯 Agent-Specific Guidance
+
+### When Creating New Missions
+1. Start with `missions/MissionX/README.md` defining REQ-1 through REQ-N
+2. Create test file first: `missions/MissionX/tests/unit_tests.rs` with `req{N}_*` functions
+3. Implement in `missions/MissionX/src/lib.rs` with `/// Requirements Satisfied: REQ-X` comments
+4. Add examples in `missions/MissionX/examples/demo.rs`
+5. Create companion tutorial in `tutorials/MissionX_tut/`
+6. Update `zettelkasten/Missions Overview.md`
+
+### When Updating Daily Study
+1. Follow template: `.github/COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md`
+2. Include "Complete Runnable Example" section
+3. Test with: `.\scripts\run_md.bat daily_study\rust_learning_weekX_notes\DayX.md`
+4. Add zettelkasten bidirectional links
+5. Use `#[allow(dead_code)]` for demonstration-only code
+
+### When Fixing Bugs
+1. Add failing test first demonstrating the bug
+2. Fix the code to make test pass
+3. Verify all existing tests still pass
+4. Run clippy to ensure no new warnings
+5. Document fix in commit message with REQ-X reference if applicable
+
+### When Adding Tests
+- Name format: `req{N}_description` for requirement tests
+- Name format: `test_edge_case_description` for edge cases
+- Include doctests in `/// # Examples` sections
+- Test both happy path and error cases
+- Verify performance claims with benchmarks
+
+## 📚 Additional Resources
+
+### Key Documentation Files
+- **`.github/README.md`** - Comprehensive workspace overview
+- **`.github/CONTRIBUTING.md`** - Contribution guidelines
+- **`.github/CLIPPY_AUTOMATION.md`** - Clippy workflow details
+- **`MONTHLY_CALENDAR.md`** - Learning schedule and activities
+- **`zettelkasten/zettel-index.md`** - Knowledge graph navigation
+
+### External References
+- [Rust Book](https://doc.rust-lang.org/book/) - Referenced in `rust_book/` exercises
+- [Advent of Code](https://adventofcode.com/) - Problem sets in `advent_of_code/`
+- [V-Cycle Methodology](https://en.wikipedia.org/wiki/V-Model_(software_development)) - Software engineering approach
+
+---
+
+## 🤖 For GitHub Copilot Coding Agent
+
+This file is optimized for GitHub Copilot Coding Agent. Key points:
+
+1. **Repository Structure**: Multi-crate workspace with 60+ members, not a single application
+2. **Build System**: Use `cargo build --workspace` and test with `-p <package>` for specific crates
+3. **Quality Standards**: Zero clippy warnings policy, all tests must pass
+4. **Methodology**: V-Cycle for missions (requirements → design → implementation → verification)
+5. **Testing**: TDD approach, tests named with requirement IDs for traceability
+6. **Documentation**: All public APIs must have rustdoc with examples
+
+**Most Common Tasks:**
+- Add new mission: Follow V-Cycle pattern in existing missions (Mission1-7)
+- Fix bug: Add test first, then fix
+- Update docs: Follow rustdoc conventions with `///` and `//!`
+- Run tests: `cargo test -p <package>` or `cargo test --workspace`
+- Check quality: `cargo clippy --workspace -- -D warnings`
+
+**Repository Philosophy**: Professional engineering standards applied to learning - every feature traced to requirements, every requirement tested, zero tolerance for warnings.
