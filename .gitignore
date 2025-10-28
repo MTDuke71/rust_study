@@ -70,5 +70,11 @@ clippy-output.json
 compilation-report.json
 test-results.json
 doc-test-results.json
+test-output.txt
+format-results.json
+benchmark-results.json
+
+# Reports directory
+reports/
 
 .smart-env
