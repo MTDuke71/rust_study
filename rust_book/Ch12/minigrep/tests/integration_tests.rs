@@ -170,7 +170,7 @@ Yes!";
 
     let results = minigrep::search("?", contents);
     
-    assert_eq!(results.len(), 2);
+    assert_eq!(results.len(), 3); // Lines 1, 2, and 3 contain "?"
 }
 
 #[test]
@@ -311,7 +311,7 @@ Hello Rust
 
     let results = minigrep::search("Hello", contents);
     
-    assert_eq!(results.len(), 2);
+    assert_eq!(results.len(), 3); // Lines 1, 3, and 4 contain "Hello"
 }
 
 #[test]

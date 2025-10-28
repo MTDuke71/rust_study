@@ -86,53 +86,84 @@ jobs:
         # Ensure reports directory exists
         mkdir -p reports
         
-        # Initialize test report
-        echo '{"test_run": "nightly", "timestamp": "'$(date -u +"%Y-%m-%d %H:%M:%S UTC")'"}' > reports/test-results.json
-        
-        # Run workspace tests with detailed output
-        echo "Running workspace tests..." | tee -a reports/test-results.json
-        cargo test --workspace --all-targets --all-features -- --nocapture 2>&1 | tee -a reports/test-results.json
+        # Run workspace tests and capture output
+        echo "Running workspace tests..."
+        cargo test --workspace --all-targets --all-features 2>&1 | tee reports/test-output.txt
         # Capture the exit code from cargo test, not tee
         workspace_exit_code=${PIPESTATUS[0]}
         
+        echo "Test execution completed with exit code: $workspace_exit_code"
+        
         # Check for compilation failures
         compilation_failed="false"
-        if grep -q "could not compile" reports/test-results.json; then
+        if grep -q "could not compile" reports/test-output.txt; then
           compilation_failed="true"
-          echo "⚠️ Compilation failures detected" | tee -a reports/test-results.json
+          echo "⚠️ Compilation failures detected"
         fi
         
-        # Parse test results from the complete output file
-        # Count all "test result:" lines to get accurate totals
-        echo "Parsing test results..." | tee -a reports/test-results.json
+        # Parse test results from the output file
+        echo "Parsing test results from test output..."
         
         total_tests=0
         passed_tests=0
         failed_tests=0
         
+        # Count test result lines for debugging
+        result_line_count=$(grep -c "test result:" reports/test-output.txt || echo "0")
+        echo "Found $result_line_count test result lines"
+        
         # Parse all test result lines from the output
         while IFS= read -r line; do
           if [[ $line =~ test\ result:\ ok\.\ ([0-9]+)\ passed ]]; then
-            passed_tests=$((passed_tests + ${BASH_REMATCH[1]}))
+            count=${BASH_REMATCH[1]}
+            passed_tests=$((passed_tests + count))
+            echo "  Found OK result: $count passed"
           elif [[ $line =~ test\ result:\ FAILED\.\ ([0-9]+)\ passed ]]; then
-            passed_tests=$((passed_tests + ${BASH_REMATCH[1]}))
+            count=${BASH_REMATCH[1]}
+            passed_tests=$((passed_tests + count))
+            echo "  Found FAILED result: $count passed"
           fi
           
           if [[ $line =~ ([0-9]+)\ failed ]]; then
-            failed_tests=$((failed_tests + ${BASH_REMATCH[1]}))
+            count=${BASH_REMATCH[1]}
+            if [ "$count" != "0" ]; then
+              failed_tests=$((failed_tests + count))
+              echo "  Found failures: $count failed"
+            fi
           fi
-        done < reports/test-results.json
+        done < reports/test-output.txt
         
         total_tests=$((passed_tests + failed_tests))
         
+        echo ""
+        echo "==================================="
+        echo "Test Parsing Summary:"
+        echo "  Passed: $passed_tests"
+        echo "  Failed: $failed_tests"
+        echo "  Total:  $total_tests"
+        echo "  Exit code: $workspace_exit_code"
+        echo "==================================="
+        
         # If no tests were found but exit code is non-zero, check for compilation issues
         if [ "$total_tests" -eq 0 ] && [ "$workspace_exit_code" -ne 0 ]; then
-          echo "⚠️ No tests executed - likely due to compilation failures" | tee -a reports/test-results.json
+          echo "⚠️ No tests executed - likely due to compilation failures"
           compilation_failed="true"
         fi
         
-        echo "Parsed results: $passed_tests passed, $failed_tests failed, $total_tests total" | tee -a reports/test-results.json
+        # Create JSON report summary
+        cat > reports/test-results.json << EOF
+{
+  "test_run": "nightly",
+  "timestamp": "$(date -u +"%Y-%m-%d %H:%M:%S UTC")",
+  "total_tests": $total_tests,
+  "passed_tests": $passed_tests,
+  "failed_tests": $failed_tests,
+  "workspace_exit_code": $workspace_exit_code,
+  "compilation_failed": $compilation_failed
+}
+EOF
         
+        echo "Exporting results to GITHUB_OUTPUT..."
         # Export results
         echo "total_tests=$total_tests" >> $GITHUB_OUTPUT
         echo "passed_tests=$passed_tests" >> $GITHUB_OUTPUT  
@@ -140,7 +171,7 @@ jobs:
         echo "workspace_exit_code=$workspace_exit_code" >> $GITHUB_OUTPUT
         echo "compilation_failed=$compilation_failed" >> $GITHUB_OUTPUT
         
-        echo "Test Summary: $passed_tests/$total_tests passed, $failed_tests failed" | tee -a reports/test-results.json
+        echo "Test Summary: $passed_tests/$total_tests passed, $failed_tests failed"
     
     # ============================================================================
     # DOCUMENTATION TESTS (Including the fix we made)
@@ -369,9 +400,10 @@ jobs:
         name: nightly-qa-results-${{ github.run_number }}
         path: |
           reports/test-results.json
+          reports/test-output.txt
           reports/compilation-report.json
           reports/doc-test-results.json
-          reports/clippy-results.json
-          reports/format-results.json
-          reports/benchmark-results.json
+          clippy-results.json
+          format-results.json
+          benchmark-results.json
         retention-days: 30
