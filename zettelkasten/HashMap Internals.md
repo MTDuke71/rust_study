@@ -111,9 +111,9 @@ struct HashMap<K, V> {
 - **Learning Path**: [[From Custom to Standard Collections]]
 
 ### **Tutorial Applications**
-- **Step 1**: [[Step 1 - Basic HashMap Structure]] - Foundation
-- **Step 2**: [[Step 2 - Collision Handling]] - Practical implementation
-- **Step 3**: [[Step 3 - Advanced Operations]] - Ergonomic API design
+- **Step 1**: **Basic HashMap Structure** - Foundation
+- **Step 2**: **Collision Handling** - Practical implementation
+- **Step 3**: **Advanced Operations** - Ergonomic API design
 
 ## 🧪 Learning Exercises
 

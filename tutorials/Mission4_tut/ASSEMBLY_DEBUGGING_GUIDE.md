@@ -240,7 +240,7 @@ This debugging approach gives you deep insight into how Rust's high-level constr
 **Mission Integration:**
 - [[Mission4 Overview]] - Linked list mission
 - [[Mission4_tut Overview]] - Complete tutorial
-- [[step2_push_front]] - Example source file
+- `step2_push_front` - Example source file
 
 **Tools & Commands:**
 - [[lldb-command-reference]] - LLDB command cheat sheet

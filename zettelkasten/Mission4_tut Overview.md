@@ -5,17 +5,17 @@
 ## 🗺️ Tutorial Learning Path
 
 ### **Foundation Building**
-- [[Step 1 - Basic Structure]] - Core linked list setup with Box<T>
-- [[Step 2 - Push Front]] - Adding elements with ownership transfer
-- [[Step 3 - Peeking]] - Safe reference access patterns
+- **Step 1 - Basic Structure** - Core linked list setup with Box<T>
+- **Step 2 - Push Front** - Adding elements with ownership transfer
+- **Step 3 - Peeking** - Safe reference access patterns
 
 ### **Advanced Ownership Patterns**  
-- [[Step 4 - Popping]] - Removing elements with proper cleanup
-- [[Step 5 - Rc Basics]] - Shared ownership with Rc<RefCell<T>>
-- [[Step 6 - Borrow Checking]] - Runtime borrow conflict handling
+- **Step 4 - Popping** - Removing elements with proper cleanup
+- **Step 5 - Rc Basics** - Shared ownership with Rc<RefCell<T>>
+- **Step 6 - Borrow Checking** - Runtime borrow conflict handling
 
 ### **Real-World Integration**
-- [[Step 7 - Performance]] - Benchmarking Box vs Rc approaches
+- **Step 7 - Performance** - Benchmarking Box vs Rc approaches
 
 ## 📚 Tutorial-Mission Alignment 
 
@@ -23,13 +23,13 @@
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
-| **Sept 22** | Setup & Planning | [[Step 1 - Basic Structure]] | [[daily-study/Day04]] |
-| **Sept 23** | Box<T> Patterns | [[Step 2 - Push Front]] | [[daily-study/Day05]] |  
-| **Sept 24** | Interior Mutability | [[Step 3 - Peeking]] | [[daily-study/Day06]] |
-| **Sept 25** | Rc<RefCell<T>> | [[Step 4 - Popping]] | [[daily-study/Day07]] |
-| **Sept 26** | Borrow Checking | [[Step 5 - Rc Basics]] | [[daily-study/Day08]] |
-| **Sept 27** | Performance Analysis | [[Step 6 - Borrow Checking]] | [[daily-study/Day09]] |
-| **Sept 28** | Final Integration | [[Step 7 - Performance]] | [[daily-study/Day10]] |
+| **Sept 22** | Setup & Planning | **Step 1 - Basic Structure** | [[daily-study/Day04]] |
+| **Sept 23** | Box<T> Patterns | **Step 2 - Push Front** | [[daily-study/Day05]] |  
+| **Sept 24** | Interior Mutability | **Step 3 - Peeking** | [[daily-study/Day06]] |
+| **Sept 25** | Rc<RefCell<T>> | **Step 4 - Popping** | [[daily-study/Day07]] |
+| **Sept 26** | Borrow Checking | **Step 5 - Rc Basics** | [[daily-study/Day08]] |
+| **Sept 27** | Performance Analysis | **Step 6 - Borrow Checking** | [[daily-study/Day09]] |
+| **Sept 28** | Final Integration | **Step 7 - Performance** | [[daily-study/Day10]] |
 
 ## 🔗 Cross-Reference Network
 
@@ -94,13 +94,13 @@ Mission4_tut/
 ## 🎯 Current Status (Sept 28, 2025)
 
 ### **Completed Steps**
-- ✅ **Step 1**: Basic structure with Box<T>
-- ✅ **Step 2**: Push front with ownership transfer
-- ✅ **Step 3**: Safe peeking with reference access
-- ✅ **Step 4**: Popping with proper cleanup
-- ✅ **Step 5**: Rc basics with shared ownership
-- ✅ **Step 6**: Borrow checking with error handling
-- 🔄 **Step 7**: Performance analysis (CURRENT FOCUS)
+- ✅ **Step 1 - Basic Structure**: Basic structure with Box<T>
+- ✅ **Step 2 - Push Front**: Push front with ownership transfer
+- ✅ **Step 3 - Peeking**: Safe peeking with reference access
+- ✅ **Step 4 - Popping**: Popping with proper cleanup
+- ✅ **Step 5 - Rc Basics**: Rc basics with shared ownership
+- ✅ **Step 6 - Borrow Checking**: Borrow checking with error handling
+- 🔄 **Step 7 - Performance**: Performance analysis (CURRENT FOCUS)
 
 ### **Alignment Check** ✅
 - **Mission Progress**: REQ-6 Weak References

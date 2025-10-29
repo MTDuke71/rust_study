@@ -208,7 +208,7 @@ This compilation process demonstrates how Rust's high-level safety features tran
 **Mission Integration:**
 - [[Mission4 Overview]] - Linked list mission context
 - [[Mission4_tut Overview]] - Complete tutorial series
-- [[step2_push_front]] - Source file being analyzed
+- `step2_push_front` - Source file being analyzed
 
 **Learning Resources:**
 - [[rust-book-ch15]] - Smart Pointers

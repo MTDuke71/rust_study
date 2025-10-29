@@ -591,7 +591,7 @@ fn parse_int_grid(filename: &str) -> Vec<Vec<i32>> {
 - **[[Performance Optimization]]** - Efficient parsing strategies
 - **[[Testing Patterns]]** - Validating parser correctness
 - **[[Error Handling Patterns]]** - Robust parsing with error recovery
-- **[[Stream Processing]]** - Memory-efficient large file parsing
+- **Stream Processing** - Memory-efficient large file parsing
 
 ### **Advanced Patterns**
 - **[[pattern-matching]]** - Regex and string matching techniques

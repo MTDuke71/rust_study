@@ -103,11 +103,11 @@
 ## 🧪 Tutorial Progression
 
 ### **Mission5_tut Learning Path**
-- [[Step 1 - Basic HashMap]] → HashMap structure setup
-- [[Step 2 - Collision Handling]] → Chaining implementation
-- [[Step 3 - Advanced Operations]] → Complex HashMap methods
-- [[Step 4 - Multi-Value Patterns]] → One-to-many mappings
-- [[Step 5 - MemoCache Integration]] → Performance optimization
+- **Step 1 - Basic HashMap** → HashMap structure setup
+- **Step 2 - Collision Handling** → Chaining implementation
+- **Step 3 - Advanced Operations** → Complex HashMap methods
+- **Step 4 - Multi-Value Patterns** → One-to-many mappings
+- **Step 5 - MemoCache Integration** → Performance optimization
 
 ## 📊 Assessment & Practice
 

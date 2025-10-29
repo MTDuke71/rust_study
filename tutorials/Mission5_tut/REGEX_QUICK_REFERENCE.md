@@ -204,8 +204,8 @@ fn is_nice(s: &str) -> bool {
 
 ### **Mission5 Tutorial Materials**
 - **[[README|Mission5_tut Overview]]** - Complete HashMap tutorial with step-by-step guide
-- **[[Step 1 - Basic HashMap|Step 1]]** - Building hash table foundations
-- **[[Step 3 - String Keys|Step 3]]** - String key handling with pattern matching
+- **Step 1 - Basic HashMap** - Building hash table foundations
+- **Step 3 - String Keys** - String key handling with pattern matching
 
 ### **String & Pattern Concepts**
 - **[[../../zettelkasten/Day 09 - String Patterns|Day 09 - String Patterns]]** - String vs &str, UTF-8 handling

@@ -5,13 +5,13 @@
 ## 🗺️ Tutorial Learning Path
 
 ### **Foundation Building**
-- [[Step 1 - Basic HashMap Structure]] - Core data structure setup
-- [[Step 2 - Collision Handling]] - Managing hash conflicts
-- [[Step 3 - Advanced Operations]] - Complex HashMap methods
+- **Step 1 - Basic HashMap Structure** - Core data structure setup
+- **Step 2 - Collision Handling** - Managing hash conflicts
+- **Step 3 - Advanced Operations** - Complex HashMap methods
 
 ### **Advanced Applications**  
-- [[Step 4 - Multi-Value Patterns]] - One-to-many mappings
-- [[Step 5 - MemoCache Integration]] - Performance optimization with Mission5 MemoCache
+- **Step 4 - Multi-Value Patterns** - One-to-many mappings
+- **Step 5 - MemoCache Integration** - Performance optimization with Mission5 MemoCache
 
 ### **Real-World Integration**
 - [[Final Project - AoC HashMap Solver]] - Practical application
@@ -22,11 +22,11 @@
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
-| **Sept 25** | Setup & Planning | [[Step 1 - Basic HashMap Structure]] | [[daily-study/Day07]] |
-| **Sept 26** | Requirements | [[Step 2 - Collision Handling]] | [[daily-study/Day08]] |  
-| **Sept 27** | Basic Structure | [[Step 3 - Advanced Operations]] | [[daily-study/Day09]] |
-| **Sept 28** | Hash & Collision | [[Step 4 - Multi-Value Patterns]] | [[daily-study/Day10]] |
-| **Sept 29** | Core Operations | [[Step 5 - MemoCache Integration]] | [[daily-study/Day11]] |
+| **Sept 25** | Setup & Planning | **Step 1 - Basic HashMap Structure** | [[daily-study/Day07]] |
+| **Sept 26** | Requirements | **Step 2 - Collision Handling** | [[daily-study/Day08]] |  
+| **Sept 27** | Basic Structure | **Step 3 - Advanced Operations** | [[daily-study/Day09]] |
+| **Sept 28** | Hash & Collision | **Step 4 - Multi-Value Patterns** | [[daily-study/Day10]] |
+| **Sept 29** | Core Operations | **Step 5 - MemoCache Integration** | [[daily-study/Day11]] |
 | **Sept 30** | Iterator Implementation | [[Final Project Review]] | [[daily_study/rust_learning_week2_notes/Day12]] |
 
 ## 🔗 Cross-Reference Network
@@ -78,11 +78,11 @@ Mission5_tut/
 ## 🎯 Current Status (Sept 29, 2025)
 
 ### **Completed Steps**
-- ✅ **Step 1**: Basic HashMap structure
-- ✅ **Step 2**: Collision handling with chaining
-- ✅ **Step 3**: Advanced operations (entry API)
-- ✅ **Step 4**: Multi-value patterns
-- 🔄 **Step 5**: MemoCache integration (CURRENT FOCUS)
+- ✅ **Step 1 - Basic HashMap Structure**: Basic HashMap structure
+- ✅ **Step 2 - Collision Handling**: Collision handling with chaining
+- ✅ **Step 3 - Advanced Operations**: Advanced operations (entry API)
+- ✅ **Step 4 - Multi-Value Patterns**: Multi-value patterns
+- 🔄 **Step 5 - MemoCache Integration**: MemoCache integration (CURRENT FOCUS)
 
 ### **Alignment Check** ✅
 - **Mission Progress**: REQ-4 Iterator Implementation 

@@ -59,7 +59,7 @@ enum UnclosedPolicy { LatestOpen, EarliestOpen }
 
 ### Advanced Patterns
 - [[Builder Pattern]] - Options configuration with defaults
-- [[Strategy Pattern]] - Pluggable ErrorMode and UnclosedPolicy
+- **Strategy Pattern** - Pluggable ErrorMode and UnclosedPolicy
 - [[Iterator Patterns]] - IntoIterator trait usage
 - [[Generic Programming]] - Flexible input types
 

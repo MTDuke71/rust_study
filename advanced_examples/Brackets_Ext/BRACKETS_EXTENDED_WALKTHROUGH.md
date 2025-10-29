@@ -291,7 +291,7 @@ The **Brackets_Extended** project demonstrates sophisticated Rust development pr
 
 ### Advanced Patterns
 - [[Builder Pattern]] - Options configuration
-- [[Strategy Pattern]] - ErrorMode and UnclosedPolicy
+- **Strategy Pattern** - ErrorMode and UnclosedPolicy
 - [[Iterator Patterns]] - Generic iteration support
 - [[Extensible Design]] - Adding features without breaking changes
 

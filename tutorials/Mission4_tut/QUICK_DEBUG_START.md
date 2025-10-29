@@ -144,7 +144,7 @@ You're now ready to see **exactly** how Rust's memory safety features translate 
 **Mission Integration:**
 - [[Mission4 Overview]] - Linked list mission
 - [[Mission4_tut Overview]] - Complete tutorial
-- [[step2_push_front]] - Example being debugged
+- `step2_push_front` - Example being debugged
 
 **Learning Resources:**
 - [[debugging-strategies]] - Systematic debugging
