@@ -162,7 +162,7 @@ pub trait WeightedGraph {
 - **[[Game AI]]** - NPC pathfinding and behavior systems
 - **[[Procedural Generation]]** - Level design and world generation
 - **[[Resource Management]]** - Supply chain and resource allocation
-- **Strategy Game AI** - Decision trees and optimal play analysis
+- **[[Strategy Game AI]]** - Decision trees and optimal play analysis
 
 #### **Science and Engineering**
 - **[[Bioinformatics]]** - Protein networks and genetic pathway analysis

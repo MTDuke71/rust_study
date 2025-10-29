@@ -248,7 +248,7 @@ See practical usage in:
 
 ### **Applications:**
 - [[AoC Grid Patterns]]
-- **Strategy Game Patterns**
+- [[Strategy Game Patterns]]
 - [[Image Processing Patterns]]
 
 ---
