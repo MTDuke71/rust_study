@@ -30,7 +30,7 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ### **Dynamic Programming**
 
 - [[Dynamic Programming]] - Optimization through memoization and tabulation
-- [[Memoization]] - Top-down caching strategies
+- [[Memoization Patterns]] - Top-down caching strategies with HashMap and Vec
 - [[Recursion]] - Recursive problem solving and base cases
 - [[State Machine Patterns]] - DP with state transitions
 
