@@ -2,6 +2,24 @@
 
 **Context**: A professional Rust learning workspace following V-Cycle software engineering methodology with integrated zettelkasten knowledge management.
 
+## 📋 **Specialized Instruction System**
+
+This repository uses **modular instruction files** for different content types. Always consult the appropriate specialized instruction file when working with specific content:
+
+### **Content-Type Specific Instructions**
+- **📚 [[.github/instructions/zettelkasten-instructions.md]]** - Knowledge graph creation, bidirectional linking, concept development
+- **📖 [[.github/instructions/daily-study-instructions.md]]** - Systematic concept deep dives, "Complete Runnable Examples", evidence-based learning
+- **🎯 [[.github/instructions/mission-instructions.md]]** - V-Cycle engineering methodology, requirements traceability, production-quality implementations
+- **🎓 [[.github/instructions/tutorial-instructions.md]]** - Progressive learning scaffolding, step-by-step skill building, mission preparation
+- **📚 [[.github/instructions/rust-book-instructions.md]]** - Official content integration, systematic chapter processing, foundational knowledge validation
+
+### **Instruction Hierarchy**
+1. **This file**: General repository structure, build commands, quality standards
+2. **Specialized files**: Content-specific templates, quality standards, integration requirements
+3. **Integration requirements**: Cross-content connections documented in each specialized file
+
+**CRITICAL**: Always use the appropriate specialized instruction file for your content type. This general file provides repository-wide context but specialized files contain detailed templates and requirements.
+
 ## ⚡ Quick Start for AI Agents
 
 ### Essential Commands
@@ -449,11 +467,24 @@ This file is optimized for GitHub Copilot Coding Agent. Key points:
 5. **Testing**: TDD approach, tests named with requirement IDs for traceability
 6. **Documentation**: All public APIs must have rustdoc with examples
 
-**Most Common Tasks:**
-- Add new mission: Follow V-Cycle pattern in existing missions (Mission1-7)
-- Fix bug: Add test first, then fix
-- Update docs: Follow rustdoc conventions with `///` and `//!`
-- Run tests: `cargo test -p <package>` or `cargo test --workspace`
-- Check quality: `cargo clippy --workspace -- -D warnings`
+**Content-Specific Tasks - USE SPECIALIZED INSTRUCTIONS:**
 
-**Repository Philosophy**: Professional engineering standards applied to learning - every feature traced to requirements, every requirement tested, zero tolerance for warnings.
+| **Task Type** | **Use This Instruction File** | **Key Focus** |
+|---------------|------------------------------|---------------|
+| Creating/editing zettelkasten pages | `zettelkasten-instructions.md` | Knowledge graph, bidirectional linking, MOC creation |
+| Daily study concept deep dives | `daily-study-instructions.md` | "Complete Runnable Examples", evidence-based learning |
+| Mission implementations (REQ-based) | `mission-instructions.md` | V-Cycle methodology, traceability, performance validation |
+| Tutorial step-by-step progressions | `tutorial-instructions.md` | Progressive scaffolding, skill building, mission prep |
+| Rust Book chapter integration | `rust-book-instructions.md` | Official content, systematic coverage, concept validation |
+
+**Most Common Tasks:**
+- **Create zettelkasten page**: Use `zettelkasten-instructions.md` for proper linking and structure
+- **Write daily study**: Use `daily-study-instructions.md` for "Complete Runnable Example" format
+- **Implement mission**: Use `mission-instructions.md` for V-Cycle methodology and REQ traceability
+- **Build tutorial**: Use `tutorial-instructions.md` for 7-step progressive learning framework
+- **Process Rust Book chapter**: Use `rust-book-instructions.md` for systematic integration
+- **Fix bug**: Add test first, then fix (use appropriate content-specific instructions)
+- **Run tests**: `cargo test -p <package>` or `cargo test --workspace`
+- **Check quality**: `cargo clippy --workspace -- -D warnings`
+
+**Repository Philosophy**: Professional engineering standards applied to learning - every feature traced to requirements, every requirement tested, zero tolerance for warnings, with specialized workflows optimized for each content type.
