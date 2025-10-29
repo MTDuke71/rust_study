@@ -641,11 +641,11 @@ pub struct MyHashMap<'a, K, V> {
 
 *Tags: #hashmap #ownership #borrowing #references #lifetimes #memory-management #mission5 #rust-patterns #copy-trait*
 
-*Links: [[zettel-index]] | [[ownership]] | [[borrowing]] | [[lifetimes]] | [[mission-5]] | [[entry-api-hashmap]] | [[rust-book-ch8]] | [[copy-trait]]*
+*Links: [[zettel-index]] | [[ownership]] | [[Borrow Checker Fundamentals]] | [[lifetimes]] | [[mission-5]] | [[entry-api-hashmap]] | [[rust-book-ch8]] | [[copy-trait]]*
 
 *Related Concepts:*
 - [[ownership]] - Fundamental ownership system
-- [[borrowing]] - Reference rules and constraints
+- [[Borrow Checker Fundamentals]] - Reference rules and constraints
 - [[lifetimes]] - Reference lifetime annotations
 - [[copy-trait]] - Copy vs Move semantics
 - [[entry-api-hashmap]] - Efficient HashMap access patterns

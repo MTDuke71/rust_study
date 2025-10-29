@@ -257,7 +257,7 @@ Understanding these concepts is essential for testing:
 
 **Related Concepts:**
 - [[ownership]] - Foundation for all these types
-- [[borrowing]] - Sharing references to struct fields and collection elements
+- [[Borrow Checker Fundamentals]] - Sharing references to struct fields and collection elements
 - [[pattern-matching]] - Enum decomposition and control flow
 - [[trait-derivation]] - Automatic implementation of common behavior
 - [[api-design]] - Building maintainable public interfaces

@@ -300,4 +300,4 @@ Places where deref coercion happens:
 
 *Tags: #deref #smart-pointers #coercion #box #mission2 #type-system #ergonomics*
 
-*Links: [[zettel-index]] | [[Box Smart Pointer Patterns]] | [[Rust Concepts MOC]] | [[Method Resolution]] | [[../missions/Mission2/README|Mission2 Queue]] | [[Borrowing and References]]*
+*Links: [[zettel-index]] | [[Box Smart Pointer Patterns]] | [[Rust Concepts MOC]] | [[Method Resolution]] | [[../missions/Mission2/README|Mission2 Queue]] | [[Borrow Checker Fundamentals]]*

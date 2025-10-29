@@ -362,7 +362,7 @@ These concepts form the foundation for safe systems programming in Rust, enablin
 
 **Core Concepts:**
 - [[ownership]] - Rust's ownership system and move semantics
-- [[borrowing]] - Immutable and mutable references
+- [[Borrow Checker Fundamentals]] - Immutable and mutable references
 - [[lifetimes]] - Ensuring references remain valid
 - [[generics]] - Type parameters and generic programming
 - [[traits]] - Copy trait vs Move semantics

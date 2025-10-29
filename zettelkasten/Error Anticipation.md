@@ -682,7 +682,7 @@ Each day includes:
 - [[Error Propagation]] - Using ? operator
 
 ### **Compiler Understanding**
-- [[Borrow Checker Mental Model]] - Understanding ownership errors
+- [[Borrow Checker Fundamentals]] - Understanding ownership errors
 - [[Lifetime Elision Rules]] - When lifetimes are implicit
 - [[Trait Bounds]] - Understanding trait requirement errors
 
@@ -704,4 +704,4 @@ Each day includes:
 
 *Tags: #error-anticipation #pedagogy #debugging #troubleshooting #borrow-checker #compilation-errors #tutorial-design #learning-support*
 
-*Links: [[zettel-index]] | [[Tutorial Engineering]] | [[Progressive Disclosure]] | [[Hands-On Learning]] | [[Debugging Lessons]] | [[Borrow Checker Mental Model]]*
+*Links: [[zettel-index]] | [[Tutorial Engineering]] | [[Progressive Disclosure]] | [[Hands-On Learning]] | [[Debugging Lessons]] | [[Borrow Checker Fundamentals]]*

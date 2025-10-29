@@ -242,7 +242,7 @@ let mut_borrow = node.borrow_mut(); // This would panic if borrow1 is still aliv
 
 **Borrow Checking:**
 - [[runtime-borrow-checking]] - RefCell runtime checks
-- [[borrow-rules]] - Rust borrowing rules and enforcement
+- [[Borrow Checker Fundamentals]] - Rust borrowing rules and enforcement
 - [[try-borrow]] - Graceful borrow conflict handling
 
 **Error Handling:**

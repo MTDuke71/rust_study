@@ -285,7 +285,7 @@ Understanding these foundations is critical for testing:
 
 **Related Concepts:**
 - [[ownership]] - Deep dive into ownership mechanics
-- [[borrowing]] - Comprehensive borrowing rules and patterns
+- [[Borrow Checker Fundamentals]] - Comprehensive borrowing rules and patterns
 - [[move-semantics]] - Understanding value transfers
 - [[copy-trait]] - When and why types copy automatically
 - [[memory-layout]] - Stack vs heap performance implications
@@ -319,7 +319,7 @@ Master these chapters before advancing because:
 
 *Tags: #rust-book #foundation #ownership #borrowing #cargo #memory-safety #ch1 #ch2 #ch3 #ch4 #getting-started #ownership-system*
 
-*Links: [[zettel-index]] | [[rust-book-ch1]] | [[rust-book-ch2]] | [[rust-book-ch3]] | [[rust-book-ch4]] | [[ownership]] | [[borrowing]] | [[daily-study/Day02]]*
+*Links: [[zettel-index]] | [[rust-book-ch1]] | [[rust-book-ch2]] | [[rust-book-ch3]] | [[rust-book-ch4]] | [[ownership]] | [[Borrow Checker Fundamentals]] | [[daily-study/Day02]]*
 
 ---
 

@@ -185,7 +185,7 @@ That's actually a lot! Keep going, one small step at a time. 🚀
 **Zettelkasten Deep Dives:**
 - [[Ownership and Borrowing|../zettelkasten/Ownership and Borrowing]] - Comprehensive ownership guide
 - [[Copy vs Clone vs Move|../zettelkasten/Copy vs Clone vs Move]] - Data transfer semantics
-- [[Borrowing Rules|../zettelkasten/Borrowing Rules]] - The borrow checker explained
+- [[Borrow Checker Fundamentals|../zettelkasten/Borrow Checker Fundamentals]] - The borrow checker explained
 - [[Stack Data Structure|../zettelkasten/Stack Data Structure]] - Stack implementation patterns
 - [[Rust Concepts MOC|../zettelkasten/Rust Concepts MOC]] - Navigate all Rust concepts
 

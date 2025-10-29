@@ -98,7 +98,7 @@ The solutions follow Rust best practices and demonstrate real-world patterns you
 
 **Testing Patterns:**
 - [[comprehensive-testing]] - Edge cases and scenarios
-- [[borrow-conflict-testing]] - Runtime borrow tests
+- [[Borrow Checker Patterns and Troubleshooting]] - Runtime borrow tests
 - [[reference-sharing-tests]] - Shared reference scenarios
 
 **Learning Resources:**

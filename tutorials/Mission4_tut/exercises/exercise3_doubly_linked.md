@@ -370,7 +370,7 @@ Your implementation should:
 **Interior Mutability:**
 - [[Interior Mutability Deep Dive]] - Comprehensive guide
 - [[refcell-patterns]] - RefCell usage patterns
-- [[borrow-conflicts]] - Handling runtime borrow errors
+- [[Borrow Checker Patterns and Troubleshooting]] - Handling runtime borrow errors
 
 **Data Structure Design:**
 - [[doubly-linked-list]] - Bidirectional linked lists

@@ -172,7 +172,7 @@ Claude Sonnet 4 • 1x
 ### Memory Safety
 - [[Aliasing Prevention]] - No shared mutable state
 - [[Ownership Model]] - Stack owns its data
-- [[Borrow Checker]] - Compile-time safety
+- [[Borrow Checker Fundamentals]] - Compile-time safety
 - [[No Unsafe Code]] - Pure safe Rust
 
 ### Performance Analysis

@@ -42,7 +42,7 @@ Mission1 is where the entire learning journey began. It established:
 - Immutable peek: `peek() -> Option<&T>`
 - Mutable peek: `peek_mut() -> Option<&mut T>`
 - Enforces Rust's aliasing rules
-- **Connected to**: [[Borrowing Rules]]
+- **Connected to**: [[Borrow Checker Fundamentals]]
 - **Pattern**: [[Mutable vs Immutable References]]
 
 ## 🔗 Learning Track Integration
@@ -90,7 +90,7 @@ Mission1 is where the entire learning journey began. It established:
 ### **Mental Models**
 - [[Ownership Mental Model - The Library Analogy]] - Books, librarians, reading passes
 - [[Move Semantics Visualization]] - Understanding ownership transfer
-- [[Borrowing Rules Intuition]] - Immutable vs mutable references
+- [[Borrow Checker Fundamentals]] - Immutable vs mutable references
 
 ## 🎓 Foundational Concepts
 
