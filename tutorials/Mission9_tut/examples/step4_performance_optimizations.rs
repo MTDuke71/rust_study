@@ -345,6 +345,12 @@ impl BidirectionalAStar {
         let mut meeting_point: Option<u32> = None;
 
         while !forward_open.is_empty() && !backward_open.is_empty() {
+            // Track peak memory usage for both searches
+            let forward_memory = forward_open.len() + forward_closed.len();
+            let backward_memory = backward_open.len() + backward_closed.len();
+            self.forward_stats.peak_memory = self.forward_stats.peak_memory.max(forward_memory);
+            self.backward_stats.peak_memory = self.backward_stats.peak_memory.max(backward_memory);
+
             // Expand forward search
             if let Some(forward_current) = forward_open.pop() {
                 self.forward_stats.nodes_explored += 1;
@@ -524,7 +530,7 @@ impl BidirectionalAStar {
         SearchStats {
             nodes_explored: self.forward_stats.nodes_explored + self.backward_stats.nodes_explored,
             nodes_generated: self.forward_stats.nodes_generated + self.backward_stats.nodes_generated,
-            peak_memory: self.forward_stats.peak_memory.max(self.backward_stats.peak_memory),
+            peak_memory: self.forward_stats.peak_memory + self.backward_stats.peak_memory, // Total memory of both searches
             search_time_ms: self.forward_stats.search_time_ms,
             path_length: self.forward_stats.path_length,
             path_cost: self.forward_stats.path_cost,
@@ -552,6 +558,7 @@ impl MemoryOptimizedAStar {
 
         // Use pre-allocated vectors for better memory performance
         let mut open_indices = BinaryHeap::new();
+        let mut open_set: HashSet<u32> = HashSet::with_capacity(grid.width * grid.height / 4); // Track nodes in open set
         let mut closed_set = HashSet::with_capacity(grid.width * grid.height / 4);
         let mut g_scores = HashMap::with_capacity(grid.width * grid.height / 4);
         let mut came_from = HashMap::with_capacity(grid.width * grid.height / 4);
@@ -563,12 +570,29 @@ impl MemoryOptimizedAStar {
         let start_h = manhattan_distance(start, goal);
         let start_index = self.node_pool.allocate(start_id, 0, start_h, None);
         
-        open_indices.push((self.node_pool.get(start_index).f_score(), start_index));
+        // Use Reverse to create min-heap behavior (lowest f-score first)
+        open_indices.push(std::cmp::Reverse((self.node_pool.get(start_index).f_score(), start_index)));
+        open_set.insert(start_id);
         g_scores.insert(start_id, 0);
         self.stats.nodes_generated += 1;
 
-        while let Some((_, current_index)) = open_indices.pop() {
+        while let Some(std::cmp::Reverse((_, current_index))) = open_indices.pop() {
             let current = self.node_pool.get(current_index).clone();
+            
+            // Skip if we've already processed this node with a better cost
+            if closed_set.contains(&current.id) {
+                self.node_pool.deallocate(current_index);
+                continue;
+            }
+            
+            // Skip if we have a better path to this node already
+            if let Some(&best_g) = g_scores.get(&current.id) {
+                if current.cost > best_g {
+                    self.node_pool.deallocate(current_index);
+                    continue;
+                }
+            }
+            
             self.stats.nodes_explored += 1;
 
             if current.id == goal_id {
@@ -584,6 +608,7 @@ impl MemoryOptimizedAStar {
             }
 
             closed_set.insert(current.id);
+            open_set.remove(&current.id); // Remove from open set
             self.node_pool.deallocate(current_index);
 
             let current_pos = grid.id_to_pos(current.id);
@@ -611,11 +636,13 @@ impl MemoryOptimizedAStar {
                 );
 
                 let neighbor_f = tentative_g + neighbor_h;
-                open_indices.push((neighbor_f, neighbor_index));
+                // Use Reverse to create min-heap behavior (lowest f-score first)
+                open_indices.push(std::cmp::Reverse((neighbor_f, neighbor_index)));
+                open_set.insert(neighbor_id);
                 self.stats.nodes_generated += 1;
             }
 
-            self.stats.peak_memory = self.stats.peak_memory.max(open_indices.len() + closed_set.len());
+            self.stats.peak_memory = self.stats.peak_memory.max(open_set.len() + closed_set.len());
         }
 
         self.stats.search_time_ms = start_time.elapsed().as_millis();
@@ -727,6 +754,8 @@ fn benchmark_algorithms() {
     let optimized_path = memory_optimized.find_path(&grid, start, goal);
     let optimized_time = start_time.elapsed();
     let optimized_stats = memory_optimized.get_stats();
+    
+    // Note: Memory-optimized may explore more nodes due to different tie-breaking and duplicate handling
 
     if let Some(path) = optimized_path {
         println!("   ✅ Path found: {} steps", path.len());
@@ -741,18 +770,24 @@ fn benchmark_algorithms() {
     // Performance summary
     println!("📈 Performance Summary:");
     println!("======================");
-    println!("Algorithm              | Nodes Explored | Time (μs)    | Memory Efficiency");
+    println!("Algorithm              | Nodes Explored | Time (μs)    | Memory Strategy");
     println!("----------------------|---------------|--------------|------------------");
-    println!("Standard A*           | {:13} | {:10} | Baseline", 
+    println!("Standard A*           | {:13} | {:10} | Baseline (heap allocs)", 
              standard_stats.nodes_explored, 
              standard_time.as_micros());
-    println!("Bidirectional A*      | {:13} | {:10} | {:.1}% reduction",
+    println!("Bidirectional A*      | {:13} | {:10} | {:.1}% exploration reduction",
              bidirectional_stats.nodes_explored,
              bidirectional_time.as_micros(),
              100.0 * (1.0 - bidirectional_stats.nodes_explored as f64 / standard_stats.nodes_explored as f64));
-    println!("Memory-Optimized A*   | {:13} | {:10} | Pool-based allocation",
+    println!("Memory-Optimized A*   | {:13} | {:10} | Pool-based (predictable)",
              optimized_stats.nodes_explored,
              optimized_time.as_micros());
+    
+    println!("\n💡 Memory-Optimized trades algorithmic efficiency for:");
+    println!("   • Predictable memory usage (no heap fragmentation)");
+    println!("   • Better cache locality (contiguous allocations)");
+    println!("   • Reduced GC pressure (object reuse)");
+    println!("   • More nodes explored due to different tie-breaking");
 }
 
 fn demonstrate_early_termination() {

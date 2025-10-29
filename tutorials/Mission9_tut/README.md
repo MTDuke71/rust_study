@@ -256,6 +256,9 @@ Each tutorial step directly supports main Mission 9 requirements:
 
 ## 📚 Additional Resources
 
+### Advanced Pathfinding Guide
+- **[[Advanced Pathfinding Algorithms Complete Guide]]** - Comprehensive reference covering 8 advanced pathfinding algorithms including Jump Point Search, Dynamic Weighted A*, Parallel Bidirectional Search, and Hierarchical Pathfinding with performance analysis and implementation details
+
 ### Algorithm References
 - **[Introduction to Algorithms (CLRS)](https://mitpress.mit.edu/books/introduction-algorithms-third-edition)** - Chapter 24: Single-Source Shortest Paths
 - **[Red Blob Games A* Tutorial](https://www.redblobgames.com/pathfinding/a-star/introduction.html)** - Interactive A* learning
