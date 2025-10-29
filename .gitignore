@@ -78,3 +78,6 @@ benchmark-results.json
 reports/
 
 .smart-env
+
+# System files directory (contains broken links output and other system files)
+.system/

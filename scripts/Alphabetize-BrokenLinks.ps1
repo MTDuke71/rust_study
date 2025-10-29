@@ -13,7 +13,7 @@
     Path to the input broken links file. Defaults to "broken links output.md"
 
 .PARAMETER OutputFile  
-    Path to the output alphabetized file. Defaults to "broken links output - alphabetized.md"
+    Path to the output alphabetized file. Defaults to ".system/broken links output - alphabetized.md"
 
 .PARAMETER WorkspaceRoot
     Path to the workspace root directory. Defaults to current directory.
@@ -31,13 +31,20 @@
 
 param(
     [string]$InputFile = "broken links output.md",
-    [string]$OutputFile = "broken links output - alphabetized.md", 
+    [string]$OutputFile = ".system/broken links output - alphabetized.md", 
     [string]$WorkspaceRoot = "."
 )
 
 # Resolve full paths
 $InputPath = Join-Path $WorkspaceRoot $InputFile
 $OutputPath = Join-Path $WorkspaceRoot $OutputFile
+
+# Ensure the output directory exists
+$OutputDir = Split-Path $OutputPath -Parent
+if (-not (Test-Path $OutputDir)) {
+    Write-Host "📁 Creating output directory: $OutputDir" -ForegroundColor Yellow
+    New-Item -ItemType Directory -Path $OutputDir -Force | Out-Null
+}
 
 Write-Host "🔍 Alphabetizing Broken Links Output" -ForegroundColor Cyan
 Write-Host "=" * 40
