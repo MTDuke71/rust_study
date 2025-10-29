@@ -1,6 +1,5 @@
 // A* Heuristic Combination Strategies - Tutorial Extension
 
-use std::collections::{BinaryHeap, HashSet, HashMap};
 use std::cmp::Ordering;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
