@@ -62,7 +62,7 @@ pub use hierarchical::{CHStats, ContractionHierarchy, ImportanceStrategy, JumpPo
 pub use multi_objective::{MultiObjectiveAstar, MultiObjectiveResult, ObjectiveFunction};
 pub use pathfinder::Pathfinder;
 pub use performance_optimization::{
-    BidirectionalAstar, BidirectionalDijkstra, MemoryOptimizedAstar, NodePool, PerformanceMetrics,
+    BidirectionalAstar, BidirectionalDijkstra, MemoryOptimizedAstar, NodePool, PerformanceMetrics, TrulyOptimizedNode,
 };
 pub use priority_queue::PathfindingQueue;
 

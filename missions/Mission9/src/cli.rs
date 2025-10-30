@@ -24,8 +24,8 @@ pub struct Cli {
     pub verbose: bool,
 
     /// Output format
-    #[arg(short, long, value_enum, default_value = "text", global = true)]
-    pub output: OutputFormat,
+    #[arg(short = 'F', long = "output-format", value_enum, default_value = "text", global = true)]
+    pub output_format: OutputFormat,
 }
 
 #[derive(Subcommand, Debug)]
@@ -33,7 +33,7 @@ pub enum Commands {
     /// Find a path between two nodes using specified algorithm
     FindPath {
         /// Input graph file (JSON, CSV, or GraphML format)
-        #[arg(short, long)]
+        #[arg(short = 'f', long = "graph")]
         graph: PathBuf,
 
         /// Start node ID
@@ -53,14 +53,14 @@ pub enum Commands {
         heuristic: Option<HeuristicType>,
 
         /// Save visualization output to file
-        #[arg(short = 'v', long)]
+        #[arg(short = 'z', long)]
         visualize: Option<PathBuf>,
     },
 
     /// Run batch pathfinding on multiple queries
     Batch {
         /// Input graph file
-        #[arg(short, long)]
+        #[arg(short = 'f', long = "graph")]
         graph: PathBuf,
 
         /// Batch query file (CSV with start,goal columns)
@@ -79,14 +79,14 @@ pub enum Commands {
     /// Display information about a graph
     Info {
         /// Input graph file
-        #[arg(short, long)]
+        #[arg(short = 'f', long = "graph")]
         graph: PathBuf,
     },
 
     /// Benchmark pathfinding algorithms
     Benchmark {
         /// Input graph file
-        #[arg(short, long)]
+        #[arg(short = 'f', long = "graph")]
         graph: PathBuf,
 
         /// Start node ID
