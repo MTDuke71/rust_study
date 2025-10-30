@@ -1,0 +1,4 @@
+start,goal,cost,path_length,nodes_explored,time_us
+5,45,12.00,3,4,21
+10,40,22.00,5,13,39
+15,35,9.00,4,10,36

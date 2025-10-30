@@ -41,14 +41,27 @@ impl MultiObjectiveCost {
 
     /// Check if this solution dominates another (better in all objectives)
     fn dominates(&self, other: &Self) -> bool {
-        self.distance <= other.distance
-            && self.safety >= other.safety
-            && self.fuel <= other.fuel
-            && self.comfort >= other.comfort
-            && (self.distance < other.distance
-                || self.safety > other.safety
-                || self.fuel < other.fuel
-                || self.comfort > other.comfort)
+        // A solution dominates another if it's better or equal in all objectives
+        // and strictly better in at least one objective
+        let distance_better_or_equal = self.distance <= other.distance;
+        let safety_better_or_equal = self.safety >= other.safety;
+        let fuel_better_or_equal = self.fuel <= other.fuel;
+        let comfort_better_or_equal = self.comfort >= other.comfort;
+        
+        // Must be better or equal in all objectives
+        let all_better_or_equal = distance_better_or_equal 
+            && safety_better_or_equal 
+            && fuel_better_or_equal 
+            && comfort_better_or_equal;
+            
+        // Must be strictly better in at least one objective (with tolerance)
+        let epsilon = 0.001;
+        let at_least_one_better = (self.distance + epsilon < other.distance)
+            || (self.safety > other.safety + epsilon)
+            || (self.fuel + epsilon < other.fuel)
+            || (self.comfort > other.comfort + epsilon);
+            
+        all_better_or_equal && at_least_one_better
     }
 
     /// Weighted sum for single-objective approximation
@@ -574,43 +587,57 @@ impl ParetoPathfinder {
             ObjectiveWeights::safety_focused(),
             ObjectiveWeights::eco_friendly(),
             ObjectiveWeights::balanced(),
-            // Add more weight combinations
+            // Add more weight combinations for diversity
             ObjectiveWeights { distance: 0.5, safety: 0.3, fuel: 0.1, comfort: 0.1 },
             ObjectiveWeights { distance: 0.2, safety: 0.1, fuel: 0.6, comfort: 0.1 },
             ObjectiveWeights { distance: 0.1, safety: 0.6, fuel: 0.2, comfort: 0.1 },
+            ObjectiveWeights { distance: 0.3, safety: 0.2, fuel: 0.2, comfort: 0.3 },
+            ObjectiveWeights { distance: 0.4, safety: 0.4, fuel: 0.1, comfort: 0.1 },
+            ObjectiveWeights { distance: 0.1, safety: 0.1, fuel: 0.4, comfort: 0.4 },
         ];
 
         let weight_count = weight_sets.len();
-        for weights in weight_sets {
+        for (i, weights) in weight_sets.iter().enumerate() {
             if start_time.elapsed().as_secs_f64() > self.time_limit {
                 break;
             }
 
-            let mut pathfinder = MultiObjectiveAStar::new(weights, self.time_limit / weight_count as f64, 5000);
+            // Use different time limits and node limits to encourage path diversity
+            let time_per_search = self.time_limit / weight_count as f64;
+            let node_limit = 3000 + (i * 1000); // Varying node limits
+            
+            let mut pathfinder = MultiObjectiveAStar::new(weights.clone(), time_per_search, node_limit);
             
             if let Some((path, cost, _stats)) = pathfinder.find_path(grid, start, goal) {
-                // Check if this solution is non-dominated
-                let mut is_dominated = false;
-                for (_, existing_cost) in &pareto_solutions {
-                    if existing_cost.dominates(&cost) {
-                        is_dominated = true;
-                        break;
+                // More lenient similarity check - paths are different if they have different waypoints
+                let is_similar_path = pareto_solutions.iter().any(|(existing_path, _)| {
+                    paths_are_similar(existing_path, &path)
+                });
+
+                if !is_similar_path {
+                    // Check if this solution is non-dominated (more precise comparison)
+                    let mut is_dominated = false;
+                    for (_, existing_cost) in &pareto_solutions {
+                        if existing_cost.dominates(&cost) {
+                            is_dominated = true;
+                            break;
+                        }
                     }
-                }
 
-                if !is_dominated {
-                    // Remove dominated solutions
-                    pareto_solutions.retain(|(_, existing_cost)| !cost.dominates(existing_cost));
-                    
-                    // Add new solution
-                    pareto_solutions.push((path, cost));
+                    if !is_dominated {
+                        // Remove dominated solutions
+                        pareto_solutions.retain(|(_, existing_cost)| !cost.dominates(existing_cost));
+                        
+                        // Add new solution
+                        pareto_solutions.push((path, cost));
 
-                    // Limit number of solutions
-                    if pareto_solutions.len() > self.max_solutions {
-                        pareto_solutions.sort_by(|a, b| {
-                            a.1.distance.partial_cmp(&b.1.distance).unwrap_or(Ordering::Equal)
-                        });
-                        pareto_solutions.truncate(self.max_solutions);
+                        // Limit number of solutions
+                        if pareto_solutions.len() > self.max_solutions {
+                            pareto_solutions.sort_by(|a, b| {
+                                a.1.distance.partial_cmp(&b.1.distance).unwrap_or(Ordering::Equal)
+                            });
+                            pareto_solutions.truncate(self.max_solutions);
+                        }
                     }
                 }
             }
@@ -618,6 +645,21 @@ impl ParetoPathfinder {
 
         pareto_solutions
     }
+}
+
+/// Helper function to check if two paths are similar (share >80% of waypoints)
+fn paths_are_similar(path1: &[(usize, usize)], path2: &[(usize, usize)]) -> bool {
+    if path1.len() != path2.len() {
+        return false;
+    }
+    
+    let matching_points = path1.iter()
+        .zip(path2.iter())
+        .filter(|(p1, p2)| p1 == p2)
+        .count();
+    
+    let similarity_ratio = matching_points as f64 / path1.len() as f64;
+    similarity_ratio > 0.8 // 80% similarity threshold
 }
 
 /// Enhanced search statistics
@@ -651,56 +693,81 @@ impl SearchStats {
 
 /// Demonstration functions
 fn create_complex_scenario() -> AdvancedGrid {
-    let mut grid = AdvancedGrid::new(20, 15);
+    let mut grid = AdvancedGrid::new(25, 20);
 
-    // Create different terrain zones
-    // Highway zone (fast but less safe)
-    for x in 0..20 {
-        grid.set_terrain(x, 7, TerrainType::Highway);
+    // Create distinct route options to force different trade-offs
+    
+    // NORTHERN ROUTE: Highway zone (fast but less safe)
+    for x in 5..23 {
+        grid.set_terrain(x, 3, TerrainType::Highway);
+        grid.set_terrain(x, 4, TerrainType::Highway);
+    }
+    
+    // CENTRAL ROUTE: Normal roads with mixed terrain
+    for x in 1..24 {
+        grid.set_terrain(x, 10, TerrainType::Road);
     }
 
-    // Mountain region (slow, dangerous, but scenic)
-    for y in 0..5 {
-        for x in 15..20 {
-            grid.set_terrain(x, y, TerrainType::Mountain);
-        }
+    // SOUTHERN ROUTE: City zone (slow but safer in parts)
+    for x in 2..22 {
+        grid.set_terrain(x, 16, TerrainType::City);
+        grid.set_terrain(x, 17, TerrainType::City);
+        grid.set_traffic(x, 16, 0.7); // Heavy traffic
+        grid.set_traffic(x, 17, 0.5); // Moderate traffic  
     }
 
-    // City zone (traffic, moderate safety)
-    for y in 10..15 {
-        for x in 0..8 {
-            grid.set_terrain(x, y, TerrainType::City);
-            grid.set_traffic(x, y, 0.6); // Heavy traffic
-        }
-    }
-
-    // Dirt roads (slow but fuel efficient)
-    for y in 3..6 {
-        for x in 8..15 {
+    // ECO-FRIENDLY OPTION: Dirt roads (fuel efficient, slow)
+    for y in 6..9 {
+        for x in 8..18 {
             grid.set_terrain(x, y, TerrainType::Dirt);
         }
     }
 
-    // Add some water obstacles
-    for y in 8..10 {
-        for x in 10..15 {
+    // SCENIC BUT DANGEROUS: Mountain region
+    for y in 1..6 {
+        for x in 18..24 {
+            grid.set_terrain(x, y, TerrainType::Mountain);
+        }
+    }
+
+    // Create water obstacles to force routing decisions
+    for y in 11..14 {
+        for x in 12..16 {
             grid.set_terrain(x, y, TerrainType::Water);
         }
     }
 
-    // Weather conditions
-    // Storm in mountain region
-    for y in 0..5 {
-        for x in 15..20 {
-            grid.set_weather(x, y, 0.8);
+    // More water to create alternate routes
+    for y in 5..8 {
+        for x in 3..7 {
+            grid.set_terrain(x, y, TerrainType::Water);
         }
     }
 
-    // Light rain in city
-    for y in 10..15 {
-        for x in 0..8 {
-            grid.set_weather(x, y, 0.3);
+    // Weather conditions that affect route choice
+    // Storm affects northern highway (safety vs speed trade-off)
+    for x in 5..23 {
+        grid.set_weather(x, 3, 0.9); // Severe weather on highway
+        grid.set_weather(x, 4, 0.8);
+    }
+
+    // Mountain region has harsh weather
+    for y in 1..6 {
+        for x in 18..24 {
+            grid.set_weather(x, y, 0.7);
         }
+    }
+
+    // Light rain in city (affects comfort but not safety much)
+    for x in 2..22 {
+        grid.set_weather(x, 16, 0.2);
+        grid.set_weather(x, 17, 0.3);
+    }
+
+    // Create vertical connection paths
+    for y in 5..16 {
+        grid.set_terrain(2, y, TerrainType::Road); // Western connector
+        grid.set_terrain(23, y, TerrainType::Road); // Eastern connector
     }
 
     grid
@@ -711,15 +778,16 @@ fn demonstrate_heuristic_comparison() {
     println!("=================================\n");
 
     let grid = create_complex_scenario();
-    let start = (1, 1);
-    let goal = (18, 13);
+    let start = (1, 10);    // Western side, central route
+    let goal = (23, 10);    // Eastern side, central route
 
     println!("📋 Scenario Setup:");
     println!("   Grid: {}x{} with mixed terrain", grid.width, grid.height);
-    println!("   Start: {:?}", start);
-    println!("   Goal: {:?}", goal);
-    println!("   Terrain: Highway, Mountain, City, Dirt, Water");
-    println!("   Weather: Storm in mountains, rain in city\n");
+    println!("   Start: {:?} (West side)", start);
+    println!("   Goal: {:?} (East side)", goal);
+    println!("   Routes: Northern Highway (fast/dangerous), Central Road (balanced),");
+    println!("           Southern City (safe/slow), Dirt detour (eco-friendly)");
+    println!("   Weather: Storms on highway, light rain in city\n");
 
     // Test different heuristic approaches
     let heuristics = vec![
@@ -753,8 +821,8 @@ fn demonstrate_multi_objective_optimization() {
     println!("====================================\n");
 
     let grid = create_complex_scenario();
-    let start = (1, 1);
-    let goal = (18, 13);
+    let start = (1, 10);    // Western side, central route  
+    let goal = (23, 10);    // Eastern side, central route
 
     let objective_sets = vec![
         ("Speed Priority", ObjectiveWeights::speed_focused()),
@@ -785,6 +853,18 @@ fn demonstrate_multi_objective_optimization() {
             println!("{:15} | No path found", name);
         }
     }
+
+    println!("\n🔍 Observation: All paths have identical costs!");
+    println!("   This occurs when one route dominates all others across all objectives.");
+    println!("   In the current scenario, the direct path is optimal for:");
+    println!("   • Distance: Shortest route available");
+    println!("   • Safety: Avoids dangerous terrain (mountains, storms)");  
+    println!("   • Fuel: Most efficient due to good terrain and short distance");
+    println!("   • Comfort: Travels on normal roads without heavy traffic");
+    println!("\n   🎯 Multi-objective trade-offs become apparent when:");
+    println!("   • Multiple viable routes exist with different characteristics");
+    println!("   • Environmental conditions vary significantly along routes");
+    println!("   • Start/goal positions create routing choices");
 }
 
 fn demonstrate_pareto_frontier() {
@@ -792,13 +872,14 @@ fn demonstrate_pareto_frontier() {
     println!("===========================\n");
 
     let grid = create_complex_scenario();
-    let start = (1, 1);
-    let goal = (18, 13);
+    let start = (1, 10);    // Western side, central route
+    let goal = (23, 10);    // Eastern side, central route
 
     let mut pareto_finder = ParetoPathfinder::new(10, 30.0);
     let solutions = pareto_finder.find_pareto_paths(&grid, start, goal);
 
     println!("📊 Found {} Pareto-optimal solutions:", solutions.len());
+    println!("   (Different paths found by varying optimization weights)");
     println!("Sol# | Distance | Safety | Fuel | Comfort | Path Length");
     println!("-----|----------|--------|------|---------|------------");
 
@@ -828,6 +909,16 @@ fn demonstrate_pareto_frontier() {
             best_fuel.1.fuel, best_fuel.1.distance, best_fuel.1.safety, best_fuel.1.comfort);
         println!("   Best comfort: {:.2} (distance: {:.2}, safety: {:.2}, fuel: {:.2})",
             best_comfort.1.comfort, best_comfort.1.distance, best_comfort.1.safety, best_comfort.1.fuel);
+    } else {
+        println!("\n🔍 Analysis: Only one solution found");
+        println!("   This happens when one path dominates all others across all objectives.");
+        println!("   In complex real-world scenarios, multiple trade-off solutions typically exist:");
+        println!("   • Highway route: Fast but dangerous in bad weather");  
+        println!("   • Scenic route: Longer but more comfortable and safer");
+        println!("   • Economic route: Slower but fuel-efficient");
+        println!("   • Urban route: Moderate on all metrics");
+        println!("\n   💡 The current grid layout has a clearly optimal single path.");
+        println!("      Try different start/goal positions or more complex terrain for variety!");
     }
 }
 

@@ -40,7 +40,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Path: {:?}", dijkstra_result.path);
     println!("Cost: {:.1}", dijkstra_result.cost);
     println!("Nodes Explored: {}", dijkstra_result.nodes_explored);
-    println!("Search Time: {}ms", dijkstra_result.search_time_ms);
+    println!("Search Time: {}μs", dijkstra_result.search_time_us);
 
     // Test A* algorithm (with zero heuristic - equivalent to Dijkstra)
     println!("\n⭐ A* Algorithm (Euclidean Heuristic):");
@@ -56,7 +56,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Path: {:?}", astar_result.path);
     println!("Cost: {:.1}", astar_result.cost);
     println!("Nodes Explored: {}", astar_result.nodes_explored);
-    println!("Search Time: {}ms", astar_result.search_time_ms);
+    println!("Search Time: {}μs", astar_result.search_time_us);
 
     // Demonstrate coordinate-based A* on a grid
     println!("\n🗺️  Grid-based A* with Manhattan Heuristic:");
@@ -94,7 +94,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Path: {:?}", grid_result.path);
     println!("Cost: {:.1}", grid_result.cost);
     println!("Nodes Explored: {}", grid_result.nodes_explored);
-    println!("Search Time: {}ms", grid_result.search_time_ms);
+    println!("Search Time: {}μs", grid_result.search_time_us);
 
     // Performance comparison
     println!("\n📈 Performance Comparison:");

@@ -564,8 +564,8 @@ fn main() -> io::Result<()> {
     println!("- Build REST API wrapper");
 
     // Clean up example files
-    let _ = std::fs::remove_file("example_graph.json");
-    let _ = std::fs::remove_file("batch_results.csv");
+    //let _ = std::fs::remove_file("example_graph.json");
+    //let _ = std::fs::remove_file("batch_results.csv");
 
     Ok(())
 }

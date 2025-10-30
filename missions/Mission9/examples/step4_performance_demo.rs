@@ -323,13 +323,37 @@ fn main() {
     println!("💾 Memory Optimization Analysis:");
     println!("===============================");
 
-    println!("\n📏 Node Structure Sizes:");
-    println!("   Optimized Node: {} bytes", std::mem::size_of::<mission9::performance_optimization::OptimizedNode>());
-    println!("   Standard (usize-based): {} bytes", std::mem::size_of::<(usize, usize, usize, Option<(usize, usize)>)>());
+    println!("📏 Node Structure Sizes:");
+    println!("   Current OptimizedNode: {} bytes", std::mem::size_of::<mission9::performance_optimization::OptimizedNode>());
+    println!("   TrulyOptimizedNode (u32): {} bytes", std::mem::size_of::<mission9::performance_optimization::TrulyOptimizedNode>());
+    println!("   Standard (usize-based): {} bytes", std::mem::size_of::<(usize, usize, u32, u32, Option<(usize, usize)>)>());
     
-    let size_reduction = 100.0 * (1.0 - std::mem::size_of::<mission9::performance_optimization::OptimizedNode>() as f64 / 
-                                 std::mem::size_of::<(usize, usize, usize, Option<(usize, usize)>)>() as f64);
-    println!("   💡 Memory reduction per node: {:.1}%", size_reduction);
+    let size_reduction_truly = 100.0 * (1.0 - std::mem::size_of::<mission9::performance_optimization::TrulyOptimizedNode>() as f64 / 
+                                 std::mem::size_of::<(usize, usize, u32, u32, Option<(usize, usize)>)>() as f64);
+    println!("   💡 Memory reduction with u32 optimization: {:.1}%", size_reduction_truly);
+    
+    let memory_per_1000_nodes_truly_optimized = std::mem::size_of::<mission9::performance_optimization::TrulyOptimizedNode>() * 1000;
+    let memory_per_1000_nodes_current = std::mem::size_of::<mission9::performance_optimization::OptimizedNode>() * 1000;
+    let memory_per_1000_nodes_standard = std::mem::size_of::<(usize, usize, u32, u32, Option<(usize, usize)>)>() * 1000;
+    
+    println!("   📊 Memory usage for 1000 nodes:");
+    println!("      Current Optimized: {} KB", memory_per_1000_nodes_current / 1024);
+    println!("      Truly Optimized:   {} KB", memory_per_1000_nodes_truly_optimized / 1024);
+    println!("      Standard:          {} KB", memory_per_1000_nodes_standard / 1024);
+    println!("      Potential Savings: {} KB", (memory_per_1000_nodes_standard - memory_per_1000_nodes_truly_optimized) / 1024);
+    
+    println!("\n🔬 Memory Layout Analysis:");
+    println!("   Current OptimizedNode breakdown:");
+    println!("   • position: (usize, usize) = {} bytes", std::mem::size_of::<(usize, usize)>());
+    println!("   • g_cost: u32 = {} bytes", std::mem::size_of::<u32>());
+    println!("   • h_cost: u32 = {} bytes", std::mem::size_of::<u32>());
+    println!("   • parent: Option<(usize, usize)> = {} bytes", std::mem::size_of::<Option<(usize, usize)>>());
+    
+    println!("\n   TrulyOptimizedNode breakdown:");
+    println!("   • position: (u32, u32) = {} bytes", std::mem::size_of::<(u32, u32)>());
+    println!("   • g_cost: u32 = {} bytes", std::mem::size_of::<u32>());
+    println!("   • h_cost: u32 = {} bytes", std::mem::size_of::<u32>());
+    println!("   • parent: Option<(u32, u32)> = {} bytes", std::mem::size_of::<Option<(u32, u32)>>());
 
     println!("\n🔄 Node Pool Benefits:");
     println!("   • Reduced allocation overhead");
