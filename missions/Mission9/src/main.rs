@@ -119,28 +119,28 @@ fn handle_find_path(
     };
 
     // Output results based on format
-    match cli.output {
+    match cli.output_format {
         OutputFormat::Text => {
             println!("\n📊 Results:");
             println!("  Path: {:?}", result.path);
             println!("  Cost: {:.2}", result.cost);
             println!("  Nodes explored: {}", result.nodes_explored);
-            println!("  Search time: {:.2}ms", result.search_time_ms);
+            println!("  Search time: {:.2}μs", result.search_time_us);
         }
         OutputFormat::Json => {
             let json = serde_json::json!({
                 "path": result.path,
                 "cost": result.cost,
                 "nodes_explored": result.nodes_explored,
-                "search_time_ms": result.search_time_ms,
+                "search_time_us": result.search_time_us,
             });
             println!("{}", serde_json::to_string_pretty(&json)?);
         }
         OutputFormat::Csv => {
-            println!("path,cost,nodes_explored,search_time_ms");
+            println!("path,cost,nodes_explored,search_time_us");
             println!(
                 "\"{:?}\",{},{},{}",
-                result.path, result.cost, result.nodes_explored, result.search_time_ms
+                result.path, result.cost, result.nodes_explored, result.search_time_us
             );
         }
     }
@@ -221,7 +221,7 @@ fn handle_batch(
 
     // Write results to CSV
     let mut writer = csv::Writer::from_path(output_path)?;
-    writer.write_record(["start", "goal", "cost", "path_length", "nodes_explored", "time_ms"])?;
+    writer.write_record(["start", "goal", "cost", "path_length", "nodes_explored", "time_us"])?;
 
     for (start, goal, result) in results {
         match result {
@@ -232,7 +232,7 @@ fn handle_batch(
                     format!("{:.2}", path_result.cost),
                     path_result.path.len().to_string(),
                     path_result.nodes_explored.to_string(),
-                    format!("{:.2}", path_result.search_time_ms),
+                    format!("{:.2}", path_result.search_time_us),
                 ])?;
             }
             Err(_) => {

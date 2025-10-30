@@ -13,8 +13,8 @@ pub struct PathResult {
     pub cost: Weight,
     /// Number of nodes explored during search
     pub nodes_explored: usize,
-    /// Time taken for the search (in milliseconds)
-    pub search_time_ms: u64,
+    /// Time taken for the search (in microseconds for better precision)
+    pub search_time_us: u64,
 }
 
 impl PathResult {
@@ -24,7 +24,7 @@ impl PathResult {
             path,
             cost,
             nodes_explored: 0,
-            search_time_ms: 0,
+            search_time_us: 0,
         }
     }
 
@@ -33,13 +33,13 @@ impl PathResult {
         path: Vec<NodeId>,
         cost: Weight,
         nodes_explored: usize,
-        search_time_ms: u64,
+        search_time_us: u64,
     ) -> Self {
         Self {
             path,
             cost,
             nodes_explored,
-            search_time_ms,
+            search_time_us,
         }
     }
 
@@ -198,7 +198,7 @@ mod tests {
         assert_eq!(result.path, path);
         assert_eq!(result.cost, cost);
         assert_eq!(result.nodes_explored, 0);
-        assert_eq!(result.search_time_ms, 0);
+        assert_eq!(result.search_time_us, 0);
         assert!(!result.is_empty());
         assert_eq!(result.step_count(), 3);
         assert_eq!(result.start(), Some(0));
@@ -233,14 +233,14 @@ mod tests {
         let path = vec![0, 1, 2];
         let cost = 5.0;
         let nodes_explored = 10;
-        let search_time_ms = 50;
+        let search_time_us = 50;
 
-        let result = PathResult::with_metrics(path.clone(), cost, nodes_explored, search_time_ms);
+        let result = PathResult::with_metrics(path.clone(), cost, nodes_explored, search_time_us);
 
         assert_eq!(result.path, path);
         assert_eq!(result.cost, cost);
         assert_eq!(result.nodes_explored, nodes_explored);
-        assert_eq!(result.search_time_ms, search_time_ms);
+        assert_eq!(result.search_time_us, search_time_us);
     }
 
     #[test]

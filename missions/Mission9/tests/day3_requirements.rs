@@ -689,7 +689,7 @@ fn test_astar_metrics_collection() {
     println!("Path found: {:?}", result.path);
     println!("Cost: {}", result.cost);
     println!("Nodes explored: {}", result.nodes_explored);
-    println!("Search time: {} ms", result.search_time_ms);
+    println!("Search time: {} μs", result.search_time_us);
 }
 
 // ===== f(n) = g(n) + h(n) Formula Verification =====

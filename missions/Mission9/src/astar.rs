@@ -98,13 +98,13 @@ impl<H: Heuristic> AstarPathfinder<H> {
             if current == goal {
                 let path = self.reconstruct_path(&predecessors, start, goal)?;
                 let final_cost = g_scores[&goal];
-                let search_time_ms = start_time.elapsed().as_millis() as u64;
+                let search_time_us = start_time.elapsed().as_micros() as u64;
 
                 return Ok(PathResult::with_metrics(
                     path,
                     final_cost,
                     nodes_explored,
-                    search_time_ms,
+                    search_time_us,
                 ));
             }
 

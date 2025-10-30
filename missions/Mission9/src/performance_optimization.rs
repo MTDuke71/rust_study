@@ -17,6 +17,7 @@ use std::cmp::Ordering;
 use std::hash::{Hash, Hasher};
 
 /// Memory-optimized node structure
+// Keep the original OptimizedNode for compatibility
 #[derive(Debug, Clone)]
 pub struct OptimizedNode {
     pub position: (usize, usize),
@@ -38,6 +39,77 @@ impl OptimizedNode {
     #[inline]
     pub fn f_cost(&self) -> u32 {
         self.g_cost + self.h_cost
+    }
+}
+
+// Add a truly memory-optimized version with u32 coordinates
+#[derive(Debug, Clone)]
+pub struct TrulyOptimizedNode {
+    pub position: (u32, u32),          // 8 bytes instead of 16
+    pub g_cost: u32,                   // Actual cost from start
+    pub h_cost: u32,                   // Heuristic cost to goal
+    pub parent: Option<(u32, u32)>,    // 12 bytes instead of 24
+}
+
+impl TrulyOptimizedNode {
+    pub fn new(position: (u32, u32), g_cost: u32, h_cost: u32, parent: Option<(u32, u32)>) -> Self {
+        Self {
+            position,
+            g_cost,
+            h_cost,
+            parent,
+        }
+    }
+
+    #[inline]
+    pub fn f_cost(&self) -> u32 {
+        self.g_cost + self.h_cost
+    }
+
+    /// Convert from usize coordinates (for compatibility with existing APIs)
+    pub fn from_usize(position: (usize, usize), g_cost: u32, h_cost: u32, parent: Option<(usize, usize)>) -> Self {
+        Self {
+            position: (position.0 as u32, position.1 as u32),
+            g_cost,
+            h_cost,
+            parent: parent.map(|(x, y)| (x as u32, y as u32)),
+        }
+    }
+
+    /// Convert to usize coordinates (for compatibility with existing APIs)
+    pub fn to_usize(&self) -> ((usize, usize), Option<(usize, usize)>) {
+        (
+            (self.position.0 as usize, self.position.1 as usize),
+            self.parent.map(|(x, y)| (x as usize, y as usize))
+        )
+    }
+}
+
+impl PartialEq for TrulyOptimizedNode {
+    fn eq(&self, other: &Self) -> bool {
+        self.position == other.position
+    }
+}
+
+impl Eq for TrulyOptimizedNode {}
+
+impl Hash for TrulyOptimizedNode {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.position.hash(state);
+    }
+}
+
+impl Ord for TrulyOptimizedNode {
+    fn cmp(&self, other: &Self) -> Ordering {
+        // Min-heap: lower f_cost has higher priority
+        other.f_cost().cmp(&self.f_cost())
+            .then_with(|| self.position.cmp(&other.position))
+    }
+}
+
+impl PartialOrd for TrulyOptimizedNode {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
     }
 }
 

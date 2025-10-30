@@ -123,7 +123,7 @@ mod day2_requirements {
         // Verify metrics are collected
         assert!(result.nodes_explored > 0);
         // Verify timing is captured (always non-negative for u64)
-        println!("Search completed in {} ms", result.search_time_ms);
+        println!("Search completed in {} μs", result.search_time_us);
         assert_eq!(result.path.first(), Some(&0));
         assert_eq!(result.path.last(), Some(&9));
         
@@ -202,7 +202,7 @@ mod day2_requirements {
         assert_eq!(result.path, vec![5]);
         assert_eq!(result.cost, 0.0);
         assert_eq!(result.nodes_explored, 1);
-        assert_eq!(result.search_time_ms, 0); // Should be immediate
+        assert_eq!(result.search_time_us, 0); // Should be immediate
     }
 
     /// Test REQ-1: Large graph performance validation
