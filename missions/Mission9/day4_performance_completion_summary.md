@@ -170,7 +170,7 @@ S = Start, G = Goal, # = Obstacle, * = Path, . = Empty
 
 ## 🔗 Related Documentation
 
-- [[Mission9 Overview]] - Complete mission roadmap and requirements
+- [[mission-9]] - Complete mission roadmap and requirements
 - [[day3_astar_completion_summary]] - Foundation A* algorithm (Day 3)
 - [[Performance Analysis]] - Algorithm performance patterns and optimization
 - [[Priority Queue Patterns]] - Bidirectional search data structures

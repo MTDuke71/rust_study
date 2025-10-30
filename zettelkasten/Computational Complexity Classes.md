@@ -528,7 +528,7 @@ fn find_best_solution(instance: &Problem) -> Solution {
 - **[[Dynamic Programming]]** - Solving some NP problems efficiently with special structure
 - **[[AoC Patterns MOC]]** - Recognizing problem patterns in competitive programming
 - **[[Rust Collections MOC]]** - Data structure complexity
-- **[[Mission9 Overview]]** - Graph algorithms and their complexity classes
+- **[[mission-9]]** - Graph algorithms and their complexity classes
 
 ---
 
@@ -550,4 +550,4 @@ fn find_best_solution(instance: &Problem) -> Solution {
 
 *Tags: #complexity-theory #np-complete #computational-complexity #p-vs-np #theoretical-cs #algorithm-theory #np-hard #decidability #problem-hardness*
 
-*Links: [[Algorithm Analysis]] | [[Big-O Analysis]] | [[Performance Optimization]] | [[Dynamic Programming]] | [[AoC Patterns MOC]] | [[Mission9 Overview]] | [[zettel-index]]*
+*Links: [[Algorithm Analysis]] | [[Big-O Analysis]] | [[Performance Optimization]] | [[Dynamic Programming]] | [[AoC Patterns MOC]] | [[mission-9]] | [[zettel-index]]*

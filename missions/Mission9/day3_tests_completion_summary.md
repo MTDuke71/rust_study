@@ -115,7 +115,7 @@ Mission 9 now has complete test coverage for:
 
 ## 🔗 Related Documentation
 
-- [[Mission9 Overview]] - Complete mission roadmap and requirements  
+- [[mission-9]] - Complete mission roadmap and requirements  
 - [[day3_astar_completion_summary]] - Day 3 A* algorithm implementation details
 - [[A-Star-Algorithm-Deep-Dive]] - Comprehensive A* algorithm analysis
 - [[Rust Test Documentation Standards]] - Testing best practices

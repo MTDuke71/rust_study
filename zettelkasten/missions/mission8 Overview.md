@@ -88,7 +88,7 @@ Located in: `tutorials/Mission8_tut/` (7-day progressive learning)
 **[[daily-study/Day32]]** - Study trait-based designs
 **[[rust-book-ch10]]** - Generics, Traits, and Lifetimes foundations
 **[[Mission7 Overview]]** - Prerequisite graph data structure knowledge
-**[[Mission9 Overview]]** - Advanced graph algorithms build on these foundations
+**[[mission-9]]** - Advanced graph algorithms build on these foundations
 
 ## Code Patterns
 
@@ -186,7 +186,7 @@ All algorithms achieve optimal asymptotic complexity through careful implementat
 - **Prerequisite**: [[Mission7 Overview]] (basic graph data structures)
 - **Concurrent Learning**: [[rust-book-ch10]] (Generics, Traits, Lifetimes)
 - **Daily Reinforcement**: [[daily-study/Day30]] through [[daily-study/Day35]]
-- **Next Mission**: [[Mission9 Overview]] (advanced algorithms)
+- **Next Mission**: [[mission-9]] (advanced algorithms)
 - **Competitive Practice**: [[aoc-2023-day12]] (graph pathfinding)
 - **Deep Dives**: [[graph-traversal]], [[algorithm-composition]], [[zero-cost-abstractions]]
 

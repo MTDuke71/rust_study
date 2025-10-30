@@ -418,7 +418,7 @@ The A* algorithm foundation is now ready for optimization techniques on Days 4-7
 
 ## 🔗 Related Documentation
 
-- [[Mission9 Overview]] - Complete mission roadmap and requirements
+- [[mission-9]] - Complete mission roadmap and requirements
 - [[A-Star-Algorithm-Deep-Dive]] - Detailed A* algorithm analysis
 - [[Pathfinding Fundamentals]] - Core pathfinding concepts
 - [[Priority Queue Patterns]] - Heap-based priority queue implementation

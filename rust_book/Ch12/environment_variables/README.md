@@ -284,7 +284,7 @@ This complete implementation demonstrates:
 ### **Next Steps**
 - [[zettelkasten/rust_book/rust-book-ch13]] - Functional programming with iterators
 - [[mission8 Overview]] - Advanced project structure  
-- [[Mission9 Overview]] - CLI pathfinding tools
+- [[mission-9]] - CLI pathfinding tools
 
 ### **Rust Book Integration**
 - Applies concepts from Chapters 1-11

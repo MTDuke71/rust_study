@@ -408,4 +408,4 @@ fn test_tie_breaking() {
 
 *Tags: #dijkstra #pathfinding #graph-algorithms #shortest-path #priority-queue #greedy-algorithm #optimization #mission9*
 
-*Backlinks: [[Graph Algorithms]] | [[Priority Queue Patterns]] | [[A* Algorithm]] | [[Bellman-Ford Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[Mission9 Overview]] | [[Network Routing]] | [[Game AI]] | [[Graph Representation]]*
+*Backlinks: [[Graph Algorithms]] | [[Priority Queue Patterns]] | [[A* Algorithm]] | [[Bellman-Ford Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[mission-9]] | [[Network Routing]] | [[Game AI]] | [[Graph Representation]]*

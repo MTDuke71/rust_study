@@ -157,7 +157,7 @@ Mission 9 now has complete test coverage for:
 
 ## 🔗 Related Documentation
 
-- [[Mission9 Overview]] - Complete mission roadmap and requirements
+- [[mission-9]] - Complete mission roadmap and requirements
 - [[day4_performance_completion_summary]] - Day 4 performance optimization implementation details
 - [[day3_tests_completion_summary]] - Day 3 A* algorithm tests
 - [[Performance Analysis]] - Performance measurement and benchmarking

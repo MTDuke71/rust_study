@@ -12,7 +12,7 @@
 
 ### **🚀 Quick Navigation**
 - **📁 Mission 7**: [[Mission7 Overview]] - Graph representation and basic algorithms
-- **📁 Mission 9**: [[Mission9 Overview]] - Dijkstra and A* pathfinding algorithms  
+- **📁 Mission 9**: [[mission-9]] - Dijkstra and A* pathfinding algorithms  
 - **📚 Tutorials**: [[../tutorials/Mission7_tut/README]] - Step-by-step graph learning
 - **🎯 Current Focus**: [[Daily Notes/2025-10-23]] - Today's algorithm work
 - **🔗 Knowledge Hub**: [[zettel-index]] - Central knowledge navigation
@@ -256,4 +256,4 @@ pub trait WeightedGraph {
 
 *Tags: #graph-algorithms #data-structures #pathfinding #network-analysis #algorithm-design #performance-optimization #graph-theory*
 
-*Links: [[Mission7 Overview]] | [[Mission9 Overview]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] | [[Dijkstra Algorithm]] | [[Bellman-Ford Algorithm]] | [[A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*
+*Links: [[Mission7 Overview]] | [[mission-9]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] | [[Dijkstra Algorithm]] | [[Bellman-Ford Algorithm]] | [[A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*

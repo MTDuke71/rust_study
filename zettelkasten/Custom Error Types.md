@@ -529,7 +529,7 @@ pub enum GraphError {
 ## 🔗 **Integration with Learning System**
 
 ### **Mission Integration**
-- **[[Mission9 Overview]]** - Pathfinding error types for Dijkstra and A*
+- **[[mission-9]]** - Pathfinding error types for Dijkstra and A*
 - **[[Mission7 Overview]]** - Graph structure error handling patterns
 - **[[Mission11 Overview]]** - Dynamic programming error types and memoization failures
 - **[[Mission12 Overview]]** - Parser error types for input processing
@@ -565,4 +565,4 @@ pub enum GraphError {
 ---
 
 *Tags: #custom-errors #error-handling #std-error #thiserror #rust #mission9 #pathfinding #api-design #testing*
-*Links: [[zettel-index]] | [[API Design Patterns]] | [[Testing Patterns]] | [[Mission9 Overview]] | [[CLI Design Patterns]] | [[Rust Book MOC]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[API Design Patterns]] | [[Testing Patterns]] | [[mission-9]] | [[CLI Design Patterns]] | [[Rust Book MOC]] | [[Daily Study MOC]]*

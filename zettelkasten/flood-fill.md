@@ -339,7 +339,7 @@ fn is_valid_neighbor(grid: &[Vec<i32>], row: usize, col: usize,
 - **[[mission-6]]** - Primary flood fill implementation mission
 - **[[mission-7]]** - Graph algorithms building on grid concepts
 - **[[mission-8]]** - Advanced algorithm composition
-- **[[Mission9 Overview]]** - Pathfinding algorithms using grid foundations
+- **[[mission-9]]** - Pathfinding algorithms using grid foundations
 
 ### **Data Structures & Performance**
 - **[[Collections MOC]]** - VecDeque, Vec, and stack/queue patterns
