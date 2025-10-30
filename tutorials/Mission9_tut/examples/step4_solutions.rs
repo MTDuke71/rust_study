@@ -27,7 +27,7 @@ impl Position {
     }
     
     fn manhattan_distance(&self, other: &Position) -> u32 {
-        (self.x.abs_diff(other.x) + self.y.abs_diff(other.y)) as u32
+        self.x.abs_diff(other.x) + self.y.abs_diff(other.y)
     }
     
     fn euclidean_distance(&self, other: &Position) -> u32 {
@@ -123,6 +123,12 @@ impl PartialOrd for JpsNode {
 
 pub struct JumpPointSearch {
     stats: SearchStats,
+}
+
+impl Default for JumpPointSearch {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl JumpPointSearch {
@@ -240,12 +246,11 @@ impl JumpPointSearch {
         }
         
         // Diagonal movement: check horizontal and vertical components
-        if dx != 0 && dy != 0 {
-            if self.jump(grid, next_pos, dx, 0, goal).is_some() ||
-               self.jump(grid, next_pos, 0, dy, goal).is_some() {
+        if dx != 0 && dy != 0
+            && (self.jump(grid, next_pos, dx, 0, goal).is_some() ||
+               self.jump(grid, next_pos, 0, dy, goal).is_some()) {
                 return Some(next_pos);
             }
-        }
         
         // Continue jumping in the same direction
         self.jump(grid, next_pos, dx, dy, goal)
@@ -477,6 +482,12 @@ impl DynamicWeightedAStar {
 
 pub struct SequentialBidirectionalAStar {
     stats: SearchStats,
+}
+
+impl Default for SequentialBidirectionalAStar {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl SequentialBidirectionalAStar {

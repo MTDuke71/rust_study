@@ -201,11 +201,9 @@ Trust me.";
     #[test]
     fn test_config_creation_success() {
         // Simulate env::args() by creating a vector and converting to Args
-        let _args = vec![
-            "program".to_string(),
+        let _args = ["program".to_string(),
             "test".to_string(),
-            "file.txt".to_string(),
-        ];
+            "file.txt".to_string()];
         
         // We need to use std::env::Args, but for testing we'll create a mock
         // In a real test, we'd use integration tests or refactor to accept generic iterators
@@ -223,7 +221,7 @@ Trust me.";
         
         assert_eq!(config.query, "test");
         assert_eq!(config.filename, "file.txt");
-        assert_eq!(config.case_sensitive, true);
+        assert!(config.case_sensitive);
     }
 
     #[test]
