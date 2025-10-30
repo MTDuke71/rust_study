@@ -211,7 +211,7 @@ pub struct MultiObjectiveResult {
     pub pareto_optimal_solutions: Vec<MultiObjectiveSolution>,
     pub objective_names: Vec<String>,
     pub nodes_explored: usize,
-    pub search_time_ms: u64,
+    pub search_time_us: u64,
 }
 
 impl MultiObjectiveResult {
@@ -354,14 +354,14 @@ impl MultiObjectiveAstar {
             return Err(PathfindingError::NoPathExists { start, goal });
         }
         
-        let search_time_ms = start_time.elapsed().as_millis() as u64;
+        let search_time_us = start_time.elapsed().as_micros() as u64;
         let objective_names = self.objectives.iter().map(|obj| obj.name().to_string()).collect();
         
         Ok(MultiObjectiveResult {
             pareto_optimal_solutions: pareto_solutions,
             objective_names,
             nodes_explored,
-            search_time_ms,
+            search_time_us,
         })
     }
     
@@ -450,8 +450,11 @@ impl MultiObjectiveAstar {
         }
         
         let mut open_set = BinaryHeap::new();
+        let mut closed_set: HashSet<NodeId> = HashSet::new();
         let mut best_g_scores: HashMap<NodeId, Vec<Weight>> = HashMap::new();
         let mut came_from: HashMap<NodeId, NodeId> = HashMap::new();
+        let mut iterations = 0;
+        let max_iterations = 100_000; // Prevent infinite loops
         
         // Initialize start node
         let start_g_scores = vec![0.0; self.objectives.len()];
@@ -466,6 +469,16 @@ impl MultiObjectiveAstar {
         best_g_scores.insert(start, start_g_scores);
         
         while let Some(current) = open_set.pop() {
+            iterations += 1;
+            if iterations >= max_iterations {
+                return Err(PathfindingError::MaxIterationsExceeded);
+            }
+            
+            // Skip if already processed
+            if closed_set.contains(&current.node) {
+                continue;
+            }
+            
             if current.node == goal {
                 // Reconstruct path
                 let mut path = Vec::new();
@@ -481,8 +494,16 @@ impl MultiObjectiveAstar {
                 return Ok(MultiObjectiveSolution::new(path, current.g_scores));
             }
             
+            // Mark as processed
+            closed_set.insert(current.node);
+            
             // Explore neighbors
             for (neighbor, _) in graph.neighbors(current.node) {
+                // Skip if already fully processed
+                if closed_set.contains(&neighbor) {
+                    continue;
+                }
+                
                 let mut neighbor_g_scores = Vec::new();
                 
                 // Calculate objective values for this path
@@ -658,7 +679,7 @@ mod tests {
             pareto_optimal_solutions: solutions,
             objective_names: vec!["Cost".to_string(), "Time".to_string()],
             nodes_explored: 10,
-            search_time_ms: 5,
+            search_time_us: 5,
         };
         
         // Test best for specific objective

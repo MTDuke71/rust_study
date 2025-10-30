@@ -427,13 +427,13 @@ impl<H: crate::Heuristic> ConstrainedAstar<H> {
                 path.push(start);
                 path.reverse();
                 
-                let search_time_ms = start_time.elapsed().as_millis() as u64;
+                let search_time_us = start_time.elapsed().as_micros() as u64;
                 
                 return Ok(crate::pathfinder::PathResult {
                     path,
                     cost: current.g_score,
                     nodes_explored: closed_set.len(),
-                    search_time_ms,
+                    search_time_us,
                 });
             }
             
@@ -446,16 +446,19 @@ impl<H: crate::Heuristic> ConstrainedAstar<H> {
                 }
                 
                 let tentative_g_score = current.g_score + edge_weight;
-                let neighbor_context = current.path_context.with_step(neighbor, edge_weight);
                 
-                // Check constraints
-                if !self.is_valid_node(neighbor, &neighbor_context) {
-                    continue;
-                }
-                
+                // Check constraints BEFORE creating the neighbor context
                 if !self.is_valid_edge(current.node, neighbor, &current.path_context) {
                     continue;
                 }
+                
+                // Check if we can visit the neighbor node (using current context, not neighbor context)
+                if !self.is_valid_node(neighbor, &current.path_context) {
+                    continue;
+                }
+                
+                // Now create the neighbor context for the search node
+                let neighbor_context = current.path_context.with_step(neighbor, edge_weight);
                 
                 // Check if this path is better
                 if let Some(&existing_g) = best_g_score.get(&neighbor) {
