@@ -148,24 +148,28 @@ cargo test req4_union_by_rank
 
 ### **Friday, November 7** 🧪
 **Mission Focus**: Mission 10 Connected Components & Applications
+**Mission Tutorial Activity**: `Mission10_tut/examples/step5_applications.rs` - Real-world Union-Find problems
 **Daily Study**: Week 6, Day 41 - External dependencies (choosing and using crates)
 **Rust Book**: Chapter 14.2 - Publishing a Crate to Crates.io
 ```bash
 # Daily Tasks
 # Build connected components and graph connectivity examples
 cargo test req5_connected_components
+# Complete step5_applications.rs with Kruskal's MST, cycle detection
 # Learn how to evaluate and integrate external crates
 # Understand crate publishing workflow
 ```
 
 ### **Saturday, November 8** 📋
-**Mission Focus**: Mission 10 Testing & Documentation
+**Mission Focus**: Mission 10 Advanced Variants & Extensions
+**Mission Tutorial Activity**: `Mission10_tut/examples/step6_advanced_variants.rs` - Weighted Union-Find, undo operations
 **Daily Study**: Week 6, Day 42 - Module practice (organizing a complex project)
 **Rust Book**: Chapter 14.3 - Cargo Workspaces
 ```bash
 # Daily Tasks
-cargo test --all                            # Complete Mission 10 tests
-cargo doc --open                            # Generate documentation
+# Implement advanced Union-Find variants (weighted, persistent, customizable)
+cargo test req6_advanced_features
+# Complete step6_advanced_variants.rs with variant implementations
 # Organize complex project with proper module structure
 # Master cargo workspace management
 ```
@@ -174,86 +178,96 @@ cargo doc --open                            # Generate documentation
 
 ## 🗓️ Week 7: November 9-15, 2025
 
+**Mission**: Mission 10 Continued - REST API & Problem Solving
+
 ### **Sunday, November 9** 🧮
-**Mission Focus**: Mission 11 Setup & Planning (Dynamic Programming & Memoization)
+**Mission Focus**: Mission 10 Problem-Solving Patterns
+**Mission Tutorial Activity**: `Mission10_tut/examples/step7_problem_solving.rs` - LeetCode/interview problems
 **Daily Study**: Week 7, Day 43 - Associated types vs generics (when to use which)
 **Rust Book**: Chapter 15.1 - Using Box<T> to Point to Data on the Heap
 ```bash
 # Daily Tasks
-cd Mission11 && cargo init                   # Initialize DP mission
-# Define REQ-1 to REQ-6 for DP algorithms and memoization
+# Work through Union-Find interview problems and patterns
+# Complete step7_problem_solving.rs with classic problems
 # Learn associated types vs generic parameters
 # Master Box<T> for heap allocation and recursive types
 ```
 
 ### **Monday, November 10** 💾
-**Mission Focus**: Mission 11 Requirements Definition & Memoization Framework
+**Mission Focus**: Mission 10 REST API Design & Setup
+**Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - API design and OpenAPI setup
 **Daily Study**: Week 7, Day 44 - Higher-ranked trait bounds (`for<'a>` syntax)
 **Rust Book**: Chapter 15.2 - Treating Smart Pointers Like Regular References with Deref
 ```bash
 # Daily Tasks
-# Design memoization cache using HashMap<Key, Value>
-# Define recursive problem decomposition patterns
+# Design RESTful endpoints for Union-Find operations
+# Set up Axum/Actix-web server with utoipa for OpenAPI
 # Learn higher-ranked trait bounds for advanced generics
 # Master Deref trait for smart pointer behavior
 ```
 
 ### **Tuesday, November 11** 🎯
-**Mission Focus**: Mission 11 Classic DP Problems Implementation
+**Mission Focus**: Mission 10 REST API Implementation - Core Endpoints
+**Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - Implement handlers and state management
 **Daily Study**: Week 7, Day 45 - Phantom types (zero-cost type safety)
 **Rust Book**: Chapter 15.3 - Running Code on Cleanup with Drop
 ```bash
 # Daily Tasks
-# Implement Fibonacci, coin change, knapsack problems
-cargo test req1_classic_dp && cargo test req2_memoization
+# Implement POST /unionfind/new, POST /union, GET /find, GET /connected
+# Add OpenAPI annotations with utoipa macros
 # Learn phantom types for compile-time guarantees
 # Master Drop trait for resource cleanup
 ```
 
 ### **Wednesday, November 12** 🗂️
-**Mission Focus**: Mission 11 Grid DP & Path Problems
+**Mission Focus**: Mission 10 REST API - OpenAPI/Swagger Documentation
+**Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - Complete Swagger UI integration
 **Daily Study**: Week 7, Day 46 - Const generics (compile-time parameters)
 **Rust Book**: Chapter 15.4 - Rc<T>, the Reference Counted Smart Pointer
 ```bash
 # Daily Tasks
-# Implement grid path counting, minimum path sum, edit distance
-cargo test req3_grid_dp && cargo test req4_path_problems
+# Set up Swagger UI at /swagger-ui/ with interactive documentation
+# Add request/response models with validation and examples
 # Learn const generics for array sizes and compile-time values
 # Master Rc<T> for shared ownership
 ```
 
 ### **Thursday, November 13** ⚡
-**Mission Focus**: Mission 11 Advanced DP Patterns & Optimization
+**Mission Focus**: Mission 10 REST API - Testing & Client Examples
+**Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - Integration tests and curl examples
 **Daily Study**: Week 7, Day 47 - Type-level programming (const functions, compile-time computation)
 **Rust Book**: Chapter 15.5 - RefCell<T> and the Interior Mutability Pattern
 ```bash
 # Daily Tasks
-# Implement advanced patterns: longest common subsequence, 0/1 knapsack variants
-cargo test req5_advanced_dp
+# Write integration tests for all API endpoints
+# Create curl examples and Postman collection
 # Learn const functions and compile-time computation
 # Master RefCell<T> for interior mutability
 ```
 
 ### **Friday, November 14** 📊
-**Mission Focus**: Mission 11 Performance Analysis & Benchmarking
+**Mission Focus**: Mission 10 REST API - Advanced Features
+**Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - Rate limiting, metrics, health checks
 **Daily Study**: Week 7, Day 48 - Trait objects deep dive (`dyn Trait`, object safety)
 **Rust Book**: Chapter 15.6 - Reference Cycles Can Leak Memory
 ```bash
 # Daily Tasks
-# Benchmark recursive vs memoized vs iterative implementations
-cargo criterion                             # Performance analysis
+# Add rate limiting middleware, Prometheus metrics endpoint
+# Implement health checks and CORS configuration
 # Deep dive into trait objects and object safety rules
 # Learn about reference cycles and memory leaks
 ```
 
 ### **Saturday, November 15** 📋
-**Mission Focus**: Mission 11 Testing & Documentation
+**Mission Focus**: Mission 10 Final Review & Documentation
+**Mission Tutorial Activity**: Complete Mission 10 Tutorial - Review all 8 steps
 **Daily Study**: Week 7, Day 49 - Advanced types practice (building type-safe APIs)
 **Rust Book**: Review Chapters 12-15 (I/O Project & Smart Pointers)
 ```bash
 # Daily Tasks
-cargo test --all                            # Complete Mission 11 tests
+cargo test --all                            # Complete Mission 10 tests
 cargo doc --open                            # Generate documentation  
+# Review all tutorial steps from basic Union-Find to REST API
 # Practice building type-safe APIs with advanced type features
 # Consolidate learning from I/O project through smart pointers
 ```
@@ -262,85 +276,87 @@ cargo doc --open                            # Generate documentation
 
 ## 🗓️ Week 8: November 16-22, 2025
 
+**Mission**: Mission 11 - Dynamic Programming & Memoization
+
 ### **Sunday, November 16** 📝
-**Mission Focus**: Mission 12 Setup & Planning (Custom Parsers & Input Processing)
+**Mission Focus**: Mission 11 Setup & Planning (Dynamic Programming & Memoization)
 **Daily Study**: Week 8, Day 50 - Thread basics (`std::thread`, `JoinHandle`, thread safety)
 **Rust Book**: Chapter 16.1 - Using Threads to Run Code Simultaneously
 ```bash
 # Daily Tasks
-cd Mission12 && cargo init                   # Initialize parser mission
-# Define REQ-1 to REQ-6 for parsing framework and AoC utilities
+cd Mission11 && cargo init                   # Initialize DP mission
+# Define REQ-1 to REQ-6 for DP algorithms and memoization
 # Learn thread creation and basic thread safety
 # Master thread spawning and joining
 ```
 
 ### **Monday, November 17** 🔍
-**Mission Focus**: Mission 12 Requirements Definition & String Parsing Foundation
+**Mission Focus**: Mission 11 Requirements Definition & Memoization Framework
 **Daily Study**: Week 8, Day 51 - Message passing (`mpsc` channels, producer-consumer patterns)
 **Rust Book**: Chapter 16.2 - Using Message Passing to Transfer Data Between Threads
 ```bash
 # Daily Tasks
-# Design parsing traits and basic string processing utilities
-# Implement line-by-line and token-based parsing
+# Design memoization cache using HashMap<Key, Value>
+# Define recursive problem decomposition patterns
 # Learn message passing with channels
 # Master producer-consumer patterns
 ```
 
 ### **Tuesday, November 18** 🧩
-**Mission Focus**: Mission 12 Regex Integration & Pattern Matching
+**Mission Focus**: Mission 11 Classic DP Problems Implementation
 **Daily Study**: Week 8, Day 52 - Shared state (`Arc<Mutex<T>>`, avoiding deadlocks)
 **Rust Book**: Chapter 16.3 - Shared-State Concurrency
 ```bash
 # Daily Tasks  
-# Integrate regex crate for complex pattern matching
-cargo test req1_regex_parsing && cargo test req2_pattern_extraction
+# Implement Fibonacci, coin change, knapsack problems
+cargo test req1_classic_dp && cargo test req2_memoization
 # Learn shared state concurrency with Arc<Mutex<T>>
 # Master deadlock avoidance techniques
 ```
 
 ### **Wednesday, November 19** 🏗️
-**Mission Focus**: Mission 12 Parser Combinators & Custom Formats
+**Mission Focus**: Mission 11 Grid DP & Path Problems
 **Daily Study**: Week 8, Day 53 - `RwLock` and atomic operations (`AtomicUsize`, memory ordering)
 **Rust Book**: Chapter 16.4 - Extensible Concurrency with the Sync and Send Traits
 ```bash
 # Daily Tasks
-# Build parser combinators for complex input formats
-cargo test req3_parser_combinators && cargo test req4_custom_formats
+# Implement grid path counting, minimum path sum, edit distance
+cargo test req3_grid_dp && cargo test req4_path_problems
 # Learn RwLock and atomic operations
 # Master Sync and Send traits for thread safety
 ```
 
 ### **Thursday, November 20** 🎮
-**Mission Focus**: Mission 12 AoC Utilities & Grid Parsing
+**Mission Focus**: Mission 11 Advanced DP Patterns & Optimization
 **Daily Study**: Week 8, Day 54 - Thread-safe collections (concurrent data structures)
 **Rust Book**: Chapter 17.1 - Futures and the Async Syntax
 ```bash
 # Daily Tasks
-# Build AoC-specific parsers: grids, coordinates, custom number formats
-cargo test req5_aoc_utilities
+# Implement advanced patterns: longest common subsequence, 0/1 knapsack variants
+cargo test req5_advanced_dp
 # Learn thread-safe collections and concurrent data structures
 # Understand Futures and async/await syntax fundamentals
 ```
 
 ### **Friday, November 21** ⚡
-**Mission Focus**: Mission 12 Performance Optimization & Error Handling
+**Mission Focus**: Mission 11 Performance Analysis & Benchmarking
 **Daily Study**: Week 8, Day 55 - Parallel iterators (`rayon` for CPU-bound work)
 **Rust Book**: Chapter 17.2 - Applying Concurrency with Async
 ```bash
 # Daily Tasks
-# Optimize parsing performance and implement robust error handling
-cargo criterion                             # Benchmark parsing performance
+# Benchmark recursive vs memoized vs iterative implementations
+cargo criterion                             # Performance analysis
 # Learn parallel iterators with rayon
 # Master async concurrency patterns and execution models
 ```
 
 ### **Saturday, November 22** 📚
-**Mission Focus**: Mission 12 Testing & Documentation  
+**Mission Focus**: Mission 11 Testing & Documentation  
 **Daily Study**: Week 8, Day 56 - Concurrency practice (building thread-safe systems)
 **Rust Book**: Chapter 17.3 - Working With Any Number of Futures
 ```bash
 # Daily Tasks
-cargo test --all                            # Complete Mission 12 tests
+cargo test --all                            # Complete Mission 11 tests
 cargo doc --open                            # Generate documentation
 # Practice building thread-safe systems
 # Learn managing multiple futures and async streams

@@ -12,6 +12,7 @@
 - [ ] **Phase 3**: Testing & Validation (Day 5)
 - [ ] **Phase 4**: Documentation (Day 6)
 - [ ] **Phase 5**: Optimization & Review (Day 7)
+- [ ] **Phase 6**: REST API with OpenAPI/Swagger (Days 8-14) - Week 7 Extension
 
 ---
 
@@ -257,7 +258,260 @@ Create comprehensive test suite with requirement traceability:
 
 ---
 
-## 🎓 Educational Enhancements
+## � Phase 6: REST API with OpenAPI/Swagger (Days 8-14)
+
+**Extended Mission Goal**: Demonstrate Union-Find as a production-ready REST API service with comprehensive OpenAPI documentation
+
+### Day 8: REST API Design & Architecture
+
+#### REQ-8: RESTful API Design
+- [ ] Design RESTful endpoints for Union-Find operations
+- [ ] Define API versioning strategy (v1)
+- [ ] Plan request/response schemas
+- [ ] Document error handling approach
+- [ ] Choose technology stack
+
+**Proposed Endpoints**:
+```
+POST   /api/v1/unionfind/new          - Create new Union-Find instance
+POST   /api/v1/unionfind/{id}/union   - Union two elements
+GET    /api/v1/unionfind/{id}/find    - Find root of element
+GET    /api/v1/unionfind/{id}/connected - Check if elements connected
+GET    /api/v1/unionfind/{id}/components - Get all connected components
+GET    /api/v1/unionfind/{id}/stats   - Get statistics (operations, tree heights)
+DELETE /api/v1/unionfind/{id}         - Delete instance
+GET    /health                        - Health check endpoint
+GET    /metrics                       - Prometheus metrics
+```
+
+#### Technology Stack Selection
+- [ ] Choose web framework: Axum (recommended), Actix-web, or Rocket
+- [ ] Select OpenAPI crate: `utoipa` + `utoipa-swagger-ui`
+- [ ] Choose async runtime: Tokio
+- [ ] Plan state management: Arc<Mutex<HashMap<String, UnionFind>>>
+
+#### Architecture Planning
+- [ ] Design state management for multiple Union-Find instances
+- [ ] Plan error handling and HTTP status codes
+- [ ] Define authentication/authorization strategy (if needed)
+- [ ] Plan CORS and security headers
+
+### Day 9-10: Core REST API Implementation
+
+#### REQ-9: HTTP Server with Basic Endpoints
+- [ ] Create new binary crate or example: `examples/rest_api/`
+- [ ] Add dependencies to Cargo.toml:
+  ```toml
+  axum = "0.7"
+  tokio = { version = "1", features = ["full"] }
+  tower = "0.4"
+  tower-http = { version = "0.5", features = ["cors", "trace"] }
+  serde = { version = "1", features = ["derive"] }
+  serde_json = "1"
+  uuid = { version = "1", features = ["v4", "serde"] }
+  tracing = "0.1"
+  tracing-subscriber = "0.3"
+  ```
+
+- [ ] Implement server infrastructure
+  - [ ] Create `main.rs` with Tokio runtime
+  - [ ] Set up tracing/logging
+  - [ ] Configure CORS middleware
+  - [ ] Add graceful shutdown
+
+- [ ] Implement state management
+  - [ ] `AppState` struct with `Arc<Mutex<HashMap<String, UnionFind>>>`
+  - [ ] Instance creation with UUID generation
+  - [ ] Instance cleanup/deletion
+
+- [ ] Implement core endpoints
+  - [ ] POST `/api/v1/unionfind/new` - Create instance
+  - [ ] POST `/api/v1/unionfind/{id}/union` - Union operation
+  - [ ] GET `/api/v1/unionfind/{id}/find` - Find operation
+  - [ ] GET `/api/v1/unionfind/{id}/connected` - Connectivity check
+  - [ ] DELETE `/api/v1/unionfind/{id}` - Delete instance
+
+#### Request/Response Models
+- [ ] Define data models with Serde
+  ```rust
+  // Request models
+  struct NewUnionFindRequest { size: usize }
+  struct UnionRequest { element1: usize, element2: usize }
+  struct FindRequest { element: usize }
+  struct ConnectedRequest { element1: usize, element2: usize }
+  
+  // Response models
+  struct NewUnionFindResponse { id: String, size: usize }
+  struct UnionResponse { success: bool, new_root: usize }
+  struct FindResponse { root: usize, path_length: usize }
+  struct ConnectedResponse { connected: bool }
+  struct ErrorResponse { error: String, code: String }
+  ```
+
+### Day 11-12: OpenAPI/Swagger Integration
+
+#### REQ-10: OpenAPI Documentation with utoipa
+- [ ] Add utoipa dependencies to Cargo.toml:
+  ```toml
+  utoipa = { version = "4", features = ["axum_extras"] }
+  utoipa-swagger-ui = { version = "6", features = ["axum"] }
+  ```
+
+- [ ] Annotate all request/response models
+  - [ ] Add `#[derive(ToSchema)]` to all structs
+  - [ ] Add descriptions and examples to fields
+  - [ ] Add validation constraints (min, max, pattern)
+  - [ ] Document default values
+
+- [ ] Annotate all endpoint handlers
+  ```rust
+  #[utoipa::path(
+      post,
+      path = "/api/v1/unionfind/{id}/union",
+      tag = "Union-Find Operations",
+      request_body = UnionRequest,
+      responses(
+          (status = 200, description = "Union successful", body = UnionResponse),
+          (status = 404, description = "Union-Find instance not found"),
+          (status = 400, description = "Invalid request")
+      ),
+      params(
+          ("id" = String, Path, description = "Union-Find instance ID")
+      )
+  )]
+  async fn union_handler(...) -> Result<Json<UnionResponse>, StatusCode>
+  ```
+
+- [ ] Create OpenAPI specification
+  - [ ] Define API info (title, version, description)
+  - [ ] Add tags for endpoint grouping
+  - [ ] Configure servers (localhost, production)
+  - [ ] Add security schemes (if using auth)
+
+- [ ] Integrate Swagger UI
+  - [ ] Mount Swagger UI at `/swagger-ui/`
+  - [ ] Serve OpenAPI spec at `/api-docs/openapi.json`
+  - [ ] Configure UI customization (theme, logo)
+  - [ ] Test interactive "Try it out" functionality
+
+#### Enhanced Endpoints with Documentation
+- [ ] Add GET `/api/v1/unionfind/{id}/components` - List all components
+- [ ] Add GET `/api/v1/unionfind/{id}/stats` - Statistics endpoint
+  ```rust
+  struct StatsResponse {
+      total_elements: usize,
+      num_components: usize,
+      operations_count: u64,
+      tree_heights: Vec<usize>,
+      avg_tree_depth: f64,
+  }
+  ```
+
+### Day 13: Testing & Examples
+
+#### API Integration Tests
+- [ ] Create `tests/api_tests.rs`
+- [ ] Test: Create new Union-Find instance
+- [ ] Test: Union operation with valid inputs
+- [ ] Test: Find operation returns correct root
+- [ ] Test: Connected query returns correct result
+- [ ] Test: Error handling for invalid instance ID
+- [ ] Test: Error handling for out-of-bounds elements
+- [ ] Test: Delete instance
+- [ ] Test: Concurrent requests (thread safety)
+
+#### curl Examples & Documentation
+- [ ] Create `examples/rest_api/README.md`
+- [ ] Add curl examples for all endpoints:
+  ```bash
+  # Create instance
+  curl -X POST http://localhost:8080/api/v1/unionfind/new \
+    -H "Content-Type: application/json" \
+    -d '{"size": 10}'
+  
+  # Union operation
+  curl -X POST http://localhost:8080/api/v1/unionfind/{id}/union \
+    -H "Content-Type: application/json" \
+    -d '{"element1": 3, "element2": 7}'
+  
+  # Check connectivity
+  curl -X GET "http://localhost:8080/api/v1/unionfind/{id}/connected?element1=3&element2=7"
+  
+  # Get statistics
+  curl -X GET http://localhost:8080/api/v1/unionfind/{id}/stats
+  ```
+
+#### Postman Collection
+- [ ] Create Postman collection for all endpoints
+- [ ] Export to `examples/rest_api/postman/`
+- [ ] Include environment variables
+- [ ] Add pre-request scripts for ID management
+
+### Day 14: Advanced Features & Deployment
+
+#### REQ-11: Production Features
+- [ ] Add rate limiting middleware
+  - [ ] Use `tower-governor` or custom implementation
+  - [ ] Configure limits per endpoint
+  - [ ] Add rate limit headers
+
+- [ ] Add request/response logging
+  - [ ] Use `tower-http::trace`
+  - [ ] Log request method, path, status
+  - [ ] Log response times
+  - [ ] Add correlation IDs
+
+- [ ] Add metrics endpoint
+  - [ ] Expose Prometheus metrics at `/metrics`
+  - [ ] Track request counts by endpoint
+  - [ ] Track response times (histograms)
+  - [ ] Track Union-Find operations
+  - [ ] Track active instances count
+
+- [ ] Add health check endpoint
+  - [ ] GET `/health` returns 200 OK
+  - [ ] Include version information
+  - [ ] Check critical dependencies
+  - [ ] Add liveness and readiness probes
+
+#### Documentation & Guides
+- [ ] Create `examples/rest_api/OPENAPI_GUIDE.md`
+  - [ ] Introduction to OpenAPI/Swagger
+  - [ ] How to use Swagger UI
+  - [ ] API design best practices
+  - [ ] Client generation examples
+  - [ ] Testing strategies
+
+- [ ] Create `examples/rest_api/DEPLOYMENT.md`
+  - [ ] Build for production
+  - [ ] Docker containerization
+  - [ ] Environment configuration
+  - [ ] Security considerations
+  - [ ] Monitoring and logging
+
+#### Optional Enhancements
+- [ ] Add WebSocket endpoint for real-time updates
+- [ ] Generate client libraries (Python, TypeScript)
+- [ ] Add GraphQL endpoint as alternative
+- [ ] Implement caching layer (Redis)
+- [ ] Add authentication (JWT, API keys)
+- [ ] Create Dockerfile and docker-compose.yml
+- [ ] Deploy to cloud platform (Fly.io, Railway, AWS)
+
+### Quality Gates for Phase 6
+- [ ] All API endpoints functional
+- [ ] Swagger UI loads and works correctly
+- [ ] OpenAPI spec validates (use `swagger-cli validate`)
+- [ ] All API tests pass
+- [ ] No warnings when compiling REST API binary
+- [ ] Documentation complete and accurate
+- [ ] curl examples tested and verified
+- [ ] Performance acceptable (< 10ms per request)
+- [ ] Thread-safe state management verified
+
+---
+
+## �🎓 Educational Enhancements
 
 ### Visualization Tools
 - [ ] Add ASCII art tree visualizations
@@ -360,7 +614,7 @@ Create comprehensive test suite with requirement traceability:
 ## ✅ Definition of Done
 
 Mission 10 is complete when:
-- [ ] All phases (1-5) checked off
+- [ ] All phases (1-6) checked off
 - [ ] All tests pass with >80% coverage
 - [ ] All examples compile and run successfully
 - [ ] Documentation is comprehensive and accurate
@@ -370,6 +624,10 @@ Mission 10 is complete when:
 - [ ] Integrated into workspace
 - [ ] Zettelkasten updated
 - [ ] Tutorial materials complete
+- [ ] **REST API with Swagger UI functional**
+- [ ] **OpenAPI specification validates correctly**
+- [ ] **All API endpoints tested and documented**
 - [ ] Ready for Mission 11 kickoff
 
-**Target Completion**: November 8, 2024 (7-day development cycle)
+**Original Target**: November 8, 2024 (7-day development cycle)
+**Extended Target with API**: November 15, 2024 (14-day development cycle - 2 weeks)

@@ -454,6 +454,251 @@ This tutorial teaches Union-Find through a 7-step progressive learning path, bui
 
 ---
 
+## 🌐 Step 8: REST API with OpenAPI/Swagger Documentation
+
+**Target**: Demonstrate Union-Find as a production REST API service with comprehensive OpenAPI documentation
+
+### Overview
+Mission 10's Union-Find will be exposed as a RESTful web service with automatic OpenAPI/Swagger documentation, demonstrating professional API design and documentation standards.
+
+### Implementation Tasks
+
+#### 8.1: REST API Design
+- [ ] Design RESTful endpoints for Union-Find operations
+- [ ] Define request/response schemas
+- [ ] Plan error handling and status codes
+- [ ] Document API versioning strategy
+
+**Proposed Endpoints**:
+```
+POST   /api/v1/unionfind/new          - Create new Union-Find instance
+POST   /api/v1/unionfind/{id}/union   - Union two elements
+GET    /api/v1/unionfind/{id}/find    - Find root of element
+GET    /api/v1/unionfind/{id}/connected - Check if elements connected
+GET    /api/v1/unionfind/{id}/components - Get all connected components
+GET    /api/v1/unionfind/{id}/stats   - Get statistics (tree heights, compression rate)
+DELETE /api/v1/unionfind/{id}         - Delete instance
+```
+
+#### 8.2: Technology Stack Selection
+- [ ] Choose web framework (Axum, Actix-web, or Rocket)
+- [ ] Select OpenAPI crate (`utoipa` recommended)
+- [ ] Plan async runtime (Tokio)
+- [ ] Design state management (Arc<Mutex<>> or parking_lot)
+
+#### 8.3: Core Implementation
+- [ ] Create `examples/step8_rest_api/` directory structure
+- [ ] Implement web server with chosen framework
+- [ ] Add Union-Find state management
+- [ ] Implement all REST endpoints
+- [ ] Add request validation
+- [ ] Implement proper error responses
+
+```rust
+// examples/step8_rest_api/main.rs structure:
+// 1. Dependencies and imports (30 lines)
+// 2. OpenAPI schema definitions (100 lines)
+// 3. State management structures (50 lines)
+// 4. Endpoint handlers (200 lines)
+// 5. OpenAPI integration (50 lines)
+// 6. Server setup and main (40 lines)
+```
+
+#### 8.4: OpenAPI/Swagger Integration
+- [ ] Add `utoipa` crate to Cargo.toml
+- [ ] Add `utoipa-swagger-ui` for interactive documentation
+- [ ] Annotate all endpoints with OpenAPI macros
+- [ ] Define request/response schemas with examples
+- [ ] Add operation descriptions and tags
+- [ ] Configure Swagger UI endpoints
+
+**OpenAPI Annotations Example**:
+```rust
+#[utoipa::path(
+    post,
+    path = "/api/v1/unionfind/{id}/union",
+    tag = "Union-Find Operations",
+    request_body = UnionRequest,
+    responses(
+        (status = 200, description = "Union successful", body = UnionResponse),
+        (status = 404, description = "Union-Find instance not found"),
+        (status = 400, description = "Invalid input")
+    )
+)]
+async fn union_handler(...) { }
+```
+
+#### 8.5: Request/Response Models
+- [ ] Define all data models with Serialize/Deserialize
+- [ ] Add OpenAPI schema annotations
+- [ ] Include validation constraints
+- [ ] Provide example values
+- [ ] Document all fields
+
+**Models to Define**:
+```rust
+// Request models
+- NewUnionFindRequest { size: usize, optimization: OptimizationType }
+- UnionRequest { element1: usize, element2: usize }
+- FindRequest { element: usize }
+- ConnectedRequest { element1: usize, element2: usize }
+
+// Response models
+- NewUnionFindResponse { id: String, size: usize }
+- UnionResponse { success: bool, new_root: usize }
+- FindResponse { root: usize, path_length: usize }
+- ConnectedResponse { connected: bool, component_size: usize }
+- ComponentsResponse { count: usize, components: Vec<Vec<usize>> }
+- StatsResponse { operations: u64, tree_heights: Vec<usize>, avg_depth: f64 }
+- ErrorResponse { code: String, message: String }
+```
+
+#### 8.6: Interactive Documentation
+- [ ] Set up Swagger UI at `/swagger-ui/`
+- [ ] Set up OpenAPI spec endpoint at `/api-docs/openapi.json`
+- [ ] Add ReDoc alternative view (optional)
+- [ ] Include "Try it out" functionality
+- [ ] Add authentication examples (if applicable)
+
+#### 8.7: Testing and Examples
+- [ ] Create `examples/step8_rest_api/README.md`
+- [ ] Add curl examples for all endpoints
+- [ ] Provide Postman collection (exported)
+- [ ] Write integration tests
+- [ ] Add load testing examples (optional)
+
+**Example Usage Section**:
+```bash
+# Create new Union-Find instance
+curl -X POST http://localhost:8080/api/v1/unionfind/new \
+  -H "Content-Type: application/json" \
+  -d '{"size": 10, "optimization": "PathCompressionAndRank"}'
+
+# Union two elements
+curl -X POST http://localhost:8080/api/v1/unionfind/{id}/union \
+  -H "Content-Type: application/json" \
+  -d '{"element1": 3, "element2": 7}'
+
+# Check connectivity
+curl -X GET "http://localhost:8080/api/v1/unionfind/{id}/connected?element1=3&element2=7"
+```
+
+#### 8.8: Advanced Features
+- [ ] Rate limiting middleware
+- [ ] Request/response logging
+- [ ] Metrics endpoint (Prometheus format)
+- [ ] Health check endpoint
+- [ ] CORS configuration
+- [ ] API versioning demonstration
+
+#### 8.9: Documentation Content
+- [ ] Create comprehensive `OPENAPI_GUIDE.md`
+- [ ] Explain REST API design principles
+- [ ] Document OpenAPI specification structure
+- [ ] Provide Swagger UI usage guide
+- [ ] Include API client generation examples
+- [ ] Discuss production deployment considerations
+
+### Content Structure
+```
+examples/step8_rest_api/
+├── Cargo.toml                 - Dependencies (utoipa, axum, tokio, etc.)
+├── README.md                  - Quick start guide
+├── OPENAPI_GUIDE.md          - Comprehensive OpenAPI documentation
+├── src/
+│   ├── main.rs               - Server entry point
+│   ├── models.rs             - Request/response models with OpenAPI schemas
+│   ├── handlers.rs           - Endpoint handlers
+│   ├── state.rs              - State management
+│   ├── errors.rs             - Error handling
+│   └── openapi.rs            - OpenAPI configuration
+├── tests/
+│   ├── integration_tests.rs  - API integration tests
+│   └── load_tests.rs         - Performance testing (optional)
+├── postman/
+│   └── Mission10_UnionFind.postman_collection.json
+└── examples/
+    └── client_demo.rs        - Example API client
+```
+
+### Specific Content
+
+- [ ] **OPENAPI_GUIDE.md Sections**:
+  - [ ] Introduction to REST APIs
+  - [ ] OpenAPI/Swagger overview
+  - [ ] Why document APIs
+  - [ ] Understanding the OpenAPI spec
+  - [ ] Using Swagger UI
+  - [ ] Generating client libraries
+  - [ ] Best practices for API design
+  - [ ] Union-Find API design rationale
+
+- [ ] **Code Documentation**:
+  - [ ] Inline comments explaining OpenAPI annotations
+  - [ ] Examples of different HTTP status codes
+  - [ ] Error handling patterns
+  - [ ] State management explanation
+  - [ ] Async/await patterns
+  - [ ] Thread-safety considerations
+
+- [ ] **Testing Documentation**:
+  - [ ] How to run the server
+  - [ ] Testing with curl
+  - [ ] Using Swagger UI for testing
+  - [ ] Writing integration tests
+  - [ ] Performance considerations
+
+### Learning Objectives
+After completing Step 8, students should understand:
+- [ ] RESTful API design principles
+- [ ] OpenAPI specification format
+- [ ] How to use utoipa for Rust API documentation
+- [ ] Swagger UI for interactive documentation
+- [ ] Request/response modeling
+- [ ] Error handling in web services
+- [ ] State management in async Rust
+- [ ] API testing strategies
+- [ ] Production deployment considerations
+
+### Integration Points
+- [ ] Reference from Mission 10 main README
+- [ ] Link from daily study (Week 6)
+- [ ] Cross-reference with advanced_examples/
+- [ ] Zettelkasten page: "REST API Design Patterns"
+- [ ] Zettelkasten page: "OpenAPI Best Practices"
+
+### Quality Standards
+- [ ] Server runs without warnings
+- [ ] All endpoints functional and tested
+- [ ] OpenAPI spec validates correctly
+- [ ] Swagger UI loads and works properly
+- [ ] Comprehensive error handling
+- [ ] Thread-safe state management
+- [ ] Clear documentation (300-500 lines)
+- [ ] Production-ready code patterns
+- [ ] Security considerations addressed
+
+### Exercises
+- [ ] **Exercise 1**: Add authentication to the API (JWT or API keys)
+- [ ] **Exercise 2**: Implement API versioning (v1 vs v2)
+- [ ] **Exercise 3**: Add caching layer (Redis) for frequently accessed data
+- [ ] **Exercise 4**: Generate Python client library from OpenAPI spec
+- [ ] **Exercise 5**: Implement WebSocket endpoint for real-time updates
+- [ ] **Exercise 6**: Add GraphQL alternative endpoint
+- [ ] **Exercise 7**: Containerize the API (Dockerfile + docker-compose)
+- [ ] **Exercise 8**: Deploy to cloud platform (Fly.io, Railway, or AWS)
+
+### Timeline Estimate
+- **API Design**: 0.5 day
+- **Core Implementation**: 2 days
+- **OpenAPI Integration**: 1 day
+- **Testing & Documentation**: 1 day
+- **Advanced Features**: 1 day (optional)
+
+**Total**: 4.5-5.5 days (November 22-27)
+
+---
+
 ## 📚 Supporting Materials
 
 ### Exercises Directory
