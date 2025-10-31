@@ -82,6 +82,7 @@ impl Grid {
 }
 
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 pub struct SearchStats {
     nodes_explored: usize,
     nodes_generated: usize,

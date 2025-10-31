@@ -98,6 +98,7 @@ fn manhattan_distance(from: (usize, usize), to: (usize, usize)) -> u32 {
 }
 
 /// Search result from individual thread
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 struct ThreadSearchResult {
     nodes_explored: usize,

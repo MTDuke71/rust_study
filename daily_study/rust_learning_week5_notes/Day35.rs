@@ -140,7 +140,7 @@ impl CsvParser {
         let mut results = Vec::new();
         let mut warnings = Vec::new();
         let mut errors = Vec::new();
-        #[allow(unused_assignments)]  // line_number is used in error handling contexts
+        #[allow(unused_assignments, unused_variables, unused_mut)]  // line_number is used in error handling contexts
         let mut line_number = 1;
         
         let lines: Vec<&str> = content.lines().collect();
@@ -164,7 +164,7 @@ impl CsvParser {
         };
         
         for (index, line) in lines.iter().enumerate().skip(1) {
-            line_number = index + 1;
+            let line_number = index + 1;
             
             if line.trim().is_empty() {
                 continue;
@@ -491,6 +491,7 @@ impl FieldValidator for EmailValidator {
 }
 
 // Multi-format parser
+#[allow(dead_code)]
 pub struct MultiFormatParser {
     #[allow(dead_code)]  // Config field for educational purposes
     config: ParserConfig,
