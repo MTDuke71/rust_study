@@ -42,6 +42,7 @@ impl From<std::num::ParseIntError> for AppError {
 
 // Web Error for web request examples
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 enum WebError {
     Network(String),
     Parse(String),
@@ -64,6 +65,7 @@ impl Error for WebError {}
 
 // Database Error for transaction examples
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 enum DatabaseError {
     Connection(String),
     Query(String),
@@ -86,29 +88,34 @@ impl Error for DatabaseError {}
 
 // Data structures
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct Config {
     port: u16,
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct UserData {
     id: u32,
     name: String,
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct UserProfile {
     user_data: UserData,
     preferences: HashMap<String, String>,
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct ProcessedFile {
     path: String,
     content: String,
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct QueryResult {
     rows_affected: usize,
 }

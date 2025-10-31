@@ -140,6 +140,7 @@ impl CsvParser {
         let mut results = Vec::new();
         let mut warnings = Vec::new();
         let mut errors = Vec::new();
+        #[allow(unused_assignments)]  // line_number is used in error handling contexts
         let mut line_number = 1;
         
         let lines: Vec<&str> = content.lines().collect();
@@ -206,7 +207,8 @@ impl CsvParser {
         }
     }
     
-    fn parse_headers(&self, line: &str, warnings: &mut Vec<ParseWarning>, errors: &mut Vec<ParseError>) -> Result<Vec<String>, ParseError> {
+    #[allow(clippy::ptr_arg)]  // Vec parameters used for educational demo
+    fn parse_headers(&self, line: &str, _warnings: &mut Vec<ParseWarning>, errors: &mut Vec<ParseError>) -> Result<Vec<String>, ParseError> {
         let headers: Vec<String> = line.split(',').map(|s| s.trim().to_string()).collect();
         
         if headers.is_empty() {
@@ -219,7 +221,7 @@ impl CsvParser {
         // Check for duplicate headers
         let mut seen = HashMap::new();
         for (index, header) in headers.iter().enumerate() {
-            if let Some(prev_index) = seen.get(header) {
+            if let Some(_prev_index) = seen.get(header) {
                 errors.push(ParseError::DuplicateField {
                     field: header.clone(),
                     line: 1,
@@ -414,7 +416,7 @@ impl ConfigParser {
         }
     }
     
-    fn parse_config_value(&self, value_str: &str, line_number: usize) -> Result<ConfigValue, ParseError> {
+    fn parse_config_value(&self, value_str: &str, _line_number: usize) -> Result<ConfigValue, ParseError> {
         if value_str.is_empty() {
             Ok(ConfigValue::String(String::new()))
         } else if value_str == "true" {
@@ -490,6 +492,7 @@ impl FieldValidator for EmailValidator {
 
 // Multi-format parser
 pub struct MultiFormatParser {
+    #[allow(dead_code)]  // Config field for educational purposes
     config: ParserConfig,
     format_detectors: Vec<Box<dyn FormatDetector>>,
 }

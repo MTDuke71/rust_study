@@ -8,6 +8,7 @@ use std::collections::HashMap;
 
 // Custom error types for examples
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 enum FfiError {
     Panic,
     InvalidInput,
@@ -21,30 +22,35 @@ enum RecoveryError {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 enum ProcessResult {
     Success(ProcessedData),
     Fallback(ProcessedData),
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct ProcessedData {
     content: String,
     metadata: String,
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct Request {
     path: String,
     method: String,
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct Response {
     status: u16,
     body: String,
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 enum BatchResult {
     Success {
         index: usize,
@@ -58,6 +64,7 @@ enum BatchResult {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct ProcessedItem {
     original: String,
     processed: String,
@@ -65,6 +72,7 @@ struct ProcessedItem {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 struct BatchSummary {
     total: usize,
     success_count: usize,
@@ -116,6 +124,7 @@ fn recover_from_panic() {
     }
 }
 
+#[allow(dead_code)]  // Demo function for learning purposes
 fn setup_panic_hook() {
     panic::set_hook(Box::new(|panic_info| {
         println!("Custom panic handler:");
@@ -148,6 +157,7 @@ fn simulate_foreign_library_call() -> String {
     panic!("Foreign library encountered an error!");
 }
 
+#[allow(dead_code)]  // Demo function for learning purposes
 fn safe_ffi_operation<F, R>(operation: F) -> Result<R, FfiError>
 where
     F: FnOnce() -> R + panic::UnwindSafe,

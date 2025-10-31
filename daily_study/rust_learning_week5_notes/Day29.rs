@@ -24,6 +24,7 @@ impl Error for ParseError {}
 
 // Example 2: Error with Source Information
 #[derive(Debug)]
+#[allow(dead_code)]  // Demo types for learning purposes
 enum FileOperationError {
     NotFound { path: String },
     PermissionDenied { path: String },

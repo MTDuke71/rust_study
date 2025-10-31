@@ -1,8 +1,7 @@
 // Day 31 - anyhow and thiserror
 // Runnable examples demonstrating practical error handling crates
 
-#[allow(dead_code, unused_imports)]
-
+#![allow(dead_code, unused_imports)]  // Demo code for learning purposes
 // Simulate anyhow and thiserror functionality with standard library
 // In real usage, you would add these to Cargo.toml:
 // anyhow = "1.0"
@@ -12,6 +11,7 @@
 type AnyhowResult<T> = Result<T, Box<dyn std::error::Error + Send + Sync + 'static>>;
 
 // Simulate anyhow::Context
+#[allow(dead_code)]  // Demo trait for learning purposes
 trait Context<T, E> {
     fn context<C>(self, context: C) -> AnyhowResult<T>
     where

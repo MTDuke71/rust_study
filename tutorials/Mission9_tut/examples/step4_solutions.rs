@@ -30,6 +30,7 @@ impl Position {
         self.x.abs_diff(other.x) + self.y.abs_diff(other.y)
     }
     
+    #[allow(dead_code)]  // Alternative distance method for educational purposes
     fn euclidean_distance(&self, other: &Position) -> u32 {
         let dx = (self.x - other.x) as f64;
         let dy = (self.y - other.y) as f64;
@@ -86,6 +87,7 @@ pub struct SearchStats {
     nodes_generated: usize,
     search_time_ms: u128,
     path_length: usize,
+    #[allow(dead_code)]  // Field for educational purposes
     algorithm_name: String,
 }
 

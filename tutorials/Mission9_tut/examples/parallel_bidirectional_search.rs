@@ -42,7 +42,7 @@ impl PartialOrd for ParallelNode {
 
 /// Simple grid (copy from main file for standalone example)
 #[derive(Debug, Clone)]
-struct Grid {
+pub struct Grid {
     width: usize,
     height: usize,
     obstacles: HashSet<(usize, usize)>,
@@ -103,8 +103,11 @@ struct ThreadSearchResult {
     nodes_explored: usize,
     nodes_generated: usize,
     came_from: HashMap<u32, u32>,
+    #[allow(dead_code)]  // Fields for educational purposes
     g_scores: HashMap<u32, u32>,
+    #[allow(dead_code)]  // Fields for educational purposes
     final_cost: Option<u32>,
+    #[allow(dead_code)]  // Fields for educational purposes
     meeting_point: Option<u32>,
 }
 
