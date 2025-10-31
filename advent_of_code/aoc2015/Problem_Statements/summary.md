@@ -18,6 +18,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **Encoding**: String encoding, character escaping
 - **Real-time Analysis**: Temporal scoring, moment-by-moment leader tracking, time-dependent calculations
 - **Conditional Logic**: Property-based filtering, range-based matching, rule-based comparisons
+- **Combinatorial Optimization**: Subset sum, container packing, constrained combination enumeration
 
 ---
 
@@ -685,6 +686,156 @@ Parse properties: goldfish→9, cars→0, samoyeds→9
 
 ---
 
+### [[day17.md|Day 17: No Such Thing as Too Much]]
+**Title**: No Such Thing as Too Much  
+**Part 1 Type**: Brute Force + Data Structures + Combinatorial Optimization  
+**Part 1 Description**: Count how many different combinations of containers exactly fit 150 liters of eggnog  
+**Part 2 Type**: Brute Force + Optimization + Data Structures  
+**Part 2 Description**: Find minimum number of containers needed, then count combinations using exactly that minimum  
+**Key Concepts**: Subset sum problem (NP-complete), recursive backtracking with include/exclude pattern, exponential time complexity O(2^n), combination enumeration vs counting, two-phase optimization (find minimum then filter), algorithm scaling analysis
+
+**The Container Packing Problem**:
+- Given ~20 containers with different capacities (liters)
+- Must use combinations that sum to exactly 150 liters
+- Classic **subset sum problem** - NP-complete computational complexity
+- Part 1: Count all valid combinations (any number of containers)
+- Part 2: Among all combinations, find those using fewest containers
+
+**Algorithm Implementation - Recursive Backtracking**:
+```rust
+// Core pattern: include/exclude decision at each step
+fn count_recursive(containers: &[usize], index: usize, remaining: usize) -> usize {
+    if remaining == 0 { return 1; }  // Found valid combination
+    if index >= containers.len() { return 0; }  // No more options
+    
+    // Try including current container
+    let include = if containers[index] <= remaining {
+        count_recursive(containers, index + 1, remaining - containers[index])
+    } else { 0 };
+    
+    // Try excluding current container  
+    let exclude = count_recursive(containers, index + 1, remaining);
+    
+    include + exclude  // Sum of both branches
+}
+```
+
+**Decision Tree Example** (simplified):
+```text
+containers = [20, 15, 10, 5, 5], target = 25
+
+                    Start (rem=25)
+                   /              \
+          Include 20            Exclude 20
+          (rem=5)               (rem=25)
+           /    \                 /      \
+      Inc 15  Exc 15         Inc 15    Exc 15
+      (fail)  (rem=5)        (rem=10)  (rem=25)
+              /    \           /    \       ...
+          Inc 10  Exc 10   Inc 10  Exc 10
+          (fail)  (rem=5)  ✓FOUND  (rem=10)
+                           [15,10] 
+```
+
+**Computational Complexity Analysis**:
+- **Search Space**: 2^n combinations (n = number of containers)
+- **For n=20**: 2^20 = 1,048,576 combinations (~10-20ms runtime) ✅
+- **For n=30**: 2^30 = 1,073,741,824 combinations (~30 seconds) ⚠️
+- **For n=40**: 2^40 = 1+ trillion combinations (~12 hours) ❌
+- **Threshold**: Brute force reasonable for n ≤ 25-30
+
+**Two Algorithmic Approaches**:
+
+1. **Counting Only** (Part 1 - Memory Efficient):
+   - Only tracks count, doesn't store combinations
+   - Space: O(n) for recursion stack
+   - Fast: No combination cloning/storage overhead
+   
+2. **Collecting Combinations** (Part 2 - Needs Analysis):
+   - Stores all valid combinations in Vec<Vec<usize>>
+   - Space: O(k × m) where k=combo count, m=avg size
+   - Required: Must analyze combination sizes to find minimum
+   - Uses backtracking with push/pop pattern
+
+**Part 2 Two-Phase Strategy**:
+```rust
+// Phase 1: Collect all combinations
+let all_combinations = find_all_combinations(&containers, 150);
+
+// Phase 2: Find minimum size
+let min_count = all_combinations.iter().map(|c| c.len()).min().unwrap();
+
+// Phase 3: Count combinations with that minimum
+all_combinations.iter().filter(|c| c.len() == min_count).count()
+```
+
+**Optimization Considerations** (from [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]]):
+- **Sorting**: Descending order helps pruning (2-5x speedup) but not needed for AoC input size
+- **Pruning**: Suffix sum checks eliminate impossible branches
+- **Dynamic Programming**: O(n × target) but only counts, doesn't enumerate
+- **Meet-in-the-Middle**: O(2^(n/2)) for n ≤ 45 but more complex
+- **For n=20**: Simple brute force is optimal - don't over-engineer!
+
+**Example (2 containers, target=25)**:
+```
+Containers: [20, 15, 10, 5, 5]
+
+Valid combinations:
+- [15, 10] = 25 ✓ (2 containers)
+- [20, 5] = 25 ✓ (2 containers)
+- [20, 5] = 25 ✓ (2 containers, different 5)
+- [15, 5, 5] = 25 ✓ (3 containers)
+
+Part 1: 4 combinations total
+Part 2: Minimum = 2 containers, count = 3 combinations
+```
+
+**Rust-Specific Implementation Details**:
+- **Recursive Pattern**: Include/exclude branches explore all 2^n subsets
+- **Base Cases**: `remaining == 0` (success), `index >= len` (exhausted)
+- **Mutable References**: `&mut Vec` for backtracking with push/pop
+- **Iterator Methods**: `.filter()`, `.map()`, `.min()`, `.count()` for Part 2 analysis
+- **No Memoization**: Each path unique (unlike Fibonacci) - cache hits would be 0%
+- **Memory Trade-off**: Counting is O(n) stack, collecting is O(k×m) heap
+
+**Performance Characteristics**:
+- **Time**: O(n × 2^n) for counting (n operations per combination)
+- **Space**: O(n) for counting, O(k × m) for collecting
+- **Actual Runtime**: ~10-20ms for n=20 (AoC input size)
+- **Scaling**: Doubles with each additional container (exponential growth)
+
+**When Brute Force Breaks** (from scaling analysis):
+- n ≤ 20: ✅ Instant (< 20ms)
+- n ≤ 25: ✅ Fast (< 1 second)  
+- n ≤ 30: ⚠️ Tolerable (< 1 minute)
+- n > 35: ❌ Need better algorithm (minutes to hours)
+
+**Educational Value**:
+- **NP-Complete Recognition**: Classic subset sum problem structure
+- **Exponential Complexity**: Understanding O(2^n) growth in practice
+- **Backtracking Pattern**: Include/exclude decision tree exploration
+- **Algorithm Scaling**: When simple solutions break and optimization needed
+- **Space-Time Trade-offs**: Counting vs collecting combinations
+- **Two-Phase Optimization**: Find constraint, then filter by constraint
+- **Recursive Thinking**: Breaking problem into subproblems
+
+**Test Coverage** (12 tests):
+- Example validation (4 combinations for 25 liters)
+- Part 2 minimum count (3 combinations with 2 containers)
+- Edge cases: empty input, single exact container, no valid combinations
+- Algorithm consistency: recursive count matches backtracking collection
+- Input parsing: whitespace handling, line-by-line parsing
+
+**Results**:
+- Part 1: 4372 combinations (for n=20, target=150)
+- Part 2: 57 combinations using minimum containers
+
+**📚 Related Analysis**: 
+- [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]] - Complete exponential algorithm analysis, optimization strategies (DP, meet-in-the-middle, branch-and-bound), sorting impact on pruning, scaling thresholds
+- [[../../../zettelkasten/AoC Collection Problems]] - Pattern recognition for subset problems
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -693,9 +844,9 @@ Parse properties: goldfish→9, cars→0, samoyeds→9
 | Mathematical | 5 | 5 |
 | Simulation | 7 | 7 |
 | Search/Traversal | 1 | 1 |
-| Optimization | 4 | 4 |
-| Data Structures | 5 | 4 |
-| Brute Force | 4 | 4 |
+| Optimization | 5 | 5 |
+| Data Structures | 6 | 5 |
+| Brute Force | 5 | 5 |
 | Cryptographic | 1 | 1 |
 | Pattern Matching | 3 | 3 |
 | Advanced Pattern Matching | 0 | 1 |
@@ -704,6 +855,7 @@ Parse properties: goldfish→9, cars→0, samoyeds→9
 | Encoding | 0 | 1 |
 | Real-time Analysis | 0 | 1 |
 | Conditional Logic | 0 | 1 |
+| Combinatorial Optimization | 1 | 1 |
 
 ## Implementation Notes
 
@@ -731,6 +883,7 @@ Parse properties: goldfish→9, cars→0, samoyeds→9
 - Day 14: **Cyclic behavior simulation and mathematical optimization**, state machine implementation for flight/rest cycles, algorithmic complexity comparison (O(n×c) vs O(n×m)), struct design with behavior methods (`cycle_length()`, `distance_per_cycle()`), real-time leader tracking with tie handling, different scoring systems analysis, performance optimization through cycle mathematics, while loop state transitions, vector-based point accumulation, iterator methods for leader detection (`max_by()`), temporal vs final scoring trade-offs
 - Day 15: **Combinatorial optimization with constraints**, nested loop generation with sum constraints (~176K combinations from 100^4 space), iterator patterns (`.iter().enumerate().map().sum()`), property calculation with negative value handling, dynamic ingredient handling (2/3/4 variations), constrained search space optimization, functional vs imperative iterator usage comparison, dead code annotations for struct fields
 - Day 16: **HashMap sparse storage for partial data**, pattern matching on string keys (`match key.as_str()`), conditional comparison logic (different operators per property type), early return optimization, string parsing chain (`strip_prefix()`, `split()`, `parse()`), linear search with early termination, Option handling with `if let Some()`, property-specific range checks
+- Day 17: **Subset sum backtracking**, recursive include/exclude pattern, combination enumeration with push/pop, minimum value filtering, Vec<Vec<T>> for storing combinations, O(2^n) complexity awareness, exponential algorithm scaling understanding, two-phase optimization (find constraint then filter), space-time trade-offs (counting vs collecting), NP-complete problem recognition, algorithm selection based on input size (n≤25 brute force acceptable)
 
 ---
 
@@ -758,9 +911,9 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search #pattern-matching #conditional-logic #sparse-storage #parsing-patterns #filtering-logic #partial-matching #early-termination*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../examples/day15_iterator_usage]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]]*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search #pattern-matching #conditional-logic #sparse-storage #parsing-patterns #filtering-logic #partial-matching #early-termination #subset-sum #backtracking #exponential-algorithms #np-complete #recursive-algorithms #decision-trees*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../examples/day15_iterator_usage]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]] | [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]]*

@@ -228,6 +228,7 @@
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
 - [[zero-cost-abstractions]] - Rust's performance guarantees
 - [[Algorithm Analysis]] - Complexity analysis patterns including amortized analysis
+- [[Subset-Sum-Scaling-Analysis]] - **Exponential algorithm scaling**: When brute force breaks, optimization strategies (DP, meet-in-the-middle, branch-and-bound)
 - Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
 
 ## 📊 System Reports & Analysis

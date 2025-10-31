@@ -714,4 +714,4 @@ fn calculate_answer<T>(state: &HashMap<String, T>) -> usize {
 ---
 
 *Tags: #collections #hashmap #hashset #vector #aoc #competitive-programming #patterns #performance #reference #troubleshooting*
-*Links: [[../Mission2/README]] | [[../Mission5/README]] | [[../Mission6/README]] | [[../daily_study/rust_learning_week2_notes/README]] | [[Rust Collections MOC]] | [[AoC Patterns MOC]] | [[Performance Optimization Guide]]*
+*Links: [[../Mission2/README]] | [[../Mission5/README]] | [[../Mission6/README]] | [[../daily_study/rust_learning_week2_notes/README]] | [[Rust Collections MOC]] | [[AoC Patterns MOC]] | [[Performance Optimization Guide]] | [[Subset-Sum-Scaling-Analysis]]*
