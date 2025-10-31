@@ -827,8 +827,8 @@ Part 2: Minimum = 2 containers, count = 3 combinations
 - Input parsing: whitespace handling, line-by-line parsing
 
 **Results**:
-- Part 1: 4372 combinations (for n=20, target=150)
-- Part 2: 57 combinations using minimum containers
+- Part 1: 1304 combinations (for n=20, target=150)
+- Part 2: 18 combinations using minimum containers
 
 **📚 Related Analysis**: 
 - [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]] - Complete exponential algorithm analysis, optimization strategies (DP, meet-in-the-middle, branch-and-bound), sorting impact on pruning, scaling thresholds

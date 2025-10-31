@@ -9,9 +9,25 @@ For example, suppose you have containers of size 20, 15, 10, 5, and 5 liters. If
 15, 5, and 5
 Filling all containers entirely, how many different combinations of containers can exactly fit all 150 liters of eggnog?
 
-To begin, get your puzzle input.
+Your puzzle answer was 1304.
 
-Answer: 
- 
+--- Part Two ---
+While playing with all the containers in the kitchen, another load of eggnog arrives! The shipping and receiving department is requesting as many containers as you can spare.
+
+Find the minimum number of containers that can exactly fit all 150 liters of eggnog. How many different ways can you fill that number of containers and still hold exactly 150 litres?
+
+In the example above, the minimum number of containers was two. There were three ways to use that many containers, and so the answer there would be 3.
+
+Your puzzle answer was 18.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
+
+At this point, you should return to your Advent calendar and try another puzzle.
+
+If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+**📚 Related Analysis**: 
+- [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]] - Complete exponential algorithm analysis, optimization strategies (DP, meet-in-the-middle, branch-and-bound), sorting impact on pruning, scaling thresholds
+- [[../../../zettelkasten/AoC Collection Problems]] - Pattern recognition for subset problems
