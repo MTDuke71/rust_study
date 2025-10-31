@@ -505,17 +505,90 @@ fn sum_with_regex(json: &str) -> i64 {
 
 ---
 
+### [[day15.md|Day 15: Science for Hungry People]]
+**Title**: Science for Hungry People  
+**Part 1 Type**: Brute Force + Optimization + Mathematical  
+**Part 1 Description**: Find optimal cookie recipe using 100 teaspoons across 4 ingredients to maximize score (capacity × durability × flavor × texture)  
+**Part 2 Type**: Brute Force + Optimization + Mathematical  
+**Part 2 Description**: Same optimization but with constraint: recipe must have exactly 500 calories  
+**Key Concepts**: Combinatorial optimization, nested loop generation with sum constraints, property calculation with negative value handling, iterator patterns (`.iter().enumerate().map().sum()`), dynamic ingredient handling (2/3/4 ingredients), constrained search space optimization
+
+**Cookie Recipe Optimization**:
+- Each ingredient has 5 properties: capacity, durability, flavor, texture, calories
+- Properties can be negative (reduce total when multiplied by amount)
+- Total score = `max(0, capacity_total) × max(0, durability_total) × max(0, flavor_total) × max(0, texture_total)`
+- Must use exactly 100 teaspoons total across all ingredients
+- If any property total is negative, overall score becomes 0
+
+**Algorithm Implementation**:
+- **Nested Loop Optimization**: Generate all valid combinations that sum to 100
+  - 4 ingredients: 3 nested loops + calculated 4th value (not 4 loops!)
+  - Reduces from 100^4 = 100 million to ~176,000 combinations
+  - Pattern: `for a in 0..=100`, `for b in 0..=(100-a)`, `for c in 0..=(100-a-b)`, `let d = 100-a-b-c`
+- **Property Calculation**: Sum each property weighted by amounts, then multiply non-negative totals
+- **Calorie Constraint** (Part 2): Filter combinations to only those with exactly 500 calories
+- **Dynamic Handling**: Separate functions for 2, 3, and 4 ingredients (future-proof for different inputs)
+
+**Example (2 ingredients)**:
+```
+Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8
+Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3
+
+Best recipe: 44 Butterscotch + 56 Cinnamon
+Capacity: 44×(-1) + 56×2 = -44 + 112 = 68
+Durability: 44×(-2) + 56×3 = -88 + 168 = 80
+Flavor: 44×6 + 56×(-2) = 264 - 112 = 152
+Texture: 44×3 + 56×(-1) = 132 - 56 = 76
+Score: 68 × 80 × 152 × 76 = 62,842,880
+```
+
+**Rust-Specific Implementation Details**:
+- **Iterator Chains**: `.iter().enumerate().map().sum()` for functional calorie calculation
+- **Struct Design**: `Ingredient` with 6 fields (name + 5 properties)
+- **Dead Code Annotation**: `#[allow(dead_code)]` on `name` field (used in Debug, not direct access)
+- **Array Indexing**: `amounts[i]` for ingredient amounts parallel to `ingredients` slice
+- **Negative Handling**: Return 0 early if any property total is negative (multiplication short-circuit)
+- **Match Statement**: Dynamic dispatch for 2/3/4 ingredients using `match num_ingredients`
+- **Loop Constraint**: Inner loop bounds calculated from outer loop variables to guarantee sum
+
+**Iterator Usage Patterns** (3 distinct patterns):
+1. **`.lines()` and `.split_whitespace()`**: Parse input into tokens
+2. **`.next()` consumption**: Sequential token extraction with manual state tracking
+3. **`.iter().enumerate().map().sum()`**: Functional transformation and aggregation
+
+**Performance Characteristics**:
+- **Search Space**: ~176,000 combinations for 4 ingredients (vs 100^4 = 100M brute force)
+- **Time Complexity**: O(n^(k-1)) where k = number of ingredients, n = total teaspoons
+- **Space Complexity**: O(k) for storing ingredient data and current amounts
+- **Optimization**: Nested loop bounds prevent generating invalid combinations (sum ≠ 100)
+
+**Educational Value**:
+- **Combinatorics**: Generating combinations with sum constraints  
+- **Optimization Problems**: Constrained search space exploration
+- **Functional Programming**: Iterator methods for cleaner code (`.enumerate().map().sum()`)
+- **Code Organization**: Separate validation functions, dynamic dispatch by input size
+- **Negative Values**: Handling properties that reduce totals (not just positive contributions)
+- **Multiple Constraints**: Distance optimization (Part 1) vs constrained optimization (Part 2)
+
+**Results**:
+- Part 1: 18,965,440 (best cookie without calorie constraint)
+- Part 2: 15,862,900 (best cookie with exactly 500 calories)
+
+**📖 Iterator Analysis**: [[../examples/day15_iterator_usage|Day 15 Iterator Usage Explained]] - Comprehensive breakdown of all iterator patterns used
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
 | String Processing | 6 | 6 |
-| Mathematical | 4 | 4 |
+| Mathematical | 5 | 5 |
 | Simulation | 7 | 7 |
 | Search/Traversal | 1 | 1 |
-| Optimization | 3 | 3 |
+| Optimization | 4 | 4 |
 | Data Structures | 4 | 3 |
-| Brute Force | 3 | 3 |
+| Brute Force | 4 | 4 |
 | Cryptographic | 1 | 1 |
 | Pattern Matching | 2 | 2 |
 | Advanced Pattern Matching | 0 | 1 |
@@ -548,6 +621,7 @@ fn sum_with_regex(json: &str) -> i64 {
 - Day 12: **JSON parsing with serde_json**, recursive tree traversal, pattern matching on Value enum, conditional filtering (red objects), regex vs structured parsing trade-offs, external crate integration, data structure selection (string scanning vs tree building)
 - Day 13: **Advanced graph theory implementation**, weighted directed complete adjacency graph using HashMap composite keys, Traveling Salesman Problem recognition and solution, Heap's algorithm for efficient permutation generation, circular seating constraint handling, mathematical symmetry exploitation for 9× performance optimization, global vs. local optimization analysis (why greedy "weakest link" fails), comprehensive verification testing proving optimization equivalence, HashMap adjacency list implementation, modular arithmetic for circular indexing
 - Day 14: **Cyclic behavior simulation and mathematical optimization**, state machine implementation for flight/rest cycles, algorithmic complexity comparison (O(n×c) vs O(n×m)), struct design with behavior methods (`cycle_length()`, `distance_per_cycle()`), real-time leader tracking with tie handling, different scoring systems analysis, performance optimization through cycle mathematics, while loop state transitions, vector-based point accumulation, iterator methods for leader detection (`max_by()`), temporal vs final scoring trade-offs
+- Day 15: **Combinatorial optimization with constraints**, nested loop generation with sum constraints (~176K combinations from 100^4 space), iterator patterns (`.iter().enumerate().map().sum()`), property calculation with negative value handling, dynamic ingredient handling (2/3/4 variations), constrained search space optimization, functional vs imperative iterator usage comparison, dead code annotations for struct fields
 
 ---
 
@@ -575,9 +649,9 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]]*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../examples/day15_iterator_usage]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]]*
