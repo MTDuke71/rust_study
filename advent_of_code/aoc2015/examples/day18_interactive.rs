@@ -13,7 +13,6 @@
 /// and displays stats. Use Ctrl+C to stop.
 ///
 /// Run with: cargo run --example day18_interactive
-
 use mission6::{Coord, Grid};
 use std::fs;
 use std::thread;
@@ -92,7 +91,7 @@ fn save_grid_to_file(grid: &Grid<bool>, step: usize, mode: &str) -> io::Result<S
     let filename = format!("day18_saved_state_step{}_mode{}_{}.txt", step, mode, timestamp);
     
     let mut content = String::new();
-    content.push_str(&format!("# Day 18 Saved State\n"));
+    content.push_str("# Day 18 Saved State\n");
     content.push_str(&format!("# Step: {}\n", step));
     content.push_str(&format!("# Mode: {}\n", mode));
     content.push_str(&format!("# Lights ON: {}\n", count_lights_on(grid)));

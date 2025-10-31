@@ -4,7 +4,6 @@
 /// the difference that stuck corners make to the final outcome.
 ///
 /// Run with: cargo run --example day18_comparison
-
 use mission6::{Coord, Grid};
 use std::thread;
 use std::time::Duration;

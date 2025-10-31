@@ -30,6 +30,7 @@ impl Position {
         self.x.abs_diff(other.x) + self.y.abs_diff(other.y)
     }
     
+    #[allow(dead_code)]
     fn euclidean_distance(&self, other: &Position) -> u32 {
         let dx = (self.x - other.x) as f64;
         let dy = (self.y - other.y) as f64;
@@ -81,6 +82,7 @@ impl Grid {
 }
 
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 pub struct SearchStats {
     nodes_explored: usize,
     nodes_generated: usize,

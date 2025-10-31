@@ -1,7 +1,8 @@
 // Day 29 - Custom Error Types
 // Runnable examples demonstrating custom error type implementation
 
-#[allow(dead_code, unused_imports)]
+#![allow(dead_code, unused_imports)]
+
 use std::error::Error;
 use std::fmt;
 

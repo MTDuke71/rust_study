@@ -2,6 +2,7 @@
 
 use std::cmp::Ordering;
 
+#[allow(dead_code)]
 #[derive(Debug, Clone, Eq, PartialEq)]
 struct WeightedAstarNode {
     id: usize,
@@ -71,7 +72,7 @@ fn main() {
     println!("=== A* Heuristic Combination Strategies ===\n");
     
     // Example coordinates
-    let start = (0, 0);
+    let _start = (0, 0);
     let goal = (10, 10);
     let current = (5, 3);
     

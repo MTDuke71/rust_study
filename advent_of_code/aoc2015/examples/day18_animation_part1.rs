@@ -4,7 +4,6 @@
 /// step-by-step visualization of the light grid.
 ///
 /// Run with: cargo run --example day18_animation_part1
-
 use mission6::{Coord, Grid};
 use std::thread;
 use std::time::Duration;
