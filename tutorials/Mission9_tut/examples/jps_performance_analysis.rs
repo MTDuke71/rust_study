@@ -80,12 +80,11 @@ impl InstrumentedJPS {
         }
         
         // Diagonal movement: check horizontal and vertical components
-        if dx != 0 && dy != 0 {
-            if self.jump(grid, next_pos, dx, 0, goal).is_some() ||
-               self.jump(grid, next_pos, 0, dy, goal).is_some() {
+        if dx != 0 && dy != 0
+            && (self.jump(grid, next_pos, dx, 0, goal).is_some() ||
+               self.jump(grid, next_pos, 0, dy, goal).is_some()) {
                 return Some(next_pos);
             }
-        }
         
         // Continue jumping in the same direction - RECURSIVE CALL
         self.jump(grid, next_pos, dx, dy, goal)
