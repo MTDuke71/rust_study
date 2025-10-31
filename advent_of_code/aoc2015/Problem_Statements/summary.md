@@ -17,6 +17,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **Parsing**: Escape sequence parsing, character-level analysis
 - **Encoding**: String encoding, character escaping
 - **Real-time Analysis**: Temporal scoring, moment-by-moment leader tracking, time-dependent calculations
+- **Conditional Logic**: Property-based filtering, range-based matching, rule-based comparisons
 
 ---
 
@@ -578,24 +579,131 @@ Score: 68 × 80 × 152 × 76 = 62,842,880
 
 ---
 
+### [[day16.md|Day 16: Aunt Sue]]
+**Title**: Aunt Sue  
+**Part 1 Type**: Data Structures + Pattern Matching + String Processing  
+**Part 1 Description**: Find which of 500 Aunt Sues gave you a gift by matching known properties against MFCSAM analysis results  
+**Part 2 Type**: Data Structures + Pattern Matching + Conditional Logic  
+**Part 2 Description**: Same problem but with range-based comparisons (cats/trees > target, pomeranians/goldfish < target)  
+**Key Concepts**: HashMap sparse storage, partial information matching, linear search with early termination, conditional comparison logic, pattern matching on string keys, range-based filtering
+
+**The Gift Identification Problem**:
+- 500 aunts all named "Sue" (numbered 1-500)
+- Each aunt: remember exactly 3 out of 10 possible properties
+- MFCSAM analysis provides target values for all 10 properties
+- Unknown properties ≠ zero (just not remembered)
+- Find the aunt where all known properties match
+
+**MFCSAM Target Properties**:
+```
+children: 3, cats: 7, samoyeds: 2, pomeranians: 3, akitas: 0
+vizslas: 0, goldfish: 5, trees: 3, cars: 2, perfumes: 1
+```
+
+**Algorithm Implementation**:
+- **Part 1 - Exact Matching**:
+  - Parse 500 aunt records with 3 properties each
+  - Linear search: check if all aunt's known properties == target values
+  - Early termination when match found
+  - Result: Sue #40
+
+- **Part 2 - Range-Based Matching** (Retroencabulator effect):
+  - **cats, trees**: Aunt's value must be **> target** (nuclear decay → lower bounds)
+  - **pomeranians, goldfish**: Aunt's value must be **< target** (magnetoreluctance → upper bounds)
+  - **All others**: Aunt's value must be **== target** (exact measurements)
+  - Result: Sue #241
+
+**Data Structure Design**:
+```rust
+struct AuntSue {
+    number: usize,
+    properties: HashMap<String, usize>,  // Sparse storage: only 3/10 properties
+}
+```
+
+**Why HashMap for Properties?**
+- Each aunt knows only 3 properties (not all 10)
+- HashMap provides sparse representation (O(1) lookup)
+- Avoids storing zeros for unknown properties
+- Efficiently checks "Does aunt have this property?" and "What's its value?"
+
+**Rust-Specific Implementation Details**:
+- **Pattern Matching on Strings**: `match key.as_str()` for property-specific logic
+- **Conditional Comparison**: Different operators (>, <, ==) based on property name
+- **Early Return Optimization**: `return false` on first mismatch (short-circuit)
+- **String Parsing Chain**: `split(':')` → `strip_prefix("Sue ")` → `parse::<usize>()`
+- **HashMap Iteration**: `for (key, value) in &self.properties` with conditional checks
+- **Option Handling**: `if let Some(&target_value) = target.get(key)` for safe lookup
+
+**Parsing Pattern**:
+```rust
+"Sue 1: goldfish: 9, cars: 0, samoyeds: 9"
+     ↓
+Split by ':' → ["Sue 1", " goldfish", " 9, cars", " 0, samoyeds", " 9"]
+     ↓
+Extract number: 1
+     ↓
+Parse properties: goldfish→9, cars→0, samoyeds→9
+```
+
+**Performance Characteristics**:
+- **Time Complexity**: O(n × m) where n=500 aunts, m=3 properties per aunt
+- **Space Complexity**: O(n × m) for storing all aunt data
+- **Search**: Linear scan with early termination
+  - Part 1: Stops at Sue #40 (checked ~8% of data)
+  - Part 2: Stops at Sue #241 (checked ~48% of data)
+
+**The Retroencabulator Effect (Part 2)**:
+- MFCSAM has "outdated retroencabulator" causing measurement errors
+- **Nuclear decay** of cat dander and tree pollen → readings are **minimums**
+- **Modial interaction** of magnetoreluctance → pomeranians/goldfish readings are **maximums**
+- Must adjust comparison logic to account for measurement uncertainty
+
+**Why Different Sues?**:
+- Sue #40: All known properties exactly match target (Part 1 winner)
+- Sue #241: Known properties satisfy range constraints (Part 2 winner)
+- Example difference: Sue #40 might have cats: 7 (exact), Sue #241 has cats: 8 (>7)
+
+**Test Coverage** (11 tests):
+- Basic parsing (multi-line, property extraction)
+- Part 1: Exact matching, subset matching, mismatch detection
+- Part 2: Greater-than (cats, trees), fewer-than (goldfish, pomeranians)
+- Part 2: Exact matching for normal properties
+- Edge cases: Equal values fail for range properties
+
+**Educational Value**:
+- **Sparse Data Representation**: HashMap for partial information
+- **Conditional Logic**: Different rules for different data types
+- **Linear Search Optimization**: Early termination strategies
+- **Pattern Matching**: String-based dispatch in match expressions
+- **Partial Matching**: Working with incomplete datasets
+- **Constraint Satisfaction**: Multiple comparison rules simultaneously
+
+**Results**:
+- Part 1: 40 (exact matching with complete information)
+- Part 2: 241 (range-based matching with measurement uncertainty)
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
-| String Processing | 6 | 6 |
+| String Processing | 7 | 7 |
 | Mathematical | 5 | 5 |
 | Simulation | 7 | 7 |
 | Search/Traversal | 1 | 1 |
 | Optimization | 4 | 4 |
-| Data Structures | 4 | 3 |
+| Data Structures | 5 | 4 |
 | Brute Force | 4 | 4 |
 | Cryptographic | 1 | 1 |
-| Pattern Matching | 2 | 2 |
+| Pattern Matching | 3 | 3 |
 | Advanced Pattern Matching | 0 | 1 |
 | Graph Algorithms | 3 | 4 |
 | Parsing | 2 | 1 |
 | Encoding | 0 | 1 |
 | Real-time Analysis | 0 | 1 |
+| Conditional Logic | 0 | 1 |
 
 ## Implementation Notes
 
@@ -622,6 +730,7 @@ Score: 68 × 80 × 152 × 76 = 62,842,880
 - Day 13: **Advanced graph theory implementation**, weighted directed complete adjacency graph using HashMap composite keys, Traveling Salesman Problem recognition and solution, Heap's algorithm for efficient permutation generation, circular seating constraint handling, mathematical symmetry exploitation for 9× performance optimization, global vs. local optimization analysis (why greedy "weakest link" fails), comprehensive verification testing proving optimization equivalence, HashMap adjacency list implementation, modular arithmetic for circular indexing
 - Day 14: **Cyclic behavior simulation and mathematical optimization**, state machine implementation for flight/rest cycles, algorithmic complexity comparison (O(n×c) vs O(n×m)), struct design with behavior methods (`cycle_length()`, `distance_per_cycle()`), real-time leader tracking with tie handling, different scoring systems analysis, performance optimization through cycle mathematics, while loop state transitions, vector-based point accumulation, iterator methods for leader detection (`max_by()`), temporal vs final scoring trade-offs
 - Day 15: **Combinatorial optimization with constraints**, nested loop generation with sum constraints (~176K combinations from 100^4 space), iterator patterns (`.iter().enumerate().map().sum()`), property calculation with negative value handling, dynamic ingredient handling (2/3/4 variations), constrained search space optimization, functional vs imperative iterator usage comparison, dead code annotations for struct fields
+- Day 16: **HashMap sparse storage for partial data**, pattern matching on string keys (`match key.as_str()`), conditional comparison logic (different operators per property type), early return optimization, string parsing chain (`strip_prefix()`, `split()`, `parse()`), linear search with early termination, Option handling with `if let Some()`, property-specific range checks
 
 ---
 
@@ -649,9 +758,9 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search #pattern-matching #conditional-logic #sparse-storage #parsing-patterns #filtering-logic #partial-matching #early-termination*
 *Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../examples/day15_iterator_usage]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]]*
