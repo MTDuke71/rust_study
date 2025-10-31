@@ -22,28 +22,28 @@ use anyhow::Result;
 /// - At each step: try including current container OR excluding it
 /// - Base cases: found exact match (remaining = 0) or exhausted options
 /// - Time complexity: O(2^n) where n = number of containers
-
-/// Count all combinations of containers that sum to exactly `target`.
 ///
-/// This is the main entry point for Part 1. It delegates to the recursive helper
-/// to perform the actual counting.
+///   Count all combinations of containers that sum to exactly `target`.
 ///
-/// # Arguments
+///   This is the main entry point for Part 1. It delegates to the recursive helper
+///   to perform the actual counting.
 ///
-/// * `containers` - Slice of container capacities (in liters)
-/// * `target` - Target volume to achieve (150 liters for the puzzle)
+///   # Arguments
 ///
-/// # Returns
+///   * `containers` - Slice of container capacities (in liters)
+///   * `target` - Target volume to achieve (150 liters for the puzzle)
 ///
-/// The number of distinct combinations that sum to exactly `target`
+///   # Returns
 ///
-/// # Example
+///   The number of distinct combinations that sum to exactly `target`
 ///
-/// ```
-/// let containers = vec![20, 15, 10, 5, 5];
-/// let count = count_combinations(&containers, 25);
-/// assert_eq!(count, 4); // Four ways to make 25 liters
-/// ```
+///   # Example
+///
+///   ```
+///   let containers = vec![20, 15, 10, 5, 5];
+///   let count = count_combinations(&containers, 25);
+///   assert_eq!(count, 4); // Four ways to make 25 liters
+///   ```
 fn count_combinations(containers: &[usize], target: usize) -> usize {
     count_recursive(containers, 0, target)
 }

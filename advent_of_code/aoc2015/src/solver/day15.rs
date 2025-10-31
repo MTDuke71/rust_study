@@ -1,7 +1,6 @@
 use anyhow::Result;
 
 /// AoC 2015 Day 15: Science for Hungry People
-
 ///
 /// Part 1: Given the ingredients in your kitchen and their properties, what is the total score of the highest-scoring cookie you can make?
 /// Part 2: What is the total score of the highest-scoring cookie you can make with a calorie total of 500?

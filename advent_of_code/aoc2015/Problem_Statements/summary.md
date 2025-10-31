@@ -19,6 +19,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **Real-time Analysis**: Temporal scoring, moment-by-moment leader tracking, time-dependent calculations
 - **Conditional Logic**: Property-based filtering, range-based matching, rule-based comparisons
 - **Combinatorial Optimization**: Subset sum, container packing, constrained combination enumeration
+- **Cellular Automaton**: Conway's Game of Life, state evolution, neighbor counting, grid simulation
 
 ---
 
@@ -836,16 +837,127 @@ Part 2: Minimum = 2 containers, count = 3 combinations
 
 ---
 
+### [[day18.md|Day 18: Like a GIF For Your Yard]]
+**Title**: Like a GIF For Your Yard  
+**Part 1 Type**: Simulation + Data Structures + Cellular Automaton  
+**Part 1 Description**: Simulate Conway's Game of Life on 100x100 grid for 100 steps, count lights ON  
+**Part 2 Type**: Simulation + Data Structures + Cellular Automaton  
+**Part 2 Description**: Same simulation but 4 corner lights are stuck in ON position  
+**Key Concepts**: Conway's Game of Life rules, 8-connected neighbor counting, cellular automaton simulation, grid state evolution, Mission 6 Grid integration, double buffering technique, stuck corner constraints, pattern stability analysis
+
+**Game of Life Rules**:
+- Light ON with 2-3 neighbors ON → stays ON
+- Light ON with 0-1 or 4+ neighbors ON → turns OFF
+- Light OFF with exactly 3 neighbors ON → turns ON
+- Light OFF otherwise → stays OFF
+
+**Algorithm Implementation**:
+- **Mission 6 Integration**: Use `Grid<bool>` for efficient 2D representation, `neighbors_8_bounded()` for safe 8-connected iteration
+- **Double Buffering**: Maintain current and next state grids to prevent state corruption during simultaneous updates
+- **Neighbor Counting**: `neighbors_8_bounded()` iterator filters and counts ON neighbors
+- **Part 2 Constraint**: Force 4 corner cells to ON after each simulation step
+
+**Performance Characteristics**:
+- **Time Complexity**: O(steps × width × height × 8) = O(steps × n²) for n×n grid
+- **Space Complexity**: O(width × height) for two grids (current + next)
+- **Actual Runtime**: ~1ms for 100 steps on 100×100 grid
+- **Mission 6 Benefits**: Safe bounds checking, O(1) indexing, iterator-based neighbor access
+
+**Example Evolution**:
+```
+Start: 5076 lights ON
+Step 10: ~1500 lights ON
+Step 50: ~1100 lights ON  
+Step 100: 1061 lights ON (stable oscillation)
+```
+
+**Part 2 Pattern Analysis**:
+- Stuck corners act as "light sources" preventing total extinction
+- Creates persistent activity near corners
+- Different final pattern: 1006 lights (55 fewer than Part 1)
+- Corner influence creates stable edge patterns
+
+**Visualization Tools Created**:
+1. **Part 1 Animation** (`day18_animation_part1.rs`): Step-by-step 6×6 test grid with ANSI colors
+2. **Part 2 Animation** (`day18_animation_part2.rs`): Stuck corners highlighted in red, legend display
+3. **Comparison Tool** (`day18_comparison.rs`): Side-by-side Part 1 vs Part 2 evolution
+4. **Interactive Simulator** (`day18_interactive.rs`): Full 100×100 grid with:
+   - User-selectable mode (Part 1 or Part 2)
+   - Configurable steps and animation speed
+   - 2×2 Unicode block compression display (16 character variants)
+   - Auto-save every 25 steps with metadata
+   - Statistics tracking (min/max/stability detection)
+   - Adaptive speed adjustment after 100 steps
+
+**Rust-Specific Implementation Details**:
+- **Grid Indexing**: `grid[Coord::new(row, col)]` for O(1) access
+- **Iterator Filtering**: `.filter(|&neighbor| grid[neighbor]).count()` for neighbor counting
+- **Match Expressions**: Pattern matching on (current_state, neighbor_count) tuples for rule application
+- **Array Literals**: Corner coordinates stored as `[Coord; 4]` constant array
+- **Comprehensive Testing**: 12 tests covering parsing, neighbor counting, simulation steps, corner forcing
+
+**Mission 6 Advantage** (vs manual implementation):
+```rust
+// With Mission 6: Clean and safe
+fn count_neighbors_on(grid: &Grid<bool>, coord: Coord) -> usize {
+    neighbors_8_bounded(&coord, grid.width(), grid.height())
+        .filter(|&neighbor| grid[neighbor])
+        .count()
+}
+
+// Without Mission 6: Error-prone manual bounds checking
+fn count_neighbors_unsafe(grid: &Vec<Vec<bool>>, row: usize, col: usize) -> usize {
+    let mut count = 0;
+    for dr in -1..=1 {
+        for dc in -1..=1 {
+            if dr == 0 && dc == 0 { continue; }
+            let nr = row as i32 + dr;
+            let nc = col as i32 + dc;
+            if nr >= 0 && nr < 100 && nc >= 0 && nc < 100 {
+                if grid[nr as usize][nc as usize] { count += 1; }
+            }
+        }
+    }
+    count
+}
+```
+
+**Educational Value**:
+- **Cellular Automaton**: Classic computational model for complex systems
+- **Grid Data Structures**: Efficient 2D array representation and iteration
+- **Neighbor Algorithms**: 8-connected grid traversal patterns
+- **State Evolution**: Double buffering to prevent update conflicts
+- **Visualization**: ANSI terminal graphics, Unicode block characters
+- **Interactive Tools**: Building user-facing simulation interfaces
+- **Mission Integration**: Leveraging custom data structures for cleaner code
+
+**Test Coverage** (12 tests):
+- Input parsing validation (# → ON, . → OFF)
+- Neighbor counting (corners have 3-5 neighbors, interior has 8)
+- Game of Life rules (stay ON, turn ON, turn OFF scenarios)
+- Multi-step simulation accuracy
+- Corner forcing (Part 2 constraint verification)
+- Integration tests (full 100-step simulation)
+
+**Results**:
+- Part 1: 1061 lights ON after 100 steps
+- Part 2: 1006 lights ON after 100 steps (with stuck corners)
+
+**📖 Complete Documentation**: [[../src/solver/day18.md]] - Comprehensive problem analysis, Mission 6 integration details, performance characteristics, visualization examples
+**🎨 Interactive Demo**: Run `cargo run --example day18_interactive` for full 100×100 simulation with auto-save and statistics
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
 | String Processing | 7 | 7 |
 | Mathematical | 5 | 5 |
-| Simulation | 7 | 7 |
+| Simulation | 8 | 8 |
 | Search/Traversal | 1 | 1 |
 | Optimization | 5 | 5 |
-| Data Structures | 6 | 5 |
+| Data Structures | 7 | 6 |
 | Brute Force | 5 | 5 |
 | Cryptographic | 1 | 1 |
 | Pattern Matching | 3 | 3 |
@@ -856,6 +968,7 @@ Part 2: Minimum = 2 containers, count = 3 combinations
 | Real-time Analysis | 0 | 1 |
 | Conditional Logic | 0 | 1 |
 | Combinatorial Optimization | 1 | 1 |
+| Cellular Automaton | 1 | 1 |
 
 ## Implementation Notes
 
@@ -884,6 +997,7 @@ Part 2: Minimum = 2 containers, count = 3 combinations
 - Day 15: **Combinatorial optimization with constraints**, nested loop generation with sum constraints (~176K combinations from 100^4 space), iterator patterns (`.iter().enumerate().map().sum()`), property calculation with negative value handling, dynamic ingredient handling (2/3/4 variations), constrained search space optimization, functional vs imperative iterator usage comparison, dead code annotations for struct fields
 - Day 16: **HashMap sparse storage for partial data**, pattern matching on string keys (`match key.as_str()`), conditional comparison logic (different operators per property type), early return optimization, string parsing chain (`strip_prefix()`, `split()`, `parse()`), linear search with early termination, Option handling with `if let Some()`, property-specific range checks
 - Day 17: **Subset sum backtracking**, recursive include/exclude pattern, combination enumeration with push/pop, minimum value filtering, Vec<Vec<T>> for storing combinations, O(2^n) complexity awareness, exponential algorithm scaling understanding, two-phase optimization (find constraint then filter), space-time trade-offs (counting vs collecting), NP-complete problem recognition, algorithm selection based on input size (n≤25 brute force acceptable)
+- Day 18: **Conway's Game of Life implementation**, Mission 6 Grid integration (`Grid<bool>`, `neighbors_8_bounded()`), 8-connected neighbor counting, cellular automaton rules, double buffering (current + next state), stuck corner constraints, pattern evolution analysis, ANSI terminal visualization, Unicode block character compression (2×2 cells), interactive simulation with auto-save, statistics tracking (min/max/stability), iterator-based neighbor filtering, match expressions for rule application, comprehensive test coverage (12 tests)
 
 ---
 
@@ -911,9 +1025,9 @@ To add a new day to this summary:
 ---
 
 *Last Updated: Based on available problem statements as of current date*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search #pattern-matching #conditional-logic #sparse-storage #parsing-patterns #filtering-logic #partial-matching #early-termination #subset-sum #backtracking #exponential-algorithms #np-complete #recursive-algorithms #decision-trees*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../examples/day15_iterator_usage]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]] | [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]]*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search #pattern-matching #conditional-logic #sparse-storage #parsing-patterns #filtering-logic #partial-matching #early-termination #subset-sum #backtracking #exponential-algorithms #np-complete #recursive-algorithms #decision-trees #cellular-automaton #game-of-life #neighbor-counting #grid-simulation #mission6-integration #double-buffering #visualization*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../missions/Mission6/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../examples/day15_iterator_usage]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]] | [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]] | [[day18.md]]*
