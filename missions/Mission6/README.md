@@ -352,10 +352,15 @@ This Mission 6 library directly supports common AoC patterns:
 
 Each pattern is implemented as a reusable utility with comprehensive test coverage and performance optimization.
 
+### Real-World Applications
+
+**Mission 6 Grid in Practice:**
+- [[../../advent_of_code/aoc2015/Problem_Statements/day18]] - Day 18 (2015): Conway's Game of Life with `Grid<bool>`, `neighbors_8_bounded()` for cellular automaton simulation
+
 ---
 
 *Tags: #grid #algorithms #pathfinding #concept #implementation #mission6 #v-cycle #competitive-programming #aoc #performance*
-*Links: [[Mission5]] | [[Mission7]] | [[Grid Algorithms]] | [[Spatial Data Structures]] | [[AoC Utilities]]*
+*Links: [[Mission5]] | [[Mission7]] | [[Grid Algorithms]] | [[Spatial Data Structures]] | [[AoC Utilities]] | [[../../advent_of_code/aoc2015/Problem_Statements/day18]]*
 
 ---
 

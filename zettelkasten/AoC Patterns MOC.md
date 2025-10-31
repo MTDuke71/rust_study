@@ -20,6 +20,7 @@
 - **[[Tree Structures]]** - Binary trees, n-ary trees, and traversal patterns
 - **[[Queue vs Stack Usage]]** - BFS, DFS, and state management
 - **[[Coordinate Systems]]** - 2D/3D grids, hex grids, and navigation
+- **[[Grid Data Structures]]** - Mission 6 Grid<T> for cellular automaton and 2D problems
 
 ---
 
@@ -68,7 +69,8 @@
 ## 📅 **Year-Specific Pattern Analysis**
 
 ### **AoC 2015 Patterns**
-- **[[../aoc2015/Problem_Statements/summary]]** - Common themes and solution approaches
+- **[[../../advent_of_code/aoc2015/Problem_Statements/summary]]** - Common themes and solution approaches
+  - Day 18: Cellular Automaton - Conway's Game of Life with Mission 6 Grid
 - **[[../aoc2015/discussions/README]]** - Year-specific implementation notes
 - **[[2015 Day Summaries]]** - Quick reference for each day's pattern
 - **[[2015 Performance Notes]]** - Optimization lessons learned
@@ -123,6 +125,7 @@
 
 ### **Simulation Problems**
 - **[[Game of Life Variants]]** - Cellular automata and state evolution
+  - **[[../../advent_of_code/aoc2015/Problem_Statements/day18]]** - AoC 2015 Day 18: Conway's Game of Life with Mission 6 Grid integration
 - **[[Physics Simulation]]** - Particle systems and collision detection
 - **[[Process Simulation]]** - Assembly execution and virtual machines
 - **[[Growth Simulation]]** - Population dynamics and exponential processes
@@ -159,6 +162,7 @@
 - **[[../Mission2/README]]** - Queue implementations for BFS problems
 - **[[../Mission5/README]]** - HashMap usage in frequency and caching problems
 - **[[../Mission6/README]]** - Grid algorithms and 2D problem solving
+  - **Real-world usage**: [[../../advent_of_code/aoc2015/Problem_Statements/day18]] - Cellular automaton with `Grid<bool>` and `neighbors_8_bounded()`
 - **[[../daily_study/rust_learning_week2_notes/Day10]]** - HashMap patterns in practice
 - **[[AoC Collection Problems]]** - Collection selection for competitive programming
 
