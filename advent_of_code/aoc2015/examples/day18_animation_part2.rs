@@ -4,7 +4,6 @@
 /// the four corner lights stuck in the ON position.
 ///
 /// Run with: cargo run --example day18_animation_part2
-
 use mission6::{Coord, Grid};
 use std::thread;
 use std::time::Duration;

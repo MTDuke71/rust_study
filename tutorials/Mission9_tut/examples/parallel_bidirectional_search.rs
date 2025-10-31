@@ -42,7 +42,7 @@ impl PartialOrd for ParallelNode {
 
 /// Simple grid (copy from main file for standalone example)
 #[derive(Debug, Clone)]
-struct Grid {
+pub struct Grid {
     width: usize,
     height: usize,
     obstacles: HashSet<(usize, usize)>,
@@ -98,6 +98,7 @@ fn manhattan_distance(from: (usize, usize), to: (usize, usize)) -> u32 {
 }
 
 /// Search result from individual thread
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 struct ThreadSearchResult {
     nodes_explored: usize,

@@ -140,7 +140,6 @@ impl CsvParser {
         let mut results = Vec::new();
         let mut warnings = Vec::new();
         let mut errors = Vec::new();
-        let mut line_number = 1;
         
         let lines: Vec<&str> = content.lines().collect();
         let headers = if !lines.is_empty() {
@@ -163,7 +162,7 @@ impl CsvParser {
         };
         
         for (index, line) in lines.iter().enumerate().skip(1) {
-            line_number = index + 1;
+            let line_number = index + 1;
             
             if line.trim().is_empty() {
                 continue;
@@ -206,7 +205,7 @@ impl CsvParser {
         }
     }
     
-    fn parse_headers(&self, line: &str, warnings: &mut Vec<ParseWarning>, errors: &mut Vec<ParseError>) -> Result<Vec<String>, ParseError> {
+    fn parse_headers(&self, line: &str, _warnings: &mut [ParseWarning], errors: &mut Vec<ParseError>) -> Result<Vec<String>, ParseError> {
         let headers: Vec<String> = line.split(',').map(|s| s.trim().to_string()).collect();
         
         if headers.is_empty() {
@@ -219,7 +218,7 @@ impl CsvParser {
         // Check for duplicate headers
         let mut seen = HashMap::new();
         for (index, header) in headers.iter().enumerate() {
-            if let Some(prev_index) = seen.get(header) {
+            if seen.contains_key(header) {
                 errors.push(ParseError::DuplicateField {
                     field: header.clone(),
                     line: 1,
@@ -414,7 +413,7 @@ impl ConfigParser {
         }
     }
     
-    fn parse_config_value(&self, value_str: &str, line_number: usize) -> Result<ConfigValue, ParseError> {
+    fn parse_config_value(&self, value_str: &str, _line_number: usize) -> Result<ConfigValue, ParseError> {
         if value_str.is_empty() {
             Ok(ConfigValue::String(String::new()))
         } else if value_str == "true" {
@@ -489,6 +488,7 @@ impl FieldValidator for EmailValidator {
 }
 
 // Multi-format parser
+#[allow(dead_code)]
 pub struct MultiFormatParser {
     config: ParserConfig,
     format_detectors: Vec<Box<dyn FormatDetector>>,

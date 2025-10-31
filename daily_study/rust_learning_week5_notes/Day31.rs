@@ -1,7 +1,7 @@
 // Day 31 - anyhow and thiserror
 // Runnable examples demonstrating practical error handling crates
 
-#[allow(dead_code, unused_imports)]
+#![allow(dead_code, unused_imports)]
 
 // Simulate anyhow and thiserror functionality with standard library
 // In real usage, you would add these to Cargo.toml:

@@ -1,7 +1,8 @@
 // Day 33 - Panic Recovery
 // Runnable examples demonstrating panic handling with catch_unwind and panic hooks
 
-#[allow(dead_code, clippy::useless_vec)]
+#![allow(dead_code, clippy::useless_vec)]
+
 use std::panic;
 use std::sync::{Arc, Mutex};
 use std::collections::HashMap;
