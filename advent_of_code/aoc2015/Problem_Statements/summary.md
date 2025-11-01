@@ -16,6 +16,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **Cryptographic**: Hash functions, encryption, cryptographic puzzles
 - **Parsing**: Escape sequence parsing, character-level analysis
 - **Encoding**: String encoding, character escaping
+- **Greedy Algorithms**: Locally optimal choices leading to global optimization, longest-first strategies
 - **Real-time Analysis**: Temporal scoring, moment-by-moment leader tracking, time-dependent calculations
 - **Conditional Logic**: Property-based filtering, range-based matching, rule-based comparisons
 - **Combinatorial Optimization**: Subset sum, container packing, constrained combination enumeration
