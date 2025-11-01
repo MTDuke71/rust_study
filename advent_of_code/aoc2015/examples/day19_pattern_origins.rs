@@ -52,7 +52,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Group by source element for clarity
     let mut source_to_patterns: HashMap<String, Vec<String>> = HashMap::new();
     for (pattern, source) in &pattern_to_source {
-        source_to_patterns.entry(source.clone()).or_insert_with(Vec::new).push(pattern.clone());
+        source_to_patterns.entry(source.clone()).or_default().push(pattern.clone());
     }
     
     for (source, patterns) in &source_to_patterns {
