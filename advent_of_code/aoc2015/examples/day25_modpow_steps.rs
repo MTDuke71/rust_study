@@ -68,8 +68,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let pow = acc;
     let code = ((START as u128 * pow as u128) % MOD as u128) as u64;
     println!("\nResult: MUL^(n-1) mod MOD = {}", pow);
+    println!(
+        "Final calculation: (START * pow) % MOD = ({} * {}) % {} = {}",
+        START, pow, MOD, code
+    );
     println!("Final code at (row={}, col={}): {}", row, col, code);
 
     Ok(())
 }
-
