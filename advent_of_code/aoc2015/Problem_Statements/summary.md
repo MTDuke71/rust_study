@@ -1104,6 +1104,16 @@ Total: 3 steps
 **Part 2 Description**: Same problem with modified rules - elves visit only 50 houses, deliver 11 presents each
 **Key Concepts**: Divisor sum calculation, sieve-like simulation, elf delivery patterns, multiples iteration, cache-friendly algorithms, upper bound estimation, early termination optimization, number theory application
 
+---
+
+### [[day21.md|Day 21: RPG Simulator 20XX]]
+**Title**: RPG Simulator 20XX
+**Part 1 Type**: Optimization + Simulation + Combinatorial Optimization
+**Part 1 Description**: Find minimum cost equipment combination that defeats the boss (1 weapon, 0-1 armor, 0-2 rings)
+**Part 2 Type**: Optimization + Simulation + Combinatorial Optimization
+**Part 2 Description**: Find maximum cost equipment combination that loses to the boss (guaranteeing defeat)
+**Key Concepts**: Equipment combination generation, turn-based combat simulation, cost optimization, brute force equipment search, constraint-based filtering (must buy exactly 1 weapon, optional armor, 0-2 rings), different optimization goals (min cost win vs max cost loss)
+
 **The Delivery Problem**:
 - Elf N delivers to houses: N, 2N, 3N, 4N, ... (all multiples of N)
 - Each elf delivers presents equal to their number times multiplier (10 for Part 1, 11 for Part 2)
@@ -1234,9 +1244,9 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 |----------|--------------|--------------|
 | String Processing | 8 | 7 |
 | Mathematical | 6 | 6 |
-| Simulation | 9 | 9 |
+| Simulation | 10 | 10 |
 | Search/Traversal | 1 | 2 |
-| Optimization | 5 | 5 |
+| Optimization | 6 | 6 |
 | Data Structures | 8 | 7 |
 | Brute Force | 5 | 5 |
 | Cryptographic | 1 | 1 |
@@ -1247,7 +1257,7 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 | Encoding | 0 | 1 |
 | Real-time Analysis | 0 | 1 |
 | Conditional Logic | 0 | 1 |
-| Combinatorial Optimization | 1 | 1 |
+| Combinatorial Optimization | 2 | 2 |
 | Cellular Automaton | 1 | 1 |
 | Number Theory | 1 | 1 |
 | Greedy Algorithms | 0 | 1 |
@@ -1282,6 +1292,7 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 - Day 18: **Conway's Game of Life implementation**, Mission 6 Grid integration (`Grid<bool>`, `neighbors_8_bounded()`), 8-connected neighbor counting, cellular automaton rules, double buffering (current + next state), stuck corner constraints, pattern evolution analysis, ANSI terminal visualization, Unicode block character compression (2×2 cells), interactive simulation with auto-save, statistics tracking (min/max/stability), iterator-based neighbor filtering, match expressions for rule application, comprehensive test coverage (12 tests)
 - Day 19: **Molecular replacement system**, string replacement patterns, HashSet for uniqueness tracking, `match_indices()` for pattern finding, reverse greedy algorithm, bidirectional search optimization (working backwards from target), understanding when greedy is optimal, string slicing and reconstruction, recognizing exploitable problem structure (unambiguous grammar), performance analysis (greedy O(n) vs BFS O(b^d)), pattern matching in replacement rules, context-free grammar concepts
 - Day 20: **Number theory and divisor sums**, sieve-like simulation (marking multiples), cache-friendly algorithms (sequential memory access), upper bound estimation heuristics (target/multiplier), early termination optimization, vector pre-allocation for performance, stepped iteration (`house += elf`), visit limiting with counters, understanding algorithm perspective (divisors vs multiples viewpoint), harmonic series complexity O(n log n), highly composite numbers, educational dead code annotation (`#[allow(dead_code)]`), doc test ignore patterns
+- Day 21: **Equipment optimization and turn-based combat simulation**, equipment combination generation with constraints (exactly 1 weapon, optional armor, 0-2 rings with no duplicates), cost calculation and comparison, brute force search through all valid combinations (~8,000 equipment sets), different optimization goals (min cost win vs max cost loss), reusable fight simulation logic, struct-based data modeling for items and characters, damage calculation with armor reduction (max(1, damage - armor)), turn-based combat loop with early termination, Pattern matching for equipment cost and stats calculation
 
 ---
 
@@ -1308,10 +1319,10 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 1, 2025*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20*
+*Last Updated: November 2, 2025*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search #pattern-matching #conditional-logic #sparse-storage #parsing-patterns #filtering-logic #partial-matching #early-termination #subset-sum #backtracking #exponential-algorithms #np-complete #recursive-algorithms #decision-trees #cellular-automaton #game-of-life #neighbor-counting #grid-simulation #mission6-integration #double-buffering #visualization #molecular-synthesis #string-replacement #greedy-algorithms #bidirectional-search #reverse-optimization #number-theory #divisor-sums #sieve-algorithms #highly-composite-numbers #cache-optimization #harmonic-series #context-free-grammars #pattern-recognition*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../missions/Mission6/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../examples/day15_iterator_usage]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]] | [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]] | [[day18.md]]*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search #pattern-matching #conditional-logic #sparse-storage #parsing-patterns #filtering-logic #partial-matching #early-termination #subset-sum #backtracking #exponential-algorithms #np-complete #recursive-algorithms #decision-trees #cellular-automaton #game-of-life #neighbor-counting #grid-simulation #mission6-integration #double-buffering #visualization #molecular-synthesis #string-replacement #greedy-algorithms #bidirectional-search #reverse-optimization #number-theory #divisor-sums #sieve-algorithms #highly-composite-numbers #cache-optimization #harmonic-series #context-free-grammars #pattern-recognition #rpg-simulator #equipment-optimization #turn-based-combat #cost-optimization #brute-force-search #constraint-based-filtering #fight-simulation*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../missions/Mission6/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../examples/day15_iterator_usage]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]] | [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]] | [[day18.md]] | [[../../../zettelkasten/Rust Learning Roadmap - The Master Plan]] | [[../../../zettelkasten/Optimization]] | [[../../../zettelkasten/Simulation]] | [[../../../zettelkasten/Brute Force Algorithms]]*
