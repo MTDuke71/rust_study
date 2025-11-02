@@ -1299,6 +1299,32 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 
 ---
 
+### [[day24.md|Day 24: It Hangs in the Balance]]
+**Title**: It Hangs in the Balance  
+**Part 1 Type**: Combinatorial Optimization + Backtracking + Subset Sum  
+**Part 1 Description**: Split packages into 3 groups of equal weight. Choose a first group with the fewest packages; tie-break by minimal quantum entanglement (product of weights).  
+**Part 2 Type**: Combinatorial Optimization + Backtracking + Subset Sum  
+**Part 2 Description**: Same constraints but split into 4 groups; again minimize first-group size and then quantum entanglement.  
+**Key Concepts**: Subset sum with cardinality minimization, k-way partition verification, pruning via descending sort, early exit at minimal size, tie-breaking by product of weights, search-space reduction.
+
+**Implementation Highlights**:
+- Enumerate exact-size combinations that sum to the target weight (by indices to avoid duplicate handling ambiguity)
+- Sort packages descending to improve pruning during backtracking
+- After picking the first group, recursively verify the remaining packages can form the other k-1 groups of the same target
+- Stop at the first group size that yields any valid partition; among those, pick the minimal quantum entanglement
+- Clean separation of concerns: `find_subsets()`, `can_partition_remaining()`, and solver wrapper for parts 1 and 2
+
+**Example Results** (from problem statement):
+- Part 1: minimal size 2 (e.g., 11 + 9) → QE = 99
+- Part 2: minimal size 2 (e.g., 11 + 4) → QE = 44
+
+**Code Aids**:
+- [[../examples/day24_execution_trace.rs|Execution Trace]]: Prints inputs, targets, and part results
+- [[../examples/day24_code_walkthrough.rs|Code Walkthrough]]: Step-by-step listing of candidate subsets, QE values, and feasibility of remaining partitions
+ - [[../examples/day24_detailed_walkthrough.md|Detailed Walkthrough]]: Function-by-function breakdown, pitfalls avoided, and complexity notes
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -1307,7 +1333,7 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 | Mathematical | 7 | 7 |
 | Simulation | 12 | 12 |
 | Search/Traversal | 1 | 2 |
-| Optimization | 6 | 6 |
+| Optimization | 7 | 7 |
 | Data Structures | 9 | 8 |
 | Brute Force | 5 | 5 |
 | Cryptographic | 1 | 1 |
@@ -1318,7 +1344,7 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 | Encoding | 0 | 1 |
 | Real-time Analysis | 0 | 1 |
 | Conditional Logic | 0 | 1 |
-| Combinatorial Optimization | 2 | 2 |
+| Combinatorial Optimization | 3 | 3 |
 | Cellular Automaton | 1 | 1 |
 | Number Theory | 1 | 1 |
 | Greedy Algorithms | 0 | 1 |
@@ -1356,7 +1382,9 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 - Day 20: **Number theory and divisor sums**, sieve-like simulation (marking multiples), cache-friendly algorithms (sequential memory access), upper bound estimation heuristics (target/multiplier), early termination optimization, vector pre-allocation for performance, stepped iteration (`house += elf`), visit limiting with counters, understanding algorithm perspective (divisors vs multiples viewpoint), harmonic series complexity O(n log n), highly composite numbers, educational dead code annotation (`#[allow(dead_code)]`), doc test ignore patterns
 - Day 21: **Equipment optimization and turn-based combat simulation**, equipment combination generation with constraints (exactly 1 weapon, optional armor, 0-2 rings with no duplicates), cost calculation and comparison, brute force search through all valid combinations (~8,000 equipment sets), different optimization goals (min cost win vs max cost loss), reusable fight simulation logic, struct-based data modeling for items and characters, damage calculation with armor reduction (max(1, damage - armor)), turn-based combat loop with early termination, Pattern matching for equipment cost and stats calculation
 - Day 22: **A* search algorithm implementation**, game state representation with effect timers, weighted graph modeling for spell casting decisions, admissible heuristic design (boss HP remaining), Mission9 pathfinding library integration, state space explosion management, effect timer state transitions, turn-based combat simulation with spell effects (Shield/Poison/Recharge), mana cost minimization through optimal path finding, graph traversal with priority queue optimization, complex state modeling for AI planning problems
-- Day 23: **Collatz conjecture implementation through assembly language**, register-based virtual machine executing mathematical algorithm, conditional program paths based on initial register state, Collatz sequence step counting (184 for a=0, 231 for a=1), famous unsolved mathematical problem disguised as assembly programming, demonstrates computational universality of simple instruction sets, Turing machine principles in practice, mathematical computation through low-level operations, [[../examples/day23_collatz_analysis|complete analysis]]
+ - Day 23: **Collatz conjecture implementation through assembly language**, register-based virtual machine executing mathematical algorithm, conditional program paths based on initial register state, Collatz sequence step counting (184 for a=0, 231 for a=1), famous unsolved mathematical problem disguised as assembly programming, demonstrates computational universality of simple instruction sets, Turing machine principles in practice, mathematical computation through low-level operations, [[../examples/day23_collatz_analysis|complete analysis]]
+
+ - Day 24: **Subset-sum with k-way partitioning and pruning**, index-based combination generation for exact-size subsets that reach target sum, descending sort to improve pruning, recursive verification that the remaining items form the other groups (base case `remaining_groups == 1`), early exit once any valid partition is found for the current minimal size, tie-break on minimal quantum entanglement. Fixes a common pitfall: building the remaining set by indices actually chosen (not by slicing ranges). Uses clear separation of concerns (`find_subsets`, `can_partition_remaining`, solver wrapper) and stops at the smallest first-group size that works. See [[../examples/day24_execution_trace.rs|execution trace]] and [[../examples/day24_code_walkthrough.rs|code walkthrough]].
 
 ---
 
@@ -1384,9 +1412,9 @@ To add a new day to this summary:
 ---
 
 *Last Updated: November 2, 2025*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24*
 
 ---
 
-*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search #pattern-matching #conditional-logic #sparse-storage #parsing-patterns #filtering-logic #partial-matching #early-termination #subset-sum #backtracking #exponential-algorithms #np-complete #recursive-algorithms #decision-trees #cellular-automaton #game-of-life #neighbor-counting #grid-simulation #mission6-integration #double-buffering #visualization #molecular-synthesis #string-replacement #greedy-algorithms #bidirectional-search #reverse-optimization #number-theory #divisor-sums #sieve-algorithms #highly-composite-numbers #cache-optimization #harmonic-series #context-free-grammars #pattern-recognition #rpg-simulator #equipment-optimization #turn-based-combat #cost-optimization #brute-force-search #constraint-based-filtering #fight-simulation #collatz-conjecture #assembly-language #virtual-machine #program-counter #instruction-parsing #register-management #conditional-jumps #execution-tracing #turing-machine #mathematical-computation #unsolved-problems #algorithm-hiding #computational-universality*
+*Tags: #aoc #2015 #problem-analysis #patterns #string-processing #simulation #mathematical #data-structures #graph-algorithms #memoization #dag #circuit-simulation #competitive-programming #rust-learning #traveling-salesman #permutations #run-length-encoding #benchmarking #performance-analysis #adjacency-graph #symmetry-optimization #circular-seating #tsp-variants #cyclic-behavior #state-machines #reindeer-olympics #mathematical-optimization #real-time-analysis #algorithm-complexity #performance-comparison #combinatorial-optimization #nested-loops #iterator-patterns #constrained-search #pattern-matching #conditional-logic #sparse-storage #parsing-patterns #filtering-logic #partial-matching #early-termination #subset-sum #backtracking #exponential-algorithms #np-complete #recursive-algorithms #decision-trees #cellular-automaton #game-of-life #neighbor-counting #grid-simulation #mission6-integration #double-buffering #visualization #molecular-synthesis #string-replacement #greedy-algorithms #bidirectional-search #reverse-optimization #number-theory #divisor-sums #sieve-algorithms #highly-composite-numbers #cache-optimization #harmonic-series #context-free-grammars #pattern-recognition #rpg-simulator #equipment-optimization #turn-based-combat #cost-optimization #brute-force-search #constraint-based-filtering #fight-simulation #collatz-conjecture #assembly-language #virtual-machine #program-counter #instruction-parsing #register-management #conditional-jumps #execution-tracing #turing-machine #mathematical-computation #unsolved-problems #algorithm-hiding #computational-universality #partition-problem #k-partition #pruning #quantum-entanglement #combination-enumeration #index-based-combinations*
 *Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Collection Problems]] | [[../../../zettelkasten/Obsidian Plugin Integration Strategy]] | [[../README]] | [[../../../missions/Mission5/README]] | [[../../../missions/Mission6/README]] | [[../../../daily_study/rust_learning_week2_notes/Day10]] | [[../../../zettelkasten/HashMap Internals]] | [[../../../zettelkasten/Memory Address Analysis]] | [[../../../zettelkasten/Heap's Algorithm Deep Dive]] | [[DAY10_BENCHMARK_ANALYSIS]] | [[DAY10_MEMOIZATION_WALKTHROUGH]] | [[../examples/day13_analysis]] | [[../examples/day14_analysis]] | [[../examples/DAY14_COMPLETE_SUMMARY]] | [[../examples/DOCUMENTATION_ENHANCEMENTS]] | [[../examples/GRAPHICS_GUIDE]] | [[../examples/day15_iterator_usage]] | [[../../../zettelkasten/Graph Theory MOC]] | [[../../../zettelkasten/TSP Algorithms]] | [[../../../zettelkasten/Subset-Sum-Scaling-Analysis]] | [[day18.md]] | [[../../../zettelkasten/Rust Learning Roadmap - The Master Plan]] | [[../../../zettelkasten/Optimization]] | [[../../../zettelkasten/Simulation]] | [[../../../zettelkasten/Brute Force Algorithms]] | [[../examples/day23_collatz_analysis]]*
