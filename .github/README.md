@@ -585,3 +585,76 @@ This repository includes **advanced automated workflows** for continuous code qu
 **Status**: 🚀 **Production Ready** - All core missions complete with comprehensive testing and documentation.
 
 **Goal**: 🎄 **AoC 2025 Domination** - Building the skills and tools to excel in competitive programming while mastering Rust engineering principles.
+
+---
+
+## 📆 Planned Future Missions (1‑Week Each)
+
+Each mission is scoped for a focused, end‑to‑end V‑Cycle week: requirements → design → implementation → tests → docs, with explicit AoC mappings and reusable utilities.
+
+### Mission 12 (Week): Byte‑Level Parsing & Escapes (AoC15 Day 8)
+- Goal: Implement a byte‑oriented parser for string literals with escape sequences (\", \\, \xHH) and compute code vs memory lengths.
+- AoC Mapping: Day 8 (Strings in Code). Reinforces byte vs UTF‑8 semantics.
+- Deliverables:
+  - `byte_parser` module with zero‑alloc scanning
+  - Comprehensive unit tests (from AoC examples + edge cases)
+  - Benchmarks comparing byte scanning vs regex
+
+### Mission 13 (Week): DAG Evaluator with Memoization (AoC15 Day 7)
+- Goal: Parse wire expressions into a DAG and evaluate with memoized recursion and dependency analysis.
+- AoC Mapping: Day 7 (Some Assembly Required).
+- Deliverables:
+  - Parser (regex or hand‑rolled) → DAG IR
+  - Evaluator with memo, cycle detection, dependency order tools
+  - Visualization (optional): topological listing for debug
+
+### Mission 14 (Week): Combinatorics Toolkit & Pruning (AoC15 Days 9, 13, 21)
+- Goal: Implement combinations/permutations generators with pruning hooks and symmetry reductions.
+- AoC Mapping: Day 9 (TSP), Day 13 (Seating), Day 21 (Equipment).
+- Deliverables:
+  - Heap’s algorithm, next_permutation, exact‑size combinations
+  - Pruning traits (bounds check, partial score), symmetry filters
+  - Example modules demonstrating speedups vs naive
+
+### Mission 15 (Week): Backtracking – Subset Sum & K‑Partition (AoC15 Days 17, 24)
+- Goal: Canonical backtracking templates for subset sum and k‑way equal‑sum partition with correctness guardrails.
+- AoC Mapping: Day 17 (Containers), Day 24 (Balance).
+- Deliverables:
+  - Index‑based subset generators, remainder construction utilities
+  - Partition validator with base‑case short‑circuiting
+  - Docs on early‑exit by primary objective and tie‑break rules
+
+### Mission 16 (Week): Modular Arithmetic & Number Theory (AoC15 Days 20, 25)
+- Goal: Build a small `modmath` crate: fast pow mod, gcd/lcm, sieve, divisor sum via prime factorization.
+- AoC Mapping: Day 20 (Divisors), Day 25 (Let It Snow).
+- Deliverables:
+  - `mod_pow`, `mod_mul_safe`, divisor enumeration, prime sieve
+  - Worked examples from Day 20/25; micro‑benchmarks
+
+### Mission 17 (Week): Mini‑VM Interpreter (AoC15 Day 23)
+- Goal: Implement a tiny register machine: PC, registers, jumps, inc/hlf/tpl ops, and an instruction set with tracing.
+- AoC Mapping: Day 23 (Turing Lock).
+- Deliverables:
+  - IR + interpreter; step tracer and state snapshotting
+  - Program loader and test harness with golden traces
+
+### Mission 18 (Week): String Rewriting & Search Direction (AoC15 Day 19)
+- Goal: Develop rewriting frameworks for forward BFS and reverse greedy strategies; show when greedy is correct.
+- AoC Mapping: Day 19 (Medicine for Rudolph).
+- Deliverables:
+  - Rule application engine (match windows, reconstruction)
+  - Bidirectional search examples; proof‑by‑structure docs for greedy
+
+### Mission 19 (Week): Time‑Segmented Simulation & Cycle Math (AoC15 Day 14)
+- Goal: Build a simulation framework with both step simulation and closed‑form cycle analysis; dual scoring systems.
+- AoC Mapping: Day 14 (Reindeer Olympics).
+- Deliverables:
+  - Cycle decomposition utilities; state machine harness
+  - Part 1/2 scoring implementations with visual trace
+
+### Mission 20 (Week): Parallel Brute‑Force & Work Distribution (AoC15 Day 4)
+- Goal: Implement a parallel prefix search using rayon/threads with chunking, early termination, and progress reporting.
+- AoC Mapping: Day 4 (Stocking Stuffer).
+- Deliverables:
+  - Threaded search harness; atomics for stop signals
+  - Benchmarks: single‑thread vs parallel; correctness cross‑checks
