@@ -26,7 +26,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let to = parts[1].to_string();
             
             forward_rules.push((from.clone(), to.clone()));
-            from_elements.entry(from.clone()).or_insert_with(Vec::new).push(to.clone());
+            from_elements.entry(from.clone()).or_default().push(to.clone());
             to_patterns.insert(to, from);
         }
     }
