@@ -373,9 +373,9 @@ cargo doc --open                            # Generate documentation
 - **Week 4**: Complete Mission 8 (BFS/DFS Algorithms) *(Oct 15-21)*
 - **Week 5**: Complete Mission 9 (Dijkstra & A* Pathfinding) *(Oct 22-28)*
 - **Transition Period**: General Review & AoC Problem Solving *(Oct 29-Nov 1)*
-- **Week 6**: Complete Mission 10 (Union-Find Disjoint Sets) *(Nov 2-8, Sunday start)*
-- **Week 7**: Complete Mission 11 (Dynamic Programming & Memoization) *(Nov 9-15)*
-- **Week 8**: Complete Mission 12 (Custom Parsers & Input Processing) *(Nov 16-22)*
+- **Week 6**: Complete Mission 10a (Union-Find Disjoint Sets) *(Nov 2-8, Sunday start)*
+- **Week 7**: Complete Mission 10b (Union-Find Disjoint Sets) *(Nov 9-15)*
+- **Week 8**: Complete Mission 11 (Dynamic Programming & Memoization) *(Nov 16-22)*
 
 ### Daily Study Track Progress
 - **Current**: Week 1, Day 7 → **Target**: Week 8, Day 56
