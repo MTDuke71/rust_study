@@ -597,7 +597,74 @@ This repository includes **advanced automated workflows** for continuous code qu
 
 ## 📆 Planned Future Missions (1‑Week Each)
 
-Integrated into Phase 3–5 above to avoid duplication. See those sections for AoC‑aligned extensions.
+Each week is a focused V‑Cycle deep dive: requirements → design → implementation → tests → docs. These missions are chosen to reinforce AoC 2015 patterns with reusable tooling.
+
+### Week 12 — Byte‑Level Parsing & Escapes (AoC2015 Day 8)
+- Goal: Implement a byte‑oriented parser for string literals with escapes (\", \\, \xHH) and compute code vs memory lengths.
+- AoC Mapping: Day 8 (Strings in Code) — correct byte vs UTF‑8 semantics.
+- Deliverables:
+  - `byte_parser` module with zero‑alloc scanning
+  - Comprehensive unit tests (AoC examples + edge cases)
+  - Benchmarks (byte scanning vs regex)
+
+### Week 13 — DAG Evaluator with Memoization (AoC2015 Day 7)
+- Goal: Parse wire expressions into a DAG and evaluate with memoized recursion and dependency analysis.
+- AoC Mapping: Day 7 (Some Assembly Required).
+- Deliverables:
+  - Parser (regex or hand‑rolled) → DAG IR
+  - Evaluator with memo, cycle detection, dependency ordering tools
+  - Optional: topological visualization for debug
+
+### Week 14 — Combinatorics Toolkit & Pruning (AoC2015 Days 9, 13, 21)
+- Goal: Build combinations/permutations generators with pruning hooks and symmetry reductions.
+- AoC Mapping: Day 9 (TSP), Day 13 (Seating), Day 21 (Equipment).
+- Deliverables:
+  - Heap’s algorithm, next_permutation, exact‑size combinations
+  - Pruning traits (bounds check, partial score), symmetry filters
+  - Example modules showing speedups vs naive
+
+### Week 15 — Backtracking: Subset Sum & K‑Partition (AoC2015 Days 17, 24)
+- Goal: Canonical backtracking templates for subset sum and k‑way equal‑sum partition with correctness guardrails.
+- AoC Mapping: Day 17 (Containers), Day 24 (It Hangs in the Balance).
+- Deliverables:
+  - Index‑based subset generators, remainder construction utilities
+  - Partition validator with base‑case short‑circuiting
+  - Docs on early‑exit by primary objective and tie‑break rules
+
+### Week 16 — Modular Arithmetic & Number Theory (AoC2015 Days 20, 25)
+- Goal: `modmath` toolkit: fast pow mod, safe mod mul, gcd/lcm, sieve, divisor sum via prime factorization.
+- AoC Mapping: Day 20 (Divisors), Day 25 (Let It Snow).
+- Deliverables:
+  - `mod_pow`, `mod_mul_safe`, divisor enumeration, prime sieve
+  - Worked examples from Day 20/25; micro‑benchmarks
+
+### Week 17 — Mini‑VM Interpreter (AoC2015 Day 23)
+- Goal: Tiny register machine: PC, registers, jumps, inc/hlf/tpl ops; instruction set + tracing.
+- AoC Mapping: Day 23 (Opening the Turing Lock).
+- Deliverables:
+  - IR + interpreter; step tracer and state snapshotting
+  - Program loader and test harness with golden traces
+
+### Week 18 — String Rewriting & Search Direction (AoC2015 Day 19)
+- Goal: Rewriting frameworks for forward BFS and reverse greedy; document when greedy is correct.
+- AoC Mapping: Day 19 (Medicine for Rudolph).
+- Deliverables:
+  - Rule application engine (match windows, reconstruction)
+  - Bidirectional search examples; proof‑by‑structure docs for greedy
+
+### Week 19 — Time‑Segmented Simulation & Cycle Math (AoC2015 Day 14)
+- Goal: Simulation framework with both step simulation and closed‑form cycle analysis; dual scoring systems.
+- AoC Mapping: Day 14 (Reindeer Olympics).
+- Deliverables:
+  - Cycle decomposition utilities; state machine harness
+  - Part 1/2 scoring implementations with visual trace
+
+### Week 20 — Parallel Brute‑Force & Work Distribution (AoC2015 Day 4)
+- Goal: Parallel prefix search using rayon/threads with chunking, early termination, and progress reporting.
+- AoC Mapping: Day 4 (Ideal Stocking Stuffer).
+- Deliverables:
+  - Threaded search harness; atomics for stop signals
+  - Benchmarks: single‑thread vs parallel; correctness cross‑checks
 
 ### Mission 12 (Week): Byte‑Level Parsing & Escapes (AoC15 Day 8)
 - Goal: Implement a byte‑oriented parser for string literals with escape sequences (\", \\, \xHH) and compute code vs memory lengths.
