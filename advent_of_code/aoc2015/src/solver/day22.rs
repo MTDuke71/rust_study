@@ -175,7 +175,7 @@ impl GameState {
 }
 
 /// Available spells in the game
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum Spell {
     MagicMissile, // 53 mana, 4 damage
     Drain,        // 73 mana, 2 damage, +2 HP
@@ -362,6 +362,11 @@ impl WizardPathfinder {
 
     /// Find minimum mana path to victory using A* search
     pub fn find_minimum_mana_path(&self, initial_state: &GameState) -> Option<i32> {
+        self.find_minimum_mana_path_with_sequence(initial_state).map(|(mana, _)| mana)
+    }
+
+    /// Find minimum mana path and return the spell sequence
+    pub fn find_minimum_mana_path_with_sequence(&self, initial_state: &GameState) -> Option<(i32, Vec<Spell>)> {
         // State registry to map between states and node IDs
         let mut state_to_id = HashMap::new();
         let mut id_to_state = HashMap::new();
@@ -371,6 +376,7 @@ impl WizardPathfinder {
         let mut open_set = std::collections::BinaryHeap::new();
         let mut g_scores = HashMap::new();
         let mut came_from = HashMap::new();
+        let mut spell_used = HashMap::new(); // Track which spell led to each state
 
         // Initialize with start state
         let start_id = next_id;
@@ -386,7 +392,17 @@ impl WizardPathfinder {
 
             // Check if we've reached victory
             if current_state.is_win() {
-                return Some(g_scores[&current_id]);
+                // Reconstruct the spell sequence
+                let mut sequence = Vec::new();
+                let mut current = current_id;
+                while let Some(&prev_id) = came_from.get(&current) {
+                    if let Some(spell) = spell_used.get(&current) {
+                        sequence.push(*spell);
+                    }
+                    current = prev_id;
+                }
+                sequence.reverse();
+                return Some((g_scores[&current_id], sequence));
             }
 
             // Skip if already lost
@@ -415,6 +431,7 @@ impl WizardPathfinder {
                     // If this path to new_state is better
                     if new_g < *g_scores.get(&new_id).unwrap_or(&i32::MAX) {
                         came_from.insert(new_id, current_id);
+                        spell_used.insert(new_id, spell);
                         g_scores.insert(new_id, new_g);
 
                         let f_score = new_g + new_state.heuristic() as i32;

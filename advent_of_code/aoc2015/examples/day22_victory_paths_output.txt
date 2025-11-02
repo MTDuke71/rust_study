@@ -1,0 +1,104 @@
+🎉 DAY 22: WIZARD SIMULATOR - PART 1 VICTORY PATH (Normal Mode)
+
+============================================================
+Optimal spell sequence found! Total mana: 900
+
+-- Player turn 1 --
+- Player has 50 hit points, 0 armor, 500 mana
+- Boss has 51 hit points
+Player casts Poison.
+
+-- Player turn 2 --
+- Player has 41 hit points, 0 armor, 327 mana
+- Boss has 48 hit points
+Player casts Magic Missile.
+
+-- Player turn 3 --
+- Player has 32 hit points, 0 armor, 274 mana
+- Boss has 38 hit points
+Player casts Recharge.
+
+-- Player turn 4 --
+- Player has 23 hit points, 0 armor, 146 mana
+- Boss has 32 hit points
+Player casts Poison.
+
+-- Player turn 5 --
+- Player has 14 hit points, 0 armor, 175 mana
+- Boss has 26 hit points
+Player casts Magic Missile.
+
+-- Player turn 6 --
+- Player has 5 hit points, 0 armor, 324 mana
+- Boss has 16 hit points
+Player casts Shield.
+
+-- Player turn 7 --
+- Player has 3 hit points, 7 armor, 211 mana
+- Boss has 10 hit points
+Player casts Magic Missile.
+
+-- Player turn 8 --
+- Player has 1 hit points, 7 armor, 158 mana
+- Boss has 3 hit points
+Player casts Magic Missile.
+
+-- Boss turn 8 --
+- Player has 1 hit points, 7 armor, 105 mana
+- Boss has -1 hit points
+Boss attacks but player wins!
+
+VICTORY! Total mana spent: 900
+
+🎯 DAY 22: WIZARD SIMULATOR - PART 2 VICTORY PATH (Hard Mode)
+
+============================================================
+Optimal spell sequence found! Total mana: 1216
+
+-- Player turn 1 --
+- Player has 50 hit points, 0 armor, 500 mana
+- Boss has 51 hit points
+Player casts Poison.
+
+-- Player turn 2 --
+- Player has 40 hit points, 0 armor, 327 mana
+- Boss has 48 hit points
+Player casts Drain.
+
+-- Player turn 3 --
+- Player has 32 hit points, 0 armor, 254 mana
+- Boss has 40 hit points
+Player casts Recharge.
+
+-- Player turn 4 --
+- Player has 22 hit points, 0 armor, 126 mana
+- Boss has 34 hit points
+Player casts Poison.
+
+-- Player turn 5 --
+- Player has 12 hit points, 0 armor, 155 mana
+- Boss has 28 hit points
+Player casts Shield.
+
+-- Player turn 6 --
+- Player has 9 hit points, 7 armor, 244 mana
+- Boss has 22 hit points
+Player casts Recharge.
+
+-- Player turn 7 --
+- Player has 6 hit points, 7 armor, 116 mana
+- Boss has 16 hit points
+Player casts Poison.
+
+-- Player turn 8 --
+- Player has 3 hit points, 7 armor, 145 mana
+- Boss has 10 hit points
+Player casts Magic Missile.
+
+-- Boss turn 8 --
+- Player has 2 hit points, 0 armor, 294 mana
+- Boss has 0 hit points
+Boss attacks but player wins!
+
+VICTORY! Total mana spent: 1216
+
