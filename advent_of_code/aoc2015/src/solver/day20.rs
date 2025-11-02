@@ -72,7 +72,7 @@ fn sum_of_divisors(n: usize) -> usize {
 
     // Only need to check up to √n
     while i * i <= n {
-        if n % i == 0 {
+        if n.is_multiple_of(i) {
             sum += i;
 
             // Add the paired divisor (n/i) if it's different from i
