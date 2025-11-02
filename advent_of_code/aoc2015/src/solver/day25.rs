@@ -26,6 +26,10 @@ pub fn parse_row_col(input: &str) -> Result<(u64, u64)> {
 
 /// Compute the 1-based sequence index for (row, col) in the diagonal order.
 /// Diagonal s = row + col - 1; number of elements before diag s is (s-1)*s/2; position within diag is col.
+/// Example (from the puzzle prompt): row=2981, col=3075
+///   s = 2981 + 3075 - 1 = 6055
+///   before = (6054 * 6055) / 2 = 18,328,485
+///   index n = before + col = 18,328,485 + 3,075 = 18,331,560
 fn index_for(row: u64, col: u64) -> u64 {
     let s = row + col - 1;
     let before = (s - 1) * s / 2;
@@ -91,4 +95,3 @@ mod tests {
         assert_eq!(code_at(1, 5), 10071777);
     }
 }
-
