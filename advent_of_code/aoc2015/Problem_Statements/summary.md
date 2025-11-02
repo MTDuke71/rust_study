@@ -22,6 +22,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **Cellular Automaton**: Conway's Game of Life, state evolution, neighbor counting, grid simulation
 - **Greedy Algorithms**: Optimal greedy strategies, reverse optimization, exploiting problem structure
 - **Number Theory**: Divisor sums, highly composite numbers, sieve algorithms, multiplicative functions
+- **Search**: Informed search algorithms, A* search, heuristics, state space exploration
 
 ---
 
@@ -1114,6 +1115,58 @@ Total: 3 steps
 **Part 2 Description**: Find maximum cost equipment combination that loses to the boss (guaranteeing defeat)
 **Key Concepts**: Equipment combination generation, turn-based combat simulation, cost optimization, brute force equipment search, constraint-based filtering (must buy exactly 1 weapon, optional armor, 0-2 rings), different optimization goals (min cost win vs max cost loss)
 
+---
+
+### [[day22.md|Day 22: Wizard Simulator 20XX]]
+**Title**: Wizard Simulator 20XX
+**Part 1 Type**: Search + Optimization + Simulation + Graph Algorithms
+**Part 1 Description**: Find minimum mana cost spell sequence to defeat boss using A* search through game state space (player: 50 HP, 500 mana; boss stats from input)
+**Part 2 Type**: Search + Optimization + Simulation + Graph Algorithms
+**Part 2 Description**: Same optimization but with hard mode: lose 1 HP at start of each player turn before effects
+**Key Concepts**: A* search algorithm, game state graph modeling, spell effect timers, turn-based combat with effects (Shield/Poison/Recharge), admissible heuristics (boss HP remaining), Mission9 pathfinding integration, state space explosion prevention, effect timer management, mana cost minimization vs equipment cost minimization (Day 21), different search goals (optimal path vs optimal selection)
+
+**The Wizard Combat Problem**:
+- Player casts spells instead of attacking: Magic Missile (4 damage, 53 mana), Drain (2 damage +2 heal, 73 mana), Shield (7 armor for 6 turns, 113 mana), Poison (3 damage/turn for 6 turns, 173 mana), Recharge (101 mana/turn for 5 turns, 229 mana)
+- Effects apply at start of each turn (both player and boss), then timer decreases
+- Cannot cast spell if effect already active, but effects can start on turn they end
+- Part 1: Find minimum mana spent sequence to win vs boss
+- Part 2: Same but lose 1 HP at start of each player turn
+
+**Algorithm Implementation - A* Search**:
+- **Game State Modeling**: `GameState` tracks player HP/mana/effects, boss HP, total mana spent, turn number
+- **Weighted Graph**: Each state has neighbors via valid spell casts, edge weight = spell mana cost
+- **Admissible Heuristic**: Boss HP remaining (underestimates actual cost to win)
+- **Mission9 Integration**: Uses `AstarPathfinder` and `BinaryHeapQueue` for efficient search
+- **Effect Timer Management**: `EffectTimers` struct tracks Shield/Poison/Recharge timers
+- **State Space**: Millions of potential states from effect combinations and HP values
+
+**Key Differences from Day 21**:
+- **Equipment Optimization (Day 21)**: Static combination generation (~8,000 sets), brute force enumeration, cost optimization
+- **Spell Sequence Optimization (Day 22)**: Dynamic state evolution through turn-based simulation, A* search through state graph, mana spent minimization
+- **Data Structures**: Equipment vectors (Day 21) vs game state graphs with effect timers (Day 22)
+- **Algorithmic Challenge**: Combinatorial optimization (Day 21) vs graph search with state explosion (Day 22)
+- **Solution Approach**: Brute force enumeration (Day 21) vs informed search with heuristics (Day 22)
+
+**Performance Characteristics**:
+- **State Space**: Millions of states vs thousands of equipment combinations
+- **Search Algorithm**: A* with O(b^d) worst case vs brute force O(n) enumeration
+- **Mission9 Benefits**: Efficient priority queue, reusable pathfinding infrastructure
+- **Actual Runtime**: ~1-2 seconds for both parts vs <1ms for Day 21
+
+**Educational Value**:
+- **A* Algorithm**: Admissible heuristics, graph search, state space modeling
+- **Game State Design**: Complex state representation with timers and effects
+- **Problem Transformation**: RPG equipment optimization vs spell sequence optimization
+- **Search vs Enumeration**: When to use informed search vs brute force
+- **Mission9 Integration**: Leveraging specialized pathfinding libraries
+- **Effect Systems**: Timer-based buffs/debuffs in turn-based games
+
+**Results**:
+- Part 1: 900 mana (minimum cost winning sequence)
+- Part 2: 1216 mana (hard mode with HP loss each turn)
+
+---
+
 **The Delivery Problem**:
 - Elf N delivers to houses: N, 2N, 3N, 4N, ... (all multiples of N)
 - Each elf delivers presents equal to their number times multiplier (10 for Part 1, 11 for Part 2)
@@ -1244,7 +1297,7 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 |----------|--------------|--------------|
 | String Processing | 8 | 7 |
 | Mathematical | 6 | 6 |
-| Simulation | 10 | 10 |
+| Simulation | 11 | 11 |
 | Search/Traversal | 1 | 2 |
 | Optimization | 6 | 6 |
 | Data Structures | 8 | 7 |
@@ -1252,7 +1305,7 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 | Cryptographic | 1 | 1 |
 | Pattern Matching | 4 | 3 |
 | Advanced Pattern Matching | 0 | 1 |
-| Graph Algorithms | 3 | 5 |
+| Graph Algorithms | 4 | 6 |
 | Parsing | 2 | 1 |
 | Encoding | 0 | 1 |
 | Real-time Analysis | 0 | 1 |
@@ -1261,6 +1314,7 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 | Cellular Automaton | 1 | 1 |
 | Number Theory | 1 | 1 |
 | Greedy Algorithms | 0 | 1 |
+| Search | 1 | 1 |
 
 ## Implementation Notes
 
@@ -1293,6 +1347,7 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 - Day 19: **Molecular replacement system**, string replacement patterns, HashSet for uniqueness tracking, `match_indices()` for pattern finding, reverse greedy algorithm, bidirectional search optimization (working backwards from target), understanding when greedy is optimal, string slicing and reconstruction, recognizing exploitable problem structure (unambiguous grammar), performance analysis (greedy O(n) vs BFS O(b^d)), pattern matching in replacement rules, context-free grammar concepts
 - Day 20: **Number theory and divisor sums**, sieve-like simulation (marking multiples), cache-friendly algorithms (sequential memory access), upper bound estimation heuristics (target/multiplier), early termination optimization, vector pre-allocation for performance, stepped iteration (`house += elf`), visit limiting with counters, understanding algorithm perspective (divisors vs multiples viewpoint), harmonic series complexity O(n log n), highly composite numbers, educational dead code annotation (`#[allow(dead_code)]`), doc test ignore patterns
 - Day 21: **Equipment optimization and turn-based combat simulation**, equipment combination generation with constraints (exactly 1 weapon, optional armor, 0-2 rings with no duplicates), cost calculation and comparison, brute force search through all valid combinations (~8,000 equipment sets), different optimization goals (min cost win vs max cost loss), reusable fight simulation logic, struct-based data modeling for items and characters, damage calculation with armor reduction (max(1, damage - armor)), turn-based combat loop with early termination, Pattern matching for equipment cost and stats calculation
+- Day 22: **A* search algorithm implementation**, game state representation with effect timers, weighted graph modeling for spell casting decisions, admissible heuristic design (boss HP remaining), Mission9 pathfinding library integration, state space explosion management, effect timer state transitions, turn-based combat simulation with spell effects (Shield/Poison/Recharge), mana cost minimization through optimal path finding, graph traversal with priority queue optimization, complex state modeling for AI planning problems
 
 ---
 
@@ -1320,7 +1375,7 @@ To add a new day to this summary:
 ---
 
 *Last Updated: November 2, 2025*
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22*
 
 ---
 
