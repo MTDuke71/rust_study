@@ -39,6 +39,19 @@ cargo doc -p mission5 --open                       # Generate and view docs
 - **Performance Baselines**: Compare implementations against std library (`Vec`, `VecDeque`, `HashMap`) in demos
 - **AoC Patterns**: Real-world validation uses Advent of Code problems (`tests/data/*.txt` + `*.expected.csv`)
 
+### AoC-Specific Workflows
+```bash
+# Run AoC 2015 solutions
+cd advent_of_code/aoc2015
+cargo run -- 10  # Run specific day solution
+cargo test day06_examples  # Test Day 6 implementations
+
+# Pattern recognition training
+cd advent_of_code/aoc_pattern_recognition
+cargo run --example pattern_trainer_demo
+cargo run --example grid_patterns_demo
+```
+
 ### Quality Gates (Must Pass)
 ```bash
 cargo clippy -- -D warnings        # Zero warnings required
@@ -122,6 +135,13 @@ Before marking work complete or creating a pull request, verify:
 - [ ] Imports cleaned up (remove unused imports caught by clippy)
 - [ ] Variables are `mut` only if actually modified
 - [ ] AoC test data files paired with `.expected.csv` results
+
+### AoC-Specific Gotchas
+- [ ] AoC treats strings as byte arrays (C-style), not UTF-8 (Rust strings) - use byte operations for character counting
+- [ ] AoC problems often require multiple algorithmic approaches (compare iterative vs memoization performance)
+- [ ] AoC input parsing is frequently more complex than the algorithm itself
+- [ ] AoC Part 2 often invalidates Part 1 assumptions (different constraints/requirements)
+- [ ] AoC timing is critical - target <15 minutes per problem for competitive success
 
 ---
 
@@ -234,6 +254,12 @@ Context:
 Testing: All tutorial examples compile cleanly with zero warnings
 ```
 
+### **Advent of Code Integration Examples:**
+- **Day 6 (Light Grid)**: HashMap vs Grid array performance analysis, Mission6 integration
+- **Day 10 (Look-and-Say)**: Memoization effectiveness study (15.7% slower due to 0% cache hits)
+- **Day 18 (Game of Life)**: Double buffering patterns, cellular automaton implementation
+- **Day 20 (Elf Delivery)**: Sieve algorithms, O(n log n) vs O(sqrt(n)) trade-offs
+
 ---
 
 ## 💾 Session Handoff Template
@@ -345,14 +371,14 @@ This codebase integrates three parallel learning tracks for comprehensive Rust m
 - Create **testable architectures** with clear component boundaries
 - Prioritize **modifiability** through trait-based design and separation of concerns
 
-This codebase integrates three parallel learning tracks for comprehensive Rust mastery:
+This codebase integrates **four** parallel learning tracks for comprehensive Rust mastery:
 
 ### **Track 1: V-Cycle Missions** (Engineering Discipline)
 Requirements-driven development with complete traceability:
 ```
 Requirements (REQ-1, REQ-2, etc.)
     ↓
-Design Specification  
+Design Specification
     ↓
 Implementation
     ↓
@@ -362,6 +388,18 @@ Validation (Integration Tests)
     ↓
 Traceability Matrix
 ```
+
+### **Track 4: Advent of Code** (Competitive Programming Mastery)
+Real-world problem solving with pattern recognition and performance optimization:
+```
+Pattern Recognition → Problem Classification → Template Application → Optimization
+```
+- **aoc2015/**: Complete 2015 solutions (20 days, 7 fully implemented) with V-Cycle methodology
+- **aoc_pattern_recognition/**: Algorithm pattern trainer for rapid problem classification
+- **Performance benchmarks**: Criterion-based optimization studies
+- **Multiple approaches**: Algorithm comparison and trade-off analysis
+- **Mission integration**: Direct connection to data structure implementations
+- **AoC 2025 preparation**: Systematic training for competitive programming success
 
 ### **Track 2: Daily Study** (Systematic Learning)
 Structured daily practice covering core concepts:
@@ -376,7 +414,7 @@ Progressive chapter-by-chapter study:
 - Integrated with practical mission work
 - Hands-on exercises and examples
 
-**Key Pattern**: All three tracks reinforce each other - missions provide depth, daily study provides breadth, and the Rust book provides foundational understanding.
+**Key Pattern**: All four tracks reinforce each other - missions provide depth, daily study provides breadth, Rust book provides foundations, and AoC provides competitive programming mastery.
 
 ## 📂 Workspace Architecture
 
@@ -507,10 +545,11 @@ cargo run --example demo     # Mission demos
 .\scripts\run_md.bat DayXX.md        # Run complete runnable examples from markdown
 ```
 
-### 3-Track Daily Workflow (30-45 minutes)
+### 4-Track Daily Workflow (45-60 minutes)
 1. **Mission Work** (15 min): Focus on current V-Cycle mission requirements
 2. **Daily Study** (15 min): Complete the day's concept with runnable example
 3. **Rust Book** (15 min): Read assigned chapter with hands-on practice
+4. **AoC Practice** (15 min): Apply patterns to competitive programming problems
 
 ### Complete Runnable Example Workflow
 When creating/updating daily study files:
@@ -648,11 +687,13 @@ Day 5: Documentation → step5_final_project.rs (complete mission review)
 
 ## 💡 When Working on This Codebase
 
-### 3-Track Integration Principles
+### 4-Track Integration Principles
 - **Cross-track reinforcement**: Connect mission concepts to daily study topics
 - **Progressive complexity**: Daily study feeds into mission requirements
 - **Practical application**: Rust book concepts appear in AoC-style problems
 - **Complete examples**: Every learning concept has runnable demonstration
+- **Competitive programming**: AoC solutions validate mission implementations in real-world scenarios
+- **Pattern recognition**: Transfer skills between tracks (BFS in Mission7 → grid traversal in AoC)
 
 ### V-Cycle Mission Requirements
 - **Always trace features back to requirements** - if there's no REQ-X, create one
