@@ -303,19 +303,26 @@ Traceability Matrix
 *AoC puzzles are 70% parsing input quickly*
 
 - 🔄 **Mission 12: Custom Parsers** - &str vs String, splitting, iterators
+  - Byte-level escapes and length accounting (AoC2015 Day 8)
 - 🔄 **Mission 13: Regex & Nom** - When to use regex vs parser combinators
+  - DAG evaluator with memoization (AoC2015 Day 7)
 - 🔄 **Mission 14: Iterator Chains** - map/filter/fold for AoC one-liners
+  - String rewriting and search direction (AoC2015 Day 19)
 
 #### **Phase 4: Performance & Unsafe** *(optional)*
 *Some AoC puzzles need speed for large inputs*
 
 - 🔄 **Mission 15: Profiling & Optimization** - cargo criterion, flamegraph
+  - Modular arithmetic toolkit (mod_pow, sieve, divisor sums) — AoC2015 Days 20, 25
+  - Parallel brute-force harness with work distribution — AoC2015 Day 4
 - 🔄 **Mission 16: Arena Allocation** - Efficient node storage
 - 🔄 **Mission 17: Bit Manipulation** - Bitmasks for set problems (AoC Day 14, 2020)
 
 #### **Phase 5: Rust Design Patterns**
 - 🔄 **Mission 18: Builder Pattern** - Fluent APIs and configuration objects
 - 🔄 **Mission 19: State Machine** - Finite state machines with type safety
+  - Mini‑VM interpreter (register machine with jumps) — AoC2015 Day 23
+  - Time‑segmented simulation & cycle math — AoC2015 Day 14
 - 🔄 **Mission 20: Command Pattern** - Encapsulating operations for undo/redo
 - 🔄 **Mission 21: Observer Pattern** - Event handling with channels and callbacks  
 - 🔄 **Mission 22: Strategy Pattern** - Runtime algorithm selection with trait objects
@@ -590,7 +597,7 @@ This repository includes **advanced automated workflows** for continuous code qu
 
 ## 📆 Planned Future Missions (1‑Week Each)
 
-Each mission is scoped for a focused, end‑to‑end V‑Cycle week: requirements → design → implementation → tests → docs, with explicit AoC mappings and reusable utilities.
+Integrated into Phase 3–5 above to avoid duplication. See those sections for AoC‑aligned extensions.
 
 ### Mission 12 (Week): Byte‑Level Parsing & Escapes (AoC15 Day 8)
 - Goal: Implement a byte‑oriented parser for string literals with escape sequences (\", \\, \xHH) and compute code vs memory lengths.
