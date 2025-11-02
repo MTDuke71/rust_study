@@ -45,9 +45,17 @@ In this scenario, the player wins! (Barely.)
 
 You have 100 hit points. The boss's actual stats are in your puzzle input. What is the least amount of gold you can spend and still win the fight?
 
-To begin, get your puzzle input.
+Your puzzle answer was 111.
 
-Answer: 
- 
+--- Part Two ---
+Turns out the shopkeeper is working with the boss, and can persuade you to buy whatever items he wants. The other rules still apply, and he still only has one of each item.
 
-You can also [Share] this puzzle.
+What is the most amount of gold you can spend and still lose the fight?
+
+Your puzzle answer was 188.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
+
+At this point, you should return to your Advent calendar and try another puzzle.
+
+If you still want to see it, you can get your puzzle input.
