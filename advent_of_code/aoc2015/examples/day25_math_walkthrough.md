@@ -103,3 +103,14 @@ These match the problem’s examples and the unit tests in the solver.
 - Modular exponentiation: `mod_pow(base, exp, m)` in `day25.rs`
 - Final composition: `code_at(row, col)` in `day25.rs`
 
+---
+
+## Related Resources
+
+- [[../Problem_Statements/day25]] - Original problem statement
+- [[../Problem_Statements/HIGHLIGHTS_SUMMARY]] - AoC 2015 algorithmic patterns (modular arithmetic)
+- [[../../zettelkasten/Missions Overview]] - Mathematical algorithms
+
+*Tags: #aoc #aoc2015 #day25 #modular-exponentiation #triangular-numbers #closed-form #number-theory*
+
+

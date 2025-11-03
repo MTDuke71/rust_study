@@ -35,3 +35,13 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## Related Resources
+
+- [[../examples/day23_collatz_analysis]] - Collatz sequence mathematical analysis
+- [[HIGHLIGHTS_SUMMARY]] - AoC 2015 algorithmic patterns
+- [[../../zettelkasten/Missions Overview]] - Data structures and algorithms
+
+*Tags: #aoc #aoc2015 #day23 #virtual-machine #assembly-simulation #collatz-sequence*

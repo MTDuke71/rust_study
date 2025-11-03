@@ -80,3 +80,14 @@ You can also [Share] this puzzle.
 - Unit tests (Day 24 only): `cargo test -p aoc2015 day24 -- --nocapture`
 - Example trace: `cargo run -p aoc2015 --example day24_execution_trace`
 - Walkthrough (prints candidates and QE): `cargo run -p aoc2015 --example day24_code_walkthrough`
+
+---
+
+## Related Resources
+
+- [[../examples/day24_detailed_walkthrough]] - Complete implementation walkthrough
+- [[HIGHLIGHTS_SUMMARY]] - AoC 2015 algorithmic patterns (subset sum, k-partition)
+- [[../../zettelkasten/Missions Overview]] - Data structures and algorithms
+
+*Tags: #aoc #aoc2015 #day24 #subset-sum #combinatorial-optimization #quantum-entanglement*
+

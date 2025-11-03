@@ -106,3 +106,13 @@ The problem title "Opening the Turing Lock" references Alan Turing and his theor
 ---
 
 *Analysis based on execution trace containing 1,345 steps across both Part 1 and Part 2 executions.*
+
+---
+
+## Related Resources
+
+- [[../Problem_Statements/day23]] - Original problem statement
+- [[../Problem_Statements/HIGHLIGHTS_SUMMARY]] - AoC 2015 algorithmic patterns
+- [[../../zettelkasten/Missions Overview]] - Data structures and algorithms
+
+*Tags: #aoc #aoc2015 #day23 #collatz-conjecture #number-theory #assembly-simulation #mathematical-analysis*

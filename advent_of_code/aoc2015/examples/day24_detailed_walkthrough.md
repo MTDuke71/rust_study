@@ -108,3 +108,14 @@ Suggested sequence:
 1. Run the walkthrough to see candidate enumeration and pruning in action.
 2. Run the execution trace to confirm final answers on the full input.
 
+---
+
+## Related Resources
+
+- [[../Problem_Statements/day24]] - Original problem statement
+- [[../Problem_Statements/HIGHLIGHTS_SUMMARY]] - AoC 2015 algorithmic patterns (subset sum, pruning)
+- [[../../zettelkasten/Missions Overview]] - Data structures and algorithms
+
+*Tags: #aoc #aoc2015 #day24 #subset-sum #k-partition #quantum-entanglement #combinatorial-optimization*
+
+

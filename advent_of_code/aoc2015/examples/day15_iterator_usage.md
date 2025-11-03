@@ -366,3 +366,15 @@ Day 15 demonstrates three core iterator patterns:
 3. **Functional transformations** - `.iter().enumerate().map().sum()` for calculations
 
 Mastering these patterns makes Rust code more concise, safer, and often easier to reason about than equivalent imperative loops.
+
+---
+
+## Related Resources
+
+- [[../Problem_Statements/HIGHLIGHTS_SUMMARY]] - AoC 2015 patterns overview
+- [[../../daily_study/rust_learning_week2_notes/Day13]] - Advanced Iterators (daily study)
+- [[../../rust_book/Ch13/examples/ch13_2_iterators]] - Iterator patterns deep dive
+- [[../../zettelkasten/Missions Overview]] - Collection patterns
+
+*Tags: #aoc #aoc2015 #day15 #iterators #functional-programming #rust-patterns*
+

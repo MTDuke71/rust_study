@@ -111,3 +111,14 @@ The implementation provides detailed error context for common issues:
 4. **Termination**: Built-in safeguards prevent infinite loops (max 1000 steps)
 
 This implementation successfully handles the AoC 2015 Day 19 problem with robust error handling, comprehensive testing, and clear documentation of the algorithmic approach.
+
+---
+
+## Related Resources
+
+- [[../Problem_Statements/day19]] - Original problem statement
+- [[DAY19_IMPLEMENTATION_SUMMARY]] - Technical implementation summary
+- [[../Problem_Statements/HIGHLIGHTS_SUMMARY]] - AoC 2015 patterns (greedy algorithms)
+- [[../../zettelkasten/Missions Overview]] - Data structures used (HashSet)
+
+*Tags: #aoc #aoc2015 #day19 #greedy-algorithm #molecule-replacement #graph-search #string-manipulation*

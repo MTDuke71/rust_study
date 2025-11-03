@@ -71,3 +71,13 @@ If you'd like to see more things like this in the future, please consider suppor
 I've highlighted the easter eggs in each puzzle, just in case you missed any. Hover your mouse over them, and the easter egg will appear.
 
 You can [Share] this moment with your friends or [Go Check on Your Calendar].
+
+---
+
+## Related Resources
+
+- [[../examples/day25_math_walkthrough]] - Mathematical analysis (diagonal indexing, modular exponentiation)
+- [[HIGHLIGHTS_SUMMARY]] - AoC 2015 algorithmic patterns
+- [[../../zettelkasten/Missions Overview]] - Data structures and algorithms
+
+*Tags: #aoc #aoc2015 #day25 #modular-arithmetic #number-theory #triangular-numbers #closed-form*
