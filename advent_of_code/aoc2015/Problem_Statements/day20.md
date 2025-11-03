@@ -25,7 +25,17 @@ What is the lowest house number of the house to get at least as many presents as
 
 Your puzzle input is 33100000.
 
-Answer: 
- 
+Answer:
+
 
 You can also [Share] this puzzle.
+
+---
+
+## Related Resources
+
+- [[HIGHLIGHTS_SUMMARY]] - AoC 2015 patterns and algorithmic takeaways
+- [[../../zettelkasten/Missions Overview]] - Data structures and algorithms
+- [[../../zettelkasten/AoC Patterns MOC]] - Problem-solving patterns
+
+*Tags: #aoc #aoc2015 #day20 #number-theory #divisor-sums #optimization*

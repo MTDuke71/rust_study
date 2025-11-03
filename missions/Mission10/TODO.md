@@ -631,3 +631,16 @@ Mission 10 is complete when:
 
 **Original Target**: November 8, 2024 (7-day development cycle)
 **Extended Target with API**: November 15, 2024 (14-day development cycle - 2 weeks)
+
+---
+
+## Related Resources
+
+- [[README]] - Mission 10 V-Cycle documentation and requirements
+- [[../../tutorials/Mission10_tut/TODO]] - Tutorial development roadmap
+- [[../../zettelkasten/Missions Overview]] - All missions overview and progress tracking
+- [[../../zettelkasten/Daily Notes/2025-11-03]] - November 3 learning plan (Mission 10 focus)
+- [[../../MONTHLY_CALENDAR]] - Week 6 schedule (November 2-8, 2025)
+- [[../../daily_study/rust_learning_week6_notes/Day37]] - Crate organization (applies to Mission 10 structure)
+
+*Tags: #mission10 #union-find #disjoint-sets #v-cycle #todo #development-roadmap #rest-api #openapi*

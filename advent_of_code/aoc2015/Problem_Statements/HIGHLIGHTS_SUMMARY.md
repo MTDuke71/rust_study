@@ -112,3 +112,14 @@ A distilled overview of the main patterns, algorithms, and Rust takeaways that r
 
 AoC 2015 rewards recognizing structure early, pairing a correct baseline with targeted pruning, and applying the right math (triangular numbers, modular arithmetic) where possible. In Rust, lean on strong types, small helpers, and example-driven exploration to iterate confidently and efficiently.
 
+---
+
+## Related Resources
+
+- [[../../zettelkasten/AoC Patterns MOC]] - Problem-solving patterns catalog
+- [[../examples/day22_implementation_walkthrough]] - A* search deep dive
+- [[../examples/day19_README]] - Greedy algorithm analysis
+- [[../../zettelkasten/Missions Overview]] - Data structure implementations (Stack, Queue, HashMap, Graph)
+- [[../../daily_study/README]] - Daily learning materials aligned with AoC concepts
+
+*Tags: #aoc #aoc2015 #algorithms #optimization #problem-solving #rust #patterns*

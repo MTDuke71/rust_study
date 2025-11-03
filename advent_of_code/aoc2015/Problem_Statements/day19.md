@@ -178,3 +178,14 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## Related Resources
+
+- [[../examples/day19_README]] - Implementation details and approach
+- [[../examples/DAY19_IMPLEMENTATION_SUMMARY]] - Technical summary
+- [[HIGHLIGHTS_SUMMARY]] - AoC 2015 patterns and takeaways
+- [[../../zettelkasten/Missions Overview]] - Data structures used in solutions
+
+*Tags: #aoc #aoc2015 #day19 #molecule-replacement #greedy-algorithm #graph-search*

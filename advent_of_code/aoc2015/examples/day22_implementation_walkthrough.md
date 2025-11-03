@@ -217,3 +217,15 @@ use mission9::{NodeId, Weight};
 ## Conclusion
 
 Day 22 demonstrates the power of informed search algorithms when brute force becomes impractical. The A* implementation elegantly solves a complex optimization problem by modeling game combat as a graph search, finding optimal spell sequences through the vast state space of possible wizard battles.
+
+---
+
+## Related Resources
+
+- [[../../zettelkasten/A-Star-Algorithm-Deep-Dive]] - A* algorithm theory and implementation
+- [[../../missions/Mission9/README]] - Advanced pathfinding algorithms (Dijkstra, A*)
+- [[../Problem_Statements/day22]] - Original problem statement
+- [[../Problem_Statements/HIGHLIGHTS_SUMMARY]] - AoC 2015 patterns overview
+- [[../../zettelkasten/Missions Overview]] - Data structure implementations used in solutions
+
+*Tags: #aoc #aoc2015 #day22 #astar #informed-search #state-space-search #game-ai #optimization*
