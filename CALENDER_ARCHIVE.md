@@ -3,6 +3,18 @@
 ---
 # 🗓️ Monthly Learning Calendar Archive
 
+---
+
+## Related Resources
+- [[Complete Runnable Examples]] - Documentation standard for all code examples
+- [[AoC Integration]] - Advent of Code integration methodology
+- [[Zettelkasten System]] - Knowledge management system underlying calendar coordination
+- [[Daily Study MOC]] - Daily study track overview
+- [[Missions Overview]] - Mission track progress
+- [[Rust Book Integration]] - Rust Book chapter coordination
+
+---
+
 
 ## 📈 Daily Learning Routine (45-75 minutes)
 
