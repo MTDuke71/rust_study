@@ -40,7 +40,7 @@ fn demonstrate_victory_path(boss_hp: i32, boss_damage: i32, hard_mode: bool, tit
             let mut current_state = initial_state.clone();
             let mut turn_number = 1;
 
-            for (_i, spell) in spell_sequence.iter().enumerate() {
+            for spell in spell_sequence.iter() {
                 // Player turn
                 display_state(&current_state, turn_number, true);
                 println!("Player casts {}.", format_spell(spell));

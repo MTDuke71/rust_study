@@ -172,7 +172,7 @@ fn solve_balanced_partition(input: &str, num_groups: u64) -> Result<String> {
     let weights = parse_weights(input)?;
     let total: u64 = weights.iter().sum();
 
-    if total % num_groups != 0 {
+    if !total.is_multiple_of(num_groups) {
         return Err(anyhow::anyhow!("Total weight {} not divisible by {}", total, num_groups));
     }
 
