@@ -284,21 +284,36 @@ Deep language understanding
 - [[daily-study/Day35|Day 35]] - Building fault-tolerant parsers with error recovery
 - **Advanced Examples**: [[../daily_study/rust_learning_week5_notes/examples/web_api_errors|Web API Error Handling]] | [[../daily_study/rust_learning_week5_notes/examples/file_processor|File Processing Pipeline]]
 
-### **Week 6: Advanced Algorithms** (Planned)
-- Graph representations
-- A* pathfinding with heuristics
-- Topological sorting
-- Minimum spanning trees
+### **Week 6: Module System & Project Organization** (Days 36-42) 🚧 **IN PROGRESS**
+**Focus**: Crate Organization, Module Trees, Publishing
 
-### **Week 7: Performance & Optimization** (Planned)
-- Benchmarking techniques
-- Memory optimization
-- Cache-friendly data structures
-- Parallel processing basics
+| Day | Topic | Key Concepts | Links |
+|-----|-------|--------------|-------|
+| [[daily-study/Day36\|Day 36]] | Module Basics | `mod`, `pub`, visibility rules | [[../rust_book/Ch13\|Ch13.1]] |
+| [[daily-study/Day37\|Day 37]] | Crate Organization | lib vs bin, module trees, API design | [[../missions/Mission10/README\|Mission10]], [[zettelkasten/Daily Notes/2025-11-03\|Nov 3 Plan]] |
+| [[daily-study/Day38\|Day 38]] | Cargo Features | Conditional compilation, feature flags | [[../rust_book/Ch13\|Ch13.3]] |
+| [[daily-study/Day39\|Day 39]] | Workspace Management | Multi-crate projects | [[Collections MOC]] |
+| [[daily-study/Day40\|Day 40]] | Publishing Crates | `Cargo.toml`, documentation, versioning | [[../rust_book/Ch14\|Ch14.1]] |
+| [[daily-study/Day41\|Day 41]] | Week 6 Review | Integration & practice | [[Week 6 Overview]] |
+| [[daily-study/Day42\|Day 42]] | Mini-Project | Complete crate with documentation | [[Mission10 Overview]] |
+
+**Mission Integration**: 
+- Module organization concepts → Mission 10 (Union-Find library structure)
+- Professional crate design patterns applied to all missions
+- Documentation and publishing standards for real-world Rust projects
+
+**Real-World Applications**:
+- Library crate design for reusable components
+- Binary crate organization for applications
+- Multi-crate workspace for large projects
 
 ---
 
-## 📅 **Daily Notes Integration**
+## � **How to Use This MOC**
+
+### **November 2025 Daily Notes**
+- [[zettelkasten/Daily Notes/2025-11-02]] - Mission 10 Setup & Week 6 Day 36 (Module System Basics)
+- [[zettelkasten/Daily Notes/2025-11-03]] - Mission 10 Requirements & Week 6 Day 37 (Crate Organization)
 
 ### **October 2025 Daily Notes**
 - [[zettelkasten/Daily Notes/2025-10-15]] - Mission 8 Setup (BFS/DFS Algorithms)
