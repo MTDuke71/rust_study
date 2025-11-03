@@ -170,3 +170,13 @@ start,goal
 2. **Permission errors**: Run PowerShell as administrator if needed
 3. **File not found**: Check that you're in the Mission9 directory
 4. **Build errors**: Run `cargo build` first to compile
+
+---
+## Related Resources
+- [[missions/Mission9/README|Mission 9 Overview]] - Full pathfinding implementation guide
+- [[missions/Mission9/LAUNCHER_TEST_SUMMARY|Launcher Test Summary]] - CLI interface and batch scripts
+- [[missions/Mission9/day7_completion_summary|Day 7 Summary]] - Final completion and integration
+- [[zettelkasten/Missions Overview|Missions Overview]] - Full mission series navigation
+- [[zettelkasten/mission-9|Mission 9 Zettel]] - Pathfinding algorithms deep dive
+
+*Tags: #mission9 #benchmarking #performance #cli-tools #testing #runner-scripts*
