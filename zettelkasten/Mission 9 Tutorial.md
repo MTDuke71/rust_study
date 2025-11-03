@@ -280,4 +280,17 @@ pub struct CustomHeuristic<F: Fn(T, T) -> f64> {
 
 ---
 
+## Related Resources
+- [[Priority Queue Patterns]] - Essential data structure for all pathfinding algorithms
+- [[missions/mission-9]] - Mission 9 pathfinding implementations
+- [[Dijkstra Algorithm]] - Shortest path algorithm details
+- [[Graph Algorithms]] - Complete graph algorithms reference
+- [[Binary Heap Data Structure]] - Underlying heap implementation
+- [[Tutorials MOC]] - Tutorial system overview
+- [[Missions Overview]] - Mission series navigation
+
+*Tags: #mission9 #tutorial #pathfinding #dijkstra #astar #priority-queue #progressive-learning #hands-on*
+
+---
+
 *Comprehensive tutorial system enabling systematic mastery of pathfinding algorithms through hands-on implementation and progressive skill development.*

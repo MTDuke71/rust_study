@@ -151,5 +151,14 @@ All collection implementations follow comprehensive documentation standards:
 
 ---
 
+## Related Resources
+- [[Priority Queue Patterns]] - BinaryHeap usage patterns and priority-based algorithms
+- [[Binary Heap Data Structure]] - Heap implementation details
+- [[AoC Collection Problems]] - Collection problem patterns from Advent of Code
+- [[Performance Optimization Guide]] - Collection performance tuning
+- [[Iterator Patterns MOC]] - Iterator patterns and usage
+- [[../Mission5/README]] - HashMap custom implementation
+- [[../daily_study/rust_learning_week2_notes/Day10]] - Collection fundamentals
+
 *Tags: #collections #overview #navigation #moc #rust-fundamentals #data-structures #algorithms #performance*
 *Links: [[AoC Collection Problems]] | [[Performance Optimization Guide]] | [[Iterator Patterns MOC]] | [[../Mission5/README]] | [[../daily_study/rust_learning_week2_notes/Day10]]*

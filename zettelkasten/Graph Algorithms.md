@@ -256,4 +256,5 @@ pub trait WeightedGraph {
 
 *Tags: #graph-algorithms #data-structures #pathfinding #network-analysis #algorithm-design #performance-optimization #graph-theory*
 
-*Links: [[Mission7 Overview]] | [[mission-9]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] | [[Dijkstra Algorithm]] | [[Bellman-Ford Algorithm]] | [[A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*
+*Links: [[Mission7 Overview]] | [[mission-9]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] | 
+[[Dijkstra Algorithm]] | [[Bellman-Ford Algorithm]] | [[A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[Priority Queue Patterns]] | [[Binary Heap Data Structure]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*

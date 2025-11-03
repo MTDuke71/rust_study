@@ -235,4 +235,14 @@ See practical implementations in:
 
 ---
 
+## Related Resources
+- [[Priority Queue Patterns]] - Comprehensive guide to priority queue usage and patterns
+- [[Mission 9 Tutorial]] - Pathfinding algorithms using heaps
+- [[Collections MOC]] - Overview of Rust collection types
+- [[BFS Patterns]] - Graph traversal patterns
+
+*Tags: #data-structures #heap #priority-queue #algorithms #binary-tree #rust #performance*
+
+---
+
 *This Zettel is part of my algorithmic knowledge system. It connects heap theory with practical Rust implementations used in pathfinding tutorials.*
