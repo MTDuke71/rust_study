@@ -12,7 +12,11 @@ edition = "2021"
 name = "day36_standalone"
 path = "Day36.rs"
 
+[[bin]]
+name = "Day37"
+path = "Day37.rs"
+
 # Note: As more days are added, we'll include them as examples:
 # [[example]]
-# name = "day37_crate_structure"
-# path = "examples/day37_crate_structure.rs"
+# name = "day38_cargo_features"
+# path = "examples/day38_cargo_features.rs"
