@@ -472,8 +472,8 @@ fn actual_problem_analysis() {
     // Data rows for points
     for (idx, r) in reindeer.iter().enumerate() {
         print!("{:<12}", r.name());
-        for time_idx in 0..time_points.len() {
-            print!("{:>8}", points_data[idx][time_idx]);
+        for points in &points_data[idx] {
+            print!("{:>8}", points);
         }
         println!();
     }

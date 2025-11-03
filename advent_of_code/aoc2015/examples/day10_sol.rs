@@ -9,7 +9,6 @@ use anyhow::Result;
 /// - "21" becomes "1211" (one 2, one 1)
 /// - "1211" becomes "111221" (one 1, one 2, two 1s)
 /// - "111221" becomes "312211" (three 1s, two 2s, one 1)
-
 pub fn solve_part1(input: &str) -> Result<String> {
     println!("🎄 Day 10 Part 1: Apply look-and-say 40 times");
     
@@ -103,4 +102,25 @@ mod tests {
     fn test_look_and_say_multiple_groups() {
         assert_eq!(look_and_say("1223"), "112213");
     }
+}
+
+fn main() -> Result<()> {
+    println!("=== Day 10: Elves Look, Elves Say - Solution Demo ===\n");
+    
+    // Demo with a simple example
+    let example_input = "1113222113";
+    
+    println!("Starting sequence: {}", example_input);
+    println!("\nApplying look-and-say transformations...\n");
+    
+    // Show a few iterations
+    let mut current = example_input.to_string();
+    for i in 1..=5 {
+        current = look_and_say(&current);
+        println!("Iteration {}: {} (length: {})", i, current, current.len());
+    }
+    
+    println!("\nFor the actual puzzle input, run: cargo run -- 10");
+    
+    Ok(())
 }
