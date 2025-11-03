@@ -29,7 +29,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 fn walkthrough_for_groups(weights_desc: &[u64], num_groups: u64) -> Result<(), Box<dyn std::error::Error>> {
     let total: u64 = weights_desc.iter().sum();
-    if total % num_groups != 0 {
+    if !total.is_multiple_of(num_groups) {
         println!("Part ({} groups): total not divisible by {}\n", num_groups, num_groups);
         return Ok(());
     }
@@ -98,7 +98,7 @@ fn walkthrough_for_groups(weights_desc: &[u64], num_groups: u64) -> Result<(), B
         }
     }
 
-    println!("");
+    println!();
     Ok(())
 }
 
