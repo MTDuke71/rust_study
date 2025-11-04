@@ -97,7 +97,7 @@ fn iterator_adaptors() {
 }
 
 fn consuming_adaptors() {
-    let v = vec![1, 2, 3, 4, 5];
+    let v = vec![1, 2, 3, 4, 5, 6, 7, 8];
     
     // collect() - build a collection
     let doubled: Vec<i32> = v.iter().map(|x| x * 2).collect();
@@ -112,7 +112,9 @@ fn consuming_adaptors() {
     println!("product(): {}", product);
     
     // count() - count elements
-    let count = v.iter().filter(|x| *x % 2 == 0).count();
+    let evens_list: Vec<&i32> = v.iter().filter(|x| *x % 2 == 0).collect();
+    let count = evens_list.len();
+    println!("even numbers: {:?}", evens_list);
     println!("count (evens): {}", count);
     
     // min() and max()
@@ -227,7 +229,7 @@ fn advanced_iterator_patterns() {
     println!("flat_map: {:?}", flattened);
     
     // partition() - split into two collections
-    let (evens, odds): (Vec<_>, Vec<_>) = v.iter()
+    let (evens, odds): (Vec<&i32>, Vec<&i32>) = v.iter()
         .partition(|x| *x % 2 == 0);
     println!("partition - evens: {:?}, odds: {:?}", evens, odds);
     
