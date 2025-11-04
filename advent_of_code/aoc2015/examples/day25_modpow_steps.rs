@@ -10,7 +10,7 @@ fn parse_row_col(input: &str) -> (u64, u64) {
     // Input format: "... row 2981, column 3075."
     let mut row = 0u64;
     let mut col = 0u64;
-    for (i, part) in input.split(|c: char| !c.is_ascii_digit()).enumerate() {
+    for (_i, part) in input.split(|c: char| !c.is_ascii_digit()).enumerate() {
         if part.is_empty() { continue; }
         let val: u64 = part.parse().unwrap();
         if row == 0 { row = val; } else { col = val; break; }
