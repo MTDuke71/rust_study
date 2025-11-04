@@ -3,13 +3,8 @@ use std::collections::HashMap;
 
 /// Parse input into two vectors of location IDs
 /// 
-/// # Example
-/// ```
-/// let input = "3   4\n4   3\n2   5";
-/// let (left, right) = parse_location_lists(input)?;
-/// assert_eq!(left, vec![3, 4, 2]);
-/// assert_eq!(right, vec![4, 3, 5]);
-/// ```
+/// Internal function used by solve_part1 and solve_part2.
+/// Example usage is demonstrated in the public solver functions.
 fn parse_location_lists(input: &str) -> Result<(Vec<i32>, Vec<i32>)> {
     let pairs: Result<Vec<(i32, i32)>> = input
         .lines()
