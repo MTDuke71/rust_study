@@ -32,6 +32,12 @@ pub struct Registers {
     pub b: i64,
 }
 
+impl Default for Registers {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Registers {
     /// Create registers with both set to 0
     pub fn new() -> Self {
