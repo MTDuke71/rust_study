@@ -103,6 +103,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "aoc2024"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "criterion 0.5.1",
+ "md5",
+ "mission5",
+ "mission6",
+ "mission9",
+ "regex",
+ "serde_json",
+]
+
+[[package]]
 name = "aoc_pattern_recognition"
 version = "0.1.0"
 dependencies = [

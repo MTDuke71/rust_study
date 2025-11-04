@@ -67,6 +67,7 @@ members = [
     "advanced_examples/competitive_linked_tree",
     "advent_of_code/aoc_pattern_recognition",
     "advent_of_code/aoc2015",
+    "advent_of_code/aoc2024",
     "daily_study/rust_learning_week5_notes"
 ]
 

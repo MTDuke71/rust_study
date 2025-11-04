@@ -1,0 +1,36 @@
+use anyhow::{bail, Result};
+
+// Import implemented days - only uncomment when days are implemented
+pub mod day01;
+
+pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
+    match day {
+        1 => Ok((day01::solve_part1(input)?, day01::solve_part2(input)?)),
+        // 2 => Ok((day02::solve_part1(input)?, day02::solve_part2(input)?)),
+        // 3 => Ok((day03::solve_part1(input)?, day03::solve_part2(input)?)),
+        // 4 => Ok((day04::solve_part1(input)?, day04::solve_part2(input)?)),
+        // 5 => Ok((day05::solve_part1(input)?, day05::solve_part2(input)?)),
+        // 6 => Ok((day06::solve_part1(input)?, day06::solve_part2(input)?)),
+        // 7 => Ok((day07::solve_part1(input)?, day07::solve_part2(input)?)),
+        // 8 => Ok((day08::solve_part1(input)?, day08::solve_part2(input)?)),
+        // 9 => Ok((day09::solve_part1(input)?, day09::solve_part2(input)?)),
+        // 10 => Ok((day10::solve_part1(input)?, day10::solve_part2(input)?)),
+        // 11 => Ok((day11::solve_part1(input)?, day11::solve_part2(input)?)),
+        // 12 => Ok((day12::solve_part1(input)?, day12::solve_part2(input)?)),
+        // 13 => Ok((day13::solve_part1(input)?, day13::solve_part2(input)?)),
+        // 14 => Ok((day14::solve_part1(input)?, day14::solve_part2(input)?)),
+        // 15 => Ok((day15::solve_part1(input)?, day15::solve_part2(input)?)),
+        // 16 => Ok((day16::solve_part1(input)?, day16::solve_part2(input)?)),
+        // 17 => Ok((day17::solve_part1(input)?, day17::solve_part2(input)?)),
+        // 18 => Ok((day18::solve_part1(input)?, day18::solve_part2(input)?)),
+        // 19 => Ok((day19::solve_part1(input)?, day19::solve_part2(input)?)),
+        // 20 => Ok((day20::solve_part1(input)?, day20::solve_part2(input)?)),
+        // 21 => Ok((day21::solve_part1(input)?, day21::solve_part2(input)?)),
+        // 22 => Ok((day22::solve_part1(input)?, day22::solve_part2(input)?)),
+        // 23 => Ok((day23::solve_part1(input)?, day23::solve_part2(input)?)),
+        // 24 => Ok((day24::solve_part1(input)?, day24::solve_part2(input)?)),
+        // 25 => Ok((day25::solve_part1(input)?, day25::solve_part2(input)?)),
+
+        _ => bail!("Day {day} not implemented yet (valid range: 1-25). To implement day {day}, create src/solver/day{day:02}.rs and uncomment the corresponding lines in mod.rs"),
+    }
+}
