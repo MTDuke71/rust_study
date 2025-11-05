@@ -6,7 +6,21 @@ edition = "2021"
 # Mark as standalone package (not part of workspace)
 [workspace]
 
+# Features for Day 38 demonstration
+[features]
+default = ["std"]
+std = []
+alloc = []  # For no_std + alloc demonstration
+debug-info = ["std"]
+serde = ["dep:serde", "dep:serde_json", "std"]
+parallel = ["dep:rayon", "std"]
+full = ["debug-info", "serde", "parallel"]
+
 [dependencies]
+# Optional dependencies for feature demonstration
+serde = { version = "1.0", features = ["derive"], optional = true }
+serde_json = { version = "1.0", optional = true }
+rayon = { version = "1.7", optional = true }
 
 [[bin]]
 name = "day36_standalone"
@@ -16,7 +30,6 @@ path = "Day36.rs"
 name = "Day37"
 path = "Day37.rs"
 
-# Note: As more days are added, we'll include them as examples:
-# [[example]]
-# name = "day38_cargo_features"
-# path = "examples/day38_cargo_features.rs"
+[[bin]]
+name = "Day38"
+path = "Day38.rs"
