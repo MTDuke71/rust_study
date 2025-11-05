@@ -7,6 +7,7 @@ edition = "2021"
 [workspace]
 
 [dependencies]
+criterion = "0.5"
 
 [[example]]
 name = "ch13_1_closures"
@@ -19,3 +20,7 @@ path = "examples/ch13_2_iterators.rs"
 [[example]]
 name = "ch13_3_io_project"
 path = "examples/ch13_3_io_project.rs"
+
+[[example]]
+name = "ch13_4_performance"
+path = "examples/ch13_4_performance.rs"

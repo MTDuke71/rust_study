@@ -22,18 +22,21 @@ This chapter covers Rust's functional programming features, focusing on closures
 - Zero-cost abstractions
 
 ### 13.4 - Comparing Performance: Loops vs Iterators
-- Benchmarking
-- Assembly analysis
-- Optimization insights
+- Zero-cost abstractions in practice
+- Benchmarking loops vs iterators
+- Compiler optimization examples
+- When to use loops vs iterators
+- Performance pitfalls and solutions
+- Assembly analysis insights
 
 ## Examples
 
 Run examples with:
 ```bash
-cargo run --example ch13_1_closures
-cargo run --example closure_basics
-cargo run --example closure_capture
-cargo run --example workout_planner
+cargo run --example ch13_1_closures      # Closure basics and environment capture
+cargo run --example ch13_2_iterators     # Iterator trait and adaptors
+cargo run --example ch13_3_io_project    # Refactoring with iterators
+cargo run --example ch13_4_performance   # Performance comparison and benchmarks
 ```
 
 ## Learning Schedule
