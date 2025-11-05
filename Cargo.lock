@@ -865,6 +865,8 @@ name = "mission10"
 version = "0.1.0"
 dependencies = [
  "criterion 0.5.1",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
