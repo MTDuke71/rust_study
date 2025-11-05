@@ -340,8 +340,8 @@ fn print_parent_array(parent: &[usize], label: &str) {
     }
     println!();
     print!("  Parent: ");
-    for i in 0..parent.len() {
-        print!("{:2} ", parent[i]);
+    for &value in parent {
+        print!("{:2} ", value);
     }
     println!("\n");
 }
