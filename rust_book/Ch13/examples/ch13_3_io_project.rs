@@ -303,6 +303,7 @@ fn additional_patterns() {
 // Key Takeaways
 // ============================================================================
 
+#[allow(dead_code)]
 fn print_key_takeaways() {
     println!("\n╔═══════════════════════════════════════════════╗");
     println!("║  Key Takeaways from Chapter 13.3             ║");
