@@ -144,11 +144,22 @@ fn process_large_dataset_loop(data: &[i32], threshold: i32) -> (usize, i32) {
     (count, max)
 }
 
-fn process_large_dataset_iterator(data: &[i32], threshold: i32) -> (usize, i32) {
+fn process_large_dataset_iterator_bad(data: &[i32], threshold: i32) -> (usize, i32) {
+    // BAD EXAMPLE: This is NOT zero-cost - it allocates and does two passes!
     let filtered: Vec<_> = data.iter().copied().filter(|&x| x > threshold).collect();
     let count = filtered.len();
     let max = filtered.into_iter().max().unwrap_or(i32::MIN);
     (count, max)
+}
+
+fn process_large_dataset_iterator_proper(data: &[i32], threshold: i32) -> (usize, i32) {
+    // GOOD EXAMPLE: This should be zero-cost - single pass, no allocation
+    data.iter()
+        .copied()
+        .filter(|&x| x > threshold)
+        .fold((0, i32::MIN), |(count, max), value| {
+            (count + 1, max.max(value))
+        })
 }
 
 fn process_large_dataset_iterator_optimized(data: &[i32], threshold: i32) -> (usize, i32) {
@@ -200,24 +211,51 @@ fn benchmark_operations() {
     let float_data: Vec<f64> = (0..SIZE).map(|i| i as f64 / 1000.0).collect();
     
     println!("=== Performance Benchmarks ===");
-    println!("Dataset size: {} elements\n", SIZE);
+    println!("Dataset size: {} elements", SIZE);
+    println!("NOTE: In release mode, compiler optimizations may make some operations appear");
+    println!("      much faster than expected. This demonstrates the power of LLVM optimization!\n");
     
-    // Search benchmarks
-    let target = SIZE as i32 / 2;
+    // Search benchmarks - test both early and late positions
+    let target_early = 1000; // Early in array
+    let target_late = SIZE as i32 - 1000; // Late in array
     
-    let start = Instant::now();
-    let _result = search_with_loop(&data, target);
-    let loop_search_time = start.elapsed();
+    // Verify both methods find the same results
+    let loop_result_early = search_with_loop(&data, target_early);
+    let iter_result_early = search_with_iterator(&data, target_early);
+    let loop_result_late = search_with_loop(&data, target_late);
+    let iter_result_late = search_with_iterator(&data, target_late);
     
-    let start = Instant::now();
-    let _result = search_with_iterator(&data, target);
-    let iter_search_time = start.elapsed();
+    assert_eq!(loop_result_early, iter_result_early);
+    assert_eq!(loop_result_late, iter_result_late);
     
-    println!("Search Performance:");
-    println!("  Loop-based:     {:?}", loop_search_time);
-    println!("  Iterator-based: {:?}", iter_search_time);
-    println!("  Speedup: {:.2}x\n", 
-             loop_search_time.as_nanos() as f64 / iter_search_time.as_nanos() as f64);
+    // Benchmark with multiple iterations for statistical significance
+    let mut loop_total = std::time::Duration::ZERO;
+    let mut iter_total = std::time::Duration::ZERO;
+    let iterations = 100;
+    
+    // Test early position (should be fast for both)
+    for _ in 0..iterations {
+        let start = Instant::now();
+        std::hint::black_box(search_with_loop(&data, target_early));
+        loop_total += start.elapsed();
+        
+        let start = Instant::now();
+        std::hint::black_box(search_with_iterator(&data, target_early));
+        iter_total += start.elapsed();
+    }
+    
+    println!("Search Performance (early position, {} iterations):", iterations);
+    println!("  Loop-based:     {:?} (found at {:?})", 
+             loop_total / iterations, loop_result_early);
+    println!("  Iterator-based: {:?} (found at {:?})", 
+             iter_total / iterations, iter_result_early);
+    
+    if iter_total.as_nanos() > 0 && loop_total.as_nanos() > 0 {
+        println!("  Ratio: {:.2}x\n", 
+                 loop_total.as_nanos() as f64 / iter_total.as_nanos() as f64);
+    } else {
+        println!("  Both optimized to near-zero time by compiler\n");
+    }
     
     // Transformation benchmarks (use smaller dataset to avoid overflow)
     let small_data: Vec<i32> = (0..10000).collect();
@@ -279,25 +317,38 @@ fn benchmark_operations() {
     println!("  Loop-based:     {:?}", loop_audio_time);
     println!("  Iterator-based: {:?}", iter_audio_time);
     
-    // Large dataset processing
+    // Large dataset processing - demonstrating zero-cost vs non-zero-cost
     let threshold = SIZE as i32 / 4;
     
     let start = Instant::now();
-    let _result = process_large_dataset_loop(&data, threshold);
+    let loop_result = process_large_dataset_loop(&data, threshold);
     let loop_large_time = start.elapsed();
     
     let start = Instant::now();
-    let _result = process_large_dataset_iterator(&data, threshold);
-    let iter_large_time = start.elapsed();
+    let bad_result = process_large_dataset_iterator_bad(&data, threshold);
+    let iter_bad_time = start.elapsed();
     
     let start = Instant::now();
-    let _result = process_large_dataset_iterator_optimized(&data, threshold);
-    let iter_opt_large_time = start.elapsed();
+    let good_result = process_large_dataset_iterator_proper(&data, threshold);
+    let iter_good_time = start.elapsed();
     
-    println!("\nLarge Dataset Processing:");
-    println!("  Loop-based:          {:?}", loop_large_time);
-    println!("  Iterator (collect):  {:?}", iter_large_time);
-    println!("  Iterator (fold):     {:?}", iter_opt_large_time);
+    let start = Instant::now();
+    let fold_result = process_large_dataset_iterator_optimized(&data, threshold);
+    let iter_fold_time = start.elapsed();
+    
+    println!("\nLarge Dataset Processing (Zero-Cost Analysis):");
+    println!("  Loop-based:              {:?} -> {:?}", loop_large_time, loop_result);
+    println!("  Iterator (BAD - collect): {:?} -> {:?} ❌ NOT zero-cost!", iter_bad_time, bad_result);
+    println!("  Iterator (GOOD - fold):  {:?} -> {:?} ✅ Should be zero-cost!", iter_good_time, good_result);
+    println!("  Iterator (fold alt):     {:?} -> {:?}", iter_fold_time, fold_result);
+    
+    // Performance analysis
+    let loop_vs_good = loop_large_time.as_nanos() as f64 / iter_good_time.as_nanos() as f64;
+    let bad_vs_loop = iter_bad_time.as_nanos() as f64 / loop_large_time.as_nanos() as f64;
+    
+    println!("\n📊 Performance Analysis:");
+    println!("  Good Iterator vs Loop: {:.2}x (should be ~1.0x for zero-cost)", loop_vs_good);
+    println!("  Bad Iterator vs Loop:  {:.2}x (shows cost of unnecessary allocation)", bad_vs_loop);
 }
 
 /// Demonstrate compiler optimizations
@@ -360,9 +411,94 @@ fn demonstrate_compiler_optimizations() {
     println!("  Ratio: {:.2}", iter_time.as_nanos() as f64 / loop_time.as_nanos() as f64);
 }
 
+/// When iterators are NOT zero-cost
+fn when_iterators_are_not_zero_cost() {
+    println!("=== When Iterators Are NOT Zero-Cost ===\n");
+    
+    let data: Vec<i32> = (0..100000).collect();
+    
+    println!("🚨 MYTH BUSTING: Iterators are not always zero-cost!");
+    println!("The 'zero-cost abstraction' claim applies when iterators compile");
+    println!("to the same code as hand-written loops. But some patterns add cost:\n");
+    
+    // 1. Unnecessary intermediate collections
+    println!("1. Unnecessary intermediate collections:");
+    
+    let start = Instant::now();
+    let _result: Vec<_> = data.iter()
+        .take(1000)  // Use smaller subset to avoid overflow
+        .filter(|&&x| x % 2 == 0)
+        .collect::<Vec<_>>()  // ❌ Creates intermediate Vec
+        .iter()
+        .map(|&x| x * x)
+        .collect();
+    let with_collect = start.elapsed();
+    
+    let start = Instant::now();
+    let _result: Vec<_> = data.iter()
+        .take(1000)  // Use smaller subset to avoid overflow
+        .filter(|&&x| x % 2 == 0)
+        .map(|&x| x * x)      // ✅ Direct chain, no intermediate allocation
+        .collect();
+    let without_collect = start.elapsed();
+    
+    println!("  With intermediate collect(): {:?} ❌", with_collect);
+    println!("  Direct chain:                {:?} ✅", without_collect);
+    println!("  Cost of intermediate collection: {:.2}x slower\n", 
+             with_collect.as_nanos() as f64 / without_collect.as_nanos() as f64);
+    
+    // 2. Wrong abstraction level
+    println!("2. Using wrong abstraction level:");
+    
+    let start = Instant::now();
+    let _sum: i32 = data.iter()
+        .take(1000) // Limit to avoid overflow
+        .filter(|&&x| x > 500)
+        .collect::<Vec<_>>()  // ❌ Collect then aggregate
+        .iter()
+        .copied()
+        .sum();
+    let collect_then_sum = start.elapsed();
+    
+    let start = Instant::now();
+    let _sum: i32 = data.iter()
+        .take(1000) // Limit to avoid overflow
+        .copied()
+        .filter(|&x| x > 500)
+        .sum();               // ✅ Direct aggregation
+    let direct_sum = start.elapsed();
+    
+    println!("  Collect then sum: {:?} ❌", collect_then_sum);
+    println!("  Direct sum:       {:?} ✅", direct_sum);
+    
+    // 3. Multiple passes when one would suffice
+    println!("\n3. Multiple passes vs single pass:");
+    
+    let start = Instant::now();
+    let count = data.iter().take(1000).filter(|&&x| x > 500).count();
+    let sum: i32 = data.iter().take(1000).copied().filter(|&x| x > 500).sum();
+    let _avg = if count > 0 { sum as f64 / count as f64 } else { 0.0 };
+    let multi_pass = start.elapsed();
+    
+    let start = Instant::now();
+    let (count, sum) = data.iter()
+        .take(1000)
+        .filter(|&&x| x > 500)
+        .fold((0, 0), |(count, sum), &x| (count + 1, sum + x));
+    let _avg = if count > 0 { sum as f64 / count as f64 } else { 0.0 };
+    let single_pass = start.elapsed();
+    
+    println!("  Multiple passes: {:?} ❌", multi_pass);
+    println!("  Single pass:     {:?} ✅", single_pass);
+    
+    println!("\n💡 Key Insight: Zero-cost means 'no abstraction overhead',");
+    println!("   not 'magically faster than any possible implementation'!");
+    println!("   Bad algorithm + iterators = Bad performance + iterators");
+}
+
 /// Common performance pitfalls and solutions
 fn performance_pitfalls() {
-    println!("=== Performance Pitfalls and Solutions ===\n");
+    println!("\n=== Performance Pitfalls and Solutions ===\n");
     
     let data: Vec<i32> = (0..1000).collect();  // Smaller to avoid overflow
     
@@ -520,6 +656,9 @@ fn main() {
     benchmark_operations();
     println!();
     
+    // When iterators are NOT zero-cost (myth busting)
+    when_iterators_are_not_zero_cost();
+    
     // Common performance pitfalls
     performance_pitfalls();
     println!();
@@ -527,19 +666,26 @@ fn main() {
     // When loops might be preferable
     when_loops_are_better();
     
-    println!("\n=== Key Takeaways ===");
-    println!("✅ Iterators are zero-cost abstractions in Rust");
-    println!("✅ The compiler often generates identical assembly for loops vs iterators");
-    println!("✅ Iterators can be more performant due to better optimization opportunities");
+    println!("\n=== Key Takeaways (CORRECTED) ===");
+    println!("✅ Iterators CAN BE zero-cost abstractions when used properly");
+    println!("✅ The compiler generates identical assembly for equivalent algorithms");
+    println!("✅ Iterator chains without intermediate collections are usually optimal");
     println!("✅ Functional style often leads to more readable and maintainable code");
     println!("✅ Lazy evaluation can provide significant performance benefits");
-    println!("✅ Avoid unnecessary intermediate collections");
-    println!("✅ Use the right iterator method for the job (fold vs collect + reduce)");
+    println!("❌ NOT all iterator patterns are zero-cost - avoid these pitfalls:");
+    println!("   • Unnecessary .collect() creating intermediate Vec allocations");
+    println!("   • Multiple passes when single pass with .fold() would work");
+    println!("   • Wrong abstraction level (collect then aggregate vs direct aggregate)");
+    println!("⚠️  'Zero-cost' means 'no abstraction overhead', not 'magically faster'");
+    println!("⚠️  Bad algorithm + iterators still equals bad performance");
     println!("⚠️  Sometimes explicit loops are clearer for complex state management");
-    println!("⚠️  Profile your specific use case - performance can vary by scenario");
+    println!("⚠️  Release mode optimizations can make benchmarks look weird (0ns times)");
+    println!("⚠️  Single-run benchmarks are unreliable - use statistical analysis");
+    println!("📊 Always profile your specific use case - measure, don't guess!");
+    println!("🔬 Use proper benchmarking tools like Criterion for production analysis");
     
     println!("\n🎯 Remember: In Rust, you can have both performance AND expressiveness!");
-    println!("   The compiler is your friend - use high-level abstractions with confidence!");
+    println!("   But you still need to choose good algorithms and avoid unnecessary allocations!");
 }
 
 #[cfg(test)]
@@ -611,11 +757,17 @@ mod tests {
         let threshold = 10;
         
         let loop_result = process_large_dataset_loop(&data, threshold);
-        let iter_result = process_large_dataset_iterator(&data, threshold);
+        let iter_bad_result = process_large_dataset_iterator_bad(&data, threshold);
+        let iter_good_result = process_large_dataset_iterator_proper(&data, threshold);
         let opt_result = process_large_dataset_iterator_optimized(&data, threshold);
         
-        assert_eq!(loop_result, iter_result);
-        assert_eq!(iter_result, opt_result);
+        // All methods should produce the same result
+        assert_eq!(loop_result, iter_bad_result);
+        assert_eq!(iter_bad_result, iter_good_result);
+        assert_eq!(iter_good_result, opt_result);
+        
+        // Expected result: count=4 (12, 21, 15, 18, 25), max=25
+        assert_eq!(loop_result, (5, 25)); // Note: 25 > 21 > 18 > 15 > 12, count = 5
     }
     
     #[test]
