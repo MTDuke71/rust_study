@@ -14,7 +14,7 @@ Rust combines functional programming features with systems programming. This cha
 - **Closures** - Anonymous functions that capture environment
 - **Iterators** - Functional-style data processing
 - **Iterator Adaptors** - Transforming data streams
-- **Performance** - Zero-cost abstractions in functional programming
+- **Performance** - Zero-cost abstractions in functional programming, accurate benchmarking with [[../black-box-benchmarking]]
 - **Functional Patterns** - Idiomatic functional Rust
 
 ## Mission Integration
@@ -46,4 +46,4 @@ Rust combines functional programming features with systems programming. This cha
 
 *Tags: #rust-book #functional-programming #closures #iterators #zero-cost-abstractions #ch13 #completed*
 
-*Links: [[../../rust_book/Ch13/README]] | [[Iteration Patterns]] | [[Closures in Rust]] | [[Functional Programming in Rust]] | [[zettel-index]]*
+*Links: [[../../rust_book/Ch13/README]] | [[Iteration Patterns]] | [[Closures in Rust]] | [[Functional Programming in Rust]] | [[../black-box-benchmarking]] | [[zettel-index]]*

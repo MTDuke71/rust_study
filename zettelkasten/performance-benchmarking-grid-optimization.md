@@ -362,7 +362,7 @@ fn benchmark_cache_patterns(grid: &TutorialGrid<i32>) -> (Duration, Duration, Du
 
 3. **Benchmarking requires discipline**
    - Use non-zero values, multiple iterations, median calculation
-   - Apply `black_box()` to prevent compiler optimizations
+   - Apply `black_box()` to prevent compiler optimizations (see [[black-box-benchmarking]])
    - Always verify results and watch for anomalies
 
 4. **Access patterns matter immensely**
@@ -378,7 +378,7 @@ fn benchmark_cache_patterns(grid: &TutorialGrid<i32>) -> (Duration, Duration, Du
 
 *Tags: #performance #benchmarking #grid-optimization #cache #mission6 #tutorial #concept #daily-study #implementation*
 
-*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Mission6 Tutorial MOC]] | [[Data Structures Overview]]*
+*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Mission6 Tutorial MOC]] | [[Data Structures Overview]] | [[black-box-benchmarking]]*
 
 ---
 

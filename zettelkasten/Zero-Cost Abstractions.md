@@ -247,7 +247,7 @@ perf report
 
 ## 🎓 Key Takeaways
 
-1. **Trust but Verify**: Always benchmark to confirm zero-cost claims
+1. **Trust but Verify**: Always benchmark to confirm zero-cost claims (see [[black-box-benchmarking]] for proper technique)
 2. **Release Mode**: Zero-cost abstractions shine in optimized builds
 3. **Monomorphization**: Generics create specialized, optimized code
 4. **Iterator Chains**: High-level functional code compiles to optimal loops
@@ -262,4 +262,4 @@ perf report
 
 ---
 
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Generic Programming]] | [[Trait Design Patterns - Mission3 Lessons]] | [[Performance Optimization Guide]] | [[Binary Search Iterator Patterns]] | [[PhantomData Type Safety Patterns]]*
+*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Generic Programming]] | [[Trait Design Patterns - Mission3 Lessons]] | [[Performance Optimization Guide]] | [[Binary Search Iterator Patterns]] | [[PhantomData Type Safety Patterns]] | [[black-box-benchmarking]]*

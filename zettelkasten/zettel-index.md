@@ -226,6 +226,7 @@
 ## ⚡ Performance & Optimization
 
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
+- [[black-box-benchmarking]] - Using std::hint::black_box for accurate benchmarks
 - [[zero-cost-abstractions]] - Rust's performance guarantees
 - [[Algorithm Analysis]] - Complexity analysis patterns including amortized analysis
 - [[Subset-Sum-Scaling-Analysis]] - **Exponential algorithm scaling**: When brute force breaks, optimization strategies (DP, meet-in-the-middle, branch-and-bound)
