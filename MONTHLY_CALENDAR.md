@@ -380,6 +380,12 @@ cargo doc --open                            # Generate documentation
 
 ---
 
+## 🗓️November 23-29, 2025   
+Vacation.  No study this week for a Thanksgiving Break
+Also rest before AOC 2025 begins.
+
+---
+
 ## �📈 Progress Tracking
 
 ### Weekly Checkpoints
