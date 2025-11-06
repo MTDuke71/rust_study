@@ -3,6 +3,25 @@
 version = 4
 
 [[package]]
+name = "add-one"
+version = "0.1.0"
+
+[[package]]
+name = "add-two"
+version = "0.1.0"
+dependencies = [
+ "add-one",
+]
+
+[[package]]
+name = "adder"
+version = "0.1.0"
+dependencies = [
+ "add-one",
+ "add-two",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.25.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -179,6 +198,13 @@ name = "bytes"
 version = "1.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d71b6127be86fdcfddb610f7182ac57211d4b18a3e9c82eb2d17662f2227ad6a"
+
+[[package]]
+name = "cargo-example"
+version = "0.1.0"
+dependencies = [
+ "clap",
+]
 
 [[package]]
 name = "cast"
@@ -714,6 +740,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "install-example"
+version = "0.1.0"
+dependencies = [
+ "clap",
+]
+
+[[package]]
 name = "io-uring"
 version = "0.7.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1148,6 +1181,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "publishing-example"
+version = "0.1.0"
+
+[[package]]
 name = "quote"
 version = "1.0.40"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1286,6 +1323,10 @@ name = "regex-syntax"
 version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "caf4aa5b0f434c91fe5c7f1ecb6a5ece2130b02ad2a590589dda5146df959001"
+
+[[package]]
+name = "release_profiles"
+version = "0.1.0"
 
 [[package]]
 name = "rust_learning_week5_error_handling"

@@ -5,7 +5,7 @@
 [workspace]
 members = [
     "release_profiles",
-    "publishing_example",
+    "publishing_example", 
     "workspace_example/adder",
     "workspace_example/add-one",
     "workspace_example/add-two",
@@ -13,4 +13,9 @@ members = [
     "custom_command",
 ]
 resolver = "2"
+
+# Custom profile: optimized but with debug info
+[profile.release-with-debug]
+inherits = "release"
+debug = true           # Keep debug symbols for profiling
 
