@@ -182,22 +182,22 @@ mod tests {
 
     #[test]
     fn test_is_safe_report() {
-        assert_eq!(is_safe_report(&[7, 6, 4, 2, 1]), true);  // All decreasing by 1 or 2
-        assert_eq!(is_safe_report(&[1, 2, 7, 8, 9]), false); // Increase of 5
-        assert_eq!(is_safe_report(&[9, 7, 6, 2, 1]), false); // Decrease of 4
-        assert_eq!(is_safe_report(&[1, 3, 2, 4, 5]), false); // Increasing then decreasing
-        assert_eq!(is_safe_report(&[8, 6, 4, 4, 1]), false); // No change (4 4)
-        assert_eq!(is_safe_report(&[1, 3, 6, 7, 9]), true);  // All increasing by 1, 2, or 3
+        assert!(is_safe_report(&[7, 6, 4, 2, 1]));  // All decreasing by 1 or 2
+        assert!(!is_safe_report(&[1, 2, 7, 8, 9])); // Increase of 5
+        assert!(!is_safe_report(&[9, 7, 6, 2, 1])); // Decrease of 4
+        assert!(!is_safe_report(&[1, 3, 2, 4, 5])); // Increasing then decreasing
+        assert!(!is_safe_report(&[8, 6, 4, 4, 1])); // No change (4 4)
+        assert!(is_safe_report(&[1, 3, 6, 7, 9]));  // All increasing by 1, 2, or 3
     }
 
     #[test]
     fn test_is_safe_with_dampener() {
-        assert_eq!(is_safe_with_dampener(&[7, 6, 4, 2, 1]), true);  // Safe without removing any level
-        assert_eq!(is_safe_with_dampener(&[1, 2, 7, 8, 9]), false); // Unsafe regardless of removal
-        assert_eq!(is_safe_with_dampener(&[9, 7, 6, 2, 1]), false); // Unsafe regardless of removal  
-        assert_eq!(is_safe_with_dampener(&[1, 3, 2, 4, 5]), true);  // Safe by removing second level (3)
-        assert_eq!(is_safe_with_dampener(&[8, 6, 4, 4, 1]), true);  // Safe by removing third level (4)
-        assert_eq!(is_safe_with_dampener(&[1, 3, 6, 7, 9]), true);  // Safe without removing any level
+        assert!(is_safe_with_dampener(&[7, 6, 4, 2, 1]));  // Safe without removing any level
+        assert!(!is_safe_with_dampener(&[1, 2, 7, 8, 9])); // Unsafe regardless of removal
+        assert!(!is_safe_with_dampener(&[9, 7, 6, 2, 1])); // Unsafe regardless of removal  
+        assert!(is_safe_with_dampener(&[1, 3, 2, 4, 5]));  // Safe by removing second level (3)
+        assert!(is_safe_with_dampener(&[8, 6, 4, 4, 1]));  // Safe by removing third level (4)
+        assert!(is_safe_with_dampener(&[1, 3, 6, 7, 9]));  // Safe without removing any level
     }
 
     #[test]
@@ -213,27 +213,27 @@ mod tests {
     #[test]
     fn test_edge_cases() {
         // Single level - should be safe
-        assert_eq!(is_safe_report(&[5]), true);
+        assert!(is_safe_report(&[5]));
         
         // Two levels - should be safe if diff is 1-3
-        assert_eq!(is_safe_report(&[1, 2]), true);
-        assert_eq!(is_safe_report(&[1, 4]), true);
-        assert_eq!(is_safe_report(&[1, 5]), false); // diff > 3
-        assert_eq!(is_safe_report(&[1, 1]), false); // no change
+        assert!(is_safe_report(&[1, 2]));
+        assert!(is_safe_report(&[1, 4]));
+        assert!(!is_safe_report(&[1, 5])); // diff > 3
+        assert!(!is_safe_report(&[1, 1])); // no change
         
         // Empty report - should be safe
-        assert_eq!(is_safe_report(&[]), true);
+        assert!(is_safe_report(&[]));
     }
 
     #[test]
     fn test_problem_dampener_edge_cases() {
         // Report with only one bad level at the beginning
-        assert_eq!(is_safe_with_dampener(&[10, 1, 2, 3]), true);
+        assert!(is_safe_with_dampener(&[10, 1, 2, 3]));
         
         // Report with only one bad level at the end
-        assert_eq!(is_safe_with_dampener(&[1, 2, 3, 10]), true);
+        assert!(is_safe_with_dampener(&[1, 2, 3, 10]));
         
         // Report with only one bad level in the middle
-        assert_eq!(is_safe_with_dampener(&[1, 2, 10, 3, 4]), true);
+        assert!(is_safe_with_dampener(&[1, 2, 10, 3, 4]));
     }
 }

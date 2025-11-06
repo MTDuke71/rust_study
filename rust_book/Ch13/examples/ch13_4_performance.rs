@@ -53,12 +53,7 @@ fn process_audio_functional(samples: &[AudioSample], gain: f64) -> Vec<i16> {
 
 /// Search performance comparison
 fn search_with_loop(data: &[i32], target: i32) -> Option<usize> {
-    for i in 0..data.len() {
-        if data[i] == target {
-            return Some(i);
-        }
-    }
-    None
+    (0..data.len()).find(|&i| data[i] == target)
 }
 
 fn search_with_iterator(data: &[i32], target: i32) -> Option<usize> {
