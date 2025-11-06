@@ -75,17 +75,23 @@ Put it all together:
 
 ---
 
-### Step 5: Applications
-**File**: `examples/step5_applications.rs`
+### Step 5: Real-World Applications ✅
+**File**: `examples/step5_applications.rs`  
+**Exercises**: `exercises/step5_exercises.rs`  
+**Status**: Complete
 
-Real-world use cases:
-- Cycle detection in undirected graphs
-- Connected components
-- Network connectivity
-- Kruskal's Minimum Spanning Tree algorithm
-- Social network friend circles
+Learn practical applications:
+- **Kruskal's Minimum Spanning Tree** - Graph algorithm with cycle detection
+- **Connected Components** - Finding all components in undirected graphs
+- **Cycle Detection** - Detecting cycles during edge addition
+- **Social Network Friend Circles** - Transitive relationship modeling
+- **Image Segmentation** - Grouping pixels by color similarity
+- **Performance Comparison** - Union-Find vs DFS/BFS vs adjacency matrix
+- **7 Practice Exercises** - LeetCode problems and advanced challenges
 
-**Run**: `cargo run --example step5_applications`
+**Run**: `cargo run --example step5_applications`  
+**Practice**: `cargo run --bin step5_exercises`  
+**Tests**: `cargo test --example step5_applications`
 
 ---
 
