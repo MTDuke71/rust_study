@@ -1,0 +1,14 @@
+[workspace]
+# 14.3 - Cargo Workspaces
+# This workspace demonstrates multi-crate project organization
+
+members = [
+    "adder",           # Binary crate
+    "add-one",         # Library crate
+    "add-two",         # Library crate
+]
+
+# Example of shared dependencies (commented out to avoid requiring rand)
+# [workspace.dependencies]
+# rand = "0.8"
+

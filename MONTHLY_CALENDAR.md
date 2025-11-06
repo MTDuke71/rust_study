@@ -196,93 +196,97 @@ cargo test req6_advanced_features
 **Mission Focus**: Mission 10 Problem-Solving Patterns
 **Mission Tutorial Activity**: `Mission10_tut/examples/step7_problem_solving.rs` - LeetCode/interview problems
 **Daily Study**: Week 7, Day 43 - Associated types vs generics (when to use which)
-**Rust Book**: Chapter 15.1 - Using Box<T> to Point to Data on the Heap
+**Rust Book**: Chapter 14.4 - Installing Binaries from Crates.io with cargo install
 ```bash
 # Daily Tasks
 # Work through Union-Find interview problems and patterns
 # Complete step7_problem_solving.rs with classic problems
 # Learn associated types vs generic parameters
-# Master Box<T> for heap allocation and recursive types
+# Master cargo install for installing binary crates
+# Practice: cargo install --list, cargo install ripgrep
 ```
 
 ### **Monday, November 10** 💾
 **Mission Focus**: Mission 10 REST API Design & Setup
 **Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - API design and OpenAPI setup
 **Daily Study**: Week 7, Day 44 - Higher-ranked trait bounds (`for<'a>` syntax)
-**Rust Book**: Chapter 15.2 - Treating Smart Pointers Like Regular References with Deref
+**Rust Book**: Chapter 14.5 - Extending Cargo with Custom Commands
 ```bash
 # Daily Tasks
 # Design RESTful endpoints for Union-Find operations
 # Set up Axum/Actix-web server with utoipa for OpenAPI
 # Learn higher-ranked trait bounds for advanced generics
-# Master Deref trait for smart pointer behavior
+# Master creating custom Cargo commands (cargo-<name> pattern)
+# Practice: Create a custom command and install it
 ```
 
 ### **Tuesday, November 11** 🎯
 **Mission Focus**: Mission 10 REST API Implementation - Core Endpoints
 **Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - Implement handlers and state management
 **Daily Study**: Week 7, Day 45 - Phantom types (zero-cost type safety)
-**Rust Book**: Chapter 15.3 - Running Code on Cleanup with Drop
+**Rust Book**: Chapter 15.1 - Using Box<T> to Point to Data on the Heap
 ```bash
 # Daily Tasks
 # Implement POST /unionfind/new, POST /union, GET /find, GET /connected
 # Add OpenAPI annotations with utoipa macros
 # Learn phantom types for compile-time guarantees
-# Master Drop trait for resource cleanup
+# Master Box<T> for heap allocation and recursive types
 ```
 
 ### **Wednesday, November 12** 🗂️
 **Mission Focus**: Mission 10 REST API - OpenAPI/Swagger Documentation
 **Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - Complete Swagger UI integration
 **Daily Study**: Week 7, Day 46 - Const generics (compile-time parameters)
-**Rust Book**: Chapter 15.4 - Rc<T>, the Reference Counted Smart Pointer
+**Rust Book**: Chapter 15.2 - Treating Smart Pointers Like Regular References with Deref | Chapter 15.3 - Running Code on Cleanup with Drop
 ```bash
 # Daily Tasks
 # Set up Swagger UI at /swagger-ui/ with interactive documentation
 # Add request/response models with validation and examples
 # Learn const generics for array sizes and compile-time values
-# Master Rc<T> for shared ownership
+# Master Deref trait for smart pointer behavior
+# Master Drop trait for resource cleanup
 ```
 
 ### **Thursday, November 13** ⚡
 **Mission Focus**: Mission 10 REST API - Testing & Client Examples
 **Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - Integration tests and curl examples
 **Daily Study**: Week 7, Day 47 - Type-level programming (const functions, compile-time computation)
-**Rust Book**: Chapter 15.5 - RefCell<T> and the Interior Mutability Pattern
+**Rust Book**: Chapter 15.4 - Rc<T>, the Reference Counted Smart Pointer
 ```bash
 # Daily Tasks
 # Write integration tests for all API endpoints
 # Create curl examples and Postman collection
 # Learn const functions and compile-time computation
-# Master RefCell<T> for interior mutability
+# Master Rc<T> for shared ownership and reference counting
 ```
 
 ### **Friday, November 14** 📊
 **Mission Focus**: Mission 10 REST API - Advanced Features
 **Mission Tutorial Activity**: `Mission10_tut/examples/step8_rest_api/` - Rate limiting, metrics, health checks
 **Daily Study**: Week 7, Day 48 - Trait objects deep dive (`dyn Trait`, object safety)
-**Rust Book**: Chapter 15.6 - Reference Cycles Can Leak Memory
+**Rust Book**: Chapter 15.5 - RefCell<T> and the Interior Mutability Pattern
 ```bash
 # Daily Tasks
 # Add rate limiting middleware, Prometheus metrics endpoint
 # Implement health checks and CORS configuration
 # Deep dive into trait objects and object safety rules
-# Learn about reference cycles and memory leaks
+# Master RefCell<T> for interior mutability
 ```
 
 ### **Saturday, November 15** 📋
 **Mission Focus**: Mission 10 Final Review & Documentation
 **Mission Tutorial Activity**: Complete Mission 10 Tutorial - Review all 8 steps
 **Daily Study**: Week 7, Day 49 - Advanced types practice (building type-safe APIs)
-**Rust Book**: Review Chapters 12-15 (I/O Project & Smart Pointers)
+**Rust Book**: Chapter 15.6 - Reference Cycles Can Leak Memory
 ```bash
 # Daily Tasks
 cargo test --all                            # Complete Mission 10 tests
 cargo doc --open                            # Generate documentation  
 # Review all tutorial steps from basic Union-Find to REST API
 # Practice building type-safe APIs with advanced type features
-# Consolidate learning from I/O project through smart pointers
+# Learn about reference cycles and memory leaks
 ```
+
 
 ---
 
@@ -395,7 +399,7 @@ cargo doc --open                            # Generate documentation
 
 ### Rust Book Progress  
 - **Current**: Chapter 4 → **Target**: Chapter 17
-- **Coverage**: Ownership → Structs/Enums → Collections → Error Handling → Generics/Traits/Lifetimes → Testing → Closures/Iterators → Cargo/Crates → Smart Pointers → Concurrency → OOP Patterns
+- **Coverage**: Ownership → Structs/Enums → Collections → Error Handling → Generics/Traits/Lifetimes → Testing → Closures/Iterators → Cargo/Crates (14.1-14.5) → Smart Pointers → Concurrency → OOP Patterns
 
 ## 🎯 Success Metrics
 

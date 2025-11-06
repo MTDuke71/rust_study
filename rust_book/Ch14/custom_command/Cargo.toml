@@ -1,0 +1,25 @@
+[package]
+name = "cargo-example"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <you@example.com>"]
+description = "An example custom Cargo command"
+license = "MIT OR Apache-2.0"
+
+# 14.5 - Extending Cargo with Custom Commands
+# 
+# To create a custom Cargo command:
+# 1. Name your binary cargo-<command-name>
+# 2. Install it with cargo install
+# 3. It will be available as cargo <command-name>
+#
+# This example creates a command called "cargo example"
+# which would be invoked as: cargo example
+
+[[bin]]
+name = "cargo-example"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.4", features = ["derive", "cargo"] }
+

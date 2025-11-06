@@ -1,0 +1,16 @@
+# Chapter 14 Workspace
+# This workspace organizes Chapter 14 examples
+# Note: These packages are also included in the root workspace
+
+[workspace]
+members = [
+    "release_profiles",
+    "publishing_example",
+    "workspace_example/adder",
+    "workspace_example/add-one",
+    "workspace_example/add-two",
+    "install_example",
+    "custom_command",
+]
+resolver = "2"
+

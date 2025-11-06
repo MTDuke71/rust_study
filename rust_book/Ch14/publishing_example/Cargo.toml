@@ -1,0 +1,24 @@
+[package]
+name = "publishing-example"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <you@example.com>"]
+description = "An example crate demonstrating how to prepare for publishing to crates.io"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/yourusername/publishing-example"
+homepage = "https://github.com/yourusername/publishing-example"
+documentation = "https://docs.rs/publishing-example"
+keywords = ["example", "tutorial", "cargo"]
+categories = ["development-tools"]
+
+# 14.2 - Publishing a Crate to Crates.io
+# This example shows how to prepare a crate for publication
+
+[dependencies]
+
+[dev-dependencies]
+
+# Badges for crates.io (shown on the crate page)
+[badges]
+maintenance = { status = "actively-developed" }
+

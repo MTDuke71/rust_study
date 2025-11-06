@@ -1,0 +1,10 @@
+[package]
+name = "adder"
+version = "0.1.0"
+edition = "2021"
+
+# Binary crate that uses workspace members
+[dependencies]
+add-one = { path = "../add-one" }
+add-two = { path = "../add-two" }
+

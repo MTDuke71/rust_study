@@ -1,0 +1,11 @@
+[package]
+name = "add-two"
+version = "0.1.0"
+edition = "2021"
+
+# Another library crate in workspace
+[dependencies]
+add-one = { path = "../add-one" }
+# Example dependency (commented out to avoid requiring rand)
+# rand = "0.8"
+

@@ -1,0 +1,10 @@
+[package]
+name = "add-one"
+version = "0.1.0"
+edition = "2021"
+
+# Library crate in workspace
+[dependencies]
+# Example dependency (commented out to avoid requiring rand)
+# rand = "0.8"
+
