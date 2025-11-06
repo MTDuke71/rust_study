@@ -99,8 +99,9 @@ impl UnionFind {
 
     /// Finds the representative (root) of the set containing element `x`
     ///
-    /// Applies path compression during traversal to flatten the tree structure,
-    /// making future queries faster.
+    /// Uses iterative path compression to flatten the tree structure during traversal,
+    /// making future queries faster. This approach is more efficient than recursive
+    /// path compression and avoids potential stack overflow on deep trees.
     ///
     /// # Requirements Satisfied: REQ-2
     ///
@@ -137,12 +138,22 @@ impl UnionFind {
     pub fn find(&mut self, x: usize) -> Result<usize, String> {
         self.validate_index(x)?;
 
-        // Path compression: make every node point directly to root
-        if self.parent[x] != x {
-            self.parent[x] = self.find(self.parent[x])?;
+        // Iterative path compression for optimal performance
+        // First, find the root
+        let mut root = x;
+        while self.parent[root] != root {
+            root = self.parent[root];
         }
 
-        Ok(self.parent[x])
+        // Then, compress the path by making all nodes point to root
+        let mut current = x;
+        while current != root {
+            let next = self.parent[current];
+            self.parent[current] = root;
+            current = next;
+        }
+
+        Ok(root)
     }
 
     /// Unites the sets containing elements `x` and `y`
@@ -590,7 +601,11 @@ impl WeightedUnionFind {
         }
     }
 
-    /// Finds the root of element x and compresses paths
+    /// Finds the root of element x and compresses paths with distance updates
+    /// 
+    /// Note: WeightedUnionFind uses recursive path compression because it must
+    /// correctly update distances during compression. This is more complex than
+    /// the basic Union-Find case.
     pub fn find(&mut self, x: usize) -> Result<usize, String> {
         if x >= self.parent.len() {
             return Err(format!("Index {} out of bounds", x));
@@ -599,6 +614,7 @@ impl WeightedUnionFind {
         if self.parent[x] != x {
             let old_parent = self.parent[x];
             self.parent[x] = self.find(old_parent)?;
+            // Update distance to root by adding parent's distance to root
             self.dist[x] += self.dist[old_parent];
         }
         Ok(self.parent[x])

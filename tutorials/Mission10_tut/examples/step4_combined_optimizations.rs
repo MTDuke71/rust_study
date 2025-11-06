@@ -179,13 +179,22 @@ impl OptimizedUnionFind {
     /// Find root with PATH COMPRESSION
     /// Makes every node on path point directly to root
     fn find(&mut self, x: usize) -> usize {
-        self.operations += 1;
-        
-        if self.parent[x] != x {
-            // Recursive path compression - elegant and efficient
-            self.parent[x] = self.find(self.parent[x]);
+        // First, find the root without path compression
+        let mut root = x;
+        while root != self.parent[root] {
+            self.operations += 1; // Count each step to find root
+            root = self.parent[root];
         }
-        self.parent[x]
+        
+        // Then, compress the path by making all nodes point to root
+        let mut current = x;
+        while current != root {
+            let next = self.parent[current];
+            self.parent[current] = root;
+            current = next;
+        }
+        
+        root
     }
 
     /// Union with UNION BY RANK
@@ -404,13 +413,31 @@ fn progressive_comparison() {
     
     let test_elements: Vec<usize> = (0..1000).map(|i| i % 16).collect();
     
-    // Basic version (simulate - we can't easily measure without timing)
+    // Count steps for each version
     let mut basic_steps = 0;
     for &elem in &test_elements {
         let mut current = elem;
         while current != basic.parent[current] {
             basic_steps += 1;
             current = basic.parent[current];
+        }
+    }
+
+    let mut path_steps = 0;
+    for &elem in &test_elements {
+        let mut current = elem;
+        while current != path_only.parent[current] {
+            path_steps += 1;
+            current = path_only.parent[current];
+        }
+    }
+
+    let mut rank_steps = 0;
+    for &elem in &test_elements {
+        let mut current = elem;
+        while current != rank_only.parent[current] {
+            rank_steps += 1;
+            current = rank_only.parent[current];
         }
     }
 
@@ -425,15 +452,21 @@ fn progressive_comparison() {
     println!("│ Version             │ Steps     │ Improvement  │");
     println!("├─────────────────────┼───────────┼──────────────┤");
     println!("│ 1. Basic            │ {:>8}  │ baseline     │", basic_steps);
-    println!("│ 2. Path Compression │ {:>8}  │ ~{}x better  │", basic_steps / 8, 8);
-    println!("│ 3. Union by Rank    │ {:>8}  │ ~{}x better  │", basic_steps / 4, 4);
-    println!("│ 4. Both Combined    │ {:>8}  │ ~{}x better  │", 
-             optimized.operations, basic_steps / optimized.operations.max(1));
+    println!("│ 2. Path Compression │ {:>8}  │ ~{:.1}x better  │", path_steps, basic_steps as f64 / path_steps.max(1) as f64);
+    println!("│ 3. Union by Rank    │ {:>8}  │ ~{:.1}x better  │", rank_steps, basic_steps as f64 / rank_steps.max(1) as f64);
+    println!("│ 4. Both Combined    │ {:>8}  │ ~{:.1}x better  │", 
+             optimized.operations, basic_steps as f64 / optimized.operations.max(1) as f64);
     println!("└─────────────────────┴───────────┴──────────────┘\n");
 
     println!("🎯 The optimized version uses almost constant time!");
     println!("   Each find() averages ~{:.1} steps", 
              optimized.operations as f64 / test_elements.len() as f64);
+
+    println!("\n💡 Why aren't the improvements more dramatic?");
+    println!("   1. Small dataset (16 elements) - benefits show more with thousands");
+    println!("   2. Path compression works progressively - improves with use");
+    println!("   3. Union by rank prevents worst-case scenarios from happening");
+    println!("   4. The first few finds build compressed paths for future finds");
 
     println!("\n=== Tree Structure Analysis ===");
     let final_stats = optimized.get_stats();
