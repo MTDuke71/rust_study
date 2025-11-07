@@ -73,6 +73,28 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 
 **Performance**: Efficient O(n) validation for Part 1, acceptable O(n²) brute force for Part 2 with small input size
 
+### Day 3: Mull It Over
+**Title**: Mull It Over  
+**Part 1 Type**: Pattern Matching + String Processing  
+**Part 1 Description**: Parse corrupted memory for valid `mul(X,Y)` instructions and sum multiplication results  
+**Part 2 Type**: Pattern Matching + Conditional Logic  
+**Part 2 Description**: Handle `do()` and `don't()` conditional statements to enable/disable multiplication processing  
+**Key Concepts**: Regular expressions, pattern validation, state machine logic, instruction parsing, escape sequence handling  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Instruction parsing with escalation (simple pattern matching → stateful conditional processing)
+- **Data Structure**: Regex for pattern matching, Vec for instruction sequences, enum for instruction types
+- **Complexity**: Part 1: O(n) regex scanning, Part 2: O(n) single-pass state machine with enable/disable tracking
+- **AoC Theme**: "Corrupted memory parsing" with classic Part 2 conditional complexity (stateless → stateful processing)
+
+**🦀 Rust Conversion Highlights**:
+- **From Python regex groups** → **Rust regex `Captures` with explicit error handling**
+- **From dynamic instruction types** → **Type-safe `enum Instruction` with pattern matching**
+- **From manual string parsing** → **`anyhow::Context` for detailed parse error reporting**
+- **From implicit state tracking** → **Explicit `enabled` boolean with clear state transitions**
+
+**Performance**: Single-pass O(n) regex processing for both parts, efficient state machine for conditional logic
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -83,7 +105,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 | Brute Force | 0 | 0 |
 | Cellular Automaton | 0 | 0 |
 | Combinatorial Optimization | 0 | 0 |
-| Conditional Logic | 1 | 1 |
+| Conditional Logic | 1 | 2 |
 | Cryptographic | 0 | 0 |
 | Data Structures | 1 | 1 |
 | Encoding | 0 | 0 |
@@ -93,27 +115,30 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 | Number Theory | 0 | 0 |
 | Optimization | 0 | 1 |
 | Parsing | 0 | 0 |
-| Pattern Matching | 0 | 0 |
+| Pattern Matching | 1 | 1 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
 | Search/Traversal | 0 | 0 |
 | Simulation | 0 | 0 |
-| String Processing | 0 | 0 |
+| String Processing | 1 | 0 |
 
 ## Implementation Notes
 
 ### Common Patterns Observed:
-1. **Input Parsing**: Structured text parsing with error handling (Day 1: whitespace-separated integers, Day 2: space-separated levels per line)
-2. **Two-Part Escalation**: Part 2 transforms Part 1's approach (Day 1: distance → similarity, Day 2: strict safety → tolerance mechanism)
+1. **Input Parsing**: Structured text parsing with error handling (Day 1: whitespace-separated integers, Day 2: space-separated levels per line, Day 3: regex pattern extraction from corrupted memory)
+2. **Two-Part Escalation**: Part 2 transforms Part 1's approach (Day 1: distance → similarity, Day 2: strict safety → tolerance mechanism, Day 3: stateless parsing → stateful conditional processing)
 3. **List Processing**: Sort and pair operations (Day 1: smallest-to-smallest pairing), sequence validation (Day 2: monotonicity checking)
 4. **Frequency Analysis**: Count occurrences for scoring (Day 1: HashMap frequency counting)
 5. **Functional Pipelines**: Iterator chains for data transformation (Day 1: parsing → unzipping → processing, Day 2: windows → validation → counting)
 6. **Safety Validation**: Range and monotonicity checking (Day 2: difference bounds + direction consistency)
 7. **Brute Force Optimization**: Try all possibilities when constraints relax (Day 2: Problem Dampener trying each removal)
+8. **Pattern Matching**: Regular expressions for instruction parsing (Day 3: `mul(X,Y)`, `do()`, `don't()` extraction from noisy input)
+9. **State Machine Logic**: Conditional instruction processing (Day 3: enable/disable state tracking across instruction sequence)
 
 ### Rust-Specific Considerations:
 - **Day 1**: Excellent introduction to functional error handling with `Result<T, E>`, iterator combinators (`zip`, `fold`, `sum`), and pattern matching for safe parsing. Demonstrates HashMap construction with functional approach vs Python's Counter.
-- **Day 2**: Showcases iterator windows for sliding comparisons, early-return imperative validation (vs Python's `all()`/`any()` functional style), and `to_vec()` + `remove()` for element removal simulation. Demonstrates performance-focused approach with manual state tracking vs functional boolean aggregation. 
+- **Day 2**: Showcases iterator windows for sliding comparisons, early-return imperative validation (vs Python's `all()`/`any()` functional style), and `to_vec()` + `remove()` for element removal simulation. Demonstrates performance-focused approach with manual state tracking vs functional boolean aggregation.
+- **Day 3**: Highlights regex integration with `regex` crate, type-safe instruction parsing using `enum` with pattern matching, comprehensive error context with `anyhow::Context`, and efficient single-pass state machine implementation. Shows Rust's strength in pattern validation and stateful processing with zero-cost abstractions. 
 ---
 
 ## Adding New Days
@@ -149,10 +174,10 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 5, 2025*
-*Days Implemented: 1, 2*
+*Last Updated: November 7, 2025*
+*Days Implemented: 1, 2, 3*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
 *Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/Priority Queue Patterns]]*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
