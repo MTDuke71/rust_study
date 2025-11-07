@@ -175,6 +175,9 @@
 - [[Unsafe Rust - Raw Pointers and Safety Contracts]] - Building safe abstractions from unsafe code
 - [[PhantomData Type Safety Patterns]] - Zero-cost type safety
 
+**Software Architecture:**
+- [[software-architecture-patterns]] - **Layer-based vs Feature-based Architecture** - Project organization patterns, decision framework, and Rust-specific considerations
+
 **Performance & Optimization:**
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
 - [[../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
