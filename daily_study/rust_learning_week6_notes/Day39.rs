@@ -5,8 +5,8 @@ use std::collections::HashMap;
 
 /// Core Union-Find implementation for workspace demonstration
 #[derive(Debug, Clone)]
-pub struct UnionFind<T> 
-where 
+pub struct UnionFind<T>
+where
     T: Clone + Eq + std::hash::Hash,
 {
     parent: HashMap<T, T>,
@@ -14,8 +14,8 @@ where
     count: usize,
 }
 
-impl<T> UnionFind<T> 
-where 
+impl<T> UnionFind<T>
+where
     T: Clone + Eq + std::hash::Hash,
 {
     /// Create a new empty Union-Find structure
@@ -32,7 +32,7 @@ where
         if self.parent.contains_key(&x) {
             return false; // Element already exists
         }
-        
+
         self.parent.insert(x.clone(), x.clone());
         self.rank.insert(x, 0);
         self.count += 1;
@@ -48,18 +48,18 @@ where
         // Path compression: make every node point directly to root
         let mut current = x.clone();
         let mut path = Vec::new();
-        
+
         // Find root and collect path
         while self.parent[&current] != current {
             path.push(current.clone());
             current = self.parent[&current].clone();
         }
-        
+
         // Compress path: point all nodes directly to root
         for node in path {
             self.parent.insert(node, current.clone());
         }
-        
+
         Some(current)
     }
 
@@ -69,7 +69,7 @@ where
             Some(root) => root,
             None => return false,
         };
-        
+
         let root_y = match self.find(y) {
             Some(root) => root,
             None => return false,
@@ -114,8 +114,8 @@ where
     }
 }
 
-impl<T> Default for UnionFind<T> 
-where 
+impl<T> Default for UnionFind<T>
+where
     T: Clone + Eq + std::hash::Hash,
 {
     fn default() -> Self {
@@ -126,22 +126,23 @@ where
 fn main() {
     println!("=== Day 39: Workspace Management Demonstration ===");
     println!();
-    
+
     // Demonstrate workspace concepts through Union-Find example
     demonstrate_workspace_concepts();
-    
+
     println!();
     demonstrate_multi_crate_benefits();
-    
-    println!();  
+
+    println!();
     demonstrate_dependency_management();
-    
+
     println!("=== Workspace Management Complete! ===");
 }
 
 fn demonstrate_workspace_concepts() {
     println!("📦 Workspace Structure Concepts:");
-    println!("
+    println!(
+        "
     Typical multi-crate workspace for Union-Find project:
     
     union-find-workspace/
@@ -165,68 +166,73 @@ fn demonstrate_workspace_concepts() {
     └── union-find-examples/          # Usage examples
         ├── Cargo.toml
         └── examples/
-    ");
-    
+    "
+    );
+
     println!("Benefits of this organization:");
     println!("  • Clear separation of concerns");
-    println!("  • Shared dependency management");  
+    println!("  • Shared dependency management");
     println!("  • Independent compilation and testing");
     println!("  • Modular development and deployment");
 }
 
 fn demonstrate_multi_crate_benefits() {
     println!("🎯 Multi-Crate Benefits Demonstration:");
-    
+
     // Simulate core library functionality
     let mut uf = UnionFind::new();
-    
+
     println!("\n1. Core Library (union-find-core):");
     println!("   - Pure algorithm implementation");
     println!("   - No external dependencies beyond std");
     println!("   - Focused, testable, reusable");
-    
+
     // Make sets for social network example
     let users = ["alice", "bob", "charlie", "diana", "eve"];
     for &user in &users {
         uf.make_set(user);
     }
     println!("   Created {} user sets", uf.count());
-    
-    println!("\n2. CLI Application (union-find-cli):");  
+
+    println!("\n2. CLI Application (union-find-cli):");
     println!("   - Uses core library as dependency");
     println!("   - Adds clap for argument parsing");
     println!("   - Command-line interface for operations");
-    
+
     // Simulate CLI operations
     uf.union(&"alice", &"bob");
     uf.union(&"charlie", &"diana");
     println!("   Simulated: uf union alice bob");
     println!("   Simulated: uf union charlie diana");
     println!("   Result: {} connected components", uf.count());
-    
+
     println!("\n3. Web API (union-find-web):");
-    println!("   - Uses core library as dependency");  
+    println!("   - Uses core library as dependency");
     println!("   - Adds axum/tokio for async web server");
     println!("   - REST endpoints for remote operations");
-    
+
     // Simulate web API operations
     let alice_charlie_connected = uf.connected(&"alice", &"charlie");
     let alice_bob_connected = uf.connected(&"alice", &"bob");
-    println!("   GET /connected?x=alice&y=charlie -> {}", alice_charlie_connected);
+    println!(
+        "   GET /connected?x=alice&y=charlie -> {}",
+        alice_charlie_connected
+    );
     println!("   GET /connected?x=alice&y=bob -> {}", alice_bob_connected);
-    
+
     println!("\n4. Benchmarks (union-find-benchmarks):");
     println!("   - Uses core library as dependency");
-    println!("   - Adds criterion for performance testing"); 
+    println!("   - Adds criterion for performance testing");
     println!("   - Isolated performance validation");
     println!("   - No impact on core library size");
 }
 
 fn demonstrate_dependency_management() {
     println!("🔧 Workspace Dependency Management:");
-    
+
     println!("\nWorkspace-level dependency coordination:");
-    println!("
+    println!(
+        "
     # Root Cargo.toml
     [workspace.dependencies]
     serde = {{ version = \"1.0\", features = [\"derive\"] }}
@@ -244,10 +250,12 @@ fn demonstrate_dependency_management() {
     # ✅ Single place to update dependencies  
     # ✅ Reduced Cargo.lock complexity
     # ✅ Better dependency resolution
-    ");
-    
+    "
+    );
+
     println!("Workspace commands demonstration:");
-    println!("
+    println!(
+        "
     # Build all crates in workspace
     cargo build --workspace
     
@@ -268,10 +276,12 @@ fn demonstrate_dependency_management() {
     
     # Lint all code
     cargo clippy --workspace -- -D warnings
-    ");
-    
+    "
+    );
+
     println!("Path dependencies for local development:");
-    println!("
+    println!(
+        "
     # union-find-cli/Cargo.toml
     [dependencies]
     union-find-core = {{ path = \"../union-find-core\" }}
@@ -282,8 +292,9 @@ fn demonstrate_dependency_management() {
     union-find-core = {{ path = \"../union-find-core\" }}
     axum = {{ workspace = true }}
     tokio = {{ workspace = true }}
-    ");
-    
+    "
+    );
+
     println!("✨ Result: Modular, maintainable, scalable project structure!");
 }
 
@@ -294,36 +305,36 @@ mod tests {
     #[test]
     fn test_workspace_union_find() {
         let mut uf = UnionFind::new();
-        
+
         // Test basic operations
         uf.make_set(1);
         uf.make_set(2);
         uf.make_set(3);
-        
+
         assert_eq!(uf.count(), 3);
         assert!(!uf.connected(&1, &2));
-        
+
         uf.union(&1, &2);
         assert!(uf.connected(&1, &2));
         assert_eq!(uf.count(), 2);
     }
 
-    #[test]  
+    #[test]
     fn test_path_compression() {
         let mut uf = UnionFind::new();
-        
+
         // Create chain: 1 -> 2 -> 3 -> 4
         for i in 1..=4 {
             uf.make_set(i);
         }
-        
+
         uf.union(&1, &2);
-        uf.union(&2, &3); 
+        uf.union(&2, &3);
         uf.union(&3, &4);
-        
+
         // All should be connected after path compression
         assert!(uf.connected(&1, &4));
-        
+
         // Path compression should make subsequent finds faster
         let root1 = uf.find(&1).unwrap();
         let root4 = uf.find(&4).unwrap();
