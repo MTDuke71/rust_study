@@ -69,8 +69,8 @@ fn calculate_something(input: i32) -> i32 {
     // With debug symbols: debugger can step through this, show variable names
     // Without debug symbols: debugger sees assembly only
     let intermediate = input * 2;
-    let final_result = intermediate + 10;
-    final_result
+    
+    intermediate + 10
 }
 
 fn process_data(data: i32) -> String {

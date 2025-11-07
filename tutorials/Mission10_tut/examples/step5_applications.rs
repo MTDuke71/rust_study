@@ -78,7 +78,7 @@ impl UnionFind {
         
         for i in 0..self.parent.len() {
             let root = self.find(i);
-            components.entry(root).or_insert_with(Vec::new).push(i);
+            components.entry(root).or_default().push(i);
         }
         
         components.into_values().collect()
@@ -364,14 +364,12 @@ fn demonstrate_cycle_detection() {
     println!("Vertices: {{0, 1, 2, 3, 4}}\n");
 
     let num_vertices = 5;
-    let edges = vec![
-        (0, 1, "Connect nodes 0-1"),
+    let edges = [(0, 1, "Connect nodes 0-1"),
         (1, 2, "Connect nodes 1-2"),
         (2, 3, "Connect nodes 2-3"),
         (3, 4, "Connect nodes 3-4"),
         (1, 3, "Shortcut: Connect nodes 1-3"),
-        (0, 4, "Try to connect nodes 0-4"),
-    ];
+        (0, 4, "Try to connect nodes 0-4")];
 
     let mut uf = UnionFind::new(num_vertices);
 
@@ -465,9 +463,7 @@ fn demonstrate_social_network() {
     println!("  • Efficiently track mutually connected groups");
     println!("  • Dynamic updates as friendships form\n");
 
-    let people = vec![
-        "Alice", "Bob", "Carol", "Dave", "Eve", "Frank", "Grace", "Henry"
-    ].iter().map(|s| s.to_string()).collect();
+    let people = ["Alice", "Bob", "Carol", "Dave", "Eve", "Frank", "Grace", "Henry"].iter().map(|s| s.to_string()).collect();
 
     let mut network = SocialNetwork::new(people);
 
