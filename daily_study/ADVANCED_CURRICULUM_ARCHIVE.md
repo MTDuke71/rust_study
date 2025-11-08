@@ -108,6 +108,83 @@ This curriculum represents **9 weeks of advanced Rust topics** (Days 43-105) cov
 
 ---
 
+## 🚀 **Advanced Mission Track** (Missions 11-29)
+
+**Mission Overview**: Advanced data structures and algorithms with AoC 2015 integration for practical problem-solving mastery.
+
+### **Phase 2: Dynamic Programming & Algorithms** (Missions 11-14)
+
+**Mission 11**: Dynamic Programming Fundamentals  
+- Core DP patterns: memoization, tabulation, state transitions
+- AoC applications: optimal substructure problems
+- Deliverables: DP toolkit with benchmarking framework
+
+**Mission 12**: Byte-Level Parsing & Escapes (AoC15 Day 8)  
+- Goal: Implement byte-oriented parser for string literals with escape sequences (\", \\, \xHH)
+- AoC Mapping: Day 8 (Strings in Code) - byte vs UTF-8 semantics
+- Deliverables: `byte_parser` module with zero-alloc scanning, comprehensive tests, benchmarks
+
+**Mission 13**: DAG Evaluator with Memoization (AoC15 Day 7)  
+- Goal: Parse wire expressions into DAG and evaluate with memoized recursion
+- AoC Mapping: Day 7 (Some Assembly Required)
+- Deliverables: Parser → DAG IR, evaluator with memo/cycle detection, topological visualization
+
+**Mission 14**: Combinatorics Toolkit & Pruning (AoC15 Days 9, 13, 21)  
+- Goal: Combinations/permutations generators with pruning hooks and symmetry reductions
+- AoC Mapping: Day 9 (TSP), Day 13 (Seating), Day 21 (Equipment)
+- Deliverables: Heap's algorithm, next_permutation, pruning traits, speedup demonstrations
+
+### **Phase 3: Advanced Parsing & Iterators** (Missions 15-17)
+
+**Mission 15**: Backtracking - Subset Sum & K-Partition (AoC15 Days 17, 24)  
+- Goal: Canonical backtracking templates for subset sum and k-way equal-sum partition
+- AoC Mapping: Day 17 (Containers), Day 24 (Balance)
+- Deliverables: Index-based subset generators, partition validator, early-exit documentation
+
+**Mission 16**: Modular Arithmetic & Number Theory (AoC15 Days 20, 25)  
+- Goal: `modmath` crate with fast pow mod, gcd/lcm, sieve, divisor sum via prime factorization
+- AoC Mapping: Day 20 (Divisors), Day 25 (Let It Snow)
+- Deliverables: `mod_pow`, `mod_mul_safe`, divisor enumeration, prime sieve, micro-benchmarks
+
+**Mission 17**: Mini-VM Interpreter (AoC15 Day 23)  
+- Goal: Tiny register machine with PC, registers, jumps, inc/hlf/tpl ops, instruction set + tracing
+- AoC Mapping: Day 23 (Turing Lock)
+- Deliverables: IR + interpreter, step tracer, state snapshotting, program loader with golden traces
+
+### **Phase 4: Performance & Unsafe Code** (Missions 18-20)
+
+**Mission 18**: String Rewriting & Search Direction (AoC15 Day 19)  
+- Goal: Rewriting frameworks for forward BFS and reverse greedy strategies
+- AoC Mapping: Day 19 (Medicine for Rudolph)
+- Deliverables: Rule application engine, bidirectional search examples, proof-by-structure docs
+
+**Mission 19**: Time-Segmented Simulation & Cycle Math (AoC15 Day 14)  
+- Goal: Simulation framework with step simulation and closed-form cycle analysis
+- AoC Mapping: Day 14 (Reindeer Olympics)
+- Deliverables: Cycle decomposition utilities, state machine harness, dual scoring with visual trace
+
+**Mission 20**: Parallel Brute-Force & Work Distribution (AoC15 Day 4)  
+- Goal: Parallel prefix search using rayon/threads with chunking, early termination, progress reporting
+- AoC Mapping: Day 4 (Stocking Stuffer)
+- Deliverables: Threaded search harness, atomics for stop signals, single-thread vs parallel benchmarks
+
+### **Phase 5: Design Patterns in Rust** (Missions 21-25)
+
+**Mission 21**: Observer Pattern - Event handling with channels and callbacks  
+**Mission 22**: Strategy Pattern - Runtime algorithm selection with trait objects  
+**Mission 23**: Factory Pattern - Object creation with associated types  
+**Mission 24**: Decorator Pattern - Composable behavior with wrapper types  
+**Mission 25**: Adapter Pattern - Interface compatibility between incompatible APIs  
+
+### **Phase 6: Advanced Systems Programming** (Missions 26-29)
+
+**Mission 26**: Build-Time Code Generation (`build.rs`) - Procedural macros and build scripts  
+**Mission 27**: Unsafe Data Structures - Implementing core data structure with raw pointers  
+**Mission 28**: High-Performance Computing (SIMD) - Parallel data processing with SIMD  
+**Mission 29**: WebAssembly Integration (WASM) - Building high-performance browser applications  
+
+---
+
 ## 🎯 **Strategic Integration Guidelines**
 
 ### **When AoC Problems Require Advanced Topics**
@@ -115,9 +192,12 @@ This curriculum represents **9 weeks of advanced Rust topics** (Days 43-105) cov
 **Pull Specific Topics On-Demand**:
 ```markdown
 **Concurrency (Days 50-56)**: When AoC solutions benefit from parallel processing
+**Advanced Algorithms (Missions 11-20)**: For complex problem-solving patterns
 **Macros (Days 64-70)**: When repetitive code patterns need generation  
 **Memory Management (Days 78-84)**: When performance optimization is critical
 **Type System (Days 43-49)**: When complex generic abstractions are needed
+**Design Patterns (Missions 21-25)**: For robust system architecture
+**Systems Programming (Missions 26-29)**: For specialized performance requirements
 ```
 
 ### **Zettelkasten Integration Strategy**
@@ -139,19 +219,22 @@ This curriculum represents **9 weeks of advanced Rust topics** (Days 43-105) cov
 ## 📚 **Resource Organization**
 
 ### **High-Priority Topics for AoC**
-1. **Concurrency (Days 50-56)**: Parallel brute-force, multi-threaded search
-2. **Macros (Days 64-70)**: Code generation for repetitive patterns
-3. **Memory Management (Days 78-84)**: Performance optimization for large inputs
+1. **Advanced Algorithms (Missions 12-20)**: AoC 2015-aligned problem-solving patterns
+2. **Concurrency (Days 50-56)**: Parallel brute-force, multi-threaded search  
+3. **Macros (Days 64-70)**: Code generation for repetitive patterns
+4. **Memory Management (Days 78-84)**: Performance optimization for large inputs
 
 ### **Medium-Priority Topics**
-4. **Advanced Types (Days 43-49)**: Complex generic abstractions
-5. **Async Programming (Days 57-63)**: Concurrent I/O operations
+5. **Advanced Types (Days 43-49)**: Complex generic abstractions
+6. **Dynamic Programming (Mission 11)**: Core DP patterns for optimization problems
+7. **Async Programming (Days 57-63)**: Concurrent I/O operations
 
 ### **Lower-Priority Topics**
-6. **Build Scripts (Days 71-77)**: Development tooling
-7. **SIMD (Days 85-91)**: Specialized performance optimization
-8. **FFI (Days 92-98)**: C library integration
-9. **WASM (Days 99-105)**: Browser-based applications
+8. **Design Patterns (Missions 21-25)**: System architecture and maintainability
+9. **Build Scripts (Days 71-77)**: Development tooling
+10. **SIMD (Days 85-91, Mission 28)**: Specialized performance optimization
+11. **FFI (Days 92-98)**: C library integration
+12. **WASM (Days 99-105, Mission 29)**: Browser-based applications
 
 ---
 
@@ -167,7 +250,8 @@ This curriculum represents **9 weeks of advanced Rust topics** (Days 43-105) cov
 - [[rust_book/]] - Foundational Rust concepts
 
 **Advanced Learning**:
-- [[missions/]] - V-Cycle implementations for practical application
+- [[missions/Mission1-10/]] - Foundational data structures (Stack, Queue, HashMap, LinkedList, etc.)
+- [[missions/Mission11-29/]] - Advanced algorithms and systems programming (ARCHIVED ABOVE)
 - [[tutorials/]] - Step-by-step learning progressions
 
 ---
