@@ -21,33 +21,39 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - **Implementation Discussion**: [[../../advent_of_code/aoc2015/discussions/day1]] - Complete walkthrough of scaffold usage and Rust vs Python comparison
 
 ### **Day 2: I Was Told There Would Be No Math**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day02.md|Day 2 Problem]]
 - Parsing structured input (`split()`, `parse()`)
 - Tuple destructuring
 - Mathematical formulas and min/max operations
 
 ### **Day 3: Perfectly Spherical Houses in a Vacuum**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day03.md|Day 3 Problem]]
 - 2D coordinate systems
 - HashSet for uniqueness tracking
 - Even/odd index splitting with iterators
 
 ### **Day 4: The Ideal Stocking Stuffer**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day04.md|Day 4 Problem]]
 - External crate integration (`md5`)
 - Computational optimization
 - Loop efficiency patterns
 
 ### **Day 5: Doesn't He Have Intern-Elves For This?**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day05.md|Day 5 Problem]]
 - Regex pattern matching
 - Multiple validation rules
 - String pattern detection
 - **Reference**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Walkthrough of Day 5 solution
 
 ### **Day 6: Probably a Fire Hazard**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day06.md|Day 6 Problem]]
 - 2D grid data structures
 - Coordinate range iteration
 - State management (on/off/toggle)
 - `saturating_sub()` for safe arithmetic
 
 ### **Day 7: Some Assembly Required**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day07.md|Day 7 Problem]]
 - **Advanced**: Circuit simulation with DAG
 - HashMap memoization
 - Recursive dependency resolution
@@ -58,6 +64,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - **Dependency Tree Analysis**: [[../advent_of_code/aoc2015/examples/day07_debug/DEPENDENCY_TREE_README]] - Visual gate-level dependency analysis for wire 'a'
 
 ### **Day 8: Matchsticks**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day08.md|Day 8 Problem]]
 - **String parsing & escape sequences**
 - **Critical Rust Concept**: [[../advent_of_code/aoc2015/examples/day08_rust_string_handling_explained]]
 - Character vs byte counting
@@ -66,6 +73,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Part 2: String encoding/escaping
 
 ### **Day 9: All in a Single Night**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day09.md|Day 9 Problem]]
 - **Traveling Salesman Problem (TSP)**
 - Permutation generation with Heap's algorithm
 - Mission 5 Dictionary integration
@@ -97,6 +105,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - **Performance**: Smart range skipping optimization to avoid generating invalid passwords
 
 ### **Day 12: JSAbacusFramework.io**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day12.md|Day 12 Problem]]
 - **Deep Dive**: [[JSON Processing with serde_json]] - Complete guide to JSON parsing and traversal
 - JSON parsing with `serde_json::Value`
 - Recursive data structure traversal
@@ -105,6 +114,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Dynamic typing in statically-typed language
 
 ### **Day 13: Knights of the Dinner Table**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day13.md|Day 13 Problem]]
 - **Traveling Salesman Problem** with circular seating constraints
 - **Complete Analysis**: [[../advent_of_code/aoc2015/examples/day13_analysis]] - TSP algorithms, graph theory, and mathematical proofs
 - Weighted directed complete adjacency graph
@@ -113,6 +123,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Global vs. local optimization strategies
 
 ### **Day 14: Reindeer Olympics**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day14.md|Day 14 Problem]]
 - **Cyclic Behavior Simulation** and mathematical optimization
 - **Complete Analysis**: [[../advent_of_code/aoc2015/examples/day14_analysis]] - Comprehensive implementation guide for cyclic systems
 - **Complete Summary**: [[../advent_of_code/aoc2015/examples/DAY14_COMPLETE_SUMMARY]] - Full problem walkthrough
