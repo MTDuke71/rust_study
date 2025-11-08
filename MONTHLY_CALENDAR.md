@@ -632,9 +632,9 @@ git add . && git commit -m "Ch15.1 Box<T> + AoC tree problems + knowledge links"
 - [[Week 5 Overview]] - Error handling
 
 *Mission Integration:*
-- [[Mission1 Overview]] - Stack Implementation (V-Cycle foundation)
-- [[Mission2 Overview]] - Queue Implementation (Ring buffer patterns)
-- [[Mission3 Overview]] - Search Algorithms (Binary search mastery)
+- [[mission-1]] - Stack Implementation (V-Cycle foundation)
+- [[mission-2]] - Queue Implementation (Ring buffer patterns)
+- [[mission-3]] - Search Algorithms (Binary search mastery)
 - [[Mission4 Overview]] - Linked Lists (Pointer manipulation)
 - [[Mission5 Overview]] - HashMap & HashSet (Current focus)
 - [[Mission6 Overview]] - Grid Systems (2D spatial algorithms)

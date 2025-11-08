@@ -6925,7 +6925,7 @@ Similar code found with 2 license types
 - [[Clippy]] - Rust linting and code quality
 
 ### Mission Integration
-- [[Mission1 Overview]] - Stack implementation foundation
+- [[mission-1]] - Stack implementation foundation
 - [[Brackets Basic]] - Original bracket validation project
 - [[Brackets Extended]] - Advanced features and configuration
 

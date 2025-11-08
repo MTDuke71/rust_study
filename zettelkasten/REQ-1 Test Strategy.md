@@ -266,8 +266,8 @@ Confirm REQ-1 meets user needs
 - [[Unit Testing Patterns]] - Effective test organization
 
 **Mission Context:**
-- [[Mission1 Overview]] - Stack REQ-1 testing
-- [[Mission2 Overview]] - Queue REQ-1 testing
+- [[mission-1]] - Stack REQ-1 testing
+- [[mission-2]] - Queue REQ-1 testing
 - [[Mission5 Overview]] - HashMap REQ-1 testing
 - [[Missions Overview]] - All mission overviews
 

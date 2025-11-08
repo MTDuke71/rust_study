@@ -309,9 +309,9 @@ cargo run
 
 ### **Mission Applications**
 Collections are fundamental to all missions:
-- [[Mission1 Overview]] - Stack using Vec<T>
-- [[Mission2 Overview]] - Queue implementations with Vec
-- [[Mission3 Overview]] - Binary search on sorted vectors
+- [[mission-1]] - Stack using Vec<T>
+- [[mission-2]] - Queue implementations with Vec
+- [[mission-3]] - Binary search on sorted vectors
 - [[Mission4 Overview]] - Linked lists as alternative to Vec
 - [[Mission5 Overview]] - Custom HashMap implementation
 - [[Mission6 Overview]] - Grid storage with Vec<Vec<T>>

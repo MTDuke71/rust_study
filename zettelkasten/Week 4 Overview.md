@@ -130,7 +130,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 - Understand BFS optimality guarantees
 
 **Connected to:**
-- [[Mission2 Overview]] - Queue implementation
+- [[mission-2]] - Queue implementation
 - [[Mission6 Overview]] - BFS pathfinding utilities
 - [[BFS Patterns]] - Breadth-first applications
 - [[A-Star-Algorithm-Deep-Dive]] - Heuristic improvement over BFS
@@ -164,7 +164,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 - Choose appropriate queue type for problem
 
 **Connected to:**
-- [[Mission2 Overview]] - Ring buffer deque
+- [[mission-2]] - Ring buffer deque
 - [[A-Star-Algorithm-Deep-Dive]] - Priority queue with heuristic
 - Dijkstra's algorithm for weighted shortest paths
 
@@ -196,7 +196,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 - Handle parsing errors gracefully
 
 **Connected to:**
-- [[Mission3 Overview]] - Search in parsed data
+- [[mission-3]] - Search in parsed data
 - [[Error Handling Deep Dive]] - Result and Option patterns
 - Rust Book Chapter 9 - Error Handling
 
@@ -435,7 +435,7 @@ for line in input.lines() {
 ### **Mission Implementations**
 - [[Mission6 Overview]] - Complete 2D grid utilities
 - [[Mission7 Overview]] - Graph algorithms and traversal
-- [[Mission2 Overview]] - Queue foundations
+- [[mission-2]] - Queue foundations
 
 ### **Zettelkasten Deep Dives**
 - [[BFS Patterns]] - Breadth-first applications

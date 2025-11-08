@@ -60,7 +60,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 
 **Connected to:**
 - [[Mission5 Overview]] - Generic HashMap implementation
-- [[Mission1 Overview]] - Generic Stack\<T\>
+- [[mission-1]] - Generic Stack\<T\>
 - [[Generic Programming]] - Deep dive into type parameterization
 - Rust Book Chapter 10.1 - Generic Data Types
 
@@ -87,7 +87,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 
 **Connected to:**
 - [[Mission5 Overview]] - REQ-3 safe reference handling
-- [[Mission3 Overview]] - Iterator lifetimes
+- [[mission-3]] - Iterator lifetimes
 - Rust Book Chapter 10.3 - Validating References with Lifetimes
 
 **Runnable Example:** ✅ Complete demo in `Day17.md`
@@ -112,7 +112,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 - Design trait hierarchies
 
 **Connected to:**
-- [[Mission3 Overview]] - Searchable trait with associated types
+- [[mission-3]] - Searchable trait with associated types
 - Iterator trait design patterns
 - Rust Book Chapter 19.2 - Advanced Traits
 
@@ -290,7 +290,7 @@ Week 3 built the **theoretical foundation** for generic, reusable code. Week 4 a
 
 ### **Mission Connections**
 - [[Mission5 Overview]] - HashMap using Week 3 concepts
-- [[Mission3 Overview]] - Trait-based search
+- [[mission-3]] - Trait-based search
 - [[Mission7 Overview]] - Generic graph representation
 
 ### **Zettelkasten Deep Dives**

@@ -62,8 +62,8 @@ pub trait Pathfinder<G: WeightedGraph> {
 
 ### **Integration Points**
 - **[[Mission7 Overview]]** - Graph<T> structures and basic graph algorithms
-- **[[Mission1 Overview]]** - Stack patterns for path reconstruction
-- **[[Mission2 Overview]]** - Queue understanding for algorithm comparison
+- **[[mission-1]]** - Stack patterns for path reconstruction
+- **[[mission-2]]** - Queue understanding for algorithm comparison
 
 ---
 

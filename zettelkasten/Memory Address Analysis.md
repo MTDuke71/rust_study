@@ -246,7 +246,7 @@ impl<K, V> HashMap<K, V> {
 ## 🔗 **Integration with Learning Tracks**
 
 ### **Mission Applications**
-- **[[Mission2 Overview]]**: Ring buffer memory access patterns
+- **[[mission-2]]**: Ring buffer memory access patterns
 - **[[Mission5 Overview]]**: HashMap bucket distribution analysis
 - **[[Mission6 Overview]]**: Grid memory layout optimization
 - **[[Mission7 Overview]]**: Graph adjacency list memory efficiency

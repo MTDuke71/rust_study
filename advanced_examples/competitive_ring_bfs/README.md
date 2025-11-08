@@ -198,7 +198,7 @@ After working with this project, you'll understand:
 - **[[Collections MOC]]** - Data structures and algorithms
 
 ### 🎯 RingBufferQueue Resources
-- **[[Mission2 Overview]]** - Queue V-Cycle implementation
+- **[[mission-2]]** - Queue V-Cycle implementation
 - **[[Ring Buffer Overwriting Semantics]]** - Circular buffer capacity management
 - [[../../missions/Mission2/IMPLEMENTATION_SUMMARY|Implementation Summary]] - Mission2 details
 - [[../../missions/Mission2/ALTERNATIVE_COMPARISON|Alternative Comparison]] - Queue approaches

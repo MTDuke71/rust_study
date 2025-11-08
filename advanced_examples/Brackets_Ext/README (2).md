@@ -75,7 +75,7 @@ cargo clippy -- -D warnings
 - [[Cargo Test]] - Running tests with cargo
 
 ### Mission Integration
-- [[Mission1 Overview]] - Stack implementation foundation
+- [[mission-1]] - Stack implementation foundation
 - [[Brackets Extended]] - Advanced features building on this
 - [[Missions Overview]] - V-Cycle mission overview
 

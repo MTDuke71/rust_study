@@ -276,9 +276,9 @@ The compiler ensures memory safety by tracking these relationships at compile ti
 
 ### **Mission Applications**
 This chapter's concepts are fundamental to all missions:
-- [[Mission1 Overview]] - Stack ownership and move semantics
-- [[Mission2 Overview]] - Queue ownership with enqueue/dequeue
-- [[Mission3 Overview]] - Binary search with borrowed slices
+- [[mission-1]] - Stack ownership and move semantics
+- [[mission-2]] - Queue ownership with enqueue/dequeue
+- [[mission-3]] - Binary search with borrowed slices
 - [[Mission4 Overview]] - Linked list pointer ownership
 - [[Mission5 Overview]] - HashMap key/value ownership patterns
 
@@ -328,7 +328,7 @@ This chapter's concepts are fundamental to all missions:
 
 *Tags: #rust-book #chapter4 #ownership #borrowing #references #slices #memory-management #foundation*
 
-*Links: [[zettel-index]] | [[Ownership and Borrowing]] | [[Memory Management]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Ownership and Borrowing]] | [[Memory Management]] | [[mission-1]] | [[mission-2]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
 
 ---
 

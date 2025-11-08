@@ -4,7 +4,7 @@
 - **Overview**: [[zettelkasten/rust_book/rust-book-ch6]]
 - **Previous**: [[zettelkasten/rust_book/rust-book-ch5]] - Structs and methods
 - **Next**: [[zettelkasten/rust_book/rust-book-ch7]] - Packages, crates, and modules
-- **Missions**: [[Mission3 Overview]] (LinkedList with Option) | [[Mission2 Overview]] (Queue with Result)
+- **Missions**: [[mission-3]] (LinkedList with Option) | [[mission-2]] (Queue with Result)
 - **Daily Study**: [[daily-study/Day14]] - Uses Result enum extensively
 - **Book MOC**: [[Rust Book MOC]]
 
@@ -417,8 +417,8 @@ fn handle_response(response: ApiResponse) {
 ## 🔗 Related Content
 
 **Missions:**
-- [[Mission3 Overview]] - LinkedList uses `Option<Box<Node<T>>>` for next pointers
-- [[Mission2 Overview]] - Queue operations return `Option<T>` for empty cases
+- [[mission-3]] - LinkedList uses `Option<Box<Node<T>>>` for next pointers
+- [[mission-2]] - Queue operations return `Option<T>` for empty cases
 - [[Mission5 Overview]] - HashMap uses `Option<&V>` for get operations
 
 **Daily Study:**

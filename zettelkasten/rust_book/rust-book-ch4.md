@@ -18,8 +18,8 @@ Understanding ownership is fundamental to Rust programming. This chapter covers 
 
 ## Mission Integration
 
-- **[[Mission1 Overview]]** - Stack implementation using ownership principles
-- **[[Mission2 Overview]]** - Queue operations and move semantics
+- **[[mission-1]]** - Stack implementation using ownership principles
+- **[[mission-2]]** - Queue operations and move semantics
 - **[[Daily Study Day 2]]** - Hands-on ownership exercises
 
 ## Cross-References
@@ -31,7 +31,7 @@ Understanding ownership is fundamental to Rust programming. This chapter covers 
 ## Learning Path
 
 1. Read [[../../rust_book/Ch4/README]] for comprehensive coverage
-2. Practice with [[Mission1 Overview]] stack implementation
+2. Practice with [[mission-1]] stack implementation
 3. Apply concepts in [[daily-study/Day02]] exercises
 4. Test understanding with ownership quiz patterns
 
@@ -39,4 +39,4 @@ Understanding ownership is fundamental to Rust programming. This chapter covers 
 
 *Tags: #rust-book #ownership #borrowing #memory-management #ch4*
 
-*Links: [[rust-book-ch1-4-review]] | [[../../rust_book/Ch4/README]] | [[Ownership and Borrowing]] | [[Mission1 Overview]] | [[zettel-index]]*
+*Links: [[rust-book-ch1-4-review]] | [[../../rust_book/Ch4/README]] | [[Ownership and Borrowing]] | [[mission-1]] | [[zettel-index]]*

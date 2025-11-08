@@ -725,8 +725,8 @@ impl MyString {
 ## 🔗 **Real-World Examples**
 
 ### **Mission Implementations**
-- **[[Mission1 Overview]]** - Stack API with push/pop operations
-- **[[Mission2 Overview]]** - Queue API with FIFO semantics
+- **[[mission-1]]** - Stack API with push/pop operations
+- **[[mission-2]]** - Queue API with FIFO semantics
 - **[[Mission5 Overview]]** - HashMap API with key-value operations
 
 ### **Standard Library Patterns**

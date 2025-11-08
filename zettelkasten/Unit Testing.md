@@ -506,8 +506,8 @@ criterion_main!(benches);
 - **[[TDD (Test-Driven Development)]]** - Writing tests before implementation
 
 ### **Mission Applications**
-- **[[Mission1 Overview]]** - Stack unit testing with ownership validation
-- **[[Mission2 Overview]]** - Queue unit testing with FIFO semantics
+- **[[mission-1]]** - Stack unit testing with ownership validation
+- **[[mission-2]]** - Queue unit testing with FIFO semantics
 - **[[Mission4 Overview]]** - Interior mutability unit testing
 - **[[Mission5 Overview]]** - HashMap unit testing with collision handling
 - **[[Mission6 Overview]]** - Grid unit testing with bounds checking
@@ -565,4 +565,4 @@ criterion_main!(benches);
 ---
 
 *Tags: #unit-testing #function-testing #component-testing #requirement-testing #assertions #mocking #coverage*
-*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Integration Testing]] | [[Testing Strategies]] | [[TDD (Test-Driven Development)]] | [[REQ-1 Test Strategy]] | [[V-Cycle Methodology]] | [[../rust_book/Ch11/CHAPTER_COMPLETE]] | [[Debugging Lessons]] | [[Error Handling Patterns]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Integration Testing]] | [[Testing Strategies]] | [[TDD (Test-Driven Development)]] | [[REQ-1 Test Strategy]] | [[V-Cycle Methodology]] | [[../rust_book/Ch11/CHAPTER_COMPLETE]] | [[Debugging Lessons]] | [[Error Handling Patterns]] | [[mission-1]] | [[mission-2]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*

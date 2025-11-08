@@ -249,7 +249,7 @@ fn process(data: &mut Vec<i32>) {
 
 ### **How This Relates to:**
 
-- **[[Mission1 Overview]]** - Stack implementation using these principles
+- **[[mission-1]]** - Stack implementation using these principles
 - **[[Mission2]]** - Queue with ring buffer using `Option::take()`
 - **[[V-Cycle in Rust Development]]** - How compiler enforces these rules (verification)
 - **[[Data Structures in Rust - Early Design Insights]]** - Applying ownership to DS design
@@ -286,4 +286,4 @@ When you encounter borrow checker errors, think: "What would the librarian say?"
 
 *Tags: #ownership #borrowing #lifetimes #mental-models #analogies #learning #fundamentals*
 
-*Links: [[zettel-index]] | [[Project Origin Story]] | [[Mission1 Overview]] | [[V-Cycle in Rust Development]]*
+*Links: [[zettel-index]] | [[Project Origin Story]] | [[mission-1]] | [[V-Cycle in Rust Development]]*

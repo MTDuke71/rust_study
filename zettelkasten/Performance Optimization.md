@@ -591,8 +591,8 @@ fn measure_performance() {
 - **[[Deduplication]]** - Performance trade-offs in duplicate removal
 
 ### **Mission-Specific Optimization**
-- **[[Mission1 Overview]]** - Stack implementation performance
-- **[[Mission3 Overview]]** - Iterator and trait optimization
+- **[[mission-1]]** - Stack implementation performance
+- **[[mission-3]]** - Iterator and trait optimization
 - **[[Mission6 Overview]]** - Pathfinding algorithm optimization
 - **[[Chess Engine Architecture]]** - High-performance game engine patterns
 
@@ -617,4 +617,4 @@ fn measure_performance() {
 
 *Tags: #performance #optimization #benchmarking #profiling #memory-optimization #cpu-optimization #algorithm-complexity #collections #zero-cost-abstractions*
 
-*Links: [[zettel-index]] | [[Zero-Cost Abstractions]] | [[Generic Programming]] | [[Collections MOC]] | [[Bounds Checking Performance]] | [[Deduplication]] | [[Mission1 Overview]] | [[Mission3 Overview]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[Zero-Cost Abstractions]] | [[Generic Programming]] | [[Collections MOC]] | [[Bounds Checking Performance]] | [[Deduplication]] | [[mission-1]] | [[mission-3]] | [[Mission6 Overview]]*

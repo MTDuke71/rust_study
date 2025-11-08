@@ -433,7 +433,7 @@ fn load_user_by_id(id: u32) -> Result<User, DatabaseError> {
 - **[[Error Propagation]]** - Patterns for error flow
 
 ### **Mission Applications**
-- **[[Mission2 Overview]]** - Queue operations with Result error handling
+- **[[mission-2]]** - Queue operations with Result error handling
 - **[[Mission4 Overview]]** - Linked list operations with borrow errors
 - **[[Mission5 Overview]]** - HashMap operations with key errors
 - **[[Mission6 Overview]]** - Grid operations with bounds errors
@@ -541,4 +541,4 @@ proptest! {
 ---
 
 *Tags: #result-type #error-handling #type-safety #rust-enum #composable-errors*
-*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Error Handling Patterns]] | [[Option Type]] | [[anyhow and thiserror]] | [[Error Propagation]] | [[daily-study/Day05]] | [[daily-study/Day29]] | [[daily-study/Day30]] | [[Week 5 Overview]] | [[Mission2 Overview]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Error Handling Patterns]] | [[Option Type]] | [[anyhow and thiserror]] | [[Error Propagation]] | [[daily-study/Day05]] | [[daily-study/Day29]] | [[daily-study/Day30]] | [[Week 5 Overview]] | [[mission-2]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*

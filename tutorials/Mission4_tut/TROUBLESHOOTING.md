@@ -463,8 +463,8 @@ impl<T> ListBuilder<T> {
 - [[Week 2 Overview|../../zettelkasten/Week 2 Overview]] - Advanced ownership patterns
 
 **Related Missions:**
-- [[Mission1 Overview|../../zettelkasten/Mission1 Overview]] - Stack (ownership basics)
-- [[Mission2 Overview|../../zettelkasten/Mission2 Overview]] - Queue (ownership in practice)
+- [[mission-1|../../zettelkasten/Mission1 Overview]] - Stack (ownership basics)
+- [[mission-2|../../zettelkasten/Mission2 Overview]] - Queue (ownership in practice)
 - [[Mission5 Overview|../../zettelkasten/Mission5 Overview]] - HashMap (complex ownership)
 
 **Learning Support:**

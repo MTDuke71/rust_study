@@ -253,8 +253,8 @@ Ch5 Structs → Ch6 Enums → Ch7 Modules → Ch8 Collections
 - [[Collections MOC]] - Structs in data structure implementations
 
 ### **Mission Applications**
-- [[Mission1 Overview]] - Stack struct with Vec wrapper
-- [[Mission2 Overview]] - Ring buffer struct design
+- [[mission-1]] - Stack struct with Vec wrapper
+- [[mission-2]] - Ring buffer struct design
 - [[Mission5 Overview]] - HashMap struct with complex internals
 
 ### **Rust Book Connections**
@@ -288,4 +288,4 @@ Ch5 Structs → Ch6 Enums → Ch7 Modules → Ch8 Collections
 
 *Tags: #rust-book #chapter5 #structs #methods #impl #api-design #custom-types #ownership*
 
-*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../zettelkasten/Rust Concepts MOC|Rust Concepts]] | [[../../zettelkasten/Missions Overview|Missions Overview]] | [[Mission1 Overview|Mission1]] | [[Mission5 Overview|Mission5]]*
+*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../zettelkasten/Rust Concepts MOC|Rust Concepts]] | [[../../zettelkasten/Missions Overview|Missions Overview]] | [[mission-1|Mission1]] | [[Mission5 Overview|Mission5]]*

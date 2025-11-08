@@ -532,8 +532,8 @@ cargo tarpaulin --out xml
 - **[[daily-study/Day35]]** - Testing robust parsing scenarios
 
 ### **Mission Applications**
-- **[[Mission1 Overview]]** - Stack testing with ownership validation
-- **[[Mission2 Overview]]** - Queue testing with FIFO semantics
+- **[[mission-1]]** - Stack testing with ownership validation
+- **[[mission-2]]** - Queue testing with FIFO semantics
 - **[[Mission4 Overview]]** - Interior mutability testing patterns
 - **[[Mission5 Overview]]** - HashMap testing with collision handling
 - **[[Mission6 Overview]]** - Grid testing with bounds checking

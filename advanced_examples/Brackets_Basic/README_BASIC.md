@@ -87,7 +87,7 @@ cargo clippy -- -D warnings
 - REQ-6 - Deterministic behavior
 
 ### Mission Integration
-- [[Mission1 Overview]] - Stack implementation foundation
+- [[mission-1]] - Stack implementation foundation
 - [[Brackets Extended]] - Advanced features extension
 - [[Missions Overview]] - V-Cycle mission overview
 
@@ -103,6 +103,6 @@ cargo clippy -- -D warnings
 - [[Competitive Programming]] - AoC-style problems
 - [[RUST_TEST_DOCUMENTATION_STANDARDS]] - Testing guide
 
-*Links: [[zettel-index]] | [[Brackets Extended]] | [[Mission1 Overview]] | [[V-Cycle Methodology]] | [[Stack Data Structure]]*
+*Links: [[zettel-index]] | [[Brackets Extended]] | [[mission-1]] | [[V-Cycle Methodology]] | [[Stack Data Structure]]*
 
 *Tags: #brackets-basic #v-cycle #stack #validation #requirements #testing #error-handling #aoc-patterns #req1-6*

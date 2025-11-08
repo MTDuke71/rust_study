@@ -189,7 +189,7 @@ Claude Sonnet 4 • 1x
 
 ### Mission Integration
 - [[Brackets Basic]] - Implementation project
-- [[Mission1 Overview]] - Stack implementation foundation
+- [[mission-1]] - Stack implementation foundation
 - [[V-Cycle Methodology]] - Requirements and validation
 
 ### Learning Resources

@@ -250,7 +250,7 @@ Why use `Vec<Option<T>>` instead of `Vec<T>`?
 - **[[../daily_study/rust_learning_week4_notes/Day25.md|Day 25]]** - Queue applications and patterns
 
 ### **Mission Connections**
-- **[[Mission1 Overview.md|Mission 1]]** - Previous: Stack implementation foundations (LIFO)
+- **[[mission-1|Mission 1]]** - Previous: Stack implementation foundations (LIFO)
 - **[[mission-3.md|Mission 3]]** - Next: Binary search trees
 - **[[mission-4.md|Mission 4]]** - LinkedList (doubly-linked complexity)
 - **[[mission-5.md|Mission 5]]** - HashMap (hash-based storage)
@@ -377,7 +377,7 @@ fn reql1_linked_structure() { ... }
 ## 🔄 Mission Progression
 
 ### **Prerequisites**
-- **[[Mission1 Overview.md|Mission 1]]** - Stack implementation completed
+- **[[mission-1|Mission 1]]** - Stack implementation completed
 - **Basic indexing**: Array and Vec manipulation
 - **Modular arithmetic**: Wraparound calculations
 
@@ -447,4 +447,4 @@ fn reql1_linked_structure() { ... }
 
 *Tags: #mission2 #queue #ring-buffer #fifo #linked-queue #performance #memory-optimization #data-structures #v-cycle #overview*
 
-*Links: [[../zettel-index.md|Zettel Index]] | [[Mission1 Overview.md|Mission 1]] | [[Mission3 Overview.md|Mission 3]] | [[mission-3.md|Mission 3 (alternate)]] | [[mission-4.md|Mission 4]] | [[mission-5.md|Mission 5]] | [[Collections MOC]] | [[While Let Pattern Deep Dive]] | [[Ring Buffer Overwriting Semantics]] | [[../../MONTHLY_CALENDAR.md|Monthly Calendar]]*
+*Links: [[../zettel-index.md|Zettel Index]] | [[mission-1|Mission 1]] | [[mission-3|Mission 3]] | [[mission-3.md|Mission 3 (alternate)]] | [[mission-4.md|Mission 4]] | [[mission-5.md|Mission 5]] | [[Collections MOC]] | [[While Let Pattern Deep Dive]] | [[Ring Buffer Overwriting Semantics]] | [[../../MONTHLY_CALENDAR.md|Monthly Calendar]]*

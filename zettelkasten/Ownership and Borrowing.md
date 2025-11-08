@@ -183,8 +183,8 @@ let world = &s[6..11];
 ## 📚 Integration Points
 
 ### **Mission Applications**
-- **[[Mission1 Overview]]** - Foundation building with ownership
-- **[[Mission2 Overview]]** - Smart pointers and advanced ownership
+- **[[mission-1]]** - Foundation building with ownership
+- **[[mission-2]]** - Smart pointers and advanced ownership
 - **[[Mission4 Overview]]** - Interior mutability patterns
 
 ### **Daily Study Progression**
@@ -258,7 +258,7 @@ println!("{}", s); // ✅ s is still valid
 - **[[daily-study/Day03]]** - Deep dive into borrowing rules
 - **[[daily-study/Day04]]** - Lifetimes and reference validity
 - **[[Smart Pointer Patterns]]** - Advanced ownership patterns
-- **[[Mission1 Overview]]** - Practical ownership applications
+- **[[mission-1]]** - Practical ownership applications
 
 ---
 

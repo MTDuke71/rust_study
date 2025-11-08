@@ -4,8 +4,8 @@
 - **Previous**: [[zettelkasten/daily-study/Day07]] - Foundations complete
 - **Next**: [[daily-study/Day09]] - String types and UTF-8
 - **Concept**: [[Collections MOC]] - Dynamic arrays and collections
-- **Mission**: [[Mission1 Overview]] - Stack uses Vec internally
-- **Mission**: [[Mission2 Overview]] - Queue ring buffer with Vec
+- **Mission**: [[mission-1]] - Stack uses Vec internally
+- **Mission**: [[mission-2]] - Queue ring buffer with Vec
 - **Rust Book**: [[Chapter 8.1 - Vectors]] - Storing lists of values
 - **Week Summary**: [[daily-study/Day14]] - Collections review
 
@@ -395,5 +395,5 @@ let numbers: Vec<i32> = (1..=10)
 
 ---
 
-*Links: [[zettelkasten/daily-study/Day07]] | [[daily-study/Day09]] | [[Collections MOC]] | [[Mission1 Overview]] | [[Mission2 Overview]]*
+*Links: [[zettelkasten/daily-study/Day07]] | [[daily-study/Day09]] | [[Collections MOC]] | [[mission-1]] | [[mission-2]]*
 *Tags: #vector #vec #collections #dynamic-arrays #daily-study #week2 #rust-book #chapter8 #foundation*

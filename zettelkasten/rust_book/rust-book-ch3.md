@@ -38,7 +38,7 @@ Essential programming building blocks in Rust! This chapter covers variables, da
 1. Read [[../../rust_book/Ch3/README]] for complete programming fundamentals ✅
 2. Progress to [[rust_book/rust-book-ch4]] for ownership concepts
 3. Explore memory fundamentals in [[Memory Management]]
-4. Apply concepts in [[missions/Mission1 Overview|Mission1]] and other mission implementations
+4. Apply concepts in [[mission-1|Mission1]] and other mission implementations
 
 ## Achievement Status
 
@@ -48,4 +48,4 @@ Essential programming building blocks in Rust! This chapter covers variables, da
 
 *Tags: #rust-book #programming-concepts #variables #data-types #functions #control-flow #ch3 #completed*
 
-*Links: [[../../rust_book/Ch3/README]] | [[rust_book/rust-book-ch2]] | [[rust_book/rust-book-ch4]] | [[Memory Management]] | [[missions/Mission1 Overview|Mission1]] | [[zettel-index]]*
+*Links: [[../../rust_book/Ch3/README]] | [[rust_book/rust-book-ch2]] | [[rust_book/rust-book-ch4]] | [[Memory Management]] | [[mission-1|Mission1]] | [[zettel-index]]*

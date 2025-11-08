@@ -357,7 +357,7 @@ fn benchmark_error_modes(input: &str) {
 
 ### **Project Series**
 - **[[../Brackets_Basic/README|Brackets Basic]]**: Foundation (REQ-1 to REQ-6)
-- **[[Mission1 Overview]]**: Stack implementation used internally
+- **[[mission-1]]**: Stack implementation used internally
 - **[[AoC Collection Problems]]**: Bracket parsing in competitive programming
 
 ### **Core Concepts**
@@ -434,4 +434,4 @@ pub fn create_learning_feedback(input: &str) -> LearningReport {
 
 *Tags: #brackets-extended #validation #stack #configuration #iterators #error-handling #aoc #advanced-examples #requirements #api-design #performance #testing #real-world-applications*
 
-*Links: [[zettel-index]] | [[Mission1 Overview]] | [[AoC Patterns MOC]] | [[Collections MOC]] | [[Error Handling Patterns]] | [[Iterator Design Patterns]] | [[Performance Optimization]] | [[Testing Strategies]]*
+*Links: [[zettel-index]] | [[mission-1]] | [[AoC Patterns MOC]] | [[Collections MOC]] | [[Error Handling Patterns]] | [[Iterator Design Patterns]] | [[Performance Optimization]] | [[Testing Strategies]]*

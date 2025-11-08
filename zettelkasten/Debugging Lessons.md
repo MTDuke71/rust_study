@@ -3,7 +3,7 @@
 **Real-world debugging strategies from Mission 2 development**
 
 ---
-*Navigation: [[zettel-index]] | [[Testing Strategies]] | [[Problem Solving]] | [[Mission2 Overview]]*
+*Navigation: [[zettel-index]] | [[Testing Strategies]] | [[Problem Solving]] | [[mission-2]]*
 *Quick Access: [[missions/Mission2/DEBUGGING_LESSONS|Full Debugging Guide]]*
 ---
 
@@ -104,7 +104,7 @@ The full document includes:
 - [[Refactoring]] - Improving code safely with tests
 
 ### **Mission Context**
-- [[Mission2 Overview]] - Queue implementation project
+- [[mission-2]] - Queue implementation project
 - [[RingBufferQueue]] - Fixed-capacity circular buffer
 - [[LinkedQueue]] - Unlimited-capacity linked list
 - [[Mission2 API Reference]] - Complete API documentation
@@ -165,7 +165,7 @@ This practice builds debugging muscle memory!
 
 *Tags: #debugging #testing #problem-solving #mission2 #error-analysis #tdd #software-engineering #lessons-learned #navigation*
 
-*Links: [[zettel-index]] | [[Mission2 Overview]] | [[Testing Strategies]] | [[V-Cycle Development]] | [[Problem Solving]] | [[Error Analysis]] | [[Unit Testing]] | [[Integration Testing]] | [[TDD (Test-Driven Development)]]*
+*Links: [[zettel-index]] | [[mission-2]] | [[Testing Strategies]] | [[V-Cycle Development]] | [[Problem Solving]] | [[Error Analysis]] | [[Unit Testing]] | [[Integration Testing]] | [[TDD (Test-Driven Development)]]*
 
 ---
 

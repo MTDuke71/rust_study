@@ -48,7 +48,7 @@ Ch10/
    - ✅ **Zettelkasten Links at TOP** (Template requirement):
      - Previous: [[zettelkasten/rust_book/rust-book-ch9]]
      - Next: [[zettelkasten/rust_book/rust-book-ch11]]
-     - Missions: [[Mission3 Overview]], [[Mission5 Overview]]
+     - Missions: [[mission-3]], [[Mission5 Overview]]
      - Daily Study: [[daily-study/Day15]], [[daily-study/Day16]], [[daily-study/Day17]]
      - Book MOC: [[Rust Book MOC]]
    - ✅ **Overview Section** (clear, 2-3 sentences)

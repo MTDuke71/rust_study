@@ -69,7 +69,7 @@ This mission demonstrates why Rust makes certain patterns difficult - and how to
 - **Chapter 9 - Error Handling**: Custom error types
 
 ### **Mission Progression**
-- **Builds on**: [[Mission1 Overview]] (ownership), [[Mission2 Overview]] (pointer structures)
+- **Builds on**: [[mission-1]] (ownership), [[mission-2]] (pointer structures)
 - **Contrasts with**: Mission1 (simple ownership) vs Mission4 (complex sharing)
 - **Prepares for**: Advanced data structures requiring shared state
 
@@ -393,4 +393,4 @@ fn req6_rc_list_weak_references_prevent_cycles() { ... }
 
 *Tags: #mission4 #linked-list #overview #v-cycle #smart-pointers #interior-mutability #data-structures #ownership*
 
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Mission3 Overview]] | [[Mission5 Overview]] | [[Box Smart Pointer]] | [[Rc Smart Pointer]] | [[RefCell Interior Mutability]] | [[Weak Pointers for Cycle Breaking]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[mission-3]] | [[Mission5 Overview]] | [[Box Smart Pointer]] | [[Rc Smart Pointer]] | [[RefCell Interior Mutability]] | [[Weak Pointers for Cycle Breaking]] | [[MONTHLY_CALENDAR]]*

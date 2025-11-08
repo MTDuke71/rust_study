@@ -80,8 +80,8 @@ Master the **fundamental pillars** of Rust that make it unique:
 ## 🔗 Cross-Track Integration
 
 ### **Mission Track Connections**
-- [[Mission1 Overview]] - Stack implementation uses ownership
-- [[Mission2 Overview]] - Queue uses borrowing patterns
+- [[mission-1]] - Stack implementation uses ownership
+- [[mission-2]] - Queue uses borrowing patterns
 - All missions build on Week 1 foundations
 
 ### **Rust Book Alignment**

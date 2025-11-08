@@ -809,7 +809,7 @@ Choose the API that best fits your use case, configure options for your specific
 - [[DOCUMENTATION_IMPROVEMENTS]] - Documentation evolution and enhancements
 
 ### 🔗 Stack Integration
-- **[[Mission1 Overview]]** - Stack implementation (LIFO foundation)
+- **[[mission-1]]** - Stack implementation (LIFO foundation)
 - [[../../missions/Mission1/QUICK_REFERENCE|Quick Reference]] - Stack and ownership basics
 - [[../../missions/Mission1/SIMPLE_GUIDE|Simple Guide]] - Mental models for data structures
 

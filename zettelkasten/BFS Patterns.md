@@ -459,13 +459,13 @@ if !visited.contains(&neighbor) {
 - [[DFS Patterns]] - Depth-first alternative
 - [[A-Star-Algorithm-Deep-Dive]] - Heuristic-guided BFS improvement
 - [[Manhattan Distance]] - Distance metric for grids
-- [[Mission2 Overview]] - Queue implementation for BFS
+- [[mission-2]] - Queue implementation for BFS
 - [[Mission6 Overview]] - Grid pathfinding with BFS
 - [[Week 4 Overview]] - Day 25 covers BFS applications
 - [[directed-vs-undirected-graphs]] - Understanding graph types for BFS
 
 ### **Related Data Structures**
-- [[Mission2 Overview]] - Queue/VecDeque for BFS
+- [[mission-2]] - Queue/VecDeque for BFS
 - Priority Queue for weighted BFS (Dijkstra)
 
 ### **Algorithm Family**
@@ -505,4 +505,4 @@ if !visited.contains(&neighbor) {
 
 *Tags: #bfs #breadth-first-search #shortest-path #level-order #graph-algorithms #grid-navigation #queue #aoc-patterns*
 
-*Links: [[zettel-index]] | [[DFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[Manhattan Distance]] | [[Mission2 Overview]] | [[Mission6 Overview]] | [[mission8 Overview]] | [[Day 5 Exercise Solutions]] | [[Week 4 Overview]]*
+*Links: [[zettel-index]] | [[DFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[Manhattan Distance]] | [[mission-2]] | [[Mission6 Overview]] | [[mission8 Overview]] | [[Day 5 Exercise Solutions]] | [[Week 4 Overview]]*

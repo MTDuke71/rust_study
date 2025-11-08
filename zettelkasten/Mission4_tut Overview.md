@@ -207,8 +207,8 @@ Overhead ratio:   2.29x
 - **[[Rc and RefCell Patterns]]** - Shared ownership with interior mutability
 
 ### **Mission Applications**
-- **[[Mission1 Overview]]** - Stack with simple ownership
-- **[[Mission2 Overview]]** - Queue with ring buffer patterns
+- **[[mission-1]]** - Stack with simple ownership
+- **[[mission-2]]** - Queue with ring buffer patterns
 - **[[Mission5 Overview]]** - HashMap with collision handling
 
 ### **Development Methodology**

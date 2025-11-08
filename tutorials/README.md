@@ -161,8 +161,8 @@ All tutorials follow workspace documentation standards:
 - **[Mission6_tut](Mission6_tut/)** - Grid programming and spatial algorithms
 
 ### 🏗️ Mission Integration
-- **[[Mission1 Overview|Mission1 Overview]]** - Stack implementation
-- **[[Mission3 Overview|Mission3 Overview]]** - Binary search implementation
+- **[[mission-1|mission-1]]** - Stack implementation
+- **[[mission-3|mission-3]]** - Binary search implementation
 - **[[Mission4 Overview|Mission4 Overview]]** - LinkedList implementation
 - **[[Mission5 Overview|Mission5 Overview]]** - HashMap implementation
 - **[[Mission6 Overview|Mission6 Overview]]** - Grid algorithms

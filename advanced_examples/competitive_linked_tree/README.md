@@ -214,7 +214,7 @@ After working with this project, you'll understand:
 - **[[Collections MOC]]** - Data structures and algorithms
 
 ### 🎯 LinkedQueue Resources
-- **[[Mission2 Overview]]** - Queue V-Cycle implementation
+- **[[mission-2]]** - Queue V-Cycle implementation
 - **[[Ring Buffer Overwriting Semantics]]** - Capacity management strategies
 - [[../../missions/Mission2/IMPLEMENTATION_SUMMARY|Implementation Summary]] - Mission2 complete details
 - [[../../missions/Mission2/ALTERNATIVE_COMPARISON|Alternative Comparison]] - Queue approaches

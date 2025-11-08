@@ -1,6 +1,6 @@
 # Mission3_tut Quick Start Guide
 
-*Navigation: [[zettel-index]] | [[Mission3 Overview]] | [[Missions Overview]] | [[Trait Design Patterns - Mission3 Lessons]]*
+*Navigation: [[zettel-index]] | [[mission-3]] | [[Missions Overview]] | [[Trait Design Patterns - Mission3 Lessons]]*
 
 ## 🚀 Get Started in 5 Minutes
 
@@ -46,7 +46,7 @@ cargo run -p mission3_tut --example step7_integration_project    # [[Performance
 ## ✅ After Tutorial Completion
 
 You'll be ready to:
-- Understand Mission3 source code (see [[Mission3 Overview]])
+- Understand Mission3 source code (see [[mission-3]])
 - Implement binary search from scratch (see [[Binary Search Iterator Patterns]])
 - Design trait-based abstractions (see [[Trait Design Patterns - Mission3 Lessons]])
 - Build custom iterators (see [[Zero-Cost Abstractions]])
@@ -100,7 +100,7 @@ cargo run --example
 - **[[AoC Binary Search Applications]]** - Competitive programming patterns
 
 ### **Learning Context**
-- **[[Mission3 Overview]]** - Mission3's objectives and scope
+- **[[mission-3]]** - Mission3's objectives and scope
 - **[[Week 3 Overview]]** - Where Mission3 fits in your learning journey
 - **[[Missions Overview]]** - All missions overview
 - **[[AoC Patterns MOC]]** - Competitive programming patterns

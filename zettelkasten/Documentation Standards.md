@@ -323,8 +323,8 @@ Each mission includes:
 ## 🔗 **Integration with Learning Tracks**
 
 ### **Mission Documentation Standards**
-- **[[Mission1 Overview]]** - Stack implementation documentation examples
-- **[[Mission2 Overview]]** - Queue API documentation patterns
+- **[[mission-1]]** - Stack implementation documentation examples
+- **[[mission-2]]** - Queue API documentation patterns
 - **[[Mission5 Overview]]** - HashMap documentation with performance notes
 
 ### **Daily Study Documentation**

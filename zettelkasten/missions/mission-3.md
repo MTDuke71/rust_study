@@ -358,4 +358,4 @@ fn property_matches_std_library() {
 
 *Tags: #mission3 #binary-search #overview #v-cycle #traits #iterators #algorithms #search #binary-search-tree #recursion #tree-traversal #heap-allocation*
 
-*Links: [[zettel-index]] | [[collections-moc]] | [[mission-2]] | [[mission-4]] | [[binary-search-iterator-patterns]] | [[trait-design-patterns-mission3]] | [[aoc-binary-search-applications]] | [[MONTHLY_CALENDAR]] | [[rust-book-ch6]] | [[rust-book-ch10]] | [[rust-book-ch15]] | [[Mission3 Overview]]*
+*Links: [[zettel-index]] | [[collections-moc]] | [[mission-2]] | [[mission-4]] | [[binary-search-iterator-patterns]] | [[trait-design-patterns-mission3]] | [[aoc-binary-search-applications]] | [[MONTHLY_CALENDAR]] | [[rust-book-ch6]] | [[rust-book-ch10]] | [[rust-book-ch15]] | [[mission-3]]*

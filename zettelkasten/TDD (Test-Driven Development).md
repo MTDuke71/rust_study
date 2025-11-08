@@ -672,8 +672,8 @@ impl std::error::Error for ServiceError {}
 - **[[Debugging Lessons]]** - Using TDD for debugging
 
 ### **Mission Applications**
-- **[[Mission1 Overview]]** - TDD for stack implementation
-- **[[Mission2 Overview]]** - TDD for queue implementation
+- **[[mission-1]]** - TDD for stack implementation
+- **[[mission-2]]** - TDD for queue implementation
 - **[[Mission4 Overview]]** - TDD for interior mutability patterns
 - **[[Mission5 Overview]]** - TDD for HashMap implementation
 - **[[Mission6 Overview]]** - TDD for grid algorithms
@@ -714,4 +714,4 @@ impl std::error::Error for ServiceError {}
 ---
 
 *Tags: #tdd #test-driven-development #red-green-refactor #test-first #development-methodology #v-cycle*
-*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Unit Testing]] | [[Integration Testing]] | [[Testing Strategies]] | [[V-Cycle Methodology]] | [[REQ-1 Test Strategy]] | [[Debugging Lessons]] | [[Mission1 Overview]] | [[Mission2 Overview]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Unit Testing]] | [[Integration Testing]] | [[Testing Strategies]] | [[V-Cycle Methodology]] | [[REQ-1 Test Strategy]] | [[Debugging Lessons]] | [[mission-1]] | [[mission-2]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Mission6 Overview]]*

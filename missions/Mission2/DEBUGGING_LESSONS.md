@@ -3,7 +3,7 @@
 **Mission 2 Real-World Debugging Experience**
 
 ---
-*Navigation: [[zettel-index]] | [[Mission2 Overview]] | [[Testing Strategies]] | [[Problem Solving]]*
+*Navigation: [[zettel-index]] | [[mission-2]] | [[Testing Strategies]] | [[Problem Solving]]*
 *Related: [[V-Cycle Development]] | [[TDD (Test-Driven Development)]] | [[Error Analysis]]*
 ---
 
@@ -351,7 +351,7 @@ Error messages don't lie. Read them carefully and trace the actual failure point
 - [[Documentation Standards]] - Documenting expected behavior
 
 ### **Mission Context**
-- [[Mission2 Overview]] - Queue implementation V-Cycle
+- [[mission-2]] - Queue implementation V-Cycle
 - [[RingBufferQueue]] - Fixed-capacity circular buffer
 - [[LinkedQueue]] - Unlimited-capacity linked list
 - [[V-Cycle Development]] - Requirements through validation
@@ -392,7 +392,7 @@ This practice will sharpen your debugging instincts!
 
 *Tags: #debugging #testing #problem-solving #mission2 #error-analysis #tdd #software-engineering #lessons-learned*
 
-*Links: [[zettel-index]] | [[Mission2 Overview]] | [[Testing Strategies]] | [[V-Cycle Development]] | [[TDD (Test-Driven Development)]] | [[Error Analysis]] | [[Problem Solving]] | [[Unit Testing]] | [[Integration Testing]]*
+*Links: [[zettel-index]] | [[mission-2]] | [[Testing Strategies]] | [[V-Cycle Development]] | [[TDD (Test-Driven Development)]] | [[Error Analysis]] | [[Problem Solving]] | [[Unit Testing]] | [[Integration Testing]]*
 
 ---
 

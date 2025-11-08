@@ -19,7 +19,7 @@ This chapter covers Rust's powerful abstraction mechanisms: generic types for re
 ## Mission Integration
 
 - **[[Mission5 Overview]]** - Generic HashMap<K, V> implementation
-- **[[Mission3 Overview]]** - Generic binary search with trait bounds
+- **[[mission-3]]** - Generic binary search with trait bounds
 - **[[Generic Programming]]** - Advanced generic programming patterns
 - **All missions** use generic principles for reusable data structures
 

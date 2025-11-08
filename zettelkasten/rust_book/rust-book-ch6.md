@@ -18,8 +18,8 @@ Enums allow you to define types by enumerating possible variants. Pattern matchi
 
 ## Mission Integration
 
-- **[[Mission1 Overview]]** - Option<T> usage in stack operations
-- **[[Mission2 Overview]]** - Result<T, E> for error handling in queues
+- **[[mission-1]]** - Option<T> usage in stack operations
+- **[[mission-2]]** - Result<T, E> for error handling in queues
 - **Error handling patterns** across all missions
 - **[[Option Type]]** - Deep dive into Option usage patterns
 
@@ -32,7 +32,7 @@ Enums allow you to define types by enumerating possible variants. Pattern matchi
 ## Learning Path
 
 1. Read [[../../rust_book/Ch6/README]] for comprehensive coverage
-2. Practice with Option<T> in [[Mission1 Overview]] stack implementation
+2. Practice with Option<T> in [[mission-1]] stack implementation
 3. Apply Result<T, E> patterns in error handling exercises
 4. Master pattern matching with [[daily-study/Day06]] exercises
 

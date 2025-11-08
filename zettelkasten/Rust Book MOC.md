@@ -154,9 +154,9 @@ This MOC provides complete access to both:
 ## 🎓 **Learning Integration & Cross-References**
 
 ### **Mission System Integration**
-- **[[Mission1 Overview]]** - Stack (Ch4 Ownership + Ch5 Structs)
-- **[[Mission2 Overview]]** - Queue (Ch4 Ownership + Ch6 Enums) 
-- **[[Mission3 Overview]]** - Binary Search (Ch10 Generics + Ch11 Testing)
+- **[[mission-1]]** - Stack (Ch4 Ownership + Ch5 Structs)
+- **[[mission-2]]** - Queue (Ch4 Ownership + Ch6 Enums) 
+- **[[mission-3]]** - Binary Search (Ch10 Generics + Ch11 Testing)
 - **[[Mission4 Overview]]** - LinkedList (Ch5 Structs + Ch15 Smart Pointers)
 - **[[Mission5 Overview]]** - HashMap (Ch5-6 Structs/Enums + Ch8 Collections)
 - **[[Mission6 Overview]]** - Advanced Algorithms (Ch7 Modules + Ch10 Generics)

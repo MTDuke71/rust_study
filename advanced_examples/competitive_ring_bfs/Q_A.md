@@ -1938,7 +1938,7 @@ Your observation shows you're thinking like a computer scientist - recognizing t
 - **[[Collections MOC]]** - Data structures and algorithms
 
 ### 🎯 RingBufferQueue Resources
-- **[[Mission2 Overview]]** - Queue V-Cycle implementation
+- **[[mission-2]]** - Queue V-Cycle implementation
 - **[[Ring Buffer Overwriting Semantics]]** - Capacity management strategies
 - [[IMPLEMENTATION_SUMMARY]] - Complete Mission2 implementation
 - [[ALTERNATIVE_COMPARISON]] - Queue implementation trade-offs

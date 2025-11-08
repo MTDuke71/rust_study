@@ -1724,7 +1724,7 @@ The two-pass approach is both **mathematically necessary** and **perfectly suite
 - **[[Collections MOC]]** - Data structures and algorithms
 
 ### 🎯 LinkedQueue Resources
-- **[[Mission2 Overview]]** - Queue V-Cycle implementation
+- **[[mission-2]]** - Queue V-Cycle implementation
 - **[[Ring Buffer Overwriting Semantics]]** - Capacity management strategies
 - [[IMPLEMENTATION_SUMMARY]] - Complete Mission2 implementation details
 - [[ALTERNATIVE_COMPARISON]] - Queue implementation comparisons

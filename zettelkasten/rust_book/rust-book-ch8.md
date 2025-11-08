@@ -19,7 +19,7 @@ Collections store multiple values and are fundamental to most Rust programs. Thi
 ## Mission Integration
 
 - **[[Mission5 Overview]]** - Custom HashMap implementation from scratch
-- **[[Mission1 Overview]]** - Vec<T> usage in stack implementation
+- **[[mission-1]]** - Vec<T> usage in stack implementation
 - **[[Collections MOC]]** - Comprehensive collection patterns and usage
 - **Daily study integration** with [[daily-study/Day10]] through [[daily-study/Day13]]
 

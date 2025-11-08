@@ -294,9 +294,9 @@ If you've worked through all steps and can confidently tackle the challenges abo
 - [[Chapter 10|../rust_book/Ch10/README]] - Generics, Traits, Lifetimes
 
 **Related Missions:**
-- [[Mission1 Overview]] - Stack (ownership foundations)
-- [[Mission2 Overview]] - Queue (FIFO patterns)
-- [[Mission3 Overview]] - Search algorithms
+- [[mission-1]] - Stack (ownership foundations)
+- [[mission-2]] - Queue (FIFO patterns)
+- [[mission-3]] - Search algorithms
 - [[Mission4 Overview]] - Linked List (smart pointers)
 - [[Mission6 Overview]] - Grid Systems (spatial algorithms)
 

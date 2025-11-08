@@ -2,7 +2,7 @@
 
 **Tags:** #rust #lifetimes #memory-safety #concept #rust-book #chapter10  
 **Created:** 2025-10-22  
-**Related:** [[Ownership and Borrowing]], [[daily-study/Day17]], [[zettelkasten/rust_book/rust-book-ch10]], [[Generic Programming]], [[Mission3 Overview]], [[Mission4 Overview]], [[Rust Concepts MOC]]
+**Related:** [[Ownership and Borrowing]], [[daily-study/Day17]], [[zettelkasten/rust_book/rust-book-ch10]], [[Generic Programming]], [[mission-3]], [[Mission4 Overview]], [[Rust Concepts MOC]]
 
 ## Overview
 
@@ -103,7 +103,7 @@ fn first_word(s: &str) -> &str { /* ... */ }
 
 - **[[Ownership and Borrowing]]** - Lifetimes ensure borrowing rules are followed
 - **[[Generic Programming]]** - Lifetimes are a form of generic parameter
-- **[[Mission3 Overview]]** - Binary search with lifetime-aware APIs
+- **[[mission-3]]** - Binary search with lifetime-aware APIs
 - **[[Mission4 Overview]]** - Smart pointers and lifetime management
 
 ## Use Cases in Rust Study Projects
@@ -141,7 +141,7 @@ mod tests {
 - [[daily-study/Day17]] - Daily study progression  
 - [[zettelkasten/rust_book/rust-book-ch10]] - Generics, traits, and lifetimes together
 - [[Generic Programming]] - Lifetimes as generic parameters
-- [[Mission3 Overview]] - Practical lifetime usage
+- [[mission-3]] - Practical lifetime usage
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns
 
 ## Quick Reference

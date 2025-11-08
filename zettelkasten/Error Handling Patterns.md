@@ -271,7 +271,7 @@ fn safe_division(a: i32, b: i32) -> Result<f64, DivisionError> {
 - **[[daily-study/Day35]]** - Robust parsing with error recovery
 
 ### **Mission Applications**
-- **[[Mission1 Overview]]** - Stack operations with bounds checking
+- **[[mission-1]]** - Stack operations with bounds checking
 - **[[Mission4 Overview]]** - Interior mutability error patterns
 - **[[Mission5 Overview]]** - HashMap operations with key validation
 - **[[Mission6 Overview]]** - Grid bounds checking and coordinate validation

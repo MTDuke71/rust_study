@@ -97,8 +97,8 @@ Master Rust's **standard library collections** and understand how they leverage 
 - Day 14 enables robust error handling (REQ-5)
 
 **Supporting Missions:**
-- [[Mission1 Overview]] - Stack uses Vec<T> internally
-- [[Mission2 Overview]] - Queue ring buffer with Vec<T>
+- [[mission-1]] - Stack uses Vec<T> internally
+- [[mission-2]] - Queue ring buffer with Vec<T>
 - All collections apply ownership from Week 1
 
 ### **Rust Book Alignment**
