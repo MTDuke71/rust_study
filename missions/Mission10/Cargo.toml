@@ -25,6 +25,10 @@ quickcheck_macros = "1.0"
 name = "performance"
 harness = false
 
+[[bench]]
+name = "comparison"
+harness = false
+
 [lib]
 name = "mission10"
 path = "src/lib.rs"

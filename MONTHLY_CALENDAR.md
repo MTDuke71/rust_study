@@ -185,9 +185,71 @@ cargo test req6_advanced_features
 # Organize complex project with proper module structure
 # Master cargo workspace management
 ```
+Simplified plan:
+
+## 🗓️ Week 7: November 9-15, 2025
+
+### **Sunday, November 9** 🧮
+**Rust Book**: Chapter 14.4 - Installing Binaries from Crates.io with cargo install
+
+### **Monday, November 10** 💾
+**Rust Book**: Chapter 14.5 - Extending Cargo with Custom Commands
+
+
+### **Tuesday, November 11** 🎯
+**Rust Book**: Chapter 15.1 - Using Box<T> to Point to Data on the Heap
+
+
+### **Wednesday, November 12** 🗂️
+**Rust Book**: Chapter 15.2 - Treating Smart Pointers Like Regular References with Deref
+               Chapter 15.3 - Running Code on Cleanup with Drop
+
+
+### **Thursday, November 13** ⚡
+**Rust Book**: Chapter 15.4 - Rc<T>, the Reference Counted Smart Pointer
+
+### **Friday, November 14** 📊
+**Rust Book**: Chapter 15.5 - RefCell<T> and the Interior Mutability Pattern
+
+
+### **Saturday, November 15** 📋
+**Rust Book**: Chapter 15.6 - Reference Cycles Can Leak Memory
 
 ---
 
+## 🗓️ Week 8: November 16-22, 2025
+
+### **Sunday, November 16** 📝   
+**Rust Book**: Chapter 16.1 - Using Threads to Run Code Simultaneously
+
+
+### **Monday, November 17** 🔍
+**Rust Book**: Chapter 16.2 - Using Message Passing to Transfer Data Between Threads
+
+### **Tuesday, November 18** 🧩
+**Rust Book**: Chapter 16.3 - Shared-State Concurrency
+
+### **Wednesday, November 19** 🏗️
+**Rust Book**: Chapter 16.4 - Extensible Concurrency with the Sync and Send Traits
+
+### **Thursday, November 20** 🎮
+**Rust Book**: Chapter 17.1 - Futures and the Async Syntax
+
+### **Friday, November 21** ⚡
+**Rust Book**: Chapter 17.2 - Applying Concurrency with Async
+
+### **Saturday, November 22** 📚
+**Rust Book**: Chapter 17.3 - Working With Any Number of Futures
+
+---
+
+## 🗓️November 23-29, 2025   
+Vacation.  No study this week for a Thanksgiving Break
+Also rest before AOC 2025 begins.
+
+---
+
+Original Plan (Put on Hold due to time constraints)
 ## 🗓️ Week 7: November 9-15, 2025
 
 **Mission**: Mission 10 Continued - REST API & Problem Solving
@@ -378,13 +440,6 @@ cargo doc --open                            # Generate documentation
 # Learn managing multiple futures and async streams
 ```
 
----
-
-## 🗓️November 23-29, 2025   
-Vacation.  No study this week for a Thanksgiving Break
-Also rest before AOC 2025 begins.
-
----
 
 ## �📈 Progress Tracking
 
@@ -396,15 +451,13 @@ Also rest before AOC 2025 begins.
 - **Week 5**: Complete Mission 9 (Dijkstra & A* Pathfinding) *(Oct 22-28)*
 - **Transition Period**: General Review & AoC Problem Solving *(Oct 29-Nov 1)*
 - **Week 6**: Complete Mission 10a (Union-Find Disjoint Sets) *(Nov 2-8, Sunday start)*
-- **Week 7**: Complete Mission 10b (Union-Find Disjoint Sets) *(Nov 9-15)*
-- **Week 8**: Complete Mission 11 (Dynamic Programming & Memoization) *(Nov 16-22)*
+- **Week 7**: Rust Book Advanced Topics (Smart Pointers) *(Nov 9-15)*
+- **Week 8**: Rust Book Concurrency Topics *(Nov 16-22)*
 
 ### Daily Study Track Progress
-- **Current**: Week 1, Day 7 → **Target**: Week 8, Day 56
 - **Focus**: Foundations → Collections → Abstractions → Applied Problem Solving → Error Handling → Modules & Crates → Advanced Type System → Concurrency Fundamentals
 
 ### Rust Book Progress  
-- **Current**: Chapter 4 → **Target**: Chapter 17
 - **Coverage**: Ownership → Structs/Enums → Collections → Error Handling → Generics/Traits/Lifetimes → Testing → Closures/Iterators → Cargo/Crates (14.1-14.5) → Smart Pointers → Concurrency → OOP Patterns
 
 ## 🎯 Success Metrics
