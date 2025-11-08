@@ -58,6 +58,20 @@ Both parts of this puzzle are complete! They provide two gold stars: **
 
 At this point, you should return to your Advent calendar and try another puzzle.
 
-If you still want to see it, you can get your puzzle input.
+---
 
-You can also [Share] this puzzle.
+## 🔗 **Related Concepts**
+
+**Problem Patterns**:
+- [[../../zettelkasten/AoC Patterns MOC]] - Sequence validation and safety analysis patterns
+- [[../../zettelkasten/Iterator Patterns]] - Sliding window techniques with `windows(2)`
+- [[../../zettelkasten/Error Handling Patterns]] - Validation with boolean logic
+
+**Algorithm Techniques**:
+- Monotonic sequence detection (all increasing/decreasing)
+- Range validation with `abs_diff()` bounds checking
+- Sliding window analysis for adjacent element pairs
+- Dampener logic with single-element removal validation
+
+**Cross-Year Patterns**:
+- [[../../zettelkasten/AoC 2015 MOC]] - Compare with AoC 2015 validation problems

@@ -256,5 +256,29 @@ Students ready for Step 6 should:
 
 ---
 
+## 🔗 **Related Mission Work**
+
+**Mission 10 Implementation**:
+- [[../../missions/Mission10/README]] - V-Cycle requirements and production implementation
+- [[../../missions/Mission10/PHASE3_COMPLETION_SUMMARY]] - Comprehensive testing validation
+- [[../../missions/Mission10/reports/phase5_quality_report]] - Final quality assurance results
+
+**Tutorial Progression**:
+- [[README]] - Mission 10 Tutorial overview and 7-step learning framework
+- [[examples/step5_applications.rs]] - Complete implementations of all 5 real-world applications
+- [[../../zettelkasten/Missions Overview]] - Mission 10 tutorial completion tracking
+
+**Algorithm Concepts**:
+- [[../../zettelkasten/Union-Find Data Structure]] - Theoretical foundations and complexity analysis
+- [[../../zettelkasten/Graph Theory MOC]] - MST algorithms and connected components theory
+- [[../../zettelkasten/AoC Patterns MOC]] - Union-Find applications in competitive programming
+
+**Learning Integration**:
+- [[../../zettelkasten/Tutorial Engineering]] - Educational design principles applied
+- [[../../zettelkasten/V-Cycle Methodology]] - Engineering methodology for learning progression
+- [[../../daily_study/rust_learning_week6_notes/]] - Week 6 integration with Mission 10 concepts
+
+---
+
 *Last Updated: November 6, 2025*  
 *Part of Mission 10 Tutorial Series*

@@ -74,6 +74,24 @@ Your puzzle answer was 23655822.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
 
+---
+
+## 🔗 **Related Concepts**
+
+**Problem Patterns**:
+- [[../../zettelkasten/AoC Patterns MOC]] - List processing and sorting patterns
+- [[../../zettelkasten/Collections MOC]] - Vec operations and HashMap frequency counting
+- [[../../zettelkasten/AoC Collection Problems]] - Similar collection-based puzzles
+
+**Implementation Techniques**:
+- Dual list processing with `zip()` iterators
+- Distance calculation using `abs_diff()` 
+- Frequency counting with HashMap aggregation
+- Similarity scoring with multiplicative accumulation
+
+**Cross-Year Patterns**:
+- [[../../zettelkasten/AoC 2015 MOC]] - Compare with AoC 2015 list processing problems
+
 At this point, you should return to your Advent calendar and try another puzzle.
 
 If you still want to see it, you can get your puzzle input.

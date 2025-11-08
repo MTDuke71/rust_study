@@ -212,3 +212,26 @@ This implementation demonstrates how QuickCheck can be used to:
 4. **Catch regression bugs** that violate structural invariants
 
 The combination of property-based tests with existing unit and integration tests provides exceptional confidence in the Union-Find implementation's correctness and robustness.
+
+---
+
+## 🔗 **Related Testing Infrastructure**
+
+**Testing Methodology**:
+- [[../../zettelkasten/test-pyramid]] - Testing strategy hierarchy and property-based testing integration
+- [[../../zettelkasten/V-Cycle Methodology]] - Verification and validation phases with property testing
+- [[PHASE3_COMPLETION_SUMMARY]] - Traditional unit testing phase results
+
+**Implementation Context**:
+- [[tests/property_tests.rs]] - Property-based test implementations with QuickCheck
+- [[tests/unit_tests.rs]] - Traditional unit tests with requirement traceability
+- [[src/lib.rs]] - Union-Find implementation validated by property tests
+
+**Advanced Testing Patterns**:
+- [[../../zettelkasten/Property Testing]] - Property-based testing concepts and applications
+- [[../../zettelkasten/Quality Assurance]] - Comprehensive quality validation strategies
+- [[../../zettelkasten/Rust Testing Patterns]] - Testing best practices and advanced techniques
+
+**Mission Integration**:
+- [[../../zettelkasten/Missions Overview]] - Mission 10 advanced testing achievements
+- [[README]] - Requirements validation through property testing alignment

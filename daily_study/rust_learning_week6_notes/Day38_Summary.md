@@ -93,6 +93,24 @@ cargo test --bin Day38 --no-default-features    # Minimal features
 
 ---
 
+## 🔗 **Related Concepts**
+
+**Implementation Examples**:
+- [[../../missions/Mission10/Cargo.toml]] - Real-world feature configuration in mission crates
+- [[../../zettelkasten/Cargo Features]] - Deep dive into conditional compilation patterns
+- [[../../zettelkasten/API Design Patterns]] - Feature-based API architecture
+
+**Learning Progression**:
+- [[Day37]] - Previous day: Crate organization fundamentals
+- [[Day39]] - Next day: Workspace management and multi-crate projects
+- [[../../zettelkasten/Daily Study MOC]] - Week 6 overview and learning integration
+
+**Practical Applications**:
+- [[../../zettelkasten/Rust Book Integration]] - Cargo and Crates.io chapter connection
+- [[../../zettelkasten/V-Cycle Methodology]] - Feature-driven development methodology
+
+---
+
 **Status**: ✅ Day 38 Complete - Ready for Day 39
 **Files Created**: 
 - `Day38.md` - Comprehensive feature flags learning

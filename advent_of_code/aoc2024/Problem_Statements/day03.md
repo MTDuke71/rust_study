@@ -40,8 +40,20 @@ Your puzzle answer was 82733683.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
 
-At this point, you should return to your Advent calendar and try another puzzle.
+---
 
-If you still want to see it, you can get your puzzle input.
+## 🔗 **Related Concepts**
 
-You can also [Share] this puzzle.
+**Problem Patterns**:
+- [[../../zettelkasten/AoC Patterns MOC]] - String parsing and instruction processing patterns
+- [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE]] - Regular expression patterns for parsing
+- [[../../zettelkasten/String Processing]] - Pattern matching and extraction techniques
+
+**Implementation Techniques**:
+- Regex pattern matching with `mul(\d+,\d+)` capture groups
+- Conditional instruction processing with `do()` and `don't()` state toggles
+- String scanning with stateful parsing
+- Numeric extraction and multiplication accumulation
+
+**Cross-Year Patterns**:
+- [[../../zettelkasten/AoC 2015 MOC]] - Compare with Day 5 string validation patterns
