@@ -175,7 +175,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 **Rust-Specific Implementation Details**:
 - **Lifetime Management**: Explicit lifetime annotations (`'a`) for string slice references in permutations
 - **Error Handling**: `anyhow::Result` for robust error propagation with `?` operator
-- **Data Structures**: Mission 5 `Dictionary<(&str, &str), usize>` for distance storage
+- **Data Structures**: Mission 5 `Dictionary\<(&str, &str), usize\>` for distance storage
 - **Memory Efficiency**: Heap's algorithm minimizes memory allocation compared to recursive approaches
 - **Test Coverage**: 11 comprehensive tests including edge cases (single city, two cities, malformed input)
 
@@ -217,7 +217,7 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 - **While Loop Pattern**: Manual index control for look-ahead and variable jumps
 - **Grouping Operation**: Inner while loop counts consecutive characters, outer while loop processes groups
 - **Skip Optimization**: `i += count` (not `i += 1`) to skip entire counted group
-- **Bounds Checking**: `i + count < len()` to prevent out-of-bounds access
+- **Bounds Checking**: `i + count \< len()` to prevent out-of-bounds access
 
 **Performance Analysis - Iterative vs Memoized**:
 - **Iterative Approach**: 340ms for 50 iterations ✅ (simple loop, minimal overhead)
@@ -311,8 +311,8 @@ This document provides a categorized overview of all Advent of Code 2015 problem
 **Rust-Specific Implementation Details**:
 - **Base-26 Arithmetic**: `((char as u8) + 1) as char` for incrementing
 - **Reverse Iteration**: `(0..len).rev()` for right-to-left carry propagation
-- **Vec<char> Mutability**: Convert string to char vector for in-place modification
-- **Sliding Window Pattern**: Three consecutive index accesses `chars[i], chars[i+1], chars[i+2]`
+- **Vec\<char\> Mutability**: Convert string to char vector for in-place modification
+- **Sliding Window Pattern**: Three consecutive index accesses `chars[i]`, `chars[i+1]`, `chars[i+2]`
 - **Early Return Optimization**: Exit validation early on first failure
 - **Range Skipping**: When forbidden char detected, jump entire range instead of increment-by-increment
 
@@ -409,7 +409,7 @@ fn sum_numbers(value: &Value) -> i64 {
 fn sum_with_regex(json: &str) -> i64 {
     let re = Regex::new(r"-?\d+").unwrap();
     re.find_iter(json)
-        .filter_map(|m| m.as_str().parse::<i64>().ok())
+        .filter_map(|m| m.as_str().parse::\<i64\>().ok())
         .sum()
 }
 ```
@@ -588,7 +588,7 @@ Score: 68 × 80 × 152 × 76 = 62,842,880
 **Part 1 Type**: Data Structures + Pattern Matching + String Processing  
 **Part 1 Description**: Find which of 500 Aunt Sues gave you a gift by matching known properties against MFCSAM analysis results  
 **Part 2 Type**: Data Structures + Pattern Matching + Conditional Logic  
-**Part 2 Description**: Same problem but with range-based comparisons (cats/trees > target, pomeranians/goldfish < target)  
+**Part 2 Description**: Same problem but with range-based comparisons (cats/trees \> target, pomeranians/goldfish \< target)  
 **Key Concepts**: HashMap sparse storage, partial information matching, linear search with early termination, conditional comparison logic, pattern matching on string keys, range-based filtering
 
 **The Gift Identification Problem**:
@@ -612,8 +612,8 @@ vizslas: 0, goldfish: 5, trees: 3, cars: 2, perfumes: 1
   - Result: Sue #40
 
 - **Part 2 - Range-Based Matching** (Retroencabulator effect):
-  - **cats, trees**: Aunt's value must be **> target** (nuclear decay → lower bounds)
-  - **pomeranians, goldfish**: Aunt's value must be **< target** (magnetoreluctance → upper bounds)
+  - **cats, trees**: Aunt's value must be **\> target** (nuclear decay → lower bounds)
+  - **pomeranians, goldfish**: Aunt's value must be **\< target** (magnetoreluctance → upper bounds)
   - **All others**: Aunt's value must be **== target** (exact measurements)
   - Result: Sue #241
 
@@ -621,7 +621,7 @@ vizslas: 0, goldfish: 5, trees: 3, cars: 2, perfumes: 1
 ```rust
 struct AuntSue {
     number: usize,
-    properties: HashMap<String, usize>,  // Sparse storage: only 3/10 properties
+    properties: HashMap\<String, usize\>,  // Sparse storage: only 3/10 properties
 }
 ```
 
@@ -633,7 +633,7 @@ struct AuntSue {
 
 **Rust-Specific Implementation Details**:
 - **Pattern Matching on Strings**: `match key.as_str()` for property-specific logic
-- **Conditional Comparison**: Different operators (>, <, ==) based on property name
+- **Conditional Comparison**: Different operators (\>, \<, ==) based on property name
 - **Early Return Optimization**: `return false` on first mismatch (short-circuit)
 - **String Parsing Chain**: `split(':')` → `strip_prefix("Sue ")` → `parse::<usize>()`
 - **HashMap Iteration**: `for (key, value) in &self.properties` with conditional checks
@@ -755,7 +755,7 @@ containers = [20, 15, 10, 5, 5], target = 25
    - Fast: No combination cloning/storage overhead
    
 2. **Collecting Combinations** (Part 2 - Needs Analysis):
-   - Stores all valid combinations in Vec<Vec<usize>>
+   - Stores all valid combinations in Vec\<Vec\<usize\>\>
    - Space: O(k × m) where k=combo count, m=avg size
    - Required: Must analyze combination sizes to find minimum
    - Uses backtracking with push/pop pattern
@@ -808,9 +808,9 @@ Part 2: Minimum = 2 containers, count = 3 combinations
 - **Scaling**: Doubles with each additional container (exponential growth)
 
 **When Brute Force Breaks** (from scaling analysis):
-- n ≤ 20: ✅ Instant (< 20ms)
-- n ≤ 25: ✅ Fast (< 1 second)  
-- n ≤ 30: ⚠️ Tolerable (< 1 minute)
+- n ≤ 20: ✅ Instant (less than 20ms)
+- n ≤ 25: ✅ Fast (less than 1 second)
+- n ≤ 30: ⚠️ Tolerable (less than 1 minute)
 - n > 35: ❌ Need better algorithm (minutes to hours)
 
 **Educational Value**:
@@ -1037,12 +1037,12 @@ Total: 3 steps
 - This is NOT general (works for this specific AoC problem structure)
 
 **Rust-Specific Implementation Details**:
-- **HashSet<String>**: Automatic deduplication for Part 1
+- **HashSet\<String\>**: Automatic deduplication for Part 1
 - **`match_indices()`**: Find all occurrences of pattern with positions
 - **String Slicing**: `&molecule[..pos]` + replacement + `&molecule[pos+len..]`
 - **`clone()`**: Necessary for owned strings in HashSet
 - **`replacen(to, from, 1)`**: Replace first occurrence only (greedy single step)
-- **Iterator Patterns**: `.lines()`, `.split(" => ")`, `.collect::<HashSet>()`
+- **Iterator Patterns**: `.lines()`, `.split(" => ")`, `.collect::\<HashSet\>()`
 
 **Performance Characteristics**:
 - **Part 1**: O(n × m) where n=rules (~45), m=molecule length (~500)
@@ -1394,8 +1394,8 @@ House 8: Elf 1, Elf 2, Elf 4, Elf 8 → 10 + 20 + 40 + 80 = 150 presents
 - Day 14: **Cyclic behavior simulation and mathematical optimization**, state machine implementation for flight/rest cycles, algorithmic complexity comparison (O(n×c) vs O(n×m)), struct design with behavior methods (`cycle_length()`, `distance_per_cycle()`), real-time leader tracking with tie handling, different scoring systems analysis, performance optimization through cycle mathematics, while loop state transitions, vector-based point accumulation, iterator methods for leader detection (`max_by()`), temporal vs final scoring trade-offs
 - Day 15: **Combinatorial optimization with constraints**, nested loop generation with sum constraints (~176K combinations from 100^4 space), iterator patterns (`.iter().enumerate().map().sum()`), property calculation with negative value handling, dynamic ingredient handling (2/3/4 variations), constrained search space optimization, functional vs imperative iterator usage comparison, dead code annotations for struct fields
 - Day 16: **HashMap sparse storage for partial data**, pattern matching on string keys (`match key.as_str()`), conditional comparison logic (different operators per property type), early return optimization, string parsing chain (`strip_prefix()`, `split()`, `parse()`), linear search with early termination, Option handling with `if let Some()`, property-specific range checks
-- Day 17: **Subset sum backtracking**, recursive include/exclude pattern, combination enumeration with push/pop, minimum value filtering, Vec<Vec<T>> for storing combinations, O(2^n) complexity awareness, exponential algorithm scaling understanding, two-phase optimization (find constraint then filter), space-time trade-offs (counting vs collecting), NP-complete problem recognition, algorithm selection based on input size (n≤25 brute force acceptable)
-- Day 18: **Conway's Game of Life implementation**, Mission 6 Grid integration (`Grid<bool>`, `neighbors_8_bounded()`), 8-connected neighbor counting, cellular automaton rules, double buffering (current + next state), stuck corner constraints, pattern evolution analysis, ANSI terminal visualization, Unicode block character compression (2×2 cells), interactive simulation with auto-save, statistics tracking (min/max/stability), iterator-based neighbor filtering, match expressions for rule application, comprehensive test coverage (12 tests)
+- Day 17: **Subset sum backtracking**, recursive include/exclude pattern, combination enumeration with push/pop, minimum value filtering, Vec\<Vec\<T\>\> for storing combinations, O(2^n) complexity awareness, exponential algorithm scaling understanding, two-phase optimization (find constraint then filter), space-time trade-offs (counting vs collecting), NP-complete problem recognition, algorithm selection based on input size (n≤25 brute force acceptable)
+- Day 18: **Conway's Game of Life implementation**, Mission 6 Grid integration (`Grid\<bool\>`, `neighbors_8_bounded()`), 8-connected neighbor counting, cellular automaton rules, double buffering (current + next state), stuck corner constraints, pattern evolution analysis, ANSI terminal visualization, Unicode block character compression (2×2 cells), interactive simulation with auto-save, statistics tracking (min/max/stability), iterator-based neighbor filtering, match expressions for rule application, comprehensive test coverage (12 tests)
 - Day 19: **Molecular replacement system**, string replacement patterns, HashSet for uniqueness tracking, `match_indices()` for pattern finding, reverse greedy algorithm, bidirectional search optimization (working backwards from target), understanding when greedy is optimal, string slicing and reconstruction, recognizing exploitable problem structure (unambiguous grammar), performance analysis (greedy O(n) vs BFS O(b^d)), pattern matching in replacement rules, context-free grammar concepts
 - Day 20: **Number theory and divisor sums**, sieve-like simulation (marking multiples), cache-friendly algorithms (sequential memory access), upper bound estimation heuristics (target/multiplier), early termination optimization, vector pre-allocation for performance, stepped iteration (`house += elf`), visit limiting with counters, understanding algorithm perspective (divisors vs multiples viewpoint), harmonic series complexity O(n log n), highly composite numbers, educational dead code annotation (`#[allow(dead_code)]`), doc test ignore patterns
 - Day 21: **Equipment optimization and turn-based combat simulation**, equipment combination generation with constraints (exactly 1 weapon, optional armor, 0-2 rings with no duplicates), cost calculation and comparison, brute force search through all valid combinations (~8,000 equipment sets), different optimization goals (min cost win vs max cost loss), reusable fight simulation logic, struct-based data modeling for items and characters, damage calculation with armor reduction (max(1, damage - armor)), turn-based combat loop with early termination, Pattern matching for equipment cost and stats calculation
