@@ -266,7 +266,7 @@ fn additional_patterns() {
     println!("\n=== Additional Iterator Patterns ===");
     
     // Pattern 1: Filtering and collecting
-    let lines = vec!["Hello", "World", "Rust", "is", "awesome"];
+    let lines = ["Hello", "World", "Rust", "is", "awesome"];
     let long_words: Vec<_> = lines
         .iter()
         .filter(|word| word.len() > 4)
@@ -274,7 +274,7 @@ fn additional_patterns() {
     println!("Words longer than 4 chars: {:?}", long_words);
     
     // Pattern 2: Transforming with map
-    let numbers = vec![1, 2, 3, 4, 5];
+    let numbers = [1, 2, 3, 4, 5];
     let doubled: Vec<_> = numbers
         .iter()
         .map(|x| x * 2)
@@ -294,7 +294,7 @@ fn additional_patterns() {
     println!("First word longer than 5: {:?}", first_long);
     
     // Pattern 5: Using any and all
-    let has_rust = lines.iter().any(|word| *word == "Rust");
+    let has_rust = lines.contains(&"Rust");
     let all_caps = lines.iter().all(|word| word.chars().next().unwrap().is_uppercase());
     println!("Has 'Rust': {}, All start with caps: {}", has_rust, all_caps);
 }
