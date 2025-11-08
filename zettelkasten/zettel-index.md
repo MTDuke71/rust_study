@@ -46,6 +46,7 @@
 
 ### **Find Today's Content**
 - **Current Day**: See [[../MONTHLY_CALENDAR]] Day activities
+- **Daily Notes**: [[Daily Notes/README|Daily Notes Index]] - Complete timeline of daily learning activities
 - **Latest Study Notes**: [[Daily Study MOC]] → Current Week
 - **Recent Work**: Check most recently modified files
 - **Daily Workflow**: [[Daily Workflow]] - Systematic learning routine setup

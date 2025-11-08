@@ -321,6 +321,7 @@ Deep language understanding
 - [[zettelkasten/Daily Notes/2025-10-17]] - Mission 8 Algorithm Composition
 
 ### **Calendar Integration**
+- **[[Daily Notes/README|Daily Notes Index]]** - Comprehensive index of all daily learning activities (Oct-Nov 2025)
 Daily notes provide detailed task breakdowns and learning objectives that align with:
 - **Mission Focus**: Specific requirements and progress tracking
 - **Daily Study**: Week-by-week concept integration
