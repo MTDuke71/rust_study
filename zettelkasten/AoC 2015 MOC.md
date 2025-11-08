@@ -134,6 +134,83 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Real-time leader tracking with different scoring systems
 - Performance optimization through cycle mathematics
 
+### **Day 15: Science for Hungry People**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day15.md|Day 15 Problem]]
+- Combinatorial optimization with constraints
+- Cookie recipe optimization using nested loops
+- Property calculation with negative value handling
+- Iterator patterns and constrained search space
+
+### **Day 16: Aunt Sue**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day16.md|Day 16 Problem]]
+- HashMap sparse storage for partial data matching
+- Pattern matching on string keys with conditional logic
+- Range-based comparisons and property filtering
+- Linear search with early termination optimization
+
+### **Day 17: No Such Thing as Too Much**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day17.md|Day 17 Problem]]
+- Subset sum problem (NP-complete) with backtracking
+- Exponential algorithm analysis and scaling limits
+- Combination enumeration vs counting trade-offs
+- Two-phase optimization strategies
+
+### **Day 18: Like a GIF For Your Yard**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day18.md|Day 18 Problem]]
+- Conway's Game of Life cellular automaton
+- Mission 6 Grid integration for neighbor counting
+- Double buffering and constraint handling
+- Grid simulation with stuck corner conditions
+
+### **Day 19: Medicine for Rudolph**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day19.md|Day 19 Problem]]
+- Molecular replacement and string rewriting
+- Reverse greedy algorithms vs forward search
+- HashSet deduplication for combinatorial problems
+- Bidirectional search optimization
+
+### **Day 20: Infinite Elves and Infinite Houses**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day20.md|Day 20 Problem]]
+- Number theory and divisor sum calculations
+- Sieve-like simulation algorithms
+- Performance optimization through algorithm perspective shifts
+- Mathematical upper bound estimation
+
+### **Day 21: RPG Simulator 20XX**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day21.md|Day 21 Problem]]
+- Equipment optimization with constraints
+- Turn-based combat simulation
+- Cost optimization with different goals (min win vs max loss)
+- Brute force search through valid combinations
+
+### **Day 22: Wizard Simulator 20XX**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day22.md|Day 22 Problem]]
+- A* search algorithm implementation
+- Game state modeling with effect timers
+- Mission 9 pathfinding integration
+- Complex state space exploration
+
+### **Day 23: Opening the Turing Lock**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day23.md|Day 23 Problem]]
+- Assembly language interpretation
+- Collatz conjecture computation
+- Register-based virtual machine simulation
+- Mathematical algorithms in low-level code
+
+### **Day 24: It Hangs in the Balance**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day24.md|Day 24 Problem]]
+- K-way partitioning with subset sum constraints
+- Quantum entanglement optimization (product minimization)
+- Pruning techniques and early termination
+- Index-based combination generation
+
+### **Day 25: Let It Snow**
+- **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day25.md|Day 25 Problem]]
+- Diagonal indexing with triangular numbers
+- Modular arithmetic and fast exponentiation
+- Mathematical sequence generation
+- Closed-form formula optimization
+
 ---
 
 ## 🎓 Key Learnings by Concept

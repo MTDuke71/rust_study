@@ -8,6 +8,9 @@ This chapter builds a complete command-line program combining many Rust concepts
 
 📖 **Full Chapter Guide**: [[../../rust_book/Ch12/README]] - Complete I/O project implementation
 📋 **Chapter Complete**: [[../../rust_book/Ch12/CHAPTER_COMPLETE]] - Command-line mastery achievement
+🔧 **Refactoring Guide**: [[../../rust_book/Ch12/refactoring/REFACTORING_SUMMARY]] - Modular design and separation of concerns
+📝 **Error Handling**: [[../../rust_book/Ch12/error_messages/README]] - Error message improvement strategies
+🛠️ **Argument Processing**: [[../../rust_book/Ch12/accepting_arguments/ARGUMENT_METHODS]] - Command-line argument handling patterns
 
 ## Key Topics Covered
 

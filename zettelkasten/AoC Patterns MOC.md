@@ -208,6 +208,10 @@
 - **CLI Integration** - Using test data with command-line tools and debugging flags
 - **Integration Testing** - Validating against known expected outputs
 
+### **Year-Specific Resources**
+- **[[AoC 2015 MOC]]** - Complete 2015 problem analysis with advanced Rust patterns
+- **[[../advent_of_code/aoc2024/README|AoC 2024 Solutions]]** - Dual-focus learning: algorithm mastery + Python→Rust conversion patterns
+
 ---
 
 *Tags: #aoc #patterns #algorithms #competitive-programming #problem-solving #reference #navigation #moc*

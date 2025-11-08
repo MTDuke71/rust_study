@@ -334,6 +334,9 @@ Daily notes provide detailed task breakdowns and learning objectives that align 
   - Book chapter alignment and review priorities
   - AoC pattern discovery and application tracking
 
+### **Archive & Future Study**
+- [[../daily_study/ADVANCED_CURRICULUM_ARCHIVE|Advanced Curriculum Archive]] - 9 weeks of advanced topics (Days 43-105) for post-AoC mastery: type system, async programming, metaprogramming, SIMD, FFI, WebAssembly
+
 ---
 
 *Tags: #daily-study #moc #learning-progression #rust-fundamentals #collections #algorithms #competitive-programming #3-track-system*

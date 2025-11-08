@@ -51,7 +51,7 @@
 - **Daily Workflow**: [[Daily Workflow]] - Systematic learning routine setup
 
 ### **Mission Track** - Engineering Projects
-- **[[missions/Mission1 Overview.md|Mission 1]]** or **[[Mission1 Overview]]** - Stack Implementation  
+- **[[mission-1|Mission 1]]** or **[[mission-1]]** - Stack Implementation  
   - **Quick Start**: [[../missions/Mission1/QUICK_REFERENCE|Quick Reference]] - 2-minute ownership essentials
   - **Beginner Guide**: [[../missions/Mission1/SIMPLE_GUIDE|Simple Guide]] - Mental models for ownership
   - **Application**: [[../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended Validator]] - Real-world stack usage
@@ -244,6 +244,7 @@
   - [[BROKEN_LINKS_TODO]] - **Active broken links repair tracker** - Prioritized action plan for fixing 1,500+ broken links
 - [[../../archived/README]] - Archived projects and workspace management insights
   - [[Reports/Link Validation Report|Link Validation]] - Overall link health
+- [[Obsidian Plugin Integration Strategy]] - Plugin enhancement plan for Local REST API MCP Tools and Smart Connections
 
 ---
 *Tags: #index #overview #navigation #cross-track #zettelkasten #moc*
