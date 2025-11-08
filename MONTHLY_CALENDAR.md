@@ -18,63 +18,74 @@
 
 ## 📈 Daily Learning Routine (45-75 minutes)
 
-**Evidence-Based Learning Protocol** *(Following cognitive science research)*:
+**New Focus: AoC + Zettelkasten + Rust Book** *(Streamlined for targeted mastery)*:
 
 ### **Morning Activation (15 minutes)**
-1. **Retrieval Practice** (10 min): 
-   - Review spaced repetition cards due today
-   - Explain 2-3 yesterday's concepts from memory (no looking!)
-   - Quick code sketch demonstrating one concept
+1. **AoC Problem Warm-up** (10 min): 
+   - Solve one AoC problem from previous years
+   - Focus on patterns: parsing, data structures, algorithms
+   - Quick implementation in Rust with pattern recognition
 
-2. **Error Bank Review** (5 min):
-   - Check error bank for patterns to avoid
-   - Review prevention rules from recent mistakes
+2. **Zettelkasten Review** (5 min):
+   - Review 2-3 recent knowledge links for connection opportunities
+   - Identify gaps in concept connections
 
-### **Core Learning Block (30-40 minutes)**
-3. **Worked Example → Faded → Bare Problem** (25-35 min):
-   - **Phase 1**: Study annotated solution (10 min)
-   - **Phase 2**: Fill-in-the-blanks practice (10 min) 
-   - **Phase 3**: Solve from scratch (15 min)
+### **Core Learning Block (35-45 minutes)**
+3. **Rust Book Deep Dive** (20-25 min):
+   - **Phase 1**: Read assigned chapter section (10 min)
+   - **Phase 2**: Type out and modify book examples (10 min) 
+   - **Phase 3**: Create zettelkasten note with connections (5 min)
 
-4. **Daily Mission Focus** (5 min):
-   - Execute today's mission task from weekly plan
-   - Apply learned concepts to V-Cycle requirements
+4. **AoC Pattern Development** (15-20 min):
+   - Work on current year's problems OR practice classic patterns
+   - Apply Rust Book concepts to problem solving
+   - Document solution patterns in zettelkasten
 
-### **Evening Consolidation (10 minutes)**
-5. **Error Logging** (5 min):
-   - Add any bugs/mistakes to error bank
-   - Write one prevention rule
+### **Evening Consolidation (15 minutes)**
+5. **Zettelkasten Integration** (10 min):
+   - Create/update notes linking AoC patterns to Rust concepts
+   - Add bidirectional links between related concepts
+   - Update Maps of Content (MOCs)
 
-6. **Metacognitive Reflection** (5 min):
-   - Daily exit ticket: What clicked? What confused?
-   - Schedule tomorrow's retrieval practice
+6. **Progress Reflection** (5 min):
+   - Track Rust Book chapter completion
+   - Note effective AoC problem-solving patterns
+   - Plan tomorrow's focus areas
 
 ### **Weekly Retrospective** (15 minutes every Friday)
-- ROI analysis of learning habits
-- Spaced repetition calibration
-- Next week's focus areas
+- AoC pattern mastery assessment
+- Zettelkasten connection quality review
+- Rust Book progress and concept integration
 
-## 🔗 Track Alignment & Coordination
+## 🔗 New Learning Integration Strategy
 
-**CRITICAL**: Daily mission focus goals should be aligned with Mission Tutorial activities to ensure cohesive learning progression.
+**CRITICAL**: Three-track alignment for maximum learning efficiency and practical application.
 
-### Mission Tutorial Integration
-- **Daily Mission Focus** should correspond to specific `MissionX_tut/` tutorial steps
-- **Mission Tutorial Activities** should be completed in parallel with V-Cycle mission work
-- **Coordination Goal**: When all daily Mission Tutorial activities are finished, the complete main mission should be reviewed and mastered
+### AoC + Rust Book Integration
+- **Rust Book Concepts** should be immediately applied to AoC problem solving
+- **AoC Problems** should demonstrate and reinforce current Rust Book chapter topics
+- **Pattern Recognition**: Build library of AoC solution patterns using newly learned Rust features
 
-### Tutorial Synchronization Strategy
-1. **Mission Focus Days** → Work through corresponding `MissionX_tut/examples/stepN_*.rs` files
-2. **Daily Tutorial Steps** → Complete exercises that build toward main mission requirements
-3. **Weekly Review** → Ensure Mission Tutorial completion aligns with main mission progress
-4. **Integration Check** → By mission end, both tutorial exercises AND main mission requirements should be fulfilled
+### Zettelkasten Knowledge Web
+- **Daily Concept Integration**: Every Rust Book concept gets a zettelkasten note with:
+  - Connection to previous concepts
+  - Application examples from AoC problems
+  - Cross-references to related patterns
+- **Problem Pattern Documentation**: AoC solutions become reusable pattern notes
+- **Bidirectional Linking**: Ensure all new notes connect to existing knowledge graph
 
-**Example Alignment (Mission 5)**:
-- Day 1: Mission 5 Setup → `Mission5_tut/examples/step1_basic_hashmap.rs`
-- Day 2: Requirements → `step2_collision_handling.rs` 
-- Day 3: Implementation → `step3_advanced_operations.rs`
-- Day 4: Testing → `step4_multi_value_patterns.rs`
-- Day 5: Documentation → `step5_memoization_cache.rs` + Complete Mission 5 V-Cycle
+### Integration Workflow
+1. **Rust Book Study** → Create concept note in zettelkasten
+2. **AoC Problem Solving** → Apply new concepts, document solution patterns
+3. **Knowledge Connection** → Link problem patterns to concept notes
+4. **Pattern Library Growth** → Build reusable solution templates
+5. **Weekly Review** → Strengthen weak connections, identify knowledge gaps
+
+**Example Integration (Smart Pointers + AoC)**:
+- Study Rust Book Ch 15.1 (Box<T>) → Create [[box-heap-allocation]] note
+- Solve AoC problems requiring recursive data structures → Apply Box<T>
+- Document recursive tree patterns → Link to [[box-heap-allocation]] note
+- Create [[aoc-tree-patterns]] note → Bidirectional link to Box<T> concept
 
 ---
 
@@ -95,151 +106,199 @@ Use these days to consolidate Mission 9 learning, review pathfinding concepts, a
 
 ---
 
-## 🗓️ Week 6: November 2-8, 2025
+## 🗓️ Week 6: November 2-8, 2025 ✅ COMPLETED
+**Focus**: Mission 10 Union-Find (Production-Ready Implementation Achieved)
 
-### **Sunday, November 2** 🚀
-**Mission Focus**: Mission 10 Setup & Planning (Union-Find Disjoint Sets)
-**Daily Study**: Week 6, Day 36 - Module basics (`mod`, `pub`, visibility rules)
-**Rust Book**: Chapter 13.1 - Closures: Anonymous Functions that Capture Their Environment
-```bash
-# Daily Tasks
-cd Mission10 && cargo init                   
-# Initialize Union-Find mission
-# Define REQ-1 to REQ-6 for Union-Find operations
-# Learn module organization and visibility rules
-# Master closure syntax and environment capture
-```
+### **Sunday, November 2** 🚀 ✅
+**Completed**: Mission 10 Setup & Planning + Rust Book 13.1
+**Achievement**: Mission 10 Phase 1 complete, Union-Find foundation established
 
-### **Monday, November 3** 📐
-**Mission Focus**: Mission 10 Requirements Definition & Basic Structure
-**Daily Study**: Week 6, Day 37 - Crate organization (lib vs bin, module trees)
-**Rust Book**: Chapter 13.2 - Processing a Series of Items with Iterators
-```bash
-# Daily Tasks
-# Design Union-Find basic structure and API
-cargo test req1_basic_union_find
-# Practice crate organization and module trees
-# Deep dive into iterator patterns and lazy evaluation
-```
+### **Monday, November 3** 📐 ✅
+**Completed**: Mission 10 Core Implementation + Rust Book 13.2
+**Achievement**: Mission 10 Phase 2 complete, basic operations working
 
-### **Tuesday, November 4** 🔗
-**Mission Focus**: Mission 10 Union & Find Operations
-**Daily Study**: Week 6, Day 38 - Cargo features (conditional compilation, feature flags)
-**Rust Book**: Chapter 13.3 - Improving Our I/O Project
-```bash
-# Daily Tasks
-# Implement basic union and find operations
-cargo test req2_union_find_operations
-# Learn cargo features and conditional compilation
-# Improve I/O project with iterators and closures
-```
+### **Tuesday, November 4** 🔗 ✅
+**Completed**: Mission 10 Testing & Validation + Rust Book 13.3
+**Achievement**: Mission 10 Phase 3 complete, comprehensive test suite (73 tests)
 
-### **Wednesday, November 5** 🎯
-**Mission Focus**: Mission 10 Path Compression Optimization
-**Daily Study**: Week 6, Day 39 - Workspace management (multi-crate projects)
-**Rust Book**: Chapter 13.4 - Comparing Performance: Loops vs Iterators
-```bash
-# Daily Tasks
-# Implement path compression for efficient find operations
-cargo test req3_path_compression
-# Practice multi-crate workspace management
-# Benchmark loops vs iterators performance
-```
+### **Wednesday, November 5** 🎯 ✅
+**Completed**: Mission 10 Path Compression & Advanced Features + Rust Book 13.4
+**Achievement**: Mission 10 advanced features, property-based testing
 
-### **Thursday, November 6** ⚖️
-**Mission Focus**: Mission 10 Union by Rank Optimization
-**Daily Study**: Week 6, Day 40 - Publishing crates (`Cargo.toml`, documentation, versioning)
-**Rust Book**: Chapter 14.1 - Customizing Builds with Release Profiles
-```bash
-# Daily Tasks
-# Implement union by rank to optimize tree height
-cargo test req4_union_by_rank
-# Learn crate publishing and documentation standards
-# Understand release profiles and optimization levels
-```
+### **Thursday, November 6** ⚖️ ✅
+**Completed**: Mission 10 Enhanced Documentation + Rust Book 14.1
+**Achievement**: Mission 10 Phase 4 complete, 4 advanced examples (2000+ lines)
 
-### **Friday, November 7** 🧪
-**Mission Focus**: Mission 10 Connected Components & Applications
-**Mission Tutorial Activity**: `Mission10_tut/examples/step5_applications.rs` - Real-world Union-Find problems
-**Daily Study**: Week 6, Day 41 - External dependencies (choosing and using crates)
-**Rust Book**: Chapter 14.2 - Publishing a Crate to Crates.io
-```bash
-# Daily Tasks
-# Build connected components and graph connectivity examples
-cargo test req5_connected_components
-# Complete step5_applications.rs with Kruskal's MST, cycle detection
-# Learn how to evaluate and integrate external crates
-# Understand crate publishing workflow
-```
+### **Friday, November 7** 🧪 ✅
+**Completed**: Mission 10 Performance Benchmarks + Rust Book 14.2
+**Achievement**: Mission 10 optimization started, comprehensive benchmark suite
 
-### **Saturday, November 8** 📋
-**Mission Focus**: Mission 10 Advanced Variants & Extensions
-**Mission Tutorial Activity**: `Mission10_tut/examples/step6_advanced_variants.rs` - Weighted Union-Find, undo operations
-**Daily Study**: Week 6, Day 42 - Module practice (organizing a complex project)
-**Rust Book**: Chapter 14.3 - Cargo Workspaces
-```bash
-# Daily Tasks
-# Implement advanced Union-Find variants (weighted, persistent, customizable)
-cargo test req6_advanced_features
-# Complete step6_advanced_variants.rs with variant implementations
-# Organize complex project with proper module structure
-# Master cargo workspace management
-```
+### **Saturday, November 8** 📋 ✅
+**Completed**: Mission 10 Final Optimization & Quality Review + Rust Book 14.3
+**Achievement**: **Mission 10 Phase 5 COMPLETE** - Production-ready (91.7% coverage, A+ quality)
 Simplified plan:
 
 ## 🗓️ Week 7: November 9-15, 2025
+**NEW FOCUS**: AoC Problems + Zettelkasten + Rust Book Smart Pointers
 
 ### **Sunday, November 9** 🧮
 **Rust Book**: Chapter 14.4 - Installing Binaries from Crates.io with cargo install
+**AoC Focus**: Set up AoC 2024 review - focus on problems requiring cargo tools
+**Zettelkasten**: Create [[rust-book-ch14-cargo-ecosystem]] with tool examples
+```bash
+# Daily Tasks
+cargo install ripgrep fd-find            # Practice cargo install
+# Review AoC 2024 problems that benefit from external tools
+# Create zettelkasten note linking cargo ecosystem to problem solving
+```
 
 ### **Monday, November 10** 💾
 **Rust Book**: Chapter 14.5 - Extending Cargo with Custom Commands
-
+**AoC Focus**: Build custom AoC helper command (cargo-aoc-gen or similar)
+**Zettelkasten**: Create [[custom-cargo-commands]] with AoC integration examples
+```bash
+# Daily Tasks
+# Create custom cargo command for AoC scaffolding
+# Link custom commands concept to existing AoC workflow notes
+# Practice: cargo new --name cargo-aoc-helper
+```
 
 ### **Tuesday, November 11** 🎯
 **Rust Book**: Chapter 15.1 - Using Box<T> to Point to Data on the Heap
-
+**AoC Focus**: Solve AoC problems requiring recursive data structures (trees, linked lists)
+**Zettelkasten**: Create [[box-heap-allocation]] with recursive AoC examples
+```bash
+# Daily Tasks
+# Find AoC problems needing Box<T> (binary trees, nested structures)
+# Implement solutions demonstrating heap allocation
+# Link Box<T> concept to recursive problem patterns
+```
 
 ### **Wednesday, November 12** 🗂️
-**Rust Book**: Chapter 15.2 - Treating Smart Pointers Like Regular References with Deref
-               Chapter 15.3 - Running Code on Cleanup with Drop
-
+**Rust Book**: Chapter 15.2-15.3 - Deref Trait & Drop Trait
+**AoC Focus**: Problems involving custom smart pointers or resource management
+**Zettelkasten**: Create [[deref-trait]] and [[drop-trait]] with practical examples
+```bash
+# Daily Tasks
+# Implement custom smart pointer for AoC problem (if applicable)
+# Study problems requiring cleanup or custom dereferencing
+# Connect Deref/Drop concepts to memory safety principles
+```
 
 ### **Thursday, November 13** ⚡
 **Rust Book**: Chapter 15.4 - Rc<T>, the Reference Counted Smart Pointer
+**AoC Focus**: Problems with shared ownership (graphs, multiple references)
+**Zettelkasten**: Create [[rc-shared-ownership]] with graph problem examples
+```bash
+# Daily Tasks
+# Solve AoC graph problems using Rc<T> for shared nodes
+# Document when to use Rc vs Box vs regular references
+# Link shared ownership patterns to graph traversal notes
+```
 
 ### **Friday, November 14** 📊
 **Rust Book**: Chapter 15.5 - RefCell<T> and the Interior Mutability Pattern
-
+**AoC Focus**: Problems requiring interior mutability (mutable shared state)
+**Zettelkasten**: Create [[refcell-interior-mutability]] with state management examples
+```bash
+# Daily Tasks
+# Find AoC problems needing Rc<RefCell<T>> pattern
+# Implement solutions with safe interior mutability
+# Connect interior mutability to concurrent problem patterns
+```
 
 ### **Saturday, November 15** 📋
 **Rust Book**: Chapter 15.6 - Reference Cycles Can Leak Memory
+**AoC Focus**: Review week's smart pointer solutions for potential cycles
+**Zettelkasten**: Create [[reference-cycles]] and update smart pointer MOC
+```bash
+# Daily Tasks
+# Audit week's AoC solutions for reference cycle risks
+# Create Map of Content for smart pointers chapter
+# Link all smart pointer concepts with bidirectional connections
+```
 
 ---
 
 ## 🗓️ Week 8: November 16-22, 2025
+**NEW FOCUS**: AoC Problems + Zettelkasten + Rust Book Concurrency
 
 ### **Sunday, November 16** 📝   
 **Rust Book**: Chapter 16.1 - Using Threads to Run Code Simultaneously
-
+**AoC Focus**: Multi-threaded solutions for computationally intensive problems
+**Zettelkasten**: Create [[rust-threading-basics]] with AoC parallelization examples
+```bash
+# Daily Tasks
+# Find AoC problems that benefit from parallelization
+# Implement basic thread spawning for divide-and-conquer problems
+# Document thread safety considerations for AoC contexts
+```
 
 ### **Monday, November 17** 🔍
 **Rust Book**: Chapter 16.2 - Using Message Passing to Transfer Data Between Threads
+**AoC Focus**: Producer-consumer patterns in AoC (parsing + processing)
+**Zettelkasten**: Create [[message-passing-channels]] with concurrent AoC examples
+```bash
+# Daily Tasks
+# Implement AoC solution using mpsc channels
+# Parse input in one thread, process in another
+# Link message passing to pipeline processing patterns
+```
 
 ### **Tuesday, November 18** 🧩
 **Rust Book**: Chapter 16.3 - Shared-State Concurrency
+**AoC Focus**: Problems requiring shared mutable state across threads
+**Zettelkasten**: Create [[shared-state-concurrency]] with Arc<Mutex<T>> examples
+```bash
+# Daily Tasks
+# Solve AoC problem using Arc<Mutex<T>> for shared state
+# Document deadlock avoidance in AoC contexts
+# Connect shared state patterns to thread safety principles
+```
 
 ### **Wednesday, November 19** 🏗️
 **Rust Book**: Chapter 16.4 - Extensible Concurrency with the Sync and Send Traits
+**AoC Focus**: Understanding thread safety of AoC data structures
+**Zettelkasten**: Create [[sync-send-traits]] with thread safety analysis
+```bash
+# Daily Tasks
+# Analyze AoC data structures for Sync/Send compliance
+# Document when custom types need manual Sync/Send implementation
+# Link thread safety concepts to data structure design notes
+```
 
 ### **Thursday, November 20** 🎮
 **Rust Book**: Chapter 17.1 - Futures and the Async Syntax
+**AoC Focus**: Async I/O for AoC problems with network requests (if any)
+**Zettelkasten**: Create [[async-await-basics]] with future concepts
+```bash
+# Daily Tasks
+# Study async fundamentals with simple examples
+# Consider AoC problems that might benefit from async (rare but possible)
+# Document async/await syntax and execution model
+```
 
 ### **Friday, November 21** ⚡
 **Rust Book**: Chapter 17.2 - Applying Concurrency with Async
+**AoC Focus**: Concurrent async operations for complex AoC scenarios
+**Zettelkasten**: Create [[async-concurrency]] with practical patterns
+```bash
+# Daily Tasks
+# Implement concurrent async operations for hypothetical AoC scenarios
+# Study difference between async concurrency and thread parallelism
+# Link async patterns to existing concurrency knowledge
+```
 
 ### **Saturday, November 22** 📚
 **Rust Book**: Chapter 17.3 - Working With Any Number of Futures
+**AoC Focus**: Managing multiple concurrent operations
+**Zettelkasten**: Create concurrency MOC and strengthen all connections
+```bash
+# Daily Tasks
+# Study futures combinators and async stream processing
+# Create Map of Content for concurrency chapter
+# Review and strengthen all concurrency concept connections
+```
 
 ---
 
@@ -443,104 +502,119 @@ cargo doc --open                            # Generate documentation
 
 ## �📈 Progress Tracking
 
-### Weekly Checkpoints
-- **Week 1**: Complete Mission 5 (HashMaps & HashSets) *(Sept 24-30)*
-- **Week 2**: Complete Mission 6 (Grids & 2D Arrays) *(Oct 1-7)*
-- **Week 3**: Complete Mission 7 (Graph Representation) *(Oct 8-14)*
-- **Week 4**: Complete Mission 8 (BFS/DFS Algorithms) *(Oct 15-21)*
-- **Week 5**: Complete Mission 9 (Dijkstra & A* Pathfinding) *(Oct 22-28)*
-- **Transition Period**: General Review & AoC Problem Solving *(Oct 29-Nov 1)*
-- **Week 6**: Complete Mission 10a (Union-Find Disjoint Sets) *(Nov 2-8, Sunday start)*
-- **Week 7**: Rust Book Advanced Topics (Smart Pointers) *(Nov 9-15)*
-- **Week 8**: Rust Book Concurrency Topics *(Nov 16-22)*
+### Weekly Checkpoints - NEW FOCUS
+- **Week 6**: ✅ Complete Mission 10 (Union-Find) - ACHIEVED Production Quality *(Nov 2-8)*
+- **Week 7**: AoC Problem Solving + Rust Book Smart Pointers + Zettelkasten Development *(Nov 9-15)*
+- **Week 8**: AoC Advanced Patterns + Rust Book Concurrency + Zettelkasten Integration *(Nov 16-22)*
+- **Week 9**: Thanksgiving Break - Rest & AoC 2025 Preparation *(Nov 23-29)*
+- **Ongoing**: AoC Daily Problems (Dec 1-25) + Rust Book Completion + Zettelkasten Mastery
 
-### Daily Study Track Progress
-- **Focus**: Foundations → Collections → Abstractions → Applied Problem Solving → Error Handling → Modules & Crates → Advanced Type System → Concurrency Fundamentals
+### New Learning Track Focus
+- **AoC Problem Solving**: Daily practice with algorithmic thinking and Rust application
+- **Zettelkasten Development**: Build comprehensive knowledge graph of Rust concepts and problem patterns
+- **Rust Book Completion**: Systematic coverage of advanced topics with practical application
 
-### Rust Book Progress  
-- **Coverage**: Ownership → Structs/Enums → Collections → Error Handling → Generics/Traits/Lifetimes → Testing → Closures/Iterators → Cargo/Crates (14.1-14.5) → Smart Pointers → Concurrency → OOP Patterns
+### Rust Book Progress - UPDATED TARGET  
+- **Current**: Chapters 1-14.3 ✅ (Ownership through Cargo/Workspaces)
+- **Week 7 Target**: Chapters 14.4-15.6 (Cargo Tools + Smart Pointers)
+- **Week 8 Target**: Chapters 16.1-17.3 (Concurrency + Async)
+- **Future Chapters**: 18 (OOP), 19 (Advanced Types), 20 (Macros), 21 (Final Project)
 
-## 🎯 Success Metrics
+## 🎯 New Success Metrics
 
-### Daily Goals (30-45 minutes total)
-- [ ] **15 min**: Mission work (requirements, implementation, testing)
-- [ ] **15 min**: Daily study track practice
-- [ ] **15 min**: Rust book reading and exercises
-- [ ] **⚠️  ALIGNMENT CHECK**: Ensure Mission Tutorial steps match daily mission focus
+### Daily Goals (45-60 minutes total)
+- [ ] **20-25 min**: Rust Book chapter reading and exercises with note-taking
+- [ ] **15-20 min**: AoC problem solving applying current Rust concepts
+- [ ] **10-15 min**: Zettelkasten note creation and connection building
+- [ ] **⚠️  INTEGRATION CHECK**: Ensure AoC solutions demonstrate Rust Book concepts
 
 ### Weekly Goals
-- [ ] Complete one full mission with V-Cycle methodology
-- [ ] Master one week of daily study concepts
-- [ ] Read 2-3 Rust book chapters with hands-on practice
-- [ ] **🎯 TUTORIAL SYNC**: Complete all MissionX_tut activities for the main mission
-- [ ] **📋 INTEGRATION REVIEW**: Verify tutorial completion supports mission mastery
+- [ ] Complete 2-3 Rust Book chapters with comprehensive understanding
+- [ ] Solve 5-10 AoC problems using newly learned Rust features
+- [ ] Create 5-15 quality zettelkasten notes with bidirectional links
+- [ ] **🎯 KNOWLEDGE WEB**: Connect new concepts to existing knowledge graph
+- [ ] **📋 PATTERN LIBRARY**: Document reusable AoC solution patterns
 
-### Monthly Outcome (Extended 8-Week Plan)
-- [ ] **8 Missions Complete**: HashMaps through Custom Parsers (Mission 5-12)
-- [ ] **8 Weeks of Daily Study**: Collections through Concurrency Fundamentals mastery
-- [ ] **13+ Rust Book Chapters**: Complete ownership through OOP patterns and concurrency
-- [ ] **Ready for Advanced Topics**: Prepared for async programming, macros, and systems programming
+### Monthly Outcome (Focused Learning Plan)
+- [ ] **Complete Rust Book Advanced Chapters**: Smart Pointers, Concurrency, Advanced Features
+- [ ] **Build AoC Pattern Library**: Comprehensive collection of solution templates and algorithms
+- [ ] **Develop Zettelkasten Mastery**: Rich knowledge graph with 100+ interconnected concept notes
+- [ ] **Ready for AoC 2025**: Strong algorithmic foundation with advanced Rust skills
+- [ ] **Achieve Deep Rust Understanding**: Beyond syntax to idiomatic patterns and advanced concepts
 
 ---
 
-## 🛠️ Daily Commands Reference
+## 🛠️ Daily Commands Reference - NEW WORKFLOW
 
 ```bash
 # Morning routine
 cd rust_study && git pull                   # Get latest updates
 cargo test --workspace                      # Verify current state
 
-# Mission work
-cd MissionX && cargo test                   # Run mission tests
-cargo test reqN_specific_requirement        # Focus on specific requirement
-cargo run --example demo                    # See practical examples
+# AoC Problem Solving
+cd advent_of_code/aoc2024                   # Work on current year problems
+cargo run --bin day01                       # Run specific day solution
+cargo test day01                            # Test solution correctness
+# OR work on previous years for pattern practice:
+cd advent_of_code/aoc2015                   # Practice with completed solutions
+cargo run --bin day01 && cargo test day01   # Study and modify existing solutions
 
-# Mission Tutorial Integration (CRITICAL ALIGNMENT)
-cd MissionX_tut && cargo run --example stepN_* # Work through tutorial steps
-# ⚠️  ENSURE: Tutorial steps align with daily mission focus goals
-# ⚠️  GOAL: Complete tutorial exercises that build toward main mission REQ-X
-# ⚠️  CHECK: Tutorial activities support current mission implementation
-# 📋 EXTENDED: Now covers Mission 9-12 tutorial integration patterns
-
-# Advanced Mission Integration (Weeks 5-6)
-cd Mission9_tut && cargo run --example dijkstra_* # Pathfinding tutorials
-cd Mission10_tut && cargo run --example union_find_* # Disjoint set tutorials  
-cd Mission11_tut && cargo run --example dp_* # Dynamic programming tutorials
-cd Mission12_tut && cargo run --example parser_* # Custom parser tutorials
-
-# Daily study practice
-# Follow the specific day's exercises from daily study track
-# Practice with small examples and coding exercises
-# 📝 ALIGNMENT TIP: Connect daily study concepts to mission requirements
-
-# Rust book study
+# Rust Book Study + Note Creation
 # Read assigned chapter section
-# Type out and run book examples
-# Complete chapter exercises
+# Type out and run book examples in scratch files
+# Create zettelkasten notes immediately:
+code zettelkasten/rust-book-ch15-1-box.md   # Create concept note
+# Add connections to existing notes:
+# - Link to [[ownership]] [[heap-allocation]] [[recursive-types]]
+# - Update MOC files with new connections
+
+# Knowledge Integration
+# Apply Rust Book concepts to AoC problems:
+# Example: Learning Box<T> → Find AoC problem needing recursive structures
+# Document the application in both the AoC solution and zettelkasten note
+
+# Zettelkasten Maintenance
+# Review recent notes for connection opportunities
+# Update Maps of Content (MOCs)
+# Strengthen bidirectional links between related concepts
 
 # Evening wrap-up  
 cargo fmt                                   # Format all code
 cargo clippy -- -D warnings                # Check for improvements
-git add . && git commit -m "Day X progress" # Save daily progress
+# Update zettelkasten index if new MOCs created
+# Commit progress with meaningful messages:
+git add . && git commit -m "Ch15.1 Box<T> + AoC tree problems + knowledge links"
 ```
 
-## 📚 Resources for Success
+## 📚 Resources for New Focus Areas
 
-- **Mission READMEs**: Each mission has complete V-Cycle documentation
-- **Mission Tutorials**: `MissionX_tut/` directories with step-by-step guided learning
-- **Daily Study Notes**: `daily_study/rust_learning_week*_notes/` directories  
+### AoC Problem Solving
+- **AoC Archives**: https://adventofcode.com/ - Previous years for pattern practice
+- **Local Scaffold**: `advent_of_code/aoc2024/` and `advent_of_code/aoc2015/` 
+- **Pattern Recognition**: Build library in `advent_of_code/aoc_pattern_recognition/`
+- **Solution Templates**: Reusable patterns for parsing, algorithms, data structures
+
+### Rust Book Study
 - **Rust Book Online**: https://doc.rust-lang.org/book/
-- **Practice Problems**: Use your AoC scaffold for additional practice
+- **Local Examples**: Create scratch files for each chapter's examples
 - **Documentation**: `cargo doc --open` for comprehensive references
+- **Rust by Example**: https://doc.rust-lang.org/rust-by-example/ for additional practice
 
-### 🔗 Alignment Resources
-- **Tutorial-Mission Mapping**: Check `MissionX_tut/README.md` for step-by-step alignment with main mission
-- **Daily Progress Tracking**: Use `git log --oneline` to verify tutorial and mission progress coordination
-- **Integration Validation**: Ensure `cargo test` passes for both `MissionX/` and `MissionX_tut/` directories
+### Zettelkasten Development
+- **Current Graph**: 488+ existing notes in `zettelkasten/` directory
+- **Master Index**: `zettelkasten/zettel-index.md` for navigation
+- **MOC Templates**: Use existing MOCs as templates for new knowledge areas
+- **Bidirectional Linking**: Always create reciprocal links between connected concepts
 
-**Remember**: Consistency beats intensity. 30-45 minutes daily will build solid mastery over this month! 🚀
+### Integration Resources
+- **AoC + Rust Book Synergy**: Apply each new Rust concept to relevant AoC problems
+- **Knowledge Connection**: Every AoC solution should reference applicable Rust concepts
+- **Pattern Documentation**: Build comprehensive library of solution templates
+- **Progress Tracking**: Use `git log --oneline --grep="Ch[0-9]"` to track Rust Book progress
 
-**⚠️  CRITICAL SUCCESS FACTOR**: Always maintain alignment between Mission Tutorial daily activities and Mission Focus goals - they should reinforce each other, not compete for attention!
+**Remember**: Integration beats isolation. Connecting AoC problems to Rust concepts through zettelkasten will build deep, lasting understanding! 🚀
+
+**⚠️  NEW CRITICAL SUCCESS FACTOR**: Every Rust Book concept should connect to at least one AoC problem and create bidirectional zettelkasten links!
 
 ---
 
@@ -590,5 +664,5 @@ git add . && git commit -m "Day X progress" # Save daily progress
 
 ---
 
-*Last Updated: October 10, 2025*
-*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[CALENDER_ARCHIVE]]*
+*Last Updated: November 8, 2025*
+*Navigation: [[zettel-index]] | [[README]] | [[AoC Pattern Library]] | [[Zettelkasten System]] | [[CALENDER_ARCHIVE]]*
