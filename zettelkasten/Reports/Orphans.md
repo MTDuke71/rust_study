@@ -19,6 +19,7 @@ WHERE length(file.inlinks) = 0 AND length(file.outlinks) = 0
 AND !contains(file.path, ".obsidian")
 AND !contains(file.path, "target")
 AND !contains(file.path, ".git")
+AND !contains(file.path, "advent_of_code/aoc2024/2024py")
 AND file.name != "Orphans"
 SORT file.mtime DESC
 LIMIT 100
@@ -40,6 +41,7 @@ AND length(file.outlinks) > 0
 AND !contains(file.path, ".obsidian")
 AND !contains(file.path, "target")
 AND !contains(file.path, ".git")
+AND !contains(file.path, "advent_of_code/aoc2024/2024py")
 AND file.name != "Orphans"
 SORT length(file.outlinks) DESC
 LIMIT 75
@@ -61,6 +63,7 @@ AND length(file.inlinks) > 0
 AND !contains(file.path, ".obsidian")
 AND !contains(file.path, "target")
 AND !contains(file.path, ".git")
+AND !contains(file.path, "advent_of_code/aoc2024/2024py")
 AND file.name != "Orphans"
 SORT length(file.inlinks) DESC
 LIMIT 50
@@ -80,6 +83,7 @@ FROM ""
 WHERE !contains(file.path, ".obsidian")
 AND !contains(file.path, "target")
 AND !contains(file.path, ".git")
+AND !contains(file.path, "advent_of_code/aoc2024/2024py")
 GROUP BY 
   choice(length(file.inlinks) = 0 AND length(file.outlinks) = 0, "True Orphan",
   choice(length(file.inlinks) = 0 AND length(file.outlinks) > 0, "No Incoming",

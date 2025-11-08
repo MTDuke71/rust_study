@@ -269,14 +269,32 @@ Based on [[../advent_of_code/aoc2015/Problem_Statements/summary]]:
 
 ---
 
+---
+
+## 🎯 **AoC 2024 Problem References**
+
+*Problem statements for cross-year pattern analysis and learning*
+
+### **Early December 2024 Problems**
+- [[../advent_of_code/aoc2024/Problem_Statements/day01]] - Historian Hysteria (2024) - List processing and distance calculations
+- [[../advent_of_code/aoc2024/Problem_Statements/day02]] - Red-Nosed Reports (2024) - Sequence validation and safety analysis
+- [[../advent_of_code/aoc2024/Problem_Statements/day03]] - Mull It Over (2024) - String parsing and instruction processing
+
+**Note**: Python implementations exist in excluded `2024py/` directory. These problem statements serve as:
+- Cross-year pattern comparison with AoC 2015
+- Future Rust implementation reference
+- Problem-solving technique analysis
+
+---
+
 ## 🔗 **Related MOCs**
 
 - [[AoC Patterns MOC]] - Cross-year competitive programming patterns
-- [[Collections MOC]] - Data structure implementations
+- [[Collections MOC]] - Data structure implementations  
 - [[Rust Concepts MOC]] - Core language features
 
 ---
 
-*Tags: #aoc #aoc2015 #competitive-programming #advent-of-code #problem-solving #rust-learning*
+*Tags: #aoc #aoc2015 #aoc2024 #competitive-programming #advent-of-code #problem-solving #rust-learning*
 
 *Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[Collections MOC]] | [[Rust Concepts MOC]]*

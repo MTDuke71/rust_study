@@ -291,7 +291,7 @@ Deep language understanding
 |-----|-------|--------------|-------|
 | [[daily-study/Day36\|Day 36]] | Module Basics | `mod`, `pub`, visibility rules | [[../rust_book/Ch13\|Ch13.1]] |
 | [[daily-study/Day37\|Day 37]] | Crate Organization | lib vs bin, module trees, API design | [[../missions/Mission10/README\|Mission10]], [[zettelkasten/Daily Notes/2025-11-03\|Nov 3 Plan]] |
-| [[daily-study/Day38\|Day 38]] | Cargo Features | Conditional compilation, feature flags | [[../rust_book/Ch13\|Ch13.3]] |
+| [[daily-study/Day38\|Day 38]] | Cargo Features | Conditional compilation, feature flags | [[../rust_book/Ch13\|Ch13.3]], [[../daily_study/rust_learning_week6_notes/Day38_Summary\|Day38 Summary]], [[../daily_study/rust_learning_week6_notes/Day38_Alloc_Warnings_Analysis\|Day38 Analysis]] |
 | [[daily-study/Day39\|Day 39]] | Workspace Management | Multi-crate projects | [[Collections MOC]] |
 | [[daily-study/Day40\|Day 40]] | Publishing Crates | `Cargo.toml`, documentation, versioning | [[../rust_book/Ch14\|Ch14.1]] |
 | [[daily-study/Day41\|Day 41]] | Week 6 Review | Integration & practice | [[Week 6 Overview]] |

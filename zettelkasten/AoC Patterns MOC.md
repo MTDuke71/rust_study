@@ -202,6 +202,12 @@
 - **String Processing**: Parsing, pattern matching, transformation
 - **Simulation**: State machines, iterative processes, complex rules
 
+### **Testing Infrastructure**
+- **[[../advent_of_code/aoc2024/tests/data/README]] - Test Data Organization** - Structure for examples, edge cases, and validation data
+- **Example vs Real Input** - Separating simple examples from full puzzle inputs
+- **CLI Integration** - Using test data with command-line tools and debugging flags
+- **Integration Testing** - Validating against known expected outputs
+
 ---
 
 *Tags: #aoc #patterns #algorithms #competitive-programming #problem-solving #reference #navigation #moc*
