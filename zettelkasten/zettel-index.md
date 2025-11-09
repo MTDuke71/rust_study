@@ -227,6 +227,10 @@
 - [[DFS Patterns]] - Depth-first search and backtracking
 - [[Graph Network Density]] - Network connectivity metrics and graph analysis
 
+### **Production Algorithm Tools**
+- **[[../missions/Mission9/docs/CLI_GUIDE]]** - Command-line pathfinding tools for practical algorithm application
+- **[[../missions/Mission9/docs/INTEGRATION_GUIDE]]** - Real-world algorithm integration patterns and examples
+
 ## ⚡ Performance & Optimization
 
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
@@ -236,6 +240,10 @@
 - [[Algorithm Analysis]] - Complexity analysis patterns including amortized analysis
 - [[Subset-Sum-Scaling-Analysis]] - **Exponential algorithm scaling**: When brute force breaks, optimization strategies (DP, meet-in-the-middle, branch-and-bound)
 - Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
+
+### **Advanced Algorithm Performance**
+- **[[../missions/Mission9/docs/PERFORMANCE_TUNING]]** - Pathfinding optimization, algorithm selection, and benchmarking techniques
+- **[[../missions/Mission9/docs/API_DOCUMENTATION]]** - Production-quality algorithm implementations with performance characteristics
 
 ## 📊 System Reports & Analysis
 

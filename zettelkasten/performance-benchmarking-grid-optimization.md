@@ -211,6 +211,11 @@ where
 - **[[Big-O Complexity]]** - Asymptotic analysis vs practical performance
 - **[[zero-cost-abstractions]]** - High-level code compiling to efficient machine code
 
+### **Advanced Performance Techniques**
+- **[[../missions/Mission9/docs/PERFORMANCE_TUNING]]** - Algorithm selection, heuristic optimization, and benchmarking strategies for pathfinding
+- **[[Priority Queue Patterns]]** - Efficient data structures for graph algorithms
+- **[[Algorithm Analysis]]** - Time/space complexity analysis methods
+
 ---
 
 ## 📚 Learning Resources
