@@ -60,7 +60,7 @@ fn iterator_basics() {
 }
 
 fn iterator_adaptors() {
-    let v = vec![1, 2, 3, 4, 5, 6];
+    let v = [1, 2, 3, 4, 5, 6];
     
     // map() - transform each element
     let doubled: Vec<i32> = v.iter().map(|x| x * 2).collect();
@@ -91,13 +91,13 @@ fn iterator_adaptors() {
     }
     
     // zip() - combine two iterators
-    let letters = vec!['a', 'b', 'c'];
+    let letters = ['a', 'b', 'c'];
     let zipped: Vec<_> = v.iter().zip(letters.iter()).collect();
     println!("\nzip: {:?}", zipped);
 }
 
 fn consuming_adaptors() {
-    let v = vec![1, 2, 3, 4, 5, 6, 7, 8];
+    let v = [1, 2, 3, 4, 5, 6, 7, 8];
     
     // collect() - build a collection
     let doubled: Vec<i32> = v.iter().map(|x| x * 2).collect();
@@ -132,10 +132,10 @@ fn consuming_adaptors() {
     println!("first even: {:?}", first_even);
     
     // fold() - reduce to single value
-    let sum_fold = v.iter().fold(0, |acc, x| acc + x);
+    let sum_fold = v.iter().sum::<i32>();
     println!("fold (sum): {}", sum_fold);
     
-    let product_fold = v.iter().fold(1, |acc, x| acc * x);
+    let product_fold = v.iter().product::<i32>();
     println!("fold (product): {}", product_fold);
 }
 
@@ -218,10 +218,10 @@ fn performance_comparison() {
 // Additional examples
 #[allow(dead_code)]
 fn advanced_iterator_patterns() {
-    let v = vec![1, 2, 3, 4, 5];
+    let v = [1, 2, 3, 4, 5];
     
     // flat_map() - map and flatten
-    let nested = vec![vec![1, 2], vec![3, 4], vec![5]];
+    let nested = [vec![1, 2], vec![3, 4], vec![5]];
     let flattened: Vec<i32> = nested.iter()
         .flat_map(|inner| inner.iter())
         .copied()

@@ -150,7 +150,7 @@ impl DynamicNetwork {
         for node_id in 0..self.next_node_id {
             let root = self.uf.find(node_id)?;
             let name = self.get_node_name(node_id)?;
-            components.entry(root).or_insert_with(Vec::new).push((node_id, name));
+            components.entry(root).or_default().push((node_id, name));
         }
         
         println!("   Components:");
@@ -189,7 +189,7 @@ impl DynamicNetwork {
         
         for node_id in 0..self.next_node_id {
             let root = self.uf.find(node_id)?;
-            components_map.entry(root).or_insert_with(Vec::new).push(node_id);
+            components_map.entry(root).or_default().push(node_id);
         }
         
         let component_roots: Vec<usize> = components_map.keys().cloned().collect();
