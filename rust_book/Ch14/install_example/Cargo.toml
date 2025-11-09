@@ -2,22 +2,30 @@
 name = "install-example"
 version = "0.1.0"
 edition = "2021"
-authors = ["Your Name <you@example.com>"]
-description = "An example binary crate that can be installed with cargo install"
-license = "MIT OR Apache-2.0"
 
 # 14.4 - Installing Binaries from Crates.io with cargo install
-# This example shows how to create an installable binary crate
-
-[[bin]]
-name = "install-example"
-path = "src/main.rs"
-
-# Optional: Additional binaries
-# [[bin]]
-# name = "install-example-helper"
-# path = "src/helper.rs"
+# This example demonstrates HOW TO INSTALL existing binary crates from crates.io
+# 
+# Popular binary crates you can install:
+# - ripgrep: Fast text search tool (rg)
+# - fd-find: Fast file finder (fd)  
+# - bat: Better cat with syntax highlighting
+# - exa: Better ls with colors and git integration
+# - tokei: Code statistics tool
+# - cargo-watch: Auto-rebuild on file changes
+#
+# Installation examples:
+# cargo install ripgrep
+# cargo install fd-find
+# cargo install bat
+# cargo install exa
+#
+# Then use them from anywhere:
+# rg "pattern" files/
+# fd filename
+# bat file.rs
+# exa -la
 
 [dependencies]
-clap = { version = "4.4", features = ["derive"] }
+# This crate demonstrates the installation process, not the creation process
 
