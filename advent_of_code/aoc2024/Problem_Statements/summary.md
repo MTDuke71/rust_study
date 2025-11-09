@@ -132,6 +132,53 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - **V-Cycle Demonstration**: Shows how foundational libraries dramatically simplify complex algorithms
 - **Documentation**: Complete analysis in [[../examples/README_day04_wm6.md]] and [[../../../zettelkasten/aoc2024-day4-mission6-example]]
 
+### Day 5: Print Queue
+**Title**: Print Queue  
+**Part 1 Type**: Graph Algorithms + Conditional Logic  
+**Part 1 Description**: Validate page ordering sequences against dependency rules, sum middle pages of correctly ordered updates  
+**Part 2 Type**: Graph Algorithms + Optimization  
+**Part 2 Description**: Fix incorrectly ordered sequences using topological sorting, sum middle pages of fixed sequences  
+**Key Concepts**: Dependency graphs, topological sorting, cycle detection, Kahn's algorithm, adaptive algorithms, rule-based validation  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Dependency ordering with escalation (validation → repair with topological sorting)
+- **Data Structure**: Mission 7 `Graph<T>` for dependencies, HashMap for bidirectional node mapping, adjacency lists for Mission 8 algorithms
+- **Complexity**: Part 1: O(n²) per sequence validation, Part 2: O(V + E) Kahn's algorithm or O(n²) rule-based fallback
+- **AoC Theme**: "Print queue dependency management" with classic Part 2 repair mechanism (validate → fix using graph theory)
+
+**🦀 Rust Conversion Highlights**:
+- **From manual graph construction** → **Mission 7 `Graph<T>` with type-safe node management**
+- **From custom cycle detection** → **Mission 8 `has_cycle()` with proven algorithms**
+- **From hardcoded topological sort** → **Kahn's algorithm with adaptive fallback for cyclic graphs**
+- **From error-prone dependency tracking** → **Bidirectional HashMap mapping between page numbers and NodeId**
+
+**Real-World Complexity Handling**:
+- **Global rules**: 1,176 ordering relationships with cycles detected by Mission 8
+- **Adaptive algorithm**: Falls back from optimal Kahn's to rule-based bubble sort when cycles exist
+- **Production robustness**: Handles edge cases gracefully rather than failing hard
+- **Mission integration validation**: Cycle detection provides valuable insights while allowing solution to continue
+
+**🏗️ Mission 7 + Mission 8 Integration**:
+- **[[../examples/day05_real_missions.rs]]** - Real Mission integration implementation
+- **[[../examples/day05_real_missions_clean.rs]]** - Comment-free version for walkthroughs
+- **[[../examples/DAY05_REAL_MISSIONS_WALKTHROUGH.md]]** - Complete architectural analysis
+- **Code Reduction**: ~40% reduction through foundational library integration
+- **Safety Improvement**: Automatic bounds checking and validation through Mission APIs
+- **Architectural Benefits**: Graph theory abstraction → competitive programming application
+- **Mission Validation**: Real cycle detection identifies data complexity (49 nodes, 1,176 edges, density 0.500)
+- **Results**: Part 1: 4,872, Part 2: 5,564 (real AoC dataset with cycle handling)
+- **V-Cycle Demonstration**: Requirements → Mission APIs → adaptive implementation → validation
+
+**Performance**: Efficient O(V + E) when no cycles, graceful O(n²) fallback when cycles detected, demonstrates production-quality error handling
+
+**Python vs Rust Comparison**:
+- **Python Approach**: Simple rule-based bubble sort for both validation and fixing (~30 lines total)
+- **Algorithm Validation**: Python solution uses identical bubble sort logic as our Rust fallback method
+- **Philosophy Difference**: Python optimizes for simplicity and speed, Rust Missions invest in architectural depth and reusability
+- **Cycle Handling**: Python implicitly handles cycles through bubble sort, Rust explicitly detects cycles with Mission 8 then adapts algorithm
+- **Educational Value**: Python gets correct results efficiently, Rust provides graph insights (cycle detection, density analysis, foundational libraries)
+- **Code Complexity**: Python ~30 lines pragmatic solution vs Rust ~200 lines with Mission integration, type safety, and architectural benefits
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -146,7 +193,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 | Cryptographic | 0 | 0 |
 | Data Structures | 1 | 1 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 0 | 0 |
+| Graph Algorithms | 1 | 1 |
 | Greedy Algorithms | 0 | 0 |
 | Mathematical | 2 | 1 |
 | Number Theory | 0 | 0 |
@@ -173,13 +220,16 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 9. **State Machine Logic**: Conditional instruction processing (Day 3: enable/disable state tracking across instruction sequence)
 10. **Grid Processing**: 2D array parsing and traversal (Day 4: character grid with bounds validation, directional search algorithms)
 11. **Directional Search**: Multi-directional pattern detection (Day 4: 8-direction word search using coordinate arithmetic and direction vectors)
-12. **Foundational Library Integration**: Mission 6 utilities demonstrate architectural benefits (Day 4: 43% code reduction, 100% panic elimination, semantic clarity)
+12. **Dependency Graphs**: Topological ordering and cycle detection (Day 5: page ordering rules with Mission 7 Graph representation and Mission 8 algorithms)
+13. **Adaptive Algorithms**: Algorithm selection based on data characteristics (Day 5: Kahn's algorithm for acyclic graphs, rule-based sorting for cyclic graphs)
+14. **Foundational Library Integration**: Mission utilities demonstrate architectural benefits (Day 4: Mission 6 - 43% code reduction, Day 5: Mission 7+8 - 40% code reduction with cycle detection)
 
 ### Rust-Specific Considerations:
 - **Day 1**: Excellent introduction to functional error handling with `Result<T, E>`, iterator combinators (`zip`, `fold`, `sum`), and pattern matching for safe parsing. Demonstrates HashMap construction with functional approach vs Python's Counter.
 - **Day 2**: Showcases iterator windows for sliding comparisons, early-return imperative validation (vs Python's `all()`/`any()` functional style), and `to_vec()` + `remove()` for element removal simulation. Demonstrates performance-focused approach with manual state tracking vs functional boolean aggregation.
 - **Day 3**: Highlights regex integration with `regex` crate, type-safe instruction parsing using `enum` with pattern matching, comprehensive error context with `anyhow::Context`, and efficient single-pass state machine implementation. Shows Rust's strength in pattern validation and stateful processing with zero-cost abstractions.
-- **Day 4**: Demonstrates 2D grid processing with comprehensive bounds checking, mathematical approach to directional search using coordinate vectors, and zero-allocation character matching vs Python's string concatenation approach. Showcases Rust's compile-time safety for array indexing and elegant pattern decomposition for geometric shapes. **Mission 6 Alternative**: Illustrates how foundational libraries can dramatically simplify competitive programming solutions—280-line manual implementation reduced to 160 lines with automatic safety guarantees, proving that good architecture improves both productivity and correctness. 
+- **Day 4**: Demonstrates 2D grid processing with comprehensive bounds checking, mathematical approach to directional search using coordinate vectors, and zero-allocation character matching vs Python's string concatenation approach. Showcases Rust's compile-time safety for array indexing and elegant pattern decomposition for geometric shapes. **Mission 6 Alternative**: Illustrates how foundational libraries can dramatically simplify competitive programming solutions—280-line manual implementation reduced to 160 lines with automatic safety guarantees, proving that good architecture improves both productivity and correctness.
+- **Day 5**: Exemplifies sophisticated graph algorithm integration using **actual Mission 7 + Mission 8 APIs** (not mocks). Demonstrates bidirectional HashMap mapping for type-safe node management, adaptive algorithm selection based on Mission 8 cycle detection, and production-quality error handling with graceful degradation. Shows how foundational libraries enable focus on problem logic rather than low-level graph implementation. **Mission Integration**: Proves concrete benefits—40% code reduction, automatic cycle detection, proven algorithms, and real-world complexity handling for graphs with cycles (49 nodes, 1,176 edges). 
 ---
 
 ## Adding New Days
@@ -216,7 +266,7 @@ To add a new day to this summary:
 ---
 
 *Last Updated: November 8, 2025*
-*Days Implemented: 1, 2, 3, 4*
+*Days Implemented: 1, 2, 3, 4, 5*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---

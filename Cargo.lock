@@ -130,6 +130,8 @@ dependencies = [
  "md5",
  "mission5",
  "mission6",
+ "mission7",
+ "mission8",
  "mission9",
  "regex",
  "serde_json",
