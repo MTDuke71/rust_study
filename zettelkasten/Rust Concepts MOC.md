@@ -76,7 +76,7 @@
 ### **Module System & Organization**
 - [[Module Organization]] - Project structure and privacy
 - [[Package Management]] - Cargo workspace patterns
-- [[API Design]] - Public interface design principles
+- [[API Design Principles]] - Public interface design principles
 
 ### **Concurrency & Async**
 - [[Thread Safety]] - Concurrent programming patterns

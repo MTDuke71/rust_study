@@ -964,7 +964,7 @@ criterion = { version = "0.5", optional = true }
 
 - **[[mission-10]]**: Apply conditional compilation to Union-Find implementation
 - **[[Cargo and Package Management]]**: Advanced Cargo configuration patterns
-- **[[API Design]]**: How features affect public API design
+- **[[API Design Principles]]**: How features affect public API design
 - **[[Testing Strategies]]**: Testing with different feature combinations
 
 ---

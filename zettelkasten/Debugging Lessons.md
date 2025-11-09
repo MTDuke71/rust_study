@@ -98,7 +98,7 @@ The full document includes:
 
 ### **Software Engineering Practices**
 - [[Clean Code Principles]] - Writing testable, maintainable code
-- [[API Design]] - Creating clear interface contracts
+- [[API Design Principles]] - Creating clear interface contracts
 - [[Documentation Standards]] - Documenting expected behavior
 - [[V-Cycle Development]] - Requirements through validation
 - [[Refactoring]] - Improving code safely with tests

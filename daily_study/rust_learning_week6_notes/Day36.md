@@ -1051,7 +1051,7 @@ The Rust Book by Steve Klabnik (550 pages)
 
 - **[[Crate Organization]]** - Day 37: lib.rs vs main.rs, module trees
 - **[[Cargo Features]]** - Day 38: Conditional compilation
-- **[[API Design]]** - Best practices for public interfaces
+- **[[API Design Principles]]** - Best practices for public interfaces
 - **[[Encapsulation]]** - Hiding implementation details
 - **[[Namespaces]]** - Avoiding name collisions
 

@@ -2,6 +2,8 @@
 
 **Comprehensive guide to designing clean, idiomatic, and maintainable public interfaces in Rust**
 
+*This guide focuses on concrete implementation patterns. For the foundational philosophy and abstract guidelines, see [[API Design Principles]].*
+
 ---
 
 ## 🏗️ **Core Design Principles**
@@ -13,6 +15,8 @@ Rust's approach to API design emphasizes:
 - **Memory safety** - APIs that prevent undefined behavior
 - **Ownership clarity** - Clear semantics about who owns what
 - **Ergonomic usage** - Easy to use correctly, hard to use incorrectly
+
+*For detailed exploration of these foundational principles, see [[API Design Principles]].*
 
 ### **The "Principle of Least Surprise"**
 ```rust
@@ -763,4 +767,4 @@ impl MyString {
 ---
 
 *Tags: #api-design #patterns #rust #public-interface #ergonomics #performance #forward-compatibility #best-practices*
-*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Rust Concepts MOC]] | [[Mission5 Overview]] | [[Error Handling Patterns]] | [[Iterator Patterns]] | [[anyhow and thiserror]] | [[Rest Patterns]] | [[Memory Address Analysis]]*
+*Links: [[API Design Principles]] | [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Rust Concepts MOC]] | [[Mission5 Overview]] | [[Error Handling Patterns]] | [[Iterator Patterns]] | [[anyhow and thiserror]] | [[Rest Patterns]] | [[Memory Address Analysis]]*

@@ -345,7 +345,7 @@ Error messages don't lie. Read them carefully and trace the actual failure point
 - [[Test Coverage]] - Ensuring comprehensive testing
 
 ### **Design Contracts**
-- [[API Design]] - Creating clear interfaces
+- [[API Design Principles]] - Creating clear interfaces
 - [[Preconditions and Postconditions]] - Defining behavior boundaries
 - [[Invariants]] - Properties that must always hold
 - [[Documentation Standards]] - Documenting expected behavior
