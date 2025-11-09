@@ -251,7 +251,7 @@ fn demonstrate_black_box_impact() {
 
 ## Related Concepts
 
-- **Dead Code Elimination**: Compiler optimization that removes unused code
+- **[[dead-code-elimination]]**: Comprehensive guide to compiler optimization that removes unused code and how to protect against it
 - **Constant Folding**: Compiler optimization that precomputes constant expressions
 - **Link-Time Optimization (LTO)**: Advanced optimization that can affect benchmarks
 - **Profile-Guided Optimization (PGO)**: Optimization based on runtime profiling

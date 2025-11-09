@@ -235,6 +235,7 @@
 
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
 - [[black-box-benchmarking]] - Using std::hint::black_box for accurate benchmarks
+- [[dead-code-elimination]] - **Compiler optimization deep dive**: Understanding and preventing unwanted code elimination in benchmarks
 - [[proptest-property-based-testing]] - Property-based testing with proptest for comprehensive validation
 - [[zero-cost-abstractions]] - Rust's performance guarantees
 - [[Algorithm Analysis]] - Complexity analysis patterns including amortized analysis
