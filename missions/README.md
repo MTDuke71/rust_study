@@ -38,17 +38,17 @@ cargo fmt --all
 ## 📂 **Mission Structure**
 
 ### **Completed Implementations** ✅
-- **[Mission1/](Mission1/)** - **Stack** - LIFO operations | [[Mission1 README]]
-- **[Mission2/](Mission2/)** - **Queue** - Ring buffer + FIFO | [[Mission2 README]]  
-- **[Mission3/](Mission3/)** - **Binary Search** - Sorted operations | [[Mission3 README]]
-- **[Mission4/](Mission4/)** - **LinkedList** - Dynamic nodes | [[Mission4 Overview]]
-- **[Mission5/](Mission5/)** - **HashMap/HashSet** - Hash collections | [[Mission5 README]]
+- **Mission1/** - **Stack** - LIFO operations | [[Mission1 README]]
+- **Mission2/** - **Queue** - Ring buffer + FIFO | [[Mission2 README]]  
+- **Mission3/** - **Binary Search** - Sorted operations | [[Mission3 README]]
+- **Mission4/** - **LinkedList** - Dynamic nodes | [[Mission4 Overview]]
+- **Mission5/** - **HashMap/HashSet** - Hash collections | [[Mission5 README]]
 
 ### **Active Development** 🚧
-- **[Mission6/](Mission6/)** - **Grids & 2D Arrays** - Spatial algorithms | [[Mission6 README]]
+- **Mission6/** - **Grids & 2D Arrays** - Spatial algorithms | [[Mission6 README]]
 
 ### **Recently Added** ✅
-- **[Mission7/](Mission7/)** - **Graph Representation** - Adjacency lists, BFS/DFS | [[Mission7 README]]
+- **Mission7/** - **Graph Representation** - Adjacency lists, BFS/DFS | [[Mission7 README]]
 
 ---
 
