@@ -21,18 +21,22 @@ fn main() {
     println!("🦀 Rust Binary Installation Demo - Chapter 14.4");
     println!("================================================");
     
-    println!("\n📦 How to install binary crates from crates.io:");
-    println!("1. cargo install ripgrep     # Fast text search");
-    println!("2. cargo install fd-find     # Fast file finder");
-    println!("3. cargo install bat         # Better cat with syntax highlighting");
-    println!("4. cargo install exa         # Better ls with colors");
-    println!("5. cargo install tokei       # Code statistics");
+    println!("\n📦 Cross-platform binary crates to install:");
+    println!("1. cargo install ripgrep     # Fast text search (Windows/Linux/Mac)");
+    println!("2. cargo install fd-find     # Fast file finder (Windows/Linux/Mac)");
+    println!("3. cargo install bat         # Better cat with syntax highlighting (Windows/Linux/Mac)");  
+    println!("4. cargo install tokei       # Code statistics (Windows/Linux/Mac)");
+    println!("5. cargo install cargo-watch # Auto-rebuild on changes (Windows/Linux/Mac)");
+    
+    println!("\n🐧 Unix/Linux-specific tools:");
+    println!("6. cargo install exa         # Better ls (Linux/Mac only - fails on Windows)");
+    println!("7. cargo install lsd         # Modern ls alternative (cross-platform alternative to exa)");
     
     println!("\n🔧 After installation, use them anywhere:");
     println!("- rg \"pattern\" files/       # Search text with ripgrep");
     println!("- fd filename               # Find files with fd");
     println!("- bat src/main.rs           # Display file with syntax highlighting");
-    println!("- exa -la                   # List files with colors and git info");
+    println!("- lsd -la                   # List files with colors (cross-platform)");
     
     println!("\n📍 Installation location: ~/.cargo/bin/");
     println!("💡 Make sure ~/.cargo/bin is in your PATH!");
@@ -44,8 +48,9 @@ fn main() {
         ("ripgrep", "rg"),
         ("fd-find", "fd"), 
         ("bat", "bat"),
-        ("exa", "exa"),
+        ("lsd", "lsd"),          // Cross-platform alternative to exa
         ("cargo-watch", "cargo-watch"),
+        ("tokei", "tokei"),
     ];
     
     for (crate_name, command) in &tools {
