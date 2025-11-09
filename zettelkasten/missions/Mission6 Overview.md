@@ -151,6 +151,11 @@ See [[Mission6_tut Overview]] for step-by-step learning path
 - Adjacency relationship through neighbor finding
 - Graph algorithms applied to spatial problems
 
+### **AoC Applications**
+- **[[../aoc2024-day4-mission6-example]]** - Word search with 43% code reduction
+- Real-world validation of grid utility design
+- Competitive programming pattern demonstration
+
 ---
 *Tags: #mission6 #grids #2d-arrays #pathfinding #overview #v-cycle #spatial-algorithms #aoc*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Mission5 Overview]] | [[Mission6_tut Overview]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Mission5 Overview]] | [[Mission6_tut Overview]] | [[MONTHLY_CALENDAR]] | [[../aoc2024-day4-mission6-example]]*

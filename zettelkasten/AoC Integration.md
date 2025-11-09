@@ -136,6 +136,7 @@ fn solve_grid_problem(input: &str) -> usize {
 - 2015 Day 3: Houses visited
 - 2015 Day 6: Light grid
 - 2015 Day 18: Game of Life
+- **[[aoc2024-day4-mission6-example]]** - 2024 Day 4: Word search with architectural benefits demonstration
 
 #### 2. **Frequency Counting** (Mission 5)
 ```rust

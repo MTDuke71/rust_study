@@ -51,4 +51,4 @@ Sixth mission implementing 2D grids with navigation algorithms, coordinate syste
 ---
 
 *Tags: #mission6 #2d-grids #navigation #spatial-algorithms #pathfinding #coordinates*
-*Links: [[../zettel-index.md]] | [[mission-5.md]] | [[mission-7.md]] | [[flood-fill.md]] | [[daily-study/Day24]]*
+*Links: [[../zettel-index.md]] | [[mission-5.md]] | [[mission-7.md]] | [[flood-fill.md]] | [[daily-study/Day24]] | [[../aoc2024-day4-mission6-example]]*
