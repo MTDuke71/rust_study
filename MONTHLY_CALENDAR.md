@@ -144,7 +144,7 @@ Simplified plan:
 ### **Sunday, November 9** 🧮
 **Rust Book**: Chapter 14.4 - Installing Binaries from Crates.io with cargo install
 **AoC Focus**: Set up AoC 2024 review - focus on problems requiring cargo tools
-**AoC 2024 Study day04 and Day05 problems
+**AoC** 2024 Study day04 and Day05 problems
 **Zettelkasten**: Create [[rust-book-ch14-cargo-ecosystem]] with tool examples
 ```bash
 # Daily Tasks

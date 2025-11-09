@@ -754,9 +754,6 @@ dependencies = [
 [[package]]
 name = "install-example"
 version = "0.1.0"
-dependencies = [
- "clap",
-]
 
 [[package]]
 name = "io-uring"
