@@ -78,4 +78,4 @@ members = [
     "daily_study/rust_learning_week5_notes"
 ]
 
-resolver = "2"
+resolver = "3"
