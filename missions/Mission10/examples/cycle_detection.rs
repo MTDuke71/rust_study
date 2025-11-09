@@ -40,8 +40,8 @@ impl Graph {
         }
 
         // Add to adjacency list (undirected = both directions)
-        self.adj_list.entry(u).or_insert_with(Vec::new).push(v);
-        self.adj_list.entry(v).or_insert_with(Vec::new).push(u);
+        self.adj_list.entry(u).or_default().push(v);
+        self.adj_list.entry(v).or_default().push(u);
         
         // Store edge for reference
         self.edges.push((u, v));

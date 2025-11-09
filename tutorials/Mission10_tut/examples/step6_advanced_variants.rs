@@ -657,7 +657,7 @@ fn demo_customizable_merge() {
     println!("Use case: Tracking statistics for connected components");
     
     // Initialize with element values
-    let values = vec![10, 25, 5, 30, 15];
+    let values = [10, 25, 5, 30, 15];
     let initial_stats: Vec<SetStats> = values.iter().map(|&v| SetStats::new(v)).collect();
     let mut cuf = CustomizableUnionFind::new(initial_stats, SetStats::merge);
     

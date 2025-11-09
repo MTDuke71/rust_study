@@ -162,7 +162,7 @@ impl SocialNetwork {
         
         for (id, person) in &self.people {
             let root = self.uf.find(*id)?;
-            communities.entry(root).or_insert_with(Vec::new).push(person);
+            communities.entry(root).or_default().push(person);
         }
         
         Ok(communities.into_values().collect())
@@ -176,7 +176,7 @@ impl SocialNetwork {
         
         // Get friend IDs
         let mut friend_ids = HashSet::new();
-        for (id, _) in &self.people {
+        for id in self.people.keys() {
             if self.uf.find(*id)? == person_root {
                 friend_ids.insert(*id);
             }
@@ -213,7 +213,7 @@ impl SocialNetwork {
             // Mutual friends bonus (check if candidate has friends in our circle)
             let candidate_root = self.uf.find(*id)?;
             let mut candidate_friend_ids = HashSet::new();
-            for (cand_id, _) in &self.people {
+            for cand_id in self.people.keys() {
                 if self.uf.find(*cand_id)? == candidate_root {
                     candidate_friend_ids.insert(*cand_id);
                 }
@@ -346,7 +346,7 @@ mod rand {
     use std::cell::Cell;
     
     thread_local! {
-        static SEED: Cell<u64> = Cell::new(1);
+        static SEED: Cell<u64> = const { Cell::new(1) };
     }
     
     pub fn random<T>() -> T 
@@ -534,13 +534,11 @@ fn example_community_growth() -> Result<(), String> {
     println!("🌱 Starting with early adopters...");
     
     let mut people = Vec::new();
-    let interests = vec![
-        vec!["Technology".to_string(), "Startups".to_string()],
+    let interests = [vec!["Technology".to_string(), "Startups".to_string()],
         vec!["Technology".to_string(), "Gaming".to_string()],
         vec!["Art".to_string(), "Photography".to_string()],
         vec!["Fitness".to_string(), "Nutrition".to_string()],
-        vec!["Music".to_string(), "Concerts".to_string()],
-    ];
+        vec!["Music".to_string(), "Concerts".to_string()]];
     
     for i in 0..5 {
         let id = network.add_person(
