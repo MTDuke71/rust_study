@@ -46,6 +46,24 @@ opt-level = 3    # Maximum optimization
 - **Cross-Platform Tools**: ripgrep, fd-find, bat, tokei, cargo-watch
 - **Platform-Specific**: Some tools (like exa) only work on Unix/Linux
 
+### Extending Cargo with Custom Commands (14.5)
+- **Custom Subcommands**: Any binary named `cargo-<name>` becomes `cargo <name>`
+- **Installation Pattern**: `cargo install cargo-<tool>` adds new cargo functionality
+- **Command Discovery**: Cargo automatically finds binaries in PATH with `cargo-` prefix
+- **Popular Extensions**: cargo-watch, cargo-audit, cargo-expand, cargo-flamegraph
+
+```bash
+# Installing custom cargo commands
+cargo install cargo-watch    # cargo watch -x test
+cargo install cargo-audit    # cargo audit (security vulnerabilities)
+cargo install cargo-expand   # cargo expand (macro expansion)
+```
+
+**Integration with Development Workflow**:
+- `cargo watch -x test` - Auto-run tests on file changes
+- `cargo audit` - Check dependencies for security vulnerabilities  
+- `cargo expand` - Debug macro expansions during development
+
 ## Practical Examples
 
 ### Workspace Structure
@@ -90,6 +108,13 @@ Successfully installed and used:
 - `fd-find`: File discovery in complex workspace structure
 - `bat`: Syntax-highlighted file viewing
 - `lsd`: Cross-platform directory listing
+- `cargo-watch`: Auto-rebuilding during development (`cargo watch -x test`)
+
+### Custom Cargo Commands in Practice
+- **Development Workflow**: `cargo watch -x test` for continuous testing during missions
+- **Security Auditing**: `cargo audit` for dependency vulnerability scanning
+- **Macro Debugging**: `cargo expand` for understanding complex proc macros
+- **Quality Pipeline**: Integration with clippy automation and testing workflows
 
 ### Workspace Statistics (via tokei)
 ```
