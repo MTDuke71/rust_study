@@ -79,7 +79,7 @@
 ### **Ownership & Collections**
 - [[Ownership in HashMap]] - Key and value borrowing patterns
 - [[Clone vs Move]] - When collections take ownership
-- [[Interior Mutability]] - RefCell in collections
+- [[interior-mutability]] - RefCell in collections
 
 ### **Performance Patterns**
 - [[O(1) vs O(log n)]] - HashMap vs BTreeMap trade-offs  

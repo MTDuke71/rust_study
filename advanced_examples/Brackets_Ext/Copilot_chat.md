@@ -6899,7 +6899,7 @@ Similar code found with 2 license types
 - [[Ownership and Borrowing]] - Memory safety guarantees in Rust
 - [[Iterator Patterns]] - Zero-cost abstractions and iterator chains
 - [[Error Handling Patterns]] - Result types and error propagation
-- [[Zero-Cost Abstractions]] - Compiler optimizations in Rust
+- [[zero-cost-abstractions]] - Compiler optimizations in Rust
 
 ### Data Structures
 - [[HashMap]] - Used in configurable alphabet implementation

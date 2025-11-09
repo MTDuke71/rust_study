@@ -737,4 +737,4 @@ for item in data.iter().map(|x| x * 2) {
 
 *Tags: #iteration #iterators #for-loops #while-loops #functional-programming #zero-cost-abstractions #performance #data-processing #rust-patterns #collections #custom-iterators #lazy-evaluation*
 
-*Links: [[Collections MOC]] | [[Day08]] | [[Day13]] | [[mission-3]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Custom Iterator Implementation]] | [[Performance Engineering]] | [[Functional Programming Patterns]] | [[Zero-Cost Abstractions]] | [[enum-iteration-patterns]] | [[While Let Pattern Deep Dive]]*
+*Links: [[Collections MOC]] | [[Day08]] | [[Day13]] | [[mission-3]] | [[Mission4 Overview]] | [[Mission5 Overview]] | [[Custom Iterator Implementation]] | [[Performance Engineering]] | [[Functional Programming Patterns]] | [[zero-cost-abstractions]] | [[enum-iteration-patterns]] | [[While Let Pattern Deep Dive]]*

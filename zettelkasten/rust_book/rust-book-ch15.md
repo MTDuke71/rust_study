@@ -28,7 +28,7 @@ Smart pointers provide additional capabilities beyond regular references. This c
 
 - **[[Box Smart Pointer Patterns]]** - Complete guide to Box<T> usage and patterns
 - **[[Memory Management]]** - Advanced memory management and ownership patterns
-- **[[Interior Mutability]]** - RefCell<T> and interior mutability concepts
+- **[[interior-mutability]]** - RefCell<T> and interior mutability concepts
 - **[[Reference Counting]]** - Rc<T> and shared ownership strategies
 
 ## Learning Path
@@ -46,4 +46,4 @@ Smart pointers provide additional capabilities beyond regular references. This c
 
 *Tags: #rust-book #smart-pointers #box #rc #refcell #memory-management #ch15 #completed*
 
-*Links: [[../../rust_book/Ch15/README]] | [[Box Smart Pointer Patterns]] | [[Memory Management]] | [[Interior Mutability]] | [[zettel-index]]*
+*Links: [[../../rust_book/Ch15/README]] | [[Box Smart Pointer Patterns]] | [[Memory Management]] | [[interior-mutability]] | [[zettel-index]]*

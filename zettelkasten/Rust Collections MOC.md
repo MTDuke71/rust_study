@@ -64,7 +64,7 @@
 ### **Memory & Ownership**
 - **[[Collection Ownership Patterns]]** - Move, borrow, and lifetime considerations
 - **[[Memory Layout Analysis]]** - How collections store data in memory
-- **[[Zero-Cost Abstractions]]** - Iterator efficiency and compiler optimization
+- **[[zero-cost-abstractions]]** - Iterator efficiency and compiler optimization
 - **[[Allocation Strategies]]** - Capacity management and performance tuning
 
 ### **Algorithm Complexity**

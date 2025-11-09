@@ -412,13 +412,13 @@ pub struct Node<T> {
 - [[Borrow Checker Patterns and Troubleshooting]] - Common patterns and solutions
 - [[Lifetime Management]] - Advanced lifetime concepts
 - [[Smart Pointers]] - Working around borrow checker limitations
-- [[Interior Mutability]] - RefCell, Cell, and Mutex patterns
+- [[interior-mutability]] - RefCell, Cell, and Mutex patterns
 
 ### **Related Concepts**
 - [[Ownership Transfer Patterns]] - When and how to move values
 - [[Reference Lifetimes]] - Understanding lifetime parameters
 - [[Memory Safety Guarantees]] - What the borrow checker prevents
-- [[Zero-Cost Abstractions]] - Performance benefits of compile-time checking
+- [[zero-cost-abstractions]] - Performance benefits of compile-time checking
 
 ---
 

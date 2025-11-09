@@ -178,7 +178,7 @@ This follows the V-Cycle methodology from your rust_study workspace while implem
 
 **Smart Pointers:**
 - [[Box Smart Pointer Patterns]] - Box<T> patterns
-- [[Interior Mutability Deep Dive]] - RefCell patterns
+- [[interior-mutability]] - RefCell patterns
 - [[weak-references]] - Weak<T> for cycles
 
 **Tutorial Components:**

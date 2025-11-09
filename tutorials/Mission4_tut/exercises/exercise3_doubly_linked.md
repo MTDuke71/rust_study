@@ -368,7 +368,7 @@ Your implementation should:
 - [[PhantomData Type Safety Patterns]] - Advanced type safety
 
 **Interior Mutability:**
-- [[Interior Mutability Deep Dive]] - Comprehensive guide
+- [[interior-mutability]] - Comprehensive guide
 - [[refcell-patterns]] - RefCell usage patterns
 - [[Borrow Checker Patterns and Troubleshooting]] - Handling runtime borrow errors
 

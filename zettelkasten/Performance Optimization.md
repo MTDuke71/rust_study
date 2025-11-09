@@ -579,7 +579,7 @@ fn measure_performance() {
 ## 🔗 Related Concepts
 
 ### **Core Performance Concepts**
-- **[[Zero-Cost Abstractions]]** - How Rust achieves performance without runtime overhead
+- **[[zero-cost-abstractions]]** - How Rust achieves performance without runtime overhead
 - **[[Generic Programming]]** - Monomorphization and compile-time optimization
 - **[[Iterator Traits]]** - Efficient functional programming patterns
 - **[[bounds-checking-performance]]** - Eliminating runtime checks in hot paths
@@ -617,4 +617,4 @@ fn measure_performance() {
 
 *Tags: #performance #optimization #benchmarking #profiling #memory-optimization #cpu-optimization #algorithm-complexity #collections #zero-cost-abstractions*
 
-*Links: [[zettel-index]] | [[Zero-Cost Abstractions]] | [[Generic Programming]] | [[Collections MOC]] | [[Bounds Checking Performance]] | [[Deduplication]] | [[mission-1]] | [[mission-3]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[zero-cost-abstractions]] | [[Generic Programming]] | [[Collections MOC]] | [[Bounds Checking Performance]] | [[Deduplication]] | [[mission-1]] | [[mission-3]] | [[Mission6 Overview]]*

@@ -735,4 +735,4 @@ fn verify_thread_safety() {
 
 *Tags: #send #sync #thread-safety #concurrency #marker-traits #unsafe #arc #mutex #rwlock #atomic #channels #async #performance #testing #best-practices*
 
-*Links: [[Unsafe Rust - Raw Pointers and Safety Contracts]] | [[Interior Mutability Deep Dive]] | [[mission-2]] | [[Concurrency Patterns]] | [[Async Programming]] | [[Performance Engineering]] | [[Zero-Cost Abstractions]] | [[Testing Strategies]] | [[../missions/Mission2/README]] | [[Thread Safety Patterns]]*
+*Links: [[Unsafe Rust - Raw Pointers and Safety Contracts]] | [[interior-mutability]] | [[mission-2]] | [[Concurrency Patterns]] | [[Async Programming]] | [[Performance Engineering]] | [[zero-cost-abstractions]] | [[Testing Strategies]] | [[../missions/Mission2/README]] | [[Thread Safety Patterns]]*

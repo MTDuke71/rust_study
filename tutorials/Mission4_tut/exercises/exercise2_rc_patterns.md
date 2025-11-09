@@ -237,7 +237,7 @@ let mut_borrow = node.borrow_mut(); // This would panic if borrow1 is still aliv
 **Core Smart Pointers:**
 - [[rc-refcell-patterns]] - Rc<RefCell<T>> usage patterns
 - [[interior-mutability]] - Interior mutability and RefCell
-- [[Interior Mutability Deep Dive]] - Comprehensive interior mutability guide
+- [[interior-mutability]] - Comprehensive interior mutability guide
 - [[reference-counting]] - Rc<T> and reference counting mechanics
 
 **Borrow Checking:**

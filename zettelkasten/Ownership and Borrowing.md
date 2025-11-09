@@ -172,7 +172,7 @@ let world = &s[6..11];
 
 ### **Advanced Ownership Patterns**
 - **[[Smart Pointers]]** - Rc<T>, RefCell<T>, Box<T>
-- **[[Interior Mutability]]** - Mutable data in immutable contexts
+- **[[interior-mutability]]** - Mutable data in immutable contexts
 - **[[Lifetimes]]** - Ensuring references stay valid
 
 ### **Collection Integration**

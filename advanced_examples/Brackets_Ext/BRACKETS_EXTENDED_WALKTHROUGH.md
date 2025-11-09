@@ -314,7 +314,7 @@ The **Brackets_Extended** project demonstrates sophisticated Rust development pr
 - [[Flexible Interfaces]] - Multiple input types
 
 ### Performance
-- [[Zero-Cost Abstractions]] - Compiler optimizations
+- [[zero-cost-abstractions]] - Compiler optimizations
 - [[Big-O Notation]] - O(n) time complexity
 - [[Memory Efficiency]] - Stack-based minimal allocations
 - [[UTF-8 Support]] - Proper Unicode handling

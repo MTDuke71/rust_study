@@ -630,7 +630,7 @@ Related: [[daily-study/Day19]]
 ### **Advanced Patterns**
 - [[PhantomData Type Safety Patterns]] - Zero-cost type state
 - [[Clone vs Copy]] - Value semantics with generics
-- [[Zero-Cost Abstractions]] - Monomorphization and performance
+- [[zero-cost-abstractions]] - Monomorphization and performance
 - [[Box Smart Pointer Patterns]] - Heap allocation with generics
 
 ### **Learning Resources**

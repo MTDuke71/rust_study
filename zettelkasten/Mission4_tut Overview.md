@@ -55,7 +55,7 @@
 ### **Technical Mastery**
 - [[Box<T> Smart Pointers]] - Understanding heap allocation and unique ownership
 - [[Rc<RefCell<T>> Patterns]] - Shared ownership with interior mutability
-- [[Interior Mutability]] - Runtime borrow checking with RefCell
+- [[interior-mutability]] - Runtime borrow checking with RefCell
 - [[Weak Reference Cycles]] - Preventing memory leaks with Weak<T>
 
 ### **Practical Skills**
@@ -203,7 +203,7 @@ Overhead ratio:   2.29x
 
 ### **Smart Pointer Integration**
 - **[[Box Smart Pointer Patterns]]** - Heap allocation and unique ownership
-- **[[Interior Mutability Deep Dive]]** - RefCell runtime borrow checking
+- **[[interior-mutability]]** - RefCell runtime borrow checking
 - **[[Rc and RefCell Patterns]]** - Shared ownership with interior mutability
 
 ### **Mission Applications**
@@ -252,4 +252,4 @@ Overhead ratio:   2.29x
 ---
 
 *Tags: #mission4 #tutorial #linked-list #smart-pointers #interior-mutability #ownership*
-*Links: [[zettel-index]] | [[Mission4 Overview]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Box Smart Pointer Patterns]] | [[Interior Mutability Deep Dive]] | [[Rc and RefCell Patterns]]*
+*Links: [[zettel-index]] | [[Mission4 Overview]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Box Smart Pointer Patterns]] | [[interior-mutability]] | [[Rc and RefCell Patterns]]*

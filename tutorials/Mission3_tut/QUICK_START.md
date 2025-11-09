@@ -39,7 +39,7 @@ cargo run -p mission3_tut --example step7_integration_project    # [[Performance
 | Day | Steps | Focus                  | Time   | Related Concepts                                 |                                              |
 | --- | ----- | ---------------------- | ------ | ------------------------------------------------ | -------------------------------------------- |
 | 1   | 1-2   | Binary search + traits | 45 min | [[Binary Search Iterator Patterns]]              | [[Trait Design Patterns - Mission3 Lessons]] |
-| 2   | 3-4   | Iterators + ordering   | 45 min | [[Zero-Cost Abstractions]]                       | [[Generic Programming]]                      |
+| 2   | 3-4   | Iterators + ordering   | 45 min | [[zero-cost-abstractions]]                       | [[Generic Programming]]                      |
 | 3   | 5-6   | Lifetimes + AoC        | 45 min | [[Ownership Mental Model - The Library Analogy]] | [[AoC Binary Search Applications]]           |
 | 4   | 7     | Integration project    | 45 min | [[Performance Optimization]]                     | [[Week 3 Overview]]                          |
 
@@ -49,7 +49,7 @@ You'll be ready to:
 - Understand Mission3 source code (see [[mission-3]])
 - Implement binary search from scratch (see [[Binary Search Iterator Patterns]])
 - Design trait-based abstractions (see [[Trait Design Patterns - Mission3 Lessons]])
-- Build custom iterators (see [[Zero-Cost Abstractions]])
+- Build custom iterators (see [[zero-cost-abstractions]])
 - Solve AoC problems with search algorithms (see [[AoC Binary Search Applications]])
 
 ## 🔗 Next Steps
@@ -91,7 +91,7 @@ cargo run --example
 ### **Core Concepts**
 - **[[Trait Design Patterns - Mission3 Lessons]]** - Mission3's trait-based architecture
 - **[[Binary Search Iterator Patterns]]** - Advanced search algorithm implementations
-- **[[Zero-Cost Abstractions]]** - How iterators compile to efficient code
+- **[[zero-cost-abstractions]]** - How iterators compile to efficient code
 - **[[Generic Programming]]** - Type parameters and monomorphization
 
 ### **Advanced Topics**

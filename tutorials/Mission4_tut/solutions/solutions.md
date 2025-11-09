@@ -72,7 +72,7 @@ The solutions follow Rust best practices and demonstrate real-world patterns you
 
 **Smart Pointer Patterns:**
 - [[Box Smart Pointer Patterns]] - Box<T> solutions
-- [[Interior Mutability Deep Dive]] - RefCell patterns
+- [[interior-mutability]] - RefCell patterns
 - [[rc-try-unwrap]] - Safe Rc unwrapping
 - [[weak-upgrade-pattern]] - Weak<T> upgrade handling
 

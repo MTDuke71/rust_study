@@ -187,7 +187,7 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 
 - [[Ownership and Borrowing]] - Memory safety in algorithms
 - [[Lifetime Patterns]] - Lifetime management in data structures
-- [[Interior Mutability]] - RefCell and Cell for shared mutation
+- [[interior-mutability]] - RefCell and Cell for shared mutation
 
 ### **Type System Algorithms**
 

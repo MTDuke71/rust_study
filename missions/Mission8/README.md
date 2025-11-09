@@ -350,7 +350,7 @@ See `tutorials/Mission8_tut/` for step-by-step progression:
 - [[trait-composition]] - Composable algorithm design patterns
 - [[generic-programming]] - Type-safe generic implementations
 - [[Algorithm Analysis]] - Performance analysis and complexity theory
-- [[Zero-Cost Abstractions]] - Rust's compile-time optimization guarantees
+- [[zero-cost-abstractions]] - Rust's compile-time optimization guarantees
 
 **Learning Resources:**
 - [[Daily Study MOC]] - Daily study integration points

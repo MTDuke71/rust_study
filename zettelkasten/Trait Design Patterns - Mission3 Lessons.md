@@ -295,7 +295,7 @@ fn find_all<'a, T: Ord>(data: &'a [T], target: &T) -> Vec<&'a T> {
 
 - [[Binary Search Iterator Patterns]] - Iterator integration with these traits
 - [[mission-3]] - Complete implementation example
-- [[Zero-Cost Abstractions]] - How trait dispatch is optimized
+- [[zero-cost-abstractions]] - How trait dispatch is optimized
 - [[Lifetime Annotations in Practice]] - Deeper dive into lifetimes
 
 ---

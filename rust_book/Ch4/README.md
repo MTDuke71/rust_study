@@ -307,7 +307,7 @@ This chapter's concepts are fundamental to all missions:
 - [[Error Handling Patterns]] - Ownership in Result and Option
 - [[Iterator Pattern]] - Borrowing in iterator chains
 - [[Collections MOC]] - Ownership in Vec, String, HashMap
-- [[Zero-Cost Abstractions]] - Performance without runtime overhead
+- [[zero-cost-abstractions]] - Performance without runtime overhead
 
 ---
 

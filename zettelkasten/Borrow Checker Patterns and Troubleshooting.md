@@ -654,7 +654,7 @@ pub struct Node<T> {
 
 ### **Enables**
 - [[Smart Pointers]] - Advanced ownership patterns (Box, Rc, Arc)
-- [[Interior Mutability]] - RefCell, Cell, and Mutex patterns
+- [[interior-mutability]] - RefCell, Cell, and Mutex patterns
 - [[Concurrent Programming]] - Thread-safe sharing with Arc + Mutex
 - [[Lifetime Management]] - Advanced lifetime relationships
 
@@ -681,4 +681,4 @@ pub struct Node<T> {
 
 *Tags: #borrow-checker #troubleshooting #patterns #conflict-resolution #rust-advanced #memory-safety #performance #API-design*
 
-*Links: [[zettel-index]] | [[Borrow Checker Fundamentals]] | [[Smart Pointers]] | [[Interior Mutability]] | [[Ownership Transfer Patterns]] | [[Debugging Lessons]]*
+*Links: [[zettel-index]] | [[Borrow Checker Fundamentals]] | [[Smart Pointers]] | [[interior-mutability]] | [[Ownership Transfer Patterns]] | [[Debugging Lessons]]*

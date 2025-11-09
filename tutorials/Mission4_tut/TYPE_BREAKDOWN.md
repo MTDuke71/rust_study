@@ -151,7 +151,7 @@ This type signature embodies Rust's philosophy: **"Fast, safe, expressive - pick
 - [[Generic Types|../../zettelkasten/Generic Types]] - Type parameters and monomorphization
 - [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership
 - [[Memory Layout|../../zettelkasten/Memory Layout]] - Rust type layouts
-- [[Zero-Cost Abstractions|../../zettelkasten/Zero-Cost Abstractions]] - Performance guarantees
+- [[zero-cost-abstractions|../../zettelkasten/Zero-Cost Abstractions]] - Performance guarantees
 - [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
 
 **Rust Book:**

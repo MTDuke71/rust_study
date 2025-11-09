@@ -144,7 +144,7 @@
 ### **Ownership ↔ Collections**
 - [[Ownership in HashMap]] - Key and value borrowing patterns
 - [[Move Semantics in Collections]] - When collections take ownership
-- [[Interior Mutability]] - RefCell and Cell patterns
+- [[interior-mutability]] - RefCell and Cell patterns
 
 ### **Error Handling ↔ AoC**
 - [[Input Validation Patterns]] - Robust parsing strategies

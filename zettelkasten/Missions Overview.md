@@ -235,7 +235,7 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 ### **Mission ↔ Daily Study Alignment**
 - **Mission1 Stack** connects to [[zettelkasten/daily-study/Day01]] and [[daily-study/Day02]]
 - **Mission2 Queue** connects to [[Vec Patterns]] and performance concepts
-- **Mission4 LinkedList** connects to [[Interior Mutability Deep Dive]]
+- **Mission4 LinkedList** connects to [[interior-mutability]]
 - **Mission5 HashMap** connects to [[daily-study/Day10]] and [[HashMap Internals]]
 
 ### **Mission ↔ AoC Applications**

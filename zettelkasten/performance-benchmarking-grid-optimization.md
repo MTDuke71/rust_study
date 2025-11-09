@@ -209,7 +209,7 @@ where
 - **[[SIMD Optimization]]** - Vectorized operations for grid processing
 - **[[Memory Alignment]]** - Data structure layout for performance
 - **[[Big-O Complexity]]** - Asymptotic analysis vs practical performance
-- **[[Rust Zero-Cost Abstractions]]** - High-level code compiling to efficient machine code
+- **[[zero-cost-abstractions]]** - High-level code compiling to efficient machine code
 
 ---
 

@@ -29,7 +29,7 @@ Rust combines functional programming features with systems programming. This cha
 - **[[Iteration Patterns]]** - Complete guide to iterator usage and patterns
 - **[[Closures in Rust]]** - Deep dive into closure mechanics and usage
 - **[[Functional Programming in Rust]]** - Advanced functional programming concepts
-- **[[Zero-Cost Abstractions]]** - Performance characteristics of functional features
+- **[[zero-cost-abstractions]]** - Performance characteristics of functional features
 
 ## Learning Path
 

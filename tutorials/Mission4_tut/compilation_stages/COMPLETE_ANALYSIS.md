@@ -131,7 +131,7 @@ This is the power of modern systems programming! 🦀
 **Zettelkasten Deep Dives:**
 - [[Compilation Process|../../../zettelkasten/Compilation Process]] - Rust compilation stages
 - [[LLVM and Rust|../../../zettelkasten/LLVM and Rust]] - Backend code generation
-- [[Zero-Cost Abstractions|../../../zettelkasten/Zero-Cost Abstractions]] - Performance analysis
+- [[zero-cost-abstractions|../../../zettelkasten/Zero-Cost Abstractions]] - Performance analysis
 - [[Monomorphization|../../../zettelkasten/Monomorphization]] - Generic type specialization
 - [[Box Smart Pointer|../../../zettelkasten/Box Smart Pointer]] - Heap allocation patterns
 - [[Rust Concepts MOC|../../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
