@@ -123,11 +123,13 @@ Traceability Matrix
 - **Requirements**: Graph representation, traversal, weighted edges
 - **Applications**: Network analysis, dependency resolution, routing
 - **Graph Metrics**: [[Graph Network Density]] - Network connectivity and completeness measurement
+- **AoC Integration**: [[aoc2024-day5-mission-integration]] - Day 5 dependency resolution (40% code reduction)
 
 ### **Mission 8: Generic Graph Algorithms** 📅
 - **Focus**: Generic BFS/DFS algorithms with trait-based design
 - **Location**: `Mission8/`
 - **Key Concepts**: Generic algorithms, trait composition, algorithm flexibility
+- **AoC Integration**: [[aoc2024-day5-mission-integration]] - Topological sorting with Mission 8 extensions
 - **Requirements**: REQ-1 (Generic algorithms), REQ-2 (Algorithm composition)
 - **Daily Notes**: 
   - [[zettelkasten/Daily Notes/2025-10-16]] - Generic Algorithm Implementation

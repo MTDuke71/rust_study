@@ -110,8 +110,10 @@
   - [[advent_of_code/aoc2015/Problem_Statements/day03]] - Grid visited tracking (Day 3)
 - **2024 Examples:**
   - [[aoc2024-day4-mission6-example]] - Day 4 word search with Mission 6 utilities (43% code reduction)
+  - [[aoc2024-day5-mission-integration]] - Day 5 print queue with Mission 7+8 (40% code reduction)
 - **2024 Solutions:**
   - [[aoc2024-day4-mission6-example]] - Day 4 word search with Mission 6 architectural benefits
+  - [[aoc2024-day5-mission-integration]] - Day 5 dependency resolution with Mission 7+8 integration
 
 ### **Rust Book Integration**
 - [[rust_book/rust-book-ch1]] - **Getting Started** - Installation and first programs ✅
