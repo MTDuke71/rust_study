@@ -44,6 +44,7 @@
 //! Mission 7 and Mission 8 would be added as dependencies in Cargo.toml.
 
 use anyhow::{Context, Result};
+#[allow(unused_imports)]
 use aoc2024::solver::day05; // Import for comparison testing
 use std::collections::{HashMap, HashSet, VecDeque};
 

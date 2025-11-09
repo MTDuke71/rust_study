@@ -40,11 +40,12 @@ use anyhow::Result;
 ///   # Example
 ///
 ///   ```
+///   use aoc2015::solver::day17::count_combinations;
 ///   let containers = vec![20, 15, 10, 5, 5];
 ///   let count = count_combinations(&containers, 25);
 ///   assert_eq!(count, 4); // Four ways to make 25 liters
 ///   ```
-fn count_combinations(containers: &[usize], target: usize) -> usize {
+pub fn count_combinations(containers: &[usize], target: usize) -> usize {
     count_recursive(containers, 0, target)
 }
 
@@ -129,6 +130,7 @@ fn count_recursive(containers: &[usize], index: usize, remaining: usize) -> usiz
 /// # Example
 ///
 /// ```
+/// use aoc2015::solver::day17::find_all_combinations;
 /// let containers = vec![20, 15, 10, 5, 5];
 /// let combinations = find_all_combinations(&containers, 25);
 /// // Returns: [[15, 10], [20, 5], [20, 5], [15, 5, 5]]
@@ -142,7 +144,7 @@ fn count_recursive(containers: &[usize], index: usize, remaining: usize) -> usiz
 /// - m = average containers per combination
 ///
 /// For the actual puzzle input, this is still reasonable (~hundreds of combinations).
-fn find_all_combinations(containers: &[usize], target: usize) -> Vec<Vec<usize>> {
+pub fn find_all_combinations(containers: &[usize], target: usize) -> Vec<Vec<usize>> {
     let mut results = Vec::new();
     let mut current = Vec::new();
     backtrack(containers, 0, target, &mut current, &mut results);
@@ -247,6 +249,7 @@ fn backtrack(
 /// # Example
 ///
 /// ```
+/// use aoc2015::solver::day17::count_minimum_combinations;
 /// // Given containers = [20, 15, 10, 5, 5] and target = 25
 /// // All combinations and their sizes:
 /// // [15, 10]     → 2 containers
@@ -265,7 +268,7 @@ fn backtrack(
 /// 1. Generate all valid combinations
 /// 2. Find `min_count = minimum length among all combinations`
 /// 3. Filter and count combinations where `length == min_count`
-fn count_minimum_combinations(containers: &[usize], target: usize) -> usize {
+pub fn count_minimum_combinations(containers: &[usize], target: usize) -> usize {
     let all_combinations = find_all_combinations(containers, target);
 
     if all_combinations.is_empty() {
@@ -313,6 +316,7 @@ fn count_minimum_combinations(containers: &[usize], target: usize) -> usize {
 /// # Example
 ///
 /// ```
+/// use aoc2015::solver::day17::solve_part1;
 /// let input = "20\n15\n10\n5\n5";
 /// let result = solve_part1(input).unwrap();
 /// // Result depends on target (150 for actual puzzle)
@@ -348,6 +352,7 @@ pub fn solve_part1(input: &str) -> Result<String> {
 /// # Example
 ///
 /// ```
+/// use aoc2015::solver::day17::solve_part2;
 /// // If minimum is 2 containers and 3 combinations use 2 containers:
 /// let input = "20\n15\n10\n5\n5";
 /// let result = solve_part2(input).unwrap();

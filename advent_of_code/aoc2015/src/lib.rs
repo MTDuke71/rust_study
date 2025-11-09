@@ -138,8 +138,7 @@ pub mod prelude {
     };
     // pub use crate::day10_with_memo::*;
     // Add more days here as you implement them:
-    pub use crate::solver::{day10, day11, day12};
-    // pub use crate::solver::{day13, day14, day15};
-    // pub use crate::solver::{day16, day17, day18, day19, day20};
+    pub use crate::solver::{day10, day11, day12, day13, day14, day15, day16, day17};
+    // pub use crate::solver::{day18, day19, day20};
     // pub use crate::solver::{day21, day22, day23, day24, day25};
 }

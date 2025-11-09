@@ -30,7 +30,7 @@ graph.neighbors(node)            // Dependency traversal
 ```rust
 // Algorithm capabilities for constraint solving
 has_cycle(&graph)                // Validate rule consistency
-topological_sort(&graph)         // Dependency resolution
+topological_sort(&graph)         // Dependency resolution using [[kahns-topological-sort]]
 ```
 
 ### Problem Integration: Day 5 Solver
@@ -179,6 +179,7 @@ This example bridges multiple learning tracks:
 - **[[mission-8]]** - BFS/DFS algorithm patterns
 - **[[v-cycle-methodology]]** - Requirements-driven development
 - **[[topological-sorting]]** - Dependency resolution algorithms
+- **[[kahns-topological-sort]]** - Queue-based topological sorting implementation
 - **[[competitive-programming-patterns]]** - Problem pattern recognition
 - **[[graph-theory-applications]]** - Real-world graph problem solving
 

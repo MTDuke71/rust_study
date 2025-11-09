@@ -120,7 +120,10 @@ impl Day5WithRealMissions {
 
         let has_cycles = m8::has_cycle(&adj_list);
         if has_cycles {
+            println!("🔄 CYCLE DETECTED in sequence {:?} - using bubble sort fallback", update);
             return self.fix_sequence_with_rules(update);
+        } else {
+            println!("✅ NO CYCLES in sequence {:?} - using optimal Kahn's algorithm", update);
         }
 
         let mut in_degree: HashMap<NodeId, usize> = HashMap::new();
@@ -167,7 +170,7 @@ impl Day5WithRealMissions {
         let mut result = update.to_vec();
         
         let mut changed = true;
-        while changed {
+         while changed {
             changed = false;
             for i in 0..result.len().saturating_sub(1) {
                 let current = result[i];
