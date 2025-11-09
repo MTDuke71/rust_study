@@ -2,7 +2,6 @@
 //!
 //! This workspace member uses another workspace member (add-one).
 
-use add_one;
 
 /// Adds two to the given number.
 ///
