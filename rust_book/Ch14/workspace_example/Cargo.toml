@@ -8,6 +8,8 @@ members = [
     "add-two",         # Library crate
 ]
 
+resolver = "3"
+
 # Example of shared dependencies (commented out to avoid requiring rand)
 # [workspace.dependencies]
 # rand = "0.8"
