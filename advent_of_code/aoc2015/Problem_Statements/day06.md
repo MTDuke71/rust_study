@@ -56,7 +56,7 @@ You can also [Share] this puzzle.
 - [[regex]] - Pattern matching for instruction parsing
 
 **Data Structures:**
-- [[vec]] - 1D Vec for flat grid storage (1000x1000)
+- [[Vec Type]] - 1D Vec for flat grid storage (1000x1000)
 - [[array]] - Fixed-size grid representation
 
 **Patterns:**

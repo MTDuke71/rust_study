@@ -1,6 +1,6 @@
 # Dynamic Programming
 
-**Related:** [[Algorithms MOC]], [[Recursion]], [[Memoization Patterns]], [[HashMap]], [[Vec]], [[AoC Patterns MOC]]
+**Related:** [[Algorithms MOC]], [[Recursion]], [[Memoization Patterns]], [[HashMap]], [[Vec Type]], [[AoC Patterns MOC]]
 
 ## Overview
 
@@ -340,7 +340,7 @@ let result = dp[n]; // OK
 - [[Recursion]] - Foundation for top-down DP
 - [[Memoization]] - Caching technique for DP optimization
 - [[HashMap]] - Rust's hash table for memoization
-- [[Vec]] - Array storage for tabulation
+- [[Vec Type]] - Array storage for tabulation
 
 **Related Topics:**
 - [[Algorithms MOC]] - Algorithmic patterns overview

@@ -61,7 +61,7 @@ cargo clippy -- -D warnings
 
 ### Data Structures
 - [[Stack Implementation]] - Stack operations (push, pop, peek)
-- [[Vec]] - Underlying storage for stack
+- [[Vec Type]] - Underlying storage for stack
 
 ### Error Handling
 - [[Error Types]] - BracketError and BracketErrorKind

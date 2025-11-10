@@ -2,7 +2,7 @@
 
 **Tags:** #data-structures #stack #algorithms #lifo #rust
 **Created:** 2025-10-22
-**Related:** [[Vec]], [[Generic Programming]], [[Brackets Basic]], [[Mission1]], [[Collections MOC]]
+**Related:** [[Vec Type]], [[Generic Programming]], [[Brackets Basic]], [[Mission1]], [[Collections MOC]]
 
 ## Overview
 
@@ -448,7 +448,7 @@ mod tests {
 
 ## Related Concepts
 
-- [[Vec]] - Primary implementation backing for Rust stacks
+- [[Vec Type]] - Primary implementation backing for Rust stacks
 - [[Generic Programming]] - Creating type-generic stack implementations
 - [[Brackets Basic]] - Practical application in bracket matching
 - [[Mission1]] - Learning foundation and problem-solving context

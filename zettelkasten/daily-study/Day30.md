@@ -26,7 +26,7 @@
 
 **Related Notes:**
 - [[../../daily_study/rust_learning_week5_notes/README|Week 5 Overview]]
-- [[../rust-book-ch9-12-review]] - Rust Book Chapters 9-12 comprehensive review (especially Chapter 9: Error Handling)
+- [[rust-book-ch9-12-review]] - Rust Book Chapters 9-12 comprehensive review (especially Chapter 9: Error Handling)
 - [[../Error Handling Patterns]]
 - [[../Result Type]]
 - [[Day29]] - Custom Error Types

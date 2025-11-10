@@ -54,7 +54,7 @@ enum UnclosedPolicy { LatestOpen, EarliestOpen }
 ### Data Structures
 - [[Stack Data Structure]] - LIFO bracket tracking
 - [[HashMap]] - Alphabet configuration storage
-- [[Vec]] - Multiple error collection
+- [[Vec Type]] - Multiple error collection
 - [[Options Pattern]] - Configuration struct
 
 ### Advanced Patterns

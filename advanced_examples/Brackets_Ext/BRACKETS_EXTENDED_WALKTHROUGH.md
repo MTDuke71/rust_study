@@ -286,7 +286,7 @@ The **Brackets_Extended** project demonstrates sophisticated Rust development pr
 ### Data Structures
 - [[Stack Data Structure]] - LIFO bracket tracking
 - [[HashMap]] - Alphabet opener-to-closer mapping
-- [[Vec]] - Error collection storage
+- [[Vec Type]] - Error collection storage
 - [[Options Pattern]] - Configuration with defaults
 
 ### Advanced Patterns

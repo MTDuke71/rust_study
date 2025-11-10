@@ -53,7 +53,7 @@ You can also [Share] this puzzle.
 - [[state-machines]] - Parsing escape sequences with state
 
 **Data Structures:**
-- [[vec]] - Building encoded/decoded strings
+- [[Vec Type]] - Building encoded/decoded strings
 - [[chars]] - Character-by-character iteration
 
 **Patterns:**

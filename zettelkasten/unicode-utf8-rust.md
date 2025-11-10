@@ -924,7 +924,7 @@ Converting strings to canonical forms (NFC, NFD, NFKC, NFKD) for comparison.
 
 *Tags: #unicode #utf8 #string #rust #text-encoding #internationalization #performance #collections #rust-book-ch8*
 
-*Links: [[zettel-index]] | [[Ch8 README]] | [[String Type]] | [[Vec Type]] | [[Collections MOC]] | [[Performance Optimization]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[rust_book/rust-book-ch8]] | [[String Type]] | [[Vec Type]] | [[Collections MOC]] | [[Performance Optimization]] | [[Daily Study MOC]]*
 
 ---
 

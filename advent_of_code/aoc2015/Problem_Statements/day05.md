@@ -56,7 +56,7 @@ You can also [Share] this puzzle.
 - [[chars]] - Character iteration
 
 **Data Structures:**
-- [[vec]] - Collection of strings to validate
+- [[Vec Type]] - Collection of strings to validate
 - [[hashset]] - Vowel checking
 
 **Patterns:**

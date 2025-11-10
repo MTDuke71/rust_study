@@ -61,7 +61,7 @@ cargo clippy -- -D warnings
 
 ### Data Structures
 - [[Stack Implementation]] - Push, pop, peek operations
-- [[Vec]] - Underlying storage for stack
+- [[Vec Type]] - Underlying storage for stack
 - [[Tuples]] - (expected_closer, open_index) pairs
 
 ### Error Handling

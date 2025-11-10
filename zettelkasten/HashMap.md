@@ -2,7 +2,7 @@
 
 **Tags:** #rust #collections #data-structures #hash-table #performance
 **Created:** 2025-10-22  
-**Related:** [[Vec]], [[Collections MOC]], [[HashMap Deep Dive]], [[Ownership and Borrowing]], [[zettelkasten/rust_book/rust-book-ch8]]
+**Related:** [[Vec Type]], [[Collections MOC]], [[HashMap Deep Dive]], [[Ownership and Borrowing]], [[zettelkasten/rust_book/rust-book-ch8]]
 
 ## Overview
 
@@ -347,7 +347,7 @@ impl std::hash::Hash for BadKey {
 
 ## Related Concepts
 
-- [[Vec]] - Dynamic arrays, often used as HashMap values
+- [[Vec Type]] - Dynamic arrays, often used as HashMap values
 - [[HashMap Deep Dive]] - Advanced implementation details
 - [[Collections MOC]] - Overview of all Rust collections  
 - [[Ownership and Borrowing]] - Memory management in collections

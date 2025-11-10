@@ -368,7 +368,7 @@ These concepts form the foundation for safe systems programming in Rust, enablin
 - [[traits]] - Copy trait vs Move semantics
 
 **Data Structures:**
-- [[vec]] - Dynamic array underlying the stack
+- [[Vec Type]] - Dynamic array underlying the stack
 - [[stack-data-structure]] - LIFO (Last In, First Out) principle
 - [[option]] - Safe handling of optional values
 

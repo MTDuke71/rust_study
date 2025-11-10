@@ -56,7 +56,7 @@ You can also [Share] this puzzle.
 **Data Structures:**
 - [[hashmap]] - Distance lookup table between cities
 - [[hashset]] - Tracking visited cities
-- [[vec]] - Storing route permutations
+- [[Vec Type]] - Storing route permutations
 
 **Patterns:**
 - [[recursion]] - Recursive permutation generation

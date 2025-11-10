@@ -45,7 +45,7 @@ You can also [Share] this puzzle.
 - [[sorting-algorithms]] - Finding smallest/largest sides
 
 **Data Structures:**
-- [[vec]] - Collection of dimensions
+- [[Vec Type]] - Collection of dimensions
 - [[tuple]] - Representing (length, width, height)
 
 **Patterns:**

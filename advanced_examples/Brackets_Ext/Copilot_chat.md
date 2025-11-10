@@ -6903,7 +6903,7 @@ Similar code found with 2 license types
 
 ### Data Structures
 - [[HashMap]] - Used in configurable alphabet implementation
-- [[Vec]] - Underlying storage for stack implementation
+- [[Vec Type]] - Underlying storage for stack implementation
 - [[String vs str]] - String borrowing and UTF-8 handling
 
 ### Rust Patterns

@@ -176,7 +176,7 @@ let world = &s[6..11];
 - **[[Lifetimes]]** - Ensuring references stay valid
 
 ### **Collection Integration**
-- **[[Vec]]** - Dynamic arrays and ownership
+- **[[Vec Type]]** - Dynamic arrays and ownership
 - **[[HashMap]]** - Key-value storage and borrowing
 - **[[String]]** - String ownership and borrowing patterns
 

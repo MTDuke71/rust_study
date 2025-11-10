@@ -148,7 +148,7 @@ Claude Sonnet 4 • 1x
 
 ### Data Structures
 - [[Stack Data Structure]] - LIFO operations and invariants
-- [[Vec]] - Underlying storage and reallocation
+- [[Vec Type]] - Underlying storage and reallocation
 - [[Tuples]] - (expected_closer, open_index) pairs
 
 ### Algorithm Design

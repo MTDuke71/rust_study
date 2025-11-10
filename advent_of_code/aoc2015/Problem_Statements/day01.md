@@ -56,7 +56,7 @@ You can also [Share] this puzzle.
 - [[enumerate]] - Position tracking in iteration
 
 **Data Structures:**
-- [[vec]] - String as byte/char collection
+- [[Vec Type]] - String as byte/char collection
 
 **Patterns:**
 - [[fold-reduce]] - Reducing a sequence to a single value
