@@ -179,6 +179,45 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - **Educational Value**: Python gets correct results efficiently, Rust provides graph insights (cycle detection, density analysis, foundational libraries)
 - **Code Complexity**: Python ~30 lines pragmatic solution vs Rust ~200 lines with Mission integration, type safety, and architectural benefits
 
+### Day 6: Guard Gallivant
+**Title**: Guard Gallivant  
+**Part 1 Type**: Simulation + Search/Traversal  
+**Part 1 Description**: Simulate guard patrol with obstacle avoidance, count distinct positions visited before exiting lab bounds  
+**Part 2 Type**: Simulation + Optimization  
+**Part 2 Description**: Find positions where placing obstacles creates infinite patrol loops (Part 1: 5551, Part 2: 1939)  
+**Key Concepts**: Guard state tracking, bounds checking, loop detection, collision avoidance, infinite loop analysis, position-based obstacle testing  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Simulation with escalation (linear patrol simulation → infinite loop detection through obstacle placement)
+- **Data Structure**: Mission 6 `Grid<char>` for lab map, Mission 6 `Coord` for positions, Mission 6 `Direction` with rotation methods, Mission 5 `HashSet<GuardState>` for loop detection
+- **Complexity**: Part 1: O(W×H) visits each position at most once, Part 2: O(P×W×H) where P is path length—tests obstacle at each path position
+- **AoC Theme**: "Guard patrol simulation" with classic Part 2 infinite loop challenge (finite simulation → cycle detection optimization)
+
+**🦀 Rust Conversion Highlights**:
+- **From manual coordinate arithmetic** → **Mission 6 `Coord.step(Direction)` with automatic bounds checking and overflow protection**
+- **From hardcoded direction arrays** → **Mission 6 `Direction` enum with `rotate_90_clockwise()` method for type-safe rotations**
+- **From manual grid indexing** → **Mission 6 `Grid<char>` with safe `.get()` access preventing buffer overflows**
+- **From tuple-based state tracking** → **Type-safe `GuardState` struct with `position` and `direction` fields for clear state management**
+- **From nested loops with manual exit conditions** → **Mission 5 `HashSet` for O(1) loop detection using state-based cycle identification**
+
+**🏗️ Mission 6 + Mission 5 Integration Benefits**:
+- **[[../examples/day06_comprehensive_walkthrough.rs]]** - Complete walkthrough with Mission integration analysis
+- **[[DAY06_PYTHON_VS_RUST_ANALYSIS]]** - Comprehensive comparison with Python reference solutions  
+- **Code Quality**: Type safety eliminates entire bug classes (bounds errors, direction confusion, state tracking mistakes)
+- **Safety Improvement**: All coordinate operations bounds-checked automatically, no possibility of array access violations
+- **Architectural Benefits**: Leverages proven V-Cycle data structures for competitive programming application
+- **Mission Integration**: `Grid<T>`, `Coord`, `Direction` from Mission 6 + `HashSet` collections from Mission 5 = complete solution framework
+- **Results**: Part 1: 5551, Part 2: 1939 with comprehensive test coverage (8 unit tests) and zero clippy warnings
+- **Educational Value**: Demonstrates how foundational libraries make complex algorithms more reliable and maintainable
+
+**Real-World Complexity Handling**:
+- **State Management**: `GuardState` struct encapsulates position + direction for comprehensive loop detection
+- **Bounds Safety**: Mission 6 `Coord.step()` prevents coordinate underflow/overflow through `Option<Coord>` returns  
+- **Error Handling**: Comprehensive `anyhow::Result` throughout parsing with detailed error context
+- **Performance**: O(1) loop detection through `HashSet<GuardState>` vs naive O(n²) position checking approaches
+
+**Performance**: Mission-leveraged implementation achieves optimal algorithmic complexity while maintaining safety guarantees
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -197,13 +236,13 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 | Greedy Algorithms | 0 | 0 |
 | Mathematical | 2 | 1 |
 | Number Theory | 0 | 0 |
-| Optimization | 0 | 1 |
+| Optimization | 0 | 2 |
 | Parsing | 0 | 0 |
 | Pattern Matching | 1 | 2 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
-| Search/Traversal | 1 | 1 |
-| Simulation | 0 | 0 |
+| Search/Traversal | 2 | 1 |
+| Simulation | 1 | 1 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
@@ -223,13 +262,17 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 12. **Dependency Graphs**: Topological ordering and cycle detection (Day 5: page ordering rules with Mission 7 Graph representation and Mission 8 algorithms)
 13. **Adaptive Algorithms**: Algorithm selection based on data characteristics (Day 5: Kahn's algorithm for acyclic graphs, rule-based sorting for cyclic graphs)
 14. **Foundational Library Integration**: Mission utilities demonstrate architectural benefits (Day 4: Mission 6 - 43% code reduction, Day 5: Mission 7+8 - 40% code reduction with cycle detection)
+15. **Guard/Agent Simulation**: State-based entity movement with obstacle avoidance (Day 6: guard patrol with turn-right collision handling, position tracking with bounds checking)
+16. **Loop Detection**: Infinite cycle identification in simulations (Day 6: HashSet-based state tracking for O(1) loop detection vs naive position-only approaches)
+17. **Obstacle Placement Optimization**: Brute force testing of environmental modifications (Day 6: testing obstacle at each path position to create infinite loops, P×W×H complexity pattern)
 
 ### Rust-Specific Considerations:
 - **Day 1**: Excellent introduction to functional error handling with `Result<T, E>`, iterator combinators (`zip`, `fold`, `sum`), and pattern matching for safe parsing. Demonstrates HashMap construction with functional approach vs Python's Counter.
 - **Day 2**: Showcases iterator windows for sliding comparisons, early-return imperative validation (vs Python's `all()`/`any()` functional style), and `to_vec()` + `remove()` for element removal simulation. Demonstrates performance-focused approach with manual state tracking vs functional boolean aggregation.
 - **Day 3**: Highlights regex integration with `regex` crate, type-safe instruction parsing using `enum` with pattern matching, comprehensive error context with `anyhow::Context`, and efficient single-pass state machine implementation. Shows Rust's strength in pattern validation and stateful processing with zero-cost abstractions.
 - **Day 4**: Demonstrates 2D grid processing with comprehensive bounds checking, mathematical approach to directional search using coordinate vectors, and zero-allocation character matching vs Python's string concatenation approach. Showcases Rust's compile-time safety for array indexing and elegant pattern decomposition for geometric shapes. **Mission 6 Alternative**: Illustrates how foundational libraries can dramatically simplify competitive programming solutions—280-line manual implementation reduced to 160 lines with automatic safety guarantees, proving that good architecture improves both productivity and correctness.
-- **Day 5**: Exemplifies sophisticated graph algorithm integration using **actual Mission 7 + Mission 8 APIs** (not mocks). Demonstrates bidirectional HashMap mapping for type-safe node management, adaptive algorithm selection based on Mission 8 cycle detection, and production-quality error handling with graceful degradation. Shows how foundational libraries enable focus on problem logic rather than low-level graph implementation. **Mission Integration**: Proves concrete benefits—40% code reduction, automatic cycle detection, proven algorithms, and real-world complexity handling for graphs with cycles (49 nodes, 1,176 edges). 
+- **Day 5**: Exemplifies sophisticated graph algorithm integration using **actual Mission 7 + Mission 8 APIs** (not mocks). Demonstrates bidirectional HashMap mapping for type-safe node management, adaptive algorithm selection based on Mission 8 cycle detection, and production-quality error handling with graceful degradation. Shows how foundational libraries enable focus on problem logic rather than low-level graph implementation. **Mission Integration**: Proves concrete benefits—40% code reduction, automatic cycle detection, proven algorithms, and real-world complexity handling for graphs with cycles (49 nodes, 1,176 edges).
+- **Day 6**: Demonstrates comprehensive Mission 6 + Mission 5 integration for simulation-based problems. Showcases type-safe coordinate operations with automatic bounds checking, enum-based direction management with rotation methods, and efficient state-based loop detection using HashSet collections. **Mission Integration**: Eliminates entire bug classes through type safety—coordinate arithmetic errors, direction confusion, bounds violations—while maintaining optimal algorithmic complexity. Shows how foundational libraries make complex simulations both safer and more maintainable (8 comprehensive unit tests, zero clippy warnings). 
 ---
 
 ## Adding New Days
@@ -265,8 +308,8 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 8, 2025*
-*Days Implemented: 1, 2, 3, 4, 5*
+*Last Updated: November 10, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
