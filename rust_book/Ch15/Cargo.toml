@@ -1,0 +1,32 @@
+[package]
+name = "rust_book_ch15"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[dev-dependencies]
+
+[[example]]
+name = "ch15_1_box"
+path = "examples/ch15_1_box.rs"
+
+[[example]]
+name = "ch15_2_deref"
+path = "examples/ch15_2_deref.rs"
+
+[[example]]
+name = "ch15_3_drop"
+path = "examples/ch15_3_drop.rs"
+
+[[example]]
+name = "ch15_4_rc"
+path = "examples/ch15_4_rc.rs"
+
+[[example]]
+name = "ch15_5_refcell"
+path = "examples/ch15_5_refcell.rs"
+
+[[example]]
+name = "ch15_6_cycles"
+path = "examples/ch15_6_cycles.rs"
