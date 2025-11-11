@@ -46,7 +46,7 @@ impl UnionFind {
         // Group elements by their root (non-deterministic HashMap iteration!)
         for i in 0..self.parent.len() {
             let root = self.find(i);
-            components_map.entry(root).or_insert_with(Vec::new).push(i);
+            components_map.entry(root).or_default().push(i);
         }
         
         // ❌ PROBLEM: HashMap.values() iteration order is non-deterministic!
