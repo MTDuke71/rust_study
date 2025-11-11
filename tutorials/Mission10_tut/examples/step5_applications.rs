@@ -232,6 +232,11 @@ fn demonstrate_kruskal_mst() {
     println!("\nStep 2: Process edges in order, skip if creates cycle\n");
 
     // Step 3: Add edges if they don't create cycles
+    // NOTE: This tutorial processes ALL edges for educational demonstration.
+    // In production code, you would optimize by stopping early when:
+    // - mst_edges.len() == num_vertices - 1 (MST complete)
+    // - uf.count() == 1 (all vertices connected)
+    // The remaining edges after MST completion will always create cycles.
     for edge in &edges {
         if !uf.connected(edge.u, edge.v) {
             uf.union(edge.u, edge.v);
@@ -239,6 +244,9 @@ fn demonstrate_kruskal_mst() {
             total_weight += edge.weight;
             println!("  ✓ Add edge ({}, {}) weight: {} [Components: {}]",
                      edge.u, edge.v, edge.weight, uf.count());
+            
+            // OPTIMIZATION: Could break here when MST is complete
+            // if mst_edges.len() == num_vertices - 1 { break; }
         } else {
             println!("  ✗ Skip edge ({}, {}) weight: {} [Would create cycle]",
                      edge.u, edge.v, edge.weight);
@@ -254,19 +262,19 @@ fn demonstrate_kruskal_mst() {
     println!("MST Edges Count: {} (should be V-1 = {})", mst_edges.len(), num_vertices - 1);
 
     println!("\nVisual MST:");
-    println!("    0           1");
-    println!("    |\\          |");
-    println!("    | \\         |");
-    println!("   2|  3\\       |1");
-    println!("    |    \\      |");
-    println!("    |     \\     |");
-    println!("    2      3    5");
-    println!("    |     /       ");
-    println!("    |    /        ");
-    println!("   3|  1/         ");
-    println!("    |  /          ");
-    println!("    | /           ");
-    println!("    4             \n");
+    println!("    0           ");
+    println!("    |\\          ");
+    println!("    | \\         ");
+    println!("   2|  3\\       ");
+    println!("    |    \\      ");
+    println!("    |     \\     ");
+    println!("    2      3    ");
+    println!("    |     /      1");
+    println!("    |    /       | ");
+    println!("   3|  1/        |1 ");
+    println!("    |  /         | ");
+    println!("    | /     2    | ");
+    println!("    4 -----------5\n");
 
     println!("Complexity Analysis:");
     println!("  • Sorting edges: O(E log E)");
@@ -384,8 +392,9 @@ fn demonstrate_cycle_detection() {
         } else {
             uf.union(*u, *v);
             println!("  ✓ Edge added successfully");
-            println!("  Current tree structure:");
-            print_tree_structure(*u, *v);
+            println!("  Latest edge added: {} --- {}", u, v);
+            println!("  (All {} vertices now form {} connected component{})", 
+                     num_vertices, uf.count(), if uf.count() == 1 { "" } else { "s" });
             println!();
         }
     }
@@ -405,9 +414,8 @@ fn demonstrate_cycle_detection() {
     println!("  • Game development (path validation)");
 }
 
-fn print_tree_structure(u: usize, v: usize) {
-    println!("      {} --- {}", u, v);
-}
+// Removed misleading print_tree_structure function - it only showed the latest edge,
+// not the complete accumulated tree structure that Union-Find maintains internally.
 
 // ============================================================================
 // Application 4: Social Network Friend Circles
@@ -557,11 +565,10 @@ impl Image {
         }
     }
 
-    fn display_segmented(&mut self, uf: &mut UnionFind) {
-        let components = uf.get_components();
+    fn display_segmented_with_components(&mut self, components: &[Vec<usize>]) {
         let mut region_map = HashMap::new();
 
-        // Assign region numbers
+        // Assign region numbers using the same component order as analysis
         for (region_id, component) in components.iter().enumerate() {
             for &pixel_idx in component {
                 region_map.insert(pixel_idx, region_id);
@@ -646,10 +653,10 @@ fn demonstrate_image_segmentation() {
     println!("Performed {} union operations", unions);
     println!("Found {} distinct regions\n", uf.count());
 
-    image.display_segmented(&mut uf);
-
-    // Analyze regions
+    // Get components once to ensure consistency between display and analysis
     let components = uf.get_components();
+    image.display_segmented_with_components(&components);
+
     println!("\n--- Region Analysis ---\n");
 
     for (i, component) in components.iter().enumerate() {
@@ -664,6 +671,15 @@ fn demonstrate_image_segmentation() {
     println!("  • Computer vision (object recognition)");
     println!("  • Photo editing (magic wand tool)");
     println!("  • Geographic information systems");
+
+    println!("\n💡 Implementation Note:");
+    println!("  The HashMap used above for component grouping can cause");
+    println!("  non-deterministic behavior due to iteration order variance.");
+    println!("  For production systems, consider using a lookup table approach:");
+    println!("  1. Pre-sort colors: A→0, B→1, C→2, D→3, E→4");
+    println!("  2. Use Vec<char> instead of HashMap for O(1) lookups");
+    println!("  3. Eliminates non-determinism while maintaining performance");
+    println!("  See lookup_table_example.rs for deterministic implementation.");
 }
 
 // ============================================================================

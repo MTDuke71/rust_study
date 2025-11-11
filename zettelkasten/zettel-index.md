@@ -71,6 +71,14 @@
   - **Exercise Solutions**: [[../tutorials/Mission8_tut/DAY5_EXERCISE_SOLUTIONS|Day 5 Exercise Solutions]] - Advanced maze solving techniques
   - **Performance Report**: [[../missions/Mission8/PERFORMANCE_REPORT|Mission8 Performance Report]] - Comprehensive benchmarking analysis
   - **Day 4 Solutions**: [[../tutorials/Mission8_tut/DAY4_EXERCISE_SOLUTIONS|Day 4 Exercise Solutions]] - Performance optimization exercises
+- **[[missions/mission-9.md|Mission 9]]** or **[[mission-9]]** - Dijkstra & A* Pathfinding Algorithms ✅ **COMPLETE**
+  - **Production Docs**: Complete API documentation, CLI guide, integration guide, and performance tuning
+  - **Achievement**: 166/166 tests passing with microsecond-precision timing and advanced pathfinding features
+- **[[missions/mission-10.md|Mission 10]]** or **[[mission-10]]** - Union-Find Disjoint Sets ✅ **COMPLETE**  
+  - **Tutorial**: [[../tutorials/Mission10_tut/README|Mission10 Tutorial]] - 7-step Union-Find mastery (5/7 complete)
+  - **Applications**: Kruskal's MST, connected components, cycle detection, social networks, image segmentation
+  - **Debugging Achievement**: [[deterministic-debugging]] - Professional debugging methodologies developed
+  - **Philosophical Insights**: [[rule-30-computational-irreducibility]] - How debugging Union-Find led to fundamental questions about computational reality
 
 ### **Daily Study Track** - Systematic Learning
 - [[Week 1 Overview]] - Collections Fundamentals
@@ -181,9 +189,11 @@
 - [[Trait Objects]] - Dynamic dispatch patterns
 - [[Unsafe Rust - Raw Pointers and Safety Contracts]] - Building safe abstractions from unsafe code
 - [[PhantomData Type Safety Patterns]] - Zero-cost type safety
+- [[rule-30-computational-irreducibility]] - **Rule 30 & Computational Irreducibility** - How simple deterministic rules generate infinite complexity, connecting Mission 10 debugging to fundamental questions about computational reality
 
 **Software Architecture:**
 - [[software-architecture-patterns]] - **Layer-based vs Feature-based Architecture** - Project organization patterns, decision framework, and Rust-specific considerations
+- [[deterministic-debugging]] - **Deterministic Debugging** - Reproducible bug detection, HashMap non-determinism solutions, and professional debugging methodologies
 
 **Performance & Optimization:**
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
@@ -246,6 +256,7 @@
 - [[zero-cost-abstractions]] - Rust's performance guarantees
 - [[Algorithm Analysis]] - Complexity analysis patterns including amortized analysis
 - [[Subset-Sum-Scaling-Analysis]] - **Exponential algorithm scaling**: When brute force breaks, optimization strategies (DP, meet-in-the-middle, branch-and-bound)
+- [[deterministic-debugging]] - **Debugging Methodology** - Non-determinism identification, HashMap iteration issues, lookup table approaches
 - Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
 
 ### **Advanced Algorithm Performance**
