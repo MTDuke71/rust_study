@@ -158,6 +158,7 @@ Traceability Matrix
 - **Focus**: Union-Find data structure with path compression and union by rank optimizations
 - **Location**: `Mission10/` + `tutorials/Mission10_tut/`
 - **Key Concepts**: Disjoint sets, path compression, union by rank, inverse Ackermann function
+- **Algorithm Reference**: [[union-find-algorithm]] - Comprehensive theoretical foundation and implementation guide (NEW)
 - **Requirements**: REQ-1 through REQ-7 - O(α(n)) amortized complexity
 - **Tutorial Progress**:
   - ✅ Step 1: Basic Union-Find (unoptimized)

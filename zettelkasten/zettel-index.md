@@ -233,6 +233,7 @@
 
 ## 🎯 Algorithms & Problem Solving
 
+- [[union-find-algorithm]] - Disjoint Set Union with path compression and union by rank (NEW)
 - [[find-all-components]] - Connected component detection with DFS (NEW)
 - [[flood-fill]] - Region modification algorithms (recursive, iterative, BFS)
 - [[Chebyshev Distance]] - Chessboard/8-connected distance metric for pathfinding

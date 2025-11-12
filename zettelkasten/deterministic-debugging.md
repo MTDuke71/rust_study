@@ -673,4 +673,4 @@ Our debugging methodology connects to profound questions about computation itsel
 - **Debugging = Discovery** - we investigate computational processes that mirror natural phenomena
 - **Environmental control** (like RUST_HASH_SEED) becomes crucial for understanding systems that might otherwise be computationally irreducible
 
-*Links: [[mission-10]] | [[debugging-methodologies]] | [[reproducible-systems]] | [[software-engineering-principles]] | [[rule-30-computational-irreducibility]]*
+*Links: [[mission-10]] | [[union-find-algorithm]] | [[debugging-methodologies]] | [[reproducible-systems]] | [[software-engineering-principles]] | [[rule-30-computational-irreducibility]]*

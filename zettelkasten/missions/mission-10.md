@@ -27,7 +27,7 @@
 ## 🧠 Core Learning Objectives
 
 ### **Algorithmic Mastery**
-- **[[Union-Find Algorithm]]** - Disjoint set data structure with optimal performance
+- **[[union-find-algorithm]]** - Disjoint set data structure with optimal performance
 - **[[Path Compression]]** - Tree flattening optimization for O(α(n)) find operations
 - **[[Union by Rank]]** - Balanced tree construction for optimal worst-case performance  
 - **[[Inverse Ackermann Function]]** - Understanding α(n) complexity and practical implications
@@ -350,7 +350,7 @@ Mission 10 uniquely contributed to professional debugging capabilities:
 - **[[Advanced Examples]]** - Real-world competitive programming integration
 
 ### **Core Algorithm Concepts**  
-- **[[Union-Find Algorithm]]** - Complete algorithmic theory and implementation
+- **[[union-find-algorithm]]** - Complete algorithmic theory and implementation
 - **[[Graph Algorithms]]** - Foundation graph theory concepts
 - **[[Tree Algorithms]]** - Forest maintenance and path compression techniques
 - **[[Performance Analysis]]** - Complexity analysis and benchmarking methodologies

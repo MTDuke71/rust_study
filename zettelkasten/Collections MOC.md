@@ -15,6 +15,7 @@
 - [[BTreeMap Patterns]] - Ordered key-value storage
 - [[BTreeSet Operations]] - Ordered unique collections
 - [[Tree Traversal]] - In-order, pre-order, post-order
+- [[union-find-algorithm]] - Disjoint Set Union with path compression (NEW)
 
 ### **Sequential Collections**
 - [[Vec Patterns]] - Dynamic arrays and capacity management
@@ -51,8 +52,17 @@
 - **Extended Features**: [[../../advanced_examples/Brackets_Ext/README (2)]] - Advanced bracket validation with comprehensive error handling
 
 ### **Mission 2: Queue** → [[Queue Implementation Strategies]] 
+
 ### **Mission 6: Grids** → [[2D Array Navigation Patterns]]
 - [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator optimization for grid traversal
+
+### **Mission 10: Union-Find Disjoint Sets**
+- **Tutorial**: [[../../tutorials/Mission10_tut/README]] - 7-step Union-Find mastery progression
+- **Algorithm Reference**: [[union-find-algorithm]] - Comprehensive theoretical foundation (NEW)
+- Path compression and union by rank optimizations
+- O(α(n)) amortized complexity with inverse Ackermann function
+- Real-world applications: Kruskal's MST, cycle detection, network connectivity
+- **Debugging Insights**: [[deterministic-debugging]] - Professional debugging methodologies
 
 ## 📖 Daily Study Integration
 
