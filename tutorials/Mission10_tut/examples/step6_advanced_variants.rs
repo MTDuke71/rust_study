@@ -269,16 +269,21 @@ impl UndoableUnionFind {
     
     /// Find root without path compression (needed for undo)
     /// 
+    /// **Key Insight**: This works because elements in the same connected 
+    /// component will always traverse up their respective paths and reach
+    /// the SAME root node. If two elements have different roots after
+    /// traversal, they're in different components.
+    /// 
     /// Note: We can't use path compression with undo because it would
     /// modify the tree structure, making undo complex
     /// 
     /// # Time Complexity
-    /// O(log n) - Without path compression
+    /// O(log n) - Without path compression (traverses up to root)
     pub fn find(&self, mut x: usize) -> usize {
         while self.parent[x] != x {
-            x = self.parent[x];
+            x = self.parent[x]; // Follow parent pointers to root
         }
-        x
+        x // Return the root node
     }
     
     /// Union two elements and record operation for undo
@@ -340,8 +345,12 @@ impl UndoableUnionFind {
     }
     
     /// Check if two elements are connected
+    /// 
+    /// **How it works**: Both elements traverse up their parent chains.
+    /// If they end up at the same root, they're in the same component.
+    /// This is the fundamental property that makes Union-Find work!
     pub fn connected(&self, x: usize, y: usize) -> bool {
-        self.find(x) == self.find(y)
+        self.find(x) == self.find(y) // Same root = same component
     }
     
     /// Get number of operations that can be undone
