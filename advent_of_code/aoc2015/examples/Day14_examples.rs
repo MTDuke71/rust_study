@@ -190,7 +190,7 @@ fn create_race_graph(
     for (idx, reindeer) in reindeer.iter().enumerate() {
         let symbol = symbols[idx % symbols.len()];
 
-        for x in 0..graph_width {
+        for (x, _) in (0..graph_width).enumerate() {
             let time = (x as f64 / (graph_width - 1) as f64 * max_time as f64) as u32;
             let distance = calculate_distance_optimized(reindeer, time);
 

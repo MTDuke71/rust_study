@@ -110,7 +110,7 @@ fn demo_pattern_quiz() {
 
     // Sample quiz questions based on real AoC problems - manually created since
     // the actual quiz structure is different
-    let sample_questions = vec![
+    let sample_questions = [
         (
             "2D Grid Pathfinding",
             "You have a 2D grid representing a cave system. Each cell contains a risk level. Find the path from top-left to bottom-right with the lowest total risk.",

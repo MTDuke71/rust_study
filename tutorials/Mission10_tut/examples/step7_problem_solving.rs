@@ -246,9 +246,9 @@ fn count_islands(grid: &[Vec<char>]) -> i32 {
     
     // Count unique components of land cells
     let mut roots = HashSet::new();
-    for i in 0..rows {
-        for j in 0..cols {
-            if grid[i][j] == '1' {
+    for (i, row) in grid.iter().enumerate() {
+        for (j, &cell) in row.iter().enumerate() {
+            if cell == '1' {
                 roots.insert(uf.find(i * cols + j));
             }
         }
@@ -305,9 +305,9 @@ fn count_friend_circles(friendships: &[Vec<i32>]) -> i32 {
     let mut uf = UnionFind::new(n);
     
     // Union direct friends
-    for i in 0..n {
-        for j in i + 1..n {
-            if friendships[i][j] == 1 {
+    for (i, friendship_row) in friendships.iter().enumerate() {
+        for (j, &is_friend) in friendship_row.iter().enumerate().skip(i + 1) {
+            if is_friend == 1 {
                 uf.union(i, j);
             }
         }
@@ -422,8 +422,7 @@ fn accounts_merge(accounts: &[Vec<String>]) -> Vec<Vec<String>> {
     
     // Build email ownership map and union accounts with shared emails
     for (i, account) in accounts.iter().enumerate() {
-        for j in 1..account.len() {
-            let email = &account[j];
+        for email in account.iter().skip(1) {
             if let Some(&owner) = email_to_account.get(email) {
                 uf.union(i, owner);
             } else {

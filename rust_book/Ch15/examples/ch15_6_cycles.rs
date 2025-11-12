@@ -24,6 +24,7 @@ fn main() {
 fn demonstrate_reference_cycle() {
     println!("--- Reference Cycle (Memory Leak) ---");
     
+    #[allow(dead_code)]
     #[derive(Debug)]
     enum List {
         Cons(i32, RefCell<Rc<List>>),
@@ -71,6 +72,7 @@ fn demonstrate_reference_cycle() {
 fn tree_with_weak_references() {
     println!("--- Tree with Weak References (No Leak) ---");
     
+    #[allow(dead_code)]
     #[derive(Debug)]
     struct Node {
         value: i32,

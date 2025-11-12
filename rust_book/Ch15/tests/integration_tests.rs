@@ -100,14 +100,14 @@ fn test_graph_structure_with_weak() {
     // Graph nodes with Weak references to prevent cycles
     #[derive(Debug)]
     struct GraphNode {
-        id: usize,
+        _id: usize,
         neighbors: RefCell<Vec<Weak<GraphNode>>>,
     }
     
     impl GraphNode {
         fn new(id: usize) -> Rc<GraphNode> {
             Rc::new(GraphNode {
-                id,
+                _id: id,
                 neighbors: RefCell::new(vec![]),
             })
         }
@@ -172,7 +172,7 @@ fn test_observer_pattern_with_rc() {
     }
     
     struct ConcreteObserver {
-        id: usize,
+        _id: usize,
         last_value: RefCell<i32>,
     }
     
@@ -185,12 +185,12 @@ fn test_observer_pattern_with_rc() {
     let subject = Subject::new();
     
     let observer1 = Rc::new(ConcreteObserver {
-        id: 1,
+        _id: 1,
         last_value: RefCell::new(0),
     });
     
     let observer2 = Rc::new(ConcreteObserver {
-        id: 2,
+        _id: 2,
         last_value: RefCell::new(0),
     });
     
