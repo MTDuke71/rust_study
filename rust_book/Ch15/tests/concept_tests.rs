@@ -6,7 +6,7 @@
 #[cfg(test)]
 mod ch15_tests {
     use std::cell::RefCell;
-    use std::rc::{Rc, Weak};
+    use std::rc::Rc;
 
     #[test]
     fn test_box_heap_allocation() {
