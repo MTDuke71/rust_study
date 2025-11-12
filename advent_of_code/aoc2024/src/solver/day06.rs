@@ -236,7 +236,7 @@ mod tests {
         let (visited, exited) = simulate_patrol(&grid, guard_state);
         
         assert!(exited, "Guard should exit the grid");
-        assert!(visited.len() > 0, "Should visit at least the starting position");
+        assert!(!visited.is_empty(), "Should visit at least the starting position");
     }
 
     #[test]
