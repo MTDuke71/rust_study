@@ -33,7 +33,7 @@ fn compute_expensive_operation(n: u64) -> u64 {
 
 /// Demonstrate how different profiles affect code generation
 fn demonstrate_optimization() {
-    let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     
     // This loop may be optimized away or unrolled in release mode
     let sum: i32 = numbers.iter().sum();
