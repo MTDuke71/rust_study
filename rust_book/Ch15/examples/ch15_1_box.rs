@@ -36,6 +36,7 @@ fn recursive_list_example() {
     println!("--- Recursive Cons List with Box ---");
     
     #[derive(Debug)]
+    #[allow(dead_code)]
     enum List {
         Cons(i32, Box<List>),
         Nil,
@@ -53,6 +54,7 @@ fn large_data_transfer() {
     println!("--- Large Data Transfer ---");
     
     struct LargeData {
+        #[allow(dead_code)]
         data: [u8; 1024], // 1KB array
     }
     
@@ -60,7 +62,7 @@ fn large_data_transfer() {
     println!("Created large boxed data: {} bytes", std::mem::size_of_val(&*large));
     
     // Only pointer is moved, not the data itself
-    let transferred = large;
+    let _transferred = large;
     println!("✓ Only 8-byte pointer moved, not 1KB of data\n");
 }
 
