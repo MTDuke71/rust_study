@@ -190,12 +190,22 @@ fn demo_weighted_union_find() {
     // Query distances
     println!("\nQuerying network latencies:");
     if let Some(latency) = wuf.distance(0, 3) {
-        println!("Latency from server 0 to 3: {}ms", latency);
-        println!("Path: 0 → 1 (10ms) → 2 (5ms) → 3 (8ms) = 23ms total");
+        println!("Relative distance from server 0 to 3: {}", latency);
+        println!("Note: Negative values indicate direction in the tree structure");
+        println!("Absolute path cost: {}ms", latency.abs());
     }
     
     if let Some(latency) = wuf.distance(1, 3) {
-        println!("Latency from server 1 to 3: {}ms", latency);
+        println!("Relative distance from server 1 to 3: {}", latency);
+        println!("Absolute path cost: {}ms", latency.abs());
+    }
+    
+    // Show bidirectional distances to demonstrate the directional nature
+    println!("\nBidirectional distance demonstration:");
+    if let Some(dist_03) = wuf.distance(0, 3) {
+        if let Some(dist_30) = wuf.distance(3, 0) {
+            println!("0→3: {}, 3→0: {} (opposite signs, same magnitude)", dist_03, dist_30);
+        }
     }
     
     // Try to connect to isolated server
