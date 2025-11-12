@@ -6,7 +6,7 @@
 #[cfg(test)]
 mod ch15_tests {
     use std::cell::RefCell;
-    use std::rc::{Rc, Weak};
+    use std::rc::Rc;
 
     #[test]
     fn test_box_heap_allocation() {
@@ -17,6 +17,7 @@ mod ch15_tests {
 
     #[test]
     fn test_box_recursive_type() {
+        #[allow(dead_code)]
         enum List {
             Cons(i32, Box<List>),
             Nil,
@@ -107,7 +108,7 @@ mod ch15_tests {
         let weak1 = Rc::downgrade(&strong);
         assert_eq!(Rc::weak_count(&strong), 1);
         
-        let weak2 = Rc::downgrade(&strong);
+        let _weak2 = Rc::downgrade(&strong);
         assert_eq!(Rc::weak_count(&strong), 2);
         
         drop(weak1);

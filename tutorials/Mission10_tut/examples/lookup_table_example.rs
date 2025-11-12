@@ -46,7 +46,7 @@ impl UnionFind {
         // Group elements by their root (non-deterministic HashMap iteration!)
         for i in 0..self.parent.len() {
             let root = self.find(i);
-            components_map.entry(root).or_insert_with(Vec::new).push(i);
+            components_map.entry(root).or_default().push(i);
         }
         
         // ❌ PROBLEM: HashMap.values() iteration order is non-deterministic!
@@ -212,9 +212,9 @@ impl ImageSegmenter {
         }
 
         // Analyze each region using lookup table
-        for region_id in 0..self.region_count {
+        for (region_id, pixel_list) in color_regions.iter().enumerate().take(self.region_count) {
             let color = self.region_to_color[region_id]; // ✅ O(1) lookup
-            let pixel_count = color_regions[region_id].len();
+            let pixel_count = pixel_list.len();
             
             println!("Region {}: Color '{}', Size {} pixels", 
                      region_id, color, pixel_count);

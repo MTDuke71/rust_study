@@ -25,7 +25,7 @@ fn demonstrate_default_hashmap_randomness() {
         map.insert("D", 4);
         
         print!("Run {}: ", run);
-        for (key, _) in &map {
+        for key in map.keys() {
             print!("{} ", key);
         }
         println!();
@@ -78,7 +78,7 @@ fn demonstrate_btreemap_alternative() {
         map.insert("B", 2);
         
         print!("Run {}: ", run);
-        for (key, _) in &map {
+        for key in map.keys() {
             print!("{} ", key);
         }
         println!();
