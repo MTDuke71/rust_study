@@ -27,11 +27,11 @@ fn basic_rc_example() {
     println!("Created a, count = {}", Rc::strong_count(&a));
     
     {
-        let b = Rc::clone(&a);
+        let _b = Rc::clone(&a);
         println!("Created b, count = {}", Rc::strong_count(&a));
         
         {
-            let c = Rc::clone(&a);
+            let _c = Rc::clone(&a);
             println!("Created c, count = {}", Rc::strong_count(&a));
         }  // c dropped here
         
@@ -49,6 +49,7 @@ fn basic_rc_example() {
 fn shared_list_structure() {
     println!("--- Shared List with Rc<T> ---");
     
+    #[allow(dead_code)]
     #[derive(Debug)]
     enum List {
         Cons(i32, Rc<List>),
@@ -109,10 +110,10 @@ fn rc_clone_semantics() {
     println!("Initial ref count: {}", Rc::strong_count(&expensive_data));
     
     // Rc::clone only increments reference count, doesn't clone data
-    let shared1 = Rc::clone(&expensive_data);
+    let _shared1 = Rc::clone(&expensive_data);
     println!("Rc::clone called, ref count: {}", Rc::strong_count(&expensive_data));
     
-    let shared2 = Rc::clone(&expensive_data);
+    let _shared2 = Rc::clone(&expensive_data);
     println!("Rc::clone called, ref count: {}", Rc::strong_count(&expensive_data));
     
     println!("\n✓ Rc::clone is cheap - only increments counter");

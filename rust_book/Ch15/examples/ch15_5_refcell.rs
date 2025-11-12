@@ -150,6 +150,7 @@ fn interior_mutability_pattern() {
 fn rc_refcell_combination() {
     println!("--- Combining Rc<RefCell<T>> ---");
     
+    #[allow(dead_code)]
     #[derive(Debug)]
     enum List {
         Cons(Rc<RefCell<i32>>, Rc<List>),
