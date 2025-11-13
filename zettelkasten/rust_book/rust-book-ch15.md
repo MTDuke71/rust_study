@@ -27,6 +27,8 @@ Smart pointers provide additional capabilities beyond regular references. This c
 ## Cross-References
 
 - **[[Box Smart Pointer Patterns]]** - Complete guide to Box<T> usage and patterns
+- **[[../box-heap-allocation]]** - Box<T> for recursive structures and heap allocation
+- **[[../rc-shared-ownership]]** - Rc<T> reference counting and shared ownership with graph examples
 - **[[Memory Management]]** - Advanced memory management and ownership patterns
 - **[[interior-mutability]]** - RefCell<T> and interior mutability concepts
 - **[[Reference Counting]]** - Rc<T> and shared ownership strategies

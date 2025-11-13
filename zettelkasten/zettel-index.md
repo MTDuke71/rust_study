@@ -224,9 +224,10 @@
 
 ## 📦 Smart Pointers & Memory Management
 
-- [[box-heap-allocation]] - Box<T> for recursive structures and AoC tree problems (NEW)
-- [[deref-trait]] - Smart pointer behavior and wrapper patterns (NEW)
-- [[drop-trait]] - Automatic cleanup and resource management (NEW)
+- [[box-heap-allocation]] - Box<T> for recursive structures and AoC tree problems
+- [[rc-shared-ownership]] - Rc<T> reference counting and shared ownership with graph examples (NEW)
+- [[deref-trait]] - Smart pointer behavior and wrapper patterns
+- [[drop-trait]] - Automatic cleanup and resource management
 - [[Box Smart Pointer Patterns]] - Heap allocation and ownership management
 - [[../tutorials/Mission4_tut/compilation_stages/VISUAL_COMPILATION_PROCESS]] - Visual compilation: Rust → LLVM → Assembly → Machine Code with memory layouts
 

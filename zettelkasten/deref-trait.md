@@ -2,7 +2,7 @@
 
 **Tags:** #deref #smart-pointers #trait #ergonomics #coercion #rust-book-ch15 #zero-cost-abstractions
 
-**Related:** [[drop-trait]], [[box-heap-allocation]], [[smart-pointers]], [[wrapper-pattern]], [[zero-cost-abstractions]], [[trait-system]]
+**Related:** [[drop-trait]], [[box-heap-allocation]], [[rc-shared-ownership]], [[smart-pointers]], [[wrapper-pattern]], [[zero-cost-abstractions]], [[trait-system]]
 
 ---
 
