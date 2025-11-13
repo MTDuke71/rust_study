@@ -293,7 +293,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - **Problem Pattern**: Geometric extrapolation → harmonic line saturation (ratio constraint removed in Part 2)
 - **Data Structures**: Mission 6 `Grid<char>` & `Coord`, `HashMap<char, Vec<Coord>>` for grouping, `HashSet<Coord>` for uniqueness
 - **Part 1 Complexity**: O(k²) per frequency group (unordered pairs); each pair produces ≤2 antinodes
-- **Part 2 Complexity**: O(k² * L) per group where L ≤ max(width,height); primitive normalization minimizes ray steps
+- **Part 2 Complexity**: O(k² * L) where L ≤ max(width,height)
 - **Correctness Pillar**: GCD normalization guarantees capturing all lattice points (no skipped intermediate harmonics)
 
 **🦀 Rust Conversion Highlights**:
@@ -310,9 +310,9 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 **Python vs Rust Comparison**:
 - Grouping identical (`defaultdict(list)` vs `HashMap<char, Vec<Coord>>`)
 - Part 1 logic equivalent pair displacement extrapolation
-- Part 2 divergence: Python steps with full displacement (risk skipping harmonic points when gcd>1); Rust normalizes to primitive vector for completeness
-- Rust fewer ray steps for large separations; Python brevity-first but potentially incomplete for generalized datasets
+- Part 2 divergence: Python steps with full displacement (risks skipping harmonic points when gcd>1, relies on overlapping coverage from all pairs); Rust normalizes to primitive vector
 - Rust leverages mission abstractions + explicit error handling; Python relies on tuple arithmetic and implicit assumptions
+- Both achieve completeness: Python via overlapping pair coverage, Rust via primitive direction precision
 
 **Educational Insights**:
 - Introduces reusable primitive direction normalization for geometry/visibility problems
@@ -387,7 +387,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - **Day 5**: Exemplifies sophisticated graph algorithm integration using **actual Mission 7 + Mission 8 APIs** (not mocks). Demonstrates bidirectional HashMap mapping for type-safe node management, adaptive algorithm selection based on Mission 8 cycle detection, and production-quality error handling with graceful degradation. Shows how foundational libraries enable focus on problem logic rather than low-level graph implementation. **Mission Integration**: Proves concrete benefits—40% code reduction, automatic cycle detection, proven algorithms, and real-world complexity handling for graphs with cycles (49 nodes, 1,176 edges).
 - **Day 6**: Demonstrates comprehensive Mission 6 + Mission 5 integration for simulation-based problems. Showcases type-safe coordinate operations with automatic bounds checking, enum-based direction management with rotation methods, and efficient state-based loop detection using HashSet collections. **Mission Integration**: Eliminates entire bug classes through type safety—coordinate arithmetic errors, direction confusion, bounds violations—while maintaining optimal algorithmic complexity. Shows how foundational libraries make complex simulations both safer and more maintainable (8 comprehensive unit tests, zero clippy warnings). 
 - **Day 7**: Exemplifies professional TDD methodology applied to competitive programming with comprehensive test-driven development (32 tests). Demonstrates type-safe `Operator` enum with pattern matching for mathematical operations, explicit left-to-right evaluation engine vs standard precedence, and systematic combination generation using base conversion mathematics. **TDD Excellence**: 5-phase implementation approach (data structures → evaluation → combinations → validation → integration) with complete edge case coverage. Shows `anyhow::Result` throughout for production-quality error handling, zero-allocation evaluation for performance, and structured approach to brute force algorithms. **Architecture Investment**: 530+ lines with comprehensive test suite vs Python's 40-line pragmatic solution—demonstrates Rust's strength in creating maintainable, verifiable, and educationally valuable competitive programming solutions.
-- **Day 8**: Demonstrates geometric correctness via primitive vector normalization (`gcd`) ensuring complete harmonic line saturation. Highlights mission abstraction benefits (safe `Grid` operations, hashed `Coord`) and contrasts completeness-oriented Rust approach with Python's brevity that risks skipped intermediate points. Establishes reusable pattern for line-of-sight / visibility algorithms.
+- **Day 8**: Demonstrates geometric correctness via primitive vector normalization (`gcd`) ensuring complete harmonic line saturation. Highlights mission abstraction benefits (safe `Grid` operations, hashed `Coord`) and contrasts completeness-oriented Rust approach with Python's brevity that risks skipped intermediate points. Establishes reusable pattern for line-of-sight / visibility algorithms with mathematical rigor applied to competitive programming.
 ---
 
 ## Adding New Days

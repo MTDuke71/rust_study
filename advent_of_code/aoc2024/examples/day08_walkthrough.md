@@ -59,9 +59,7 @@ Procedure per antenna pair `(p1, p2)`:
 
 Why start rays from `p1` instead of both ends? Symmetry + simplicity: starting from one anchor and walking both directions guarantees coverage of entire bounded line without missing endpoints.
 
-Complexity:
-- Worst-case rays: length ≤ max(width, height) per pair.
-- Overall: O(Σ k² * L) where L ~ O(max(W,H)) for dense aligned clusters. Acceptable for AoC typical grid sizes.
+Complexity: O(Σ k² * L) where L ~ O(max(W,H)) for dense aligned clusters, k = antenna count per frequency.
 
 ## 7. Correctness Considerations
 | Risk | Mitigation |
