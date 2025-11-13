@@ -12,6 +12,7 @@ fn main() {
     shared_list_structure();
     reference_counting_demo();
     rc_clone_semantics();
+    rc_immutability();
     
     println!("\n✅ Chapter 15.4 Rc<T> concepts demonstrated!");
 }
