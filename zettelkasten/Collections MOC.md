@@ -22,6 +22,11 @@
 - [[VecDeque Usage]] - Double-ended queue operations
 - [[LinkedList Design]] - When to use linked structures
 
+### **Smart Pointers for Collections**
+- [[box-heap-allocation]] - Box<T> for recursive data structures and AoC tree problems (NEW)
+- [[deref-trait]] - Transparent wrapper behavior for collection types (NEW)
+- [[drop-trait]] - Automatic resource cleanup for collection wrappers (NEW)
+
 ## 🎯 Mission Implementations
 
 ### **Mission 4: Linked Lists**

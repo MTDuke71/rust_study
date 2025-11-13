@@ -10,6 +10,7 @@ fn main() {
     drop_order_demonstration();
     early_drop_with_std_mem();
     nested_drop_order();
+    dependent_resources_example();
     
     println!("\n✅ Chapter 15.3 Drop trait concepts demonstrated!");
 }
@@ -140,7 +141,6 @@ fn nested_drop_order() {
 }
 
 /// Example of Drop with dependent resources
-#[allow(dead_code)]
 fn dependent_resources_example() {
     println!("--- Dependent Resources Drop Order ---");
     
@@ -155,6 +155,7 @@ fn dependent_resources_example() {
     }
     
     struct Transaction {
+        #[allow(dead_code)]
         connection: Connection,
         id: u32,
     }

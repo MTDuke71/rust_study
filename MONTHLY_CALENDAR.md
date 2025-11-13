@@ -167,7 +167,7 @@ cargo install ripgrep fd-find            # Practice cargo install
 ### **Tuesday, November 11** 🎯
 **Rust Book**: Chapter 15.1 - Using Box<T> to Point to Data on the Heap
 **AoC Focus**: Solve AoC problems requiring recursive data structures (trees, linked lists)
-**Zettelkasten**: Create [[box-heap-allocation]] with recursive AoC examples
+**Zettelkasten**: ✅ Create [[box-heap-allocation]] with recursive AoC examples
 ```bash
 # Daily Tasks
 # Find AoC problems needing Box<T> (binary trees, nested structures)

@@ -12,6 +12,7 @@ fn main() {
     custom_smart_pointer();
     deref_coercion_demo();
     multiple_deref_coercions();
+    deref_coercion_rules();
     
     println!("\n✅ Chapter 15.2 Deref trait concepts demonstrated!");
 }
@@ -134,7 +135,6 @@ fn multiple_deref_coercions() {
 }
 
 /// Demonstrates the three deref coercion rules
-#[allow(dead_code)]
 fn deref_coercion_rules() {
     println!("--- Deref Coercion Rules ---");
     println!("1. &T -> &U when T: Deref<Target=U>");
