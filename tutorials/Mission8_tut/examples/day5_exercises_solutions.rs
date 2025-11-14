@@ -339,9 +339,11 @@ pub fn generate_random_maze(
     }
 
     // Ensure borders are walls (except for designated openings)
-    for col in 0..cols {
-        grid[0][col] = Cell::Wall;
-        grid[rows - 1][col] = Cell::Wall;
+    for cell in &mut grid[0] {
+        *cell = Cell::Wall;
+    }
+    for cell in &mut grid[rows - 1] {
+        *cell = Cell::Wall;
     }
     for row_data in grid.iter_mut().take(rows) {
         row_data[0] = Cell::Wall;
