@@ -540,11 +540,11 @@ fn example_community_growth() -> Result<(), String> {
         vec!["Fitness".to_string(), "Nutrition".to_string()],
         vec!["Music".to_string(), "Concerts".to_string()]];
     
-    for i in 0..5 {
+    for (i, interest_list) in interests.iter().enumerate() {
         let id = network.add_person(
             format!("Person-{}", i + 1),
             25 + i as u32,
-            interests[i].clone(),
+            interest_list.clone(),
             if i < 3 { "City A".to_string() } else { "City B".to_string() }
         )?;
         people.push(id);
