@@ -69,6 +69,10 @@ impl NaiveUnionFind {
     pub fn len(&self) -> usize {
         self.parent.len()
     }
+    
+    pub fn is_empty(&self) -> bool {
+        self.parent.is_empty()
+    }
 }
 
 // ============================================================================
@@ -126,6 +130,10 @@ impl PathCompressionUnionFind {
     
     pub fn len(&self) -> usize {
         self.parent.len()
+    }
+    
+    pub fn is_empty(&self) -> bool {
+        self.parent.is_empty()
     }
 }
 
@@ -200,6 +208,10 @@ impl UnionByRankUnionFind {
     
     pub fn len(&self) -> usize {
         self.parent.len()
+    }
+    
+    pub fn is_empty(&self) -> bool {
+        self.parent.is_empty()
     }
 }
 

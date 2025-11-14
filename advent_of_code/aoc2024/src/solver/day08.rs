@@ -3,8 +3,11 @@ use mission6::{Coord, Grid};
 use std::collections::HashMap;
 use std::collections::HashSet;
 
+/// Type alias for antenna frequency map
+type FrequencyMap = HashMap<char, Vec<Coord>>;
+
 /// Parse antenna map into a Mission6 `Grid<char>` and frequency -> coordinates mapping.
-fn parse_input(input: &str) -> Result<(Grid<char>, HashMap<char, Vec<Coord>>)> {
+fn parse_input(input: &str) -> Result<(Grid<char>, FrequencyMap)> {
     let lines: Vec<&str> = input.lines().filter(|l| !l.trim().is_empty()).collect();
     if lines.is_empty() {
         anyhow::bail!("Input empty");

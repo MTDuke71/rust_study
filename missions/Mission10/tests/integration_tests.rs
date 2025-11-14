@@ -260,7 +260,7 @@ fn integration_online_queries() {
             }
             "query" => {
                 let connected = uf.connected(x, y).unwrap();
-                if (x == 5 && y == 10) || (x == 5 && y == 20) {
+                if x == 5 && (y == 10 || y == 20) {
                     assert!(connected);
                 } else if x == 5 && y == 15 {
                     assert!(!connected);
@@ -492,8 +492,8 @@ fn integration_percolation_basic() {
     ];
     
     // Connect virtual top to top row open sites
-    for col in 0..n {
-        if open_sites[col] == 1 {
+    for (col, &site) in open_sites.iter().enumerate().take(n) {
+        if site == 1 {
             uf.union(col, virtual_top).unwrap();
         }
     }
@@ -549,8 +549,8 @@ fn integration_percolation_no_path() {
     ];
     
     // Connect top row
-    for col in 0..n {
-        if open_sites[col] == 1 {
+    for (col, &site) in open_sites.iter().enumerate().take(n) {
+        if site == 1 {
             uf.union(col, virtual_top).unwrap();
         }
     }
