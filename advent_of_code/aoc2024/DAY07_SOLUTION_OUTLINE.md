@@ -356,3 +356,5 @@ fn solve_part2(input: &str) -> u64
 ---
 
 *Ready to implement step by step with TDD approach! 🚀*
+
+*Links: [[DAY07_TDD_COMPLETION_REPORT]] [[AoC Integration]] [[tdd-aoc-patterns]]*

@@ -583,3 +583,6 @@ This demonstrates the educational philosophy of the workspace: **learning throug
 *Mission Integration: 6 (Grids & 2D Arrays) + 5 (Collections)*  
 *Algorithm Complexity: O(W×H) Part 1, O(P×W×H) Part 2*  
 *Results: Part 1: 5551, Part 2: 1939 (real), Part 1: 41, Part 2: 6 (example)*
+
+---
+*Links: [[DAY06_PYTHON_VS_RUST_ANALYSIS]] [[AoC Integration]] [[mission-6]]*

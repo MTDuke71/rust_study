@@ -121,3 +121,6 @@ custom_command/
 ```
 
 This example demonstrates the complete lifecycle of creating, testing, installing, and using custom Cargo commands as described in Chapter 14.5 of The Rust Programming Language book.
+
+---
+*Links: [[rust_book/Ch14]] [[rust_book/Ch14/custom_command]] [[rust-book-ch14-command-line-arguments]]*

@@ -648,3 +648,5 @@ Need heap allocation?
 *Run all examples*: `cargo run --example ch15_[section]`  
 *Run all tests*: `cargo test`  
 *Check quality*: `cargo clippy -- -D warnings`
+
+*Summary Note*: [[rust_book/Ch15/CHAPTER_SUMMARY]]

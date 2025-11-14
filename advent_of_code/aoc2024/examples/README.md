@@ -159,6 +159,9 @@ cargo run --example day05_with_missions
 - **[Mission 8 Algorithms](../../missions/Mission8/)** - BFS/DFS algorithm extensions
 
 ---
+*Links: [[REAL_VS_CONCEPTUAL_COMPARISON]] [[DAY06_COMPREHENSIVE_WALKTHROUGH]] [[AoC 2024 Overview]]*
+
+---
 
 ## 🏆 **Success Validation**
 

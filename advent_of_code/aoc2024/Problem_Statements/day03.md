@@ -57,3 +57,6 @@ Both parts of this puzzle are complete! They provide two gold stars: **
 
 **Cross-Year Patterns**:
 - [[../../zettelkasten/AoC 2015 MOC]] - Compare with Day 5 string validation patterns
+
+---
+*Links: [[day02]] [[day04]] [[AoC 2024 Overview]]*

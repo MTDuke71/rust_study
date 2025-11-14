@@ -49,3 +49,6 @@ Using your new knowledge of elephant hiding spots, determine which equations cou
 Your puzzle answer was 354060705047464.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
+
+---
+*Links: [[day06]] [[day08]] [[AoC 2024 Overview]]*

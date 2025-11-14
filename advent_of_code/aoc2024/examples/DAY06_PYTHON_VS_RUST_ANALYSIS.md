@@ -298,3 +298,5 @@ Both approaches have merit depending on context:
 **Rust with Mission integration** excels at building reliable, maintainable systems that leverage existing infrastructure.
 
 The key insight is that **well-engineered abstractions** (like our Mission data structures) can make complex problems more approachable while maintaining safety and performance. This represents the educational philosophy of the workspace: learning through professional-quality implementations that scale to real-world applications.
+
+*Links: [[AoC Integration]] [[mission-6]] [[python-vs-rust-competitive-vs-production]]*

@@ -94,6 +94,10 @@ cd rust_book/Ch3 && cargo test --workspace
 
 ## 📚 **Chapter-Specific Learning Outcomes**
 
+### **Chapter 15: Smart Pointers**
+- **Focus**: Box<T>, Deref, Drop, Rc<T>, RefCell<T>, Weak<T>
+- **Summary**: [[rust_book/Ch15/CHAPTER_SUMMARY]] - Chapter 15 Summary: Smart Pointers
+
 ### **Chapter 1: Getting Started**
 - **Rust installation** and basic toolchain usage
 - **Cargo fundamentals** - project creation, building, running

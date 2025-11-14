@@ -113,4 +113,6 @@ Day 8 solution cleanly composes small, reliable abstractions (Mission 6 spatial 
 These should compute correctly when integrated with full puzzle input via dispatcher `run_day(8, input)`.
 
 ---
+*Links: [[DAY08_COMPARATIVE_ANALYSIS]] [[AoC Integration]] [[mission-6]]*
+
 *Tags: #aoc #2024 #day08 #mission6-reuse #grid-geometry #gcd #harmonic-lines*

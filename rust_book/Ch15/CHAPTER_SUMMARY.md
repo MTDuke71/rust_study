@@ -242,3 +242,5 @@ struct Node {
 *ChapterLinks: [[rust_book/Ch14]] | [[rust_book/Ch16]]*  
 *ConceptLinks: [[smart-pointers-fundamentals]] | [[box-heap-allocation]] | [[rc-reference-counting]] | [[refcell-interior-mutability]] | [[weak-reference-cycles]]*  
 *ApplicationLinks: [[mission-3]] | [[mission-4]] | [[daily-study/Day20]] | [[daily-study/Day21]]*
+
+*Chapter: [[rust_book/Ch15/CHAPTER_SUMMARY]]*

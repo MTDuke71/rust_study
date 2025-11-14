@@ -123,3 +123,6 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+*Links: [[day09]] [[day11]] [[AoC 2024 Overview]]*

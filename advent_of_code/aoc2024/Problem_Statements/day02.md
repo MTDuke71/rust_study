@@ -75,3 +75,6 @@ At this point, you should return to your Advent calendar and try another puzzle.
 
 **Cross-Year Patterns**:
 - [[../../zettelkasten/AoC 2015 MOC]] - Compare with AoC 2015 validation problems
+
+---
+*Links: [[day01]] [[day03]] [[AoC 2024 Overview]]*

@@ -8,6 +8,7 @@ Cargo is Rust's build system and package manager. This chapter covers advanced C
 
 📖 **Full Chapter Guide**: [[../../rust_book/Ch14/README]] - Complete Cargo mastery guide
 📋 **Chapter Complete**: [[../../rust_book/Ch14/CHAPTER_COMPLETE]] - Cargo expertise achievement
+🛠️ **Custom Command Example**: [[../../rust_book/Ch14/custom_command/README]] - Implementing `cargo-<name>` subcommands (Ch 14.5)
 
 ## Key Topics Covered
 

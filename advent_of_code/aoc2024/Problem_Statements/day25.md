@@ -125,3 +125,6 @@ At this point, all that is left is for you to admire your Advent calendar.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+*Links: [[day24]] [[AoC 2024 Overview]]*

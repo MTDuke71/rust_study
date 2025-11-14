@@ -759,3 +759,5 @@ This demonstrates why **graph theory and smart problem decomposition** provide s
 ---
 
 This walkthrough demonstrates the power of the V-Cycle methodology applied to competitive programming: by building solid foundational libraries first, complex problems become exercises in **architecture and integration** rather than **custom implementation from scratch**.
+
+*Links: [[mission-7]] [[mission-8]] [[AoC Pattern Library]] [[aoc-dependency-graph-patterns]]*
