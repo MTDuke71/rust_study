@@ -72,6 +72,38 @@ fn gcd(mut a: isize, mut b: isize) -> isize {
     a
 }
 
+/// Debug helper: for each frequency with at least two antennas, print all pairs with
+/// their raw (dx, dy) and gcd-normalized step (dx/g, dy/g).
+///
+/// Intended for manual inspection when exploring the geometry of the puzzle.
+pub fn debug_print_pairs_with_gcd(input: &str) -> Result<()> {
+    let (_grid, freq_map) = parse_input(input).context("Failed to parse input for debug_print_pairs_with_gcd")?;
+
+    for (freq, positions) in freq_map.iter() {
+        if positions.len() < 2 {
+            continue;
+        }
+        println!("Frequency {freq}: {} antennas", positions.len());
+        for i in 0..positions.len() {
+            for j in (i + 1)..positions.len() {
+                let p1 = positions[i];
+                let p2 = positions[j];
+                let dx = p2.x as isize - p1.x as isize;
+                let dy = p2.y as isize - p1.y as isize;
+                let g = gcd(dx, dy);
+                let step_x = dx / g;
+                let step_y = dy / g;
+                println!(
+                    "  pair ({}, {}) <-> ({}, {}): dx={}, dy={}, gcd={}, step=({}, {})",
+                    p1.x, p1.y, p2.x, p2.y, dx, dy, g, step_x, step_y
+                );
+            }
+        }
+    }
+
+    Ok(())
+}
+
 /// Part 2: Harmonic resonance - all positions along the line defined by any pair of same-frequency antennas.
 pub fn solve_part2(input: &str) -> Result<String> {
     let (grid, freq_map) = parse_input(input).context("Failed to parse input for part2")?;
@@ -105,6 +137,47 @@ pub fn solve_part2(input: &str) -> Result<String> {
                 while x2 >= 0 && x2 < width && y2 >= 0 && y2 < height {
                     antinodes.insert(Coord::new(x2 as usize, y2 as usize));
                     x2 -= step_x; y2 -= step_y;
+                }
+            }
+        }
+    }
+    Ok(antinodes.len().to_string())
+}
+
+/// Variant of part2 that uses the full pair delta (dx, dy) as the step
+/// instead of the gcd-normalized primitive step. This matches many
+/// published AoC solutions and is useful for comparison.
+pub fn solve_part2_raw_step(input: &str) -> Result<String> {
+    let (grid, freq_map) = parse_input(input).context("Failed to parse input for part2_raw_step")?;
+    let mut antinodes: HashSet<Coord> = HashSet::new();
+    let width = grid.width() as isize;
+    let height = grid.height() as isize;
+
+    for (_freq, positions) in freq_map.iter() {
+        if positions.len() < 2 { continue; }
+        // Original antenna positions count as antinodes under harmonic rule
+        for &p in positions { antinodes.insert(p); }
+        for i in 0..positions.len() {
+            for j in (i + 1)..positions.len() {
+                let p1 = positions[i];
+                let p2 = positions[j];
+                let dx = p2.x as isize - p1.x as isize;
+                let dy = p2.y as isize - p1.y as isize;
+
+                // Step forward from p2
+                let mut x = p2.x as isize + dx;
+                let mut y = p2.y as isize + dy;
+                while x >= 0 && x < width && y >= 0 && y < height {
+                    antinodes.insert(Coord::new(x as usize, y as usize));
+                    x += dx; y += dy;
+                }
+
+                // Step backward from p1
+                let mut x2 = p1.x as isize - dx;
+                let mut y2 = p1.y as isize - dy;
+                while x2 >= 0 && x2 < width && y2 >= 0 && y2 < height {
+                    antinodes.insert(Coord::new(x2 as usize, y2 as usize));
+                    x2 -= dx; y2 -= dy;
                 }
             }
         }
@@ -172,5 +245,37 @@ mod tests {
         let result = solve_part2(input).unwrap();
         // All positions along line become antinodes: indices 0..=4 => 5
         assert_eq!(result, "5");
+    }
+
+    // #[test]
+    // fn compare_gcd_vs_raw_on_greater_than_one_gcd() {
+    //     // NOTE: This test is intentionally commented out because it
+    //     // demonstrates a *difference* between the gcd-based implementation
+    //     // (`solve_part2`) and the raw-step variant (`solve_part2_raw_step`).
+    //     //
+    //     // Custom grid: 7x4
+    //     // A . . . . . .
+    //     // . . . . . . .
+    //     // . . . . . . .
+    //     // . . . . . . A
+    //     // Antennas at (0,0) and (6,3) with dx=6, dy=3, gcd=3
+    //     let input = "A......\n.......\n.......\n......A\n";
+    //
+    //     let gcd_based = solve_part2(input).unwrap();
+    //     let raw_based = solve_part2_raw_step(input).unwrap();
+    //
+    //     // Here `gcd_based` returns "4" (it visits all lattice points
+    //     // along the line using primitive step (2,1): (0,0),(2,1),(4,2),(6,3)),
+    //     // while `raw_based` returns "2" (it only sees the endpoints when
+    //     // stepping by ±(6,3)). Enabling this assertion would therefore
+    //     // deliberately fail, documenting why the gcd-based approach is
+    //     // strictly more general than the raw-step one.
+    //     // assert_eq!(gcd_based, raw_based);
+    // }
+
+    #[test]
+    fn debug_example_pairs_with_gcd() {
+        let input = include_str!("../../inputs/day08_example.txt");
+        debug_print_pairs_with_gcd(input).unwrap();
     }
 }

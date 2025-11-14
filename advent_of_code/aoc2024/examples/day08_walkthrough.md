@@ -50,6 +50,12 @@ We now want **all** positions collinear with any pair of same-frequency antennas
 
 Key insight: All collinear resonance points lie along the line determined by the minimal step vector between two antennas. That step is the displacement divided by the greatest common divisor of component magnitudes.
 
+> **Note on the actual AoC 2024 data**
+> When we instrumented the solver to print `(dx, dy, gcd)` for every same-frequency antenna pair on both the example and full input, every single pair had `gcd(dx, dy) = 1`. That means, for the real puzzle data:
+> - The primitive step `(dx/g, dy/g)` is identical to the raw pair delta `(dx, dy)`.
+> - A simpler implementation that walks the line using `±(dx, dy)` (without explicit `gcd`) happens to visit the same lattice points as the gcd-normalized version.
+> - Our gcd-based implementation is strictly more general and would still behave correctly on inputs where `gcd > 1`, but for the official data both approaches coincide.
+
 Procedure per antenna pair `(p1, p2)`:
 1. Compute signed displacement `(dx, dy)`.
 2. Normalize: `g = gcd(|dx|, |dy|)`, `step = (dx/g, dy/g)`.
