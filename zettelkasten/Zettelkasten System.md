@@ -256,9 +256,9 @@ Commit `e442fdb` (November 2, 2025):
 ---
 
 ## Related Resources
-- [[Linked Note 1]] - Brief context
-- [[Linked Note 2]] - Brief context
-- [[Linked Note 3]] - Brief context
+- Linked Note 1 - Brief context
+- Linked Note 2 - Brief context
+- Linked Note 3 - Brief context
 
 *Tags: #tag1 #tag2 #tag3*
 

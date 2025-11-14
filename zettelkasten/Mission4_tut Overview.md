@@ -34,12 +34,12 @@
 ## 🔗 Cross-Reference Network
 
 ### **Tutorial → Main Mission Links**
-- **Step 1** builds toward → [[Mission4 REQ-1 Memory Safety]]
-- **Step 2** reinforces → [[Mission4 REQ-2 Interior Mutability]] 
-- **Step 3** prepares for → [[Mission4 REQ-3 O(1) Operations]]
-- **Step 4** enables → [[Mission4 REQ-4 Safe Iteration]]
-- **Step 5** optimizes → [[Mission4 REQ-5 Memory Management]]
-- **Step 6** completes → [[Mission4 REQ-6 Weak References]]
+- **Step 1** builds toward → Mission4 REQ-1 Memory Safety
+- **Step 2** reinforces → Mission4 REQ-2 Interior Mutability
+- **Step 3** prepares for → Mission4 REQ-3 O(1) Operations
+- **Step 4** enables → Mission4 REQ-4 Safe Iteration
+- **Step 5** optimizes → Mission4 REQ-5 Memory Management
+- **Step 6** completes → Mission4 REQ-6 Weak References
 
 ### **Tutorial → Daily Study Links**
 - **Step 1** applies concepts from → [[daily-study/Day04]]

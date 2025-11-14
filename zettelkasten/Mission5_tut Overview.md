@@ -32,11 +32,12 @@
 ## 🔗 Cross-Reference Network
 
 ### **Tutorial → Main Mission Links**
-- **Step 1** builds toward → [[Mission5 REQ-1 Basic Structure]]
-- **Step 2** reinforces → [[Mission5 REQ-2 Core Operations]] 
-- **Step 3** prepares for → [[Mission5 REQ-4 Iterator Implementation]]
-- **Step 4** enables → [[Mission5 REQ-5 Multi-Value Support]]
-- **Step 5** optimizes → [[Mission5 REQ-6 AoC Utilities]]
+### **Tutorial → Main Mission Links**
+- **Step 1** builds toward → Mission5 REQ-1 Basic Structure
+- **Step 2** reinforces → Mission5 REQ-2 Core Operations
+- **Step 3** prepares for → Mission5 REQ-4 Iterator Implementation
+- **Step 4** enables → Mission5 REQ-5 Multi-Value Support
+- **Step 5** optimizes → Mission5 REQ-6 AoC Utilities
 
 ### **Tutorial → Daily Study Links**
 - **Step 1** applies concepts from → [[daily-study/Day10]]

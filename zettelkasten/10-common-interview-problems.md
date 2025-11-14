@@ -1,7 +1,7 @@
 # 10 Common Coding Interview Problems - Patterns and Solutions
 
 *Tags: #coding-interviews #leetcode #algorithms #data-structures #problem-solving #competitive-programming*  
-*Links: [[zettel-index]] | [[Algorithm Analysis]] | [[pattern-matching]] | [[Dynamic Programming]] | [[Graph Algorithms]] | [[String Algorithms]] | [[monotonic-stack]]*
+*Links: [[zettel-index]] | [[Algorithm Analysis]] | [[pattern-matching]] | [[Dynamic Programming]] | [[Graph Algorithms]] | [[String Algorithms]] | [[Tree Algorithms]] | [[monotonic-stack]]*
 
 ---
 

@@ -61,13 +61,13 @@ Ch4/
 - ✅ **Further Reading**: Links to official Rust Book chapter
 - ✅ **Zettelkasten links at top**:
   ```markdown
-  ## 🔗 Zettelkasten Links
-  - **Overview**: [[Chapter {X} Overview]]
-  - **Previous**: [[Chapter {X-1} Overview]]
-  - **Next**: [[Chapter {X+1} Overview]]
-  - **Missions**: [[Mission{Y} Overview]] - Applies concepts from this chapter
-  - **Daily Study**: [[Day{Z}]] - Reinforces this chapter's concepts
-  - **Book MOC**: [[Rust Book MOC]]
+    ## 🔗 Zettelkasten Links
+    - **Overview**: Chapter {X} Overview (template placeholder)
+    - **Previous**: Chapter {X-1} Overview (template placeholder)
+    - **Next**: Chapter {X+1} Overview (template placeholder)
+    - **Missions**: Mission{Y} Overview (template placeholder) - Applies concepts from this chapter
+    - **Daily Study**: Day{Z} (template placeholder) - Reinforces this chapter's concepts
+    - **Book MOC**: [[Rust Book MOC]]
   ```
 - ✅ **Tags at bottom**: `*Tags: #rust-book #chapter{X} #[main-topic] #concept #foundation*`
 
@@ -77,11 +77,11 @@ Ch4/
 # Chapter X: [Chapter Title]
 
 ## 🔗 Zettelkasten Links
-- **Overview**: [[Chapter {X} Overview]]
-- **Previous**: [[Chapter {X-1} Overview]]
-- **Next**: [[Chapter {X+1} Overview]]
-- **Missions**: [[Mission{Y} Overview]] - Applies these concepts
-- **Daily Study**: [[Day{Z} - {Topic}]] - Reinforces this chapter
+- **Overview**: Chapter {X} Overview (template placeholder)
+- **Previous**: Chapter {X-1} Overview (template placeholder)
+- **Next**: Chapter {X+1} Overview (template placeholder)
+- **Missions**: Mission{Y} Overview (template placeholder) - Applies these concepts
+- **Daily Study**: Day{Z} - {Topic} (template placeholder) - Reinforces this chapter
 - **Book MOC**: [[Rust Book MOC]]
 
 ## 📚 Overview
@@ -169,16 +169,16 @@ Think of [concept] as:
 ## 🔗 Related Content
 
 **Missions:**
-- [[Mission{Y} Overview]] - Applies [concept] in practice
-- [[Mission{Z} Overview]] - Uses [pattern] extensively
+- Mission{Y} Overview (template placeholder) - Applies [concept] in practice
+- Mission{Z} Overview (template placeholder) - Uses [pattern] extensively
 
 **Daily Study:**
-- [[Day{N} - {Topic}]] - Practical exercises for [concept]
-- [[Day{M} - {Topic}]] - Advanced applications
+- Day{N} - {Topic} (template placeholder) - Practical exercises for [concept]
+- Day{M} - {Topic} (template placeholder) - Advanced applications
 
 **Next Steps:**
 - Complete exercises in `ChX/section_name/` directories
-- Review [[Chapter {X+1} Overview]] when ready
+- Review Chapter {X+1} Overview (template placeholder) when ready
 
 ---
 

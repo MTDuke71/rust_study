@@ -1,3 +1,12 @@
+---
+title: Performance Optimization Guide
+---
+
+The Performance Optimization Guide collects strategies, benchmarks, and case studies for making Rust code faster and more memory-efficient without sacrificing clarity. It connects mission benchmarking work, AoC performance notes, and dedicated performance zettels.
+
+Use this as the hub when you add new notes about profiling, algorithmic improvements, or micro-optimizations, and cross-link them back to the concrete code paths they improve.
+
+*Links: [[Performance Optimization]] [[Performance Benchmarking]] [[Graph Theory MOC]] [[Algorithms MOC]]*
 # Performance Optimization Guide
 
 **Comprehensive guide to optimizing Rust code for competitive programming and production systems**
