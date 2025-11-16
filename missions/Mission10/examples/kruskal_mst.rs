@@ -214,9 +214,9 @@ fn example_larger_graph() -> Result<(), String> {
     ];
     
     // Generate all edges from adjacency matrix
-    for i in 0..6 {
-        for j in (i + 1)..6 {
-            edges.push(Edge::new(i, j, weights[i][j]));
+    for (i, row) in weights.iter().enumerate() {
+        for (j, &weight) in row.iter().enumerate().skip(i + 1) {
+            edges.push(Edge::new(i, j, weight));
         }
     }
     
