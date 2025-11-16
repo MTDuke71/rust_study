@@ -77,6 +77,6 @@ members = [
     "advent_of_code/aoc2015",
     "advent_of_code/aoc2024",
     "daily_study/rust_learning_week5_notes"
-]
+, "rust_book/Ch16/threads", "rust_book/Ch16/message_passing", "rust_book/Ch16/shared_state", "rust_book/Ch16/sync_send"]
 
 resolver = "3"

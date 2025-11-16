@@ -871,6 +871,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "32a282da65faaf38286cf3be983213fcf1d2e2a58700e808f83f4ea9a4804bc0"
 
 [[package]]
+name = "message_passing"
+version = "0.1.0"
+
+[[package]]
 name = "method_syntax"
 version = "0.1.0"
 
@@ -1469,6 +1473,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "shared_state"
+version = "0.1.0"
+
+[[package]]
 name = "signal-hook-registry"
 version = "1.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1525,6 +1533,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "sync_send"
+version = "0.1.0"
+
+[[package]]
 name = "tempfile"
 version = "3.23.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1568,6 +1580,10 @@ dependencies = [
  "quote",
  "syn",
 ]
+
+[[package]]
+name = "threads"
+version = "0.1.0"
 
 [[package]]
 name = "tinytemplate"
