@@ -7,7 +7,7 @@ Code Quality Standards represent the agreed-upon contract for what constitutes "
 
 🧠 Mental Models
 The "Broken Window" Theory
-If you leave one function with a 100-line body or a unwrap() panic, it signals that low quality is acceptable. Strict standards prevent the first broken window, ensuring the codebase remains pristine.
+If you leave one function with a 100-line body or an `unwrap()` panic, it signals that low quality is acceptable. Strict standards prevent the first broken window, ensuring the codebase remains pristine.
 
 The Compiler as a Teammate
 In other languages, linters are critics. In Rust, the compiler and clippy are senior engineers doing code review. Adhering to standards means listening to this automated senior engineer before asking a human to review.
@@ -19,11 +19,11 @@ Every line of code consumes "cognitive RAM" to understand. Quality standards (li
 1. Fundamental Hygiene (The "Must-Haves")
 These are binary states: the code either passes or it fails.
 
-Formatting: Zero tolerance for custom formatting. All code must pass cargo fmt.
+Formatting: Zero tolerance for custom formatting. All code must pass `cargo fmt`.
 
 Compilation: Code must compile with zero warnings.
 
-Linter: cargo clippy -- -D warnings must return clean.
+Linter: `cargo clippy -- -D warnings` must return clean.
 
 Doc Tests: Code must pass `cargo test --doc` to ensure all documentation examples are correct and compile.
 
@@ -36,22 +36,21 @@ Naming: See [[NAMING_CONVENTIONS]] for full details.
 2. Complexity Metrics
 To ensure maintainability, we enforce strict limits on code density.
 
-Metric	Limit	Reason
-Function Length	< 20 lines	Forces logic decomposition and SRP (Single Responsibility Principle).
-Cyclomatic Complexity	< 10	Limits branches/paths to ensure testability.
-Argument Count	< 4	More than 3 arguments usually suggests a struct is needed.
-Nesting Depth	< 3 levels	Prevents "arrow code"; encourages early returns.
-
-Export to Sheets
+| Metric              | Limit         | Reason                                                        |
+|---------------------|--------------|---------------------------------------------------------------|
+| Function length     | < 20 lines   | Forces logic decomposition and SRP (Single Responsibility).   |
+| Cyclomatic complexity | < 10       | Limits branches/paths to ensure testability.                  |
+| Argument count      | < 4          | More than 3 arguments usually suggests a struct is needed.    |
+| Nesting depth       | < 3 levels   | Prevents "arrow code"; encourages early returns.             |
 
 3. Idiomatic Rust Patterns
 Quality Rust code utilizes the specific strengths of the language.
 
-Expression-Oriented: Prefer implicit returns (omitting ;) over explicit return keywords where possible.
+Expression-Oriented: Prefer implicit returns (omitting `;` on the last expression) over explicit `return` where possible.
 
-Iterators vs. Loops: Use strict iterator chains (map, filter, fold) instead of C-style for loops with mutable state.
+Iterators vs. Loops: Prefer iterator chains (`map`, `filter`, `fold`, etc.) instead of C-style `for` loops with mutable state.
 
-Type-Driven Development: Use the type system to make invalid states unrepresentable (e.g., using enum instead of bool flags).
+Type-Driven Development: Use the type system to make invalid states unrepresentable (e.g., using an `enum` instead of `bool` flags).
 
 Error Handling:
 
@@ -62,20 +61,24 @@ Error Handling:
 4. Documentation Standards
 Code describes how; documentation describes why.
 
-Public API: Every pub item must have /// doc comments.
+Public API: Every `pub` item must have `///` doc comments.
 
-Examples: Documentation must include a runnable ```rust example.
+Examples: Documentation must include at least one runnable Rust code block example:
 
-Traceability: Comments must link to Requirements IDs (e.g., // Implements REQ-3).
+```rust
+// example usage goes here
+```
+
+Traceability: Comments must link to Requirements IDs (e.g., `// Implements REQ-3`).
 
 💡 Key Takeaways
-Automation over Discipline: Use cargo fmt and clippy to enforce standards automatically; do not rely on willpower.
+Automation over Discipline: Use `cargo fmt` and `cargo clippy` to enforce standards automatically; do not rely on willpower.
 
 Low Complexity = High Reliability: Small functions with low cyclomatic complexity are exponentially easier to test and debug.
 
 Types allow "Local Reasoning": Strong types and ownership rules allow you to understand a function without reading the whole codebase.
 
-Documentation is Code: If the examples in the documentation don't compile, the code is considered broken (use cargo test --doc).
+Documentation is Code: If the examples in the documentation don't compile, the code is considered broken (use `cargo test --doc`; see Fundamental Hygiene).
 
 🔗 Integration Points
 Builds On
@@ -105,13 +108,13 @@ Standard: Manage complexity in the resize function (often a source of high cyclo
 Idiom: Use the Entry API pattern to handle insertion logic idiomatically.
 
 📚 Learning Progression
-Introduction: [[daily-study/Day03]]
+Introduction:
 Introduction to cargo fmt and basic variable naming conventions.
 
-Application: [[daily-study/Day10]]
+Application:
 Applying clippy lints and resolving common warnings regarding ownership and borrowing.
 
-Mastery: [[daily-study/Day25]]
+Mastery:
 Refactoring complex nested loops into cleaner Iterator chains to reduce cyclomatic complexity.
 
 📖 Official Documentation
@@ -123,8 +126,7 @@ Rust API Guidelines: Official style guide for public interfaces.
 
 🔍 Code Examples
 ❌ Non-Compliant (Bad Quality)
-Rust
-
+```rust
 // Violation: Bad naming, high nesting, manual loop, unwrap
 pub fn Process_Data(input: Vec<i32>) -> i32 {
     let mut total = 0;
@@ -139,9 +141,9 @@ pub fn Process_Data(input: Vec<i32>) -> i32 {
     // Violation: Explicit return where not needed
     return total; 
 }
+```
 ✅ Compliant (Good Quality)
-Rust
-
+```rust
 /// Processes data by summing even numbers greater than 10.
 ///
 /// # Examples
@@ -154,6 +156,7 @@ pub fn process_data(input: &[i32]) -> i32 {
         .filter(|&&x| x > 10 && x % 2 == 0)
         .sum()
 }
+```
 Tags: #code-quality #standards #best-practices #rust-idioms #clean-code #intermediate #maintainability
 
 Links: [[zettel-index]] | [[Quality Assurance]] | [[test-quality-framework]] | [[documentation-standards]]
