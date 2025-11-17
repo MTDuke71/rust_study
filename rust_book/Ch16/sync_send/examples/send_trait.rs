@@ -2,7 +2,6 @@
 // Understanding ownership transfer between threads
 
 use std::thread;
-use std::rc::Rc;
 
 fn main() {
     println!("=== Send Trait Example ===\n");

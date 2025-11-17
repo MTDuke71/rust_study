@@ -3,7 +3,6 @@
 
 use std::sync::{Arc, Mutex};
 use std::thread;
-use std::cell::RefCell;
 
 fn main() {
     println!("=== Sync Trait Example ===\n");
