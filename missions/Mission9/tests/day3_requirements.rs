@@ -8,8 +8,8 @@ use mission9::astar::{astar, astar_with_heuristic, AstarPathfinder, EuclideanAst
 use mission9::error::PathfindingError;
 use mission9::graph::{SimpleWeightedGraph, WeightedGraph};
 use mission9::heuristic::{
-    ChebyshevHeuristic, EuclideanHeuristic, Heuristic, HeuristicContext,
-    HeuristicType, ManhattanHeuristic, WeightedCombinationHeuristic, ZeroHeuristic,
+    ChebyshevHeuristic, EuclideanHeuristic, Heuristic, HeuristicContext, HeuristicType,
+    ManhattanHeuristic, WeightedCombinationHeuristic, ZeroHeuristic,
 };
 use mission9::pathfinder::{Pathfinder, PathfindingConfig};
 
@@ -133,9 +133,9 @@ fn create_weighted_grid() -> (SimpleWeightedGraph, HeuristicContext) {
             let from = y * 3 + x;
             let to_diag1 = (y + 1) * 3 + (x + 1); // Bottom-right diagonal
             let _to_diag2 = y * 3 + (x + 1) + 3; // Same as above, different calculation
-            
+
             graph.add_undirected_edge(from, to_diag1, diagonal_cost);
-            
+
             // Add other diagonal (top-right to bottom-left)
             let from_tr = y * 3 + (x + 1);
             let to_bl = (y + 1) * 3 + x;
@@ -159,12 +159,17 @@ fn test_req2_astar_pathfinder_creation() {
     assert_eq!(euclidean_astar.heuristic().name(), "Euclidean Distance");
 
     let zero_astar = AstarPathfinder::new(ZeroHeuristic);
-    assert_eq!(zero_astar.heuristic().name(), "Zero Heuristic (Dijkstra Mode)");
+    assert_eq!(
+        zero_astar.heuristic().name(),
+        "Zero Heuristic (Dijkstra Mode)"
+    );
 }
 
 #[test]
 fn test_req2_astar_with_config() {
-    let config = PathfindingConfig::new().with_timeout(10).with_max_iterations(1000);
+    let config = PathfindingConfig::new()
+        .with_timeout(10)
+        .with_max_iterations(1000);
     let pathfinder = AstarPathfinder::with_config(EuclideanHeuristic, config);
 
     // Test that pathfinder is created correctly
@@ -204,7 +209,10 @@ fn test_astar_simple_path_finding() {
     for i in 1..result.path.len() {
         let from = result.path[i - 1];
         let to = result.path[i];
-        assert!(graph.neighbors(from).iter().any(|(neighbor, _)| *neighbor == to));
+        assert!(graph
+            .neighbors(from)
+            .iter()
+            .any(|(neighbor, _)| *neighbor == to));
     }
 }
 
@@ -252,7 +260,10 @@ fn test_astar_no_path_exists() {
     let pathfinder = AstarPathfinder::new(EuclideanHeuristic);
     let result = pathfinder.find_path_with_context(&graph, 0, 1, &context);
 
-    assert!(matches!(result, Err(PathfindingError::NoPathExists { start: 0, goal: 1 })));
+    assert!(matches!(
+        result,
+        Err(PathfindingError::NoPathExists { start: 0, goal: 1 })
+    ));
 }
 
 // ===== Heuristic Function Tests =====
@@ -338,14 +349,18 @@ fn test_heuristic_admissibility_verification() {
     ];
 
     for heuristic in heuristics {
-        assert!(heuristic.is_admissible(), "Heuristic {} should be admissible", heuristic.name());
+        assert!(
+            heuristic.is_admissible(),
+            "Heuristic {} should be admissible",
+            heuristic.name()
+        );
 
         // Test a few node pairs to verify h(n) <= actual_distance
         for start in 0..9 {
             for goal in 0..9 {
                 if start != goal {
                     let h_estimate = heuristic.estimate_distance(start, goal, &context);
-                    
+
                     // Find actual shortest path using Dijkstra (Zero heuristic A*)
                     let dijkstra_pathfinder = AstarPathfinder::new(ZeroHeuristic);
                     if let Ok(actual_result) = dijkstra_pathfinder.find_path(&graph, start, goal) {
@@ -371,7 +386,9 @@ fn test_manhattan_admissible_for_grid() {
     let test_pairs = vec![(0, 15), (0, 5), (3, 12), (6, 10)];
 
     for (start, goal) in test_pairs {
-        let manhattan_result = manhattan_astar.find_path_with_context(&graph, start, goal, &context).unwrap();
+        let manhattan_result = manhattan_astar
+            .find_path_with_context(&graph, start, goal, &context)
+            .unwrap();
         let dijkstra_result = dijkstra_astar.find_path(&graph, start, goal).unwrap();
 
         // Both should find optimal path (same cost)
@@ -384,7 +401,8 @@ fn test_manhattan_admissible_for_grid() {
         assert!(
             manhattan_result.nodes_explored <= dijkstra_result.nodes_explored,
             "Manhattan A* should explore <= nodes than Dijkstra (explored: {} vs {})",
-            manhattan_result.nodes_explored, dijkstra_result.nodes_explored
+            manhattan_result.nodes_explored,
+            dijkstra_result.nodes_explored
         );
     }
 }
@@ -410,7 +428,10 @@ fn test_astar_vs_dijkstra_efficiency() {
 
     // A* should typically be more efficient (explore fewer nodes)
     println!("A* explored: {} nodes", astar_result.nodes_explored);
-    println!("Dijkstra explored: {} nodes", dijkstra_result.nodes_explored);
+    println!(
+        "Dijkstra explored: {} nodes",
+        dijkstra_result.nodes_explored
+    );
 
     // For this specific case, A* should explore fewer or equal nodes
     assert!(astar_result.nodes_explored <= dijkstra_result.nodes_explored);
@@ -423,13 +444,19 @@ fn test_heuristic_effectiveness_different_distances() {
     let pathfinder = AstarPathfinder::new(ManhattanHeuristic);
 
     // Test short distance
-    let short_result = pathfinder.find_path_with_context(&graph, 0, 1, &context).unwrap();
+    let short_result = pathfinder
+        .find_path_with_context(&graph, 0, 1, &context)
+        .unwrap();
 
     // Test medium distance
-    let medium_result = pathfinder.find_path_with_context(&graph, 0, 10, &context).unwrap();
+    let medium_result = pathfinder
+        .find_path_with_context(&graph, 0, 10, &context)
+        .unwrap();
 
     // Test long distance
-    let long_result = pathfinder.find_path_with_context(&graph, 0, 15, &context).unwrap();
+    let long_result = pathfinder
+        .find_path_with_context(&graph, 0, 15, &context)
+        .unwrap();
 
     // All should find valid paths
     assert!(short_result.cost > 0.0);
@@ -452,14 +479,18 @@ fn test_astar_path_optimality() {
 
     // Test Manhattan heuristic
     let manhattan_pathfinder = AstarPathfinder::new(ManhattanHeuristic);
-    let manhattan_result = manhattan_pathfinder.find_path_with_context(&graph, 0, 8, &context).unwrap();
+    let manhattan_result = manhattan_pathfinder
+        .find_path_with_context(&graph, 0, 8, &context)
+        .unwrap();
     assert_eq!(manhattan_result.cost, expected_cost);
     assert_eq!(manhattan_result.path[0], 0);
     assert_eq!(manhattan_result.path[manhattan_result.path.len() - 1], 8);
 
     // Test Euclidean heuristic
     let euclidean_pathfinder = AstarPathfinder::new(EuclideanHeuristic);
-    let euclidean_result = euclidean_pathfinder.find_path_with_context(&graph, 0, 8, &context).unwrap();
+    let euclidean_result = euclidean_pathfinder
+        .find_path_with_context(&graph, 0, 8, &context)
+        .unwrap();
     assert_eq!(euclidean_result.cost, expected_cost);
     assert_eq!(euclidean_result.path[0], 0);
     assert_eq!(euclidean_result.path[euclidean_result.path.len() - 1], 8);
@@ -483,7 +514,9 @@ fn test_astar_multiple_optimal_paths() {
     let mut paths = Vec::new();
 
     for _ in 0..5 {
-        let result = pathfinder.find_path_with_context(&graph, 0, 8, &context).unwrap();
+        let result = pathfinder
+            .find_path_with_context(&graph, 0, 8, &context)
+            .unwrap();
         costs.push(result.cost);
         paths.push(result.path);
     }
@@ -496,7 +529,10 @@ fn test_astar_multiple_optimal_paths() {
     for i in 1..path.len() {
         let from = path[i - 1];
         let to = path[i];
-        assert!(graph.neighbors(from).iter().any(|(neighbor, _)| *neighbor == to));
+        assert!(graph
+            .neighbors(from)
+            .iter()
+            .any(|(neighbor, _)| *neighbor == to));
     }
 }
 
@@ -600,13 +636,22 @@ fn test_heuristic_without_coordinates() {
 
     // All should fall back to 0.0 when coordinates are missing
     let manhattan_distance = ManhattanHeuristic.estimate_distance(0, 1, &context);
-    assert_eq!(manhattan_distance, 0.0, "Manhattan heuristic should fall back to 0.0 without coordinates");
+    assert_eq!(
+        manhattan_distance, 0.0,
+        "Manhattan heuristic should fall back to 0.0 without coordinates"
+    );
 
     let euclidean_distance = EuclideanHeuristic.estimate_distance(0, 1, &context);
-    assert_eq!(euclidean_distance, 0.0, "Euclidean heuristic should fall back to 0.0 without coordinates");
+    assert_eq!(
+        euclidean_distance, 0.0,
+        "Euclidean heuristic should fall back to 0.0 without coordinates"
+    );
 
     let chebyshev_distance = ChebyshevHeuristic.estimate_distance(0, 1, &context);
-    assert_eq!(chebyshev_distance, 0.0, "Chebyshev heuristic should fall back to 0.0 without coordinates");
+    assert_eq!(
+        chebyshev_distance, 0.0,
+        "Chebyshev heuristic should fall back to 0.0 without coordinates"
+    );
 }
 
 // ===== Convenience Functions Tests =====
@@ -641,7 +686,9 @@ fn test_euclidean_astar_type_alias() {
 
     // Test EuclideanAstar type alias
     let pathfinder = EuclideanAstar::euclidean();
-    let result = pathfinder.find_path_with_context(&graph, 0, 8, &context).unwrap();
+    let result = pathfinder
+        .find_path_with_context(&graph, 0, 8, &context)
+        .unwrap();
 
     assert_eq!(result.cost, 4.0);
     assert_eq!(pathfinder.heuristic().name(), "Euclidean Distance");
@@ -658,7 +705,9 @@ fn test_astar_comprehensive_grid_exploration() {
     let corners = vec![(0, 15), (3, 12), (12, 3), (15, 0)];
 
     for (start, goal) in corners {
-        let result = pathfinder.find_path_with_context(&graph, start, goal, &context).unwrap();
+        let result = pathfinder
+            .find_path_with_context(&graph, start, goal, &context)
+            .unwrap();
 
         // Manhattan distance for opposite corners should be 6
         assert_eq!(result.cost, 6.0);
@@ -668,7 +717,10 @@ fn test_astar_comprehensive_grid_exploration() {
         for i in 1..result.path.len() {
             let from = result.path[i - 1];
             let to = result.path[i];
-            assert!(graph.neighbors(from).iter().any(|(neighbor, _)| *neighbor == to));
+            assert!(graph
+                .neighbors(from)
+                .iter()
+                .any(|(neighbor, _)| *neighbor == to));
         }
     }
 }
@@ -678,7 +730,9 @@ fn test_astar_metrics_collection() {
     let (graph, context) = create_4x4_grid();
     let pathfinder = AstarPathfinder::new(EuclideanHeuristic);
 
-    let result = pathfinder.find_path_with_context(&graph, 0, 15, &context).unwrap();
+    let result = pathfinder
+        .find_path_with_context(&graph, 0, 15, &context)
+        .unwrap();
 
     // Verify all metrics are collected
     assert!(result.cost > 0.0);
@@ -703,7 +757,9 @@ fn test_f_function_formula_implementation() {
     let pathfinder = AstarPathfinder::new(ManhattanHeuristic);
 
     // For path finding from 0 to 8, track the algorithm behavior
-    let result = pathfinder.find_path_with_context(&graph, 0, 8, &context).unwrap();
+    let result = pathfinder
+        .find_path_with_context(&graph, 0, 8, &context)
+        .unwrap();
 
     // The algorithm should find the optimal path
     assert_eq!(result.cost, 4.0);
@@ -734,8 +790,12 @@ fn test_req2_comprehensive_validation() {
     let (graph, context) = create_4x4_grid();
 
     // ✓ f(n) = g(n) + h(n) cost calculation (tested through successful pathfinding)
-    let manhattan_result = manhattan_pathfinder.find_path_with_context(&graph, 0, 15, &context).unwrap();
-    let euclidean_result = euclidean_pathfinder.find_path_with_context(&graph, 0, 15, &context).unwrap();
+    let manhattan_result = manhattan_pathfinder
+        .find_path_with_context(&graph, 0, 15, &context)
+        .unwrap();
+    let euclidean_result = euclidean_pathfinder
+        .find_path_with_context(&graph, 0, 15, &context)
+        .unwrap();
     let dijkstra_result = zero_pathfinder.find_path(&graph, 0, 15).unwrap();
 
     // All should find optimal path (cost 6.0 for opposite corners of 4x4 grid)
@@ -754,9 +814,18 @@ fn test_req2_comprehensive_validation() {
     assert!(ZeroHeuristic.is_admissible());
 
     // ✓ Performance metrics vs Dijkstra
-    println!("Manhattan A* explored: {} nodes", manhattan_result.nodes_explored);
-    println!("Euclidean A* explored: {} nodes", euclidean_result.nodes_explored);
-    println!("Dijkstra explored: {} nodes", dijkstra_result.nodes_explored);
+    println!(
+        "Manhattan A* explored: {} nodes",
+        manhattan_result.nodes_explored
+    );
+    println!(
+        "Euclidean A* explored: {} nodes",
+        euclidean_result.nodes_explored
+    );
+    println!(
+        "Dijkstra explored: {} nodes",
+        dijkstra_result.nodes_explored
+    );
 
     // A* should generally be more efficient than Dijkstra
     assert!(manhattan_result.nodes_explored <= dijkstra_result.nodes_explored);

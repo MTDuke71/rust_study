@@ -25,9 +25,9 @@ use std::cmp::Ordering;
 /// Represents a weighted edge in a graph
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Edge {
-    pub u: usize,      // First vertex
-    pub v: usize,      // Second vertex  
-    pub weight: i32,   // Edge weight
+    pub u: usize,    // First vertex
+    pub v: usize,    // Second vertex
+    pub weight: i32, // Edge weight
 }
 
 impl Edge {
@@ -53,29 +53,37 @@ impl PartialOrd for Edge {
 /// Result of Kruskal's MST algorithm
 #[derive(Debug)]
 pub struct MSTResult {
-    pub edges: Vec<Edge>,           // Edges in the MST
-    pub total_weight: i32,          // Total weight of MST
-    pub vertices_connected: usize,  // Number of vertices in MST
+    pub edges: Vec<Edge>,          // Edges in the MST
+    pub total_weight: i32,         // Total weight of MST
+    pub vertices_connected: usize, // Number of vertices in MST
 }
 
 impl MSTResult {
     /// Check if the result represents a valid spanning tree
     pub fn is_spanning_tree(&self, num_vertices: usize) -> bool {
-        self.edges.len() == num_vertices.saturating_sub(1) && 
-        self.vertices_connected == num_vertices
+        self.edges.len() == num_vertices.saturating_sub(1)
+            && self.vertices_connected == num_vertices
     }
 
     /// Get the MST as a formatted string for display
     pub fn format_tree(&self) -> String {
         let mut result = String::new();
-        result.push_str(&format!("MST with {} edges, total weight: {}\n", 
-                                self.edges.len(), self.total_weight));
-        
+        result.push_str(&format!(
+            "MST with {} edges, total weight: {}\n",
+            self.edges.len(),
+            self.total_weight
+        ));
+
         for (i, edge) in self.edges.iter().enumerate() {
-            result.push_str(&format!("  {}: ({}, {}) weight {}\n", 
-                           i + 1, edge.u, edge.v, edge.weight));
+            result.push_str(&format!(
+                "  {}: ({}, {}) weight {}\n",
+                i + 1,
+                edge.u,
+                edge.v,
+                edge.weight
+            ));
         }
-        
+
         result
     }
 }
@@ -121,8 +129,12 @@ pub fn kruskals_mst(vertices: usize, mut edges: Vec<Edge>) -> Result<MSTResult, 
     // Validate that all edges reference valid vertices
     for edge in &edges {
         if edge.u >= vertices || edge.v >= vertices {
-            return Err(format!("Edge ({}, {}) references invalid vertex (max: {})", 
-                             edge.u, edge.v, vertices - 1));
+            return Err(format!(
+                "Edge ({}, {}) references invalid vertex (max: {})",
+                edge.u,
+                edge.v,
+                vertices - 1
+            ));
         }
     }
 
@@ -131,18 +143,21 @@ pub fn kruskals_mst(vertices: usize, mut edges: Vec<Edge>) -> Result<MSTResult, 
 
     // Step 2: Initialize Union-Find structure
     let mut uf = UnionFind::new(vertices);
-    
+
     // Step 3: Process edges in order, adding to MST if no cycle
     let mut mst_edges = Vec::new();
     let mut total_weight = 0;
 
     for edge in edges {
         // Check if adding this edge would create a cycle
-        if uf.union(edge.u, edge.v).map_err(|e| format!("Union-Find error: {}", e))? {
+        if uf
+            .union(edge.u, edge.v)
+            .map_err(|e| format!("Union-Find error: {}", e))?
+        {
             // No cycle - add edge to MST
             mst_edges.push(edge);
             total_weight += edge.weight;
-            
+
             // Early termination: MST complete when we have n-1 edges
             if mst_edges.len() == vertices - 1 {
                 break;
@@ -154,8 +169,10 @@ pub fn kruskals_mst(vertices: usize, mut edges: Vec<Edge>) -> Result<MSTResult, 
     // Check if we found a spanning tree (graph must be connected)
     let components = uf.count();
     if components > 1 {
-        return Err(format!("Graph is not connected - {} components found, MST requires 1", 
-                          components));
+        return Err(format!(
+            "Graph is not connected - {} components found, MST requires 1",
+            components
+        ));
     }
 
     Ok(MSTResult {
@@ -168,7 +185,7 @@ pub fn kruskals_mst(vertices: usize, mut edges: Vec<Edge>) -> Result<MSTResult, 
 /// Example: Small graph MST
 fn example_small_graph() -> Result<(), String> {
     println!("=== Small Graph MST Example ===");
-    
+
     // Create a simple 4-vertex graph
     //     4
     //  0 --- 1
@@ -178,30 +195,30 @@ fn example_small_graph() -> Result<(), String> {
     //  | /   |
     //  2 --- 3
     //     4
-    
+
     let edges = vec![
         Edge::new(0, 1, 4),
-        Edge::new(0, 2, 3),  
-        Edge::new(1, 2, 1),  // This will be selected (minimum weight)
-        Edge::new(1, 3, 2),  // This will be selected
-        Edge::new(2, 3, 4),  // This will be skipped (creates cycle)
+        Edge::new(0, 2, 3),
+        Edge::new(1, 2, 1), // This will be selected (minimum weight)
+        Edge::new(1, 3, 2), // This will be selected
+        Edge::new(2, 3, 4), // This will be skipped (creates cycle)
     ];
 
     let mst = kruskals_mst(4, edges)?;
-    
+
     println!("Input graph has 5 edges");
     println!("{}", mst.format_tree());
     println!("Edges selected: (1,2) weight 1, (1,3) weight 2, (0,2) weight 3");
     println!("Edge (2,3) weight 4 was skipped to avoid cycle");
     println!("Is valid spanning tree: {}\n", mst.is_spanning_tree(4));
-    
+
     Ok(())
 }
 
 /// Example: Larger graph demonstrating algorithm efficiency
 fn example_larger_graph() -> Result<(), String> {
     println!("=== Larger Graph MST Example ===");
-    
+
     // Create a 6-vertex complete graph with random weights
     let mut edges = Vec::new();
     let weights = [
@@ -212,38 +229,43 @@ fn example_larger_graph() -> Result<(), String> {
         [6, 1, 9, 3, 0, 5],
         [8, 4, 2, 1, 5, 0],
     ];
-    
+
     // Generate all edges from adjacency matrix
     for (i, row) in weights.iter().enumerate() {
         for (j, &weight) in row.iter().enumerate().skip(i + 1) {
             edges.push(Edge::new(i, j, weight));
         }
     }
-    
+
     println!("Complete graph with 6 vertices and {} edges", edges.len());
-    
+
     let mst = kruskals_mst(6, edges)?;
-    
+
     println!("{}", mst.format_tree());
-    println!("Algorithm processed {} edges but only selected {} for MST", 
-             15, mst.edges.len()); // 6 choose 2 = 15 total edges
-    println!("Efficiency: {}% of edges were actually needed\n", 
-             (mst.edges.len() * 100) / 15);
-    
+    println!(
+        "Algorithm processed {} edges but only selected {} for MST",
+        15,
+        mst.edges.len()
+    ); // 6 choose 2 = 15 total edges
+    println!(
+        "Efficiency: {}% of edges were actually needed\n",
+        (mst.edges.len() * 100) / 15
+    );
+
     Ok(())
 }
 
 /// Example: Disconnected graph (should fail)
 fn example_disconnected_graph() {
     println!("=== Disconnected Graph Example (Error Case) ===");
-    
+
     // Create two separate triangles - not connected
     let edges = vec![
         Edge::new(0, 1, 1),
-        Edge::new(1, 2, 2), 
-        Edge::new(2, 0, 3),  // Triangle 1: vertices 0,1,2
+        Edge::new(1, 2, 2),
+        Edge::new(2, 0, 3), // Triangle 1: vertices 0,1,2
         Edge::new(3, 4, 1),
-        Edge::new(4, 5, 2),  // Triangle 2: vertices 3,4,5 (disconnected)
+        Edge::new(4, 5, 2), // Triangle 2: vertices 3,4,5 (disconnected)
     ];
 
     match kruskals_mst(6, edges) {
@@ -255,15 +277,15 @@ fn example_disconnected_graph() {
 /// Demonstrate cycle detection during MST construction
 fn example_cycle_detection() -> Result<(), String> {
     println!("=== Cycle Detection Example ===");
-    
+
     // Create edges that would form cycles if all were added
     let edges = vec![
-        Edge::new(0, 1, 1),  // Will be added (lowest weight)
-        Edge::new(1, 2, 2),  // Will be added
-        Edge::new(0, 2, 5),  // Will be SKIPPED (creates cycle with 0-1-2)
-        Edge::new(2, 3, 3),  // Will be added
-        Edge::new(0, 3, 4),  // Will be SKIPPED (creates cycle)
-        Edge::new(1, 3, 6),  // Will be SKIPPED (creates cycle)
+        Edge::new(0, 1, 1), // Will be added (lowest weight)
+        Edge::new(1, 2, 2), // Will be added
+        Edge::new(0, 2, 5), // Will be SKIPPED (creates cycle with 0-1-2)
+        Edge::new(2, 3, 3), // Will be added
+        Edge::new(0, 3, 4), // Will be SKIPPED (creates cycle)
+        Edge::new(1, 3, 6), // Will be SKIPPED (creates cycle)
     ];
 
     println!("Processing edges in weight order:");
@@ -271,10 +293,10 @@ fn example_cycle_detection() -> Result<(), String> {
     let mut mst_edges = Vec::new();
     let mut sorted_edges = edges.clone();
     sorted_edges.sort();
-    
+
     for edge in sorted_edges {
         print!("Edge ({}, {}) weight {}: ", edge.u, edge.v, edge.weight);
-        
+
         if uf.connected(edge.u, edge.v)? {
             println!("SKIPPED (would create cycle)");
         } else {
@@ -283,28 +305,31 @@ fn example_cycle_detection() -> Result<(), String> {
             println!("ADDED to MST");
         }
     }
-    
-    println!("\nFinal MST: {} edges selected out of {} total", 
-             mst_edges.len(), edges.len());
-    
+
+    println!(
+        "\nFinal MST: {} edges selected out of {} total",
+        mst_edges.len(),
+        edges.len()
+    );
+
     Ok(())
 }
 
 fn main() -> Result<(), String> {
     println!("🌳 Kruskal's Minimum Spanning Tree Algorithm with Union-Find\n");
-    
+
     example_small_graph()?;
-    example_larger_graph()?; 
+    example_larger_graph()?;
     example_disconnected_graph();
     example_cycle_detection()?;
-    
+
     println!("✅ All examples completed successfully!");
     println!("\n💡 Key Insights:");
     println!("• Union-Find detects cycles in O(α(n)) time per edge");
     println!("• Kruskal's algorithm is optimal for sparse graphs");
     println!("• Edge sorting dominates the time complexity: O(E log E)");
     println!("• MST always has exactly n-1 edges for n vertices");
-    
+
     Ok(())
 }
 
@@ -357,8 +382,8 @@ mod tests {
         let mut e1 = Edge::new(0, 1, 5);
         let mut e2 = Edge::new(2, 3, 3);
         let mut e3 = Edge::new(4, 5, 5);
-        
-        assert!(e2 < e1);  // Lower weight comes first
+
+        assert!(e2 < e1); // Lower weight comes first
         assert!(e1 == e3); // Same weight are equal
     }
 }

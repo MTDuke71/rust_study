@@ -1,16 +1,16 @@
 // Example: Building Thread-Safe Custom Types
 // Understanding how to implement Send and Sync for custom types
 
+use std::marker::PhantomData;
 use std::sync::{Arc, Mutex};
 use std::thread;
-use std::marker::PhantomData;
 
 fn main() {
     println!("=== Thread-Safe Custom Types ===\n");
 
     // Example 1: Automatically Send+Sync custom type
     println!("Example 1: Auto-derived Send+Sync");
-    
+
     #[derive(Debug, Clone)]
     #[allow(dead_code)]
     struct Config {
@@ -18,9 +18,9 @@ fn main() {
         retries: u32,
         host: String,
     }
-    
+
     // Config is automatically Send+Sync because all fields are Send+Sync
-    
+
     let config = Arc::new(Config {
         timeout: 5000,
         retries: 3,
@@ -28,7 +28,7 @@ fn main() {
     });
 
     let mut handles = vec![];
-    
+
     for i in 0..3 {
         let config = Arc::clone(&config);
         let handle = thread::spawn(move || {
@@ -118,7 +118,7 @@ fn main() {
 
     struct NotThreadSafe {
         data: i32,
-        _not_send_sync: PhantomData<*const ()>,  // Raw pointer is not Send/Sync
+        _not_send_sync: PhantomData<*const ()>, // Raw pointer is not Send/Sync
     }
 
     let not_safe = NotThreadSafe {

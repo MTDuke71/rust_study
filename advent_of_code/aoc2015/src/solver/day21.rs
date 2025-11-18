@@ -66,28 +66,108 @@ struct Character {
 /// Shop has exactly 5 weapons, 5 armor pieces, and 6 rings.
 fn parse_shop() -> (Vec<Item>, Vec<Item>, Vec<Item>) {
     let weapons = vec![
-        Item { name: "Dagger".to_string(), cost: 8, damage: 4, armor: 0 },
-        Item { name: "Shortsword".to_string(), cost: 10, damage: 5, armor: 0 },
-        Item { name: "Warhammer".to_string(), cost: 25, damage: 6, armor: 0 },
-        Item { name: "Longsword".to_string(), cost: 40, damage: 7, armor: 0 },
-        Item { name: "Greataxe".to_string(), cost: 74, damage: 8, armor: 0 },
+        Item {
+            name: "Dagger".to_string(),
+            cost: 8,
+            damage: 4,
+            armor: 0,
+        },
+        Item {
+            name: "Shortsword".to_string(),
+            cost: 10,
+            damage: 5,
+            armor: 0,
+        },
+        Item {
+            name: "Warhammer".to_string(),
+            cost: 25,
+            damage: 6,
+            armor: 0,
+        },
+        Item {
+            name: "Longsword".to_string(),
+            cost: 40,
+            damage: 7,
+            armor: 0,
+        },
+        Item {
+            name: "Greataxe".to_string(),
+            cost: 74,
+            damage: 8,
+            armor: 0,
+        },
     ];
 
     let armor = vec![
-        Item { name: "Leather".to_string(), cost: 13, damage: 0, armor: 1 },
-        Item { name: "Chainmail".to_string(), cost: 31, damage: 0, armor: 2 },
-        Item { name: "Splintmail".to_string(), cost: 53, damage: 0, armor: 3 },
-        Item { name: "Bandedmail".to_string(), cost: 75, damage: 0, armor: 4 },
-        Item { name: "Platemail".to_string(), cost: 102, damage: 0, armor: 5 },
+        Item {
+            name: "Leather".to_string(),
+            cost: 13,
+            damage: 0,
+            armor: 1,
+        },
+        Item {
+            name: "Chainmail".to_string(),
+            cost: 31,
+            damage: 0,
+            armor: 2,
+        },
+        Item {
+            name: "Splintmail".to_string(),
+            cost: 53,
+            damage: 0,
+            armor: 3,
+        },
+        Item {
+            name: "Bandedmail".to_string(),
+            cost: 75,
+            damage: 0,
+            armor: 4,
+        },
+        Item {
+            name: "Platemail".to_string(),
+            cost: 102,
+            damage: 0,
+            armor: 5,
+        },
     ];
 
     let rings = vec![
-        Item { name: "Damage +1".to_string(), cost: 25, damage: 1, armor: 0 },
-        Item { name: "Damage +2".to_string(), cost: 50, damage: 2, armor: 0 },
-        Item { name: "Damage +3".to_string(), cost: 100, damage: 3, armor: 0 },
-        Item { name: "Defense +1".to_string(), cost: 20, damage: 0, armor: 1 },
-        Item { name: "Defense +2".to_string(), cost: 40, damage: 0, armor: 2 },
-        Item { name: "Defense +3".to_string(), cost: 80, damage: 0, armor: 3 },
+        Item {
+            name: "Damage +1".to_string(),
+            cost: 25,
+            damage: 1,
+            armor: 0,
+        },
+        Item {
+            name: "Damage +2".to_string(),
+            cost: 50,
+            damage: 2,
+            armor: 0,
+        },
+        Item {
+            name: "Damage +3".to_string(),
+            cost: 100,
+            damage: 3,
+            armor: 0,
+        },
+        Item {
+            name: "Defense +1".to_string(),
+            cost: 20,
+            damage: 0,
+            armor: 1,
+        },
+        Item {
+            name: "Defense +2".to_string(),
+            cost: 40,
+            damage: 0,
+            armor: 2,
+        },
+        Item {
+            name: "Defense +3".to_string(),
+            cost: 80,
+            damage: 0,
+            armor: 3,
+        },
     ];
 
     (weapons, armor, rings)
@@ -135,13 +215,20 @@ fn parse_boss(input: &str) -> Character {
 ///
 /// Vector of tuples: (weapon, optional_armor, ring_vector)
 /// Total combinations: 5 weapons × 6 armor_options × 22 ring_combinations = 660 combinations
-fn generate_combinations(weapons: &[Item], armor: &[Item], rings: &[Item]) -> Vec<(Item, Option<Item>, Vec<Item>)> {
+fn generate_combinations(
+    weapons: &[Item],
+    armor: &[Item],
+    rings: &[Item],
+) -> Vec<(Item, Option<Item>, Vec<Item>)> {
     let mut combinations = Vec::new();
 
     // Always exactly one weapon
     for weapon in weapons {
         // Armor is optional (0 or 1) - create vec with None + all armor options
-        let armor_options: Vec<Option<Item>> = vec![None].into_iter().chain(armor.iter().cloned().map(Some)).collect();
+        let armor_options: Vec<Option<Item>> = vec![None]
+            .into_iter()
+            .chain(armor.iter().cloned().map(Some))
+            .collect();
 
         for armor_choice in armor_options {
             // Rings: 0, 1, or 2 (combinations, not permutations - order doesn't matter for stats)
@@ -155,8 +242,12 @@ fn generate_combinations(weapons: &[Item], armor: &[Item], rings: &[Item]) -> Ve
 
             // 2 rings (combinations, not permutations - avoid (ringA, ringB) and (ringB, ringA))
             for i in 0..rings.len() {
-                for j in (i+1)..rings.len() {
-                    combinations.push((weapon.clone(), armor_choice.clone(), vec![rings[i].clone(), rings[j].clone()]));
+                for j in (i + 1)..rings.len() {
+                    combinations.push((
+                        weapon.clone(),
+                        armor_choice.clone(),
+                        vec![rings[i].clone(), rings[j].clone()],
+                    ));
                 }
             }
         }
@@ -245,12 +336,16 @@ fn find_minimum_cost(combinations: &[(Item, Option<Item>, Vec<Item>)], boss: &Ch
 
     for (weapon, armor_opt, rings) in combinations {
         let (damage, armor) = calculate_stats(weapon, armor_opt.as_ref(), rings);
-        let player = Character { hp: 100, damage, armor };
+        let player = Character {
+            hp: 100,
+            damage,
+            armor,
+        };
 
         if simulate_fight(&player, boss) {
-            let cost = weapon.cost +
-                       armor_opt.as_ref().map_or(0, |a| a.cost) +
-                       rings.iter().map(|r| r.cost).sum::<i32>();
+            let cost = weapon.cost
+                + armor_opt.as_ref().map_or(0, |a| a.cost)
+                + rings.iter().map(|r| r.cost).sum::<i32>();
             if cost < min_cost {
                 min_cost = cost;
             }
@@ -270,17 +365,24 @@ fn find_minimum_cost(combinations: &[(Item, Option<Item>, Vec<Item>)], boss: &Ch
 /// # Returns
 ///
 /// Maximum gold cost while still guaranteeing defeat
-fn find_maximum_cost_for_loss(combinations: &[(Item, Option<Item>, Vec<Item>)], boss: &Character) -> i32 {
+fn find_maximum_cost_for_loss(
+    combinations: &[(Item, Option<Item>, Vec<Item>)],
+    boss: &Character,
+) -> i32 {
     let mut max_cost = i32::MIN;
 
     for (weapon, armor_opt, rings) in combinations {
         let (damage, armor) = calculate_stats(weapon, armor_opt.as_ref(), rings);
-        let player = Character { hp: 100, damage, armor };
+        let player = Character {
+            hp: 100,
+            damage,
+            armor,
+        };
 
         if !simulate_fight(&player, boss) {
-            let cost = weapon.cost +
-                       armor_opt.as_ref().map_or(0, |a| a.cost) +
-                       rings.iter().map(|r| r.cost).sum::<i32>();
+            let cost = weapon.cost
+                + armor_opt.as_ref().map_or(0, |a| a.cost)
+                + rings.iter().map(|r| r.cost).sum::<i32>();
             if cost > max_cost {
                 max_cost = cost;
             }
@@ -368,11 +470,31 @@ mod tests {
 
     #[test]
     fn test_calculate_stats() {
-        let weapon = Item { name: "Test Weapon".to_string(), cost: 10, damage: 5, armor: 0 };
-        let armor = Item { name: "Test Armor".to_string(), cost: 20, damage: 0, armor: 3 };
+        let weapon = Item {
+            name: "Test Weapon".to_string(),
+            cost: 10,
+            damage: 5,
+            armor: 0,
+        };
+        let armor = Item {
+            name: "Test Armor".to_string(),
+            cost: 20,
+            damage: 0,
+            armor: 3,
+        };
         let rings = vec![
-            Item { name: "Damage Ring".to_string(), cost: 25, damage: 2, armor: 0 },
-            Item { name: "Armor Ring".to_string(), cost: 30, damage: 0, armor: 1 },
+            Item {
+                name: "Damage Ring".to_string(),
+                cost: 25,
+                damage: 2,
+                armor: 0,
+            },
+            Item {
+                name: "Armor Ring".to_string(),
+                cost: 30,
+                damage: 0,
+                armor: 1,
+            },
         ];
 
         // Weapon only
@@ -399,8 +521,16 @@ mod tests {
     #[test]
     fn test_simulate_fight_player_wins() {
         // Player with overwhelming advantage
-        let player = Character { hp: 100, damage: 20, armor: 10 };
-        let boss = Character { hp: 10, damage: 1, armor: 0 };
+        let player = Character {
+            hp: 100,
+            damage: 20,
+            armor: 10,
+        };
+        let boss = Character {
+            hp: 10,
+            damage: 1,
+            armor: 0,
+        };
 
         assert!(simulate_fight(&player, &boss));
     }
@@ -408,8 +538,16 @@ mod tests {
     #[test]
     fn test_simulate_fight_boss_wins() {
         // Boss with overwhelming advantage
-        let player = Character { hp: 10, damage: 1, armor: 0 };
-        let boss = Character { hp: 100, damage: 20, armor: 10 };
+        let player = Character {
+            hp: 10,
+            damage: 1,
+            armor: 0,
+        };
+        let boss = Character {
+            hp: 100,
+            damage: 20,
+            armor: 10,
+        };
 
         assert!(!simulate_fight(&player, &boss));
     }
@@ -417,8 +555,16 @@ mod tests {
     #[test]
     fn test_simulate_fight_min_damage() {
         // Test minimum damage rule (always at least 1 damage)
-        let player = Character { hp: 100, damage: 0, armor: 10 };
-        let boss = Character { hp: 1, damage: 0, armor: 0 };
+        let player = Character {
+            hp: 100,
+            damage: 0,
+            armor: 10,
+        };
+        let boss = Character {
+            hp: 1,
+            damage: 0,
+            armor: 0,
+        };
 
         // Player deals 1 damage despite 0 damage - 0 armor = 0 (min 1)
         assert!(simulate_fight(&player, &boss));
@@ -429,8 +575,16 @@ mod tests {
         // Replicate the example from the problem statement
         // Player: 8 HP, 5 damage, 5 armor
         // Boss: 12 HP, 7 damage, 2 armor
-        let player = Character { hp: 8, damage: 5, armor: 5 };
-        let boss = Character { hp: 12, damage: 7, armor: 2 };
+        let player = Character {
+            hp: 8,
+            damage: 5,
+            armor: 5,
+        };
+        let boss = Character {
+            hp: 12,
+            damage: 7,
+            armor: 2,
+        };
 
         assert!(simulate_fight(&player, &boss));
     }
@@ -440,7 +594,11 @@ mod tests {
         let (weapons, armor, rings) = parse_shop();
         let combinations = generate_combinations(&weapons, &armor, &rings);
 
-        let boss = Character { hp: 12, damage: 7, armor: 2 };
+        let boss = Character {
+            hp: 12,
+            damage: 7,
+            armor: 2,
+        };
         let min_cost = find_minimum_cost(&combinations, &boss);
 
         // Should find some winning combination
@@ -453,7 +611,11 @@ mod tests {
         let (weapons, armor, rings) = parse_shop();
         let combinations = generate_combinations(&weapons, &armor, &rings);
 
-        let boss = Character { hp: 12, damage: 7, armor: 2 };
+        let boss = Character {
+            hp: 12,
+            damage: 7,
+            armor: 2,
+        };
         let max_cost = find_maximum_cost_for_loss(&combinations, &boss);
 
         // Should find some losing combination

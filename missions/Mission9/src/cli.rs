@@ -24,7 +24,13 @@ pub struct Cli {
     pub verbose: bool,
 
     /// Output format
-    #[arg(short = 'F', long = "output-format", value_enum, default_value = "text", global = true)]
+    #[arg(
+        short = 'F',
+        long = "output-format",
+        value_enum,
+        default_value = "text",
+        global = true
+    )]
     pub output_format: OutputFormat,
 }
 

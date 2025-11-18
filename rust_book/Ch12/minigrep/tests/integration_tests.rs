@@ -38,7 +38,7 @@ Python is also popular.
 Rust community is welcoming.";
 
     let results = minigrep::search("Rust", contents);
-    
+
     assert_eq!(results.len(), 3);
     assert_eq!(results[0].0, 1); // Line 1
     assert_eq!(results[1].0, 3); // Line 3
@@ -53,7 +53,7 @@ Jumps over THE lazy dog
 the end";
 
     let results = minigrep::search_case_insensitive("the", contents);
-    
+
     assert_eq!(results.len(), 3);
     assert_eq!(results[0].0, 1);
     assert_eq!(results[1].0, 2);
@@ -64,7 +64,7 @@ the end";
 fn test_search_empty_results() {
     let contents = "apple\nbanana\norange";
     let results = minigrep::search("grape", contents);
-    
+
     assert_eq!(results.len(), 0);
 }
 
@@ -77,7 +77,7 @@ Release 3.0.0
 Version 4.0.0";
 
     let results = minigrep::search("Version", contents);
-    
+
     assert_eq!(results.len(), 3);
 }
 
@@ -90,7 +90,7 @@ Say hello?
 Greetings!";
 
     let results = minigrep::search("Hello", contents);
-    
+
     assert_eq!(results.len(), 2);
 }
 
@@ -103,7 +103,7 @@ apple sauce
 banana";
 
     let results = minigrep::search("apple", contents);
-    
+
     assert_eq!(results.len(), 3);
 }
 
@@ -116,7 +116,7 @@ rust
 RuSt";
 
     let results = minigrep::search("Rust", contents);
-    
+
     assert_eq!(results.len(), 1);
 }
 
@@ -131,7 +131,7 @@ Line 5 content
 Line 6 target";
 
     let results = minigrep::search("target", contents);
-    
+
     assert_eq!(results.len(), 3);
     assert_eq!(results[0].0, 2);
     assert_eq!(results[1].0, 4);
@@ -147,7 +147,7 @@ trailing spaces
 normal line";
 
     let results = minigrep::search("spaces", contents);
-    
+
     assert_eq!(results.len(), 2);
 }
 
@@ -155,7 +155,7 @@ normal line";
 fn test_search_empty_query_matches_all() {
     let contents = "line1\nline2\nline3";
     let results = minigrep::search("", contents);
-    
+
     // Empty query matches all lines
     assert_eq!(results.len(), 3);
 }
@@ -169,7 +169,7 @@ Is it (good)?
 Yes!";
 
     let results = minigrep::search("?", contents);
-    
+
     assert_eq!(results.len(), 3); // Lines 1, 2, and 3 contain "?"
 }
 
@@ -182,7 +182,7 @@ Rust is also fast
 C++ and Rust";
 
     let results = minigrep::search_case_insensitive("C++", contents);
-    
+
     assert_eq!(results.len(), 3);
 }
 
@@ -194,7 +194,7 @@ C++ and Rust";
 fn test_config_new_with_insufficient_args() {
     let args = vec!["minigrep".to_string()];
     let result = minigrep::Config::new(args.into_iter());
-    
+
     assert!(result.is_err());
 }
 
@@ -202,7 +202,7 @@ fn test_config_new_with_insufficient_args() {
 fn test_config_new_with_only_query() {
     let args = vec!["minigrep".to_string(), "query".to_string()];
     let result = minigrep::Config::new(args.into_iter());
-    
+
     assert!(result.is_err());
 }
 
@@ -215,9 +215,9 @@ fn test_config_new_with_extra_args_ignored() {
         "extra".to_string(),
         "args".to_string(),
     ];
-    
+
     let config = minigrep::Config::new(args.into_iter()).unwrap();
-    
+
     assert_eq!(config.query, "query");
     assert_eq!(config.filename, "file.txt");
 }
@@ -234,7 +234,7 @@ Second line with search term
 Third line";
 
     let results = minigrep::search("search", contents);
-    
+
     assert_eq!(results.len(), 1);
     assert_eq!(results[0].0, 2);
     assert!(results[0].1.contains("Second line with search term"));
@@ -244,9 +244,9 @@ Third line";
 fn test_search_preserves_original_line() {
     let original = "This is a TEST line";
     let contents = format!("{}\nAnother line", original);
-    
+
     let results = minigrep::search("TEST", &contents);
-    
+
     assert_eq!(results.len(), 1);
     assert_eq!(results[0].1, original);
 }
@@ -260,7 +260,7 @@ Hello World
 hElLo WoRlD";
 
     let results = minigrep::search_case_insensitive("HeLLo", contents);
-    
+
     assert_eq!(results.len(), 4);
 }
 
@@ -280,7 +280,7 @@ fn test_search_in_large_content() {
     }
 
     let results = minigrep::search("TARGET", &contents);
-    
+
     assert_eq!(results.len(), 1);
     assert_eq!(results[0].0, 501); // Line 501 (0-indexed becomes 1-indexed)
 }
@@ -297,7 +297,7 @@ apple cake
 apple tart";
 
     let results = minigrep::search("apple", contents);
-    
+
     assert_eq!(results.len(), 7);
 }
 
@@ -310,7 +310,7 @@ Hello Rust
 世界 Hello";
 
     let results = minigrep::search("Hello", contents);
-    
+
     assert_eq!(results.len(), 3); // Lines 1, 3, and 4 contain "Hello"
 }
 
@@ -323,7 +323,7 @@ Hello 世界
 编程 means programming";
 
     let results = minigrep::search("世界", contents);
-    
+
     assert_eq!(results.len(), 2);
 }
 
@@ -342,7 +342,7 @@ fn test_log_file_search() {
 [INFO] Shutting down";
 
     let error_results = minigrep::search("[ERROR]", contents);
-    
+
     assert_eq!(error_results.len(), 2);
 }
 
@@ -362,7 +362,7 @@ fn main_function() {
 }";
 
     let results = minigrep::search("fn ", contents);
-    
+
     assert_eq!(results.len(), 3);
 }
 
@@ -376,7 +376,7 @@ api_key=abc123
 api_timeout=30";
 
     let results = minigrep::search("database", contents);
-    
+
     assert_eq!(results.len(), 3);
 }
 
@@ -389,6 +389,6 @@ Support: help@service.net
 Username: john_doe";
 
     let results = minigrep::search("@", contents);
-    
+
     assert_eq!(results.len(), 3);
 }

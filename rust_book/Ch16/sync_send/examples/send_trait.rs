@@ -8,7 +8,7 @@ fn main() {
 
     // Example 1: Send types can be transferred to threads
     println!("Example 1: Send types (String, Vec, Box)");
-    
+
     let data = String::from("Hello from main thread!");
     let numbers = vec![1, 2, 3, 4, 5];
     let boxed = Box::new(42);
@@ -23,7 +23,7 @@ fn main() {
 
     // Example 2: Primitive types are Send
     println!("\nExample 2: Primitives are Send");
-    
+
     let number = 100;
     let flag = true;
     let character = 'A';

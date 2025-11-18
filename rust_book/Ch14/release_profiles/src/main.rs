@@ -6,18 +6,18 @@
 fn main() {
     println!("Release Profiles Example");
     println!("========================");
-    
+
     // This function will be optimized differently based on the profile
     let result = compute_expensive_operation(1_000_000);
     println!("Result: {}", result);
-    
+
     // Check if debug assertions are enabled
     #[cfg(debug_assertions)]
     println!("Debug assertions: ENABLED (dev profile)");
-    
+
     #[cfg(not(debug_assertions))]
     println!("Debug assertions: DISABLED (release profile)");
-    
+
     // Demonstrate optimization differences
     demonstrate_optimization();
 }
@@ -34,11 +34,11 @@ fn compute_expensive_operation(n: u64) -> u64 {
 /// Demonstrate how different profiles affect code generation
 fn demonstrate_optimization() {
     let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    
+
     // This loop may be optimized away or unrolled in release mode
     let sum: i32 = numbers.iter().sum();
     println!("Sum of numbers: {}", sum);
-    
+
     // Debug assertions only active in dev profile
     debug_assert!(sum > 0, "Sum should always be positive");
 }
@@ -54,4 +54,3 @@ mod tests {
         assert!(result > 0);
     }
 }
-

@@ -17,24 +17,23 @@
 //! - **Open set**: Nodes to be evaluated
 //! - **Closed set**: Nodes already evaluated
 
-use std::collections::{BinaryHeap, HashSet, HashMap};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 
 /// Represents a node with its evaluation in A*
 #[derive(Debug, Clone, Eq, PartialEq)]
 struct AstarNode {
     id: usize,
-    g: usize,      // Cost from start
-    h: usize,      // Heuristic estimate to goal
-    f: usize,      // Total estimated cost (g + h)
+    g: usize, // Cost from start
+    h: usize, // Heuristic estimate to goal
+    f: usize, // Total estimated cost (g + h)
 }
 
 impl Ord for AstarNode {
     fn cmp(&self, other: &Self) -> Ordering {
         // Min-heap: lower f value has higher priority
         // Use reverse for min-heap behavior
-        other.f.cmp(&self.f)
-            .then_with(|| self.id.cmp(&other.id))
+        other.f.cmp(&self.f).then_with(|| self.id.cmp(&other.id))
     }
 }
 
@@ -62,7 +61,7 @@ fn euclidean_distance(from: (usize, usize), to: (usize, usize)) -> usize {
 
 /// Simple graph representation for tutorial
 struct SimpleGraph {
-    nodes: Vec<(usize, usize)>,  // positions
+    nodes: Vec<(usize, usize)>,      // positions
     edges: Vec<Vec<(usize, usize)>>, // adjacency with weights
 }
 
@@ -171,25 +170,45 @@ fn exercise_1_basic_astar() {
 
     // Create a simple 4x4 grid
     let mut graph = SimpleGraph::new(vec![
-        (0, 0), (0, 1), (0, 2), (0, 3),
-        (1, 0), (1, 1), (1, 2), (1, 3),
-        (2, 0), (2, 1), (2, 2), (2, 3),
-        (3, 0), (3, 1), (3, 2), (3, 3),
+        (0, 0),
+        (0, 1),
+        (0, 2),
+        (0, 3),
+        (1, 0),
+        (1, 1),
+        (1, 2),
+        (1, 3),
+        (2, 0),
+        (2, 1),
+        (2, 2),
+        (2, 3),
+        (3, 0),
+        (3, 1),
+        (3, 2),
+        (3, 3),
     ]);
 
     // Add edges (simplified 4-way movement)
     for row in 0..4 {
         for col in 0..4 {
             let node = row * 4 + col;
-            if col < 3 { graph.add_edge(node, node + 1, 1); }  // right
-            if col > 0 { graph.add_edge(node, node - 1, 1); }  // left
-            if row < 3 { graph.add_edge(node, node + 4, 1); }  // down
-            if row > 0 { graph.add_edge(node, node - 4, 1); }  // up
+            if col < 3 {
+                graph.add_edge(node, node + 1, 1);
+            } // right
+            if col > 0 {
+                graph.add_edge(node, node - 1, 1);
+            } // left
+            if row < 3 {
+                graph.add_edge(node, node + 4, 1);
+            } // down
+            if row > 0 {
+                graph.add_edge(node, node - 4, 1);
+            } // up
         }
     }
 
-    let start = 0;    // Top-left (0,0)
-    let goal = 15;    // Bottom-right (3,3)
+    let start = 0; // Top-left (0,0)
+    let goal = 15; // Bottom-right (3,3)
 
     match astar(&graph, start, goal, manhattan_distance) {
         Some(path) => {
@@ -214,20 +233,40 @@ fn exercise_2_heuristic_comparison() {
 
     // Create a simple graph
     let mut graph = SimpleGraph::new(vec![
-        (0, 0), (0, 1), (0, 2), (0, 3),
-        (1, 0), (1, 1), (1, 2), (1, 3),
-        (2, 0), (2, 1), (2, 2), (2, 3),
-        (3, 0), (3, 1), (3, 2), (3, 3),
+        (0, 0),
+        (0, 1),
+        (0, 2),
+        (0, 3),
+        (1, 0),
+        (1, 1),
+        (1, 2),
+        (1, 3),
+        (2, 0),
+        (2, 1),
+        (2, 2),
+        (2, 3),
+        (3, 0),
+        (3, 1),
+        (3, 2),
+        (3, 3),
     ]);
 
     // Add edges
     for row in 0..4 {
         for col in 0..4 {
             let node = row * 4 + col;
-            if col < 3 { graph.add_edge(node, node + 1, 1); }
-            if col > 0 { graph.add_edge(node, node - 1, 1); }
-            if row < 3 { graph.add_edge(node, node + 4, 1); }
-            if row > 0 { graph.add_edge(node, node - 4, 1); }
+            if col < 3 {
+                graph.add_edge(node, node + 1, 1);
+            }
+            if col > 0 {
+                graph.add_edge(node, node - 1, 1);
+            }
+            if row < 3 {
+                graph.add_edge(node, node + 4, 1);
+            }
+            if row > 0 {
+                graph.add_edge(node, node - 4, 1);
+            }
         }
     }
 
@@ -235,7 +274,7 @@ fn exercise_2_heuristic_comparison() {
     let goal = 15;
 
     println!("From (0,0) to (3,3):");
-    
+
     // Manhattan heuristic
     if let Some(path_m) = astar(&graph, start, goal, manhattan_distance) {
         println!("  Manhattan: {} steps", path_m.len() - 1);
@@ -256,7 +295,7 @@ fn exercise_3_heuristic_admissibility() {
 
     let start_pos = (0, 0);
     let goal_pos = (3, 3);
-    let actual_distance = 6;  // Manhattan distance in grid = 3 + 3
+    let actual_distance = 6; // Manhattan distance in grid = 3 + 3
 
     println!("From (0,0) to (3,3):");
     println!("Actual distance (Manhattan): {}\n", actual_distance);
@@ -265,10 +304,18 @@ fn exercise_3_heuristic_admissibility() {
     let h_euclidean = euclidean_distance(start_pos, goal_pos);
 
     println!("Heuristic estimates:");
-    println!("  Manhattan: {} (≤ {}? {})", 
-        h_manhattan, actual_distance, h_manhattan <= actual_distance);
-    println!("  Euclidean: {} (≤ {}? {})", 
-        h_euclidean, actual_distance, h_euclidean <= actual_distance);
+    println!(
+        "  Manhattan: {} (≤ {}? {})",
+        h_manhattan,
+        actual_distance,
+        h_manhattan <= actual_distance
+    );
+    println!(
+        "  Euclidean: {} (≤ {}? {})",
+        h_euclidean,
+        actual_distance,
+        h_euclidean <= actual_distance
+    );
 
     println!("\n✓ Exercise 3 complete: Both heuristics are admissible\n");
 }
@@ -302,18 +349,32 @@ mod tests {
     #[test]
     fn test_astar_finds_path() {
         let mut graph = SimpleGraph::new(vec![
-            (0, 0), (0, 1), (0, 2),
-            (1, 0), (1, 1), (1, 2),
-            (2, 0), (2, 1), (2, 2),
+            (0, 0),
+            (0, 1),
+            (0, 2),
+            (1, 0),
+            (1, 1),
+            (1, 2),
+            (2, 0),
+            (2, 1),
+            (2, 2),
         ]);
 
         for row in 0..3 {
             for col in 0..3 {
                 let node = row * 3 + col;
-                if col < 2 { graph.add_edge(node, node + 1, 1); }
-                if col > 0 { graph.add_edge(node, node - 1, 1); }
-                if row < 2 { graph.add_edge(node, node + 3, 1); }
-                if row > 0 { graph.add_edge(node, node - 3, 1); }
+                if col < 2 {
+                    graph.add_edge(node, node + 1, 1);
+                }
+                if col > 0 {
+                    graph.add_edge(node, node - 1, 1);
+                }
+                if row < 2 {
+                    graph.add_edge(node, node + 3, 1);
+                }
+                if row > 0 {
+                    graph.add_edge(node, node - 3, 1);
+                }
             }
         }
 

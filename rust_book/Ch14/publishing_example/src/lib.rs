@@ -187,4 +187,3 @@ mod tests {
         assert_eq!(calc.divide(0, 5), Some(0));
     }
 }
-

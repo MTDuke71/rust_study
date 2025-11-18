@@ -68,7 +68,7 @@ impl AuntSue {
 
 pub fn solve_part1(input: &str) -> Result<String> {
     let aunts = parse_input(input)?;
-    
+
     // MFCSAM analysis results
     let mut target = HashMap::new();
     target.insert("children".to_string(), 3);
@@ -81,20 +81,20 @@ pub fn solve_part1(input: &str) -> Result<String> {
     target.insert("trees".to_string(), 3);
     target.insert("cars".to_string(), 2);
     target.insert("perfumes".to_string(), 1);
-    
+
     // Find the Aunt Sue that matches
     for aunt in &aunts {
         if aunt.matches(&target) {
             return Ok(aunt.number.to_string());
         }
     }
-    
+
     Ok("0".to_string())
 }
 
 pub fn solve_part2(input: &str) -> Result<String> {
     let aunts = parse_input(input)?;
-    
+
     // MFCSAM analysis results (same as Part 1)
     let mut target = HashMap::new();
     target.insert("children".to_string(), 3);
@@ -107,45 +107,45 @@ pub fn solve_part2(input: &str) -> Result<String> {
     target.insert("trees".to_string(), 3);
     target.insert("cars".to_string(), 2);
     target.insert("perfumes".to_string(), 1);
-    
+
     // Find the Aunt Sue that matches with Part 2 rules
     for aunt in &aunts {
         if aunt.matches_part2(&target) {
             return Ok(aunt.number.to_string());
         }
     }
-    
+
     Ok("0".to_string())
 }
 
 fn parse_input(input: &str) -> Result<Vec<AuntSue>> {
     let mut aunts = Vec::new();
-    
+
     for line in input.lines() {
         if line.trim().is_empty() {
             continue;
         }
-        
+
         // Parse: "Sue 1: goldfish: 9, cars: 0, samoyeds: 9"
         // Split at first colon to separate Sue number from properties
         let parts: Vec<&str> = line.split(':').collect();
         if parts.len() < 2 {
             continue;
         }
-        
+
         // Extract Sue number from "Sue 1"
         let sue_part = parts[0].trim();
         let number = sue_part
             .strip_prefix("Sue ")
             .and_then(|s| s.parse::<usize>().ok())
             .unwrap_or(0);
-        
+
         let mut aunt = AuntSue::new(number);
-        
+
         // Parse properties: "goldfish: 9, cars: 0, samoyeds: 9"
         // Join remaining parts in case there are colons in values (shouldn't be, but safe)
         let properties_str = parts[1..].join(":");
-        
+
         // Split by comma to get individual property: value pairs
         for property_pair in properties_str.split(',') {
             let prop_parts: Vec<&str> = property_pair.split(':').collect();
@@ -156,10 +156,10 @@ fn parse_input(input: &str) -> Result<Vec<AuntSue>> {
                 }
             }
         }
-        
+
         aunts.push(aunt);
     }
-    
+
     Ok(aunts)
 }
 
@@ -169,7 +169,8 @@ mod tests {
 
     #[test]
     fn test_parse_input() {
-        let input = "Sue 1: goldfish: 9, cars: 0, samoyeds: 9\nSue 2: perfumes: 5, trees: 8, goldfish: 8";
+        let input =
+            "Sue 1: goldfish: 9, cars: 0, samoyeds: 9\nSue 2: perfumes: 5, trees: 8, goldfish: 8";
         let aunts = parse_input(input).unwrap();
         assert_eq!(aunts.len(), 2);
         assert_eq!(aunts[0].number, 1);
@@ -185,12 +186,12 @@ mod tests {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("cats".to_string(), 7);
         aunt.add_property("cars".to_string(), 2);
-        
+
         let mut target = HashMap::new();
         target.insert("cats".to_string(), 7);
         target.insert("cars".to_string(), 2);
         target.insert("perfumes".to_string(), 1);
-        
+
         assert!(aunt.matches(&target));
     }
 
@@ -199,11 +200,11 @@ mod tests {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("cats".to_string(), 5); // Wrong value
         aunt.add_property("cars".to_string(), 2);
-        
+
         let mut target = HashMap::new();
         target.insert("cats".to_string(), 7);
         target.insert("cars".to_string(), 2);
-        
+
         assert!(!aunt.matches(&target));
     }
 
@@ -213,12 +214,12 @@ mod tests {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("cats".to_string(), 7);
         aunt.add_property("cars".to_string(), 2);
-        
+
         let mut target = HashMap::new();
         target.insert("cats".to_string(), 7);
         target.insert("cars".to_string(), 2);
         target.insert("perfumes".to_string(), 1);
-        
+
         // Should match because known properties match
         assert!(aunt.matches(&target));
     }
@@ -228,11 +229,11 @@ mod tests {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("cats".to_string(), 8); // Greater than 7
         aunt.add_property("cars".to_string(), 2);
-        
+
         let mut target = HashMap::new();
         target.insert("cats".to_string(), 7);
         target.insert("cars".to_string(), 2);
-        
+
         // Should match in Part 2 (cats > 7)
         assert!(aunt.matches_part2(&target));
         // Should NOT match in Part 1 (cats != 7)
@@ -243,10 +244,10 @@ mod tests {
     fn test_part2_trees_greater_than() {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("trees".to_string(), 5); // Greater than 3
-        
+
         let mut target = HashMap::new();
         target.insert("trees".to_string(), 3);
-        
+
         assert!(aunt.matches_part2(&target));
     }
 
@@ -254,10 +255,10 @@ mod tests {
     fn test_part2_goldfish_fewer_than() {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("goldfish".to_string(), 3); // Fewer than 5
-        
+
         let mut target = HashMap::new();
         target.insert("goldfish".to_string(), 5);
-        
+
         assert!(aunt.matches_part2(&target));
     }
 
@@ -265,10 +266,10 @@ mod tests {
     fn test_part2_pomeranians_fewer_than() {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("pomeranians".to_string(), 2); // Fewer than 3
-        
+
         let mut target = HashMap::new();
         target.insert("pomeranians".to_string(), 3);
-        
+
         assert!(aunt.matches_part2(&target));
     }
 
@@ -277,13 +278,13 @@ mod tests {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("children".to_string(), 3); // Must be exact
         aunt.add_property("cars".to_string(), 2); // Must be exact
-        
+
         let mut target = HashMap::new();
         target.insert("children".to_string(), 3);
         target.insert("cars".to_string(), 2);
-        
+
         assert!(aunt.matches_part2(&target));
-        
+
         // Wrong value should fail
         aunt.add_property("children".to_string(), 4);
         assert!(!aunt.matches_part2(&target));
@@ -293,10 +294,10 @@ mod tests {
     fn test_part2_cats_equal_or_less_fails() {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("cats".to_string(), 7); // Equal to target
-        
+
         let mut target = HashMap::new();
         target.insert("cats".to_string(), 7);
-        
+
         // Should fail because cats must be > 7, not == 7
         assert!(!aunt.matches_part2(&target));
     }
@@ -305,10 +306,10 @@ mod tests {
     fn test_part2_goldfish_equal_or_more_fails() {
         let mut aunt = AuntSue::new(1);
         aunt.add_property("goldfish".to_string(), 5); // Equal to target
-        
+
         let mut target = HashMap::new();
         target.insert("goldfish".to_string(), 5);
-        
+
         // Should fail because goldfish must be < 5, not == 5
         assert!(!aunt.matches_part2(&target));
     }

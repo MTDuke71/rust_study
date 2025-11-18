@@ -9,15 +9,15 @@ fn main() {
 
     // Example 1: Sync types can be shared via references across threads
     println!("Example 1: Primitives are Sync");
-    
+
     let shared_number = &42;
-    
+
     // Can use scoped threads to share references
     thread::scope(|s| {
         s.spawn(|| {
             println!("Thread 1 sees: {}", shared_number);
         });
-        
+
         s.spawn(|| {
             println!("Thread 2 sees: {}", shared_number);
         });
@@ -25,7 +25,7 @@ fn main() {
 
     // Example 2: Arc allows safe shared ownership (Arc<T> is Sync if T is Send+Sync)
     println!("\nExample 2: Arc provides Sync wrapper");
-    
+
     let data = Arc::new(vec![1, 2, 3, 4, 5]);
     let mut handles = vec![];
 
@@ -43,7 +43,7 @@ fn main() {
 
     // Example 3: Mutex<T> is Sync (provides interior mutability safely)
     println!("\nExample 3: Mutex provides Sync with interior mutability");
-    
+
     let counter = Arc::new(Mutex::new(0));
     let mut handles = vec![];
 
@@ -78,20 +78,20 @@ fn main() {
 
     // Example 5: Demonstrating Send vs Sync
     println!("\nExample 5: Send vs Sync distinction");
-    
+
     // Box<T> is Send but not necessarily Sync
     // Arc<T> is both Send and Sync (if T is Send+Sync)
-    
+
     struct Data {
         value: i32,
     }
 
     let arc_data = Arc::new(Data { value: 42 });
-    
+
     thread::scope(|s| {
         // Can share Arc references across threads (Sync)
         let data_ref = &arc_data;
-        
+
         s.spawn(move || {
             println!("Thread accessing via reference: {}", data_ref.value);
         });
@@ -101,7 +101,9 @@ fn main() {
     let arc_clone = Arc::clone(&arc_data);
     thread::spawn(move || {
         println!("Thread received ownership: {}", arc_clone.value);
-    }).join().unwrap();
+    })
+    .join()
+    .unwrap();
 
     println!("\nKey insight:");
     println!("- Send: Type can be TRANSFERRED between threads (move)");

@@ -210,13 +210,22 @@ fn applications_preview() {
     network.union(1, 2);
     network.union(3, 4);
 
-    println!("\n  Can computer 0 reach computer 2? {}", network.connected(0, 2));
-    println!("  Can computer 0 reach computer 3? {}", network.connected(0, 3));
+    println!(
+        "\n  Can computer 0 reach computer 2? {}",
+        network.connected(0, 2)
+    );
+    println!(
+        "  Can computer 0 reach computer 3? {}",
+        network.connected(0, 3)
+    );
     println!("  Number of separate networks: {}", network.count());
 
     println!("\n  Adding connection: 2-3");
     network.union(2, 3);
-    println!("  Can computer 0 reach computer 3? {}", network.connected(0, 3));
+    println!(
+        "  Can computer 0 reach computer 3? {}",
+        network.connected(0, 3)
+    );
     println!("  Number of separate networks: {}", network.count());
 }
 
@@ -248,7 +257,10 @@ fn performance_analysis() {
 
     uf.visualize();
     println!("\n  To find the root of element 0:");
-    println!("    0 → {} → {} → {} → ... → 9", uf.parent[0], uf.parent[uf.parent[0]], uf.parent[uf.parent[uf.parent[0]]]);
+    println!(
+        "    0 → {} → {} → {} → ... → 9",
+        uf.parent[0], uf.parent[uf.parent[0]], uf.parent[uf.parent[uf.parent[0]]]
+    );
     println!("    Requires 9 steps (O(n) where n=10)");
     println!();
     println!("  Solutions (coming in next steps):");

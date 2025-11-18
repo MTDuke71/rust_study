@@ -1,5 +1,5 @@
 //! Requirement-based tests for Mission 9 Day 2
-//! 
+//!
 //! These tests validate specific requirements from the TODO.md file:
 //! - REQ-1: Implement DijkstraPathfinder struct with Pathfinder trait
 //! - Core algorithm logic with priority queue integration
@@ -9,16 +9,14 @@
 
 #[cfg(test)]
 mod day2_requirements {
-    use mission9::{
-        DijkstraPathfinder, Pathfinder, PathfindingError, SimpleWeightedGraph,
-    };
     use mission9::pathfinder::PathfindingConfig;
+    use mission9::{DijkstraPathfinder, Pathfinder, PathfindingError, SimpleWeightedGraph};
 
     /// Test REQ-1: DijkstraPathfinder struct implements Pathfinder trait
     #[test]
     fn test_req1_dijkstra_pathfinder_trait() {
         let pathfinder = DijkstraPathfinder::new();
-        
+
         // Verify trait implementation
         assert_eq!(pathfinder.algorithm_name(), "Dijkstra's Algorithm");
         assert!(!pathfinder.supports_negative_weights());
@@ -30,7 +28,7 @@ mod day2_requirements {
     #[test]
     fn test_req1_core_algorithm_with_priority_queue() {
         let mut graph = SimpleWeightedGraph::new();
-        
+
         // Create test graph with multiple paths to verify priority queue ordering
         // Path 1: 0 -> 1 -> 3 (cost: 2 + 3 = 5)
         // Path 2: 0 -> 2 -> 3 (cost: 6 + 1 = 7)
@@ -53,7 +51,7 @@ mod day2_requirements {
     #[test]
     fn test_req1_path_reconstruction() {
         let mut graph = SimpleWeightedGraph::new();
-        
+
         // Linear path: 0 -> 1 -> 2 -> 3 -> 4
         graph.add_edge(0, 1, 1.0);
         graph.add_edge(1, 2, 1.0);
@@ -66,7 +64,7 @@ mod day2_requirements {
         // Verify complete path reconstruction
         assert_eq!(result.path, vec![0, 1, 2, 3, 4]);
         assert_eq!(result.cost, 4.0);
-        
+
         // Test partial path reconstruction
         let result = pathfinder.find_path(&graph, 1, 3).unwrap();
         assert_eq!(result.path, vec![1, 2, 3]);
@@ -79,16 +77,22 @@ mod day2_requirements {
         let mut graph = SimpleWeightedGraph::new();
         graph.add_edge(0, 1, 1.0);
         graph.add_node(2); // Isolated node
-        
+
         let pathfinder = DijkstraPathfinder::new();
 
         // Test invalid start node
         let result = pathfinder.find_path(&graph, 99, 1);
-        assert!(matches!(result, Err(PathfindingError::InvalidStartNode { .. })));
+        assert!(matches!(
+            result,
+            Err(PathfindingError::InvalidStartNode { .. })
+        ));
 
         // Test invalid goal node
         let result = pathfinder.find_path(&graph, 0, 99);
-        assert!(matches!(result, Err(PathfindingError::InvalidGoalNode { .. })));
+        assert!(matches!(
+            result,
+            Err(PathfindingError::InvalidGoalNode { .. })
+        ));
 
         // Test no path exists
         let result = pathfinder.find_path(&graph, 0, 2);
@@ -105,7 +109,7 @@ mod day2_requirements {
     #[test]
     fn test_req1_performance_metrics_collection() {
         let mut graph = SimpleWeightedGraph::new();
-        
+
         // Create larger graph to test metrics collection
         for i in 0..10 {
             if i < 9 {
@@ -126,7 +130,7 @@ mod day2_requirements {
         println!("Search completed in {} μs", result.search_time_us);
         assert_eq!(result.path.first(), Some(&0));
         assert_eq!(result.path.last(), Some(&9));
-        
+
         // For this graph, should explore multiple nodes but find optimal path
         assert!(result.nodes_explored >= result.path.len());
     }
@@ -135,17 +139,17 @@ mod day2_requirements {
     #[test]
     fn test_req1_algorithm_correctness_complex_graph() {
         let mut graph = SimpleWeightedGraph::new();
-        
+
         // Complex graph with multiple competing paths
         // Shortest path should be 0 -> 3 -> 5 -> 6 (cost: 1 + 1 + 1 = 3)
-        graph.add_edge(0, 1, 5.0);  // Expensive direct path
-        graph.add_edge(0, 2, 3.0);  // Medium path
-        graph.add_edge(0, 3, 1.0);  // Cheap start
-        graph.add_edge(1, 6, 1.0);  // Expensive -> goal
-        graph.add_edge(2, 4, 1.0);  // Medium path continuation
-        graph.add_edge(3, 5, 1.0);  // Cheap path continuation
-        graph.add_edge(4, 6, 2.0);  // Medium -> goal
-        graph.add_edge(5, 6, 1.0);  // Cheap -> goal
+        graph.add_edge(0, 1, 5.0); // Expensive direct path
+        graph.add_edge(0, 2, 3.0); // Medium path
+        graph.add_edge(0, 3, 1.0); // Cheap start
+        graph.add_edge(1, 6, 1.0); // Expensive -> goal
+        graph.add_edge(2, 4, 1.0); // Medium path continuation
+        graph.add_edge(3, 5, 1.0); // Cheap path continuation
+        graph.add_edge(4, 6, 2.0); // Medium -> goal
+        graph.add_edge(5, 6, 1.0); // Cheap -> goal
 
         let pathfinder = DijkstraPathfinder::new();
         let result = pathfinder.find_path(&graph, 0, 6).unwrap();
@@ -163,28 +167,27 @@ mod day2_requirements {
 
         // Test with custom configuration
         let config = PathfindingConfig::new()
-            .with_timeout(10)  // 10 seconds should be plenty
+            .with_timeout(10) // 10 seconds should be plenty
             .with_max_iterations(100);
-        
+
         let pathfinder = DijkstraPathfinder::with_config(config);
         let result = pathfinder.find_path(&graph, 0, 1);
-        
+
         // Should succeed with reasonable limits
         assert!(result.is_ok());
 
         // Test with very restrictive limits
-        let restrictive_config = PathfindingConfig::new()
-            .with_max_iterations(1);
-        
+        let restrictive_config = PathfindingConfig::new().with_max_iterations(1);
+
         let restrictive_pathfinder = DijkstraPathfinder::with_config(restrictive_config);
-        
+
         // Create graph that requires more than 1 iteration
         let mut complex_graph = SimpleWeightedGraph::new();
         complex_graph.add_edge(0, 1, 1.0);
         complex_graph.add_edge(1, 2, 1.0);
-        
+
         let result = restrictive_pathfinder.find_path(&complex_graph, 0, 2);
-        
+
         // Should hit iteration limit for non-trivial paths
         assert!(matches!(result, Err(PathfindingError::QueueError { .. })));
     }
@@ -209,7 +212,7 @@ mod day2_requirements {
     #[test]
     fn test_req1_large_graph_performance() {
         let mut graph = SimpleWeightedGraph::new();
-        
+
         // Create moderately large graph (chain with branches)
         let size = 100;
         for i in 0..size {
@@ -224,14 +227,14 @@ mod day2_requirements {
 
         let pathfinder = DijkstraPathfinder::new();
         let start_time = std::time::Instant::now();
-        
+
         let result = pathfinder.find_path(&graph, 0, size - 1).unwrap();
-        
+
         let elapsed = start_time.elapsed();
-        
+
         // Should complete in reasonable time
         assert!(elapsed.as_millis() < 100); // Should be under 100ms
-        
+
         // Should find optimal path (might use shortcuts if available)
         // The cost depends on whether shortcuts are taken
         assert!(result.cost >= 50.0); // At least half the linear path cost
@@ -250,16 +253,16 @@ mod day2_requirements {
 
         let pathfinder = DijkstraPathfinder::new();
         let result = pathfinder.find_path(&simple_graph, 0, 2).unwrap();
-        
+
         assert_eq!(result.path, vec![0, 1, 2]);
         assert_eq!(result.cost, 5.0);
 
         // Test with graph created from edges
         let edges = vec![(0, 1, 1.0), (1, 2, 1.0), (0, 2, 5.0)];
         let from_edges_graph = SimpleWeightedGraph::from_edges(&edges);
-        
+
         let result2 = pathfinder.find_path(&from_edges_graph, 0, 2).unwrap();
-        
+
         // Should find optimal path 0->1->2 (cost 2) instead of direct 0->2 (cost 5)
         assert_eq!(result2.path, vec![0, 1, 2]);
         assert_eq!(result2.cost, 2.0);

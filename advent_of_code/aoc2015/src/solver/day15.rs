@@ -28,7 +28,14 @@ pub struct Ingredient {
 }
 
 impl Ingredient {
-    pub fn new(name: String, capacity: i64, durability: i64, flavor: i64, texture: i64, calories: i64) -> Self {
+    pub fn new(
+        name: String,
+        capacity: i64,
+        durability: i64,
+        flavor: i64,
+        texture: i64,
+        calories: i64,
+    ) -> Self {
         Self {
             name,
             capacity,
@@ -76,7 +83,7 @@ fn calculate_calories(ingredients: &[Ingredient], amounts: &[i64]) -> i64 {
 /// calorie_target: if Some(n), only consider recipes with exactly n calories
 fn find_best_score(ingredients: &[Ingredient], calorie_target: Option<i64>) -> i64 {
     let num_ingredients = ingredients.len();
-    
+
     // Handle different numbers of ingredients dynamically
     match num_ingredients {
         2 => find_best_score_2_ingredients(ingredients, calorie_target),
@@ -158,38 +165,55 @@ fn find_best_score_2_ingredients(ingredients: &[Ingredient], calorie_target: Opt
 
 fn parse_input(_input: &str) -> Result<Vec<Ingredient>> {
     let mut ingredients = Vec::new();
-    
+
     for line in _input.lines() {
         // Add 'let' binding for line_split
         let mut line_split = line.split_whitespace();
-        
+
         let name = line_split.next().unwrap().trim_end_matches(':').to_string();
-        
+
         // Skip "capacity" label, then get the value
         line_split.next(); // skip "capacity"
-        let capacity = line_split.next().unwrap().trim_end_matches(',').parse::<i64>()?;
-        
+        let capacity = line_split
+            .next()
+            .unwrap()
+            .trim_end_matches(',')
+            .parse::<i64>()?;
+
         // Skip "durability" label, then get the value
         line_split.next(); // skip "durability"
-        let durability = line_split.next().unwrap().trim_end_matches(',').parse::<i64>()?;
-        
+        let durability = line_split
+            .next()
+            .unwrap()
+            .trim_end_matches(',')
+            .parse::<i64>()?;
+
         // Skip "flavor" label, then get the value
         line_split.next(); // skip "flavor"
-        let flavor = line_split.next().unwrap().trim_end_matches(',').parse::<i64>()?;
-        
+        let flavor = line_split
+            .next()
+            .unwrap()
+            .trim_end_matches(',')
+            .parse::<i64>()?;
+
         // Skip "texture" label, then get the value
         line_split.next(); // skip "texture"
-        let texture = line_split.next().unwrap().trim_end_matches(',').parse::<i64>()?;
-        
+        let texture = line_split
+            .next()
+            .unwrap()
+            .trim_end_matches(',')
+            .parse::<i64>()?;
+
         // Skip "calories" label, then get the value
         line_split.next(); // skip "calories"
         let calories = line_split.next().unwrap().parse::<i64>()?;
-        
-        ingredients.push(Ingredient::new(name, capacity, durability, flavor, texture, calories));
+
+        ingredients.push(Ingredient::new(
+            name, capacity, durability, flavor, texture, calories,
+        ));
     }
     Ok(ingredients)
 }
-
 
 #[cfg(test)]
 mod tests {

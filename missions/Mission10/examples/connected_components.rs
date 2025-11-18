@@ -10,14 +10,7 @@ fn main() -> Result<(), String> {
     println!("Graph with {} nodes\n", num_nodes);
 
     // Add edges to form components
-    let edges = vec![
-        (0, 1),
-        (1, 2),
-        (2, 3),
-        (5, 6),
-        (6, 7),
-        (8, 9),
-    ];
+    let edges = vec![(0, 1), (1, 2), (2, 3), (5, 6), (6, 7), (8, 9)];
 
     println!("Adding edges:");
     for (x, y) in &edges {

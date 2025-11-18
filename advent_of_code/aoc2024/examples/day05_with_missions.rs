@@ -67,14 +67,14 @@ impl<T> ConceptualGraph<T> {
             adjacency: Vec::new(),
         }
     }
-    
+
     fn add_node(&mut self, data: T) -> NodeId {
         let node_id = self.nodes.len();
         self.nodes.push(Some(data));
         self.adjacency.push(Vec::new());
         node_id
     }
-    
+
     fn add_edge(&mut self, from: NodeId, to: NodeId) -> bool {
         if from < self.adjacency.len() && to < self.nodes.len() {
             self.adjacency[from].push(to);
@@ -83,15 +83,18 @@ impl<T> ConceptualGraph<T> {
             false
         }
     }
-    
+
     fn neighbors(&self, node: NodeId) -> &[NodeId] {
-        self.adjacency.get(node).map(|v| v.as_slice()).unwrap_or(&[])
+        self.adjacency
+            .get(node)
+            .map(|v| v.as_slice())
+            .unwrap_or(&[])
     }
-    
+
     fn node_count(&self) -> usize {
         self.nodes.len()
     }
-    
+
     fn edge_count(&self) -> usize {
         self.adjacency.iter().map(|adj| adj.len()).sum()
     }
@@ -147,10 +150,10 @@ impl Day5WithMissions {
             if parts.len() != 2 {
                 continue;
             }
-            
+
             let before: i32 = parts[0].parse().context("Invalid page number")?;
             let after: i32 = parts[1].parse().context("Invalid page number")?;
-            
+
             all_pages.insert(before);
             all_pages.insert(after);
         }
@@ -168,13 +171,13 @@ impl Day5WithMissions {
             if parts.len() != 2 {
                 continue;
             }
-            
+
             let before: i32 = parts[0].parse().context("Invalid page number")?;
             let after: i32 = parts[1].parse().context("Invalid page number")?;
-            
+
             let before_node = page_to_node[&before];
             let after_node = page_to_node[&after];
-            
+
             // Add edge: before_page → after_page
             graph.add_edge(before_node, after_node);
         }
@@ -182,11 +185,8 @@ impl Day5WithMissions {
         // Parse update sequences
         let mut updates = Vec::new();
         for line in sections[1].lines() {
-            let pages: Result<Vec<i32>, _> = line
-                .split(',')
-                .map(|s| s.parse::<i32>())
-                .collect();
-            
+            let pages: Result<Vec<i32>, _> = line.split(',').map(|s| s.parse::<i32>()).collect();
+
             updates.push(pages.context("Invalid update format")?);
         }
 
@@ -250,9 +250,9 @@ impl Day5WithMissions {
             if let Some(&page_node) = self.page_to_node.get(&page) {
                 // Mission 7: Get all pages that must come after this page
                 let dependencies = self.graph.neighbors(page_node);
-                
+
                 let current_pos = positions[&page];
-                
+
                 for &dep_node in dependencies {
                     if let Some(&dep_page) = self.node_to_page.get(&dep_node) {
                         if let Some(&dep_pos) = positions.get(&dep_page) {
@@ -282,23 +282,23 @@ impl Day5WithMissions {
     /// - Clear separation of graph representation vs algorithms
     fn topological_sort_mission_style(&self, update: &[i32]) -> Vec<i32> {
         let update_set: HashSet<i32> = update.iter().copied().collect();
-        
+
         // Build subgraph containing only pages from this update
         // Using HashMap for algorithm implementation (could extend Mission 8)
         let mut subgraph: HashMap<i32, Vec<i32>> = HashMap::new();
         let mut in_degree: HashMap<i32, i32> = HashMap::new();
-        
+
         // Initialize
         for &page in update {
             subgraph.insert(page, Vec::new());
             in_degree.insert(page, 0);
         }
-        
+
         // Add relevant edges from the Mission 7 graph
         for &page in update {
             if let Some(&page_node) = self.page_to_node.get(&page) {
                 let dependencies = self.graph.neighbors(page_node);
-                
+
                 for &dep_node in dependencies {
                     if let Some(&dep_page) = self.node_to_page.get(&dep_node) {
                         if update_set.contains(&dep_page) {
@@ -309,21 +309,21 @@ impl Day5WithMissions {
                 }
             }
         }
-        
+
         // Kahn's algorithm for topological sorting
         let mut queue = VecDeque::new();
         let mut result = Vec::new();
-        
+
         // Start with nodes that have no incoming edges
         for (&page, &degree) in &in_degree {
             if degree == 0 {
                 queue.push_back(page);
             }
         }
-        
+
         while let Some(current) = queue.pop_front() {
             result.push(current);
-            
+
             // Mission-style: Process dependencies systematically
             if let Some(neighbors) = subgraph.get(&current) {
                 for &neighbor in neighbors {
@@ -336,7 +336,7 @@ impl Day5WithMissions {
                 }
             }
         }
-        
+
         result
     }
 
@@ -379,7 +379,7 @@ impl Day5WithMissions {
         } else {
             0.0
         };
-        
+
         (nodes, edges, density)
     }
 }
@@ -388,7 +388,7 @@ impl Day5WithMissions {
 pub fn solve_part1_with_missions(input: &str) -> Result<String> {
     let solver = Day5WithMissions::parse(input)
         .context("Failed to parse Day 5 input with Mission integration")?;
-    
+
     let (part1, _) = solver.solve();
     Ok(part1.to_string())
 }
@@ -397,7 +397,7 @@ pub fn solve_part1_with_missions(input: &str) -> Result<String> {
 pub fn solve_part2_with_missions(input: &str) -> Result<String> {
     let solver = Day5WithMissions::parse(input)
         .context("Failed to parse Day 5 input with Mission integration")?;
-    
+
     let (_, part2) = solver.solve();
     Ok(part2.to_string())
 }
@@ -406,7 +406,7 @@ pub fn solve_part2_with_missions(input: &str) -> Result<String> {
 pub fn solve_with_missions(input: &str) -> Result<(i32, i32)> {
     let solver = Day5WithMissions::parse(input)
         .context("Failed to parse Day 5 input with Mission integration")?;
-    
+
     Ok(solver.solve())
 }
 
@@ -446,12 +446,12 @@ mod tests {
     #[test]
     fn test_mission_integration_parsing() {
         let solver = Day5WithMissions::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // Verify Mission 7 graph construction
         assert!(solver.graph.node_count() > 0);
         assert!(solver.graph.edge_count() > 0);
         assert_eq!(solver.updates.len(), 6);
-        
+
         // Verify page-to-node mappings are bidirectional
         for (&page, &node) in &solver.page_to_node {
             assert_eq!(solver.node_to_page[&node], page);
@@ -461,28 +461,29 @@ mod tests {
     #[test]
     fn test_mission_style_validation() {
         let solver = Day5WithMissions::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // Test Mission-based validation matches expected results
         assert!(solver.is_correctly_ordered_mission_style(&solver.updates[0])); // 75,47,61,53,29
         assert!(solver.is_correctly_ordered_mission_style(&solver.updates[1])); // 97,61,53,29,13
         assert!(solver.is_correctly_ordered_mission_style(&solver.updates[2])); // 75,29,13
-        
+
         assert!(!solver.is_correctly_ordered_mission_style(&solver.updates[3])); // 75,97,47,61,53
         assert!(!solver.is_correctly_ordered_mission_style(&solver.updates[4])); // 61,13,29
-        assert!(!solver.is_correctly_ordered_mission_style(&solver.updates[5])); // 97,13,75,29,47
+        assert!(!solver.is_correctly_ordered_mission_style(&solver.updates[5]));
+        // 97,13,75,29,47
     }
 
     #[test]
     fn test_mission_style_topological_sort() {
         let solver = Day5WithMissions::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // Test that Mission-based topological sort fixes incorrect sequences
         let fixed1 = solver.topological_sort_mission_style(&solver.updates[3]);
         assert!(solver.is_correctly_ordered_mission_style(&fixed1));
-        
+
         let fixed2 = solver.topological_sort_mission_style(&solver.updates[4]);
         assert!(solver.is_correctly_ordered_mission_style(&fixed2));
-        
+
         let fixed3 = solver.topological_sort_mission_style(&solver.updates[5]);
         assert!(solver.is_correctly_ordered_mission_style(&fixed3));
     }
@@ -497,17 +498,17 @@ mod tests {
     #[test]
     fn test_architectural_benefits() {
         let solver = Day5WithMissions::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // Demonstrate Mission 7 graph capabilities
         assert!(solver.graph.node_count() > 0);
         assert!(solver.graph.edge_count() > 0);
-        
+
         // Demonstrate extensibility with analysis functions
         let (nodes, edges, density) = solver.get_dependency_stats();
         assert!(nodes > 0);
         assert!(edges > 0);
         assert!(density >= 0.0 && density <= 1.0);
-        
+
         // Demonstrate Mission 8 integration potential
         assert!(solver.validate_rules_are_acyclic());
     }
@@ -517,7 +518,7 @@ mod tests {
         // Verify Mission-based implementation produces identical results
         let manual_result = day05::solve(EXAMPLE_INPUT).unwrap();
         let mission_result = solve_with_missions(EXAMPLE_INPUT).unwrap();
-        
+
         assert_eq!(manual_result.0, mission_result.0);
         assert_eq!(manual_result.1, mission_result.1);
     }
@@ -525,12 +526,12 @@ mod tests {
     #[test]
     fn test_performance_characteristics() {
         let solver = Day5WithMissions::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // Mission integration should maintain good performance
         let start = std::time::Instant::now();
         let _ = solver.solve();
         let duration = start.elapsed();
-        
+
         assert!(duration.as_millis() < 100); // Should be very fast
     }
 
@@ -546,54 +547,63 @@ mod tests {
 fn main() -> Result<()> {
     println!("🚀 Day 5: Print Queue - Mission 7 + Mission 8 Integration Demo");
     println!("==============================================================");
-    
+
     let example_input = include_str!("../inputs/day05_example.txt");
-    
+
     println!("\n📖 Problem Analysis:");
     println!("- Part 1: Validate page ordering sequences against dependency rules");
     println!("- Part 2: Fix incorrect sequences using topological sorting");
     println!("- Mission Integration: Graph theory + dependency resolution");
-    
+
     println!("\n🏗️ Mission Architecture Benefits:");
     println!("- Mission 7: Graph<T> for dependency relationships");
     println!("- Mission 8: BFS/DFS + topological sorting algorithms");
     println!("- Code Reuse: ~40% reduction in implementation complexity");
     println!("- Safety: Automatic bounds checking and cycle detection");
-    
+
     println!("\n⚡ Running Mission-Based Solution...");
-    
+
     let solver = Day5WithMissions::parse(example_input)
         .context("Failed to parse input with Mission integration")?;
-    
+
     let (nodes, edges, density) = solver.get_dependency_stats();
     println!("📊 Graph Analysis:");
     println!("   • Nodes (pages): {}", nodes);
     println!("   • Edges (rules): {}", edges);
     println!("   • Density: {:.3}", density);
-    
+
     let (part1, part2) = solver.solve();
-    
+
     println!("\n🎯 Results:");
     println!("   • Part 1 (correctly ordered sum): {}", part1);
     println!("   • Part 2 (fixed sequences sum): {}", part2);
-    
+
     println!("\n✅ Mission Integration Validation:");
-    println!("   • Graph construction: ✅ {} nodes, {} edges", nodes, edges);
+    println!(
+        "   • Graph construction: ✅ {} nodes, {} edges",
+        nodes, edges
+    );
     println!("   • Cycle detection: ✅ Rules are acyclic");
-    println!("   • Topological sorting: ✅ Fixed {} incorrect sequences", 
-             solver.updates.iter().filter(|u| !solver.is_correctly_ordered_mission_style(u)).count());
-    
+    println!(
+        "   • Topological sorting: ✅ Fixed {} incorrect sequences",
+        solver
+            .updates
+            .iter()
+            .filter(|u| !solver.is_correctly_ordered_mission_style(u))
+            .count()
+    );
+
     println!("\n🔄 V-Cycle Demonstration:");
     println!("   • Requirements: ✅ Parse rules, validate sequences, fix ordering");
     println!("   • Design: ✅ Mission 7 graph + Mission 8 algorithms");
     println!("   • Implementation: ✅ Foundational library integration");
     println!("   • Verification: ✅ Identical results to manual implementation");
     println!("   • Validation: ✅ Real-world AoC problem solved efficiently");
-    
+
     println!("\n🎉 Mission Integration Success!");
     println!("This demonstrates how foundational libraries (Missions) dramatically");
     println!("simplify competitive programming solutions while improving safety,");
     println!("maintainability, and code reuse.");
-    
+
     Ok(())
 }

@@ -31,10 +31,8 @@ impl Day5WithRealMissions {
         let mut updates = Vec::new();
         for line in sections[1].lines() {
             if !line.trim().is_empty() {
-                let pages: Result<Vec<i32>, _> = line
-                    .split(',')
-                    .map(|s| s.trim().parse())
-                    .collect();
+                let pages: Result<Vec<i32>, _> =
+                    line.split(',').map(|s| s.trim().parse()).collect();
                 updates.push(pages.context("Invalid page in update")?);
             }
         }
@@ -61,8 +59,9 @@ impl Day5WithRealMissions {
         }
 
         for (before, after) in &rules {
-            if let (Some(&before_node), Some(&after_node)) = 
-                (page_to_node.get(before), page_to_node.get(after)) {
+            if let (Some(&before_node), Some(&after_node)) =
+                (page_to_node.get(before), page_to_node.get(after))
+            {
                 graph.add_edge(before_node, after_node);
             }
         }
@@ -81,9 +80,11 @@ impl Day5WithRealMissions {
             for j in (i + 1)..update.len() {
                 let before = update[i];
                 let after = update[j];
-                
-                if let (Some(&after_node), Some(&before_node)) = 
-                    (self.page_to_node.get(&after), self.page_to_node.get(&before)) {
+
+                if let (Some(&after_node), Some(&before_node)) = (
+                    self.page_to_node.get(&after),
+                    self.page_to_node.get(&before),
+                ) {
                     if self.graph.has_edge(after_node, before_node) {
                         return false;
                     }
@@ -95,15 +96,15 @@ impl Day5WithRealMissions {
 
     pub fn fix_sequence(&self, update: &[i32]) -> Result<Vec<i32>> {
         let pages_set: HashSet<i32> = update.iter().copied().collect();
-        
+
         let mut adj_list: HashMap<NodeId, Vec<NodeId>> = HashMap::new();
-        
+
         for &page in update {
             if let Some(&node_id) = self.page_to_node.get(&page) {
                 adj_list.insert(node_id, Vec::new());
             }
         }
-        
+
         for &page in update {
             if let Some(&node_id) = self.page_to_node.get(&page) {
                 let mut neighbors = Vec::new();
@@ -120,10 +121,16 @@ impl Day5WithRealMissions {
 
         let has_cycles = m8::has_cycle(&adj_list);
         if has_cycles {
-            println!("🔄 CYCLE DETECTED in sequence {:?} - using bubble sort fallback", update);
+            println!(
+                "🔄 CYCLE DETECTED in sequence {:?} - using bubble sort fallback",
+                update
+            );
             return self.fix_sequence_with_rules(update);
         } else {
-            println!("✅ NO CYCLES in sequence {:?} - using optimal Kahn's algorithm", update);
+            println!(
+                "✅ NO CYCLES in sequence {:?} - using optimal Kahn's algorithm",
+                update
+            );
         }
 
         let mut in_degree: HashMap<NodeId, usize> = HashMap::new();
@@ -133,7 +140,7 @@ impl Day5WithRealMissions {
         for &node_id in adj_list.keys() {
             in_degree.insert(node_id, 0);
         }
-        
+
         for neighbors in adj_list.values() {
             for &neighbor in neighbors {
                 *in_degree.entry(neighbor).or_insert(0) += 1;
@@ -168,40 +175,40 @@ impl Day5WithRealMissions {
 
     fn fix_sequence_with_rules(&self, update: &[i32]) -> Result<Vec<i32>> {
         let mut result = update.to_vec();
-        
+
         let mut changed = true;
-         while changed {
+        while changed {
             changed = false;
             for i in 0..result.len().saturating_sub(1) {
                 let current = result[i];
                 let next = result[i + 1];
-                
+
                 if self.rules.contains(&(next, current)) {
                     result.swap(i, i + 1);
                     changed = true;
                 }
             }
         }
-        
+
         Ok(result)
     }
 
     pub fn part1(&self) -> i32 {
         let mut sum = 0;
-        
+
         for update in &self.updates {
             if self.is_correctly_ordered(update) {
                 let middle_idx = update.len() / 2;
                 sum += update[middle_idx];
             }
         }
-        
+
         sum
     }
 
     pub fn part2(&self) -> Result<i32> {
         let mut sum = 0;
-        
+
         for update in &self.updates {
             if !self.is_correctly_ordered(update) {
                 let fixed = self.fix_sequence(update)?;
@@ -209,7 +216,7 @@ impl Day5WithRealMissions {
                 sum += fixed[middle_idx];
             }
         }
-        
+
         Ok(sum)
     }
 
@@ -226,7 +233,7 @@ impl Day5WithRealMissions {
 
     pub fn validate_rules(&self) -> Result<()> {
         let mut adj_list: HashMap<NodeId, Vec<NodeId>> = HashMap::new();
-        
+
         for node_id in self.graph.nodes() {
             let neighbors: Vec<NodeId> = self.graph.neighbors(node_id).to_vec();
             adj_list.insert(node_id, neighbors);
@@ -242,10 +249,10 @@ impl Day5WithRealMissions {
 
 pub fn solve_with_real_missions(input: &str) -> Result<(i32, i32)> {
     let solver = Day5WithRealMissions::parse(input)?;
-    
+
     let part1 = solver.part1();
     let part2 = solver.part2()?;
-    
+
     Ok((part1, part2))
 }
 
@@ -253,7 +260,7 @@ fn main() -> Result<()> {
     println!("🚀 Day 5: Print Queue - REAL Mission 7 + Mission 8 Integration");
     println!("================================================================");
     println!();
-    
+
     let input = std::fs::read_to_string("inputs/day05_example.txt")
         .context("Failed to read inputs/day05_example.txt")?;
 
@@ -265,13 +272,13 @@ fn main() -> Result<()> {
 
     println!("🏗️ REAL Mission Architecture:");
     println!("- Mission 7: Graph<T> for dependency relationships (ACTUAL IMPLEMENTATION)");
-    println!("- Mission 8: BFS/DFS + cycle detection algorithms (ACTUAL IMPLEMENTATION)");  
+    println!("- Mission 8: BFS/DFS + cycle detection algorithms (ACTUAL IMPLEMENTATION)");
     println!("- Code Reuse: ~40% reduction through foundational library integration");
     println!("- Safety: Mission 7/8 automatic bounds checking and validation");
     println!();
 
     let solver = Day5WithRealMissions::parse(&input)?;
-    
+
     println!("⚡ Running REAL Mission-Based Solution...");
     let (nodes, edges, density) = solver.get_graph_stats();
     println!("📊 Graph Analysis (Mission 7):");
@@ -291,14 +298,17 @@ fn main() -> Result<()> {
     println!();
 
     let (part1, part2) = solve_with_real_missions(&input)?;
-    
+
     println!("🎯 Results:");
     println!("   • Part 1 (correctly ordered sum): {}", part1);
     println!("   • Part 2 (fixed sequences sum): {}", part2);
     println!();
 
     println!("✅ REAL Mission Integration Validation:");
-    println!("   • Graph construction: ✅ {} nodes, {} edges (Mission 7)", nodes, edges);
+    println!(
+        "   • Graph construction: ✅ {} nodes, {} edges (Mission 7)",
+        nodes, edges
+    );
     println!("   • Cycle detection: ✅ Rules are consistent (Mission 8)");
     println!("   • Topological sorting: ✅ Sequences fixed using graph theory");
     println!();
@@ -356,7 +366,7 @@ mod tests {
     fn test_real_missions_parsing() {
         let solver = Day5WithRealMissions::parse(SAMPLE_INPUT).unwrap();
         let (nodes, edges, _) = solver.get_graph_stats();
-        
+
         assert!(nodes > 0, "Should have parsed nodes using Mission 7");
         assert!(edges > 0, "Should have parsed edges using Mission 7");
     }
@@ -364,14 +374,14 @@ mod tests {
     #[test]
     fn test_real_missions_validation() {
         let solver = Day5WithRealMissions::parse(SAMPLE_INPUT).unwrap();
-        
+
         assert!(solver.validate_rules().is_ok());
     }
 
     #[test]
     fn test_real_missions_solving() {
         let (part1, part2) = solve_with_real_missions(SAMPLE_INPUT).unwrap();
-        
+
         assert_eq!(part1, 143);
         assert_eq!(part2, 123);
     }
@@ -379,10 +389,10 @@ mod tests {
     #[test]
     fn test_correctly_ordered_with_real_missions() {
         let solver = Day5WithRealMissions::parse(SAMPLE_INPUT).unwrap();
-        
+
         let update = vec![75, 47, 61, 53, 29];
         assert!(solver.is_correctly_ordered(&update));
-        
+
         let update = vec![75, 97, 47, 61, 53];
         assert!(!solver.is_correctly_ordered(&update));
     }
@@ -390,13 +400,13 @@ mod tests {
     #[test]
     fn test_fix_sequence_with_real_missions() {
         let solver = Day5WithRealMissions::parse(SAMPLE_INPUT).unwrap();
-        
+
         let update = vec![75, 97, 47, 61, 53];
         let fixed = solver.fix_sequence(&update).unwrap();
-        
+
         assert!(solver.is_correctly_ordered(&fixed));
         assert_eq!(fixed.len(), update.len());
-        
+
         let mut original_sorted = update.clone();
         original_sorted.sort();
         let mut fixed_sorted = fixed.clone();

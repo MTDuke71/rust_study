@@ -30,7 +30,7 @@ fn main() {
     let data_clone = Arc::clone(&data);
     let writer = thread::spawn(move || {
         thread::sleep(Duration::from_millis(50)); // Let readers go first
-        
+
         // Acquire write lock (exclusive access)
         let mut write_guard = data_clone.write().unwrap();
         println!("Writer modifying data...");
