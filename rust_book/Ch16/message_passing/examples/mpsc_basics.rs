@@ -70,7 +70,6 @@ fn main() {
 
     #[allow(dead_code)]
     #[derive(Debug)]
-    #[allow(dead_code)]
     struct Task {
         id: u32,
         description: String,

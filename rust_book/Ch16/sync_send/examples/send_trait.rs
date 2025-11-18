@@ -54,7 +54,6 @@ fn main() {
 
     #[allow(dead_code)]
     #[derive(Debug)]
-    #[allow(dead_code)]
     struct Person {
         name: String,
         age: u32,
