@@ -87,14 +87,20 @@ fn display_comparison(grid1: &Grid<bool>, grid2: &Grid<bool>, step: usize) {
     println!("├{}┼{}┤", "─".repeat(width + 13), "─".repeat(width + 21));
     println!("│  PART 1: Normal     │  PART 2: Stuck Corners (🔒)       │");
     println!("├{}┼{}┤", "─".repeat(width + 13), "─".repeat(width + 21));
-    println!("│  Step: {:3}          │  Step: {:3}                        │", step, step);
-    println!("│  Lights: {:3}        │  Lights: {:3}                      │", 
-             count_lights_on(grid1), count_lights_on(grid2));
+    println!(
+        "│  Step: {:3}          │  Step: {:3}                        │",
+        step, step
+    );
+    println!(
+        "│  Lights: {:3}        │  Lights: {:3}                      │",
+        count_lights_on(grid1),
+        count_lights_on(grid2)
+    );
     println!("├{}┼{}┤", "─".repeat(width + 13), "─".repeat(width + 21));
 
     for y in 0..grid1.height() {
         print!("│  ");
-        
+
         // Part 1 grid
         for x in 0..width {
             if grid1[(x, y)] {
@@ -103,14 +109,14 @@ fn display_comparison(grid1: &Grid<bool>, grid2: &Grid<bool>, step: usize) {
                 print!("\x1B[90m░\x1B[0m");
             }
         }
-        
+
         print!("          │  ");
-        
+
         // Part 2 grid with highlighted corners
         for x in 0..width {
             let coord = Coord::new(x, y);
             let is_stuck = is_corner(coord, grid2.width(), grid2.height());
-            
+
             if is_stuck {
                 print!("\x1B[91m█\x1B[0m"); // Red for stuck corners
             } else if grid2[(x, y)] {
@@ -119,7 +125,7 @@ fn display_comparison(grid1: &Grid<bool>, grid2: &Grid<bool>, step: usize) {
                 print!("\x1B[90m░\x1B[0m"); // Gray for OFF
             }
         }
-        
+
         println!("                        │");
     }
 
@@ -158,18 +164,24 @@ fn main() {
     for step in 1..=total_steps {
         // Part 1: Normal step
         grid1 = simulate_step(&grid1);
-        
+
         // Part 2: Step with stuck corners
         grid2 = simulate_step(&grid2);
         stick_corners_on(&mut grid2);
-        
+
         display_comparison(&grid1, &grid2, step);
         thread::sleep(Duration::from_millis(700));
     }
 
     println!("\n✨ Comparison complete!\n");
-    println!("Part 1: {} lights ON (converged to stable pattern)", count_lights_on(&grid1));
-    println!("Part 2: {} lights ON (stuck corners keep activity higher)", count_lights_on(&grid2));
+    println!(
+        "Part 1: {} lights ON (converged to stable pattern)",
+        count_lights_on(&grid1)
+    );
+    println!(
+        "Part 2: {} lights ON (stuck corners keep activity higher)",
+        count_lights_on(&grid2)
+    );
     println!("\nNotice how Part 1 converges to a 2x2 stable block,");
     println!("while Part 2 maintains more lights due to corner influence.\n");
     println!("For the full 100x100 puzzle:");

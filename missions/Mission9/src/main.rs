@@ -44,7 +44,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             algorithm,
             heuristic,
             ref visualize,
-        } => handle_find_path(graph, *start, *goal, *algorithm, *heuristic, visualize.clone(), &cli)?,
+        } => handle_find_path(
+            graph,
+            *start,
+            *goal,
+            *algorithm,
+            *heuristic,
+            visualize.clone(),
+            &cli,
+        )?,
 
         Commands::Batch {
             ref graph,
@@ -96,7 +104,11 @@ fn handle_find_path(
     };
 
     if cli.verbose {
-        println!("✅ Graph loaded: {} nodes, {} edges", graph.node_count(), graph.edge_count());
+        println!(
+            "✅ Graph loaded: {} nodes, {} edges",
+            graph.node_count(),
+            graph.edge_count()
+        );
         println!("🎯 Finding path: {} → {}", start, goal);
         println!("🔧 Algorithm: {}", algorithm);
     }
@@ -152,7 +164,10 @@ fn handle_find_path(
         }
         save_visualization(&viz_path, &graph, Some(&result.path))?;
         println!("✅ Visualization saved to: {}", viz_path.display());
-        println!("   (Render with: dot -Tpng {} -o output.png)", viz_path.display());
+        println!(
+            "   (Render with: dot -Tpng {} -o output.png)",
+            viz_path.display()
+        );
     }
 
     Ok(())
@@ -178,7 +193,11 @@ fn handle_batch(
     };
 
     if cli.verbose {
-        println!("✅ Graph loaded: {} nodes, {} edges", graph.node_count(), graph.edge_count());
+        println!(
+            "✅ Graph loaded: {} nodes, {} edges",
+            graph.node_count(),
+            graph.edge_count()
+        );
         println!("📂 Loading queries from: {}", queries_path.display());
     }
 
@@ -215,13 +234,23 @@ fn handle_batch(
     let total_time = total_start.elapsed();
 
     if cli.verbose {
-        println!("✅ All queries processed in {:.2}s", total_time.as_secs_f64());
+        println!(
+            "✅ All queries processed in {:.2}s",
+            total_time.as_secs_f64()
+        );
         println!("📝 Writing results to: {}", output_path.display());
     }
 
     // Write results to CSV
     let mut writer = csv::Writer::from_path(output_path)?;
-    writer.write_record(["start", "goal", "cost", "path_length", "nodes_explored", "time_us"])?;
+    writer.write_record([
+        "start",
+        "goal",
+        "cost",
+        "path_length",
+        "nodes_explored",
+        "time_us",
+    ])?;
 
     for (start, goal, result) in results {
         match result {
@@ -293,8 +322,7 @@ fn handle_info(graph_path: &Path, cli: &Cli) -> Result<(), Box<dyn std::error::E
     }
 
     // Check for coordinates
-    let has_coords = (0..graph.node_count())
-        .any(|n| context.get_coordinates(n as u32).is_some());
+    let has_coords = (0..graph.node_count()).any(|n| context.get_coordinates(n as u32).is_some());
 
     println!("\n📐 Spatial Information:");
     if has_coords {
@@ -326,7 +354,11 @@ fn handle_benchmark(
     };
 
     if cli.verbose {
-        println!("✅ Graph loaded: {} nodes, {} edges", graph.node_count(), graph.edge_count());
+        println!(
+            "✅ Graph loaded: {} nodes, {} edges",
+            graph.node_count(),
+            graph.edge_count()
+        );
         println!("🎯 Benchmarking: {} → {}", start, goal);
         println!("🔄 Iterations: {}", iterations);
     }
@@ -383,13 +415,21 @@ fn handle_generate(
     cli: &Cli,
 ) -> Result<(), Box<dyn std::error::Error>> {
     if cli.verbose {
-        println!("🏗️  Generating {} graph with {} nodes", graph_type_str(graph_type), nodes);
+        println!(
+            "🏗️  Generating {} graph with {} nodes",
+            graph_type_str(graph_type),
+            nodes
+        );
     }
 
     let (graph, context) = generate_graph(graph_type_str(graph_type), nodes)?;
 
     if cli.verbose {
-        println!("✅ Generated: {} nodes, {} edges", graph.node_count(), graph.edge_count());
+        println!(
+            "✅ Generated: {} nodes, {} edges",
+            graph.node_count(),
+            graph.edge_count()
+        );
         println!("💾 Saving to: {}", output_path.display());
     }
 

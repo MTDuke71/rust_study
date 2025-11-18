@@ -26,4 +26,3 @@ mod tests {
         assert_eq!(add_one(-1), 0);
     }
 }
-

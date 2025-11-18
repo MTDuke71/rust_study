@@ -74,7 +74,9 @@ impl BasicUnionFind {
     fn union(&mut self, x: usize, y: usize) -> bool {
         let root_x = self.find(x);
         let root_y = self.find(y);
-        if root_x == root_y { return false; }
+        if root_x == root_y {
+            return false;
+        }
         self.parent[root_x] = root_y;
         self.count -= 1;
         true
@@ -106,7 +108,9 @@ impl PathCompressionUF {
     fn union(&mut self, x: usize, y: usize) -> bool {
         let root_x = self.find(x);
         let root_y = self.find(y);
-        if root_x == root_y { return false; }
+        if root_x == root_y {
+            return false;
+        }
         self.parent[root_x] = root_y; // Naive attachment
         self.count -= 1;
         true
@@ -141,7 +145,9 @@ impl UnionByRankUF {
     fn union(&mut self, x: usize, y: usize) -> bool {
         let root_x = self.find(x);
         let root_y = self.find(y);
-        if root_x == root_y { return false; }
+        if root_x == root_y {
+            return false;
+        }
 
         match self.rank[root_x].cmp(&self.rank[root_y]) {
             std::cmp::Ordering::Less => self.parent[root_x] = root_y,
@@ -170,8 +176,8 @@ impl OptimizedUnionFind {
     fn new(n: usize) -> Self {
         Self {
             parent: (0..n).collect(), // Each element is its own parent initially
-            rank: vec![0; n],          // All start with rank 0
-            count: n,                  // n separate components initially
+            rank: vec![0; n],         // All start with rank 0
+            count: n,                 // n separate components initially
             operations: 0,
         }
     }
@@ -185,7 +191,7 @@ impl OptimizedUnionFind {
             self.operations += 1; // Count each step to find root
             root = self.parent[root];
         }
-        
+
         // Then, compress the path by making all nodes point to root
         let mut current = x;
         while current != root {
@@ -193,7 +199,7 @@ impl OptimizedUnionFind {
             self.parent[current] = root;
             current = next;
         }
-        
+
         root
     }
 
@@ -214,7 +220,7 @@ impl OptimizedUnionFind {
                 self.parent[root_x] = root_y;
             }
             std::cmp::Ordering::Greater => {
-                // root_y smaller, attach to root_x  
+                // root_y smaller, attach to root_x
                 self.parent[root_y] = root_x;
             }
             std::cmp::Ordering::Equal => {
@@ -244,7 +250,7 @@ impl OptimizedUnionFind {
     fn get_stats(&mut self) -> UnionFindStats {
         let mut components = std::collections::HashMap::new();
         let size = self.parent.len();
-        
+
         // Group elements by their root
         for i in 0..size {
             let root = self.find(i);
@@ -252,10 +258,10 @@ impl OptimizedUnionFind {
         }
 
         let max_component_size = components.values().map(|v| v.len()).max().unwrap_or(0);
-        let avg_component_size = if components.is_empty() { 
-            0.0 
-        } else { 
-            size as f64 / components.len() as f64 
+        let avg_component_size = if components.is_empty() {
+            0.0
+        } else {
+            size as f64 / components.len() as f64
         };
 
         // Calculate average path length
@@ -299,7 +305,8 @@ struct UnionFindStats {
 
 impl std::fmt::Display for UnionFindStats {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, 
+        write!(
+            f,
             "UnionFind Stats:\n\
              ├─ Elements: {}\n\
              ├─ Components: {}\n\
@@ -308,7 +315,7 @@ impl std::fmt::Display for UnionFindStats {
              ├─ Avg path length: {:.2}\n\
              └─ Total operations: {}",
             self.total_elements,
-            self.num_components, 
+            self.num_components,
             self.max_component_size,
             self.avg_component_size,
             self.avg_path_length,
@@ -319,7 +326,7 @@ impl std::fmt::Display for UnionFindStats {
 
 fn explain_synergy() {
     println!("Each optimization helps the other:");
-    
+
     println!("\n🔄 Path Compression helps Union by Rank:");
     println!("  • Flattens trees, making rank bounds tighter");
     println!("  • Reduces tree height below theoretical maximum");
@@ -334,7 +341,7 @@ fn explain_synergy() {
     println!("  • O(α(n)) amortized complexity");
     println!("  • α(n) ≤ 4 for all practical n");
     println!("  • Virtually constant time operations");
-    
+
     println!("\n💡 Think of it like this:");
     println!("  • Union by rank: Good architect (plans balanced structures)");
     println!("  • Path compression: Efficient maintenance (optimizes during use)");
@@ -348,26 +355,37 @@ fn demonstrate_optimized_implementation() {
     println!("Elements: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9\n");
 
     let operations = [
-        (0, 1), (2, 3), (4, 5), (6, 7), (8, 9),  // Pairs
-        (1, 3), (5, 7), (3, 7), (1, 9)           // Connections
+        (0, 1),
+        (2, 3),
+        (4, 5),
+        (6, 7),
+        (8, 9), // Pairs
+        (1, 3),
+        (5, 7),
+        (3, 7),
+        (1, 9), // Connections
     ];
 
     for (i, &(x, y)) in operations.iter().enumerate() {
         println!("Step {}: union({}, {})", i + 1, x, y);
-        
+
         let before_stats = uf.get_stats();
         uf.reset_operations();
-        
+
         let result = uf.union(x, y);
-        
+
         let after_stats = uf.get_stats();
-        
+
         if result {
             println!("  ✓ Connected {} and {}", x, y);
-            println!("  📊 Components: {} → {}", 
-                     before_stats.num_components, after_stats.num_components);
-            println!("  🎯 Path length: {:.2} → {:.2}", 
-                     before_stats.avg_path_length, after_stats.avg_path_length);
+            println!(
+                "  📊 Components: {} → {}",
+                before_stats.num_components, after_stats.num_components
+            );
+            println!(
+                "  🎯 Path length: {:.2} → {:.2}",
+                before_stats.avg_path_length, after_stats.avg_path_length
+            );
         } else {
             println!("  ≡ Already connected");
         }
@@ -377,7 +395,7 @@ fn demonstrate_optimized_implementation() {
     println!("Final state:");
     let final_stats = uf.get_stats();
     println!("{}", final_stats);
-    
+
     println!("\nNotice how average path length stays very low!");
     println!("This is the power of combined optimizations. 🚀");
 }
@@ -392,13 +410,27 @@ fn progressive_comparison() {
     let mut optimized = OptimizedUnionFind::new(16);
 
     let operations = [
-        (0, 1), (2, 3), (4, 5), (6, 7), (8, 9), (10, 11), (12, 13), (14, 15),
-        (1, 3), (5, 7), (9, 11), (13, 15),
-        (3, 7), (11, 15),
-        (7, 15)
+        (0, 1),
+        (2, 3),
+        (4, 5),
+        (6, 7),
+        (8, 9),
+        (10, 11),
+        (12, 13),
+        (14, 15),
+        (1, 3),
+        (5, 7),
+        (9, 11),
+        (13, 15),
+        (3, 7),
+        (11, 15),
+        (7, 15),
     ];
 
-    println!("Performing {} operations on 16 elements:\n", operations.len());
+    println!(
+        "Performing {} operations on 16 elements:\n",
+        operations.len()
+    );
 
     // Apply same operations to all versions
     for &(x, y) in &operations {
@@ -410,9 +442,9 @@ fn progressive_comparison() {
 
     // Measure performance with multiple finds
     println!("Performance test: 1000 random find operations");
-    
+
     let test_elements: Vec<usize> = (0..1000).map(|i| i % 16).collect();
-    
+
     // Count steps for each version
     let mut basic_steps = 0;
     for &elem in &test_elements {
@@ -451,16 +483,32 @@ fn progressive_comparison() {
     println!("┌─────────────────────┬───────────┬──────────────┐");
     println!("│ Version             │ Steps     │ Improvement  │");
     println!("├─────────────────────┼───────────┼──────────────┤");
-    println!("│ 1. Basic            │ {:>8}  │ baseline     │", basic_steps);
-    println!("│ 2. Path Compression │ {:>8}  │ ~{:.1}x better  │", path_steps, basic_steps as f64 / path_steps.max(1) as f64);
-    println!("│ 3. Union by Rank    │ {:>8}  │ ~{:.1}x better  │", rank_steps, basic_steps as f64 / rank_steps.max(1) as f64);
-    println!("│ 4. Both Combined    │ {:>8}  │ ~{:.1}x better  │", 
-             optimized.operations, basic_steps as f64 / optimized.operations.max(1) as f64);
+    println!(
+        "│ 1. Basic            │ {:>8}  │ baseline     │",
+        basic_steps
+    );
+    println!(
+        "│ 2. Path Compression │ {:>8}  │ ~{:.1}x better  │",
+        path_steps,
+        basic_steps as f64 / path_steps.max(1) as f64
+    );
+    println!(
+        "│ 3. Union by Rank    │ {:>8}  │ ~{:.1}x better  │",
+        rank_steps,
+        basic_steps as f64 / rank_steps.max(1) as f64
+    );
+    println!(
+        "│ 4. Both Combined    │ {:>8}  │ ~{:.1}x better  │",
+        optimized.operations,
+        basic_steps as f64 / optimized.operations.max(1) as f64
+    );
     println!("└─────────────────────┴───────────┴──────────────┘\n");
 
     println!("🎯 The optimized version uses almost constant time!");
-    println!("   Each find() averages ~{:.1} steps", 
-             optimized.operations as f64 / test_elements.len() as f64);
+    println!(
+        "   Each find() averages ~{:.1} steps",
+        optimized.operations as f64 / test_elements.len() as f64
+    );
 
     println!("\n💡 Why aren't the improvements more dramatic?");
     println!("   1. Small dataset (16 elements) - benefits show more with thousands");
@@ -471,7 +519,10 @@ fn progressive_comparison() {
     println!("\n=== Tree Structure Analysis ===");
     let final_stats = optimized.get_stats();
     println!("Average path length: {:.2}", final_stats.avg_path_length);
-    println!("This means find() touches ~{:.0} nodes on average", final_stats.avg_path_length + 1.0);
+    println!(
+        "This means find() touches ~{:.0} nodes on average",
+        final_stats.avg_path_length + 1.0
+    );
     println!("Compare to theoretical worst case: log₂(16) = 4 nodes");
     println!("Path compression keeps us well below even the improved bound!");
 }
@@ -485,15 +536,15 @@ fn explain_inverse_ackermann() {
     println!("  • It's the theoretical complexity of optimized Union-Find\n");
 
     println!("How slow does α(n) grow?");
-    
+
     let values = [
         (10u64, 2),
-        (100u64, 3), 
+        (100u64, 3),
         (1000u64, 3),
         (10000u64, 4),
         (100000u64, 4),
         (1000000u64, 4),
-        (1000000000u64, 4), // 10^9
+        (1000000000u64, 4),          // 10^9
         (1000000000000000000u64, 4), // 10^18
     ];
 
@@ -503,13 +554,18 @@ fn explain_inverse_ackermann() {
     for (n, alpha_n) in values {
         if n < 1000000 {
             println!("│ {:>15} │ {:>7} │", format_number(n), alpha_n);
-        } else if n < 10000000000u64 { // 10^10
+        } else if n < 10000000000u64 {
+            // 10^10
             println!("│ {:>15} │ {:>7} │", format_large_number(n), alpha_n);
         } else {
-            println!("│ {:>15} │ {:>7} │", format!("10^{}", (n as f64).log10() as u32), alpha_n);
+            println!(
+                "│ {:>15} │ {:>7} │",
+                format!("10^{}", (n as f64).log10() as u32),
+                alpha_n
+            );
         }
     }
-    
+
     // Add the theoretical astronomically large example
     println!("│ {:>15} │ {:>7} │", "10^100", 5);
     println!("└─────────────────┴─────────┘\n");
@@ -550,33 +606,33 @@ fn real_world_performance() {
 
     // Test different sizes
     let sizes = [100, 1000, 10000, 50000];
-    
+
     for &size in &sizes {
         println!("📊 Testing with {} elements:", size);
-        
+
         let mut uf = OptimizedUnionFind::new(size);
-        
+
         // Create many random connections (about 50% connectivity)
         let num_operations = size / 2;
         uf.reset_operations();
-        
+
         for i in 0..num_operations {
-            let x = (i * 17) % size;  // Pseudo-random pattern
+            let x = (i * 17) % size; // Pseudo-random pattern
             let y = (i * 23 + 7) % size;
             uf.union(x, y);
         }
-        
+
         let after_unions = uf.operations;
         uf.reset_operations();
-        
+
         // Test find performance
         for i in 0..1000.min(size) {
             uf.find(i);
         }
-        
+
         let finds_ops = uf.operations;
         let stats = uf.get_stats();
-        
+
         println!("  📈 Union operations: {}", after_unions);
         println!("  🔍 1000 finds used: {} operations", finds_ops);
         println!("  📏 Avg path length: {:.2}", stats.avg_path_length);
@@ -596,13 +652,13 @@ fn mission_connection() {
     println!("=== Connection to Mission 10 ===\n");
 
     println!("This tutorial teaches the same Union-Find used in Mission 10:");
-    
+
     println!("\n📝 Mission 10 Requirements (from REQ-IDs):");
     println!("  • REQ-1: Generic Union-Find with path compression");
-    println!("  • REQ-2: Union by rank optimization");  
+    println!("  • REQ-2: Union by rank optimization");
     println!("  • REQ-3: O(α(n)) amortized complexity");
     println!("  • REQ-4: Thread-safe operations");
-    
+
     println!("\n🎓 Tutorial Learning Path:");
     println!("  • Step 1: Basic Union-Find (understand the problem)");
     println!("  • Step 2: Path compression (REQ-1)");
@@ -641,20 +697,20 @@ mod tests {
     #[test]
     fn test_optimized_union_find_basic_operations() {
         let mut uf = OptimizedUnionFind::new(5);
-        
+
         // Test initial state
         assert_eq!(uf.count(), 5);
         assert!(!uf.connected(0, 1));
-        
+
         // Test union
         assert!(uf.union(0, 1));
         assert!(uf.connected(0, 1));
         assert_eq!(uf.count(), 4);
-        
+
         // Test duplicate union
         assert!(!uf.union(0, 1));
         assert_eq!(uf.count(), 4);
-        
+
         // Test transitivity
         assert!(uf.union(1, 2));
         assert!(uf.connected(0, 2));
@@ -663,30 +719,35 @@ mod tests {
     #[test]
     fn test_path_compression_effect() {
         let mut uf = OptimizedUnionFind::new(10);
-        
+
         // Create a chain: 0-1-2-3-4
         for i in 0..4 {
             uf.union(i, i + 1);
         }
-        
+
         // First find will compress the path
         uf.reset_operations();
         let root1 = uf.find(0);
         let ops1 = uf.operations;
-        
+
         // Second find should be much faster due to compression
         uf.reset_operations();
         let root2 = uf.find(0);
         let ops2 = uf.operations;
-        
+
         assert_eq!(root1, root2);
-        assert!(ops2 <= ops1, "Second find should be faster: {} vs {}", ops2, ops1);
+        assert!(
+            ops2 <= ops1,
+            "Second find should be faster: {} vs {}",
+            ops2,
+            ops1
+        );
     }
 
     #[test]
     fn test_union_by_rank_maintains_balance() {
         let mut uf = OptimizedUnionFind::new(16);
-        
+
         // Build perfectly balanced tree
         for i in 0..8 {
             uf.union(i * 2, i * 2 + 1);
@@ -698,45 +759,51 @@ mod tests {
             uf.union(i * 8 + 3, i * 8 + 7);
         }
         uf.union(7, 15);
-        
+
         // All elements should be connected
         for i in 1..16 {
             assert!(uf.connected(0, i));
         }
-        
+
         // Tree should be well-balanced
         let stats = uf.get_stats();
-        assert!(stats.avg_path_length < 4.0, 
-                "Average path length {} should be less than 4", stats.avg_path_length);
+        assert!(
+            stats.avg_path_length < 4.0,
+            "Average path length {} should be less than 4",
+            stats.avg_path_length
+        );
     }
 
     #[test]
     fn test_performance_consistency() {
         let mut uf = OptimizedUnionFind::new(1000);
-        
+
         // Perform many operations
         for i in 0..500 {
             uf.union(i, (i + 1) % 1000);
         }
-        
+
         // Test find performance consistency
         uf.reset_operations();
         for i in 0..100 {
             uf.find(i * 10);
         }
-        
+
         let ops = uf.operations;
         let avg_ops_per_find = ops as f64 / 100.0;
-        
+
         // Should be very efficient (practically constant)
-        assert!(avg_ops_per_find < 10.0, 
-                "Average operations per find {} should be less than 10", avg_ops_per_find);
+        assert!(
+            avg_ops_per_find < 10.0,
+            "Average operations per find {} should be less than 10",
+            avg_ops_per_find
+        );
     }
 
     #[test]
     fn test_stats_accuracy() {
         let mut uf = OptimizedUnionFind::new(10);
-        
+
         // Create two components: {0,1,2,3,4} and {5,6,7,8,9}
         for i in 0..4 {
             uf.union(i, i + 1);
@@ -744,9 +811,9 @@ mod tests {
         for i in 5..9 {
             uf.union(i, i + 1);
         }
-        
+
         let stats = uf.get_stats();
-        
+
         assert_eq!(stats.total_elements, 10);
         assert_eq!(stats.num_components, 2);
         assert_eq!(stats.max_component_size, 5);

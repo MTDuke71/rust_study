@@ -464,11 +464,7 @@ mod tests {
         let containers = vec![20, 15, 10, 5, 5];
         let count1 = count_combinations(&containers, 25);
         let combinations = find_all_combinations(&containers, 25);
-        assert_eq!(
-            count1,
-            combinations.len(),
-            "Both methods should agree"
-        );
+        assert_eq!(count1, combinations.len(), "Both methods should agree");
     }
 
     #[test]

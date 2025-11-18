@@ -1,6 +1,6 @@
 /// Demonstration of optimal spell sequences for Day 22 Wizard Simulator
 /// Shows the complete victory paths for both Part 1 (Normal) and Part 2 (Hard Mode)
-use aoc2015::solver::day22::{GameState, Spell, WizardPathfinder, simulate_turn, parse_boss};
+use aoc2015::solver::day22::{parse_boss, simulate_turn, GameState, Spell, WizardPathfinder};
 
 /// Pretty-print a spell for display
 fn format_spell(spell: &Spell) -> &'static str {
@@ -21,7 +21,12 @@ fn display_state(state: &GameState, turn_number: usize, is_player_turn: bool) {
         println!("-- Boss turn {} --", turn_number);
     }
 
-    println!("- Player has {} hit points, {} armor, {} mana", state.player_hp, state.player_armor(), state.player_mana);
+    println!(
+        "- Player has {} hit points, {} armor, {} mana",
+        state.player_hp,
+        state.player_armor(),
+        state.player_mana
+    );
     println!("- Boss has {} hit points", state.boss_hp);
 }
 
@@ -54,7 +59,12 @@ fn demonstrate_victory_path(boss_hp: i32, boss_damage: i32, hard_mode: bool, tit
                         // Boss turn details are shown in simulate_turn, but we need to show the state after effects
                         if current_state.is_win() {
                             println!("-- Boss turn {} --", turn_number);
-                            println!("- Player has {} hit points, {} armor, {} mana", current_state.player_hp, current_state.player_armor(), current_state.player_mana);
+                            println!(
+                                "- Player has {} hit points, {} armor, {} mana",
+                                current_state.player_hp,
+                                current_state.player_armor(),
+                                current_state.player_mana
+                            );
                             println!("- Boss has {} hit points", current_state.boss_hp);
                             println!("Boss attacks but player wins!");
                             break;
@@ -87,13 +97,13 @@ fn main() {
         boss_hp,
         boss_damage,
         false,
-        "🎉 DAY 22: WIZARD SIMULATOR - PART 1 VICTORY PATH (Normal Mode)"
+        "🎉 DAY 22: WIZARD SIMULATOR - PART 1 VICTORY PATH (Normal Mode)",
     );
 
     demonstrate_victory_path(
         boss_hp,
         boss_damage,
         true,
-        "🎯 DAY 22: WIZARD SIMULATOR - PART 2 VICTORY PATH (Hard Mode)"
+        "🎯 DAY 22: WIZARD SIMULATOR - PART 2 VICTORY PATH (Hard Mode)",
     );
 }

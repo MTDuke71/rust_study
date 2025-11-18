@@ -75,12 +75,12 @@ impl UnionFind {
 
     fn get_components(&mut self) -> Vec<Vec<usize>> {
         let mut components: HashMap<usize, Vec<usize>> = HashMap::new();
-        
+
         for i in 0..self.parent.len() {
             let root = self.find(i);
             components.entry(root).or_default().push(i);
         }
-        
+
         components.into_values().collect()
     }
 }
@@ -242,14 +242,21 @@ fn demonstrate_kruskal_mst() {
             uf.union(edge.u, edge.v);
             mst_edges.push(*edge);
             total_weight += edge.weight;
-            println!("  ✓ Add edge ({}, {}) weight: {} [Components: {}]",
-                     edge.u, edge.v, edge.weight, uf.count());
-            
+            println!(
+                "  ✓ Add edge ({}, {}) weight: {} [Components: {}]",
+                edge.u,
+                edge.v,
+                edge.weight,
+                uf.count()
+            );
+
             // OPTIMIZATION: Could break here when MST is complete
             // if mst_edges.len() == num_vertices - 1 { break; }
         } else {
-            println!("  ✗ Skip edge ({}, {}) weight: {} [Would create cycle]",
-                     edge.u, edge.v, edge.weight);
+            println!(
+                "  ✗ Skip edge ({}, {}) weight: {} [Would create cycle]",
+                edge.u, edge.v, edge.weight
+            );
         }
     }
 
@@ -259,7 +266,11 @@ fn demonstrate_kruskal_mst() {
         println!("  ({}, {}) weight: {}", edge.u, edge.v, edge.weight);
     }
     println!("\nTotal MST Weight: {}", total_weight);
-    println!("MST Edges Count: {} (should be V-1 = {})", mst_edges.len(), num_vertices - 1);
+    println!(
+        "MST Edges Count: {} (should be V-1 = {})",
+        mst_edges.len(),
+        num_vertices - 1
+    );
 
     println!("\nVisual MST:");
     println!("    0           ");
@@ -306,10 +317,12 @@ fn demonstrate_connected_components() {
 
     let num_vertices = 10;
     let edges = vec![
-        (0, 1), (1, 5),  // Component 1: {0, 1, 5}
-        (2, 3), (3, 4),  // Component 2: {2, 3, 4}
-        (6, 7),          // Component 3: {6, 7}
-        (8, 9),          // Component 4: {8, 9}
+        (0, 1),
+        (1, 5), // Component 1: {0, 1, 5}
+        (2, 3),
+        (3, 4), // Component 2: {2, 3, 4}
+        (6, 7), // Component 3: {6, 7}
+        (8, 9), // Component 4: {8, 9}
     ];
 
     println!("Edges:");
@@ -332,14 +345,24 @@ fn demonstrate_connected_components() {
     println!("Total components: {}\n", components.len());
 
     for (i, component) in components.iter().enumerate() {
-        println!("Component {}: {:?} (size: {})", i + 1, component, component.len());
+        println!(
+            "Component {}: {:?} (size: {})",
+            i + 1,
+            component,
+            component.len()
+        );
     }
 
     println!("\nQueries:");
     let queries = vec![(0, 5), (2, 4), (0, 2), (6, 7), (8, 0)];
     for (u, v) in queries {
         let connected = uf.connected(u, v);
-        println!("  Are {} and {} connected? {}", u, v, if connected { "✓ Yes" } else { "✗ No" });
+        println!(
+            "  Are {} and {} connected? {}",
+            u,
+            v,
+            if connected { "✓ Yes" } else { "✗ No" }
+        );
     }
 
     println!("\nComparison with DFS/BFS:");
@@ -372,12 +395,14 @@ fn demonstrate_cycle_detection() {
     println!("Vertices: {{0, 1, 2, 3, 4}}\n");
 
     let num_vertices = 5;
-    let edges = [(0, 1, "Connect nodes 0-1"),
+    let edges = [
+        (0, 1, "Connect nodes 0-1"),
         (1, 2, "Connect nodes 1-2"),
         (2, 3, "Connect nodes 2-3"),
         (3, 4, "Connect nodes 3-4"),
         (1, 3, "Shortcut: Connect nodes 1-3"),
-        (0, 4, "Try to connect nodes 0-4")];
+        (0, 4, "Try to connect nodes 0-4"),
+    ];
 
     let mut uf = UnionFind::new(num_vertices);
 
@@ -387,14 +412,21 @@ fn demonstrate_cycle_detection() {
         println!("Step {}: {} (edge {}-{})", i + 1, description, u, v);
 
         if uf.connected(*u, *v) {
-            println!("  ⚠️  CYCLE DETECTED! Vertices {} and {} already connected", u, v);
+            println!(
+                "  ⚠️  CYCLE DETECTED! Vertices {} and {} already connected",
+                u, v
+            );
             println!("  ✗ Rejecting edge to maintain acyclic structure\n");
         } else {
             uf.union(*u, *v);
             println!("  ✓ Edge added successfully");
             println!("  Latest edge added: {} --- {}", u, v);
-            println!("  (All {} vertices now form {} connected component{})", 
-                     num_vertices, uf.count(), if uf.count() == 1 { "" } else { "s" });
+            println!(
+                "  (All {} vertices now form {} connected component{})",
+                num_vertices,
+                uf.count(),
+                if uf.count() == 1 { "" } else { "s" }
+            );
             println!();
         }
     }
@@ -438,11 +470,15 @@ impl SocialNetwork {
 
     fn add_friendship(&mut self, person1: usize, person2: usize) {
         if self.uf.union(person1, person2) {
-            println!("  ✓ {} and {} are now friends!",
-                     self.names[person1], self.names[person2]);
+            println!(
+                "  ✓ {} and {} are now friends!",
+                self.names[person1], self.names[person2]
+            );
         } else {
-            println!("  → {} and {} are already in the same friend circle",
-                     self.names[person1], self.names[person2]);
+            println!(
+                "  → {} and {} are already in the same friend circle",
+                self.names[person1], self.names[person2]
+            );
         }
     }
 
@@ -452,7 +488,8 @@ impl SocialNetwork {
 
     fn get_friend_circles(&mut self) -> Vec<Vec<String>> {
         let components = self.uf.get_components();
-        components.iter()
+        components
+            .iter()
             .map(|comp| comp.iter().map(|&i| self.names[i].clone()).collect())
             .collect()
     }
@@ -471,12 +508,20 @@ fn demonstrate_social_network() {
     println!("  • Efficiently track mutually connected groups");
     println!("  • Dynamic updates as friendships form\n");
 
-    let people = ["Alice", "Bob", "Carol", "Dave", "Eve", "Frank", "Grace", "Henry"].iter().map(|s| s.to_string()).collect();
+    let people = [
+        "Alice", "Bob", "Carol", "Dave", "Eve", "Frank", "Grace", "Henry",
+    ]
+    .iter()
+    .map(|s| s.to_string())
+    .collect();
 
     let mut network = SocialNetwork::new(people);
 
-    println!("Initial: {} people, {} circles (everyone isolated)\n",
-             network.names.len(), network.count_circles());
+    println!(
+        "Initial: {} people, {} circles (everyone isolated)\n",
+        network.names.len(),
+        network.count_circles()
+    );
 
     println!("Adding friendships:\n");
 
@@ -498,7 +543,12 @@ fn demonstrate_social_network() {
     let circles = network.get_friend_circles();
 
     for (i, circle) in circles.iter().enumerate() {
-        println!("Circle {}: {} (size: {})", i + 1, circle.join(", "), circle.len());
+        println!(
+            "Circle {}: {} (size: {})",
+            i + 1,
+            circle.join(", "),
+            circle.len()
+        );
     }
 
     println!("\nQueries:\n");
@@ -511,8 +561,12 @@ fn demonstrate_social_network() {
 
     for (p1, p2, name1, name2) in queries {
         let connected = network.are_friends(p1, p2);
-        println!("  Are {} and {} in same friend circle? {}",
-                 name1, name2, if connected { "✓ Yes" } else { "✗ No" });
+        println!(
+            "  Are {} and {} in same friend circle? {}",
+            name1,
+            name2,
+            if connected { "✓ Yes" } else { "✗ No" }
+        );
     }
 
     println!("\nPractical Applications:");
@@ -662,8 +716,12 @@ fn demonstrate_image_segmentation() {
     for (i, component) in components.iter().enumerate() {
         let (row, col) = image.index_to_coords(component[0]);
         let color = image.get_pixel(row, col);
-        println!("Region {}: Color '{}', Size {} pixels",
-                 i, color, component.len());
+        println!(
+            "Region {}: Color '{}', Size {} pixels",
+            i,
+            color,
+            component.len()
+        );
     }
 
     println!("\nApplications:");
@@ -796,12 +854,7 @@ mod tests {
     #[test]
     fn test_connected_components() {
         let mut uf = UnionFind::new(10);
-        let edges = vec![
-            (0, 1), (1, 5),
-            (2, 3), (3, 4),
-            (6, 7),
-            (8, 9),
-        ];
+        let edges = vec![(0, 1), (1, 5), (2, 3), (3, 4), (6, 7), (8, 9)];
 
         for (u, v) in edges {
             uf.union(u, v);
@@ -835,7 +888,9 @@ mod tests {
     #[test]
     fn test_social_network() {
         let people: Vec<String> = vec!["A", "B", "C", "D"]
-            .iter().map(|s| s.to_string()).collect();
+            .iter()
+            .map(|s| s.to_string())
+            .collect();
 
         let mut network = SocialNetwork::new(people);
 

@@ -195,23 +195,32 @@ impl Computer {
     /// Returns final register values
     pub fn execute_with_trace(&mut self) -> Result<String> {
         let mut trace = String::new();
-        trace.push_str(&format!("Initial state: a={}, b={}\n", self.registers.a, self.registers.b));
+        trace.push_str(&format!(
+            "Initial state: a={}, b={}\n",
+            self.registers.a, self.registers.b
+        ));
 
         let mut step_count = 0;
         while self.step()? {
             step_count += 1;
-            trace.push_str(&format!("After step {}: a={}, b={} (pc={})\n",
-                step_count, self.registers.a, self.registers.b, self.pc));
+            trace.push_str(&format!(
+                "After step {}: a={}, b={} (pc={})\n",
+                step_count, self.registers.a, self.registers.b, self.pc
+            ));
         }
 
-        trace.push_str(&format!("Final state: a={}, b={}\n", self.registers.a, self.registers.b));
+        trace.push_str(&format!(
+            "Final state: a={}, b={}\n",
+            self.registers.a, self.registers.b
+        ));
         Ok(trace)
     }
 }
 
 /// Parse program from multi-line string
 pub fn parse_program(input: &str) -> Result<Vec<Instruction>> {
-    input.lines()
+    input
+        .lines()
         .map(|line| Instruction::parse(line.trim()))
         .collect()
 }
@@ -252,12 +261,25 @@ mod tests {
     #[test]
     fn test_parse_instruction() {
         // Test each instruction type
-        assert!(matches!(Instruction::parse("hlf a").unwrap(), Instruction::Half(ref r) if r == "a"));
-        assert!(matches!(Instruction::parse("tpl b").unwrap(), Instruction::Triple(ref r) if r == "b"));
-        assert!(matches!(Instruction::parse("inc a").unwrap(), Instruction::Increment(ref r) if r == "a"));
-        assert!(matches!(Instruction::parse("jmp +2").unwrap(), Instruction::Jump(2)));
-        assert!(matches!(Instruction::parse("jie a, +4").unwrap(), Instruction::JumpIfEven(ref r, 4) if r == "a"));
-        assert!(matches!(Instruction::parse("jio b, -3").unwrap(), Instruction::JumpIfOne(ref r, -3) if r == "b"));
+        assert!(
+            matches!(Instruction::parse("hlf a").unwrap(), Instruction::Half(ref r) if r == "a")
+        );
+        assert!(
+            matches!(Instruction::parse("tpl b").unwrap(), Instruction::Triple(ref r) if r == "b")
+        );
+        assert!(
+            matches!(Instruction::parse("inc a").unwrap(), Instruction::Increment(ref r) if r == "a")
+        );
+        assert!(matches!(
+            Instruction::parse("jmp +2").unwrap(),
+            Instruction::Jump(2)
+        ));
+        assert!(
+            matches!(Instruction::parse("jie a, +4").unwrap(), Instruction::JumpIfEven(ref r, 4) if r == "a")
+        );
+        assert!(
+            matches!(Instruction::parse("jio b, -3").unwrap(), Instruction::JumpIfOne(ref r, -3) if r == "b")
+        );
     }
 
     #[test]
@@ -279,7 +301,7 @@ mod tests {
     #[test]
     fn test_jump_execution() {
         let program = vec![
-            Instruction::Jump(2), // Jump to instruction 2 (0-indexed)
+            Instruction::Jump(2),                    // Jump to instruction 2 (0-indexed)
             Instruction::Increment("a".to_string()), // This should be skipped
             Instruction::Increment("b".to_string()), // This should execute
         ];
@@ -296,10 +318,10 @@ mod tests {
     fn test_conditional_jumps() {
         // Test jie (jump if even)
         let program = vec![
-            Instruction::Increment("a".to_string()), // a = 1 (odd)
+            Instruction::Increment("a".to_string()),     // a = 1 (odd)
             Instruction::JumpIfEven("a".to_string(), 2), // Should not jump
-            Instruction::Increment("b".to_string()), // Should execute (b = 1)
-            Instruction::Increment("b".to_string()), // Should execute (b = 2)
+            Instruction::Increment("b".to_string()),     // Should execute (b = 1)
+            Instruction::Increment("b".to_string()),     // Should execute (b = 2)
         ];
 
         let registers = Registers::new();
@@ -311,10 +333,10 @@ mod tests {
 
         // Test jio (jump if one)
         let program2 = vec![
-            Instruction::Increment("a".to_string()), // a = 1
+            Instruction::Increment("a".to_string()),    // a = 1
             Instruction::JumpIfOne("a".to_string(), 2), // Should jump
-            Instruction::Increment("b".to_string()), // Should be skipped
-            Instruction::Increment("b".to_string()), // Should execute
+            Instruction::Increment("b".to_string()),    // Should be skipped
+            Instruction::Increment("b".to_string()),    // Should execute
         ];
 
         let registers2 = Registers::new();

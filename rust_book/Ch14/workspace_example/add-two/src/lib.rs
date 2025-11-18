@@ -2,7 +2,6 @@
 //!
 //! This workspace member uses another workspace member (add-one).
 
-
 /// Adds two to the given number.
 ///
 /// This function uses `add_one` twice to demonstrate
@@ -30,4 +29,3 @@ mod tests {
         assert_eq!(add_two(-1), 1);
     }
 }
-

@@ -1,7 +1,7 @@
 /// Mission 9: Grid-based Pathfinding CLI
 ///
 /// REQ-7: Production-ready CLI for bidirectional algorithms
-/// 
+///
 /// This CLI works with grid-based pathfinding algorithms that use
 /// coordinate-based representations (BidirectionalDijkstra, BidirectionalAstar).
 use clap::Parser;
@@ -79,12 +79,14 @@ fn parse_coord(s: &str) -> Result<(usize, usize), String> {
     if parts.len() != 2 {
         return Err(format!("Expected format: x,y but got: {}", s));
     }
-    
-    let x = parts[0].parse::<usize>()
+
+    let x = parts[0]
+        .parse::<usize>()
         .map_err(|_| format!("Invalid x coordinate: {}", parts[0]))?;
-    let y = parts[1].parse::<usize>()
+    let y = parts[1]
+        .parse::<usize>()
         .map_err(|_| format!("Invalid y coordinate: {}", parts[1]))?;
-    
+
     Ok((x, y))
 }
 
@@ -104,7 +106,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             goal,
             algorithm,
             obstacles,
-        } => handle_find_path(width, height, start, goal, algorithm, obstacles, cli.verbose)?,
+        } => handle_find_path(
+            width,
+            height,
+            start,
+            goal,
+            algorithm,
+            obstacles,
+            cli.verbose,
+        )?,
 
         Commands::Benchmark {
             width,
@@ -201,7 +211,7 @@ fn handle_find_path(
             println!("\n✅ Path found!");
             println!("  Length: {} steps", p.len());
             println!("  Search time: {:.2}ms", elapsed.as_secs_f64() * 1000.0);
-            
+
             if verbose {
                 println!("\n📍 Path coordinates:");
                 for (i, pos) in p.iter().enumerate() {

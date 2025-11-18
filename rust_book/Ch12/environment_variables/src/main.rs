@@ -1,4 +1,4 @@
- //! # Chapter 12.5: Working with Environment Variables
+//! # Chapter 12.5: Working with Environment Variables
 //!
 //! Demonstrates how to use environment variables to control program behavior.
 //! Shows case-sensitive vs case-insensitive search based on environment settings.

@@ -67,7 +67,11 @@ fn display_grid(grid: &Grid<bool>, step: usize) {
     println!("┌{}┐", "─".repeat(grid.width() + 2));
     println!("│ 🎄 Day 18: Like a GIF For Your Yard - Part 1 │");
     println!("├{}┤", "─".repeat(grid.width() + 2));
-    println!("│ Step: {:3} │ Lights ON: {:4} │", step, count_lights_on(grid));
+    println!(
+        "│ Step: {:3} │ Lights ON: {:4} │",
+        step,
+        count_lights_on(grid)
+    );
     println!("├{}┤", "─".repeat(grid.width() + 2));
 
     for y in 0..grid.height() {
@@ -118,7 +122,11 @@ fn main() {
     }
 
     println!("\n✨ Animation complete!");
-    println!("Final state: {} lights ON after {} steps", count_lights_on(&grid), total_steps);
+    println!(
+        "Final state: {} lights ON after {} steps",
+        count_lights_on(&grid),
+        total_steps
+    );
     println!("\nFor the full 100x100 grid with 100 steps:");
     println!("  cargo run --release --bin aoc2015 -- 18");
 }

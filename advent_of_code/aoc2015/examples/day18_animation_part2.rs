@@ -60,10 +60,10 @@ fn stick_corners_on(grid: &mut Grid<bool>) {
     let height = grid.height();
 
     if width > 0 && height > 0 {
-        grid[(0, 0)] = true;                    // Top-left
-        grid[(width - 1, 0)] = true;            // Top-right
-        grid[(0, height - 1)] = true;           // Bottom-left
-        grid[(width - 1, height - 1)] = true;   // Bottom-right
+        grid[(0, 0)] = true; // Top-left
+        grid[(width - 1, 0)] = true; // Top-right
+        grid[(0, height - 1)] = true; // Bottom-left
+        grid[(width - 1, height - 1)] = true; // Bottom-right
     }
 }
 
@@ -92,7 +92,11 @@ fn display_grid(grid: &Grid<bool>, step: usize) {
     println!("┌{}┐", "─".repeat(grid.width() + 2));
     println!("│ 🎄 Day 18: Like a GIF For Your Yard - Part 2 │");
     println!("├{}┤", "─".repeat(grid.width() + 2));
-    println!("│ Step: {:3} │ Lights ON: {:4} │ 🔒 CORNERS STUCK │", step, count_lights_on(grid));
+    println!(
+        "│ Step: {:3} │ Lights ON: {:4} │ 🔒 CORNERS STUCK │",
+        step,
+        count_lights_on(grid)
+    );
     println!("├{}┤", "─".repeat(grid.width() + 2));
 
     for y in 0..grid.height() {
@@ -153,8 +157,11 @@ fn main() {
     }
 
     println!("\n✨ Animation complete!");
-    println!("Final state: {} lights ON after {} steps (including 4 stuck corners)", 
-             count_lights_on(&grid), total_steps);
+    println!(
+        "Final state: {} lights ON after {} steps (including 4 stuck corners)",
+        count_lights_on(&grid),
+        total_steps
+    );
     println!("\nFor the full 100x100 grid with 100 steps:");
     println!("  cargo run --release --bin aoc2015 -- 18");
 }

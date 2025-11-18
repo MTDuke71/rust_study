@@ -22,13 +22,13 @@ fn main() {
         println!("Thread 1: Trying to lock resource1...");
         let _lock1 = r1_clone.lock().unwrap();
         println!("Thread 1: Locked resource1");
-        
+
         thread::sleep(Duration::from_millis(100)); // Simulate some work
-        
+
         println!("Thread 1: Trying to lock resource2...");
         let _lock2 = r2_clone.lock().unwrap();
         println!("Thread 1: Locked resource2");
-        
+
         println!("Thread 1: Done!");
     });
 
@@ -39,13 +39,13 @@ fn main() {
         println!("Thread 2: Trying to lock resource2...");
         let _lock2 = r2_clone.lock().unwrap();
         println!("Thread 2: Locked resource2");
-        
+
         thread::sleep(Duration::from_millis(100)); // Simulate some work
-        
+
         println!("Thread 2: Trying to lock resource1...");
         let _lock1 = r1_clone.lock().unwrap();
         println!("Thread 2: Locked resource1");
-        
+
         println!("Thread 2: Done!");
     });
 

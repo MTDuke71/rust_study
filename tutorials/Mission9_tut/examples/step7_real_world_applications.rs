@@ -112,7 +112,9 @@ impl SimpleWeightedGraph {
 ///   }
 /// }
 /// ```
-pub fn load_graph_from_json(path: &Path) -> io::Result<(SimpleWeightedGraph, Option<HashMap<u32, Coordinate>>)> {
+pub fn load_graph_from_json(
+    path: &Path,
+) -> io::Result<(SimpleWeightedGraph, Option<HashMap<u32, Coordinate>>)> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     let data: GraphData = serde_json::from_reader(reader)
@@ -120,7 +122,8 @@ pub fn load_graph_from_json(path: &Path) -> io::Result<(SimpleWeightedGraph, Opt
 
     let mut graph = SimpleWeightedGraph::new(data.nodes);
     for edge in data.edges {
-        graph.add_edge(edge.from, edge.to, edge.weight)
+        graph
+            .add_edge(edge.from, edge.to, edge.weight)
             .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
     }
 
@@ -151,8 +154,7 @@ pub fn save_graph_to_json(
     };
 
     let file = File::create(path)?;
-    serde_json::to_writer_pretty(file, &data)
-        .map_err(io::Error::other)
+    serde_json::to_writer_pretty(file, &data).map_err(io::Error::other)
 }
 
 /// Load batch queries from CSV file
@@ -178,9 +180,11 @@ pub fn load_queries_from_csv(path: &Path) -> io::Result<Vec<(u32, u32)>> {
             ));
         }
 
-        let start: u32 = record[0].parse()
+        let start: u32 = record[0]
+            .parse()
             .map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "Invalid start node"))?;
-        let goal: u32 = record[1].parse()
+        let goal: u32 = record[1]
+            .parse()
             .map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "Invalid goal node"))?;
 
         queries.push((start, goal));
@@ -211,7 +215,10 @@ impl PartialEq for State {
 
 impl Ord for State {
     fn cmp(&self, other: &Self) -> Ordering {
-        other.cost.partial_cmp(&self.cost).unwrap_or(Ordering::Equal)
+        other
+            .cost
+            .partial_cmp(&self.cost)
+            .unwrap_or(Ordering::Equal)
             .then_with(|| self.node.cmp(&other.node))
     }
 }
@@ -238,14 +245,17 @@ pub fn dijkstra_with_metrics(
     goal: u32,
 ) -> Option<PathResult> {
     let start_time = Instant::now();
-    
+
     let mut heap = BinaryHeap::new();
     let mut distances = vec![f64::INFINITY; graph.node_count()];
     let mut predecessors = vec![None; graph.node_count()];
     let mut nodes_explored = 0;
 
     distances[start as usize] = 0.0;
-    heap.push(State { cost: 0.0, node: start });
+    heap.push(State {
+        cost: 0.0,
+        node: start,
+    });
 
     while let Some(State { cost, node }) = heap.pop() {
         nodes_explored += 1;
@@ -326,12 +336,19 @@ impl BatchProcessor {
     /// Process batch and save results to CSV
     pub fn process_and_save(&self, queries: &[(u32, u32)], output_path: &Path) -> io::Result<()> {
         let results = self.process_batch(queries);
-        
+
         let file = File::create(output_path)?;
         let mut writer = csv::Writer::from_writer(file);
 
         // Write header
-        writer.write_record(["start", "goal", "cost", "path_length", "nodes_explored", "time_ms"])?;
+        writer.write_record([
+            "start",
+            "goal",
+            "cost",
+            "path_length",
+            "nodes_explored",
+            "time_ms",
+        ])?;
 
         // Write results
         for (i, result) in results.iter().enumerate() {
@@ -403,14 +420,20 @@ impl PerformanceMonitor {
         println!("\n=== Performance Summary ===");
         println!("Total queries: {}", self.total_queries);
         println!("Successful: {}", self.successful_queries);
-        println!("Success rate: {:.1}%", 
-                 (self.successful_queries as f64 / self.total_queries as f64) * 100.0);
-        
+        println!(
+            "Success rate: {:.1}%",
+            (self.successful_queries as f64 / self.total_queries as f64) * 100.0
+        );
+
         if self.successful_queries > 0 {
-            println!("Avg time per query: {:.2} ms", 
-                     self.total_time_ms / self.successful_queries as f64);
-            println!("Avg nodes explored: {:.0}", 
-                     self.total_nodes_explored as f64 / self.successful_queries as f64);
+            println!(
+                "Avg time per query: {:.2} ms",
+                self.total_time_ms / self.successful_queries as f64
+            );
+            println!(
+                "Avg nodes explored: {:.0}",
+                self.total_nodes_explored as f64 / self.successful_queries as f64
+            );
         }
         println!("Total time: {:.2} ms", self.total_time_ms);
     }
@@ -446,9 +469,15 @@ fn example_file_io() -> io::Result<()> {
 
     // Create and save a graph
     let mut graph = SimpleWeightedGraph::new(4);
-    graph.add_edge(0, 1, 1.0).map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
-    graph.add_edge(1, 2, 1.0).map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
-    graph.add_edge(2, 3, 1.0).map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
+    graph
+        .add_edge(0, 1, 1.0)
+        .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
+    graph
+        .add_edge(1, 2, 1.0)
+        .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
+    graph
+        .add_edge(2, 3, 1.0)
+        .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
 
     let mut coords = HashMap::new();
     coords.insert(0, Coordinate { x: 0.0, y: 0.0 });
@@ -476,16 +505,13 @@ fn example_batch_processing() -> io::Result<()> {
     // Create test graph
     let mut graph = SimpleWeightedGraph::new(10);
     for i in 0..9 {
-        graph.add_edge(i, i + 1, 1.0).map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
+        graph
+            .add_edge(i, i + 1, 1.0)
+            .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
     }
 
     // Create batch queries
-    let queries = vec![
-        (0, 5),
-        (2, 8),
-        (0, 9),
-        (3, 7),
-    ];
+    let queries = vec![(0, 5), (2, 8), (0, 9), (3, 7)];
 
     // Process batch
     let processor = BatchProcessor::new(graph);
@@ -496,8 +522,10 @@ fn example_batch_processing() -> io::Result<()> {
         monitor.record(result.as_ref());
 
         if let Some(r) = result {
-            println!("Query ({} → {}): cost={:.2}, time={:.2}ms", 
-                     start, goal, r.cost, r.search_time_ms);
+            println!(
+                "Query ({} → {}): cost={:.2}, time={:.2}ms",
+                start, goal, r.cost, r.search_time_ms
+            );
         }
     }
 
@@ -579,7 +607,7 @@ mod exercises {
     use super::*;
 
     /// Exercise 1: Add CSV graph loading
-    /// 
+    ///
     /// TODO: Implement a function that loads graphs from CSV format:
     /// ```csv
     /// from,to,weight
@@ -593,7 +621,7 @@ mod exercises {
     }
 
     /// Exercise 2: Add graph generation utilities
-    /// 
+    ///
     /// TODO: Implement functions to generate common graph types:
     /// - Grid graph (for game maps)
     /// - Random graph (for testing)
@@ -606,7 +634,7 @@ mod exercises {
     }
 
     /// Exercise 3: Add A* with heuristics
-    /// 
+    ///
     /// TODO: Extend the system to support A* algorithm with coordinates
     #[test]
     fn exercise3_astar_integration() {
@@ -616,7 +644,7 @@ mod exercises {
     }
 
     /// Exercise 4: Add visualization output
-    /// 
+    ///
     /// TODO: Generate DOT format for Graphviz visualization
     /// Output should highlight the found path
     #[test]
@@ -627,7 +655,7 @@ mod exercises {
     }
 
     /// Exercise 5: CLI argument parsing
-    /// 
+    ///
     /// TODO: Use clap to parse command-line arguments:
     /// - Input graph file
     /// - Start/goal nodes
@@ -648,7 +676,7 @@ mod exercises {
 pub fn load_graph_from_csv(path: &Path) -> io::Result<SimpleWeightedGraph> {
     let file = File::open(path)?;
     let mut reader = csv::Reader::from_reader(file);
-    
+
     // First pass: count nodes
     let mut max_node = 0u32;
     for result in reader.records() {
@@ -657,12 +685,12 @@ pub fn load_graph_from_csv(path: &Path) -> io::Result<SimpleWeightedGraph> {
         let to: u32 = record[1].parse().unwrap();
         max_node = max_node.max(from).max(to);
     }
-    
+
     // Second pass: build graph
     let mut graph = SimpleWeightedGraph::new((max_node + 1) as usize);
     let file = File::open(path)?;
     let mut reader = csv::Reader::from_reader(file);
-    
+
     for result in reader.records() {
         let record = result?;
         let from: u32 = record[0].parse().unwrap();
@@ -670,25 +698,25 @@ pub fn load_graph_from_csv(path: &Path) -> io::Result<SimpleWeightedGraph> {
         let weight: f64 = record[2].parse().unwrap();
         graph.add_edge(from, to, weight)?;
     }
-    
+
     Ok(graph)
 }
 
 /// Solution to Exercise 2: Grid Graph Generation
 pub fn generate_grid_graph(width: usize, height: usize) -> SimpleWeightedGraph {
     let mut graph = SimpleWeightedGraph::new(width * height);
-    
+
     for y in 0..height {
         for x in 0..width {
             let node = (y * width + x) as u32;
-            
+
             // Right neighbor
             if x + 1 < width {
                 let right = (y * width + (x + 1)) as u32;
                 graph.add_edge(node, right, 1.0).unwrap();
                 graph.add_edge(right, node, 1.0).unwrap();
             }
-            
+
             // Down neighbor
             if y + 1 < height {
                 let down = ((y + 1) * width + x) as u32;
@@ -697,7 +725,7 @@ pub fn generate_grid_graph(width: usize, height: usize) -> SimpleWeightedGraph {
             }
         }
     }
-    
+
     graph
 }
 */

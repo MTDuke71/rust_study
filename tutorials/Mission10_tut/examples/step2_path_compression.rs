@@ -113,7 +113,7 @@ impl PathCompressionUF {
         let mut current = x;
         while current != root {
             let next = self.parent[current];
-            self.parent[current] = root;  // Direct connection to root!
+            self.parent[current] = root; // Direct connection to root!
             current = next;
         }
 
@@ -229,7 +229,7 @@ fn side_by_side_comparison() {
     println!("Find root of 0:");
     let _root1 = basic_uf.find(0);
     println!("  Steps required: ~7 (follows chain)");
-    
+
     println!("\nFind root of 0 AGAIN:");
     let _root2 = basic_uf.find(0);
     println!("  Steps required: ~7 (no improvement!)");
@@ -239,7 +239,7 @@ fn side_by_side_comparison() {
     let _root3 = compressed_uf.find(0);
     println!("  Steps required: ~7 (follows chain)");
     println!("  BUT: Tree is now compressed!");
-    
+
     println!("\nFind root of 0 AGAIN:");
     let _root4 = compressed_uf.find(0);
     println!("  Steps required: 1 (direct to root!)");
@@ -271,14 +271,14 @@ fn visualize_compression() {
     println!("\n3. Calling find(0) - Watch the compression happen!");
     println!("   Pass 1: Find root by following chain");
     println!("     0 → 1 → 2 → 3 → 4 → 5 ✓ (found root: 5)");
-    
+
     println!("\n   Pass 2: Compress path (make everyone point to 5)");
     println!("     0 → 5 ✓");
     println!("     1 → 5 ✓");
     println!("     2 → 5 ✓");
     println!("     3 → 5 ✓");
     println!("     4 → 5 ✓");
-    
+
     let _root = uf.find(0);
 
     println!("\n4. Result - Flat tree:");
@@ -364,7 +364,7 @@ mod tests {
     #[test]
     fn test_path_compression_correctness() {
         let mut uf = PathCompressionUF::new(10);
-        
+
         // Build chain
         for i in 0..9 {
             uf.union(i, i + 1);
@@ -382,7 +382,7 @@ mod tests {
     #[test]
     fn test_compression_occurs() {
         let mut uf = PathCompressionUF::new(5);
-        
+
         // Create chain: 0 → 1 → 2 → 3 → 4
         uf.union(0, 1);
         uf.union(1, 2);
@@ -391,7 +391,7 @@ mod tests {
 
         // First find compresses path
         let root1 = uf.find(0);
-        
+
         // Parent of 0 should now point directly to root
         // (not to intermediate node 1)
         let root2 = uf.parent[0];

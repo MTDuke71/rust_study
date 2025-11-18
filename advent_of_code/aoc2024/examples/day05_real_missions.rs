@@ -59,10 +59,8 @@ impl Day5WithRealMissions {
         let mut updates = Vec::new();
         for line in sections[1].lines() {
             if !line.trim().is_empty() {
-                let pages: Result<Vec<i32>, _> = line
-                    .split(',')
-                    .map(|s| s.trim().parse())
-                    .collect();
+                let pages: Result<Vec<i32>, _> =
+                    line.split(',').map(|s| s.trim().parse()).collect();
                 updates.push(pages.context("Invalid page in update")?);
             }
         }
@@ -93,8 +91,9 @@ impl Day5WithRealMissions {
 
         // Add edges for ordering rules
         for (before, after) in &rules {
-            if let (Some(&before_node), Some(&after_node)) = 
-                (page_to_node.get(before), page_to_node.get(after)) {
+            if let (Some(&before_node), Some(&after_node)) =
+                (page_to_node.get(before), page_to_node.get(after))
+            {
                 graph.add_edge(before_node, after_node);
             }
         }
@@ -114,10 +113,12 @@ impl Day5WithRealMissions {
             for j in (i + 1)..update.len() {
                 let before = update[i];
                 let after = update[j];
-                
+
                 // Check if there's a rule saying 'after' should come before 'before'
-                if let (Some(&after_node), Some(&before_node)) = 
-                    (self.page_to_node.get(&after), self.page_to_node.get(&before)) {
+                if let (Some(&after_node), Some(&before_node)) = (
+                    self.page_to_node.get(&after),
+                    self.page_to_node.get(&before),
+                ) {
                     if self.graph.has_edge(after_node, before_node) {
                         return false;
                     }
@@ -128,23 +129,23 @@ impl Day5WithRealMissions {
     }
 
     /// Fix an incorrectly ordered update using topological sorting
-    /// 
+    ///
     /// Since Mission 8 doesn't have topological sort yet, we'll implement it
     /// using Mission 8's has_cycle function and BFS/DFS capabilities
     pub fn fix_sequence(&self, update: &[i32]) -> Result<Vec<i32>> {
         // Create a subgraph containing only the pages in this update
         let pages_set: HashSet<i32> = update.iter().copied().collect();
-        
+
         // Build adjacency list for Mission 8's Graph trait
         let mut adj_list: HashMap<NodeId, Vec<NodeId>> = HashMap::new();
-        
+
         // Add all nodes from the update
         for &page in update {
             if let Some(&node_id) = self.page_to_node.get(&page) {
                 adj_list.insert(node_id, Vec::new());
             }
         }
-        
+
         // Add edges that apply to this update
         for &page in update {
             if let Some(&node_id) = self.page_to_node.get(&page) {
@@ -176,7 +177,7 @@ impl Day5WithRealMissions {
         for &node_id in adj_list.keys() {
             in_degree.insert(node_id, 0);
         }
-        
+
         // Calculate in-degrees
         for neighbors in adj_list.values() {
             for &neighbor in neighbors {
@@ -216,7 +217,7 @@ impl Day5WithRealMissions {
     /// Fallback sorting method for when cycles exist in the subgraph
     fn fix_sequence_with_rules(&self, update: &[i32]) -> Result<Vec<i32>> {
         let mut result = update.to_vec();
-        
+
         // Simple bubble sort using the ordering rules
         let mut changed = true;
         while changed {
@@ -224,7 +225,7 @@ impl Day5WithRealMissions {
             for i in 0..result.len().saturating_sub(1) {
                 let current = result[i];
                 let next = result[i + 1];
-                
+
                 // Check if we have a rule that says 'next' should come before 'current'
                 if self.rules.contains(&(next, current)) {
                     result.swap(i, i + 1);
@@ -232,28 +233,28 @@ impl Day5WithRealMissions {
                 }
             }
         }
-        
+
         Ok(result)
     }
 
     /// Solve Part 1: Sum of middle pages in correctly ordered updates
     pub fn part1(&self) -> i32 {
         let mut sum = 0;
-        
+
         for update in &self.updates {
             if self.is_correctly_ordered(update) {
                 let middle_idx = update.len() / 2;
                 sum += update[middle_idx];
             }
         }
-        
+
         sum
     }
 
     /// Solve Part 2: Sum of middle pages in fixed incorrectly ordered updates  
     pub fn part2(&self) -> Result<i32> {
         let mut sum = 0;
-        
+
         for update in &self.updates {
             if !self.is_correctly_ordered(update) {
                 let fixed = self.fix_sequence(update)?;
@@ -261,7 +262,7 @@ impl Day5WithRealMissions {
                 sum += fixed[middle_idx];
             }
         }
-        
+
         Ok(sum)
     }
 
@@ -281,7 +282,7 @@ impl Day5WithRealMissions {
     pub fn validate_rules(&self) -> Result<()> {
         // Create adjacency list for Mission 8
         let mut adj_list: HashMap<NodeId, Vec<NodeId>> = HashMap::new();
-        
+
         for node_id in self.graph.nodes() {
             let neighbors: Vec<NodeId> = self.graph.neighbors(node_id).to_vec();
             adj_list.insert(node_id, neighbors);
@@ -298,14 +299,14 @@ impl Day5WithRealMissions {
 /// Solve Day 5 using real Mission 7 + Mission 8 integration
 pub fn solve_with_real_missions(input: &str) -> Result<(i32, i32)> {
     let solver = Day5WithRealMissions::parse(input)?;
-    
+
     // Note: We skip global rule validation here since AoC problems
     // often have cycles in global rules but expect local consistency
     // The validation is shown separately for demonstration
-    
+
     let part1 = solver.part1();
     let part2 = solver.part2()?;
-    
+
     Ok((part1, part2))
 }
 
@@ -313,7 +314,7 @@ fn main() -> Result<()> {
     println!("🚀 Day 5: Print Queue - REAL Mission 7 + Mission 8 Integration");
     println!("================================================================");
     println!();
-    
+
     // Read from external input file
     let input = std::fs::read_to_string("inputs/day05_example.txt")
         .context("Failed to read inputs/day05_example.txt")?;
@@ -326,14 +327,14 @@ fn main() -> Result<()> {
 
     println!("🏗️ REAL Mission Architecture:");
     println!("- Mission 7: Graph<T> for dependency relationships (ACTUAL IMPLEMENTATION)");
-    println!("- Mission 8: BFS/DFS + cycle detection algorithms (ACTUAL IMPLEMENTATION)");  
+    println!("- Mission 8: BFS/DFS + cycle detection algorithms (ACTUAL IMPLEMENTATION)");
     println!("- Code Reuse: ~40% reduction through foundational library integration");
     println!("- Safety: Mission 7/8 automatic bounds checking and validation");
     println!();
 
     // Parse and analyze
     let solver = Day5WithRealMissions::parse(&input)?;
-    
+
     println!("⚡ Running REAL Mission-Based Solution...");
     let (nodes, edges, density) = solver.get_graph_stats();
     println!("📊 Graph Analysis (Mission 7):");
@@ -355,14 +356,17 @@ fn main() -> Result<()> {
 
     // Solve (continuing despite potential global cycles)
     let (part1, part2) = solve_with_real_missions(&input)?;
-    
+
     println!("🎯 Results:");
     println!("   • Part 1 (correctly ordered sum): {}", part1);
     println!("   • Part 2 (fixed sequences sum): {}", part2);
     println!();
 
     println!("✅ REAL Mission Integration Validation:");
-    println!("   • Graph construction: ✅ {} nodes, {} edges (Mission 7)", nodes, edges);
+    println!(
+        "   • Graph construction: ✅ {} nodes, {} edges (Mission 7)",
+        nodes, edges
+    );
     println!("   • Cycle detection: ✅ Rules are consistent (Mission 8)");
     println!("   • Topological sorting: ✅ Sequences fixed using graph theory");
     println!();
@@ -420,7 +424,7 @@ mod tests {
     fn test_real_missions_parsing() {
         let solver = Day5WithRealMissions::parse(SAMPLE_INPUT).unwrap();
         let (nodes, edges, _) = solver.get_graph_stats();
-        
+
         assert!(nodes > 0, "Should have parsed nodes using Mission 7");
         assert!(edges > 0, "Should have parsed edges using Mission 7");
     }
@@ -428,7 +432,7 @@ mod tests {
     #[test]
     fn test_real_missions_validation() {
         let solver = Day5WithRealMissions::parse(SAMPLE_INPUT).unwrap();
-        
+
         // Should not have cycles (Mission 8 validation)
         assert!(solver.validate_rules().is_ok());
     }
@@ -436,7 +440,7 @@ mod tests {
     #[test]
     fn test_real_missions_solving() {
         let (part1, part2) = solve_with_real_missions(SAMPLE_INPUT).unwrap();
-        
+
         // Expected results from sample
         assert_eq!(part1, 143);
         assert_eq!(part2, 123);
@@ -445,11 +449,11 @@ mod tests {
     #[test]
     fn test_correctly_ordered_with_real_missions() {
         let solver = Day5WithRealMissions::parse(SAMPLE_INPUT).unwrap();
-        
+
         // First update should be correctly ordered
         let update = vec![75, 47, 61, 53, 29];
         assert!(solver.is_correctly_ordered(&update));
-        
+
         // Fourth update should be incorrectly ordered
         let update = vec![75, 97, 47, 61, 53];
         assert!(!solver.is_correctly_ordered(&update));
@@ -458,15 +462,15 @@ mod tests {
     #[test]
     fn test_fix_sequence_with_real_missions() {
         let solver = Day5WithRealMissions::parse(SAMPLE_INPUT).unwrap();
-        
+
         // Fix an incorrectly ordered sequence
         let update = vec![75, 97, 47, 61, 53];
         let fixed = solver.fix_sequence(&update).unwrap();
-        
+
         // Fixed sequence should be correctly ordered
         assert!(solver.is_correctly_ordered(&fixed));
         assert_eq!(fixed.len(), update.len());
-        
+
         // Should contain all original pages
         let mut original_sorted = update.clone();
         original_sorted.sort();

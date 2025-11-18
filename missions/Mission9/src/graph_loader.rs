@@ -58,9 +58,8 @@ pub fn load_graph_json(
         PathfindingError::InvalidInput(format!("Failed to open file {}: {}", path.display(), e))
     })?;
 
-    let data: GraphData = serde_json::from_reader(file).map_err(|e| {
-        PathfindingError::InvalidInput(format!("Failed to parse JSON: {}", e))
-    })?;
+    let data: GraphData = serde_json::from_reader(file)
+        .map_err(|e| PathfindingError::InvalidInput(format!("Failed to parse JSON: {}", e)))?;
 
     let mut graph = SimpleWeightedGraph::new();
     let mut context = HeuristicContext::new();
@@ -122,9 +121,8 @@ pub fn save_graph_json(
         PathfindingError::InvalidInput(format!("Failed to create file {}: {}", path.display(), e))
     })?;
 
-    serde_json::to_writer_pretty(file, &data).map_err(|e| {
-        PathfindingError::InvalidInput(format!("Failed to write JSON: {}", e))
-    })?;
+    serde_json::to_writer_pretty(file, &data)
+        .map_err(|e| PathfindingError::InvalidInput(format!("Failed to write JSON: {}", e)))?;
 
     Ok(())
 }
@@ -279,12 +277,7 @@ pub fn save_visualization(
     // Highlight path nodes if provided
     if let Some(path) = highlighted_path {
         for node in path {
-            writeln!(
-                file,
-                "  {} [style=filled, fillcolor=lightblue];",
-                node
-            )
-            .map_err(|e| {
+            writeln!(file, "  {} [style=filled, fillcolor=lightblue];", node).map_err(|e| {
                 PathfindingError::InvalidInput(format!("Failed to write visualization: {}", e))
             })?;
         }
@@ -311,13 +304,14 @@ pub fn save_visualization(
                     PathfindingError::InvalidInput(format!("Failed to write visualization: {}", e))
                 })?;
             } else {
-                writeln!(file, "  {} -> {} [label=\"{:.1}\"];", node_u32, neighbor, weight)
-                    .map_err(|e| {
-                        PathfindingError::InvalidInput(format!(
-                            "Failed to write visualization: {}",
-                            e
-                        ))
-                    })?;
+                writeln!(
+                    file,
+                    "  {} -> {} [label=\"{:.1}\"];",
+                    node_u32, neighbor, weight
+                )
+                .map_err(|e| {
+                    PathfindingError::InvalidInput(format!("Failed to write visualization: {}", e))
+                })?;
             }
         }
     }
@@ -419,7 +413,9 @@ fn simple_rng(seed: u64) -> SimpleRng {
 
 impl SimpleRng {
     fn next(&mut self) -> usize {
-        self.state = self.state.wrapping_mul(6364136223846793005)
+        self.state = self
+            .state
+            .wrapping_mul(6364136223846793005)
             .wrapping_add(1442695040888963407);
         (self.state >> 32) as usize
     }

@@ -17,7 +17,11 @@ fn main() {
 
     // Spawn first producer
     thread::spawn(move || {
-        let messages = vec!["Producer 1: msg 1", "Producer 1: msg 2", "Producer 1: msg 3"];
+        let messages = vec![
+            "Producer 1: msg 1",
+            "Producer 1: msg 2",
+            "Producer 1: msg 3",
+        ];
         for msg in messages {
             tx1.send(msg).unwrap();
             thread::sleep(Duration::from_millis(100));
@@ -44,7 +48,7 @@ fn main() {
 
     // Single consumer receives from all producers
     println!("Consumer receiving from multiple producers:\n");
-    
+
     // Collect all messages (channel closes when all senders drop)
     let mut count = 0;
     for received in rx {

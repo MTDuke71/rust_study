@@ -67,7 +67,9 @@ impl PrintQueue {
     pub fn parse(input: &str) -> Result<Self> {
         let sections: Vec<&str> = input.trim().split("\n\n").collect();
         if sections.len() != 2 {
-            return Err(anyhow::anyhow!("Invalid input format: expected rules and updates separated by blank line"));
+            return Err(anyhow::anyhow!(
+                "Invalid input format: expected rules and updates separated by blank line"
+            ));
         }
 
         // Parse ordering rules: X|Y means X must come before Y
@@ -79,12 +81,14 @@ impl PrintQueue {
             if parts.len() != 2 {
                 return Err(anyhow::anyhow!("Invalid rule format: {}", line));
             }
-            
-            let before: i32 = parts[0].parse()
+
+            let before: i32 = parts[0]
+                .parse()
                 .with_context(|| format!("Invalid page number: {}", parts[0]))?;
-            let after: i32 = parts[1].parse()
+            let after: i32 = parts[1]
+                .parse()
                 .with_context(|| format!("Invalid page number: {}", parts[1]))?;
-            
+
             rules.entry(before).or_default().push(after);
             all_pages.insert(before);
             all_pages.insert(after);
@@ -93,11 +97,8 @@ impl PrintQueue {
         // Parse update sequences
         let mut updates = Vec::new();
         for line in sections[1].lines() {
-            let pages: Result<Vec<i32>, _> = line
-                .split(',')
-                .map(|s| s.parse::<i32>())
-                .collect();
-            
+            let pages: Result<Vec<i32>, _> = line.split(',').map(|s| s.parse::<i32>()).collect();
+
             updates.push(pages.with_context(|| format!("Invalid update format: {}", line))?);
         }
 
@@ -181,17 +182,17 @@ impl PrintQueue {
     /// Topologically sorted sequence that respects all ordering rules
     fn topological_sort_subgraph(&self, update: &[i32]) -> Vec<i32> {
         let update_set: HashSet<i32> = update.iter().copied().collect();
-        
+
         // Build subgraph with only pages from this update
         let mut subgraph: HashMap<i32, Vec<i32>> = HashMap::new();
         let mut in_degree: HashMap<i32, i32> = HashMap::new();
-        
+
         // Initialize all pages with empty adjacency lists and zero in-degree
         for &page in update {
             subgraph.insert(page, Vec::new());
             in_degree.insert(page, 0);
         }
-        
+
         // Add edges that are relevant to this update
         for (&before_page, after_pages) in &self.rules {
             if update_set.contains(&before_page) {
@@ -203,21 +204,21 @@ impl PrintQueue {
                 }
             }
         }
-        
+
         // Kahn's algorithm for topological sorting
         let mut queue = VecDeque::new();
         let mut result = Vec::new();
-        
+
         // Start with pages that have no incoming edges
         for (&page, &degree) in &in_degree {
             if degree == 0 {
                 queue.push_back(page);
             }
         }
-        
+
         while let Some(current) = queue.pop_front() {
             result.push(current);
-            
+
             // Remove edges from current node
             if let Some(neighbors) = subgraph.get(&current) {
                 for &neighbor in neighbors {
@@ -230,13 +231,16 @@ impl PrintQueue {
                 }
             }
         }
-        
+
         // If result length doesn't match update length, there was a cycle
         // This shouldn't happen in valid AoC input, but handle gracefully
         if result.len() != update.len() {
-            eprintln!("Warning: Cycle detected in update {:?}, returning partial sort", update);
+            eprintln!(
+                "Warning: Cycle detected in update {:?}, returning partial sort",
+                update
+            );
         }
-        
+
         result
     }
 
@@ -267,9 +271,8 @@ impl PrintQueue {
 ///
 /// String representation of the sum of middle pages from correctly ordered updates
 pub fn solve_part1(input: &str) -> Result<String> {
-    let queue = PrintQueue::parse(input)
-        .context("Failed to parse print queue input")?;
-    
+    let queue = PrintQueue::parse(input).context("Failed to parse print queue input")?;
+
     let (part1, _) = queue.solve();
     Ok(part1.to_string())
 }
@@ -284,9 +287,8 @@ pub fn solve_part1(input: &str) -> Result<String> {
 ///
 /// String representation of the sum of middle pages from fixed updates
 pub fn solve_part2(input: &str) -> Result<String> {
-    let queue = PrintQueue::parse(input)
-        .context("Failed to parse print queue input")?;
-    
+    let queue = PrintQueue::parse(input).context("Failed to parse print queue input")?;
+
     let (_, part2) = queue.solve();
     Ok(part2.to_string())
 }
@@ -310,9 +312,8 @@ pub fn solve_part2(input: &str) -> Result<String> {
 /// // Results will depend on actual input processing
 /// ```
 pub fn solve(input: &str) -> Result<(i32, i32)> {
-    let queue = PrintQueue::parse(input)
-        .context("Failed to parse print queue input")?;
-    
+    let queue = PrintQueue::parse(input).context("Failed to parse print queue input")?;
+
     Ok(queue.solve())
 }
 
@@ -352,7 +353,7 @@ mod tests {
     #[test]
     fn test_parse_input() {
         let queue = PrintQueue::parse(EXAMPLE_INPUT).unwrap();
-        
+
         assert!(!queue.rules.is_empty());
         assert_eq!(queue.updates.len(), 6);
         assert_eq!(queue.updates[0], vec![75, 47, 61, 53, 29]);
@@ -361,12 +362,12 @@ mod tests {
     #[test]
     fn test_is_correctly_ordered() {
         let queue = PrintQueue::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // First three should be correctly ordered
         assert!(queue.is_correctly_ordered(&queue.updates[0])); // 75,47,61,53,29
         assert!(queue.is_correctly_ordered(&queue.updates[1])); // 97,61,53,29,13
         assert!(queue.is_correctly_ordered(&queue.updates[2])); // 75,29,13
-        
+
         // Last three should be incorrectly ordered
         assert!(!queue.is_correctly_ordered(&queue.updates[3])); // 75,97,47,61,53
         assert!(!queue.is_correctly_ordered(&queue.updates[4])); // 61,13,29
@@ -376,7 +377,7 @@ mod tests {
     #[test]
     fn test_get_middle_page() {
         let queue = PrintQueue::parse(EXAMPLE_INPUT).unwrap();
-        
+
         assert_eq!(queue.get_middle_page(&[75, 47, 61, 53, 29]), 61);
         assert_eq!(queue.get_middle_page(&[97, 61, 53, 29, 13]), 53);
         assert_eq!(queue.get_middle_page(&[75, 29, 13]), 29);
@@ -385,16 +386,16 @@ mod tests {
     #[test]
     fn test_topological_sort_subgraph() {
         let queue = PrintQueue::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // Test fixing incorrectly ordered sequences
         let fixed1 = queue.topological_sort_subgraph(&queue.updates[3]); // 75,97,47,61,53
         assert!(queue.is_correctly_ordered(&fixed1));
         assert_eq!(queue.get_middle_page(&fixed1), 47);
-        
+
         let fixed2 = queue.topological_sort_subgraph(&queue.updates[4]); // 61,13,29
         assert!(queue.is_correctly_ordered(&fixed2));
         assert_eq!(queue.get_middle_page(&fixed2), 29);
-        
+
         let fixed3 = queue.topological_sort_subgraph(&queue.updates[5]); // 97,13,75,29,47
         assert!(queue.is_correctly_ordered(&fixed3));
         assert_eq!(queue.get_middle_page(&fixed3), 47);
@@ -431,11 +432,11 @@ mod tests {
     #[test]
     fn test_mission_integration_concepts() {
         let queue = PrintQueue::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // Verify graph construction concepts (similar to Mission 7)
         assert!(!queue.rules.is_empty());
         assert!(!queue.all_pages.is_empty());
-        
+
         // Verify topological sorting produces valid orderings
         for update in &queue.updates {
             if !queue.is_correctly_ordered(update) {
@@ -450,11 +451,11 @@ mod tests {
     #[test]
     fn test_algorithm_composition() {
         let queue = PrintQueue::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // Test that we can compose validation + topological sort
         let mut correctly_ordered_count = 0;
         let mut fixed_count = 0;
-        
+
         for update in &queue.updates {
             if queue.is_correctly_ordered(update) {
                 correctly_ordered_count += 1;
@@ -464,7 +465,7 @@ mod tests {
                 fixed_count += 1;
             }
         }
-        
+
         assert_eq!(correctly_ordered_count, 3);
         assert_eq!(fixed_count, 3);
         assert_eq!(correctly_ordered_count + fixed_count, queue.updates.len());
@@ -474,16 +475,16 @@ mod tests {
     #[test]
     fn test_performance_characteristics() {
         let queue = PrintQueue::parse(EXAMPLE_INPUT).unwrap();
-        
+
         // Ensure topological sort runs in reasonable time
         let start = std::time::Instant::now();
-        
+
         for update in &queue.updates {
             if !queue.is_correctly_ordered(update) {
                 queue.topological_sort_subgraph(update);
             }
         }
-        
+
         let duration = start.elapsed();
         assert!(duration.as_millis() < 100); // Should be very fast for small inputs
     }

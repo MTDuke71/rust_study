@@ -67,8 +67,10 @@ fn main() {
 
     // Example 4: Sending complex data
     println!("Example 4: Sending structured data");
-    
+
+    #[allow(dead_code)]
     #[derive(Debug)]
+    #[allow(dead_code)]
     struct Task {
         id: u32,
         description: String,
@@ -79,9 +81,21 @@ fn main() {
 
     thread::spawn(move || {
         let tasks = vec![
-            Task { id: 1, description: "Process data".to_string(), priority: 1 },
-            Task { id: 2, description: "Send report".to_string(), priority: 2 },
-            Task { id: 3, description: "Clean up".to_string(), priority: 3 },
+            Task {
+                id: 1,
+                description: "Process data".to_string(),
+                priority: 1,
+            },
+            Task {
+                id: 2,
+                description: "Send report".to_string(),
+                priority: 2,
+            },
+            Task {
+                id: 3,
+                description: "Clean up".to_string(),
+                priority: 3,
+            },
         ];
 
         for task in tasks {

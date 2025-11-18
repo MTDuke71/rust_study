@@ -12,8 +12,8 @@
 //! - Early termination with bound checking
 //! - Custom memory allocators for node management
 
-use std::collections::{BinaryHeap, HashSet, HashMap};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::hash::{Hash, Hasher};
 
 /// Memory-optimized node structure
@@ -21,13 +21,18 @@ use std::hash::{Hash, Hasher};
 #[derive(Debug, Clone)]
 pub struct OptimizedNode {
     pub position: (usize, usize),
-    pub g_cost: u32,        // Actual cost from start
-    pub h_cost: u32,        // Heuristic cost to goal
+    pub g_cost: u32, // Actual cost from start
+    pub h_cost: u32, // Heuristic cost to goal
     pub parent: Option<(usize, usize)>,
 }
 
 impl OptimizedNode {
-    pub fn new(position: (usize, usize), g_cost: u32, h_cost: u32, parent: Option<(usize, usize)>) -> Self {
+    pub fn new(
+        position: (usize, usize),
+        g_cost: u32,
+        h_cost: u32,
+        parent: Option<(usize, usize)>,
+    ) -> Self {
         Self {
             position,
             g_cost,
@@ -45,10 +50,10 @@ impl OptimizedNode {
 // Add a truly memory-optimized version with u32 coordinates
 #[derive(Debug, Clone)]
 pub struct TrulyOptimizedNode {
-    pub position: (u32, u32),          // 8 bytes instead of 16
-    pub g_cost: u32,                   // Actual cost from start
-    pub h_cost: u32,                   // Heuristic cost to goal
-    pub parent: Option<(u32, u32)>,    // 12 bytes instead of 24
+    pub position: (u32, u32),       // 8 bytes instead of 16
+    pub g_cost: u32,                // Actual cost from start
+    pub h_cost: u32,                // Heuristic cost to goal
+    pub parent: Option<(u32, u32)>, // 12 bytes instead of 24
 }
 
 impl TrulyOptimizedNode {
@@ -67,7 +72,12 @@ impl TrulyOptimizedNode {
     }
 
     /// Convert from usize coordinates (for compatibility with existing APIs)
-    pub fn from_usize(position: (usize, usize), g_cost: u32, h_cost: u32, parent: Option<(usize, usize)>) -> Self {
+    pub fn from_usize(
+        position: (usize, usize),
+        g_cost: u32,
+        h_cost: u32,
+        parent: Option<(usize, usize)>,
+    ) -> Self {
         Self {
             position: (position.0 as u32, position.1 as u32),
             g_cost,
@@ -80,7 +90,7 @@ impl TrulyOptimizedNode {
     pub fn to_usize(&self) -> ((usize, usize), Option<(usize, usize)>) {
         (
             (self.position.0 as usize, self.position.1 as usize),
-            self.parent.map(|(x, y)| (x as usize, y as usize))
+            self.parent.map(|(x, y)| (x as usize, y as usize)),
         )
     }
 }
@@ -102,7 +112,9 @@ impl Hash for TrulyOptimizedNode {
 impl Ord for TrulyOptimizedNode {
     fn cmp(&self, other: &Self) -> Ordering {
         // Min-heap: lower f_cost has higher priority
-        other.f_cost().cmp(&self.f_cost())
+        other
+            .f_cost()
+            .cmp(&self.f_cost())
             .then_with(|| self.position.cmp(&other.position))
     }
 }
@@ -130,7 +142,9 @@ impl Hash for OptimizedNode {
 impl Ord for OptimizedNode {
     fn cmp(&self, other: &Self) -> Ordering {
         // Min-heap: lower f_cost has higher priority
-        other.f_cost().cmp(&self.f_cost())
+        other
+            .f_cost()
+            .cmp(&self.f_cost())
             .then_with(|| self.position.cmp(&other.position))
     }
 }
@@ -157,9 +171,15 @@ impl NodePool {
         }
     }
 
-    pub fn allocate(&mut self, position: (usize, usize), g_cost: u32, h_cost: u32, parent: Option<(usize, usize)>) -> usize {
+    pub fn allocate(
+        &mut self,
+        position: (usize, usize),
+        g_cost: u32,
+        h_cost: u32,
+        parent: Option<(usize, usize)>,
+    ) -> usize {
         let node = OptimizedNode::new(position, g_cost, h_cost, parent);
-        
+
         if let Some(index) = self.free_indices.pop() {
             self.nodes[index] = node;
             index
@@ -281,7 +301,7 @@ impl BidirectionalAstar {
         let mut forward_g_scores = HashMap::new();
         let mut forward_came_from = HashMap::new();
 
-        // Backward search state  
+        // Backward search state
         let mut backward_open = BinaryHeap::new();
         let mut backward_closed = HashSet::new();
         let mut backward_g_scores = HashMap::new();
@@ -305,9 +325,13 @@ impl BidirectionalAstar {
         // Main bidirectional search loop
         while !forward_open.is_empty() && !backward_open.is_empty() {
             // Update peak sizes
-            self.metrics.peak_open_set_size = self.metrics.peak_open_set_size
+            self.metrics.peak_open_set_size = self
+                .metrics
+                .peak_open_set_size
                 .max(forward_open.len() + backward_open.len());
-            self.metrics.peak_closed_set_size = self.metrics.peak_closed_set_size
+            self.metrics.peak_closed_set_size = self
+                .metrics
+                .peak_closed_set_size
                 .max(forward_closed.len() + backward_closed.len());
 
             // Expand forward search
@@ -349,7 +373,12 @@ impl BidirectionalAstar {
                     forward_came_from.insert(neighbor_pos, forward_current.position);
 
                     let neighbor_h = heuristic(neighbor_pos, goal);
-                    let neighbor_node = OptimizedNode::new(neighbor_pos, tentative_g, neighbor_h, Some(forward_current.position));
+                    let neighbor_node = OptimizedNode::new(
+                        neighbor_pos,
+                        tentative_g,
+                        neighbor_h,
+                        Some(forward_current.position),
+                    );
 
                     forward_open.push(neighbor_node);
                     self.metrics.nodes_generated += 1;
@@ -395,7 +424,12 @@ impl BidirectionalAstar {
                     backward_came_from.insert(neighbor_pos, backward_current.position);
 
                     let neighbor_h = heuristic(neighbor_pos, start);
-                    let neighbor_node = OptimizedNode::new(neighbor_pos, tentative_g, neighbor_h, Some(backward_current.position));
+                    let neighbor_node = OptimizedNode::new(
+                        neighbor_pos,
+                        tentative_g,
+                        neighbor_h,
+                        Some(backward_current.position),
+                    );
 
                     backward_open.push(neighbor_node);
                     self.metrics.nodes_generated += 1;
@@ -407,7 +441,7 @@ impl BidirectionalAstar {
             if !forward_open.is_empty() && !backward_open.is_empty() {
                 let forward_min_f = forward_open.peek().map(|n| n.f_cost()).unwrap_or(u32::MAX);
                 let backward_min_f = backward_open.peek().map(|n| n.f_cost()).unwrap_or(u32::MAX);
-                
+
                 if forward_min_f + backward_min_f >= best_path_cost {
                     self.metrics.early_terminations += 1;
                     break;
@@ -538,7 +572,9 @@ impl BidirectionalDijkstra {
 
         // Main search loop
         while !forward_open.is_empty() && !backward_open.is_empty() {
-            self.metrics.peak_open_set_size = self.metrics.peak_open_set_size
+            self.metrics.peak_open_set_size = self
+                .metrics
+                .peak_open_set_size
                 .max(forward_open.len() + backward_open.len());
 
             // Expand forward search
@@ -573,7 +609,12 @@ impl BidirectionalDijkstra {
                     forward_distances.insert(neighbor_pos, new_distance);
                     forward_came_from.insert(neighbor_pos, forward_current.position);
 
-                    let neighbor_node = OptimizedNode::new(neighbor_pos, new_distance, 0, Some(forward_current.position));
+                    let neighbor_node = OptimizedNode::new(
+                        neighbor_pos,
+                        new_distance,
+                        0,
+                        Some(forward_current.position),
+                    );
                     forward_open.push(neighbor_node);
                     self.metrics.nodes_generated += 1;
                 }
@@ -608,7 +649,12 @@ impl BidirectionalDijkstra {
                     backward_distances.insert(neighbor_pos, new_distance);
                     backward_came_from.insert(neighbor_pos, backward_current.position);
 
-                    let neighbor_node = OptimizedNode::new(neighbor_pos, new_distance, 0, Some(backward_current.position));
+                    let neighbor_node = OptimizedNode::new(
+                        neighbor_pos,
+                        new_distance,
+                        0,
+                        Some(backward_current.position),
+                    );
                     backward_open.push(neighbor_node);
                     self.metrics.nodes_generated += 1;
                 }
@@ -726,7 +772,8 @@ impl MemoryOptimizedAstar {
         while let Some(current) = open_set.pop() {
             self.metrics.nodes_explored += 1;
             self.metrics.peak_open_set_size = self.metrics.peak_open_set_size.max(open_set.len());
-            self.metrics.peak_closed_set_size = self.metrics.peak_closed_set_size.max(closed_set.len());
+            self.metrics.peak_closed_set_size =
+                self.metrics.peak_closed_set_size.max(closed_set.len());
 
             if current.position == goal {
                 let path = self.reconstruct_path(&came_from, start, goal);
@@ -755,7 +802,12 @@ impl MemoryOptimizedAstar {
                 came_from.insert(neighbor_pos, current.position);
 
                 let neighbor_h = heuristic(neighbor_pos, goal);
-                let neighbor_node = OptimizedNode::new(neighbor_pos, tentative_g, neighbor_h, Some(current.position));
+                let neighbor_node = OptimizedNode::new(
+                    neighbor_pos,
+                    tentative_g,
+                    neighbor_h,
+                    Some(current.position),
+                );
 
                 open_set.push(neighbor_node);
                 self.metrics.nodes_generated += 1;
@@ -803,14 +855,26 @@ mod tests {
         (dx + dy) as u32
     }
 
-    fn grid_neighbors(pos: (usize, usize), width: usize, height: usize) -> Vec<((usize, usize), u32)> {
+    fn grid_neighbors(
+        pos: (usize, usize),
+        width: usize,
+        height: usize,
+    ) -> Vec<((usize, usize), u32)> {
         let mut neighbors = Vec::new();
         let (x, y) = pos;
 
-        if x > 0 { neighbors.push(((x-1, y), 1)); }
-        if x + 1 < width { neighbors.push(((x+1, y), 1)); }
-        if y > 0 { neighbors.push(((x, y-1), 1)); }
-        if y + 1 < height { neighbors.push(((x, y+1), 1)); }
+        if x > 0 {
+            neighbors.push(((x - 1, y), 1));
+        }
+        if x + 1 < width {
+            neighbors.push(((x + 1, y), 1));
+        }
+        if y > 0 {
+            neighbors.push(((x, y - 1), 1));
+        }
+        if y + 1 < height {
+            neighbors.push(((x, y + 1), 1));
+        }
 
         neighbors
     }
@@ -821,18 +885,15 @@ mod tests {
         let start = (0, 0);
         let goal = (9, 9);
 
-        let path = astar.find_path(
-            start,
-            goal,
-            manhattan_distance,
-            |pos| grid_neighbors(pos, 10, 10),
-        );
+        let path = astar.find_path(start, goal, manhattan_distance, |pos| {
+            grid_neighbors(pos, 10, 10)
+        });
 
         assert!(path.is_some());
         let path = path.unwrap();
         assert_eq!(path.first(), Some(&start));
         assert_eq!(path.last(), Some(&goal));
-        
+
         let metrics = astar.get_metrics();
         assert!(metrics.nodes_explored > 0);
         assert!(metrics.path_cost > 0);
@@ -844,11 +905,7 @@ mod tests {
         let start = (0, 0);
         let goal = (5, 5);
 
-        let path = dijkstra.find_path(
-            start,
-            goal,
-            |pos| grid_neighbors(pos, 10, 10),
-        );
+        let path = dijkstra.find_path(start, goal, |pos| grid_neighbors(pos, 10, 10));
 
         assert!(path.is_some());
         let path = path.unwrap();
@@ -865,12 +922,9 @@ mod tests {
         let start = (0, 0);
         let goal = (7, 7);
 
-        let path = astar.find_path(
-            start,
-            goal,
-            manhattan_distance,
-            |pos| grid_neighbors(pos, 10, 10),
-        );
+        let path = astar.find_path(start, goal, manhattan_distance, |pos| {
+            grid_neighbors(pos, 10, 10)
+        });
 
         assert!(path.is_some());
         let metrics = astar.get_metrics();
@@ -880,18 +934,18 @@ mod tests {
     #[test]
     fn test_node_pool() {
         let mut pool = NodePool::new(10);
-        
+
         // Test allocation
         let idx1 = pool.allocate((0, 0), 0, 5, None);
         let idx2 = pool.allocate((1, 1), 1, 4, Some((0, 0)));
-        
+
         assert_eq!(pool.get(idx1).position, (0, 0));
         assert_eq!(pool.get(idx2).position, (1, 1));
-        
+
         // Test deallocation and reuse
         pool.deallocate(idx1);
         let idx3 = pool.allocate((2, 2), 2, 3, None);
-        
+
         // Should reuse the deallocated slot
         assert_eq!(idx3, idx1);
         assert_eq!(pool.get(idx3).position, (2, 2));
@@ -903,12 +957,9 @@ mod tests {
         let start = (0, 0);
         let goal = (2, 2); // Close goal for early termination
 
-        astar.find_path(
-            start,
-            goal,
-            manhattan_distance,
-            |pos| grid_neighbors(pos, 10, 10),
-        );
+        astar.find_path(start, goal, manhattan_distance, |pos| {
+            grid_neighbors(pos, 10, 10)
+        });
 
         let metrics = astar.get_metrics();
         // Should find path quickly with minimal exploration

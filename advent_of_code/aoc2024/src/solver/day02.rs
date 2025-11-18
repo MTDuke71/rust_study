@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 
 /// Parse input into a vector of reports, where each report is a vector of levels
-/// 
+///
 /// Internal function used by solve_part1 and solve_part2.
 /// Example usage is demonstrated in the public solver functions.
 fn parse_reports(input: &str) -> Result<Vec<Vec<i32>>> {
@@ -13,8 +13,14 @@ fn parse_reports(input: &str) -> Result<Vec<Vec<i32>>> {
             line.split_whitespace()
                 .enumerate()
                 .map(|(col_num, level_str)| {
-                    level_str.parse::<i32>()
-                        .with_context(|| format!("Failed to parse level '{}' at position {} on line {}", level_str, col_num + 1, line_num + 1))
+                    level_str.parse::<i32>().with_context(|| {
+                        format!(
+                            "Failed to parse level '{}' at position {} on line {}",
+                            level_str,
+                            col_num + 1,
+                            line_num + 1
+                        )
+                    })
                 })
                 .collect::<Result<Vec<i32>>>()
         })
@@ -30,16 +36,16 @@ fn is_safe_report(levels: &[i32]) -> bool {
     }
 
     let mut direction: Option<bool> = None; // None = unknown, Some(true) = increasing, Some(false) = decreasing
-    
+
     for window in levels.windows(2) {
         let diff = window[1] - window[0];
         let abs_diff = diff.abs();
-        
+
         // Check if difference is within allowed range (1-3)
         if !(1..=3).contains(&abs_diff) {
             return false;
         }
-        
+
         // Determine or verify direction
         let is_increasing = diff > 0;
         match direction {
@@ -55,7 +61,7 @@ fn is_safe_report(levels: &[i32]) -> bool {
             }
         }
     }
-    
+
     true
 }
 
@@ -65,39 +71,39 @@ fn is_safe_with_dampener(levels: &[i32]) -> bool {
     if is_safe_report(levels) {
         return true;
     }
-    
+
     // Try removing each level one at a time
     for i in 0..levels.len() {
         let mut modified_levels = levels.to_vec();
         modified_levels.remove(i);
-        
+
         if is_safe_report(&modified_levels) {
             return true;
         }
     }
-    
+
     false
 }
 
 /// Solve Part 1: Count how many reports are safe
-/// 
+///
 /// A report is safe if:
 /// - The levels are either all increasing or all decreasing
 /// - Any two adjacent levels differ by at least one and at most three
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `input` - The puzzle input as a string
-/// 
+///
 /// # Returns
-/// 
+///
 /// The number of safe reports
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// use aoc2024::solver::day02::solve_part1;
-/// 
+///
 /// // Small example with 6 reports
 /// let input = "7 6 4 2 1
 /// 1 2 7 8 9
@@ -105,40 +111,39 @@ fn is_safe_with_dampener(levels: &[i32]) -> bool {
 /// 1 3 2 4 5
 /// 8 6 4 4 1
 /// 1 3 6 7 9";
-/// 
+///
 /// assert_eq!(solve_part1(input).unwrap(), 2);
 /// ```
 pub fn solve_part1(input: &str) -> Result<usize> {
-    let reports = parse_reports(input)
-        .context("Failed to parse reports from input")?;
-    
+    let reports = parse_reports(input).context("Failed to parse reports from input")?;
+
     let safe_count = reports
         .iter()
         .filter(|report| is_safe_report(report))
         .count();
-    
+
     Ok(safe_count)
 }
 
 /// Solve Part 2: Count how many reports are safe with the Problem Dampener
-/// 
+///
 /// The Problem Dampener allows the reactor safety systems to tolerate a single
 /// bad level in what would otherwise be a safe report. A report is safe if
 /// removing exactly one level would make it safe according to Part 1 rules.
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `input` - The puzzle input as a string
-/// 
+///
 /// # Returns
-/// 
+///
 /// The number of safe reports with the Problem Dampener
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// use aoc2024::solver::day02::solve_part2;
-/// 
+///
 /// // Small example with 6 reports
 /// let input = "7 6 4 2 1
 /// 1 2 7 8 9
@@ -146,18 +151,17 @@ pub fn solve_part1(input: &str) -> Result<usize> {
 /// 1 3 2 4 5
 /// 8 6 4 4 1
 /// 1 3 6 7 9";
-/// 
+///
 /// assert_eq!(solve_part2(input).unwrap(), 4);
 /// ```
 pub fn solve_part2(input: &str) -> Result<usize> {
-    let reports = parse_reports(input)
-        .context("Failed to parse reports from input")?;
-    
+    let reports = parse_reports(input).context("Failed to parse reports from input")?;
+
     let safe_count = reports
         .iter()
         .filter(|report| is_safe_with_dampener(report))
         .count();
-    
+
     Ok(safe_count)
 }
 
@@ -182,22 +186,22 @@ mod tests {
 
     #[test]
     fn test_is_safe_report() {
-        assert!(is_safe_report(&[7, 6, 4, 2, 1]));  // All decreasing by 1 or 2
+        assert!(is_safe_report(&[7, 6, 4, 2, 1])); // All decreasing by 1 or 2
         assert!(!is_safe_report(&[1, 2, 7, 8, 9])); // Increase of 5
         assert!(!is_safe_report(&[9, 7, 6, 2, 1])); // Decrease of 4
         assert!(!is_safe_report(&[1, 3, 2, 4, 5])); // Increasing then decreasing
         assert!(!is_safe_report(&[8, 6, 4, 4, 1])); // No change (4 4)
-        assert!(is_safe_report(&[1, 3, 6, 7, 9]));  // All increasing by 1, 2, or 3
+        assert!(is_safe_report(&[1, 3, 6, 7, 9])); // All increasing by 1, 2, or 3
     }
 
     #[test]
     fn test_is_safe_with_dampener() {
-        assert!(is_safe_with_dampener(&[7, 6, 4, 2, 1]));  // Safe without removing any level
+        assert!(is_safe_with_dampener(&[7, 6, 4, 2, 1])); // Safe without removing any level
         assert!(!is_safe_with_dampener(&[1, 2, 7, 8, 9])); // Unsafe regardless of removal
-        assert!(!is_safe_with_dampener(&[9, 7, 6, 2, 1])); // Unsafe regardless of removal  
-        assert!(is_safe_with_dampener(&[1, 3, 2, 4, 5]));  // Safe by removing second level (3)
-        assert!(is_safe_with_dampener(&[8, 6, 4, 4, 1]));  // Safe by removing third level (4)
-        assert!(is_safe_with_dampener(&[1, 3, 6, 7, 9]));  // Safe without removing any level
+        assert!(!is_safe_with_dampener(&[9, 7, 6, 2, 1])); // Unsafe regardless of removal
+        assert!(is_safe_with_dampener(&[1, 3, 2, 4, 5])); // Safe by removing second level (3)
+        assert!(is_safe_with_dampener(&[8, 6, 4, 4, 1])); // Safe by removing third level (4)
+        assert!(is_safe_with_dampener(&[1, 3, 6, 7, 9])); // Safe without removing any level
     }
 
     #[test]
@@ -214,13 +218,13 @@ mod tests {
     fn test_edge_cases() {
         // Single level - should be safe
         assert!(is_safe_report(&[5]));
-        
+
         // Two levels - should be safe if diff is 1-3
         assert!(is_safe_report(&[1, 2]));
         assert!(is_safe_report(&[1, 4]));
         assert!(!is_safe_report(&[1, 5])); // diff > 3
         assert!(!is_safe_report(&[1, 1])); // no change
-        
+
         // Empty report - should be safe
         assert!(is_safe_report(&[]));
     }
@@ -229,10 +233,10 @@ mod tests {
     fn test_problem_dampener_edge_cases() {
         // Report with only one bad level at the beginning
         assert!(is_safe_with_dampener(&[10, 1, 2, 3]));
-        
+
         // Report with only one bad level at the end
         assert!(is_safe_with_dampener(&[1, 2, 3, 10]));
-        
+
         // Report with only one bad level in the middle
         assert!(is_safe_with_dampener(&[1, 2, 10, 3, 4]));
     }

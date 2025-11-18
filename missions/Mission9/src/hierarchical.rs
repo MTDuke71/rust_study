@@ -11,8 +11,8 @@
 use crate::error::PathfindingError;
 use crate::graph::WeightedGraph;
 use crate::{NodeId, PathfindingResult};
-use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 
 // ============================================================================
 // Node Importance & Ordering
@@ -37,28 +37,22 @@ pub fn calculate_node_importance<G: WeightedGraph>(
     strategy: ImportanceStrategy,
 ) -> Vec<(NodeId, f64)> {
     let mut importance = Vec::new();
-    
+
     for node_id in graph.nodes() {
         let score = match strategy {
-            ImportanceStrategy::Degree => {
-                graph.neighbors(node_id).len() as f64
-            }
-            ImportanceStrategy::EdgeDifference => {
-                calculate_edge_difference(graph, node_id)
-            }
-            ImportanceStrategy::Betweenness => {
-                approximate_betweenness(graph, node_id)
-            }
+            ImportanceStrategy::Degree => graph.neighbors(node_id).len() as f64,
+            ImportanceStrategy::EdgeDifference => calculate_edge_difference(graph, node_id),
+            ImportanceStrategy::Betweenness => approximate_betweenness(graph, node_id),
             ImportanceStrategy::Combined => {
                 let degree = graph.neighbors(node_id).len() as f64;
                 let edge_diff = calculate_edge_difference(graph, node_id);
                 0.3 * degree + 0.7 * edge_diff
             }
         };
-        
+
         importance.push((node_id, score));
     }
-    
+
     importance
 }
 
@@ -68,12 +62,12 @@ fn calculate_edge_difference<G: WeightedGraph>(graph: &G, node: NodeId) -> f64 {
     if neighbors.is_empty() {
         return 0.0;
     }
-    
+
     // Estimate: if we contract this node, we create shortcuts between all neighbor pairs
     let neighbor_count = neighbors.len();
     let potential_shortcuts = (neighbor_count * (neighbor_count - 1)) as f64 / 2.0;
     let existing_edges = neighbor_count as f64;
-    
+
     potential_shortcuts - existing_edges
 }
 
@@ -83,7 +77,7 @@ fn approximate_betweenness<G: WeightedGraph>(graph: &G, node: NodeId) -> f64 {
     if neighbor_count < 2 {
         return 0.0;
     }
-    
+
     // Simple approximation: nodes connecting many others are more "central"
     (neighbor_count * (neighbor_count - 1)) as f64 / 2.0
 }
@@ -134,28 +128,31 @@ impl ContractionHierarchy {
     ///
     /// # Returns
     /// A contraction hierarchy ready for fast queries
-    pub fn build<G: WeightedGraph>(graph: &G, strategy: ImportanceStrategy) -> PathfindingResult<Self> {
+    pub fn build<G: WeightedGraph>(
+        graph: &G,
+        strategy: ImportanceStrategy,
+    ) -> PathfindingResult<Self> {
         if graph.nodes().is_empty() {
             return Err(PathfindingError::InvalidConfiguration {
-                message: "Cannot build CH from empty graph".to_string()
+                message: "Cannot build CH from empty graph".to_string(),
             });
         }
-        
+
         // Calculate node importance and create ordering
         let mut importance = calculate_node_importance(graph, strategy);
         importance.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(Ordering::Equal));
-        
+
         let node_order: Vec<NodeId> = importance.iter().map(|(id, _)| *id).collect();
         let mut node_rank = HashMap::new();
         for (rank, &node_id) in node_order.iter().enumerate() {
             node_rank.insert(node_id, rank);
         }
-        
+
         // Contract nodes and build shortcuts
         let mut shortcuts = Vec::new();
         let mut upward_edges: HashMap<NodeId, Vec<(NodeId, f64)>> = HashMap::new();
         let mut contracted = HashSet::new();
-        
+
         for &node_id in &node_order {
             Self::contract_node(
                 graph,
@@ -167,7 +164,7 @@ impl ContractionHierarchy {
             );
             contracted.insert(node_id);
         }
-        
+
         Ok(ContractionHierarchy {
             node_order,
             node_rank,
@@ -176,7 +173,7 @@ impl ContractionHierarchy {
             node_count: graph.nodes().len(),
         })
     }
-    
+
     /// Contract a single node and add necessary shortcuts
     fn contract_node<G: WeightedGraph>(
         graph: &G,
@@ -191,21 +188,21 @@ impl ContractionHierarchy {
             .into_iter()
             .filter(|&(n, _)| !contracted.contains(&n))
             .collect();
-        
+
         // For each pair of neighbors, check if we need a shortcut
         for &(from_id, from_weight) in &neighbors {
             for &(to_id, to_weight) in &neighbors {
                 if from_id == to_id {
                     continue;
                 }
-                
+
                 let from_rank = node_rank.get(&from_id).copied().unwrap_or(0);
                 let to_rank = node_rank.get(&to_id).copied().unwrap_or(0);
-                
+
                 // Only add upward shortcuts (lower rank -> higher rank)
                 if from_rank < to_rank {
                     let shortcut_weight = from_weight + to_weight;
-                    
+
                     // Witness search: is this shortcut necessary?
                     if Self::is_shortcut_necessary(
                         graph,
@@ -221,7 +218,7 @@ impl ContractionHierarchy {
                             weight: shortcut_weight,
                             via: node,
                         });
-                        
+
                         upward_edges
                             .entry(from_id)
                             .or_default()
@@ -231,7 +228,7 @@ impl ContractionHierarchy {
             }
         }
     }
-    
+
     /// Witness search: check if a shortcut is necessary
     fn is_shortcut_necessary<G: WeightedGraph>(
         graph: &G,
@@ -244,68 +241,78 @@ impl ContractionHierarchy {
         // Limited Dijkstra search to find alternative path
         let mut queue = BinaryHeap::new();
         let mut visited = HashSet::new();
-        
+
         queue.push(WitnessState {
             cost: 0.0,
             node: from,
         });
-        
+
         while let Some(WitnessState { cost, node }) = queue.pop() {
             if node == to && cost <= max_weight {
                 return false; // Found alternative path, shortcut not needed
             }
-            
+
             if cost > max_weight {
                 continue;
             }
-            
+
             if !visited.insert(node) {
                 continue;
             }
-            
+
             for (neighbor, weight) in graph.neighbors(node) {
                 if neighbor == avoid || contracted.contains(&neighbor) {
                     continue;
                 }
-                
+
                 queue.push(WitnessState {
                     cost: cost + weight,
                     node: neighbor,
                 });
             }
         }
-        
+
         true // No alternative path found, shortcut is necessary
     }
-    
+
     /// Query the contraction hierarchy for shortest path
     ///
     /// Uses bidirectional search in the hierarchy (extremely fast)
-    pub fn query(&self, start: NodeId, goal: NodeId) -> PathfindingResult<Option<(f64, Vec<NodeId>)>> {
+    pub fn query(
+        &self,
+        start: NodeId,
+        goal: NodeId,
+    ) -> PathfindingResult<Option<(f64, Vec<NodeId>)>> {
         if start >= self.node_count as NodeId || goal >= self.node_count as NodeId {
             return Err(PathfindingError::InvalidConfiguration {
-                message: format!("Node ID out of range (graph has {} nodes)", self.node_count)
+                message: format!("Node ID out of range (graph has {} nodes)", self.node_count),
             });
         }
-        
+
         // Bidirectional search (forward and backward simultaneously)
         let mut forward_dist = vec![f64::INFINITY; self.node_count];
         let mut forward_parent = vec![None; self.node_count];
         let mut forward_queue = BinaryHeap::new();
-        
+
         let mut backward_dist = vec![f64::INFINITY; self.node_count];
         let mut backward_parent = vec![None; self.node_count];
         let mut backward_queue = BinaryHeap::new();
-        
+
         forward_dist[start as usize] = 0.0;
-        forward_queue.push(CHState { cost: 0.0, node: start });
-        
+        forward_queue.push(CHState {
+            cost: 0.0,
+            node: start,
+        });
+
         backward_dist[goal as usize] = 0.0;
-        backward_queue.push(CHState { cost: 0.0, node: goal });
-        
+        backward_queue.push(CHState {
+            cost: 0.0,
+            node: goal,
+        });
+
         let mut best_distance = f64::INFINITY;
         let mut meeting_node = None;
-        
+
         // Search until both queues are exhausted
         while !forward_queue.is_empty() || !backward_queue.is_empty() {
             // Forward step
@@ -313,11 +320,11 @@ impl ContractionHierarchy {
                 if cost > best_distance {
                     break;
                 }
-                
+
                 if cost > forward_dist[node as usize] {
                     continue;
                 }
-                
+
                 // Check for meeting point
                 if backward_dist[node as usize] < f64::INFINITY {
                     let total = forward_dist[node as usize] + backward_dist[node as usize];
@@ -326,7 +333,7 @@ impl ContractionHierarchy {
                         meeting_node = Some(node);
                     }
                 }
-                
+
                 // Explore upward edges
                 self.explore_upward(
                     node,
@@ -336,17 +343,17 @@ impl ContractionHierarchy {
                     &mut forward_queue,
                 )?;
             }
-            
+
             // Backward step
             if let Some(CHState { cost, node }) = backward_queue.pop() {
                 if cost > best_distance {
                     break;
                 }
-                
+
                 if cost > backward_dist[node as usize] {
                     continue;
                 }
-                
+
                 // Check for meeting point
                 if forward_dist[node as usize] < f64::INFINITY {
                     let total = forward_dist[node as usize] + backward_dist[node as usize];
@@ -355,7 +362,7 @@ impl ContractionHierarchy {
                         meeting_node = Some(node);
                     }
                 }
-                
+
                 // Explore upward edges in reverse
                 self.explore_upward_reverse(
                     node,
@@ -366,19 +373,14 @@ impl ContractionHierarchy {
                 )?;
             }
         }
-        
+
         Ok(meeting_node.map(|meeting| {
-            let path = self.reconstruct_path(
-                start,
-                goal,
-                meeting,
-                &forward_parent,
-                &backward_parent,
-            );
+            let path =
+                self.reconstruct_path(start, goal, meeting, &forward_parent, &backward_parent);
             (best_distance, path)
         }))
     }
-    
+
     /// Explore upward edges (forward search)
     fn explore_upward(
         &self,
@@ -389,7 +391,7 @@ impl ContractionHierarchy {
         queue: &mut BinaryHeap<CHState>,
     ) -> PathfindingResult<()> {
         let node_rank = self.node_rank.get(&node).copied().unwrap_or(0);
-        
+
         // Explore shortcuts going upward
         if let Some(edges) = self.upward_edges.get(&node) {
             for &(neighbor, weight) in edges {
@@ -407,10 +409,10 @@ impl ContractionHierarchy {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     /// Explore upward edges in reverse (backward search)
     fn explore_upward_reverse(
         &self,
@@ -421,7 +423,7 @@ impl ContractionHierarchy {
         queue: &mut BinaryHeap<CHState>,
     ) -> PathfindingResult<()> {
         let node_rank = self.node_rank.get(&node).copied().unwrap_or(0);
-        
+
         // Find all shortcuts pointing TO this node
         for shortcut in &self.shortcuts {
             if shortcut.to == node {
@@ -439,10 +441,10 @@ impl ContractionHierarchy {
                 }
             }
         }
-        
+
         Ok(())
     }
-    
+
     /// Reconstruct path from bidirectional search
     fn reconstruct_path(
         &self,
@@ -453,7 +455,7 @@ impl ContractionHierarchy {
         backward_parent: &[Option<NodeId>],
     ) -> Vec<NodeId> {
         let mut path = Vec::new();
-        
+
         // Forward path: start -> meeting
         let mut current = meeting;
         let mut forward_path = vec![current];
@@ -466,7 +468,7 @@ impl ContractionHierarchy {
         }
         forward_path.reverse();
         path.extend(forward_path);
-        
+
         // Backward path: meeting -> goal
         current = meeting;
         while let Some(parent) = backward_parent[current as usize] {
@@ -476,10 +478,10 @@ impl ContractionHierarchy {
                 break;
             }
         }
-        
+
         path
     }
-    
+
     /// Get statistics about the contraction hierarchy
     pub fn stats(&self) -> CHStats {
         CHStats {
@@ -526,7 +528,7 @@ impl JumpPointSearch {
             allow_diagonal,
         }
     }
-    
+
     /// Find jump point in a given direction
     ///
     /// Returns the jump point coordinates if found
@@ -543,22 +545,22 @@ impl JumpPointSearch {
     ) -> Option<(isize, isize)> {
         let nx = x + dx;
         let ny = y + dy;
-        
+
         // Check bounds and walkability
         if !self.is_walkable(nx, ny, walkable) {
             return None;
         }
-        
+
         // Reached goal
         if nx == goal_x && ny == goal_y {
             return Some((nx, ny));
         }
-        
+
         // Check for forced neighbors
         if self.has_forced_neighbors(nx, ny, dx, dy, walkable) {
             return Some((nx, ny));
         }
-        
+
         // Diagonal movement: check cardinal directions
         if dx != 0 && dy != 0 {
             if self.jump(nx, ny, dx, 0, goal_x, goal_y, walkable).is_some() {
@@ -568,11 +570,11 @@ impl JumpPointSearch {
                 return Some((nx, ny));
             }
         }
-        
+
         // Continue jumping in the same direction
         self.jump(nx, ny, dx, dy, goal_x, goal_y, walkable)
     }
-    
+
     /// Check if a position has forced neighbors
     fn has_forced_neighbors(
         &self,
@@ -586,24 +588,22 @@ impl JumpPointSearch {
             // Diagonal: check for forced neighbors
             let can_walk_x = self.is_walkable(x - dx, y, walkable);
             let can_walk_y = self.is_walkable(x, y - dy, walkable);
-            
+
             (!can_walk_x && self.is_walkable(x - dx, y + dy, walkable))
                 || (!can_walk_y && self.is_walkable(x + dx, y - dy, walkable))
         } else if dx != 0 {
             // Horizontal
-            (self.is_walkable(x + dx, y + 1, walkable)
-                && !self.is_walkable(x, y + 1, walkable))
+            (self.is_walkable(x + dx, y + 1, walkable) && !self.is_walkable(x, y + 1, walkable))
                 || (self.is_walkable(x + dx, y - 1, walkable)
                     && !self.is_walkable(x, y - 1, walkable))
         } else {
             // Vertical
-            (self.is_walkable(x + 1, y + dy, walkable)
-                && !self.is_walkable(x + 1, y, walkable))
+            (self.is_walkable(x + 1, y + dy, walkable) && !self.is_walkable(x + 1, y, walkable))
                 || (self.is_walkable(x - 1, y + dy, walkable)
                     && !self.is_walkable(x - 1, y, walkable))
         }
     }
-    
+
     /// Check if a grid position is walkable
     fn is_walkable(&self, x: isize, y: isize, walkable: &[Vec<bool>]) -> bool {
         x >= 0
@@ -682,35 +682,35 @@ impl PartialOrd for WitnessState {
 mod tests {
     use super::*;
     use crate::SimpleWeightedGraph;
-    
+
     #[test]
     fn test_node_importance_degree() {
         let mut graph = SimpleWeightedGraph::new();
         graph.add_edge(0, 1, 1.0);
         graph.add_edge(0, 2, 1.0);
-        
+
         let importance = calculate_node_importance(&graph, ImportanceStrategy::Degree);
-        
+
         // Node 0 should have highest importance (degree 2)
         assert!(importance.iter().find(|(id, _)| *id == 0).unwrap().1 > 1.0);
     }
-    
+
     #[test]
     fn test_contraction_hierarchy_simple_path() {
         let mut graph = SimpleWeightedGraph::new();
         graph.add_edge(0, 1, 1.0);
         graph.add_edge(1, 2, 1.0);
-        
+
         let ch = ContractionHierarchy::build(&graph, ImportanceStrategy::EdgeDifference)
             .expect("CH build failed");
-        
+
         let result = ch.query(0, 2);
-        
+
         // For now, just verify that query doesn't error
         // Full pathfinding verification requires more complex setup
         assert!(result.is_ok());
     }
-    
+
     #[test]
     fn test_jps_walkability() {
         let walkable = vec![
@@ -718,9 +718,9 @@ mod tests {
             vec![true, false, true],
             vec![true, true, true],
         ];
-        
+
         let jps = JumpPointSearch::new(3, 3, true);
-        
+
         assert!(jps.is_walkable(0, 0, &walkable));
         assert!(!jps.is_walkable(1, 1, &walkable));
         assert!(jps.is_walkable(2, 2, &walkable));

@@ -19,17 +19,17 @@
 //! - **Early Termination**: Stop search when optimal solution found
 //! - **Cache Locality**: Arrange data for better CPU cache usage
 
-use std::collections::{BinaryHeap, HashSet, HashMap};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::time::Instant;
 
 /// Enhanced node structure with memory optimization
 #[derive(Debug, Clone, Eq, PartialEq)]
 struct OptimizedNode {
-    id: u32,        // Use u32 instead of usize for memory efficiency
-    cost: u32,      // Use integer costs for better cache performance
-    heuristic: u32, // Heuristic value (for A*)
-    parent: Option<u32>,  // Parent for path reconstruction
+    id: u32,             // Use u32 instead of usize for memory efficiency
+    cost: u32,           // Use integer costs for better cache performance
+    heuristic: u32,      // Heuristic value (for A*)
+    parent: Option<u32>, // Parent for path reconstruction
 }
 
 impl OptimizedNode {
@@ -41,7 +41,9 @@ impl OptimizedNode {
 impl Ord for OptimizedNode {
     fn cmp(&self, other: &Self) -> Ordering {
         // Min-heap: lower f-score has higher priority
-        other.f_score().cmp(&self.f_score())
+        other
+            .f_score()
+            .cmp(&self.f_score())
             .then_with(|| self.id.cmp(&other.id))
     }
 }
@@ -68,11 +70,21 @@ impl NodePool {
 
     fn allocate(&mut self, id: u32, cost: u32, heuristic: u32, parent: Option<u32>) -> usize {
         if let Some(index) = self.free_indices.pop() {
-            self.nodes[index] = OptimizedNode { id, cost, heuristic, parent };
+            self.nodes[index] = OptimizedNode {
+                id,
+                cost,
+                heuristic,
+                parent,
+            };
             index
         } else {
             let index = self.nodes.len();
-            self.nodes.push(OptimizedNode { id, cost, heuristic, parent });
+            self.nodes.push(OptimizedNode {
+                id,
+                cost,
+                heuristic,
+                parent,
+            });
             index
         }
     }
@@ -186,7 +198,12 @@ impl StandardAStar {
         }
     }
 
-    fn find_path(&mut self, grid: &Grid, start: (usize, usize), goal: (usize, usize)) -> Option<Vec<(usize, usize)>> {
+    fn find_path(
+        &mut self,
+        grid: &Grid,
+        start: (usize, usize),
+        goal: (usize, usize),
+    ) -> Option<Vec<(usize, usize)>> {
         let start_time = Instant::now();
         self.stats = SearchStats::new();
 
@@ -213,7 +230,10 @@ impl StandardAStar {
 
         while let Some(current) = open_set.pop() {
             self.stats.nodes_explored += 1;
-            self.stats.peak_memory = self.stats.peak_memory.max(open_set.len() + closed_set.len());
+            self.stats.peak_memory = self
+                .stats
+                .peak_memory
+                .max(open_set.len() + closed_set.len());
 
             if current.id == goal_id {
                 // Reconstruct path
@@ -263,7 +283,13 @@ impl StandardAStar {
         None
     }
 
-    fn reconstruct_path(&self, came_from: &HashMap<u32, u32>, start_id: u32, goal_id: u32, grid: &Grid) -> Vec<(usize, usize)> {
+    fn reconstruct_path(
+        &self,
+        came_from: &HashMap<u32, u32>,
+        start_id: u32,
+        goal_id: u32,
+        grid: &Grid,
+    ) -> Vec<(usize, usize)> {
         let mut path = Vec::new();
         let mut current = goal_id;
 
@@ -301,7 +327,12 @@ impl BidirectionalAStar {
         }
     }
 
-    fn find_path(&mut self, grid: &Grid, start: (usize, usize), goal: (usize, usize)) -> Option<Vec<(usize, usize)>> {
+    fn find_path(
+        &mut self,
+        grid: &Grid,
+        start: (usize, usize),
+        goal: (usize, usize),
+    ) -> Option<Vec<(usize, usize)>> {
         let start_time = Instant::now();
         self.forward_stats = SearchStats::new();
         self.backward_stats = SearchStats::new();
@@ -357,9 +388,11 @@ impl BidirectionalAStar {
 
                 // Check if we've met the backward search
                 if backward_closed.contains(&forward_current.id) {
-                    let total_cost = forward_current.cost + 
-                        backward_g_scores.get(&forward_current.id).unwrap_or(&u32::MAX);
-                    
+                    let total_cost = forward_current.cost
+                        + backward_g_scores
+                            .get(&forward_current.id)
+                            .unwrap_or(&u32::MAX);
+
                     if total_cost < best_path_cost {
                         best_path_cost = total_cost;
                         meeting_point = Some(forward_current.id);
@@ -412,9 +445,11 @@ impl BidirectionalAStar {
 
                 // Check if we've met the forward search
                 if forward_closed.contains(&backward_current.id) {
-                    let total_cost = backward_current.cost + 
-                        forward_g_scores.get(&backward_current.id).unwrap_or(&u32::MAX);
-                    
+                    let total_cost = backward_current.cost
+                        + forward_g_scores
+                            .get(&backward_current.id)
+                            .unwrap_or(&u32::MAX);
+
                     if total_cost < best_path_cost {
                         best_path_cost = total_cost;
                         meeting_point = Some(backward_current.id);
@@ -469,10 +504,14 @@ impl BidirectionalAStar {
         // Reconstruct path if meeting point found
         if let Some(meeting_id) = meeting_point {
             let path = self.reconstruct_bidirectional_path(
-                &forward_came_from, &backward_came_from,
-                start_id, goal_id, meeting_id, grid
+                &forward_came_from,
+                &backward_came_from,
+                start_id,
+                goal_id,
+                meeting_id,
+                grid,
             );
-            
+
             self.forward_stats.path_length = path.len();
             self.forward_stats.path_cost = best_path_cost;
             Some(path)
@@ -488,7 +527,7 @@ impl BidirectionalAStar {
         start_id: u32,
         goal_id: u32,
         meeting_id: u32,
-        grid: &Grid
+        grid: &Grid,
     ) -> Vec<(usize, usize)> {
         let mut path = Vec::new();
 
@@ -529,7 +568,8 @@ impl BidirectionalAStar {
     fn get_total_stats(&self) -> SearchStats {
         SearchStats {
             nodes_explored: self.forward_stats.nodes_explored + self.backward_stats.nodes_explored,
-            nodes_generated: self.forward_stats.nodes_generated + self.backward_stats.nodes_generated,
+            nodes_generated: self.forward_stats.nodes_generated
+                + self.backward_stats.nodes_generated,
             peak_memory: self.forward_stats.peak_memory + self.backward_stats.peak_memory, // Total memory of both searches
             search_time_ms: self.forward_stats.search_time_ms,
             path_length: self.forward_stats.path_length,
@@ -552,7 +592,12 @@ impl MemoryOptimizedAStar {
         }
     }
 
-    fn find_path(&mut self, grid: &Grid, start: (usize, usize), goal: (usize, usize)) -> Option<Vec<(usize, usize)>> {
+    fn find_path(
+        &mut self,
+        grid: &Grid,
+        start: (usize, usize),
+        goal: (usize, usize),
+    ) -> Option<Vec<(usize, usize)>> {
         let start_time = Instant::now();
         self.stats = SearchStats::new();
 
@@ -569,22 +614,25 @@ impl MemoryOptimizedAStar {
         // Allocate start node from pool
         let start_h = manhattan_distance(start, goal);
         let start_index = self.node_pool.allocate(start_id, 0, start_h, None);
-        
+
         // Use Reverse to create min-heap behavior (lowest f-score first)
-        open_indices.push(std::cmp::Reverse((self.node_pool.get(start_index).f_score(), start_index)));
+        open_indices.push(std::cmp::Reverse((
+            self.node_pool.get(start_index).f_score(),
+            start_index,
+        )));
         open_set.insert(start_id);
         g_scores.insert(start_id, 0);
         self.stats.nodes_generated += 1;
 
         while let Some(std::cmp::Reverse((_, current_index))) = open_indices.pop() {
             let current = self.node_pool.get(current_index).clone();
-            
+
             // Skip if we've already processed this node with a better cost
             if closed_set.contains(&current.id) {
                 self.node_pool.deallocate(current_index);
                 continue;
             }
-            
+
             // Skip if we have a better path to this node already
             if let Some(&best_g) = g_scores.get(&current.id) {
                 if current.cost > best_g {
@@ -592,7 +640,7 @@ impl MemoryOptimizedAStar {
                     continue;
                 }
             }
-            
+
             self.stats.nodes_explored += 1;
 
             if current.id == goal_id {
@@ -601,7 +649,7 @@ impl MemoryOptimizedAStar {
                 self.stats.search_time_ms = start_time.elapsed().as_millis();
                 self.stats.path_length = path.len();
                 self.stats.path_cost = current.cost;
-                
+
                 // Clean up node pool
                 self.node_pool.deallocate(current_index);
                 return Some(path);
@@ -631,9 +679,9 @@ impl MemoryOptimizedAStar {
                 came_from.insert(neighbor_id, current.id);
 
                 let neighbor_h = manhattan_distance(neighbor_pos, goal);
-                let neighbor_index = self.node_pool.allocate(
-                    neighbor_id, tentative_g, neighbor_h, Some(current.id)
-                );
+                let neighbor_index =
+                    self.node_pool
+                        .allocate(neighbor_id, tentative_g, neighbor_h, Some(current.id));
 
                 let neighbor_f = tentative_g + neighbor_h;
                 // Use Reverse to create min-heap behavior (lowest f-score first)
@@ -642,14 +690,23 @@ impl MemoryOptimizedAStar {
                 self.stats.nodes_generated += 1;
             }
 
-            self.stats.peak_memory = self.stats.peak_memory.max(open_set.len() + closed_set.len());
+            self.stats.peak_memory = self
+                .stats
+                .peak_memory
+                .max(open_set.len() + closed_set.len());
         }
 
         self.stats.search_time_ms = start_time.elapsed().as_millis();
         None
     }
 
-    fn reconstruct_path(&self, came_from: &HashMap<u32, u32>, start_id: u32, goal_id: u32, grid: &Grid) -> Vec<(usize, usize)> {
+    fn reconstruct_path(
+        &self,
+        came_from: &HashMap<u32, u32>,
+        start_id: u32,
+        goal_id: u32,
+        grid: &Grid,
+    ) -> Vec<(usize, usize)> {
         let mut path = Vec::new();
         let mut current = goal_id;
 
@@ -676,7 +733,7 @@ impl MemoryOptimizedAStar {
 /// Demonstration functions
 fn create_test_grid() -> Grid {
     let mut grid = Grid::new(50, 50);
-    
+
     // Add some obstacles to make the path more interesting
     for i in 10..40 {
         grid.add_obstacle(i, 25);
@@ -684,7 +741,7 @@ fn create_test_grid() -> Grid {
     for i in 15..35 {
         grid.add_obstacle(25, i);
     }
-    
+
     grid
 }
 
@@ -714,7 +771,10 @@ fn benchmark_algorithms() {
         println!("   ✅ Path found: {} steps", path.len());
         println!("   📊 Nodes explored: {}", standard_stats.nodes_explored);
         println!("   🏭 Nodes generated: {}", standard_stats.nodes_generated);
-        println!("   💾 Peak memory usage: {} nodes", standard_stats.peak_memory);
+        println!(
+            "   💾 Peak memory usage: {} nodes",
+            standard_stats.peak_memory
+        );
         println!("   ⏱️  Search time: {:?}\n", standard_time);
     } else {
         println!("   ❌ No path found\n");
@@ -730,15 +790,28 @@ fn benchmark_algorithms() {
 
     if let Some(path) = bidirectional_path {
         println!("   ✅ Path found: {} steps", path.len());
-        println!("   📊 Nodes explored: {}", bidirectional_stats.nodes_explored);
-        println!("   🏭 Nodes generated: {}", bidirectional_stats.nodes_generated);
-        println!("   💾 Peak memory usage: {} nodes", bidirectional_stats.peak_memory);
+        println!(
+            "   📊 Nodes explored: {}",
+            bidirectional_stats.nodes_explored
+        );
+        println!(
+            "   🏭 Nodes generated: {}",
+            bidirectional_stats.nodes_generated
+        );
+        println!(
+            "   💾 Peak memory usage: {} nodes",
+            bidirectional_stats.peak_memory
+        );
         println!("   ⏱️  Search time: {:?}", bidirectional_time);
-        
+
         // Performance comparison
         if standard_stats.nodes_explored > 0 {
-            let exploration_reduction = 100.0 * (1.0 - bidirectional_stats.nodes_explored as f64 / standard_stats.nodes_explored as f64);
-            let time_reduction = 100.0 * (1.0 - bidirectional_time.as_nanos() as f64 / standard_time.as_nanos() as f64);
+            let exploration_reduction = 100.0
+                * (1.0
+                    - bidirectional_stats.nodes_explored as f64
+                        / standard_stats.nodes_explored as f64);
+            let time_reduction = 100.0
+                * (1.0 - bidirectional_time.as_nanos() as f64 / standard_time.as_nanos() as f64);
             println!("   🎯 Exploration reduction: {:.1}%", exploration_reduction);
             println!("   🎯 Time reduction: {:.1}%", time_reduction);
         }
@@ -754,14 +827,17 @@ fn benchmark_algorithms() {
     let optimized_path = memory_optimized.find_path(&grid, start, goal);
     let optimized_time = start_time.elapsed();
     let optimized_stats = memory_optimized.get_stats();
-    
+
     // Note: Memory-optimized may explore more nodes due to different tie-breaking and duplicate handling
 
     if let Some(path) = optimized_path {
         println!("   ✅ Path found: {} steps", path.len());
         println!("   📊 Nodes explored: {}", optimized_stats.nodes_explored);
         println!("   🏭 Nodes generated: {}", optimized_stats.nodes_generated);
-        println!("   💾 Peak memory usage: {} nodes", optimized_stats.peak_memory);
+        println!(
+            "   💾 Peak memory usage: {} nodes",
+            optimized_stats.peak_memory
+        );
         println!("   ⏱️  Search time: {:?}\n", optimized_time);
     } else {
         println!("   ❌ No path found\n");
@@ -772,17 +848,25 @@ fn benchmark_algorithms() {
     println!("======================");
     println!("Algorithm              | Nodes Explored | Time (μs)    | Memory Strategy");
     println!("----------------------|---------------|--------------|------------------");
-    println!("Standard A*           | {:13} | {:10} | Baseline (heap allocs)", 
-             standard_stats.nodes_explored, 
-             standard_time.as_micros());
-    println!("Bidirectional A*      | {:13} | {:10} | {:.1}% exploration reduction",
-             bidirectional_stats.nodes_explored,
-             bidirectional_time.as_micros(),
-             100.0 * (1.0 - bidirectional_stats.nodes_explored as f64 / standard_stats.nodes_explored as f64));
-    println!("Memory-Optimized A*   | {:13} | {:10} | Pool-based (predictable)",
-             optimized_stats.nodes_explored,
-             optimized_time.as_micros());
-    
+    println!(
+        "Standard A*           | {:13} | {:10} | Baseline (heap allocs)",
+        standard_stats.nodes_explored,
+        standard_time.as_micros()
+    );
+    println!(
+        "Bidirectional A*      | {:13} | {:10} | {:.1}% exploration reduction",
+        bidirectional_stats.nodes_explored,
+        bidirectional_time.as_micros(),
+        100.0
+            * (1.0
+                - bidirectional_stats.nodes_explored as f64 / standard_stats.nodes_explored as f64)
+    );
+    println!(
+        "Memory-Optimized A*   | {:13} | {:10} | Pool-based (predictable)",
+        optimized_stats.nodes_explored,
+        optimized_time.as_micros()
+    );
+
     println!("\n💡 Memory-Optimized trades algorithmic efficiency for:");
     println!("   • Predictable memory usage (no heap fragmentation)");
     println!("   • Better cache locality (contiguous allocations)");
@@ -819,11 +903,19 @@ fn demonstrate_memory_patterns() {
     println!("=================================");
 
     println!("📊 Node Structure Sizes:");
-    println!("   OptimizedNode: {} bytes", std::mem::size_of::<OptimizedNode>());
-    println!("   Standard usize-based: {} bytes", std::mem::size_of::<(usize, usize, usize, Option<usize>)>());
-    
-    let reduction = 100.0 * (1.0 - std::mem::size_of::<OptimizedNode>() as f64 / 
-                            std::mem::size_of::<(usize, usize, usize, Option<usize>)>() as f64);
+    println!(
+        "   OptimizedNode: {} bytes",
+        std::mem::size_of::<OptimizedNode>()
+    );
+    println!(
+        "   Standard usize-based: {} bytes",
+        std::mem::size_of::<(usize, usize, usize, Option<usize>)>()
+    );
+
+    let reduction = 100.0
+        * (1.0
+            - std::mem::size_of::<OptimizedNode>() as f64
+                / std::mem::size_of::<(usize, usize, usize, Option<usize>)>() as f64);
     println!("   💡 Memory reduction: {:.1}% per node", reduction);
 
     println!("\n🔄 Memory Pool Benefits:");

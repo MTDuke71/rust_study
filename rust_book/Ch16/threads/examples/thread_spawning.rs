@@ -59,10 +59,7 @@ fn main() {
         .collect();
 
     println!("Waiting for all tasks...");
-    let results: Vec<_> = handles
-        .into_iter()
-        .map(|h| h.join().unwrap())
-        .collect();
+    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
     println!("All tasks complete: {:?}\n", results);
 
     // Pattern 5: Scoped threads (requires std::thread::scope - Rust 1.63+)

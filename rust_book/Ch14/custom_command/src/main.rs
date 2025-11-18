@@ -60,7 +60,7 @@ fn main() {
     // Detect how we're being called
     let args: Vec<String> = env::args().collect();
     let called_via_cargo = args.len() > 1 && args[1] == "example";
-    
+
     // Skip the first argument if it's "example" (when called via cargo)
     let args_to_parse = if called_via_cargo {
         let mut modified_args = args;
@@ -69,7 +69,7 @@ fn main() {
     } else {
         args
     };
-    
+
     let parsed_args = ExampleArgs::parse_from(args_to_parse);
 
     // Show how we were invoked
@@ -114,4 +114,3 @@ fn main() {
         }
     }
 }
-
