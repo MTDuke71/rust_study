@@ -13,6 +13,7 @@ fn main() {
     tree_with_weak_references();
     weak_upgrade_example();
     parent_child_relationships();
+    memory_leak_detection();
 
     println!("\n✅ Chapter 15.6 Reference cycles and Weak<T> demonstrated!");
 }

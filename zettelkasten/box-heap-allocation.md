@@ -2,7 +2,7 @@
 
 **Tags:** #box #heap-allocation #recursive-types #smart-pointers #rust-book-ch15 #aoc-applications #tree-structures #linked-lists
 
-**Related:** [[deref-trait]], [[drop-trait]], [[rc-shared-ownership]], [[recursive-data-structures]], [[heap-vs-stack]], [[ownership]], [[smart-pointers]]
+**Related:** [[Smart Pointers MOC]], [[deref-trait]], [[drop-trait]], [[rc-shared-ownership]], [[recursive-data-structures]], [[heap-vs-stack]], [[ownership]], [[smart-pointers]]
 
 ---
 

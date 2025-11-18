@@ -499,4 +499,4 @@ fn main() {
 
 *Tags: #smart-pointers #interior-mutability #refcell #design-patterns #shared-state #intermediate #memory-safety*
 
-*Links: [[interior-mutability]] | [[zettel-index]] | [[smart-pointer-patterns]] | [[rc-shared-ownership]] | [[cell-types-comparison]] | [[observer-pattern]] | [[state-machine-patterns]] | [[graph-data-structures]] | [[reference-cycles]]*
+*Links: [[Smart Pointers MOC]] | [[interior-mutability]] | [[zettel-index]] | [[smart-pointer-patterns]] | [[rc-shared-ownership]] | [[cell-types-comparison]] | [[observer-pattern]] | [[state-machine-patterns]] | [[graph-data-structures]] | [[reference-cycles]] | [[arena-allocation]]*

@@ -594,4 +594,4 @@ struct SharedGraph<T> {
 
 *Navigation: [[zettel-index]] | [[Smart Pointers MOC]] | [[Rust Book Ch15]]*  
 *Tags: #rust #smart-pointers #rc #reference-counting #shared-ownership #graphs #aoc-patterns #memory-management*  
-*Related: [[box-heap-allocation]] [[refcell-interior-mutability]] [[mission-7]] [[aoc-graph-problems]]*
+*Related: [[box-heap-allocation]] [[refcell-interior-mutability]] [[reference-cycles]] [[arena-allocation]] [[mission-7]] [[aoc-graph-problems]]*

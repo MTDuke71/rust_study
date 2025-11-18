@@ -13,6 +13,7 @@ fn main() {
     runtime_borrow_checking();
     interior_mutability_pattern();
     rc_refcell_combination();
+    compile_time_vs_runtime();
 
     println!("\n✅ Chapter 15.5 RefCell<T> concepts demonstrated!");
 }
