@@ -124,14 +124,21 @@ Competitive programming patterns:
 
 ---
 
-### Step 8: REST API with OpenAPI/Swagger
- **Status**: 🚀 IN PROGRESS
- 
- Build a production-ready REST API:
- - **RESTful Design** - Designing clean API endpoints
- - **Axum & Tokio** - Async web server implementation
- - **OpenAPI/Swagger** - Automatic documentation with `utoipa`
- - **Production Features** - Rate limiting, tracing, metrics
+### Step 8: REST API with OpenAPI/Swagger ✅
+**File**: `examples/step8_rest_api/`  
+**Status**: ✅ COMPLETE
+
+Build a production-ready REST API:
+- **RESTful Design** - Clean, resource-based API endpoints
+- **Axum & Tokio** - Modern async web server implementation
+- **OpenAPI/Swagger** - Automatic interactive documentation
+- **6 Complete Endpoints** - Full CRUD operations for Union-Find
+- **Production Features** - Input validation, error handling, state management
+- **Comprehensive Tutorial** - See `examples/step8_rest_api/TUTORIAL.md`
+
+**Run**: `cd examples/step8_rest_api && cargo run`  
+**Docs**: Open http://localhost:8080/swagger-ui  
+**Tutorial**: See `examples/step8_rest_api/TUTORIAL.md` for detailed learning guide
  
  ---
 

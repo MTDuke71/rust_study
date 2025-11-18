@@ -46,11 +46,36 @@ pub struct FindResponse {
     pub root: usize,
 }
 
+/// Request for find operation (query parameters)
+#[derive(Debug, Deserialize, ToSchema)]
+pub struct FindRequest {
+    /// Element to find root for
+    pub element: usize,
+}
+
 /// Response for connectivity check
 #[derive(Debug, Serialize, ToSchema)]
 pub struct ConnectedResponse {
     /// Whether the elements are in the same set
     pub connected: bool,
+}
+
+/// Request for connectivity check (query parameters)
+#[derive(Debug, Deserialize, ToSchema)]
+pub struct ConnectedRequest {
+    /// First element
+    pub element1: usize,
+    /// Second element
+    pub element2: usize,
+}
+
+/// Response for statistics endpoint
+#[derive(Debug, Serialize, ToSchema)]
+pub struct StatsResponse {
+    /// Total number of elements
+    pub total_elements: usize,
+    /// Number of disjoint sets
+    pub num_components: usize,
 }
 
 /// Standard error response

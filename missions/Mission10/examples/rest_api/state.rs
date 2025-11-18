@@ -30,4 +30,12 @@ impl AppState {
         let mut instances = self.instances.lock().unwrap();
         instances.get_mut(&id).map(f)
     }
+
+    pub fn delete_instance(&self, id: Uuid) -> bool {
+        self.instances.lock().unwrap().remove(&id).is_some()
+    }
+
+    pub fn instance_count(&self) -> usize {
+        self.instances.lock().unwrap().len()
+    }
 }

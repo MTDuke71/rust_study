@@ -6,7 +6,10 @@ use crate::models::*;
     paths(
         crate::handlers::create_instance,
         crate::handlers::union_elements,
-        // Add other handlers here
+        crate::handlers::find_element,
+        crate::handlers::check_connected,
+        crate::handlers::get_stats,
+        crate::handlers::delete_instance,
     ),
     components(
         schemas(
@@ -14,19 +17,22 @@ use crate::models::*;
             CreateResponse,
             UnionRequest,
             UnionResponse,
+            FindRequest,
             FindResponse,
+            ConnectedRequest,
             ConnectedResponse,
+            StatsResponse,
             ErrorResponse
         )
     ),
     tags(
         (name = "Union-Find Management", description = "Lifecycle operations for Union-Find instances"),
-        (name = "Operations", description = "Core Union-Find operations (union, find, connected)")
+        (name = "Operations", description = "Core Union-Find operations")
     ),
     info(
-        title = "Union-Find REST API",
+        title = "Mission 10 Union-Find API",
         version = "1.0.0",
-        description = "A production-ready REST API for the Union-Find data structure"
+        description = "REST API for Mission 10 Union-Find implementation with path compression and union by rank optimizations"
     )
 )]
 pub struct ApiDoc;

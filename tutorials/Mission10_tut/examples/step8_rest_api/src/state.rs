@@ -1,12 +1,11 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use uuid::Uuid;
-use mission10::UnionFind; // Assuming mission10 is available
+use mission10::UnionFind;
 
 #[derive(Clone)]
 pub struct AppState {
     // Map of Instance ID -> UnionFind structure
-    // Using Mutex for thread safety since UnionFind requires &mut for operations
     instances: Arc<Mutex<HashMap<Uuid, UnionFind>>>,
 }
 
@@ -31,9 +30,12 @@ impl AppState {
         let mut instances = self.instances.lock().unwrap();
         instances.get_mut(&id).map(f)
     }
-    
-    #[allow(dead_code)]
-    pub fn remove_instance(&self, id: Uuid) -> bool {
+
+    pub fn delete_instance(&self, id: Uuid) -> bool {
         self.instances.lock().unwrap().remove(&id).is_some()
+    }
+
+    pub fn instance_count(&self) -> usize {
+        self.instances.lock().unwrap().len()
     }
 }

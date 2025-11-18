@@ -49,7 +49,7 @@ async fn main() {
     let app = Router::new()
         .route("/health", get(health_check))
         .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
-        .nest("/api/v1", handlers::create_routes())
+        .nest("/api/v1", handlers::routes())
         .layer(CorsLayer::permissive())
         .with_state(app_state);
 
