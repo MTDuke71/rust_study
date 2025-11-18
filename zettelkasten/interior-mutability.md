@@ -69,6 +69,9 @@ println!("Old: {}, New: {}", old_value, cell.get());
 - Caching computed values
 
 ### **2. RefCell<T> - Single-Threaded, Runtime Borrowing**
+
+*For comprehensive RefCell patterns and state management examples, see [[refcell-interior-mutability]]*
+
 ```rust
 use std::cell::RefCell;
 
@@ -962,6 +965,7 @@ fn get_data() -> &'static str {
 ---
 
 *Interior Mutability Links:*
+- [[refcell-interior-mutability]] - Deep dive into RefCell patterns and state management
 - [[zero-cost-abstractions]] - Runtime cost trade-offs
 - [[Memory Safety]] - Safe shared mutability
 - [[ownership]] - Borrowing rule exceptions

@@ -265,6 +265,7 @@ map.insert(key, value);
 - [ ] Tags include primary category and difficulty level
 - [ ] Code examples are complete and tested
 - [ ] Integration section connects to other content types
+- [ ] **Daily study references verified**: Check that `[[daily-study/DayXX]]` links actually cover the referenced topic (read the file headers to confirm)
 
 ---
 
