@@ -665,6 +665,7 @@ fn test_query(db: &dyn Database) {
 - [[Week 3 Overview]] - Day 19 covers trait objects in depth
 - [[Mission5 Overview]] - REQ-6 flexible APIs using trait objects
 - [[Generic Programming]] - Static dispatch alternative
+- [[monomorphization]] - Implementation mechanism for generics (static dispatch)
 - [[Collections MOC]] - Heterogeneous collections
 
 ### **Rust Book References**
