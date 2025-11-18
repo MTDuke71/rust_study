@@ -68,6 +68,7 @@ fn main() {
     // Example 4: Sending complex data
     println!("Example 4: Sending structured data");
     
+    #[allow(dead_code)]
     #[derive(Debug)]
     struct Task {
         id: u32,

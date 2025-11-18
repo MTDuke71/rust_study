@@ -52,6 +52,7 @@ fn main() {
     // Example 4: Custom types are automatically Send if all fields are Send
     println!("\nExample 4: Custom struct is Send");
 
+    #[allow(dead_code)]
     #[derive(Debug)]
     struct Person {
         name: String,
