@@ -3,7 +3,7 @@
 ## 🔗 Zettelkasten Links
 - **Previous**: [[daily-study/Day04]] - Lifetime annotations
 - **Next**: [[zettelkasten/daily-study/Day06]] - Match expressions
-- **Concept**: [[Rust Concepts MOC]] - Error handling system
+- **Concept**: [[rust-concepts-MOC]] - Error handling system
 - **Rust Book**: [[Chapter 6 - Enums]] - Option and pattern matching
 - **Rust Book**: [[Chapter 9 - Error Handling]] - Result and ? operator
 - **Week Summary**: [[zettelkasten/daily-study/Day07]] - Foundations review
@@ -419,7 +419,7 @@ These types are fundamental to Rust's approach to safety and make programs more 
 
 ---
 
-*Links: [[daily-study/Day04]] | [[zettelkasten/daily-study/Day06]] | [[Rust Concepts MOC]]*
+*Links: [[daily-study/Day04]] | [[zettelkasten/daily-study/Day06]] | [[rust-concepts-MOC]]*
 *Tags: #option #result #error-handling #daily-study #rust-book #chapter6 #chapter9 #foundation*
 
 ---

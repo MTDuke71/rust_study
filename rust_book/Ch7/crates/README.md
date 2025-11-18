@@ -91,4 +91,4 @@ After studying this example, you should understand:
 
 ---
 *Tags: #rust-book #chapter7 #crates #packages #modules #organization #library #binary*
-*Links: [[../../../zettelkasten/zettel-index|Zettelkasten Index]] | [[../../../zettelkasten/Rust Concepts MOC|Rust Concepts]] | [[../../../zettelkasten/Missions Overview|Missions Overview]] | [[../../../missions/Mission7/README|Mission7 - Modules in Practice]]*
+*Links: [[../../../zettelkasten/zettel-index|Zettelkasten Index]] | [[rust-concepts-MOC|Rust Concepts]] | [[../../../zettelkasten/Missions Overview|Missions Overview]] | [[../../../missions/Mission7/README|Mission7 - Modules in Practice]]*

@@ -354,7 +354,7 @@ let result = dp[n]; // OK
 
 **Navigation:**
 - [[zettel-index]] - Main knowledge base
-- [[Rust Concepts MOC]] - Language features for DP
+- [[rust-concepts-MOC]] - Language features for DP
 - [[Daily Study MOC]] - Progressive learning path
 
 ---

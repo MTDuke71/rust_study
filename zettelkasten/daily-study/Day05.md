@@ -121,7 +121,7 @@ fn process_data(input: &str) -> Result<String, String> {
 - **Previous**: [[daily-study/Day04]]
 - **Next**: [[zettelkasten/daily-study/Day06]]
 - **Week**: [[Week 1 Overview]]
-- **MOC**: [[Rust Concepts MOC]]
+- **MOC**: [[rust-concepts-MOC]]
 
 ---
 

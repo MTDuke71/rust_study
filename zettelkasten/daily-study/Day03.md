@@ -81,7 +81,7 @@ println!("{}", s);  // "hello, world"
 - **Previous**: [[daily-study/Day02]]
 - **Next**: [[daily-study/Day04]]
 - **Week**: [[Week 1 Overview]]
-- **MOC**: [[Rust Concepts MOC]]
+- **MOC**: [[rust-concepts-MOC]]
 
 ---
 

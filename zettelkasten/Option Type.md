@@ -320,7 +320,7 @@ assert_eq!(add_two_numbers(Some(3), None), None);
 
 ### 📚 Zettelkasten
 - **[[zettel-index]]** - Main knowledge base entry point
-- **[[Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC]]** - Core language features
 - **[[Collections MOC]]** - HashMap, Vec operations that return Option
 
 ### 🎯 Related Learning

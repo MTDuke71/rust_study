@@ -132,4 +132,4 @@
 
 ---
 *Tags: #collections #overview #data-structures #cross-track #algorithms #performance*
-*Links: [[zettel-index]] | [[Missions Overview]] | [[Rust Concepts MOC]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Day 5 Exercise Solutions]]*
+*Links: [[zettel-index]] | [[Missions Overview]] | [[rust-concepts-MOC]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Day 5 Exercise Solutions]]*

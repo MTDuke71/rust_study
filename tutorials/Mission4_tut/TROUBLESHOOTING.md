@@ -468,7 +468,7 @@ impl<T> ListBuilder<T> {
 - [[Mission5 Overview|../../zettelkasten/Mission5 Overview]] - HashMap (complex ownership)
 
 **Learning Support:**
-- [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+- [[rust-concepts-MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
 - [[TDD (Test-Driven Development)|../../zettelkasten/Test-Driven Development]] - TDD approach
 
 ---

@@ -281,4 +281,4 @@ You've lived through the complete transformation from "computers as calculators"
 
 *Tags: #project-origin #v-cycle #learning-philosophy #mental-models #roadmap #mission1 #foundations*
 
-*Links: [[zettel-index]] | [[Missions Overview]] | [[Rust Concepts MOC]] | [[V-Cycle in Rust Development]] | [[Ownership Mental Model - The Library Analogy]] | [[Rust Learning Roadmap - The Master Plan]] | [[../missions/Mission1/FOUNDATIONAL_CONCEPTS|Mission1 Foundational Concepts]] | [[course-creation-strategy]]*
+*Links: [[zettel-index]] | [[Missions Overview]] | [[rust-concepts-MOC]] | [[V-Cycle in Rust Development]] | [[Ownership Mental Model - The Library Analogy]] | [[Rust Learning Roadmap - The Master Plan]] | [[../missions/Mission1/FOUNDATIONAL_CONCEPTS|Mission1 Foundational Concepts]] | [[course-creation-strategy]]*

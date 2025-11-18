@@ -379,10 +379,10 @@ Based on [[../advent_of_code/aoc2015/Problem_Statements/summary]]:
 
 - [[AoC Patterns MOC]] - Cross-year competitive programming patterns
 - [[Collections MOC]] - Data structure implementations  
-- [[Rust Concepts MOC]] - Core language features
+- [[rust-concepts-MOC]] - Core language features
 
 ---
 
 *Tags: #aoc #aoc2015 #aoc2024 #competitive-programming #advent-of-code #problem-solving #rust-learning*
 
-*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[Collections MOC]] | [[Rust Concepts MOC]]*
+*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[Collections MOC]] | [[rust-concepts-MOC]]*

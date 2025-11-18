@@ -1,6 +1,6 @@
 # Algorithms MOC (Map of Content)
 
-**Related:** [[AoC Patterns MOC]], [[Rust Concepts MOC]], [[Collections MOC]], [[zettel-index]]
+**Related:** [[AoC Patterns MOC]], [[rust-concepts-MOC]], [[Collections MOC]], [[zettel-index]]
 
 ## Overview
 
@@ -229,7 +229,7 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ### **Related MOCs**
 - [[AoC Patterns MOC]] - Competitive programming applications
 - [[Collections MOC]] - Data structure fundamentals
-- [[Rust Concepts MOC]] - Language features for algorithms
+- [[rust-concepts-MOC]] - Language features for algorithms
 - [[Daily Study MOC]] - Progressive learning path
 
 ### **Key Concepts**
@@ -279,6 +279,6 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 
 *Tags: #algorithms #moc #data-structures #problem-solving #competitive-programming #graph-algorithms #dynamic-programming #sorting #searching #optimization*
 
-*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[Rust Concepts MOC]] | [[Collections MOC]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[rust-concepts-MOC]] | [[Collections MOC]] | [[Daily Study MOC]]*
 
 *Created: 2025-10-27 | Status: 🎯 Active Reference | Purpose: Algorithm knowledge organization*

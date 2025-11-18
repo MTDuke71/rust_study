@@ -207,4 +207,4 @@ The pattern naturally handles:
 
 *Tags: #control-flow #pattern-matching #while-let #mission2 #loops #idioms #ownership*
 
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Pattern Matching Deep Dive]] | [[For Loop vs Iterator Patterns]] | [[../missions/Mission2/README|Mission2 Queue]] | [[Option and Result Handling]]*
+*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[Pattern Matching Deep Dive]] | [[For Loop vs Iterator Patterns]] | [[../missions/Mission2/README|Mission2 Queue]] | [[Option and Result Handling]]*

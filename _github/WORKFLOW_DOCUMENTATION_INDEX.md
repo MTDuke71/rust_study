@@ -328,7 +328,7 @@ All documentation files are in: `.github/`
 - **[[Quality Assurance]]** - Testing and quality standards
 
 ### **Learning System Integration**
-- **[[Rust Concepts MOC]]** - Core Rust language concepts
+- **[[rust-concepts-MOC]]** - Core Rust language concepts
 - **[[Daily Study MOC]]** - Daily learning progression
 - **[[Missions Overview]]** - Hands-on project implementations  
 - **[[V-Cycle Methodology]]** - Requirements-driven development approach

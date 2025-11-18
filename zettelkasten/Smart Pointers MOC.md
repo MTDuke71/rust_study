@@ -354,4 +354,4 @@ thread::spawn(move || println!("{}", data)); // OK
 
 *Tags: #moc #smart-pointers #box #rc #refcell #weak #memory-management #ownership #rust-book-ch15*
 
-*Navigation: [[zettel-index]] | [[Rust Concepts MOC]] | [[Memory Management]] | [[ownership-fundamentals]]*
+*Navigation: [[zettel-index]] | [[rust-concepts-MOC]] | [[Memory Management]] | [[ownership-fundamentals]]*

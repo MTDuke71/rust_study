@@ -152,7 +152,7 @@ This type signature embodies Rust's philosophy: **"Fast, safe, expressive - pick
 - [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership
 - [[Memory Layout|../../zettelkasten/Memory Layout]] - Rust type layouts
 - [[zero-cost-abstractions|../../zettelkasten/Zero-Cost Abstractions]] - Performance guarantees
-- [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+- [[rust-concepts-MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
 
 **Rust Book:**
 - [[Chapter 15|../../rust_book/Ch15/README]] - Smart Pointers (Box, Rc, RefCell)

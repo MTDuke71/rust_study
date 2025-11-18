@@ -398,7 +398,7 @@ fn deduplicate_normalized(strings: Vec<String>) -> Vec<String> {
 ### 📚 Zettelkasten
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[Collections MOC]]** - Data structures overview
-- **[[Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC]]** - Core language features
 
 ### 🎯 Related Data Structures
 - **[[HashMap Internals]]** - Hash-based collections (HashSet = HashMap<K, ()>)

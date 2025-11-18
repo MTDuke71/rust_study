@@ -56,7 +56,7 @@ You'll be ready to:
 
 1. Complete the tutorial
 2. Read the [Mission3 README](../../missions/Mission3/README.md)
-3. Explore the [zettelkasten pages](../../zettelkasten/) - Start with [[Rust Concepts MOC]]
+3. Explore the [zettelkasten pages](../../zettelkasten/) - Start with [[rust-concepts-MOC]]
 4. Try Mission3 exercises
 5. Review [[Week 3 Overview]] for broader context
 6. Explore [[AoC Patterns MOC]] for competitive programming applications
@@ -107,7 +107,7 @@ cargo run --example
 
 ### **Navigation**
 - **[[zettel-index]]** - Main knowledge base entry point
-- **[[Rust Concepts MOC]]** - Core Rust concepts overview
+- **[[rust-concepts-MOC]]** - Core Rust concepts overview
 - **[[Daily Study MOC]]** - Daily learning progression
 
 ---

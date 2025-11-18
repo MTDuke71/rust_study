@@ -188,7 +188,7 @@ The Mission 2 implementation demonstrates mastery of:
 ### 📖 Learning Resources
 - **[[../../zettelkasten/Collections MOC|Collections MOC]]** - Complete data structures guide
 - **[[../../zettelkasten/Daily Study MOC|Daily Study MOC]]** - Progressive learning track
-- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC|rust-concepts-MOC]]** - Core language features
 
 ---
 

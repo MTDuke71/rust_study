@@ -434,7 +434,7 @@ This linked list implementation provides foundation for:
 - [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Heap allocation with Box
 - [[Rc and RefCell|../../zettelkasten/Rc and RefCell]] - Shared ownership and interior mutability
 - [[Linked List Patterns|../../zettelkasten/Linked List Patterns]] - Data structure implementations
-- [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+- [[rust-concepts-MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
 
 **Related Missions:**
 - [[Mission1 README|../Mission1/README]] - Stack (ownership basics)

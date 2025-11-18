@@ -51,7 +51,7 @@
 ### **Learning Resources**
 - [[Missions Overview]] - Active mission overview
 - [[zettel-index]] - Main knowledge hub
-- [[Rust Concepts MOC]] - Core concepts reference
+- [[rust-concepts-MOC]] - Core concepts reference
 
 ### **Templates**
 - [[Templates/Daily Learning Template]] - Daily session template

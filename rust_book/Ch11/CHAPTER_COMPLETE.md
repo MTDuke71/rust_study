@@ -135,4 +135,4 @@ All packages compile successfully, all tests pass, and the chapter follows estab
 
 *Tags: #rust-book #ch11 #testing #automated-tests #unit-tests #integration-tests #tdd #complete*
 
-*Links: [[../../zettelkasten/zettel-index]] | [[../Ch10/README]] | [[../Ch12/README]] | [[../../zettelkasten/Testing Strategies]] | [[../../zettelkasten/Unit Testing]] | [[../../zettelkasten/Integration Testing]] | [[../../zettelkasten/TDD (Test-Driven Development)]] | [[../../zettelkasten/Rust Concepts MOC]]*
+*Links: [[../../zettelkasten/zettel-index]] | [[../Ch10/README]] | [[../Ch12/README]] | [[../../zettelkasten/Testing Strategies]] | [[../../zettelkasten/Unit Testing]] | [[../../zettelkasten/Integration Testing]] | [[../../zettelkasten/TDD (Test-Driven Development)]] | [[rust-concepts-MOC]]*

@@ -70,7 +70,7 @@ stack.push(text);      // Gives away the string
 - [[Ownership and Borrowing|../zettelkasten/Ownership and Borrowing]] - Deep dive into ownership
 - [[Copy vs Clone vs Move|../zettelkasten/Copy vs Clone vs Move]] - Understanding data transfer
 - [[Stack Data Structure|../zettelkasten/Stack Data Structure]] - Stack patterns and use cases
-- [[Rust Concepts MOC|../zettelkasten/Rust Concepts MOC]] - Navigate all Rust concepts
+- [[rust-concepts-MOC|../zettelkasten/Rust Concepts MOC]] - Navigate all Rust concepts
 
 **Rust Book Integration:**
 - [[Chapter 4|../rust_book/Ch4/README]] - Ownership fundamentals

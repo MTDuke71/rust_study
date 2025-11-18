@@ -224,7 +224,7 @@ fn is_nice(s: &str) -> bool {
 
 ### **Knowledge Hubs**
 - **[[../../zettelkasten/Collections MOC|Collections MOC]]** - Data structure patterns
-- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC|rust-concepts-MOC]]** - Core language features
 - **[[../../missions/Mission5/README|Mission5 HashMap]]** - Main implementation using string keys
 
 ---

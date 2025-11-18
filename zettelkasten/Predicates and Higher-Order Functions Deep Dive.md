@@ -2,7 +2,7 @@
 
 **Tags:** #rust #predicates #closures #higher-order-functions #functional-programming #iterators
 
-**Related:** [[daily-study/Day17]] | [[Collections MOC]] | [[Rust Concepts MOC]]
+**Related:** [[daily-study/Day17]] | [[Collections MOC]] | [[rust-concepts-MOC]]
 
 ## Overview
 

@@ -163,7 +163,7 @@ while let Some(top) = stack.pop() {
 - **Previous**: [[daily-study/Day05]]
 - **Next**: [[daily-study/Day07]]
 - **Week**: [[Week 1 Overview]]
-- **MOC**: [[Rust Concepts MOC]]
+- **MOC**: [[rust-concepts-MOC]]
 
 ---
 

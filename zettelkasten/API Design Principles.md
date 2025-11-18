@@ -647,7 +647,7 @@ impl<T> Vec<T> {
 ## 📚 **Related Concepts**
 
 - **[[API Design Patterns]]** - Concrete patterns implementing these principles
-- **[[Rust Concepts MOC]]** - Core Rust concepts
+- **[[rust-concepts-MOC]]** - Core Rust concepts
 - **[[Error Handling Patterns]]** - Applying error-as-value principle
 - **[[Ownership and Borrowing]]** - Memory safety principle
 - **[[Generic Programming]]** - Zero-cost abstraction principle
@@ -674,4 +674,4 @@ impl<T> Vec<T> {
 
 *Tags: #api-design #principles #rust-patterns #solid #best-practices #design-philosophy #idiomatic-rust #type-safety*
 
-*Links: [[API Design Patterns]] | [[Rust Concepts MOC]] | [[Error Handling Patterns]] | [[Ownership and Borrowing]] | [[Generic Programming]] | [[Traits]] | [[Iterator Patterns]] | [[zettel-index]]*
+*Links: [[API Design Patterns]] | [[rust-concepts-MOC]] | [[Error Handling Patterns]] | [[Ownership and Borrowing]] | [[Generic Programming]] | [[Traits]] | [[Iterator Patterns]] | [[zettel-index]]*

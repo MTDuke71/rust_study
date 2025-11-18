@@ -975,6 +975,6 @@ fn get_data() -> &'static str {
 - [[mission-6]] - Mutable grid operations
 - [[mission-10]] - Union-Find data structure
 - [[zettel-index]] - Knowledge graph navigation
-- [[Rust Concepts MOC]] - Related concepts hub
+- [[rust-concepts-MOC]] - Related concepts hub
 
 *Interior mutability is a powerful tool that allows you to work within Rust's ownership system while still achieving the flexibility you need. Use it judiciously and understand the trade-offs between compile-time and runtime safety.*

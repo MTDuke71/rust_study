@@ -226,7 +226,7 @@ where
 *   **Performance Analysis**: [[Load Factor Management]], [[Performance Analysis]]
 *   **Implementation Examples**: [[Mission5 HashMap]] (uses chaining)
 *   **Advanced Topics**: Robin Hood Hashing, Cuckoo Hashing, Hopscotch Hashing
-*   **Broader Context**: [[Collections MOC]], [[Rust Concepts MOC]]
+*   **Broader Context**: [[Collections MOC]], [[rust-concepts-MOC]]
 
 ---
 

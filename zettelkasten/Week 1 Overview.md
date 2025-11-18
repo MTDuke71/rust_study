@@ -92,7 +92,7 @@ Master the **fundamental pillars** of Rust that make it unique:
 - **Chapter 10**: Lifetimes (Day 4)
 
 ### **Zettelkasten Network**
-- [[Rust Concepts MOC]] - All concepts in one map
+- [[rust-concepts-MOC]] - All concepts in one map
 - [[Collections MOC]] - Prepares for Week 2
 - [[zettel-index]] - Master index
 
@@ -297,7 +297,7 @@ fn choose<'a>(x: &'a str, y: &'a str) -> &'a str {
 - [Rustlings Exercises](https://github.com/rust-lang/rustlings)
 
 ### **Zettelkasten Notes**
-- [[Rust Concepts MOC]] - Concept map
+- [[rust-concepts-MOC]] - Concept map
 - [[Collections MOC]] - Week 2 preview
 - [[zettel-index]] - Full index
 
@@ -315,5 +315,5 @@ fn choose<'a>(x: &'a str, y: &'a str) -> &'a str {
 
 ---
 
-*Links: [[daily-study/Day01]] | [[daily-study/Day07]] | [[Week 2 Overview]] | [[Rust Concepts MOC]] | [[zettel-index]]*
+*Links: [[daily-study/Day01]] | [[daily-study/Day07]] | [[Week 2 Overview]] | [[rust-concepts-MOC]] | [[zettel-index]]*
 *Tags: #week-overview #week1 #foundations #ownership #borrowing #lifetimes #daily-study #learning-path*

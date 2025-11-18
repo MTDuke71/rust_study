@@ -3,7 +3,7 @@
 ## 🔗 Zettelkasten Links
 - **Previous**: [[daily-study/Day08]] - Dynamic arrays
 - **Next**: [[daily-study/Day10]] - Key-value storage
-- **Concept**: [[Rust Concepts MOC]] - String types and UTF-8
+- **Concept**: [[rust-concepts-MOC]] - String types and UTF-8
 - **Rust Book**: [[Chapter 8.2 - Strings]] - Storing UTF-8 text
 - **Week Summary**: [[daily-study/Day14]] - Collections review
 
@@ -515,5 +515,5 @@ fn test_parse_coordinates() {
 
 ---
 
-*Links: [[daily-study/Day08]] | [[daily-study/Day10]] | [[Rust Concepts MOC]]*
+*Links: [[daily-study/Day08]] | [[daily-study/Day10]] | [[rust-concepts-MOC]]*
 *Tags: #string #str #utf8 #text-processing #daily-study #week2 #rust-book #chapter8 #parsing*

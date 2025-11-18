@@ -134,7 +134,7 @@ This is the power of modern systems programming! 🦀
 - [[zero-cost-abstractions|../../../zettelkasten/Zero-Cost Abstractions]] - Performance analysis
 - [[Monomorphization|../../../zettelkasten/Monomorphization]] - Generic type specialization
 - [[Box Smart Pointer|../../../zettelkasten/Box Smart Pointer]] - Heap allocation patterns
-- [[Rust Concepts MOC|../../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+- [[rust-concepts-MOC|../../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
 
 **Performance Topics:**
 - [[Performance Patterns|../../../zettelkasten/Performance Patterns]] - Optimization strategies

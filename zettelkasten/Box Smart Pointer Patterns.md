@@ -357,7 +357,7 @@ for animal in animals {
 ---
 
 *Tags: #box #smart-pointers #heap-allocation #ownership #memory-management #trait-objects #recursive-structures*
-*Links: [[daily-study/Day02]] | [[daily-study/Day19]] | [[Rust Concepts MOC]] | [[Collections MOC]]*
+*Links: [[daily-study/Day02]] | [[daily-study/Day19]] | [[rust-concepts-MOC]] | [[Collections MOC]]*
 
 
 

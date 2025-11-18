@@ -377,4 +377,4 @@ Each mission includes:
 ---
 
 *Tags: #documentation #standards #rust #api-documentation #testing #examples #workflow #quality-assurance*
-*Links: [[zettel-index]] | [[API Design Patterns]] | [[RUST_DOCUMENTATION_STANDARDS]] | [[RUST_TEST_DOCUMENTATION_STANDARDS]] | [[V-Cycle Methodology]] | [[Quality Assurance]] | [[Rust Concepts MOC]]*
+*Links: [[zettel-index]] | [[API Design Patterns]] | [[RUST_DOCUMENTATION_STANDARDS]] | [[RUST_TEST_DOCUMENTATION_STANDARDS]] | [[V-Cycle Methodology]] | [[Quality Assurance]] | [[rust-concepts-MOC]]*

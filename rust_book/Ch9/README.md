@@ -582,4 +582,4 @@ fn process_items(items: Vec<String>) -> Result<String, String> {
 *Chapter 9 Complete: Error handling is now a core competency for reliable Rust programming!*
 
 *Tags: #rust-book #chapter9 #error-handling #result #panic #option #complete*
-*Links: [[../Ch8/README]] | [[../Ch10/README]] | [[Mission5]] | [[daily-study/Day05]] | [[zettel-index]] | [[Error Handling Deep Dive]] | [[Week 5 Overview]] | [[daily-study/Day29]] | [[daily-study/Day30]] | [[daily-study/Day31]] | [[Rust Concepts MOC]]*
+*Links: [[../Ch8/README]] | [[../Ch10/README]] | [[Mission5]] | [[daily-study/Day05]] | [[zettel-index]] | [[Error Handling Deep Dive]] | [[Week 5 Overview]] | [[daily-study/Day29]] | [[daily-study/Day30]] | [[daily-study/Day31]] | [[rust-concepts-MOC]]*

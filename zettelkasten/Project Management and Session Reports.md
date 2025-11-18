@@ -139,7 +139,7 @@
 - **Iteration Cycles**: Feedback loops for continuous improvement
 
 ### **Rust Book Integration**
-- **[[Rust Concepts MOC]]** - Core Rust concepts organization
+- **[[rust-concepts-MOC]]** - Core Rust concepts organization
 - **Chapter Progress**: Session tracking for systematic book study
 - **Knowledge Verification**: Session reports confirm concept mastery
 
@@ -160,4 +160,4 @@
 ---
 
 *Tags: #project-management #session-reports #quality-assurance #workflow #learning-system #progress-tracking #documentation*
-*Links: [[zettel-index]] | [[Documentation Standards]] | [[Quality Assurance]] | [[V-Cycle Methodology]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Rust Concepts MOC]]*
+*Links: [[zettel-index]] | [[Documentation Standards]] | [[Quality Assurance]] | [[V-Cycle Methodology]] | [[Daily Study MOC]] | [[Missions Overview]] | [[rust-concepts-MOC]]*

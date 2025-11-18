@@ -2,7 +2,7 @@
 
 **Tags:** #rust #lifetimes #memory-safety #concept #rust-book #chapter10  
 **Created:** 2025-10-22  
-**Related:** [[Ownership and Borrowing]], [[daily-study/Day17]], [[zettelkasten/rust_book/rust-book-ch10]], [[Generic Programming]], [[mission-3]], [[Mission4 Overview]], [[Rust Concepts MOC]]
+**Related:** [[Ownership and Borrowing]], [[daily-study/Day17]], [[zettelkasten/rust_book/rust-book-ch10]], [[Generic Programming]], [[mission-3]], [[Mission4 Overview]], [[rust-concepts-MOC]]
 
 ## Overview
 

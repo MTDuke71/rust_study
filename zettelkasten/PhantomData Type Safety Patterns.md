@@ -340,4 +340,4 @@ mod tests {
 *PhantomData enables powerful type-level programming patterns that provide compile-time safety without runtime overhead. Essential for building robust, type-safe systems.*
 
 *Tags: #phantomdata #type-safety #generics #zero-cost #compile-time #patterns #advanced*
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[daily-study/Day15]] | [[zero-cost-abstractions]]*
+*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[daily-study/Day15]] | [[zero-cost-abstractions]]*

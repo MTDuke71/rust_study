@@ -437,7 +437,7 @@ for route in generate_permutations(&cities) {
 ### 📚 Zettelkasten
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[AoC Patterns MOC]]** - Competitive programming patterns (Combinatorial Problems section)
-- **[[Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC]]** - Core language features
 
 ### 🎯 Algorithm Context
 - **[[Permutation Generation]]** - Parent concept for arrangement problems

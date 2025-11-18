@@ -62,7 +62,7 @@ These Day 3 concepts form the foundation for more advanced topics like lifetimes
 ### 📚 Zettelkasten Navigation
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[Daily Study MOC]]** - Week-by-week learning progression
-- **[[Rust Concepts MOC]]** - Concept-based navigation
+- **[[rust-concepts-MOC]]** - Concept-based navigation
 
 ### 🎯 Related Concepts in Zettelkasten
 - **Ownership & Borrowing Deep Dives:**

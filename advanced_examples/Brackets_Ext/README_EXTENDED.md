@@ -66,7 +66,7 @@ enum UnclosedPolicy { LatestOpen, EarliestOpen }
 ### **Knowledge Hubs**
 - **[[../../zettelkasten/Collections MOC|Collections MOC]]** - Data structures and algorithms
 - **[[../../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - Competitive programming patterns
-- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC|rust-concepts-MOC]]** - Core language features
 
 ---
 

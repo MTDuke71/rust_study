@@ -3,7 +3,7 @@
 ## 🔗 Zettelkasten Links
 - **Previous**: [[zettelkasten/daily-study/Day01]] - Toolchain basics
 - **Next**: [[daily-study/Day03]] - Reference rules
-- **Concept**: [[Rust Concepts MOC]] - Ownership system
+- **Concept**: [[rust-concepts-MOC]] - Ownership system
 - **Rust Book**: [[Chapter 4.1 - Ownership]] - What is Ownership?
 - **Week Summary**: [[zettelkasten/daily-study/Day07]] - Foundations review
 
@@ -110,5 +110,5 @@ fn takes_and_gives_back(s: String) -> String {
 
 ---
 
-*Links: [[zettelkasten/daily-study/Day01]] | [[daily-study/Day03]] | [[Rust Concepts MOC]]*
+*Links: [[zettelkasten/daily-study/Day01]] | [[daily-study/Day03]] | [[rust-concepts-MOC]]*
 *Tags: #ownership #moves #copy #daily-study #rust-book #chapter4 #foundation*

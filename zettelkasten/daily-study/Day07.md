@@ -141,7 +141,7 @@ let result = maybe_value
 - **Previous**: [[zettelkasten/daily-study/Day06]]
 - **Next**: [[Week 2 Overview]]
 - **Week**: [[Week 1 Overview]]
-- **MOC**: [[Rust Concepts MOC]]
+- **MOC**: [[rust-concepts-MOC]]
 
 ---
 

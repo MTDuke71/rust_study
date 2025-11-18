@@ -111,7 +111,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 - [[Collections MOC]] - Complete collection map
 - [[HashMap Internals]] - Deep dive on hash tables
 - [[Mission5 Overview]] - V-Cycle project integration
-- [[Rust Concepts MOC]] - Foundation concepts
+- [[rust-concepts-MOC]] - Foundation concepts
 - [[zettel-index]] - Master index
 
 ---

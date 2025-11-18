@@ -61,6 +61,6 @@ Each file shows a different stage of compilation with explanations!
 - [[Compilation Process|../../../zettelkasten/Compilation Process]] - Rust compilation stages
 - [[LLVM and Rust|../../../zettelkasten/LLVM and Rust]] - LLVM backend integration
 - [[zero-cost-abstractions|../../../zettelkasten/Zero-Cost Abstractions]] - Performance guarantees
-- [[Rust Concepts MOC|../../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+- [[rust-concepts-MOC|../../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
 
 *Tags: #mission4 #compilation #llvm #assembly #tutorial #compiler*

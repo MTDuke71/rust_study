@@ -213,7 +213,7 @@ Brief description of the concept...
 
 - [[zettel-index]] - Main zettelkasten index
 - [[Missions Overview]] - Mission overview
-- [[Rust Concepts MOC]] - Core Rust concepts
+- [[rust-concepts-MOC]] - Core Rust concepts
 - [[Daily Study MOC]] - Learning progression
 - [[AoC 2015 MOC]] - Advent of Code problems
 

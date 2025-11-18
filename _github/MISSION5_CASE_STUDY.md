@@ -504,7 +504,7 @@ fn example_different_types() {
 - **[[../zettelkasten/Quality Assurance]]** - Testing and quality standards
 
 ### **Learning System Integration**
-- **[[../zettelkasten/Rust Concepts MOC]]** - Core Rust language concepts
+- **[[rust-concepts-MOC]]** - Core Rust language concepts
 - **[[../zettelkasten/Daily Study MOC]]** - Daily learning progression
 - **[[../zettelkasten/Missions Overview]]** - Hands-on project implementations  
 - **[[../zettelkasten/V-Cycle Methodology]]** - Requirements-driven development approach

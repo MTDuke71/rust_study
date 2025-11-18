@@ -81,7 +81,7 @@ takes_ownership(s);  // s moved into function
 - **Previous**: [[zettelkasten/daily-study/Day01]]
 - **Next**: [[daily-study/Day03]]
 - **Week**: [[Week 1 Overview]]
-- **MOC**: [[Rust Concepts MOC]]
+- **MOC**: [[rust-concepts-MOC]]
 
 ---
 

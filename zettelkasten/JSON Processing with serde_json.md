@@ -610,9 +610,9 @@ fn process_json_file(path: &str) -> Result<i64, Box<dyn std::error::Error>> {
 - [[Error Handling Deep Dive]] - Comprehensive error handling patterns
 - [[../advent_of_code/aoc2015/src/solver/day12.rs]] - Complete AoC Day 12 implementation
 - [[AoC Patterns MOC]] - Competitive programming techniques
-- [[Rust Concepts MOC]] - Core language features
+- [[rust-concepts-MOC]] - Core language features
 
 ---
 
 *Tags: #json #serde #parsing #data-processing #aoc #day12 #pattern-matching #recursion #error-handling*
-*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[Rust Concepts MOC]] | [[Error Handling Deep Dive]]*
+*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[rust-concepts-MOC]] | [[Error Handling Deep Dive]]*

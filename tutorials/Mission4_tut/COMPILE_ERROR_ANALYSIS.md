@@ -173,7 +173,7 @@ For linked lists, `Box<T>` and `Rc<RefCell<T>>` provide the same functionality w
 - [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Safe heap allocation
 - [[Rc and RefCell|../../zettelkasten/Rc and RefCell]] - Safe shared ownership
 - [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core concepts
-- [[Rust Concepts MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
+- [[rust-concepts-MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
 
 **Rust Book:**
 - [[Chapter 15|../../rust_book/Ch15/README]] - Smart Pointers

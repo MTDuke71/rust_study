@@ -800,7 +800,7 @@ Choose the API that best fits your use case, configure options for your specific
 ### 📚 Zettelkasten Navigation
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[Missions Overview]]** - V-Cycle project implementations
-- **[[Rust Concepts MOC]]** - Core language features and patterns
+- **[[rust-concepts-MOC]]** - Core language features and patterns
 
 ### 🎯 Brackets Extended Resources
 - [[README_EXTENDED]] - Complete implementation guide and design decisions

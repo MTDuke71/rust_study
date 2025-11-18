@@ -342,4 +342,4 @@ unsafe {
 
 *Tags: #box #smart-pointers #heap-allocation #ownership #memory-management #recursive-structures #trait-objects #performance #mission-integration #fundamentals*
 
-*Links: [[zettel-index]] | [[Box Smart Pointer Patterns]] | [[Ownership and Borrowing]] | [[Memory Address Analysis]] | [[Mission4 Overview]] | [[Collections MOC]] | [[Rust Concepts MOC]]*
+*Links: [[zettel-index]] | [[Box Smart Pointer Patterns]] | [[Ownership and Borrowing]] | [[Memory Address Analysis]] | [[Mission4 Overview]] | [[Collections MOC]] | [[rust-concepts-MOC]]*

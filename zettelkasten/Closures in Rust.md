@@ -346,4 +346,4 @@ pub fn peek(&self) -> Option<&T> {
 
 *Tags: #closures #functional-programming #mission2 #iterators #higher-order-functions #capture-environment*
 
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Iterator Patterns]] | [[Option and Result Handling]] | [[../missions/Mission2/README|Mission2 Queue]] | [[Functional Programming in Rust]]*
+*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[Iterator Patterns]] | [[Option and Result Handling]] | [[../missions/Mission2/README|Mission2 Queue]] | [[Functional Programming in Rust]]*

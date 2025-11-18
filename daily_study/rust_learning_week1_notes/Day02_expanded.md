@@ -1156,7 +1156,7 @@ You’re on exactly the right track — keep going at your own pace.
 ### 📚 Zettelkasten Navigation
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[Daily Study MOC]]** - Week-by-week learning progression
-- **[[Rust Concepts MOC]]** - Concept-based navigation
+- **[[rust-concepts-MOC]]** - Concept-based navigation
 
 ### 🎯 Related Concepts in Zettelkasten
 - **Ownership Deep Dives:**

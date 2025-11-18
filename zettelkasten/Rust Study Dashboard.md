@@ -2,7 +2,7 @@
 
 **Tags:** #dashboard #learning-hub #overview #progress-tracking #zettelkasten-system  
 **Created:** 2025-10-22  
-**Related:** [[Daily Study MOC]], [[Missions Overview]], [[Progress Tracking]], [[Quality Assurance]], [[Rust Concepts MOC]], [[3-Track Integration]]
+**Related:** [[Daily Study MOC]], [[Missions Overview]], [[Progress Tracking]], [[Quality Assurance]], [[rust-concepts-MOC]], [[3-Track Integration]]
 
 *Your central hub for Rust learning and development*
 
@@ -42,7 +42,7 @@ LIMIT 8
 
 | Area | Link | Description |
 |------|------|-------------|
-| **All Concepts** | [[Rust Concepts MOC]] | Complete concept overview |
+| **All Concepts** | [[rust-concepts-MOC]] | Complete concept overview |
 | **Collections** | [[Collections MOC]] | Data structures and containers |
 | **AoC Patterns** | [[AoC Patterns MOC]] | Algorithm patterns from Advent of Code |
 | **Missions** | [[Missions Overview]] | Project-based learning track |

@@ -3,7 +3,7 @@
 ## 🔗 Zettelkasten Links
 - **Previous**: [[daily-study/Day05]] - Error handling types
 - **Next**: [[zettelkasten/daily-study/Day07]] - Week foundations review
-- **Concept**: [[Rust Concepts MOC]] - Pattern matching system
+- **Concept**: [[rust-concepts-MOC]] - Pattern matching system
 - **Rust Book**: [[Chapter 6.2 - Match]] - The match control flow operator
 - **Rust Book**: [[Chapter 18 - Patterns]] - All pattern forms
 - **Week Summary**: [[zettelkasten/daily-study/Day07]] - Foundations review
@@ -413,5 +413,5 @@ Pattern matching is central to idiomatic Rust and appears throughout your worksp
 
 ---
 
-*Links: [[daily-study/Day05]] | [[zettelkasten/daily-study/Day07]] | [[Rust Concepts MOC]]*
+*Links: [[daily-study/Day05]] | [[zettelkasten/daily-study/Day07]] | [[rust-concepts-MOC]]*
 *Tags: #pattern-matching #match #daily-study #rust-book #chapter6 #chapter18 #foundation*

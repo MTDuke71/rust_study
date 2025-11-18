@@ -95,7 +95,7 @@ fn main() {
 - **Previous**: [[daily-study/Day03]]
 - **Next**: [[daily-study/Day05]]
 - **Week**: [[Week 1 Overview]]
-- **MOC**: [[Rust Concepts MOC]]
+- **MOC**: [[rust-concepts-MOC]]
 
 ---
 

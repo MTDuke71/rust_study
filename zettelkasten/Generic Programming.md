@@ -635,7 +635,7 @@ Related: [[daily-study/Day19]]
 
 ### **Learning Resources**
 - [[Daily Study MOC]] - Progressive learning track
-- [[Rust Concepts MOC]] - Core language features
+- [[rust-concepts-MOC]] - Core language features
 - [[Rust Book]] - The Rust Programming Language (Chapter 10)
 - [[AoC Patterns MOC]] - Competitive programming with generics
 
@@ -664,4 +664,4 @@ Related: [[daily-study/Day19]]
 
 *Tags: #generics #type-parameters #trait-bounds #associated-types #monomorphization #zero-cost-abstractions #rust-type-system #reusable-code*
 
-*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Rust Concepts MOC]] | [[Rust Trinity - Struct Trait Impl]] | [[daily-study/Day16]] | [[Collections MOC]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[rust-concepts-MOC]] | [[Rust Trinity - Struct Trait Impl]] | [[daily-study/Day16]] | [[Collections MOC]]*

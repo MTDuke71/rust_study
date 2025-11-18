@@ -260,7 +260,7 @@ Both are valuable for understanding different aspects of Rust systems programmin
 ### 📖 Learning Path
 - **[[../../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded]]** - Ownership deep dive
 - **[[../../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded]]** - Borrowing and references
-- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC|rust-concepts-MOC]]** - Core language features
 
 ### 🎄 AoC Applications
 - **[[../../advanced_examples/competitive_ring_bfs/README|competitive_ring_bfs]]** - BFS maze solver using RingBufferQueue

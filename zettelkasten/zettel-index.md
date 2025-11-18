@@ -29,7 +29,7 @@
 
 ## 🗺️ Maps of Content (MOCs)
 
-- [[Rust Concepts MOC]] - Core language features and patterns
+- [[rust-concepts-MOC]] - Core language features and patterns
 - [[Missions Overview]] - V-Cycle project implementations  
 - [[Collections MOC]] - Data structures and algorithms
 - [[Daily Study MOC]] - Progressive learning track

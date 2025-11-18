@@ -288,7 +288,7 @@ This will give you **reliable, monotonic timing** that actually reflects memory 
 ### 📚 Zettelkasten
 - **[[../../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
 - **[[../../zettelkasten/Missions Overview|Missions Overview]]** - V-Cycle projects navigation
-- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC|rust-concepts-MOC]]** - Core language features
 
 ### 🎯 Mission 6 Tutorial Context
 - **[Mission6_tut README](README.md)** - Tutorial overview

@@ -151,7 +151,7 @@ All tutorials follow workspace documentation standards:
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[Missions Overview]]** - V-Cycle projects navigation
 - **[[Daily Study MOC]]** - Progressive learning track
-- **[[Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC]]** - Core language features
 
 ### 🎯 Tutorial-Specific Navigation
 - **[Mission1_tut](Mission1_tut/)** - Stack fundamentals and LIFO principles

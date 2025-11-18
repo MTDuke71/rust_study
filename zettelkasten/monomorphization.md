@@ -55,4 +55,4 @@ Monomorphization happens during the compilation phase. Heavy use of generics can
 
 *Tags: #concept #performance #rust-book #intermediate #compiler #generics*
 
-*Links: [[zettel-index]] | [[rust-concepts-moc]] | [[Trait Objects]] | [[zero-cost-abstractions]]*
+*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[Trait Objects]] | [[zero-cost-abstractions]]*

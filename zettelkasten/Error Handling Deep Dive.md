@@ -371,4 +371,4 @@ fn panic_calculation(x: i32) -> i32 {
 *This comprehensive guide covers Rust's error handling from basic concepts to advanced patterns, with practical examples for competitive programming and mission work.*
 
 *Tags: #error-handling #result #option #pattern-matching #aoc #mission5 #daily-study #cross-track*
-*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Rust Concepts MOC]] | [[Collections MOC]] | [[daily-study/Day05]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[rust-concepts-MOC]] | [[Collections MOC]] | [[daily-study/Day05]]*

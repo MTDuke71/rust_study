@@ -40,7 +40,7 @@ my_project/
 - **Full Details**: [[daily_study/rust_learning_week1_notes/Day01]]
 - **Next**: [[daily-study/Day02]]
 - **Week**: [[Week 1 Overview]]
-- **MOC**: [[Rust Concepts MOC]]
+- **MOC**: [[rust-concepts-MOC]]
 
 ---
 

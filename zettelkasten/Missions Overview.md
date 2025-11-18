@@ -260,7 +260,7 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 - **Smart Pointers**: Chapter 15 - Smart Pointers
 
 ### **Related Zettelkasten Pages**
-- **[[Rust Concepts MOC]]** - Core Rust language concepts
+- **[[rust-concepts-MOC]]** - Core Rust language concepts
 - **[[Daily Study MOC]]** - Daily learning progression
 - **[[AoC 2015 MOC]]** - Advent of Code integration
 - **[[Collections MOC]]** - Collection types and patterns
@@ -373,4 +373,4 @@ The workspace includes complete solutions for Advent of Code 2015, demonstrating
 > **💡 Tip**: Use this MOC to navigate between related missions and find the right learning path for your current skill level and interests.
 
 *Tags: #missions #overview #v-cycle #engineering #projects #requirements #testing #architecture*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Rust Concepts MOC]] | [[V-Cycle Methodology]] | [[mission8 Overview]] | [[Day 5 Exercise Solutions]] | [[Mission Progress Tracker]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[rust-concepts-MOC]] | [[V-Cycle Methodology]] | [[mission8 Overview]] | [[Day 5 Exercise Solutions]] | [[Mission Progress Tracker]]*

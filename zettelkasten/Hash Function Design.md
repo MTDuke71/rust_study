@@ -141,4 +141,4 @@ assert_ne!(hash1, hash2);
 *   **Core Rust Concepts**: [[Generic Programming]] (for `K: Hash` trait bounds), [[Traits]]
 *   **Implementation Details**: [[Mission5 HashMap]], [[entry-api-hashmap]]
 *   **Performance**: [[Load Factor Management]], [[Performance Analysis]]
-*   **Broader Context**: [[Collections MOC]], [[Rust Concepts MOC]]
+*   **Broader Context**: [[Collections MOC]], [[rust-concepts-MOC]]

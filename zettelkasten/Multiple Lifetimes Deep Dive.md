@@ -2,7 +2,7 @@
 
 **Tags:** #rust #lifetimes #memory-safety #advanced-rust #borrowing
 
-**Related:** [[Day17 - Lifetimes Deep Dive|Day 17]] | [[Rust Concepts MOC]] | [[Error Handling Deep Dive]]
+**Related:** [[Day17 - Lifetimes Deep Dive|Day 17]] | [[rust-concepts-MOC]] | [[Error Handling Deep Dive]]
 
 ## Overview
 
@@ -359,4 +359,4 @@ Multiple lifetimes are essential for:
 **References:**
 - [[Day17 - Lifetimes Deep Dive|Day 17 Learning Notes]]
 - [The Rust Book - Validating References with Lifetimes](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html)
-- [[Rust Concepts MOC]] for related concepts
+- [[rust-concepts-MOC]] for related concepts

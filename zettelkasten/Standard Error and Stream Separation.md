@@ -489,4 +489,4 @@ test_stream_separation() {
 
 *Created: 2025-10-26*  
 *Tags: #cli #stdout #stderr #streams #error-handling #rust #chapter12 #testing*  
-*Links: [[Error Handling Deep Dive]] | [[CLI Design Patterns]] | [[zettelkasten/rust_book/rust-book-ch12]] | [[Rust Concepts MOC]]*
+*Links: [[Error Handling Deep Dive]] | [[CLI Design Patterns]] | [[zettelkasten/rust_book/rust-book-ch12]] | [[rust-concepts-MOC]]*

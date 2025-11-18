@@ -454,7 +454,7 @@ cargo tarpaulin --out html
 ### 📚 Zettelkasten
 - **[[../../zettelkasten/zettel-index|Zettel Index]]** - Main knowledge base entry point
 - **[[../../zettelkasten/Missions Overview|Missions Overview]]** - V-Cycle projects navigation
-- **[[../../zettelkasten/Rust Concepts MOC|Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC|rust-concepts-MOC]]** - Core language features
 
 ### 🎯 Mission 6 Context
 - **[Mission 6 README](README.md)** - Main mission documentation

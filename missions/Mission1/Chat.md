@@ -1548,7 +1548,7 @@ Made changes.
 ### 📚 Zettelkasten Navigation
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[Missions Overview]]** - V-Cycle project implementations
-- **[[Rust Concepts MOC]]** - Core language features
+- **[[rust-concepts-MOC]]** - Core language features
 
 ### 🎯 Mission1 Resources
 - [[README]] - Complete Mission1 V-Cycle implementation

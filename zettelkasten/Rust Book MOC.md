@@ -177,7 +177,7 @@ This MOC provides complete access to both:
 - **[[Binary Search Iterator Patterns]]** - Ch10 generics in algorithms
 
 ### **Zettelkasten Knowledge Network**
-- **[[Rust Concepts MOC]]** - Complete language feature overview
+- **[[rust-concepts-MOC]]** - Complete language feature overview
 - **[[Collections MOC]]** - Ch8 collections with ownership (Ch4-5)
 - **[[Error Handling Deep Dive]]** - Ch9 error patterns with real applications
 - **[[Performance Optimization]]** - Ch4 ownership + Ch19 unsafe for zero-cost abstractions
@@ -259,4 +259,4 @@ This MOC provides complete access to both:
 ---
 
 *Tags: #rust-book #learning-index #systematic-study #ownership #structs #generics #modules #collections #concurrency #moc*
-*Links: [[zettel-index]] | [[Rust Concepts MOC]] | [[Missions Overview]] | [[Daily Study MOC]] | [[AoC Patterns MOC]] | [[API Design Patterns]] | [[Documentation Standards]]*
+*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[Missions Overview]] | [[Daily Study MOC]] | [[AoC Patterns MOC]] | [[API Design Patterns]] | [[Documentation Standards]]*
