@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 
 /// Parse input into a 2D grid of characters
-/// 
+///
 /// Internal function used by solve_part1 and solve_part2.
 /// Creates a Vec<Vec<char>> for efficient 2D indexing and bounds checking.
 fn parse_grid(input: &str) -> Result<Vec<Vec<char>>> {
@@ -10,25 +10,29 @@ fn parse_grid(input: &str) -> Result<Vec<Vec<char>>> {
         .filter(|line| !line.trim().is_empty())
         .map(|line| line.chars().collect())
         .collect();
-    
+
     if grid.is_empty() {
         anyhow::bail!("Input grid is empty");
     }
-    
+
     // Verify all rows have the same length (rectangular grid)
     let expected_width = grid[0].len();
     for (row_idx, row) in grid.iter().enumerate() {
         if row.len() != expected_width {
-            anyhow::bail!("Grid row {} has length {}, expected {}", 
-                         row_idx, row.len(), expected_width);
+            anyhow::bail!(
+                "Grid row {} has length {}, expected {}",
+                row_idx,
+                row.len(),
+                expected_width
+            );
         }
     }
-    
+
     Ok(grid)
 }
 
 /// Check if "XMAS" can be found starting at (row, col) in the given direction
-/// 
+///
 /// Returns true if the complete word "XMAS" is found in bounds.
 /// Direction is specified as (row_delta, col_delta) where:
 /// - (-1, -1) = diagonal up-left
@@ -39,38 +43,43 @@ fn parse_grid(input: &str) -> Result<Vec<Vec<char>>> {
 /// - (1, -1)  = diagonal down-left
 /// - (1, 0)   = straight down
 /// - (1, 1)   = diagonal down-right
-fn check_xmas_direction(grid: &[Vec<char>], start_row: usize, start_col: usize, 
-                       row_delta: i32, col_delta: i32) -> bool {
+fn check_xmas_direction(
+    grid: &[Vec<char>],
+    start_row: usize,
+    start_col: usize,
+    row_delta: i32,
+    col_delta: i32,
+) -> bool {
     let target = ['X', 'M', 'A', 'S'];
     let rows = grid.len() as i32;
     let cols = grid[0].len() as i32;
-    
+
     // Check all 4 characters of "XMAS"
     for (i, &expected_char) in target.iter().enumerate() {
         let row = start_row as i32 + (i as i32) * row_delta;
         let col = start_col as i32 + (i as i32) * col_delta;
-        
+
         // Bounds check
         if row < 0 || row >= rows || col < 0 || col >= cols {
             return false;
         }
-        
+
         // Character match check
         if grid[row as usize][col as usize] != expected_char {
             return false;
         }
     }
-    
+
     true
 }
 
 /// Check if there's an X-MAS pattern centered at (row, col)
-/// 
+///
 /// An X-MAS consists of two "MAS" words arranged in an X shape:
 /// - One MAS diagonal (top-left to bottom-right or bottom-right to top-left)
 /// - One MAS diagonal (top-right to bottom-left or bottom-left to top-right)
 /// - Both diagonals intersect at 'A'
-/// 
+///
 /// Example valid patterns:
 /// M.S    S.M    M.M    S.S
 /// .A.    .A.    .A.    .A.
@@ -78,54 +87,57 @@ fn check_xmas_direction(grid: &[Vec<char>], start_row: usize, start_col: usize,
 fn check_x_mas_pattern(grid: &[Vec<char>], center_row: usize, center_col: usize) -> bool {
     let rows = grid.len();
     let cols = grid[0].len();
-    
+
     // Must be 'A' at center and have space for diagonals
-    if center_row == 0 || center_row >= rows - 1 || 
-       center_col == 0 || center_col >= cols - 1 {
+    if center_row == 0 || center_row >= rows - 1 || center_col == 0 || center_col >= cols - 1 {
         return false;
     }
-    
+
     if grid[center_row][center_col] != 'A' {
         return false;
     }
-    
+
     // Get the four diagonal positions
     let top_left = grid[center_row - 1][center_col - 1];
     let top_right = grid[center_row - 1][center_col + 1];
     let bottom_left = grid[center_row + 1][center_col - 1];
     let bottom_right = grid[center_row + 1][center_col + 1];
-    
+
     // Check first diagonal (top-left to bottom-right)
-    let diagonal1_mas = (top_left == 'M' && bottom_right == 'S') ||
-                        (top_left == 'S' && bottom_right == 'M');
-    
-    // Check second diagonal (top-right to bottom-left)  
-    let diagonal2_mas = (top_right == 'M' && bottom_left == 'S') ||
-                        (top_right == 'S' && bottom_left == 'M');
-    
+    let diagonal1_mas =
+        (top_left == 'M' && bottom_right == 'S') || (top_left == 'S' && bottom_right == 'M');
+
+    // Check second diagonal (top-right to bottom-left)
+    let diagonal2_mas =
+        (top_right == 'M' && bottom_left == 'S') || (top_right == 'S' && bottom_left == 'M');
+
     diagonal1_mas && diagonal2_mas
 }
 
 /// Part 1: Count all occurrences of "XMAS" in any direction
-/// 
+///
 /// Searches for "XMAS" in all 8 directions from every position.
 /// Includes horizontal, vertical, and diagonal searches, both forwards and backwards.
 pub fn solve_part1(input: &str) -> Result<String> {
-    let grid = parse_grid(input)
-        .context("Failed to parse grid for Part 1")?;
-    
+    let grid = parse_grid(input).context("Failed to parse grid for Part 1")?;
+
     let rows = grid.len();
     let cols = grid[0].len();
-    
+
     // All 8 directions: up, down, left, right, and 4 diagonals
     let directions = [
-        (-1, -1), (-1, 0), (-1, 1),  // Up-left, Up, Up-right
-        (0, -1),           (0, 1),    // Left, Right  
-        (1, -1),  (1, 0),  (1, 1),   // Down-left, Down, Down-right
+        (-1, -1),
+        (-1, 0),
+        (-1, 1), // Up-left, Up, Up-right
+        (0, -1),
+        (0, 1), // Left, Right
+        (1, -1),
+        (1, 0),
+        (1, 1), // Down-left, Down, Down-right
     ];
-    
+
     let mut count = 0;
-    
+
     // Check every position as a potential start of "XMAS"
     for row in 0..rows {
         for col in 0..cols {
@@ -137,22 +149,21 @@ pub fn solve_part1(input: &str) -> Result<String> {
             }
         }
     }
-    
+
     Ok(count.to_string())
 }
 
-/// Part 2: Count all X-MAS patterns 
-/// 
+/// Part 2: Count all X-MAS patterns
+///
 /// Finds X-shaped patterns where two "MAS" words intersect at their 'A'.
 /// Each MAS can be forwards or backwards along its diagonal.
 pub fn solve_part2(input: &str) -> Result<String> {
-    let grid = parse_grid(input)
-        .context("Failed to parse grid for Part 2")?;
-    
+    let grid = parse_grid(input).context("Failed to parse grid for Part 2")?;
+
     let rows = grid.len();
     let cols = grid[0].len();
     let mut count = 0;
-    
+
     // Check every interior position as potential center of X-MAS
     // Skip edges since X-MAS needs space for diagonals
     for row in 1..rows.saturating_sub(1) {
@@ -162,7 +173,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
             }
         }
     }
-    
+
     Ok(count.to_string())
 }
 
@@ -214,10 +225,10 @@ M.S"#;
     #[test]
     fn test_check_xmas_direction_horizontal() {
         let grid = parse_grid("XMAS").unwrap();
-        
+
         // Forward direction (left to right)
         assert!(check_xmas_direction(&grid, 0, 0, 0, 1));
-        
+
         // Should not find XMAS starting from position 1
         assert!(!check_xmas_direction(&grid, 0, 1, 0, 1));
     }
@@ -225,7 +236,7 @@ M.S"#;
     #[test]
     fn test_check_xmas_direction_backwards() {
         let grid = parse_grid("SAMX").unwrap();
-        
+
         // Backwards direction (right to left, starting from S)
         assert!(check_xmas_direction(&grid, 0, 3, 0, -1));
     }
@@ -233,10 +244,10 @@ M.S"#;
     #[test]
     fn test_check_xmas_direction_vertical() {
         let grid = parse_grid(SIMPLE_VERTICAL).unwrap();
-        
+
         // Vertical down from top-left (X-M-A-S in column 0)
         assert!(check_xmas_direction(&grid, 0, 0, 1, 0));
-        
+
         // Test that we can detect when there's no XMAS pattern
         assert!(!check_xmas_direction(&grid, 0, 1, 1, 0)); // Column 1 doesn't have XMAS
     }
@@ -244,10 +255,10 @@ M.S"#;
     #[test]
     fn test_check_x_mas_pattern_simple() {
         let grid = parse_grid(SIMPLE_X_MAS).unwrap();
-        
+
         // Center should be at (1, 1) - the 'A'
         assert!(check_x_mas_pattern(&grid, 1, 1));
-        
+
         // Other positions should not work
         assert!(!check_x_mas_pattern(&grid, 0, 0));
         assert!(!check_x_mas_pattern(&grid, 0, 1));
@@ -258,15 +269,18 @@ M.S"#;
         // Test different valid X-MAS patterns
         let patterns = [
             "M.S\n.A.\nM.S", // M-A-S both ways
-            "S.M\n.A.\nS.M", // S-A-M both ways  
+            "S.M\n.A.\nS.M", // S-A-M both ways
             "M.M\n.A.\nS.S", // M-A-S one way, S-A-M the other
             "S.S\n.A.\nM.M", // S-A-M one way, M-A-S the other
         ];
-        
+
         for pattern in &patterns {
             let grid = parse_grid(pattern).unwrap();
-            assert!(check_x_mas_pattern(&grid, 1, 1), 
-                   "Pattern should be valid:\n{}", pattern);
+            assert!(
+                check_x_mas_pattern(&grid, 1, 1),
+                "Pattern should be valid:\n{}",
+                pattern
+            );
         }
     }
 
@@ -317,7 +331,7 @@ M.S"#;
     #[test]
     fn test_bounds_checking() {
         let grid = parse_grid("XM").unwrap(); // Too short for XMAS
-        
+
         // Should not find XMAS when it goes out of bounds
         assert!(!check_xmas_direction(&grid, 0, 0, 0, 1));
     }
@@ -325,7 +339,7 @@ M.S"#;
     #[test]
     fn test_x_mas_bounds_checking() {
         let grid = parse_grid("A").unwrap(); // Single character, no room for X pattern
-        
+
         // Should not find X-MAS when there's no room for diagonals
         assert!(!check_x_mas_pattern(&grid, 0, 0));
     }

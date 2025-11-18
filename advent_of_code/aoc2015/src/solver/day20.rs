@@ -247,13 +247,13 @@ mod tests {
 
     #[test]
     fn test_sum_of_divisors() {
-        assert_eq!(sum_of_divisors(1), 1);   // 1
-        assert_eq!(sum_of_divisors(2), 3);   // 1 + 2
-        assert_eq!(sum_of_divisors(3), 4);   // 1 + 3
-        assert_eq!(sum_of_divisors(4), 7);   // 1 + 2 + 4
-        assert_eq!(sum_of_divisors(6), 12);  // 1 + 2 + 3 + 6
-        assert_eq!(sum_of_divisors(8), 15);  // 1 + 2 + 4 + 8
-        assert_eq!(sum_of_divisors(9), 13);  // 1 + 2 + 9
+        assert_eq!(sum_of_divisors(1), 1); // 1
+        assert_eq!(sum_of_divisors(2), 3); // 1 + 2
+        assert_eq!(sum_of_divisors(3), 4); // 1 + 3
+        assert_eq!(sum_of_divisors(4), 7); // 1 + 2 + 4
+        assert_eq!(sum_of_divisors(6), 12); // 1 + 2 + 3 + 6
+        assert_eq!(sum_of_divisors(8), 15); // 1 + 2 + 4 + 8
+        assert_eq!(sum_of_divisors(9), 13); // 1 + 2 + 9
     }
 
     #[test]

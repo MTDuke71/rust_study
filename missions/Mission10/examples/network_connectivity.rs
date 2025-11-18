@@ -10,11 +10,7 @@ fn main() -> Result<(), String> {
     println!("Network with {} computers\n", num_computers);
 
     // Add connections (cables)
-    let connections = vec![
-        (0, 1, "Cable A"),
-        (1, 2, "Cable B"),
-        (3, 4, "Cable C"),
-    ];
+    let connections = vec![(0, 1, "Cable A"), (1, 2, "Cable B"), (3, 4, "Cable C")];
 
     println!("Adding connections:");
     for (x, y, name) in &connections {
@@ -27,8 +23,14 @@ fn main() -> Result<(), String> {
 
     // Test connectivity
     println!("\nConnectivity tests:");
-    println!("  Computer 0 can reach Computer 2? {}", network.connected(0, 2)?);
-    println!("  Computer 0 can reach Computer 5? {}", network.connected(0, 5)?);
+    println!(
+        "  Computer 0 can reach Computer 2? {}",
+        network.connected(0, 2)?
+    );
+    println!(
+        "  Computer 0 can reach Computer 5? {}",
+        network.connected(0, 5)?
+    );
 
     // Add bridge connection
     println!("\nAdding Cable D to connect networks...");
@@ -36,7 +38,10 @@ fn main() -> Result<(), String> {
 
     println!("\nAfter bridge:");
     println!("  Separate networks: {}", network.count());
-    println!("  Computer 0 can reach Computer 4? {}", network.connected(0, 4)?);
+    println!(
+        "  Computer 0 can reach Computer 4? {}",
+        network.connected(0, 4)?
+    );
 
     Ok(())
 }

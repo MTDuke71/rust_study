@@ -33,8 +33,8 @@
 //! - **Space**: O(V) for distances, predecessors, and visited set
 //! - **Optimality**: Guaranteed shortest path with non-negative weights
 
-use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 
 /// Node identifier for our examples
 pub type NodeId = u32;
@@ -136,10 +136,10 @@ impl SimpleGraph {
     /// Add an edge (automatically adds nodes if they don't exist)
     pub fn add_edge(&mut self, from: NodeId, to: NodeId, weight: Weight) {
         assert!(weight >= 0.0, "Dijkstra requires non-negative weights");
-        
+
         self.add_node(from);
         self.add_node(to);
-        
+
         self.edges.get_mut(&from).unwrap().push((to, weight));
     }
 
@@ -326,7 +326,7 @@ pub fn dijkstra_with_explanation(
     // Reconstruct path from predecessors
     let mut path = Vec::new();
     let mut current = goal;
-    
+
     while current != start {
         path.push(current);
         match predecessors.get(&current) {
@@ -350,7 +350,11 @@ pub fn dijkstra_with_explanation(
 }
 
 /// Simplified Dijkstra implementation for comparison
-pub fn dijkstra_simple(graph: &SimpleGraph, start: NodeId, goal: NodeId) -> Result<PathResult, String> {
+pub fn dijkstra_simple(
+    graph: &SimpleGraph,
+    start: NodeId,
+    goal: NodeId,
+) -> Result<PathResult, String> {
     dijkstra_with_explanation(graph, start, goal, false)
 }
 
@@ -382,14 +386,14 @@ fn exercise_1_basic_dijkstra() {
 
     // TODO: Run Dijkstra from node 0 to node 3
     println!("\n🎯 Finding shortest path from 0 to 3:");
-    
+
     match dijkstra_with_explanation(&graph, 0, 3, true) {
         Ok(result) => {
             println!("\nResult Summary:");
             println!("  Shortest path: {:?}", result.path);
             println!("  Total cost: {:.1}", result.cost);
             println!("  Nodes explored: {}", result.nodes_explored);
-            
+
             // Expected: path [0, 1, 3] with cost 5.0
             assert_eq!(result.path, vec![0, 1, 3]);
             assert_eq!(result.cost, 5.0);
@@ -406,7 +410,7 @@ fn exercise_2_path_comparison() {
 
     // Create graph with multiple paths between nodes
     let mut graph = SimpleGraph::new();
-    
+
     // Multiple paths from 0 to 4:
     // Path 1: 0 -> 1 -> 4 (cost: 3 + 2 = 5)
     // Path 2: 0 -> 2 -> 3 -> 4 (cost: 1 + 1 + 1 = 3) <- optimal
@@ -435,7 +439,7 @@ fn exercise_2_path_comparison() {
 
     for (start, goal) in test_cases {
         println!("\n🎯 Path from {} to {}:", start, goal);
-        
+
         match dijkstra_simple(&graph, start, goal) {
             Ok(result) => {
                 if result.path.is_empty() {
@@ -472,7 +476,7 @@ fn exercise_3_edge_cases() {
 
     for (start, goal, description) in test_cases {
         println!("\n📋 Test: {} ({} -> {})", description, start, goal);
-        
+
         match dijkstra_simple(&graph, start, goal) {
             Ok(result) => {
                 if result.path.is_empty() {
@@ -499,7 +503,7 @@ fn exercise_4_performance_analysis() {
 
     for size in sizes {
         let mut graph = SimpleGraph::new();
-        
+
         // Create a grid-like graph: each node connects to next few nodes
         for i in 0..size {
             for j in 1..=3 {
@@ -510,12 +514,16 @@ fn exercise_4_performance_analysis() {
         }
 
         let start_time = std::time::Instant::now();
-        
+
         match dijkstra_simple(&graph, 0, size - 1) {
             Ok(result) => {
                 let elapsed = start_time.elapsed();
-                println!("Graph size {}: Path length {}, Time {:?}", 
-                    size, result.path.len(), elapsed);
+                println!(
+                    "Graph size {}: Path length {}, Time {:?}",
+                    size,
+                    result.path.len(),
+                    elapsed
+                );
             }
             Err(e) => println!("Graph size {}: Error - {}", size, e),
         }
@@ -529,7 +537,7 @@ fn advanced_exercise_algorithm_correctness() {
     println!("\n🔍 Advanced Exercise: Algorithm Correctness");
 
     let mut graph = SimpleGraph::new();
-    
+
     // Create a graph where greedy choice might seem wrong
     // But Dijkstra still finds optimal path
     graph.add_edge(0, 1, 10.0);
@@ -550,9 +558,19 @@ fn advanced_exercise_algorithm_correctness() {
             println!("\n📈 Correctness Analysis:");
             println!("  • Direct path 0→1: cost 10.0");
             println!("  • Indirect path 0→2→1: cost 1.0 + 1.0 = 2.0");
-            println!("  • Algorithm chose: {:?} with cost {:.1}", result.path, result.cost);
-            println!("  • Optimal? {}", if result.cost == 2.0 { "YES ✅" } else { "NO ❌" });
-            
+            println!(
+                "  • Algorithm chose: {:?} with cost {:.1}",
+                result.path, result.cost
+            );
+            println!(
+                "  • Optimal? {}",
+                if result.cost == 2.0 {
+                    "YES ✅"
+                } else {
+                    "NO ❌"
+                }
+            );
+
             // Verify optimality
             assert_eq!(result.path, vec![0, 2, 1]);
             assert_eq!(result.cost, 2.0);
@@ -615,7 +633,7 @@ mod step2_tests {
     #[test]
     fn test_invalid_nodes() {
         let graph = SimpleGraph::new();
-        
+
         assert!(dijkstra_simple(&graph, 0, 1).is_err());
         assert!(dijkstra_simple(&graph, 99, 0).is_err());
     }
@@ -625,7 +643,7 @@ mod step2_tests {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("🎯 Mission 9 Tutorial - Step 2: Dijkstra's Algorithm Basics");
     println!("═══════════════════════════════════════════════════════════════");
-    
+
     exercise_1_basic_dijkstra();
     exercise_2_path_comparison();
     exercise_3_edge_cases();
@@ -639,7 +657,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("  • Relaxation updates distances when shorter paths are found");
     println!("  • Path reconstruction uses predecessor tracking");
     println!("  • Time complexity: O((V + E) log V)");
-    
+
     println!("\n➡️  Next: cargo run --example step3_astar_implementation");
 
     Ok(())

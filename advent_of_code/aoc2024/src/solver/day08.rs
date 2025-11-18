@@ -16,7 +16,12 @@ fn parse_input(input: &str) -> Result<ParsedInput> {
     let width = lines[0].len();
     for (i, line) in lines.iter().enumerate() {
         if line.len() != width {
-            anyhow::bail!("Non-rectangular grid at line {}: got {}, expected {}", i, line.len(), width);
+            anyhow::bail!(
+                "Non-rectangular grid at line {}: got {}, expected {}",
+                i,
+                line.len(),
+                width
+            );
         }
     }
     let mut grid = Grid::new(width, height, '.');
@@ -25,7 +30,8 @@ fn parse_input(input: &str) -> Result<ParsedInput> {
         for (x, ch) in line.chars().enumerate() {
             let coord = Coord::new(x, y);
             grid[coord] = ch;
-            if ch != '.' { // antenna present
+            if ch != '.' {
+                // antenna present
                 freq_map.entry(ch).or_default().push(coord);
             }
         }
@@ -42,9 +48,11 @@ pub fn solve_part1(input: &str) -> Result<String> {
     let height = grid.height();
 
     for (_freq, positions) in freq_map.iter() {
-        if positions.len() < 2 { continue; }
+        if positions.len() < 2 {
+            continue;
+        }
         for i in 0..positions.len() {
-            for j in (i+1)..positions.len() {
+            for j in (i + 1)..positions.len() {
                 let p1 = positions[i];
                 let p2 = positions[j];
                 let dx = p2.x as isize - p1.x as isize;
@@ -69,9 +77,17 @@ pub fn solve_part1(input: &str) -> Result<String> {
 
 /// Greatest common divisor (Euclidean algorithm) for non-negative isize values.
 fn gcd(mut a: isize, mut b: isize) -> isize {
-    if a < 0 { a = -a; }
-    if b < 0 { b = -b; }
-    while b != 0 { let r = a % b; a = b; b = r; }
+    if a < 0 {
+        a = -a;
+    }
+    if b < 0 {
+        b = -b;
+    }
+    while b != 0 {
+        let r = a % b;
+        a = b;
+        b = r;
+    }
     a
 }
 
@@ -80,7 +96,8 @@ fn gcd(mut a: isize, mut b: isize) -> isize {
 ///
 /// Intended for manual inspection when exploring the geometry of the puzzle.
 pub fn debug_print_pairs_with_gcd(input: &str) -> Result<()> {
-    let (_grid, freq_map) = parse_input(input).context("Failed to parse input for debug_print_pairs_with_gcd")?;
+    let (_grid, freq_map) =
+        parse_input(input).context("Failed to parse input for debug_print_pairs_with_gcd")?;
 
     for (freq, positions) in freq_map.iter() {
         if positions.len() < 2 {
@@ -115,11 +132,15 @@ pub fn solve_part2(input: &str) -> Result<String> {
     let height = grid.height() as isize;
 
     for (_freq, positions) in freq_map.iter() {
-        if positions.len() < 2 { continue; }
+        if positions.len() < 2 {
+            continue;
+        }
         // Ensure original antenna positions count as antinodes under harmonic rule
-        for &p in positions { antinodes.insert(p); }
+        for &p in positions {
+            antinodes.insert(p);
+        }
         for i in 0..positions.len() {
-            for j in (i+1)..positions.len() {
+            for j in (i + 1)..positions.len() {
                 let p1 = positions[i];
                 let p2 = positions[j];
                 let dx = p2.x as isize - p1.x as isize;
@@ -132,14 +153,16 @@ pub fn solve_part2(input: &str) -> Result<String> {
                 let mut y = p1.y as isize + step_y;
                 while x >= 0 && x < width && y >= 0 && y < height {
                     antinodes.insert(Coord::new(x as usize, y as usize));
-                    x += step_x; y += step_y;
+                    x += step_x;
+                    y += step_y;
                 }
                 // Radiate backward from p1
                 let mut x2 = p1.x as isize - step_x;
                 let mut y2 = p1.y as isize - step_y;
                 while x2 >= 0 && x2 < width && y2 >= 0 && y2 < height {
                     antinodes.insert(Coord::new(x2 as usize, y2 as usize));
-                    x2 -= step_x; y2 -= step_y;
+                    x2 -= step_x;
+                    y2 -= step_y;
                 }
             }
         }
@@ -151,15 +174,20 @@ pub fn solve_part2(input: &str) -> Result<String> {
 /// instead of the gcd-normalized primitive step. This matches many
 /// published AoC solutions and is useful for comparison.
 pub fn solve_part2_raw_step(input: &str) -> Result<String> {
-    let (grid, freq_map) = parse_input(input).context("Failed to parse input for part2_raw_step")?;
+    let (grid, freq_map) =
+        parse_input(input).context("Failed to parse input for part2_raw_step")?;
     let mut antinodes: HashSet<Coord> = HashSet::new();
     let width = grid.width() as isize;
     let height = grid.height() as isize;
 
     for (_freq, positions) in freq_map.iter() {
-        if positions.len() < 2 { continue; }
+        if positions.len() < 2 {
+            continue;
+        }
         // Original antenna positions count as antinodes under harmonic rule
-        for &p in positions { antinodes.insert(p); }
+        for &p in positions {
+            antinodes.insert(p);
+        }
         for i in 0..positions.len() {
             for j in (i + 1)..positions.len() {
                 let p1 = positions[i];
@@ -172,7 +200,8 @@ pub fn solve_part2_raw_step(input: &str) -> Result<String> {
                 let mut y = p2.y as isize + dy;
                 while x >= 0 && x < width && y >= 0 && y < height {
                     antinodes.insert(Coord::new(x as usize, y as usize));
-                    x += dx; y += dy;
+                    x += dx;
+                    y += dy;
                 }
 
                 // Step backward from p1
@@ -180,7 +209,8 @@ pub fn solve_part2_raw_step(input: &str) -> Result<String> {
                 let mut y2 = p1.y as isize - dy;
                 while x2 >= 0 && x2 < width && y2 >= 0 && y2 < height {
                     antinodes.insert(Coord::new(x2 as usize, y2 as usize));
-                    x2 -= dx; y2 -= dy;
+                    x2 -= dx;
+                    y2 -= dy;
                 }
             }
         }

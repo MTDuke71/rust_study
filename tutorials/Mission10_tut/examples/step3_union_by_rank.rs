@@ -108,7 +108,7 @@ impl BasicUnionFind {
 /// Key addition: Track rank (upper bound on tree height)
 struct UnionByRankUF {
     parent: Vec<usize>,
-    rank: Vec<usize>,    // NEW: Rank of each tree (upper bound on height)
+    rank: Vec<usize>, // NEW: Rank of each tree (upper bound on height)
     count: usize,
 }
 
@@ -116,7 +116,7 @@ impl UnionByRankUF {
     fn new(n: usize) -> Self {
         Self {
             parent: (0..n).collect(),
-            rank: vec![0; n],      // Initially all have rank 0 (single nodes)
+            rank: vec![0; n], // Initially all have rank 0 (single nodes)
             count: n,
         }
     }
@@ -259,7 +259,7 @@ fn demonstrate_union_by_rank() {
     println!("All start with rank 0\n");
 
     println!("Union by rank operations:");
-    
+
     println!("1. union(0, 1):");
     println!("   - Both have rank 0 (equal)");
     println!("   - Attach 0 → 1, increase rank[1] to 1");
@@ -292,7 +292,7 @@ fn demonstrate_union_by_rank() {
     println!("  0   2   (empty)");
 
     uf.print_tree_structure(&[0, 1, 2, 3, 4]);
-    
+
     let root = uf.find(0);
     let height = uf.get_tree_height(root);
     println!("\nTree height: {} (much better!)", height);
@@ -310,9 +310,9 @@ fn explain_rank_concept() {
     println!("  • Tree height ≤ rank ≤ log₂(tree_size)");
 
     println!("\n=== Why Rank Works ===");
-    
+
     let mut uf = UnionByRankUF::new(16);
-    
+
     println!("Building trees to show rank progression:\n");
 
     // Build perfectly balanced binary tree
@@ -326,20 +326,20 @@ fn explain_rank_concept() {
     }
 
     println!("\nStep 2: Combine pairs (rank 1 → 2)");
-    uf.union(1, 3);  // Tree roots with rank 1
+    uf.union(1, 3); // Tree roots with rank 1
     println!("  union(1, 3): both rank 1, result rank 2");
-    
+
     uf.union(5, 7);
     println!("  union(5, 7): both rank 1, result rank 2");
 
     println!("\nStep 3: Combine larger trees (rank 2 → 3)");
-    uf.union(3, 7);  // Tree roots with rank 2
+    uf.union(3, 7); // Tree roots with rank 2
     println!("  union(3, 7): both rank 2, result rank 3");
 
     println!("\nRank progression shows perfect balance:");
     println!("  Rank 0: 1 node    (2⁰ = 1)");
     println!("  Rank 1: ≥ 2 nodes  (2¹ = 2)");
-    println!("  Rank 2: ≥ 4 nodes  (2² = 4)");  
+    println!("  Rank 2: ≥ 4 nodes  (2² = 4)");
     println!("  Rank 3: ≥ 8 nodes  (2³ = 8)");
     println!("  ...");
     println!("  Rank k: ≥ 2ᵏ nodes");
@@ -357,31 +357,44 @@ fn side_by_side_comparison() {
     let mut ranked = UnionByRankUF::new(10);
 
     let operations = [
-        (0, 1), (2, 3), (4, 5), (6, 7), (8, 9),
-        (1, 3), (5, 7), (3, 7), (1, 9)
+        (0, 1),
+        (2, 3),
+        (4, 5),
+        (6, 7),
+        (8, 9),
+        (1, 3),
+        (5, 7),
+        (3, 7),
+        (1, 9),
     ];
 
     println!("Performing same operations on both structures:\n");
 
     for (i, &(x, y)) in operations.iter().enumerate() {
         println!("Operation {}: union({}, {})", i + 1, x, y);
-        
+
         basic.union(x, y);
         ranked.union(x, y);
 
         // Find a common root to analyze
         let basic_root = basic.find(0);
         let ranked_root = ranked.find(0);
-        
+
         let basic_height = basic.get_tree_height(basic_root);
         let ranked_height = ranked.get_tree_height(ranked_root);
         let ranked_rank = ranked.get_rank(0);
 
         println!("  Naive:  tree height = {}", basic_height);
-        println!("  Ranked: tree height = {}, rank = {}", ranked_height, ranked_rank);
-        
+        println!(
+            "  Ranked: tree height = {}, rank = {}",
+            ranked_height, ranked_rank
+        );
+
         if ranked_height < basic_height {
-            println!("  → Rank optimization wins! {} < {}", ranked_height, basic_height);
+            println!(
+                "  → Rank optimization wins! {} < {}",
+                ranked_height, basic_height
+            );
         }
         println!();
     }
@@ -389,9 +402,15 @@ fn side_by_side_comparison() {
     println!("=== Final Comparison ===");
     let basic_root = basic.find(0);
     let ranked_root = ranked.find(0);
-    
-    println!("Naive union final height:  {}", basic.get_tree_height(basic_root));
-    println!("Union by rank final height: {}", ranked.get_tree_height(ranked_root));
+
+    println!(
+        "Naive union final height:  {}",
+        basic.get_tree_height(basic_root)
+    );
+    println!(
+        "Union by rank final height: {}",
+        ranked.get_tree_height(ranked_root)
+    );
     println!("Union by rank final rank:   {}", ranked.get_rank(0));
 }
 
@@ -419,13 +438,15 @@ fn performance_analysis() {
 
     // Demonstrate with larger example
     println!("\n=== Scaling Demonstration ===");
-    
+
     for size in [16, 64, 256, 1024] {
-        let naive_worst = size - 1;  // Chain length
+        let naive_worst = size - 1; // Chain length
         let ranked_worst = (size as f32).log2().ceil() as usize;
-        
-        println!("Size {}: Naive O({}) vs Ranked O({})", 
-                 size, naive_worst, ranked_worst);
+
+        println!(
+            "Size {}: Naive O({}) vs Ranked O({})",
+            size, naive_worst, ranked_worst
+        );
     }
 
     println!("\nFor n = 1,000,000:");
@@ -444,7 +465,7 @@ fn interactive_demo() {
 
     let steps = [
         ("union(0, 1)", 0, 1, "Two rank-0 trees → one rank-1 tree"),
-        ("union(2, 3)", 2, 3, "Two rank-0 trees → one rank-1 tree"),  
+        ("union(2, 3)", 2, 3, "Two rank-0 trees → one rank-1 tree"),
         ("union(4, 5)", 4, 5, "Two rank-0 trees → one rank-1 tree"),
         ("union(6, 7)", 6, 7, "Two rank-0 trees → one rank-1 tree"),
         ("union(1, 3)", 1, 3, "Two rank-1 trees → one rank-2 tree"),
@@ -454,24 +475,32 @@ fn interactive_demo() {
 
     for (description, x, y, explanation) in steps {
         println!("🔄 {}: {}", description, explanation);
-        
+
         let root_x = uf.find(x);
         let root_y = uf.find(y);
         let rank_x = uf.rank[root_x];
         let rank_y = uf.rank[root_y];
-        
-        println!("   Before: root({}) has rank {}, root({}) has rank {}", 
-                 x, rank_x, y, rank_y);
-        
+
+        println!(
+            "   Before: root({}) has rank {}, root({}) has rank {}",
+            x, rank_x, y, rank_y
+        );
+
         uf.union(x, y);
-        
+
         let new_root = uf.find(x);
         let new_rank = uf.rank[new_root];
-        
+
         println!("   After:  root {} has rank {}", new_root, new_rank);
-        
+
         // Show tree structure for smaller examples
-        if steps.len() - steps.iter().position(|(d, _, _, _)| *d == description).unwrap() > 4 {
+        if steps.len()
+            - steps
+                .iter()
+                .position(|(d, _, _, _)| *d == description)
+                .unwrap()
+            > 4
+        {
             uf.print_tree_structure(&[0, 1, 2, 3]);
         }
         println!();
@@ -480,7 +509,7 @@ fn interactive_demo() {
     println!("Final tree structure:");
     uf.print_tree_structure(&[0, 1, 2, 3, 4, 5, 6, 7]);
     uf.print_rank_summary();
-    
+
     println!("\nNotice: Final tree has height 3, which equals its rank!");
     println!("This demonstrates that rank is a tight upper bound.");
 }
@@ -492,11 +521,11 @@ mod tests {
     #[test]
     fn test_union_by_rank_basic() {
         let mut uf = UnionByRankUF::new(5);
-        
+
         assert!(uf.union(0, 1));
         assert!(uf.union(2, 3));
         assert!(uf.union(1, 3));
-        
+
         assert!(uf.connected(0, 2));
         assert!(!uf.connected(0, 4));
     }
@@ -504,22 +533,22 @@ mod tests {
     #[test]
     fn test_rank_increases_correctly() {
         let mut uf = UnionByRankUF::new(4);
-        
+
         // Equal rank union increases rank
-        uf.union(0, 1);  // Both rank 0 → result rank 1
+        uf.union(0, 1); // Both rank 0 → result rank 1
         assert_eq!(uf.get_rank(0), 1);
-        
-        uf.union(2, 3);  // Both rank 0 → result rank 1  
+
+        uf.union(2, 3); // Both rank 0 → result rank 1
         assert_eq!(uf.get_rank(2), 1);
-        
-        uf.union(1, 3);  // Both rank 1 → result rank 2
+
+        uf.union(1, 3); // Both rank 1 → result rank 2
         assert_eq!(uf.get_rank(0), 2);
     }
 
     #[test]
     fn test_height_bounded_by_rank() {
         let mut uf = UnionByRankUF::new(16);
-        
+
         // Build balanced tree
         for i in 0..8 {
             uf.union(i * 2, i * 2 + 1);
@@ -531,12 +560,17 @@ mod tests {
             uf.union(i * 8 + 3, i * 8 + 7);
         }
         uf.union(7, 15);
-        
+
         let root = uf.find(0);
         let height = uf.get_tree_height(root);
         let rank = uf.get_rank(0);
-        
-        assert!(height <= rank, "Height {} should be ≤ rank {}", height, rank);
+
+        assert!(
+            height <= rank,
+            "Height {} should be ≤ rank {}",
+            height,
+            rank
+        );
         assert!(rank <= 4, "Rank {} should be ≤ log₂(16) = 4", rank);
     }
 }

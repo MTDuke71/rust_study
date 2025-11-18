@@ -27,10 +27,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn walkthrough_for_groups(weights_desc: &[u64], num_groups: u64) -> Result<(), Box<dyn std::error::Error>> {
+fn walkthrough_for_groups(
+    weights_desc: &[u64],
+    num_groups: u64,
+) -> Result<(), Box<dyn std::error::Error>> {
     let total: u64 = weights_desc.iter().sum();
     if !total.is_multiple_of(num_groups) {
-        println!("Part ({} groups): total not divisible by {}\n", num_groups, num_groups);
+        println!(
+            "Part ({} groups): total not divisible by {}\n",
+            num_groups, num_groups
+        );
         return Ok(());
     }
     let target = total / num_groups;
@@ -47,10 +53,15 @@ fn walkthrough_for_groups(weights_desc: &[u64], num_groups: u64) -> Result<(), B
             continue;
         }
 
-        println!("\nTrying first-group size = {} ({} subsets sum to target)", size, combos.len());
+        println!(
+            "\nTrying first-group size = {} ({} subsets sum to target)",
+            size,
+            combos.len()
+        );
         let mut used_any_for_size = false;
 
-        for idxs in combos.into_iter().take(10) { // show only first few for brevity
+        for idxs in combos.into_iter().take(10) {
+            // show only first few for brevity
             let mut chosen = Vec::with_capacity(size);
             let mut used = vec![false; weights_desc.len()];
             for i in idxs {
@@ -101,4 +112,3 @@ fn walkthrough_for_groups(weights_desc: &[u64], num_groups: u64) -> Result<(), B
     println!();
     Ok(())
 }
-

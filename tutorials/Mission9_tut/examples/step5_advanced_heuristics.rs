@@ -21,22 +21,27 @@
 //! - **Weighted A***: Trade optimality for speed with f(n) = g(n) + w*h(n)
 //! - **Dynamic Weighting**: Adapt search focus based on progress and constraints
 
-use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::time::Instant;
 
 /// Multi-objective cost representation
 #[derive(Debug, Clone, PartialEq)]
 struct MultiObjectiveCost {
-    distance: f64,    // Travel distance/time
-    safety: f64,      // Safety score (higher is safer)
-    fuel: f64,        // Fuel consumption
-    comfort: f64,     // Comfort level (road quality, traffic)
+    distance: f64, // Travel distance/time
+    safety: f64,   // Safety score (higher is safer)
+    fuel: f64,     // Fuel consumption
+    comfort: f64,  // Comfort level (road quality, traffic)
 }
 
 impl MultiObjectiveCost {
     fn new(distance: f64, safety: f64, fuel: f64, comfort: f64) -> Self {
-        Self { distance, safety, fuel, comfort }
+        Self {
+            distance,
+            safety,
+            fuel,
+            comfort,
+        }
     }
 
     /// Check if this solution dominates another (better in all objectives)
@@ -47,20 +52,20 @@ impl MultiObjectiveCost {
         let safety_better_or_equal = self.safety >= other.safety;
         let fuel_better_or_equal = self.fuel <= other.fuel;
         let comfort_better_or_equal = self.comfort >= other.comfort;
-        
+
         // Must be better or equal in all objectives
-        let all_better_or_equal = distance_better_or_equal 
-            && safety_better_or_equal 
-            && fuel_better_or_equal 
+        let all_better_or_equal = distance_better_or_equal
+            && safety_better_or_equal
+            && fuel_better_or_equal
             && comfort_better_or_equal;
-            
+
         // Must be strictly better in at least one objective (with tolerance)
         let epsilon = 0.001;
         let at_least_one_better = (self.distance + epsilon < other.distance)
             || (self.safety > other.safety + epsilon)
             || (self.fuel + epsilon < other.fuel)
             || (self.comfort > other.comfort + epsilon);
-            
+
         all_better_or_equal && at_least_one_better
     }
 
@@ -69,7 +74,7 @@ impl MultiObjectiveCost {
         weights.distance * self.distance
             + weights.safety * (1.0 - self.safety)  // Invert safety (lower is better for sum)
             + weights.fuel * self.fuel
-            + weights.comfort * (1.0 - self.comfort)  // Invert comfort
+            + weights.comfort * (1.0 - self.comfort) // Invert comfort
     }
 }
 
@@ -84,19 +89,39 @@ struct ObjectiveWeights {
 
 impl ObjectiveWeights {
     fn balanced() -> Self {
-        Self { distance: 0.25, safety: 0.25, fuel: 0.25, comfort: 0.25 }
+        Self {
+            distance: 0.25,
+            safety: 0.25,
+            fuel: 0.25,
+            comfort: 0.25,
+        }
     }
 
     fn speed_focused() -> Self {
-        Self { distance: 0.7, safety: 0.1, fuel: 0.1, comfort: 0.1 }
+        Self {
+            distance: 0.7,
+            safety: 0.1,
+            fuel: 0.1,
+            comfort: 0.1,
+        }
     }
 
     fn safety_focused() -> Self {
-        Self { distance: 0.1, safety: 0.7, fuel: 0.1, comfort: 0.1 }
+        Self {
+            distance: 0.1,
+            safety: 0.7,
+            fuel: 0.1,
+            comfort: 0.1,
+        }
     }
 
     fn eco_friendly() -> Self {
-        Self { distance: 0.2, safety: 0.2, fuel: 0.5, comfort: 0.1 }
+        Self {
+            distance: 0.2,
+            safety: 0.2,
+            fuel: 0.5,
+            comfort: 0.1,
+        }
     }
 }
 
@@ -135,7 +160,9 @@ impl PartialEq for MultiObjectiveNode {
 impl Ord for MultiObjectiveNode {
     fn cmp(&self, other: &Self) -> Ordering {
         // Min-heap based on distance + heuristic
-        other.f_score(1.0).partial_cmp(&self.f_score(1.0))
+        other
+            .f_score(1.0)
+            .partial_cmp(&self.f_score(1.0))
             .unwrap_or(Ordering::Equal)
             .then_with(|| self.id.cmp(&other.id))
     }
@@ -153,28 +180,28 @@ struct AdvancedGrid {
     width: usize,
     height: usize,
     terrain: Vec<Vec<TerrainType>>,
-    traffic_density: Vec<Vec<f64>>,    // 0.0 = no traffic, 1.0 = heavy traffic
-    weather_impact: Vec<Vec<f64>>,     // 0.0 = clear, 1.0 = severe weather
+    traffic_density: Vec<Vec<f64>>, // 0.0 = no traffic, 1.0 = heavy traffic
+    weather_impact: Vec<Vec<f64>>,  // 0.0 = clear, 1.0 = severe weather
 }
 
 #[derive(Debug, Clone, PartialEq)]
 enum TerrainType {
-    Road,       // Normal road
-    Highway,    // Fast but less safe
-    Dirt,       // Slow but fuel efficient
-    Mountain,   // Scenic but challenging
-    City,       // Traffic but convenient
-    Water,      // Impassable
+    Road,     // Normal road
+    Highway,  // Fast but less safe
+    Dirt,     // Slow but fuel efficient
+    Mountain, // Scenic but challenging
+    City,     // Traffic but convenient
+    Water,    // Impassable
 }
 
 impl TerrainType {
     fn movement_cost(&self) -> f64 {
         match self {
             TerrainType::Road => 1.0,
-            TerrainType::Highway => 0.8,    // Faster
-            TerrainType::Dirt => 1.5,       // Slower
-            TerrainType::Mountain => 2.0,   // Much slower
-            TerrainType::City => 1.2,       // Traffic delays
+            TerrainType::Highway => 0.8,         // Faster
+            TerrainType::Dirt => 1.5,            // Slower
+            TerrainType::Mountain => 2.0,        // Much slower
+            TerrainType::City => 1.2,            // Traffic delays
             TerrainType::Water => f64::INFINITY, // Impassable
         }
     }
@@ -182,21 +209,21 @@ impl TerrainType {
     fn safety_score(&self) -> f64 {
         match self {
             TerrainType::Road => 0.8,
-            TerrainType::Highway => 0.6,    // Less safe due to speed
-            TerrainType::Dirt => 0.9,       // Safer, lower speed
-            TerrainType::Mountain => 0.4,   // Dangerous terrain
-            TerrainType::City => 0.7,       // Urban hazards
-            TerrainType::Water => 0.0,      // Impassable
+            TerrainType::Highway => 0.6,  // Less safe due to speed
+            TerrainType::Dirt => 0.9,     // Safer, lower speed
+            TerrainType::Mountain => 0.4, // Dangerous terrain
+            TerrainType::City => 0.7,     // Urban hazards
+            TerrainType::Water => 0.0,    // Impassable
         }
     }
 
     fn fuel_efficiency(&self) -> f64 {
         match self {
             TerrainType::Road => 1.0,
-            TerrainType::Highway => 0.9,    // More fuel efficient
-            TerrainType::Dirt => 1.3,       // Less efficient
-            TerrainType::Mountain => 1.8,   // Much less efficient
-            TerrainType::City => 1.4,       // Stop-and-go traffic
+            TerrainType::Highway => 0.9,  // More fuel efficient
+            TerrainType::Dirt => 1.3,     // Less efficient
+            TerrainType::Mountain => 1.8, // Much less efficient
+            TerrainType::City => 1.4,     // Stop-and-go traffic
             TerrainType::Water => f64::INFINITY,
         }
     }
@@ -204,10 +231,10 @@ impl TerrainType {
     fn comfort_level(&self) -> f64 {
         match self {
             TerrainType::Road => 0.8,
-            TerrainType::Highway => 0.9,    // Smooth, fast
-            TerrainType::Dirt => 0.4,       // Bumpy
-            TerrainType::Mountain => 0.6,   // Scenic but rough
-            TerrainType::City => 0.5,       // Traffic stress
+            TerrainType::Highway => 0.9,  // Smooth, fast
+            TerrainType::Dirt => 0.4,     // Bumpy
+            TerrainType::Mountain => 0.6, // Scenic but rough
+            TerrainType::City => 0.5,     // Traffic stress
             TerrainType::Water => 0.0,
         }
     }
@@ -328,10 +355,10 @@ impl AdvancedHeuristics {
         weights: &ObjectiveWeights,
     ) -> f64 {
         let base_distance = Self::manhattan_distance(from, to);
-        
+
         // Estimate terrain impact along straight line
         let terrain_penalty = Self::estimate_terrain_penalty(from, to, grid);
-        
+
         // Weight the heuristic based on objectives
         let distance_h = base_distance * (1.0 + terrain_penalty);
         let safety_h = base_distance * 0.1; // Safety has less impact on heuristic
@@ -368,11 +395,16 @@ impl AdvancedHeuristics {
     }
 
     /// Dynamic weight adjustment based on search progress
-    fn dynamic_weight(nodes_explored: usize, _goal_distance: f64, time_limit: f64, elapsed: f64) -> f64 {
+    fn dynamic_weight(
+        nodes_explored: usize,
+        _goal_distance: f64,
+        time_limit: f64,
+        elapsed: f64,
+    ) -> f64 {
         // Start with weight = 1.0 (optimal), increase as time pressure mounts
         let time_pressure = elapsed / time_limit;
         let exploration_factor = (nodes_explored as f64 / 1000.0).min(1.0);
-        
+
         // Increase weight when time pressure is high or too many nodes explored
         1.0 + time_pressure * 2.0 + exploration_factor * 0.5
     }
@@ -413,9 +445,8 @@ impl MultiObjectiveAStar {
         let goal_id = grid.pos_to_id(goal);
 
         // Initialize start node
-        let start_heuristic = AdvancedHeuristics::composite_heuristic(
-            start, goal, grid, &self.objective_weights
-        );
+        let start_heuristic =
+            AdvancedHeuristics::composite_heuristic(start, goal, grid, &self.objective_weights);
         let start_costs = MultiObjectiveCost::new(0.0, 1.0, 0.0, 1.0);
         let start_node = MultiObjectiveNode {
             id: start_id,
@@ -455,7 +486,10 @@ impl MultiObjectiveAStar {
             // Dynamic weight adjustment
             let goal_distance = AdvancedHeuristics::manhattan_distance(current.position, goal);
             let dynamic_weight = AdvancedHeuristics::dynamic_weight(
-                stats.nodes_explored, goal_distance, self.time_limit, elapsed
+                stats.nodes_explored,
+                goal_distance,
+                self.time_limit,
+                elapsed,
             );
 
             // Expand neighbors
@@ -477,8 +511,8 @@ impl MultiObjectiveAStar {
 
                 // Check if this path is better
                 let should_update = if let Some(existing_costs) = g_costs.get(&neighbor_id) {
-                    tentative_costs.weighted_sum(&self.objective_weights) <
-                        existing_costs.weighted_sum(&self.objective_weights)
+                    tentative_costs.weighted_sum(&self.objective_weights)
+                        < existing_costs.weighted_sum(&self.objective_weights)
                 } else {
                     true
                 };
@@ -488,7 +522,10 @@ impl MultiObjectiveAStar {
                     came_from.insert(neighbor_id, current.id);
 
                     let neighbor_heuristic = AdvancedHeuristics::composite_heuristic(
-                        neighbor_pos, goal, grid, &self.objective_weights
+                        neighbor_pos,
+                        goal,
+                        grid,
+                        &self.objective_weights,
                     );
 
                     let neighbor_node = MultiObjectiveNode {
@@ -513,9 +550,14 @@ impl MultiObjectiveAStar {
         None
     }
 
-    fn check_constraints(&self, current: &MultiObjectiveNode, next_pos: (usize, usize), grid: &AdvancedGrid) -> bool {
+    fn check_constraints(
+        &self,
+        current: &MultiObjectiveNode,
+        next_pos: (usize, usize),
+        grid: &AdvancedGrid,
+    ) -> bool {
         // Example constraints
-        
+
         // 1. Maximum fuel constraint
         if current.costs.fuel > 50.0 {
             return false;
@@ -569,7 +611,10 @@ struct ParetoPathfinder {
 
 impl ParetoPathfinder {
     fn new(max_solutions: usize, time_limit: f64) -> Self {
-        Self { max_solutions, time_limit }
+        Self {
+            max_solutions,
+            time_limit,
+        }
     }
 
     fn find_pareto_paths(
@@ -588,12 +633,42 @@ impl ParetoPathfinder {
             ObjectiveWeights::eco_friendly(),
             ObjectiveWeights::balanced(),
             // Add more weight combinations for diversity
-            ObjectiveWeights { distance: 0.5, safety: 0.3, fuel: 0.1, comfort: 0.1 },
-            ObjectiveWeights { distance: 0.2, safety: 0.1, fuel: 0.6, comfort: 0.1 },
-            ObjectiveWeights { distance: 0.1, safety: 0.6, fuel: 0.2, comfort: 0.1 },
-            ObjectiveWeights { distance: 0.3, safety: 0.2, fuel: 0.2, comfort: 0.3 },
-            ObjectiveWeights { distance: 0.4, safety: 0.4, fuel: 0.1, comfort: 0.1 },
-            ObjectiveWeights { distance: 0.1, safety: 0.1, fuel: 0.4, comfort: 0.4 },
+            ObjectiveWeights {
+                distance: 0.5,
+                safety: 0.3,
+                fuel: 0.1,
+                comfort: 0.1,
+            },
+            ObjectiveWeights {
+                distance: 0.2,
+                safety: 0.1,
+                fuel: 0.6,
+                comfort: 0.1,
+            },
+            ObjectiveWeights {
+                distance: 0.1,
+                safety: 0.6,
+                fuel: 0.2,
+                comfort: 0.1,
+            },
+            ObjectiveWeights {
+                distance: 0.3,
+                safety: 0.2,
+                fuel: 0.2,
+                comfort: 0.3,
+            },
+            ObjectiveWeights {
+                distance: 0.4,
+                safety: 0.4,
+                fuel: 0.1,
+                comfort: 0.1,
+            },
+            ObjectiveWeights {
+                distance: 0.1,
+                safety: 0.1,
+                fuel: 0.4,
+                comfort: 0.4,
+            },
         ];
 
         let weight_count = weight_sets.len();
@@ -605,14 +680,15 @@ impl ParetoPathfinder {
             // Use different time limits and node limits to encourage path diversity
             let time_per_search = self.time_limit / weight_count as f64;
             let node_limit = 3000 + (i * 1000); // Varying node limits
-            
-            let mut pathfinder = MultiObjectiveAStar::new(weights.clone(), time_per_search, node_limit);
-            
+
+            let mut pathfinder =
+                MultiObjectiveAStar::new(weights.clone(), time_per_search, node_limit);
+
             if let Some((path, cost, _stats)) = pathfinder.find_path(grid, start, goal) {
                 // More lenient similarity check - paths are different if they have different waypoints
-                let is_similar_path = pareto_solutions.iter().any(|(existing_path, _)| {
-                    paths_are_similar(existing_path, &path)
-                });
+                let is_similar_path = pareto_solutions
+                    .iter()
+                    .any(|(existing_path, _)| paths_are_similar(existing_path, &path));
 
                 if !is_similar_path {
                     // Check if this solution is non-dominated (more precise comparison)
@@ -626,15 +702,18 @@ impl ParetoPathfinder {
 
                     if !is_dominated {
                         // Remove dominated solutions
-                        pareto_solutions.retain(|(_, existing_cost)| !cost.dominates(existing_cost));
-                        
+                        pareto_solutions
+                            .retain(|(_, existing_cost)| !cost.dominates(existing_cost));
+
                         // Add new solution
                         pareto_solutions.push((path, cost));
 
                         // Limit number of solutions
                         if pareto_solutions.len() > self.max_solutions {
                             pareto_solutions.sort_by(|a, b| {
-                                a.1.distance.partial_cmp(&b.1.distance).unwrap_or(Ordering::Equal)
+                                a.1.distance
+                                    .partial_cmp(&b.1.distance)
+                                    .unwrap_or(Ordering::Equal)
                             });
                             pareto_solutions.truncate(self.max_solutions);
                         }
@@ -652,12 +731,13 @@ fn paths_are_similar(path1: &[(usize, usize)], path2: &[(usize, usize)]) -> bool
     if path1.len() != path2.len() {
         return false;
     }
-    
-    let matching_points = path1.iter()
+
+    let matching_points = path1
+        .iter()
         .zip(path2.iter())
         .filter(|(p1, p2)| p1 == p2)
         .count();
-    
+
     let similarity_ratio = matching_points as f64 / path1.len() as f64;
     similarity_ratio > 0.8 // 80% similarity threshold
 }
@@ -696,13 +776,13 @@ fn create_complex_scenario() -> AdvancedGrid {
     let mut grid = AdvancedGrid::new(25, 20);
 
     // Create distinct route options to force different trade-offs
-    
+
     // NORTHERN ROUTE: Highway zone (fast but less safe)
     for x in 5..23 {
         grid.set_terrain(x, 3, TerrainType::Highway);
         grid.set_terrain(x, 4, TerrainType::Highway);
     }
-    
+
     // CENTRAL ROUTE: Normal roads with mixed terrain
     for x in 1..24 {
         grid.set_terrain(x, 10, TerrainType::Road);
@@ -713,7 +793,7 @@ fn create_complex_scenario() -> AdvancedGrid {
         grid.set_terrain(x, 16, TerrainType::City);
         grid.set_terrain(x, 17, TerrainType::City);
         grid.set_traffic(x, 16, 0.7); // Heavy traffic
-        grid.set_traffic(x, 17, 0.5); // Moderate traffic  
+        grid.set_traffic(x, 17, 0.5); // Moderate traffic
     }
 
     // ECO-FRIENDLY OPTION: Dirt roads (fuel efficient, slow)
@@ -778,8 +858,8 @@ fn demonstrate_heuristic_comparison() {
     println!("=================================\n");
 
     let grid = create_complex_scenario();
-    let start = (1, 10);    // Western side, central route
-    let goal = (23, 10);    // Eastern side, central route
+    let start = (1, 10); // Western side, central route
+    let goal = (23, 10); // Eastern side, central route
 
     println!("📋 Scenario Setup:");
     println!("   Grid: {}x{} with mixed terrain", grid.width, grid.height);
@@ -791,9 +871,18 @@ fn demonstrate_heuristic_comparison() {
 
     // Test different heuristic approaches
     let heuristics = vec![
-        ("Manhattan", AdvancedHeuristics::manhattan_distance(start, goal)),
-        ("Euclidean", AdvancedHeuristics::euclidean_distance(start, goal)),
-        ("Chebyshev", AdvancedHeuristics::chebyshev_distance(start, goal)),
+        (
+            "Manhattan",
+            AdvancedHeuristics::manhattan_distance(start, goal),
+        ),
+        (
+            "Euclidean",
+            AdvancedHeuristics::euclidean_distance(start, goal),
+        ),
+        (
+            "Chebyshev",
+            AdvancedHeuristics::chebyshev_distance(start, goal),
+        ),
     ];
 
     println!("🧭 Heuristic Values:");
@@ -821,8 +910,8 @@ fn demonstrate_multi_objective_optimization() {
     println!("====================================\n");
 
     let grid = create_complex_scenario();
-    let start = (1, 10);    // Western side, central route  
-    let goal = (23, 10);    // Eastern side, central route
+    let start = (1, 10); // Western side, central route
+    let goal = (23, 10); // Eastern side, central route
 
     let objective_sets = vec![
         ("Speed Priority", ObjectiveWeights::speed_focused()),
@@ -837,10 +926,11 @@ fn demonstrate_multi_objective_optimization() {
 
     for (name, weights) in objective_sets {
         let mut pathfinder = MultiObjectiveAStar::new(weights, 5.0, 10000);
-        
+
         let _start_time = Instant::now();
         if let Some((_path, costs, stats)) = pathfinder.find_path(&grid, start, goal) {
-            println!("{:15} | {:8.2} | {:6.2} | {:4.2} | {:7.2} | {:9} | {:5}",
+            println!(
+                "{:15} | {:8.2} | {:6.2} | {:4.2} | {:7.2} | {:9} | {:5}",
                 name,
                 costs.distance,
                 costs.safety,
@@ -858,7 +948,7 @@ fn demonstrate_multi_objective_optimization() {
     println!("   This occurs when one route dominates all others across all objectives.");
     println!("   In the current scenario, the direct path is optimal for:");
     println!("   • Distance: Shortest route available");
-    println!("   • Safety: Avoids dangerous terrain (mountains, storms)");  
+    println!("   • Safety: Avoids dangerous terrain (mountains, storms)");
     println!("   • Fuel: Most efficient due to good terrain and short distance");
     println!("   • Comfort: Travels on normal roads without heavy traffic");
     println!("\n   🎯 Multi-objective trade-offs become apparent when:");
@@ -872,8 +962,8 @@ fn demonstrate_pareto_frontier() {
     println!("===========================\n");
 
     let grid = create_complex_scenario();
-    let start = (1, 10);    // Western side, central route
-    let goal = (23, 10);    // Eastern side, central route
+    let start = (1, 10); // Western side, central route
+    let goal = (23, 10); // Eastern side, central route
 
     let mut pareto_finder = ParetoPathfinder::new(10, 30.0);
     let solutions = pareto_finder.find_pareto_paths(&grid, start, goal);
@@ -884,7 +974,8 @@ fn demonstrate_pareto_frontier() {
     println!("-----|----------|--------|------|---------|------------");
 
     for (i, (path, costs)) in solutions.iter().enumerate() {
-        println!("{:4} | {:8.2} | {:6.2} | {:4.2} | {:7.2} | {:10}",
+        println!(
+            "{:4} | {:8.2} | {:6.2} | {:4.2} | {:7.2} | {:10}",
             i + 1,
             costs.distance,
             costs.safety,
@@ -896,24 +987,52 @@ fn demonstrate_pareto_frontier() {
 
     if solutions.len() > 1 {
         println!("\n💡 Trade-off Analysis:");
-        let best_distance = solutions.iter().min_by(|a, b| a.1.distance.partial_cmp(&b.1.distance).unwrap()).unwrap();
-        let best_safety = solutions.iter().max_by(|a, b| a.1.safety.partial_cmp(&b.1.safety).unwrap()).unwrap();
-        let best_fuel = solutions.iter().min_by(|a, b| a.1.fuel.partial_cmp(&b.1.fuel).unwrap()).unwrap();
-        let best_comfort = solutions.iter().max_by(|a, b| a.1.comfort.partial_cmp(&b.1.comfort).unwrap()).unwrap();
+        let best_distance = solutions
+            .iter()
+            .min_by(|a, b| a.1.distance.partial_cmp(&b.1.distance).unwrap())
+            .unwrap();
+        let best_safety = solutions
+            .iter()
+            .max_by(|a, b| a.1.safety.partial_cmp(&b.1.safety).unwrap())
+            .unwrap();
+        let best_fuel = solutions
+            .iter()
+            .min_by(|a, b| a.1.fuel.partial_cmp(&b.1.fuel).unwrap())
+            .unwrap();
+        let best_comfort = solutions
+            .iter()
+            .max_by(|a, b| a.1.comfort.partial_cmp(&b.1.comfort).unwrap())
+            .unwrap();
 
-        println!("   Best distance: {:.2} (safety: {:.2}, fuel: {:.2}, comfort: {:.2})",
-            best_distance.1.distance, best_distance.1.safety, best_distance.1.fuel, best_distance.1.comfort);
-        println!("   Best safety: {:.2} (distance: {:.2}, fuel: {:.2}, comfort: {:.2})",
-            best_safety.1.safety, best_safety.1.distance, best_safety.1.fuel, best_safety.1.comfort);
-        println!("   Best fuel: {:.2} (distance: {:.2}, safety: {:.2}, comfort: {:.2})",
-            best_fuel.1.fuel, best_fuel.1.distance, best_fuel.1.safety, best_fuel.1.comfort);
-        println!("   Best comfort: {:.2} (distance: {:.2}, safety: {:.2}, fuel: {:.2})",
-            best_comfort.1.comfort, best_comfort.1.distance, best_comfort.1.safety, best_comfort.1.fuel);
+        println!(
+            "   Best distance: {:.2} (safety: {:.2}, fuel: {:.2}, comfort: {:.2})",
+            best_distance.1.distance,
+            best_distance.1.safety,
+            best_distance.1.fuel,
+            best_distance.1.comfort
+        );
+        println!(
+            "   Best safety: {:.2} (distance: {:.2}, fuel: {:.2}, comfort: {:.2})",
+            best_safety.1.safety, best_safety.1.distance, best_safety.1.fuel, best_safety.1.comfort
+        );
+        println!(
+            "   Best fuel: {:.2} (distance: {:.2}, safety: {:.2}, comfort: {:.2})",
+            best_fuel.1.fuel, best_fuel.1.distance, best_fuel.1.safety, best_fuel.1.comfort
+        );
+        println!(
+            "   Best comfort: {:.2} (distance: {:.2}, safety: {:.2}, fuel: {:.2})",
+            best_comfort.1.comfort,
+            best_comfort.1.distance,
+            best_comfort.1.safety,
+            best_comfort.1.fuel
+        );
     } else {
         println!("\n🔍 Analysis: Only one solution found");
         println!("   This happens when one path dominates all others across all objectives.");
-        println!("   In complex real-world scenarios, multiple trade-off solutions typically exist:");
-        println!("   • Highway route: Fast but dangerous in bad weather");  
+        println!(
+            "   In complex real-world scenarios, multiple trade-off solutions typically exist:"
+        );
+        println!("   • Highway route: Fast but dangerous in bad weather");
         println!("   • Scenic route: Longer but more comfortable and safer");
         println!("   • Economic route: Slower but fuel-efficient");
         println!("   • Urban route: Moderate on all metrics");
@@ -927,7 +1046,7 @@ fn demonstrate_dynamic_weighting() {
     println!("==================================\n");
 
     println!("🔄 Weight Adaptation Examples:");
-    
+
     let scenarios = vec![
         ("Early search, no time pressure", 100, 10.0, 10.0, 1.0),
         ("Many nodes explored", 2000, 10.0, 10.0, 5.0),
@@ -940,8 +1059,10 @@ fn demonstrate_dynamic_weighting() {
 
     for (name, nodes, goal_dist, time_limit, elapsed) in scenarios {
         let weight = AdvancedHeuristics::dynamic_weight(nodes, goal_dist, time_limit, elapsed);
-        println!("{:29} | {:5} | {:9.1} | {:10.1} | {:7.1} | {:6.2}",
-            name, nodes, goal_dist, time_limit, elapsed, weight);
+        println!(
+            "{:29} | {:5} | {:9.1} | {:10.1} | {:7.1} | {:6.2}",
+            name, nodes, goal_dist, time_limit, elapsed, weight
+        );
     }
 
     println!("\n💡 Dynamic Weighting Benefits:");
@@ -1026,7 +1147,9 @@ fn todo_exercises() {
 }
 
 fn main() {
-    println!("📚 Mission 9 Tutorial - Step 5: Advanced Heuristics & Multi-Objective Optimization\n");
+    println!(
+        "📚 Mission 9 Tutorial - Step 5: Advanced Heuristics & Multi-Objective Optimization\n"
+    );
 
     demonstrate_heuristic_comparison();
     demonstrate_multi_objective_optimization();

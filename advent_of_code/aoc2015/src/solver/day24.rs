@@ -90,7 +90,15 @@ pub fn find_subsets(weights: &[u64], target: u64, exact_size: usize) -> Vec<Vec<
         }
     }
 
-    backtrack(weights, target, 0, &mut current, 0, exact_size, &mut results);
+    backtrack(
+        weights,
+        target,
+        0,
+        &mut current,
+        0,
+        exact_size,
+        &mut results,
+    );
     results
 }
 
@@ -173,7 +181,11 @@ fn solve_balanced_partition(input: &str, num_groups: u64) -> Result<String> {
     let total: u64 = weights.iter().sum();
 
     if !total.is_multiple_of(num_groups) {
-        return Err(anyhow::anyhow!("Total weight {} not divisible by {}", total, num_groups));
+        return Err(anyhow::anyhow!(
+            "Total weight {} not divisible by {}",
+            total,
+            num_groups
+        ));
     }
 
     let target = total / num_groups;

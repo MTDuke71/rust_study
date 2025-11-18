@@ -17,17 +17,17 @@ pub struct Config {
 
 impl Config {
     /// Creates a new Config from command line arguments
-    /// 
+    ///
     /// # Arguments
     /// * `args` - A slice of String arguments from the command line
-    /// 
+    ///
     /// # Returns
     /// * `Result<Config, &'static str>` - Success with Config or error message
-    /// 
+    ///
     /// # Examples
     /// ```
     /// use chapter12_refactoring::Config;
-    /// 
+    ///
     /// let args = vec![
     ///     String::from("minigrep"),
     ///     String::from("searchterm"),
@@ -42,7 +42,7 @@ impl Config {
 
         let query = args[1].clone();
         let filename = args[2].clone();
-        
+
         // Check for case sensitivity via environment variable
         let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
 
@@ -54,10 +54,10 @@ impl Config {
     }
 
     /// Alternative constructor using iterators (more idiomatic Rust)
-    /// 
+    ///
     /// # Arguments  
     /// * `mut args` - An iterator over command line arguments
-    /// 
+    ///
     /// # Returns
     /// * `Result<Config, &'static str>` - Success with Config or error message
     pub fn from_args(mut args: env::Args) -> Result<Config, &'static str> {
@@ -84,17 +84,17 @@ impl Config {
 }
 
 /// Main application logic - reads file and performs search
-/// 
+///
 /// # Arguments
 /// * `config` - Configuration struct containing search parameters
-/// 
+///
 /// # Returns
 /// * `Result<(), Box<dyn Error>>` - Success or error details
-/// 
+///
 /// # Examples
 /// ```no_run
 /// use chapter12_refactoring::{Config, run};
-/// 
+///
 /// let config = Config::new(&["minigrep", "rust", "poem.txt"]
 ///     .iter().map(|&s| s.into()).collect::<Vec<String>>()).unwrap();
 /// run(config).unwrap();
@@ -116,24 +116,24 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 
 /// Performs case-sensitive search for query in contents
-/// 
+///
 /// # Arguments
 /// * `query` - The string to search for
 /// * `contents` - The text content to search in
-/// 
+///
 /// # Returns
 /// * `Vec<&str>` - Vector of lines containing the query
-/// 
+///
 /// # Examples
 /// ```
 /// use chapter12_refactoring::search;
-/// 
+///
 /// let query = "duct";
 /// let contents = "\
 /// Rust:
 /// safe, fast, productive.
 /// Pick three.";
-/// 
+///
 /// assert_eq!(vec!["safe, fast, productive."], search(query, contents));
 /// ```
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
@@ -149,25 +149,25 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 
 /// Performs case-insensitive search for query in contents
-/// 
+///
 /// # Arguments
 /// * `query` - The string to search for (will be converted to lowercase)
 /// * `contents` - The text content to search in
-/// 
+///
 /// # Returns
 /// * `Vec<&str>` - Vector of lines containing the query (case-insensitive)
-/// 
+///
 /// # Examples
 /// ```
 /// use chapter12_refactoring::search_case_insensitive;
-/// 
+///
 /// let query = "rUsT";
 /// let contents = "\
 /// Rust:
 /// safe, fast, productive.
 /// Pick three.
 /// Trust me.";
-/// 
+///
 /// assert_eq!(
 ///     vec!["Rust:", "Trust me."],
 ///     search_case_insensitive(query, contents)

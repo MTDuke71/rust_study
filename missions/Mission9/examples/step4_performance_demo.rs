@@ -6,7 +6,9 @@
 //! - Memory optimization with node pools
 //! - Performance measurement and comparison
 
-use mission9::performance_optimization::{BidirectionalAstar, BidirectionalDijkstra, MemoryOptimizedAstar, PerformanceMetrics};
+use mission9::performance_optimization::{
+    BidirectionalAstar, BidirectionalDijkstra, MemoryOptimizedAstar, PerformanceMetrics,
+};
 use std::collections::HashSet;
 
 /// Simple grid representation for pathfinding
@@ -35,7 +37,7 @@ impl Grid {
     fn add_wall(&mut self, start: (usize, usize), end: (usize, usize)) {
         let (start_x, start_y) = start;
         let (end_x, end_y) = end;
-        
+
         if start_x == end_x {
             // Vertical wall
             let min_y = start_y.min(end_y);
@@ -74,14 +76,19 @@ impl Grid {
         neighbors
     }
 
-    fn display_with_path(&self, path: Option<&Vec<(usize, usize)>>, start: (usize, usize), goal: (usize, usize)) {
+    fn display_with_path(
+        &self,
+        path: Option<&Vec<(usize, usize)>>,
+        start: (usize, usize),
+        goal: (usize, usize),
+    ) {
         let path_set: HashSet<(usize, usize)> = path
             .map(|p| p.iter().cloned().collect())
             .unwrap_or_default();
 
         println!("\nGrid Visualization:");
         println!("S = Start, G = Goal, # = Obstacle, * = Path, . = Empty");
-        
+
         for y in 0..self.height {
             for x in 0..self.width {
                 let pos = (x, y);
@@ -156,9 +163,9 @@ impl BenchmarkResult {
 
 fn create_complex_maze() -> Grid {
     let mut grid = Grid::new(40, 30);
-    
+
     // Create a maze-like structure with multiple paths
-    
+
     // Outer walls
     for x in 0..grid.width {
         grid.add_obstacle(x, 0);
@@ -168,40 +175,40 @@ fn create_complex_maze() -> Grid {
         grid.add_obstacle(0, y);
         grid.add_obstacle(grid.width - 1, y);
     }
-    
+
     // Internal maze structure
-    grid.add_wall((5, 5), (35, 5));   // Horizontal barrier
+    grid.add_wall((5, 5), (35, 5)); // Horizontal barrier
     grid.add_wall((5, 15), (35, 15)); // Another horizontal barrier
     grid.add_wall((5, 25), (35, 25)); // Bottom horizontal barrier
-    
+
     grid.add_wall((10, 1), (10, 10)); // Vertical barriers
     grid.add_wall((20, 5), (20, 20));
     grid.add_wall((30, 10), (30, 28));
-    
+
     // Create openings in walls
     grid.obstacles.remove(&(15, 5));
     grid.obstacles.remove(&(25, 5));
     grid.obstacles.remove(&(12, 15));
     grid.obstacles.remove(&(28, 15));
     grid.obstacles.remove(&(18, 25));
-    
+
     // Add some scattered obstacles
     for &(x, y) in &[(7, 8), (23, 12), (17, 18), (32, 22), (8, 20)] {
         grid.add_obstacle(x, y);
     }
-    
+
     grid
 }
 
 fn create_simple_grid() -> Grid {
     let mut grid = Grid::new(15, 15);
-    
+
     // Simple obstacle pattern
     for i in 5..10 {
         grid.add_obstacle(i, 7);
         grid.add_obstacle(7, i);
     }
-    
+
     grid
 }
 
@@ -212,7 +219,11 @@ fn run_bidirectional_astar_manhattan(
 ) -> BenchmarkResult {
     let mut astar = BidirectionalAstar::new(10000);
     let path = astar.find_path(start, goal, manhattan_distance, |pos| grid.neighbors(pos));
-    BenchmarkResult::from_metrics("Bidirectional A* (Manhattan)".to_string(), astar.get_metrics(), path.is_some())
+    BenchmarkResult::from_metrics(
+        "Bidirectional A* (Manhattan)".to_string(),
+        astar.get_metrics(),
+        path.is_some(),
+    )
 }
 
 fn run_bidirectional_astar_euclidean(
@@ -222,7 +233,11 @@ fn run_bidirectional_astar_euclidean(
 ) -> BenchmarkResult {
     let mut astar = BidirectionalAstar::new(10000);
     let path = astar.find_path(start, goal, euclidean_distance, |pos| grid.neighbors(pos));
-    BenchmarkResult::from_metrics("Bidirectional A* (Euclidean)".to_string(), astar.get_metrics(), path.is_some())
+    BenchmarkResult::from_metrics(
+        "Bidirectional A* (Euclidean)".to_string(),
+        astar.get_metrics(),
+        path.is_some(),
+    )
 }
 
 fn run_bidirectional_dijkstra(
@@ -232,7 +247,11 @@ fn run_bidirectional_dijkstra(
 ) -> BenchmarkResult {
     let mut dijkstra = BidirectionalDijkstra::new(10000);
     let path = dijkstra.find_path(start, goal, |pos| grid.neighbors(pos));
-    BenchmarkResult::from_metrics("Bidirectional Dijkstra".to_string(), dijkstra.get_metrics(), path.is_some())
+    BenchmarkResult::from_metrics(
+        "Bidirectional Dijkstra".to_string(),
+        dijkstra.get_metrics(),
+        path.is_some(),
+    )
 }
 
 fn run_memory_optimized_astar(
@@ -242,7 +261,11 @@ fn run_memory_optimized_astar(
 ) -> BenchmarkResult {
     let mut mem_astar = MemoryOptimizedAstar::new(10000);
     let path = mem_astar.find_path(start, goal, manhattan_distance, |pos| grid.neighbors(pos));
-    BenchmarkResult::from_metrics("Memory-Optimized A*".to_string(), mem_astar.get_metrics(), path.is_some())
+    BenchmarkResult::from_metrics(
+        "Memory-Optimized A*".to_string(),
+        mem_astar.get_metrics(),
+        path.is_some(),
+    )
 }
 
 fn main() {
@@ -251,8 +274,18 @@ fn main() {
 
     // Test scenarios
     let scenarios = vec![
-        ("Simple Grid (15x15)", create_simple_grid(), (2, 2), (12, 12)),
-        ("Complex Maze (40x30)", create_complex_maze(), (2, 2), (37, 27)),
+        (
+            "Simple Grid (15x15)",
+            create_simple_grid(),
+            (2, 2),
+            (12, 12),
+        ),
+        (
+            "Complex Maze (40x30)",
+            create_complex_maze(),
+            (2, 2),
+            (37, 27),
+        ),
     ];
 
     for (scenario_name, grid, start, goal) in scenarios {
@@ -276,42 +309,58 @@ fn main() {
 
         // Display results table
         println!("\n📊 Performance Comparison:");
-        println!("{:<25} | {:>8} | {:>10} | {:>12} | {:>12} | {:>8} | {:>12}", 
-                 "Algorithm", "Found", "Path Len", "Nodes Exp", "Nodes Gen", "Early T", "Time (μs)");
-        println!("{:-<25}-|-{:->8}-|-{:->10}-|-{:->12}-|-{:->12}-|-{:->8}-|-{:->12}",
-                 "", "", "", "", "", "", "");
+        println!(
+            "{:<25} | {:>8} | {:>10} | {:>12} | {:>12} | {:>8} | {:>12}",
+            "Algorithm", "Found", "Path Len", "Nodes Exp", "Nodes Gen", "Early T", "Time (μs)"
+        );
+        println!(
+            "{:-<25}-|-{:->8}-|-{:->10}-|-{:->12}-|-{:->12}-|-{:->8}-|-{:->12}",
+            "", "", "", "", "", "", ""
+        );
 
         for result in &results {
-            println!("{:<25} | {:>8} | {:>10} | {:>12} | {:>12} | {:>8} | {:>12}",
-                     result.algorithm,
-                     if result.path_found { "✅" } else { "❌" },
-                     result.path_length,
-                     result.nodes_explored,
-                     result.nodes_generated,
-                     result.early_terminations,
-                     result.search_time_ns / 1000);
+            println!(
+                "{:<25} | {:>8} | {:>10} | {:>12} | {:>12} | {:>8} | {:>12}",
+                result.algorithm,
+                if result.path_found { "✅" } else { "❌" },
+                result.path_length,
+                result.nodes_explored,
+                result.nodes_generated,
+                result.early_terminations,
+                result.search_time_ns / 1000
+            );
         }
 
         // Performance analysis
         if results.len() >= 2 {
             let bidirectional = &results[0];
-            let dijkstra = results.iter().find(|r| r.algorithm.contains("Dijkstra")).unwrap();
-            
+            let dijkstra = results
+                .iter()
+                .find(|r| r.algorithm.contains("Dijkstra"))
+                .unwrap();
+
             if bidirectional.nodes_explored > 0 && dijkstra.nodes_explored > 0 {
-                let exploration_improvement = 100.0 * (1.0 - bidirectional.nodes_explored as f64 / dijkstra.nodes_explored as f64);
-                let time_improvement = 100.0 * (1.0 - bidirectional.search_time_ns as f64 / dijkstra.search_time_ns as f64);
-                
+                let exploration_improvement = 100.0
+                    * (1.0 - bidirectional.nodes_explored as f64 / dijkstra.nodes_explored as f64);
+                let time_improvement = 100.0
+                    * (1.0 - bidirectional.search_time_ns as f64 / dijkstra.search_time_ns as f64);
+
                 println!("\n🎯 Bidirectional A* vs Dijkstra Improvements:");
                 println!("   Exploration reduction: {:.1}%", exploration_improvement);
                 println!("   Time reduction: {:.1}%", time_improvement);
-                println!("   Early terminations: {}", bidirectional.early_terminations);
+                println!(
+                    "   Early terminations: {}",
+                    bidirectional.early_terminations
+                );
             }
         }
 
         // Show path for smaller grids
         if grid.width <= 20 && !results.is_empty() && results[0].path_found {
             let mut astar = BidirectionalAstar::new(1000);
-            if let Some(path) = astar.find_path(start, goal, manhattan_distance, |pos| grid.neighbors(pos)) {
+            if let Some(path) =
+                astar.find_path(start, goal, manhattan_distance, |pos| grid.neighbors(pos))
+            {
                 grid.display_with_path(Some(&path), start, goal);
             }
         }
@@ -324,41 +373,82 @@ fn main() {
     println!("===============================");
 
     println!("📏 Node Structure Sizes:");
-    println!("   Current OptimizedNode: {} bytes", std::mem::size_of::<mission9::performance_optimization::OptimizedNode>());
-    println!("   TrulyOptimizedNode (u32): {} bytes", std::mem::size_of::<mission9::performance_optimization::TrulyOptimizedNode>());
-    println!("   Standard (usize-based): {} bytes", std::mem::size_of::<(usize, usize, u32, u32, Option<(usize, usize)>)>());
-    
-    let size_reduction_truly = 100.0 * (1.0 - std::mem::size_of::<mission9::performance_optimization::TrulyOptimizedNode>() as f64 / 
-                                 std::mem::size_of::<(usize, usize, u32, u32, Option<(usize, usize)>)>() as f64);
-    println!("   💡 Memory reduction with u32 optimization: {:.1}%", size_reduction_truly);
-    
-    let memory_per_1000_nodes_truly_optimized = std::mem::size_of::<mission9::performance_optimization::TrulyOptimizedNode>() * 1000;
-    let memory_per_1000_nodes_current = std::mem::size_of::<mission9::performance_optimization::OptimizedNode>() * 1000;
-    let memory_per_1000_nodes_standard = std::mem::size_of::<(usize, usize, u32, u32, Option<(usize, usize)>)>() * 1000;
-    
+    println!(
+        "   Current OptimizedNode: {} bytes",
+        std::mem::size_of::<mission9::performance_optimization::OptimizedNode>()
+    );
+    println!(
+        "   TrulyOptimizedNode (u32): {} bytes",
+        std::mem::size_of::<mission9::performance_optimization::TrulyOptimizedNode>()
+    );
+    println!(
+        "   Standard (usize-based): {} bytes",
+        std::mem::size_of::<(usize, usize, u32, u32, Option<(usize, usize)>)>()
+    );
+
+    let size_reduction_truly = 100.0
+        * (1.0
+            - std::mem::size_of::<mission9::performance_optimization::TrulyOptimizedNode>() as f64
+                / std::mem::size_of::<(usize, usize, u32, u32, Option<(usize, usize)>)>() as f64);
+    println!(
+        "   💡 Memory reduction with u32 optimization: {:.1}%",
+        size_reduction_truly
+    );
+
+    let memory_per_1000_nodes_truly_optimized =
+        std::mem::size_of::<mission9::performance_optimization::TrulyOptimizedNode>() * 1000;
+    let memory_per_1000_nodes_current =
+        std::mem::size_of::<mission9::performance_optimization::OptimizedNode>() * 1000;
+    let memory_per_1000_nodes_standard =
+        std::mem::size_of::<(usize, usize, u32, u32, Option<(usize, usize)>)>() * 1000;
+
     println!("   📊 Memory usage for 1000 nodes:");
-    println!("      Current Optimized: {} KB", memory_per_1000_nodes_current / 1024);
-    println!("      Truly Optimized:   {} KB", memory_per_1000_nodes_truly_optimized / 1024);
-    println!("      Standard:          {} KB", memory_per_1000_nodes_standard / 1024);
-    println!("      Potential Savings: {} KB", (memory_per_1000_nodes_standard - memory_per_1000_nodes_truly_optimized) / 1024);
-    
+    println!(
+        "      Current Optimized: {} KB",
+        memory_per_1000_nodes_current / 1024
+    );
+    println!(
+        "      Truly Optimized:   {} KB",
+        memory_per_1000_nodes_truly_optimized / 1024
+    );
+    println!(
+        "      Standard:          {} KB",
+        memory_per_1000_nodes_standard / 1024
+    );
+    println!(
+        "      Potential Savings: {} KB",
+        (memory_per_1000_nodes_standard - memory_per_1000_nodes_truly_optimized) / 1024
+    );
+
     println!("\n🔬 Memory Layout Analysis:");
     println!("   Current OptimizedNode breakdown:");
-    println!("   • position: (usize, usize) = {} bytes", std::mem::size_of::<(usize, usize)>());
+    println!(
+        "   • position: (usize, usize) = {} bytes",
+        std::mem::size_of::<(usize, usize)>()
+    );
     println!("   • g_cost: u32 = {} bytes", std::mem::size_of::<u32>());
     println!("   • h_cost: u32 = {} bytes", std::mem::size_of::<u32>());
-    println!("   • parent: Option<(usize, usize)> = {} bytes", std::mem::size_of::<Option<(usize, usize)>>());
-    
+    println!(
+        "   • parent: Option<(usize, usize)> = {} bytes",
+        std::mem::size_of::<Option<(usize, usize)>>()
+    );
+
     println!("\n   TrulyOptimizedNode breakdown:");
-    println!("   • position: (u32, u32) = {} bytes", std::mem::size_of::<(u32, u32)>());
+    println!(
+        "   • position: (u32, u32) = {} bytes",
+        std::mem::size_of::<(u32, u32)>()
+    );
     println!("   • g_cost: u32 = {} bytes", std::mem::size_of::<u32>());
     println!("   • h_cost: u32 = {} bytes", std::mem::size_of::<u32>());
-    println!("   • parent: Option<(u32, u32)> = {} bytes", std::mem::size_of::<Option<(u32, u32)>>());
+    println!(
+        "   • parent: Option<(u32, u32)> = {} bytes",
+        std::mem::size_of::<Option<(u32, u32)>>()
+    );
 
     println!("\n🔄 Node Pool Benefits:");
     println!("   • Reduced allocation overhead");
     println!("   • Better cache locality");
-    println!("   • Memory reuse and recycling");  
+    println!("   • Memory reuse and recycling");
     println!("   • Predictable memory usage patterns");
     println!("   • Lower garbage collection pressure");
 

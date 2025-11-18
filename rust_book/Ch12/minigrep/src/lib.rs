@@ -55,7 +55,11 @@ impl Config {
 
         let case_sensitive = std::env::var("CASE_INSENSITIVE").is_err();
 
-        Ok(Config { query, filename, case_sensitive })
+        Ok(Config {
+            query,
+            filename,
+            case_sensitive,
+        })
     }
 }
 
@@ -339,7 +343,7 @@ Why not!";
             "query".to_string(),
             "filename.txt".to_string(),
         ];
-        
+
         let config = Config::new(args.into_iter()).unwrap();
         assert_eq!(config.query, "query");
         assert_eq!(config.filename, "filename.txt");
@@ -348,7 +352,7 @@ Why not!";
     #[test]
     fn test_config_new_missing_query() {
         let args = vec!["minigrep".to_string()];
-        
+
         let result = Config::new(args.into_iter());
         assert!(result.is_err());
         assert_eq!(result.unwrap_err(), "Didn't get a query string");
@@ -357,7 +361,7 @@ Why not!";
     #[test]
     fn test_config_new_missing_filename() {
         let args = vec!["minigrep".to_string(), "query".to_string()];
-        
+
         let result = Config::new(args.into_iter());
         assert!(result.is_err());
         assert_eq!(result.unwrap_err(), "Didn't get a file name");

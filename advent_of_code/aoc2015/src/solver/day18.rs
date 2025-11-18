@@ -18,12 +18,7 @@ fn parse_grid(input: &str) -> Result<Grid<bool>> {
     // Verify all rows have the same width
     for (i, line) in lines.iter().enumerate() {
         if line.len() != width {
-            anyhow::bail!(
-                "Row {} has width {} but expected {}",
-                i,
-                line.len(),
-                width
-            );
+            anyhow::bail!("Row {} has width {} but expected {}", i, line.len(), width);
         }
     }
 

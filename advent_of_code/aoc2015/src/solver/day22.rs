@@ -27,9 +27,9 @@
 /// 3. A* finds minimum mana path to boss defeat
 /// 4. Handle effect timers and spell availability constraints
 use anyhow::Result;
-use std::collections::HashMap;
 use mission9::astar::AstarPathfinder;
 use mission9::{NodeId, Weight};
+use std::collections::HashMap;
 
 /// Represents active spell effects with their remaining durations
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
@@ -165,7 +165,11 @@ impl GameState {
 
     /// Get current player armor from effects
     pub fn player_armor(&self) -> i32 {
-        if self.effects.shield_timer > 0 { 7 } else { 0 }
+        if self.effects.shield_timer > 0 {
+            7
+        } else {
+            0
+        }
     }
 
     /// Calculate heuristic for A* (remaining boss HP - admissible)
@@ -333,7 +337,12 @@ pub fn parse_boss(input: &str) -> (i32, i32) {
 pub struct BossHpHeuristic;
 
 impl mission9::heuristic::Heuristic for BossHpHeuristic {
-    fn estimate_distance(&self, _from: NodeId, _to: NodeId, _context: &mission9::heuristic::HeuristicContext) -> Weight {
+    fn estimate_distance(
+        &self,
+        _from: NodeId,
+        _to: NodeId,
+        _context: &mission9::heuristic::HeuristicContext,
+    ) -> Weight {
         // For wizard combat, we don't use node IDs directly
         // This heuristic will be computed from game state instead
         0.0
@@ -362,11 +371,15 @@ impl WizardPathfinder {
 
     /// Find minimum mana path to victory using A* search
     pub fn find_minimum_mana_path(&self, initial_state: &GameState) -> Option<i32> {
-        self.find_minimum_mana_path_with_sequence(initial_state).map(|(mana, _)| mana)
+        self.find_minimum_mana_path_with_sequence(initial_state)
+            .map(|(mana, _)| mana)
     }
 
     /// Find minimum mana path and return the spell sequence
-    pub fn find_minimum_mana_path_with_sequence(&self, initial_state: &GameState) -> Option<(i32, Vec<Spell>)> {
+    pub fn find_minimum_mana_path_with_sequence(
+        &self,
+        initial_state: &GameState,
+    ) -> Option<(i32, Vec<Spell>)> {
         // State registry to map between states and node IDs
         let mut state_to_id = HashMap::new();
         let mut id_to_state = HashMap::new();
@@ -384,7 +397,10 @@ impl WizardPathfinder {
         state_to_id.insert(initial_state.clone(), start_id);
         id_to_state.insert(start_id, initial_state.clone());
 
-        open_set.push(std::cmp::Reverse((initial_state.heuristic() as i32, start_id)));
+        open_set.push(std::cmp::Reverse((
+            initial_state.heuristic() as i32,
+            start_id,
+        )));
         g_scores.insert(start_id, 0);
 
         while let Some(std::cmp::Reverse((_, current_id))) = open_set.pop() {
@@ -501,8 +517,8 @@ mod tests {
         // Apply and tick
         let (boss_dmg, mana, armor) = effects.apply_and_tick();
         assert_eq!(boss_dmg, 0); // No poison
-        assert_eq!(mana, 0);     // No recharge
-        assert_eq!(armor, 7);    // Shield active
+        assert_eq!(mana, 0); // No recharge
+        assert_eq!(armor, 7); // Shield active
         assert_eq!(effects.shield_timer, 5);
 
         // Cannot start shield again while active

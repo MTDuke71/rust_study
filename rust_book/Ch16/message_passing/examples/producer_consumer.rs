@@ -1,7 +1,7 @@
 // Example: Producer-Consumer Pattern
 // Classic concurrent pattern using channels
 
-use std::sync::{mpsc, Arc, Mutex};
+use std::sync::{Arc, Mutex, mpsc};
 use std::thread;
 use std::time::Duration;
 
@@ -14,6 +14,7 @@ fn main() {
         data: String,
     }
 
+    #[allow(dead_code)]
     #[derive(Debug)]
     #[allow(dead_code)]
     struct ProcessedItem {
@@ -54,23 +55,23 @@ fn main() {
 
         let worker = thread::spawn(move || {
             println!("Worker {} starting...", worker_id);
-            
+
             // Loop until the channel is empty and disconnected
             while let Ok(item) = rx_raw_clone.lock().unwrap().recv() {
                 println!("  Worker {} processing item {}", worker_id, item.id);
                 thread::sleep(Duration::from_millis(200)); // Simulate work
-                
+
                 let processed = ProcessedItem {
                     id: item.id,
                     result: format!("{}_processed_by_worker_{}", item.data, worker_id),
                 };
-                
+
                 tx_processed_clone.send(processed).unwrap();
             }
-            
+
             println!("Worker {} finished!", worker_id);
         });
-        
+
         workers.push(worker);
     }
 
@@ -81,12 +82,12 @@ fn main() {
     let collector = thread::spawn(move || {
         println!("Collector starting...");
         let mut results = vec![];
-        
+
         for processed in rx_processed {
             println!("  Collected: {:?}", processed);
             results.push(processed);
         }
-        
+
         println!("Collector finished!");
         results
     });

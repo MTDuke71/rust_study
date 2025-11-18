@@ -129,7 +129,7 @@
 //! # fn main() -> Result<(), String> {
 //! // Represent a graph with 6 vertices
 //! let mut uf = UnionFind::new(6);
-//! 
+//!
 //! // Add edges: (0,1), (1,2), (3,4)
 //! let edges = vec![(0,1), (1,2), (3,4)];
 //! for (u, v) in edges {
@@ -176,7 +176,10 @@
 /// - REQ-5: Set counting and statistics
 /// - REQ-6: Error handling and bounds checking
 /// - REQ-7: Connected components application support
-#[cfg_attr(feature = "serde_support", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde_support",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct UnionFind {
     /// Parent pointers: parent[i] is the parent of element i
     parent: Vec<usize>,
@@ -268,7 +271,7 @@ impl UnionFind {
     /// let root = uf.find(0)?;
     /// assert_eq!(uf.find(1)?, root);
     /// assert_eq!(uf.find(2)?, root);
-    /// 
+    ///
     /// // Elements in different sets have different roots
     /// assert_ne!(uf.find(3)?, root);
     /// # Ok(())
@@ -281,7 +284,7 @@ impl UnionFind {
     ///
     /// # fn main() -> Result<(), String> {
     /// let mut uf = UnionFind::new(1000000); // Large dataset
-    /// 
+    ///
     /// // Create a long chain: 0 -> 1 -> 2 -> ... -> 999999
     /// for i in 0..999999 {
     ///     uf.union(i, i + 1)?;
@@ -289,7 +292,7 @@ impl UnionFind {
     ///
     /// // First find() triggers path compression
     /// let root1 = uf.find(500000)?;
-    /// 
+    ///
     /// // Second find() is much faster due to compression
     /// let root2 = uf.find(500000)?;
     /// assert_eq!(root1, root2);
@@ -307,7 +310,7 @@ impl UnionFind {
     /// # Errors
     ///
     /// Returns an error if `x` is out of bounds (>= `self.len()`).
-    /// 
+    ///
     /// # See Also
     ///
     /// - [`union`](#method.union) - Merge two sets
@@ -343,14 +346,14 @@ impl UnionFind {
     }
 
     /// Unsafe version of find for maximum performance (no bounds checking)
-    /// 
+    ///
     /// # Safety
-    /// 
+    ///
     /// The caller must ensure that `x < self.parent.len()`.
     /// Violating this constraint results in undefined behavior.
-    /// 
+    ///
     /// # Performance
-    /// 
+    ///
     /// This method is approximately 10-15% faster than the safe version
     /// due to eliminating bounds checks. Use only in performance-critical
     /// inner loops where bounds have been verified externally.
@@ -447,10 +450,10 @@ impl UnionFind {
     ///
     /// // Build connected component: {3,4}
     /// uf.union(3, 4)?;
-    /// 
+    ///
     /// // Element 5 remains isolated
     /// assert_eq!(uf.count(), 3); // Components: {0,1,2}, {3,4}, {5}
-    /// 
+    ///
     /// // Verify connectivity within components
     /// assert!(uf.connected(0, 2)?);
     /// assert!(uf.connected(3, 4)?);
@@ -465,11 +468,11 @@ impl UnionFind {
     ///
     /// # fn main() -> Result<(), String> {
     /// let mut uf = UnionFind::new(4);
-    /// 
+    ///
     /// // Represent graph edges as (u, v) pairs
     /// let edges = vec![(0, 1), (1, 2), (2, 3), (3, 0)];
     /// let mut edges_added = 0;
-    /// 
+    ///
     /// for (u, v) in edges {
     ///     if uf.union(u, v)? {
     ///         edges_added += 1;
@@ -478,7 +481,7 @@ impl UnionFind {
     ///         println!("Edge ({}, {}) would create cycle - skipped", u, v);
     ///     }
     /// }
-    /// 
+    ///
     /// assert_eq!(edges_added, 3); // Only 3 edges needed for 4 vertices
     /// assert_eq!(uf.count(), 1);  // All vertices connected
     /// # Ok(())
@@ -511,7 +514,7 @@ impl UnionFind {
     #[inline]
     pub fn union(&mut self, x: usize, y: usize) -> Result<bool, String> {
         use std::cmp::Ordering;
-        
+
         let root_x = self.find(x)?;
         let root_y = self.find(y)?;
 
@@ -576,7 +579,7 @@ impl UnionFind {
     /// # Ok(())
     /// # }
     /// ```
-    /// 
+    ///
     /// # Errors
     ///
     /// Returns an error if either `x` or `y` is out of bounds (>= `self.len()`).
@@ -649,7 +652,7 @@ impl UnionFind {
     /// # Ok(())
     /// # }
     /// ```
-    /// 
+    ///
     /// # Errors
     ///
     /// Returns an error if `x` is out of bounds (>= `self.len()`).
@@ -781,9 +784,9 @@ impl UnionFind {
     /// # Complexity
     ///
     /// Time: O(n⋅α(n)), Space: O(n)
-    /// 
+    ///
     /// # Panics
-    /// 
+    ///
     /// This method will not panic under normal usage as all indices are generated
     /// internally and are guaranteed to be valid.
     ///
@@ -804,7 +807,7 @@ impl UnionFind {
     /// # }
     /// ```
     pub fn components(&mut self) -> ComponentIter {
-        let mut component_map: std::collections::HashMap<usize, Vec<usize>> = 
+        let mut component_map: std::collections::HashMap<usize, Vec<usize>> =
             std::collections::HashMap::new();
 
         // Group elements by their root
@@ -829,13 +832,13 @@ impl UnionFind {
     ///
     /// * `Ok(MemberIter)` - Iterator over set members
     /// * `Err(msg)` - If element is out of bounds
-    /// 
+    ///
     /// # Errors
-    /// 
+    ///
     /// Returns an error if `element` is out of bounds (>= `self.len()`).
-    /// 
+    ///
     /// # Panics
-    /// 
+    ///
     /// This method will not panic under normal usage as all indices are generated
     /// internally and are guaranteed to be valid.
     ///
@@ -857,7 +860,7 @@ impl UnionFind {
     pub fn members(&mut self, element: usize) -> Result<MemberIter, String> {
         self.validate_index(element)?;
         let root = self.find(element)?;
-        
+
         let mut members = Vec::new();
         for i in 0..self.parent.len() {
             if self.find(i).unwrap() == root {
@@ -954,7 +957,7 @@ impl WeightedUnionFind {
     }
 
     /// Finds the root of element x and compresses paths with distance updates
-    /// 
+    ///
     /// Note: WeightedUnionFind uses recursive path compression because it must
     /// correctly update distances during compression. This is more complex than
     /// the basic Union-Find case.
@@ -982,7 +985,7 @@ impl WeightedUnionFind {
     /// let mut wuf = WeightedUnionFind::new(5);
     /// wuf.weighted_union(0, 1, 10)?; // Distance from 0 to 1 is 10
     /// wuf.weighted_union(1, 2, 5)?;  // Distance from 1 to 2 is 5
-    /// 
+    ///
     /// // Now distance from 0 to 2 should be 15
     /// assert_eq!(wuf.distance(0, 2)?, Some(15));
     /// ```
@@ -1060,7 +1063,8 @@ enum OperationType {
 
 impl UndoUnionFind {
     /// Creates a new Union-Find structure with undo support
-    #[must_use] pub fn new(n: usize) -> Self {
+    #[must_use]
+    pub fn new(n: usize) -> Self {
         Self {
             parent: (0..n).collect(),
             rank: vec![0; n],
@@ -1090,9 +1094,9 @@ impl UndoUnionFind {
 
         // Save state before operation
         let old_state = UndoOperation {
-            op_type: OperationType::Union { 
-                x: root_x, 
-                y: root_y
+            op_type: OperationType::Union {
+                x: root_x,
+                y: root_y,
             },
             x_parent: self.parent[root_x],
             y_parent: self.parent[root_y],
@@ -1172,12 +1176,14 @@ impl UndoUnionFind {
     }
 
     /// Returns the number of operations performed
-    #[must_use] pub const fn operation_count(&self) -> u64 {
+    #[must_use]
+    pub const fn operation_count(&self) -> u64 {
         self.operation_count
     }
 
     /// Returns the number of disjoint sets
-    #[must_use] pub const fn count(&self) -> usize {
+    #[must_use]
+    pub const fn count(&self) -> usize {
         self.count
     }
 }
@@ -1228,7 +1234,7 @@ mod tests {
     #[test]
     fn req2_additional_operations() {
         let mut uf = UnionFind::new(5);
-        
+
         // Test len() and is_empty()
         assert_eq!(uf.len(), 5);
         assert!(!uf.is_empty());
@@ -1237,7 +1243,7 @@ mod tests {
         uf.union(0, 1).unwrap();
         uf.union(2, 3).unwrap();
         assert_eq!(uf.count(), 3);
-        
+
         uf.clear();
         assert_eq!(uf.count(), 5);
         assert!(!uf.connected(0, 1).unwrap());
@@ -1257,7 +1263,7 @@ mod tests {
 
         let components: Vec<Vec<usize>> = uf.components().collect();
         assert_eq!(components.len(), 4);
-        
+
         // Check that each component has correct size
         let mut sizes: Vec<usize> = components.iter().map(|c| c.len()).collect();
         sizes.sort();
@@ -1282,7 +1288,7 @@ mod tests {
     #[test]
     fn test_undo_union_find() {
         let mut uf = UndoUnionFind::new(5);
-        
+
         // Initial state
         assert_eq!(uf.count(), 5);
         assert_eq!(uf.operation_count(), 0);
@@ -1314,11 +1320,11 @@ mod tests {
     #[test]
     fn test_weighted_union_find() {
         let mut wuf = WeightedUnionFind::new(4);
-        
+
         // Create weighted connections
         wuf.weighted_union(0, 1, 10).unwrap();
         wuf.weighted_union(1, 2, 5).unwrap();
-        
+
         // Test distances
         assert_eq!(wuf.distance(0, 1).unwrap(), Some(10));
         assert_eq!(wuf.distance(0, 2).unwrap(), Some(15)); // 10 + 5
