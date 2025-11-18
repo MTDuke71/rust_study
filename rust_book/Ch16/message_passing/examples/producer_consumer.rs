@@ -15,6 +15,7 @@ fn main() {
     }
 
     #[derive(Debug)]
+    #[allow(dead_code)]
     struct ProcessedItem {
         id: usize,
         result: String,

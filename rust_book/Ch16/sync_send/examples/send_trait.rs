@@ -53,6 +53,7 @@ fn main() {
     println!("\nExample 4: Custom struct is Send");
 
     #[derive(Debug)]
+    #[allow(dead_code)]
     struct Person {
         name: String,
         age: u32,
