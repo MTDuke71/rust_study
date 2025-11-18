@@ -1,0 +1,25 @@
+[package]
+name = "step8_rest_api"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+axum = "0.7"
+tokio = { version = "1", features = ["full"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+uuid = { version = "1", features = ["v4", "serde"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+utoipa = { version = "4", features = ["axum_extras", "uuid"] }
+utoipa-swagger-ui = { version = "6", features = ["axum"] }
+
+# Link to the main mission library for UnionFind implementation
+# Assuming mission10 crate is available in the workspace or we copy the implementation
+# For this tutorial step, we might need to copy the UnionFind struct or rely on the workspace
+# If mission10 is a crate in the workspace:
+mission10 = { path = "../../../../missions/Mission10" }

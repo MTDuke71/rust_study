@@ -15,6 +15,7 @@ This tutorial teaches you how to build an efficient Union-Find (Disjoint Set Uni
 5. Real-world applications (cycle detection, MST, connected components)
 6. Advanced variants and extensions
 7. Problem-solving patterns
+8. REST API with OpenAPI/Swagger
 
 ---
 
@@ -123,6 +124,17 @@ Competitive programming patterns:
 
 ---
 
+### Step 8: REST API with OpenAPI/Swagger
+ **Status**: 🚀 IN PROGRESS
+ 
+ Build a production-ready REST API:
+ - **RESTful Design** - Designing clean API endpoints
+ - **Axum & Tokio** - Async web server implementation
+ - **OpenAPI/Swagger** - Automatic documentation with `utoipa`
+ - **Production Features** - Rate limiting, tracing, metrics
+ 
+ ---
+
 ## 🚀 Getting Started
 
 ```bash
@@ -150,7 +162,10 @@ Step 1: Basic → Step 2: Path Compression → Step 3: Union by Rank
                               ↓
          Step 5: Applications ← → Step 6: Variants
                               ↓
-                   Step 7: Problem Solving
+                               ↓
+                    Step 7: Problem Solving
+                               ↓
+                    Step 8: REST API
 ```
 
 ---
@@ -209,6 +224,7 @@ By completing this tutorial, you will:
 - [ ] Step 5: Applications (To create)
 - [ ] Step 6: Advanced Variants (To create)
 - [ ] Step 7: Problem Solving (To create)
+- [ ] Step 8: REST API (To create)
 
 ---
 

@@ -65,6 +65,34 @@ This data structure is crucial for algorithms involving connected components, cy
 - Support cycle detection in undirected graphs
 - Enable minimum spanning tree algorithms (Kruskal's)
 
+### REQ-8: RESTful API Design
+- Design RESTful endpoints for Union-Find operations
+- Define API versioning strategy (v1)
+- Plan request/response schemas
+- Document error handling approach
+- **Status**: 🚀 IN PROGRESS
+
+### REQ-9: HTTP Server with Basic Endpoints
+- Implement HTTP server using Axum/Tokio
+- Create endpoints for new, union, find, connected operations
+- Implement state management for multiple instances
+- Add graceful shutdown and configuration
+- **Status**: 🚀 IN PROGRESS
+
+### REQ-10: OpenAPI Documentation
+- Integrate `utoipa` for OpenAPI specification generation
+- Annotate all endpoints and models
+- Serve Swagger UI for interactive documentation
+- Ensure specification validates correctly
+- **Status**: 🚀 IN PROGRESS
+
+### REQ-11: Production Features
+- Implement rate limiting middleware
+- Add request/response logging/tracing
+- Expose Prometheus metrics
+- Add health check endpoints
+- **Status**: 🚀 IN PROGRESS
+
 ---
 
 ## 🏗️ V-Cycle Development Process
@@ -115,6 +143,24 @@ cargo init --lib
 - [ ] Add error handling and validation
 - [ ] Create connected components examples
 - [ ] Write unit tests for REQ-5, REQ-6, REQ-7
+
+- [ ] Write unit tests for REQ-5, REQ-6, REQ-7
+
+### Phase 6: REST API & OpenAPI (Days 8-14)
+**Status**: 🚀 IN PROGRESS
+
+**Deliverables**:
+- [ ] REST API design document
+- [ ] Functional HTTP server with Axum
+- [ ] OpenAPI/Swagger documentation
+- [ ] Integration tests for API endpoints
+
+**Activities**:
+- **Day 8**: API Design & Architecture
+- **Day 9-10**: Core Implementation
+- **Day 11-12**: OpenAPI Integration
+- **Day 13**: Testing & Validation
+- **Day 14**: Advanced Features
 
 ### Phase 4: Testing & Validation (Day 6 - Nov 7)
 **Deliverables**:
@@ -549,6 +595,12 @@ cargo run --example network_connectivity
 - [ ] Examples polished
 - [ ] Tutorial integration
 - [ ] Mission complete! 🎉
+
+### Days 8-14 (REST API)
+- [ ] REQ-8: API Design
+- [ ] REQ-9: Server Implementation
+- [ ] REQ-10: OpenAPI Integration
+- [ ] REQ-11: Production Features
 
 ---
 
