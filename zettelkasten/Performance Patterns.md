@@ -532,6 +532,7 @@ fn optimized_search(data: &[i32], target: i32) -> Option<usize> {
 ---
 
 *Performance Patterns Links:*
+- [[atomic-operations-memory-ordering]] - Lock-free concurrency and atomic performance characteristics
 - [[zero-cost-abstractions]] - High-level performance patterns
 - [[Performance Benchmarking]] - Measuring optimization results
 - [[interior-mutability]] - Managing shared state costs

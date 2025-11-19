@@ -117,6 +117,7 @@ fn main() {
 - [[deterministic-debugging]] - Centralized logging/state capture for multi-threaded scenarios
 
 ### **Related Concepts**
+- [[atomic-operations-memory-ordering]] - Lock-free alternative to Mutex for simple counters and flags
 - [[message-passing-channels]] - Ownership-transfer alternative without shared mutation
 - [[Performance Patterns]] - Measuring contention, batching updates, and using lock-free data structures
 - [[hashmap-ownership-patterns]] - Strategies for storing owned vs borrowed data inside the shared registry

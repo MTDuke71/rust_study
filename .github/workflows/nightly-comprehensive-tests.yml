@@ -151,17 +151,15 @@ jobs:
         fi
         
         # Create JSON report summary
-        cat > reports/test-results.json << EOF
-{
-  "test_run": "nightly",
-  "timestamp": "$(date -u +"%Y-%m-%d %H:%M:%S UTC")",
-  "total_tests": $total_tests,
-  "passed_tests": $passed_tests,
-  "failed_tests": $failed_tests,
-  "workspace_exit_code": $workspace_exit_code,
-  "compilation_failed": $compilation_failed
-}
-EOF
+        echo "{" > reports/test-results.json
+        echo "  \"test_run\": \"nightly\"," >> reports/test-results.json
+        echo "  \"timestamp\": \"$(date -u +"%Y-%m-%d %H:%M:%S UTC")\"," >> reports/test-results.json
+        echo "  \"total_tests\": $total_tests," >> reports/test-results.json
+        echo "  \"passed_tests\": $passed_tests," >> reports/test-results.json
+        echo "  \"failed_tests\": $failed_tests," >> reports/test-results.json
+        echo "  \"workspace_exit_code\": $workspace_exit_code," >> reports/test-results.json
+        echo "  \"compilation_failed\": $compilation_failed" >> reports/test-results.json
+        echo "}" >> reports/test-results.json
         
         echo "Exporting results to GITHUB_OUTPUT..."
         # Export results

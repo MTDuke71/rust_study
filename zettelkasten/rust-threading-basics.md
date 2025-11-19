@@ -544,6 +544,7 @@ fn main() {
 - [[parallel-iterators-rayon]] - Week 8 Day 55, rayon for ergonomic data parallelism (Friday Nov 21)
 
 ### **Related Concepts**
+- [[handles-resource-abstraction]] - Understanding thread handles and the handle pattern
 - [[concurrency-vs-parallelism]] - Concurrency (task switching) vs parallelism (simultaneous execution)
 - [[cpu-bound-vs-io-bound]] - Threading best for CPU-bound, async better for I/O-bound
 - [[rust-book-ch16-1]] - Official Rust Book coverage of threading

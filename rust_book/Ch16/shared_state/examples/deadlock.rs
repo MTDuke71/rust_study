@@ -8,6 +8,8 @@ use std::time::Duration;
 fn main() {
     println!("=== Deadlock Example ===\n");
 
+    correct_approach();
+
     println!("WARNING: This example will deadlock!");
     println!("Press Ctrl+C to stop if it hangs.\n");
 

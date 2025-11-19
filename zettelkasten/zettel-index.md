@@ -235,8 +235,10 @@
 
 - [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks of Rust's type system
 
-## 🔄 Concurrency Patterns
+## 🧵 Concurrency Patterns
 
+- [[atomic-operations-memory-ordering]] - **Atomics & Memory Ordering** - Lock-free primitives, Acquire/Release/Relaxed/SeqCst ordering, compare-exchange, performance vs Mutex
+- [[handles-resource-abstraction]] - **Handle Pattern** - Abstract resource references with coat check mental model, thread handles, file handles
 - [[rust-threading-basics]] - Thread spawning, ownership transfer, and AoC parallelization fundamentals
 - [[message-passing-channels]] - mpsc-based producer/consumer pipelines for AoC parsing, processing, and aggregation
 - [[shared-state-concurrency]] - Arc<Mutex<T>> coordination patterns, contention controls, and AoC shared scoreboard examples

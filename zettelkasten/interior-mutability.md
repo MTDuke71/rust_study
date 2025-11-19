@@ -965,6 +965,7 @@ fn get_data() -> &'static str {
 ---
 
 *Interior Mutability Links:*
+- [[atomic-operations-memory-ordering]] - Lock-free atomic types for concurrent interior mutability
 - [[refcell-interior-mutability]] - Deep dive into RefCell patterns and state management
 - [[zero-cost-abstractions]] - Runtime cost trade-offs
 - [[Memory Safety]] - Safe shared mutability
