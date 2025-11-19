@@ -261,6 +261,7 @@
 
 ## ⚡ Performance & Optimization
 
+- [[rust-performance-tools]] - **Performance Tooling Guide** - Benchmarking (Hyperfine), profiling (Flamegraph, Dhat), async diagnostics (Tracing, Tokio Console)
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
 - [[black-box-benchmarking]] - Using std::hint::black_box for accurate benchmarks
 - [[dead-code-elimination]] - **Compiler optimization deep dive**: Understanding and preventing unwanted code elimination in benchmarks
