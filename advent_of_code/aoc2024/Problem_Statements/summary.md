@@ -323,6 +323,39 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 
 **Mission Integration Benefit**: Grid & coordinate hashing reduce incidental complexity, focusing effort on geometric reasoning.
 
+### Day 9: Disk Fragmenter
+**Title**: Disk Fragmenter  
+**Part 1 Type**: Simulation + Data Structures  
+**Part 1 Description**: Interpret the dense disk map, treat digits as alternating file and gap lengths, then repeatedly pull the rightmost file blocks into the leftmost gaps to remove every hole before computing the checksum.  
+**Part 2 Type**: Simulation + Optimization  
+**Part 2 Description**: Move *whole* files exactly once, scanning from the largest ID downward and sliding each file into the earliest gap to its left that can contain it; recompute the checksum after every relocation.  
+**Key Concepts**: Dense disk decoding, block-level simulation, Mission 5 dictionary reuse for file metadata, gap tracking, checksum reduction, visualization hooks (`examples/day09_visualization.rs`).
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Memory compaction escalation (single-block sliding → whole-file relocation with greedy nearest-gap fit).
+- **Data Structure**: `Vec<Option<u32>>` for block occupancy, `Dictionary<usize, FileInfo>` from Mission 5 for O(1) file metadata, `Vec<GapSegment>` for sorted free-space spans.
+- **Complexity**: Part 1 runs in O(total_blocks) by converging two pointers from both ends; Part 2 is O(F·G) where F is file count and G is number of gaps scanned per file (worst-case O(F²) but bounded by problem input sizes).
+- **AoC Theme**: Disk defragmentation with progressively stricter movement rules (block shuffling → contiguous file moves).
+
+**🦀 Rust Conversion Highlights**:
+- **Structured Parsing**: `parse_disk` enforces digit-only input, pre-allocates block vectors, and records file/gap metadata as the dense map is decoded.
+- **Safe Compaction**: `compact_blocks` implements the two-pointer pull without reallocations, while `compact_whole_files` reuses dictionary metadata to update positions after every move.
+- **Checksum Accuracy**: Dedicated `checksum` helper mirrors the puzzle requirement (`position * file_id`) and doubles as a regression oracle for the visualization example.
+- **Error Context**: `anyhow::Context` pinpoints malformed digits or empty inputs, which was easy to miss in the Python reference implementation.
+
+**Mission Integration & Visualization**:
+- Mission 5’s `Dictionary` keeps file metadata synchronized during moves—no ad-hoc hash maps needed and type safety prevents stale references.
+- `examples/day09_visualization.rs` streams every intermediate block state (pre/post compaction) so the disk behavior can be inspected or animated, mirroring the narrative screenshots in the puzzle statement.
+
+**Python vs Rust Comparison**:
+- Python solution (`2024py/solutions/day09.py`) mutates per-block vectors and stores gaps as indices, but relies on implicit assumptions (e.g., trailing gaps at the end) and lacks strong typing.
+- Rust tracks both files and gaps explicitly, uses dedicated structs (`FileInfo`, `GapSegment`), and updates metadata atomically, avoiding subtle off-by-one errors during whole-file moves.
+- Visualization tooling in Rust doubles as an integration test for both compilation targets (solver + example), whereas Python depends on print-based debugging.
+
+**Results & Takeaways**:
+- Sample checksum: Part 1 = 1928, Part 2 = 2858; puzzle input answers match official AoC totals (6519155389266, 6547228115826).
+- Demonstrates how mission libraries make even 1D simulations safer, and how adding an `examples/` visualizer can convert puzzle mechanics into reusable teaching material.
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -335,19 +368,19 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 | Combinatorial Optimization | 0 | 1 |
 | Conditional Logic | 1 | 2 |
 | Cryptographic | 0 | 0 |
-| Data Structures | 1 | 1 |
+| Data Structures | 2 | 2 |
 | Encoding | 0 | 0 |
 | Graph Algorithms | 1 | 1 |
 | Greedy Algorithms | 0 | 0 |
 | Mathematical | 4 | 2 |
 | Number Theory | 0 | 0 |
-| Optimization | 0 | 3 |
+| Optimization | 0 | 4 |
 | Parsing | 0 | 0 |
 | Pattern Matching | 2 | 2 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
 | Search/Traversal | 2 | 2 |
-| Simulation | 1 | 1 |
+| Simulation | 2 | 2 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
@@ -378,6 +411,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 23. **Vector Normalization**: GCD-based primitive direction extraction for complete lattice coverage (Day 8: prevents skipped harmonic points)
 24. **Primitive Ray Casting**: Bidirectional traversal using minimal step vectors for geometric saturation (Day 8: harmonic resonance lines)
 25. **Geometric Resonance Saturation**: Transition from discrete extrapolation to full line filling via normalized direction (Day 8: resonance propagation)
+26. **Disk Compaction & Gap Management**: Dense disk decoding, dual-pointer compaction, and mission-backed metadata tracking for relocations (Day 9)
 
 ### Rust-Specific Considerations:
 - **Day 1**: Excellent introduction to functional error handling with `Result<T, E>`, iterator combinators (`zip`, `fold`, `sum`), and pattern matching for safe parsing. Demonstrates HashMap construction with functional approach vs Python's Counter.
@@ -388,6 +422,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - **Day 6**: Demonstrates comprehensive Mission 6 + Mission 5 integration for simulation-based problems. Showcases type-safe coordinate operations with automatic bounds checking, enum-based direction management with rotation methods, and efficient state-based loop detection using HashSet collections. **Mission Integration**: Eliminates entire bug classes through type safety—coordinate arithmetic errors, direction confusion, bounds violations—while maintaining optimal algorithmic complexity. Shows how foundational libraries make complex simulations both safer and more maintainable (8 comprehensive unit tests, zero clippy warnings). 
 - **Day 7**: Exemplifies professional TDD methodology applied to competitive programming with comprehensive test-driven development (32 tests). Demonstrates type-safe `Operator` enum with pattern matching for mathematical operations, explicit left-to-right evaluation engine vs standard precedence, and systematic combination generation using base conversion mathematics. **TDD Excellence**: 5-phase implementation approach (data structures → evaluation → combinations → validation → integration) with complete edge case coverage. Shows `anyhow::Result` throughout for production-quality error handling, zero-allocation evaluation for performance, and structured approach to brute force algorithms. **Architecture Investment**: 530+ lines with comprehensive test suite vs Python's 40-line pragmatic solution—demonstrates Rust's strength in creating maintainable, verifiable, and educationally valuable competitive programming solutions.
 - **Day 8**: Demonstrates geometric correctness via primitive vector normalization (`gcd`) ensuring complete harmonic line saturation. Highlights mission abstraction benefits (safe `Grid` operations, hashed `Coord`) and contrasts completeness-oriented Rust approach with Python's brevity that risks skipped intermediate points. Establishes reusable pattern for line-of-sight / visibility algorithms with mathematical rigor applied to competitive programming.
+- **Day 9**: Highlights dense-disk simulations built atop Mission 5 collections—`Dictionary` keeps file metadata synchronized during block and whole-file moves while gap segments stay sorted for O(1) lookup. Dedicated checksum helper doubles as regression oracle, and `examples/day09_visualization.rs` streams every intermediate compaction state so the algorithm can be inspected visually. Emphasizes how mission libraries plus instrumentation (examples/ tooling) turn a puzzle solver into a teaching asset.
 ---
 
 ## Adding New Days
@@ -423,8 +458,8 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 12, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8*
+*Last Updated: November 18, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---

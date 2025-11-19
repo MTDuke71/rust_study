@@ -75,5 +75,7 @@ If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
 
+Need to inspect the compaction steps visually? Run the helper example with `cargo run -p aoc2024 --example day09_visualization` to stream every intermediate disk state.
+
 ---
-*Links: [[day08]] [[day10]] [[AoC 2024 Overview]]*
+*Links: [[day08]] [[day10]] [[../examples/day09_visualization_output]] [[AoC 2024 Overview]]*
