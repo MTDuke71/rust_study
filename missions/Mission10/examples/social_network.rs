@@ -880,9 +880,9 @@ mod tests {
 
         // Alice and Bob should be in same circle, Charlie separate
         let alice_circle = network.get_friend_circle(alice).unwrap();
-        let charlie_circle = network.get_friend_circle(charlie).unwrap();
-
         assert_eq!(alice_circle.len(), 2); // Alice and Bob
+        
+        let charlie_circle = network.get_friend_circle(charlie).unwrap();
         assert_eq!(charlie_circle.len(), 1); // Just Charlie
 
         // Connect Charlie to Alice

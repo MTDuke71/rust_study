@@ -66,16 +66,16 @@ async fn main() {
     }
     println!();
 
-    // Example 5: Enumerate stream
+    // Example 5: Enumerate stream (manual enumeration)
     println!("Example 5: Enumerated stream");
     
-    let stream = tokio_stream::iter(vec!["apple", "banana", "cherry"])
-        .enumerate();
+    // Streams don't have enumerate(), so we manually track the index
+    let mut stream = tokio_stream::iter(vec!["apple", "banana", "cherry"]);
+    let mut index = 0;
     
-    tokio::pin!(stream);
-    
-    while let Some((i, fruit)) = stream.next().await {
-        println!("{}: {}", i, fruit);
+    while let Some(fruit) = stream.next().await {
+        println!("{}: {}", index, fruit);
+        index += 1;
     }
     
     println!("\nNote: Streams must be pinned for manual iteration");

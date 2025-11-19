@@ -68,10 +68,11 @@ async fn main() {
     // Example 5: Storing async blocks
     println!("Example 5: Storing futures in variables");
     
-    let futures = vec![
-        async { 1 },
-        async { 2 },
-        async { 3 },
+    // Each async block has a unique type, so we need to Box them to store in a Vec
+    let futures: Vec<std::pin::Pin<Box<dyn Future<Output = i32>>>> = vec![
+        Box::pin(async { 1 }),
+        Box::pin(async { 2 }),
+        Box::pin(async { 3 }),
     ];
     
     for (i, future) in futures.into_iter().enumerate() {
