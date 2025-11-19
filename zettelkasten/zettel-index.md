@@ -235,6 +235,13 @@
 
 - [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks of Rust's type system
 
+## 🔄 Concurrency Patterns
+
+- [[rust-threading-basics]] - Thread spawning, ownership transfer, and AoC parallelization fundamentals
+- [[message-passing-channels]] - mpsc-based producer/consumer pipelines for AoC parsing, processing, and aggregation
+- [[shared-state-concurrency]] - Arc<Mutex<T>> coordination patterns, contention controls, and AoC shared scoreboard examples
+- [[sync-send-traits]] - Thread-safety marker trait audits, static assertions, and lock-wrapping safety guides
+
 ## 🎯 Algorithms & Problem Solving
 
 - [[union-find-algorithm]] - Disjoint Set Union with path compression and union by rank (NEW)

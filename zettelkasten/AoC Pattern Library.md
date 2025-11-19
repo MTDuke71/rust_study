@@ -6,4 +6,10 @@ The AoC Pattern Library collects recurring problem patterns, data structures, an
 
 Use this as a jump-off point when turning a specific AoC solution into a reusable pattern (for example grid traversal, graph search, dynamic programming, or string parsing).
 
-*Links: [[AoC Patterns MOC]] [[Algorithms MOC]] [[Collections MOC]] [[Graph Theory MOC]]*
+## Featured Patterns
+
+- [[message-passing-channels]] - Producer/consumer queueing for splitting AoC parsing, computation, and aggregation workloads across threads.
+- [[shared-state-concurrency]] - Arc<Mutex<T>> leaderboards, memo caches, and checksum accumulators when AoC stages must mutate shared data.
+- [[sync-send-traits]] - Trait-audit checklist to ensure custom AoC data structures safely cross thread boundaries before applying concurrency patterns.
+
+*Links: [[AoC Patterns MOC]] [[Algorithms MOC]] [[Collections MOC]] [[Graph Theory MOC]] [[shared-state-concurrency]] [[sync-send-traits]]*

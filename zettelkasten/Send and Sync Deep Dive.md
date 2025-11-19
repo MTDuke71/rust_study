@@ -687,6 +687,8 @@ fn verify_thread_safety() {
 }
 ```
 
+Need ready-made assertion helpers? [[sync-send-traits]] packages the `static_assertions` patterns and AoC audit workflow built specifically for these trait checks.
+
 ## Best Practices
 
 ### Do's ✅
@@ -731,8 +733,8 @@ fn verify_thread_safety() {
 ---
 
 *Created: 2025-10-19*
-*Last Updated: 2025-10-19*
+*Last Updated: 2025-11-18*
 
 *Tags: #send #sync #thread-safety #concurrency #marker-traits #unsafe #arc #mutex #rwlock #atomic #channels #async #performance #testing #best-practices*
 
-*Links: [[Unsafe Rust - Raw Pointers and Safety Contracts]] | [[interior-mutability]] | [[mission-2]] | [[Concurrency Patterns]] | [[Async Programming]] | [[Performance Engineering]] | [[zero-cost-abstractions]] | [[Testing Strategies]] | [[../missions/Mission2/README]] | [[Thread Safety Patterns]]*
+*Links: [[Unsafe Rust - Raw Pointers and Safety Contracts]] | [[interior-mutability]] | [[mission-2]] | [[Concurrency Patterns]] | [[Async Programming]] | [[Performance Engineering]] | [[zero-cost-abstractions]] | [[Testing Strategies]] | [[../missions/Mission2/README]] | [[Thread Safety Patterns]] | [[sync-send-traits]]*
