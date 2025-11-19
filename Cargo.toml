@@ -76,7 +76,15 @@ members = [
     "advent_of_code/aoc_pattern_recognition",
     "advent_of_code/aoc2015",
     "advent_of_code/aoc2024",
-    "daily_study/rust_learning_week5_notes"
-, "rust_book/Ch16/threads", "rust_book/Ch16/message_passing", "rust_book/Ch16/shared_state", "rust_book/Ch16/sync_send"]
+    "daily_study/rust_learning_week5_notes",
+    "rust_book/Ch16/threads",
+    "rust_book/Ch16/message_passing",
+    "rust_book/Ch16/shared_state",
+    "rust_book/Ch16/sync_send",
+    "rust_book/Ch17/futures_basics",
+    "rust_book/Ch17/async_concurrency",
+    "rust_book/Ch17/async_streams",
+    "rust_book/Ch17/async_traits"
+]
 
 resolver = "3"

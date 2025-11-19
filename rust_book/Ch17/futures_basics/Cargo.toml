@@ -1,0 +1,21 @@
+[package]
+name = "futures_basics"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+async-std = { version = "1.12", features = ["attributes"] }
+futures = "0.3"
+
+[[example]]
+name = "future_basics"
+path = "examples/future_basics.rs"
+
+[[example]]
+name = "async_blocks"
+path = "examples/async_blocks.rs"
+
+[[example]]
+name = "executor_comparison"
+path = "examples/executor_comparison.rs"

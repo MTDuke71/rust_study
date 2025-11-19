@@ -1,0 +1,21 @@
+[package]
+name = "async_streams"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+tokio-stream = { version = "0.1", features = ["sync"] }
+futures = "0.3"
+
+[[example]]
+name = "stream_processing"
+path = "examples/stream_processing.rs"
+
+[[example]]
+name = "async_iteration"
+path = "examples/async_iteration.rs"
+
+[[example]]
+name = "buffering"
+path = "examples/buffering.rs"

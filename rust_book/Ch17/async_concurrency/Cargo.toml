@@ -1,0 +1,20 @@
+[package]
+name = "async_concurrency"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+futures = "0.3"
+
+[[example]]
+name = "join_futures"
+path = "examples/join_futures.rs"
+
+[[example]]
+name = "select_futures"
+path = "examples/select_futures.rs"
+
+[[example]]
+name = "timeout_patterns"
+path = "examples/timeout_patterns.rs"

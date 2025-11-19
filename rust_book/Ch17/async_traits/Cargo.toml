@@ -1,0 +1,20 @@
+[package]
+name = "async_traits"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+futures = "0.3"
+
+[[example]]
+name = "future_trait"
+path = "examples/future_trait.rs"
+
+[[example]]
+name = "pin_unpin"
+path = "examples/pin_unpin.rs"
+
+[[example]]
+name = "tasks_vs_threads"
+path = "examples/tasks_vs_threads.rs"
