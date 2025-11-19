@@ -5,6 +5,7 @@ use std::marker::PhantomPinned;
 
 /// A normal struct - can be moved freely
 #[derive(Debug)]
+#[allow(dead_code)]
 struct Movable {
     data: String,
 }
@@ -12,6 +13,7 @@ struct Movable {
 /// A self-referential struct (conceptually)
 /// In real async code, the compiler generates these
 #[derive(Debug)]
+#[allow(dead_code)]
 struct SelfReferential {
     data: String,
     // In reality, this would be a pointer into `data`
@@ -41,7 +43,7 @@ async fn main() {
         _pinned: PhantomPinned,
     };
     
-    let mut pinned = Box::pin(self_ref);
+    let pinned = Box::pin(self_ref);
     
     // Can't move out of a Pin
     // let moved = *pinned;  // ERROR: can't move out of Pin

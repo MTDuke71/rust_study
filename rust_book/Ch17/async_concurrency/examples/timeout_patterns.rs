@@ -1,6 +1,6 @@
 // Example: Timeout patterns and cancellation
 
-use tokio::time::{sleep, timeout, Duration, Instant};
+use tokio::time::{sleep, timeout, Duration};
 
 async fn unreliable_operation() -> Result<String, &'static str> {
     // Simulates operation that might take too long

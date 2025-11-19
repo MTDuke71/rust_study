@@ -17,7 +17,7 @@ async fn main() {
     let start = Instant::now();
     
     let results: Vec<_> = stream::iter(1..=5)
-        .then(|n| process_item(n))
+        .then(process_item)
         .collect()
         .await;
     
@@ -30,7 +30,7 @@ async fn main() {
     let start = Instant::now();
     
     let results: Vec<_> = stream::iter(1..=5)
-        .map(|n| process_item(n))
+        .map(process_item)
         .buffered(3)  // Process up to 3 concurrently
         .collect()
         .await;
