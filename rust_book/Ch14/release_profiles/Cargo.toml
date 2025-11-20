@@ -4,50 +4,20 @@ version = "0.1.0"
 edition = "2021"
 
 # 14.1 - Customizing Builds with Release Profiles
-# This example demonstrates how to customize Cargo's release profiles
+# This example demonstrates Cargo's release profiles
+# Note: Profile configurations should be defined at the workspace root (d:\repos\rust_study\Cargo.toml)
+# not in individual packages. The examples below show the syntax but are commented out
+# to avoid "profiles will be ignored" warnings.
 
-# Default dev profile (fast compilation, debug info)
-[profile.dev]
-opt-level = 0          # No optimization
-debug = true           # Include debug symbols
-split-debuginfo = "off"
-debug-assertions = true
-overflow-checks = true
-lto = false
-panic = 'unwind'
-incremental = true
-codegen-units = 256
-rpath = false
-
-# Default release profile (optimized, minimal debug info)
-[profile.release]
-opt-level = 3          # Maximum optimization
-debug = false          # No debug symbols
-split-debuginfo = "off"
-debug-assertions = false
-overflow-checks = false
-lto = false
-panic = 'unwind'
-incremental = false
-codegen-units = 1
-rpath = false
-
-# Custom profile: optimized but with debug info
-[profile.release-with-debug]
-inherits = "release"
-debug = true           # Keep debug symbols for profiling
-
-# Custom profile: minimal size
-[profile.release-min-size]
-inherits = "release"
-opt-level = "z"        # Optimize for size
-lto = true             # Link-time optimization
-codegen-units = 1
-
-# Custom profile: maximum performance
-[profile.release-max-perf]
-inherits = "release"
-opt-level = 3
-lto = "fat"            # Full LTO for maximum optimization
-codegen-units = 1
+# For actual profile customization, add these to the workspace root Cargo.toml:
+#
+# [profile.dev]
+# opt-level = 0
+#
+# [profile.release]
+# opt-level = 3
+#
+# [profile.release-with-debug]
+# inherits = "release"
+# debug = true
 

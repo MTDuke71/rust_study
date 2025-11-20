@@ -44,7 +44,7 @@ name = "mission10"
 path = "src/lib.rs"
 
 [[example]]
-name = "demo"
+name = "mission10_demo"
 path = "examples/demo.rs"
 
 [[example]]
