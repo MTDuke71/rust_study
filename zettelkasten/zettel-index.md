@@ -138,6 +138,8 @@
 - [[rust_book/rust-book-ch12]] - **I/O Project** - Command-line program ✅
 - [[rust_book/rust-book-ch13]] - **Functional Features** - Closures and iterators ✅
 - [[rust_book/rust-book-ch14]] - **Cargo & Crates.io** - Package management ✅
+  - [[cargo-release-profiles]] - **Cargo Profiles** - Build optimization and configuration
+
 - [[rust_book/rust-book-ch15]] - **Smart Pointers** - Box, Rc, RefCell ✅
 - [[rust_book/rust-book-ch16]] - **Fearless Concurrency** - Threads and message passing ✅
 - [[rust_book/rust-book-ch17]] - **Fundamentals of Asynchronous Programming** - Async, Await, Futures, and Streams ✅

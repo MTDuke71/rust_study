@@ -12,7 +12,7 @@ Cargo is Rust's build system and package manager. This chapter covers advanced C
 
 ## Key Topics Covered
 
-- **Release Profiles** - Optimizing builds for different scenarios
+- **Release Profiles** - Optimizing builds for different scenarios → [[../cargo-release-profiles]]
 - **Publishing Crates** - Sharing code with the Rust community
 - **Workspaces** - Managing multi-crate projects
 - **Documentation** - Generating and publishing docs
@@ -27,6 +27,7 @@ Cargo is Rust's build system and package manager. This chapter covers advanced C
 
 ## Cross-References
 
+- **[[../cargo-release-profiles]]** - Deep dive into Cargo profiles (dev, release, custom)
 - **[[Cargo Workspace Patterns]]** - Advanced workspace organization and management
 - **[[Release Optimization]]** - Performance tuning and build configuration
 - **[[Documentation Standards]]** - Comprehensive documentation practices
