@@ -1,41 +1,45 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result};
+use mission6::{Coord, Grid};
 use mission8::{bfs, Graph};
 
-type Position = (usize, usize);
-
+/// Topographic map using Mission 6's Grid for storage and Mission 8's Graph for algorithms.
 #[derive(Debug, Clone)]
 struct TopoMap {
-    heights: Vec<Vec<Option<u32>>>,
-    rows: usize,
-    cols: usize,
+    heights: Grid<Option<u32>>,
 }
 
 impl TopoMap {
     /// Parse the hiking trail map from the input string.
     /// Digits 0-9 represent heights, '.' represents impassable positions.
+    /// Leverages Mission 6's grid parsing as a foundation.
     fn from_str(input: &str) -> Result<Self> {
         let lines: Vec<&str> = input.lines().filter(|l| !l.trim().is_empty()).collect();
         if lines.is_empty() {
-            bail!("Empty input");
+            anyhow::bail!("Empty input");
         }
 
-        let rows = lines.len();
-        let cols = lines[0].len();
-        let mut heights = Vec::with_capacity(rows);
+        let height = lines.len();
+        let width = lines[0].len();
 
-        for (row_idx, line) in lines.iter().enumerate() {
-            if line.len() != cols {
-                bail!(
+        // Verify rectangular grid
+        for (idx, line) in lines.iter().enumerate() {
+            if line.len() != width {
+                anyhow::bail!(
                     "Non-rectangular grid at line {}: got {} columns, expected {}",
-                    row_idx,
+                    idx,
                     line.len(),
-                    cols
+                    width
                 );
             }
+        }
 
-            let mut row = Vec::with_capacity(cols);
-            for ch in line.chars() {
-                let height = if ch == '.' {
+        // Create grid and parse heights
+        let mut heights = Grid::new(width, height, None);
+
+        for (y, line) in lines.iter().enumerate() {
+            for (x, ch) in line.chars().enumerate() {
+                let coord = Coord::new(x, y);
+                heights[coord] = if ch == '.' {
                     None
                 } else {
                     Some(
@@ -43,99 +47,88 @@ impl TopoMap {
                             .with_context(|| format!("Invalid character '{ch}' in map"))?,
                     )
                 };
-                row.push(height);
             }
-            heights.push(row);
         }
 
-        Ok(TopoMap { heights, rows, cols })
+        Ok(TopoMap { heights })
     }
 
-    /// Check if a position is within grid bounds.
-    fn is_valid(&self, pos: Position) -> bool {
-        pos.0 < self.rows && pos.1 < self.cols
-    }
-
-    /// Get the height at a position, or None if impassable.
-    fn height_at(&self, pos: Position) -> Option<u32> {
-        if self.is_valid(pos) {
-            self.heights[pos.0][pos.1]
-        } else {
-            None
-        }
+    /// Get the height at a coordinate, or None if impassable or out of bounds.
+    /// Uses Mission 6's safe access via Grid::get().
+    fn height_at(&self, coord: Coord) -> Option<u32> {
+        self.heights.get(coord).and_then(|&h| h)
     }
 
     /// Find all trailheads (positions with height 0).
-    fn find_trailheads(&self) -> Vec<Position> {
-        let mut trailheads = Vec::new();
-        for row in 0..self.rows {
-            for col in 0..self.cols {
-                if self.heights[row][col] == Some(0) {
-                    trailheads.push((row, col));
+    /// Uses Mission 6's grid enumeration.
+    fn find_trailheads(&self) -> Vec<Coord> {
+        self.heights
+            .enumerate()
+            .filter_map(|(coord, &height)| {
+                if height == Some(0) {
+                    Some(coord)
+                } else {
+                    None
                 }
-            }
-        }
-        trailheads
+            })
+            .collect()
     }
 
     /// Get valid neighbors (4-directional, height increases by exactly 1).
-    fn valid_neighbors(&self, pos: Position) -> Vec<Position> {
-        let current_height = match self.height_at(pos) {
+    /// Uses Mission 6's Coord::neighbors_4() for direction handling.
+    fn valid_neighbors(&self, coord: Coord) -> Vec<Coord> {
+        let current_height = match self.height_at(coord) {
             Some(h) => h,
             None => return Vec::new(), // Impassable position
         };
-        let (row, col) = pos;
-        let mut neighbors = Vec::new();
 
-        // Check all 4 directions
-        let directions = [
-            (row.wrapping_sub(1), col), // Up
-            (row + 1, col),              // Down
-            (row, col.wrapping_sub(1)), // Left
-            (row, col + 1),              // Right
-        ];
-
-        for &next_pos in &directions {
-            if self.is_valid(next_pos) {
-                if let Some(next_height) = self.height_at(next_pos) {
-                    if next_height == current_height + 1 {
-                        neighbors.push(next_pos);
-                    }
+        // Mission 6 provides 4-directional neighbors with automatic bounds handling
+        coord
+            .neighbors_4()
+            .filter(|&next_coord| {
+                // Must be in bounds
+                if !self.heights.in_bounds(next_coord) {
+                    return false;
                 }
-            }
-        }
 
-        neighbors
+                // Must have height = current + 1
+                if let Some(next_height) = self.height_at(next_coord) {
+                    next_height == current_height + 1
+                } else {
+                    false
+                }
+            })
+            .collect()
     }
 
     /// Part 1: Calculate trailhead score (number of reachable 9s).
     /// Uses Mission 8's generic BFS algorithm.
-    fn trailhead_score(&self, start: Position) -> usize {
+    fn trailhead_score(&self, start: Coord) -> usize {
         let visited = bfs(self, start);
 
         // Count how many visited positions have height 9
         visited
             .iter()
-            .filter(|&&pos| self.height_at(pos) == Some(9))
+            .filter(|&&coord| self.height_at(coord) == Some(9))
             .count()
     }
 
     /// Part 2: Calculate trailhead rating (number of distinct paths to 9s).
-    fn trailhead_rating(&self, start: Position) -> usize {
+    fn trailhead_rating(&self, start: Coord) -> usize {
         self.count_paths_dfs(start)
     }
 
     /// DFS to count all distinct paths from current position to height 9.
-    fn count_paths_dfs(&self, pos: Position) -> usize {
+    fn count_paths_dfs(&self, coord: Coord) -> usize {
         // If we reached height 9, we found one complete path
-        if self.height_at(pos) == Some(9) {
+        if self.height_at(coord) == Some(9) {
             return 1;
         }
 
         // Count paths through all valid neighbors
         // valid_neighbors already checks height increases by exactly 1
         let mut total_paths = 0;
-        for neighbor in self.valid_neighbors(pos) {
+        for neighbor in self.valid_neighbors(coord) {
             total_paths += self.count_paths_dfs(neighbor);
         }
 
@@ -144,28 +137,23 @@ impl TopoMap {
 }
 
 /// Implement Mission 8's Graph trait for TopoMap.
-/// This allows using generic graph algorithms like BFS.
+/// This allows using generic graph algorithms like BFS on the topographic map.
 impl Graph for TopoMap {
-    type Node = Position;
+    type Node = Coord;
 
     fn neighbors(&self, node: Self::Node) -> Vec<Self::Node> {
         self.valid_neighbors(node)
     }
 
     fn contains(&self, node: Self::Node) -> bool {
-        self.is_valid(node) && self.height_at(node).is_some()
+        self.heights.in_bounds(node) && self.height_at(node).is_some()
     }
 
     fn nodes(&self) -> Vec<Self::Node> {
-        let mut all_nodes = Vec::new();
-        for row in 0..self.rows {
-            for col in 0..self.cols {
-                if self.heights[row][col].is_some() {
-                    all_nodes.push((row, col));
-                }
-            }
-        }
-        all_nodes
+        self.heights
+            .enumerate()
+            .filter_map(|(coord, &height)| height.map(|_| coord))
+            .collect()
     }
 }
 
@@ -217,10 +205,10 @@ mod tests {
     #[test]
     fn test_parse_map() {
         let map = TopoMap::from_str(SMALL_EXAMPLE).unwrap();
-        assert_eq!(map.rows, 7);
-        assert_eq!(map.cols, 7);
-        assert_eq!(map.height_at((0, 3)), Some(0));
-        assert_eq!(map.height_at((0, 0)), None); // '.' is impassable
+        assert_eq!(map.heights.height(), 7);
+        assert_eq!(map.heights.width(), 7);
+        assert_eq!(map.height_at(Coord::new(3, 0)), Some(0));
+        assert_eq!(map.height_at(Coord::new(0, 0)), None); // '.' is impassable
     }
 
     #[test]
@@ -228,15 +216,15 @@ mod tests {
         let map = TopoMap::from_str(SMALL_EXAMPLE).unwrap();
         let trailheads = map.find_trailheads();
         assert_eq!(trailheads.len(), 1);
-        assert_eq!(trailheads[0], (0, 3));
+        assert_eq!(trailheads[0], Coord::new(3, 0));
     }
 
     #[test]
     fn test_valid_neighbors() {
         let map = TopoMap::from_str(SMALL_EXAMPLE).unwrap();
-        let neighbors = map.valid_neighbors((0, 3)); // height 0
+        let neighbors = map.valid_neighbors(Coord::new(3, 0)); // height 0
         assert_eq!(neighbors.len(), 1); // Only one neighbor with height 1
-        assert_eq!(neighbors[0], (1, 3));
+        assert_eq!(neighbors[0], Coord::new(3, 1));
     }
 
     #[test]
@@ -288,13 +276,13 @@ mod tests {
     #[test]
     fn test_graph_trait() {
         let map = TopoMap::from_str(SMALL_EXAMPLE).unwrap();
-        assert!(map.contains((0, 3))); // height 0
-        assert!(!map.contains((0, 0))); // '.' is impassable
-        assert!(!map.contains((100, 100))); // out of bounds
+        assert!(map.contains(Coord::new(3, 0))); // height 0
+        assert!(!map.contains(Coord::new(0, 0))); // '.' is impassable
+        assert!(!map.contains(Coord::new(100, 100))); // out of bounds
 
         let all_nodes = map.nodes();
-        assert!(all_nodes.contains(&(0, 3)));
-        assert!(!all_nodes.contains(&(0, 0))); // '.' excluded
+        assert!(all_nodes.contains(&Coord::new(3, 0)));
+        assert!(!all_nodes.contains(&Coord::new(0, 0))); // '.' excluded
     }
 
     #[test]
