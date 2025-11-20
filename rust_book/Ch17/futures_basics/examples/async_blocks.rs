@@ -23,7 +23,7 @@ async fn main() {
     // Example 2: Async block with move
     println!("Example 2: Async block with move");
     
-    let data = vec![1, 2, 3, 4, 5];
+    let data = [1, 2, 3, 4, 5];
     let future = async move {
         println!("Processing {} items", data.len());
         sleep(Duration::from_millis(100)).await;
@@ -52,9 +52,11 @@ async fn main() {
     let result = process_data.await;
     println!("Processed: {:?}\n", result);
 
-    // Example 4: Async closures (manual implementation)
+    // Example 4: Async functions (compared to manual async blocks)
     println!("Example 4: Function returning async block");
     
+    // This demonstrates the manual approach compared to async fn
+    #[allow(clippy::manual_async_fn)]
     fn make_async_closure(multiplier: i32) -> impl Future<Output = i32> {
         async move {
             sleep(Duration::from_millis(100)).await;
@@ -68,10 +70,11 @@ async fn main() {
     // Example 5: Storing async blocks
     println!("Example 5: Storing futures in variables");
     
-    let futures = vec![
-        async { 1 },
-        async { 2 },
-        async { 3 },
+    // Each async block has a unique type, so we need to Box them to store in a Vec
+    let futures: Vec<std::pin::Pin<Box<dyn Future<Output = i32>>>> = vec![
+        Box::pin(async { 1 }),
+        Box::pin(async { 2 }),
+        Box::pin(async { 3 }),
     ];
     
     for (i, future) in futures.into_iter().enumerate() {

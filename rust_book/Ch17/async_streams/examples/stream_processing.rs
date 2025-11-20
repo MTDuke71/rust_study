@@ -25,7 +25,7 @@ async fn main() {
         .then(|page| async move {
             fetch_page(page).await
         })
-        .flat_map(|items| stream::iter(items));
+        .flat_map(stream::iter);
     
     let all_items: Vec<_> = pages.collect().await;
     println!("All items: {:?}\n", all_items);

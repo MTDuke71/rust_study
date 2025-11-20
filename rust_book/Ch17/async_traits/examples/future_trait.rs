@@ -70,10 +70,13 @@ where
 {
     type Output = F::Output;
 
-    fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-        match self.inner.as_mut().poll(cx) {
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+        // SAFETY: We're not moving out of any pinned fields.
+        // We only access `inner` which is already a Pin<Box<F>>, and `condition` which is Unpin.
+        let this = unsafe { self.get_unchecked_mut() };
+        match this.inner.as_mut().poll(cx) {
             Poll::Ready(value) => {
-                if (self.condition)(&value) {
+                if (this.condition)(&value) {
                     Poll::Ready(value)
                 } else {
                     cx.waker().wake_by_ref();

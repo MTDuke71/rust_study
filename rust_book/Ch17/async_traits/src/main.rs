@@ -57,6 +57,7 @@ async fn main() {
     }
     
     // Is approximately equivalent to:
+    #[allow(clippy::manual_async_fn)]
     fn example_desugared() -> impl Future<Output = String> {
         async {
             sleep(Duration::from_millis(100)).await;
