@@ -356,9 +356,89 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - Sample checksum: Part 1 = 1928, Part 2 = 2858; puzzle input answers match official AoC totals (6519155389266, 6547228115826).
 - Demonstrates how mission libraries make even 1D simulations safer, and how adding an `examples/` visualizer can convert puzzle mechanics into reusable teaching material.
 
+### Day 10: Hoof It
+
+**Title**: Hoof It  
+**Part 1 Type**: Graph Algorithms + Search/Traversal  
+**Part 1 Description**: Find hiking trail trailheads (height 0), use BFS to count reachable summits (height 9) where each step increases height by exactly 1 in 4 cardinal directions  
+**Part 2 Type**: Graph Algorithms + Search/Traversal  
+**Part 2 Description**: Count all distinct hiking trails (paths) from each trailhead to any summit, where trails can share positions but form unique routes  
+**Key Concepts**: Topographic map parsing, breadth-first search for reachability, depth-first search for path counting, Mission 6 Grid/Coord abstraction, Mission 8 Graph trait integration, height-based traversal constraints
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Graph traversal escalation (reachable nodes → distinct path counting)
+- **Data Structure**: Mission 6 `Grid<Option<u32>>` for topographic heights, Mission 6 `Coord` for positions, Mission 8 `Graph` trait with `bfs()`, custom DFS for path enumeration
+- **Complexity**: Part 1: O(V+E) BFS per trailhead, Part 2: O(V+E) DFS with exponential branching for path counting (bounded by small grid sizes)
+- **AoC Theme**: "Hiking trail analysis" with classic Part 2 escalation (unique destinations → all distinct paths)
+
+**🦀 Rust Conversion Highlights**:
+
+- **From manual grid management** → **Mission 6 `Grid<Option<u32>>`** with automatic bounds checking and safe access
+- **From tuple positions `(usize, usize)`** → **Mission 6 `Coord` type** with x/y semantics preventing coordinate confusion
+- **From manual direction arrays** → **Mission 6 `coord.neighbors_4()` iterator** encapsulating 4-directional movement
+- **From manual bounds checking** → **`grid.in_bounds(coord)` and `grid.get(coord)`** providing safety guarantees
+- **From nested loops** → **`grid.enumerate()` functional iteration** over (Coord, &T) pairs
+- **From custom BFS implementation** → **Mission 8 generic `bfs()` algorithm** working via Graph trait
+- **From Python's `list.pop(0)` O(n)** → **Mission 8's `VecDeque` O(1)** queue operations in BFS
+
+**🏗️ Mission 6 + Mission 8 Composition Benefits**:
+
+- **[[../examples/aoc_day10_hiking.rs]]** - Mission 8 example demonstrating Graph trait with AoC problem (303 lines, manual grid)
+- **[[../src/solver/day10.rs]]** - Production solver refactored to use Mission 6 Grid + Coord infrastructure (~160 lines)
+- **Code Quality**: Type safety eliminates coordinate bugs (tuple x/y swapping impossible with Coord)
+- **Code Reduction**: ~10 lines shorter through Mission 6 integration, eliminated manual bounds checking and direction handling
+- **Safety Improvement**: All grid access bounds-checked automatically, `Option<Coord>` returns prevent overflow/underflow
+- **Architectural Benefits**: Demonstrates mission composition—Grid (Mission 6) + Graph/BFS (Mission 8) = complete topographic solution
+- **Clippy Clean**: Zero warnings after removing redundant `.into_iter()` (neighbors_4() already returns iterator, not Vec)
+- **Test Coverage**: 12 comprehensive tests covering parsing, graph operations, edge cases, and both parts
+- **Results**: Sample (36, 81), Puzzle (512, 1045) with comprehensive validation
+
+**Real-World Complexity Handling**:
+
+- **Type Safety**: `Option<u32>` for heights (Some(0..=9) passable, None impassable '.') prevents treating impassable as valid
+- **Graph Abstraction**: TopoMap implements Graph trait making Mission 8's generic algorithms available
+- **Algorithm Selection**: BFS for Part 1 (unique destinations), custom DFS for Part 2 (all paths)—demonstrates when to use vs extend mission libraries
+- **Iterator Efficiency**: Mission 6's `neighbors_4()` returns iterator (not Vec), more memory efficient than collecting
+
+**Python vs Rust Comparison**:
+
+- **Algorithm Philosophy**:
+  - **Python**: Pragmatic BFS using `list.pop(0)` (O(n) but acceptable for small inputs), single `get_score()` function reused for both parts with set deduplication
+  - **Rust**: Structured approach with Mission 8 BFS (O(1) VecDeque), separate algorithms for Part 1 (BFS reachability) vs Part 2 (DFS path counting)
+- **Implementation Style**:
+  - **Python**: ~50 lines, manual bounds checking every neighbor, tuple positions `(y, x)`, direction array `[(0,1), (1,0), (0,-1), (-1,0)]`
+  - **Rust**: ~160 lines with 12 tests, Mission 6 Grid/Coord abstractions, Mission 8 Graph trait, type-safe height validation
+- **Performance**:
+  - **Python**: O(n) queue operations acceptable for racing at midnight, no visited set in BFS (revisits nodes)
+  - **Rust**: O(1) queue operations via VecDeque, HashSet visited tracking in Mission 8 BFS prevents redundant work
+- **Error Handling**:
+  - **Python**: Assumes all inputs are digits, IndexError possible on malformed input
+  - **Rust**: Validates characters, handles '.' explicitly, comprehensive error context with `anyhow::Result`
+- **Code Philosophy**:
+  - **Python**: Optimize for midnight leaderboard speed (~10-15 minutes to implement)
+  - **Rust**: Invest in learning, architecture, and production quality (demonstrates mission composition benefits)
+
+**Educational Insights**:
+
+- **Mission Composition**: Day 10 demonstrates practical benefits of foundational libraries—Grid handles 2D storage, Coord prevents coordinate errors, Graph enables generic BFS
+- **Type-Driven Design**: `Coord` type is self-documenting vs ambiguous tuples, compiler enforces correct usage
+- **Iterator Design**: Mission 6's `neighbors_4()` returning iterator (not Vec) teaches efficient API design
+- **Graph Trait Power**: Generic `bfs<G: Graph>(graph, start)` works on any Graph implementation—topographic maps, abstract graphs, trees
+- **Algorithm Selection**: Shows when to use mission libraries (BFS for Part 1) vs custom code (DFS for Part 2 path counting)
+- **V-Cycle Validation**: Initial manual implementation (commit d082003) proves algorithm correctness, refactoring (commit c6b2283) proves missions compose properly, tests validate functional equivalence
+
+**Mission Integration Benefit**:
+
+- Grid & Coord reduce manual bounds checking and coordinate arithmetic
+- Graph trait enables battle-tested algorithms from Mission 8
+- Composition pattern: build generic components, compose for domain problems
+- Less code, better type safety, clearer intent—exactly what mission system designed for
+
 ---
 
 ## Problem Type Distribution (Available Days)
+
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
@@ -370,7 +450,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 | Cryptographic | 0 | 0 |
 | Data Structures | 2 | 2 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 1 | 1 |
+| Graph Algorithms | 2 | 2 |
 | Greedy Algorithms | 0 | 0 |
 | Mathematical | 4 | 2 |
 | Number Theory | 0 | 0 |
@@ -379,13 +459,14 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 | Pattern Matching | 2 | 2 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
-| Search/Traversal | 2 | 2 |
+| Search/Traversal | 3 | 3 |
 | Simulation | 2 | 2 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
 
-### Common Patterns Observed:
+### Common Patterns Observed
+
 1. **Input Parsing**: Structured text parsing with error handling (Day 1: whitespace-separated integers, Day 2: space-separated levels per line, Day 3: regex pattern extraction from corrupted memory)
 2. **Two-Part Escalation**: Part 2 transforms Part 1's approach (Day 1: distance → similarity, Day 2: strict safety → tolerance mechanism, Day 3: stateless parsing → stateful conditional processing)
 3. **List Processing**: Sort and pair operations (Day 1: smallest-to-smallest pairing), sequence validation (Day 2: monotonicity checking)
@@ -412,20 +493,26 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 24. **Primitive Ray Casting**: Bidirectional traversal using minimal step vectors for geometric saturation (Day 8: harmonic resonance lines)
 25. **Geometric Resonance Saturation**: Transition from discrete extrapolation to full line filling via normalized direction (Day 8: resonance propagation)
 26. **Disk Compaction & Gap Management**: Dense disk decoding, dual-pointer compaction, and mission-backed metadata tracking for relocations (Day 9)
+27. **Height-Constrained Graph Traversal**: Graph navigation with edge constraints based on vertex properties (Day 10: topographic hiking trails with +1 height increment requirement)
+28. **Reachability vs Path Enumeration**: Contrasting BFS for unique destination counting with DFS for complete path enumeration (Day 10: Part 1 counts reachable summits, Part 2 counts all distinct routes)
 
-### Rust-Specific Considerations:
+### Rust-Specific Considerations
+
 - **Day 1**: Excellent introduction to functional error handling with `Result<T, E>`, iterator combinators (`zip`, `fold`, `sum`), and pattern matching for safe parsing. Demonstrates HashMap construction with functional approach vs Python's Counter.
 - **Day 2**: Showcases iterator windows for sliding comparisons, early-return imperative validation (vs Python's `all()`/`any()` functional style), and `to_vec()` + `remove()` for element removal simulation. Demonstrates performance-focused approach with manual state tracking vs functional boolean aggregation.
 - **Day 3**: Highlights regex integration with `regex` crate, type-safe instruction parsing using `enum` with pattern matching, comprehensive error context with `anyhow::Context`, and efficient single-pass state machine implementation. Shows Rust's strength in pattern validation and stateful processing with zero-cost abstractions.
 - **Day 4**: Demonstrates 2D grid processing with comprehensive bounds checking, mathematical approach to directional search using coordinate vectors, and zero-allocation character matching vs Python's string concatenation approach. Showcases Rust's compile-time safety for array indexing and elegant pattern decomposition for geometric shapes. **Mission 6 Alternative**: Illustrates how foundational libraries can dramatically simplify competitive programming solutions—280-line manual implementation reduced to 160 lines with automatic safety guarantees, proving that good architecture improves both productivity and correctness.
 - **Day 5**: Exemplifies sophisticated graph algorithm integration using **actual Mission 7 + Mission 8 APIs** (not mocks). Demonstrates bidirectional HashMap mapping for type-safe node management, adaptive algorithm selection based on Mission 8 cycle detection, and production-quality error handling with graceful degradation. Shows how foundational libraries enable focus on problem logic rather than low-level graph implementation. **Mission Integration**: Proves concrete benefits—40% code reduction, automatic cycle detection, proven algorithms, and real-world complexity handling for graphs with cycles (49 nodes, 1,176 edges).
-- **Day 6**: Demonstrates comprehensive Mission 6 + Mission 5 integration for simulation-based problems. Showcases type-safe coordinate operations with automatic bounds checking, enum-based direction management with rotation methods, and efficient state-based loop detection using HashSet collections. **Mission Integration**: Eliminates entire bug classes through type safety—coordinate arithmetic errors, direction confusion, bounds violations—while maintaining optimal algorithmic complexity. Shows how foundational libraries make complex simulations both safer and more maintainable (8 comprehensive unit tests, zero clippy warnings). 
+- **Day 6**: Demonstrates comprehensive Mission 6 + Mission 5 integration for simulation-based problems. Showcases type-safe coordinate operations with automatic bounds checking, enum-based direction management with rotation methods, and efficient state-based loop detection using HashSet collections. **Mission Integration**: Eliminates entire bug classes through type safety—coordinate arithmetic errors, direction confusion, bounds violations—while maintaining optimal algorithmic complexity. Shows how foundational libraries make complex simulations both safer and more maintainable (8 comprehensive unit tests, zero clippy warnings).
 - **Day 7**: Exemplifies professional TDD methodology applied to competitive programming with comprehensive test-driven development (32 tests). Demonstrates type-safe `Operator` enum with pattern matching for mathematical operations, explicit left-to-right evaluation engine vs standard precedence, and systematic combination generation using base conversion mathematics. **TDD Excellence**: 5-phase implementation approach (data structures → evaluation → combinations → validation → integration) with complete edge case coverage. Shows `anyhow::Result` throughout for production-quality error handling, zero-allocation evaluation for performance, and structured approach to brute force algorithms. **Architecture Investment**: 530+ lines with comprehensive test suite vs Python's 40-line pragmatic solution—demonstrates Rust's strength in creating maintainable, verifiable, and educationally valuable competitive programming solutions.
 - **Day 8**: Demonstrates geometric correctness via primitive vector normalization (`gcd`) ensuring complete harmonic line saturation. Highlights mission abstraction benefits (safe `Grid` operations, hashed `Coord`) and contrasts completeness-oriented Rust approach with Python's brevity that risks skipped intermediate points. Establishes reusable pattern for line-of-sight / visibility algorithms with mathematical rigor applied to competitive programming.
 - **Day 9**: Highlights dense-disk simulations built atop Mission 5 collections—`Dictionary` keeps file metadata synchronized during block and whole-file moves while gap segments stay sorted for O(1) lookup. Dedicated checksum helper doubles as regression oracle, and `examples/day09_visualization.rs` streams every intermediate compaction state so the algorithm can be inspected visually. Emphasizes how mission libraries plus instrumentation (examples/ tooling) turn a puzzle solver into a teaching asset.
+- **Day 10**: Exemplifies mission composition at its finest—Mission 6 `Grid<Option<u32>>` + `Coord` type + `neighbors_4()` iterator combined with Mission 8 `Graph` trait + generic `bfs()` algorithm. Demonstrates complete refactoring journey: initial manual implementation (d082003) proves algorithm correctness, Mission 6 refactoring (c6b2283) reduces code by ~10 lines while eliminating entire bug classes (coordinate confusion, bounds errors). **Key Learning**: `Coord` type prevents tuple x/y swapping, `grid.in_bounds()` eliminates manual checks, `neighbors_4()` returns iterator (not Vec) for efficiency, Graph trait enables generic algorithms. Shows BFS for Part 1 reachability vs custom DFS for Part 2 path counting—demonstrates when to use vs extend mission libraries. **Python Comparison**: Python's 50-line pragmatic solution uses O(n) `list.pop(0)` and tuple positions; Rust's 160-line structured solution uses O(1) VecDeque, type-safe Coord, and comprehensive validation. Both correct, different optimization goals (midnight racing vs production learning). **V-Cycle Validation**: Tests prove functional equivalence (12/12 pass), answers match (512/1045), zero clippy warnings after iterator refinement.
+
 ---
 
 ## Adding New Days
+
 
 To add a new day to this summary:
 
@@ -436,16 +523,19 @@ To add a new day to this summary:
 5. **Note any new patterns or Rust learning opportunities**
 6. **⚠️ CRITICAL: Verify Rust-specific claims against actual implementation code**
 
-### Documentation Quality Lesson Learned:
+### Documentation Quality Lesson Learned
+
 **Always inspect actual code before documenting patterns.** During Day 2 documentation, incorrect claims were made about using `all()`/`any()` functions when the implementation actually used imperative loops with early returns. This highlights the importance of **evidence-based documentation** over **assumption-based documentation**.
 
 **Verification Checklist**:
+
 - [ ] Read the actual Rust implementation file
 - [ ] Document patterns that are **actually present** in the code
 - [ ] Note deliberate trade-offs (e.g., performance vs functional style)
 - [ ] Compare claimed patterns against `grep`/search results in codebase
 
-### Template for New Days:
+### Template for New Days
+
 ```markdown
 ### Day X: [Problem Title]
 **Title**: [Problem Title]  
@@ -458,10 +548,10 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 18, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9*
+*Last Updated: November 19, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #foundational-libraries*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]]*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]]*
