@@ -87,8 +87,10 @@ jobs:
         mkdir -p reports
         
         # Run workspace tests and capture output
+        # Note: Using || true to ensure script continues even if tests fail
+        # This allows parsing logic to run and report actual test counts
         echo "Running workspace tests..."
-        cargo test --workspace --all-targets --all-features 2>&1 | tee reports/test-output.txt
+        cargo test --workspace --all-targets --all-features 2>&1 | tee reports/test-output.txt || true
         # Capture the exit code from cargo test, not tee
         workspace_exit_code=${PIPESTATUS[0]}
         

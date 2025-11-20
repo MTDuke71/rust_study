@@ -379,11 +379,12 @@ mod tests {
 
     #[test]
     fn test_edge_ordering() {
-        let mut e1 = Edge::new(0, 1, 5);
-        let mut e2 = Edge::new(2, 3, 3);
-        let mut e3 = Edge::new(4, 5, 5);
+        let e1 = Edge::new(0, 1, 5);
+        let e2 = Edge::new(2, 3, 3);
+        let e3 = Edge::new(4, 5, 5);
 
         assert!(e2 < e1); // Lower weight comes first
-        assert!(e1 == e3); // Same weight are equal
+        assert!(e1.cmp(&e3) == std::cmp::Ordering::Equal); // Same weight compare as equal
+        assert_ne!(e1, e3); // But they are structurally different edges
     }
 }
