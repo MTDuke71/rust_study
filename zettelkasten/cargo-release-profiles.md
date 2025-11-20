@@ -143,7 +143,7 @@ codegen-units = 1
 ### Rust Book Chapter 14.1 Connection
 See [[rust-book-ch14]] for detailed examples and demonstrations.
 - Example location: `rust_book/Ch14/release_profiles/`
-- Comprehensive guide: `PROFILES.md` in package directory
+- **Comprehensive technical reference**: [[../rust_book/Ch14/release_profiles/PROFILES|PROFILES.md]] - 200+ line guide with detailed tables, commands, and best practices
 - Shows impact of optimization levels on performance
 
 ### Performance Patterns

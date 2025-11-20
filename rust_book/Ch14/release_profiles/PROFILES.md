@@ -2,6 +2,8 @@
 
 This guide covers Cargo's build profiles and how to customize them for different scenarios.
 
+> 💡 **Knowledge Graph**: See [[../../zettelkasten/cargo-release-profiles|cargo-release-profiles]] for conceptual connections and integration with other Rust topics.
+
 ## Overview
 
 Cargo has different build profiles that control compilation settings. The main profiles are:
@@ -199,6 +201,7 @@ cargo run --release
 - [Cargo Book: Profiles](https://doc.rust-lang.org/cargo/reference/profiles.html)
 - [The Rust Performance Book](https://nnethercote.github.io/perf-book/)
 - [Cargo Reference: Profile Settings](https://doc.rust-lang.org/cargo/reference/profiles.html#profile-settings)
+- [[../../zettelkasten/cargo-release-profiles|cargo-release-profiles]] - Zettelkasten knowledge page with cross-references
 
 ---
 
