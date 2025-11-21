@@ -115,7 +115,7 @@ async fn main() {
     });
     
     // Let it run for a bit
-    sleep(Duration::from_secs(1)).await;
+    sleep(Duration::from_secs(2)).await;
     
     // Send cancellation signal
     cancel_tx.send(()).await.unwrap();

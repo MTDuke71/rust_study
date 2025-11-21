@@ -9,7 +9,8 @@
 This directory contains hands-on implementations of concepts from the official Rust Book, organized by chapter for systematic learning progression.
 
 ### **Chapter Organization**
-```
+
+```text
 rust_book/
 ├── Ch1/          # Getting Started
 │   ├── hello_world/     # Basic hello world

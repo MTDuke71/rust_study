@@ -131,4 +131,24 @@ If you still want to see it, you can get your puzzle input.
 You can also [Share] this puzzle.
 
 ---
+
+## 🚀 Parallelization Opportunity
+
+**Excellent candidate for parallel processing (⭐⭐⭐):**
+- Simulate 100+ robots with independent position calculations
+- Part 2: Test many timesteps in parallel to find Christmas tree pattern
+- Perfect beginner problem for learning `rayon`
+
+```rust
+// Example parallel approach
+let final_positions: Vec<_> = robots.par_iter()
+    .map(|robot| simulate_robot(robot, 100))
+    .collect();
+
+// Part 2: Parallel timestep search
+(0..10000).into_par_iter()
+    .find_first(|&t| forms_christmas_tree(robots, t))
+```
+
+---
 *Links: [[day13]] [[day15]] [[AoC 2024 Overview]]*

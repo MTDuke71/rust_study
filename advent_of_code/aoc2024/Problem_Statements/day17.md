@@ -83,4 +83,19 @@ If you still want to see it, you can get your puzzle input.
 You can also [Share] this puzzle.
 
 ---
+
+## 🚀 Parallelization Opportunity
+
+**Moderate candidate for parallel processing (⭐):**
+- Part 2 requires searching for initial register value producing quine
+- Can parallelize search space testing
+- Each VM execution is sequential but tests are independent
+
+```rust
+// Example parallel approach for Part 2
+(0..u64::MAX).into_par_iter()
+    .find_first(|&a| produces_quine(a, program))
+```
+
+---
 *Links: [[day16]] [[day18]] [[AoC 2024 Overview]]*

@@ -85,4 +85,26 @@ If you still want to see it, you can get your puzzle input.
 You can also [Share] this puzzle.
 
 ---
+
+## 🚀 Parallelization Opportunity
+
+**Great candidate for parallel processing (⭐⭐):**
+- Check each towel design independently
+- Part 2: Count all possible arrangements per design in parallel
+- Each design's dynamic programming solution is independent
+
+```rust
+// Example parallel approach
+// Part 1: Check which designs are possible
+let possible_count = designs.par_iter()
+    .filter(|design| can_make_design(towels, design))
+    .count();
+
+// Part 2: Count all arrangements
+let total_ways: u64 = designs.par_iter()
+    .map(|design| count_arrangements(towels, design))
+    .sum();
+```
+
+---
 *Links: [[day18]] [[day20]] [[AoC 2024 Overview]]*

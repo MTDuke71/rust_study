@@ -69,4 +69,23 @@ If you still want to see it, you can get your puzzle input.
 You can also [Share] this puzzle.
 
 ---
+
+## 🚀 Parallelization Opportunity
+
+**Good candidate for parallel processing (⭐⭐):**
+- Each stone transformation is independent during blink operations
+- Can use `rayon`'s `.par_iter()` to process stones in parallel
+- **Challenge:** Needs memoization/caching for Part 2 efficiency (75 blinks)
+- Consider using `DashMap` for thread-safe shared cache
+
+```rust
+// Example parallel approach
+fn blink_parallel(stones: Vec<u64>) -> Vec<u64> {
+    stones.par_iter()
+        .flat_map(|&stone| transform_stone(stone))
+        .collect()
+}
+```
+
+---
 *Links: [[day10]] [[day12]] [[AoC 2024 Overview]]*

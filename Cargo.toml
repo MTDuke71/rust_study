@@ -84,7 +84,7 @@ members = [
     "rust_book/Ch17/futures_basics",
     "rust_book/Ch17/async_concurrency",
     "rust_book/Ch17/async_streams",
-    "rust_book/Ch17/async_traits"
-]
+    "rust_book/Ch17/async_traits",
+    "rust_book/Ch17/hello-async"]
 
 resolver = "3"

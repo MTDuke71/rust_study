@@ -50,6 +50,55 @@ This is a **LEARNING WORKSPACE**, not a production application. It contains:
 - Formal V-Cycle engineering methodology for missions
 - Zettelkasten knowledge management system
 
+### Learner Background - The Integrator Perspective
+
+**Professional Context**: The primary user is an **integrator rather than a developer** at work. They take checkpoints and components from domain experts and integrate them into final products. This professional background shapes their learning approach and provides unique advantages.
+
+**Key Integrator Strengths Applied to Rust Learning**:
+- **Component Composition**: Natural understanding of building systems from proven parts (missions as validated libraries)
+- **Interface Contracts**: Experience with how components connect and communicate (traits, function signatures)
+- **Orchestration**: Coordinating multiple components to work together (async/await, composition patterns)
+- **Trust in Validated Components**: Comfortable using expert-built pieces without reinventing (mission libraries, standard crates)
+- **System Integration**: Understanding how pieces fit together rather than implementing from scratch
+
+**Teaching Approach - Use Integration Analogies**:
+
+When explaining Rust concepts, relate them to integration and component composition patterns:
+
+| **Rust Concept** | **Integration Analogy** |
+|------------------|-------------------------|
+| **Missions** | Validated component libraries built by experts, ready to integrate |
+| **Traits** | Interface contracts defining how components connect |
+| **async/await** | Orchestrating concurrent I/O components (like AUTOSAR RTE scheduling runnables) |
+| **Ownership** | Component resource lifecycle management |
+| **Error handling** | Component failure handling and propagation |
+| **Composition (Mission 6 + Mission 8)** | Integrating Grid infrastructure with Graph algorithms |
+| **Futures** | Work tickets/promises from components (like AUTOSAR events) |
+| **Runtime (tokio/trpl)** | Execution environment coordinating components (like AUTOSAR RTE) |
+
+**AUTOSAR Background**: The user has experience with AUTOSAR (automotive), which provides excellent parallels:
+- AUTOSAR runnables (callbacks) ↔ Rust async tasks
+- AUTOSAR RTE (runtime environment) ↔ Tokio runtime
+- AUTOSAR software components ↔ Rust crates/modules
+- Port-based communication ↔ Rust traits and function interfaces
+
+**Learning Philosophy**: 
+- Focus on **composition over implementation** - how to connect validated components
+- Emphasize **interface understanding** - what the API contracts mean
+- Show **integration patterns** - how missions compose (e.g., Day 10 using Mission 6 + Mission 8)
+- Value **proven correctness** - trust mission tests, focus on proper usage
+- Think **architecturally** - system design rather than low-level details first
+
+**Example Explanations**:
+
+✅ **Good** (Integration-focused):
+"Mission 6's `Grid<T>` is a validated 2D storage component. Mission 8's `Graph` trait is an interface contract. In Day 10, you integrated them by implementing the `Graph` trait for your `TopoMap` struct, connecting the Grid storage to BFS algorithms. You're the integrator - not building Grid from scratch, but connecting proven components."
+
+❌ **Avoid** (Implementation-focused without context):
+"Here's how to implement a 2D grid with nested vectors and manual bounds checking..."
+
+**Daily Progress Recognition**: The user has completed Day 10 refactoring demonstrating successful mission composition (Grid + Graph + BFS). They understand the philosophy of "not reinventing the wheel" and appreciate code clarity through component reuse.
+
 ### Before Making Changes
 1. **Check workspace builds**: `cargo build --workspace`
 2. **Run existing tests**: `cargo test --workspace`
@@ -410,6 +459,63 @@ cargo bench -p mission5
 ```
 
 ## 🎯 Agent-Specific Guidance
+
+### When Solving Advent of Code Problems
+**CRITICAL - Mission Reuse Philosophy**: Before implementing any AoC solution, **ALWAYS scan existing missions first** for reusable components. This embodies the integrator approach: compose from validated libraries rather than reimplementing.
+
+**CRITICAL - Incremental Development**: User prefers **step-by-step implementation** rather than complete solutions at once. Break work into logical stages:
+1. **Parse input** → Test with sample data → Verify
+2. **Implement core logic** → Test with examples → Verify
+3. **Solve Part 1** → Run against puzzle input → Confirm
+4. **Optimize if needed** → Benchmark → Document
+5. **Extend to Part 2** → Identify changes → Implement incrementally
+
+**User wants to be part of the process** - even when AI does the coding, explain each step, wait for confirmation, and allow the user to understand the progression. Think "pair programming" not "here's the complete solution."
+
+**Pre-Implementation Mission Scan Checklist**:
+1. **Read the missions/** directory for applicable data structures and algorithms
+2. **Check Mission READMEs** for feature compatibility with AoC problem requirements
+3. **Review mission tests** to understand performance characteristics and edge cases
+4. **Prefer mission composition** over custom implementation when possible
+
+**Mission-to-AoC Mapping Examples**:
+- **Grid problems (pathfinding, regions, areas)** → Use Mission 6 `Grid<T>` component
+- **Graph traversal (BFS/DFS, shortest paths)** → Use Mission 8 `Graph` trait and algorithms
+- **Union-Find (connected components, grouping)** → Use Mission 10 `UnionFind` structure
+- **HashMap/HashSet needs** → Use Mission 5 optimized implementations
+- **Stack/Queue operations** → Use Mission 1/Mission 2 validated structures
+- **Linked list patterns** → Use Mission 4 implementations
+- **Search algorithms** → Use Mission 3 binary search variants
+
+**AoC Solution Pattern**:
+```rust
+// ✅ GOOD - Integrator approach using Mission components
+use mission6::Grid;
+use mission8::{Graph, bfs};
+
+fn solve_aoc(input: &str) -> usize {
+    let grid = Grid::from_input(input);
+    bfs(&grid, start, end).expect("path exists")
+}
+
+// ❌ AVOID - Reimplementing grid/BFS from scratch
+fn solve_aoc_wrong(input: &str) -> usize {
+    // Don't reimplement Vec<Vec<T>> grid manually...
+    // Don't write custom BFS when Mission 8 provides it...
+}
+```
+
+**Benefits of Mission Reuse**:
+- ✅ **Proven correctness** - Mission implementations are V-Cycle validated with comprehensive tests
+- ✅ **Performance optimized** - Missions meet Big-O requirements and are benchmarked
+- ✅ **Time efficiency** - Focus on problem-solving logic, not infrastructure
+- ✅ **Learning reinforcement** - Practical application of mission concepts
+- ✅ **Knowledge integration** - Connects AoC practice to mission learning in zettelkasten
+
+**When to Implement Custom vs. Use Mission**:
+- **Use Mission** if: Problem maps to existing mission functionality (grid, graph, union-find, collections)
+- **Extend Mission** if: Need slight variation (implement trait for custom type, add helper methods)
+- **Custom Implementation** if: Problem requires truly novel data structure not covered by missions
 
 ### When Creating New Missions
 1. Start with `missions/MissionX/README.md` defining REQ-1 through REQ-N

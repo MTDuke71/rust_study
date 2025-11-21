@@ -82,4 +82,20 @@ If you still want to see it, you can get your puzzle input.
 You can also [Share] this puzzle.
 
 ---
+
+## 🚀 Parallelization Opportunity
+
+**Great candidate for parallel processing (⭐⭐):**
+- Each claw machine can be solved independently (linear algebra)
+- No dependencies between machines
+- Perfect use case for `rayon`'s `.par_iter()`
+
+```rust
+// Example parallel approach
+let total_tokens: i64 = machines.par_iter()
+    .filter_map(|machine| solve_machine(machine))
+    .sum();
+```
+
+---
 *Links: [[day12]] [[day14]] [[AoC 2024 Overview]]*

@@ -122,4 +122,27 @@ If you still want to see it, you can get your puzzle input.
 You can also [Share] this puzzle.
 
 ---
+
+## 🚀 Parallelization Opportunity
+
+**Excellent candidate for parallel processing (⭐⭐⭐):**
+- Generate 2000 secret numbers for each buyer independently
+- Part 2: Test many different 4-change sequences across all buyers in parallel
+- Pure CPU-bound computation (XOR, modulo, multiply)
+- Perfect demonstration of parallel reduction with `.sum()` and `.max()`
+
+```rust
+// Example parallel approach
+// Part 1: Process all buyers in parallel
+let sum: i64 = initial_secrets.par_iter()
+    .map(|&secret| generate_nth_secret(secret, 2000))
+    .sum();
+
+// Part 2: Test all possible sequences in parallel
+all_sequences.par_iter()
+    .map(|seq| total_bananas_for_sequence(buyers, seq))
+    .max()
+```
+
+---
 *Links: [[day21]] [[day23]] [[AoC 2024 Overview]]*
