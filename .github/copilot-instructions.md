@@ -45,10 +45,18 @@ cd tutorials/Mission5_tut && cargo run --example step1_basic_hashmap
 
 ### Repository Type
 This is a **LEARNING WORKSPACE**, not a production application. It contains:
-- 60+ independent crate members in `Cargo.toml`
+- 80+ independent crate members in `Cargo.toml` (expanded with Ch16/Ch17 async work)
 - Multiple learning tracks (missions, tutorials, daily study, Rust book exercises)
 - Formal V-Cycle engineering methodology for missions
-- Zettelkasten knowledge management system
+- Zettelkasten knowledge management system with 488+ interconnected notes
+
+### Current Learning Phase
+- **Primary Focus**: Rust Book deep dive (Ch17 async/await completed) + AoC problem solving + Zettelkasten knowledge consolidation
+- **Daily Study**: On hold after Week 6 completion (proved disjointed from core learning)
+  - Advanced curriculum topics in archive still valuable - will integrate into Book chapters and AoC problems as relevant
+- **Mission Status**: 10 missions completed, deferred until Rust Book mastery achieved
+- **AoC Integration**: Active problem solving with pattern recognition framework + complete 2015 solutions
+- **Learning Strategy**: Focused on Book → AoC application → Zettelkasten integration cycle
 
 ### Learner Background - The Integrator Perspective
 
@@ -116,19 +124,23 @@ When explaining Rust concepts, relate them to integration and component composit
 This is NOT a typical Rust project - it's a **comprehensive learning system** with three integrated tracks:
 
 ### Core Components
-- **`missions/MissionX/`** - V-Cycle data structure implementations (Stack, Queue, HashMap, Graph, etc.)
-- **`tutorials/MissionX_tut/`** - Step-by-step learning progressions that build toward missions
+- **`rust_book/ChX/`** - **PRIMARY FOCUS**: Rust Book chapter exercises (Ch1-17 completed, 80+ workspace members)
+  - **`Ch16/`** - Threading and concurrency (threads, message passing, shared state, Sync/Send)
+  - **`Ch17/`** - Async programming (futures, async/await, tokio, streams, select/join patterns)
+- **`advent_of_code/`** - **ACTIVE**: AoC problem solving with pattern recognition framework + complete 2015 solutions
+- **`zettelkasten/`** - **ACTIVE**: Bidirectional knowledge graph with 488+ interconnected notes
+- **`missions/MissionX/`** - **DEFERRED**: V-Cycle data structure implementations (10 completed, paused for Book focus)
+- **`tutorials/MissionX_tut/`** - Step-by-step learning progressions (aligned with missions)
 - **`advanced_examples/`** - Real-world applications demonstrating mission concepts
-- **`daily_study/rust_learning_weekX_notes/`** - Systematic concept progression (5 weeks completed)
-- **`rust_book/ChX/`** - Rust Book chapter exercises (50+ workspace members)
-- **`zettelkasten/`** - Bidirectional knowledge graph with 488+ interconnected markdown files
-- **`advent_of_code/`** - AoC preparation with pattern recognition and complete 2015 solutions
+- **`daily_study/rust_learning_weekX_notes/`** - **ON HOLD**: Week 6 completed, format paused (proved disjointed)
+  - **`ADVANCED_CURRICULUM_ARCHIVE.md`** - Advanced topics still valuable, will integrate into Book/AoC workflow
 
 ### Key Architectural Decisions
 - **Hybrid structure**: Keeps tutorials separate from missions to avoid root clutter while maintaining clear educational flow
-- **Workspace organization**: 60+ crate members in `Cargo.toml` for independent compilation and testing
+- **Workspace organization**: 80+ crate members in `Cargo.toml` for independent compilation and testing
 - **Knowledge overlay**: Zettelkasten provides navigation without disrupting existing code structure
-- **Cross-track alignment**: Daily study, missions, and tutorials coordinate through `MONTHLY_CALENDAR.md`
+- **Learning flow**: Rust Book → AoC application → Zettelkasten consolidation (daily study/missions deferred)
+- **Async runtime**: Chapter 17 uses `tokio` as primary async runtime with `trpl` crate for book examples
 
 ## 🔄 V-Cycle Development Workflow
 
@@ -196,13 +208,31 @@ cargo bench -p mission5
 cd tutorials/Mission5_tut
 cargo run --example step1_basic_hashmap
 cargo run --example step2_collision_handling
+
+# Rust Book chapters
+cd rust_book/Ch17/async_concurrency
+cargo run --example join_futures
+cargo run --example select_futures
+```
+
+### Running Async Examples (Ch17)
+```bash
+# Chapter 17 async examples use tokio runtime
+cd rust_book/Ch17/async_concurrency
+cargo run                              # Main demo
+cargo run --example join_futures       # Concurrent execution with tokio::join!
+cargo run --example select_futures     # Racing futures with tokio::select!
+cargo run --example timeout_patterns   # Timeouts and cancellation
+
+cd rust_book/Ch17/async_streams
+cargo run --example stream_processing  # Async iteration patterns
 ```
 
 ### Testing Markdown Examples
 ```powershell
 # Scripts extract and run Rust code from markdown "Complete Runnable Example" sections
-.\scripts\run_md.bat daily_study\rust_learning_week5_notes\Day34.md
 .\scripts\run_markdown_code.ps1 missions\Mission5\README.md
+.\scripts\run_md.bat rust_book\Ch17\README.md
 ```
 
 ### Quality Pipeline
@@ -213,13 +243,20 @@ cargo run --example step2_collision_handling
 # Generates reports in reports/ directory with timestamp
 ```
 
-### Daily Study Workflow
+### Current Learning Workflow
 ```bash
-# See MONTHLY_CALENDAR.md for current day's activities
-# Example daily routine:
-cd daily_study/rust_learning_week5_notes
-cargo run --example day34_standalone
+# Primary focus: Rust Book chapters with examples
+cd rust_book/Ch17/async_concurrency
+cargo run --example join_futures
 cargo test
+
+# Apply concepts to AoC problems
+cd advent_of_code/aoc2024
+cargo test day01
+cargo run --bin day01
+
+# Consolidate learning in zettelkasten
+# Create/update concept notes linking Book chapters to AoC patterns
 ```
 
 ## 🎯 Mission-Specific Patterns
@@ -351,27 +388,39 @@ enum DemoError { ... }
 
 ## 🔗 Integration Points
 
-### Cross-Track Coordination
-- `MONTHLY_CALENDAR.md` synchronizes all three tracks
-- Tutorial steps align with mission requirements
-- Daily study examples reference mission implementations
-- AoC problems use mission data structures
+### Active Learning Flow
+- **Rust Book → AoC**: Apply chapter concepts immediately to problem solving
+- **AoC → Zettelkasten**: Document patterns and connections between problems and Book concepts
+- **Zettelkasten → Book**: Cross-reference concepts, build knowledge graph of Rust fundamentals
+- **Future**: Mission data structures will be used in AoC when work resumes
 
 ### External Dependencies
-- **Criterion** - Benchmarking (all missions with performance requirements)
-- **anyhow/thiserror** - Error handling (Week 5 daily study, Mission 5+)
-- **clap** - CLI parsing (Mission 9+, AoC utilities)
+- **tokio** - Async runtime (Ch17, future AoC I/O-bound problems)
+- **Criterion** - Benchmarking (missions with performance requirements)
+- **anyhow/thiserror** - Error handling (Book Ch9, AoC utilities)
+- **clap** - CLI parsing (AoC utilities, Mission 9+)
 
 ## 🎓 Learning Philosophy
 
-This workspace treats Rust learning as **professional software engineering discipline**:
+This workspace uses a **focused, sequential mastery approach**:
+- **Current Phase**: Deep Rust Book study with immediate AoC application
+- **Why**: Daily study proved disjointed from core Book/AoC learning
+- **Strategy**: Master Book chapters → Apply to AoC problems → Consolidate in zettelkasten
+- **Advanced Topics**: Concepts from daily study archive will be integrated as they become relevant to Book chapters or AoC problems
+- **Future**: Return to V-Cycle mission work after solid Book foundation
+
+**For Mission Work** (when resumed):
 - Requirements before implementation (V-Cycle)
 - Test-driven development (TDD)
 - Formal verification and validation
-- Comprehensive documentation standards
-- Evidence-based learning protocols (see `MONTHLY_CALENDAR.md` header)
+- Traceability matrices
 
-When working in this codebase, maintain this professional standard - every change should trace to a requirement, have tests, and integrate with the knowledge system.
+**For Book/AoC Work** (current focus):
+- Work through Book examples hands-on
+- Solve AoC problems using newly learned concepts
+- Document patterns and connections in zettelkasten
+- Build conceptual understanding before implementation rigor
+- Pull in advanced topics from archive when contextually relevant
 
 ## 🔧 Troubleshooting Common Issues
 
@@ -517,20 +566,30 @@ fn solve_aoc_wrong(input: &str) -> usize {
 - **Extend Mission** if: Need slight variation (implement trait for custom type, add helper methods)
 - **Custom Implementation** if: Problem requires truly novel data structure not covered by missions
 
-### When Creating New Missions
+### When Working with Rust Book Chapters (PRIMARY FOCUS)
+1. Create/enhance examples in `rust_book/ChX/` directories
+2. Test all examples: `cargo run`, `cargo test`
+3. Document key insights in chapter README.md
+4. Create zettelkasten notes linking concepts (e.g., `[[async-await-fundamentals]]`)
+5. Apply concepts to AoC problems immediately
+6. Cross-reference Book sections in zettelkasten
+
+### When Solving AoC Problems (ACTIVE)
+1. Read problem, identify relevant Book concepts
+2. Implement solution using patterns from recent chapters
+3. Test with sample data, then real input
+4. Document pattern in zettelkasten (e.g., `[[aoc-parsing-patterns]]`)
+5. Link to relevant Book chapters and concepts
+6. Consider mission data structures for future use
+
+### When Creating New Missions (DEFERRED)
+*Work on missions is paused pending Book mastery. When resumed:*
 1. Start with `missions/MissionX/README.md` defining REQ-1 through REQ-N
 2. Create test file first: `missions/MissionX/tests/unit_tests.rs` with `req{N}_*` functions
 3. Implement in `missions/MissionX/src/lib.rs` with `/// Requirements Satisfied: REQ-X` comments
 4. Add examples in `missions/MissionX/examples/demo.rs`
 5. Create companion tutorial in `tutorials/MissionX_tut/`
 6. Update `zettelkasten/Missions Overview.md`
-
-### When Updating Daily Study
-1. Follow template: `.github/COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md`
-2. Include "Complete Runnable Example" section
-3. Test with: `.\scripts\run_md.bat daily_study\rust_learning_weekX_notes\DayX.md`
-4. Add zettelkasten bidirectional links
-5. Use `#[allow(dead_code)]` for demonstration-only code
 
 ### When Fixing Bugs
 1. Add failing test first demonstrating the bug
@@ -566,12 +625,13 @@ fn solve_aoc_wrong(input: &str) -> usize {
 
 This file is optimized for GitHub Copilot Coding Agent. Key points:
 
-1. **Repository Structure**: Multi-crate workspace with 60+ members, not a single application
+1. **Repository Structure**: Multi-crate workspace with 80+ members, not a single application
 2. **Build System**: Use `cargo build --workspace` and test with `-p <package>` for specific crates
 3. **Quality Standards**: Zero clippy warnings policy, all tests must pass
 4. **Methodology**: V-Cycle for missions (requirements → design → implementation → verification)
 5. **Testing**: TDD approach, tests named with requirement IDs for traceability
 6. **Documentation**: All public APIs must have rustdoc with examples
+7. **Async Runtime**: Ch17 examples use `tokio` - understand async/await patterns for I/O-bound work
 
 **Content-Specific Tasks - USE SPECIALIZED INSTRUCTIONS:**
 
@@ -583,13 +643,13 @@ This file is optimized for GitHub Copilot Coding Agent. Key points:
 | Tutorial step-by-step progressions | `tutorial-instructions.md` | Progressive scaffolding, skill building, mission prep |
 | Rust Book chapter integration | `rust-book-instructions.md` | Official content, systematic coverage, concept validation |
 
-**Most Common Tasks:**
-- **Create zettelkasten page**: Use `zettelkasten-instructions.md` for proper linking and structure
-- **Write daily study**: Use `daily-study-instructions.md` for "Complete Runnable Example" format
-- **Implement mission**: Use `mission-instructions.md` for V-Cycle methodology and REQ traceability
-- **Build tutorial**: Use `tutorial-instructions.md` for 7-step progressive learning framework
-- **Process Rust Book chapter**: Use `rust-book-instructions.md` for systematic integration
-- **Fix bug**: Add test first, then fix (use appropriate content-specific instructions)
+**Most Common Tasks (Updated Priority):**
+- **Process Rust Book chapter**: Use `rust-book-instructions.md` for systematic integration (PRIMARY)
+- **Solve AoC problem**: Apply Book concepts, document patterns in zettelkasten (ACTIVE)
+- **Create zettelkasten page**: Use `zettelkasten-instructions.md` for linking Book/AoC concepts (ACTIVE)
+- **Implement mission**: Use `mission-instructions.md` - DEFERRED until Book mastery
+- **Write daily study**: Use `daily-study-instructions.md` - ON HOLD (proved disjointed)
+- **Build tutorial**: Use `tutorial-instructions.md` - DEFERRED (aligned with missions)
 - **Run tests**: `cargo test -p <package>` or `cargo test --workspace`
 - **Check quality**: `cargo clippy --workspace -- -D warnings`
 
