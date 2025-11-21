@@ -467,6 +467,7 @@ async fn main() {
 - **Week 8, Day 55**: Concurrent async with tokio
 - **Week 8, Day 56**: Streams and async iteration
 - **Week 8, Day 57**: Advanced async patterns
+- **[[../../zettelkasten/Daily Notes/2025-11-21]]**: Chapter 17.2 completion - Concurrency deep dive
 
 ### **AoC Applications**
 

@@ -22,6 +22,11 @@ Each daily note includes:
 ## 📅 **Daily Notes Timeline**
 
 ### **November 2025** 
+- **[[2025-11-21]]** - Rust Book Chapter 17.2 - Async Concurrency Deep Dive ✅
+  - Created book.rs with all 8 Rust Book listings (17-6 through 17-13)
+  - Enhanced select_futures.rs with concurrent execution demonstrations
+  - Mastered Waker pattern and loop+select+break graceful cancellation
+  - Created 3 new zettelkasten pages (async-await-basics, async-concurrency, rust-concurrency-moc)
 - **[[2025-11-03]]** - Mission 10 Crate Organization & Tutorial Step 2
   - Week 6 Day 37 (Crate Organization)
   - Mission 10 requirements validation
