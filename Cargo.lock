@@ -310,6 +310,7 @@ dependencies = [
  "futures",
  "tokio",
  "tokio-stream",
+ "trpl",
 ]
 
 [[package]]

@@ -504,6 +504,6 @@ async fn page_title(url: &str) -> (&str, Option<String>) {
 
 *Tags: #rust #async #concurrency #select #join #spawn #cooperative-multitasking #io-bound*
 
-*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[async-await-basics]] | [[futures-and-polling]] | [[async-streams]]*
+*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[async-await-basics]] | [[futures-and-polling]] | [[async-streams]] | [[async-performance-timer-resolution]]*
 
-*Last Updated: November 21, 2025*
+*Last Updated: November 22, 2025*

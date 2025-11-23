@@ -271,6 +271,7 @@ let result2 = future2.await;
 - [[sync-vs-async]] - When to use threads vs async
 - [[blocking-in-async]] - Handling CPU-bound work (spawn_blocking)
 - [[async-trait-objects]] - Dynamic dispatch with async
+- [[async-performance-timer-resolution]] - Timer granularity, runtime overhead, and yield_now performance
 
 **AUTOSAR Comparisons:**
 - [[rust-concurrency-vs-autosar]] - Mapping async patterns to automotive
