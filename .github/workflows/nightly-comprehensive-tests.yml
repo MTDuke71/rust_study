@@ -35,6 +35,10 @@ jobs:
       with:
         components: clippy, rustfmt
     
+    - name: Install cargo-tarpaulin for code coverage
+      run: |
+        cargo install cargo-tarpaulin --locked
+    
     - name: Cache Cargo dependencies
       uses: actions/cache@v4
       with:
@@ -258,6 +262,63 @@ jobs:
         fi
     
     # ============================================================================
+    # CODE COVERAGE ANALYSIS (Missions Only)
+    # ============================================================================
+    - name: Generate code coverage for missions
+      id: coverage
+      continue-on-error: true
+      run: |
+        echo "📊 Generating code coverage for missions..."
+        
+        # Create coverage reports directory
+        mkdir -p reports/coverage
+        
+        # Run tarpaulin for each mission package
+        echo '{"coverage_run": "nightly", "packages": []}' > reports/coverage-summary.json
+        
+        mission_count=0
+        total_coverage=0
+        
+        for mission_dir in missions/Mission*; do
+          if [ -d "$mission_dir" ] && [ -f "$mission_dir/Cargo.toml" ]; then
+            mission_name=$(basename "$mission_dir")
+            echo "Generating coverage for $mission_name..."
+            
+            # Run tarpaulin with HTML and JSON output
+            (cd "$mission_dir" && \
+              cargo tarpaulin \
+                --out Html \
+                --out Json \
+                --output-dir ../../reports/coverage/$mission_name \
+                --timeout 300 \
+                --skip-clean \
+                2>&1 | tee ../../reports/coverage/$mission_name/tarpaulin.log || true)
+            
+            # Extract coverage percentage if JSON exists
+            if [ -f "reports/coverage/$mission_name/tarpaulin-report.json" ]; then
+              coverage=$(jq -r '.files | to_entries | map(.value.covered) | add / length' reports/coverage/$mission_name/tarpaulin-report.json 2>/dev/null || echo "0")
+              echo "$mission_name: ${coverage}% coverage"
+              
+              mission_count=$((mission_count + 1))
+              total_coverage=$(echo "$total_coverage + $coverage" | bc)
+            fi
+          fi
+        done
+        
+        # Calculate average coverage
+        if [ $mission_count -gt 0 ]; then
+          avg_coverage=$(echo "scale=2; $total_coverage / $mission_count" | bc)
+          echo "Average mission coverage: ${avg_coverage}%"
+          echo "avg_coverage=$avg_coverage" >> $GITHUB_OUTPUT
+          echo "mission_count=$mission_count" >> $GITHUB_OUTPUT
+        else
+          echo "avg_coverage=0" >> $GITHUB_OUTPUT
+          echo "mission_count=0" >> $GITHUB_OUTPUT
+        fi
+        
+        echo "Coverage analysis complete for $mission_count missions"
+    
+    # ============================================================================
     # CREATE COMPREHENSIVE REPORT
     # ============================================================================
     - name: Generate comprehensive quality report
@@ -321,7 +382,36 @@ jobs:
           reportBody += '| Documentation Generation | ' + docGenStatus + ' | API docs generated |\n';
           reportBody += '| Documentation Tests | ' + docTestStatus + ' | Code examples in docs |\n';
           reportBody += '| Clippy Analysis | ' + clippyStatus + ' | Linting and best practices |\n';
-          reportBody += '| Code Formatting | ' + formatStatus + ' | Consistent code style |\n\n';
+          reportBody += '| Code Formatting | ' + formatStatus + ' | Consistent code style |\n';
+          
+          // Add coverage metrics if available
+          const coverageStatus = '${{ steps.coverage.outcome }}';
+          const avgCoverage = '${{ steps.coverage.outputs.avg_coverage }}';
+          const missionCount = '${{ steps.coverage.outputs.mission_count }}';
+          
+          if (coverageStatus === 'success' && missionCount > 0) {
+            reportBody += '| Code Coverage (Missions) | ✅ Completed | ' + avgCoverage + '% avg across ' + missionCount + ' missions |\n';
+          } else if (coverageStatus === 'failure') {
+            reportBody += '| Code Coverage (Missions) | ❌ Failed | Check workflow logs |\n';
+          }
+          reportBody += '\n';
+          
+          // Add coverage section if available
+          if (coverageStatus === 'success' && missionCount > 0) {
+            reportBody += '### 📊 Code Coverage Analysis\n';
+            reportBody += '- **Average Coverage**: ' + avgCoverage + '%\n';
+            reportBody += '- **Missions Analyzed**: ' + missionCount + '\n';
+            reportBody += '- **Reports**: HTML coverage reports available in workflow artifacts\n';
+            reportBody += '- **Next Steps**: ';
+            if (parseFloat(avgCoverage) < 70) {
+              reportBody += 'Consider adding tests to improve mission coverage\n';
+            } else if (parseFloat(avgCoverage) < 85) {
+              reportBody += 'Good coverage - focus on edge cases and error paths\n';
+            } else {
+              reportBody += 'Excellent coverage - maintain quality!\n';
+            }
+            reportBody += '\n';
+          }
           
           reportBody += '### 📋 Key Achievements\n';
           reportBody += '- **Mission8 BFS/DFS Fix**: Edge case handling for non-existent nodes ✅\n';
@@ -349,7 +439,11 @@ jobs:
           reportBody += '- Detailed test output\n';
           reportBody += '- Clippy analysis\n';
           reportBody += '- Documentation generation logs\n';
-          reportBody += '- Benchmark results (if available)\n\n';
+          reportBody += '- Benchmark results (if available)\n';
+          if (coverageStatus === 'success' && missionCount > 0) {
+            reportBody += '- 📊 **Code coverage reports** (HTML + JSON for ' + missionCount + ' missions)\n';
+          }
+          reportBody += '\n';
           
           reportBody += '---\n';
           reportBody += '**Run Details**\n';
@@ -403,6 +497,7 @@ jobs:
           reports/test-output.txt
           reports/compilation-report.json
           reports/doc-test-results.json
+          reports/coverage/
           clippy-results.json
           format-results.json
           benchmark-results.json
