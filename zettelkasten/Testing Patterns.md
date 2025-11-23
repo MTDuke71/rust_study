@@ -916,8 +916,8 @@ fn comprehensive_error_messages() {
 - **[[mission-1]]** - Stack testing with ownership patterns
 - **[[mission-2]]** - Queue testing with enum state verification  
 - **[[mission-3]]** - Algorithm testing with property-based approaches
-- **[[Mission5 Overview]]** - HashMap testing with collision and resize scenarios
-- **[[Mission6 Overview]]** - Graph algorithm testing with complex state verification
+- **[[mission-5]]** - HashMap testing with collision and resize scenarios
+- **[[mission-6]]** - Graph algorithm testing with complex state verification
 
 ### **Documentation Integration**
 - **[[Documentation Standards]]** - Testing documentation requirements

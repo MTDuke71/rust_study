@@ -335,11 +335,11 @@ unsafe {
 
 ### **Data Structures**
 - **[[Box Smart Pointer Patterns]]**: Advanced Box usage patterns
-- **[[Mission4 Overview]]**: Linked lists and trees with Box
+- **[[mission-4]]**: Linked lists and trees with Box
 - **[[Collections MOC]]**: Box in collection implementations
 
 ---
 
 *Tags: #box #smart-pointers #heap-allocation #ownership #memory-management #recursive-structures #trait-objects #performance #mission-integration #fundamentals*
 
-*Links: [[zettel-index]] | [[Box Smart Pointer Patterns]] | [[Ownership and Borrowing]] | [[Memory Address Analysis]] | [[Mission4 Overview]] | [[Collections MOC]] | [[rust-concepts-MOC]]*
+*Links: [[zettel-index]] | [[Box Smart Pointer Patterns]] | [[Ownership and Borrowing]] | [[Memory Address Analysis]] | [[mission-4]] | [[Collections MOC]] | [[rust-concepts-MOC]]*

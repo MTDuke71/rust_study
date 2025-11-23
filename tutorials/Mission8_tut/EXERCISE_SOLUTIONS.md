@@ -130,8 +130,8 @@ After completing these exercises, students will understand:
 
 ### **Algorithm Applications**
 - **[[AoC Patterns MOC]]** - Competitive programming patterns
-- **[[Mission6 Overview]]** - Grid-based pathfinding
-- **[[Mission7 Overview]]** - Graph algorithms and traversal
+- **[[mission-6]]** - Grid-based pathfinding
+- **[[mission-7]]** - Graph algorithms and traversal
 
 ## 📚 **Further Reading**
 
@@ -143,4 +143,4 @@ After completing these exercises, students will understand:
 ---
 
 *Tags: #exercise-solutions #mission8 #tutorial #graph-algorithms #bfs #dfs #pathfinding*
-*Links: [[zettel-index]] | [[BFS Patterns]] | [[DFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[directed-vs-undirected-graphs]] | [[Graph Network Density]] | [[find-all-components]] | [[missions/Mission8/README]] | [[tutorials/Mission8_tut/README]] | [[zettelkasten/Daily Notes/2025-10-16]] | [[zettelkasten/Daily Notes/2025-10-17]] | [[Testing Strategies]] | [[Generic Programming]] | [[daily-study/Day24]] | [[daily-study/Day25]] | [[daily-study/Day26]] | [[AoC Patterns MOC]] | [[Mission6 Overview]] | [[Mission7 Overview]]*
+*Links: [[zettel-index]] | [[BFS Patterns]] | [[DFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[directed-vs-undirected-graphs]] | [[Graph Network Density]] | [[find-all-components]] | [[missions/Mission8/README]] | [[tutorials/Mission8_tut/README]] | [[zettelkasten/Daily Notes/2025-10-16]] | [[zettelkasten/Daily Notes/2025-10-17]] | [[Testing Strategies]] | [[Generic Programming]] | [[daily-study/Day24]] | [[daily-study/Day25]] | [[daily-study/Day26]] | [[AoC Patterns MOC]] | [[mission-6]] | [[mission-7]]*

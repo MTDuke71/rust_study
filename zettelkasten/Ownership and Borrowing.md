@@ -185,7 +185,7 @@ let world = &s[6..11];
 ### **Mission Applications**
 - **[[mission-1]]** - Foundation building with ownership
 - **[[mission-2]]** - Smart pointers and advanced ownership
-- **[[Mission4 Overview]]** - Interior mutability patterns
+- **[[mission-4]]** - Interior mutability patterns
 
 ### **Daily Study Progression**
 - **[[daily-study/Day02]]** - Ownership basics (previous)

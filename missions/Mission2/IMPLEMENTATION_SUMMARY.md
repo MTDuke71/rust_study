@@ -172,7 +172,7 @@ The Mission 2 implementation demonstrates mastery of:
 ### 🏗️ Related Missions
 - **[[mission-1|mission-1]]** - Stack (LIFO) foundations
 - **[[mission-3|mission-3]]** - Binary search patterns
-- **[[Mission4 Overview|Mission4 Overview]]** - LinkedList deep dive
+- **[[mission-4|mission-4]]** - LinkedList deep dive
 
 ### 🧠 Related Concepts
 - **[[../../zettelkasten/Ring Buffer Overwriting Semantics|Ring Buffer Semantics]]** - Circular buffer strategies

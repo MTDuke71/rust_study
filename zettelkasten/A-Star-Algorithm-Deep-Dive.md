@@ -302,4 +302,4 @@ mod bench_tests {
 ---
 
 *Tags: #astar #algorithms #pathfinding #heuristics #grid-navigation #mission6 #concept #implementation*
-*Links: [[zettel-index]] | [[Mission6 Overview]] | [[BFS Patterns]] | [[Manhattan Distance]] | [[Euclidean Distance]]*
+*Links: [[zettel-index]] | [[mission-6]] | [[BFS Patterns]] | [[Manhattan Distance]] | [[Euclidean Distance]]*

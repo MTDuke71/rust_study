@@ -33,7 +33,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 - Use trait bounds to constrain generic types
 
 **Connected to:**
-- [[Mission5 Overview]] - `Eq + Hash` trait constraints
+- [[mission-5]] - `Eq + Hash` trait constraints
 - [[Collections MOC]] - Trait usage across data structures
 - Rust Book Chapter 10.2 - Traits
 
@@ -59,7 +59,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 - Balance flexibility with type safety
 
 **Connected to:**
-- [[Mission5 Overview]] - Generic HashMap implementation
+- [[mission-5]] - Generic HashMap implementation
 - [[mission-1]] - Generic Stack\<T\>
 - [[Generic Programming]] - Deep dive into type parameterization
 - Rust Book Chapter 10.1 - Generic Data Types
@@ -86,7 +86,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 - Design APIs with clear lifetime contracts
 
 **Connected to:**
-- [[Mission5 Overview]] - REQ-3 safe reference handling
+- [[mission-5]] - REQ-3 safe reference handling
 - [[mission-3]] - Iterator lifetimes
 - Rust Book Chapter 10.3 - Validating References with Lifetimes
 
@@ -138,7 +138,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 - Measure performance impact of dynamic dispatch
 
 **Connected to:**
-- [[Mission5 Overview]] - REQ-6 flexible APIs with trait objects
+- [[mission-5]] - REQ-6 flexible APIs with trait objects
 - [[Trait Objects]] - Deep dive into dynamic dispatch
 - Rust Book Chapter 17.2 - Trait Objects
 
@@ -190,7 +190,7 @@ This week provides the theoretical foundation that powers Mission5's flexible Ha
 
 **Connected to:**
 - All previous Week 3 days
-- [[Mission5 Overview]] - Complete trait-based design
+- [[mission-5]] - Complete trait-based design
 - Real-world API patterns
 
 **Runnable Example:** ✅ Complete demo in `Day21.md`
@@ -289,9 +289,9 @@ Week 3 built the **theoretical foundation** for generic, reusable code. Week 4 a
 - `daily_study/rust_learning_week3_notes/Day21.md` - Generics + Traits Practice
 
 ### **Mission Connections**
-- [[Mission5 Overview]] - HashMap using Week 3 concepts
+- [[mission-5]] - HashMap using Week 3 concepts
 - [[mission-3]] - Trait-based search
-- [[Mission7 Overview]] - Generic graph representation
+- [[mission-7]] - Generic graph representation
 
 ### **Zettelkasten Deep Dives**
 - [[Generic Programming]] - Type parameterization techniques
@@ -340,4 +340,4 @@ Week 3 built the **theoretical foundation** for generic, reusable code. Week 4 a
 
 *Tags: #week3 #overview #traits #generics #lifetimes #trait-objects #type-system #learning-track*
 
-*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 2 Overview]] | [[Week 4 Overview]] | [[Mission5 Overview]] | [[Generic Programming]] | [[Trait Objects]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 2 Overview]] | [[Week 4 Overview]] | [[mission-5]] | [[Generic Programming]] | [[Trait Objects]] | [[MONTHLY_CALENDAR]]*

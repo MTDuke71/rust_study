@@ -3,13 +3,13 @@
 > **Learning Context**: Day 20 explores advanced lifetime patterns essential for Mission5's zero-copy operations, memory safety guarantees, and complex data structure relationships.
 
 **Cross-Track Integration:**
-- **Mission Focus**: Advanced lifetimes enable Mission5's efficient borrowing patterns and zero-copy HashMap operations - see [[Mission5 Overview]]
+- **Mission Focus**: Advanced lifetimes enable Mission5's efficient borrowing patterns and zero-copy HashMap operations - see [[mission-5]]
 - **Daily Study**: Completes Week 3's type system mastery with lifetime relationship modeling
 - **Rust Book**: Chapter 10.3 Validating References with Lifetimes and Chapter 19 Advanced Lifetimes
 
 **Related Zettelkasten Notes:**
 - [[Collections MOC]] - Lifetime patterns in collection APIs
-- [[Mission5 Overview]] - REQ-7 zero-copy operations with lifetime management
+- [[mission-5]] - REQ-7 zero-copy operations with lifetime management
 - [[HashMap Internals]] - Lifetime relationships in hash table implementations
 - [[zettel-index]] - Main learning hub
 
@@ -808,14 +808,14 @@ From Day 20, you should understand:
 
 **Cross-References:**
 - [[Collections MOC]] - Lifetime patterns across different collection types
-- [[Mission5 Overview]] - REQ-7 zero-copy operations with advanced lifetime management
+- [[mission-5]] - REQ-7 zero-copy operations with advanced lifetime management
 - [[HashMap Internals]] - Lifetime relationships in hash table API design
 
 **Next**: Day 21 will integrate **Generics + Traits Practice** - combining all Week 3 concepts for flexible, performant APIs!
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[HashMap Internals]] | [[zettel-index]]*
 
 *Tags: #lifetimes #advanced-lifetimes #static-lifetime #elision-rules #zero-copy #mission5 #daily-study #week3 #memory-safety*
 

@@ -499,7 +499,7 @@ let dist_squared = dx * dx + dy * dy;
 - [[Chebyshev Distance]] - Grid-based 8-connected distance
 - [[A-Star-Algorithm-Deep-Dive]] - Can use Euclidean distance as heuristic
 - [[Week 4 Overview]] - Spatial algorithms and distance metrics
-- [[Mission6 Overview]] - Grid navigation (usually uses Manhattan/Chebyshev)
+- [[mission-6]] - Grid navigation (usually uses Manhattan/Chebyshev)
 
 ### **When to Use Each Metric**
 - **Euclidean**: Continuous space, physics, real-world straight-line
@@ -550,4 +550,4 @@ If need actual distance: Use distance() with sqrt()
 
 *Tags: #euclidean-distance #continuous-space #pythagorean-theorem #metrics #algorithms #physics #clustering*
 
-*Links: [[zettel-index]] | [[Manhattan Distance]] | [[Chebyshev Distance]] | [[A-Star-Algorithm-Deep-Dive]] | [[Week 4 Overview]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[Manhattan Distance]] | [[Chebyshev Distance]] | [[A-Star-Algorithm-Deep-Dive]] | [[Week 4 Overview]] | [[mission-6]]*

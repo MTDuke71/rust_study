@@ -138,4 +138,4 @@ struct HashMap<K, V> {
 
 ---
 *Tags: #hashmap #concept #data-structures #algorithms #performance #mission5*  
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[Hash Function Design]] | [[Performance Analysis]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[Hash Function Design]] | [[Performance Analysis]]*

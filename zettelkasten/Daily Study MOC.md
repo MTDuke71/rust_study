@@ -44,7 +44,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 | [[daily-study/Day08\|Day 8]] | Vectors | Dynamic arrays, capacity vs length | [[../missions/Mission1/README\|Mission1]] |
 | [[daily-study/Day09\|Day 9]] | Strings | String vs &str, UTF-8, manipulation | [[zettelkasten/rust_book/rust-book-ch8\|Ch8]] |
 | [[daily-study/Day10\|Day 10]] | HashMaps | Key-value storage, borrowing | [[../missions/Mission5/README\|Mission5]] |
-| [[daily-study/Day11\|Day 11]] | HashSets | Unique collections, set ops | [[Mission5 Overview]] |
+| [[daily-study/Day11\|Day 11]] | HashSets | Unique collections, set ops | [[mission-5]] |
 | [[daily-study/Day12\|Day 12]] | BTreeMap & BTreeSet | Ordered collections | [[Collections MOC]] |
 | [[daily-study/Day13\|Day 13]] | Advanced Iterators | Transforming collections | [[../missions/Mission6/SIZE_HINT_EXPLAINED]] |
 | [[daily-study/Day14\|Day 14]] | Error Handling | Robust error management | [[Error Handling Deep Dive]] |
@@ -83,13 +83,13 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 | Day | Topic | Key Concepts | Links |
 |-----|-------|--------------|-------|
-| [[daily-study/Day22\|Day 22]] | Grid Fundamentals | 2D arrays, coordinates, storage | [[Mission6 Overview]] |
+| [[daily-study/Day22\|Day 22]] | Grid Fundamentals | 2D arrays, coordinates, storage | [[mission-6]] |
 | [[daily-study/Day23\|Day 23]] | Grid Navigation | Directions, bounds checking | [[Chebyshev Distance]], [[Manhattan Distance]] |
 | [[daily-study/Day24\|Day 24]] | Grid Algorithms | Flood fill, connected components | [[DFS Patterns]], [[BFS Patterns]] |
 | [[daily-study/Day25\|Day 25]] | Queue Applications | BFS, level traversal | [[../missions/Mission2/README\|Mission2]] |
-| [[daily-study/Day26\|Day 26]] | Advanced Queues | Priority queues, deque patterns | [[A-Star-Algorithm-Deep-Dive]], [[Mission6 Overview]] |
+| [[daily-study/Day26\|Day 26]] | Advanced Queues | Priority queues, deque patterns | [[A-Star-Algorithm-Deep-Dive]], [[mission-6]] |
 | [[daily-study/Day27\|Day 27]] | String Parsing | Splitting, regex, custom parsers | [[AoC Patterns MOC]] |
-| [[daily-study/Day28\|Day 28]] | Week 4 Integration | Complete problem solving | [[Mission6 Overview]] |
+| [[daily-study/Day28\|Day 28]] | Week 4 Integration | Complete problem solving | [[mission-6]] |
 
 **Mission Integration**: 
 - Week 4 provides complete toolkit for Mission 6 (2D grids + pathfinding)
@@ -189,7 +189,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 - [[../missions/Mission1/README|Mission1 - Stack]] - Generic stack with Week 1 ownership concepts
 - [[../missions/Mission2/README|Mission2 - Queue]] - Ring buffer with Week 4 queue patterns
 - [[../missions/Mission5/README|Mission5 - HashMap]] - Week 2 collections applied to hash table
-- [[Mission6 Overview]] - Complete Week 4 integration (grids + BFS + Dijkstra)
+- [[mission-6]] - Complete Week 4 integration (grids + BFS + Dijkstra)
 
 ### **AoC Integration**
 - [[AoC Patterns MOC]] - Problem-solving patterns from daily study

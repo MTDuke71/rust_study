@@ -3,12 +3,12 @@
 > **Learning Context**: Day 22 begins Week 4's focus on spatial algorithms and grid-based problem solving, building on Week 3's trait system mastery to enable Mission 6's 2D grid utilities and Mission 7's graph representation.
 
 **Cross-Track Integration:**
-- **Mission Focus**: Grid fundamentals power Mission 6's pathfinding and Mission 7's spatial graph algorithms - see [[Mission6 Overview]] and [[Mission7 Overview]]
+- **Mission Focus**: Grid fundamentals power Mission 6's pathfinding and Mission 7's spatial graph algorithms - see [[mission-6]] and [[mission-7]]
 - **Daily Study**: Week 4 opener - transitions from abstract types to concrete spatial structures
 - **Rust Book**: Builds on Chapter 8.1 (Vectors) for 2D array storage
 
 **Related Zettelkasten Notes:**
-- [[Mission6 Overview]] - Real-world grid implementation
+- [[mission-6]] - Real-world grid implementation
 - [[Collections MOC]] - Grid as specialized collection type
 - [[zettel-index]] - Main learning hub
 
@@ -534,4 +534,4 @@ let index = row * width + col;  // Correct! Row-major
 ---
 
 *Tags: #grids #2d-arrays #coordinates #spatial-algorithms #mission6 #data-structures #aoc-patterns*
-*Links: [[Mission6 Overview]] | [[zettel-index]] | [[Collections MOC]] | [[daily-study/Day23]] →*
+*Links: [[mission-6]] | [[zettel-index]] | [[Collections MOC]] | [[daily-study/Day23]] →*

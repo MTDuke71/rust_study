@@ -225,4 +225,4 @@ Mission6_tut/
 
 ---
 *Tags: #mission6 #tutorial #grids #pathfinding #overview #step-by-step #learning-progression #spatial-algorithms*
-*Links: [[zettel-index]] | [[Mission6 Overview]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Mission5_tut Overview]]*
+*Links: [[zettel-index]] | [[mission-6]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Mission5_tut Overview]]*

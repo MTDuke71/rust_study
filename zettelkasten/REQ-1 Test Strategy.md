@@ -268,7 +268,7 @@ Confirm REQ-1 meets user needs
 **Mission Context:**
 - [[mission-1]] - Stack REQ-1 testing
 - [[mission-2]] - Queue REQ-1 testing
-- [[Mission5 Overview]] - HashMap REQ-1 testing
+- [[mission-5]] - HashMap REQ-1 testing
 - [[Missions Overview]] - All mission overviews
 
 **Quality Assurance:**

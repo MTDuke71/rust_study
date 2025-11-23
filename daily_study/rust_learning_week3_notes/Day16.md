@@ -3,13 +3,13 @@
 > **Learning Context**: Day 16 expands on Day 15's traits with generic type parameters, enabling Mission5's `HashMap<K, V>` implementation and flexible, reusable data structures.
 
 **Cross-Track Integration:**
-- **Mission Focus**: Generic types enable Mission5's `HashMap<K, V>` where K and V can be any type - see [[Mission5 Overview]]
+- **Mission Focus**: Generic types enable Mission5's `HashMap<K, V>` where K and V can be any type - see [[mission-5]]
 - **Daily Study**: Builds on Day 15 traits to create parameterized types
 - **Rust Book**: Core of Chapter 10 Generic Types, Traits, and Lifetimes
 
 **Related Zettelkasten Notes:**
 - [[Collections MOC]] - Generic patterns across all data structures
-- [[Mission5 Overview]] - REQ-1 generic support implementation
+- [[mission-5]] - REQ-1 generic support implementation
 - [[zettel-index]] - Main learning hub
 
 ## Core Concepts
@@ -562,14 +562,14 @@ From Day 16, you should understand:
 
 **Cross-References:**
 - [[Collections MOC]] - Generic patterns across Vec, HashMap, BTreeMap implementations
-- [[Mission5 Overview]] - REQ-1 generic support using type parameters and constraints
+- [[mission-5]] - REQ-1 generic support using type parameters and constraints
 - [[HashMap Internals]] - Generic bucket storage and type-safe key handling
 
 **Next**: Day 17 will cover **Lifetime Annotations** - ensuring memory safety in generic code!
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[HashMap Internals]] | [[zettel-index]]*
 
 *Tags: #generics #type-parameters #constraints #mission5 #daily-study #week3 #type-system #zero-cost-abstractions*
 

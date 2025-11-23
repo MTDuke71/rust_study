@@ -115,4 +115,4 @@ Mission5_tut/
 
 ---
 *Tags: #mission5 #tutorial #hashmap #overview #step-by-step #learning-progression*
-*Links: [[zettel-index]] | [[Mission5 Overview]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[mission-5]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]]*

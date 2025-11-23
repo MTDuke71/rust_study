@@ -627,7 +627,7 @@ fn safe_dfs(
 ### **Related Zettelkasten Pages**
 - [[BFS Patterns]] - Breadth-first alternative
 - [[A-Star-Algorithm-Deep-Dive]] - Heuristic-guided search
-- [[Mission7 Overview]] - Graph algorithms including DFS
+- [[mission-7]] - Graph algorithms including DFS
 - [[Week 4 Overview]] - Day 24 covers DFS for region detection
 - [[directed-vs-undirected-graphs]] - Understanding graph types for DFS
 
@@ -671,4 +671,4 @@ fn safe_dfs(
 
 *Tags: #dfs #depth-first-search #backtracking #recursion #exhaustive-search #graph-algorithms #tree-traversal #aoc-patterns*
 
-*Links: [[zettel-index]] | [[BFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[Mission7 Overview]] | [[mission8 Overview]] | [[Day 5 Exercise Solutions]] | [[Week 4 Overview]] | [[kahns-topological-sort]]*
+*Links: [[zettel-index]] | [[BFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[mission-7]] | [[mission-8]] | [[Day 5 Exercise Solutions]] | [[Week 4 Overview]] | [[kahns-topological-sort]]*

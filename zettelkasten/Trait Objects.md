@@ -663,7 +663,7 @@ fn test_query(db: &dyn Database) {
 
 ### **Related Zettelkasten Pages**
 - [[Week 3 Overview]] - Day 19 covers trait objects in depth
-- [[Mission5 Overview]] - REQ-6 flexible APIs using trait objects
+- [[mission-5]] - REQ-6 flexible APIs using trait objects
 - [[Generic Programming]] - Static dispatch alternative
 - [[monomorphization]] - Implementation mechanism for generics (static dispatch)
 - [[Collections MOC]] - Heterogeneous collections
@@ -705,4 +705,4 @@ fn test_query(db: &dyn Database) {
 
 *Tags: #trait-objects #dynamic-dispatch #polymorphism #vtable #object-safety #design-patterns #week3 #advanced-traits*
 
-*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Week 3 Overview]] | [[Generic Programming]] | [[Mission5 Overview]] | [[Collections MOC]] | [[Rust Trinity - Struct Trait Impl]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Week 3 Overview]] | [[Generic Programming]] | [[mission-5]] | [[Collections MOC]] | [[Rust Trinity - Struct Trait Impl]]*

@@ -134,7 +134,7 @@ Both approaches are production-ready and demonstrate different algorithmic think
 
 ### �� HashMap Resources
 - **[[HashMap Internals]]** - Hash table implementation details
-- **[[Mission5 Overview]]** - HashMap V-Cycle implementation
+- **[[mission-5]]** - HashMap V-Cycle implementation
 - [[daily-study/Day10]] - Foundational HashMap learning
 
 ### 📊 Performance Analysis

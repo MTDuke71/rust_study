@@ -139,8 +139,8 @@ The code now compiles without warnings while maintaining its educational value! 
 - [[rust-idioms]] - Idiomatic enum usage patterns
 
 **Related Missions:**
-- [[Mission5 Overview]] - Enums in HashMap implementation
-- [[Mission6 Overview]] - Direction enum for grid navigation
-- [[Mission7 Overview]] - Graph representation with enums
+- [[mission-5]] - Enums in HashMap implementation
+- [[mission-6]] - Direction enum for grid navigation
+- [[mission-7]] - Graph representation with enums
 
 *Tags: #enums #compiler-warnings #rust-book #ch6 #pattern-matching #dead-code #educational #best-practices*

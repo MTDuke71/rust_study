@@ -3,13 +3,13 @@
 > **Learning Context**: Day 14 explores Rust's comprehensive error handling approach, essential for Mission5's robust HashMap operations and providing foundation for advanced error patterns.
 
 **Cross-Track Integration:**
-- **Mission Focus**: Error handling enables Mission5's reliable HashMap operations with graceful failure modes - see [[Mission5 Overview]]
+- **Mission Focus**: Error handling enables Mission5's reliable HashMap operations with graceful failure modes - see [[mission-5]]
 - **Daily Study**: Concludes Week 2 with practical error management patterns
 - **Rust Book**: Chapter 9 Error Handling with real-world application patterns
 
 **Related Zettelkasten Notes:**
 - [[Collections MOC]] - Error handling patterns across collection operations
-- [[Mission5 Overview]] - REQ-4 robust error handling in HashMap operations
+- [[mission-5]] - REQ-4 robust error handling in HashMap operations
 - [[HashMap Internals]] - Error cases in hash table operations
 - [[zettel-index]] - Main learning hub
 
@@ -776,7 +776,7 @@ From Day 14, you should understand:
 
 **Cross-References:**
 - [[Collections MOC]] - Error handling patterns across different collection types
-- [[Mission5 Overview]] - REQ-4 robust error handling in HashMap operations
+- [[mission-5]] - REQ-4 robust error handling in HashMap operations
 - [[HashMap Internals]] - Error cases and recovery strategies in hash table implementations
 
 **Next**: Week 3 will cover **Advanced Type System** (Traits, Generics, Lifetimes) building on this solid error handling foundation!
@@ -1000,6 +1000,6 @@ fn parse_move_instruction(line: &str) -> Result<Move, String> {
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[HashMap Internals]] | [[zettel-index]]*
 
 *Tags: #error-handling #result-type #custom-errors #mission5 #robustness #daily-study #week2 #error-recovery*

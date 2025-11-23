@@ -7,7 +7,7 @@ See: [[../missions/Mission5/README|Mission5 README.md]]
 ## Quick Links
 
 - **Full Documentation**: [Mission5 README.md](../missions/Mission5/README.md)
-- **Mission Overview**: [[Mission5 Overview]] - Zettelkasten summary and learning integration
+- **Mission Overview**: [[mission-5]] - Zettelkasten summary and learning integration
 - **API Reference**: [[Mission5 API Reference]] - Detailed API documentation
 - **Tutorial**: [[Mission5_tut Overview]] - Step-by-step guided learning
 

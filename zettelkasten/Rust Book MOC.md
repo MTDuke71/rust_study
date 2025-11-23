@@ -157,11 +157,11 @@ This MOC provides complete access to both:
 - **[[mission-1]]** - Stack (Ch4 Ownership + Ch5 Structs)
 - **[[mission-2]]** - Queue (Ch4 Ownership + Ch6 Enums) 
 - **[[mission-3]]** - Binary Search (Ch10 Generics + Ch11 Testing)
-- **[[Mission4 Overview]]** - LinkedList (Ch5 Structs + Ch15 Smart Pointers)
-- **[[Mission5 Overview]]** - HashMap (Ch5-6 Structs/Enums + Ch8 Collections)
-- **[[Mission6 Overview]]** - Advanced Algorithms (Ch7 Modules + Ch10 Generics)
-- **[[Mission7 Overview]]** - Graph Algorithms (Ch16 Concurrency + Ch19 Advanced)
-- **[[mission8 Overview]]** - Performance Optimization (Ch19 Unsafe + Ch20 Systems)
+- **[[mission-4]]** - LinkedList (Ch5 Structs + Ch15 Smart Pointers)
+- **[[mission-5]]** - HashMap (Ch5-6 Structs/Enums + Ch8 Collections)
+- **[[mission-6]]** - Advanced Algorithms (Ch7 Modules + Ch10 Generics)
+- **[[mission-7]]** - Graph Algorithms (Ch16 Concurrency + Ch19 Advanced)
+- **[[mission-8]]** - Performance Optimization (Ch19 Unsafe + Ch20 Systems)
 
 ### **Daily Study Connections**
 - **[[Daily Study MOC]]** - Complete daily study overview with book integration

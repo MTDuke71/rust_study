@@ -787,7 +787,7 @@ fn fibonacci_optimal(n: u32) -> u64 {
 - **[[Algorithm Analysis]]** - Comprehensive algorithm analysis techniques including empirical analysis and profiling
 - **[[Performance Optimization]]** - Practical optimization techniques
 - **[[Rust Collections MOC]]** - Collection performance characteristics
-- **[[Mission5 Overview]]** - HashMap complexity analysis
+- **[[mission-5]]** - HashMap complexity analysis
 - **[[mission-9]]** - Graph algorithm complexity
 - **[[AoC Patterns MOC]]** - Complexity analysis for competitive programming
 - **[[Complexity Analysis]]** - Related complexity concepts
@@ -812,4 +812,4 @@ fn fibonacci_optimal(n: u32) -> u64 {
 
 *Tags: #big-o #complexity-analysis #algorithms #performance #time-complexity #space-complexity #optimization #computer-science*
 
-*Links: [[Algorithm Analysis]] | [[Performance Optimization]] | [[Rust Collections MOC]] | [[Mission5 Overview]] | [[mission-9]] | [[AoC Patterns MOC]] | [[Algorithm Design Patterns]] | [[zettel-index]]*
+*Links: [[Algorithm Analysis]] | [[Performance Optimization]] | [[Rust Collections MOC]] | [[mission-5]] | [[mission-9]] | [[AoC Patterns MOC]] | [[Algorithm Design Patterns]] | [[zettel-index]]*

@@ -22,7 +22,7 @@
 - **✅ Day 4 Achievement**: [[day4_performance_completion_summary]] - Performance optimization
 - **✅ Test Validation**: All day test summaries showing 166/166 tests passing
 - **📝 Daily Notes**: [[Daily Notes/2025-10-29]] - Final completion and bug fixes
-- **🔗 Dependencies**: [[Mission7 Overview]] - Graph representation foundation
+- **🔗 Dependencies**: [[mission-7]] - Graph representation foundation
 
 ---
 
@@ -61,7 +61,7 @@ pub trait Pathfinder<G: WeightedGraph> {
 - **🔄 WeightedGraph Trait** (CURRENT FOCUS) - Graph abstraction for algorithms
 
 ### **Integration Points**
-- **[[Mission7 Overview]]** - Graph<T> structures and basic graph algorithms
+- **[[mission-7]]** - Graph<T> structures and basic graph algorithms
 - **[[mission-1]]** - Stack patterns for path reconstruction
 - **[[mission-2]]** - Queue understanding for algorithm comparison
 
@@ -326,4 +326,4 @@ pub trait Pathfinder<G: WeightedGraph> {
 
 *Tags: #mission9 #pathfinding #dijkstra #astar #algorithms #graphs #optimization #data-structures*
 
-*Links: [[rust-book-ch9-12-review]] | [[Mission7 Overview]] | [[Mission10 Overview]] | [[Graph Algorithms]] | [[Algorithm Design Patterns]] | [[Performance Analysis]] | [[Priority Queue Patterns]] | [[Dijkstra Algorithm]] | [[A* Algorithm]] | [[Pathfinding Strategies]] | [[day2_completion_summary]] | [[Daily Notes/2025-10-23]] | [[zettel-index]]*
+*Links: [[rust-book-ch9-12-review]] | [[mission-7]] | [[Mission10 Overview]] | [[Graph Algorithms]] | [[Algorithm Design Patterns]] | [[Performance Analysis]] | [[Priority Queue Patterns]] | [[Dijkstra Algorithm]] | [[A* Algorithm]] | [[Pathfinding Strategies]] | [[day2_completion_summary]] | [[Daily Notes/2025-10-23]] | [[zettel-index]]*

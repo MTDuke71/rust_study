@@ -3,7 +3,7 @@
 > **Learning Context**: Day 15 begins Week 3's deep dive into Rust's trait system, the foundation for generic programming and code reuse that enables Mission5's flexible HashMap implementation.
 
 **Cross-Track Integration:**
-- **Mission Focus**: Traits enable Mission5's `Eq + Hash` constraints and generic implementation - see [[Mission5 Overview]]
+- **Mission Focus**: Traits enable Mission5's `Eq + Hash` constraints and generic implementation - see [[mission-5]]
 - **Daily Study**: Week 3 opener - transitions from collections to type system mastery
 - **Rust Book**: Builds on Chapter 10 Generic Types, Traits, and Lifetimes
 
@@ -426,14 +426,14 @@ From Day 15, you should understand:
 
 **Cross-References:**
 - [[Collections MOC]] - See "Trait Requirements" sections across data structures
-- [[Mission5 Overview]] - REQ-1 generic support relies on trait system
+- [[mission-5]] - REQ-1 generic support relies on trait system
 - [[HashMap Internals]] - Hash and Eq traits essential for key storage
 
 **Next**: Day 16 will cover **Generic Types** - parameterized types for flexible, reusable code!
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[zettel-index]]*
 
 *Tags: #traits #fundamentals #generic-programming #interfaces #mission5 #daily-study #week3 #type-system*
 

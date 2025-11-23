@@ -18,7 +18,7 @@ This chapter covers Rust's powerful abstraction mechanisms: generic types for re
 
 ## Mission Integration
 
-- **[[Mission5 Overview]]** - Generic HashMap<K, V> implementation
+- **[[mission-5]]** - Generic HashMap<K, V> implementation
 - **[[mission-3]]** - Generic binary search with trait bounds
 - **[[Generic Programming]]** - Advanced generic programming patterns
 - **All missions** use generic principles for reusable data structures
@@ -33,7 +33,7 @@ This chapter covers Rust's powerful abstraction mechanisms: generic types for re
 ## Learning Path
 
 1. Read [[../../rust_book/Ch10/README]] for comprehensive coverage
-2. Implement generic data structures in [[Mission5 Overview]]
+2. Implement generic data structures in [[mission-5]]
 3. Practice trait design with mission examples
 4. Master lifetime annotations through complex examples
 
@@ -41,4 +41,4 @@ This chapter covers Rust's powerful abstraction mechanisms: generic types for re
 
 *Tags: #rust-book #generics #traits #lifetimes #type-system #ch10*
 
-*Links: [[../../rust_book/Ch10/README]] | [[Generic Programming]] | [[Trait Design Patterns]] | [[Mission5 Overview]] | [[zettel-index]]*
+*Links: [[../../rust_book/Ch10/README]] | [[Generic Programming]] | [[Trait Design Patterns]] | [[mission-5]] | [[zettel-index]]*

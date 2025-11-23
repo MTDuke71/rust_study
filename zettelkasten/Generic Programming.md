@@ -434,7 +434,7 @@ where
 }
 ```
 
-Related: [[Mission5 Overview]] | [[HashMap Internals]]
+Related: [[mission-5]] | [[HashMap Internals]]
 
 ### **Mission6: Generic Grid**
 
@@ -465,7 +465,7 @@ impl<T: Clone> Grid<T> {
 }
 ```
 
-Related: [[Mission6 Overview]]
+Related: [[mission-6]]
 
 ## 🧪 Testing Generic Code
 
@@ -657,7 +657,7 @@ Related: [[daily-study/Day19]]
 1. **Foundations** → [[daily-study/Day16]]
 2. **Trait Bounds** → [[daily-study/Day15]]
 3. **Associated Types** → [[daily-study/Day18]]
-4. **Practice** → [[mission-1]], [[Mission5 Overview]]
+4. **Practice** → [[mission-1]], [[mission-5]]
 5. **Advanced** → [[PhantomData Type Safety Patterns]]
 
 ---

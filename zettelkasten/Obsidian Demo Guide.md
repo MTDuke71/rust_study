@@ -21,7 +21,7 @@ When you open Obsidian and enable the Graph view, you'll see:
 
 ### **Today's Study Session (Sept 29)**
 1. Open [[zettel-index]] → Navigate to current focus
-2. Click [[Mission5 Overview]] → See today's iterator implementation task
+2. Click [[mission-5]] → See today's iterator implementation task
 3. Check [[Mission5_tut Overview]] → Find Step 5 tutorial alignment
 4. Reference [[HashMap Internals]] → Understand implementation details
 5. Connect to [[daily-study/Day11]] → Reinforce theoretical concepts
@@ -33,7 +33,7 @@ When you open Obsidian and enable the Graph view, you'll see:
 - Search for "iterator" → See how the pattern appears across missions
 
 ### **Progress Tracking**
-- Today's checkboxes in [[Mission5 Overview]]
+- Today's checkboxes in [[mission-5]]
 - Tutorial alignment verification in [[Mission5_tut Overview]]  
 - Cross-reference with [[MONTHLY_CALENDAR]] daily goals
 

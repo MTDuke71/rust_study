@@ -272,9 +272,9 @@ fn safe_division(a: i32, b: i32) -> Result<f64, DivisionError> {
 
 ### **Mission Applications**
 - **[[mission-1]]** - Stack operations with bounds checking
-- **[[Mission4 Overview]]** - Interior mutability error patterns
-- **[[Mission5 Overview]]** - HashMap operations with key validation
-- **[[Mission6 Overview]]** - Grid bounds checking and coordinate validation
+- **[[mission-4]]** - Interior mutability error patterns
+- **[[mission-5]]** - HashMap operations with key validation
+- **[[mission-6]]** - Grid bounds checking and coordinate validation
 
 ### **Rust Book Integration**
 - **[[../rust_book/Ch9/README]]** - Complete error handling chapter

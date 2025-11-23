@@ -255,7 +255,7 @@ Ch5 Structs → Ch6 Enums → Ch7 Modules → Ch8 Collections
 ### **Mission Applications**
 - [[mission-1]] - Stack struct with Vec wrapper
 - [[mission-2]] - Ring buffer struct design
-- [[Mission5 Overview]] - HashMap struct with complex internals
+- [[mission-5]] - HashMap struct with complex internals
 
 ### **Rust Book Connections**
 - [[Chapter 6 - Enums]] - Complementary to structs for sum types
@@ -288,4 +288,4 @@ Ch5 Structs → Ch6 Enums → Ch7 Modules → Ch8 Collections
 
 *Tags: #rust-book #chapter5 #structs #methods #impl #api-design #custom-types #ownership*
 
-*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[rust-concepts-MOC|Rust Concepts]] | [[../../zettelkasten/Missions Overview|Missions Overview]] | [[mission-1|Mission1]] | [[Mission5 Overview|Mission5]]*
+*Links: [[../../zettelkasten/zettel-index|Zettelkasten Index]] | [[rust-concepts-MOC|Rust Concepts]] | [[../../zettelkasten/Missions Overview|Missions Overview]] | [[mission-1|Mission1]] | [[mission-5|Mission5]]*

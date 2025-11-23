@@ -502,4 +502,4 @@ mod tests {
 
 *Tags: #error-handling #anyhow #thiserror #result-type #library-design #application-development #rust-patterns #mission-integration #aoc-patterns #testing-strategies #performance*
 
-*Links: [[zettel-index]] | [[Result Type]] | [[Error Handling Patterns]] | [[Error Handling Deep Dive]] | [[Mission5 Overview]] | [[Week 5 Overview]] | [[Testing Strategies]] | [[API Design Patterns]]*
+*Links: [[zettel-index]] | [[Result Type]] | [[Error Handling Patterns]] | [[Error Handling Deep Dive]] | [[mission-5]] | [[Week 5 Overview]] | [[Testing Strategies]] | [[API Design Patterns]]*

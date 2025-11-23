@@ -419,7 +419,7 @@ fn handle_response(response: ApiResponse) {
 **Missions:**
 - [[mission-3]] - LinkedList uses `Option<Box<Node<T>>>` for next pointers
 - [[mission-2]] - Queue operations return `Option<T>` for empty cases
-- [[Mission5 Overview]] - HashMap uses `Option<&V>` for get operations
+- [[mission-5]] - HashMap uses `Option<&V>` for get operations
 
 **Daily Study:**
 - [[daily-study/Day14]] - Uses `Result<T, E>` enum extensively

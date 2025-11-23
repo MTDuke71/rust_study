@@ -172,7 +172,7 @@ This follows the V-Cycle methodology from your rust_study workspace while implem
 - [[error-anticipation]] - Proactive error handling
 
 **Mission Integration:**
-- [[Mission4 Overview]] - Linked list mission
+- [[mission-4]] - Linked list mission
 - [[Mission4_tut Overview]] - Complete tutorial guide
 - [[V-Cycle Methodology]] - Engineering approach
 

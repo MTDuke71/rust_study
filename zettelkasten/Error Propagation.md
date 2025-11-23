@@ -803,4 +803,4 @@ pub enum ExpensiveError {
 
 *Tags: #error-propagation #result-type #question-mark-operator #error-conversion #error-handling #anyhow #thiserror #mission-integration #performance #async-errors #testing #rust-patterns*
 
-*Links: [[zettel-index]] | [[anyhow and thiserror]] | [[Result Type]] | [[Error Handling Patterns]] | [[Error Handling Deep Dive]] | [[Mission5 Overview]] | [[Testing Strategies]] | [[Performance Optimization]]*
+*Links: [[zettel-index]] | [[anyhow and thiserror]] | [[Result Type]] | [[Error Handling Patterns]] | [[Error Handling Deep Dive]] | [[mission-5]] | [[Testing Strategies]] | [[Performance Optimization]]*

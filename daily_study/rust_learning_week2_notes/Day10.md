@@ -1,7 +1,7 @@
 # Day 10 · HashMap & HashSet Deep Dive
 
 ## 🔗 Zettelkasten Connections
-- **Implementation**: [[Mission5 Overview]] - Custom HashMap from scratch
+- **Implementation**: [[mission-5]] - Custom HashMap from scratch
 - **Tutorial**: [[Mission5_tut Overview]] - Guided learning progression
 - **Internals**: [[HashMap Internals]] - How hash tables work under the hood
 - **Collections**: [[Collections MOC]] - Broader data structures context

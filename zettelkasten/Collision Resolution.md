@@ -230,4 +230,4 @@ where
 
 ---
 
-*Related Links: [[Hash Function Design]] | [[HashMap Internals]] | [[Mission5 Overview]]*
+*Related Links: [[Hash Function Design]] | [[HashMap Internals]] | [[mission-5]]*

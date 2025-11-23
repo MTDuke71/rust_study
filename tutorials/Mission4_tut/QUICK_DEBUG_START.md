@@ -142,7 +142,7 @@ You're now ready to see **exactly** how Rust's memory safety features translate 
 - [[zero-cost-abstractions]] - Performance guarantees
 
 **Mission Integration:**
-- [[Mission4 Overview]] - Linked list mission
+- [[mission-4]] - Linked list mission
 - [[Mission4_tut Overview]] - Complete tutorial
 - `step2_push_front` - Example being debugged
 

@@ -8,7 +8,7 @@
 - **Rust Book**: Chapters 8-10 applied in complete solutions
 
 **Related Zettelkasten Notes:**
-- [[Mission6 Overview]]
+- [[mission-6]]
 - [[Week 4 Concepts MOC]] - All Week 4 topics
 - [[zettel-index]] - Main learning hub
 
@@ -870,4 +870,4 @@ fn test_edge_cases() {
 ---
 
 *Tags: #week4-review #integration #grids #bfs #dijkstra #flood-fill #parsing #mission6 #aoc-patterns #problem-solving*
-*Links: [[daily-study/Day27]] ← | [[Mission6 Overview]] | [[zettel-index]] | [[Week 5 Preview]] →*
+*Links: [[daily-study/Day27]] ← | [[mission-6]] | [[zettel-index]] | [[Week 5 Preview]] →*

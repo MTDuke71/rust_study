@@ -256,7 +256,7 @@ let mut_borrow = node.borrow_mut(); // This would panic if borrow1 is still aliv
 - [[weak-references]] - Weak<T> for breaking cycles
 
 **Mission Integration:**
-- [[Mission4 Overview]] - Linked list mission
+- [[mission-4]] - Linked list mission
 - [[exercise1_box_basics]] - Previous exercise: Box basics
 - [[exercise3_doubly_linked]] - Next exercise: doubly linked list
 - [[Mission4_tut Overview]] - Complete tutorial guide

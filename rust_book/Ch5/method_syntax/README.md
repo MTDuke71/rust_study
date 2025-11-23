@@ -7,7 +7,7 @@ See [[API Design Patterns]] for comprehensive naming guidelines and [[Collection
 ### Method Naming Conventionsoms.
 
 **Cross-Track Integration:**
-- **Mission5 Connection**: Method syntax enables `HashMap::new()` and `map.insert()` ergonomic APIs - see [[Mission5 Overview]]
+- **Mission5 Connection**: Method syntax enables `HashMap::new()` and `map.insert()` ergonomic APIs - see [[mission-5]]
 - **Rust Book**: Part of Chapter 5 Structs sequence building toward object-oriented patterns
 - **Daily Study**: Foundation for collection method patterns used in Week 2 studies
 
@@ -339,7 +339,7 @@ impl OuterStruct {
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[API Design Patterns]] | [[Ownership Methods]] | [[Memory Address Analysis]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[API Design Patterns]] | [[Ownership Methods]] | [[Memory Address Analysis]] | [[zettel-index]]*
 
 *Tags: #method-syntax #structs #api-design #rust-book #ch5 #mission5 #ergonomic-apis #ownership #memory-analysis #performance*
 

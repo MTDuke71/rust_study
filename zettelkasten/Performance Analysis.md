@@ -743,7 +743,7 @@ fn memory_profile() {
 - **[[Big-O Analysis]]** - Theoretical complexity analysis
 - **[[Algorithm Analysis]]** - Broader algorithm analysis techniques
 - **[[Computational Complexity Classes]]** - Problem hardness analysis
-- **[[Mission5 Overview]]** - HashMap performance case study
+- **[[mission-5]]** - HashMap performance case study
 - **[[mission-9]]** - Graph algorithm performance comparison
 - **[[Rust Collections MOC]]** - Collection performance characteristics
 - **[[AoC Patterns MOC]]** - Performance patterns in competitive programming
@@ -778,4 +778,4 @@ fn memory_profile() {
 
 *Tags: #performance-analysis #benchmarking #profiling #criterion #flamegraph #measurement #optimization #performance-testing #empirical-analysis #complexity-verification*
 
-*Links: [[Performance Optimization]] | [[Performance Optimization Guide]] | [[Big-O Analysis]] | [[Algorithm Analysis]] | [[Mission5 Overview]] | [[mission-9]] | [[Rust Collections MOC]] | [[zettel-index]]*
+*Links: [[Performance Optimization]] | [[Performance Optimization Guide]] | [[Big-O Analysis]] | [[Algorithm Analysis]] | [[mission-5]] | [[mission-9]] | [[Rust Collections MOC]] | [[zettel-index]]*

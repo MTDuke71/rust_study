@@ -378,7 +378,7 @@ Your implementation should:
 - [[memory-leak-prevention]] - Preventing cycles and leaks
 
 **Mission Integration:**
-- [[Mission4 Overview]] - Linked list mission
+- [[mission-4]] - Linked list mission
 - [[exercise1_box_basics]] - Basic ownership patterns
 - [[exercise2_rc_patterns]] - Shared ownership foundation
 - [[Mission4_tut Overview]] - Complete tutorial series

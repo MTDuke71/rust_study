@@ -247,9 +247,9 @@ impl<K, V> HashMap<K, V> {
 
 ### **Mission Applications**
 - **[[mission-2]]**: Ring buffer memory access patterns
-- **[[Mission5 Overview]]**: HashMap bucket distribution analysis
-- **[[Mission6 Overview]]**: Grid memory layout optimization
-- **[[Mission7 Overview]]**: Graph adjacency list memory efficiency
+- **[[mission-5]]**: HashMap bucket distribution analysis
+- **[[mission-6]]**: Grid memory layout optimization
+- **[[mission-7]]**: Graph adjacency list memory efficiency
 
 ### **Daily Study Connections**
 - **Week 1**: Ownership and borrowing visualization
@@ -287,4 +287,4 @@ println!("Same data, different addresses: {}", !std::ptr::eq(&a, &b));
 
 *Tags: #memory-analysis #addresses #pointers #performance #debugging #unsafe #method-dispatch #ownership #heap #stack #cache-locality #profiling #mission-integration #rust-book-ch5*
 
-*Links: [[zettel-index]] | [[Mission5 Overview]] | [[Ownership and Borrowing]] | [[Performance Optimization]] | [[Collections MOC]] | [[API Design Patterns]] | [[Unsafe Rust - Raw Pointers and Safety Contracts]]*
+*Links: [[zettel-index]] | [[mission-5]] | [[Ownership and Borrowing]] | [[Performance Optimization]] | [[Collections MOC]] | [[API Design Patterns]] | [[Unsafe Rust - Raw Pointers and Safety Contracts]]*

@@ -770,9 +770,9 @@ let first_large = numbers.iter().find(|&&x| x > 2);
 - **[[mission-1]]** - Stack iterator implementation with LIFO ordering
 - **[[mission-2]]** - Queue iterator with FIFO guarantees
 - **[[mission-3]]** - Algorithm iterators for search and sort operations  
-- **[[Mission5 Overview]]** - HashMap iterator patterns for key-value access
-- **[[Mission6 Overview]]** - Tree traversal iterators (pre/in/post-order, BFS)
-- **[[Mission7 Overview]]** - Graph iterator patterns for traversal algorithms
+- **[[mission-5]]** - HashMap iterator patterns for key-value access
+- **[[mission-6]]** - Tree traversal iterators (pre/in/post-order, BFS)
+- **[[mission-7]]** - Graph iterator patterns for traversal algorithms
 
 ### **Rust Book Integration**
 - **[[Rust Book MOC]]** - Chapter 13 covers functional programming and iterators
@@ -811,4 +811,4 @@ let first_large = numbers.iter().find(|&&x| x > 2);
 ---
 
 *Tags: #iterator #patterns #rust #functional-programming #zero-cost-abstractions #performance #collections #api-design #mission-iterators*
-*Links: [[zettel-index]] | [[API Design Patterns]] | [[Testing Patterns]] | [[Rust Book MOC]] | [[mission-1]] | [[Mission5 Overview]] | [[Mission6 Overview]] | [[AoC Patterns MOC]] | [[Rest Patterns]]*
+*Links: [[zettel-index]] | [[API Design Patterns]] | [[Testing Patterns]] | [[Rust Book MOC]] | [[mission-1]] | [[mission-5]] | [[mission-6]] | [[AoC Patterns MOC]] | [[Rest Patterns]]*

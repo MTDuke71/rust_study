@@ -5,7 +5,7 @@
 - **Overview**: [[zettelkasten/rust_book/rust-book-ch7]]
 - **Previous**: [[zettelkasten/rust_book/rust-book-ch6]]
 - **Next**: [[zettelkasten/rust_book/rust-book-ch8]]
-- **Missions**: [[Mission6 Overview]] - Applies module organization concepts
+- **Missions**: [[mission-6]] - Applies module organization concepts
 - **Daily Study**: [[daily-study/Day15]] - Reinforces this chapter
 - **Book MOC**: [[Rust Book MOC]]
 
@@ -159,8 +159,8 @@ The module tree is like a file system where you navigate from root to find what 
 ## 🔗 Related Content
 
 **Missions:**
-- [[Mission6 Overview]] - Applies module organization in advanced algorithms
-- [[Mission5 Overview]] - Uses module structure for HashMap implementations
+- [[mission-6]] - Applies module organization in advanced algorithms
+- [[mission-5]] - Uses module structure for HashMap implementations
 
 **Daily Study:**
 - [[daily-study/Day15]] - Practical exercises for module organization

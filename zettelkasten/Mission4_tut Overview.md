@@ -209,7 +209,7 @@ Overhead ratio:   2.29x
 ### **Mission Applications**
 - **[[mission-1]]** - Stack with simple ownership
 - **[[mission-2]]** - Queue with ring buffer patterns
-- **[[Mission5 Overview]]** - HashMap with collision handling
+- **[[mission-5]]** - HashMap with collision handling
 
 ### **Development Methodology**
 - **[[V-Cycle Methodology]]** - Systematic linked list development
@@ -252,4 +252,4 @@ Overhead ratio:   2.29x
 ---
 
 *Tags: #mission4 #tutorial #linked-list #smart-pointers #interior-mutability #ownership*
-*Links: [[zettel-index]] | [[Mission4 Overview]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Box Smart Pointer Patterns]] | [[interior-mutability]] | [[Rc and RefCell Patterns]]*
+*Links: [[zettel-index]] | [[mission-4]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Box Smart Pointer Patterns]] | [[interior-mutability]] | [[Rc and RefCell Patterns]]*

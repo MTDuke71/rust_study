@@ -446,7 +446,7 @@ for route in generate_permutations(&cities) {
 - **[[Backtracking Algorithms]]** - Alternative exploration strategy
 
 ### 🏗️ Mission Integration
-- **[[Mission5 Overview]]** - HashMap applications (distance lookups for TSP)
+- **[[mission-5]]** - HashMap applications (distance lookups for TSP)
 - **[Mission5 README](../missions/Mission5/README.md)** - Dictionary implementation for route calculations
 
 ### 🎄 AoC Applications

@@ -34,7 +34,7 @@ From the daily study file, Day 16 covers:
 
 ### Zettelkasten Deep Dives
 - [[Generic Programming]] - Deep dive into generic design patterns
-- [[Mission5 Overview]] - Generic HashMap<K, V> implementation
+- [[mission-5]] - Generic HashMap<K, V> implementation
 - [[Trait Design Patterns]] - Combining generics with traits
 
 ### Daily Study Progression
@@ -43,7 +43,7 @@ From the daily study file, Day 16 covers:
 - [[daily-study/Day17]] - Next day (lifetime parameters)
 
 ### Mission Applications
-- [[Mission5 Overview]] - Generic HashMap<K, V> design
+- [[mission-5]] - Generic HashMap<K, V> design
 - [[Mission5_tut Overview]] - Tutorial series for generics
 - [[AoC Patterns MOC]] - Generic patterns in competitive programming
 

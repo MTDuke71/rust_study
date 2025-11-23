@@ -8,7 +8,7 @@
 - **Rust Book**: Applies Chapter 6 (Enums) to represent directions and Chapter 8 (Vectors) for neighbor lists
 
 **Related Zettelkasten Notes:**
-- [[Mission6 Overview]]
+- [[mission-6]]
 - [[Direction Enum Patterns]] - Direction representation strategies
 - [[zettel-index]] - Main learning hub
 
@@ -820,4 +820,4 @@ for _ in 0..4 {
 ---
 
 *Tags: #navigation #directions #bounds-checking #neighbors #grid-algorithms #mission6 #pathfinding*
-*Links: [[daily-study/Day22]] ← | [[Mission6 Overview]] | [[zettel-index]] | [[daily-study/Day24]] →*
+*Links: [[daily-study/Day22]] ← | [[mission-6]] | [[zettel-index]] | [[daily-study/Day24]] →*

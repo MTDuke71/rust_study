@@ -9,7 +9,7 @@
 
 **Related Zettelkasten Notes:**
 - [[../missions/Mission2/README|Mission2 - Ring Buffer Queue]]
-- [[Mission6 Overview]]
+- [[mission-6]]
 - [[BFS Patterns]] - Breadth-first search applications
 - [[zettel-index]] - Main learning hub
 
@@ -1394,4 +1394,4 @@ fn iterative_deepening_search(position: GameState, time_limit: Duration) -> Move
 ---
 
 *Tags: #bfs #queues #shortest-path #level-traversal #vecdeque #mission2 #mission6 #graph-algorithms #aoc-patterns*
-*Links: [[daily-study/Day24]] ← | [[Mission6 Overview]] | [[zettel-index]] | [[daily-study/Day26]] →*
+*Links: [[daily-study/Day24]] ← | [[mission-6]] | [[zettel-index]] | [[daily-study/Day26]] →*

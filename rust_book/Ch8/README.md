@@ -312,9 +312,9 @@ Collections are fundamental to all missions:
 - [[mission-1]] - Stack using Vec<T>
 - [[mission-2]] - Queue implementations with Vec
 - [[mission-3]] - Binary search on sorted vectors
-- [[Mission4 Overview]] - Linked lists as alternative to Vec
-- [[Mission5 Overview]] - Custom HashMap implementation
-- [[Mission6 Overview]] - Grid storage with Vec<Vec<T>>
+- [[mission-4]] - Linked lists as alternative to Vec
+- [[mission-5]] - Custom HashMap implementation
+- [[mission-6]] - Grid storage with Vec<Vec<T>>
 
 ### **Daily Study Connections**
 - [[daily-study/Day10]] - HashMap fundamentals
@@ -398,7 +398,7 @@ Collections are fundamental to all missions:
 
 *Tags: #rust-book #chapter8 #collections #vector #string #hashmap #heap-allocation #dynamic-data*
 
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Vec Type]] | [[String]] | [[HashMap]] | [[Mission5 Overview]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Vec Type]] | [[String]] | [[HashMap]] | [[mission-5]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
 
 ---
 

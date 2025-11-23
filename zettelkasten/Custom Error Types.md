@@ -530,7 +530,7 @@ pub enum GraphError {
 
 ### **Mission Integration**
 - **[[mission-9]]** - Pathfinding error types for Dijkstra and A*
-- **[[Mission7 Overview]]** - Graph structure error handling patterns
+- **[[mission-7]]** - Graph structure error handling patterns
 - **[[Mission11 Overview]]** - Dynamic programming error types and memoization failures
 - **[[Mission12 Overview]]** - Parser error types for input processing
 

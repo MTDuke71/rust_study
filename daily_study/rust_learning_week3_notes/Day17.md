@@ -3,13 +3,13 @@
 > **Learning Context**: Day 17 introduces lifetime annotations, Rust's solution to memory safety in generic code that enables Mission5's safe reference handling without garbage collection.
 
 **Cross-Track Integration:**
-- **Mission Focus**: Lifetimes ensure Mission5 HashMap references remain valid across function boundaries - see [[Mission5 Overview]]
+- **Mission Focus**: Lifetimes ensure Mission5 HashMap references remain valid across function boundaries - see [[mission-5]]
 - **Daily Study**: Builds on Days 15-16 (Traits + Generics) to complete type system foundation
 - **Rust Book**: Core of Chapter 10.3 Validating References with Lifetimes
 
 **Related Zettelkasten Notes:**
 - [[Collections MOC]] - Reference patterns across data structures
-- [[Mission5 Overview]] - REQ-3 safe reference handling with lifetimes
+- [[mission-5]] - REQ-3 safe reference handling with lifetimes
 - [[zettel-index]] - Main learning hub
 
 ## Core Concepts
@@ -528,14 +528,14 @@ From Day 17, you should understand:
 
 **Cross-References:**
 - [[Collections MOC]] - Reference safety patterns across Vec, HashMap, BTreeMap
-- [[Mission5 Overview]] - REQ-3 safe reference handling with lifetime annotations
+- [[mission-5]] - REQ-3 safe reference handling with lifetime annotations
 - [[HashMap Internals]] - Memory safety in hash table implementation
 
 **Next**: Day 18 will cover **Advanced Traits** - associated types, defaults, and trait bounds!
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[HashMap Internals]] | [[zettel-index]]*
 
 *Tags: #lifetimes #memory-safety #references #borrow-checker #mission5 #daily-study #week3 #type-system*
 

@@ -3,7 +3,7 @@
 > **Learning Context**: Day 12 of Week 2 focuses on ordered collections, building toward Mission5's HashMap implementation by understanding the alternative tree-based approach to key-value storage.
 
 **Cross-Track Integration:**
-- **Mission5 Connection**: Contrasts with HashMap's hash-table approach - see [[Mission5 Overview]]
+- **Mission5 Connection**: Contrasts with HashMap's hash-table approach - see [[mission-5]]
 - **Daily Study**: Part of Week 2's collections mastery progression  
 - **Rust Book**: Complements Chapter 8 Collections with ordered alternatives
 
@@ -439,7 +439,7 @@ From Day 12, you should understand:
 
 **Cross-References:**
 - [[Collections MOC]] - See "Tree-Based Collections" section
-- [[Mission5 Overview]] - REQ-4 performance comparison opportunities  
+- [[mission-5]] - REQ-4 performance comparison opportunities  
 - [[HashMap Internals]] - Hash collision vs tree rebalancing trade-offs
 
 **Next**: Day 13 will cover **Advanced Iterators** - transforming and processing collections efficiently!
@@ -537,6 +537,6 @@ fn main() {
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[HashMap Internals]] | [[zettel-index]]*
 
 *Tags: #btreemap #btreeset #ordered-collections #data-structures #daily-study #week2 #collections #performance-comparison*

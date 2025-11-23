@@ -44,7 +44,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 - Trait requirements: K: Eq + Hash
 - Entry API patterns
 - Interior mutability and wrapper patterns
-- Direct alignment with [[Mission5 Overview]]
+- Direct alignment with [[mission-5]]
 
 **Key Takeaway**: HashMap provides fast lookups with hash-based indexing
 
@@ -110,7 +110,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 ### **Zettelkasten Network**
 - [[Collections MOC]] - Complete collection map
 - [[HashMap Internals]] - Deep dive on hash tables
-- [[Mission5 Overview]] - V-Cycle project integration
+- [[mission-5]] - V-Cycle project integration
 - [[rust-concepts-MOC]] - Foundation concepts
 - [[zettel-index]] - Master index
 
@@ -431,7 +431,7 @@ where
 ### **Zettelkasten Notes**
 - [[Collections MOC]] - Complete collection map
 - [[HashMap Internals]] - Hash table deep dive
-- [[Mission5 Overview]] - V-Cycle integration
+- [[mission-5]] - V-Cycle integration
 - [[Performance Optimization Guide]] - Collection performance tips
 - [[zettel-index]] - Master index
 
@@ -461,5 +461,5 @@ where
 
 ---
 
-*Links: [[daily-study/Day08]] | [[daily-study/Day14]] | [[Week 1 Overview]] | [[Week 3 Overview]] | [[Collections MOC]] | [[Mission5 Overview]] | [[zettel-index]]*
+*Links: [[daily-study/Day08]] | [[daily-study/Day14]] | [[Week 1 Overview]] | [[Week 3 Overview]] | [[Collections MOC]] | [[mission-5]] | [[zettel-index]]*
 *Tags: #week-overview #week2 #collections #hashmap #iterators #daily-study #learning-path #mission5*

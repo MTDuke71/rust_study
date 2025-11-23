@@ -384,4 +384,4 @@ The current implementation provides excellent foundation performance suitable fo
 
 *Tags: #mission8 #performance #benchmarking #bfs #dfs #optimization #algorithms #analysis*
 
-*Links: [[../../zettelkasten/zettel-index]] | [[mission8 Overview]] | [[../../zettelkasten/BFS Patterns]] | [[../../zettelkasten/DFS Patterns]] | [[../../zettelkasten/Performance Optimization Guide]] | [[../../tutorials/Mission8_tut/DAY4_EXERCISE_SOLUTIONS]] | [[../../zettelkasten/Missions Overview]]*
+*Links: [[../../zettelkasten/zettel-index]] | [[mission-8]] | [[../../zettelkasten/BFS Patterns]] | [[../../zettelkasten/DFS Patterns]] | [[../../zettelkasten/Performance Optimization Guide]] | [[../../tutorials/Mission8_tut/DAY4_EXERCISE_SOLUTIONS]] | [[../../zettelkasten/Missions Overview]]*

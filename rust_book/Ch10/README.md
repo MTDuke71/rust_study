@@ -4,7 +4,7 @@
 - **Overview**: [[zettelkasten/rust_book/rust-book-ch10]]
 - **Previous**: [[zettelkasten/rust_book/rust-book-ch9]]
 - **Next**: [[zettelkasten/rust_book/rust-book-ch11]]
-- **Missions**: [[mission-3]] - Trait-based algorithms | [[Mission5 Overview]] - Generic collections
+- **Missions**: [[mission-3]] - Trait-based algorithms | [[mission-5]] - Generic collections
 - **Daily Study**: [[daily-study/Day15]] | [[daily-study/Day16]] | [[daily-study/Day17]]
 - **Book MOC**: [[Rust Book MOC]]
 
@@ -421,7 +421,7 @@ Before moving to Chapter 11, ensure you can:
 
 **Missions:**
 - [[mission-3]] - Binary search with trait bounds
-- [[Mission5 Overview]] - Generic HashMap implementation
+- [[mission-5]] - Generic HashMap implementation
 
 **Daily Study:**
 - [[daily-study/Day15]] - Practical trait implementations

@@ -891,7 +891,7 @@ criterion_main!(benches);
 
 *Tags: #performance #optimization #bounds-checking #chess-engines #game-development #unsafe-rust #hot-paths #bitboards #magic-bitboards*
 
-*Links: [[zettel-index]] | [[daily-study/Day23]] | [[Mission6 Overview]] | [[Unsafe Rust]] | [[Performance Optimization]] | [[Chess Engine Architecture]]*
+*Links: [[zettel-index]] | [[daily-study/Day23]] | [[mission-6]] | [[Unsafe Rust]] | [[Performance Optimization]] | [[Chess Engine Architecture]]*
 
 ---
 

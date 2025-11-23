@@ -30,7 +30,7 @@ From the daily study file, Day 10 covers:
 
 ### Zettelkasten Deep Dives
 - [[HashMap Internals]] - Deep dive into hash table implementation
-- [[Mission5 Overview]] - Custom HashMap implementation project
+- [[mission-5]] - Custom HashMap implementation project
 - [[Generic Programming]] - HashMap<K, V> generic design
 
 ### Daily Study Progression
@@ -39,7 +39,7 @@ From the daily study file, Day 10 covers:
 - [[daily-study/Day11]] - Next day (unique collections)
 
 ### Mission Applications
-- [[Mission5 Overview]] - Custom HashMap<K, V> implementation
+- [[mission-5]] - Custom HashMap<K, V> implementation
 - [[Mission5_tut Overview]] - Tutorial series for HashMap
 - [[AoC Patterns MOC]] - HashMap usage in competitive programming
 

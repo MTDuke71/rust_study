@@ -41,7 +41,7 @@ cargo fmt --all
 - **Mission1/** - **Stack** - LIFO operations | [[Mission1 README]]
 - **Mission2/** - **Queue** - Ring buffer + FIFO | [[Mission2 README]]  
 - **Mission3/** - **Binary Search** - Sorted operations | [[Mission3 README]]
-- **Mission4/** - **LinkedList** - Dynamic nodes | [[Mission4 Overview]]
+- **Mission4/** - **LinkedList** - Dynamic nodes | [[mission-4]]
 - **Mission5/** - **HashMap/HashSet** - Hash collections | [[Mission5 README]]
 
 ### **Active Development** 🚧

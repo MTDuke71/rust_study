@@ -94,7 +94,7 @@ Week 3 concepts apply to ALL missions with generic type parameters:
 - Trait bounds: `K: Hash + Eq`
 
 #### **Mission 6: Generic Grid**
-- [[Mission6 Overview]] - `Grid<T>`
+- [[mission-6]] - `Grid<T>`
 - Generic 2D data structures
 
 ---

@@ -99,7 +99,7 @@
 - [[Search Algorithms]] - Linear and binary search implementations
 
 ### **Mission 5: Hash Collections**
-- [[Mission5 Overview]] - Complete HashMap/HashSet implementation
+- [[mission-5]] - Complete HashMap/HashSet implementation
 - [[Hash Function Design]] - Creating effective hash functions
 - [[Collision Resolution]] - Handling hash conflicts
 - [[Iterator Implementation]] - Custom collection iteration

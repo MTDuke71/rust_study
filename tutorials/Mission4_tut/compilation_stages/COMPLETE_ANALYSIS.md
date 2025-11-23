@@ -126,7 +126,7 @@ This is the power of modern systems programming! 🦀
 - [[COMPILE_ERROR_ANALYSIS|../COMPILE_ERROR_ANALYSIS]] - Understanding errors
 
 **Mission4 Implementation:**
-- [[Mission4 Overview|../../../missions/Mission4/README]] - Linked list V-Cycle documentation
+- [[mission-4|../../../missions/Mission4/README]] - Linked list V-Cycle documentation
 
 **Zettelkasten Deep Dives:**
 - [[Compilation Process|../../../zettelkasten/Compilation Process]] - Rust compilation stages

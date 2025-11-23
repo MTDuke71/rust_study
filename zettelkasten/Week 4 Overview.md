@@ -34,7 +34,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 - Understand memory layout (row-major vs column-major)
 
 **Connected to:**
-- [[Mission6 Overview]] - 2D grid utilities and pathfinding
+- [[mission-6]] - 2D grid utilities and pathfinding
 - [[Collections MOC]] - Grid as specialized collection
 - Rust Book Chapter 8.1 - Vectors for grid storage
 
@@ -68,7 +68,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 **Connected to:**
 - [[Manhattan Distance]] - 4-connected distance metric
 - [[Chebyshev Distance]] - 8-connected distance metric
-- [[Mission6 Overview]] - REQ-2 direction system
+- [[mission-6]] - REQ-2 direction system
 
 **Real-World Applications:**
 - Pathfinding algorithms (A*, Dijkstra)
@@ -100,7 +100,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 **Connected to:**
 - [[DFS Patterns]] - Depth-first region exploration
 - [[BFS Patterns]] - Breadth-first region exploration
-- [[Mission7 Overview]] - Graph traversal techniques
+- [[mission-7]] - Graph traversal techniques
 
 **Real-World Applications:**
 - Image segmentation
@@ -131,7 +131,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 
 **Connected to:**
 - [[mission-2]] - Queue implementation
-- [[Mission6 Overview]] - BFS pathfinding utilities
+- [[mission-6]] - BFS pathfinding utilities
 - [[BFS Patterns]] - Breadth-first applications
 - [[A-Star-Algorithm-Deep-Dive]] - Heuristic improvement over BFS
 
@@ -244,7 +244,7 @@ let cmd = parse_command(line)?;
 
 **Connected to:**
 - [[daily-study/Day27]] - Core parsing techniques
-- [[Mission6 Overview]] - Grid input parsing
+- [[mission-6]] - Grid input parsing
 - All AoC problem implementations
 
 **Real-World Applications:**
@@ -433,8 +433,8 @@ for line in input.lines() {
 - `daily_study/rust_learning_week4_notes/Day28.md` - Input Parsing Patterns
 
 ### **Mission Implementations**
-- [[Mission6 Overview]] - Complete 2D grid utilities
-- [[Mission7 Overview]] - Graph algorithms and traversal
+- [[mission-6]] - Complete 2D grid utilities
+- [[mission-7]] - Graph algorithms and traversal
 - [[mission-2]] - Queue foundations
 
 ### **Zettelkasten Deep Dives**
@@ -513,4 +513,4 @@ See how these Week 4 concepts apply to real competitive programming:
 
 *Tags: #week4 #overview #grids #bfs #dfs #parsing #pathfinding #spatial-algorithms #aoc-patterns #learning-track #aoc2015*
 
-*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 3 Overview]] | [[Mission6 Overview]] | [[Mission7 Overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[MONTHLY_CALENDAR]] | [[AoC 2015 MOC]]*
+*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 3 Overview]] | [[mission-6]] | [[mission-7]] | [[BFS Patterns]] | [[DFS Patterns]] | [[MONTHLY_CALENDAR]] | [[AoC 2015 MOC]]*

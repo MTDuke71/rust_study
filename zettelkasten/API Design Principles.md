@@ -652,7 +652,7 @@ impl<T> Vec<T> {
 - **[[Ownership and Borrowing]]** - Memory safety principle
 - **[[Generic Programming]]** - Zero-cost abstraction principle
 - **[[Traits]]** - Abstraction and composability
-- **[[Mission5 Overview]]** - HashMap API design case study
+- **[[mission-5]]** - HashMap API design case study
 - **[[Iterator Patterns]]** - Composability and zero-cost abstractions
 - **[[Testing Patterns]]** - Ensuring principles are upheld
 

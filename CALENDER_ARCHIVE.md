@@ -788,11 +788,11 @@ git add . && git commit -m "Day X progress" # Save daily progress
 - [[mission-1]] - Stack Implementation (V-Cycle foundation)
 - [[mission-2]] - Queue Implementation (Ring buffer patterns)
 - [[mission-3]] - Search Algorithms (Binary search mastery)
-- [[Mission4 Overview]] - Linked Lists (Pointer manipulation)
-- [[Mission5 Overview]] - HashMap & HashSet (Current focus)
-- [[Mission6 Overview]] - Grid Systems (2D spatial algorithms)
-- [[Mission7 Overview]] - Graph Algorithms (BFS/DFS)
-- [[mission8 Overview]] - Advanced Data Structures
+- [[mission-4]] - Linked Lists (Pointer manipulation)
+- [[mission-5]] - HashMap & HashSet (Current focus)
+- [[mission-6]] - Grid Systems (2D spatial algorithms)
+- [[mission-7]] - Graph Algorithms (BFS/DFS)
+- [[mission-8]] - Advanced Data Structures
 
 *Core Learning Concepts:*
 - [[Ownership and Borrowing]] - Rust's memory safety foundation and reference rules

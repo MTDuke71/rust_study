@@ -4,7 +4,7 @@
 - **Overview**: [[zettelkasten/rust_book/rust-book-ch12]]
 - **Previous**: [[zettelkasten/rust_book/rust-book-ch11]]
 - **Next**: [[zettelkasten/rust_book/rust-book-ch13]]
-- **Missions**: [[mission8 Overview]] - Advanced project structure | [[mission-9]] - CLI pathfinding tools
+- **Missions**: [[mission-8]] - Advanced project structure | [[mission-9]] - CLI pathfinding tools
 - **Daily Study**: [[daily-study/Day42]] - Reinforces this chapter
 - **Book MOC**: [[Rust Book MOC]]
 
@@ -298,7 +298,7 @@ fn main() {
 ## 🔗 Related Content
 
 **Missions:**
-- [[mission8 Overview]] - Advanced project structure patterns
+- [[mission-8]] - Advanced project structure patterns
 - [[mission-9]] - CLI pathfinding tools with argument parsing
 
 **Daily Study:**

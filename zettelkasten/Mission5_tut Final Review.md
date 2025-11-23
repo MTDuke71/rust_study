@@ -3,7 +3,7 @@
 **Comprehensive Review of HashMaps & HashSets Learning Journey**
 
 ---
-*Navigation: [[zettel-index]] | [[Mission5_tut Overview]] | [[Mission5 Overview]] | [[Collections MOC]]*
+*Navigation: [[zettel-index]] | [[Mission5_tut Overview]] | [[mission-5]] | [[Collections MOC]]*
 *Quick Links: [[HashMap Internals]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
 ---
 
@@ -179,7 +179,7 @@ Now that you've mastered the tutorial, you should be able to:
 4. **Extend the implementation** with new features
 5. **Apply patterns to AoC problems** using Mission5 as a library
 
-**Next Action**: Review [[Mission5 Overview]] and verify all REQ-1 through REQ-6 are understood.
+**Next Action**: Review [[mission-5]] and verify all REQ-1 through REQ-6 are understood.
 
 ---
 
@@ -221,9 +221,9 @@ Now that you've mastered the tutorial, you should be able to:
 - [[Performance Optimization]] - Benchmarking and profiling techniques
 
 ### **Mission Integration**
-- [[Mission5 Overview]] - Main V-Cycle implementation context
+- [[mission-5]] - Main V-Cycle implementation context
 - [[Mission5 API Reference]] - Complete API documentation
-- [[Mission6 Overview]] - Next mission (Grid systems)
+- [[mission-6]] - Next mission (Grid systems)
 - [[MONTHLY_CALENDAR]] - Overall learning timeline
 
 ---
@@ -260,7 +260,7 @@ If you've worked through all steps and can confidently tackle the challenges abo
 
 *Tags: #mission5-tut #final-review #mastery-checklist #hashmap #hashset #completion #learning-validation #self-assessment*
 
-*Links: [[zettel-index]] | [[Mission5_tut Overview]] | [[Mission5 Overview]] | [[Collections MOC]] | [[HashMap Internals]] | [[Mission6 Overview]] | [[MONTHLY_CALENDAR]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[Mission5_tut Overview]] | [[mission-5]] | [[Collections MOC]] | [[HashMap Internals]] | [[mission-6]] | [[MONTHLY_CALENDAR]] | [[Daily Study MOC]]*
 
 ---
 
@@ -269,7 +269,7 @@ If you've worked through all steps and can confidently tackle the challenges abo
 **Mission5 Documentation:**
 - [[Mission5 README|../missions/Mission5/README]] - Complete V-Cycle implementation
 - [[Mission5 API Reference]] - Detailed API documentation  
-- [[Mission5 Overview]] - Requirements and learning integration
+- [[mission-5]] - Requirements and learning integration
 
 **Core Concepts:**
 - [[HashMap Deep Dive]] - Internal implementation analysis
@@ -297,8 +297,8 @@ If you've worked through all steps and can confidently tackle the challenges abo
 - [[mission-1]] - Stack (ownership foundations)
 - [[mission-2]] - Queue (FIFO patterns)
 - [[mission-3]] - Search algorithms
-- [[Mission4 Overview]] - Linked List (smart pointers)
-- [[Mission6 Overview]] - Grid Systems (spatial algorithms)
+- [[mission-4]] - Linked List (smart pointers)
+- [[mission-6]] - Grid Systems (spatial algorithms)
 
 **AoC Applications:**
 - [[AoC Patterns MOC]] - Common algorithm patterns

@@ -125,7 +125,7 @@ cargo run --example day04_wm6
 
 ### **Mission System**
 - **[[mission-6]]** - Core 2D grid and navigation implementation
-- **[[Mission6 Overview]]** - Requirements and design specification
+- **[[mission-6]]** - Requirements and design specification
 - **[[Mission6_tut]]** - Tutorial progression for mastering grid operations
 
 ### **AoC Pattern Library**

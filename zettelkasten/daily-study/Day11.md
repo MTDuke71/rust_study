@@ -31,7 +31,7 @@ Or navigate directly to: `daily_study/rust_learning_week2_notes/Day11.md`
 
 ### Zettelkasten Deep Dives
 - [[HashSet Operations]] - Deep dive into set operations
-- [[Mission5 Overview]] - HashMap and HashSet implementation
+- [[mission-5]] - HashMap and HashSet implementation
 - [[Collections MOC]] - All collection types overview
 
 ### Daily Study Progression
@@ -40,7 +40,7 @@ Or navigate directly to: `daily_study/rust_learning_week2_notes/Day11.md`
 - [[daily_study/rust_learning_week2_notes/Day12]] - Next day (ordered collections)
 
 ### Mission Applications
-- [[Mission5 Overview]] - Custom HashMap<K, V> and HashSet<T> implementation
+- [[mission-5]] - Custom HashMap<K, V> and HashSet<T> implementation
 - [[Mission5_tut Overview]] - Tutorial series for collections
 - [[AoC Patterns MOC]] - HashSet usage in competitive programming
 

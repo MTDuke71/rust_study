@@ -269,11 +269,11 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 ## 🔗 Integration with Learning Tracks
 
 ### **Mission Connections**
-- Day 7 → [[Mission5 Overview]] - HashMap memoization patterns
+- Day 7 → [[mission-5]] - HashMap memoization patterns
 - Day 8 → String parsing techniques
 - Day 3 → [[Collections MOC]] - HashSet usage
-- Day 9 → [[Mission5 Overview]] - Dictionary for distance matrix
-- Day 10 → [[Mission5 Overview]] - MemoCache usage (educational example of when NOT to cache)
+- Day 9 → [[mission-5]] - Dictionary for distance matrix
+- Day 10 → [[mission-5]] - MemoCache usage (educational example of when NOT to cache)
 
 ### **Daily Study Connections**
 - Day 8 → [[daily-study/Day09]] - String vs &str

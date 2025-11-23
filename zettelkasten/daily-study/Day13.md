@@ -41,7 +41,7 @@ Or navigate directly to: `daily_study/rust_learning_week2_notes/Day13.md`
 - [[daily-study/Day14]] - Next day (error handling patterns)
 
 ### Mission Applications
-- [[Mission5 Overview]] - Iterator integration with HashMap
+- [[mission-5]] - Iterator integration with HashMap
 - [[Mission5_tut Overview]] - Tutorial series for iterators
 - [[AoC Patterns MOC]] - Iterator usage in competitive programming
 

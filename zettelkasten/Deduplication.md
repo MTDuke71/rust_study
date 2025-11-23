@@ -416,7 +416,7 @@ fn deduplicate_normalized(strings: Vec<String>) -> Vec<String> {
 - **[[Set Operations]]** - Unique element operations
 
 ### 🏗️ Mission Integration
-- **[[Mission5 Overview]]** - HashMap applications
+- **[[mission-5]]** - HashMap applications
 - **[Mission5 README](../missions/Mission5/README.md)** - Hash-based collection implementation
 
 ---

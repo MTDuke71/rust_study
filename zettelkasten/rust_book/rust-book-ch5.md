@@ -18,8 +18,8 @@ Structs let you create custom data types that are meaningful for your domain. Th
 
 ## Mission Integration
 
-- **[[Mission5 Overview]]** - HashMap implementation using struct design
-- **[[Mission6 Overview]]** - Grid struct for 2D algorithms
+- **[[mission-5]]** - HashMap implementation using struct design
+- **[[mission-6]]** - Grid struct for 2D algorithms
 - **Method design patterns** from mission implementations
 
 ## Cross-References
@@ -31,7 +31,7 @@ Structs let you create custom data types that are meaningful for your domain. Th
 ## Learning Path
 
 1. Read [[../../rust_book/Ch5/README]] for comprehensive coverage
-2. Apply struct design in [[Mission5 Overview]] HashMap project
+2. Apply struct design in [[mission-5]] HashMap project
 3. Practice method syntax with mission examples
 4. Explore advanced patterns in struct-heavy missions
 
@@ -39,4 +39,4 @@ Structs let you create custom data types that are meaningful for your domain. Th
 
 *Tags: #rust-book #structs #methods #api-design #ch5*
 
-*Links: [[rust-book-ch5-8-review]] | [[../../rust_book/Ch5/README]] | [[Generic Programming]] | [[Mission5 Overview]] | [[zettel-index]]*
+*Links: [[rust-book-ch5-8-review]] | [[../../rust_book/Ch5/README]] | [[Generic Programming]] | [[mission-5]] | [[zettel-index]]*

@@ -266,4 +266,4 @@ cargo run --example step1_priority_queue_foundation
 ---
 
 *Tags: #mission9 #pathfinding #dijkstra #astar #priority-queue #weighted-graphs #algorithms #performance*
-*Links: [[Mission7 Overview]] | [[Mission11 Overview]] | [[Graph Algorithms]] | [[Performance Analysis]] | [[Algorithm Design Patterns]] | [[day2_completion_summary]]*
+*Links: [[mission-7]] | [[Mission11 Overview]] | [[Graph Algorithms]] | [[Performance Analysis]] | [[Algorithm Design Patterns]] | [[day2_completion_summary]]*

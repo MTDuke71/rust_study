@@ -325,7 +325,7 @@ Each mission includes:
 ### **Mission Documentation Standards**
 - **[[mission-1]]** - Stack implementation documentation examples
 - **[[mission-2]]** - Queue API documentation patterns
-- **[[Mission5 Overview]]** - HashMap documentation with performance notes
+- **[[mission-5]]** - HashMap documentation with performance notes
 
 ### **Daily Study Documentation**
 - **[[daily-study/Day10]]** - HashMap concepts with runnable examples

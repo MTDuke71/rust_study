@@ -92,7 +92,7 @@ The solutions follow Rust best practices and demonstrate real-world patterns you
 - [[insert-at-position]] - Complex insertion logic
 
 **Mission Integration:**
-- [[Mission4 Overview]] - Linked list mission
+- [[mission-4]] - Linked list mission
 - [[Mission4_tut Overview]] - Tutorial series
 - [[TROUBLESHOOTING]] - Common issues guide
 

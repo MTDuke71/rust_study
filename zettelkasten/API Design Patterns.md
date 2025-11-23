@@ -731,7 +731,7 @@ impl MyString {
 ### **Mission Implementations**
 - **[[mission-1]]** - Stack API with push/pop operations
 - **[[mission-2]]** - Queue API with FIFO semantics
-- **[[Mission5 Overview]]** - HashMap API with key-value operations
+- **[[mission-5]]** - HashMap API with key-value operations
 
 ### **Standard Library Patterns**
 - **[`Vec<T>`]** - Dynamic array with growth strategies
@@ -767,4 +767,4 @@ impl MyString {
 ---
 
 *Tags: #api-design #patterns #rust #public-interface #ergonomics #performance #forward-compatibility #best-practices*
-*Links: [[API Design Principles]] | [[zettel-index]] | [[rust-book-ch9-12-review]] | [[rust-concepts-MOC]] | [[Mission5 Overview]] | [[Error Handling Patterns]] | [[Iterator Patterns]] | [[anyhow and thiserror]] | [[Rest Patterns]] | [[Memory Address Analysis]]*
+*Links: [[API Design Principles]] | [[zettel-index]] | [[rust-book-ch9-12-review]] | [[rust-concepts-MOC]] | [[mission-5]] | [[Error Handling Patterns]] | [[Iterator Patterns]] | [[anyhow and thiserror]] | [[Rest Patterns]] | [[Memory Address Analysis]]*

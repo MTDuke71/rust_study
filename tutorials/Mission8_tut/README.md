@@ -416,7 +416,7 @@ cargo clean && cargo build -p mission8_tut
 ## 🔗 **Zettelkasten Links**
 
 **Tutorial Concepts:**
-- [[mission8 Overview]] - Mission 8 architectural overview and design decisions
+- [[mission-8]] - Mission 8 architectural overview and design decisions
 - [[BFS Patterns]] - Breadth-first search algorithm patterns and template code
 - [[DFS Patterns]] - Depth-first search algorithm patterns and recursion techniques
 - [[trait-composition]] - Composable algorithm design using Rust traits
@@ -440,7 +440,7 @@ cargo clean && cargo build -p mission8_tut
 
 *Tags: #mission8-tutorial #graph-algorithms #bfs #dfs #tutorial #step-by-step #traits #generics #algorithm-composition #learning*
 
-*Links: [[zettel-index]] | [[mission8 Overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Tutorial Engineering]] | [[3-Track Integration]]*
+*Links: [[zettel-index]] | [[mission-8]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Tutorial Engineering]] | [[3-Track Integration]]*
 
 ---
 

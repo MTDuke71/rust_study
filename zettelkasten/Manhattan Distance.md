@@ -378,7 +378,7 @@ fn closer_manhattan(p1: Point, target: Point, p2: Point) -> bool {
 - [[A-Star-Algorithm-Deep-Dive]] - Uses Manhattan distance as heuristic
 - [[BFS Patterns]] - Naturally finds shortest Manhattan paths
 - [[Week 4 Overview]] - Day 22-23 cover grid navigation
-- [[Mission6 Overview]] - Grid navigation and pathfinding
+- [[mission-6]] - Grid navigation and pathfinding
 
 ### **Mission Integration**
 - **Mission6**: 4-connected grid navigation using Manhattan distance
@@ -423,4 +423,4 @@ fn closer_manhattan(p1: Point, target: Point, p2: Point) -> bool {
 
 *Tags: #manhattan-distance #grid-distance #pathfinding #metrics #algorithms #aoc-patterns #4-connected #heuristic*
 
-*Links: [[zettel-index]] | [[Chebyshev Distance]] | [[Euclidean Distance]] | [[A-Star-Algorithm-Deep-Dive]] | [[BFS Patterns]] | [[Week 4 Overview]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[Chebyshev Distance]] | [[Euclidean Distance]] | [[A-Star-Algorithm-Deep-Dive]] | [[BFS Patterns]] | [[Week 4 Overview]] | [[mission-6]]*

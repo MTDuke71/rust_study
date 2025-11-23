@@ -84,7 +84,7 @@ Traceability Matrix
 - **Status**: Complete with traversal implementations
 
 ### **Mission 4: Linked Lists** ✅
-- **Documentation**: [[Mission4 Overview]] - Linked list implementation with smart pointers
+- **Documentation**: [[mission-4]] - Linked list implementation with smart pointers
 - **Focus**: Node-based dynamic data structure with pointer management
 - **Location**: `Mission4/` + `tutorials/Mission4_tut/`
 - **Key Concepts**: Box<T>, Rc<T>, RefCell<T>, ownership patterns
@@ -374,4 +374,4 @@ The workspace includes complete solutions for Advent of Code 2015, demonstrating
 > **💡 Tip**: Use this MOC to navigate between related missions and find the right learning path for your current skill level and interests.
 
 *Tags: #missions #overview #v-cycle #engineering #projects #requirements #testing #architecture*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[rust-concepts-MOC]] | [[V-Cycle Methodology]] | [[mission8 Overview]] | [[Day 5 Exercise Solutions]] | [[Mission Progress Tracker]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[rust-concepts-MOC]] | [[V-Cycle Methodology]] | [[mission-8]] | [[Day 5 Exercise Solutions]] | [[Mission Progress Tracker]]*

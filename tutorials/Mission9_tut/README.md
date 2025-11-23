@@ -277,4 +277,4 @@ Each tutorial step directly supports main Mission 9 requirements:
 ---
 
 *Tags: #mission9-tutorial #pathfinding #dijkstra #astar #priority-queue #step-by-step #guided-learning*
-*Links: [[mission-9]] | [[Mission7 Overview]] | [[Graph Algorithms]] | [[Performance Analysis]] | [[Tutorial Engineering]]*
+*Links: [[mission-9]] | [[mission-7]] | [[Graph Algorithms]] | [[Performance Analysis]] | [[Tutorial Engineering]]*

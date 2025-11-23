@@ -3,13 +3,13 @@
 > **Learning Context**: Day 18 explores advanced trait patterns that enable Mission5's sophisticated generic APIs and zero-cost abstractions in Rust's type system.
 
 **Cross-Track Integration:**
-- **Mission Focus**: Advanced traits enable Mission5's iterator patterns and extensible APIs - see [[Mission5 Overview]]
+- **Mission Focus**: Advanced traits enable Mission5's iterator patterns and extensible APIs - see [[mission-5]]
 - **Daily Study**: Builds on Days 15-17 foundation to master trait system depth
 - **Rust Book**: Advanced Chapter 10 patterns and Chapter 19 advanced features
 
 **Related Zettelkasten Notes:**
 - [[Collections MOC]] - Advanced trait patterns across data structures
-- [[Mission5 Overview]] - REQ-6 advanced operations using trait patterns
+- [[mission-5]] - REQ-6 advanced operations using trait patterns
 - [[zettel-index]] - Main learning hub
 
 ## Core Concepts
@@ -646,14 +646,14 @@ From Day 18, you should understand:
 
 **Cross-References:**
 - [[Collections MOC]] - Advanced trait patterns in Vec, HashMap, BTreeMap iterators
-- [[Mission5 Overview]] - REQ-6 advanced operations using associated types
+- [[mission-5]] - REQ-6 advanced operations using associated types
 - [[HashMap Internals]] - Iterator implementation details and type relationships
 
 **Next**: Day 19 will cover **Trait Objects** - dynamic dispatch and object-oriented patterns!
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[HashMap Internals]] | [[zettel-index]]*
 
 *Tags: #advanced-traits #associated-types #defaults #supertraits #mission5 #daily-study #week3 #type-system*
 

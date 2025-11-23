@@ -731,4 +731,4 @@ cargo doc -p mission8_tut --open
 
 *Tags: #mission8 #tutorial #bfs #dfs #graph-algorithms #todo #progress*
 
-*Links: [[zettel-index]] | [[mission8 Overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Day 5 Exercise Solutions]] | [[../README]] | [[../../missions/Mission8/TODO]] | [[../../missions/Mission8/README]] | [[Missions Overview]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[mission-8]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Day 5 Exercise Solutions]] | [[../README]] | [[../../missions/Mission8/TODO]] | [[../../missions/Mission8/README]] | [[Missions Overview]] | [[Daily Study MOC]]*

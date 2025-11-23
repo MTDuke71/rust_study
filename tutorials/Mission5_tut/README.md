@@ -4,7 +4,7 @@
 
 ## 🔗 Zettelkasten Navigation
 - **Tutorial Hub**: [[Mission5_tut Overview]] - Complete learning path and alignment
-- **Main Mission**: [[Mission5 Overview]] - V-Cycle implementation context  
+- **Main Mission**: [[mission-5]] - V-Cycle implementation context  
 - **Concepts**: [[HashMap Internals]] - Technical deep dive
 - **Collections**: [[Collections MOC]] - Broader data structures ecosystem
 - **Calendar**: [[MONTHLY_CALENDAR]] - Daily learning schedule integration

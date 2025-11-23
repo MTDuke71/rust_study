@@ -593,7 +593,7 @@ fn measure_performance() {
 ### **Mission-Specific Optimization**
 - **[[mission-1]]** - Stack implementation performance
 - **[[mission-3]]** - Iterator and trait optimization
-- **[[Mission6 Overview]]** - Pathfinding algorithm optimization
+- **[[mission-6]]** - Pathfinding algorithm optimization
 - **[[Chess Engine Architecture]]** - High-performance game engine patterns
 
 ### **Tools and Techniques**
@@ -617,4 +617,4 @@ fn measure_performance() {
 
 *Tags: #performance #optimization #benchmarking #profiling #memory-optimization #cpu-optimization #algorithm-complexity #collections #zero-cost-abstractions*
 
-*Links: [[zettel-index]] | [[zero-cost-abstractions]] | [[Generic Programming]] | [[Collections MOC]] | [[Bounds Checking Performance]] | [[Deduplication]] | [[mission-1]] | [[mission-3]] | [[Mission6 Overview]]*
+*Links: [[zettel-index]] | [[zero-cost-abstractions]] | [[Generic Programming]] | [[Collections MOC]] | [[Bounds Checking Performance]] | [[Deduplication]] | [[mission-1]] | [[mission-3]] | [[mission-6]]*

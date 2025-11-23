@@ -148,7 +148,7 @@ Once you complete this exercise:
 - [[drop-trait]] - Automatic cleanup on scope exit
 
 **Mission Integration:**
-- [[Mission4 Overview]] - Linked list mission context
+- [[mission-4]] - Linked list mission context
 - [[Mission4_tut Overview]] - Complete tutorial progression
 - [[exercise2_rc_patterns]] - Next exercise: shared ownership
 

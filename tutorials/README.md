@@ -163,9 +163,9 @@ All tutorials follow workspace documentation standards:
 ### 🏗️ Mission Integration
 - **[[mission-1|mission-1]]** - Stack implementation
 - **[[mission-3|mission-3]]** - Binary search implementation
-- **[[Mission4 Overview|Mission4 Overview]]** - LinkedList implementation
-- **[[Mission5 Overview|Mission5 Overview]]** - HashMap implementation
-- **[[Mission6 Overview|Mission6 Overview]]** - Grid algorithms
+- **[[mission-4|mission-4]]** - LinkedList implementation
+- **[[mission-5|mission-5]]** - HashMap implementation
+- **[[mission-6|mission-6]]** - Grid algorithms
 - **[missions/](../missions/)** - Full V-Cycle implementations
 
 ### 📖 Learning Resources

@@ -483,4 +483,4 @@ Use Specialized Variants when:
 
 ---
 
-*Links: [[BFS Patterns]] | [[BFS Optimization]] | [[BFS Pathfinding]] | [[Mission7 Overview]] | [[Graph Algorithms]] | [[DFS Patterns]] | [[mission-7]] | [[zettel-index]]*
+*Links: [[BFS Patterns]] | [[BFS Optimization]] | [[BFS Pathfinding]] | [[mission-7]] | [[Graph Algorithms]] | [[DFS Patterns]] | [[mission-7]] | [[zettel-index]]*

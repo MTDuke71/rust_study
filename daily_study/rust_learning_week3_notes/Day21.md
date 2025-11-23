@@ -3,13 +3,13 @@
 > **Learning Context**: Day 21 integrates all Week 3 concepts (traits, generics, lifetimes, trait objects) through Mission5's complete API design, demonstrating real-world application of advanced type system features.
 
 **Cross-Track Integration:**
-- **Mission Focus**: Culminates Mission5's advanced features using all Week 3 concepts in a complete, flexible HashMap API - see [[Mission5 Overview]]
+- **Mission Focus**: Culminates Mission5's advanced features using all Week 3 concepts in a complete, flexible HashMap API - see [[mission-5]]
 - **Daily Study**: Week 3 mastery project combining traits → generics → lifetimes → trait objects
 - **Rust Book**: Chapters 10 (Generics, Traits, Lifetimes) and 17 (Object-Oriented Features) integration
 
 **Related Zettelkasten Notes:**
 - [[Collections MOC]] - Complete type system patterns across collection designs
-- [[Mission5 Overview]] - REQ-8 advanced API design using all Week 3 concepts
+- [[mission-5]] - REQ-8 advanced API design using all Week 3 concepts
 - [[HashMap Internals]] - Implementation patterns for flexible, performant APIs
 - [[zettel-index]] - Main learning hub
 
@@ -850,14 +850,14 @@ From Day 21, you should master:
 
 **Cross-References:**
 - [[Collections MOC]] - Complete type system patterns across all collection designs
-- [[Mission5 Overview]] - REQ-8 advanced HashMap implementation with all Week 3 concepts
+- [[mission-5]] - REQ-8 advanced HashMap implementation with all Week 3 concepts
 - [[HashMap Internals]] - Implementation details for performance-critical generic code
 
 **Next Week**: Week 4 will focus on **Applied Problem Solving** with a emphasis on AoC-Style Problems
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[HashMap Internals]] | [[zettel-index]]*
 
 *Tags: #generics-traits-practice #integration-project #mission5 #advanced-api-design #type-system-mastery #daily-study #week3 #real-world-application*
 

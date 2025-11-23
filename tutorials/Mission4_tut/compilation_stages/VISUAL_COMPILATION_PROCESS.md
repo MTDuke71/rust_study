@@ -1,6 +1,6 @@
 # Visual Compilation Process for step2_push_front.rs
 
-> **Navigation**: [[zettel-index]] | [[Collections MOC]] | [[Mission4_tut Overview]] | [[Mission4 Overview]]
+> **Navigation**: [[zettel-index]] | [[Collections MOC]] | [[Mission4_tut Overview]] | [[mission-4]]
 
 ## 🎯 High-Level Overview
 
@@ -259,7 +259,7 @@ This transformation shows how Rust's high-level safety features compile into eff
 - **[[Performance Optimization Guide]]** - Compilation level optimizations
 
 ### **Main Mission**
-- **[[Mission4 Overview]]** - Mission 4: Linked Lists implementation
+- **[[mission-4]]** - Mission 4: Linked Lists implementation
 - **[[Collections MOC]]** - Data structures hub with Mission 4 integration
 
 ---

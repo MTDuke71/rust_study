@@ -3,7 +3,7 @@
 > **Learning Context**: Day 13 completes Week 2's collections mastery with iterator patterns essential for efficient data processing in Mission5 and AoC problems.
 
 **Cross-Track Integration:**
-- **Mission5 Connection**: Iterator patterns for HashMap traversal and batch operations - see [[Mission5 Overview]]
+- **Mission5 Connection**: Iterator patterns for HashMap traversal and batch operations - see [[mission-5]]
 - **Daily Study**: Culminates Week 2 collections (HashMap → BTreeMap → Iterators)
 - **Rust Book**: Builds on Chapter 13 Functional Language Features with practical applications
 
@@ -834,11 +834,11 @@ fn main() {
 
 **Cross-References:**
 - [[Collections MOC]] - See "Iterator Patterns" section for cross-collection usage
-- [[Mission5 Overview]] - REQ-6 advanced operations benefit from iterator chains
+- [[mission-5]] - REQ-6 advanced operations benefit from iterator chains
 - [[HashMap Internals]] - Internal vs external iteration performance considerations
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[HashMap Internals]] | [[zettel-index]]*
 
 *Tags: #iterators #advanced-patterns #data-processing #collections #daily-study #week2 #functional-programming #mission5*

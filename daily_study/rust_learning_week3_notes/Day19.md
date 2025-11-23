@@ -3,13 +3,13 @@
 > **Learning Context**: Day 19 explores dynamic dispatch through trait objects, enabling Mission5's polymorphic collections and runtime flexibility while understanding performance trade-offs.
 
 **Cross-Track Integration:**
-- **Mission Focus**: Trait objects enable Mission5's flexible value storage and plugin architectures - see [[Mission5 Overview]]
+- **Mission Focus**: Trait objects enable Mission5's flexible value storage and plugin architectures - see [[mission-5]]
 - **Daily Study**: Builds on Week 3's trait mastery for dynamic programming patterns
 - **Rust Book**: Chapter 17 Object-Oriented Programming Features and Chapter 19 Advanced Features
 
 **Related Zettelkasten Notes:**
 - [[Collections MOC]] - Dynamic dispatch patterns across data structures
-- [[Mission5 Overview]] - REQ-6 flexible APIs using trait objects
+- [[mission-5]] - REQ-6 flexible APIs using trait objects
 - [[zettel-index]] - Main learning hub
 
 ## Core Concepts
@@ -708,14 +708,14 @@ From Day 19, you should understand:
 
 **Cross-References:**
 - [[Collections MOC]] - Dynamic dispatch patterns in collection designs
-- [[Mission5 Overview]] - REQ-6 flexible APIs using trait objects for extensibility
+- [[mission-5]] - REQ-6 flexible APIs using trait objects for extensibility
 - [[HashMap Internals]] - Polymorphic value storage and plugin architecture patterns
 
 **Next**: Day 20 will cover **Advanced Lifetimes** - elision rules, `'static`, and complex lifetime relationships!
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[Mission5 Overview]] | [[HashMap Internals]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[HashMap Internals]] | [[zettel-index]]*
 
 *Tags: #trait-objects #dynamic-dispatch #polymorphism #object-safety #mission5 #daily-study #week3 #dyn-keyword*
 

@@ -193,7 +193,7 @@ The debug tools provide complete visibility into the AoC Day 7 circuit simulatio
 
 **Learning Resources:**
 - [[Daily Study MOC]] - Daily learning progression
-- [[Mission5 Overview]] - HashMap implementation (used for memoization)
-- [[Mission7 Overview]] - Graph algorithms (dependency resolution)
+- [[mission-5]] - HashMap implementation (used for memoization)
+- [[mission-7]] - Graph algorithms (dependency resolution)
 
 *Tags: #aoc #aoc2015 #day07 #debugging #tools #memoization #circuit-simulation #hashmap #interactive-tools #powershell*

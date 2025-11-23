@@ -338,4 +338,4 @@ cargo build -p mission8_tut --example day5_exercises_solutions
 
 *Tags: #mission8 #tutorial #bfs #dfs #pathfinding #exercises #solutions #maze-solving #graph-algorithms #advanced*
 
-*Links: [[zettel-index]] | [[mission8 Overview]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Mission8 Tutorial TODO]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Collections MOC]]*
+*Links: [[zettel-index]] | [[mission-8]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Mission8 Tutorial TODO]] | [[Daily Study MOC]] | [[Missions Overview]] | [[Collections MOC]]*

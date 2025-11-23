@@ -3,7 +3,7 @@
 **Key-Value Storage, Set Operations, and Competitive Programming Patterns**
 
 ## � Zettelkasten Links
-- **Overview**: [[Mission5 Overview]] - Complete mission context and learning integration
+- **Overview**: [[mission-5]] - Complete mission context and learning integration
 - **Concepts**: [[HashMap Internals]] - Deep dive into hash table implementation
 - **Tutorial**: [[Mission5_tut Overview]] - Step-by-step guided learning
 - **Integration**: [[Collections MOC]] - Broader data structures context

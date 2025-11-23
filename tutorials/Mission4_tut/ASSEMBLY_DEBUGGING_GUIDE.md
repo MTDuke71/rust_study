@@ -238,7 +238,7 @@ This debugging approach gives you deep insight into how Rust's high-level constr
 - [[memory-layout]] - Struct layout in memory
 
 **Mission Integration:**
-- [[Mission4 Overview]] - Linked list mission
+- [[mission-4]] - Linked list mission
 - [[Mission4_tut Overview]] - Complete tutorial
 - `step2_push_front` - Example source file
 

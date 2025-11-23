@@ -11,7 +11,7 @@
 **Learning Path**: Theory → Implementation → Optimization → Real-world Applications
 
 ### **🚀 Quick Navigation**
-- **📁 Mission 7**: [[Mission7 Overview]] - Graph representation and basic algorithms
+- **📁 Mission 7**: [[mission-7]] - Graph representation and basic algorithms
 - **📁 Mission 9**: [[mission-9]] - Dijkstra and A* pathfinding algorithms  
 - **📚 Tutorials**: [[../tutorials/Mission7_tut/README]] - Step-by-step graph learning
 - **🎯 Current Focus**: [[Daily Notes/2025-10-23]] - Today's algorithm work
@@ -265,5 +265,5 @@ pub trait WeightedGraph {
 
 *Tags: #graph-algorithms #data-structures #pathfinding #network-analysis #algorithm-design #performance-optimization #graph-theory*
 
-*Links: [[Mission7 Overview]] | [[mission-9]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] | 
+*Links: [[mission-7]] | [[mission-9]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] | 
 [[Dijkstra Algorithm]] | [[Bellman-Ford Algorithm]] | [[A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[Priority Queue Patterns]] | [[Binary Heap Data Structure]] | [[kahns-topological-sort]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*

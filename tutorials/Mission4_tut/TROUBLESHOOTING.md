@@ -442,7 +442,7 @@ impl<T> ListBuilder<T> {
 - [[QUICK_DEBUG_START|QUICK_DEBUG_START]] - Fast debugging reference
 
 **Mission4 Implementation:**
-- [[Mission4 Overview|../../missions/Mission4/README]] - Main linked list V-Cycle documentation
+- [[mission-4|../../missions/Mission4/README]] - Main linked list V-Cycle documentation
 
 **Zettelkasten Core Concepts:**
 - [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership rules
@@ -465,7 +465,7 @@ impl<T> ListBuilder<T> {
 **Related Missions:**
 - [[mission-1|../../zettelkasten/Mission1 Overview]] - Stack (ownership basics)
 - [[mission-2|../../zettelkasten/Mission2 Overview]] - Queue (ownership in practice)
-- [[Mission5 Overview|../../zettelkasten/Mission5 Overview]] - HashMap (complex ownership)
+- [[mission-5|../../zettelkasten/Mission5 Overview]] - HashMap (complex ownership)
 
 **Learning Support:**
 - [[rust-concepts-MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
@@ -474,4 +474,4 @@ impl<T> ListBuilder<T> {
 ---
 
 *Tags: #mission4 #troubleshooting #linked-list #borrowing #rc #refcell #error-solutions #debugging*
-*Links: [[README|README]] | [[Mission4 Overview|../../missions/Mission4/README]] | [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]]*
+*Links: [[README|README]] | [[mission-4|../../missions/Mission4/README]] | [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]]*

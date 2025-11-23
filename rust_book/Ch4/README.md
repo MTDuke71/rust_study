@@ -279,8 +279,8 @@ This chapter's concepts are fundamental to all missions:
 - [[mission-1]] - Stack ownership and move semantics
 - [[mission-2]] - Queue ownership with enqueue/dequeue
 - [[mission-3]] - Binary search with borrowed slices
-- [[Mission4 Overview]] - Linked list pointer ownership
-- [[Mission5 Overview]] - HashMap key/value ownership patterns
+- [[mission-4]] - Linked list pointer ownership
+- [[mission-5]] - HashMap key/value ownership patterns
 
 ### **Daily Study Connections**
 - [[daily-study/Day01]] - Reinforces ownership rules

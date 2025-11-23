@@ -27,7 +27,7 @@ See: [[../missions/Mission5/README|Mission5 README.md]] - Scroll to "API Documen
 
 **Mission5 Implementation:**
 - [[Mission5 README|../missions/Mission5/README]] - Complete V-Cycle documentation
-- [[Mission5 Overview]] - Learning integration and requirements
+- [[mission-5]] - Learning integration and requirements
 
 **Mission5 Tutorial:**
 - [[Mission5_tut Overview]] - Step-by-step guided learning
@@ -60,4 +60,4 @@ See: [[../missions/Mission5/README|Mission5 README.md]] - Scroll to "API Documen
 ---
 
 *Tags: #mission5 #api-reference #hashmap #hashset #documentation #redirect*
-*Links: [[zettel-index]] | [[Mission5 Overview]] | [[Collections MOC]]]*
+*Links: [[zettel-index]] | [[mission-5]] | [[Collections MOC]]]*
