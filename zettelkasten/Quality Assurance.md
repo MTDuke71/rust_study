@@ -36,18 +36,28 @@ impl QualityAssurance {
 **Daily Quality Gates**:
 ```rust
 // Pre-commit quality checklist (automated where possible)
+// Comprehensive automation via scripts/quality-pipeline.ps1
 fn daily_quality_gates() -> QualityReport {
     let checks = vec![
+        // Core Quality Checks (always run)
         Check::CompileClean,           // No compiler errors
         Check::ClippyClean,           // cargo clippy -- -D warnings  
         Check::TestCoverage(85),      // Minimum test coverage %
         Check::DocumentationComplete, // All public APIs documented
         Check::FormattingConsistent,  // cargo fmt applied
         Check::NamingConventions,     // Meaningful, intention-revealing names
+        
+        // Extended Quality Checks (full mode)
+        Check::SecurityAudit,         // Known vulnerabilities (cargo-audit)
+        Check::OutdatedDependencies,  // Dependency updates available
+        Check::UnusedDependencies,    // Declared but unused deps
+        Check::DeadCodeDetection,     // Unused functions/structs
     ];
     
     checks.into_iter().all(|check| check.passes())
 }
+
+// See [[../../scripts/QUALITY_PIPELINE_USAGE]] for automated implementation
 ```
 
 **Code Quality Evolution Tracking**:
@@ -274,23 +284,30 @@ Week 5: Can optimize solutions and teach approaches to others
 ```powershell
 # Daily quality assurance script for Windows
 # File: scripts/quality-pipeline.ps1
+# Documentation: scripts/QUALITY_PIPELINE_USAGE.md
 
 # Run with parameters for flexibility
 .\scripts\quality-pipeline.ps1 -Quick -NonInteractive
 
 # Key Features:
+# - 10 comprehensive quality checks (see usage guide for details)
 # - Color-coded output with emojis
 # - Detailed error reporting and metrics tracking  
-# - Optional coverage analysis (cargo-tarpaulin)
+# - Missions-only coverage mode for focused analysis
+# - Security audit and dependency health checks
+# - Dead code detection and unused dependency analysis
 # - JSON output parsing for CI integration
 # - Quality report generation with timestamps
 # - Configurable failure modes (FailFast, etc.)
 
 # Usage Examples:
-.\scripts\quality-pipeline.ps1                    # Full quality pipeline
-.\scripts\quality-pipeline.ps1 -Quick            # Skip coverage for speed  
+.\scripts\quality-pipeline.ps1                    # Full quality pipeline (all 10 checks)
+.\scripts\quality-pipeline.ps1 -Quick            # Essential checks only (~2-3 min)
+.\scripts\quality-pipeline.ps1 -MissionsOnly     # Missions-focused coverage
 .\scripts\quality-pipeline.ps1 -OutputFile qa.txt # Save report to file
 .\scripts\quality-pipeline.ps1 -FailFast         # Stop on first error
+
+# See comprehensive usage guide: [[../../scripts/QUALITY_PIPELINE_USAGE]]
 ```
 
 **Jenkins Integration**:
@@ -310,11 +327,17 @@ stage('Quality Pipeline') {
 # Before each commit (pre-commit hook)
 & "scripts\quality-pipeline.ps1"
 
-# Quick check during development  
+# Quick check during development (essential checks only)  
 & "scripts\quality-pipeline.ps1" -Quick
 
-# Full analysis with detailed reporting
+# Mission-focused coverage analysis
+& "scripts\quality-pipeline.ps1" -MissionsOnly
+
+# Full analysis with detailed reporting (all 10 checks)
 & "scripts\quality-pipeline.ps1" -OutputFile "daily-qa-$(Get-Date -Format 'yyyy-MM-dd').txt"
+
+# For detailed usage patterns and all parameters, see:
+# [[../../scripts/QUALITY_PIPELINE_USAGE]]
 ```
 
 ### **2. Learning Process Automation**
@@ -633,6 +656,8 @@ impl VCycleMission {
 *Quality Assurance Tools:*
 - [[Quality Metrics Dashboard]] - Real-time tracking of code and learning quality  
 - [[Automated Quality Scripts]] - Daily and weekly quality assessment automation
+- **[[../../scripts/QUALITY_PIPELINE_USAGE]]** - Comprehensive local quality pipeline guide (10 checks)
+- **[[../../.github/CODE_COVERAGE_INTEGRATION]]** - Nightly CI/CD coverage analysis documentation
 - [[Quality Gate Checklists]] - Pre-commit and session-end quality verification
 - [[Standards Evolution Framework]] - Adaptive quality requirements based on skill progression
 - [[Jenkins Setup Guide]] - Automated CI/CD pipeline setup for quality assurance

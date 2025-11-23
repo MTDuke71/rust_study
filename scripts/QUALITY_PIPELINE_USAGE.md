@@ -1,7 +1,8 @@
 # Quality Pipeline Usage Guide
 
 **Updated**: 2025-11-23  
-**Script**: `scripts/quality-pipeline.ps1`
+**Script**: `scripts/quality-pipeline.ps1`  
+**Related**: [[../zettelkasten/Quality Assurance]] - Quality assurance philosophy and standards
 
 ---
 
@@ -560,3 +561,21 @@ Analyzes 10 missions (~4-5 min) vs entire workspace (~8-10 min).
 **Last Updated**: 2025-11-23  
 **Script Version**: 2.0 (with extended quality checks)  
 **Maintained By**: Rust Study Workspace Quality Team
+
+---
+
+## 📚 Related Documentation
+
+### Quality Assurance Framework
+- **[[../zettelkasten/Quality Assurance]]** - Quality assurance philosophy, standards, and learning process integration
+- **[[../.github/CODE_COVERAGE_INTEGRATION]]** - Nightly CI/CD code coverage analysis details
+
+### Workflow Documentation  
+- **[[../.github/workflows/nightly-comprehensive-tests.yml]]** - Automated nightly quality pipeline
+- **[[../.github/RUST_TEST_DOCUMENTATION_STANDARDS]]** - Test documentation requirements
+- **[[../.github/RUST_DOCUMENTATION_STANDARDS]]** - Code documentation standards
+
+### Learning System Integration
+- **[[../zettelkasten/V-Cycle Methodology]]** - Quality gates in requirements-driven development
+- **[[../zettelkasten/Progress Tracking]]** - Quality metrics as advancement indicators
+- **[[../zettelkasten/developer-learning-habits]]** - Evidence-based quality practices
