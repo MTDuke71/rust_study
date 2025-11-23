@@ -435,6 +435,106 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - Composition pattern: build generic components, compose for domain problems
 - Less code, better type safety, clearer intent—exactly what mission system designed for
 
+### Day 11: Plutonian Pebbles
+
+**Title**: Plutonian Pebbles  
+**Part 1 Type**: Simulation + Mathematical  
+**Part 1 Description**: Simulate stone transformations for 25 blinks using three rules: 0→1, even-digit split, else multiply by 2024. Count total stones after all blinks.  
+**Part 2 Type**: Optimization + Mathematical  
+**Part 2 Description**: Scale to 75 blinks using memoization—exponential growth makes naive simulation impossible (would take days + terabytes RAM).  
+**Key Concepts**: Exponential growth, dynamic programming, memoization with (stone, blinks_remaining) cache key, digit counting optimization, integer arithmetic, cache efficiency analysis
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Simulation escalation (manageable naive approach → requires optimization through memoization)
+- **Data Structure**: `Vec<u64>` for naive simulation (Part 1), `HashMap<(u64, usize), usize>` for memoization cache (Part 2), math-based digit counting using `log10()`
+- **Complexity**:
+  - Part 1 Naive: O(S^B) where S ≈ 2 (average split factor), B = 25 blinks → ~187K stones
+  - Part 2 Memoized: O(U × B) where U = unique (stone, depth) states ≈ 130K entries
+  - Math optimization: Eliminated heap allocations from string conversion/parsing
+- **AoC Theme**: "Stone transformation simulation" with classic Part 2 optimization challenge (exponential growth → dynamic programming)
+
+**🦀 Rust Conversion Highlights**:
+
+- **From string-based digit counting** → **Math-based `(n as f64).log10().floor() + 1`** eliminating heap allocations
+- **From string parsing for splits** → **Integer arithmetic** `stone / 10^(digits/2)` and `stone % 10^(digits/2)`
+- **From nested loops** → **Recursive memoization** with HashMap cache for O(1) lookups
+- **From manual state tracking** → **Structured cache key `(u64, usize)`** tuple for clear semantics
+- **From ad-hoc optimization** → **Systematic TDD approach** with 18 comprehensive tests including performance analysis
+
+**🏗️ Optimization Journey**:
+
+- **[[../examples/day11_cache_analysis.md]]** - 300+ line comprehensive analysis documenting:
+  - Performance comparison: Naive 25 blinks (20ms) vs memoized (711µs) = 28× speedup
+  - Cache efficiency: 130K entries for 223 trillion stones (1 trillion× memory reduction)
+  - Traced execution example with [0,1,2] for 5 blinks showing cache reuse patterns
+  - Educational deep dive into when/why memoization is necessary
+- **Python Comparison**: Discovered Python reference solution used `log10()` for digit counting, adopted math-based approach
+- **Final Optimization**: Refactored from string-based (`to_string().len()`, string parsing) to integer arithmetic (log10, division/modulo)
+
+**Real-World Complexity Handling**:
+
+- **Exponential Growth**: Naive simulation at 40 blinks takes 10.6s with 233MB RAM, impossible for 75 blinks
+- **Memoization Strategy**: Cache key `(stone_value, blinks_remaining)` captures complete state for reuse
+- **Cache Reuse**: Same stone values at different depths share computation (e.g., stone 1 at depth 2 reused 84 times)
+- **Math Optimization**: `log10()` eliminates String allocations, division/modulo replaces string slicing and parsing
+- **Performance Validation**: Dedicated tests comparing naive vs memoized approaches with timing instrumentation
+
+**Transformation Rules**:
+
+1. **Rule 1**: Stone with value 0 → Stone with value 1
+2. **Rule 2**: Stone with even number of digits → Split into two stones (left half, right half)
+   - Example: 1234 → 12, 34
+   - Implementation: `let divisor = 10^(digits/2); left = stone / divisor; right = stone % divisor`
+3. **Rule 3**: Otherwise → Stone with value multiplied by 2024
+
+**Educational Insights**:
+
+- **When to Memoize**: Time/memory complexity analysis (naive hits time wall at ~40 blinks, memory wall at ~50)
+- **Cache Design**: Choosing cache keys that capture complete state for optimal reuse
+- **Algorithm Selection**: Naive simulation acceptable for small inputs (≤25 blinks), memoization essential for scale
+- **Optimization Patterns**: Comparing string-based vs math-based approaches for performance improvements
+- **Test-Driven Learning**: Performance tests validate optimization benefits with concrete measurements
+- **Helper Functions**: `count_stones_with_trace()` and `count_with_cache_stats()` provide educational instrumentation (marked `#[allow(dead_code)]` for test-only usage)
+
+**Python vs Rust Comparison**:
+
+- **Algorithm Philosophy**:
+  - **Python**: Math-based from start using `floor(log(stone, 10)) + 1` for digit counting
+  - **Rust**: Evolved from string-based (initial) → math-based (optimized after Python comparison)
+- **Implementation Style**:
+  - **Python**: Recursive memoization with `@cache` decorator, math-based digit operations
+  - **Rust**: Manual HashMap cache management, comprehensive test suite (18 tests), educational instrumentation
+- **Performance**:
+  - Both use memoization for Part 2 (75 blinks)
+  - Rust's final math-based approach eliminates heap allocations from String operations
+  - Both achieve optimal algorithmic complexity
+- **Code Philosophy**:
+  - **Python**: Pragmatic racing solution leveraging standard library (`@cache`, `math.log`)
+  - **Rust**: Educational investment with performance analysis, traced examples, comprehensive documentation
+
+**Results**:
+
+- Sample: Part 1 = 55,312 (25 blinks)
+- Puzzle: Part 1 = 187,738 (25 blinks), Part 2 = 223,767,210,249,237 (75 blinks)
+- Cache stats: 129,787 unique (stone, depth) combinations for Part 2
+
+**Test Coverage**: 18 tests including:
+
+- Parsing validation (5 tests)
+- Transformation rules (3 tests)
+- Simulation correctness (4 tests)
+- Memoization correctness (2 tests)
+- Performance analysis (2 ignored tests: naive vs memoized comparison, cache stats)
+- Integration tests (2 tests: Part 1 and Part 2 answers)
+
+**Mission Integration Benefit**:
+
+- Demonstrates optimization patterns applicable to other exponential growth problems
+- Shows progression from naive → optimized approaches with measurable performance gains
+- Educational documentation with traced examples makes complex memoization accessible
+- Test infrastructure validates both correctness and performance characteristics
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -452,15 +552,15 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 | Encoding | 0 | 0 |
 | Graph Algorithms | 2 | 2 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 4 | 2 |
+| Mathematical | 5 | 3 |
 | Number Theory | 0 | 0 |
-| Optimization | 0 | 4 |
+| Optimization | 0 | 5 |
 | Parsing | 0 | 0 |
 | Pattern Matching | 2 | 2 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
 | Search/Traversal | 3 | 3 |
-| Simulation | 2 | 2 |
+| Simulation | 3 | 2 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
@@ -495,6 +595,11 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 26. **Disk Compaction & Gap Management**: Dense disk decoding, dual-pointer compaction, and mission-backed metadata tracking for relocations (Day 9)
 27. **Height-Constrained Graph Traversal**: Graph navigation with edge constraints based on vertex properties (Day 10: topographic hiking trails with +1 height increment requirement)
 28. **Reachability vs Path Enumeration**: Contrasting BFS for unique destination counting with DFS for complete path enumeration (Day 10: Part 1 counts reachable summits, Part 2 counts all distinct routes)
+29. **Exponential Growth Simulation**: Stone/entity multiplication with transformation rules leading to exponential count increases (Day 11: stone transformations with 2× average growth per blink)
+30. **Dynamic Programming with Memoization**: HashMap-based caching of recursive subproblems using composite state keys (Day 11: `(stone_value, blinks_remaining) → count` for O(U×B) vs naive O(S^B))
+31. **Math-Based Optimization**: Replacing string operations with integer arithmetic for performance (Day 11: `log10()` for digit counting, division/modulo for splitting vs string conversion/parsing)
+32. **Cache Efficiency Analysis**: Measuring memoization effectiveness through cache size vs theoretical state space (Day 11: 130K cache entries for 223 trillion stones = 1 trillion× reduction)
+33. **Algorithmic Complexity Thresholds**: Identifying breakpoints where naive approaches become infeasible and optimization is required (Day 11: naive feasible ≤25 blinks, memoization required for 75)
 
 ### Rust-Specific Considerations
 
@@ -508,6 +613,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - **Day 8**: Demonstrates geometric correctness via primitive vector normalization (`gcd`) ensuring complete harmonic line saturation. Highlights mission abstraction benefits (safe `Grid` operations, hashed `Coord`) and contrasts completeness-oriented Rust approach with Python's brevity that risks skipped intermediate points. Establishes reusable pattern for line-of-sight / visibility algorithms with mathematical rigor applied to competitive programming.
 - **Day 9**: Highlights dense-disk simulations built atop Mission 5 collections—`Dictionary` keeps file metadata synchronized during block and whole-file moves while gap segments stay sorted for O(1) lookup. Dedicated checksum helper doubles as regression oracle, and `examples/day09_visualization.rs` streams every intermediate compaction state so the algorithm can be inspected visually. Emphasizes how mission libraries plus instrumentation (examples/ tooling) turn a puzzle solver into a teaching asset.
 - **Day 10**: Exemplifies mission composition at its finest—Mission 6 `Grid<Option<u32>>` + `Coord` type + `neighbors_4()` iterator combined with Mission 8 `Graph` trait + generic `bfs()` algorithm. Demonstrates complete refactoring journey: initial manual implementation (d082003) proves algorithm correctness, Mission 6 refactoring (c6b2283) reduces code by ~10 lines while eliminating entire bug classes (coordinate confusion, bounds errors). **Key Learning**: `Coord` type prevents tuple x/y swapping, `grid.in_bounds()` eliminates manual checks, `neighbors_4()` returns iterator (not Vec) for efficiency, Graph trait enables generic algorithms. Shows BFS for Part 1 reachability vs custom DFS for Part 2 path counting—demonstrates when to use vs extend mission libraries. **Python Comparison**: Python's 50-line pragmatic solution uses O(n) `list.pop(0)` and tuple positions; Rust's 160-line structured solution uses O(1) VecDeque, type-safe Coord, and comprehensive validation. Both correct, different optimization goals (midnight racing vs production learning). **V-Cycle Validation**: Tests prove functional equivalence (12/12 pass), answers match (512/1045), zero clippy warnings after iterator refinement.
+- **Day 11**: Showcases optimization journey from string-based to math-based approaches. Demonstrates dynamic programming with `HashMap<(u64, usize), usize>` memoization cache using composite state keys for O(1) lookups. Highlights performance analysis through dedicated tests comparing naive O(S^B) vs memoized O(U×B) approaches. **Math Optimization**: Evolved from `to_string().len()` to `log10()` for digit counting, from string parsing to integer arithmetic (`division/modulo`) for splitting stones—eliminates heap allocations while maintaining correctness. **Educational Infrastructure**: `count_stones_with_trace()` and `count_with_cache_stats()` test helpers (marked `#[allow(dead_code)]`) provide instrumentation for understanding memoization mechanics. **Test-Driven Analysis**: 18 comprehensive tests including performance validation (naive vs memoized timing), cache efficiency measurement (130K entries for 223T stones), and traced execution examples. **Python Comparison**: Python used math-based approach from start with `@cache` decorator; Rust's manual cache management provides deeper understanding of memoization mechanics. Shows when optimization transitions from optional (Part 1 ≤25 blinks) to essential (Part 2 = 75 blinks), with concrete performance metrics validating the necessity.
 
 ---
 
@@ -548,8 +654,8 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 19, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10*
+*Last Updated: November 22, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---

@@ -88,4 +88,13 @@ fn blink_parallel(stones: Vec<u64>) -> Vec<u64> {
 ```
 
 ---
-*Links: [[day10]] [[day12]] [[AoC 2024 Overview]]*
+
+## 📊 Deep Dive Analysis
+
+See [[../examples/day11_cache_analysis]] for detailed memoization analysis showing:
+- Why naive simulation fails at 75 blinks (time + memory)
+- Cache efficiency: 130K entries vs. 223 trillion stones
+- Complete execution trace of memoization algorithm
+
+---
+*Links: [[day10]] [[day12]] [[AoC 2024 Overview]] [[../examples/day11_cache_analysis]]*
