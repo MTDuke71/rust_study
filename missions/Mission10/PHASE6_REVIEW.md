@@ -4,6 +4,8 @@
 **Reviewer**: AI Assistant  
 **Implementation**: Phase 6 REST API for Mission 10 Union-Find
 
+**Related**: [[../../zettelkasten/mission-10]] | [[../../zettelkasten/Missions Overview]] | [[../../tutorials/Mission10_tut/README]]
+
 ---
 
 ## 📊 **Review Summary**
@@ -307,3 +309,24 @@ The REST API implementation is now:
 *Review Date*: November 18, 2025  
 *Reviewer*: AI Assistant  
 *Status*: ✅ Phase 6 Complete - Ready for Student Use
+
+---
+
+## Links
+
+**Mission Context**:
+- [[../../zettelkasten/mission-10]] - Mission 10 Union-Find core concepts
+- [[../../zettelkasten/Missions Overview]] - All missions progress tracking
+
+**Implementation**:
+- [[../../tutorials/Mission10_tut/README]] - Tutorial progression overview
+- [[../../tutorials/Mission10_tut/examples/step8_rest_api/TUTORIAL]] - Comprehensive REST API tutorial
+
+**Related Concepts**:
+- [[../../zettelkasten/rest-api-design]] - RESTful API design patterns
+- [[../../zettelkasten/axum-framework]] - Axum web framework concepts
+- [[../../zettelkasten/async-rust]] - Async/await patterns in Rust
+
+**Quality Assurance**:
+- [[../../zettelkasten/Quality Assurance]] - Quality standards and testing
+- [[../../zettelkasten/v-cycle-methodology]] - V-Cycle development approach
