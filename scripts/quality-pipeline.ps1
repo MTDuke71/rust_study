@@ -3,7 +3,7 @@
 
 # File: scripts/quality-pipeline.ps1
 param(
-    [Parameter(HelpMessage="Run quick checks only (skip coverage)")]
+    [Parameter(HelpMessage="Run quick checks only (skip coverage and heavy analysis)")]
     [switch]$Quick,
     
     [Parameter(HelpMessage="Skip interactive prompts")]
@@ -13,7 +13,16 @@ param(
     [string]$OutputFile,
     
     [Parameter(HelpMessage="Fail fast on first error")]
-    [switch]$FailFast
+    [switch]$FailFast,
+    
+    [Parameter(HelpMessage="Run missions-only coverage (default: workspace)")]
+    [switch]$MissionsOnly,
+    
+    [Parameter(HelpMessage="Skip security audit check")]
+    [switch]$SkipSecurityAudit,
+    
+    [Parameter(HelpMessage="Skip dependency checks")]
+    [switch]$SkipDependencyChecks
 )
 
 # Quality Pipeline Configuration
@@ -79,10 +88,19 @@ $QualityReport = @{
     TestResults = @{ Passed = 0; Failed = 0; Total = 0 }
     FailedTests = @()
     Coverage = $null
+    MissionCoverage = @()
     DocumentationWarnings = 0
     DocumentationDetails = @()
     Formatting = $null
     FormattingDetails = @()
+    SecurityVulnerabilities = 0
+    SecurityDetails = @()
+    OutdatedDependencies = 0
+    OutdatedDetails = @()
+    UnusedDependencies = 0
+    UnusedDetails = @()
+    DeadCodeWarnings = 0
+    DeadCodeDetails = @()
 }
 
 function Start-QualityPipeline {
@@ -108,6 +126,17 @@ Working Directory: $PWD
     
     if (-not $Quick) {
         $checks += @{ Name = "Coverage Analysis"; Function = "Test-Coverage" }
+        
+        if (-not $SkipSecurityAudit) {
+            $checks += @{ Name = "Security Audit"; Function = "Test-SecurityAudit" }
+        }
+        
+        if (-not $SkipDependencyChecks) {
+            $checks += @{ Name = "Outdated Dependencies"; Function = "Test-OutdatedDependencies" }
+            $checks += @{ Name = "Unused Dependencies"; Function = "Test-UnusedDependencies" }
+        }
+        
+        $checks += @{ Name = "Dead Code Detection"; Function = "Test-DeadCode" }
     }
     
     foreach ($check in $checks) {
@@ -389,6 +418,13 @@ function Test-Coverage {
         return
     }
     
+    # Determine coverage scope
+    if ($MissionsOnly) {
+        Write-QAInfo "Running missions-only coverage analysis..."
+        Test-MissionsCoverage
+        return
+    }
+    
     try {
         # Run tarpaulin and capture output
         $coverageOutput = & cargo tarpaulin --workspace --timeout 120 --out Json 2>&1
@@ -478,6 +514,262 @@ function Test-Coverage {
     }
 }
 
+function Test-MissionsCoverage {
+    Write-QAInfo "📊 Analyzing coverage for missions only..."
+    
+    $missionDirs = Get-ChildItem -Path "missions" -Directory -Filter "Mission*" | Sort-Object Name
+    
+    if ($missionDirs.Count -eq 0) {
+        Write-QAWarning "No mission directories found"
+        return
+    }
+    
+    $missionReports = @()
+    $totalMissionCoverage = 0
+    $successfulMissions = 0
+    
+    foreach ($missionDir in $missionDirs) {
+        $missionName = $missionDir.Name
+        Write-QAInfo "  Analyzing $missionName..."
+        
+        try {
+            # Run tarpaulin for this specific mission
+            Push-Location $missionDir.FullName
+            
+            $coverageOutput = & cargo tarpaulin --out Json --timeout 120 2>&1
+            $exitCode = $LASTEXITCODE
+            
+            if ($exitCode -eq 0 -and (Test-Path "tarpaulin-report.json")) {
+                $coverageData = Get-Content "tarpaulin-report.json" -Raw | ConvertFrom-Json
+                
+                $totalLines = 0
+                $coveredLines = 0
+                
+                foreach ($file in $coverageData.files.PSObject.Properties) {
+                    $totalLines += $file.Value.coverable
+                    $coveredLines += $file.Value.covered
+                }
+                
+                $coverage = if ($totalLines -gt 0) { [math]::Round(($coveredLines / $totalLines) * 100, 2) } else { 0 }
+                
+                $missionReports += @{
+                    Mission = $missionName
+                    Coverage = $coverage
+                    Lines = $totalLines
+                    Covered = $coveredLines
+                }
+                
+                $totalMissionCoverage += $coverage
+                $successfulMissions++
+                
+                Write-QASuccess "  $missionName: $coverage% coverage"
+                
+                # Clean up JSON file
+                Remove-Item "tarpaulin-report.json" -ErrorAction SilentlyContinue
+            } else {
+                Write-QAWarning "  $missionName: Coverage analysis failed"
+            }
+        }
+        catch {
+            Write-QAWarning "  $missionName: Error - $_"
+        }
+        finally {
+            Pop-Location
+        }
+    }
+    
+    if ($successfulMissions -gt 0) {
+        $avgCoverage = [math]::Round($totalMissionCoverage / $successfulMissions, 2)
+        $QualityReport.Coverage = "$avgCoverage% (avg across $successfulMissions missions)"
+        $QualityReport.MissionCoverage = $missionReports
+        
+        Write-QASuccess "Average mission coverage: $avgCoverage%"
+        
+        # Save detailed mission coverage report
+        $missionCoverageReport = @()
+        $missionCoverageReport += "MISSION COVERAGE REPORT"
+        $missionCoverageReport += "======================="
+        $missionCoverageReport += ""
+        $missionCoverageReport += "Average Coverage: $avgCoverage%"
+        $missionCoverageReport += "Missions Analyzed: $successfulMissions"
+        $missionCoverageReport += ""
+        $missionCoverageReport += "INDIVIDUAL MISSION RESULTS:"
+        $missionCoverageReport += "---------------------------"
+        
+        foreach ($report in $missionReports | Sort-Object -Property Coverage -Descending) {
+            $status = if ($report.Coverage -ge 85) { "✅" } elseif ($report.Coverage -ge 70) { "⚠️" } else { "❌" }
+            $missionCoverageReport += "$status $($report.Mission): $($report.Coverage)% ($($report.Covered)/$($report.Lines) lines)"
+        }
+        
+        $missionCoverageFile = Join-Path $ReportsDir "Mission_Coverage_$Timestamp.txt"
+        $missionCoverageReport | Out-File -FilePath $missionCoverageFile -Encoding UTF8
+        Write-QAInfo "Mission coverage report saved to $missionCoverageFile"
+    }
+}
+
+function Test-SecurityAudit {
+    Write-QAInfo "🔒 Running security audit..."
+    
+    # Check if cargo-audit is installed
+    if (-not (Get-Command "cargo-audit" -ErrorAction SilentlyContinue)) {
+        Write-QAWarning "cargo-audit not installed. Run: cargo install cargo-audit"
+        $QualityReport.SecurityVulnerabilities = "Not Available"
+        return
+    }
+    
+    try {
+        $auditOutput = & cargo audit --json 2>&1
+        $exitCode = $LASTEXITCODE
+        
+        # Save audit results
+        Save-CheckResult -CheckName "Security_Audit" -Output ($auditOutput -join "`n") -ExitCode $exitCode
+        
+        if ($exitCode -eq 0) {
+            # Parse JSON output
+            try {
+                $auditData = $auditOutput -join "`n" | ConvertFrom-Json
+                $vulnCount = if ($auditData.vulnerabilities) { $auditData.vulnerabilities.found.Count } else { 0 }
+                
+                $QualityReport.SecurityVulnerabilities = $vulnCount
+                
+                if ($vulnCount -eq 0) {
+                    Write-QASuccess "No known security vulnerabilities found"
+                } else {
+                    $QualityReport.SecurityDetails = $auditData.vulnerabilities.list | ForEach-Object {
+                        "$($_.advisory.id): $($_.advisory.title) in $($_.package.name) $($_.package.version)"
+                    }
+                    Write-QAWarning "Found $vulnCount security vulnerabilities"
+                    $QualityReport.SecurityDetails | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+                }
+            }
+            catch {
+                Write-QAWarning "Failed to parse audit JSON, using text output"
+                $QualityReport.SecurityVulnerabilities = 0
+                Write-QASuccess "Security audit completed"
+            }
+        } else {
+            Write-QAWarning "Security audit completed with warnings"
+        }
+    }
+    catch {
+        Write-QAWarning "Security audit failed: $_"
+        $QualityReport.SecurityVulnerabilities = "Failed"
+    }
+}
+
+function Test-OutdatedDependencies {
+    Write-QAInfo "📦 Checking for outdated dependencies..."
+    
+    # Check if cargo-outdated is installed
+    if (-not (Get-Command "cargo-outdated" -ErrorAction SilentlyContinue)) {
+        Write-QAWarning "cargo-outdated not installed. Run: cargo install cargo-outdated"
+        $QualityReport.OutdatedDependencies = "Not Available"
+        return
+    }
+    
+    try {
+        $outdatedOutput = & cargo outdated --root-deps-only 2>&1
+        $exitCode = $LASTEXITCODE
+        
+        # Save outdated dependencies results
+        Save-CheckResult -CheckName "Outdated_Dependencies" -Output ($outdatedOutput -join "`n") -ExitCode $exitCode
+        
+        # Count outdated dependencies from output
+        $outdatedLines = $outdatedOutput | Where-Object { $_ -match '^\s*\w+' -and $_ -notmatch 'Name|---' }
+        $outdatedCount = ($outdatedLines | Measure-Object).Count
+        
+        $QualityReport.OutdatedDependencies = $outdatedCount
+        
+        if ($outdatedCount -eq 0) {
+            Write-QASuccess "All dependencies are up to date"
+        } else {
+            $QualityReport.OutdatedDetails = $outdatedLines
+            Write-QAWarning "Found $outdatedCount outdated dependencies"
+            $outdatedLines | Select-Object -First 10 | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+            if ($outdatedCount -gt 10) {
+                Write-Host "  ... and $($outdatedCount - 10) more" -ForegroundColor Gray
+            }
+        }
+    }
+    catch {
+        Write-QAWarning "Outdated dependency check failed: $_"
+        $QualityReport.OutdatedDependencies = "Failed"
+    }
+}
+
+function Test-UnusedDependencies {
+    Write-QAInfo "🧹 Checking for unused dependencies..."
+    
+    # Check if cargo-udeps is installed
+    if (-not (Get-Command "cargo-udeps" -ErrorAction SilentlyContinue)) {
+        Write-QAWarning "cargo-udeps not installed. Run: cargo install cargo-udeps --locked"
+        Write-QAWarning "Note: cargo-udeps requires nightly toolchain"
+        $QualityReport.UnusedDependencies = "Not Available"
+        return
+    }
+    
+    try {
+        # cargo-udeps requires nightly
+        $udepsOutput = & cargo +nightly udeps --all-targets 2>&1
+        $exitCode = $LASTEXITCODE
+        
+        # Save unused dependencies results
+        Save-CheckResult -CheckName "Unused_Dependencies" -Output ($udepsOutput -join "`n") -ExitCode $exitCode
+        
+        # Parse output for unused dependencies
+        $unusedLines = $udepsOutput | Where-Object { $_ -match 'unused' }
+        $unusedCount = ($unusedLines | Measure-Object).Count
+        
+        $QualityReport.UnusedDependencies = $unusedCount
+        
+        if ($unusedCount -eq 0) {
+            Write-QASuccess "No unused dependencies found"
+        } else {
+            $QualityReport.UnusedDetails = $unusedLines
+            Write-QAWarning "Found $unusedCount unused dependencies"
+            $unusedLines | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+        }
+    }
+    catch {
+        Write-QAWarning "Unused dependency check failed: $_"
+        $QualityReport.UnusedDependencies = "Failed"
+    }
+}
+
+function Test-DeadCode {
+    Write-QAInfo "💀 Detecting dead code..."
+    
+    try {
+        # Run clippy with dead_code lint
+        $deadCodeOutput = & cargo clippy --workspace -- -W dead_code 2>&1
+        $exitCode = $LASTEXITCODE
+        
+        # Save dead code results
+        Save-CheckResult -CheckName "Dead_Code" -Output ($deadCodeOutput -join "`n") -ExitCode $exitCode
+        
+        # Count dead code warnings
+        $deadCodeLines = $deadCodeOutput | Where-Object { $_ -match 'dead_code|never used|never constructed' }
+        $deadCodeCount = ($deadCodeLines | Measure-Object).Count
+        
+        $QualityReport.DeadCodeWarnings = $deadCodeCount
+        
+        if ($deadCodeCount -eq 0) {
+            Write-QASuccess "No dead code detected"
+        } else {
+            $QualityReport.DeadCodeDetails = $deadCodeLines
+            Write-QAWarning "Found $deadCodeCount potential dead code instances"
+            $deadCodeLines | Select-Object -First 15 | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+            if ($deadCodeCount -gt 15) {
+                Write-Host "  ... and $($deadCodeCount - 15) more" -ForegroundColor Gray
+            }
+        }
+    }
+    catch {
+        Write-QAWarning "Dead code detection failed: $_"
+        $QualityReport.DeadCodeWarnings = "Failed"
+    }
+}
+
 function Generate-QualityReport {
     $endTime = Get-Date
     $duration = $endTime - $QualityReport.StartTime
@@ -537,6 +829,58 @@ $(if ($QualityReport.DocumentationDetails.Count -gt 30) { "  ... (showing first 
 "@
     }
     
+    # Mission coverage breakdown
+    if ($QualityReport.MissionCoverage.Count -gt 0) {
+        $detailSections += @"
+
+📊 MISSION COVERAGE BREAKDOWN:
+$("-" * 50)
+$($QualityReport.MissionCoverage | ForEach-Object { "  $($_.Mission): $($_.Coverage)% ($($_.Covered)/$($_.Lines) lines)" } | Out-String)
+"@
+    }
+    
+    # Security vulnerabilities
+    if ($QualityReport.SecurityVulnerabilities -gt 0 -and $QualityReport.SecurityDetails.Count -gt 0) {
+        $detailSections += @"
+
+🔒 SECURITY VULNERABILITIES ($($QualityReport.SecurityVulnerabilities)):
+$("-" * 50)
+$($QualityReport.SecurityDetails | ForEach-Object { "  $_" } | Out-String)
+"@
+    }
+    
+    # Outdated dependencies
+    if ($QualityReport.OutdatedDependencies -gt 0 -and $QualityReport.OutdatedDetails.Count -gt 0) {
+        $detailSections += @"
+
+📦 OUTDATED DEPENDENCIES ($($QualityReport.OutdatedDependencies)):
+$("-" * 50)
+$($QualityReport.OutdatedDetails | Select-Object -First 20 | ForEach-Object { "  $_" } | Out-String)
+$(if ($QualityReport.OutdatedDetails.Count -gt 20) { "  ... (showing first 20 of $($QualityReport.OutdatedDetails.Count) outdated deps)" })
+"@
+    }
+    
+    # Unused dependencies
+    if ($QualityReport.UnusedDependencies -gt 0 -and $QualityReport.UnusedDetails.Count -gt 0) {
+        $detailSections += @"
+
+🧹 UNUSED DEPENDENCIES ($($QualityReport.UnusedDependencies)):
+$("-" * 50)
+$($QualityReport.UnusedDetails | ForEach-Object { "  $_" } | Out-String)
+"@
+    }
+    
+    # Dead code
+    if ($QualityReport.DeadCodeWarnings -gt 0 -and $QualityReport.DeadCodeDetails.Count -gt 0) {
+        $detailSections += @"
+
+💀 DEAD CODE WARNINGS ($($QualityReport.DeadCodeWarnings)):
+$("-" * 50)
+$($QualityReport.DeadCodeDetails | Select-Object -First 20 | ForEach-Object { "  $_" } | Out-String)
+$(if ($QualityReport.DeadCodeDetails.Count -gt 20) { "  ... (showing first 20 of $($QualityReport.DeadCodeDetails.Count) warnings)" })
+"@
+    }
+    
     $report = @"
 
 🎯 QUALITY ASSURANCE REPORT
@@ -552,7 +896,13 @@ Duration: $($duration.ToString('mm\:ss'))
   Coverage: $($QualityReport.Coverage)
   Doc Warnings: $($QualityReport.DocumentationWarnings)
 
-🎉 OVERALL STATUS: $(if ($QualityReport.TestResults.Failed -eq 0 -and $QualityReport.ClippyIssues -eq 0 -and $QualityReport.CompilationErrors.Count -eq 0) { "✅ PASSED" } else { "❌ ISSUES FOUND" })
+🔒 SECURITY & DEPENDENCIES:
+  Security Vulnerabilities: $($QualityReport.SecurityVulnerabilities)
+  Outdated Dependencies: $($QualityReport.OutdatedDependencies)
+  Unused Dependencies: $($QualityReport.UnusedDependencies)
+  Dead Code Warnings: $($QualityReport.DeadCodeWarnings)
+
+🎉 OVERALL STATUS: $(if ($QualityReport.TestResults.Failed -eq 0 -and $QualityReport.ClippyIssues -eq 0 -and $QualityReport.CompilationErrors.Count -eq 0 -and $QualityReport.SecurityVulnerabilities -eq 0) { "✅ PASSED" } else { "❌ ISSUES FOUND" })
 $($detailSections -join "`n")
 
 "@
