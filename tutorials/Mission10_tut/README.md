@@ -126,6 +126,7 @@ Competitive programming patterns:
 
 ### Step 8: REST API with OpenAPI/Swagger ✅
 **File**: `examples/step8_rest_api/`  
+**Quick Start**: [[examples/step8_rest_api/README]] - Setup and API reference
 **Status**: ✅ COMPLETE
 
 Build a production-ready REST API:

@@ -320,6 +320,7 @@ The REST API implementation is now:
 
 **Implementation**:
 - [[../../tutorials/Mission10_tut/README]] - Tutorial progression overview
+- [[../../tutorials/Mission10_tut/examples/step8_rest_api/README]] - Step 8 quick start and API reference
 - [[../../tutorials/Mission10_tut/examples/step8_rest_api/TUTORIAL]] - Comprehensive REST API tutorial
 
 **Related Concepts**:

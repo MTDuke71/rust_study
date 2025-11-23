@@ -1,5 +1,7 @@
 # Step 8: REST API with OpenAPI/Swagger
 
+**Related**: [[../../README|Mission 10 Tutorial]] | [[TUTORIAL|Comprehensive Tutorial Guide]] | [[../../../../../missions/Mission10/PHASE6_REVIEW|Phase 6 Review]]
+
 This example demonstrates how to wrap the Union-Find data structure in a production-ready REST API using Axum and Utoipa.
 
 ## 🚀 Getting Started
@@ -85,6 +87,24 @@ See [TUTORIAL.md](TUTORIAL.md) for:
 
 ---
 
-*Next*: See [TUTORIAL.md](TUTORIAL.md) for comprehensive learning guide
-*Mission 10*: See [../../../../../missions/Mission10/README.md](../../../../../missions/Mission10/README.md)
+## Links
+
+**Tutorial Progression**:
+- [[../../README]] - Mission 10 Tutorial overview and all 7 steps
+- [[TUTORIAL]] - Comprehensive REST API learning guide (1400+ lines)
+- [[../step5_applications]] - Step 5: Real-world Union-Find applications
+
+**Mission Context**:
+- [[../../../../../missions/Mission10/README]] - Mission 10 main implementation
+- [[../../../../../missions/Mission10/PHASE6_REVIEW]] - Phase 6 completion review and quality report
+- [[../../../../../zettelkasten/missions/mission-10]] - Mission 10 zettelkasten page
+
+**Related Concepts**:
+- [[../../../../../zettelkasten/rest-api-design]] - RESTful API design patterns
+- [[../../../../../zettelkasten/axum-framework]] - Axum web framework concepts
+- [[../../../../../zettelkasten/async-rust]] - Async/await patterns in Rust
+
+**Learning Integration**:
+- [[../../../../../zettelkasten/Missions Overview]] - All missions progress tracking
+- [[../../../../../zettelkasten/Quality Assurance]] - Quality standards and testing
 
