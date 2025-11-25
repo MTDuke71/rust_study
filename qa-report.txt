@@ -1,43 +1,28 @@
 
 🎯 QUALITY ASSURANCE REPORT
 ===========================
-Timestamp: 2025-11-25 16:35:57
-Duration: 06:56
+Timestamp: 2025-11-25 16:51:49
+Duration: 07:00
 
 📊 CODE QUALITY RESULTS:
   Compilation: ✅ Clean
   Formatting: ✅ Already formatted  
   Clippy Issues: 0
   Tests: 1711/1711 passed
-  Coverage: 37.7%
+  Coverage: 37.69%
   Doc Warnings: 0
 
 🔒 SECURITY & DEPENDENCIES:
   Security Vulnerabilities: 1
-  Outdated Dependencies: 16
+  Outdated Dependencies: 1
   Unused Dependencies: 0
   Dead Code Warnings: 0
 
 🎉 OVERALL STATUS: ❌ ISSUES FOUND
 
-📦 OUTDATED DEPENDENCIES (16):
+📦 OUTDATED DEPENDENCIES (1):
 --------------------------------------------------
-  guessing_game
-  cargo-example
-  mission3
-  mission8
-  mission9
-  mission10
-  mission5_tut
-  mission9_tut
-  aoc_pattern_recognition
-  aoc2015
-  aoc2024
-  rust_learning_week5_error_handling
-  futures_basics
-  async_concurrency
-  async_streams
-  async_traits
+  All dependencies are up to date, yay!
 
 
 

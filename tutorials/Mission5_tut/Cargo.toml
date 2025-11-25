@@ -8,7 +8,7 @@ solutions = []
 
 [dependencies]
 anyhow = "1.0.100"
-regex = "1.11.3"
+regex = "1.12.2"
 # No external dependencies - pure Rust std library focus
 # Educational approach using HashMap and HashSet directly
 

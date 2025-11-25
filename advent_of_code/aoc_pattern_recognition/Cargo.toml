@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 rand = "0.9.2"
-regex = "1.11.1"
+regex = "1.12.2"
 
 [[example]]
 name = "grid_patterns_demo"

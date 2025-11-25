@@ -7,14 +7,14 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 md5 = "0.8"
-regex = "1"
+regex = "1.12.2"
 serde_json = "1.0"
 mission5 = { path = "../../missions/Mission5" }
 mission6 = { path = "../../missions/Mission6" }
 mission9 = { path = "../../missions/Mission9" }
 
 [dev-dependencies]
-criterion = "0.5"
+criterion = "0.7.0"
 
 [[bench]]
 name = "day10_comparison"
