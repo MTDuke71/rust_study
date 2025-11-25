@@ -5,9 +5,6 @@ edition = "2021"
 description = "Step-by-step tutorial for learning Grids & 2D Arrays programming"
 authors = ["Rust Study Workspace"]
 
-[dependencies]
-mission6 = { path = "../../missions/Mission6" }
-
 [[example]]
 name = "step1_grid_setup"
 path = "examples/step1_grid_setup.rs"

@@ -6,11 +6,10 @@
 use mission9::constraint_based::*;
 use mission9::error::*;
 use mission9::graph::*;
-use mission9::hierarchical::*;
 use mission9::heuristic::*;
+use mission9::hierarchical::*;
 use mission9::multi_objective::*;
 use mission9::pathfinder::*;
-use mission9::*;
 
 // ============================================================================
 // ERROR MODULE TESTS (error.rs: 0% coverage)
@@ -19,7 +18,7 @@ use mission9::*;
 #[test]
 fn test_error_is_recoverable() {
     // Test is_recoverable() for all PathfindingError variants
-    
+
     // Recoverable errors
     assert!(PathfindingError::NoPathExists { start: 0, goal: 1 }.is_recoverable());
     assert!(PathfindingError::InvalidHeuristic { value: -1.0 }.is_recoverable());
@@ -36,8 +35,14 @@ fn test_error_is_recoverable() {
     assert!(!PathfindingError::InvalidNode { node: 2 }.is_recoverable());
     assert!(!PathfindingError::NegativeWeights.is_recoverable());
     assert!(!PathfindingError::InvalidGraph.is_recoverable());
-    assert!(!PathfindingError::QueueError { message: "test".to_string() }.is_recoverable());
-    assert!(!PathfindingError::InvalidConfiguration { message: "test".to_string() }.is_recoverable());
+    assert!(!PathfindingError::QueueError {
+        message: "test".to_string()
+    }
+    .is_recoverable());
+    assert!(!PathfindingError::InvalidConfiguration {
+        message: "test".to_string()
+    }
+    .is_recoverable());
     assert!(!PathfindingError::InvalidInput("test".to_string()).is_recoverable());
 }
 
@@ -77,7 +82,10 @@ fn test_error_severity() {
     );
 
     assert_eq!(
-        PathfindingError::QueueError { message: "test".to_string() }.severity(),
+        PathfindingError::QueueError {
+            message: "test".to_string()
+        }
+        .severity(),
         ErrorSeverity::Fatal
     );
 
@@ -92,12 +100,18 @@ fn test_error_severity() {
     );
 
     assert_eq!(
-        PathfindingError::InvalidConfiguration { message: "test".to_string() }.severity(),
+        PathfindingError::InvalidConfiguration {
+            message: "test".to_string()
+        }
+        .severity(),
         ErrorSeverity::Fatal
     );
 
     assert_eq!(
-        PathfindingError::ConstraintViolation { constraint: "test".to_string() }.severity(),
+        PathfindingError::ConstraintViolation {
+            constraint: "test".to_string()
+        }
+        .severity(),
         ErrorSeverity::Warning
     );
 
@@ -188,7 +202,7 @@ fn test_contraction_hierarchy_query() {
     // Query for path from 0 to 3
     let result = ch.query(0, 3);
     assert!(result.is_ok());
-    
+
     // Query might return None if path not found due to contractions
     if let Ok(Some((cost, path))) = result {
         assert!(cost >= 0.0);
@@ -291,7 +305,8 @@ fn test_waypoint_constraint() {
 
 #[test]
 fn test_path_constraint_type_enum() {
-    let forbidden = PathConstraintType::ForbiddenZone(ForbiddenZoneConstraint::new().add_forbidden_node(5));
+    let forbidden =
+        PathConstraintType::ForbiddenZone(ForbiddenZoneConstraint::new().add_forbidden_node(5));
     let context = PathContext::new(0);
 
     assert!(forbidden.is_valid_node(0, &context));
@@ -531,10 +546,10 @@ fn test_ch_with_triangle_graph() {
     graph.add_edge(0, 1, 1.0);
     graph.add_edge(1, 2, 1.0);
     graph.add_edge(0, 2, 5.0); // More expensive direct path
-    
-    let ch = ContractionHierarchy::build(&graph, ImportanceStrategy::Combined)
-        .expect("CH build failed");
-    
+
+    let ch =
+        ContractionHierarchy::build(&graph, ImportanceStrategy::Combined).expect("CH build failed");
+
     let stats = ch.stats();
     assert_eq!(stats.node_count, 3);
     // Shortcut count is non-negative by type
@@ -549,13 +564,13 @@ fn test_ch_query_with_actual_path() {
     graph.add_edge(1, 2, 1.0);
     graph.add_edge(2, 3, 1.0);
     graph.add_edge(3, 4, 1.0);
-    
-    let ch = ContractionHierarchy::build(&graph, ImportanceStrategy::Degree)
-        .expect("CH build failed");
-    
+
+    let ch =
+        ContractionHierarchy::build(&graph, ImportanceStrategy::Degree).expect("CH build failed");
+
     let result = ch.query(0, 4);
     assert!(result.is_ok());
-    
+
     if let Ok(Some((cost, path))) = result {
         assert!(cost > 0.0);
         assert!(path.len() >= 2);
@@ -570,10 +585,10 @@ fn test_ch_query_no_path() {
     let mut graph = SimpleWeightedGraph::new();
     graph.add_edge(0, 1, 1.0);
     graph.add_edge(2, 3, 1.0);
-    
+
     let ch = ContractionHierarchy::build(&graph, ImportanceStrategy::EdgeDifference)
         .expect("CH build failed");
-    
+
     let result = ch.query(0, 3);
     assert!(result.is_ok());
     assert!(result.unwrap().is_none()); // No path should exist
@@ -589,10 +604,10 @@ fn test_ch_with_dense_graph() {
     graph.add_edge(1, 3, 1.0);
     graph.add_edge(2, 3, 1.0);
     graph.add_edge(0, 3, 10.0); // Alternative longer path
-    
+
     let ch = ContractionHierarchy::build(&graph, ImportanceStrategy::Betweenness)
         .expect("CH build failed");
-    
+
     let result = ch.query(0, 3);
     assert!(result.is_ok());
 }
@@ -604,9 +619,9 @@ fn test_jps_jump_to_goal() {
         vec![true, true, true],
         vec![true, true, true],
     ];
-    
+
     let jps = JumpPointSearch::new(3, 3, true);
-    
+
     // Jump horizontally toward goal
     let result = jps.jump(0, 0, 1, 0, 2, 0, &walkable);
     assert!(result.is_some());
@@ -619,9 +634,9 @@ fn test_jps_jump_with_obstacle() {
         vec![true, false, true],
         vec![true, true, true],
     ];
-    
+
     let jps = JumpPointSearch::new(3, 3, true);
-    
+
     // Jump into obstacle should return None
     let result = jps.jump(0, 1, 1, 0, 2, 1, &walkable);
     assert!(result.is_none());
@@ -634,9 +649,9 @@ fn test_jps_diagonal_jump() {
         vec![true, true, true],
         vec![true, true, true],
     ];
-    
+
     let jps = JumpPointSearch::new(3, 3, true);
-    
+
     // Diagonal jump
     let result = jps.jump(0, 0, 1, 1, 2, 2, &walkable);
     assert!(result.is_some());
@@ -650,9 +665,9 @@ fn test_jps_recursive_jump() {
         vec![true, true, true, true, true],
         vec![true, true, true, true, true],
     ];
-    
+
     let jps = JumpPointSearch::new(5, 3, true);
-    
+
     // Jump across multiple cells
     let result = jps.jump(0, 0, 1, 0, 4, 0, &walkable);
     assert!(result.is_some());
@@ -660,13 +675,10 @@ fn test_jps_recursive_jump() {
 
 #[test]
 fn test_jps_bounds_checking() {
-    let walkable = vec![
-        vec![true, true],
-        vec![true, true],
-    ];
-    
+    let walkable = vec![vec![true, true], vec![true, true]];
+
     let jps = JumpPointSearch::new(2, 2, false);
-    
+
     // Jump out of bounds
     let result = jps.jump(1, 1, 1, 0, 5, 1, &walkable);
     assert!(result.is_none());
@@ -675,10 +687,10 @@ fn test_jps_bounds_checking() {
 #[test]
 fn test_ch_empty_graph_error() {
     let graph = SimpleWeightedGraph::new();
-    
+
     let result = ContractionHierarchy::build(&graph, ImportanceStrategy::Degree);
     assert!(result.is_err());
-    
+
     if let Err(e) = result {
         assert!(matches!(e, PathfindingError::InvalidConfiguration { .. }));
     }
@@ -690,9 +702,9 @@ fn test_edge_difference_calculation() {
     graph.add_edge(0, 1, 1.0);
     graph.add_edge(0, 2, 1.0);
     graph.add_edge(0, 3, 1.0);
-    
+
     let importance = calculate_node_importance(&graph, ImportanceStrategy::EdgeDifference);
-    
+
     // Node 0 should have edge difference score
     let node0_importance = importance.iter().find(|(id, _)| *id == 0).unwrap().1;
     // Edge difference can be 0 or positive depending on graph structure
@@ -704,9 +716,9 @@ fn test_betweenness_calculation() {
     let mut graph = SimpleWeightedGraph::new();
     graph.add_edge(0, 1, 1.0);
     graph.add_edge(1, 2, 1.0);
-    
+
     let importance = calculate_node_importance(&graph, ImportanceStrategy::Betweenness);
-    
+
     // Node 1 should have higher betweenness (connects 0 and 2)
     let node1_importance = importance.iter().find(|(id, _)| *id == 1).unwrap().1;
     assert!(node1_importance >= 0.0);
@@ -718,10 +730,10 @@ fn test_ch_stats() {
     graph.add_edge(0, 1, 1.0);
     graph.add_edge(1, 2, 1.0);
     graph.add_edge(2, 3, 1.0);
-    
-    let ch = ContractionHierarchy::build(&graph, ImportanceStrategy::Combined)
-        .expect("CH build failed");
-    
+
+    let ch =
+        ContractionHierarchy::build(&graph, ImportanceStrategy::Combined).expect("CH build failed");
+
     let stats = ch.stats();
     assert_eq!(stats.node_count, 4);
     assert!(stats.avg_shortcuts_per_node >= 0.0);

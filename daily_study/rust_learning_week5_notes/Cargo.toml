@@ -9,7 +9,6 @@ description = "Week 5: Error Handling Mastery - Comprehensive error handling str
 # Error handling crates
 anyhow = "1.0"           # For application-level error handling
 thiserror = "1.0"        # For library-level error types
-serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"       # For JSON parsing examples
 
 # Additional utilities
@@ -95,27 +94,3 @@ path = "examples/file_processor.rs"
 [[bin]]
 name = "day31_alt"
 path = "Day31_alt.rs"
-
-[dev-dependencies]
-# Testing utilities
-tempfile = "3.0"         # For temporary file creation in tests
-criterion = "0.5"        # For benchmarking error handling performance
-
-# Documentation
-# These are only needed if you want to generate docs
-# mdbook = "0.4"         # For generating documentation
-
-# Development tools (these are typically installed via rustup, not as dependencies)
-# clippy and rustfmt are installed as rustup components, not cargo dependencies
-
-# Note: The examples in Day29.rs through Day35.rs are designed to work
-# with just the standard library for educational purposes.
-# 
-# To run the actual examples with real crates, use:
-# cargo run --example day31_anyhow_thiserror
-# 
-# To run individual day files directly:
-# rustc Day29.rs && ./Day29
-# 
-# To use the real crates in your own code, uncomment the dependencies
-# and use the patterns shown in the .md files.

@@ -12,10 +12,6 @@ regex = "1.11.3"
 # No external dependencies - pure Rust std library focus
 # Educational approach using HashMap and HashSet directly
 
-[dev-dependencies]
-# For property-based testing examples
-rand = "0.9"
-
 [[example]]
 name = "step1_basic_hashmap"
 path = "examples/step1_basic_hashmap.rs"

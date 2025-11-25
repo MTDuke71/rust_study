@@ -6,9 +6,6 @@ edition = "2021"
 [dependencies]
 mission2 = { path = "../../missions/Mission2" }
 
-[dev-dependencies]
-criterion = "0.7"
-
 [[example]]
 name = "maze_solver_demo"
 path = "examples/maze_solver_demo.rs"

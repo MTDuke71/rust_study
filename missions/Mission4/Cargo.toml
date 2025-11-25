@@ -7,10 +7,6 @@ edition = "2021"
 # No external dependencies for this mission - pure Rust std library
 # Focus on interior mutability patterns: Rc, RefCell, Weak references
 
-[dev-dependencies]
-# For property-based testing and random test data
-rand = "0.9"
-
 [[example]]
 name = "mission4_demo"
 path = "examples/demo.rs"

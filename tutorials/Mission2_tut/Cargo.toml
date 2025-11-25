@@ -3,9 +3,6 @@ name = "mission2_tut"
 version = "0.1.0"
 edition = "2021"
 
-[dependencies]
-anyhow = "1.0"
-
 [[example]]
 name = "step1_queue_basics"
 path = "examples/step1_queue_basics.rs"

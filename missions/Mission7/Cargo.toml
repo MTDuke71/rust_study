@@ -9,11 +9,7 @@ authors = ["Rust Study Workspace"]
 # No external dependencies for this mission - pure Rust std library
 # Focus on graph representation, adjacency lists, and algorithm foundations
 
-[dev-dependencies]
-# For property-based testing and random test data
-rand = "0.8"
-# For benchmarking graph operations
-criterion = { version = "0.5", features = ["html_reports"] }
+
 
 [[example]]
 name = "mission7_demo"

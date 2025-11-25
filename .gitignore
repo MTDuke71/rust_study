@@ -74,6 +74,7 @@ doc-test-results.json
 test-output.txt
 format-results.json
 benchmark-results.json
+tarpaulin-report.json
 
 # Reports directory
 reports/
