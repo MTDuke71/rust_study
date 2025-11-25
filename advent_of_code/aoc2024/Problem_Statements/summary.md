@@ -437,11 +437,11 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 
 ### Day 11: Plutonian Pebbles
 
-**Title**: Plutonian Pebbles  
-**Part 1 Type**: Simulation + Mathematical  
-**Part 1 Description**: Simulate stone transformations for 25 blinks using three rules: 0→1, even-digit split, else multiply by 2024. Count total stones after all blinks.  
-**Part 2 Type**: Optimization + Mathematical  
-**Part 2 Description**: Scale to 75 blinks using memoization—exponential growth makes naive simulation impossible (would take days + terabytes RAM).  
+**Title**: Plutonian Pebbles
+**Part 1 Type**: Simulation + Mathematical
+**Part 1 Description**: Simulate stone transformations for 25 blinks using three rules: 0→1, even-digit split, else multiply by 2024. Count total stones after all blinks.
+**Part 2 Type**: Optimization + Mathematical
+**Part 2 Description**: Scale to 75 blinks using memoization—exponential growth makes naive simulation impossible (would take days + terabytes RAM).
 **Key Concepts**: Exponential growth, dynamic programming, memoization with (stone, blinks_remaining) cache key, digit counting optimization, integer arithmetic, cache efficiency analysis
 
 **🧩 Algorithm Analysis**:
@@ -535,10 +535,106 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - Educational documentation with traced examples makes complex memoization accessible
 - Test infrastructure validates both correctness and performance characteristics
 
+### Day 12: Garden Groups
+
+**Title**: Garden Groups
+**Part 1 Type**: Graph Algorithms + Mathematical
+**Part 1 Description**: Calculate fencing cost for garden regions where cost = area × perimeter. Use flood fill to detect connected regions of same plant type, sum all region costs.
+**Part 2 Type**: Graph Algorithms + Mathematical
+**Part 2 Description**: Calculate bulk discount cost where cost = area × number_of_sides. Count sides using corner detection algorithm (sides = corners for polygons).
+**Key Concepts**: Flood fill region detection, connected components, perimeter calculation, corner counting algorithm, Mission 6 Grid/FloodFill integration, geometric insight (sides = corners)
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Region analysis escalation (perimeter-based cost → geometric side counting)
+- **Data Structure**: Mission 6 `Grid<char>` for garden map, Mission 6 `FloodFill::analyze_region_4()` for connected components, `HashSet<Coord>` for visited tracking and region membership
+- **Complexity**:
+  - Part 1: O(W×H) single grid scan with flood fill, perimeter computed during BFS
+  - Part 2: O(W×H) for flood fill + O(R×8) for corner checking (R = region size, 8 neighbor checks per cell)
+  - Generic abstraction: Single `calculate_total_cost<F>()` function eliminates duplication
+- **AoC Theme**: "Garden fencing optimization" with classic Part 2 geometric complexity (perimeter → side counting)
+
+**🦀 Rust Conversion Highlights**:
+
+- **From manual flood fill** → **Mission 6 `FloodFill::analyze_region_4()`** providing area, perimeter, and coordinates in one call
+- **From separate region detection passes** → **Generic `calculate_total_cost<F>()` function** accepting closure for different cost calculations (area × perimeter vs area × sides)
+- **From string/rotation side detection** → **Mathematical corner counting** using geometric theorem (sides = corners)
+- **From manual bounds checking** → **Mission 6 `Grid` and `Coord`** with automatic safety guarantees
+- **From ad-hoc validation** → **Defense in depth** with validation in both `parse_grid()` and `Grid::from_vec2d()`
+
+**🏗️ Mission 6 Integration Benefits**:
+
+- **Code Reduction**: Generic function eliminates ~30 lines of duplicate code between Part 1 and Part 2
+- **Safety Improvement**: All grid operations bounds-checked automatically through Mission 6 APIs
+- **Metadata for Free**: `FloodFill` provides area, perimeter, and coordinates—no manual computation needed
+- **Cache-Friendly**: Row-major grid scanning (y outer, x inner loop) matches memory layout
+- **Type Safety**: `Coord` type prevents x/y confusion, `Grid` indexing prevents buffer overflows
+
+**Corner Counting Algorithm** (Part 2):
+
+For each cell in a region, check 4 corner positions (top-left, top-right, bottom-left, bottom-right):
+
+- **Outer corner (convex)**: Neither orthogonal neighbor exists (e.g., !North && !West)
+- **Inner corner (concave)**: Both orthogonal neighbors exist but diagonal is missing (e.g., North && West && !NorthWest)
+
+**Key Insight**: Number of sides equals number of corners for any polygon (including those with holes). This eliminates need for complex edge tracing or rotation algorithms.
+
+**Real-World Complexity Handling**:
+
+- **Nested Regions**: Inner corner detection handles regions with holes (e.g., B regions inside A region)
+- **Irregular Shapes**: Corner algorithm works for any shape—rectangles, L-shapes, E-shapes, nested structures
+- **Validation Redundancy**: `parse_grid()` validates dimensions even though `Grid::from_vec2d()` also checks—provides better error messages ("Row 2 has length 5, expected 6")
+- **Code Reuse**: Generic function with closures demonstrates functional programming patterns for algorithm families
+
+**Python vs Rust Comparison**:
+
+- **Algorithm Philosophy**:
+  - **Python Part 2**: String manipulation + grid rotation approach—creates padded grid, counts edge segments using string split trick, rotates 90° for vertical edges
+  - **Rust Part 2**: Mathematical corner counting—leverages geometric theorem (sides = corners), HashSet lookups for neighbor checks
+- **Implementation Style**:
+  - **Python**: ~120 lines, manual DFS flood fill, string concatenation for edge detection, grid rotation with `zip(*grid[::-1])`
+  - **Rust**: ~190 lines with 22 tests, Mission 6 flood fill, HashSet-based corner detection, generic cost function
+- **Memory Efficiency**:
+  - **Python**: Creates padded grid per region, allocates rotated grid, string operations
+  - **Rust**: Single HashSet for region membership, no grid allocations, direct coordinate checks
+- **Code Organization**:
+  - **Python**: Pre-indexes coordinates by plant type, processes regions grouped by type
+  - **Rust**: Single pass through grid, processes regions as discovered, generic abstraction for cost calculations
+- **Side Detection**:
+  - **Python**: Clever but memory-intensive—builds strings representing edge transitions, counts contiguous segments
+  - **Rust**: Mathematically elegant—counts corners directly, leverages polygon property
+
+**Educational Insights**:
+
+- **Geometric Theorems**: Sides = corners is a fundamental polygon property applicable to many problems
+- **Mission Composition**: Grid storage + FloodFill algorithm = complete region detection framework
+- **Functional Patterns**: Generic functions with closures enable code reuse across similar algorithms
+- **Corner Detection**: Distinguishing outer (convex) vs inner (concave) corners handles complex shapes including holes
+- **Algorithm Selection**: Python's rotation trick is creative for small grids; Rust's corner counting scales better and requires less memory
+
+**Results**:
+
+- Sample: Part 1 = 140, Part 2 = 80 (simple 4×4 example)
+- Sample: Part 1 = 1,930, Part 2 = 1,206 (large 10×10 example)
+- Puzzle: Part 1 = 1,450,816, Part 2 = 865,662
+
+**Test Coverage**: 22 tests including:
+
+- Parsing validation (11 tests: empty input, single cell, jagged grids, trailing newlines, various characters)
+- Part 1 integration (5 tests: simple example, OXOXO example, large example, edge cases)
+- Part 2 integration (6 tests: simple, OXOXO, E-shape, nested regions, large example, edge cases)
+- All tests validate expected area, perimeter, sides, and total costs from problem statement
+
+**Mission Integration Benefit**:
+
+- Demonstrates foundational library reuse for competitive programming (Grid + FloodFill)
+- Shows functional programming patterns (generic functions with closures) for algorithm families
+- Validates that Mission 6 components handle real AoC complexity (nested regions, irregular shapes)
+- Proves value of defense-in-depth validation (better error messages through layered checks)
+
 ---
 
 ## Problem Type Distribution (Available Days)
-
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
@@ -550,9 +646,9 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 | Cryptographic | 0 | 0 |
 | Data Structures | 2 | 2 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 2 | 2 |
+| Graph Algorithms | 3 | 3 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 5 | 3 |
+| Mathematical | 6 | 4 |
 | Number Theory | 0 | 0 |
 | Optimization | 0 | 5 |
 | Parsing | 0 | 0 |
@@ -600,6 +696,10 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 31. **Math-Based Optimization**: Replacing string operations with integer arithmetic for performance (Day 11: `log10()` for digit counting, division/modulo for splitting vs string conversion/parsing)
 32. **Cache Efficiency Analysis**: Measuring memoization effectiveness through cache size vs theoretical state space (Day 11: 130K cache entries for 223 trillion stones = 1 trillion× reduction)
 33. **Algorithmic Complexity Thresholds**: Identifying breakpoints where naive approaches become infeasible and optimization is required (Day 11: naive feasible ≤25 blinks, memoization required for 75)
+34. **Connected Component Analysis**: Region detection using flood fill for connected cells sharing properties (Day 12: garden plots grouped by plant type with 4-connectivity)
+35. **Corner Counting for Polygon Sides**: Geometric algorithm leveraging the property that sides = corners for any polygon, detecting both outer (convex) and inner (concave) corners (Day 12: eliminates need for edge tracing or rotation)
+36. **Generic Higher-Order Functions**: Code reuse through generic functions accepting closures for algorithm family variations (Day 12: single `calculate_total_cost<F>()` for different cost formulas eliminates duplication)
+37. **Region Metadata Extraction**: Single-pass flood fill providing multiple metrics (area, perimeter, coordinates) avoiding redundant traversals (Day 12: Mission 6 FloodFill returns complete region info)
 
 ### Rust-Specific Considerations
 
@@ -614,6 +714,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - **Day 9**: Highlights dense-disk simulations built atop Mission 5 collections—`Dictionary` keeps file metadata synchronized during block and whole-file moves while gap segments stay sorted for O(1) lookup. Dedicated checksum helper doubles as regression oracle, and `examples/day09_visualization.rs` streams every intermediate compaction state so the algorithm can be inspected visually. Emphasizes how mission libraries plus instrumentation (examples/ tooling) turn a puzzle solver into a teaching asset.
 - **Day 10**: Exemplifies mission composition at its finest—Mission 6 `Grid<Option<u32>>` + `Coord` type + `neighbors_4()` iterator combined with Mission 8 `Graph` trait + generic `bfs()` algorithm. Demonstrates complete refactoring journey: initial manual implementation (d082003) proves algorithm correctness, Mission 6 refactoring (c6b2283) reduces code by ~10 lines while eliminating entire bug classes (coordinate confusion, bounds errors). **Key Learning**: `Coord` type prevents tuple x/y swapping, `grid.in_bounds()` eliminates manual checks, `neighbors_4()` returns iterator (not Vec) for efficiency, Graph trait enables generic algorithms. Shows BFS for Part 1 reachability vs custom DFS for Part 2 path counting—demonstrates when to use vs extend mission libraries. **Python Comparison**: Python's 50-line pragmatic solution uses O(n) `list.pop(0)` and tuple positions; Rust's 160-line structured solution uses O(1) VecDeque, type-safe Coord, and comprehensive validation. Both correct, different optimization goals (midnight racing vs production learning). **V-Cycle Validation**: Tests prove functional equivalence (12/12 pass), answers match (512/1045), zero clippy warnings after iterator refinement.
 - **Day 11**: Showcases optimization journey from string-based to math-based approaches. Demonstrates dynamic programming with `HashMap<(u64, usize), usize>` memoization cache using composite state keys for O(1) lookups. Highlights performance analysis through dedicated tests comparing naive O(S^B) vs memoized O(U×B) approaches. **Math Optimization**: Evolved from `to_string().len()` to `log10()` for digit counting, from string parsing to integer arithmetic (`division/modulo`) for splitting stones—eliminates heap allocations while maintaining correctness. **Educational Infrastructure**: `count_stones_with_trace()` and `count_with_cache_stats()` test helpers (marked `#[allow(dead_code)]`) provide instrumentation for understanding memoization mechanics. **Test-Driven Analysis**: 18 comprehensive tests including performance validation (naive vs memoized timing), cache efficiency measurement (130K entries for 223T stones), and traced execution examples. **Python Comparison**: Python used math-based approach from start with `@cache` decorator; Rust's manual cache management provides deeper understanding of memoization mechanics. Shows when optimization transitions from optional (Part 1 ≤25 blinks) to essential (Part 2 = 75 blinks), with concrete performance metrics validating the necessity.
+- **Day 12**: Exemplifies Mission 6 integration for region-based problems with flood fill for connected component detection. Demonstrates generic higher-order functions with closures—`calculate_total_cost<F>()` eliminates ~30 lines of duplication while accepting different cost formulas (area × perimeter vs area × sides). **Corner Counting Algorithm**: Mathematical approach leveraging geometric theorem (sides = corners for polygons), distinguishing outer corners (!N && !W) from inner corners (N && W && !NW), handling complex shapes including nested regions with holes. **Mission Integration**: `FloodFill::analyze_region_4()` provides area, perimeter, and coordinates in single call; `Grid<char>` + `Coord` eliminate manual bounds checking; row-major scanning (y outer, x inner) matches memory layout for cache efficiency. **Defense in Depth**: Validation in both `parse_grid()` and `Grid::from_vec2d()` provides better error messages despite redundancy. **Test Coverage**: 22 comprehensive tests covering parsing edge cases (11), Part 1 integration (5), Part 2 geometric shapes (6). **Python Comparison**: Python's creative string manipulation + grid rotation approach (creates padded grid, counts edge segments, rotates 90° for vertical edges) vs Rust's mathematical corner counting (HashSet lookups, no grid allocations, leverages polygon property). Shows functional programming patterns (closures for algorithm families) and foundational library composition (Grid + FloodFill = complete region detection framework).
 
 ---
 
@@ -654,10 +755,10 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 22, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11*
+*Last Updated: November 25, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions*
 *Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]]*

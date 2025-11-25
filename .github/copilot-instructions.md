@@ -521,6 +521,12 @@ cargo bench -p mission5
 
 **User wants to be part of the process** - even when AI does the coding, explain each step, wait for confirmation, and allow the user to understand the progression. Think "pair programming" not "here's the complete solution."
 
+**AoC File Locations** (2024 and onwards):
+- **Problem descriptions**: `advent_of_code/aoc2024/Problem_Statements/dayXX.md`
+- **Puzzle inputs**: `advent_of_code/aoc2024/inputs/dayXX.txt`
+- **Example inputs**: `advent_of_code/aoc2024/inputs/dayXX_example.txt` (if needed)
+- **Solutions**: `advent_of_code/aoc2024/src/solver/dayXX.rs`
+
 **Pre-Implementation Mission Scan Checklist**:
 1. **Read the missions/** directory for applicable data structures and algorithms
 2. **Check Mission READMEs** for feature compatibility with AoC problem requirements
