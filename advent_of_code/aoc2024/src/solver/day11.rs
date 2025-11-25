@@ -5,7 +5,6 @@ use std::collections::HashMap;
 /// Input is a single line with space-separated numbers.
 fn parse_stones(input: &str) -> Result<Vec<u64>> {
     input
-        .trim()
         .split_whitespace()
         .map(|s| s.parse::<u64>().with_context(|| format!("Invalid number: {}", s)))
         .collect()
@@ -35,7 +34,7 @@ fn transform_stone(stone: u64) -> Vec<u64> {
         // Math-based approach: use logarithm instead of string conversion
         let num_digits = count_digits(stone);
         
-        if num_digits % 2 == 0 {
+        if num_digits.is_multiple_of(2) {
             // Rule 2: Even number of digits - split using integer math
             let divisor = 10_u64.pow(num_digits / 2);
             let left = stone / divisor;
