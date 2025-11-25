@@ -86,20 +86,24 @@ $QualityReport = @{
     ClippyIssues = 0
     ClippyDetails = @()
     TestResults = @{ Passed = 0; Failed = 0; Total = 0 }
-    FailedTests = @()
-    Coverage = $null
+    FailedTests = @{
+        TestNames = @()
+        Details = @()
+        FailuresList = @()
+    }
+    Coverage = "Skipped"  # Default to "Skipped" instead of null
     MissionCoverage = @()
     DocumentationWarnings = 0
     DocumentationDetails = @()
     Formatting = $null
     FormattingDetails = @()
-    SecurityVulnerabilities = 0
+    SecurityVulnerabilities = "Not Available"  # Default for optional checks
     SecurityDetails = @()
-    OutdatedDependencies = 0
+    OutdatedDependencies = "Not Available"
     OutdatedDetails = @()
-    UnusedDependencies = 0
+    UnusedDependencies = "Not Available"
     UnusedDetails = @()
-    DeadCodeWarnings = 0
+    DeadCodeWarnings = "Skipped"
     DeadCodeDetails = @()
 }
 
@@ -274,8 +278,8 @@ function Test-Clippy {
 function Test-Suite {
     Write-QAInfo "🧪 Running test suite..."
     
-        # Run tests for all packages
-        $testOutput = & cargo test --workspace 2>&1
+    # Run tests for all packages with detailed output
+    $testOutput = & cargo test --workspace 2>&1
     $exitCode = $LASTEXITCODE
     
     # Parse test results from the human-readable output
@@ -314,10 +318,60 @@ function Test-Suite {
     }
     Save-CheckResult -CheckName "Tests" -Output ($testOutput -join "`n") -ExitCode $exitCode -AdditionalData $additionalData
     
-    if ($exitCode -ne 0) {
-        # Capture failed test details
-        $failedTestDetails = $testOutput | Select-String "test result: FAILED|thread '.*' panicked|assertion" | ForEach-Object { $_.Line }
-        $QualityReport.FailedTests = $failedTestDetails
+    if ($exitCode -ne 0 -or $totalFailed -gt 0) {
+        # Capture failed test names - look for "test <name> ... FAILED"
+        $failedTestNames = $testOutput | Select-String "test .+ \.\.\. FAILED" | ForEach-Object { 
+            if ($_.Line -match "test (.+) \.\.\. FAILED") {
+                $matches[1]
+            }
+        }
+        
+        # Capture panic messages and assertion failures with context
+        $failureDetails = @()
+        $inFailure = $false
+        $failureBlock = @()
+        
+        foreach ($line in $testOutput) {
+            # Start capturing on panic or assertion
+            if ($line -match "thread '(.+)' panicked at" -or $line -match "assertion `left == right` failed") {
+                $inFailure = $true
+                $failureBlock = @($line)
+            }
+            # Continue capturing failure context
+            elseif ($inFailure) {
+                $failureBlock += $line
+                # End capture after stack trace or empty line
+                if ($line -match "^$" -or $line -match "note: run with" -or $failureBlock.Count -gt 20) {
+                    $failureDetails += $failureBlock -join "`n"
+                    $failureDetails += "---"
+                    $inFailure = $false
+                    $failureBlock = @()
+                }
+            }
+        }
+        
+        # Also capture "failures:" section which lists all failed tests
+        $failuresSection = @()
+        $inFailuresSection = $false
+        foreach ($line in $testOutput) {
+            if ($line -match "^failures:$") {
+                $inFailuresSection = $true
+            }
+            elseif ($inFailuresSection) {
+                if ($line -match "^test result:" -or $line -match "^$" -and $failuresSection.Count -gt 0) {
+                    break
+                }
+                if ($line.Trim()) {
+                    $failuresSection += $line.Trim()
+                }
+            }
+        }
+        
+        $QualityReport.FailedTests = @{
+            TestNames = $failedTestNames
+            Details = $failureDetails
+            FailuresList = $failuresSection
+        }
     }
     
     if ($exitCode -eq 0 -and $totalFailed -eq 0) {
@@ -562,16 +616,16 @@ function Test-MissionsCoverage {
                 $totalMissionCoverage += $coverage
                 $successfulMissions++
                 
-                Write-QASuccess "  $missionName: $coverage% coverage"
+                Write-QASuccess "  ${missionName}: ${coverage}% coverage"
                 
                 # Clean up JSON file
                 Remove-Item "tarpaulin-report.json" -ErrorAction SilentlyContinue
             } else {
-                Write-QAWarning "  $missionName: Coverage analysis failed"
+                Write-QAWarning "  ${missionName}: Coverage analysis failed"
             }
         }
         catch {
-            Write-QAWarning "  $missionName: Error - $_"
+            Write-QAWarning "  ${missionName}: Error - $_"
         }
         finally {
             Pop-Location
@@ -808,8 +862,39 @@ $(if ($QualityReport.ClippyDetails.Count -gt 50) { "  ... (showing first 50 of $
 "@
     }
     
-    # Failed tests
-    if ($QualityReport.FailedTests.Count -gt 0) {
+    # Failed tests - enhanced with detailed capture
+    if ($QualityReport.FailedTests -and ($QualityReport.FailedTests.TestNames.Count -gt 0 -or $QualityReport.FailedTests.FailuresList.Count -gt 0)) {
+        $detailSections += @"
+
+❌ FAILED TESTS:
+$("-" * 50)
+"@
+        # Show failed test names
+        if ($QualityReport.FailedTests.TestNames.Count -gt 0) {
+            $detailSections += "`nFailed Test Names:`n"
+            foreach ($testName in $QualityReport.FailedTests.TestNames) {
+                $detailSections += "  - $testName`n"
+            }
+        }
+        
+        # Show failures list from "failures:" section
+        if ($QualityReport.FailedTests.FailuresList.Count -gt 0) {
+            $detailSections += "`nFailure Summary:`n"
+            foreach ($failure in $QualityReport.FailedTests.FailuresList) {
+                $detailSections += "  $failure`n"
+            }
+        }
+        
+        # Show detailed failure messages (panic info, assertion details)
+        if ($QualityReport.FailedTests.Details.Count -gt 0) {
+            $detailSections += "`nFailure Details:`n"
+            foreach ($detail in $QualityReport.FailedTests.Details) {
+                $detailSections += "  $detail`n"
+            }
+        }
+    }
+    # Legacy fallback for old format
+    elseif ($QualityReport.FailedTests -and $QualityReport.FailedTests -is [array] -and $QualityReport.FailedTests.Count -gt 0) {
         $detailSections += @"
 
 ❌ FAILED TESTS:

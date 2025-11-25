@@ -199,8 +199,7 @@ fn example_pin_macro() {
             }
         });
 
-        let futures: Vec<Pin<&mut dyn Future<Output = ()>>> =
-            vec![tx1_fut, rx_fut, tx_fut];
+        let futures: Vec<Pin<&mut dyn Future<Output = ()>>> = vec![tx1_fut, rx_fut, tx_fut];
 
         trpl::join_all(futures).await;
     });
@@ -364,7 +363,7 @@ fn example_yield_now() {
 fn example_performance_comparison() {
     trpl::run(async {
         println!("Running performance comparison...");
-        
+
         let one_ns = Duration::from_nanos(1);
         let start = Instant::now();
         async {
@@ -434,7 +433,7 @@ fn example_timer_resolution() {
     #[cfg(windows)]
     {
         use std::thread;
-        
+
         // Windows FFI for timer resolution control
         #[link(name = "winmm")]
         extern "system" {
@@ -451,9 +450,11 @@ fn example_timer_resolution() {
             thread::sleep(Duration::from_millis(1));
         }
         let total = Instant::now() - start;
-        println!("  Total: {}ms (average {:.2}ms per sleep)\n", 
-                 total.as_millis(), 
-                 total.as_secs_f64() * 1000.0 / 100.0);
+        println!(
+            "  Total: {}ms (average {:.2}ms per sleep)\n",
+            total.as_millis(),
+            total.as_secs_f64() * 1000.0 / 100.0
+        );
 
         // Test 2: Request 1ms timer resolution
         println!("Test 2: With timeBeginPeriod(1) - requesting 1ms resolution - 100 iterations");
@@ -471,9 +472,11 @@ fn example_timer_resolution() {
             thread::sleep(Duration::from_millis(1));
         }
         let total = Instant::now() - start;
-        println!("  Total: {}ms (average {:.2}ms per sleep)\n", 
-                 total.as_millis(), 
-                 total.as_secs_f64() * 1000.0 / 100.0);
+        println!(
+            "  Total: {}ms (average {:.2}ms per sleep)\n",
+            total.as_millis(),
+            total.as_secs_f64() * 1000.0 / 100.0
+        );
 
         // Clean up: restore default timer resolution
         unsafe {
@@ -482,7 +485,7 @@ fn example_timer_resolution() {
         }
 
         println!("\n=== Async Version Comparison ===\n");
-        
+
         // Test 3: Async sleep with default resolution
         println!("Test 3: trpl::sleep with default timer resolution - 100 iterations");
         let start = Instant::now();
@@ -492,14 +495,18 @@ fn example_timer_resolution() {
             }
         });
         let total = Instant::now() - start;
-        println!("  Total: {}ms (average {:.2}ms per sleep)\n", 
-                 total.as_millis(), 
-                 total.as_secs_f64() * 1000.0 / 100.0);
+        println!(
+            "  Total: {}ms (average {:.2}ms per sleep)\n",
+            total.as_millis(),
+            total.as_secs_f64() * 1000.0 / 100.0
+        );
 
         // Test 4: Async sleep with 1ms resolution
         println!("Test 4: trpl::sleep with timeBeginPeriod(1) - 100 iterations");
-        unsafe { timeBeginPeriod(1); }
-        
+        unsafe {
+            timeBeginPeriod(1);
+        }
+
         let start = Instant::now();
         trpl::run(async {
             for _ in 0..100 {
@@ -507,11 +514,15 @@ fn example_timer_resolution() {
             }
         });
         let total = Instant::now() - start;
-        println!("  Total: {}ms (average {:.2}ms per sleep)\n", 
-                 total.as_millis(), 
-                 total.as_secs_f64() * 1000.0 / 100.0);
-        
-        unsafe { timeEndPeriod(1); }
+        println!(
+            "  Total: {}ms (average {:.2}ms per sleep)\n",
+            total.as_millis(),
+            total.as_secs_f64() * 1000.0 / 100.0
+        );
+
+        unsafe {
+            timeEndPeriod(1);
+        }
 
         println!("\n=== Key Takeaway ===");
         println!("Without timeBeginPeriod: ~15.6ms minimum sleep");

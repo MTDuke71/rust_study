@@ -87,6 +87,11 @@ fn calculate_total_fencing_cost(grid: &Grid<char>) -> usize {
 ///
 /// Key insight: The number of sides equals the number of corners.
 /// We check each cell in the region for corner configurations.
+/// This algorithm leverages a fundamental property of polygons:
+/// Euler's formula for corners.
+/// Every time you turn while tracing a polygon's perimeter, you create a corner.
+/// The total number of turns equals the number of straight segments (sides).
+///
 fn count_sides(region_coords: &[Coord]) -> usize {
     let region_set: HashSet<_> = region_coords.iter().copied().collect();
     let mut corners = 0;
@@ -111,8 +116,8 @@ fn count_sides(region_coords: &[Coord]) -> usize {
         // For each of the 4 corners around this cell, check if it's an outer or inner corner
 
         // Top-left corner
-        let n = in_region(0, -1);  // North
-        let w = in_region(-1, 0);  // West
+        let n = in_region(0, -1); // North
+        let w = in_region(-1, 0); // West
         let nw = in_region(-1, -1); // Northwest
 
         // Outer corner: neither N nor W is in region
@@ -125,8 +130,8 @@ fn count_sides(region_coords: &[Coord]) -> usize {
         }
 
         // Top-right corner
-        let n = in_region(0, -1);  // North
-        let e = in_region(1, 0);   // East
+        let n = in_region(0, -1); // North
+        let e = in_region(1, 0); // East
         let ne = in_region(1, -1); // Northeast
 
         if !n && !e {
@@ -137,8 +142,8 @@ fn count_sides(region_coords: &[Coord]) -> usize {
         }
 
         // Bottom-left corner
-        let s = in_region(0, 1);   // South
-        let w = in_region(-1, 0);  // West
+        let s = in_region(0, 1); // South
+        let w = in_region(-1, 0); // West
         let sw = in_region(-1, 1); // Southwest
 
         if !s && !w {
@@ -149,9 +154,9 @@ fn count_sides(region_coords: &[Coord]) -> usize {
         }
 
         // Bottom-right corner
-        let s = in_region(0, 1);   // South
-        let e = in_region(1, 0);   // East
-        let se = in_region(1, 1);  // Southeast
+        let s = in_region(0, 1); // South
+        let e = in_region(1, 0); // East
+        let se = in_region(1, 1); // Southeast
 
         if !s && !e {
             corners += 1;

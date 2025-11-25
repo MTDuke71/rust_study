@@ -1,7 +1,7 @@
+use mission10::UnionFind;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use uuid::Uuid;
-use mission10::UnionFind;
 
 #[derive(Clone)]
 pub struct AppState {

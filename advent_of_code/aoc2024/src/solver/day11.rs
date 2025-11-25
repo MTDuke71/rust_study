@@ -5,9 +5,11 @@ use std::collections::HashMap;
 /// Input is a single line with space-separated numbers.
 fn parse_stones(input: &str) -> Result<Vec<u64>> {
     input
-        .trim()
         .split_whitespace()
-        .map(|s| s.parse::<u64>().with_context(|| format!("Invalid number: {}", s)))
+        .map(|s| {
+            s.parse::<u64>()
+                .with_context(|| format!("Invalid number: {}", s))
+        })
         .collect()
 }
 
@@ -34,8 +36,8 @@ fn transform_stone(stone: u64) -> Vec<u64> {
     } else {
         // Math-based approach: use logarithm instead of string conversion
         let num_digits = count_digits(stone);
-        
-        if num_digits % 2 == 0 {
+
+        if num_digits.is_multiple_of(2) {
             // Rule 2: Even number of digits - split using integer math
             let divisor = 10_u64.pow(num_digits / 2);
             let left = stone / divisor;
@@ -55,7 +57,7 @@ fn transform_stone(stone: u64) -> Vec<u64> {
     } else {
         let num_str = stone.to_string();
         let num_digits = num_str.len();
-        
+
         if num_digits % 2 == 0 {
             let mid = num_digits / 2;
             let left = num_str[..mid].parse::<u64>().unwrap();
@@ -72,14 +74,11 @@ fn transform_stone(stone: u64) -> Vec<u64> {
 /// Returns the stones after the specified number of blinks.
 fn simulate_blinks(initial_stones: Vec<u64>, blinks: usize) -> Vec<u64> {
     let mut stones = initial_stones;
-    
+
     for _ in 0..blinks {
-        stones = stones
-            .into_iter()
-            .flat_map(transform_stone)
-            .collect();
+        stones = stones.into_iter().flat_map(transform_stone).collect();
     }
-    
+
     stones
 }
 
@@ -121,32 +120,42 @@ fn count_stones_with_trace(
     depth: usize,
 ) -> usize {
     let indent = "  ".repeat(depth);
-    
+
     // Base case: no more blinks, this stone counts as 1
     if blinks_remaining == 0 {
-        println!("{}Stone {} with 0 blinks → count = 1 (base case)", indent, stone);
+        println!(
+            "{}Stone {} with 0 blinks → count = 1 (base case)",
+            indent, stone
+        );
         return 1;
     }
 
     // Check cache
     if let Some(&cached) = cache.get(&(stone, blinks_remaining)) {
-        println!("{}Stone {} with {} blinks → count = {} (CACHED ✓)", 
-                 indent, stone, blinks_remaining, cached);
+        println!(
+            "{}Stone {} with {} blinks → count = {} (CACHED ✓)",
+            indent, stone, blinks_remaining, cached
+        );
         return cached;
     }
 
     // Apply transformation and recursively count
     let transformed = transform_stone(stone);
-    println!("{}Stone {} with {} blinks → transforms to {:?}", 
-             indent, stone, blinks_remaining, transformed);
-    
+    println!(
+        "{}Stone {} with {} blinks → transforms to {:?}",
+        indent, stone, blinks_remaining, transformed
+    );
+
     let count = transformed
         .iter()
         .map(|&s| count_stones_with_trace(s, blinks_remaining - 1, cache, depth + 1))
         .sum();
 
     // Cache the result
-    println!("{}→ CACHE: ({}, {}) = {}", indent, stone, blinks_remaining, count);
+    println!(
+        "{}→ CACHE: ({}, {}) = {}",
+        indent, stone, blinks_remaining, count
+    );
     cache.insert((stone, blinks_remaining), count);
     count
 }
@@ -296,10 +305,10 @@ mod tests {
         // Test memoization with smaller examples
         let stones = vec![0];
         assert_eq!(count_stones_after_blinks(&stones, 1), 1); // 0 -> 1
-        
+
         let stones = vec![1];
         assert_eq!(count_stones_after_blinks(&stones, 1), 1); // 1 -> 2024
-        
+
         let stones = vec![10];
         assert_eq!(count_stones_after_blinks(&stones, 1), 2); // 10 -> 1, 0
     }
@@ -308,19 +317,22 @@ mod tests {
     #[ignore] // Expensive test - run manually
     fn test_naive_simulation_limits() {
         use std::time::Instant;
-        
+
         // Test how far naive simulation can go before hitting limits
         let stones = vec![125, 17];
-        
+
         for blinks in [25, 30, 35, 40] {
             let start = Instant::now();
             let result = simulate_blinks(stones.clone(), blinks);
             let elapsed = start.elapsed();
-            
+
             println!("\nNaive simulation - {} blinks:", blinks);
             println!("  Stones: {}", result.len());
             println!("  Time: {:?}", elapsed);
-            println!("  Memory estimate: ~{} bytes", result.len() * std::mem::size_of::<u64>());
+            println!(
+                "  Memory estimate: ~{} bytes",
+                result.len() * std::mem::size_of::<u64>()
+            );
         }
     }
 
@@ -328,25 +340,29 @@ mod tests {
     #[ignore] // Expensive test - run manually
     fn test_memoized_vs_naive_comparison() {
         use std::time::Instant;
-        
+
         let stones = vec![125, 17];
-        
+
         println!("\nComparing naive vs memoized:");
-        
+
         // Test both approaches up to where naive is still feasible
         for blinks in [10, 15, 20, 25] {
             // Naive
             let start = Instant::now();
             let naive_result = simulate_blinks(stones.clone(), blinks);
             let naive_time = start.elapsed();
-            
+
             // Memoized
             let start = Instant::now();
             let memo_result = count_stones_after_blinks(&stones, blinks);
             let memo_time = start.elapsed();
-            
+
             println!("\n{} blinks:", blinks);
-            println!("  Naive:    {} stones in {:?}", naive_result.len(), naive_time);
+            println!(
+                "  Naive:    {} stones in {:?}",
+                naive_result.len(),
+                naive_time
+            );
             println!("  Memoized: {} stones in {:?}", memo_result, memo_time);
             assert_eq!(naive_result.len(), memo_result);
         }
@@ -356,19 +372,25 @@ mod tests {
     fn test_cache_size_analysis() {
         // Analyze how many unique (stone, blinks) states we actually cache
         let stones = vec![125, 17];
-        
+
         println!("\nCache size analysis for example input [125, 17]:");
         for blinks in [10, 25, 50, 75] {
             let (count, cache_size) = count_with_cache_stats(&stones, blinks);
-            println!("  {} blinks: {} stones, {} cache entries", blinks, count, cache_size);
+            println!(
+                "  {} blinks: {} stones, {} cache entries",
+                blinks, count, cache_size
+            );
         }
-        
+
         // Test with actual puzzle input
         let puzzle_input = vec![77, 515, 6779622, 6, 91370, 959685, 0, 9861];
         println!("\nCache size analysis for puzzle input:");
         for blinks in [25, 75] {
             let (count, cache_size) = count_with_cache_stats(&puzzle_input, blinks);
-            println!("  {} blinks: {} stones, {} cache entries", blinks, count, cache_size);
+            println!(
+                "  {} blinks: {} stones, {} cache entries",
+                blinks, count, cache_size
+            );
         }
     }
 
@@ -376,18 +398,21 @@ mod tests {
     fn test_trace_example_5_blinks() {
         // Trace execution with 3 initial stones and 5 blinks
         println!("\n=== TRACING: [0, 1, 2] with 5 blinks ===\n");
-        
+
         let stones = vec![0, 1, 2];
         let mut cache = HashMap::new();
-        
+
         let mut total = 0;
         for stone in stones {
             println!("Processing initial stone: {}", stone);
             let count = count_stones_with_trace(stone, 5, &mut cache, 1);
-            println!("→ Stone {} produces {} stones after 5 blinks\n", stone, count);
+            println!(
+                "→ Stone {} produces {} stones after 5 blinks\n",
+                stone, count
+            );
             total += count;
         }
-        
+
         println!("=== FINAL RESULTS ===");
         println!("Total stones: {}", total);
         println!("Cache entries: {}", cache.len());

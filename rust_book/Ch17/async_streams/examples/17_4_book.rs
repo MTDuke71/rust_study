@@ -140,7 +140,7 @@ fn example_interval_stream() {
 
     trpl::run(async {
         let mut intervals = get_intervals();
-        
+
         // Just print first 10 intervals for demonstration
         for _ in 0..10 {
             if let Some(count) = intervals.next().await {

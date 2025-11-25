@@ -42,7 +42,7 @@ impl Future for PeriodicCounter {
                     // Schedule next tick
                     let next = Instant::now() + self.interval;
                     self.next_tick = Box::pin(sleep_until(next));
-                    
+
                     // Tell runtime to poll us again
                     cx.waker().wake_by_ref();
                     Poll::Pending
@@ -100,17 +100,17 @@ async fn main() {
 
     // Example 2: Conditional future
     println!("Example 2: Conditional completion");
-    
+
     async fn get_number() -> i32 {
         tokio::time::sleep(Duration::from_millis(100)).await;
         42
     }
-    
+
     let conditional = ConditionalFuture {
         inner: Box::pin(get_number()),
         condition: |n| *n > 40,
     };
-    
+
     let result = conditional.await;
     println!("Got: {} (passed condition)\n", result);
 

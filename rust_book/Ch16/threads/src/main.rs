@@ -10,7 +10,7 @@ fn main() {
     // NOTE: This thread will continue running in the background even after
     // this example "finishes" - it becomes an orphaned thread that can
     // interfere with subsequent examples!
-    
+
     // Spawn a thread WITHOUT saving the handle
     thread::spawn(|| {
         for i in 1..10 {

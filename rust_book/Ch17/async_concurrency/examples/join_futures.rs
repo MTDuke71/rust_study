@@ -30,16 +30,16 @@ async fn main() {
     // Example 1: Basic join
     println!("Example 1: Joining different return types");
     let start = Instant::now();
-    
+
     let (a, b, c) = tokio::join!(task_a(), task_b(), task_c());
-    
+
     println!("\nResults: {}, {}, {:?}", a, b, c);
     println!("Total time: {:?} (longest task)", start.elapsed());
     println!();
 
     // Example 2: Join with inline futures
     println!("Example 2: Inline futures");
-    
+
     let (r1, r2, r3) = tokio::join!(
         async {
             sleep(Duration::from_millis(300)).await;
@@ -54,12 +54,12 @@ async fn main() {
             3
         }
     );
-    
+
     println!("Results: {}, {}, {}\n", r1, r2, r3);
 
     // Example 3: Many futures
     println!("Example 3: Join many futures");
-    
+
     let start = Instant::now();
     let results = tokio::join!(
         fetch_data(1),
@@ -68,7 +68,7 @@ async fn main() {
         fetch_data(4),
         fetch_data(5)
     );
-    
+
     println!("Got {} results in {:?}", 5, start.elapsed());
     println!("Results: {:?}\n", results);
 

@@ -20,54 +20,52 @@ async fn main() {
     // Example 1: I/O-bound workload - async wins
     println!("Example 1: I/O-bound (async tasks)");
     let start = Instant::now();
-    
+
     let tasks: Vec<_> = (0..100)
         .map(|i| tokio::spawn(io_intensive_work(i)))
         .collect();
-    
+
     for task in tasks {
         task.await.unwrap();
     }
-    
+
     println!("100 I/O tasks completed in {:?}", start.elapsed());
     println!("Memory: ~few hundred KB\n");
 
     // Example 2: CPU-bound workload - threads win
     println!("Example 2: CPU-bound (thread pool)");
     let start = Instant::now();
-    
+
     let threads: Vec<_> = (0..4)
-        .map(|i| {
-            std::thread::spawn(move || {
-                cpu_intensive_work(10_000_000 * (i + 1))
-            })
-        })
+        .map(|i| std::thread::spawn(move || cpu_intensive_work(10_000_000 * (i + 1))))
         .collect();
-    
+
     for thread in threads {
         thread.join().unwrap();
     }
-    
+
     println!("4 CPU-intensive threads completed in {:?}", start.elapsed());
     println!("Used available cores efficiently\n");
 
     // Example 3: Mixed workload - hybrid approach
     println!("Example 3: Mixed workload (hybrid)");
     let start = Instant::now();
-    
+
     // Async for I/O coordination
     let data = io_intensive_work(1).await;
-    
+
     // Spawn thread for CPU work
     let processed = tokio::task::spawn_blocking(move || {
         cpu_intensive_work(5_000_000);
         format!("Processed: {}", data)
-    }).await.unwrap();
-    
+    })
+    .await
+    .unwrap();
+
     // Back to async for final I/O
     println!("{}", processed);
     sleep(Duration::from_millis(50)).await;
-    
+
     println!("Hybrid completed in {:?}\n", start.elapsed());
 
     // Example 4: Scalability comparison
@@ -87,13 +85,13 @@ async fn main() {
     println!("  - High concurrency needed (1000s of connections)");
     println!("  - Non-blocking is critical");
     println!("  - Examples: web servers, API clients, chat apps");
-    
+
     println!("\n✅ Use Threads When:");
     println!("  - CPU-intensive computation");
     println!("  - Blocking operations (no async alternative)");
     println!("  - Parallel data processing");
     println!("  - Examples: image processing, crypto, simulations");
-    
+
     println!("\n✅ Use Both (Hybrid) When:");
     println!("  - I/O coordination + CPU processing");
     println!("  - Web server with compute endpoints");
@@ -101,7 +99,7 @@ async fn main() {
 
     // Example 6: Common mistakes
     println!("\n\n❌ Common Mistakes:");
-    
+
     println!("\nMistake 1: Blocking in async context");
     println!("// BAD");
     println!("async fn bad() {{");

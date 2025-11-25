@@ -64,13 +64,15 @@ impl TopoMap {
     fn find_trailheads(&self) -> Vec<Coord> {
         self.heights
             .enumerate()
-            .filter_map(|(coord, &height)| {
-                if height == Some(0) {
-                    Some(coord)
-                } else {
-                    None
-                }
-            })
+            .filter_map(
+                |(coord, &height)| {
+                    if height == Some(0) {
+                        Some(coord)
+                    } else {
+                        None
+                    }
+                },
+            )
             .collect()
     }
 

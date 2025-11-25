@@ -1,5 +1,5 @@
-use aoc2024::solver::day09;
 use anyhow::{Context, Result};
+use aoc2024::solver::day09;
 use std::env;
 use std::fs;
 
@@ -7,7 +7,9 @@ fn load_input() -> Result<String> {
     if let Some(path) = env::args().nth(1) {
         fs::read_to_string(&path).with_context(|| format!("Failed to read {path}"))
     } else {
-        Ok(include_str!("../inputs/day09_example.txt").trim().to_string())
+        Ok(include_str!("../inputs/day09_example.txt")
+            .trim()
+            .to_string())
     }
 }
 

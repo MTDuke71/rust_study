@@ -160,10 +160,10 @@
 //!
 //! ## See Also
 //!
-//! - [`examples/kruskal_mst.rs`] - Minimum spanning tree implementation
-//! - [`examples/cycle_detection.rs`] - Graph cycle detection
-//! - [`examples/social_network.rs`] - Social network analysis
-//! - [`examples/dynamic_connectivity.rs`] - Online connectivity queries
+//! - `examples/kruskal_mst.rs` - Minimum spanning tree implementation
+//! - `examples/cycle_detection.rs` - Graph cycle detection
+//! - `examples/social_network.rs` - Social network analysis
+//! - `examples/dynamic_connectivity.rs` - Online connectivity queries
 
 /// Union-Find data structure with path compression and union by rank
 ///

@@ -49,13 +49,13 @@ async fn main() {
 
     // Example 2: What async fn generates
     println!("Example 2: async fn is syntactic sugar");
-    
+
     // This async fn:
     async fn example() -> String {
         sleep(Duration::from_millis(100)).await;
         String::from("Done")
     }
-    
+
     // Is approximately equivalent to:
     #[allow(clippy::manual_async_fn)]
     fn example_desugared() -> impl Future<Output = String> {
@@ -64,7 +64,7 @@ async fn main() {
             String::from("Done")
         }
     }
-    
+
     let result1 = example().await;
     let result2 = example_desugared().await;
     println!("async fn: {}", result1);

@@ -5,7 +5,7 @@ type Position = (usize, usize);
 
 /// Topographic map with height information
 struct TopoMap {
-    heights: Vec<Vec<Option<u32>>>,  // None for impassable positions
+    heights: Vec<Vec<Option<u32>>>, // None for impassable positions
     rows: usize,
     cols: usize,
 }
@@ -19,7 +19,7 @@ impl TopoMap {
                 line.chars()
                     .map(|c| {
                         if c == '.' {
-                            None  // Impassable
+                            None // Impassable
                         } else {
                             c.to_digit(10)
                         }
@@ -31,7 +31,11 @@ impl TopoMap {
         let rows = heights.len();
         let cols = if rows > 0 { heights[0].len() } else { 0 };
 
-        Self { heights, rows, cols }
+        Self {
+            heights,
+            rows,
+            cols,
+        }
     }
 
     /// Get height at a position (None if impassable)
@@ -61,7 +65,7 @@ impl TopoMap {
     fn valid_neighbors(&self, pos: Position) -> Vec<Position> {
         let current_height = match self.height_at(pos) {
             Some(h) => h,
-            None => return Vec::new(),  // Impassable position
+            None => return Vec::new(), // Impassable position
         };
         let (row, col) = pos;
         let mut neighbors = Vec::new();
@@ -69,9 +73,9 @@ impl TopoMap {
         // Check all 4 directions
         let directions = [
             (row.wrapping_sub(1), col), // Up
-            (row + 1, col),              // Down
+            (row + 1, col),             // Down
             (row, col.wrapping_sub(1)), // Left
-            (row, col + 1),              // Right
+            (row, col + 1),             // Right
         ];
 
         for &next_pos in &directions {
@@ -167,7 +171,12 @@ fn main() {
     println!("Part 1: Trailhead Scores");
     for (i, &trailhead) in trailheads.iter().enumerate() {
         let score = map.trailhead_score(trailhead);
-        println!("  Trailhead {} at {:?}: score = {}", i + 1, trailhead, score);
+        println!(
+            "  Trailhead {} at {:?}: score = {}",
+            i + 1,
+            trailhead,
+            score
+        );
         total_score += score;
     }
     println!("\nTotal score: {}", total_score);

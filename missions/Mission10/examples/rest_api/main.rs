@@ -3,23 +3,18 @@
 //! This example demonstrates how to expose the Union-Find data structure
 //! as a RESTful API using Axum and Utoipa.
 
-use axum::{
-    routing::get,
-    Router,
-    http::StatusCode,
-    response::IntoResponse,
-};
+use axum::{http::StatusCode, response::IntoResponse, routing::get, Router};
 use std::net::SocketAddr;
-use utoipa::OpenApi;
-use utoipa_swagger_ui::SwaggerUi;
 use tower_http::cors::CorsLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use utoipa::OpenApi;
+use utoipa_swagger_ui::SwaggerUi;
 
-mod models;
-mod handlers;
-mod state;
 mod errors;
+mod handlers;
+mod models;
 mod openapi;
+mod state;
 
 use openapi::ApiDoc;
 use state::AppState;
@@ -51,7 +46,7 @@ async fn main() {
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("✅ Server listening on http://{}", addr);
     println!("📚 Swagger UI: http://{}/swagger-ui", addr);
-    
+
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }

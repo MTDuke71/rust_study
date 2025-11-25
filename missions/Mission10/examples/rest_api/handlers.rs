@@ -1,15 +1,18 @@
-use axum::{
-    routing::{post, get, delete},
-    Router,
-    extract::{Path, State, Json, Query},
-    http::StatusCode,
-    response::{IntoResponse, Response},
-};
-use uuid::Uuid;
 use crate::{
-    models::{CreateRequest, CreateResponse, UnionRequest, UnionResponse, FindRequest, FindResponse, ConnectedRequest, ConnectedResponse, StatsResponse, ErrorResponse},
+    models::{
+        ConnectedRequest, ConnectedResponse, CreateRequest, CreateResponse, ErrorResponse,
+        FindRequest, FindResponse, StatsResponse, UnionRequest, UnionResponse,
+    },
     state::AppState,
 };
+use axum::{
+    extract::{Json, Path, Query, State},
+    http::StatusCode,
+    response::{IntoResponse, Response},
+    routing::{delete, get, post},
+    Router,
+};
+use uuid::Uuid;
 
 pub fn routes() -> Router<AppState> {
     Router::new()
@@ -62,7 +65,8 @@ pub async fn create_instance(
             id,
             size: payload.size,
         }),
-    ).into_response()
+    )
+        .into_response()
 }
 
 /// Union two elements
@@ -95,13 +99,9 @@ pub async fn union_elements(
     });
 
     match result {
-        Some(Ok((merged, root))) => (
-            StatusCode::OK,
-            Json(UnionResponse {
-                merged,
-                root,
-            }),
-        ).into_response(),
+        Some(Ok((merged, root))) => {
+            (StatusCode::OK, Json(UnionResponse { merged, root })).into_response()
+        }
         Some(Err(e)) => error_response(StatusCode::BAD_REQUEST, &e),
         None => error_response(StatusCode::NOT_FOUND, "Instance not found"),
     }
@@ -127,9 +127,7 @@ pub async fn find_element(
     Path(id): Path<Uuid>,
     Query(params): Query<FindRequest>,
 ) -> Response {
-    let result = state.get_instance(id, |uf| {
-        uf.find(params.element)
-    });
+    let result = state.get_instance(id, |uf| uf.find(params.element));
 
     match result {
         Some(Ok(root)) => (
@@ -138,7 +136,8 @@ pub async fn find_element(
                 element: params.element,
                 root,
             }),
-        ).into_response(),
+        )
+            .into_response(),
         Some(Err(e)) => error_response(StatusCode::BAD_REQUEST, &e),
         None => error_response(StatusCode::NOT_FOUND, "Instance not found"),
     }
@@ -165,15 +164,12 @@ pub async fn check_connected(
     Path(id): Path<Uuid>,
     Query(params): Query<ConnectedRequest>,
 ) -> Response {
-    let result = state.get_instance(id, |uf| {
-        uf.connected(params.element1, params.element2)
-    });
+    let result = state.get_instance(id, |uf| uf.connected(params.element1, params.element2));
 
     match result {
-        Some(Ok(connected)) => (
-            StatusCode::OK,
-            Json(ConnectedResponse { connected }),
-        ).into_response(),
+        Some(Ok(connected)) => {
+            (StatusCode::OK, Json(ConnectedResponse { connected })).into_response()
+        }
         Some(Err(e)) => error_response(StatusCode::BAD_REQUEST, &e),
         None => error_response(StatusCode::NOT_FOUND, "Instance not found"),
     }
@@ -192,22 +188,14 @@ pub async fn check_connected(
     ),
     tag = "Operations"
 )]
-pub async fn get_stats(
-    State(state): State<AppState>,
-    Path(id): Path<Uuid>,
-) -> Response {
-    let result = state.get_instance(id, |uf| {
-        StatsResponse {
-            total_elements: uf.len(),
-            num_components: uf.count(),
-        }
+pub async fn get_stats(State(state): State<AppState>, Path(id): Path<Uuid>) -> Response {
+    let result = state.get_instance(id, |uf| StatsResponse {
+        total_elements: uf.len(),
+        num_components: uf.count(),
     });
 
     match result {
-        Some(stats) => (
-            StatusCode::OK,
-            Json(stats),
-        ).into_response(),
+        Some(stats) => (StatusCode::OK, Json(stats)).into_response(),
         None => error_response(StatusCode::NOT_FOUND, "Instance not found"),
     }
 }
@@ -225,10 +213,7 @@ pub async fn get_stats(
     ),
     tag = "Union-Find Management"
 )]
-pub async fn delete_instance(
-    State(state): State<AppState>,
-    Path(id): Path<Uuid>,
-) -> Response {
+pub async fn delete_instance(State(state): State<AppState>, Path(id): Path<Uuid>) -> Response {
     if state.delete_instance(id) {
         StatusCode::NO_CONTENT.into_response()
     } else {

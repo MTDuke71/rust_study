@@ -1,9 +1,9 @@
+use crate::models::ErrorResponse;
 use axum::{
-    response::{IntoResponse, Response},
     http::StatusCode,
+    response::{IntoResponse, Response},
     Json,
 };
-use crate::models::ErrorResponse;
 
 #[allow(dead_code)]
 pub enum AppError {

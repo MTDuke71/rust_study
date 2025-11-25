@@ -58,9 +58,9 @@ impl<'a> SnapshotRecorder<'a> {
 fn parse_disk(input: &str) -> Result<DiskLayout> {
     let mut digits: Vec<usize> = Vec::new();
     for ch in input.chars().filter(|c| !c.is_whitespace()) {
-        let len = ch
-            .to_digit(10)
-            .with_context(|| format!("Invalid digit '{ch}' in disk map"))? as usize;
+        let len =
+            ch.to_digit(10)
+                .with_context(|| format!("Invalid digit '{ch}' in disk map"))? as usize;
         digits.push(len);
     }
     if digits.is_empty() {
@@ -140,7 +140,7 @@ fn compact_blocks_with_recorder<'a>(
     }
     let mut left = 0usize;
     let mut right = blocks.len() - 1;
-    
+
     // Two-pointer compaction: left finds gaps, right finds file blocks
     while left < right {
         // Advance left to the first gap
@@ -484,18 +484,18 @@ mod tests {
         assert_eq!(layout.file_count, 2);
         // file1 has len=3, exists in file_table
         assert!(layout.file_table.get(&1).is_some());
-        
+
         // "0131" = file0 len=0, gap len=1, file1 len=3, gap len=1
         // file0 has len=0, should NOT be in file_table because len=0
         // Gap at position 0 with len=1 is too small for file1 (len=3), so file1 stays put
         let mut layout2 = parse_disk("0131").unwrap();
         assert_eq!(layout2.file_count, 2);
         assert!(layout2.file_table.get(&0).is_none());
-        
+
         let file1_start_before = layout2.file_table.get(&1).unwrap().start;
         compact_whole_files(&mut layout2);
         let file1_start_after = layout2.file_table.get(&1).unwrap().start;
-        
+
         // file1 should NOT move because gap (len=1) is too small for file (len=3)
         assert_eq!(file1_start_after, file1_start_before);
     }

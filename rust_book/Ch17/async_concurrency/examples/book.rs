@@ -233,13 +233,13 @@ fn listing_17_13() {
 fn main() {
     // Run whichever listing you want to explore
     // Uncomment the one you want to run:
-    
+
     listing_17_6();
     listing_17_7();
     listing_17_8();
     listing_17_9();
     //listing_17_10();
     //listing_17_11();
-     listing_17_12();
+    listing_17_12();
     listing_17_13();
 }

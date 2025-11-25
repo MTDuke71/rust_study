@@ -2,8 +2,8 @@
 //!
 //! This example demonstrates how to create a custom Cargo command.
 //!
-//! Custom Cargo commands follow the naming convention: cargo-<name>
-//! When installed, they become available as: cargo <name>
+//! Custom Cargo commands follow the naming convention: `cargo-<name>`
+//! When installed, they become available as: `cargo <name>`
 //!
 //! ## Testing during development:
 //!   cargo run -p cargo-example --bin cargo-example
