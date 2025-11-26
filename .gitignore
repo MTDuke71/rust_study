@@ -83,3 +83,7 @@ reports/
 
 # System files directory (contains broken links output and other system files)
 .system/
+
+# Coverage profiling data
+*.profraw
+*.profdata
