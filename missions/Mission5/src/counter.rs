@@ -437,4 +437,260 @@ mod tests {
         assert_eq!(counter.get(&"b"), 1);
         assert_eq!(counter.get(&"c"), 1);
     }
+
+    // ========== NEW COVERAGE TESTS ==========
+
+    #[test]
+    fn test_with_capacity() {
+        // REQ-3: Counter should support pre-allocation
+        let counter: Counter<String> = Counter::with_capacity(100);
+        assert!(counter.is_empty());
+        assert_eq!(counter.total_count(), 0);
+        assert_eq!(counter.unique_count(), 0);
+    }
+
+    #[test]
+    fn test_is_empty() {
+        let mut counter: Counter<&str> = Counter::new();
+        assert!(counter.is_empty());
+
+        counter.increment("item");
+        assert!(!counter.is_empty());
+
+        counter.remove(&"item");
+        assert!(counter.is_empty());
+    }
+
+    #[test]
+    fn test_clear() {
+        let mut counter = Counter::new();
+        counter.increment("a");
+        counter.increment("b");
+        counter.increment("a");
+
+        assert_eq!(counter.total_count(), 3);
+        assert_eq!(counter.unique_count(), 2);
+
+        counter.clear();
+
+        assert!(counter.is_empty());
+        assert_eq!(counter.total_count(), 0);
+        assert_eq!(counter.unique_count(), 0);
+        assert_eq!(counter.get(&"a"), 0);
+    }
+
+    #[test]
+    fn test_contains() {
+        let mut counter = Counter::new();
+        assert!(!counter.contains(&"apple"));
+
+        counter.increment("apple");
+        assert!(counter.contains(&"apple"));
+        assert!(!counter.contains(&"banana"));
+    }
+
+    #[test]
+    fn test_iter() {
+        let mut counter = Counter::new();
+        counter.increment("a");
+        counter.increment("b");
+        counter.increment("a");
+
+        let items: Vec<_> = counter.iter().collect();
+        assert_eq!(items.len(), 2);
+
+        // Verify we can find both keys with their counts
+        let a_count = counter.iter().find(|(k, _)| **k == "a").map(|(_, v)| *v);
+        let b_count = counter.iter().find(|(k, _)| **k == "b").map(|(_, v)| *v);
+        assert_eq!(a_count, Some(2));
+        assert_eq!(b_count, Some(1));
+    }
+
+    #[test]
+    fn test_keys() {
+        let mut counter = Counter::new();
+        counter.increment("apple");
+        counter.increment("banana");
+        counter.increment("cherry");
+
+        let mut keys: Vec<_> = counter.keys().cloned().collect();
+        keys.sort();
+        assert_eq!(keys, vec!["apple", "banana", "cherry"]);
+    }
+
+    #[test]
+    fn test_values() {
+        let mut counter = Counter::new();
+        counter.increment_by("a", 5);
+        counter.increment_by("b", 3);
+        counter.increment_by("c", 1);
+
+        let mut values: Vec<_> = counter.values().copied().collect();
+        values.sort();
+        assert_eq!(values, vec![1, 3, 5]);
+    }
+
+    #[test]
+    fn test_least_common() {
+        let mut counter = Counter::new();
+        counter.count_multiple(vec![
+            "a".to_string(),
+            "b".to_string(),
+            "a".to_string(),
+            "c".to_string(),
+            "a".to_string(),
+            "b".to_string(),
+        ]);
+
+        let least_common = counter.least_common(2);
+        assert_eq!(least_common.len(), 2);
+        assert_eq!(least_common[0], ("c".to_string(), 1));
+        assert_eq!(least_common[1], ("b".to_string(), 2));
+    }
+
+    #[test]
+    fn test_default_trait() {
+        let counter: Counter<String> = Counter::default();
+        assert!(counter.is_empty());
+        assert_eq!(counter.total_count(), 0);
+    }
+
+    #[test]
+    fn test_extend_trait() {
+        let mut counter = Counter::new();
+        counter.increment("initial");
+
+        // Extend with more items
+        counter.extend(vec!["a", "b", "a", "c"]);
+
+        assert_eq!(counter.get(&"initial"), 1);
+        assert_eq!(counter.get(&"a"), 2);
+        assert_eq!(counter.get(&"b"), 1);
+        assert_eq!(counter.get(&"c"), 1);
+        assert_eq!(counter.total_count(), 5);
+    }
+
+    #[test]
+    fn test_remove_nonexistent_key() {
+        let mut counter = Counter::new();
+        counter.increment("exists");
+
+        // Remove key that doesn't exist
+        let removed = counter.remove(&"missing");
+        assert_eq!(removed, 0);
+        assert_eq!(counter.total_count(), 1); // Total unchanged
+
+        // Remove key that exists
+        let removed = counter.remove(&"exists");
+        assert_eq!(removed, 1);
+        assert_eq!(counter.total_count(), 0);
+    }
+
+    #[test]
+    fn test_set_overwrites_existing() {
+        let mut counter = Counter::new();
+        counter.increment_by("key", 10);
+        assert_eq!(counter.total_count(), 10);
+
+        // Set to different value - should update total correctly
+        counter.set("key", 5);
+        assert_eq!(counter.get(&"key"), 5);
+        assert_eq!(counter.total_count(), 5);
+
+        // Set to zero
+        counter.set("key", 0);
+        assert_eq!(counter.get(&"key"), 0);
+        assert_eq!(counter.total_count(), 0);
+    }
+
+    #[test]
+    fn test_set_new_key() {
+        let mut counter: Counter<&str> = Counter::new();
+
+        // Set on non-existent key
+        counter.set("new_key", 7);
+        assert_eq!(counter.get(&"new_key"), 7);
+        assert_eq!(counter.total_count(), 7);
+    }
+
+    #[test]
+    fn test_clone_trait() {
+        let mut counter = Counter::new();
+        counter.increment("a");
+        counter.increment("b");
+
+        let cloned = counter.clone();
+
+        // Verify clone has same data
+        assert_eq!(cloned.get(&"a"), 1);
+        assert_eq!(cloned.get(&"b"), 1);
+        assert_eq!(cloned.total_count(), 2);
+
+        // Modify original - clone should be unaffected
+        counter.increment("a");
+        assert_eq!(counter.get(&"a"), 2);
+        assert_eq!(cloned.get(&"a"), 1);
+    }
+
+    #[test]
+    fn test_most_common_more_than_available() {
+        let mut counter = Counter::new();
+        counter.count_multiple(vec!["a".to_string(), "b".to_string()]);
+
+        // Request more items than exist
+        let most_common = counter.most_common(10);
+        assert_eq!(most_common.len(), 2);
+    }
+
+    #[test]
+    fn test_least_common_more_than_available() {
+        let mut counter = Counter::new();
+        counter.count_multiple(vec!["a".to_string(), "b".to_string()]);
+
+        // Request more items than exist
+        let least_common = counter.least_common(10);
+        assert_eq!(least_common.len(), 2);
+    }
+
+    #[test]
+    fn test_empty_counter_operations() {
+        let counter: Counter<String> = Counter::new();
+
+        // Operations on empty counter should work gracefully
+        assert_eq!(counter.get(&"anything".to_string()), 0);
+        assert!(counter.is_empty());
+        assert_eq!(counter.total_count(), 0);
+        assert_eq!(counter.unique_count(), 0);
+        assert!(!counter.contains(&"anything".to_string()));
+        assert_eq!(counter.iter().count(), 0);
+        assert_eq!(counter.keys().count(), 0);
+        assert_eq!(counter.values().count(), 0);
+    }
+
+    #[test]
+    fn test_count_words_empty_string() {
+        let mut counter = Counter::new();
+        counter.count_words("");
+        assert!(counter.is_empty());
+    }
+
+    #[test]
+    fn test_count_chars_empty_string() {
+        let mut counter = Counter::new();
+        counter.count_chars("");
+        assert!(counter.is_empty());
+    }
+
+    #[test]
+    fn test_numeric_keys() {
+        // Test with numeric keys to ensure generic behavior
+        let mut counter: Counter<i32> = Counter::new();
+        counter.increment(1);
+        counter.increment(2);
+        counter.increment(1);
+
+        assert_eq!(counter.get(&1), 2);
+        assert_eq!(counter.get(&2), 1);
+        assert_eq!(counter.get(&99), 0);
+    }
 }
