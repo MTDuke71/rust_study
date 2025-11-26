@@ -632,6 +632,103 @@ For each cell in a region, check 4 corner positions (top-left, top-right, bottom
 - Validates that Mission 6 components handle real AoC complexity (nested regions, irregular shapes)
 - Proves value of defense-in-depth validation (better error messages through layered checks)
 
+### Day 13: Claw Contraption
+
+**Title**: Claw Contraption
+**Part 1 Type**: Mathematical + Optimization
+**Part 1 Description**: Solve claw machine puzzles to win prizes. Each machine has two buttons (A costs 3 tokens, B costs 1 token) that move the claw by specific X/Y amounts. Find the minimum tokens to reach the prize position, or determine if it's impossible.
+**Part 2 Type**: Mathematical + Optimization
+**Part 2 Description**: Same puzzle but add 10 trillion to each prize coordinate, requiring linear algebra solution (brute force impossible).
+**Key Concepts**: Linear algebra, Cramer's rule, 2×2 system of equations, integer solution validation, modular arithmetic for divisibility checking
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Mathematical optimization with escalation (small search space → enormous coordinates requiring analytical solution)
+- **Data Structure**: `ClawMachine` struct with button displacements (dx, dy) and prize coordinates, no complex data structures needed—pure mathematics
+- **Complexity**: O(1) per machine—Cramer's rule provides direct closed-form solution
+- **AoC Theme**: "Claw machine optimization" with classic Part 2 scale-up that eliminates brute force (100×100 search → 10 trillion offset)
+
+**🦀 Rust Conversion Highlights**:
+
+- **From brute force search** → **Cramer's rule closed-form solution** eliminating nested loops entirely
+- **From float division with `.is_integer()`** → **Integer modulo `% det != 0`** for exact divisibility checking (avoids floating-point precision issues)
+- **From duplicated Part 1/Part 2 logic** → **Shared `total_tokens(&machines)` helper** accepting machine slice for code reuse
+- **From string-based line splitting** → **Line-based grouping with `.lines()` iterator** handling both LF and CRLF line endings
+- **From implicit error handling** → **Comprehensive `anyhow::Result`** with detailed error context for parsing failures
+
+**Linear Algebra Solution**:
+
+Given system of equations:
+
+```
+a * Ax + b * Bx = Px
+a * Ay + b * By = Py
+```
+
+Cramer's rule solution:
+
+- `det = Ax * By - Bx * Ay` (determinant)
+- `a = (Px * By - Bx * Py) / det`
+- `b = (Ax * Py - Px * Ay) / det`
+
+Validity checks:
+
+1. `det ≠ 0` (non-parallel lines, unique solution exists)
+2. `a_num % det == 0 && b_num % det == 0` (integer solution)
+3. `a ≥ 0 && b ≥ 0` (non-negative button presses)
+
+**Key Insight**: Linear algebra guarantees at most one solution—no need to search for "minimum cost" among multiple solutions.
+
+**Real-World Complexity Handling**:
+
+- **Integer Precision**: Using `i64` throughout avoids floating-point precision loss for 10 trillion-scale coordinates
+- **Determinant Zero Handling**: Parallel lines (no unique solution) gracefully handled as unsolvable
+- **Cross-Platform Parsing**: `.lines()` iterator handles both Unix LF and Windows CRLF line endings automatically
+- **Code Reuse**: `total_tokens()` function shared between Part 1 and Part 2, only prize offset differs
+
+**Python vs Rust Comparison**:
+
+- **Algorithm Approach**:
+  - **Python**: Uses substitution method (solve for `a` in terms of `b`, substitute), float division with `.is_integer()` check
+  - **Rust**: Uses Cramer's rule directly, integer modulo for divisibility check, no floating-point operations
+- **Implementation Style**:
+  - **Python**: ~45 lines, compact regex parsing, commented Z3 solver code for alternative approach
+  - **Rust**: ~170 lines with 11 tests, structured parsing with error handling, type-safe `ClawMachine` struct
+- **Integer Checking**:
+  - **Python**: `float(a).is_integer()` relies on floating-point representation
+  - **Rust**: `a_num % det != 0` uses exact integer arithmetic, no precision concerns
+- **Code Reuse**:
+  - **Python**: Separate `part1()` and `part2()` functions with duplicated solve logic
+  - **Rust**: Shared `total_tokens()` function, Part 2 only adds offset before calling same solver
+- **Error Handling**:
+  - **Python**: Assumes valid input format, potential parse failures on malformed data
+  - **Rust**: Comprehensive `Result<T>` throughout with detailed error context
+
+**Educational Insights**:
+
+- **Linear Algebra Application**: Real-world use of Cramer's rule for 2×2 systems—common in geometry, physics, and optimization problems
+- **Scale-Driven Algorithm Selection**: Part 1 could use brute force (100×100 = 10K iterations), Part 2 forces O(1) analytical approach
+- **Integer vs Float Precision**: Demonstrates why integer arithmetic is preferred when dealing with large coordinates (floating-point would lose precision at 10 trillion scale)
+- **Uniqueness Guarantee**: Understanding that 2×2 linear systems have at most one solution (assuming non-parallel lines) eliminates unnecessary optimization logic
+
+**Results**:
+
+- Sample: Part 1 = 480 (machines 1 and 3 solvable, costs 280 + 200)
+- Puzzle: Part 1 = 25,751, Part 2 = 108,528,956,728,655
+
+**Test Coverage**: 11 tests including:
+
+- Parsing validation (4 tests: button lines, prize lines, full machine, complete input)
+- Individual machine solving (4 tests: solvable machine 1, unsolvable machine 2, solvable machine 3, unsolvable machine 4)
+- Part 1 integration (1 test: example total 480)
+- Part 2 behavior (2 tests: machine 2 becomes solvable, machine 4 becomes solvable with offset)
+
+**Mission Integration Benefit**:
+
+- Demonstrates that not all AoC problems benefit from mission libraries—Day 13 is pure mathematics with minimal data structure needs
+- Shows value of choosing right tool: analytical solution over brute force when problem structure allows
+- Validates that clean code organization (`ClawMachine` struct, `solve_machine()` function, `total_tokens()` helper) can make mathematical solutions readable and maintainable
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -648,9 +745,9 @@ For each cell in a region, check 4 corner positions (top-left, top-right, bottom
 | Encoding | 0 | 0 |
 | Graph Algorithms | 3 | 3 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 6 | 4 |
+| Mathematical | 7 | 5 |
 | Number Theory | 0 | 0 |
-| Optimization | 0 | 5 |
+| Optimization | 1 | 6 |
 | Parsing | 0 | 0 |
 | Pattern Matching | 2 | 2 |
 | Real-time Analysis | 0 | 0 |
@@ -700,6 +797,9 @@ For each cell in a region, check 4 corner positions (top-left, top-right, bottom
 35. **Corner Counting for Polygon Sides**: Geometric algorithm leveraging the property that sides = corners for any polygon, detecting both outer (convex) and inner (concave) corners (Day 12: eliminates need for edge tracing or rotation)
 36. **Generic Higher-Order Functions**: Code reuse through generic functions accepting closures for algorithm family variations (Day 12: single `calculate_total_cost<F>()` for different cost formulas eliminates duplication)
 37. **Region Metadata Extraction**: Single-pass flood fill providing multiple metrics (area, perimeter, coordinates) avoiding redundant traversals (Day 12: Mission 6 FloodFill returns complete region info)
+38. **Linear Algebra for Constraint Solving**: Cramer's rule for 2×2 systems providing O(1) closed-form solutions instead of brute force search (Day 13: claw machine button press combinations)
+39. **Scale-Driven Algorithm Selection**: Problem constraints that force analytical solutions over brute force approaches (Day 13: Part 2 adds 10 trillion offset making search impossible)
+40. **Integer Precision for Large Coordinates**: Using integer modulo for divisibility checking instead of floating-point `.is_integer()` to avoid precision loss at large scales (Day 13: 10 trillion-scale coordinates)
 
 ### Rust-Specific Considerations
 
@@ -715,6 +815,7 @@ For each cell in a region, check 4 corner positions (top-left, top-right, bottom
 - **Day 10**: Exemplifies mission composition at its finest—Mission 6 `Grid<Option<u32>>` + `Coord` type + `neighbors_4()` iterator combined with Mission 8 `Graph` trait + generic `bfs()` algorithm. Demonstrates complete refactoring journey: initial manual implementation (d082003) proves algorithm correctness, Mission 6 refactoring (c6b2283) reduces code by ~10 lines while eliminating entire bug classes (coordinate confusion, bounds errors). **Key Learning**: `Coord` type prevents tuple x/y swapping, `grid.in_bounds()` eliminates manual checks, `neighbors_4()` returns iterator (not Vec) for efficiency, Graph trait enables generic algorithms. Shows BFS for Part 1 reachability vs custom DFS for Part 2 path counting—demonstrates when to use vs extend mission libraries. **Python Comparison**: Python's 50-line pragmatic solution uses O(n) `list.pop(0)` and tuple positions; Rust's 160-line structured solution uses O(1) VecDeque, type-safe Coord, and comprehensive validation. Both correct, different optimization goals (midnight racing vs production learning). **V-Cycle Validation**: Tests prove functional equivalence (12/12 pass), answers match (512/1045), zero clippy warnings after iterator refinement.
 - **Day 11**: Showcases optimization journey from string-based to math-based approaches. Demonstrates dynamic programming with `HashMap<(u64, usize), usize>` memoization cache using composite state keys for O(1) lookups. Highlights performance analysis through dedicated tests comparing naive O(S^B) vs memoized O(U×B) approaches. **Math Optimization**: Evolved from `to_string().len()` to `log10()` for digit counting, from string parsing to integer arithmetic (`division/modulo`) for splitting stones—eliminates heap allocations while maintaining correctness. **Educational Infrastructure**: `count_stones_with_trace()` and `count_with_cache_stats()` test helpers (marked `#[allow(dead_code)]`) provide instrumentation for understanding memoization mechanics. **Test-Driven Analysis**: 18 comprehensive tests including performance validation (naive vs memoized timing), cache efficiency measurement (130K entries for 223T stones), and traced execution examples. **Python Comparison**: Python used math-based approach from start with `@cache` decorator; Rust's manual cache management provides deeper understanding of memoization mechanics. Shows when optimization transitions from optional (Part 1 ≤25 blinks) to essential (Part 2 = 75 blinks), with concrete performance metrics validating the necessity.
 - **Day 12**: Exemplifies Mission 6 integration for region-based problems with flood fill for connected component detection. Demonstrates generic higher-order functions with closures—`calculate_total_cost<F>()` eliminates ~30 lines of duplication while accepting different cost formulas (area × perimeter vs area × sides). **Corner Counting Algorithm**: Mathematical approach leveraging geometric theorem (sides = corners for polygons), distinguishing outer corners (!N && !W) from inner corners (N && W && !NW), handling complex shapes including nested regions with holes. **Mission Integration**: `FloodFill::analyze_region_4()` provides area, perimeter, and coordinates in single call; `Grid<char>` + `Coord` eliminate manual bounds checking; row-major scanning (y outer, x inner) matches memory layout for cache efficiency. **Defense in Depth**: Validation in both `parse_grid()` and `Grid::from_vec2d()` provides better error messages despite redundancy. **Test Coverage**: 22 comprehensive tests covering parsing edge cases (11), Part 1 integration (5), Part 2 geometric shapes (6). **Python Comparison**: Python's creative string manipulation + grid rotation approach (creates padded grid, counts edge segments, rotates 90° for vertical edges) vs Rust's mathematical corner counting (HashSet lookups, no grid allocations, leverages polygon property). Shows functional programming patterns (closures for algorithm families) and foundational library composition (Grid + FloodFill = complete region detection framework).
+- **Day 13**: Demonstrates pure mathematical problem solving with minimal data structure complexity. Showcases Cramer's rule implementation for 2×2 linear systems with integer arithmetic avoiding floating-point precision issues. **Algorithm Choice**: Direct closed-form solution instead of brute force—O(1) vs O(N²) complexity; Part 2's 10 trillion offset makes brute force literally impossible. **Integer Precision**: Uses `i64` throughout and modulo checks (`a_num % det != 0`) instead of floating-point `.is_integer()`, critical for large-scale coordinates. **Cross-Platform Parsing**: `.lines()` iterator handles both LF and CRLF line endings automatically, fixing initial parsing failure on Windows. **Code Organization**: Clean separation with `ClawMachine` struct, dedicated parse functions with error context, and shared `total_tokens()` helper between parts. **Test Coverage**: 11 comprehensive tests covering parsing, individual machine solving (solvable and unsolvable cases), and Part 2 behavior changes. **Key Learning**: Not all AoC problems need complex data structures or mission libraries—recognizing when mathematical analysis is the right tool shows problem-solving maturity.
 
 ---
 
@@ -755,10 +856,10 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 25, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
+*Last Updated: November 26, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule*
 *Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]]*
