@@ -77,6 +77,7 @@ zettelkasten/
 - ✅ **Concepts**: `[[find-all-components]]` (lowercase-with-dashes)
 
 **Why This Matters:**
+
 - Prevents link collisions (Day24 could be many things)
 - Maintains namespace clarity
 - Enables reliable graph navigation
@@ -90,6 +91,7 @@ A **Map of Content** is a zettel that organizes related notes into a navigable s
 ### Primary MOCs
 
 #### 1. **zettel-index.md**
+
 Master navigation hub - entry point to entire system
 
 ```markdown
@@ -113,6 +115,7 @@ Master navigation hub - entry point to entire system
 ```
 
 #### 2. **Missions Overview.md**
+
 Tracks all mission progress and interconnections
 
 ```markdown
@@ -131,6 +134,7 @@ Tracks all mission progress and interconnections
 ```
 
 #### 3. **Daily Study MOC.md**
+
 Organizes daily learning progression
 
 ```markdown
@@ -146,6 +150,7 @@ Organizes daily learning progression
 ```
 
 #### 4. **AoC Patterns MOC.md**
+
 Catalogs problem-solving patterns
 
 ```markdown
@@ -178,7 +183,8 @@ If `FileA.md` links to `FileB.md`, then `FileB.md` MUST link back to `FileA.md`.
 
 ### Implementation Pattern
 
-#### In Daily Study Note:
+#### In Daily Study Note
+
 ```markdown
 # Day 26 - Priority Queues
 
@@ -192,7 +198,8 @@ If `FileA.md` links to `FileB.md`, then `FileB.md` MUST link back to `FileA.md`.
 - [[Binary Heap Data Structure]] - Implementation details
 ```
 
-#### In Referenced Files:
+#### In Referenced Files
+
 ```markdown
 # Priority Queue Patterns
 
@@ -209,16 +216,17 @@ If `FileA.md` links to `FileB.md`, then `FileB.md` MUST link back to `FileA.md`.
 ### Recent Example
 
 Commit `e442fdb` (November 2, 2025):
+
 - Created `Priority Queue Patterns.md`
 - Added bidirectional links to 8 files:
-  * `Binary Heap Data Structure.md`
-  * `Graph Algorithms.md`
-  * `Day26.md`
-  * `day2_completion_summary.md`
-  * `2025-10-23.md`
-  * `Mission 9 Tutorial.md`
-  * `Dijkstra Algorithm.md`
-  * `Rust Collections MOC.md`
+  - `Binary Heap Data Structure.md`
+  - `Graph Algorithms.md`
+  - `Day26.md`
+  - `day2_completion_summary.md`
+  - `2025-10-23.md`
+  - `Mission 9 Tutorial.md`
+  - `Dijkstra Algorithm.md`
+  - `Rust Collections MOC.md`
 
 ## Atomic Note Structure
 
@@ -256,6 +264,7 @@ Commit `e442fdb` (November 2, 2025):
 ---
 
 ## Related Resources
+
 - Linked Note 1 - Brief context
 - Linked Note 2 - Brief context
 - Linked Note 3 - Brief context
@@ -265,6 +274,7 @@ Commit `e442fdb` (November 2, 2025):
 ---
 
 *Additional context or meta-notes*
+
 ```
 
 ### Example: Graph Algorithms Zettel
@@ -298,12 +308,14 @@ Commit `e442fdb` (November 2, 2025):
 ### Tag Categories
 
 #### 1. **Content Type**
+
 - `#mission1` through `#mission10`
 - `#daily-study`
 - `#rust-book`
 - `#aoc2015`
 
 #### 2. **Concepts**
+
 - `#ownership`
 - `#borrowing`
 - `#lifetimes`
@@ -311,6 +323,7 @@ Commit `e442fdb` (November 2, 2025):
 - `#trait-objects`
 
 #### 3. **Algorithms**
+
 - `#dijkstra`
 - `#astar`
 - `#binary-search`
@@ -318,6 +331,7 @@ Commit `e442fdb` (November 2, 2025):
 - `#dfs`
 
 #### 4. **Data Structures**
+
 - `#hashmap`
 - `#binary-heap`
 - `#graph`
@@ -325,6 +339,7 @@ Commit `e442fdb` (November 2, 2025):
 - `#union-find`
 
 #### 5. **Patterns**
+
 - `#pathfinding`
 - `#simulation`
 - `#optimization`
@@ -355,6 +370,7 @@ The zettelkasten shines in Obsidian's graph view:
 ### Cluster Detection
 
 Natural clusters emerge:
+
 - **Mission Cluster** - Implementation-focused notes
 - **Concept Cluster** - Theoretical understanding
 - **Application Cluster** - AoC and real-world use
@@ -395,6 +411,7 @@ Repository Root
 ### How Notes Evolve
 
 #### Initial Creation (Day 1)
+
 ```markdown
 # Binary Search
 
@@ -406,6 +423,7 @@ Used in Mission 3.
 ```
 
 #### After Implementation (Week 1)
+
 ```markdown
 # Binary Search
 
@@ -419,16 +437,20 @@ fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
 ```
 
 ## Complexity
+
 - Time: O(log n)
 - Space: O(1) iterative, O(log n) recursive
 
-## Applications
+## Example Applications
+
 - Mission 3 implementation
 - AoC 2015 Day 20
 
 ## Related
+
 - [[Divide and Conquer]]
 - [[mission-3]]
+
 ```
 
 #### After Multiple Applications (Month 1)
@@ -473,6 +495,7 @@ fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
 ### Weekly Review
 
 **Every Sunday:**
+
 1. Check for broken links (Obsidian plugin)
 2. Add bidirectional links for new notes
 3. Update MOCs with recent additions
@@ -481,6 +504,7 @@ fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
 ### Monthly Audit
 
 **First of Month:**
+
 1. Review orphaned notes (no incoming/outgoing links)
 2. Consolidate duplicate concepts
 3. Update main MOCs
@@ -505,6 +529,7 @@ Get-ChildItem zettelkasten/*.md | Where-Object {
 When completing a mission:
 
 1. **Create Mission Overview Zettel**
+
    ```markdown
    # Mission X Overview
    
@@ -531,6 +556,7 @@ When completing a mission:
 When encountering new concept:
 
 1. **Create Atomic Zettel**
+
    ```markdown
    # New Concept
    
@@ -576,6 +602,7 @@ When encountering new concept:
 ### Obsidian Setup
 
 **Essential Plugins:**
+
 - **Graph View** - Visualize connections
 - **Backlinks** - See incoming references
 - **Tag Pane** - Browse by tag
@@ -694,6 +721,7 @@ Detected in:
 ### Scalability Considerations
 
 As workspace grows:
+
 - **Sub-MOCs** - Break large MOCs into focused areas
 - **Archive Pattern** - Move completed work to archive/
 - **Index Updates** - Keep navigation current
@@ -701,7 +729,8 @@ As workspace grows:
 
 ---
 
-## Related Resources
+## See Also
+
 - [[MONTHLY_CALENDAR]] - Three-track coordination
 - [[CALENDER_ARCHIVE]] - Historical zettelkasten evolution
 - [[Complete Runnable Examples]] - Documentation standard

@@ -18,11 +18,13 @@ Bounds checking is a fundamental safety mechanism in Rust, but in performance-cr
 ### Why Bounds Checking Matters in Chess
 
 A typical chess engine during search:
+
 - **Nodes evaluated per second:** 1-50 million (depending on engine strength)
 - **Move generation calls:** 30-40 per position (average branching factor)
 - **Board accesses per move:** 5-20 (sliding pieces, pins, checks)
 
 **Critical calculation:**
+
 ```
 1,000,000 positions/sec × 35 moves/position × 10 accesses/move
 = 350,000,000 bounds checks per second
@@ -33,6 +35,7 @@ If each check takes 2ns → 700ms wasted per second (70% overhead!)
 ### Real-World Example: Stockfish vs Rust Chess Engine
 
 **Stockfish (C++):**
+
 ```cpp
 // No bounds checking - assumes valid input
 inline Square move_to(Move m) {
@@ -49,6 +52,7 @@ Piece piece_at(Square sq) {
 ```
 
 **Naive Rust Approach:**
+
 ```rust
 // Always bounds checks
 fn piece_at(&self, sq: Square) -> Option<Piece> {
@@ -98,6 +102,7 @@ fn generate_knight_moves(pos: Square, board: &Board) -> Vec<Move> {
 ```
 
 **Characteristics:**
+
 - ✅ **Safe:** Never creates invalid squares
 - ✅ **Correct:** Rust-idiomatic error handling
 - ❌ **Slow:** 2 bounds checks per candidate move (8 × 2 = 16 checks)
@@ -149,6 +154,7 @@ impl Square {
 ```
 
 **Characteristics:**
+
 - ✅ **Safer than Strategy 3:** Explicit validation step
 - ✅ **Faster than Strategy 1:** Single check per move
 - ❌ **Still branches:** 8 conditional branches
@@ -223,6 +229,7 @@ const fn precompute_knight_attacks() -> [BitBoard; 64] {
 ```
 
 **Characteristics:**
+
 - ✅ **Blazing fast:** Zero runtime bounds checks
 - ✅ **Cache-friendly:** Pre-computed tables stay hot in L1 cache
 - ✅ **Branch-free:** Bitboard iteration is highly predictable
@@ -312,6 +319,7 @@ const ROOK_DIRECTIONS: [i32; 4] = [
 ```
 
 **Why This Works:**
+
 - ✅ **Zero bounds checks** in hot path (sentinel terminates loop)
 - ✅ **Simple indexing** arithmetic
 - ✅ **Sliding pieces** generate moves naturally
@@ -367,6 +375,7 @@ fn rook_attacks(sq: Square, occupied: BitBoard) -> BitBoard {
 ```
 
 **Why This Is Fastest:**
+
 - ✅ **O(1) attack generation** (vs O(n) ray-casting)
 - ✅ **Zero branches** in critical path
 - ✅ **SIMD-friendly** (multiple boards in parallel)
@@ -379,6 +388,7 @@ fn rook_attacks(sq: Square, occupied: BitBoard) -> BitBoard {
 ## Performance Comparison: Real Benchmarks
 
 ### Test Setup
+
 - **Hardware:** AMD Ryzen 9 5950X (16 cores, 4.9 GHz)
 - **Task:** Generate all legal moves in 1000 random positions
 - **Compiler:** `rustc 1.70.0` with `-C opt-level=3 -C target-cpu=native`
@@ -399,7 +409,8 @@ fn rook_attacks(sq: Square, occupied: BitBoard) -> BitBoard {
 
 ## When Each Strategy Is Appropriate
 
-### Use Strategy 1 (Check Before) When:
+### Use Strategy 1 (Check Before) When
+
 - 📚 **Learning/educational code** ([[daily-study/Day23]] grid navigation)
 - 🔒 **Safety-critical systems** (medical devices, aerospace)
 - 🧪 **Prototyping** new algorithms
@@ -407,6 +418,7 @@ fn rook_attacks(sq: Square, occupied: BitBoard) -> BitBoard {
 - 🎮 **Turn-based games** (player waits anyway)
 
 **Example: Turn-based strategy game**
+
 ```rust
 // Player takes 1 second to decide move
 // 10ms to validate move is imperceptible
@@ -425,7 +437,8 @@ fn validate_move(from: Coord, to: Coord, board: &Board) -> Result<Move, Error> {
 
 ---
 
-### Use Strategy 2 (Check After) When:
+### Use Strategy 2 (Check After) When
+
 - ⚖️ **Moderate performance** needs (100k ops/sec)
 - 🎮 **Real-time games** with relaxed timing (60 FPS)
 - 🤖 **Game AI** (moderate search depth)
@@ -433,6 +446,7 @@ fn validate_move(from: Coord, to: Coord, board: &Board) -> Result<Move, Error> {
 - 🔄 **Iterative algorithms** (not innermost loop)
 
 **Example: Real-time strategy pathfinding**
+
 ```rust
 // Need 60 FPS = 16ms frame budget
 // A* with 1000 node expansions/frame
@@ -455,7 +469,8 @@ fn expand_neighbors(pos: Coord, grid: &Grid) -> Vec<Coord> {
 
 ---
 
-### Use Strategy 3 (Pre-computed) When:
+### Use Strategy 3 (Pre-computed) When
+
 - 🏎️ **Performance-critical** (millions of ops/sec)
 - ♟️ **Chess engines** (10M nodes/sec target)
 - 🎮 **High-performance game AI** (Deep Blue, AlphaZero)
@@ -464,6 +479,7 @@ fn expand_neighbors(pos: Coord, grid: &Grid) -> Vec<Coord> {
 - 🎯 **Real-time constraints** (<1μs latency)
 
 **Example: Chess engine perft**
+
 ```rust
 // Target: 10M nodes/second
 // Need: <100ns per node
@@ -709,6 +725,7 @@ fn rook_attacks(sq: Square, occupied: BitBoard) -> BitBoard {
 ## Debug vs Release Trade-offs
 
 ### Debug Build Strategy
+
 ```rust
 impl Board {
     #[cfg(debug_assertions)]
@@ -852,17 +869,20 @@ criterion_main!(benches);
 ## Related Concepts
 
 ### Memory Safety vs Speed Trade-off
+
 - Rust's borrow checker eliminates **spatial** safety issues at compile time
 - Bounds checking eliminates **temporal** safety issues at runtime
 - Pre-computation moves **temporal** checks to initialization time
 
 ### CPU Architecture Considerations
+
 - **Branch prediction:** Modern CPUs hate unpredictable branches
 - **Cache locality:** Pre-computed tables stay in L1 cache
 - **SIMD:** BitBoards enable parallel processing of multiple squares
 - **Pipeline stalls:** Bounds checks can stall instruction pipeline
 
 ### Related Zettelkasten Notes
+
 - [[daily-study/Day23]] - Where this pattern originates
 - [[BitBoard Techniques]] - Advanced chess engine patterns
 - [[Unsafe Rust Guidelines]] - When and how to use unsafe
@@ -873,15 +893,19 @@ criterion_main!(benches);
 ## Practical Advice
 
 ### For Day 23 Grid Navigation (Learning)
+
 **Use Strategy 1** - Safety and clarity beat speed when learning.
 
 ### For Mission 6 Pathfinding (Moderate Performance)
+
 **Use Strategy 2** - Good balance for real-time games.
 
 ### For Chess Engine Project (High Performance)
+
 **Use Strategy 3** - Required for competitive performance.
 
 ### Upgrade Path
+
 1. **Start with Strategy 1** - Get correctness first
 2. **Profile with `cargo flamegraph`** - Find hot paths
 3. **Optimize hot paths with Strategy 3** - Only where it matters

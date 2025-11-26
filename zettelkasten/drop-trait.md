@@ -17,6 +17,7 @@ trait Drop {
 ```
 
 ### **Fundamental Guarantee**
+
 When a value goes out of scope, Rust automatically calls its `Drop::drop()` method. This happens **deterministically** at compile-time-determined points.
 
 ---
@@ -24,6 +25,7 @@ When a value goes out of scope, Rust automatically calls its `Drop::drop()` meth
 ## Basic Implementation Pattern
 
 ### **Custom Resource Management**
+
 ```rust
 struct FileManager {
     filename: String,
@@ -53,6 +55,7 @@ impl Drop for FileManager {
 ```
 
 ### **Database Connection Example**
+
 ```rust
 struct DatabaseConnection {
     connection_id: u32,
@@ -82,6 +85,7 @@ impl Drop for DatabaseConnection {
 ## Drop Order - LIFO (Stack-Like)
 
 ### **Reverse Creation Order**
+
 ```rust
 struct OrderedDrop {
     name: String,
@@ -108,6 +112,7 @@ fn demonstrate_drop_order() {
 ```
 
 ### **Nested Structure Drop Order**
+
 ```rust
 struct Inner { id: u32 }
 struct Outer { inner: Inner, id: u32 }
@@ -142,6 +147,7 @@ impl Drop for Outer {
 ## Early Drop with `std::mem::drop`
 
 ### **Manual Cleanup**
+
 ```rust
 fn early_drop_example() {
     let resource = DatabaseConnection::new(42);
@@ -157,6 +163,7 @@ fn early_drop_example() {
 ```
 
 ### **Why `std::mem::drop`?**
+
 ```rust
 // ❌ Can't call drop() directly
 // resource.drop();  // Error: explicit destructor calls not allowed
@@ -170,6 +177,7 @@ drop(resource);     // Takes ownership, then goes out of scope
 ## Practical Applications
 
 ### **1. AoC Problem: Temporary File Management**
+
 ```rust
 struct TempFile {
     path: std::path::PathBuf,
@@ -216,6 +224,7 @@ fn solve_day_with_temp_file() -> std::io::Result<i32> {
 ```
 
 ### **2. Performance Monitoring**
+
 ```rust
 use std::time::Instant;
 
@@ -252,6 +261,7 @@ fn solve_aoc_day1() {
 ```
 
 ### **3. Mission Integration: Union-Find Statistics**
+
 ```rust
 struct TrackedUnionFind<T> {
     inner: UnionFind<T>,
@@ -299,6 +309,7 @@ impl<T> Drop for TrackedUnionFind<T> {
 ## Drop Safety and Edge Cases
 
 ### **Exception Safety (Panic During Drop)**
+
 ```rust
 struct CarefulDrop {
     name: String,
@@ -319,6 +330,7 @@ impl Drop for CarefulDrop {
 ```
 
 ### **Drop Flag Optimization**
+
 ```rust
 // Rust automatically tracks whether drop needs to be called
 let maybe_resource = if condition {
@@ -336,6 +348,7 @@ let maybe_resource = if condition {
 ## Advanced Drop Patterns
 
 ### **Dependent Resource Management**
+
 ```rust
 struct Transaction {
     connection: DatabaseConnection,
@@ -354,6 +367,7 @@ impl Drop for Transaction {
 ```
 
 ### **Leak Prevention in Linked Structures**
+
 ```rust
 // From Mission 4 - preventing stack overflow in deep lists
 struct Node<T> {
@@ -374,6 +388,7 @@ impl<T> Drop for Node<T> {
 ```
 
 ### **Resource Pool Management**
+
 ```rust
 struct PooledConnection {
     connection: Option<DatabaseConnection>,
@@ -395,6 +410,7 @@ impl Drop for PooledConnection {
 ## Testing Drop Behavior
 
 ### **Drop Order Tests**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -452,6 +468,7 @@ mod tests {
 ## Performance Considerations
 
 ### **Zero-Cost When Not Needed**
+
 ```rust
 struct NoDropNeeded {
     value: i32,  // Primitives don't need drop
@@ -462,6 +479,7 @@ struct NoDropNeeded {
 ```
 
 ### **Drop Glue Generation**
+
 ```rust
 struct ComplexType {
     vec: Vec<String>,      // Vec implements Drop
@@ -478,6 +496,7 @@ struct ComplexType {
 ## Common Anti-Patterns
 
 ### **❌ Expensive Operations in Drop**
+
 ```rust
 impl Drop for BadExample {
     fn drop(&mut self) {
@@ -494,6 +513,7 @@ impl Drop for BadExample {
 ```
 
 ### **✅ Proper Drop Implementation**
+
 ```rust
 impl Drop for GoodExample {
     fn drop(&mut self) {
@@ -515,6 +535,7 @@ impl Drop for GoodExample {
 ## Integration Patterns
 
 ### **Drop + Deref for Smart Pointers**
+
 ```rust
 struct SmartFile {
     file: std::fs::File,
@@ -539,6 +560,7 @@ impl Drop for SmartFile {
 ```
 
 ### **Drop + Send/Sync for Thread Safety**
+
 ```rust
 struct ThreadSafeResource {
     inner: Arc<Mutex<SomeResource>>,
@@ -562,6 +584,7 @@ unsafe impl Sync for ThreadSafeResource {}
 ## Best Practices
 
 ### **✅ Drop Implementation Guidelines**
+
 1. **Keep drop() fast and simple** - avoid complex operations
 2. **Don't panic in drop()** - log errors instead
 3. **Handle partial cleanup gracefully** - resource might already be released
@@ -569,12 +592,14 @@ unsafe impl Sync for ThreadSafeResource {}
 5. **Test drop behavior** - ensure resources are properly released
 
 ### **✅ When to Implement Drop**
+
 - **File handles, database connections** - external resources
 - **Temporary files, allocated memory** - cleanup required
 - **Locks, mutexes** - explicit release needed
 - **Timers, monitors** - reporting or logging on completion
 
 ### **❌ When NOT to Implement Drop**
+
 - **Pure data structures** - let Rust handle automatic cleanup
 - **Types that don't own resources** - no cleanup needed
 - **Performance-critical paths** - unless necessary for correctness
@@ -584,6 +609,7 @@ unsafe impl Sync for ThreadSafeResource {}
 ## Learning Progression
 
 ### **Foundation → Application**
+
 1. **Understand scope-based cleanup** and deterministic timing
 2. **Implement basic Drop** for simple resource management
 3. **Master drop order** and nested structure cleanup
@@ -591,6 +617,7 @@ unsafe impl Sync for ThreadSafeResource {}
 5. **Combine with other traits** for comprehensive resource management
 
 ### **Mission Integration Path**
+
 - **Mission 4**: Linked list cleanup and preventing stack overflow
 - **Mission 10**: Union-Find statistics and performance monitoring
 - **AoC Problems**: Temporary file management and resource cleanup
@@ -601,6 +628,7 @@ unsafe impl Sync for ThreadSafeResource {}
 ## Comparison with Other Languages
 
 ### **Rust vs Garbage Collection**
+
 | Aspect | Rust Drop | Java/C#/Python GC |
 |--------|-----------|-------------------|
 | **Timing** | Deterministic (scope-based) | Non-deterministic |
@@ -610,6 +638,7 @@ unsafe impl Sync for ThreadSafeResource {}
 | **Resource Types** | Any resource | Memory only |
 
 ### **Rust vs Manual Management (C/C++)**
+
 | Aspect | Rust Drop | C/C++ Manual |
 |--------|-----------|---------------|
 | **Safety** | Automatic, guaranteed | Manual, error-prone |

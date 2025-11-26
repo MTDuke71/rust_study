@@ -79,6 +79,7 @@ match tuple {
 ## 🔍 Pattern Types
 
 ### **1. Literal Patterns**
+
 ```rust
 match x {
     1 => { },           // Exact value
@@ -88,6 +89,7 @@ match x {
 ```
 
 ### **2. Range Patterns**
+
 ```rust
 match x {
     1..=5 => { },       // Inclusive range
@@ -97,6 +99,7 @@ match x {
 ```
 
 ### **3. Named Variable Patterns**
+
 ```rust
 match x {
     value => println!("Got {}", value),  // Binds value to `value`
@@ -104,6 +107,7 @@ match x {
 ```
 
 ### **4. Wildcard Pattern**
+
 ```rust
 match x {
     1 => { },
@@ -112,6 +116,7 @@ match x {
 ```
 
 ### **5. `ref` and `ref mut` Patterns**
+
 ```rust
 let value = String::from("hello");
 match value {
@@ -125,6 +130,7 @@ match value {
 ```
 
 ### **6. Binding with `@`**
+
 ```rust
 match x {
     num @ 1..=5 => println!("Small number: {}", num),
@@ -134,6 +140,7 @@ match x {
 ```
 
 ### **7. Guard Clauses**
+
 ```rust
 match tuple {
     (x, y) if x > y => println!("{} > {}", x, y),
@@ -147,6 +154,7 @@ match tuple {
 ## 🎨 Common Patterns
 
 ### **Pattern 1: Option Handling**
+
 ```rust
 let maybe_number: Option<i32> = Some(5);
 
@@ -162,6 +170,7 @@ if let Some(n) = maybe_number {
 ```
 
 ### **Pattern 2: Result Handling**
+
 ```rust
 let result: Result<String, String> = Ok("success".to_string());
 
@@ -178,6 +187,7 @@ let message = match result {
 ```
 
 ### **Pattern 3: Nested Patterns**
+
 ```rust
 enum Message {
     Quit,
@@ -197,6 +207,7 @@ fn process(msg: Message) {
 ```
 
 ### **Pattern 4: Exhaustiveness Checking**
+
 ```rust
 // ✅ CORRECT - Rust compiler ensures all cases handled
 match option {
@@ -222,6 +233,7 @@ match option {
 ## 💡 Real-World Examples
 
 ### **Example 1: Bracket Validation**
+
 ```rust
 // From Brackets_Basic project
 fn validate_brackets(s: &str) -> Result<(), BracketError> {
@@ -253,6 +265,7 @@ fn validate_brackets(s: &str) -> Result<(), BracketError> {
 ```
 
 ### **Example 2: AoC Day 12 - JSON Parsing**
+
 ```rust
 // Conditional parsing based on JSON value type
 fn sum_numbers(value: &JsonValue) -> i64 {
@@ -274,6 +287,7 @@ fn sum_numbers(value: &JsonValue) -> i64 {
 ```
 
 ### **Example 3: State Machine**
+
 ```rust
 enum State {
     Idle,
@@ -297,6 +311,7 @@ fn handle_state(state: State) {
 ## 🔧 Pattern Matching vs Traditional Conditionals
 
 ### **Pattern Matching (Preferred in Rust)**
+
 ```rust
 // ✅ Clear, safe, exhaustive
 match value {
@@ -306,6 +321,7 @@ match value {
 ```
 
 ### **Traditional Conditionals (Less Idiomatic)**
+
 ```rust
 // ⚠️ Less safe, not exhaustive checking
 if let Some(x) = value {
@@ -320,6 +336,7 @@ if let Some(x) = value {
 ## ⚡ Advanced Techniques
 
 ### **1. Match Expression as Value**
+
 ```rust
 let number = 13;
 let description = match number {
@@ -330,6 +347,7 @@ let description = match number {
 ```
 
 ### **2. Combining with Loops**
+
 ```rust
 for item in items {
     match item {
@@ -341,6 +359,7 @@ for item in items {
 ```
 
 ### **3. Partial Patterns with `if let`**
+
 ```rust
 // When you only care about one case
 if let Some(x) = value {
@@ -354,6 +373,7 @@ if let Ok(msg) = receiver.recv() {
 ```
 
 ### **4. Multiple Patterns with `|`**
+
 ```rust
 match ch {
     'a' | 'e' | 'i' | 'o' | 'u' => println!("Vowel"),
@@ -397,12 +417,14 @@ Before writing match expressions:
 ## 🎓 Learning Resources
 
 ### **From This Workspace**
+
 1. **Daily Study**: `daily_study/` - Pattern matching exercises
 2. **AoC Examples**: `advent_of_code/aoc2015/Problem_Statements/` - Real-world usage
 3. **Brackets Project**: `advanced_examples/Brackets_Basic/` - Practical pattern matching
 4. **Mission 3+**: `missions/Mission3/` - Data structure pattern matching
 
 ### **Interactive Exercises**
+
 ```rust
 // Try this in Rust Playground
 fn classify(n: i32) {
@@ -439,6 +461,7 @@ fn main() {
 ## 🔗 Cross-References
 
 **In this workspace**:
+
 - Implementation: `advanced_examples/Brackets_Basic/src/lib.rs` (bracket matching)
 - Advanced: `advanced_examples/Brackets_Ext/` (configurable patterns)
 - Real-world: `advent_of_code/aoc2015/Problem_Statements/day12` (JSON parsing)

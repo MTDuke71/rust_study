@@ -7,6 +7,7 @@
 ## 🎯 **Performance Analysis Framework**
 
 ### **Analysis Dimensions**
+
 ```rust
 pub struct PerformanceMetrics {
     // Time complexity
@@ -48,6 +49,7 @@ pub enum ComplexityClass {
 ### **1. Micro-Benchmarking with Criterion**
 
 #### **Basic Operation Benchmarking**
+
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
 
@@ -100,6 +102,7 @@ fn benchmark_queue_operations(c: &mut Criterion) {
 ```
 
 #### **Comparative Analysis Pattern**
+
 ```rust
 fn benchmark_bounded_vs_unbounded(c: &mut Criterion) {
     let mut group = c.benchmark_group("queue_comparison");
@@ -155,6 +158,7 @@ fn benchmark_bounded_vs_unbounded(c: &mut Criterion) {
 ### **2. Memory Usage Analysis**
 
 #### **Memory Profiling Pattern**
+
 ```rust
 use std::alloc::{GlobalAlloc, Layout, System};
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -218,6 +222,7 @@ fn test_queue_memory_usage() {
 ### **3. Complexity Analysis Through Scaling**
 
 #### **Empirical Complexity Detection**
+
 ```rust
 use std::time::Instant;
 
@@ -277,6 +282,7 @@ fn analyze_scaling_relationship(results: &[(usize, std::time::Duration)]) {
 ## 🔬 **Cache Performance Analysis**
 
 ### **Cache Miss Measurement**
+
 ```rust
 use std::time::Instant;
 
@@ -373,6 +379,7 @@ impl CacheAnalyzer {
 ## 📈 **Throughput Analysis Patterns**
 
 ### **Operations Per Second Measurement**
+
 ```rust
 use std::time::{Duration, Instant};
 
@@ -438,6 +445,7 @@ impl ThroughputAnalyzer {
 ```
 
 ### **Latency Distribution Analysis**
+
 ```rust
 use std::collections::BTreeMap;
 
@@ -528,6 +536,7 @@ struct LatencyStats {
 ## 🎯 **Performance Regression Detection**
 
 ### **Automated Performance Testing**
+
 ```rust
 #[derive(Debug)]
 struct PerformanceBaseline {
@@ -607,6 +616,7 @@ enum RegressionResult {
 ## 🛠️ **Analysis Tools Integration**
 
 ### **Flamegraph Generation**
+
 ```rust
 // Requires flamegraph crate
 #[cfg(feature = "profiling")]
@@ -627,6 +637,7 @@ where
 ```
 
 ### **Custom Performance Metrics**
+
 ```rust
 use std::collections::HashMap;
 

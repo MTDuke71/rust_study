@@ -17,22 +17,26 @@ The collision resolution strategy you choose fundamentally impacts the performan
 Each bucket in the hash table contains a linked list (or vector) of all key-value pairs that hash to that bucket.
 
 **How it works**:
+
 1. Hash the key to get the bucket index.
 2. If the bucket is empty, insert the entry.
 3. If the bucket already has entries, append or prepend to the list.
 4. For lookups, search through the list in the bucket.
 
 **Advantages**:
+
 - Simple to implement and understand.
 - Handles high load factors gracefully (performance degrades gradually).
 - Deletion is straightforward—just remove from the list.
 
 **Disadvantages**:
+
 - Extra memory overhead for pointers/metadata.
 - Cache-unfriendly due to pointer chasing.
 - Worst-case lookup is O(n) if all keys hash to the same bucket.
 
 **Rust Implementation Pattern**:
+
 ```rust
 use std::collections::HashMap;
 
@@ -90,31 +94,37 @@ All entries are stored directly in the bucket array. When a collision occurs, th
 **Common Probing Methods**:
 
 #### a. **Linear Probing**
+
 - **Formula**: `index = (hash + i) % capacity` where `i = 0, 1, 2, 3, ...`
 - **Behavior**: Check the next slot sequentially until an empty one is found.
 - **Issue**: Causes "primary clustering"—long runs of occupied slots that slow down further insertions.
 
 #### b. **Quadratic Probing**
+
 - **Formula**: `index = (hash + i²) % capacity` where `i = 0, 1, 4, 9, ...`
 - **Behavior**: Jump by increasing distances to avoid primary clustering.
 - **Issue**: Can cause "secondary clustering" and may fail to find an empty slot if the table is more than half full.
 
 #### c. **Double Hashing**
+
 - **Formula**: `index = (hash1 + i * hash2) % capacity`
 - **Behavior**: Use a second hash function to determine the probe step size.
 - **Advantage**: Minimizes clustering, provides better distribution.
 
 **Advantages of Open Addressing**:
+
 - Better cache locality (all data in one contiguous array).
 - No extra memory for pointers.
 - Can be faster for small tables with low load factors.
 
 **Disadvantages**:
+
 - Deletion is complex (requires "tombstone" markers or rehashing).
 - Performance degrades sharply as the table fills (must keep load factor low, e.g., < 0.5).
 - More complex implementation.
 
 **Rust Implementation Pattern (Linear Probing)**:
+
 ```rust
 #[derive(Clone)]
 enum Slot<K, V> {
@@ -203,18 +213,21 @@ where
 ## ❓ Key Questions & Trade-offs
 
 **When should you use chaining?**
+
 - When deletions are frequent.
 - When you expect a high load factor (> 0.75).
 - When simplicity and maintainability are priorities.
 - This is the approach used in [[Mission5 HashMap]].
 
 **When should you use open addressing?**
+
 - When memory is constrained.
 - When you can keep the load factor low (< 0.5).
 - When cache performance is critical (e.g., high-frequency lookups).
 - When deletions are rare.
 
 **Why does Rust's `std::collections::HashMap` use a hybrid approach?**
+
 - Rust's standard library uses a variant called **Robin Hood hashing** (a form of open addressing with additional optimizations).
 - It provides excellent average-case performance while mitigating the worst-case scenarios of pure open addressing.
 
@@ -222,11 +235,11 @@ where
 
 ## 🔗 Related Concepts
 
-*   **Primary Dependency**: [[Hash Function Design]], [[HashMap Internals]]
-*   **Performance Analysis**: [[Load Factor Management]], [[Performance Analysis]]
-*   **Implementation Examples**: [[Mission5 HashMap]] (uses chaining)
-*   **Advanced Topics**: Robin Hood Hashing, Cuckoo Hashing, Hopscotch Hashing
-*   **Broader Context**: [[Collections MOC]], [[rust-concepts-MOC]]
+- **Primary Dependency**: [[Hash Function Design]], [[HashMap Internals]]
+- **Performance Analysis**: [[Load Factor Management]], [[Performance Analysis]]
+- **Implementation Examples**: [[Mission5 HashMap]] (uses chaining)
+- **Advanced Topics**: Robin Hood Hashing, Cuckoo Hashing, Hopscotch Hashing
+- **Broader Context**: [[Collections MOC]], [[rust-concepts-MOC]]
 
 ---
 

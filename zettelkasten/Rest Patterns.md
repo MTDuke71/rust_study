@@ -9,6 +9,7 @@
 **Rest Patterns** (written as `{ .. }` or `..`) are Rust's way of saying "match this structure but ignore some/all remaining fields." They're essential for clean, maintainable pattern matching when you only care about specific parts of data structures.
 
 ### **Key Syntax Forms**
+
 - **`{ .. }`** - Ignore all fields in struct-like patterns
 - **`{ field1, .. }`** - Extract some fields, ignore the rest
 - **`(.., last)`** - Ignore leading elements in tuples
@@ -19,6 +20,7 @@
 ## 📋 **Core Syntax Reference**
 
 ### **Struct Rest Patterns**
+
 ```rust
 enum GameState {
     Playing { lives: u32, score: u32, level: u32 },
@@ -38,6 +40,7 @@ match game_state {
 ```
 
 ### **Tuple Rest Patterns**
+
 ```rust
 let coordinates = (10, 20, 30, 40, 50);
 
@@ -48,6 +51,7 @@ match coordinates {
 ```
 
 ### **Array/Slice Rest Patterns**
+
 ```rust
 let numbers = [1, 2, 3, 4, 5];
 
@@ -63,6 +67,7 @@ match numbers {
 ## 🔧 **Common Use Cases**
 
 ### **1. State Machine Pattern Matching**
+
 ```rust
 // From Day 14 Reindeer Olympics - State Machine
 enum ReindeerState {
@@ -78,6 +83,7 @@ fn is_flying(&self) -> bool {
 ```
 
 ### **2. Configuration Structs**
+
 ```rust
 struct ServerConfig {
     host: String,
@@ -99,6 +105,7 @@ match config {
 ```
 
 ### **3. Error Handling with Complex Error Types**
+
 ```rust
 enum DatabaseError {
     ConnectionFailed { host: String, port: u16, reason: String },
@@ -115,6 +122,7 @@ match error {
 ```
 
 ### **4. HTTP Response Processing**
+
 ```rust
 struct HttpResponse {
     status: u16,
@@ -138,6 +146,7 @@ match response {
 ## 🌟 **Advanced Patterns**
 
 ### **1. Nested Rest Patterns**
+
 ```rust
 struct Player {
     name: String,
@@ -165,6 +174,7 @@ match player {
 ```
 
 ### **2. Rest Patterns with Guards**
+
 ```rust
 enum Temperature {
     Celsius { degrees: f32, humidity: f32, pressure: f32 },
@@ -183,6 +193,7 @@ match temp {
 ```
 
 ### **3. Rest Patterns in Function Parameters**
+
 ```rust
 // Extract first and last elements from slice
 fn process_endpoints(data: &[i32]) {
@@ -202,6 +213,7 @@ fn process_endpoints(data: &[i32]) {
 ## ⚡ **Performance Considerations**
 
 ### **Zero-Cost Abstraction**
+
 ```rust
 // Both compile to identical assembly
 fn check_state_verbose(state: &ReindeerState) -> bool {
@@ -217,6 +229,7 @@ fn check_state_rest(state: &ReindeerState) -> bool {
 ```
 
 ### **Memory Efficiency**
+
 - ✅ **No runtime cost** - patterns are compile-time constructs
 - ✅ **No field access** - ignored fields aren't read from memory
 - ✅ **Optimal assembly** - identical to manual enum discrimination
@@ -226,6 +239,7 @@ fn check_state_rest(state: &ReindeerState) -> bool {
 ## 🔄 **Alternative Approaches**
 
 ### **Without Rest Patterns (Verbose)**
+
 ```rust
 // Explicit field naming - cluttered and brittle
 match config {
@@ -243,6 +257,7 @@ match config {
 ```
 
 ### **With Rest Patterns (Clean)**
+
 ```rust
 // Clean and forward-compatible
 match config {
@@ -257,6 +272,7 @@ match config {
 ## 🛠️ **Best Practices**
 
 ### **1. Forward Compatibility**
+
 ```rust
 // ✅ Good: Adding new fields won't break existing code
 struct User {
@@ -272,6 +288,7 @@ match user {
 ```
 
 ### **2. Clear Intent**
+
 ```rust
 // ✅ Good: Clear what you care about
 match event {
@@ -288,6 +305,7 @@ match event {
 ```
 
 ### **3. Documentation Value**
+
 ```rust
 // ✅ Good: Self-documenting - "only care about error type"
 match result {
@@ -302,6 +320,7 @@ match result {
 ## 🧪 **Testing Patterns**
 
 ### **State Machine Testing**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -343,14 +362,17 @@ mod tests {
 ## 🎓 **Learning Progression**
 
 ### **Beginner Level**
+
 - Use `{ .. }` to ignore all fields when checking enum variants
 - Apply in `matches!` macro for simple boolean checks
 
 ### **Intermediate Level**
+
 - Mix field extraction with rest patterns: `{ field1, field2, .. }`
 - Use in complex match statements with multiple patterns
 
 ### **Advanced Level**
+
 - Nested rest patterns in complex data structures
 - Combine with pattern guards and range patterns
 - Design APIs that leverage rest patterns for forward compatibility
@@ -360,18 +382,21 @@ mod tests {
 ## 🔗 **Related Concepts**
 
 ### **Pattern Matching Hierarchy**
+
 - [[Pattern Matching MOC]] - Complete pattern matching guide
 - [[Enum Patterns]] - Enum-specific pattern matching techniques
 - [[Struct Destructuring]] - Extracting values from structs
 - [[Tuple Patterns]] - Working with tuple destructuring
 
 ### **Rust Language Features**
+
 - [[Matches Macro]] - `matches!` macro usage patterns
 - [[Match Expressions]] - Comprehensive match statement guide
 - [[If Let Patterns]] - Alternative pattern matching syntax
 - [[While Let Patterns]] - Loop-based pattern matching
 
 ### **Real-World Applications**
+
 - [[State Machine Patterns]] - State machine implementation in Rust
 - [[Error Handling Patterns]] - Pattern matching for error types
 - [[Configuration Parsing]] - Processing complex configuration structs
@@ -382,6 +407,7 @@ mod tests {
 ## 📚 **Examples from Codebase**
 
 ### **Day 14 State Machine** (AoC 2015)
+
 ```rust
 // From: advent_of_code/aoc2015/examples/Day14_state_machine.rs
 fn is_flying(&self) -> bool {
@@ -390,6 +416,7 @@ fn is_flying(&self) -> bool {
 ```
 
 ### **Mission System Integration**
+
 - [[Mission5 HashMap]] - Pattern matching with complex data structures
 - [[Mission7 Graph]] - State pattern matching in graph algorithms
 - [[Mission8 BFS]] - Rest patterns in algorithm state tracking

@@ -25,6 +25,7 @@ unsafe { tail_ptr.as_mut().next = Some(new); }
 ## 🔍 **Why LinkedQueue Needs Unsafe**
 
 ### **The Problem: Raw Pointers**
+
 ```rust
 pub struct LinkedQueue<T> {
     head: Option<Box<Node<T>>>,        // ✅ Safe - owned
@@ -34,12 +35,14 @@ pub struct LinkedQueue<T> {
 ```
 
 **Raw pointers** (`NonNull<T>`, `*const T`, `*mut T`) are **not** `Send` or `Sync` by default because:
+
 1. Compiler can't track what they point to
 2. No automatic lifetime checking
 3. Could point to invalid memory
 4. Could create aliasing violations
 
 ### **Without Unsafe - Compiler Error**
+
 ```rust
 // This won't compile:
 Some(mut tail_ptr) => {
@@ -74,6 +77,7 @@ unsafe {
 ## 🔧 **Why Not Use Safe Alternatives?**
 
 ### **Alternative 1: Traverse from Head (O(n))**
+
 ```rust
 pub fn enqueue(&mut self, value: T) {
     let new = Box::new(Node { elem: value, next: None });
@@ -90,6 +94,7 @@ pub fn enqueue(&mut self, value: T) {
 **Problem**: O(n) enqueue destroys queue performance for competitive programming!
 
 ### **Alternative 2: Reference Counting (`Rc<RefCell<T>>`)**
+
 ```rust
 pub struct LinkedQueue<T> {
     head: Option<Rc<RefCell<Node<T>>>>,
@@ -98,12 +103,14 @@ pub struct LinkedQueue<T> {
 ```
 
 **Problems**:
+
 - Runtime overhead (reference counting)
 - `RefCell` adds borrowing checks at runtime
 - Not `Send` - can't use across threads
 - More complex, less performant
 
 ### **Alternative 3: Vec Backing Store**
+
 ```rust
 pub struct LinkedQueue<T> {
     items: Vec<T>,
@@ -111,6 +118,7 @@ pub struct LinkedQueue<T> {
 ```
 
 **Problems**:
+
 - Not a true linked structure
 - Doesn't demonstrate pointer manipulation
 - Defeats learning purpose of Mission4
@@ -135,18 +143,21 @@ pub struct LinkedQueue<T> {
 Our safety claims are verified through:
 
 1. **Comprehensive Tests**
+
    ```rust
    #[test]
    fn test_enqueue_maintains_tail_pointer() { ... }
    ```
 
 2. **Invariant Checking**
+
    ```rust
    // After every operation:
    assert!(self.tail.is_some() == self.head.is_some());
    ```
 
 3. **Miri Testing** (Rust's interpreter that detects undefined behavior)
+
    ```bash
    cargo +nightly miri test
    ```
@@ -195,6 +206,7 @@ This demonstrates a core Rust principle:
 > **"Use unsafe internally to build safe external APIs"**
 
 ### **Our Safe Public API**
+
 ```rust
 impl<T> LinkedQueue<T> {
     pub fn new() -> Self { ... }           // Safe
@@ -205,6 +217,7 @@ impl<T> LinkedQueue<T> {
 ```
 
 ### **Internal Unsafe Implementation**
+
 ```rust
 // Only in implementation:
 unsafe {
@@ -227,11 +240,13 @@ Think of `unsafe` as:
 ## 📐 **Requirements Integration**
 
 **REQ-L3**: O(1) Enqueue Through Tail Pointer
+
 - Implementation requires raw pointer to maintain O(1) complexity
 - Safety guaranteed through careful invariant maintenance
 - Verified through comprehensive testing and Miri
 
 **REQ-L4**: Thread Safety
+
 - Manual `Send`/`Sync` implementation required due to raw pointers
 - Safety justified by internal-only usage and proper synchronization
 - Public API remains completely safe across threads

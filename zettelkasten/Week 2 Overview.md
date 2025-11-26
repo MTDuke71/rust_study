@@ -22,6 +22,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 ## 📚 Daily Progression
 
 ### **Day 8: Vectors (Vec<T>)** [[daily-study/Day08]]
+
 - Growable, heap-allocated sequences
 - Creation: Vec::new(), vec![], with_capacity()
 - Operations: push, pop, insert, remove
@@ -31,6 +32,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 **Key Takeaway**: Vec<T> is the workhorse data structure in Rust
 
 ### **Day 9: Strings** [[daily-study/Day09]]
+
 - String vs &str distinction (owned vs borrowed)
 - UTF-8 encoding and Unicode handling
 - String manipulation: split, trim, replace
@@ -40,6 +42,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 **Key Takeaway**: Strings are UTF-8 and require special handling
 
 ### **Day 10: HashMap Basics** [[daily-study/Day10]]
+
 - Key-value storage with O(1) average access
 - Trait requirements: K: Eq + Hash
 - Entry API patterns
@@ -49,6 +52,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 **Key Takeaway**: HashMap provides fast lookups with hash-based indexing
 
 ### **Day 11: HashSet Operations** [[daily-study/Day11]]
+
 - Unique value collections
 - Set theory operations (union, intersection, difference)
 - HashSet<T> = HashMap<T, ()> zero-cost abstraction
@@ -58,6 +62,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 **Key Takeaway**: HashSet enables efficient uniqueness and set operations
 
 ### **Day 12: BTreeMap & BTreeSet** [[daily_study/rust_learning_week2_notes/Day12]]
+
 - Ordered collections with O(log n) operations
 - Range queries (impossible with HashMap)
 - Custom Ord implementations
@@ -67,6 +72,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 **Key Takeaway**: BTreeMap provides guaranteed performance with ordering
 
 ### **Day 13: Advanced Iterators** [[daily-study/Day13]]
+
 - Lazy evaluation and zero-cost abstractions
 - Iterator adaptors (map, filter, chain)
 - Consuming adaptors (collect, fold, sum)
@@ -76,6 +82,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 **Key Takeaway**: Iterators enable expressive, efficient data processing
 
 ### **Day 14: Error Handling Patterns** [[daily-study/Day14]]
+
 - Result<T, E> deep dive
 - Custom error types with enums
 - Error propagation with ? operator
@@ -91,23 +98,27 @@ Master Rust's **standard library collections** and understand how they leverage 
 ### **Mission Track Connections**
 
 **Primary Focus: Mission5 (HashMap/HashSet)**
+
 - Days 10-11 directly align with Mission5 requirements
 - Day 12 provides performance comparison context
 - Day 13 covers iterator requirements (REQ-4)
 - Day 14 enables robust error handling (REQ-5)
 
 **Supporting Missions:**
+
 - [[mission-1]] - Stack uses Vec<T> internally
 - [[mission-2]] - Queue ring buffer with Vec<T>
 - All collections apply ownership from Week 1
 
 ### **Rust Book Alignment**
+
 - **Chapter 8**: Common Collections (Days 8-11)
 - **Chapter 9**: Error Handling (Day 14)
 - **Chapter 13**: Functional Features (Day 13)
 - Collections extend ownership concepts from Chapters 4-6
 
 ### **Zettelkasten Network**
+
 - [[Collections MOC]] - Complete collection map
 - [[HashMap Internals]] - Deep dive on hash tables
 - [[mission-5]] - V-Cycle project integration
@@ -121,6 +132,7 @@ Master Rust's **standard library collections** and understand how they leverage 
 By the end of Week 2, you should be able to:
 
 ### **Conceptual Understanding**
+
 - ✅ Explain when to use Vec vs HashMap vs BTreeMap
 - ✅ Describe hash-based vs tree-based collection trade-offs
 - ✅ Understand String vs &str memory models
@@ -129,6 +141,7 @@ By the end of Week 2, you should be able to:
 - ✅ Design custom error types
 
 ### **Practical Skills**
+
 - ✅ Choose appropriate collections for problems
 - ✅ Handle UTF-8 text safely
 - ✅ Implement Entry API patterns
@@ -185,6 +198,7 @@ fn process(input: &str) -> Result<i32, MyError> {
 ### **Self-Assessment Questions**
 
 1. **Collection Choice**: When would you use HashMap vs BTreeMap?
+
    ```rust
    // HashMap: Need O(1) lookups, don't care about order
    let mut cache: HashMap<String, Data> = HashMap::new();
@@ -194,12 +208,14 @@ fn process(input: &str) -> Result<i32, MyError> {
    ```
 
 2. **String Ownership**: What's the difference?
+
    ```rust
    fn take_ownership(s: String) { }     // Consumes string
    fn borrow_string(s: &str) { }        // Borrows (preferred)
    ```
 
 3. **Iterator Efficiency**: Which is more efficient?
+
    ```rust
    // ❌ Collects intermediate vector
    let result = vec.iter()
@@ -215,6 +231,7 @@ fn process(input: &str) -> Result<i32, MyError> {
    ```
 
 4. **Error Propagation**: How does this work?
+
    ```rust
    fn process() -> Result<i32, Error> {
        let val1 = parse_number()?;  // Returns early if Err
@@ -240,6 +257,7 @@ fn process(input: &str) -> Result<i32, MyError> {
 | **Day 12** | Performance comparison context |
 
 ### **Mission5 Preparation Checklist**
+
 - [x] Understand Eq + Hash trait requirements
 - [x] Master Entry API patterns
 - [x] Implement custom iterator types
@@ -253,6 +271,7 @@ fn process(input: &str) -> Result<i32, MyError> {
 ## 📈 Progress Tracking
 
 ### **Completed Materials**
+
 - [x] Day 8: Vectors (Vec<T>)
 - [x] Day 9: Strings & UTF-8
 - [x] Day 10: HashMap Basics
@@ -262,6 +281,7 @@ fn process(input: &str) -> Result<i32, MyError> {
 - [x] Day 14: Error Handling Patterns
 
 ### **Skills Acquired**
+
 - [x] Collection selection for performance
 - [x] UTF-8 text processing
 - [x] Hash-based data structures
@@ -270,6 +290,7 @@ fn process(input: &str) -> Result<i32, MyError> {
 - [x] Production error handling
 
 ### **Mission Readiness**
+
 - [x] Ready for Mission5 (HashMap/HashSet)
 - [x] Can optimize collection operations
 - [x] Can handle complex data structures
@@ -279,6 +300,7 @@ fn process(input: &str) -> Result<i32, MyError> {
 ## 🔍 Common Week 2 Challenges
 
 ### **Challenge 1: Borrowing While Modifying**
+
 ```rust
 // ❌ Problem
 let mut vec = vec![1, 2, 3];
@@ -293,6 +315,7 @@ println!("{}", first_value);
 ```
 
 ### **Challenge 2: String Concatenation**
+
 ```rust
 // ❌ Inefficient
 let mut result = String::new();
@@ -308,6 +331,7 @@ for i in 0..1000 {
 ```
 
 ### **Challenge 3: HashMap Key Mutability**
+
 ```rust
 // ❌ Problem - Key must be immutable!
 let mut map = HashMap::new();
@@ -322,6 +346,7 @@ map.insert(key, "value");
 ```
 
 ### **Challenge 4: Iterator Ownership**
+
 ```rust
 // ❌ Problem
 let vec = vec![1, 2, 3];
@@ -352,6 +377,7 @@ let doubled: Vec<_> = vec.iter().map(|x| x * 2).collect();
 Common patterns from Advent of Code that use Week 2 knowledge:
 
 ### **Coordinate Tracking**
+
 ```rust
 use std::collections::HashSet;
 type Point = (i32, i32);
@@ -361,6 +387,7 @@ visited.insert((0, 0));
 ```
 
 ### **Frequency Counting**
+
 ```rust
 use std::collections::HashMap;
 
@@ -371,6 +398,7 @@ for item in data {
 ```
 
 ### **Graph Representation**
+
 ```rust
 use std::collections::HashMap;
 type Graph = HashMap<String, Vec<String>>;
@@ -380,6 +408,7 @@ graph.entry("A".to_string()).or_insert(vec![]).push("B".to_string());
 ```
 
 ### **Time Series Processing**
+
 ```rust
 use std::collections::BTreeMap;
 
@@ -398,6 +427,7 @@ for (timestamp, event) in events.range(start..end) {
 **Week 3** will cover **traits, generics, and advanced patterns**.
 
 ### **What's Next:**
+
 - Traits and trait bounds
 - Generic programming
 - Smart pointers (Box, Rc, Arc)
@@ -405,6 +435,7 @@ for (timestamp, event) in events.range(start..end) {
 - Advanced type system features
 
 ### **How Week 2 Prepares You:**
+
 ```rust
 // Week 2 knowledge enables advanced patterns:
 impl<K, V> MyHashMap<K, V>
@@ -424,11 +455,13 @@ where
 ## 📚 Further Resources
 
 ### **Official Documentation**
+
 - [Rust Book Chapter 8 - Collections](https://doc.rust-lang.org/book/ch08-00-common-collections.html)
 - [Rust Book Chapter 13 - Iterators](https://doc.rust-lang.org/book/ch13-02-iterators.html)
 - [std::collections Module](https://doc.rust-lang.org/std/collections/)
 
 ### **Zettelkasten Notes**
+
 - [[Collections MOC]] - Complete collection map
 - [[HashMap Internals]] - Hash table deep dive
 - [[mission-5]] - V-Cycle integration
@@ -436,6 +469,7 @@ where
 - [[zettel-index]] - Master index
 
 ### **Advanced Reading**
+
 - [Rust Performance Book - Collections](https://nnethercote.github.io/perf-book/standard-library-types.html)
 - [Jon Gjengset - Crust of Rust: Iterators](https://www.youtube.com/watch?v=yozQ9C69pNs)
 

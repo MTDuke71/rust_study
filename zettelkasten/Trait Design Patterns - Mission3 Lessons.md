@@ -7,6 +7,7 @@
 ## 🎯 **The Challenge**
 
 Mission3 required creating a binary search API that works with:
+
 - Slices (`&[T]`)
 - Vectors (`Vec<T>`)
 - Arrays (`[T; N]`)
@@ -44,7 +45,8 @@ pub trait Searchable<T: Ord> {
 }
 ```
 
-**Key Insight:** 
+**Key Insight:**
+
 - Trait bound `T: Ord` ensures only orderable types work
 - Single method `as_slice()` required - everything else has default implementation
 - **Deep Module Pattern** - Simple interface (`as_slice`), complex functionality
@@ -82,6 +84,7 @@ impl<T: Ord, const N: usize> Searchable<T> for [T; N] {
 ```
 
 **Pattern:**
+
 - All implementations convert to `&[T]`
 - Default trait methods work on slice representation
 - **Zero runtime overhead** - slice conversions are compile-time
@@ -108,6 +111,7 @@ impl<T: Ord> SearchExt<T> for [T] {
 ```
 
 **Benefits:**
+
 1. **Ergonomic API**: `data.find_all_equal(&5)` instead of `find_all_equal(&data, &5)`
 2. **IDE Support**: Methods appear in autocomplete
 3. **Method Chaining**: `data.find_range(&1, &10).filter(...).map(...)`
@@ -120,6 +124,7 @@ impl<T: Ord> SearchExt<T> for [T] {
 ```rust
 impl<T: Ord> Searchable<T> for [T] { ... }
 ```
+
 - `T: Ord` means T implements the `Ord` trait
 - Allows comparison operations (`<`, `>`, `==`)
 
@@ -128,6 +133,7 @@ impl<T: Ord> Searchable<T> for [T] { ... }
 ```rust
 impl<T: Ord + Clone> Searchable<T> for CustomContainer<T> { ... }
 ```
+
 - `T` must implement both `Ord` and `Clone`
 - More restrictive but enables more functionality
 
@@ -141,6 +147,7 @@ where
     // Implementation
 }
 ```
+
 - Same as multiple bounds but more readable
 - Preferred for complex constraints
 
@@ -154,6 +161,7 @@ where
     fn sorted(&mut self) -> SortedIter<Self> { ... }
 }
 ```
+
 - Constrains the associated type `Item`
 - Enables trait methods that depend on item properties
 
@@ -166,6 +174,7 @@ fn find_all_equal<'a, T: Ord>(slice: &'a [T], target: &T) -> RangeIter<'a, T>
 ```
 
 **Key Points:**
+
 1. Lifetime `'a` connects input slice to output iterator
 2. Iterator can't outlive the data it borrows
 3. Compiler enforces this at compile time
@@ -180,6 +189,7 @@ trait SearchExt<T> {
 ```
 
 **Rules:**
+
 - `'_` means "infer the lifetime"
 - Typically the lifetime of `&self`
 - Makes code more readable
@@ -187,16 +197,19 @@ trait SearchExt<T> {
 ## 🚀 **Design Principles Applied**
 
 ### **1. Deep Modules (Clean Code)**
+
 - **Simple interface**: One required method (`as_slice`)
 - **Complex functionality**: All binary search variants provided
 - **Information hiding**: Implementation details hidden behind trait
 
 ### **2. Single Responsibility**
+
 - `Searchable` trait: Provides binary search capability
 - `SearchExt` trait: Adds advanced search methods
 - Each trait has one clear purpose
 
 ### **3. Zero-Cost Abstractions**
+
 ```rust
 // This high-level code:
 let results: Vec<_> = data.find_all_equal(&5).collect();
@@ -222,6 +235,7 @@ trait Searchable<T> {
 ```
 
 **Solution:** Add trait bounds
+
 ```rust
 // ✅ Constrains T to be orderable
 trait Searchable<T: Ord> { ... }
@@ -240,6 +254,7 @@ trait Searchable<T: Ord> {
 ```
 
 **Solution:** Provide default implementations
+
 ```rust
 // ✅ Only as_slice() required, rest have defaults
 trait Searchable<T: Ord> {
@@ -262,6 +277,7 @@ fn find_all<T: Ord>(data: &[T], target: &T) -> Vec<&T> {
 ```
 
 **Solution:** Explicit lifetime annotations
+
 ```rust
 // ✅ Lifetime 'a connects input to output
 fn find_all<'a, T: Ord>(data: &'a [T], target: &T) -> Vec<&'a T> {
@@ -272,21 +288,25 @@ fn find_all<'a, T: Ord>(data: &'a [T], target: &T) -> Vec<&'a T> {
 ## 🎯 **When to Use Each Pattern**
 
 ### **Use Basic Trait When:**
+
 - You need polymorphism across different types
 - Multiple implementations with same behavior
 - Example: `Searchable` trait for slices, Vecs, arrays
 
 ### **Use Extension Trait When:**
+
 - Adding methods to existing types you don't own
 - Creating "method-style" APIs
 - Example: `SearchExt` adding methods to slices
 
 ### **Use Trait Objects When:**
+
 - Runtime polymorphism needed
 - Heterogeneous collections
 - Example: `Vec<Box<dyn Searchable<i32>>>`
 
 ### **Use Generic Traits When:**
+
 - Compile-time polymorphism (zero cost)
 - Type-specific optimizations
 - Example: `fn process<T: Searchable<i32>>(data: T)`

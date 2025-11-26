@@ -7,6 +7,7 @@ A **handle** is a fundamental computer science concept - an **abstract reference
 ## Core Concept
 
 **Key Characteristics:**
+
 - You can't directly manipulate the underlying resource
 - You use the handle to ask the system to do things for you
 - The system manages the actual resource lifetime and state
@@ -31,6 +32,7 @@ This abstraction **protects you** from accidentally damaging the coat (corruptin
 ## Common Handle Types
 
 ### 1. Thread Handles
+
 ```rust
 use std::thread;
 
@@ -45,18 +47,21 @@ let result = handle.join().unwrap(); // Wait for thread + get return value
 ```
 
 **What the handle provides:**
+
 - Wait for completion (`.join()`)
 - Get the return value
 - Transfer ownership (proves you "own" this thread)
 - Synchronization point between threads
 
 **Without the handle:**
+
 - Thread runs in background (detached)
 - You can't wait for it to finish
 - You lose the return value
 - No way to synchronize
 
 ### 2. File Handles
+
 ```rust
 use std::fs::File;
 use std::io::Read;
@@ -74,6 +79,7 @@ file_handle.read_to_string(&mut contents)?;
 ```
 
 ### 3. Window Handles (GUI)
+
 ```rust
 // Conceptual (Windows API style)
 let window_handle = create_window(...);
@@ -85,6 +91,7 @@ close_window(window_handle);
 ```
 
 ### 4. Database Connection Handles
+
 ```rust
 // Conceptual
 let db_handle = Connection::connect("postgres://...")?;
@@ -99,18 +106,23 @@ db_handle.close()?;
 ## Why Handles Exist
 
 ### **Encapsulation**
+
 Hide implementation complexity - you don't need to know how threads, files, or windows work internally.
 
 ### **Safety**
+
 Prevent misuse - you can't accidentally corrupt internal state by directly manipulating memory.
 
 ### **Resource Management**
+
 The system can track resources and clean them up automatically (RAII in Rust).
 
 ### **Portability**
+
 Same API works across different operating systems - handle abstracts platform differences.
 
 ### **Access Control**
+
 The system controls what operations you can perform through the handle's API.
 
 ---
@@ -133,6 +145,7 @@ handle2.join().unwrap(); // OK: handle2 has ownership
 ```
 
 This ownership model ensures:
+
 - Only one entity can wait on a thread
 - No data races on the return value
 - Clear responsibility for cleanup
@@ -154,6 +167,7 @@ This ownership model ensures:
 ## Common Patterns
 
 ### Pattern 1: Fire and Forget (No Handle)
+
 ```rust
 thread::spawn(|| {
     log_metrics_to_file();
@@ -162,6 +176,7 @@ thread::spawn(|| {
 ```
 
 ### Pattern 2: Wait for Completion
+
 ```rust
 let handle = thread::spawn(|| {
     compute_primes(1000)
@@ -173,6 +188,7 @@ let primes = handle.join().unwrap(); // Synchronize here
 ```
 
 ### Pattern 3: Collect Multiple Results
+
 ```rust
 let handles: Vec<_> = (0..10)
     .map(|i| thread::spawn(move || compute(i)))
@@ -185,6 +201,7 @@ let results: Vec<_> = handles
 ```
 
 ### Pattern 4: Conditional Wait
+
 ```rust
 let handle = thread::spawn(|| expensive_task());
 
@@ -200,6 +217,7 @@ if need_result {
 ## Real-World Examples
 
 ### AoC Parallel Processing
+
 ```rust
 use std::thread;
 
@@ -221,6 +239,7 @@ let final_answer = combine_results(partial_results);
 ```
 
 ### Concurrent Data Structure Updates
+
 ```rust
 use std::sync::{Arc, Mutex};
 use std::thread;

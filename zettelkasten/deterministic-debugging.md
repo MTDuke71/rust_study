@@ -9,6 +9,7 @@
 ## The Reproducibility Problem
 
 ### **Non-Deterministic Behavior Sources**
+
 ```rust
 // Common sources of non-determinism in debugging:
 
@@ -34,6 +35,7 @@ let random = rand::random::<u32>();  // Varies each execution
 ```
 
 ### **Impact on Software Development**
+
 - **Bug Reports**: "It works on my machine" syndrome
 - **Testing**: Flaky tests that pass/fail inconsistently  
 - **Performance Analysis**: Inconsistent benchmark results
@@ -43,6 +45,7 @@ let random = rand::random::<u32>();  // Varies each execution
 ## Deterministic Solutions
 
 ### **1. Controlled Randomness**
+
 ```rust
 // ❌ Non-deterministic: System entropy
 let mut rng = rand::thread_rng();
@@ -60,6 +63,7 @@ let mut rng = StdRng::seed_from_u64(seed);
 ```
 
 ### **2. Data Structure Choice**
+
 ```rust
 use std::collections::{HashMap, BTreeMap};
 
@@ -84,6 +88,7 @@ for (key, value) in index_map {  // Insertion order preserved
 ```
 
 ### **3. Lookup Table Approach (Mission 10 Pattern)**
+
 ```rust
 // From Union-Find image segmentation example:
 
@@ -118,6 +123,7 @@ fn get_components(&mut self) -> Vec<Vec<usize>> {
 ```
 
 ### **4. Environment Variables for Control**
+
 ```rust
 // Rust HashMap determinism via RUST_HASH_SEED
 // Set before running: RUST_HASH_SEED=0 cargo run
@@ -140,6 +146,7 @@ mod tests {
 ## Production vs Testing Strategies
 
 ### **Dual-Mode Design Pattern**
+
 ```rust
 pub struct SystemConfig {
     pub deterministic_mode: bool,
@@ -194,6 +201,7 @@ impl GameEngine {
 ## Debugging Techniques
 
 ### **1. Reproducible Bug Reports**
+
 ```rust
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BugReport {
@@ -221,6 +229,7 @@ impl BugReport {
 ```
 
 ### **2. Deterministic Testing Framework**
+
 ```rust
 pub struct DeterministicTest {
     name: String,
@@ -253,6 +262,7 @@ impl DeterministicTest {
 ```
 
 ### **3. Time-Travel Debugging**
+
 ```rust
 pub struct ReplayableSystem {
     operations: Vec<(Timestamp, Operation)>,
@@ -293,6 +303,7 @@ impl ReplayableSystem {
 ## Real-World Case Studies
 
 ### **Case Study 1: Lemonade Stand Game (Childhood Learning)**
+
 ```rust
 // Problem: Deterministic RNG made game exploitable
 struct LemonadeGame {
@@ -312,6 +323,7 @@ impl LemonadeGame {
 ```
 
 ### **Case Study 2: Mission 10 Union-Find (Professional Debugging)**
+
 ```rust
 // Problem: HashMap iteration caused non-deterministic component ordering
 // Impact: Same algorithm, different output each run - debugging nightmare
@@ -328,6 +340,7 @@ fn get_components_deterministic(&mut self) -> Vec<Vec<usize>> {
 ```
 
 ### **Case Study 3: Cloudflare Lava Lamps (Controlled Chaos)**
+
 ```rust
 // Problem: Need true randomness for cryptography, determinism for testing
 struct EntropySystem {
@@ -365,6 +378,7 @@ impl EntropySystem {
 ## Best Practices
 
 ### **1. Design for Determinism**
+
 ```rust
 // ✅ Always provide deterministic constructors
 impl MySystem {
@@ -392,6 +406,7 @@ pub struct DeterministicMap<K, V> {
 ```
 
 ### **2. Environment-Based Control**
+
 ```rust
 pub fn get_deterministic_mode() -> bool {
     std::env::var("DETERMINISTIC_DEBUG")
@@ -410,6 +425,7 @@ pub fn get_debug_seed() -> Option<u64> {
 ```
 
 ### **3. Logging and Traceability**
+
 ```rust
 use tracing::{info, debug, trace};
 
@@ -432,6 +448,7 @@ pub fn process_with_randomness(&mut self, input: &Input) -> Output {
 ```
 
 ### **4. Testing Strategies**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -472,6 +489,7 @@ mod tests {
 ## Advanced Techniques
 
 ### **1. Deterministic Concurrency**
+
 ```rust
 use std::sync::Barrier;
 
@@ -497,6 +515,7 @@ impl DeterministicScheduler {
 ```
 
 ### **2. Snapshot-Based Debugging**
+
 ```rust
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct SystemSnapshot {
@@ -525,6 +544,7 @@ impl SystemSnapshot {
 ```
 
 ### **3. Chaos Engineering with Control**
+
 ```rust
 pub struct ControlledChaos {
     failure_seed: u64,
@@ -554,12 +574,14 @@ if chaos.should_inject_failure("network_call") {
 ## Tools and Techniques
 
 ### **Rust-Specific Tools**
+
 - **`RUST_HASH_SEED`**: Environment variable for HashMap determinism
 - **`proptest`**: Property-based testing with reproducible seeds
 - **`arbitrary`**: Generate deterministic test data
 - **`tracing`**: Structured logging with deterministic context
 
 ### **Testing Frameworks**
+
 ```toml
 [dependencies]
 proptest = "1.0"
@@ -593,6 +615,7 @@ proptest! {
 ## Integration with Development Workflow
 
 ### **CI/CD Pipeline Integration**
+
 ```yaml
 # .github/workflows/deterministic-tests.yml
 name: Deterministic Testing
@@ -624,6 +647,7 @@ jobs:
 ```
 
 ### **Development Environment Setup**
+
 ```bash
 # .envrc (for direnv)
 export RUST_HASH_SEED=0
@@ -647,13 +671,16 @@ export RUST_LOG=debug
 ## Philosophical Implications
 
 ### **The Debugging Mindset**
+
 Deterministic debugging reflects a fundamental principle in software engineering: **control enables understanding**. When behavior is predictable:
+
 - **Cause and effect** become traceable
 - **Experiments** can be repeated reliably  
 - **Hypotheses** can be tested systematically
 - **Solutions** can be verified definitively
 
 ### **Balance of Chaos and Control**
+
 The art of deterministic debugging lies in knowing when to embrace chaos (for security, realism, testing edge cases) and when to impose control (for debugging, reproducibility, systematic analysis).
 
 ## Historical Evolution
@@ -667,7 +694,9 @@ The art of deterministic debugging lies in knowing when to embrace chaos (for se
 **Key Insight**: As systems become more complex and non-deterministic, the value of controlled determinism for debugging increases exponentially.
 
 ### **Connection to Computational Irreducibility**
+
 Our debugging methodology connects to profound questions about computation itself. Some systems exhibit **[[rule-30-computational-irreducibility|computational irreducibility]]** - they cannot be shortcut or predicted without full execution. This explains why:
+
 - **Complex bugs require step-by-step investigation** - no mathematical shortcuts exist
 - **Emergent behavior** arises unpredictably from simple rule interactions
 - **Debugging = Discovery** - we investigate computational processes that mirror natural phenomena

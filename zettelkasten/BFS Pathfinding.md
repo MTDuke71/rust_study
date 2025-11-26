@@ -11,6 +11,7 @@ BFS pathfinding specializes in finding the shortest path in unweighted graphs an
 ## 📐 Distance Metrics & Grid Navigation
 
 ### **Manhattan Distance (4-Connected)**
+
 *Standard grid movement: up, down, left, right*
 
 ```rust
@@ -68,6 +69,7 @@ pub fn manhattan_bfs_pathfind(
 ```
 
 ### **Chebyshev Distance (8-Connected)**
+
 *Grid movement including diagonals - complements [[Chebyshev Distance]] analysis*
 
 ```rust
@@ -125,6 +127,7 @@ pub fn chebyshev_bfs_pathfind(
 ```
 
 ### **Custom Distance Functions**
+
 *Application-specific movement rules*
 
 ```rust
@@ -163,6 +166,7 @@ impl Point {
 ## 🎯 Core Pathfinding Algorithms
 
 ### **1. Basic Shortest Path BFS**
+
 *Find single shortest path between two points*
 
 ```rust
@@ -222,6 +226,7 @@ fn reconstruct_path(
 ```
 
 ### **2. Multi-Target BFS**
+
 *Find shortest paths to multiple goals simultaneously*
 
 ```rust
@@ -269,6 +274,7 @@ pub fn bfs_multiple_targets(
 ```
 
 ### **3. All-Pairs Shortest Distances**
+
 *Compute distance from one source to all reachable points*
 
 ```rust
@@ -332,6 +338,7 @@ pub fn bfs_distance_grid(
 ```
 
 ### **4. Bidirectional BFS Pathfinding**
+
 *Search from both start and goal to reduce explored area*
 
 ```rust
@@ -458,6 +465,7 @@ fn reconstruct_bidirectional_path(
 ## 🕳️ Obstacle Handling & Complex Grids
 
 ### **Dynamic Obstacle Avoidance**
+
 *Handle moving obstacles or temporary blockages*
 
 ```rust
@@ -538,6 +546,7 @@ pub fn time_aware_bfs(
 ```
 
 ### **Multi-Level Pathfinding**
+
 *Handle 3D grids, buildings with floors, etc.*
 
 ```rust
@@ -604,6 +613,7 @@ pub fn bfs_3d_pathfind(
 ## 🎮 Game-Specific Pathfinding Patterns
 
 ### **Unit Size Pathfinding**
+
 *Handle units larger than 1x1 grid cell*
 
 ```rust
@@ -671,6 +681,7 @@ fn can_place_unit_at(grid: &[Vec<bool>], position: &Point, unit_size: &UnitSize)
 ```
 
 ### **Pathfinding with Collectibles**
+
 *Find optimal path while collecting items*
 
 ```rust
@@ -808,6 +819,7 @@ fn estimate_memory_usage(grid_width: usize, grid_height: usize) -> PathfindingMe
 ## 🔗 Integration with Distance Metrics
 
 ### **Chebyshev Distance Applications**
+
 *Builds on [[Chebyshev Distance]] concepts for 8-connected pathfinding*
 
 ```rust
@@ -840,6 +852,7 @@ enum TerrainType { Ground, Water, Mountain, Forest, Road }
 ```
 
 ### **Distance Heuristic Validation**
+
 *Verify distance metrics produce optimal paths*
 
 ```rust
@@ -874,6 +887,7 @@ mod distance_validation {
 ## 🚀 Advanced Applications
 
 ### **Real-Time Pathfinding**
+
 *Time-sliced BFS for real-time systems*
 
 ```rust
@@ -934,6 +948,7 @@ pub enum PathfindingResult {
 ```
 
 ### **Hierarchical Pathfinding Preparation**
+
 *BFS for cluster connectivity in hierarchical algorithms*
 
 ```rust

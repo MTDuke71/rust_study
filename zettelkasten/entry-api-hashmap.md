@@ -58,6 +58,7 @@ let count = map.entry(word).or_insert(0);
 **Use Case**: Frequency counting, initialization with defaults
 
 **Behavior**:
+
 - **Occupied**: Returns `&mut V` to existing value (no modification)
 - **Vacant**: Inserts default, returns `&mut V` to newly inserted value
 
@@ -74,11 +75,13 @@ let result = cache
 **Use Case**: Memoization, avoiding expensive default computation
 
 **Why Better Than `or_insert`**:
+
 - Closure not evaluated if key exists
 - Critical for expensive operations
 - Enables side effects only when needed
 
 **Example - Avoiding Waste**:
+
 ```rust
 // ❌ Default always computed even if not needed
 map.entry(key).or_insert(expensive_function());
@@ -100,6 +103,7 @@ map.entry(key)
 **Use Case**: Increment existing, initialize missing (counter pattern)
 
 **Chaining Pattern**:
+
 ```rust
 map.entry(key)
     .and_modify(|count| *count += 1)
@@ -132,6 +136,7 @@ for word in text.split_whitespace() {
 ```
 
 **Why Optimal**:
+
 - Single hash per word
 - No conditional logic needed
 - Returns mutable reference for immediate increment
@@ -149,6 +154,7 @@ for (name, category) in items {
 ```
 
 **Why Optimal**:
+
 - Creates empty Vec only when needed
 - Returns mutable reference to Vec for push
 - One lookup per item
@@ -167,6 +173,7 @@ let result = cache
 ```
 
 **Why Optimal**:
+
 - Computation only happens on cache miss
 - Closure captures context if needed
 - Clear cache hit/miss semantics
@@ -180,6 +187,7 @@ map.entry(key)
 ```
 
 **Why Optimal**:
+
 - Different logic for existing vs new
 - Single lookup
 - Chainable operations
@@ -196,6 +204,7 @@ map.entry(key).or_insert_with(|| {
 ```
 
 **Why Optimal**:
+
 - Multi-statement initialization
 - Only runs when needed
 - Type inference works naturally
@@ -219,6 +228,7 @@ match map.entry(key) {
 ```
 
 **When to Use**:
+
 - Need different behavior for occupied vs vacant
 - Want to remove occupied entries conditionally
 - Need to log or report state
@@ -249,6 +259,7 @@ if let Entry::Vacant(e) = map.entry(key) {
 ### **Hash Computation Cost**
 
 For a type like `String`:
+
 ```rust
 // ❌ Two hash computations (~100-200 CPU cycles each)
 if !map.contains_key(&key) {
@@ -264,6 +275,7 @@ map.entry(key).or_insert(value);
 ### **Bucket Search Cost**
 
 With hash collisions:
+
 ```rust
 // ❌ Two bucket chain traversals
 if let Some(v) = map.get_mut(&key) {
@@ -552,6 +564,7 @@ fn test_entry_modify_and_insert() {
 *Links: [[zettel-index]] | [[mission-5]] | [[rust-book-ch8]] | [[hashmap-internals]] | [[daily-study/Day10]] | [[rust-book-ch5-8-review]]*
 
 *Related Concepts:*
+
 - [[hashmap-internals]] - Understanding hash computation and bucket chains
 - [[or-insert-pattern]] - Common frequency counting idiom
 - [[memoization-patterns]] - Caching with `or_insert_with`
@@ -560,10 +573,12 @@ fn test_entry_modify_and_insert() {
 - [[zero-cost-abstractions]] - Entry API compiles to optimal code
 
 *Related Mission Work:*
+
 - [[mission-5]] - Implementing Entry API is a key Mission 5 challenge
 - [[daily-study/Day10]] - HashMap fundamentals and Entry API usage
 
 *Real-World Applications:*
+
 - Frequency analysis (word count, character frequency)
 - Request tracking and rate limiting
 - Configuration merging and defaults

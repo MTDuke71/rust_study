@@ -7,15 +7,19 @@ Symmetry exploitation is a powerful technique in algorithm optimization where ma
 ## Types of Symmetries
 
 ### 1. Rotational Symmetry
+
 **Definition**: Solutions that are rotations of each other are considered equivalent.
 
 **Example - Circular Seating (Day 13)**:
+
 ```
 [A, B, C, D] ≡ [B, C, D, A] ≡ [C, D, A, B] ≡ [D, A, B, C]
 ```
+
 All represent the same circular seating arrangement.
 
 **Optimization Strategy**: Fix one element's position
+
 ```rust
 // Instead of generating all n! permutations
 fn brute_force(items: Vec<T>) -> Solution {
@@ -30,19 +34,24 @@ fn rotation_optimized(items: Vec<T>) -> Solution {
     // Prepend fixed element to each permutation
 }
 ```
+
 **Speedup**: n× reduction (n! → (n-1)!)
 
 ### 2. Reflectional Symmetry
+
 **Definition**: Mirror images represent equivalent solutions.
 
 **Example - Circular Arrangements**:
+
 ```
 Clockwise:     [A, B, C, D] (A→B→C→D→A)
 Counter-clockwise: [A, D, C, B] (A→D→C→B→A)
 ```
+
 Both represent the same relationships, just traversed in opposite directions.
 
 **Optimization Strategy**: Fix two elements' relative positions
+
 ```rust
 fn full_optimization(items: Vec<T>) -> Solution {
     let fixed1 = items[0].clone();
@@ -54,13 +63,16 @@ fn full_optimization(items: Vec<T>) -> Solution {
     // Construct: [fixed1, fixed2, ...permutation...]
 }
 ```
+
 **Additional Speedup**: 2× reduction ((n-1)! → (n-1)!/2)
 **Combined Speedup**: 2n× reduction (n! → (n-1)!/2)
 
 ### 3. Translational Symmetry
+
 **Definition**: Solutions that are translations (shifts) of each other are equivalent.
 
 **Example - Grid Problems**:
+
 ```
 Pattern at (0,0): [X, O, X]
                   [O, X, O]
@@ -74,6 +86,7 @@ Same pattern at (5,3): [_, _, _, _, _, X, O, X]
 **Optimization**: Fix pattern position (e.g., top-left corner at origin).
 
 ### 4. Permutation Symmetry
+
 **Definition**: Swapping equivalent elements doesn't change the solution.
 
 **Example - Identical Objects**:
@@ -84,6 +97,7 @@ If you have 3 red balls and 2 blue balls, swapping red balls among themselves do
 ## Implementation Patterns
 
 ### Basic Symmetry Detection
+
 ```rust
 // Check if two arrangements are rotations of each other
 fn are_rotations<T: PartialEq>(arr1: &[T], arr2: &[T]) -> bool {
@@ -121,6 +135,7 @@ fn are_reflections<T: PartialEq>(arr1: &[T], arr2: &[T]) -> bool {
 ```
 
 ### Symmetry-Aware Generators
+
 ```rust
 // Generate only canonical representatives (no rotational duplicates)
 fn generate_canonical_permutations<T: Clone + Ord>(
@@ -164,11 +179,14 @@ fn generate_full_canonical<T: Clone + Ord>(
 ## Applications in Different Problem Domains
 
 ### 1. Traveling Salesman Problem (TSP)
-**Symmetries**: 
+
+**Symmetries**:
+
 - Rotational: Starting city doesn't matter in circular tour
 - Reflectional: Clockwise ≡ counter-clockwise traversal
 
 **Optimization**:
+
 ```rust
 fn tsp_optimized(cities: Vec<City>) -> (Cost, Vec<City>) {
     // Fix starting city (rotational symmetry)
@@ -194,10 +212,13 @@ fn tsp_optimized(cities: Vec<City>) -> (Cost, Vec<City>) {
     (best_cost, best_tour)
 }
 ```
+
 **Speedup**: 8× for 8 cities, 10× for 10 cities, etc.
 
 ### 2. Seating Arrangements (Day 13)
+
 **Symmetries**:
+
 - Rotational: Physical rotation of table doesn't change relationships
 - Reflectional: Clockwise vs counter-clockwise seating
 
@@ -214,7 +235,9 @@ fn seating_optimized(people: Vec<Person>) -> (Happiness, Vec<Person>) {
 ```
 
 ### 3. Grid Pattern Matching
+
 **Symmetries**:
+
 - Rotational: 90°, 180°, 270° rotations
 - Reflectional: Horizontal, vertical, diagonal reflections
 
@@ -256,6 +279,7 @@ fn generate_symmetric_patterns(pattern: &Grid) -> Vec<Grid> {
 | **10 items** | 3,628,800 | 362,880 (10×) | 181,440 (20×) |
 
 ### Real-World Measurements (Day 13)
+
 ```
 8 people seating optimization:
 - Brute force:     40,320 permutations → 250ms
@@ -264,6 +288,7 @@ fn generate_symmetric_patterns(pattern: &Grid) -> Vec<Grid> {
 ```
 
 ### Complexity Analysis
+
 - **Time Reduction**: O(n!) → O((n-k)!) where k = fixed positions
 - **Space**: No change (same memory usage pattern)
 - **Implementation Complexity**: Minimal (just fix some elements)
@@ -271,6 +296,7 @@ fn generate_symmetric_patterns(pattern: &Grid) -> Vec<Grid> {
 ## Advanced Symmetry Techniques
 
 ### 1. Group Theory Application
+
 ```rust
 // Use mathematical group operations to identify equivalences
 struct SymmetryGroup {
@@ -298,19 +324,25 @@ impl SymmetryGroup {
 ```
 
 ### 2. Burnside's Lemma
+
 For counting distinct arrangements under group action:
+
 ```
 |X/G| = (1/|G|) * Σ_{g∈G} |X^g|
 ```
+
 Where X^g is the set of arrangements fixed by group element g.
 
 ### 3. Orbit-Stabilizer Theorem
+
 Each equivalence class (orbit) has the same size, allowing systematic enumeration.
 
 ## Common Pitfalls and Solutions
 
 ### 1. Incorrect Symmetry Identification
+
 **Problem**: Assuming symmetries that don't actually exist
+
 ```rust
 // WRONG: Assuming all permutations are equivalent in line arrangements
 fn incorrect_line_optimization(items: Vec<T>) {
@@ -326,6 +358,7 @@ fn correct_circular_optimization(items: Vec<T>) {
 ```
 
 ### 2. Off-by-One Errors in Reduction Calculations
+
 ```rust
 // WRONG: Calculating wrong reduction factor
 let wrong_reduction = factorial(n) / n;  // Should be factorial(n-1)
@@ -336,6 +369,7 @@ let reflection_reduction = factorial(n-1) / 2;  // Fix two positions
 ```
 
 ### 3. Missing Edge Cases
+
 ```rust
 fn handle_edge_cases<T>(items: Vec<T>) -> Vec<T> {
     match items.len() {
@@ -354,6 +388,7 @@ fn handle_edge_cases<T>(items: Vec<T>) -> Vec<T> {
 ## Integration with Other Optimization Techniques
 
 ### 1. Branch and Bound + Symmetry
+
 ```rust
 fn branch_and_bound_with_symmetry(problem: Problem) -> Solution {
     // Use canonical forms in the branching process
@@ -377,6 +412,7 @@ fn branch_and_bound_with_symmetry(problem: Problem) -> Solution {
 ```
 
 ### 2. Dynamic Programming + Symmetry
+
 ```rust
 fn dp_with_symmetry(problem: Problem) -> Solution {
     let mut memo = HashMap::new();
@@ -400,6 +436,7 @@ fn dp_with_symmetry(problem: Problem) -> Solution {
 ## Testing and Validation
 
 ### 1. Correctness Testing
+
 ```rust
 #[cfg(test)]
 mod symmetry_tests {
@@ -430,6 +467,7 @@ mod symmetry_tests {
 ```
 
 ### 2. Performance Validation
+
 ```rust
 #[test]
 fn test_expected_speedup() {
@@ -453,16 +491,19 @@ fn test_expected_speedup() {
 ## Educational Value
 
 ### Mathematical Concepts
+
 1. **Group Theory**: Understanding mathematical symmetry groups
 2. **Combinatorics**: Counting with and without symmetry considerations
 3. **Equivalence Relations**: Partitioning solution space into equivalence classes
 
 ### Algorithmic Concepts  
+
 1. **Search Space Reduction**: Systematic approaches to pruning
 2. **Canonical Forms**: Unique representatives for equivalence classes
 3. **Optimization Techniques**: Combining symmetry with other optimization methods
 
 ### Implementation Skills
+
 1. **Pattern Recognition**: Identifying symmetries in problem structure
 2. **Algorithm Design**: Modifying existing algorithms to exploit symmetry
 3. **Performance Engineering**: Measuring and validating optimization effectiveness
@@ -474,4 +515,4 @@ fn test_expected_speedup() {
 
 *Tags: #symmetry #optimization #algorithms #combinatorics #group-theory #performance #search-space-reduction #canonical-forms*
 
-*Links: [[Graph Theory MOC]] | [[TSP Algorithms]] | [[day13_analysis]] | [[Combinatorial Optimization]] | [[Performance Engineering]] | [[Heap's Algorithm Deep Dive]]*
+*Links: [[Graph Theory MOC]] | [[TSP Algorithms]] | [[day13_analysis]] | [[Combinatorial Optimization]] | [[Performance Engineering]] | [[Memory Optimization]] | [[Heap's Algorithm Deep Dive]]*

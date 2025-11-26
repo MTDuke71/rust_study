@@ -9,6 +9,7 @@ Algorithm analysis is the systematic study of computational complexity, performa
 ### What is Algorithm Analysis?
 
 Algorithm analysis examines:
+
 - **Time Complexity**: How execution time grows with input size
 - **Space Complexity**: How memory usage scales with input size  
 - **Best/Average/Worst Case**: Performance across different scenarios
@@ -1086,6 +1087,7 @@ fn estimate_cache_performance(access_pattern: &[usize], data_size: usize) -> f64
 ### Do's ✅
 
 1. **Measure What Matters**
+
    ```rust
    // Focus on the operations that scale with input size
    fn analyze_relevant_operations(data: &[i32]) {
@@ -1106,6 +1108,7 @@ fn estimate_cache_performance(access_pattern: &[usize], data_size: usize) -> f64
    ```
 
 2. **Consider All Cases**
+
    ```rust
    // Analyze best, average, and worst cases
    fn analyze_quicksort_cases() {
@@ -1118,6 +1121,7 @@ fn estimate_cache_performance(access_pattern: &[usize], data_size: usize) -> f64
    ```
 
 3. **Use Realistic Data**
+
    ```rust
    // Test with realistic input distributions
    fn benchmark_with_realistic_data() {
@@ -1142,6 +1146,7 @@ fn estimate_cache_performance(access_pattern: &[usize], data_size: usize) -> f64
 ### Don'ts ❌
 
 1. **Don't Ignore Constants**
+
    ```rust
    // Both are O(n), but performance differs significantly
    fn inefficient_linear_search(arr: &[i32], target: i32) -> bool {
@@ -1168,6 +1173,7 @@ fn estimate_cache_performance(access_pattern: &[usize], data_size: usize) -> f64
    ```
 
 2. **Don't Forget Memory Hierarchy**
+
    ```rust
    // Cache-unfriendly: jumps around memory
    fn cache_unfriendly_sum(matrix: &[Vec<i32>]) -> i32 {
@@ -1230,6 +1236,7 @@ While Big-O analysis measures how fast a specific algorithm runs, computational 
 | **NP-Hard** | At least as hard as NP problems | Halting problem, optimization TSP |
 
 **Key Insight:** If a problem is NP-Complete, don't expect to find an efficient exact solution. Use:
+
 - Approximation algorithms
 - Heuristics (simulated annealing, genetic algorithms)
 - Dynamic programming (if problem has special structure)

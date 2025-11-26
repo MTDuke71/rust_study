@@ -9,6 +9,7 @@
 **Threading in Rust** enables concurrent execution by spawning multiple threads of execution that can run simultaneously on multi-core processors. Unlike many languages where threading introduces data race vulnerabilities, Rust's ownership system **guarantees thread safety at compile time** through the `Send` and `Sync` traits.
 
 **Key Components**:
+
 - **`std::thread::spawn`**: Creates new OS threads that execute closures concurrently
 - **`JoinHandle<T>`**: Handle for waiting on thread completion and retrieving results
 - **`Send` trait**: Types safe to transfer ownership between threads
@@ -16,6 +17,7 @@
 - **Thread safety**: Compiler prevents data races through borrow checker
 
 **Why Threading Matters for AoC**:
+
 1. **Computational parallelism**: Divide-and-conquer on multi-core systems (prime checking, search spaces)
 2. **Independent subtasks**: Parse input while processing previous data
 3. **Performance scaling**: 4-core CPU = potential 4x speedup for CPU-bound problems
@@ -109,6 +111,7 @@ fn main() {
 ```
 
 **Output** (interleaved execution):
+
 ```
 main thread: 1
 spawned thread: 1
@@ -531,12 +534,14 @@ fn main() {
 ## 🔗 **Integration Points**
 
 ### **Builds On**
+
 - [[ownership-fundamentals]] - Understanding move semantics for thread data transfer
 - [[closures-rust]] - Threads execute closures, `move` keyword captures environment
 - [[error-handling-patterns]] - `JoinHandle::join()` returns `Result<T, Box<dyn Any>>`
 - [[traits]] - `Send` and `Sync` marker traits enable thread safety
 
 ### **Enables**
+
 - [[message-passing-channels]] - Week 8 Day 51, mpsc for thread communication (Monday Nov 17)
 - [[shared-state-concurrency]] - Week 8 Day 52, Arc<Mutex<T>> for shared mutable state (Tuesday Nov 18)
 - [[sync-send-traits]] - Week 8 Day 53, deep dive into thread safety markers (Wednesday Nov 19)
@@ -544,6 +549,7 @@ fn main() {
 - [[parallel-iterators-rayon]] - Week 8 Day 55, rayon for ergonomic data parallelism (Friday Nov 21)
 
 ### **Related Concepts**
+
 - [[handles-resource-abstraction]] - Understanding thread handles and the handle pattern
 - [[concurrency-vs-parallelism]] - Concurrency (task switching) vs parallelism (simultaneous execution)
 - [[cpu-bound-vs-io-bound]] - Threading best for CPU-bound, async better for I/O-bound
@@ -551,11 +557,13 @@ fn main() {
 - [[aoc-optimization-strategies]] - When and how to parallelize AoC solutions
 
 ### **Mission Applications**
+
 - **Mission 11** (Dynamic Programming): Parallelize independent DP subproblems
 - **Mission 12** (Graph Algorithms): Parallel BFS/DFS on disconnected components
 - **Future Advanced Missions**: Thread pools, work-stealing schedulers
 
 ### **AoC Problem Integration**
+
 - **2015 Day 4**: MD5 hash mining with parallel range searching
 - **2015 Day 17**: Container combinations with parallel subset generation
 - **2020 Day 1**: Find sum pairs/triplets with parallel chunk processing
@@ -567,22 +575,26 @@ fn main() {
 ## 📚 **Learning Path**
 
 ### **Beginner (Current - Week 8 Day 50)**
+
 1. ✅ Spawn threads with `thread::spawn(|| { })`
 2. ✅ Move data into threads with `move` closures
 3. ✅ Wait for threads with `join()` and retrieve results
 4. ✅ Parallelize simple AoC problems (independent tasks)
 
 ### **Intermediate (Week 8 Days 51-53)**
+
 1. Use `mpsc` channels for thread communication (Monday)
 2. Share mutable state with `Arc<Mutex<T>>` (Tuesday)
 3. Understand `Send`/`Sync` traits for custom types (Wednesday)
 
 ### **Advanced (Week 8 Days 54-56)**
+
 1. Compare threads vs async for different workloads (Thursday)
 2. Use `rayon` for ergonomic data parallelism (Friday)
 3. Build thread-safe systems with proper synchronization (Saturday)
 
 ### **Expert (Future Topics)**
+
 1. Implement custom thread pools with work stealing
 2. Lock-free concurrent data structures with atomics
 3. Real-time constraints and thread priority management
@@ -627,6 +639,7 @@ fn benchmark_threading() {
 ```
 
 **Expected results on 4-core CPU**:
+
 - Sequential: ~8ms
 - Parallel: ~2.5ms
 - Speedup: ~3.2x (not 4x due to overhead and memory bandwidth)

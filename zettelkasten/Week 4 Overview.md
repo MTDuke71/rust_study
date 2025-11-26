@@ -5,6 +5,7 @@
 ## 🎯 Week Focus
 
 Week 4 transitions from **abstract type system theory** (Week 3) to **concrete algorithmic applications**:
+
 - **2D Grids**: Spatial data structures and navigation
 - **BFS/DFS**: Queue applications for pathfinding
 - **String Parsing**: Input processing for AoC and real data
@@ -17,9 +18,11 @@ This week bridges theoretical knowledge with practical competitive programming a
 ## 📅 Daily Breakdown
 
 ### **Day 22 - Grid Fundamentals**
+
 *2D arrays, coordinates, and spatial indexing*
 
 **Key Concepts:**
+
 - 2D array representation (`Vec<Vec<T>>` vs flat `Vec<T>`)
 - Coordinate systems (row/column vs x/y)
 - Linear indexing: `index = row * width + column`
@@ -28,17 +31,20 @@ This week bridges theoretical knowledge with practical competitive programming a
 - **Pattern**: Spatial data structure foundation
 
 **Learning Outcomes:**
+
 - Create and initialize 2D grids efficiently
 - Convert between coordinate systems
 - Implement safe grid access methods
 - Understand memory layout (row-major vs column-major)
 
 **Connected to:**
+
 - [[mission-6]] - 2D grid utilities and pathfinding
 - [[Collections MOC]] - Grid as specialized collection
 - Rust Book Chapter 8.1 - Vectors for grid storage
 
 **Real-World Applications:**
+
 - Game development (tile-based games, chess)
 - Image processing (pixel grids)
 - Geographic data (maps, elevation data)
@@ -49,9 +55,11 @@ This week bridges theoretical knowledge with practical competitive programming a
 ---
 
 ### **Day 23 - Grid Navigation**
+
 *Directions, neighbors, and bounds checking*
 
 **Key Concepts:**
+
 - Direction enums (North, South, East, West)
 - 4-connected vs 8-connected neighbors
 - Offset arrays for direction vectors
@@ -60,17 +68,20 @@ This week bridges theoretical knowledge with practical competitive programming a
 - **Pattern**: Safe spatial traversal
 
 **Learning Outcomes:**
+
 - Implement direction-based movement
 - Calculate neighbor coordinates
 - Handle grid boundaries safely
 - Create neighbor iterators
 
 **Connected to:**
+
 - [[Manhattan Distance]] - 4-connected distance metric
 - [[Chebyshev Distance]] - 8-connected distance metric
 - [[mission-6]] - REQ-2 direction system
 
 **Real-World Applications:**
+
 - Pathfinding algorithms (A*, Dijkstra)
 - Flood fill (paint bucket tool)
 - Cellular automata (Conway's Game of Life)
@@ -81,9 +92,11 @@ This week bridges theoretical knowledge with practical competitive programming a
 ---
 
 ### **Day 24 - Grid Algorithms**
+
 *Flood fill, connected components, and region detection*
 
 **Key Concepts:**
+
 - Flood fill algorithm (recursive and iterative)
 - Connected component labeling
 - Region detection with DFS
@@ -92,17 +105,20 @@ This week bridges theoretical knowledge with practical competitive programming a
 - **Pattern**: Exhaustive region exploration
 
 **Learning Outcomes:**
+
 - Implement flood fill for region coloring
 - Count connected components
 - Detect regions with specific properties
 - Choose appropriate exploration strategy
 
 **Connected to:**
+
 - [[DFS Patterns]] - Depth-first region exploration
 - [[BFS Patterns]] - Breadth-first region exploration
 - [[mission-7]] - Graph traversal techniques
 
 **Real-World Applications:**
+
 - Image segmentation
 - Game map analysis (finding rooms, areas)
 - Geographic region identification
@@ -113,9 +129,11 @@ This week bridges theoretical knowledge with practical competitive programming a
 ---
 
 ### **Day 25 - Queue Applications (BFS & Level Traversal)**
+
 *Breadth-first search for shortest paths*
 
 **Key Concepts:**
+
 - BFS algorithm with queue (FIFO)
 - Level-by-level exploration
 - Shortest path finding (unweighted)
@@ -124,18 +142,21 @@ This week bridges theoretical knowledge with practical competitive programming a
 - **Pattern**: Systematic nearest-first exploration
 
 **Learning Outcomes:**
+
 - Implement BFS for shortest paths
 - Calculate distances to all reachable cells
 - Use VecDeque for efficient queue operations
 - Understand BFS optimality guarantees
 
 **Connected to:**
+
 - [[mission-2]] - Queue implementation
 - [[mission-6]] - BFS pathfinding utilities
 - [[BFS Patterns]] - Breadth-first applications
 - [[A-Star-Algorithm-Deep-Dive]] - Heuristic improvement over BFS
 
 **Real-World Applications:**
+
 - GPS navigation (shortest route)
 - Social network analysis (degrees of separation)
 - Web crawling (breadth-first page exploration)
@@ -147,9 +168,11 @@ This week bridges theoretical knowledge with practical competitive programming a
 ---
 
 ### **Day 26 - Advanced Queues**
+
 *Priority queues and deque patterns*
 
 **Key Concepts:**
+
 - Priority queue (heap-based)
 - `BinaryHeap<T>` for priority scheduling
 - Double-ended queue (deque) patterns
@@ -158,17 +181,20 @@ This week bridges theoretical knowledge with practical competitive programming a
 - **Pattern**: Weighted shortest paths
 
 **Learning Outcomes:**
+
 - Use `BinaryHeap` for priority-based processing
 - Implement Dijkstra's algorithm for weighted graphs
 - Apply 0-1 BFS for binary-weight problems
 - Choose appropriate queue type for problem
 
 **Connected to:**
+
 - [[mission-2]] - Ring buffer deque
 - [[A-Star-Algorithm-Deep-Dive]] - Priority queue with heuristic
 - Dijkstra's algorithm for weighted shortest paths
 
 **Real-World Applications:**
+
 - Task scheduling (priority-based)
 - Weighted pathfinding (road networks with costs)
 - Resource allocation
@@ -179,9 +205,11 @@ This week bridges theoretical knowledge with practical competitive programming a
 ---
 
 ### **Day 27 - String Parsing**
+
 *Splitting, regex, and custom parsers*
 
 **Key Concepts:**
+
 - String splitting methods (`split()`, `split_whitespace()`)
 - Regular expressions with `regex` crate
 - Custom parser implementation
@@ -190,17 +218,20 @@ This week bridges theoretical knowledge with practical competitive programming a
 - **Pattern**: Text-to-structure transformation
 
 **Learning Outcomes:**
+
 - Parse AoC-style inputs efficiently
 - Use regex for complex pattern matching
 - Build custom parsers for domain-specific formats
 - Handle parsing errors gracefully
 
 **Connected to:**
+
 - [[mission-3]] - Search in parsed data
 - [[Error Handling Deep Dive]] - Result and Option patterns
 - Rust Book Chapter 9 - Error Handling
 
 **Real-World Applications:**
+
 - **AoC Input Processing**: Converting puzzle text to data structures
 - Configuration file parsing (INI, TOML)
 - Log file analysis
@@ -208,6 +239,7 @@ This week bridges theoretical knowledge with practical competitive programming a
 - Command-line argument parsing
 
 **Common AoC Patterns:**
+
 ```rust
 // Coordinate parsing: "x=5, y=10"
 let point = parse_point(line)?;
@@ -226,9 +258,11 @@ let cmd = parse_command(line)?;
 ---
 
 ### **Day 28 - Input Parsing Patterns**
+
 *AoC-style format handling and utilities*
 
 **Key Concepts:**
+
 - Multi-section input handling
 - Grid parsing from text
 - Number extraction patterns
@@ -237,17 +271,20 @@ let cmd = parse_command(line)?;
 - **Pattern**: Robust input pipeline
 
 **Learning Outcomes:**
+
 - Parse complex multi-format inputs
 - Build reusable parsing utilities
 - Handle edge cases in input processing
 - Create input test fixtures
 
 **Connected to:**
+
 - [[daily-study/Day27]] - Core parsing techniques
 - [[mission-6]] - Grid input parsing
 - All AoC problem implementations
 
 **Real-World Applications:**
+
 - Competitive programming input handling
 - Data pipeline construction
 - File format conversion
@@ -260,6 +297,7 @@ let cmd = parse_command(line)?;
 ## 🎓 Key Learning Outcomes
 
 ### **Technical Mastery**
+
 - ✅ **2D Grid Structures**: Efficient spatial data organization
 - ✅ **BFS/DFS Algorithms**: Shortest path and region exploration
 - ✅ **Pathfinding**: Distance computation and navigation
@@ -267,12 +305,14 @@ let cmd = parse_command(line)?;
 - ✅ **Pattern Recognition**: Common AoC problem strategies
 
 ### **Engineering Skills**
+
 - **Spatial Algorithm Design**: Coordinates, neighbors, boundaries
 - **Queue Applications**: BFS for shortest paths, priority queues
 - **Input Processing**: Robust parsing pipelines
 - **Performance Optimization**: Flat arrays, efficient iteration
 
 ### **Problem-Solving Patterns**
+
 - **Grid Traversal**: 4-connected, 8-connected exploration
 - **Shortest Path**: BFS for unweighted, Dijkstra for weighted
 - **Region Detection**: Flood fill, connected components
@@ -285,18 +325,21 @@ let cmd = parse_command(line)?;
 ### **Week 4 Directly Powers:**
 
 **Mission 6 - 2D Grids & Navigation**
+
 - Grid structure implementation (Days 22-23)
 - BFS pathfinding utilities (Day 25)
 - Direction system and neighbors (Day 23)
 - Flood fill algorithms (Day 24)
 
 **Mission 7 - Graph Algorithms**
+
 - BFS/DFS traversal patterns (Days 24-25)
 - Distance computation (Day 25)
 - Priority queue usage (Day 26)
 - Graph representation choices
 
 **All AoC Solutions**
+
 - Input parsing utilities (Days 27-28)
 - Grid-based puzzle solving (Days 22-24)
 - Shortest path problems (Day 25)
@@ -307,6 +350,7 @@ let cmd = parse_command(line)?;
 ## 📊 Week 4 Progress Tracking
 
 ### **Completion Checklist**
+
 - [ ] Day 22: Grid Fundamentals ✅
 - [ ] Day 23: Grid Navigation ✅
 - [ ] Day 24: Grid Algorithms ✅
@@ -316,6 +360,7 @@ let cmd = parse_command(line)?;
 - [ ] Day 28: Input Parsing Patterns ✅
 
 ### **Self-Assessment Questions**
+
 1. Can you create and safely access a 2D grid?
 2. Can you implement BFS for shortest path finding?
 3. Can you implement flood fill to detect regions?
@@ -327,13 +372,16 @@ let cmd = parse_command(line)?;
 ## 🎯 Common AoC Problem Patterns
 
 ### **Grid-Based Problems**
+
 **Pattern Recognition:**
+
 - Maze solving → BFS for shortest path
 - Region counting → Flood fill with DFS
 - Visibility checks → Ray tracing with bounds
 - Pathfinding → A* or Dijkstra
 
 **Example Problems (AoC):**
+
 - 2015 Day 6: Light grid simulation
 - 2015 Day 3: Infinite grid tracking
 - Warehouse navigation puzzles
@@ -342,13 +390,16 @@ let cmd = parse_command(line)?;
 ---
 
 ### **Queue Application Problems**
+
 **Pattern Recognition:**
+
 - "Shortest path" → BFS with queue
 - "Nearest X" → BFS with distance tracking
 - "Level-by-level" → BFS with level markers
 - "Priority ordering" → BinaryHeap (Dijkstra)
 
 **Example Problems (AoC):**
+
 - Shortest route through grid obstacles
 - Flood spreading simulation
 - Multi-step transformation (minimum moves)
@@ -357,13 +408,16 @@ let cmd = parse_command(line)?;
 ---
 
 ### **Parsing Problems**
+
 **Pattern Recognition:**
+
 - "Parse input like `x=5, y=10`" → Regex or split
 - "Grid from text" → Line-by-line char processing
 - "Instructions" → Custom parser with state machine
 - "Nested structures" → Recursive descent parser
 
 **Example Problems (AoC):**
+
 - Instruction sequence parsing ("move 3 from 1 to 2")
 - Coordinate list parsing ("x=5, y=10")
 - Multi-section inputs (separate by blank lines)
@@ -374,6 +428,7 @@ let cmd = parse_command(line)?;
 ## 📈 Performance Considerations
 
 ### **Grid Optimization**
+
 ```rust
 // ❌ Slow: Nested Vec (cache-unfriendly)
 let grid: Vec<Vec<i32>> = vec![vec![0; width]; height];
@@ -384,6 +439,7 @@ let access = grid[row * width + col];
 ```
 
 ### **BFS Optimization**
+
 ```rust
 // ✅ Use VecDeque for efficient queue operations
 use std::collections::VecDeque;
@@ -395,6 +451,7 @@ let mut visited = vec![false; width * height];
 ```
 
 ### **Parsing Optimization**
+
 ```rust
 // ❌ Slow: String allocations in loop
 for line in input.lines() {
@@ -412,6 +469,7 @@ for line in input.lines() {
 ## 🌉 Bridge to Advanced Topics
 
 **Week 4 Foundation Enables:**
+
 - **Mission 8**: Advanced graph algorithms (topological sort, cycle detection)
 - **Mission 9**: Dynamic programming on grids
 - **Mission 10**: Geometry and computational geometry
@@ -424,6 +482,7 @@ for line in input.lines() {
 ## 📁 Related Files
 
 ### **Daily Study Notes**
+
 - `daily_study/rust_learning_week4_notes/Day22.md` - Grid Fundamentals
 - `daily_study/rust_learning_week4_notes/Day23.md` - Grid Navigation
 - `daily_study/rust_learning_week4_notes/Day24.md` - Grid Algorithms
@@ -433,11 +492,13 @@ for line in input.lines() {
 - `daily_study/rust_learning_week4_notes/Day28.md` - Input Parsing Patterns
 
 ### **Mission Implementations**
+
 - [[mission-6]] - Complete 2D grid utilities
 - [[mission-7]] - Graph algorithms and traversal
 - [[mission-2]] - Queue foundations
 
 ### **Zettelkasten Deep Dives**
+
 - [[BFS Patterns]] - Breadth-first applications
 - [[DFS Patterns]] - Depth-first applications
 - [[Manhattan Distance]] - Grid distance metrics
@@ -449,6 +510,7 @@ for line in input.lines() {
 ## 🎯 Week 4 Achievement Summary
 
 **What You've Mastered:**
+
 - ✅ Creating and navigating 2D grids
 - ✅ Implementing BFS for shortest paths
 - ✅ Flood fill and connected components
@@ -457,6 +519,7 @@ for line in input.lines() {
 - ✅ AoC input processing patterns
 
 **Real-World Applications:**
+
 - Game development (tile maps, pathfinding)
 - Geographic information systems (GIS)
 - Image processing (region detection)
@@ -464,6 +527,7 @@ for line in input.lines() {
 - Data pipeline construction
 
 **Rust Book Coverage:**
+
 - Chapter 8 - Collections (VecDeque, BinaryHeap)
 - Chapter 9 - Error Handling (parsing Results)
 - Chapter 13 - Iterators (grid iteration)
@@ -487,6 +551,7 @@ for line in input.lines() {
 ## 🏆 Competitive Programming Readiness
 
 After Week 4, you can confidently tackle:
+
 - ✅ Grid-based pathfinding problems
 - ✅ Region detection and counting
 - ✅ Shortest path in unweighted graphs
@@ -501,6 +566,7 @@ After Week 4, you can confidently tackle:
 See how these Week 4 concepts apply to real competitive programming:
 
 ### **Day 14 - Reindeer Olympics** (Cyclic Systems & State Machines)
+
 - [[advent_of_code/aoc2015/Problem_Statements/Day14-Analysis]] - Mathematical optimization approach
 - [[advent_of_code/aoc2015/Problem_Statements/Day14-Algorithmic-Complexity-Comparison]] - Performance analysis  
 - [[advent_of_code/aoc2015/Problem_Statements/Day14-Performance-Comparison]] - Implementation comparison

@@ -35,6 +35,7 @@ impl<'a, T> Iterator for RangeIter<'a, T> {
 ```
 
 **Key Design Points:**
+
 - Stores a **borrowed slice** (`&'a [T]`) - no copying data
 - **Lifetime annotation** ensures iterator can't outlive the data
 - Returns **borrowed references** (`&'a T`) - zero allocation
@@ -54,6 +55,7 @@ fn size_hint(&self) -> (usize, Option<usize>) {
 ```
 
 **Why This Matters:**
+
 - `collect()` can **pre-allocate** the exact Vec capacity
 - No reallocation during collection
 - Other iterators can optimize based on size
@@ -73,6 +75,7 @@ let twos: Vec<_> = find_all_equal(&data, &2).collect(); // [&2, &2, &2]
 ```
 
 **Performance Characteristics:**
+
 - **Find range**: O(log n) for both bounds
 - **Create iterator**: O(1) - just stores indices
 - **Iterate results**: O(k) where k = number of matches
@@ -104,6 +107,7 @@ let results: Vec<_> = data.find_all_equal(&2).collect();
 ```
 
 **Benefits:**
+
 - **Ergonomic API** - feels like standard library
 - **Method chaining** - `data.find_range(&3, &8).filter(...)`
 - **Discoverable** - IDE autocomplete shows custom methods
@@ -124,6 +128,7 @@ let result: Vec<_> = data
 ```
 
 **Why This Is Fast:**
+
 - No intermediate `Vec` allocations
 - Single pass through data
 - Compiler optimizations apply across the entire chain
@@ -138,6 +143,7 @@ let found = data
 ```
 
 **Iterator Short-Circuits:**
+
 - Doesn't iterate entire range
 - Returns as soon as condition is met
 - O(k) where k = position of first match
@@ -154,6 +160,7 @@ let unique_range: HashSet<i32> = data
 ```
 
 **FromIterator Trait:**
+
 - Many types implement `FromIterator`
 - Same iterator works with Vec, HashSet, BTreeSet, etc.
 - No code changes needed
@@ -211,6 +218,7 @@ fn process_range<'a>(data: &'a [i32]) -> impl Iterator<Item = &'a i32> {
 ```
 
 **Safety Guarantees:**
+
 - Iterator can't outlive the data it references
 - Compiler enforces lifetime relationships
 - No runtime overhead
@@ -223,6 +231,7 @@ let iter = data.iter().filter(|&&x| x > 5).map(|&x| x * 2);
 ```
 
 **Iterator Adaptor Sizes:**
+
 - Many iterators are **zero-sized types** (ZSTs)
 - Filter/Map store closure + base iterator (usually small)
 - Entire chain lives on the stack

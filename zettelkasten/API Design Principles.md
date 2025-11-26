@@ -9,6 +9,7 @@
 API Design Principles are the **foundational guidelines** that inform how we create public interfaces in Rust. While [[API Design Patterns]] provide concrete, reusable solutions, principles offer abstract rules and philosophies that guide decision-making across all API design scenarios.
 
 **Key Distinction:**
+
 - **Principles** → *Why* and *what* (guiding philosophy)
 - **Patterns** → *How* (concrete implementation)
 
@@ -17,6 +18,7 @@ API Design Principles are the **foundational guidelines** that inform how we cre
 ## 🏛️ **Rust's Core API Design Principles**
 
 ### **1. Zero-Cost Abstractions**
+
 *"What you don't use, you don't pay for. And what you do use, you couldn't hand code any better."*
 
 **Principle:** High-level APIs should compile to the same machine code as hand-written low-level code.
@@ -39,6 +41,7 @@ for &x in &vec![1, 2, 3, 4, 5] {
 ```
 
 **Application in Mission5 (HashMap):**
+
 - Generic type parameters compile to specialized code
 - No vtable overhead unless using trait objects
 - Inline optimization of small generic functions
@@ -46,6 +49,7 @@ for &x in &vec![1, 2, 3, 4, 5] {
 ---
 
 ### **2. Explicit Over Implicit**
+
 *"Make behavior visible, predictable, and intentional."*
 
 **Principle:** APIs should make their effects and costs explicit to the caller.
@@ -79,6 +83,7 @@ pub fn get_data(&self) -> Vec<u8> {
 ```
 
 **Mission Applications:**
+
 - **Mission1 (Stack):** `pop()` returns `Option<T>` explicitly handling empty case
 - **Mission3 (Binary Search):** Returns `Result<usize, usize>` showing success/failure
 - **Mission5 (HashMap):** `insert()` returns `Option<V>` showing if value was replaced
@@ -86,6 +91,7 @@ pub fn get_data(&self) -> Vec<u8> {
 ---
 
 ### **3. Make Illegal States Unrepresentable**
+
 *"Use the type system to prevent errors at compile time."*
 
 **Principle:** Design types so invalid states cannot be constructed.
@@ -120,6 +126,7 @@ impl ConnectionBuilder<Configured> {
 ```
 
 **Mission3 Application (Binary Search):**
+
 ```rust
 // Sorted wrapper ensures precondition
 pub struct Sorted<T>(Vec<T>);
@@ -139,6 +146,7 @@ impl<T: Ord> Sorted<T> {
 ---
 
 ### **4. Pay-for-What-You-Use**
+
 *"Don't impose costs on users who don't need the feature."*
 
 **Principle:** Optional functionality should not burden users who don't need it.
@@ -164,6 +172,7 @@ where
 ```
 
 **AoC Applications:**
+
 - Use `Vec<T>` when capacity is unknown (pays for dynamic allocation)
 - Use `[T; N]` when size is fixed (zero allocation cost)
 - Use `&str` when ownership not needed (no allocation)
@@ -171,6 +180,7 @@ where
 ---
 
 ### **5. Composability**
+
 *"Small, focused APIs that work together seamlessly."*
 
 **Principle:** Design APIs that can be combined to create more complex behavior.
@@ -191,6 +201,7 @@ let result: Vec<_> = data
 ```
 
 **Mission6 Application (Iterator Patterns):**
+
 ```rust
 pub trait CustomIterator: Iterator {
     fn custom_filter<P>(self, predicate: P) -> CustomFilter<Self, P>
@@ -208,6 +219,7 @@ pub trait CustomIterator: Iterator {
 ---
 
 ### **6. Principle of Least Surprise**
+
 *"Follow conventions and user expectations."*
 
 **Principle:** APIs should behave as users expect based on naming and Rust conventions.
@@ -231,6 +243,7 @@ impl<T> Vec<T> {
 ```
 
 **Standard Naming Conventions:**
+
 - `new()` → Constructor (doesn't fail)
 - `with_*()` → Alternative constructor
 - `from_*()` → Conversion constructor
@@ -243,6 +256,7 @@ impl<T> Vec<T> {
 ---
 
 ### **7. Memory Safety Without Garbage Collection**
+
 *"Compile-time guarantees, zero runtime overhead."*
 
 **Principle:** APIs enforce memory safety through ownership and borrowing rules.
@@ -262,6 +276,7 @@ take_ownership(data);     // OK: moves ownership
 ```
 
 **Mission Applications:**
+
 - **Mission1:** Stack owns its data, provides borrowing methods
 - **Mission4:** LinkedList manages node lifetimes safely
 - **Mission5:** HashMap manages heap-allocated buckets
@@ -269,6 +284,7 @@ take_ownership(data);     // OK: moves ownership
 ---
 
 ### **8. Errors Are Values**
+
 *"Make error handling explicit and composable."*
 
 **Principle:** Represent failures as values (`Result`, `Option`), not exceptions.
@@ -292,12 +308,14 @@ let config = parse_config(path)?;
 ```
 
 **Error Design Guidelines:**
+
 - Use `Result<T, E>` for recoverable errors
 - Use `Option<T>` for absence of value (not an error)
 - Use `panic!` only for unrecoverable programmer errors
 - Provide custom error types with context
 
 **Mission3 Application:**
+
 ```rust
 pub enum BinarySearchError {
     EmptyArray,
@@ -318,6 +336,7 @@ pub fn binary_search<T: Ord>(
 ---
 
 ### **9. Trait Coherence and Consistency**
+
 *"One implementation per type per trait."*
 
 **Principle:** Rust's orphan rules and trait coherence ensure consistent behavior.
@@ -353,6 +372,7 @@ impl Ord for Point {
 ```
 
 **Standard Trait Guidelines:**
+
 - `Debug` → Almost always implement (debugging)
 - `Clone` → If cheap to clone or necessary
 - `Copy` → Only for small, stack-only types
@@ -364,6 +384,7 @@ impl Ord for Point {
 ---
 
 ### **10. Progressive Disclosure**
+
 *"Simple things simple, complex things possible."*
 
 **Principle:** Provide simple defaults with escape hatches for advanced use.
@@ -384,6 +405,7 @@ let map = HashMap::with_hasher(MyCustomHasher::new());
 ```
 
 **Mission5 Application (HashMap):**
+
 ```rust
 // Level 1: Simple API
 impl<K, V> HashMap<K, V> {
@@ -409,6 +431,7 @@ impl<K, V, S> HashMap<K, V, S> where S: BuildHasher {
 ## 🎯 **SOLID Principles in Rust Context**
 
 ### **Single Responsibility Principle (SRP)**
+
 *Each type/module should have one reason to change.*
 
 ```rust
@@ -437,6 +460,7 @@ pub struct User {
 ```
 
 ### **Open/Closed Principle (OCP)**
+
 *Open for extension, closed for modification.*
 
 ```rust
@@ -460,6 +484,7 @@ impl Shape for Rectangle {
 ```
 
 ### **Liskov Substitution Principle (LSP)**
+
 *Subtypes must be substitutable for their base types.*
 
 ```rust
@@ -476,6 +501,7 @@ fn process<I: Iterator>(iter: I) {
 ```
 
 ### **Interface Segregation Principle (ISP)**
+
 *Clients shouldn't depend on methods they don't use.*
 
 ```rust
@@ -506,6 +532,7 @@ pub trait IO {
 ```
 
 ### **Dependency Inversion Principle (DIP)**
+
 *Depend on abstractions, not concretions.*
 
 ```rust
@@ -535,6 +562,7 @@ pub struct Service {
 ## 🔍 **Additional Rust-Specific Principles**
 
 ### **11. Leverage the Type System**
+
 *Use types to encode invariants and contracts.*
 
 ```rust
@@ -556,6 +584,7 @@ impl<T> NonEmptyVec<T> {
 ```
 
 ### **12. Provide Escape Hatches**
+
 *Safe by default, unsafe when necessary.*
 
 ```rust
@@ -576,6 +605,7 @@ pub unsafe fn get_unchecked(&self, index: usize) -> &T {
 ```
 
 ### **13. Make Common Operations Cheap**
+
 *Optimize for the expected use case.*
 
 ```rust
@@ -598,23 +628,27 @@ impl<T> Vec<T> {
 ## 📊 **Applying Principles Across Missions**
 
 ### **Mission1 (Stack) - Principles Applied:**
+
 - **Explicit:** `pop()` returns `Option<T>` showing empty state
 - **Zero-cost:** Generic `Stack<T>` compiles to specialized code
 - **Memory safety:** Ownership prevents use-after-free
 - **Composability:** Works with iterators
 
 ### **Mission3 (Binary Search) - Principles Applied:**
+
 - **Errors as values:** Returns `Result<usize, usize>`
 - **Explicit:** Clear success/failure semantics
 - **Make illegal states unrepresentable:** Could use `Sorted<T>` wrapper
 
 ### **Mission5 (HashMap) - Principles Applied:**
+
 - **Pay-for-what-you-use:** Generic hasher parameter
 - **Progressive disclosure:** Simple API, advanced options available
 - **Zero-cost:** Monomorphization for generic types
 - **Composability:** Implements standard traits
 
 ### **Mission9 (Pathfinding) - Principles Applied:**
+
 - **Single responsibility:** Separate graph, algorithm, and visualization
 - **Dependency inversion:** Algorithm depends on trait, not concrete graph
 - **Leverage type system:** Type parameters for node/edge types
@@ -624,6 +658,7 @@ impl<T> Vec<T> {
 ## 🎓 **Best Practices Summary**
 
 ### **DO:**
+
 - ✅ Use descriptive, conventional naming
 - ✅ Make mutation explicit (`&mut self`)
 - ✅ Return `Result` for fallible operations
@@ -634,6 +669,7 @@ impl<T> Vec<T> {
 - ✅ Design APIs that are hard to misuse
 
 ### **DON'T:**
+
 - ❌ Panic in library code (use `Result` instead)
 - ❌ Use `unwrap()` in public APIs
 - ❌ Hide mutation or allocation costs
@@ -661,11 +697,13 @@ impl<T> Vec<T> {
 ## 🔗 **Learning Resources**
 
 ### **Rust API Guidelines**
+
 - [Official Rust API Guidelines](https://rust-lang.github.io/api-guidelines/)
 - Rust Book Chapter 7 - Managing Growing Projects
 - [[zettelkasten/rust_book/rust-book-ch10]] - Traits and Generics
 
 ### **Mission Applications**
+
 - Review Mission5 HashMap for comprehensive API design
 - Study Mission9 graph algorithms for trait-based design
 - Examine Mission1 Stack for ownership clarity

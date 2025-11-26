@@ -29,6 +29,7 @@ let v: Vec<i32> = (0..5).collect();
 ### Common Operations
 
 #### Adding Elements
+
 ```rust
 let mut v = Vec::new();
 v.push(5);                    // Add to end
@@ -37,6 +38,7 @@ v.extend([1, 2, 3]);         // Add multiple
 ```
 
 #### Accessing Elements
+
 ```rust
 let v = vec![1, 2, 3, 4, 5];
 
@@ -52,6 +54,7 @@ let last = v.last();         // Option<&T>
 ```
 
 #### Removing Elements
+
 ```rust
 let mut v = vec![1, 2, 3, 4, 5];
 let last = v.pop();          // Removes and returns Option<T>
@@ -76,6 +79,7 @@ println!("Capacity: {}", v.capacity());  // Usually 4
 ## Common Patterns
 
 ### Stack Implementation
+
 ```rust
 struct Stack<T> {
     items: Vec<T>,
@@ -97,6 +101,7 @@ impl<T> Stack<T> {
 ```
 
 ### Iteration Patterns
+
 ```rust
 let v = vec![1, 2, 3, 4, 5];
 
@@ -120,6 +125,7 @@ let doubled: Vec<i32> = v.iter().map(|x| x * 2).collect();
 ```
 
 ### Deduplication
+
 ```rust
 let mut v = vec![1, 2, 2, 3, 2, 4];
 v.sort();
@@ -130,6 +136,7 @@ v.dedup();  // Removes consecutive duplicates
 ## Advanced Usage
 
 ### Custom Types
+
 ```rust
 #[derive(Debug, Clone)]
 struct Person {
@@ -145,6 +152,7 @@ people.push(Person {
 ```
 
 ### Slice Conversions
+
 ```rust
 let v = vec![1, 2, 3, 4, 5];
 let slice: &[i32] = &v;       // Vec to slice
@@ -154,16 +162,19 @@ let slice = &v[1..4];         // Subslice [2, 3, 4]
 ### Performance Tips
 
 1. **Pre-allocate when size is known**
+
    ```rust
    let mut v = Vec::with_capacity(1000);  // Avoids reallocations
    ```
 
 2. **Prefer `extend()` over multiple `push()` calls**
+
    ```rust
    v.extend([1, 2, 3, 4, 5]);  // More efficient than 5 pushes
    ```
 
 3. **Use `shrink_to_fit()` to reclaim memory**
+
    ```rust
    v.shrink_to_fit();  // Reduce capacity to length
    ```
@@ -171,6 +182,7 @@ let slice = &v[1..4];         // Subslice [2, 3, 4]
 ## Common Pitfalls
 
 ### Borrowing During Modification
+
 ```rust
 let mut v = vec![1, 2, 3];
 let first = &v[0];        // Borrow
@@ -179,6 +191,7 @@ println!("{}", first);
 ```
 
 ### Index Out of Bounds
+
 ```rust
 let v = vec![1, 2, 3];
 // let x = v[10];         // PANIC: index out of bounds
@@ -194,16 +207,19 @@ let x = v.get(10);        // Safe: returns None
 ## Use Cases in Rust Study Projects
 
 ### Advent of Code Applications
+
 - **Day 1-9:** Input parsing and number collections
 - **Graph problems:** Adjacency lists
 - **Dynamic programming:** Memoization arrays
 
 ### Mission Projects  
+
 - **Mission 1:** Basic collection operations
 - **Mission 5:** HashMap backing storage
 - **Bracket matching:** Character stack implementation
 
 ### Advanced Examples
+
 - **Brackets:** Token storage and validation
 - **Competitive programming:** Fast I/O and result collections
 

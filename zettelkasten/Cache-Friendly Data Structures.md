@@ -7,6 +7,7 @@
 ## 🧠 **Cache Hierarchy Fundamentals**
 
 ### **CPU Cache Levels**
+
 ```
 L1 Cache: ~32KB,  ~1-2 cycles  (per core)
 L2 Cache: ~256KB, ~10 cycles   (per core)  
@@ -17,6 +18,7 @@ RAM:      ~16GB,  ~200 cycles  (system)
 **Key Insight**: Accessing data in cache is **100-200x faster** than RAM access
 
 ### **Cache Line Size**
+
 - Modern CPUs: **64 bytes** per cache line
 - **Spatial locality**: Adjacent memory locations loaded together
 - **Temporal locality**: Recently accessed data likely to be accessed again
@@ -26,6 +28,7 @@ RAM:      ~16GB,  ~200 cycles  (system)
 ### **1. Array of Structures (AoS) vs Structure of Arrays (SoA)**
 
 #### **Array of Structures - Poor Cache Utilization**
+
 ```rust
 #[derive(Debug)]
 struct Particle {
@@ -49,6 +52,7 @@ fn update_positions_aos(particles: &mut [Particle], dt: f32) {
 **Cache Analysis**: Loading 28 bytes per particle, but only using 24 bytes (position + velocity)
 
 #### **Structure of Arrays - Optimal Cache Utilization**
+
 ```rust
 #[derive(Debug)]
 struct ParticleSystem {
@@ -75,6 +79,7 @@ impl ParticleSystem {
 ### **2. Hot/Cold Data Separation**
 
 #### **Problematic Mixed Layout**
+
 ```rust
 struct Node {
     // Hot data - accessed frequently
@@ -90,6 +95,7 @@ struct Node {
 ```
 
 #### **Optimized Hot/Cold Separation**
+
 ```rust
 struct Node {
     // Hot data only - fits in single cache line
@@ -113,6 +119,7 @@ struct NodeMetadata {
 ### **3. Padding and Alignment for Cache Lines**
 
 #### **Cache Line Alignment**
+
 ```rust
 #[repr(align(64))]  // Align to cache line boundary
 struct CacheAlignedBuffer {
@@ -124,6 +131,7 @@ struct CacheAlignedBuffer {
 ```
 
 #### **Strategic Padding**
+
 ```rust
 struct OptimizedStruct {
     // Frequently accessed together - same cache line
@@ -143,6 +151,7 @@ struct OptimizedStruct {
 ### **1. Sequential Access Patterns**
 
 #### **Cache-Friendly Linear Search**
+
 ```rust
 fn linear_search_optimized<T: PartialEq>(slice: &[T], target: &T) -> Option<usize> {
     // Sequential access - perfect cache utilization
@@ -151,6 +160,7 @@ fn linear_search_optimized<T: PartialEq>(slice: &[T], target: &T) -> Option<usiz
 ```
 
 #### **Cache-Hostile Random Access**
+
 ```rust
 fn binary_search_cache_analysis<T: Ord>(slice: &[T], target: &T) -> Option<usize> {
     // Random access pattern - poor cache utilization for small searches
@@ -164,6 +174,7 @@ fn binary_search_cache_analysis<T: Ord>(slice: &[T], target: &T) -> Option<usize
 ### **2. Block-Based Processing**
 
 #### **Cache-Aware Matrix Multiplication**
+
 ```rust
 fn matrix_multiply_blocked(a: &[Vec<f32>], b: &[Vec<f32>]) -> Vec<Vec<f32>> {
     let n = a.len();
@@ -193,6 +204,7 @@ fn matrix_multiply_blocked(a: &[Vec<f32>], b: &[Vec<f32>]) -> Vec<Vec<f32>> {
 ### **3. Prefetching Patterns**
 
 #### **Manual Prefetching**
+
 ```rust
 use std::arch::x86_64::_mm_prefetch;
 
@@ -219,6 +231,7 @@ fn process_with_prefetch(data: &[DataStruct]) {
 ## 📊 **Ring Buffer Cache Optimization**
 
 ### **Cache-Aligned Ring Buffer**
+
 ```rust
 #[repr(align(64))]  // Cache line alignment
 pub struct CacheOptimizedRingBuffer<T> {
@@ -238,6 +251,7 @@ pub struct CacheOptimizedRingBuffer<T> {
 ```
 
 ### **SIMD-Friendly Buffer Operations**
+
 ```rust
 impl<T: Copy> CacheOptimizedRingBuffer<T> {
     /// Bulk copy optimized for SIMD
@@ -291,6 +305,7 @@ impl<T: Copy> CacheOptimizedRingBuffer<T> {
 ## 🔬 **Cache Performance Measurement**
 
 ### **Cache Miss Profiling**
+
 ```rust
 use std::time::Instant;
 
@@ -318,6 +333,7 @@ fn benchmark_cache_patterns() {
 ```
 
 ### **Cache Line Utilization Analysis**
+
 ```rust
 fn analyze_cache_utilization<T>(data: &[T]) {
     let element_size = std::mem::size_of::<T>();
@@ -334,6 +350,7 @@ fn analyze_cache_utilization<T>(data: &[T]) {
 ## 🎯 **Optimization Guidelines**
 
 ### **1. Data Structure Design**
+
 - ✅ **Group frequently accessed fields** together
 - ✅ **Separate hot and cold data** into different structures
 - ✅ **Align to cache line boundaries** for shared data
@@ -341,6 +358,7 @@ fn analyze_cache_utilization<T>(data: &[T]) {
 - ❌ **Avoid unnecessary padding** that wastes cache space
 
 ### **2. Algorithm Design**
+
 - ✅ **Prefer sequential access** patterns when possible
 - ✅ **Process data in blocks** that fit in cache
 - ✅ **Minimize pointer chasing** (linked lists, trees)
@@ -348,6 +366,7 @@ fn analyze_cache_utilization<T>(data: &[T]) {
 - ❌ **Avoid random memory access** patterns
 
 ### **3. Memory Layout**
+
 - ✅ **Pack related data** into single cache lines
 - ✅ **Align critical structures** to cache boundaries
 - ✅ **Consider false sharing** in multi-threaded code
@@ -357,6 +376,7 @@ fn analyze_cache_utilization<T>(data: &[T]) {
 ## 🏆 **Performance Impact Examples**
 
 ### **Cache-Friendly vs Cache-Hostile Comparison**
+
 ```rust
 // Cache-hostile: 50ms for 1M elements
 struct BadLayout {
@@ -374,6 +394,7 @@ struct GoodLayout {
 **Result**: 3.3x performance improvement through better cache utilization
 
 ### **Ring Buffer Performance Comparison**
+
 ```rust
 // Standard implementation: 100 MB/s throughput
 struct StandardRingBuffer<T> {
@@ -398,6 +419,7 @@ struct OptimizedRingBuffer<T> {
 ## 🔧 **Tools and Profiling**
 
 ### **Performance Monitoring**
+
 ```bash
 # Linux - Monitor cache misses
 perf stat -e cache-misses,cache-references ./program
@@ -408,6 +430,7 @@ perf report
 ```
 
 ### **Rust Profiling Tools**
+
 ```rust
 // Criterion benchmarks with cache analysis
 use criterion::{black_box, criterion_group, criterion_main, Criterion};

@@ -183,17 +183,20 @@ This mirrors many AoC tasks (e.g., **2023 Day 20 pulse processing**) where parsi
 ## 🔗 **Integration Points**
 
 ### **Builds On**
+
 - [[rust-threading-basics]] - Spawning threads safely and joining for completion
 - [[ownership]] - `Sender<T>` transfers ownership instead of cloning data by default
 - [[Send and Sync Deep Dive]] - Why `Sender` is `Clone`/`Send` and `Receiver` is `Send` but not `Sync`
 - [[rust_book/rust-book-ch16]] - Official resource for Chapter 16.2 message passing
 
 ### **Enables**
+
 - [[AoC Pattern Library]] - Adds producer/consumer pipeline recipes to the catalog
 - [[AoC Integration]] - Builds the concurrency strand of the three-track workflow
 - [[deterministic-debugging]] - Channel logging provides reproducible event streams for tricky bugs
 
 ### **Related Concepts**
+
 - [[Divide and Conquer]] - Split workloads before feeding them into channels
 - [[Performance Patterns]] - Backpressure, batching, and throughput tuning
 - [[string-processing-patterns]] - Typical AoC parsing stage that feeds the channel

@@ -11,6 +11,7 @@
 ### **What is Dead Code?**
 
 Dead code includes:
+
 1. **Unused computations** - Results that are never used
 2. **Unreachable code** - Code paths that can never execute
 3. **Pure functions with unused results** - Side-effect-free operations
@@ -35,6 +36,7 @@ fn benchmark_example() {
 ```
 
 **Compiler reasoning:**
+
 1. `result` is never read after assignment
 2. `expensive_calculation()` has no observable side effects
 3. Therefore, the entire call can be eliminated
@@ -116,6 +118,7 @@ fn protected_benchmark() {
 ```
 
 **How black_box works:**
+
 - Creates an optimization barrier
 - Compiler cannot assume anything about the function
 - Input and output are treated as "unknown" to optimizer
@@ -170,6 +173,7 @@ fn benchmark_with_side_effects() {
 ### **Identifying DCE in Benchmarks**
 
 **Red flags that indicate DCE:**
+
 1. **Impossibly fast times** - Nanosecond operations that should take microseconds
 2. **Constant time regardless of input size** - O(n) algorithm showing O(1) performance
 3. **Zero variance** - Multiple runs show identical times
@@ -375,12 +379,14 @@ fn criterion_benchmark(c: &mut Criterion) {
    - Debug vs release mode shows huge differences
 
 2. **Verify with assembly:**
+
    ```bash
    cargo rustc --release -- --emit asm
    # Look for missing loops, function calls, or computations
    ```
 
 3. **Test with different protection levels:**
+
    ```rust
    // Test 1: No protection
    let time_no_protection = benchmark_without_blackbox();
@@ -524,18 +530,21 @@ cargo bench --quiet | grep -E "(ns|µs|ms)" | awk '{
 ## 🔗 Related Concepts
 
 ### **Compiler Optimizations**
+
 - [[Constant Folding]] - Compile-time evaluation of constant expressions
 - [[Loop Unrolling]] - Optimization that can interact with DCE
 - [[Inlining]] - Function call elimination that enables more DCE
 - [[Common Subexpression Elimination]] - Related optimization technique
 
 ### **Benchmarking Techniques**
+
 - [[black-box-benchmarking]] - Practical usage of std::hint::black_box
 - [[performance-benchmarking-grid-optimization]] - Real-world benchmarking examples
 - [[Statistical Analysis in Benchmarking]] - Proper measurement and analysis
 - [[Criterion.rs Patterns]] - Professional benchmarking framework usage
 
 ### **Performance Analysis**
+
 - [[Assembly Analysis]] - Understanding compiler output
 - [[Cache Effects in Benchmarking]] - Memory-related performance factors
 - [[Compiler Optimization Levels]] - Understanding -O flags and their effects
@@ -546,18 +555,21 @@ cargo bench --quiet | grep -E "(ns|µs|ms)" | awk '{
 ## 💡 Key Insights
 
 ### **Fundamental Principles**
+
 1. **The compiler is very smart** - It will eliminate any computation it can prove is unused
 2. **Benchmarks are particularly vulnerable** - They often don't use results in meaningful ways
 3. **black_box is your friend** - Zero-cost protection against unwanted optimization
 4. **Verification is essential** - Always sanity-check benchmark results
 
 ### **Common Misconceptions**
+
 - ❌ "Using `let _result =` prevents DCE" - Underscore prefix doesn't help
 - ❌ "Only debug mode has DCE issues" - Release mode DCE is much more aggressive
 - ❌ "Side effects always prevent DCE" - Compiler can prove many "side effects" are unused
 - ❌ "Generic functions can't be eliminated" - Monomorphization enables aggressive DCE
 
 ### **Best Practices Summary**
+
 1. **Always use black_box** for benchmark inputs and outputs
 2. **Verify realistic performance** - Compare with expected complexity
 3. **Analyze assembly when in doubt** - See what the compiler actually generated
@@ -600,7 +612,8 @@ Dijkstra on 1000-node graph:
 **Created**: 2025-11-08  
 **Source**: Mission9 benchmarking experience, Rust performance optimization research  
 **Related Code**: `missions/Mission9/benches/`, `tutorials/Mission6_tut/examples/step6_performance.rs`  
-**References**: 
+**References**:
+
 - [Rust Reference - Hints](https://doc.rust-lang.org/std/hint/index.html)
 - [The Rust Performance Book](https://nnethercote.github.io/perf-book/)
 - [Criterion.rs Documentation](https://bheisler.github.io/criterion.rs/book/)

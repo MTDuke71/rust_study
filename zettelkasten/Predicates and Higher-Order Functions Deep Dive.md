@@ -11,12 +11,15 @@ Predicates are functions that test conditions and return boolean values. In Rust
 ## What Are Predicates?
 
 ### Core Definition
+
 A **predicate** is a function that:
+
 - **Takes some input** and returns a **boolean** (`true` or `false`)
 - **Tests a condition** or **asks a question** about the input
 - **Determines** whether something meets certain criteria
 
 ### Rust Implementation
+
 ```rust
 // Predicate as a closure
 let is_even = |x: i32| x % 2 == 0;
@@ -43,12 +46,15 @@ where
 ## Higher-Order Functions
 
 ### Definition
+
 **Higher-order functions** are functions that:
+
 - **Take other functions as parameters**
 - **Return functions as results**
 - **Operate on functions** rather than just data
 
 ### Rust Syntax
+
 ```rust
 // Function that takes a function as parameter
 fn apply_operation<F>(value: i32, operation: F) -> i32
@@ -66,6 +72,7 @@ let squared = apply_operation(5, |x| x * x);
 ## Common Predicate Patterns
 
 ### 1. Filtering Collections
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -85,6 +92,7 @@ let in_range: Vec<i32> = numbers
 ```
 
 ### 2. Finding Elements
+
 ```rust
 let words = vec!["apple", "banana", "cherry", "date"];
 
@@ -100,6 +108,7 @@ let longest = words
 ```
 
 ### 3. Validation Patterns
+
 ```rust
 // Email validation predicate
 fn is_valid_email(email: &str) -> bool {
@@ -126,6 +135,7 @@ let valid_emails: Vec<&str> = emails
 ## Advanced Predicate Patterns
 
 ### 1. Predicate Composition
+
 ```rust
 // Combine multiple predicates
 fn and<F, G, T>(f: F, g: G) -> impl Fn(&T) -> bool
@@ -157,6 +167,7 @@ let result: Vec<i32> = numbers
 ```
 
 ### 2. Stateful Predicates
+
 ```rust
 // Predicate that remembers state
 fn create_counter_predicate(threshold: i32) -> impl Fn(&i32) -> bool {
@@ -176,6 +187,7 @@ let result: Vec<i32> = numbers
 ```
 
 ### 3. Generic Predicate Functions
+
 ```rust
 // Generic predicate function for HashMap
 impl<K, V> HashMap<K, V> {
@@ -199,6 +211,7 @@ impl<K, V> HashMap<K, V> {
 ## Iterator Methods Using Predicates
 
 ### Standard Library Examples
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -224,6 +237,7 @@ let rpos = numbers.iter().rposition(|&x| x == 5);
 ## Performance Considerations
 
 ### Zero-Cost Abstractions
+
 ```rust
 // This predicate usage has zero runtime overhead
 let result: Vec<i32> = numbers
@@ -242,6 +256,7 @@ for &x in &numbers {
 ```
 
 ### Closure Capture Performance
+
 ```rust
 // Efficient: capture by reference
 let threshold = 5;
@@ -255,6 +270,7 @@ let predicate = move |x: &i32| large_data.contains(x);  // Moves large_data
 ## Real-World Applications
 
 ### 1. Data Validation
+
 ```rust
 struct User {
     name: String,
@@ -283,6 +299,7 @@ let valid_users: Vec<&User> = users
 ```
 
 ### 2. Search and Filter
+
 ```rust
 struct Product {
     name: String,
@@ -319,6 +336,7 @@ let electronics_under_800: Vec<&Product> = products
 ```
 
 ### 3. Configuration Validation
+
 ```rust
 struct Config {
     host: String,
@@ -350,6 +368,7 @@ impl Config {
 ## Testing Predicates
 
 ### Unit Testing
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -401,6 +420,7 @@ mod tests {
 ## Integration with Mission Work
 
 ### Mission 5: HashMap Patterns
+
 ```rust
 impl<K, V> HashMap<K, V> {
     // Find key by predicate
@@ -448,6 +468,7 @@ impl<K, V> HashMap<K, V> {
 ## Best Practices
 
 ### 1. Clear Naming
+
 ```rust
 // ✅ Good: Descriptive predicate names
 let is_valid_email = |email: &str| email.contains('@');
@@ -461,6 +482,7 @@ let func = |x: &i32| *x > 0;
 ```
 
 ### 2. Reusable Predicates
+
 ```rust
 // ✅ Good: Reusable predicate functions
 fn create_length_predicate(min_length: usize) -> impl Fn(&str) -> bool {
@@ -477,6 +499,7 @@ let in_range_1_10 = create_range_predicate(1, 10);
 ```
 
 ### 3. Performance Considerations
+
 ```rust
 // ✅ Good: Efficient predicate
 let is_expensive = |item: &Product| item.price > 100.0;  // Simple comparison
@@ -491,6 +514,7 @@ let is_expensive = |item: &Product| {
 ## Common Pitfalls
 
 ### 1. Moving vs Borrowing
+
 ```rust
 // ❌ Problem: Moving captured values
 let data = vec![1, 2, 3, 4, 5];
@@ -502,6 +526,7 @@ let predicate = |x: &i32| data.contains(x);  // data is borrowed
 ```
 
 ### 2. Lifetime Issues
+
 ```rust
 // ❌ Problem: Lifetime mismatch
 fn create_predicate() -> impl Fn(&str) -> bool {
@@ -516,6 +541,7 @@ fn create_predicate() -> impl Fn(&str) -> bool {
 ```
 
 ### 3. Over-complex Predicates
+
 ```rust
 // ❌ Problem: Too complex
 let complex_predicate = |user: &User| {
@@ -552,6 +578,7 @@ Predicates and higher-order functions are fundamental to Rust's functional progr
 ---
 
 **References:**
+
 - [[daily-study/Day17]] for lifetime patterns with predicates
 - [[Collections MOC]] for collection-specific predicate patterns
 - [The Rust Book - Chapter 13: Functional Language Features](https://doc.rust-lang.org/book/ch13-00-functional-features.html)

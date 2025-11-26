@@ -5,7 +5,9 @@
 ## 🎯 Core Concepts
 
 ### **The Two Standard Streams**
+
 Every Unix-like process has three standard file descriptors:
+
 - **stdin (0)** - Standard input (keyboard, pipes)
 - **stdout (1)** - Standard output (results, data)  
 - **stderr (2)** - Standard error (diagnostics, errors)
@@ -24,6 +26,7 @@ fn main() {
 ```
 
 ### **Why Separate Streams Matter**
+
 - **🎯 Data vs Diagnostics** - Results don't mix with error messages
 - **🔀 Independent Redirection** - Pipe results while seeing errors
 - **🧪 Testing and Automation** - Scripts can handle success/failure separately
@@ -32,6 +35,7 @@ fn main() {
 ## 🦀 Rust-Specific Patterns
 
 ### **println! vs eprintln!**
+
 ```rust
 // Standard output - for program results
 println!("Found {} matches:", count);
@@ -46,6 +50,7 @@ eprintln!("ℹ️  Info: Processing {} files", file_count);
 ```
 
 ### **Structured Error Output**
+
 ```rust
 use std::process;
 
@@ -64,6 +69,7 @@ fn main() {
 ```
 
 ### **Debug vs Production Error Messages**
+
 ```rust
 #[cfg(debug_assertions)]
 fn log_error(error: &str, context: &str) {
@@ -79,6 +85,7 @@ fn log_error(error: &str, _context: &str) {
 ## 🔀 Shell Redirection Patterns
 
 ### **Basic Redirection**
+
 ```bash
 # Redirect stdout only
 program > output.txt                # Results to file, errors to terminal
@@ -98,6 +105,7 @@ program 2> $null                   # PowerShell
 ```
 
 ### **PowerShell Redirection**
+
 ```powershell
 # Basic redirection
 cargo run > results.txt                    # stdout only
@@ -110,6 +118,7 @@ cargo run 3> info.txt 4> verbose.txt      # Custom streams
 ```
 
 ### **Piping and Redirection**
+
 ```bash
 # Pipe stdout, stderr to terminal
 program | grep "pattern"
@@ -124,6 +133,7 @@ program 2> >(logger -t errors) | process_results
 ## 🧪 Testing Stream Separation
 
 ### **Manual Testing**
+
 ```bash
 # Test successful output
 cargo run -p error_messages_demo -- nobody poem.txt > results.txt
@@ -139,6 +149,7 @@ cargo run -p error_messages_demo -- pattern file.txt > out.txt 2> err.txt
 ```
 
 ### **Automated Testing with PowerShell**
+
 ```powershell
 # Test script pattern
 function Test-StreamSeparation {
@@ -157,6 +168,7 @@ function Test-StreamSeparation {
 ```
 
 ### **Rust Testing Framework**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -187,6 +199,7 @@ mod tests {
 ## 🎨 CLI Design Best Practices
 
 ### **User Experience Guidelines**
+
 ```rust
 // ✅ Good: Clear, actionable error messages
 eprintln!("❌ File not found: '{}'", filename);
@@ -198,6 +211,7 @@ eprintln!("Something went wrong");
 ```
 
 ### **Progress and Status Updates**
+
 ```rust
 fn process_files(files: &[String]) -> Result<(), Box<dyn Error>> {
     eprintln!("🚀 Processing {} files...", files.len());
@@ -223,6 +237,7 @@ fn process_files(files: &[String]) -> Result<(), Box<dyn Error>> {
 ```
 
 ### **Configuration and Debug Info**
+
 ```rust
 fn main() {
     let config = parse_config();
@@ -251,6 +266,7 @@ fn main() {
 ## 🌍 Cross-Platform Considerations
 
 ### **Windows vs Unix Differences**
+
 ```rust
 // Cross-platform error handling
 #[cfg(windows)]
@@ -285,6 +301,7 @@ fn handle_file_error(error: std::io::Error, path: &str) {
 ```
 
 ### **Terminal Detection**
+
 ```rust
 use std::io::IsTerminal;
 
@@ -308,6 +325,7 @@ fn print_with_colors(message: &str, is_error: bool) {
 ## 🔗 Real-World Examples
 
 ### **Our Error Messages Demo**
+
 See the complete implementation in [[../rust_book/Ch12/error_messages/|Chapter 12.6 Error Messages Demo]]:
 
 ```rust
@@ -338,6 +356,7 @@ fn main() {
 ```
 
 ### **Production CLI Pattern**
+
 ```rust
 use clap::Parser;
 
@@ -375,6 +394,7 @@ fn main() {
 ## 🧪 Testing and Validation
 
 ### **Stream Separation Test Suite**
+
 Create comprehensive tests using our demo script pattern:
 
 ```powershell
@@ -402,6 +422,7 @@ function Test-StreamBehavior {
 ```
 
 ### **Automated Validation**
+
 ```bash
 #!/bin/bash
 # Bash test script for stream validation
@@ -429,6 +450,7 @@ test_stream_separation() {
 ## 📚 Integration Points
 
 ### **Cross-References**
+
 - **[[Error Handling Deep Dive]]** - Advanced error handling patterns
 - **[[CLI Design Patterns]]** - Command-line interface best practices  
 - **[[zettelkasten/rust_book/rust-book-ch12]]** - Complete minigrep implementation
@@ -436,6 +458,7 @@ test_stream_separation() {
 - **[[../daily_study/rust_learning_week5_notes/README]]** - Advanced error handling
 
 ### **Learning Track Integration**
+
 - **Rust Book Ch12.6** - Foundation concepts
 - **Daily Study Week 2** - Basic I/O patterns  
 - **Daily Study Week 5** - Advanced error handling
@@ -443,6 +466,7 @@ test_stream_separation() {
 - **AoC Solutions** - Input validation and error reporting
 
 ### **Code Examples**
+
 - **[[../rust_book/Ch12/error_messages/src/main.rs]]** - Complete implementation
 - **[[../rust_book/Ch12/error_messages/demo.ps1]]** - Testing framework
 - **[[../missions/Mission9/examples/]]** - Advanced CLI patterns
@@ -450,6 +474,7 @@ test_stream_separation() {
 ## 🎯 Best Practices Summary
 
 ### **✅ DO:**
+
 - Use `println!` for program output/results
 - Use `eprintln!` for errors, warnings, debug info
 - Provide clear, actionable error messages  
@@ -459,6 +484,7 @@ test_stream_separation() {
 - Consider terminal detection for colors/formatting
 
 ### **❌ DON'T:**
+
 - Mix results and diagnostics in the same stream
 - Write errors to stdout (breaks piping)
 - Write progress/debug info to stdout  
@@ -467,6 +493,7 @@ test_stream_separation() {
 - Forget to handle different platforms
 
 ### **🧪 Testing Checklist:**
+
 - [ ] stdout contains only program results
 - [ ] stderr contains only diagnostics/errors  
 - [ ] Redirection works correctly (>, 2>, 2>&1)

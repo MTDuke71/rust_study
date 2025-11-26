@@ -5,6 +5,7 @@
 ## 🎯 Core Philosophy
 
 Rust's error handling is built on the principle that **errors are values, not exceptions**. This means:
+
 - Errors are explicit and must be handled
 - No hidden control flow or stack unwinding
 - Compiler enforces error handling
@@ -13,6 +14,7 @@ Rust's error handling is built on the principle that **errors are values, not ex
 ## 📚 The Two Main Error Types
 
 ### **Option<T>** - "Maybe" Values
+
 ```rust
 enum Option<T> {
     Some(T),    // Value exists
@@ -21,11 +23,13 @@ enum Option<T> {
 ```
 
 **When to use**: When a value might not exist
+
 - Array access that might be out of bounds
 - Hash map lookup that might fail
 - Parsing that might not succeed
 
 ### **Result<T, E>** - "Success or Error" Values
+
 ```rust
 enum Result<T, E> {
     Ok(T),      // Success with value
@@ -34,6 +38,7 @@ enum Result<T, E> {
 ```
 
 **When to use**: When an operation might fail
+
 - File I/O operations
 - Network requests
 - Parsing user input
@@ -42,6 +47,7 @@ enum Result<T, E> {
 ## 🛠️ Practical Error Handling Patterns
 
 ### **Pattern 1: Match Expressions**
+
 ```rust
 fn divide(a: i32, b: i32) -> Result<i32, String> {
     if b == 0 {
@@ -59,6 +65,7 @@ match divide(10, 2) {
 ```
 
 ### **Pattern 2: The ? Operator**
+
 ```rust
 fn process_file(filename: &str) -> Result<String, std::io::Error> {
     let mut file = File::open(filename)?;  // Returns early on error
@@ -69,11 +76,13 @@ fn process_file(filename: &str) -> Result<String, std::io::Error> {
 ```
 
 **Key benefits**:
+
 - Cleaner code than match expressions
 - Automatic error propagation
 - Compiler enforces error handling
 
 ### **Pattern 3: unwrap() and expect()**
+
 ```rust
 // unwrap() - panic on error
 let value = some_result.unwrap();
@@ -83,11 +92,13 @@ let value = some_result.expect("Failed to parse number");
 ```
 
 **When to use**:
+
 - **unwrap()**: Prototyping, tests, when you're 100% sure it won't fail
 - **expect()**: When you want a better error message for debugging
 - **Never in production code** unless you're certain
 
 ### **Pattern 4: unwrap_or() and unwrap_or_else()**
+
 ```rust
 // Provide default value
 let value = some_option.unwrap_or(0);
@@ -102,6 +113,7 @@ let value = some_option.unwrap_or_else(|| {
 ## 🎨 Advanced Error Handling
 
 ### **Custom Error Types**
+
 ```rust
 #[derive(Debug)]
 enum MathError {
@@ -124,6 +136,7 @@ impl std::error::Error for MathError {}
 ```
 
 ### **Error Propagation with ?**
+
 ```rust
 fn complex_calculation(x: i32, y: i32) -> Result<f64, MathError> {
     let quotient = divide(x, y)?;           // Propagates MathError
@@ -141,6 +154,7 @@ fn divide(a: i32, b: i32) -> Result<i32, MathError> {
 ```
 
 ### **Error Chaining and Context**
+
 ```rust
 use std::error::Error;
 
@@ -161,6 +175,7 @@ fn process_data() -> Result<(), Box<dyn Error>> {
 ## 🚀 **Advanced Error Handling (Week 5)**
 
 ### **Production-Ready Error Handling**
+
 For comprehensive error handling patterns and real-world examples, see [[Week 5 Overview]]:
 
 - **[[daily-study/Day29]]** - Building robust error types with `Display` and `Error` traits
@@ -172,12 +187,14 @@ For comprehensive error handling patterns and real-world examples, see [[Week 5 
 - **[[daily-study/Day35]]** - Building fault-tolerant parsers with error recovery
 
 ### **Real-World Examples**
+
 - **[[../daily_study/rust_learning_week5_notes/examples/web_api_errors|Web API Error Handling]]** - HTTP status codes, validation errors
 - **[[../daily_study/rust_learning_week5_notes/examples/file_processor|File Processing Pipeline]]** - Multi-format parsing with recovery
 
 ## 🎯 AoC-Specific Error Patterns
 
 ### **Input Parsing Errors**
+
 ```rust
 fn parse_coordinate(input: &str) -> Result<(i32, i32), String> {
     let parts: Vec<&str> = input.split(',').collect();
@@ -195,6 +212,7 @@ fn parse_coordinate(input: &str) -> Result<(i32, i32), String> {
 ```
 
 ### **Grid Boundary Errors**
+
 ```rust
 fn get_grid_value(grid: &Vec<Vec<i32>>, x: usize, y: usize) -> Option<i32> {
     grid.get(y)?.get(x).copied()
@@ -211,6 +229,7 @@ if let Some(value) = get_grid_value(&grid, x, y) {
 ```
 
 ### **Algorithm State Errors**
+
 ```rust
 fn bfs_search(graph: &HashMap<String, Vec<String>>, start: &str, target: &str) 
     -> Result<Vec<String>, String> {
@@ -231,6 +250,7 @@ fn bfs_search(graph: &HashMap<String, Vec<String>>, start: &str, target: &str)
 ## 🧪 Testing Error Handling
 
 ### **Testing Error Cases**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -265,6 +285,7 @@ mod tests {
 ```
 
 ### **Property-Based Testing**
+
 ```rust
 use proptest::prelude::*;
 
@@ -286,11 +307,13 @@ proptest! {
 ## 🚀 Performance Considerations
 
 ### **Zero-Cost Error Handling**
+
 - `Result<T, E>` has no runtime overhead when there's no error
 - Error cases are handled at compile time
 - No exception handling machinery
 
 ### **Error vs Panic Performance**
+
 ```rust
 // Fast path - no error checking overhead
 fn fast_calculation(x: i32) -> i32 {
@@ -316,6 +339,7 @@ fn panic_calculation(x: i32) -> i32 {
 ## 🎓 Best Practices
 
 ### **DO:**
+
 - Use `Result<T, E>` for operations that can fail
 - Use `Option<T>` for values that might not exist
 - Use `?` operator for error propagation
@@ -324,6 +348,7 @@ fn panic_calculation(x: i32) -> i32 {
 - Use `unwrap_or()` for safe defaults
 
 ### **DON'T:**
+
 - Use `unwrap()` in production code
 - Ignore errors with `let _ = result;`
 - Use `panic!()` for recoverable errors
@@ -331,6 +356,7 @@ fn panic_calculation(x: i32) -> i32 {
 - Forget to handle `Result` values
 
 ### **Error Handling Checklist:**
+
 - [ ] All fallible operations return `Result<T, E>`
 - [ ] Error types are descriptive and helpful
 - [ ] Error messages include context
@@ -341,16 +367,19 @@ fn panic_calculation(x: i32) -> i32 {
 ## 🔗 Integration with Learning Tracks
 
 ### **Mission Integration**
+
 - **Mission 1-4**: Stack/Queue operations with bounds checking
 - **Mission 5**: HashMap operations with key validation
 - **Mission 6**: Grid algorithms with boundary checking
 
 ### **Daily Study Integration**
+
 - **Day 5**: Option and Result fundamentals
 - **Day 6**: Pattern matching for error handling
 - **Day 15+**: Advanced error handling patterns
 
 ### **AoC Applications**
+
 - Input parsing with validation
 - Algorithm state management
 - Boundary condition handling

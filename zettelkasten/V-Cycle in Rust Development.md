@@ -7,6 +7,7 @@
 ## 🎯 **What is the V-Cycle?**
 
 The **V-Model** (Verification and Validation Model) is a software development methodology that emphasizes:
+
 - **Requirements traceability** from specification to validation
 - **Testing at every level** matching development phases
 - **Formal verification** before moving forward
@@ -54,6 +55,7 @@ No use-after-free or double-free shall be possible.
 ```
 
 **Key:** Each requirement is:
+
 - **Specific** - Clear acceptance criteria
 - **Testable** - Can be verified
 - **Traceable** - Has unique ID (REQ-N)
@@ -86,6 +88,7 @@ impl<T> Stack<T> {
 Code the design in Rust.
 
 **Key Insight:** Rust's compiler encodes part of the formal spec:
+
 - **Ownership rules** enforce REQ-3 and REQ-5
 - **Borrow checker** enforces REQ-4
 - **Type system** enforces REQ-1
@@ -182,6 +185,7 @@ fn integration_bracket_matching() {
 ### **Requirements Traceability**
 
 **1. Test Naming Convention:**
+
 ```rust
 #[test]
 fn req1_generic_support() { /* ... */ }
@@ -191,6 +195,7 @@ fn req2_push_amortized_constant() { /* ... */ }
 ```
 
 **2. Documentation Links:**
+
 ```rust
 /// Pushes a value onto the stack.
 /// 
@@ -201,6 +206,7 @@ fn req2_push_amortized_constant() { /* ... */ }
 ```
 
 **3. README Traceability Matrix:**
+
 ```markdown
 | Requirement | Design | Implementation | Tests | Status |
 |-------------|--------|----------------|-------|--------|
@@ -211,12 +217,14 @@ fn req2_push_amortized_constant() { /* ... */ }
 ### **Verification Tools**
 
 **1. Unit Tests:**
+
 ```bash
 cargo test  # Run all tests
 cargo test req1  # Run specific requirement tests
 ```
 
 **2. Property Tests:**
+
 ```rust
 use proptest::prelude::*;
 
@@ -240,6 +248,7 @@ proptest! {
 ```
 
 **3. Compiler as Verifier:**
+
 ```rust
 // REQ-5: Memory safety - verified by compiler!
 fn test_use_after_move() {
@@ -253,11 +262,13 @@ fn test_use_after_move() {
 ### **Validation Tools**
 
 **1. Integration Tests:**
+
 ```bash
 cargo test --test integration_tests
 ```
 
 **2. Benchmarking:**
+
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
@@ -274,6 +285,7 @@ fn bench_push(c: &mut Criterion) {
 ```
 
 **3. Static Analysis:**
+
 ```bash
 cargo clippy -- -D warnings  # Automated design review
 cargo audit                  # Security requirement checks
@@ -288,17 +300,20 @@ Instead of one big V-cycle (like aerospace), use **micro V-cycles** for each fea
 ### **Feature: Add `clear()` method**
 
 **1. Requirements:**
+
 ```markdown
 REQ-6: Clear Operation
 The stack shall provide a method to remove all elements in O(1) time.
 ```
 
 **2. Design:**
+
 ```rust
 fn clear(&mut self);  // Drops all elements, resets to empty
 ```
 
 **3. Implementation:**
+
 ```rust
 pub fn clear(&mut self) {
     self.items.clear();
@@ -306,6 +321,7 @@ pub fn clear(&mut self) {
 ```
 
 **4. Verification:**
+
 ```rust
 #[test]  // REQ-6
 fn req6_clear_removes_all() {
@@ -322,6 +338,7 @@ fn req6_clear_removes_all() {
 ```
 
 **5. Commit:**
+
 ```bash
 git commit -m "feat: REQ-6 - Add clear() method with O(1) complexity"
 ```
@@ -333,11 +350,13 @@ git commit -m "feat: REQ-6 - Add clear() method with O(1) complexity"
 ### **1. Compiler-Enforced Verification**
 
 **Traditional Languages:**
+
 - Must write tests to verify memory safety
 - Runtime errors for use-after-free
 - Valgrind, ASan for detection
 
 **Rust:**
+
 - Compiler verifies memory safety at compile time
 - Many requirements verified by type system
 - Impossible to ship with certain bug classes
@@ -345,6 +364,7 @@ git commit -m "feat: REQ-6 - Add clear() method with O(1) complexity"
 ### **2. Requirements as Types**
 
 **Example:**
+
 ```rust
 // Requirement: "ID must be valid and non-zero"
 struct UserId(NonZeroU32);  // Type system enforces non-zero
@@ -377,16 +397,19 @@ for item in data.iter().filter(|x| **x > 0).map(|x| x * 2) {
 ## 📊 **V-Cycle Success Metrics**
 
 ### **Coverage:**
+
 - ✅ Every requirement has at least one test
 - ✅ Every function has unit tests
 - ✅ Integration tests cover real-world scenarios
 
 ### **Traceability:**
+
 - ✅ Can map any test back to requirement
 - ✅ Can verify any requirement is tested
 - ✅ Git history shows requirement-driven commits
 
 ### **Quality:**
+
 - ✅ Zero compiler warnings (`cargo clippy -- -D warnings`)
 - ✅ All tests passing
 - ✅ Performance benchmarks meet requirements
@@ -407,6 +430,7 @@ for item in data.iter().filter(|x| **x > 0).map(|x| x * 2) {
 **Validation:** Full bridge stress test with actual vehicles.
 
 **In Rust:**
+
 - **Type system** = Material properties (can't use wrong type)
 - **Borrow checker** = Load distribution (prevents overload)
 - **Compiler** = Automated structural analysis

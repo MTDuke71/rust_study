@@ -19,6 +19,7 @@ A **stack** is a Last-In-First-Out (LIFO) data structure where elements are adde
 5. **Size** - Get number of elements
 
 ### LIFO Principle
+
 ```
 Push(1) → [1]
 Push(2) → [1, 2]  
@@ -30,6 +31,7 @@ Pop()   → returns 2, stack becomes [1]
 ## Implementation in Rust
 
 ### Basic Stack Using Vec
+
 ```rust
 struct Stack<T> {
     items: Vec<T>,
@@ -65,6 +67,7 @@ impl<T> Stack<T> {
 ```
 
 ### Usage Example
+
 ```rust
 let mut stack = Stack::new();
 
@@ -82,6 +85,7 @@ assert_eq!(stack.pop(), None);
 ```
 
 ### Direct Vec as Stack
+
 Rust's `Vec<T>` already implements stack operations efficiently:
 
 ```rust
@@ -100,6 +104,7 @@ let is_empty = stack.is_empty();  // false
 ## Common Stack Applications
 
 ### 1. Bracket/Parentheses Matching
+
 ```rust
 fn is_balanced(s: &str) -> bool {
     let mut stack = Vec::new();
@@ -130,6 +135,7 @@ assert_eq!(is_balanced("((()))"), true);
 ```
 
 ### 2. Expression Evaluation
+
 ```rust
 // Evaluate postfix expression: "3 4 + 2 *" = 14
 fn eval_postfix(expr: &str) -> i32 {
@@ -161,6 +167,7 @@ fn eval_postfix(expr: &str) -> i32 {
 ```
 
 ### 3. Function Call Stack (Conceptual)
+
 ```rust
 fn factorial(n: u32) -> u32 {
     if n <= 1 {
@@ -178,6 +185,7 @@ fn factorial(n: u32) -> u32 {
 ```
 
 ### 4. Undo Operations
+
 ```rust
 struct UndoableEditor {
     content: String,
@@ -210,6 +218,7 @@ impl UndoableEditor {
 ```
 
 ### 5. Depth-First Search (DFS)
+
 ```rust
 fn dfs_iterative(graph: &[Vec<usize>], start: usize) -> Vec<usize> {
     let mut visited = vec![false; graph.len()];
@@ -239,15 +248,18 @@ fn dfs_iterative(graph: &[Vec<usize>], start: usize) -> Vec<usize> {
 ## Performance Characteristics
 
 ### Time Complexity
+
 - **Push:** O(1) amortized (Vec may need to resize)
-- **Pop:** O(1) 
+- **Pop:** O(1)
 - **Peek:** O(1)
 - **IsEmpty:** O(1)
 
 ### Space Complexity
+
 - **O(n)** where n is the number of elements
 
 ### Memory Layout
+
 ```rust
 // Vec<T> provides optimal stack performance
 // Elements stored contiguously in memory
@@ -259,6 +271,7 @@ let mut stack = Vec::with_capacity(100);  // Pre-allocate to avoid resizing
 ## Advanced Stack Patterns
 
 ### Stack with Maximum Tracking
+
 ```rust
 struct MaxStack {
     items: Vec<i32>,
@@ -296,6 +309,7 @@ impl MaxStack {
 ```
 
 ### Generic Stack with Bounds
+
 ```rust
 use std::fmt::Debug;
 
@@ -330,21 +344,25 @@ impl<T: Debug> BoundedStack<T> {
 ## Use Cases in Rust Study Projects
 
 ### Advanced Examples - Brackets
+
 - **Basic bracket matching:** Simple parentheses validation
 - **Extended brackets:** Multiple bracket types with nesting rules
 - **Syntax validation:** Ensuring proper bracket pairing in expressions
 
 ### Mission 1 - Fundamentals
+
 - **Learning progression:** Stack as introductory data structure
 - **Problem solving:** Using stacks for algorithm challenges
 - **Memory understanding:** Stack vs heap concepts
 
 ### Competitive Programming
+
 - **Parsing problems:** Expression evaluation and syntax checking
 - **Backtracking algorithms:** Maintaining state for exploration
 - **Tree traversal:** Iterative depth-first search implementation
 
 ### Real-world Applications
+
 - **Compiler design:** Managing scope and syntax parsing
 - **Browser history:** Back/forward navigation
 - **Game development:** Undo systems and state management
@@ -352,6 +370,7 @@ impl<T: Debug> BoundedStack<T> {
 ## Common Patterns and Idioms
 
 ### Pattern: Processing with Temporary Storage
+
 ```rust
 fn process_nested_structure(input: &[char]) -> Vec<String> {
     let mut stack = Vec::new();
@@ -377,6 +396,7 @@ fn process_nested_structure(input: &[char]) -> Vec<String> {
 ```
 
 ### Pattern: State Machine with Backtracking
+
 ```rust
 fn find_path(maze: &[Vec<char>], start: (usize, usize)) -> Option<Vec<(usize, usize)>> {
     let mut stack = vec![(start, vec![start])];

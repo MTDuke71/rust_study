@@ -7,6 +7,7 @@
 ## 🏗️ **Core Implementation Strategies**
 
 ### **1. Array-Based Ring Buffer**
+
 ```rust
 pub struct RingBuffer<T> {
     buf: Vec<Option<T>>,
@@ -17,12 +18,14 @@ pub struct RingBuffer<T> {
 ```
 
 **Characteristics**:
+
 - ✅ O(1) all operations
 - ✅ Cache-friendly contiguous memory
 - ✅ Simple modular arithmetic
 - ❌ Fixed capacity (unless reallocated)
 
 ### **2. Linked Ring Buffer**
+
 ```rust
 pub struct LinkedRingBuffer<T> {
     head: Option<Rc<RefCell<Node<T>>>>,
@@ -38,12 +41,14 @@ struct Node<T> {
 ```
 
 **Characteristics**:
+
 - ✅ Dynamic allocation per element
 - ✅ No wasted slots
 - ❌ Reference counting overhead
 - ❌ Poor cache locality
 
 ### **3. VecDeque-Based Implementation**
+
 ```rust
 use std::collections::VecDeque;
 
@@ -54,6 +59,7 @@ pub struct RingBuffer<T> {
 ```
 
 **Characteristics**:
+
 - ✅ Leverages std library optimizations
 - ✅ Handles growth automatically
 - ❌ Less control over memory layout
@@ -62,6 +68,7 @@ pub struct RingBuffer<T> {
 ## 🎯 **Index Management Patterns**
 
 ### **Pattern 1: Separate Head/Tail Pointers**
+
 ```rust
 impl<T> RingBuffer<T> {
     fn enqueue(&mut self, value: T) -> Result<(), T> {
@@ -89,15 +96,18 @@ impl<T> RingBuffer<T> {
 ```
 
 **Advantages**:
+
 - Clear separation of concerns
 - Easy to understand and debug
 - Standard pattern in literature
 
 **Disadvantages**:
+
 - Extra `len` field needed
 - Three fields to keep in sync
 
 ### **Pattern 2: Count-Based Management**
+
 ```rust
 impl<T> RingBuffer<T> {
     fn is_full(&self) -> bool {
@@ -113,6 +123,7 @@ impl<T> RingBuffer<T> {
 **Key Insight**: Using explicit `len` field simplifies full/empty detection
 
 ### **Pattern 3: Sentinel-Based (One Slot Wasted)**
+
 ```rust
 impl<T> RingBuffer<T> {
     fn is_full(&self) -> bool {
@@ -130,12 +141,14 @@ impl<T> RingBuffer<T> {
 ## 🔄 **Wrap-Around Arithmetic Patterns**
 
 ### **Modular Arithmetic**
+
 ```rust
 // Standard approach
 next_index = (current_index + 1) % capacity;
 ```
 
 ### **Bitwise AND (Power-of-2 Capacity)**
+
 ```rust
 // Only works when capacity is power of 2
 next_index = (current_index + 1) & (capacity - 1);
@@ -144,6 +157,7 @@ next_index = (current_index + 1) & (capacity - 1);
 **Performance**: Bitwise AND is faster than modulo for power-of-2 sizes
 
 ### **Conditional Wrap**
+
 ```rust
 // Explicit branching
 next_index = if current_index + 1 == capacity {
@@ -158,6 +172,7 @@ next_index = if current_index + 1 == capacity {
 ## 🛡️ **Safety and Error Handling Patterns**
 
 ### **Pattern 1: Fallible Operations**
+
 ```rust
 pub enum RingBufferError<T> {
     Full(T),    // Returns the value that couldn't be inserted
@@ -177,6 +192,7 @@ impl<T> RingBuffer<T> {
 ```
 
 ### **Pattern 2: Dual APIs (Fallible + Infallible)**
+
 ```rust
 impl<T> RingBuffer<T> {
     // Conservative: fails on full
@@ -191,6 +207,7 @@ impl<T> RingBuffer<T> {
 ```
 
 ### **Pattern 3: Panic-Free Design**
+
 ```rust
 impl<T> RingBuffer<T> {
     // All operations return Results or Options
@@ -204,6 +221,7 @@ impl<T> RingBuffer<T> {
 ## 🎮 **Capacity Management Patterns**
 
 ### **Fixed Capacity**
+
 ```rust
 impl<T> RingBuffer<T> {
     pub fn with_capacity(capacity: usize) -> Self {
@@ -220,6 +238,7 @@ impl<T> RingBuffer<T> {
 **Best for**: Embedded systems, real-time applications, predictable memory usage
 
 ### **Dynamic Resizing**
+
 ```rust
 impl<T> RingBuffer<T> {
     pub fn grow(&mut self) {
@@ -242,6 +261,7 @@ impl<T> RingBuffer<T> {
 **Complexity**: Requires careful element reordering during resize
 
 ### **Configurable Strategy**
+
 ```rust
 pub enum ResizeStrategy {
     Fixed,           // Never resize
@@ -259,6 +279,7 @@ pub struct ConfigurableRingBuffer<T> {
 ## 🔍 **Memory Layout Optimization Patterns**
 
 ### **Option<T> vs Uninitialized Memory**
+
 ```rust
 // Safe but potentially wasteful
 buf: Vec<Option<T>>,
@@ -268,6 +289,7 @@ buf: Vec<MaybeUninit<T>>,
 ```
 
 ### **Avoiding Option Overhead**
+
 ```rust
 pub struct RingBuffer<T> {
     buf: Box<[MaybeUninit<T>]>,    // No Option wrapper
@@ -280,6 +302,7 @@ pub struct RingBuffer<T> {
 **Benefit**: Eliminates discriminant overhead for `Option<T>`
 
 ### **SIMD-Friendly Alignment**
+
 ```rust
 #[repr(align(64))]  // Cache line alignment
 pub struct AlignedRingBuffer<T> {
@@ -291,6 +314,7 @@ pub struct AlignedRingBuffer<T> {
 ## 🧪 **Testing Patterns**
 
 ### **Comprehensive State Testing**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -320,6 +344,7 @@ mod tests {
 ```
 
 ### **Property-Based Testing**
+
 ```rust
 use proptest::prelude::*;
 
@@ -352,6 +377,7 @@ proptest! {
 ## 🎨 **API Design Patterns**
 
 ### **Builder Pattern for Configuration**
+
 ```rust
 impl<T> RingBuffer<T> {
     pub fn builder() -> RingBufferBuilder<T> {
@@ -383,6 +409,7 @@ impl<T> RingBufferBuilder<T> {
 ```
 
 ### **Iterator Support**
+
 ```rust
 impl<T> RingBuffer<T> {
     pub fn iter(&self) -> RingBufferIter<T> {
@@ -413,6 +440,7 @@ impl<T> Iterator for RingBufferIter<'_, T> {
 ## 🔗 **Integration Patterns**
 
 ### **Generic Over Storage**
+
 ```rust
 pub struct RingBuffer<T, S = Vec<Option<T>>> {
     storage: S,
@@ -427,6 +455,7 @@ type VecRingBuffer<T> = RingBuffer<T, Vec<Option<T>>>;
 ```
 
 ### **Async-Compatible Design**
+
 ```rust
 pub struct AsyncRingBuffer<T> {
     inner: Arc<Mutex<RingBuffer<T>>>,

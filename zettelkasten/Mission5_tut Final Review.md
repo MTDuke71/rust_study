@@ -3,6 +3,7 @@
 **Comprehensive Review of HashMaps & HashSets Learning Journey**
 
 ---
+
 *Navigation: [[zettel-index]] | [[Mission5_tut Overview]] | [[mission-5]] | [[Collections MOC]]*
 *Quick Links: [[HashMap Internals]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
 ---
@@ -16,6 +17,7 @@ If you've completed all steps of Mission5_tut, you should now be able to confide
 ## ✅ Mastery Checklist
 
 ### **Step 1: Basic HashMap Operations**
+
 - [ ] Create and populate HashMaps with `insert()` and `entry()` API
 - [ ] Retrieve values using `get()`, `get_mut()`, and pattern matching
 - [ ] Update values with `or_insert()` and `and_modify()`
@@ -25,6 +27,7 @@ If you've completed all steps of Mission5_tut, you should now be able to confide
 **Key Pattern Mastered**: Entry API for efficient insert-or-update operations
 
 ### **Step 2: HashSet Operations**
+
 - [ ] Create and populate HashSets for unique element storage
 - [ ] Perform set operations: union, intersection, difference, symmetric difference
 - [ ] Check membership with `contains()`
@@ -34,6 +37,7 @@ If you've completed all steps of Mission5_tut, you should now be able to confide
 **Key Pattern Mastered**: Deduplication and set-based algorithms
 
 ### **Step 3: Frequency Counting**
+
 - [ ] Build word frequency analyzers with `HashMap<String, usize>`
 - [ ] Implement character occurrence counters
 - [ ] Sort by frequency for "top N" queries
@@ -43,6 +47,7 @@ If you've completed all steps of Mission5_tut, you should now be able to confide
 **Key Pattern Mastered**: Statistical analysis and occurrence tracking
 
 ### **Step 4: Multi-Value Patterns**
+
 - [ ] Create one-to-many relationships with `HashMap<K, Vec<V>>`
 - [ ] Use `entry().or_insert_with()` for complex default values
 - [ ] Implement grouping and categorization algorithms
@@ -52,6 +57,7 @@ If you've completed all steps of Mission5_tut, you should now be able to confide
 **Key Pattern Mastered**: Grouping and graph representation
 
 ### **Step 5: Memoization Cache**
+
 - [ ] Implement memoized recursive functions (Fibonacci, factorial)
 - [ ] Design cache invalidation strategies
 - [ ] Understand trade-offs: memory vs computation time
@@ -61,6 +67,7 @@ If you've completed all steps of Mission5_tut, you should now be able to confide
 **Key Pattern Mastered**: Dynamic programming and performance optimization
 
 ### **Step 6: AoC Applications** *(If included in tutorial)*
+
 - [ ] Implement coordinate-based grid systems with `HashMap<(i32, i32), Cell>`
 - [ ] Track visited states in BFS/DFS with `HashSet<State>`
 - [ ] Build game state machines with hash-based storage
@@ -76,6 +83,7 @@ If you've completed all steps of Mission5_tut, you should now be able to confide
 Test your mastery by attempting these challenges **without looking up syntax**:
 
 ### **Challenge 1: Word Frequency Analyzer** (10 minutes)
+
 ```rust
 // Build from scratch:
 // - Parse text into words
@@ -89,6 +97,7 @@ fn top_words(text: &str, n: usize) -> Vec<(String, usize)> {
 **Expected Skills**: Entry API, sorting, iterator chains
 
 ### **Challenge 2: Memoized Fibonacci** (10 minutes)
+
 ```rust
 // Implement with memoization:
 use std::collections::HashMap;
@@ -101,6 +110,7 @@ fn fibonacci_memo(n: u64, cache: &mut HashMap<u64, u64>) -> u64 {
 **Expected Skills**: Recursive memoization, cache management
 
 ### **Challenge 3: Grid Coordinate System** (15 minutes)
+
 ```rust
 // Implement a 2D grid with HashMap:
 // - Store cell values at coordinates
@@ -122,6 +132,7 @@ impl GridMap {
 **Expected Skills**: Coordinate math, nested structures, set operations
 
 ### **Challenge 4: Grouping Algorithm** (10 minutes)
+
 ```rust
 // Group students by grade:
 struct Student { name: String, grade: u8 }
@@ -186,18 +197,21 @@ Now that you've mastered the tutorial, you should be able to:
 ## 🚀 Next Learning Steps
 
 ### **Immediate Next Actions** (Week 2-3)
+
 1. **Solve 3-5 AoC problems** using HashMap/HashSet patterns
 2. **Complete Mission 5 V-Cycle** - Implement all requirements
 3. **Review Mission5 benchmarks** - Compare with std::collections
 4. **Read HashMap Internals** - [[HashMap Internals]] deep dive
 
 ### **Medium-Term Goals** (Week 4-5)
+
 1. **Mission 6: Grid Systems** - Build on coordinate HashMap patterns
 2. **Advanced Collections** - BTreeMap, BTreeSet performance comparisons
 3. **Custom Hash Functions** - Implement `Hash` trait for custom types
 4. **Hash Table Internals** - Study collision resolution strategies
 
 ### **Long-Term Mastery** (Month 2+)
+
 1. **Graph Algorithms** - Adjacency lists with HashMap
 2. **State Machines** - Hash-based state tracking
 3. **Caching Systems** - Production-grade memoization
@@ -208,11 +222,13 @@ Now that you've mastered the tutorial, you should be able to:
 ## 📚 Additional Resources
 
 ### **Rust Documentation**
+
 - [HashMap API Reference](https://doc.rust-lang.org/std/collections/struct.HashMap.html)
 - [HashSet API Reference](https://doc.rust-lang.org/std/collections/struct.HashSet.html)
 - [Entry API Guide](https://doc.rust-lang.org/std/collections/hash_map/enum.Entry.html)
 
 ### **Related Zettelkasten Pages**
+
 - [[HashMap Internals]] - Technical deep dive into hash table implementation
 - [[Collections MOC]] - Overview of all Rust collection types
 - [[Generic Programming]] - Understanding `<K, V>` type parameters
@@ -221,6 +237,7 @@ Now that you've mastered the tutorial, you should be able to:
 - [[Performance Optimization]] - Benchmarking and profiling techniques
 
 ### **Mission Integration**
+
 - [[mission-5]] - Main V-Cycle implementation context
 - [[Mission5 API Reference]] - Complete API documentation
 - [[mission-6]] - Next mission (Grid systems)
@@ -228,7 +245,7 @@ Now that you've mastered the tutorial, you should be able to:
 
 ---
 
-## 🎉 Congratulations!
+## 🎉 Congratulations
 
 If you've worked through all steps and can confidently tackle the challenges above, you've achieved **HashMap/HashSet mastery** sufficient for:
 
@@ -245,12 +262,14 @@ If you've worked through all steps and can confidently tackle the challenges abo
 ## 🔄 Continuous Improvement
 
 ### **Monthly Review Questions**
+
 - Which HashMap patterns do you use most frequently?
 - What mistakes did you make that taught you the most?
 - Which AoC problems best reinforced your learning?
 - What would you explain differently to a beginner?
 
 ### **Portfolio Projects Using These Skills**
+
 - Build a text analysis tool (word frequency, readability scores)
 - Create a game with coordinate-based grid system
 - Implement a caching system for expensive computations
@@ -267,33 +286,39 @@ If you've worked through all steps and can confidently tackle the challenges abo
 ## 🔗 Additional Learning Resources
 
 **Mission5 Documentation:**
+
 - [[Mission5 README|../missions/Mission5/README]] - Complete V-Cycle implementation
 - [[Mission5 API Reference]] - Detailed API documentation  
 - [[mission-5]] - Requirements and learning integration
 
 **Core Concepts:**
+
 - [[HashMap Deep Dive]] - Internal implementation analysis
 - [[Hash Function Design]] - Creating effective hash functions
 - [[Collision Resolution]] - Handling hash conflicts
 - [[Generic Programming]] - Type parameters and constraints
 
 **Collections Context:**
+
 - [[Collections MOC]] - Navigate all data structure concepts
 - [[HashSet Wrapper Pattern]] - Set abstraction patterns
 - [[Iterator Design Patterns]] - Custom iteration
 - [[Performance Patterns]] - Optimization strategies
 
 **Daily Study Integration:**
+
 - [[daily-study/Day10]] - Foundational theory
 - [[daily-study/Day11]] - Set operations
 - [[daily-study/Day12]] - Ordered maps
 - [[daily-study/Day13]] - Iterator chains
 
 **Rust Book:**
+
 - [[Chapter 8|../rust_book/Ch8/README]] - Collections (Vec, String, HashMap)
 - [[Chapter 10|../rust_book/Ch10/README]] - Generics, Traits, Lifetimes
 
 **Related Missions:**
+
 - [[mission-1]] - Stack (ownership foundations)
 - [[mission-2]] - Queue (FIFO patterns)
 - [[mission-3]] - Search algorithms
@@ -301,6 +326,7 @@ If you've worked through all steps and can confidently tackle the challenges abo
 - [[mission-6]] - Grid Systems (spatial algorithms)
 
 **AoC Applications:**
+
 - [[AoC Patterns MOC]] - Common algorithm patterns
 - [[AoC 2015 MOC|../zettelkasten/AoC 2015 MOC]] - Year 2015 problems
 

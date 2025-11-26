@@ -7,6 +7,7 @@ A comprehensive guide to writing clean, maintainable, and professional code base
 **"Any fool can write code that a computer can understand. Good programmers write code that humans can understand."** - Martin Fowler
 
 Clean code is:
+
 - **Readable** - Easy to understand by any developer
 - **Simple** - Does one thing well
 - **Testable** - Easy to verify correctness
@@ -1664,6 +1665,7 @@ echo "✅ All quality checks passed!"
 ### **Refactoring Triggers**
 
 Refactor when you see:
+
 - Functions longer than 30 lines
 - More than 3 levels of nesting
 - Duplicate code patterns
@@ -1677,18 +1679,21 @@ Refactor when you see:
 ## 🔗 **Related Resources**
 
 ### **Books**
+
 - "Clean Code" by Robert C. Martin
 - "Refactoring" by Martin Fowler
 - "Code Complete" by Steve McConnell
 - "The Pragmatic Programmer" by Hunt & Thomas
 
 ### **Rust-Specific Resources**
+
 - [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/)
 - [The Rust Programming Language Book](https://doc.rust-lang.org/book/)
 - [Rust By Example](https://doc.rust-lang.org/rust-by-example/)
 - [Effective Rust](https://www.lurklurk.org/effective-rust/)
 
 ### **Tools for Clean Code**
+
 - `rustfmt` - Automatic code formatting
 - `clippy` - Lint tool for catching common mistakes
 - `cargo-audit` - Security vulnerability scanner
@@ -1698,6 +1703,7 @@ Refactor when you see:
 ## 🎯 **Next Steps**
 
 ### **Practice Exercises**
+
 1. **Refactor Legacy Code**: Take an existing codebase and apply clean code principles
 2. **Code Review Practice**: Review others' code with clean code principles in mind
 3. **TDD Practice**: Write tests first, then implement clean code to pass them
@@ -1705,6 +1711,7 @@ Refactor when you see:
 5. **Eliminate Duplication**: Find and remove code duplication in a project
 
 ### **Advanced Topics**
+
 - [[software-architecture-patterns]] - Larger-scale design principles
 - [[TDD (Test-Driven Development)]] - TDD practices and techniques
 - [[refactoring-techniques]] - Systematic code improvement methods

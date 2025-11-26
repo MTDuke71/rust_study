@@ -9,6 +9,7 @@ An **adjacency list** is a fundamental graph representation that stores each ver
 ## Core Concept
 
 In an adjacency list representation:
+
 - Each vertex maintains a list of vertices it's directly connected to
 - For vertex `v`, the adjacency list `adj[v]` contains all vertices `u` such that edge `(v,u)` exists
 - The entire graph is represented as an array/vector of these individual lists
@@ -26,6 +27,7 @@ Graph:          Adjacency Lists:
 ## Implementation Approaches
 
 ### **Vector of Vectors (Most Common)**
+
 ```rust
 struct Graph {
     adj: Vec<Vec<usize>>,  // adj[i] contains neighbors of vertex i
@@ -36,7 +38,8 @@ struct Graph {
 **Advantages**: Simple, cache-friendly, good for iteration
 **Disadvantages**: O(degree) edge existence checks
 
-### **Vector of HashSets** 
+### **Vector of HashSets**
+
 ```rust
 use std::collections::HashSet;
 struct Graph {
@@ -48,6 +51,7 @@ struct Graph {
 **Disadvantages**: Higher memory overhead, worse cache performance
 
 ### **Hybrid Approach**
+
 ```rust
 enum NeighborList {
     Small(Vec<usize>),      // For low-degree vertices
@@ -61,11 +65,13 @@ enum NeighborList {
 ## Space and Time Complexity
 
 ### **Space Complexity**
+
 - **Total Space**: O(V + E) where V = vertices, E = edges
 - **Best Case**: O(V) for graphs with no edges
 - **Worst Case**: O(V²) for complete graphs (but still more efficient than adjacency matrix)
 
 ### **Time Complexity**
+
 | Operation | Time | Notes |
 |-----------|------|--------|
 | Add Vertex | O(1) amortized | Vector reallocation |
@@ -78,6 +84,7 @@ enum NeighborList {
 ## Comparison with Other Representations
 
 ### **vs Adjacency Matrix**
+
 | Aspect | Adjacency List | Adjacency Matrix |
 |--------|----------------|------------------|
 | **Space** | O(V + E) | O(V²) |
@@ -87,6 +94,7 @@ enum NeighborList {
 | **Best For** | Sparse graphs | Dense graphs, frequent edge queries |
 
 ### **vs Edge List**
+
 | Aspect | Adjacency List | Edge List |
 |--------|----------------|-----------|
 | **Space** | O(V + E) | O(E) |
@@ -95,7 +103,9 @@ enum NeighborList {
 | **Best For** | Neighbor queries | Simple storage, algorithms that process all edges |
 
 ### **vs Union-Find** (for connectivity)
+
 From [[mission-10]] analysis:
+
 | Aspect | Adjacency List + DFS | Union-Find |
 |--------|---------------------|------------|
 | **Space** | O(V + E) | O(V) |
@@ -106,22 +116,26 @@ From [[mission-10]] analysis:
 ## Algorithm Performance
 
 ### **Graph Traversal Algorithms**
+
 - **DFS/BFS**: O(V + E) - optimal performance
 - **Connected Components**: O(V + E) using DFS/BFS
 - **Topological Sort**: O(V + E) with DFS-based approach
 
 ### **Shortest Path Algorithms**  
+
 - **Dijkstra's Algorithm**: O((V + E) log V) with priority queue
 - **Bellman-Ford**: O(VE) - good performance for sparse graphs
 - **A* Search**: O((V + E) log V) with efficient neighbor access
 
 ### **Minimum Spanning Tree**
+
 - **Kruskal's**: O(E log E) - needs all edges, adjacency list helps with iteration
 - **Prim's**: O((V + E) log V) - excellent with adjacency list neighbor access
 
 ## Real-World Applications
 
 ### **Social Networks**
+
 ```rust
 // Friend connections - highly sparse
 let friends: Vec<Vec<UserId>> = vec![
@@ -137,6 +151,7 @@ let friends: Vec<Vec<UserId>> = vec![
 ```
 
 ### **Web Graph**  
+
 ```rust
 // Page links - very sparse but with some high-degree pages
 let web_links: Vec<Vec<PageId>> = vec![
@@ -152,6 +167,7 @@ let web_links: Vec<Vec<PageId>> = vec![
 ```
 
 ### **Transportation Networks**
+
 ```rust
 // Road intersections and connections
 let road_network: Vec<Vec<IntersectionId>> = vec![
@@ -167,6 +183,7 @@ let road_network: Vec<Vec<IntersectionId>> = vec![
 ```
 
 ### **Dependency Graphs**
+
 ```rust
 // Software package dependencies
 let dependencies: Vec<Vec<PackageId>> = vec![
@@ -184,6 +201,7 @@ let dependencies: Vec<Vec<PackageId>> = vec![
 ## Optimization Strategies
 
 ### **Memory Optimization**
+
 ```rust
 use smallvec::SmallVec;
 
@@ -201,6 +219,7 @@ struct OptimizedGraph {
 ```
 
 ### **Cache Optimization**
+
 ```rust
 // Store vertices and adjacency data together for better locality
 #[repr(C)]
@@ -222,6 +241,7 @@ struct CacheOptimizedGraph<T> {
 ```
 
 ### **Concurrent Access**
+
 ```rust
 use std::sync::Arc;
 use parking_lot::RwLock;
@@ -240,6 +260,7 @@ struct ConcurrentGraph {
 ## Advanced Variations
 
 ### **Weighted Adjacency Lists**
+
 ```rust
 struct WeightedEdge {
     target: usize,
@@ -254,6 +275,7 @@ struct WeightedGraph {
 ```
 
 ### **Bidirectional Adjacency Lists**
+
 ```rust
 struct BiGraph {
     out_adj: Vec<Vec<usize>>,  // Outgoing edges
@@ -267,6 +289,7 @@ struct BiGraph {
 ```
 
 ### **Compressed Adjacency Lists**
+
 ```rust
 // For very large graphs, use compressed representations
 struct CompressedGraph {
@@ -283,6 +306,7 @@ struct CompressedGraph {
 ## Performance Considerations
 
 ### **When Adjacency Lists Excel**
+
 - **Sparse Graphs**: E << V², which is most real-world graphs
 - **Graph Traversal**: DFS, BFS, connected components
 - **Neighbor Iteration**: When you need to visit all neighbors
@@ -290,12 +314,14 @@ struct CompressedGraph {
 - **Memory Constraints**: Limited memory for large graphs
 
 ### **When Adjacency Lists Struggle**
+
 - **Dense Graphs**: E ≈ V², adjacency matrix becomes competitive
 - **Frequent Edge Queries**: Checking if specific edge exists
 - **Random Access**: Accessing arbitrary vertex pairs
 - **Cache-Sensitive**: Random memory access patterns
 
 ### **Optimization Decision Tree**
+
 ```
 Graph Density?
 ├── Sparse (E < V²/10)
@@ -311,12 +337,14 @@ Graph Density?
 ## Mission 7 Integration
 
 In [[mission-7]], adjacency lists are the primary focus:
+
 - **REQ-1**: Generic graph structure with adjacency list representation
 - **REQ-2**: Support both directed and undirected graphs  
 - **REQ-3**: Efficient neighbor access and graph traversal
 - **REQ-4**: Memory-efficient storage for sparse graphs
 
 The Mission 7 implementation demonstrates production-quality adjacency list usage with:
+
 - Proper error handling for invalid operations
 - Generic type support for vertex data
 - Comprehensive test coverage for edge cases
@@ -325,12 +353,14 @@ The Mission 7 implementation demonstrates production-quality adjacency list usag
 ## Educational Value
 
 Adjacency lists teach fundamental concepts:
+
 - **Trade-offs**: Space vs time complexity decisions
 - **Algorithm Design**: How data structure choice affects algorithm efficiency  
 - **Real-World Modeling**: Most networks are sparse, making adjacency lists practical
 - **Optimization**: Cache locality, memory management, concurrent access patterns
 
 Understanding adjacency lists provides foundation for:
+
 - Advanced graph algorithms (shortest path, network flow)
 - Distributed graph processing (GraphX, Pregel)
 - Graph databases (Neo4j, Amazon Neptune)

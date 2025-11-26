@@ -16,7 +16,7 @@
 
 ### What Makes This Course Different
 
-1. **3-Track Learning System** 
+1. **3-Track Learning System**
    - ✅ Mission-based projects (V-Cycle methodology)
    - ✅ Daily concept studies (30-day structured learning)
    - ✅ Rust Book integration (foundational knowledge)
@@ -62,6 +62,7 @@
 **Format:** 6-8 week live program with weekly sessions
 
 **Structure:**
+
 ```
 Week 1: Foundations
 ├─ Mission 1: Generic Stack
@@ -118,6 +119,7 @@ Week 8: Integration
 **Frequency:** 3-4 cohorts per year = $36,000-$120,000 annual potential
 
 **Deliverables:**
+
 - 24+ hours live instruction
 - 8 office hour sessions
 - Private Discord community
@@ -133,6 +135,7 @@ Week 8: Integration
 **Format:** Pre-recorded video lessons + exercises
 
 **Structure:**
+
 ```
 Module 1: Rust Foundations (8 videos, 3 hours)
 ├─ Setting up the workspace
@@ -182,6 +185,7 @@ Module 6: Capstone Project (5 videos, 2 hours)
 **Platform:** Teachable, Podia, or self-hosted
 
 **Deliverables:**
+
 - 80+ video lessons (30+ hours)
 - Complete workspace repository
 - Downloadable Zettelkasten notes
@@ -196,6 +200,7 @@ Module 6: Capstone Project (5 videos, 2 hours)
 **Format:** Free YouTube content + paid membership tier
 
 **Free YouTube Content:**
+
 ```
 Series 1: "Rust Missions" (Main series)
 ├─ Mission walkthroughs (15-30 min each)
@@ -218,6 +223,7 @@ Series 3: "Debugging Real Confusions" (Problem-solving)
 ```
 
 **Paid Membership Benefits ($19-29/month):**
+
 - Extended tutorials with more detail
 - Access to all exercise solutions
 - Private Discord community
@@ -238,6 +244,7 @@ Series 3: "Debugging Real Confusions" (Problem-solving)
 ### Channel Vision
 
 **Name Ideas:**
+
 - "Rust Through Missions"
 - "Mission-Driven Rust"
 - "Engineering Rust with [Your Name]"
@@ -247,6 +254,7 @@ Series 3: "Debugging Real Confusions" (Problem-solving)
 **Tagline:** "Master Rust through engineering discipline, daily practice, and mission-based projects"
 
 **Target Audience:**
+
 - Software engineers (3-10 years experience)
 - Career switchers from C++, Java, Python
 - Self-taught developers leveling up
@@ -260,6 +268,7 @@ Series 3: "Debugging Real Confusions" (Problem-solving)
 **Format:** 15-30 minute deep dives
 
 **Example Episodes:**
+
 ```
 Ep 1: "Mission 1 - Building a Generic Stack from Scratch"
 ├─ Hook: "The first data structure every Rustacean should build"
@@ -299,6 +308,7 @@ Ep 7: "Mission 7 - Graph Implementation: Node IDs vs Counts"
 **Format:** 5-10 minute focused explanations
 
 **Example Episodes:**
+
 ```
 Day 1: "HashMap Internals - How Hashing Actually Works"
 Day 2: "HashSet - More Than Just HashMap<T, ()>"
@@ -316,6 +326,7 @@ Day 30: "Error Handling - Result vs Option vs Panic"
 **Your Secret Weapon:** These are your **actual learning moments**!
 
 **Example Episodes:**
+
 ```
 Ep 1: "Node IDs vs Counts - The Graph Confusion"
 ├─ Show the confusing output: "A's neighbors: [1]"
@@ -430,6 +441,7 @@ Ep 5: "Duplicate Edge Handling - Graph API Design"
 ### Production Quality Guidelines
 
 **Essential Quality Standards:**
+
 - ✅ **Audio:** Clear voice (invest $100-150 in USB mic like Blue Yeti)
 - ✅ **Video:** 1080p screen recording minimum
 - ✅ **Code:** Large font (16-20pt), high contrast theme
@@ -437,6 +449,7 @@ Ep 5: "Duplicate Edge Handling - Graph API Design"
 - ✅ **Energy:** Enthusiastic but not forced - be authentic
 
 **You DON'T Need (Yet):**
+
 - ❌ Professional studio setup
 - ❌ Fancy motion graphics
 - ❌ Perfect lighting
@@ -457,6 +470,7 @@ Ep 5: "Duplicate Edge Handling - Graph API Design"
 | **AI Assistance** | [[../../advanced_examples/Brackets_Ext/Copilot_chat]] - GitHub Copilot | $10/month | Code completion and learning support |
 
 **Recording Setup:**
+
 ```
 VS Code Settings for Recording:
 - Font: Fira Code or JetBrains Mono
@@ -483,6 +497,7 @@ OBS Settings:
 **Goal:** Establish presence and validate interest
 
 **Week 1-2: Setup**
+
 - [ ] Create YouTube channel
 - [ ] Design channel art (banner, profile picture)
 - [ ] Write compelling About section
@@ -491,6 +506,7 @@ OBS Settings:
 - [ ] Add email signup form (Mailchimp free tier)
 
 **Week 3-4: First Content**
+
 - [ ] Record intro video: "Why Rust Through Missions?"
 - [ ] Record Mission 1 walkthrough (Part 1)
 - [ ] Upload first 2 videos
@@ -498,6 +514,7 @@ OBS Settings:
 - [ ] Post on Hacker News: "Show HN: My Rust Learning System"
 
 **Week 5-6: Build Momentum**
+
 - [ ] Record 3 more videos (Mission 1 Part 2, Daily Concept, Debugging)
 - [ ] Consistent upload schedule (1-2 per week)
 - [ ] Engage with comments religiously
@@ -505,6 +522,7 @@ OBS Settings:
 - [ ] Write blog post about 3-track learning system
 
 **Week 7-8: Community Building**
+
 - [ ] Create Discord server
 - [ ] Invite first 20 subscribers
 - [ ] Host first live Q&A session
@@ -512,6 +530,7 @@ OBS Settings:
 - [ ] Iterate based on feedback
 
 **Success Metrics:**
+
 - 100 YouTube subscribers
 - 50 email signups
 - 10 active Discord members
@@ -524,6 +543,7 @@ OBS Settings:
 **Goal:** Build course library and audience
 
 **Month 3: Mission Content**
+
 - [ ] Record all Mission 1-3 walkthroughs (10 videos)
 - [ ] Record 10 Daily Concept shorts
 - [ ] Record 5 Debugging Confusion episodes
@@ -531,6 +551,7 @@ OBS Settings:
 - [ ] Cross-post to LinkedIn, Twitter with code snippets
 
 **Month 4: Advanced Content**
+
 - [ ] Record Mission 4-5 walkthroughs (8 videos)
 - [ ] Record 10 more Daily Concepts
 - [ ] Record AoC problem-solving sessions (5 videos)
@@ -538,6 +559,7 @@ OBS Settings:
 - [ ] Write guest blog post for Rust community sites
 
 **Month 5: Course Development**
+
 - [ ] Create detailed course curriculum
 - [ ] Design landing page with testimonials
 - [ ] Set up course platform (Teachable/Podia)
@@ -545,6 +567,7 @@ OBS Settings:
 - [ ] Price research and positioning
 
 **Success Metrics:**
+
 - 1,000 YouTube subscribers
 - 250 email signups
 - 50 Discord members
@@ -558,6 +581,7 @@ OBS Settings:
 **Goal:** Validate course with paying students
 
 **Week 1-2: Pre-Launch**
+
 - [ ] Announce beta cohort to email list
 - [ ] Early bird pricing: $99-$199 (50% off)
 - [ ] Limit to 10-15 beta students
@@ -565,6 +589,7 @@ OBS Settings:
 - [ ] Schedule 6-week cohort timeline
 
 **Week 3-8: Beta Cohort**
+
 - [ ] Weekly live sessions (2 hours each)
 - [ ] Office hours (1 hour each)
 - [ ] Code reviews for beta students
@@ -573,6 +598,7 @@ OBS Settings:
 - [ ] Record all sessions for course library
 
 **Week 9-10: Iteration**
+
 - [ ] Survey beta students (what worked, what didn't)
 - [ ] Update course materials
 - [ ] Add missing content
@@ -580,6 +606,7 @@ OBS Settings:
 - [ ] Get video testimonials
 
 **Success Metrics:**
+
 - 10-15 beta students enrolled
 - $1,500-$3,000 beta revenue
 - 3-5 video testimonials
@@ -593,6 +620,7 @@ OBS Settings:
 **Goal:** Launch full-price course to public
 
 **Week 1: Pre-Launch Marketing**
+
 - [ ] Email sequence to list (7-day campaign)
 - [ ] YouTube announcement video
 - [ ] Reddit launch post (r/rust, r/learnrust)
@@ -601,6 +629,7 @@ OBS Settings:
 - [ ] Podcast interview appearances
 
 **Week 2: Launch**
+
 - [ ] Open enrollment at full price ($299-$599)
 - [ ] Launch day live stream
 - [ ] Q&A session for prospective students
@@ -608,6 +637,7 @@ OBS Settings:
 - [ ] Respond to all questions within 24 hours
 
 **Week 3-4: Post-Launch**
+
 - [ ] Continue marketing push
 - [ ] Share student wins on social media
 - [ ] Guest blog posts
@@ -615,6 +645,7 @@ OBS Settings:
 - [ ] Open second cohort registration
 
 **Success Metrics:**
+
 - 30-50 students enrolled
 - $10,000-$30,000 revenue
 - 95%+ satisfaction rate
@@ -628,6 +659,7 @@ OBS Settings:
 **Goal:** Build sustainable business
 
 **Ongoing Activities:**
+
 - [ ] Run cohorts quarterly (3-4 per year)
 - [ ] Maintain YouTube upload schedule (1-2/week)
 - [ ] Update course with new Rust features
@@ -636,6 +668,7 @@ OBS Settings:
 - [ ] Explore corporate training opportunities
 
 **Year 1 Success Metrics:**
+
 - 3 cohorts × 25 students × $599 = $44,925
 - YouTube: 5,000 subscribers, $300/month ads
 - Membership: 50 members × $19 = $950/month = $11,400/year
@@ -652,6 +685,7 @@ OBS Settings:
 **Timeline:** Months 3-24
 
 **Requirements:**
+
 - 1,000 subscribers
 - 4,000 watch hours (past 12 months)
 - Consistent upload schedule
@@ -666,6 +700,7 @@ OBS Settings:
 | 25K subs | 400,000 | $5-10 | $2,000-4,000 | $24,000-$48,000 |
 
 **Strategy:**
+
 - Focus on searchable content (tutorials, explanations)
 - Longer videos (10-20 min) = more ad placements
 - Target high-value keywords (Rust, programming, systems)
@@ -694,6 +729,7 @@ OBS Settings:
 | **Popular** | 50 | $200 | $10,000 | $120,000 |
 
 **Marketing Channels:**
+
 - YouTube subscribers (strongest conversion)
 - Email list (50% conversion if nurtured)
 - Reddit posts (occasional spikes)
@@ -707,6 +743,7 @@ OBS Settings:
 **Timeline:** Months 7-24
 
 **Program Details:**
+
 - 6-8 week intensive program
 - Weekly live sessions (2 hours)
 - Office hours (1 hour/week)
@@ -726,6 +763,7 @@ OBS Settings:
 | **Year 3** | 30 | $999 | $29,970 | 4 | $119,880 |
 
 **Capacity Planning:**
+
 - Max 30 students per cohort (quality > quantity)
 - Run quarterly (Jan, Apr, Jul, Oct)
 - Dedicate 15-20 hours/week during cohort
@@ -754,6 +792,7 @@ OBS Settings:
 | 250 | $18 | $4,500 | $54,000 |
 
 **Platform Options:**
+
 - Patreon (8% fee, established audience)
 - Buy Me a Coffee (5% fee, simpler)
 - YouTube Memberships (no external fee)
@@ -766,6 +805,7 @@ OBS Settings:
 **Timeline:** Months 12+
 
 **Requirements:**
+
 - 5,000+ YouTube subscribers
 - Consistent view count (50k+ monthly)
 - Engaged audience (high comments/likes)
@@ -779,6 +819,7 @@ OBS Settings:
 | **Affiliate** | 10-30% | Per sale |
 
 **Potential Sponsors:**
+
 - Rust books (No Starch Press, O'Reilly)
 - Developer tools (JetBrains, Visual Studio)
 - Cloud platforms (AWS, Azure, DigitalOcean)
@@ -790,6 +831,7 @@ OBS Settings:
 ### Total Revenue Projections
 
 **Conservative Year 1 (Part-Time):**
+
 ```
 YouTube Ads:           $1,800
 Self-Paced Course:     $9,000
@@ -800,6 +842,7 @@ Total Year 1:          $51,060
 ```
 
 **Realistic Year 2 (Part-Time → Full-Time Transition):**
+
 ```
 YouTube Ads:           $7,200
 Self-Paced Course:     $43,200
@@ -811,6 +854,7 @@ Total Year 2:          $154,300
 ```
 
 **Optimistic Year 3 (Full-Time):**
+
 ```
 YouTube Ads:           $14,400
 Self-Paced Course:     $120,000
@@ -829,6 +873,7 @@ Total Year 3:          $362,280
 ### Primary Persona: "The Career Switcher"
 
 **Demographics:**
+
 - Age: 28-40
 - Current role: Software engineer (3-10 years experience)
 - Background: C++, Java, Python, JavaScript
@@ -836,6 +881,7 @@ Total Year 3:          $362,280
 - Location: Global (English-speaking)
 
 **Psychographics:**
+
 - Motivated by: Career growth, better tools, job market value
 - Pain points: Rust's steep learning curve, lack of structure
 - Learning style: Systematic, engineering-oriented, hands-on
@@ -843,6 +889,7 @@ Total Year 3:          $362,280
 - Budget: Can invest $300-1,000 in education
 
 **Goals:**
+
 - Transition to Rust for work projects
 - Understand systems programming deeply
 - Build portfolio of Rust projects
@@ -850,6 +897,7 @@ Total Year 3:          $362,280
 - Join Rust teams at major companies
 
 **Where They Hang Out:**
+
 - r/rust, r/learnrust
 - Hacker News
 - Rust Discord/Zulip
@@ -858,6 +906,7 @@ Total Year 3:          $362,280
 - Twitter #rustlang
 
 **Decision Factors:**
+
 - Structured curriculum (not random tutorials)
 - Engineering discipline (not just coding)
 - Real projects (not toy examples)
@@ -869,6 +918,7 @@ Total Year 3:          $362,280
 ### Secondary Persona: "The Systems Student"
 
 **Demographics:**
+
 - Age: 20-25
 - Current role: CS student or bootcamp grad
 - Background: Academic C/C++, some projects
@@ -876,6 +926,7 @@ Total Year 3:          $362,280
 - Location: Global
 
 **Psychographics:**
+
 - Motivated by: Learning best practices, career preparation
 - Pain points: Bridging academic→industry gap
 - Learning style: Structured, wants clear progression
@@ -883,6 +934,7 @@ Total Year 3:          $362,280
 - Budget: $50-300 (student pricing important)
 
 **Goals:**
+
 - Prepare for internships/jobs
 - Build impressive portfolio
 - Understand production-quality code
@@ -894,6 +946,7 @@ Total Year 3:          $362,280
 ### Tertiary Persona: "The Hobby Enthusiast"
 
 **Demographics:**
+
 - Age: 25-50 (wide range)
 - Current role: Various (or retired)
 - Background: Some programming experience
@@ -901,6 +954,7 @@ Total Year 3:          $362,280
 - Location: Global
 
 **Psychographics:**
+
 - Motivated by: Intellectual curiosity, fun projects
 - Pain points: Overwhelming amount of resources
 - Learning style: Self-paced, project-driven
@@ -908,6 +962,7 @@ Total Year 3:          $362,280
 - Budget: $50-200
 
 **Goals:**
+
 - Learn for personal satisfaction
 - Build cool projects
 - Keep skills sharp
@@ -921,6 +976,7 @@ Total Year 3:          $362,280
 ### Required Software & Setup
 
 **Development Environment:**
+
 ```bash
 # Rust toolchain
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -932,6 +988,7 @@ cargo install cargo-tarpaulin   # Code coverage
 ```
 
 **Recording Setup:**
+
 ```bash
 # OBS Studio (free, cross-platform)
 # Download: https://obsproject.com/
@@ -944,6 +1001,7 @@ cargo install cargo-tarpaulin   # Code coverage
 ```
 
 **Editing Setup:**
+
 ```bash
 # DaVinci Resolve (free version sufficient)
 # Download: https://www.blackmagicdesign.com/products/davinciresolve
@@ -954,6 +1012,7 @@ cargo install cargo-tarpaulin   # Code coverage
 ```
 
 **VS Code for Recording:**
+
 ```json
 {
   "editor.fontSize": 20,
@@ -970,9 +1029,10 @@ cargo install cargo-tarpaulin   # Code coverage
 
 ## 📋 Content Checklist
 
-### For Each Mission Video:
+### For Each Mission Video
 
 **Pre-Production:**
+
 - [ ] Outline key concepts to cover
 - [ ] Write script or bullet points
 - [ ] Test all code examples
@@ -980,6 +1040,7 @@ cargo install cargo-tarpaulin   # Code coverage
 - [ ] Set up recording environment
 
 **Recording:**
+
 - [ ] Record intro hook
 - [ ] Screen capture code walkthrough
 - [ ] Record voiceover explanations
@@ -987,6 +1048,7 @@ cargo install cargo-tarpaulin   # Code coverage
 - [ ] Show test results
 
 **Post-Production:**
+
 - [ ] Edit out mistakes and pauses
 - [ ] Add intro/outro
 - [ ] Insert diagrams at right moments
@@ -995,6 +1057,7 @@ cargo install cargo-tarpaulin   # Code coverage
 - [ ] Add captions/subtitles
 
 **Publishing:**
+
 - [ ] Create thumbnail (Canva template)
 - [ ] Write SEO-optimized title
 - [ ] Craft detailed description
@@ -1012,11 +1075,13 @@ cargo install cargo-tarpaulin   # Code coverage
 ### Visual Identity
 
 **Channel Branding:**
+
 - **Colors:** Rust orange (#CE422B), dark blue (#1A1A2E), white
 - **Fonts:** JetBrains Mono (code), Inter (UI text)
 - **Style:** Technical, clean, professional yet approachable
 
 **Thumbnail Template:**
+
 ```
 ┌─────────────────────────────────┐
 │  [MISSION NUMBER]                │
@@ -1037,6 +1102,7 @@ Style:
 ### Copy Templates
 
 **YouTube Video Description:**
+
 ```markdown
 🎯 In this video, we [main value proposition].
 
@@ -1065,6 +1131,7 @@ Join the waitlist: [link]
 ```
 
 **Email Newsletter Template:**
+
 ```markdown
 Subject: [Mission X] - [Key Concept Learned]
 
@@ -1099,6 +1166,7 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Content Creation Mistakes
 
 **❌ Don't:**
+
 - Wait for "perfect" equipment before starting
 - Try to cover everything in one video
 - Compare yourself to established creators
@@ -1109,6 +1177,7 @@ P.S. [Call to action - join course, Discord, etc.]
 - Copy others' style instead of being authentic
 
 **✅ Do:**
+
 - Start with what you have (basic mic is fine)
 - Focus each video on one concept
 - Learn from others but find your voice
@@ -1121,6 +1190,7 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Business Mistakes
 
 **❌ Don't:**
+
 - Underprice your course (you're providing value!)
 - Over-promise features you can't deliver
 - Ignore negative feedback
@@ -1130,6 +1200,7 @@ P.S. [Call to action - join course, Discord, etc.]
 - Forget to ask for testimonials
 
 **✅ Do:**
+
 - Price based on value, not cost
 - Be clear about what's included
 - Use negative feedback to improve
@@ -1145,6 +1216,7 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Monthly Tracking
 
 **Content Metrics:**
+
 - Videos published (target: 4-8)
 - Total views (growth rate)
 - Average view duration (target: >40%)
@@ -1152,6 +1224,7 @@ P.S. [Call to action - join course, Discord, etc.]
 - Engagement rate (likes + comments / views)
 
 **Business Metrics:**
+
 - Email list size (growth rate)
 - Course inquiries/signups
 - Discord member count
@@ -1159,6 +1232,7 @@ P.S. [Call to action - join course, Discord, etc.]
 - Profit margin
 
 **Quality Metrics:**
+
 - Student satisfaction (survey)
 - Course completion rate (target: >70%)
 - Video retention rate (where people drop off)
@@ -1168,6 +1242,7 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Milestone Goals
 
 **3 Months:**
+
 - 500 YouTube subscribers
 - 200 email signups
 - 20 Discord members
@@ -1175,6 +1250,7 @@ P.S. [Call to action - join course, Discord, etc.]
 - First $100 earned
 
 **6 Months:**
+
 - 1,500 subscribers
 - 500 email signups
 - 50 Discord members
@@ -1183,6 +1259,7 @@ P.S. [Call to action - join course, Discord, etc.]
 - $2,000-5,000 earned
 
 **12 Months:**
+
 - 5,000 subscribers
 - 1,500 email signups
 - 150 Discord members
@@ -1197,18 +1274,21 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Feedback Collection
 
 **After Each Video:**
+
 - Monitor comments for confusion points
 - Track where viewers drop off (YouTube Analytics)
 - Ask: "What did you find most helpful?"
 - Note: "What was unclear?"
 
 **After Each Cohort:**
+
 - Detailed survey (what worked, what didn't)
 - 1-on-1 exit interviews with select students
 - Track completion rates by module
 - Collect testimonials and case studies
 
 **Monthly Review:**
+
 - Which videos performed best? (Replicate success)
 - Which topics got most questions? (Need clarification)
 - What trends in student struggles? (Add content)
@@ -1241,18 +1321,21 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Course Creation
 
 **Books:**
+
 - "Launch" by Jeff Walker (product launches)
 - "Expert Secrets" by Russell Brunson (educational marketing)
 - "Engaged" by Amy Porterfield (online course creation)
 - "The Course Builder's Playbook" by Danny Iny
 
 **Courses:**
+
 - "30 Days to MVP" by Arvid Kahl (audience building)
 - "How to Make Your First Dollar" by Daniel Vassallo (indie hacker)
 
 ### YouTube Strategy
 
 **Channels to Study:**
+
 - Fireship (concise technical content)
 - ThePrimeagen (authentic personality)
 - No Boilerplate (Rust content, great production)
@@ -1262,6 +1345,7 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Rust Teaching
 
 **Resources:**
+
 - "The Rust Programming Language" book
 - "Programming Rust" by O'Reilly
 - "Rust for Rustaceans" by Jon Gjengset
@@ -1275,6 +1359,7 @@ P.S. [Call to action - join course, Discord, etc.]
 ### When to Quit Your Job
 
 **Don't quit until:**
+
 - 3 months consistent revenue ($3,000+/month)
 - Strong pipeline (email list 1,000+)
 - Proven product-market fit (2+ successful cohorts)
@@ -1282,6 +1367,7 @@ P.S. [Call to action - join course, Discord, etc.]
 - Clear growth trajectory
 
 **You're ready when:**
+
 - Course revenue matches 50% of salary
 - Consistent demand (waiting list exists)
 - Systems in place (can run on autopilot)
@@ -1295,30 +1381,35 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Core Principles
 
 **1. Teach What You're Learning**
+
 - You don't need to be an expert
 - Your struggles = teachable moments
 - Authenticity > perfection
 - Document the journey
 
 **2. Serve Your Audience**
+
 - Focus on their confusion, not your expertise
 - Answer the questions they're actually asking
 - Clear explanation > impressive jargon
 - Their success = your success
 
 **3. Build in Public**
+
 - Share progress openly
 - Show behind-the-scenes
 - Admit mistakes
 - Celebrate small wins
 
 **4. Long-Term Thinking**
+
 - Quality compounds over time
 - Build relationships, not just subscribers
 - One happy student > ten lukewarm ones
 - Sustainable pace beats burnout
 
 **5. Iterate Relentlessly**
+
 - Every video teaches you something
 - Feedback is gold
 - Perfect is the enemy of done
@@ -1331,26 +1422,31 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Absolute First Steps (This Week)
 
 **Day 1 (TODAY):**
+
 1. Create YouTube channel (10 minutes)
 2. Record 5-minute intro: "Why I'm teaching Rust" (30 minutes)
 3. Upload video (even if imperfect!) (20 minutes)
 
 **Day 2:**
+
 1. Write outline for Mission 1 video (30 minutes)
 2. Test all code examples (1 hour)
 3. Record Mission 1 Part 1 (1 hour)
 
 **Day 3:**
+
 1. Edit Mission 1 video (1-2 hours)
 2. Create thumbnail (30 minutes)
 3. Upload and schedule (30 minutes)
 
 **Day 4:**
+
 1. Share on Reddit, Twitter, LinkedIn (30 minutes)
 2. Respond to all comments (30 minutes)
 3. Start email list (Mailchimp free tier) (1 hour)
 
 **Day 5:**
+
 1. Plan next 5 videos (1 hour)
 2. Create Discord server (30 minutes)
 3. Invite first 10 people (30 minutes)
@@ -1364,6 +1460,7 @@ P.S. [Call to action - join course, Discord, etc.]
 ### Why This Will Work
 
 **Your Unique Advantages:**
+
 1. **Systematic Approach** - 3-track system is proven
 2. **Real Confusions** - You know what trips learners up
 3. **Engineering Rigor** - V-Cycle methodology differentiates you

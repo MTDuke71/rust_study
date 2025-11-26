@@ -10,6 +10,7 @@ Performance patterns in Rust encompass **systematic approaches** to optimization
 ## Memory Access Patterns
 
 ### Cache-Friendly Data Layout
+
 ```rust
 // Bad: Array of Structures (AoS) - poor cache locality
 struct ParticleAoS {
@@ -48,6 +49,7 @@ fn update_positions_soa(particles: &mut ParticlesSoA) {
 ```
 
 ### Memory Pre-allocation
+
 ```rust
 // Inefficient: Multiple allocations
 fn build_result_inefficient(data: &[i32]) -> Vec<String> {
@@ -78,6 +80,7 @@ fn build_result_optimal(data: &[i32]) -> Vec<String> {
 ## Algorithm Optimization Patterns
 
 ### Iterator Chain Optimization
+
 ```rust
 // Suboptimal: Multiple passes over data
 fn process_data_multipass(numbers: &[i32]) -> Vec<i32> {
@@ -106,6 +109,7 @@ fn process_data_singlepass(numbers: &[i32]) -> Vec<i32> {
 ```
 
 ### Branching Optimization
+
 ```rust
 // Branch-heavy code - unpredictable for CPU
 fn classify_numbers_branchy(numbers: &[i32]) -> (usize, usize, usize) {
@@ -140,6 +144,7 @@ fn classify_numbers_branchless(numbers: &[i32]) -> (usize, usize, usize) {
 ## Mission-Specific Optimization Patterns
 
 ### Mission 1: Stack Optimization
+
 ```rust
 // Basic implementation
 struct Stack<T> {
@@ -184,6 +189,7 @@ impl<T> OptimizedStack<T> {
 ```
 
 ### Mission 5: HashMap Performance
+
 ```rust
 use std::collections::HashMap;
 use std::hash::{BuildHasher, Hasher};
@@ -218,6 +224,7 @@ fn create_optimized_map(data: &[(u32, String)]) -> HashMap<u32, String> {
 ```
 
 ### Mission 6: Grid Access Optimization
+
 ```rust
 // Cache-unfriendly: column-major access
 fn sum_columns_slow(grid: &[Vec<i32>]) -> Vec<i32> {
@@ -250,6 +257,7 @@ fn sum_columns_fast(grid: &[Vec<i32>]) -> Vec<i32> {
 ## AoC Performance Patterns
 
 ### Day 15: Combinatorial Optimization
+
 ```rust
 // Naive approach: full enumeration
 fn find_optimal_naive(ingredients: &[Ingredient]) -> i32 {
@@ -279,6 +287,7 @@ fn find_optimal_constrained(ingredients: &[Ingredient]) -> i32 {
 ```
 
 ### Day 11: String Generation Optimization
+
 ```rust
 // Slow: String manipulation
 fn increment_password_string(password: &str) -> String {
@@ -312,6 +321,7 @@ fn increment_password_bytes(password: &mut [u8]) {
 ## Concurrent Performance Patterns
 
 ### Parallel Processing with Rayon
+
 ```rust
 use rayon::prelude::*;
 
@@ -340,6 +350,7 @@ fn process_chunked_parallel(data: &[i32]) -> Vec<i32> {
 ```
 
 ### Lock-Free Data Structures
+
 ```rust
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
@@ -370,6 +381,7 @@ impl AtomicCounter {
 ## Memory Layout Optimization
 
 ### Enum Optimization
+
 ```rust
 // Suboptimal: Large enum variants
 enum Message {
@@ -395,6 +407,7 @@ struct LargeData {
 ```
 
 ### Bit Packing
+
 ```rust
 // Inefficient: Multiple bools take 1 byte each
 struct Flags {
@@ -433,6 +446,7 @@ impl PackedFlags {
 ## Profile-Guided Optimization
 
 ### Hot Path Identification
+
 ```rust
 // Use profiling tools to identify hot paths
 fn hot_path_example(data: &[i32]) -> i32 {
@@ -463,6 +477,7 @@ fn optimized_hot_path(data: &[i32]) -> i32 {
 ```
 
 ### Branch Prediction Optimization
+
 ```rust
 // Help branch predictor with likely/unlikely hints
 fn search_with_hints(data: &[i32], target: i32) -> Option<usize> {
@@ -493,16 +508,19 @@ fn optimized_search(data: &[i32], target: i32) -> Option<usize> {
 ## Daily Study Applications
 
 ### Week 2: Collection Optimization
+
 - Vector capacity management
 - Iterator fusion patterns
 - HashMap sizing strategies
 
 ### Week 5: Error Handling Performance  
+
 - Result<T, E> optimization patterns
 - Error propagation efficiency
 - Zero-cost error handling
 
 ### Week 6: Advanced Optimization
+
 - SIMD operation patterns
 - Async runtime optimization
 - Memory pool patterns
@@ -510,6 +528,7 @@ fn optimized_search(data: &[i32], target: i32) -> Option<usize> {
 ## Mission Integration Examples
 
 ### Mission Performance Reports
+
 - **Mission 1**: Stack operation optimization (O(1) amortized)
 - **Mission 4**: LinkedList memory layout optimization
 - **Mission 5**: HashMap load factor and rehashing patterns
@@ -517,6 +536,7 @@ fn optimized_search(data: &[i32], target: i32) -> Option<usize> {
 - **Mission 10**: Union-Find path compression efficiency
 
 ### Optimization Methodology
+
 1. **Profile First**: Identify actual bottlenecks
 2. **Measure Everything**: Before and after benchmarks
 3. **Validate Correctness**: Ensure optimizations don't break functionality
@@ -532,6 +552,7 @@ fn optimized_search(data: &[i32], target: i32) -> Option<usize> {
 ---
 
 *Performance Patterns Links:*
+
 - [[atomic-operations-memory-ordering]] - Lock-free concurrency and atomic performance characteristics
 - [[zero-cost-abstractions]] - High-level performance patterns
 - [[Performance Benchmarking]] - Measuring optimization results

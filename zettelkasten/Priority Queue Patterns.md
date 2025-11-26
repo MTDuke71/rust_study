@@ -78,6 +78,7 @@ fn min_heap_example() {
 | Heapify from Vec | O(n) | Build from collection |
 
 ### Space Complexity
+
 - **O(n)** - Linear space for n elements
 - **Contiguous memory** - Backed by `Vec<T>`
 
@@ -209,6 +210,7 @@ impl PartialOrd for Task {
 ## Binary Heap Implementation Details
 
 ### Internal Structure
+
 ```
 Binary Heap as Array:
        10
@@ -226,10 +228,12 @@ Right child: 2*i + 2
 ```
 
 ### Heap Property
+
 - **Max-Heap**: Parent ≥ all children
 - **Min-Heap**: Parent ≤ all children
 
 ### Heapify Operations
+
 1. **Bubble Up**: After insertion, restore heap property upward
 2. **Bubble Down**: After removal, restore heap property downward
 
@@ -312,16 +316,19 @@ impl PartialOrd for Event {
 Priority queues are fundamental to Mission 9's pathfinding algorithms:
 
 ### Dijkstra Implementation (Mission 9 Day 2)
+
 - **Use Case**: Shortest path in weighted graphs
 - **Priority**: Distance from source
 - **Pattern**: Min-heap with distance tracking
 
 ### A* Implementation (Mission 9 Day 3)
+
 - **Use Case**: Optimal pathfinding with heuristics
 - **Priority**: f(n) = g(n) + h(n)
 - **Pattern**: Min-heap with combined cost
 
 ### Performance Optimization (Mission 9 Day 4)
+
 - **Closed Set**: Track visited nodes separately
 - **Early Termination**: Stop when goal reached
 - **Tie Breaking**: Secondary ordering for equal priorities
@@ -331,11 +338,13 @@ Priority queues are fundamental to Mission 9's pathfinding algorithms:
 Priority queues appear in multiple Advent of Code problems:
 
 ### Day 15 (2021): Chiton
+
 - **Problem**: Lowest risk path through grid
 - **Solution**: Dijkstra with BinaryHeap
 - **Key**: Each cell's risk as edge weight
 
 ### Day 23 (2021): Amphipod
+
 - **Problem**: Minimum energy to organize amphipods
 - **Solution**: A* with custom state
 - **Key**: Complex state space with heuristic
@@ -343,6 +352,7 @@ Priority queues appear in multiple Advent of Code problems:
 ## Best Practices
 
 ### ✅ Do
+
 - Use `BinaryHeap` for priority-based access
 - Wrap in `Reverse` for min-heap behavior
 - Implement `Ord` carefully for custom types
@@ -350,6 +360,7 @@ Priority queues appear in multiple Advent of Code problems:
 - Profile performance for large datasets
 
 ### ❌ Don't
+
 - Don't assume stable ordering for equal priorities
 - Don't mutate elements after insertion
 - Don't forget to handle duplicate states in graph algorithms
@@ -358,6 +369,7 @@ Priority queues appear in multiple Advent of Code problems:
 ## Performance Considerations
 
 ### When to Use Priority Queue
+
 - ✅ Need access to min/max element repeatedly
 - ✅ Dijkstra, A*, or greedy algorithms
 - ✅ Event-driven simulation
@@ -365,6 +377,7 @@ Priority queues appear in multiple Advent of Code problems:
 - ✅ Merge operations
 
 ### When NOT to Use
+
 - ❌ Simple FIFO queue (`VecDeque` is better)
 - ❌ Need stable ordering
 - ❌ Frequent arbitrary element access
@@ -426,6 +439,7 @@ mod tests {
 ## Common Pitfalls
 
 ### 1. Max-Heap Default
+
 ```rust
 // ❌ Wrong: Expects min-heap but gets max
 let mut heap = BinaryHeap::new();
@@ -441,6 +455,7 @@ assert_eq!(heap.pop(), Some(Reverse(2)));
 ```
 
 ### 2. Duplicate State Handling
+
 ```rust
 // ❌ Wrong: Processes same node multiple times
 while let Some(node) = pq.pop() {
@@ -458,6 +473,7 @@ while let Some(node) = pq.pop() {
 ```
 
 ### 3. Stale Priority Values
+
 ```rust
 // ❌ Wrong: Priority may be stale
 pq.push(Node { id: 1, cost: 10 });
@@ -476,16 +492,19 @@ while let Some(node) = pq.pop() {
 ## Related Concepts
 
 ### Data Structures
+
 - [[Binary Heap Data Structure]] - Underlying implementation
 - [[Graph Algorithms]] - Primary use case
 - [[Rust Collections MOC]] - Collection type overview
 
 ### Algorithms
+
 - [[Dijkstra Algorithm]] - Shortest path with priority queue
 - [[missions/mission-9]] - Mission 9 pathfinding implementations
 - [[BFS Patterns]] - Comparison with breadth-first search
 
 ### Learning Resources
+
 - [[daily-study/Day26]] - Queue implementation study
 - [[Mission 9 Tutorial]] - Tutorial progression
 - [[Daily Notes/2025-10-23]] - Pathfinding fundamentals
@@ -493,29 +512,35 @@ while let Some(node) = pq.pop() {
 ## Mission Integration
 
 ### Mission 2
+
 - Queue fundamentals and FIFO semantics
 - Contrast with priority-based ordering
 
 ### Mission 9
+
 - **Day 2**: Dijkstra with BinaryHeap
 - **Day 3**: A* heuristic-based priority
 - **Day 4**: Performance optimization patterns
 
 ### Mission 10
+
 - Union-Find vs Priority Queue comparison
 - When to use each data structure
 
 ## Further Reading
 
 ### Official Documentation
+
 - [std::collections::BinaryHeap](https://doc.rust-lang.org/std/collections/struct.BinaryHeap.html)
 - [std::cmp::Reverse](https://doc.rust-lang.org/std/cmp/struct.Reverse.html)
 
 ### Academic References
+
 - Introduction to Algorithms (CLRS) - Chapter 6: Heapsort
 - Algorithm Design Manual - Priority Queues
 
 ### Implementation Examples
+
 - Mission 9 Dijkstra implementation
 - Mission 9 A* implementation
 - AoC 2021 Day 15, Day 23 solutions
@@ -523,6 +548,7 @@ while let Some(node) = pq.pop() {
 ---
 
 ## Related Resources
+
 - [[Binary Heap Data Structure]] - Implementation details and heap operations
 - [[Graph Algorithms]] - Algorithms using priority queues (Dijkstra, A*, Prim's)
 - [[missions/mission-9]] - Mission 9 pathfinding with priority queue patterns

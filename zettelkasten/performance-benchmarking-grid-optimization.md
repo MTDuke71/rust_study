@@ -32,6 +32,7 @@ let value = flat_grid[index];  // Single memory access
 ```
 
 **Why it matters**:
+
 - Each pointer dereference is a memory access (slow)
 - Index calculation is CPU arithmetic (fast)
 - Sequential data enables cache prefetching
@@ -48,6 +49,7 @@ CPU cache performance depends heavily on memory access patterns:
 | **Random** | Unpredictable jumps | ❌ Worst - cache thrashing |
 
 **Release mode benchmarks** (1000x1000 grid):
+
 - Row-major: ~100µs (baseline)
 - Column-major: ~327µs (3.26x slower)
 - Random access: ~771µs (7.67x slower)
@@ -57,6 +59,7 @@ CPU cache performance depends heavily on memory access patterns:
 ## ⚠️ Common Benchmarking Pitfalls
 
 ### **1. Zero-Value Optimization**
+
 ```rust
 // ❌ BAD: OS may use zero-page optimization
 let grid = TutorialGrid::new(1000, 1000, 0i32);
@@ -66,11 +69,13 @@ let grid = TutorialGrid::new(1000, 1000, 1i32);
 ```
 
 **Why**: Operating systems optimize zero-page allocation through:
+
 - Lazy allocation (memory not allocated until written)
 - Copy-on-write (all zero pages point to single physical page)
 - Result: Artificially fast creation times
 
 ### **2. Dead Code Elimination**
+
 ```rust
 // ❌ BAD: Compiler may eliminate unused computation
 let sum = grid.iter().sum::<i32>();
@@ -81,6 +86,7 @@ let sum = std::hint::black_box(grid.iter().sum::<i32>());
 ```
 
 ### **3. Single-Sample Timing**
+
 ```rust
 // ❌ BAD: Single measurement affected by system noise
 let start = Instant::now();
@@ -99,7 +105,9 @@ let median = times[times.len() / 2];
 ```
 
 ### **4. Suspiciously Fast Times**
+
 Watch for physically impossible results:
+
 - 1000x1000 grid faster than 500x500 → optimization artifact
 - Sub-nanosecond operations → dead code elimination
 - Identical times across size variations → lazy allocation
@@ -109,6 +117,7 @@ Watch for physically impossible results:
 ## 🛠️ Proper Benchmarking Techniques
 
 ### **Framework Structure**
+
 ```rust
 use std::time::Instant;
 use std::hint::black_box;
@@ -131,6 +140,7 @@ where
 ```
 
 ### **Best Practices Checklist**
+
 - ✅ Use non-zero test data
 - ✅ Multiple iterations (10+ for creation, 5+ for operations)
 - ✅ Calculate median (not average) to filter outliers
@@ -145,6 +155,7 @@ where
 ## 📊 Performance Characteristics
 
 ### **Grid Creation Scaling**
+
 | Size | Elements | Time | Per 100 cells |
 |------|----------|------|---------------|
 | 10x10 | 100 | 500ns | 500ns |
@@ -155,6 +166,7 @@ where
 **Analysis**: O(n) linear scaling, consistent per-cell time demonstrates no hidden overhead.
 
 ### **Memory Layout Comparison** (100x100 grid)
+
 | Layout | Creation | Access | Speedup |
 |--------|----------|--------|---------|
 | Vec<Vec<T>> | ~15µs | ~22µs | Baseline |
@@ -165,6 +177,7 @@ where
 ## 🎯 Optimization Strategies
 
 ### **Memory Layout**
+
 1. **Use flat Vec<T>** instead of Vec<Vec<T>>
    - Single allocation vs multiple allocations
    - Direct indexing vs pointer chasing
@@ -176,7 +189,9 @@ where
    - Consider alignment for SIMD operations
 
 ### **Access Patterns**
+
 1. **Prefer row-major traversal**
+
    ```rust
    // ✅ GOOD: Row-major (y outer, x inner)
    for y in 0..height {
@@ -197,6 +212,7 @@ where
 3. **Batch operations** to reduce function call overhead
 
 ### **Algorithm Choice**
+
 - Consider spatial data structures for sparse grids (quadtree, R-tree)
 - Use appropriate algorithms for problem size
 - Profile memory allocation patterns
@@ -212,6 +228,7 @@ where
 - **[[zero-cost-abstractions]]** - High-level code compiling to efficient machine code
 
 ### **Advanced Performance Techniques**
+
 - **[[../missions/Mission9/docs/PERFORMANCE_TUNING]]** - Algorithm selection, heuristic optimization, and benchmarking strategies for pathfinding
 - **[[Priority Queue Patterns]]** - Efficient data structures for graph algorithms
 - **[[Algorithm Analysis]]** - Time/space complexity analysis methods
@@ -221,6 +238,7 @@ where
 ## 📚 Learning Resources
 
 ### **Essential Reading**
+
 - **[Algorithmica HPC](https://en.algorithmica.org/hpc/)** - Comprehensive resource on high-performance computing, covering:
   - Computer architecture fundamentals
   - Cache optimization techniques
@@ -230,6 +248,7 @@ where
   - Practical benchmarking methods
 
 ### **Hands-On Examples**
+
 - **Mission6_tut/examples/step6_performance.rs** - Complete benchmarking framework
   - Grid creation benchmarks
   - Cache pattern testing
@@ -237,6 +256,7 @@ where
   - Documented pitfalls and solutions
 
 ### **Key Concepts from Algorithmica**
+
 - **Memory hierarchy**: L1/L2/L3 cache, RAM, storage
 - **Cache lines**: 64-byte blocks, spatial locality
 - **Prefetching**: Hardware and software techniques
@@ -248,6 +268,7 @@ where
 ## 💡 Practical Applications
 
 ### **Advent of Code Scenarios**
+
 1. **Grid traversal** (Day 3, Day 11, Day 15)
    - Flat Vec layout for cache efficiency
    - Row-major iteration for optimal access
@@ -261,6 +282,7 @@ where
    - SIMD for parallel pixel operations
 
 ### **Real-World Use Cases**
+
 - Game development (tile maps, collision detection)
 - Scientific computing (matrix operations, simulations)
 - Computer vision (image filtering, convolution)
@@ -271,6 +293,7 @@ where
 ## 🧪 Verification Methods
 
 ### **Sanity Checks**
+
 ```rust
 // Verify monotonic scaling
 assert!(time_1000x1000 > time_500x500);
@@ -285,6 +308,7 @@ assert!(sum != 0 || all_elements_are_zero());
 ```
 
 ### **Debug vs Release Mode**
+
 - **Debug mode**: Unoptimized, smaller performance gaps (5-10%)
 - **Release mode**: Full optimizations, dramatic cache effects (3-7x)
 - Always benchmark in `--release` for production-realistic results

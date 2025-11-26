@@ -5,6 +5,7 @@
 ---
 
 ## 📅 Current Date
+
 ```dataview
 TABLE WITHOUT ID
   dateformat(date(today), "EEEE, MMMM d, yyyy") as "Today"

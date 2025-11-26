@@ -7,12 +7,14 @@
 **Breadth-First Search (BFS)** is a graph/grid traversal algorithm that explores nodes level by level, visiting all neighbors at distance `d` before moving to distance `d + 1`. It uses a **queue** (FIFO) data structure.
 
 **Key Properties:**
+
 - ✅ **Finds shortest path** in unweighted graphs
 - ✅ **Explores level-by-level** (systematic layer exploration)
 - ✅ **First visit = shortest distance** (optimal for unweighted)
 - ✅ **Complete** (explores all reachable nodes)
 
 **When to Use BFS:**
+
 - Need shortest path in unweighted graph/grid
 - Want to compute distances from source
 - Exploring nodes by proximity/distance layers
@@ -24,6 +26,7 @@
 ## 📐 BFS Algorithm Template
 
 ### **Basic BFS Structure**
+
 ```rust
 use std::collections::VecDeque;
 
@@ -50,6 +53,7 @@ fn bfs(grid: &[Vec<bool>], start: Point) {
 ```
 
 ### **BFS with Distance Tracking**
+
 ```rust
 fn bfs_with_distance(
     grid: &[Vec<bool>],
@@ -75,6 +79,7 @@ fn bfs_with_distance(
 ```
 
 ### **BFS Shortest Path**
+
 ```rust
 fn bfs_shortest_path(
     grid: &[Vec<bool>],
@@ -128,6 +133,7 @@ fn reconstruct_path(
 ## 🎨 Common BFS Patterns
 
 ### **Pattern 1: Multi-Source BFS**
+
 *Start BFS from multiple sources simultaneously*
 
 ```rust
@@ -160,6 +166,7 @@ fn multi_source_bfs(
 ```
 
 ### **Pattern 2: Level-Order Processing**
+
 *Process all nodes at each distance level together*
 
 ```rust
@@ -197,6 +204,7 @@ fn bfs_by_levels(grid: &[Vec<bool>], start: Point) -> Vec<Vec<Point>> {
 ```
 
 ### **Pattern 3: BFS with State**
+
 *Track additional state alongside position*
 
 ```rust
@@ -250,6 +258,7 @@ fn bfs_with_state(
 ```
 
 ### **Pattern 4: 0-1 BFS**
+
 *BFS variant for graphs with weights 0 and 1*
 
 ```rust
@@ -288,6 +297,7 @@ fn zero_one_bfs(
 ```
 
 ### **Pattern 5: Bidirectional BFS**
+
 *Search from both start and goal simultaneously*
 
 ```rust
@@ -348,6 +358,7 @@ fn bidirectional_bfs(
 ## 🎮 AoC BFS Patterns
 
 ### **AoC Pattern 1: Maze Shortest Path**
+
 ```rust
 // Classic maze solving
 fn solve_maze(maze: &[Vec<char>]) -> u32 {
@@ -359,6 +370,7 @@ fn solve_maze(maze: &[Vec<char>]) -> u32 {
 ```
 
 ### **AoC Pattern 2: Flood Fill with Distance**
+
 ```rust
 // Water spreading from sources
 fn flood_simulation(grid: &mut [Vec<char>], water_sources: &[Point]) {
@@ -371,6 +383,7 @@ fn flood_simulation(grid: &mut [Vec<char>], water_sources: &[Point]) {
 ```
 
 ### **AoC Pattern 3: Collect All Items**
+
 ```rust
 // Collect all keys/coins in minimum steps
 fn collect_all_keys(dungeon: &[Vec<char>], start: Point) -> u32 {
@@ -379,6 +392,7 @@ fn collect_all_keys(dungeon: &[Vec<char>], start: Point) -> u32 {
 ```
 
 ### **AoC Pattern 4: Level Counting**
+
 ```rust
 // Count nodes at each distance
 fn count_by_distance(grid: &[Vec<bool>], start: Point) -> Vec<usize> {
@@ -405,6 +419,7 @@ fn count_by_distance(grid: &[Vec<bool>], start: Point) -> Vec<usize> {
 ## ⚡ Performance Optimization
 
 ### **1. Use VecDeque Instead of Vec**
+
 ```rust
 // ❌ Slow: O(n) pop from front
 let mut queue: Vec<Point> = Vec::new();
@@ -416,6 +431,7 @@ let current = queue.pop_front().unwrap();  // Efficient!
 ```
 
 ### **2. Pre-allocate Visited Set**
+
 ```rust
 // For grid: use Vec<Vec<bool>> instead of HashSet
 let mut visited = vec![vec![false; width]; height];
@@ -423,6 +439,7 @@ visited[y][x] = true;  // O(1) access
 ```
 
 ### **3. Early Exit**
+
 ```rust
 // Stop as soon as goal is found
 if current == goal {
@@ -431,6 +448,7 @@ if current == goal {
 ```
 
 ### **4. Avoid Redundant Checks**
+
 ```rust
 // Mark visited when adding to queue, not when popping
 if !visited.contains(&neighbor) {
@@ -456,6 +474,7 @@ if !visited.contains(&neighbor) {
 ## 🔗 Connected Concepts
 
 ### **Related Zettelkasten Pages**
+
 - [[DFS Patterns]] - Depth-first alternative
 - [[A-Star-Algorithm-Deep-Dive]] - Heuristic-guided BFS improvement
 - [[Manhattan Distance]] - Distance metric for grids
@@ -465,10 +484,12 @@ if !visited.contains(&neighbor) {
 - [[directed-vs-undirected-graphs]] - Understanding graph types for BFS
 
 ### **Related Data Structures**
+
 - [[mission-2]] - Queue/VecDeque for BFS
 - Priority Queue for weighted BFS (Dijkstra)
 
 ### **Algorithm Family**
+
 - **Uninformed Search**: BFS, DFS, Uniform Cost
 - **Informed Search**: [[A-Star-Algorithm-Deep-Dive]], Greedy Best-First
 - **Optimal**: BFS (unweighted), Dijkstra (weighted), A*
@@ -485,6 +506,7 @@ if !visited.contains(&neighbor) {
 6. **Perfect for Grids**: Natural fit for grid pathfinding
 
 **When to Use BFS:**
+
 ```
 ✅ Need shortest path (unweighted)
 ✅ Want distance from source

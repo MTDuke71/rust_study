@@ -13,16 +13,19 @@
 ## 🚀 Core Principles
 
 ### 1. No Global Costs
+
 - Features don't impose performance penalties on unused parts of the program
 - No heavy runtime required just for having features available
 - Example: Rust's ownership system doesn't slow down code that doesn't use references
 
 ### 2. Optimal Performance
+
 - Abstractions compile to machine code as efficient as manual implementations
 - Compiler optimizations eliminate abstraction overhead
 - Example: `Vec<T>` iterators compile to the same assembly as hand-written loops
 
 ### 3. Enhanced Developer Experience
+
 - Abstractions simplify development without introducing complexity
 - Code becomes more readable and maintainable
 - Safety and ergonomics without performance trade-offs
@@ -30,6 +33,7 @@
 ## 🔧 Rust's Zero-Cost Abstractions
 
 ### 1. **Ownership and Borrowing**
+
 ```rust
 // Zero-cost memory safety - no garbage collector overhead
 fn process_data(data: Vec<i32>) -> i32 {
@@ -43,6 +47,7 @@ fn borrow_example(s: &str) -> usize {
 ```
 
 ### 2. **Iterators and Functional Programming**
+
 ```rust
 // High-level, functional style
 let sum: i32 = vec![1, 2, 3, 4, 5]
@@ -61,6 +66,7 @@ for &x in &[1, 2, 3, 4, 5] {
 ```
 
 ### 3. **Generics and Monomorphization**
+
 ```rust
 // Generic function
 fn find_max<T: Ord>(items: &[T]) -> Option<&T> {
@@ -74,6 +80,7 @@ fn find_max<T: Ord>(items: &[T]) -> Option<&T> {
 ```
 
 ### 4. **Option and Result Types**
+
 ```rust
 // Safe null handling - compiles to same code as C unions
 fn safe_divide(a: i32, b: i32) -> Option<i32> {
@@ -84,6 +91,7 @@ fn safe_divide(a: i32, b: i32) -> Option<i32> {
 ```
 
 ### 5. **Smart Pointers**
+
 ```rust
 // Box<T> heap allocation
 let boxed = Box::new(42);
@@ -95,6 +103,7 @@ let rc2 = rc1.clone(); // Increment counter - minimal cost
 ```
 
 ### 6. **Async/Await and Futures**
+
 ```rust
 // High-level async code
 async fn fetch_data() -> Result<String, Error> {
@@ -109,12 +118,14 @@ async fn fetch_data() -> Result<String, Error> {
 ## ⚡ Performance Characteristics
 
 ### Compiler Optimizations
+
 - **Monomorphization**: Generic code generates specialized versions
 - **Inlining**: Function calls are eliminated when beneficial
 - **Dead Code Elimination**: Unused abstractions are completely removed
 - **Loop Unrolling**: Iterator chains become unrolled loops
 
 ### Benchmarking Example
+
 ```rust
 // Iterator chain (high-level)
 let result: i32 = (1..1000)
@@ -136,11 +147,13 @@ for x in 1..1000 {
 ## 🎯 When Zero-Cost Abstractions Aren't Zero-Cost
 
 ### 1. **Debug Builds**
+
 - Optimizations are disabled in debug mode
 - Abstractions may have measurable overhead
 - Always benchmark in release mode
 
 ### 2. **Dynamic Dispatch**
+
 ```rust
 // This has runtime overhead
 fn process_dynamic(items: &[Box<dyn Iterator<Item = i32>>]) {
@@ -162,17 +175,20 @@ fn process_static<T: Iterator<Item = i32>>(items: &[T]) {
 ```
 
 ### 3. **Heap Allocations**
+
 - Some abstractions may hide heap allocations
 - Always be aware of memory allocation patterns
 - Use tools like `cargo bench` and profiling
 
 ### 4. **Complex Cases**
+
 1. **Trait Objects**: Dynamic dispatch overhead
 2. **RefCell**: Runtime borrow checking
 3. **Large Generic Instantiations**: Code bloat
 4. **Complex Iterator Chains**: May prevent some optimizations
 
 ### Compile-Time Costs
+
 - **Longer compilation**: More template instantiation
 - **Binary size**: Multiple monomorphized versions
 - **Compiler memory**: Template expansion overhead
@@ -180,6 +196,7 @@ fn process_static<T: Iterator<Item = i32>>(items: &[T]) {
 ## 🔍 Mission Integration Examples
 
 ### Mission 1: Stack Implementation
+
 ```rust
 // Generic Stack<T> - zero-cost when monomorphized
 impl<T> Stack<T> {
@@ -193,6 +210,7 @@ impl<T> Stack<T> {
 ```
 
 ### Mission 3: Binary Search Trees
+
 ```rust
 // High-level iterator chain
 let filtered: Vec<_> = data
@@ -205,6 +223,7 @@ let filtered: Vec<_> = data
 ```
 
 ### Mission 4: Linked List with Rc<RefCell<T>>
+
 ```rust
 // Zero-cost when compiler can optimize dispatch
 trait Processor {
@@ -217,6 +236,7 @@ trait Processor {
 ```
 
 ### Mission 5: HashMap
+
 - **Generic HashMap<K, V>** → Specialized implementations
 - **Hash trait** → Inlined hash functions
 - **Iterator chains** → Optimized loops
@@ -224,6 +244,7 @@ trait Processor {
 ## 🔬 Compile-Time Techniques
 
 ### Monomorphization
+
 ```rust
 // One generic function
 fn process<T: Display>(item: T) {
@@ -236,6 +257,7 @@ fn process<T: Display>(item: T) {
 ```
 
 ### Inlining
+
 ```rust
 #[inline]
 fn add(a: i32, b: i32) -> i32 {
@@ -246,6 +268,7 @@ fn add(a: i32, b: i32) -> i32 {
 ```
 
 ### Static vs Dynamic Dispatch
+
 ```rust
 // Static dispatch - zero cost
 fn static_dispatch<T: Draw>(item: T) {
@@ -261,10 +284,12 @@ fn dynamic_dispatch(item: &dyn Draw) {
 ## 🛠️ Tools for Verification
 
 ### 1. **Compiler Explorer (godbolt.org)**
+
 - Compare assembly output of different implementations
 - Verify that abstractions compile to optimal code
 
 ### 2. **Cargo Bench**
+
 ```rust
 // Benchmark to verify zero-cost claims
 #[cfg(test)]
@@ -283,6 +308,7 @@ mod benches {
 ```
 
 ### 3. **Perf and Profiling**
+
 ```bash
 # Profile to identify any hidden costs
 cargo build --release
@@ -293,28 +319,34 @@ perf report
 ## 🎓 Daily Study Applications
 
 ### Week 1: Ownership Fundamentals
+
 - Smart pointer abstractions without runtime cost
 - Move semantics compilation optimization
 
 ### Week 2: Collections and Iterators  
+
 - Iterator combinators compile to efficient loops
 - Generic collection performance characteristics
 
 ### Week 5: Error Handling
+
 - Result<T, E> compile-time optimization
 - Zero-cost error propagation with `?` operator
 
 ## 🏆 AoC Pattern Applications
 
 ### String Processing (AoC 2015 Days 1-4)
+
 - High-level string operations optimize to character manipulation
 - Iterator chains over characters compile to efficient loops
 
 ### Grid Operations (AoC 2015 Day 18)
+
 - Generic coordinate systems without abstraction penalty
 - Neighbor iteration patterns optimize to direct array access
 
 ### Algorithm Implementation
+
 - Recursive algorithms with zero-cost tail-call optimization
 - Generic search patterns specialized for problem types
 
@@ -346,6 +378,7 @@ perf report
 ---
 
 *Zero-Cost Abstractions Links:*
+
 - [[Performance Benchmarking]] - Measuring abstraction overhead
 - [[interior-mutability]] - When zero-cost breaks down
 - [[monomorphization]] - How generics achieve zero cost

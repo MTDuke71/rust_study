@@ -12,6 +12,7 @@ Density = (Actual Edges) / (Maximum Possible Edges)
 ```
 
 Where:
+
 - `E` = number of edges in the graph
 - `n` = number of nodes (vertices)
 - `n × (n - 1) / 2` = maximum possible edges in an undirected graph
@@ -118,21 +119,25 @@ Interpretation: Fully connected clique
 ## 🎯 Applications
 
 ### Social Network Analysis
+
 - **High density** (0.7+): Close-knit communities, strong social cohesion
 - **Low density** (0.3-): Weak ties, bridging between groups
 - **Measure influence**: Dense networks spread information faster
 
 ### Computer Networks
+
 - **Router networks**: Low density (cost constraints)
 - **Data center**: High density (redundancy requirements)
 - **Topology design**: Balance density with cost and reliability
 
 ### Organizational Analysis
+
 - **Communication patterns**: Who talks to whom?
 - **Collaboration networks**: Cross-team density indicates silos
 - **Knowledge sharing**: Dense networks = better information flow
 
 ### Web Graphs
+
 - **Link analysis**: Website connectivity
 - **Citation networks**: Research paper connections
 - **PageRank**: Density affects ranking algorithms
@@ -148,14 +153,17 @@ Interpretation: Fully connected clique
 ## ⚡ Computational Considerations
 
 ### Time Complexity
+
 - **Calculating density**: O(1) if edge/node counts are cached
 - **Computing from scratch**: O(V + E) to count nodes and edges
 
 ### Memory Usage
+
 - Dense graphs (density > 0.5): **Adjacency matrix** more efficient
 - Sparse graphs (density < 0.5): **Adjacency list** more efficient
 
 ### Threshold Rule of Thumb
+
 ```rust
 if density > 0.5 {
     // Use adjacency matrix: O(1) edge lookup
@@ -169,6 +177,7 @@ if density > 0.5 {
 ## 📝 Common Pitfalls
 
 ### 1. **Directed vs Undirected**
+
 ```rust
 // ❌ Wrong for directed graph
 let density = edges / ((n * (n - 1)) / 2);
@@ -178,12 +187,15 @@ let density = edges / (n * (n - 1));
 ```
 
 ### 2. **Self-Loops**
+
 Standard formula assumes no self-loops (node connecting to itself). If self-loops exist:
+
 ```rust
 let max_edges = (n * (n + 1)) / 2; // Include self-loops
 ```
 
 ### 3. **Integer Division**
+
 ```rust
 // ❌ Integer division loses precision
 let density = edge_count / (node_count * (node_count - 1) / 2);

@@ -9,12 +9,14 @@
 **Embedded Rust RTOS** refers to operating systems and runtime frameworks written in Rust that provide real-time task scheduling, hardware abstraction, and memory safety guarantees for resource-constrained embedded systems. Unlike traditional C/C++ RTOS solutions, Rust RTOS projects leverage the type system and ownership model to prevent common embedded bugs (use-after-free, data races, null pointer dereferences) at compile time.
 
 **Key Characteristics**:
+
 - **Memory safety without garbage collection**: Zero-cost abstractions with compile-time guarantees
 - **Concurrency without data races**: Ownership prevents simultaneous mutable access
 - **No runtime overhead**: Most safety checks happen at compile time
 - **Interoperability**: Can interface with existing C/C++ embedded ecosystems
 
 **Why Embedded Rust Matters**:
+
 1. **Safety-critical systems**: Medical devices, automotive, aerospace require memory safety
 2. **Reducing bugs**: 70% of security vulnerabilities stem from memory unsafety (Microsoft research)
 3. **Modern abstractions**: Async/await, iterators, pattern matching in embedded context
@@ -80,11 +82,13 @@ avr-hal            Embassy/RTIC/Tock  Embassy       std Rust + rppal
 #### **1. Tock OS** - Security-Focused Microkernel
 
 **Architecture**: Microkernel with memory protection
-- **Website**: https://www.tockos.org/
-- **GitHub**: https://github.com/tock/tock
+
+- **Website**: <https://www.tockos.org/>
+- **GitHub**: <https://github.com/tock/tock>
 - **Target Platforms**: ARM Cortex-M (nRF52, SAM4L, STM32, etc.)
 
 **Key Features**:
+
 ```rust
 // Process isolation with Memory Protection Unit (MPU)
 // Each app runs in its own memory space
@@ -100,6 +104,7 @@ trait Capsule {
 ```
 
 **Production Use Cases**:
+
 - **Google OpenTitan**: Security chips for server firmware protection
 - **Research projects**: Universities use for OS education
 - **IoT security**: Sandboxed untrusted code execution
@@ -111,11 +116,13 @@ trait Capsule {
 #### **2. Embassy** - Modern Async RTOS
 
 **Architecture**: Async executor with cooperative multitasking
-- **Website**: https://embassy.dev/
-- **GitHub**: https://github.com/embassy-rs/embassy
+
+- **Website**: <https://embassy.dev/>
+- **GitHub**: <https://github.com/embassy-rs/embassy>
 - **Target Platforms**: ARM Cortex-M, RISC-V, ESP32, RP2040
 
 **Key Features**:
+
 ```rust
 use embassy_executor::Spawner;
 use embassy_time::{Duration, Timer};
@@ -142,6 +149,7 @@ async fn main(spawner: Spawner) {
 ```
 
 **Production Use Cases**:
+
 - **Battery-powered IoT**: Power-efficient async I/O reduces current draw
 - **ESP32 projects**: Official Embassy support from Espressif
 - **Industrial sensors**: Multi-sensor coordination with async
@@ -153,11 +161,13 @@ async fn main(spawner: Spawner) {
 #### **3. RTIC (Real-Time Interrupt-driven Concurrency)** - Zero-Cost Hard Real-Time
 
 **Architecture**: Compile-time task scheduling with hardware interrupts
-- **Website**: https://rtic.rs/
-- **GitHub**: https://github.com/rtic-rs/rtic
+
+- **Website**: <https://rtic.rs/>
+- **GitHub**: <https://github.com/rtic-rs/rtic>
 - **Target Platforms**: ARM Cortex-M only
 
 **Key Features**:
+
 ```rust
 #[rtic::app(device = stm32f4::stm32f401, peripherals = true)]
 mod app {
@@ -191,6 +201,7 @@ mod app {
 ```
 
 **Production Use Cases**:
+
 - **Motor control**: Deterministic timing for PWM and encoder reading
 - **Industrial automation**: PLC-like control with hard deadlines
 - **Safety-critical**: Automotive, medical devices requiring WCET guarantees
@@ -202,10 +213,12 @@ mod app {
 #### **4. FreeRTOS-rust** - Rust Bindings to Battle-Tested C Kernel
 
 **Architecture**: Safe Rust wrapper over FreeRTOS C API
-- **GitHub**: https://github.com/lobaro/FreeRTOS-rust
+
+- **GitHub**: <https://github.com/lobaro/FreeRTOS-rust>
 - **Target Platforms**: Any platform FreeRTOS supports (50+ architectures)
 
 **Key Features**:
+
 ```rust
 use freertos_rust::*;
 
@@ -229,6 +242,7 @@ fn main() {
 ```
 
 **Production Use Cases**:
+
 - **Legacy migration**: Gradual Rust adoption in existing FreeRTOS projects
 - **Certification**: FreeRTOS has DO-178C/IEC-61508 certified versions
 - **Multi-platform**: Widest hardware support
@@ -240,11 +254,13 @@ fn main() {
 #### **5. Drone OS** - Research-Focused Fiber Scheduler
 
 **Architecture**: Fiber-based cooperative multitasking with compile-time memory safety
-- **Website**: https://www.drone-os.com/
-- **GitHub**: https://github.com/drone-os/drone
+
+- **Website**: <https://www.drone-os.com/>
+- **GitHub**: <https://github.com/drone-os/drone>
 - **Target Platforms**: ARM Cortex-M
 
 **Key Features**:
+
 - Dynamic memory with compile-time guarantees (heap pools)
 - Fiber-based lightweight threads
 - Interrupt-driven I/O with Rust futures
@@ -258,10 +274,12 @@ fn main() {
 #### **Arduino (AVR Architecture)**
 
 **Main Framework**: AVR-HAL
-- **GitHub**: https://github.com/Rahix/avr-hal
+
+- **GitHub**: <https://github.com/Rahix/avr-hal>
 - **Supported Boards**: Uno (ATmega328P), Mega 2560, Leonardo, Nano
 
 **Complete Blink Example**:
+
 ```rust
 #![no_std]
 #![no_main]
@@ -285,6 +303,7 @@ fn main() -> ! {
 ```
 
 **Development Workflow**:
+
 ```powershell
 # Install AVR toolchain and programmer
 cargo install ravedude
@@ -304,6 +323,7 @@ ravedude uno -cb 57600
 ```
 
 **Advanced Example - Serial Communication**:
+
 ```rust
 #[arduino_hal::entry]
 fn main() -> ! {
@@ -324,12 +344,14 @@ fn main() -> ! {
 ```
 
 **Limitations**:
+
 - `#![no_std]` - No standard library (use `core` only)
 - 2KB RAM on Uno - Very constrained heap
 - Limited debugging - Serial output or JTAG/debugWIRE
 - Smaller ecosystem than Arduino C++ libraries
 
 **When to Use Arduino Rust**:
+
 - ✅ Learning embedded Rust on familiar hardware
 - ✅ Simple sensor/actuator projects
 - ✅ Ultra-low power applications (µW range)
@@ -372,6 +394,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 **Advanced - PWM Servo Control**:
+
 ```rust
 use rppal::pwm::{Channel, Pwm, Polarity};
 use std::time::Duration;
@@ -396,6 +419,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 **Cross-Compilation Workflow**:
+
 ```powershell
 # On development PC (Windows/Linux/macOS)
 rustup target add armv7-unknown-linux-gnueabihf  # Pi 2/3/4 (32-bit)
@@ -412,6 +436,7 @@ ssh pi@raspberrypi.local
 ```
 
 **Using `cross` for Easy Cross-Compilation**:
+
 ```powershell
 # Install cross (Docker-based cross-compilation)
 cargo install cross
@@ -426,7 +451,8 @@ cross build --release
 **Approach 2: Bare-Metal Raspberry Pi** (Advanced)
 
 Run Rust **without Linux** on Raspberry Pi hardware:
-- **Repository**: https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials
+
+- **Repository**: <https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials>
 - Direct bootloader development
 - Full hardware control (GPU, interrupts, etc.)
 - Much more complex - for OS development education
@@ -444,6 +470,7 @@ Run Rust **without Linux** on Raspberry Pi hardware:
 | **Drone** | Low | Fiber scheduler | ❌ | Soft | Fiber-based | Research | Experimental projects |
 
 **Real-Time Classifications**:
+
 - **Hard Real-Time**: Missing deadline = system failure (RTIC, FreeRTOS)
 - **Soft Real-Time**: Missing deadline = degraded performance (Tock, Embassy, Drone)
 
@@ -487,12 +514,14 @@ Run Rust **without Linux** on Raspberry Pi hardware:
 ## 🔗 **Integration Points**
 
 ### **Builds On**
+
 - [[ownership-fundamentals]] - Ownership prevents embedded memory bugs
 - [[smart-pointers]] - Box/Rc patterns in constrained environments
 - [[async-await-basics]] - Embassy's async runtime foundation
 - [[concurrency-fundamentals]] - Thread safety in embedded context
 
 ### **Enables**
+
 - **Future Learning**:
   - [[embedded-hal-traits]] - Hardware abstraction layer design
   - [[no-std-programming]] - Programming without standard library
@@ -507,17 +536,20 @@ Run Rust **without Linux** on Raspberry Pi hardware:
   - Home automation with Raspberry Pi + rppal
 
 ### **Related Concepts**
+
 - [[rust-for-linux]] - Rust in Linux kernel development
 - [[webassembly-embedded]] - WASM on embedded (wasm3)
 - [[formal-verification]] - Proving RTOS correctness
 - [[zero-cost-abstractions]] - How Rust achieves embedded performance
 
 ### **Mission Integration Possibilities**
+
 - **Mission 11: Embedded Data Structures** - Implement Mission 1-10 data structures in `no_std` environment
 - **Mission 12: Real-Time Scheduler** - Build simple RTOS task scheduler using Rust traits
 - **Mission 13: Hardware Abstraction** - Create embedded-hal implementations for custom hardware
 
 ### **Daily Study Applications**
+
 - Week 9: Port daily study examples to Arduino/Raspberry Pi
 - Week 10: Implement AoC problems on constrained embedded hardware (2KB RAM challenge!)
 - Week 11: Compare `std` vs `no_std` implementations of same algorithm
@@ -527,6 +559,7 @@ Run Rust **without Linux** on Raspberry Pi hardware:
 ## 📚 **Resources**
 
 ### **Official Documentation**
+
 - [Embedded Rust Book](https://docs.rust-embedded.org/book/) - Comprehensive embedded Rust guide
 - [Embassy Book](https://embassy.dev/book/) - Async embedded development
 - [RTIC Book](https://rtic.rs/dev/book/en/) - Interrupt-driven concurrency
@@ -534,17 +567,20 @@ Run Rust **without Linux** on Raspberry Pi hardware:
 - [rppal Documentation](https://docs.rs/rppal/) - Raspberry Pi GPIO library
 
 ### **Hardware Resources**
+
 - [Discovery Book](https://docs.rust-embedded.org/discovery/) - ARM Cortex-M beginner tutorial with STM32F3
 - [Rust on ESP](https://esp-rs.github.io/book/) - ESP32 development in Rust
 - [RP2040 HAL](https://github.com/rp-rs/rp-hal) - Raspberry Pi Pico (RP2040 chip)
 
 ### **Community & Tools**
+
 - [Awesome Embedded Rust](https://github.com/rust-embedded/awesome-embedded-rust) - Curated embedded resources
 - [probe-rs](https://probe.rs/) - Debugging and flashing tool for embedded Rust
 - [defmt](https://defmt.ferrous-systems.com/) - Efficient logging for embedded
 - [embedded-hal](https://docs.rs/embedded-hal/) - Hardware abstraction traits
 
 ### **Workspace Examples (Future)**
+
 - `embedded/arduino_blink/` - AVR-HAL blink example
 - `embedded/rpi_gpio/` - Raspberry Pi GPIO with rppal
 - `embedded/embassy_async/` - ESP32 async example
@@ -555,6 +591,7 @@ Run Rust **without Linux** on Raspberry Pi hardware:
 ## 🎯 **Learning Path**
 
 ### **Beginner: Start with Raspberry Pi**
+
 1. Install Rust on Raspberry Pi OS
 2. Run standard Rust programs (full `std` support)
 3. Use `rppal` for GPIO control
@@ -563,6 +600,7 @@ Run Rust **without Linux** on Raspberry Pi hardware:
 **Why**: Familiar development experience, full debugging, gentle embedded introduction
 
 ### **Intermediate: Arduino AVR Development**
+
 1. Install `ravedude` and AVR toolchain
 2. Understand `#![no_std]` environment
 3. Implement blink with `arduino-hal`
@@ -571,6 +609,7 @@ Run Rust **without Linux** on Raspberry Pi hardware:
 **Why**: True embedded constraints, bare-metal experience, common hobbyist platform
 
 ### **Advanced: ARM Cortex-M with RTOS**
+
 1. Get STM32 Discovery board (~$10)
 2. Follow Discovery Book tutorials
 3. Implement tasks with Embassy async
@@ -579,6 +618,7 @@ Run Rust **without Linux** on Raspberry Pi hardware:
 **Why**: Production-grade RTOS patterns, modern embedded development, career-applicable skills
 
 ### **Expert: Bare-Metal OS Development**
+
 1. Study Raspberry Pi bare-metal tutorials
 2. Implement basic bootloader
 3. Write interrupt handlers

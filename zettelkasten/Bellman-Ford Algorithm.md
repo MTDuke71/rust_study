@@ -180,12 +180,14 @@ Bellman-Ford's execution:
 ### **The "No Guarantee" Problem**
 
 **[[Dijkstra Algorithm]]'s guarantee:**
+
 ```
 When I pop node X at distance D:
   ✅ D is the shortest distance to X (if edges ≥ 0)
 ```
 
 **Bellman-Ford's reality:**
+
 ```
 After checking edge X→Y:
   ❌ Can't be sure this is shortest to Y yet
@@ -200,6 +202,7 @@ After checking edge X→Y:
 ## 🎯 Use Cases & Applications
 
 ### **Currency Arbitrage**
+
 ```
 Currencies as nodes, exchange rates as edges
 Negative edge: Profitable exchange cycle
@@ -210,16 +213,19 @@ Bellman-Ford detects: "Negative cycle exists!"
 ```
 
 ### **Network Protocols**
+
 - **Distance Vector Routing**: RIP protocol uses Bellman-Ford
 - **BGP**: Internet backbone routing with policy costs
 - **Network with Credits**: Edges can represent cost savings
 
 ### **Financial Modeling**
+
 - **Transaction Networks**: Costs and rebates (negative costs)
 - **Cash Flow Analysis**: Income (negative cost) and expenses
 - **Optimization Problems**: Resource allocation with incentives
 
 ### **Constraint Networks**
+
 - **Difference Constraints**: System of inequalities
 - **Temporal Reasoning**: Time intervals with constraints
 - **Resource Scheduling**: Tasks with dependencies and bonuses
@@ -262,6 +268,7 @@ fn spfa(graph: &Graph, start: NodeId) -> HashMap<NodeId, Weight> {
 ```
 
 **SPFA (Shortest Path Faster Algorithm)**:
+
 - Only processes nodes whose distances changed
 - Often faster in practice: average `O(E)`, worst still `O(V·E)`
 - Popular in competitive programming
@@ -337,6 +344,7 @@ fn test_disconnected_nodes() {
 ### **Why V-1 Iterations?**
 
 Visual explanation:
+
 ```
 Path from 0 to 4 in worst case:
   0 → 1 → 2 → 3 → 4  (4 edges for 5 vertices)
@@ -373,16 +381,19 @@ Solution: Bellman-Ford detects this on Vth iteration!
 ## 📚 Learning Integration
 
 ### **Prerequisite Knowledge**
+
 - **[[Graph Representation]]**: Understanding graph data structures
 - **[[BFS Patterns]]**: Basic graph traversal concepts
 - **[[Dijkstra Algorithm]]**: Context for why Bellman-Ford is needed
 
 ### **Related Concepts**
+
 - **[[Graph Algorithms]]**: Overall algorithm landscape
 - **[[Pathfinding Strategies]]**: When to use which algorithm
 - **[[Dynamic Programming]]**: Bellman-Ford as DP on graphs
 
 ### **Advanced Topics**
+
 - **[[Floyd-Warshall Algorithm]]**: All-pairs shortest paths
 - **[[Network Flow Algorithms]]**: Related optimization problems
 - **[[Constraint Satisfaction]]**: Application to scheduling problems
@@ -394,12 +405,14 @@ Solution: Bellman-Ford detects this on Vth iteration!
 ### **When to Use Bellman-Ford**
 
 ✅ **Use Bellman-Ford when:**
+
 - Edge weights can be negative
 - Need to detect negative cycles
 - Graph is small (< 1000 vertices)
 - Running offline/batch processing
 
 ❌ **Avoid Bellman-Ford when:**
+
 - All edges are non-negative → Use [[Dijkstra Algorithm]]
 - Need real-time performance on large graphs
 - Only care about unweighted paths → Use [[BFS Patterns]]

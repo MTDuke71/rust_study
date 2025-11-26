@@ -9,6 +9,7 @@
 `Rc<T>` (Reference Counted) is a smart pointer that enables multiple ownership of the same data through reference counting. It keeps track of the number of references to a value and only cleans up the value when the last reference goes out of scope.
 
 **Key Characteristics**:
+
 - **Shared Ownership**: Multiple owners can hold references to the same data
 - **Reference Counting**: Tracks number of active references at runtime
 - **Single-Threaded Only**: Not thread-safe (use `Arc<T>` for concurrent contexts)
@@ -274,6 +275,7 @@ impl MutableGraph {
 ## Performance Considerations
 
 ### Runtime Overhead
+
 ```rust
 use std::rc::Rc;
 
@@ -291,6 +293,7 @@ println!("Strong count: {}", Rc::strong_count(&rc1));  // 3
 ```
 
 ### Memory Overhead
+
 - **Reference Count Storage**: Extra word(s) for strong/weak counts
 - **Heap Allocation**: Data always on heap
 - **Indirection**: Pointer dereference to access data
@@ -393,6 +396,7 @@ fn create_tree() -> Rc<Node> {
 ### Pattern: Graph Traversal with Shared Nodes
 
 Applicable to:
+
 - **AoC 2024 Day 5**: Page ordering dependency graph
 - **AoC 2015 Day 9**: Traveling salesman with city graph
 - **AoC 2023 Day 10**: Pipe maze graph representation
@@ -539,27 +543,32 @@ struct SharedGraph<T> {
 ## Related Concepts
 
 **Smart Pointers**:
+
 - [[box-heap-allocation]] - Single ownership heap allocation
 - [[refcell-interior-mutability]] - Interior mutability pattern (often used with Rc)
 - [[arc-atomic-rc]] - Thread-safe reference counting
 - [[weak-references]] - Breaking reference cycles
 
 **Ownership & Borrowing**:
+
 - [[ownership]] - Rust's ownership system fundamentals
 - [[borrowing-rules]] - Borrow checker and lifetime rules
 - [[lifetimes]] - Explicit lifetime annotations
 
 **Graph & Data Structures**:
+
 - [[mission-7]] - Graph algorithms and implementations
 - [[graph-traversal-patterns]] - BFS, DFS, topological sort
 - [[tree-structures]] - Binary trees, tries, DAGs
 
 **AoC Problem Patterns**:
+
 - [[aoc-graph-problems]] - Graph-based AoC challenges
 - [[aoc-dependency-resolution]] - Topological sorting problems
 - [[aoc-shared-state]] - Problems requiring shared mutable state
 
 **Performance**:
+
 - [[heap-vs-stack]] - Memory allocation strategies
 - [[zero-cost-abstractions]] - Rust's performance philosophy
 - [[reference-counting-overhead]] - Runtime cost analysis
@@ -569,18 +578,20 @@ struct SharedGraph<T> {
 - **Rust Book**: Chapter 15.4 - Rc<T>, the Reference Counted Smart Pointer
 - **Rust Book**: Chapter 15.5 - RefCell<T> and the Interior Mutability Pattern
 - **Rust Book**: Chapter 15.6 - Reference Cycles Can Leak Memory
-- **Documentation**: https://doc.rust-lang.org/std/rc/struct.Rc.html
-- **Weak References**: https://doc.rust-lang.org/std/rc/struct.Weak.html
+- **Documentation**: <https://doc.rust-lang.org/std/rc/struct.Rc.html>
+- **Weak References**: <https://doc.rust-lang.org/std/rc/struct.Weak.html>
 
 ## Summary
 
 `Rc<T>` enables **shared ownership** in single-threaded contexts through **reference counting**. It's essential for:
+
 - Graph data structures with shared nodes
 - Configuration sharing across components
 - Tree structures with multiple parents (DAGs)
 - Observer patterns and event systems
 
 **Key Trade-offs**:
+
 - ✅ Enables multiple ownership without lifetime complexity
 - ✅ Automatic cleanup when last reference drops
 - ✅ Safe sharing in single-threaded contexts

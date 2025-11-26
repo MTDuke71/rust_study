@@ -8,6 +8,7 @@
 **Interior Mutability** is a Rust design pattern that allows you to mutate data even when you have an immutable reference to that data. This seemingly violates Rust's core principle of "shared XOR mutable," but it's implemented safely through specific wrapper types that enforce borrowing rules at runtime rather than compile time.
 
 ### **Core Concept**
+
 ```rust
 // Normally this would be impossible:
 let x = 5;
@@ -42,6 +43,7 @@ let r2 = x.borrow();     // OK: multiple immutable borrows
 ## 🏗️ The Types of Interior Mutability
 
 ### **1. Cell<T> - Single-Threaded, Move-Only**
+
 ```rust
 use std::cell::Cell;
 
@@ -58,12 +60,14 @@ println!("Old: {}, New: {}", old_value, cell.get());
 ```
 
 **Characteristics:**
+
 - ✅ **Zero-cost**: No runtime overhead
 - ✅ **No borrowing**: Only move semantics
 - ❌ **No references**: Cannot get `&T` or `&mut T`
 - ❌ **Single-threaded only**: Not `Send` or `Sync`
 
 **Use Cases:**
+
 - Simple counters and flags
 - Configuration values that need updating
 - Caching computed values
@@ -97,17 +101,20 @@ match data.try_borrow_mut() {
 ```
 
 **Characteristics:**
+
 - ✅ **Runtime borrowing**: Can get `&T` and `&mut T`
 - ✅ **Panic on violation**: Clear error detection
 - ❌ **Runtime overhead**: Borrow tracking
 - ❌ **Single-threaded only**: Not `Send` or `Sync`
 
 **Use Cases:**
+
 - Breaking circular dependencies
 - Mutable data in immutable contexts
 - Implementing `Clone` for types with interior mutability
 
 ### **3. Mutex<T> - Multi-Threaded, Exclusive Access**
+
 ```rust
 use std::sync::Mutex;
 use std::thread;
@@ -147,12 +154,14 @@ println!("Counter: {}", *counter.lock().unwrap());
 ```
 
 **Characteristics:**
+
 - ✅ **Thread-safe**: `Send` and `Sync`
 - ✅ **Exclusive access**: Only one thread at a time
 - ❌ **Deadlock risk**: Can block indefinitely
 - ❌ **Runtime overhead**: Locking mechanism
 
 ### **4. RwLock<T> - Multi-Threaded, Read-Write Access**
+
 ```rust
 use std::sync::RwLock;
 use std::thread;
@@ -200,12 +209,14 @@ writer.join().unwrap();
 ```
 
 **Characteristics:**
+
 - ✅ **Multiple readers**: Concurrent read access
 - ✅ **Exclusive writers**: Only one writer at a time
 - ❌ **Writer starvation**: Readers can block writers
 - ❌ **Runtime overhead**: Lock management
 
 ### **5. Atomic Types - Lock-Free, Single Values**
+
 ```rust
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::thread;
@@ -229,6 +240,7 @@ println!("Counter: {}", counter.load(Ordering::SeqCst));
 ```
 
 **Characteristics:**
+
 - ✅ **Lock-free**: No blocking or panicking
 - ✅ **Thread-safe**: `Send` and `Sync`
 - ❌ **Limited types**: Only primitive types
@@ -267,6 +279,7 @@ Do you need thread safety?
 ## 🔍 Mission Integration Examples
 
 ### **Mission 4: Linked List with Interior Mutability**
+
 ```rust
 use std::rc::Rc;
 use std::cell::RefCell;
@@ -328,6 +341,7 @@ impl<T> DoublyLinkedList<T> {
 ```
 
 ### **Mission 6: Grid with Mutable Cells**
+
 ```rust
 use std::cell::RefCell;
 
@@ -381,6 +395,7 @@ impl<T> MutableGrid<T> {
 ## 🏆 AoC Pattern Applications
 
 ### **Day 18: Game of Life State Management**
+
 ```rust
 use std::cell::RefCell;
 
@@ -414,6 +429,7 @@ impl GameOfLife {
 ```
 
 ### **Shared State in Graph Algorithms**
+
 ```rust
 use std::collections::HashMap;
 use std::cell::RefCell;
@@ -463,6 +479,7 @@ impl Graph {
 ## 🏗️ Common Patterns and Use Cases
 
 ### **1. Breaking Circular Dependencies**
+
 ```rust
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -483,6 +500,7 @@ impl Node {
 ```
 
 ### **2. Caching with Lazy Evaluation**
+
 ```rust
 use std::cell::RefCell;
 
@@ -509,6 +527,7 @@ impl ExpensiveComputation {
 ```
 
 ### **3. Mock Objects in Testing**
+
 ```rust
 use std::cell::RefCell;
 
@@ -540,6 +559,7 @@ impl Logger for MockLogger {
 ```
 
 ### **4. Configuration Management**
+
 ```rust
 use std::cell::Cell;
 
@@ -569,6 +589,7 @@ impl Config {
 ```
 
 ### **5. Observer Pattern with Interior Mutability**
+
 ```rust
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
@@ -600,6 +621,7 @@ impl Subject {
 ```
 
 ### **6. Memoized Functions**
+
 ```rust
 use std::cell::RefCell;
 use std::collections::HashMap;
@@ -631,6 +653,7 @@ where
 ## ⚡ Runtime Overhead and Performance
 
 ### **RefCell Cost Analysis**
+
 ```rust
 use criterion::{black_box, Criterion};
 use std::cell::RefCell;
@@ -657,6 +680,7 @@ fn benchmark_refcell_overhead(c: &mut Criterion) {
 ```
 
 ### **When Zero-Cost Abstractions Break Down**
+
 ```rust
 // Zero-cost: compile-time borrow checking
 fn zero_cost_example(data: &mut Vec<i32>) {
@@ -673,6 +697,7 @@ fn runtime_cost_example(data: &RefCell<Vec<i32>>) {
 ## ⚠️ Common Pitfalls and Solutions
 
 ### **1. Panic on Borrow Violation**
+
 ```rust
 use std::cell::RefCell;
 
@@ -682,6 +707,7 @@ let _borrow2 = cell.borrow_mut(); // PANIC! Already borrowed
 ```
 
 **Solution**: Use `try_borrow()` and `try_borrow_mut()` for graceful handling:
+
 ```rust
 let cell = RefCell::new(42);
 if let Ok(_borrow1) = cell.try_borrow() {
@@ -692,6 +718,7 @@ if let Ok(_borrow1) = cell.try_borrow() {
 ```
 
 ### **2. Deadlock with Mutex**
+
 ```rust
 use std::sync::Mutex;
 
@@ -704,6 +731,7 @@ let _guard2 = lock2.lock().unwrap(); // Deadlock if Thread 2 has opposite order
 ```
 
 **Solution**: Always acquire locks in the same order:
+
 ```rust
 // Good: Consistent lock ordering
 let _guard1 = lock1.lock().unwrap();
@@ -711,6 +739,7 @@ let _guard2 = lock2.lock().unwrap();
 ```
 
 ### **3. Forgotten Drop of Borrows**
+
 ```rust
 use std::cell::RefCell;
 
@@ -721,6 +750,7 @@ let borrow = cell.borrow();
 ```
 
 **Solution**: Use scoped borrowing or explicit drops:
+
 ```rust
 // Scoped borrowing
 {
@@ -737,6 +767,7 @@ drop(borrow); // Explicit release
 ## 🔒 Error Handling Patterns
 
 ### **Safe Interior Mutability**
+
 ```rust
 use std::cell::RefCell;
 
@@ -773,6 +804,7 @@ if let Some(()) = container.with_data_mut(|v| v.push(4)) {
 ```
 
 ### **Borrow Conflict Detection**
+
 ```rust
 use std::cell::{RefCell, BorrowError, BorrowMutError};
 
@@ -802,6 +834,7 @@ fn safe_operations<T>(cell: &RefCell<T>) -> Result<(), String> {
 ## 🧪 Testing Interior Mutability
 
 ### **Unit Testing with Mock Objects**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -841,6 +874,7 @@ mod tests {
 ```
 
 ### **Integration Testing with Threads**
+
 ```rust
 #[test]
 fn test_thread_safety() {
@@ -870,6 +904,7 @@ fn test_thread_safety() {
 ## 🚀 Advanced Patterns
 
 ### **1. Thread-Local Storage**
+
 ```rust
 use std::cell::RefCell;
 use std::thread_local;
@@ -887,6 +922,7 @@ fn increment_counter() {
 ```
 
 ### **2. Lazy Static Initialization**
+
 ```rust
 use std::cell::RefCell;
 use std::sync::Once;
@@ -907,30 +943,36 @@ fn get_data() -> &'static str {
 ## 🎓 Daily Study Applications
 
 ### **Week 3: Advanced Ownership Patterns**
+
 - RefCell for shared mutable state
 - Rc<RefCell<T>> combination patterns
 
 ### **Week 4: Concurrency Foundations**  
+
 - Mutex vs RefCell comparison
 - Thread-safe interior mutability
 
 ### **Week 5: Complex Data Structures**
+
 - Interior mutability in tree structures
 - Self-referential data patterns
 
 ## 🏆 Mission Applications
 
 ### **Mission 4: Doubly Linked List**
+
 - **Essential**: Rc<RefCell<Node<T>>> pattern
 - **Challenge**: Avoiding reference cycles
 - **Performance**: Runtime borrow checking overhead
 
 ### **Mission 6: Mutable Grid Operations**
+
 - **Use Case**: Simultaneous cell updates
 - **Pattern**: RefCell for individual cells
 - **Safety**: Preventing borrow conflicts
 
 ### **Mission 10: Union-Find with Path Compression**
+
 - **Need**: Mutable parent pointers in shared structure
 - **Solution**: RefCell for rank and parent fields
 - **Efficiency**: Minimizing borrow scope
@@ -946,16 +988,19 @@ fn get_data() -> &'static str {
 ## 📖 Further Reading
 
 ### **Official Documentation**
+
 - [The Rust Book - Interior Mutability](https://doc.rust-lang.org/book/ch15-05-interior-mutability.html)
 - [Rust Reference - Interior Mutability](https://doc.rust-lang.org/reference/interior-mutability.html)
 
 ### **Performance Considerations**
+
 - **Cell<T>**: Zero runtime cost, but limited to `Copy` types
 - **RefCell<T>**: Runtime borrow checking, panic on violation
 - **Mutex<T>**: Thread-safe but with locking overhead
 - **Atomic<T>**: Lock-free but limited to primitive types
 
 ### **Best Practices**
+
 1. **Prefer compile-time checks** when possible
 2. **Use the most restrictive type** that meets your needs
 3. **Be explicit about thread safety requirements**
@@ -965,6 +1010,7 @@ fn get_data() -> &'static str {
 ---
 
 *Interior Mutability Links:*
+
 - [[atomic-operations-memory-ordering]] - Lock-free atomic types for concurrent interior mutability
 - [[refcell-interior-mutability]] - Deep dive into RefCell patterns and state management
 - [[zero-cost-abstractions]] - Runtime cost trade-offs

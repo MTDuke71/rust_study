@@ -8,6 +8,7 @@
 ## 🎯 Overview
 
 This page outlines 10 classic coding interview problems frequently asked at FAANG companies. Each problem is framed with:
+
 - **Problem statement** summary
 - **Key algorithm/approach**
 - **Time & space complexity**
@@ -19,6 +20,7 @@ This page outlines 10 classic coding interview problems frequently asked at FAAN
 ## 1️⃣ Valid Anagram
 
 ### **Problem**
+
 Given two strings `s` and `t`, determine if `t` is an anagram of `s`. An anagram uses exactly the same characters, just rearranged.
 
 ```
@@ -32,6 +34,7 @@ Output: false
 ### **Approach Options**
 
 **Option A: Sorting** (Simple but slower)
+
 ```rust
 fn is_anagram(s: String, t: String) -> bool {
     let mut s_chars: Vec<char> = s.chars().collect();
@@ -45,6 +48,7 @@ fn is_anagram(s: String, t: String) -> bool {
 ```
 
 **Option B: Character Frequency** (Better)
+
 ```rust
 fn is_anagram(s: String, t: String) -> bool {
     if s.len() != t.len() { return false; }
@@ -61,10 +65,12 @@ fn is_anagram(s: String, t: String) -> bool {
 ```
 
 ### **Complexity**
+
 - **Time**: O(n) with frequency counting; O(n log n) with sorting
 - **Space**: O(1) since max 26 letters
 
 ### **Key Insights**
+
 - ✅ Character frequency counting solves this efficiently
 - ✅ HashMap (or array for fixed alphabet) is ideal
 - ✅ Early length check saves time
@@ -74,6 +80,7 @@ fn is_anagram(s: String, t: String) -> bool {
 ## 2️⃣ First and Last Index in Sorted Array
 
 ### **Problem**
+
 Given a sorted array and a target value, find the first and last position of the target.
 
 ```
@@ -87,6 +94,7 @@ Output: [-1, -1]
 ### **Approach**
 
 **Binary Search (Two Passes)**
+
 ```rust
 fn search_range(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let left = binary_search_left(nums.clone(), target);
@@ -134,10 +142,12 @@ fn binary_search_right(nums: Vec<i32>, target: i32) -> i32 {
 ```
 
 ### **Complexity**
+
 - **Time**: O(log n) - two binary searches
 - **Space**: O(1)
 
 ### **Key Insights**
+
 - ✅ Binary search, but continue searching after finding target
 - ✅ One pass finds first, another finds last
 - ✅ Must handle duplicates properly
@@ -147,6 +157,7 @@ fn binary_search_right(nums: Vec<i32>, target: i32) -> i32 {
 ## 3️⃣ Kth Largest Element
 
 ### **Problem**
+
 Find the kth largest element in an unsorted array.
 
 ```
@@ -160,6 +171,7 @@ Output: 2
 ### **Approach Options**
 
 **Option A: Min Heap of Size K**
+
 ```rust
 use std::collections::BinaryHeap;
 use std::cmp::Reverse;
@@ -182,6 +194,7 @@ fn find_kth_largest(nums: Vec<i32>, k: i32) -> i32 {
 ```
 
 **Option B: QuickSelect (Faster average case)**
+
 ```rust
 fn find_kth_largest(nums: Vec<i32>, k: i32) -> i32 {
     let mut nums = nums;
@@ -219,10 +232,12 @@ fn partition(nums: &mut Vec<i32>, left: usize, right: usize) -> usize {
 ```
 
 ### **Complexity**
+
 - **Min Heap**: Time O(n log k), Space O(k)
 - **QuickSelect**: Time O(n) average, O(n²) worst, Space O(1)
 
 ### **Key Insights**
+
 - ✅ Min heap of size k is reliable O(n log k)
 - ✅ QuickSelect is faster on average for random data
 - ✅ HeapSort concept: maintain heap of k elements
@@ -232,6 +247,7 @@ fn partition(nums: &mut Vec<i32>, left: usize, right: usize) -> usize {
 ## 4️⃣ Symmetric Tree
 
 ### **Problem**
+
 Check if a binary tree is symmetric (mirror of itself).
 
 ```
@@ -247,6 +263,7 @@ Output: true (symmetric)
 ### **Approach**
 
 **Recursive Comparison**
+
 ```rust
 #[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
@@ -276,6 +293,7 @@ fn is_mirror(left: &Option<Box<TreeNode>>, right: &Option<Box<TreeNode>>) -> boo
 ```
 
 **Iterative with Queue**
+
 ```rust
 use std::collections::VecDeque;
 
@@ -302,10 +320,12 @@ fn is_symmetric(root: Option<Box<TreeNode>>) -> bool {
 ```
 
 ### **Complexity**
+
 - **Time**: O(n) - visit each node once
 - **Space**: O(h) recursive, O(n) iterative (h = height)
 
 ### **Key Insights**
+
 - ✅ Compare nodes recursively: compare val, cross-compare children
 - ✅ Mirror means left.left == right.right AND left.right == right.left
 - ✅ Tree traversal problem, good for recursion practice
@@ -315,6 +335,7 @@ fn is_symmetric(root: Option<Box<TreeNode>>) -> bool {
 ## 5️⃣ Generate Parentheses
 
 ### **Problem**
+
 Generate all combinations of well-formed parentheses with n pairs.
 
 ```
@@ -328,6 +349,7 @@ Output: ["()"]
 ### **Approach**
 
 **Backtracking**
+
 ```rust
 fn generate_parenthesis(n: i32) -> Vec<String> {
     let mut result = Vec::new();
@@ -364,10 +386,12 @@ fn generate_parenthesis(n: i32) -> Vec<String> {
 ```
 
 ### **Complexity**
+
 - **Time**: O(4^n / √n) - Catalan number
 - **Space**: O(n) recursion depth
 
 ### **Key Insights**
+
 - ✅ Backtracking with constraints
 - ✅ Only add '(' if open < n
 - ✅ Only add ')' if close < open (valid parentheses constraint)
@@ -378,6 +402,7 @@ fn generate_parenthesis(n: i32) -> Vec<String> {
 ## 6️⃣ Gas Station
 
 ### **Problem**
+
 Given gas and cost arrays, find starting gas station index to complete circuit.
 
 ```
@@ -391,6 +416,7 @@ Output: -1  (impossible)
 ### **Approach**
 
 **Greedy Algorithm**
+
 ```rust
 fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {
     let mut tank = 0;
@@ -412,10 +438,12 @@ fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {
 ```
 
 ### **Complexity**
+
 - **Time**: O(n) - single pass
 - **Space**: O(1)
 
 ### **Key Insights**
+
 - ✅ Greedy approach: if tank goes negative, restart from next station
 - ✅ Track total fuel difference to check if solution exists
 - ✅ If no solution exists, total will be negative
@@ -426,6 +454,7 @@ fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {
 ## 7️⃣ Course Schedule
 
 ### **Problem**
+
 Determine if you can finish all courses given prerequisites. Prerequisites form edges in a graph.
 
 ```
@@ -439,6 +468,7 @@ Output: false  (circular dependency)
 ### **Approach**
 
 **Topological Sort with DFS**
+
 ```rust
 fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
     let mut graph = vec![vec![]; num_courses as usize];
@@ -479,6 +509,7 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
 ```
 
 **Topological Sort with BFS (Kahn's Algorithm)**
+
 ```rust
 fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
     let mut graph = vec![vec![]; num_courses as usize];
@@ -514,10 +545,12 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
 ```
 
 ### **Complexity**
+
 - **Time**: O(V + E) - graph traversal
 - **Space**: O(V + E) - graph storage
 
 ### **Key Insights**
+
 - ✅ Detect cycle in directed graph
 - ✅ Three state DFS: unvisited, visiting, visited
 - ✅ Topological sort: Kahn's algorithm with in-degrees
@@ -528,6 +561,7 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
 ## 8️⃣ Kth Permutation
 
 ### **Problem**
+
 Find the kth permutation of n numbers (1 to n) in lexicographic order.
 
 ```
@@ -541,6 +575,7 @@ Sequence: "123", "132", "213", "231", "312", "321"
 ### **Approach**
 
 **Math-Based (No Generation)**
+
 ```rust
 fn get_permutation(n: i32, k: i32) -> String {
     let mut factorial = vec![1; n as usize];
@@ -564,10 +599,12 @@ fn get_permutation(n: i32, k: i32) -> String {
 ```
 
 ### **Complexity**
+
 - **Time**: O(n²) - O(n) digits, each remove is O(n)
 - **Space**: O(n)
 
 ### **Key Insights**
+
 - ✅ Use factorial number system to calculate directly
 - ✅ For each position, determine which number from remaining
 - ✅ k is divided by factorial of remaining numbers
@@ -578,6 +615,7 @@ fn get_permutation(n: i32, k: i32) -> String {
 ## 9️⃣ Minimum Window Substring
 
 ### **Problem**
+
 Find minimum window substring containing all characters of target string.
 
 ```
@@ -591,6 +629,7 @@ Output: ""  (impossible)
 ### **Approach**
 
 **Sliding Window with Frequency Maps**
+
 ```rust
 use std::collections::HashMap;
 
@@ -651,10 +690,12 @@ fn min_window(s: String, t: String) -> String {
 ```
 
 ### **Complexity**
+
 - **Time**: O(|s| + |t|) - each character visited at most twice
 - **Space**: O(|t|) - character count maps
 
 ### **Key Insights**
+
 - ✅ Sliding window with two pointers
 - ✅ Expand right pointer, contract left pointer
 - ✅ Track character frequency requirements
@@ -665,6 +706,7 @@ fn min_window(s: String, t: String) -> String {
 ## 🔟 Largest Rectangle in Histogram
 
 ### **Problem**
+
 Find the largest rectangle area in histogram where bars have varying heights.
 
 ```
@@ -685,6 +727,7 @@ Rectangle: 2×5 = 10 or 2×6 = 12? No, it's limited by minimum height
 ### **Approach**
 
 **Monotonic Stack (Optimal)** - See [[monotonic-stack]] for detailed pattern explanation
+
 ```rust
 fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
     let mut stack = Vec::new();
@@ -714,10 +757,12 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 ```
 
 ### **Complexity**
+
 - **Time**: O(n) - each bar pushed/popped once
 - **Space**: O(n) - stack storage
 
 ### **Key Insights**
+
 - ✅ Monotonic stack maintains increasing heights
 - ✅ When height drops, calculate area for all bars that can't extend further
 - ✅ Add sentinels (0s) at start and end to simplify logic
@@ -757,6 +802,7 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 ## 🎓 Interview Preparation Tips
 
 ### **Pattern Recognition**
+
 - ✅ **String/Character**: Think hash map, frequency counting
 - ✅ **Array Search**: Think binary search
 - ✅ **Top K**: Think heap
@@ -766,12 +812,14 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 - ✅ **Max/Min Subarrays**: Think stack or dynamic programming
 
 ### **Complexity Targets**
+
 - ✅ O(n log n): Sorting-based, binary search
 - ✅ O(n): Optimal for most problems, often sliding window
 - ✅ O(n²): Nested loops, not ideal but sometimes necessary
 - ✅ O(2^n): Exponential, backtracking, only for small n
 
 ### **Implementation Tips**
+
 1. **Clarify constraints** before coding
 2. **Start with brute force**, then optimize
 3. **Test edge cases**: empty, single element, all same
@@ -783,6 +831,7 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 ## 🔗 Cross-References
 
 ### **In This Workspace**
+
 - **Pattern Matching**: Problem 5 (Generate Parentheses)
 - **Algorithm Analysis**: All problems
 - **Data Structures**: Specific to each problem
@@ -790,6 +839,7 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 - **Competitive Programming**: AoC integration
 
 ### **Related Concepts**
+
 - **[[Dynamic Programming]]** - Course schedule, Kth permutation
 - **[[Tree Algorithms]]** - Symmetric tree
 - **[[Graph Theory]]** - Course schedule, cycle detection
@@ -816,6 +866,7 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 ## 📚 Additional Resources
 
 ### **LeetCode Problem Links**
+
 1. Valid Anagram - LeetCode 242
 2. First and Last Index - LeetCode 34
 3. Kth Largest - LeetCode 215
@@ -828,6 +879,7 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 10. Largest Rectangle - LeetCode 84
 
 ### **Study Resources**
+
 - **NeetCode.io**: Video walkthroughs for all problems
 - **Rust Playground**: Test implementations
 - **LeetCode Discuss**: Learn from community solutions

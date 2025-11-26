@@ -19,6 +19,7 @@ let y = Box::new(5);
 ```
 
 ### **Why Box<T> is Needed for Recursion**
+
 ```rust
 // ❌ This won't compile - infinite size
 enum List {
@@ -38,6 +39,7 @@ enum List {
 ## Basic Usage Patterns
 
 ### **Simple Heap Allocation**
+
 ```rust
 fn basic_box_usage() {
     let b = Box::new(5);
@@ -51,6 +53,7 @@ fn basic_box_usage() {
 ```
 
 ### **Large Data on Heap**
+
 ```rust
 // Large array on stack might cause stack overflow
 // let large_array = [0; 1_000_000];  // 4MB on stack!
@@ -64,6 +67,7 @@ let large_array = Box::new([0; 1_000_000]);  // 8 bytes on stack, 4MB on heap
 ## AoC Applications - Tree Structures
 
 ### **Binary Tree for AoC Problems**
+
 ```rust
 #[derive(Debug, Clone)]
 struct TreeNode {
@@ -121,6 +125,7 @@ fn solve_tree_problem(input: &[i32]) -> i32 {
 ```
 
 ### **AoC 2015 Day 7: Circuit Evaluation (Expression Trees)**
+
 ```rust
 #[derive(Debug, Clone)]
 enum Gate {
@@ -243,6 +248,7 @@ fn solve_circuit(instructions: &[String]) -> u16 {
 ## AoC Applications - Linked Lists
 
 ### **Linked List for Sequence Problems**
+
 ```rust
 #[derive(Debug)]
 struct ListNode<T> {
@@ -299,6 +305,7 @@ where
 ```
 
 ### **AoC Josephus Problem Variant**
+
 ```rust
 struct CircularList {
     val: usize,
@@ -353,6 +360,7 @@ impl CircularList {
 ## Performance Characteristics
 
 ### **Memory Layout and Access**
+
 ```rust
 // Stack-based access (fast)
 let stack_array = [1, 2, 3, 4, 5];
@@ -364,6 +372,7 @@ let sum: i32 = heap_array.iter().sum();   // One indirection to access
 ```
 
 ### **Allocation Costs**
+
 ```rust
 use std::time::Instant;
 
@@ -385,6 +394,7 @@ fn compare_allocation_performance() {
 ```
 
 ### **Cache Locality Considerations**
+
 ```rust
 // ❌ Poor cache locality - many heap allocations
 struct BadLinkedList {
@@ -406,6 +416,7 @@ fn process_sequence_efficiently(items: Vec<i32>) -> i32 {
 ## Advanced Box Patterns
 
 ### **Box with Custom Types**
+
 ```rust
 trait AocSolver {
     fn solve(&self, input: &str) -> String;
@@ -439,6 +450,7 @@ fn create_solver(day: u32) -> Box<dyn AocSolver> {
 ```
 
 ### **Recursive Data with Shared Ownership**
+
 ```rust
 use std::rc::Rc;
 
@@ -459,6 +471,7 @@ struct SharedTreeNode {
 ## Testing Patterns
 
 ### **Box Behavior Tests**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -509,6 +522,7 @@ mod tests {
 ## Common AoC Use Cases
 
 ### **1. Expression Parsing (AST)**
+
 ```rust
 #[derive(Debug)]
 enum Expr {
@@ -546,6 +560,7 @@ fn parse_expression(tokens: &[&str]) -> Expr {
 ```
 
 ### **2. File System Tree (Directory Traversal)**
+
 ```rust
 #[derive(Debug)]
 struct FileNode {
@@ -586,6 +601,7 @@ fn solve_filesystem_problem(input: &str) -> usize {
 ```
 
 ### **3. Game State Trees (Decision Trees)**
+
 ```rust
 #[derive(Debug, Clone)]
 struct GameState {
@@ -649,6 +665,7 @@ impl GameNode {
 ## Box vs Alternatives
 
 ### **When to Use Box<T>**
+
 ```rust
 // ✅ Recursive data structures
 enum List<T> { Cons(T, Box<List<T>>), Nil }
@@ -664,6 +681,7 @@ fn move_to_heap<T>(data: T) -> Box<T> { Box::new(data) }
 ```
 
 ### **When to Use Alternatives**
+
 ```rust
 // ✅ Use Vec<T> instead of linked lists (usually faster)
 let sequence = vec![1, 2, 3, 4, 5];  // Not Box<Node>
@@ -685,6 +703,7 @@ fn process_data(data: &[i32]) -> i32 { /* ... */ }  // No Box needed
 ## Best Practices
 
 ### **✅ Efficient Box Usage**
+
 1. **Prefer Vec<T> over linked lists** for sequential data
 2. **Use Box<T> for truly recursive structures** (trees, ASTs)
 3. **Consider Rc<T>/Arc<T>** when sharing is needed
@@ -692,6 +711,7 @@ fn process_data(data: &[i32]) -> i32 { /* ... */ }  // No Box needed
 5. **Design for cache locality** when possible
 
 ### **✅ AoC-Specific Tips**
+
 1. **Parse input into tree structures** for hierarchical problems
 2. **Use Box<dyn Trait>** for polymorphic solver patterns
 3. **Build ASTs for expression evaluation** problems
@@ -699,6 +719,7 @@ fn process_data(data: &[i32]) -> i32 { /* ... */ }  // No Box needed
 5. **Balance heap usage with performance** requirements
 
 ### **❌ Common Pitfalls**
+
 ```rust
 // ❌ Unnecessary boxing of primitives
 let x = Box::new(42);  // Just use: let x = 42;
@@ -731,6 +752,7 @@ fn iterative_sum(mut list: &List) -> i32 {
 ## Advanced Topics
 
 ### **Box and Lifetimes**
+
 ```rust
 struct Container<'a> {
     data: Box<&'a str>,  // Box can contain borrowed data
@@ -745,6 +767,7 @@ fn create_container(s: &str) -> Container {
 ```
 
 ### **Custom Allocators (Advanced)**
+
 ```rust
 use std::alloc::{GlobalAlloc, Layout, System};
 

@@ -26,10 +26,12 @@ Systematic collection of programming errors with fast reproduction cases and pre
 ## 🔬 **Detailed Error Analysis**
 
 ### **ERROR-001: Ownership Violation in HashMap Implementation**
+
 **Date**: 2025-10-10  
 **Context**: Mission 5 HashMap insert method
 
 **Symptom**:
+
 ```
 error[E0507]: cannot move out of borrowed content
   --> src/lib.rs:45:13
@@ -39,6 +41,7 @@ error[E0507]: cannot move out of borrowed content
 ```
 
 **Minimal Reproduction**:
+
 ```rust
 fn broken_insert() {
     let mut map = HashMap::new();
@@ -54,6 +57,7 @@ fn broken_insert() {
 **Root Cause**: Attempted to move owned value out of mutable reference context.
 
 **Fix Strategy 1 - Clone**:
+
 ```rust
 fn fix1_clone() -> Option<String> {
     let mut map = HashMap::new();
@@ -64,6 +68,7 @@ fn fix1_clone() -> Option<String> {
 ```
 
 **Fix Strategy 2 - Take/Replace**:
+
 ```rust
 use std::mem;
 
@@ -82,10 +87,12 @@ fn fix2_replace() -> Option<String> {
 ---
 
 ### **ERROR-002: Lifetime Issues in LinkedList Iterator**
+
 **Date**: 2025-10-09  
 **Context**: Mission 4 LinkedList implementation
 
 **Symptom**:
+
 ```
 error[E0515]: cannot return value referencing local variable `current`
   --> src/lib.rs:67:9
@@ -98,6 +105,7 @@ error[E0515]: cannot return value referencing local variable `current`
 ```
 
 **Minimal Reproduction**:
+
 ```rust
 fn broken_iterator() -> Option<&i32> {
     let node = Box::new(Node { data: 42, next: None });
@@ -108,6 +116,7 @@ fn broken_iterator() -> Option<&i32> {
 **Root Cause**: Returned reference to locally-owned data that gets dropped.
 
 **Fix Strategy - Return Owned Values**:
+
 ```rust
 fn fixed_iterator() -> Option<i32> {
     let node = Box::new(Node { data: 42, next: None });
@@ -120,10 +129,12 @@ fn fixed_iterator() -> Option<i32> {
 ---
 
 ### **ERROR-003: Borrow Checker Violation in Ring Buffer**  
+
 **Date**: 2025-10-08
 **Context**: Mission 2 Queue implementation
 
 **Symptom**:
+
 ```
 error[E0502]: cannot borrow `self.data` as mutable because it is also borrowed as immutable
   --> src/lib.rs:89:9
@@ -134,6 +145,7 @@ error[E0502]: cannot borrow `self.data` as mutable because it is also borrowed a
 ```
 
 **Minimal Reproduction**:
+
 ```rust
 fn broken_dequeue() {
     let mut buffer = RingBuffer::new(5);
@@ -145,6 +157,7 @@ fn broken_dequeue() {
 **Root Cause**: Held immutable reference while attempting mutation.
 
 **Fix Strategy - Narrow Scope**:
+
 ```rust  
 fn fixed_dequeue() -> Option<T> {
     let result = self.data[self.head].take();  // ✅ Atomic take operation
@@ -162,6 +175,7 @@ fn fixed_dequeue() -> Option<T> {
 ## 🛠️ **Bug Drill Templates**
 
 ### **Ownership Error Drill**
+
 ```rust
 // BUG DRILL: Identify the ownership issue
 fn drill_ownership() {
@@ -177,6 +191,7 @@ fn drill_ownership() {
 ```
 
 ### **Borrow Checker Drill**
+
 ```rust  
 // BUG DRILL: Fix the borrow checker error
 fn drill_borrowing() {
@@ -193,6 +208,7 @@ fn drill_borrowing() {
 ```
 
 ### **Lifetime Error Drill**
+
 ```rust
 // BUG DRILL: Fix the lifetime annotation
 fn drill_lifetimes() -> &str {      // Missing lifetime parameter
@@ -211,6 +227,7 @@ fn drill_lifetimes() -> &str {      // Missing lifetime parameter
 ## 📊 **Error Pattern Analysis**
 
 ### **Most Common Error Categories**
+
 1. **Ownership Violations**: 40% of errors
    - Moving out of borrowed content
    - Use after move
@@ -232,11 +249,13 @@ fn drill_lifetimes() -> &str {      // Missing lifetime parameter
    - Conversion problems
 
 ### **Learning Curve Insights**
+
 - **Weeks 1-2**: Mostly ownership and borrowing basics
 - **Weeks 3-4**: Complex lifetime situations emerge
 - **Weeks 5+**: Focus shifts to advanced trait usage
 
 ### **Prevention Strategy Evolution**
+
 - **Early stage**: Focus on ownership rules memorization
 - **Intermediate**: Pattern recognition for common scenarios  
 - **Advanced**: Architectural design to avoid lifetime complexity
@@ -246,6 +265,7 @@ fn drill_lifetimes() -> &str {      // Missing lifetime parameter
 ## 🔄 **Daily Workflow Integration**
 
 ### **When Errors Occur** (5 minutes)
+
 1. **Immediate capture**: Copy exact error message
 2. **Minimal repro**: Create 5-10 line reproduction case
 3. **Fix twice**: Try two different solution approaches  
@@ -253,12 +273,14 @@ fn drill_lifetimes() -> &str {      // Missing lifetime parameter
 5. **Spaced repetition**: Convert to retrieval card if concept-heavy
 
 ### **Weekly Error Review** (15 minutes, Fridays)
+
 1. **Pattern identification**: Group similar errors
 2. **Success rate**: Track prevention rule effectiveness
 3. **Drill creation**: Build practice exercises from common mistakes
 4. **Calendar integration**: Add error-prone topics to daily study focus
 
 ### **Monthly Error Analysis** (30 minutes)
+
 1. **Trend analysis**: Are error types changing over time?
 2. **Knowledge gap identification**: What concepts need more study?
 3. **Prevention rule validation**: Which rules are most effective?
@@ -306,6 +328,7 @@ Print this and keep near your coding setup:
 *Links: [[zettel-index]] | [[developer-learning-habits]] | [[spaced-repetition-cards]] | [[MONTHLY_CALENDAR]]*
 
 **Next Actions:**
+
 - [ ] Add error from today's coding session  
 - [ ] Create bug drill for Mission 5 HashMap errors
 - [ ] Review error patterns weekly (Friday retrospective)

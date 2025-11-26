@@ -20,7 +20,8 @@ fn complex<'a, 'b>(x: &'a str, y: &'b str) -> &'a str {
 ```
 
 **Why multiple lifetimes?**
-- `x` has lifetime `'a` 
+
+- `x` has lifetime `'a`
 - `y` has lifetime `'b`
 - Return value has lifetime `'a` (same as `x`)
 - The function can return a reference that lives **as long as `x`**, regardless of how long `y` lives
@@ -60,6 +61,7 @@ fn find_first<'a, 'b>(haystack: &'a str, needles: &'b [&str]) -> Option<&'a str>
 ## Key Scenarios for Multiple Lifetimes
 
 ### Scenario 1: Different Input Lifetimes
+
 ```rust
 fn combine<'a, 'b>(short: &'a str, long: &'b str) -> &'b str {
     // Return the longer-lived reference
@@ -68,6 +70,7 @@ fn combine<'a, 'b>(short: &'a str, long: &'b str) -> &'b str {
 ```
 
 ### Scenario 2: One Input, Multiple Outputs
+
 ```rust
 fn split<'a>(text: &'a str) -> (&'a str, &'a str) {
     let mid = text.len() / 2;
@@ -76,6 +79,7 @@ fn split<'a>(text: &'a str) -> (&'a str, &'a str) {
 ```
 
 ### Scenario 3: Conditional Returns
+
 ```rust
 fn get_best<'a, 'b>(option1: &'a str, option2: &'b str) -> &'a str {
     if option1.len() > option2.len() {
@@ -89,6 +93,7 @@ fn get_best<'a, 'b>(option1: &'a str, option2: &'b str) -> &'a str {
 ## Real-World Examples
 
 ### Web Framework
+
 ```rust
 fn handle_request<'req, 'resp>(
     request: &'req Request,
@@ -100,6 +105,7 @@ fn handle_request<'req, 'resp>(
 ```
 
 ### File Processing
+
 ```rust
 fn process_file<'file, 'config>(
     file_content: &'file str,
@@ -111,6 +117,7 @@ fn process_file<'file, 'config>(
 ```
 
 ### Database-like Operations
+
 ```rust
 struct Database<'db> {
     connection: &'db mut Connection,
@@ -132,6 +139,7 @@ fn execute_query<'db, 'q>(
 ## Common Patterns
 
 ### Pattern 1: Lifetime Elision with Multiple Parameters
+
 ```rust
 // The compiler can often infer lifetimes
 fn process<'a, 'b>(data: &'a str, config: &'b Config) -> &'a str {
@@ -141,6 +149,7 @@ fn process<'a, 'b>(data: &'a str, config: &'b Config) -> &'a str {
 ```
 
 ### Pattern 2: Lifetime Bounds
+
 ```rust
 fn process_with_bound<'a, 'b>(x: &'a str, y: &'b str) -> &'a str 
 where 
@@ -151,6 +160,7 @@ where
 ```
 
 ### Pattern 3: Static Lifetime
+
 ```rust
 fn get_static_string<'a>(input: &'a str) -> &'static str {
     "This is a static string"  // Lives for the entire program
@@ -160,6 +170,7 @@ fn get_static_string<'a>(input: &'a str) -> &'static str {
 ## Error Patterns and Solutions
 
 ### Error: Conflicting Lifetime Requirements
+
 ```rust
 // ❌ This won't compile
 fn problematic<'a, 'b>(x: &'a str, y: &'b str) -> &'a str {
@@ -172,6 +183,7 @@ fn problematic<'a, 'b>(x: &'a str, y: &'b str) -> &'a str {
 ```
 
 **Solution:** Use lifetime bounds or return owned data
+
 ```rust
 // ✅ Solution 1: Lifetime bounds
 fn fixed1<'a, 'b>(x: &'a str, y: &'b str) -> &'a str 
@@ -198,6 +210,7 @@ fn fixed2<'a, 'b>(x: &'a str, y: &'b str) -> String {
 ## Testing Multiple Lifetimes
 
 ### Unit Tests
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -233,11 +246,13 @@ mod tests {
 ## Performance Considerations
 
 ### Zero-Cost Abstractions
+
 - Multiple lifetimes are **compile-time only**
 - No runtime overhead
 - Compiler optimizes away lifetime annotations
 
 ### Memory Safety Benefits
+
 - Prevents dangling references
 - Enables safe concurrent access
 - Allows complex reference relationships
@@ -245,6 +260,7 @@ mod tests {
 ## Integration with Mission Work
 
 ### Mission 5: HashMap Patterns
+
 ```rust
 struct Cache<'key, 'value> {
     keys: &'key [String],
@@ -260,6 +276,7 @@ impl<'key, 'value> Cache<'key, 'value> {
 ```
 
 ### Mission 6: Grid Operations
+
 ```rust
 struct GridProcessor<'grid, 'data> {
     grid: &'grid Grid,
@@ -277,11 +294,13 @@ impl<'grid, 'data> GridProcessor<'grid, 'data> {
 ## Best Practices
 
 ### 1. Start Simple
+
 - Begin with single lifetime parameters
 - Add multiple lifetimes only when needed
 - Let the compiler guide you
 
 ### 2. Use Descriptive Names
+
 ```rust
 // ✅ Good
 fn process<'input, 'config>(input: &'input str, config: &'config Config) -> &'input str
@@ -291,6 +310,7 @@ fn process<'a, 'b>(x: &'a str, y: &'b Config) -> &'a str
 ```
 
 ### 3. Lifetime Bounds When Needed
+
 ```rust
 // Use lifetime bounds to express relationships
 fn combine<'a, 'b>(x: &'a str, y: &'b str) -> &'a str 
@@ -302,6 +322,7 @@ where
 ```
 
 ### 4. Consider Owned Data
+
 ```rust
 // Sometimes returning owned data is simpler
 fn process_simple<'a, 'b>(x: &'a str, y: &'b str) -> String {
@@ -312,6 +333,7 @@ fn process_simple<'a, 'b>(x: &'a str, y: &'b str) -> String {
 ## Common Pitfalls
 
 ### Pitfall 1: Over-complicating
+
 ```rust
 // ❌ Unnecessarily complex
 fn overcomplicated<'a, 'b, 'c>(x: &'a str, y: &'b str, z: &'c str) -> &'a str {
@@ -325,6 +347,7 @@ fn simple<'a>(x: &'a str, y: &str, z: &str) -> &'a str {
 ```
 
 ### Pitfall 2: Ignoring Lifetime Bounds
+
 ```rust
 // ❌ May not compile in all cases
 fn problematic<'a, 'b>(x: &'a str, y: &'b str) -> &'a str {
@@ -357,6 +380,7 @@ Multiple lifetimes are essential for:
 ---
 
 **References:**
+
 - [[Day17 - Lifetimes Deep Dive|Day 17 Learning Notes]]
 - [The Rust Book - Validating References with Lifetimes](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html)
 - [[rust-concepts-MOC]] for related concepts

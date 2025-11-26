@@ -82,6 +82,7 @@ Y's neighbors: [X]  // Store X in Y's list
 ```
 
 **Why store in both lists?**
+
 - To check "Can I go from X to Y?": Look in X's neighbor list → O(1)
 - To check "Can I go from Y to X?": Look in Y's neighbor list → O(1)
 - It's **ONE edge** stored in **TWO places** for performance
@@ -244,6 +245,7 @@ println!("Edges: {}", g.edge_count());  // Output: 3
 ```
 
 **Visual:**
+
 ```
     A
    / \
@@ -276,6 +278,7 @@ println!("Edges: {}", g.edge_count());  // Output: 3
 ```
 
 **Visual:**
+
 ```
     A
     ↓
@@ -308,6 +311,7 @@ println!("Edges: {}", g.edge_count());  // Output: 2
 ```
 
 **Visual:**
+
 ```
     ↗
 X     Y
@@ -339,6 +343,7 @@ println!("Edges: {}", g.edge_count());  // Output: 3
 ```
 
 **Visual:**
+
 ```
     ↗
 A     B → C
@@ -355,6 +360,7 @@ A     B → C
 ### **Confusion 1: "Why only 1 edge when stored in 2 places?"**
 
 **Question:**
+
 ```
 Undirected graph: X <-> Y
 X's neighbors: [Y]  ← One entry
@@ -363,12 +369,14 @@ Why edge count = 1 and not 2?
 ```
 
 **Answer:**
+
 - **Storage** (implementation detail) ≠ **Count** (conceptual meaning)
 - We store in both places for **lookup efficiency** (O(1) instead of O(E))
 - Conceptually, there's **ONE undirected edge** between X and Y
 - The graph structure itself defines counting rules, not the storage method
 
 **Analogy:**
+
 ```
 Phone contact list:
 - Alice has Bob's number
@@ -397,6 +405,7 @@ Undirected graph for X ↔ Y:
 ### **Confusion 3: "Same adjacency list, different counts?"**
 
 **Observation:**
+
 ```
 Both graphs show:
 X's neighbors: [Y]
@@ -406,11 +415,13 @@ But undirected counts as 1 edge, directed counts as 2!
 ```
 
 **Explanation:**
+
 - The **graph type** (directed vs undirected) determines **interpretation**
 - Same data structure, different **semantics**
 - Adjacency list is just **storage**, not the definition of edges
 
 **Code Example:**
+
 ```rust
 // Same adjacency structure, different edge counts
 let adj_x = vec![y];  // X's neighbors
@@ -507,17 +518,20 @@ Note: Directed graph can have twice as many edges!
 ### **Use Undirected Graphs When:**
 
 ✅ **Relationships are symmetric**
+
 - Social networks (mutual friendships)
 - Computer networks (Ethernet cables)
 - Road networks (two-way streets)
 - Molecule bonds (atoms connected both ways)
 
 ✅ **No direction matters**
+
 - Geographic distance (A to B = B to A)
 - Similarity measures (item1 similar to item2)
 - Collaboration networks (co-authors)
 
 ✅ **Modeling physical connections**
+
 - Electrical circuits
 - Neural networks (some models)
 - Infrastructure networks
@@ -525,18 +539,21 @@ Note: Directed graph can have twice as many edges!
 ### **Use Directed Graphs When:**
 
 ✅ **Relationships are asymmetric**
+
 - Twitter follows (Alice follows Bob ≠ Bob follows Alice)
 - Web hyperlinks (PageA links to PageB)
 - Dependency graphs (Package A depends on B)
 - Debt networks (Who owes whom)
 
 ✅ **Direction matters**
+
 - Traffic flow (one-way streets)
 - Data flow (pipelines, streams)
 - Causal relationships (A causes B)
 - Workflow sequences (task dependencies)
 
 ✅ **Modeling directed processes**
+
 - State machines (transitions)
 - Food chains (predator-prey)
 - Influence propagation (information spread)
@@ -715,6 +732,7 @@ fn directed_vs_undirected_edge_count() {
 ### **Undirected Graph Examples**
 
 **Social Network (Facebook Friends):**
+
 ```rust
 // Friendship is mutual (undirected)
 let mut friends = Graph::new_undirected();
@@ -730,6 +748,7 @@ println!("Total friendships: {}", friends.edge_count());  // 3
 ```
 
 **Computer Network:**
+
 ```rust
 // Ethernet cables are bidirectional (undirected)
 let mut network = Graph::new_undirected();
@@ -748,6 +767,7 @@ println!("Total cables: {}", network.edge_count());  // 3
 ### **Directed Graph Examples**
 
 **Twitter Follow Graph:**
+
 ```rust
 // Following is directional (directed)
 let mut twitter = Graph::new();
@@ -764,6 +784,7 @@ println!("Total follows: {}", twitter.edge_count());  // 3
 ```
 
 **Web Link Graph:**
+
 ```rust
 // Hyperlinks are directional (directed)
 let mut web = Graph::new();
@@ -805,18 +826,21 @@ println!("Total links: {}", web.edge_count());  // 3
 ### **For Implementers**
 
 1. **Separate internal storage from conceptual model**
+
    ```rust
    // Internal: adjacency list (storage)
    // External: edge count (concept)
    ```
 
 2. **Use helper methods for undirected graphs**
+
    ```rust
    add_undirected_edge()  // Maintains symmetry
    remove_undirected_edge()  // Removes from both lists
    ```
 
 3. **Document your counting method**
+
    ```rust
    /// Returns the number of edges.
    /// For undirected graphs, counts each edge once (not twice).
@@ -824,6 +848,7 @@ println!("Total links: {}", web.edge_count());  // 3
    ```
 
 4. **Validate undirected invariants**
+
    ```rust
    // Ensure every u→v has corresponding v→u
    debug_assert!(self.is_undirected());
@@ -844,14 +869,17 @@ println!("Total links: {}", web.edge_count());  // 3
 ## 📖 Further Reading
 
 **Books:**
+
 - "Introduction to Algorithms" (CLRS) - Chapter 22: Elementary Graph Algorithms
 - "Algorithm Design Manual" (Skiena) - Section 5.1: Flavors of Graphs
 
 **Online Resources:**
+
 - [Graph Theory - Directed vs Undirected](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics))
 - [Adjacency List Representation](https://www.geeksforgeeks.org/graph-and-its-representations/)
 
 **AoC Problems:**
+
 - 2015 Day 9: Traveling Salesman (undirected, complete graph)
 - 2018 Day 7: Dependencies (directed acyclic graph)
 - 2019 Day 6: Orbits (directed tree)

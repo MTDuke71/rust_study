@@ -31,6 +31,7 @@ transfer_ownership(document);             // You gave it away (moved)
 ```
 
 **Real Life**: Like handing someone your only copy of a contract
+
 - ✅ They have it now and can use it
 - ❌ You can't use it anymore - you don't have it
 - 🔄 They can give it back to you later
@@ -38,6 +39,7 @@ transfer_ownership(document);             // You gave it away (moved)
 ### Two Types of Data Behavior
 
 #### 📋 Copy Types (Stack-Only)
+
 Numbers, booleans, chars, tuples of Copy types
 
 ```rust
@@ -49,6 +51,7 @@ println!("{}", x);   // ✅ Still works! x is still valid
 **Mental Model**: Like photocopying - you keep the original, they get a copy
 
 #### 📄 Move Types (Heap-Allocated)  
+
 String, Vec, Box, Rc, custom structs (by default)
 
 ```rust
@@ -193,6 +196,7 @@ let r1 = &mut s;  // ✅ First mutable borrow
 ### Why These Rules Matter
 
 **Prevents Data Races** at compile time:
+
 - Multiple readers OR one writer (never both simultaneously)
 - Eliminates entire classes of bugs that plague other languages
 
@@ -268,6 +272,7 @@ fn main() {
 ```
 
 **When to Clone**:
+
 - ✅ When you need independent copies
 - ✅ When borrowing won't work (async, threads)
 - ⚠️ Be aware: Clone can be expensive for large data
@@ -279,6 +284,7 @@ fn main() {
 ### Stack Allocation
 
 **Characteristics**:
+
 - ✅ Fast allocation/deallocation (just move stack pointer)
 - ✅ Deterministic size known at compile time
 - ✅ Automatic cleanup (LIFO order)
@@ -296,6 +302,7 @@ let tuple = (1, 2.0);   // On stack
 ### Heap Allocation
 
 **Characteristics**:
+
 - ✅ Dynamic size, can grow
 - ✅ Large amount of memory available
 - ❌ Slower allocation (requires finding free space)
@@ -327,6 +334,7 @@ let b = Box::new(5);            // Boxed value on heap
 ### Memory Safety Without Garbage Collection
 
 **Problems Ownership Prevents**:
+
 1. **Use-after-free**: Can't use moved values
 2. **Double-free**: Only one owner can drop data
 3. **Memory leaks**: Drop called automatically  
@@ -343,6 +351,7 @@ println!("{}", s);  // ❌ Compile error: value used after move
 ```
 
 **Zero Runtime Overhead**: All ownership checks happen at compile time
+
 - No garbage collection pauses
 - No reference counting overhead (except Rc/Arc when explicitly needed)
 - Performance comparable to C/C++
@@ -352,21 +361,25 @@ println!("{}", s);  // ❌ Compile error: value used after move
 ## 🎯 Learning Progression
 
 ### Week 1: Basic Understanding
+
 - Focus: Recognize when values move vs copy
 - Practice: Simple examples with String and primitives
 - Goal: Understand compiler error messages
 
 ### Week 2: Borrowing Basics  
+
 - Focus: Using references to avoid moves
 - Practice: Function parameters with `&T` and `&mut T`
 - Goal: Predict when borrows are valid
 
 ### Week 3: Ownership Patterns
+
 - Focus: Common patterns (temporary borrowing, ownership chains)
 - Practice: Refactoring code to satisfy borrow checker
 - Goal: Write idiomatic Rust code
 
-### Don't Worry Yet About:
+### Don't Worry Yet About
+
 - ⏸️ Lifetimes (advanced topic)
 - ⏸️ Complex smart pointer patterns
 - ⏸️ Async ownership challenges
@@ -432,29 +445,34 @@ let r2 = &mut s;     // OK: r1 no longer active
 ## 🔗 Related Concepts
 
 ### Foundation for Advanced Topics
+
 - **[[borrowing-rules]]** - Detailed borrowing and lifetime rules
 - **[[lifetimes]]** - Ensuring references remain valid
 - **[[move-semantics]]** - Deep dive into move operations
 
 ### Smart Pointers (Build on Ownership)
+
 - **[[box-heap-allocation]]** - Single ownership on heap
 - **[[rc-shared-ownership]]** - Multiple ownership via reference counting
 - **[[refcell-interior-mutability]]** - Runtime-checked mutable borrowing
 - **[[Smart Pointers MOC]]** - Complete smart pointer ecosystem
 
 ### Memory Management
+
 - **[[Memory Management]]** - Overall memory management strategies
 - **[[drop-trait]]** - Automatic cleanup and RAII
 - **[[copy-trait]]** - Types that can be duplicated
 - **[[clone-trait]]** - Explicit deep copying
 
 ### Practical Applications
+
 - **[[mission-1]]** - Stack implementation demonstrating ownership
 - **[[mission-4]]** - LinkedList with complex ownership patterns
 - **[[rust-threading-basics]]** - Ownership in concurrent contexts
 - **[[async-await-basics]]** - Ownership in async code
 
 ### Learning Resources
+
 - **[[../../missions/Mission1/QUICK_REFERENCE]]** - 2-minute ownership overview
 - **[[../../missions/Mission1/SIMPLE_GUIDE]]** - Detailed learning guide with exercises
 - **[[../../rust_book/Ch4/README]]** - Rust Book Chapter 4 notes
@@ -465,16 +483,19 @@ let r2 = &mut s;     // OK: r1 no longer active
 ## 📚 Further Reading
 
 ### Mission Documentation
+
 - **Mission 1**: Basic ownership with Stack implementation
 - **Mission 2**: Ownership in Queue and RingBuffer
 - **Mission 4**: Complex ownership with LinkedList and smart pointers
 
 ### Rust Book Integration
+
 - **Chapter 4**: Understanding Ownership
 - **Chapter 8**: Collections and ownership
 - **Chapter 15**: Smart Pointers
 
 ### Daily Study Connections
+
 - **[[daily-study/Day01]]** - Collections and ownership basics
 - **[[daily-study/Day12]]** - Ord trait and ownership semantics
 

@@ -11,11 +11,13 @@ Heap's Algorithm is an efficient method for generating all permutations of a giv
 ## Why Heap's Algorithm?
 
 ### Traditional Approaches vs Heap's
+
 - **Naive Recursive**: Generates permutations but with many redundant operations
 - **Lexicographic Generation**: Complex implementation, not always optimal
 - **Heap's Algorithm**: **Minimal swaps**, **simple implementation**, **memory efficient**
 
 ### Key Advantages
+
 1. **Minimal Swaps**: Uses only O(n!) swaps to generate n! permutations
 2. **In-Place**: Generates permutations by modifying the input array
 3. **Simple Logic**: Easy to understand and implement
@@ -24,9 +26,11 @@ Heap's Algorithm is an efficient method for generating all permutations of a giv
 ## Algorithm Explanation
 
 ### Core Concept
+
 Heap's algorithm generates permutations by systematically swapping elements to create all possible arrangements. It uses a clever recursive structure that minimizes the number of operations.
 
 ### The Algorithm
+
 ```rust
 fn heaps_algorithm<T>(arr: &mut [T], size: usize, result: &mut Vec<Vec<T>>) 
 where T: Clone {
@@ -58,6 +62,7 @@ For input `[A, B, C]`:
 3. **i=2**: Generate permutations of size 2, then swap(2,2)
 
 **Size 2 Recursion**:
+
 - Generate size 1 permutations
 - Swap based on even/odd logic
 
@@ -74,6 +79,7 @@ if size % 2 == 1 {
 ```
 
 **Why this works**:
+
 - **Odd sizes**: The first element acts as a "pivot" that gets swapped with the last
 - **Even sizes**: Each element gets a chance to be in the last position
 - This creates the systematic exploration of all arrangements
@@ -81,6 +87,7 @@ if size % 2 == 1 {
 ## Rust Implementation
 
 ### Complete Working Implementation
+
 ```rust
 fn generate_permutations<'a>(cities: &'a [&'a str]) -> Vec<Vec<&'a str>> {
     if cities.is_empty() {
@@ -118,6 +125,7 @@ fn generate_permutations<'a>(cities: &'a [&'a str]) -> Vec<Vec<&'a str>> {
 ```
 
 ### Key Rust Features Used
+
 - **Lifetime Parameters**: `'a` ensures references live long enough
 - **Mutable References**: `&mut` for in-place modifications
 - **Clone**: Creating copies for the result vector
@@ -126,15 +134,18 @@ fn generate_permutations<'a>(cities: &'a [&'a str]) -> Vec<Vec<&'a str>> {
 ## Performance Analysis
 
 ### Time Complexity
+
 - **O(n! × n)** where n is the number of elements
 - **n! permutations** × **n operations per permutation**
 
 ### Space Complexity
+
 - **O(n! × n)** for storing all permutations
 - **O(n)** for the recursive call stack
 - **O(1)** additional space for swaps (in-place)
 
 ### Swap Count
+
 - **Exactly n! swaps** to generate n! permutations
 - **Optimal**: No algorithm can do better than n! swaps
 
@@ -149,6 +160,7 @@ fn generate_permutations<'a>(cities: &'a [&'a str]) -> Vec<Vec<&'a str>> {
 ## Applications in Competitive Programming
 
 ### Traveling Salesman Problem (TSP)
+
 ```rust
 // Generate all possible routes
 for route in generate_permutations(&cities) {
@@ -158,6 +170,7 @@ for route in generate_permutations(&cities) {
 ```
 
 ### N-Queens Problem
+
 ```rust
 // Generate all queen placements
 for placement in generate_permutations(&positions) {
@@ -168,6 +181,7 @@ for placement in generate_permutations(&positions) {
 ```
 
 ### String Permutations
+
 ```rust
 // Find all anagrams
 let chars: Vec<char> = word.chars().collect();
@@ -180,6 +194,7 @@ let anagrams: Vec<String> = perms.into_iter()
 ## Advanced Variations
 
 ### Iterator-Based Implementation
+
 ```rust
 struct PermutationIterator<T> {
     data: Vec<T>,
@@ -203,6 +218,7 @@ impl<T: Clone> Iterator for PermutationIterator<T> {
 ```
 
 ### Memory-Efficient Version
+
 ```rust
 fn heaps_permute_iterative<T>(arr: &mut [T]) -> impl Iterator<Item = ()> + '_ 
 where T: Clone {
@@ -214,6 +230,7 @@ where T: Clone {
 ## Common Pitfalls and Solutions
 
 ### 1. **Lifetime Issues in Rust**
+
 ```rust
 // ❌ Wrong: Lifetime mismatch
 fn bad_permutations<'a>(items: &'a [&'a str]) -> Vec<Vec<&'a str>> {
@@ -227,6 +244,7 @@ fn good_permutations<'a>(items: &'a [&'a str]) -> Vec<Vec<&'a str>> {
 ```
 
 ### 2. **Memory Allocation**
+
 ```rust
 // ❌ Wrong: Cloning too much
 for perm in permutations {
@@ -240,6 +258,7 @@ for perm in &permutations {
 ```
 
 ### 3. **Stack Overflow**
+
 ```rust
 // ❌ Wrong: Deep recursion on large inputs
 generate_permutations(&large_array); // May cause stack overflow
@@ -251,6 +270,7 @@ generate_permutations_iterative(&large_array);
 ## Testing Strategy
 
 ### Unit Tests
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -293,6 +313,7 @@ mod tests {
 ```
 
 ### Property-Based Tests
+
 ```rust
 use proptest::prelude::*;
 
@@ -319,6 +340,7 @@ proptest! {
 ## Performance Optimization Tips
 
 ### 1. **Avoid Unnecessary Clones**
+
 ```rust
 // ❌ Slow
 for perm in generate_permutations(&items) {
@@ -332,6 +354,7 @@ for perm in &generate_permutations(&items) {
 ```
 
 ### 2. **Use Iterators for Memory Efficiency**
+
 ```rust
 // Generate permutations on-demand
 let permutations = PermutationIterator::new(items);
@@ -343,6 +366,7 @@ for perm in permutations {
 ```
 
 ### 3. **Parallel Processing**
+
 ```rust
 use rayon::prelude::*;
 
@@ -355,21 +379,25 @@ let results: Vec<_> = perms.par_iter()
 ## Real-World Applications
 
 ### 1. **Cryptography**
+
 - Generating keys from character sets
 - Password cracking (brute force)
 - Hash collision testing
 
 ### 2. **Game Development**
+
 - Shuffling game elements
 - Generating puzzle configurations
 - AI move generation
 
 ### 3. **Data Science**
+
 - Feature selection in machine learning
 - A/B testing configurations
 - Sampling strategies
 
 ### 4. **Algorithm Problems**
+
 - **TSP**: Route optimization
 - **N-Queens**: Constraint satisfaction
 - **String Matching**: Pattern recognition
@@ -397,15 +425,18 @@ for route in generate_permutations(&cities) {
 ## Resources and Further Reading
 
 ### Academic Papers
+
 - **Heap, B. R. (1963)**. "Permutations by Interchanges". The Computer Journal, 6(3), 293-298.
 - **Sedgewick, R. (1977)**. "Permutation Generation Methods". Computing Surveys, 9(2), 137-164.
 
 ### Online Resources
+
 - [Heap's Algorithm on Wikipedia](https://en.wikipedia.org/wiki/Heap%27s_algorithm)
 - [Visualization of Heap's Algorithm](https://www.youtube.com/watch?v=GuTPwotSdYw)
 - [Competitive Programming Guide](https://cp-algorithms.com/combinatorics/generating_combinations.html)
 
 ### Practice Problems
+
 - **LeetCode**: Permutations, Permutations II
 - **CodeForces**: Problems involving enumeration
 - **AtCoder**: Combinatorial problems
@@ -435,27 +466,32 @@ for route in generate_permutations(&cities) {
 ## 🔗 Navigation
 
 ### 📚 Zettelkasten
+
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[AoC Patterns MOC]]** - Competitive programming patterns (Combinatorial Problems section)
 - **[[rust-concepts-MOC]]** - Core language features
 
 ### 🎯 Algorithm Context
+
 - **[[Permutation Generation]]** - Parent concept for arrangement problems
 - **[[A-Star-Algorithm-Deep-Dive|A* Algorithm Deep Dive]]** - Another optimization algorithm
 - **[[Dynamic Programming]]** - Optimization technique
 - **[[Backtracking Algorithms]]** - Alternative exploration strategy
 
 ### 🏗️ Mission Integration
+
 - **[[mission-5]]** - HashMap applications (distance lookups for TSP)
 - **[Mission5 README](../missions/Mission5/README.md)** - Dictionary implementation for route calculations
 
 ### 🎄 AoC Applications
+
 - **TSP (Traveling Salesman Problem)** - Classic permutation optimization
 - **N-Queens Problem** - Constraint satisfaction with backtracking
 - **Route Optimization** - Finding shortest paths through all points
 - **Puzzle Solving** - Configuration enumeration
 
 ### 📖 Related Algorithms
+
 - **[[Graph Algorithms]]** - Path finding and traversal
 - **[[Combinatorial Optimization]]** - Mathematical optimization techniques
 - **[[Constraint Satisfaction]]** - Rule-based problem solving

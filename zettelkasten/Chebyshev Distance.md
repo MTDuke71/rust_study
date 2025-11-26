@@ -78,6 +78,7 @@ Diamond shape           Circle shape            Square shape
    - Strategy games (StarCraft, Age of Empires)
 
 2. **A* Heuristic for 8-Connected Graphs**
+
    ```rust
    // Admissible for 8-connected grids with diagonal movement
    let h = chebyshev_distance(current, goal);
@@ -103,12 +104,14 @@ Diamond shape           Circle shape            Square shape
 ## 🧮 **Mathematical Properties**
 
 ### **Metric Properties:**
+
 1. **Non-negativity**: `d(a,b) ≥ 0`
 2. **Identity**: `d(a,b) = 0` if and only if `a = b`
 3. **Symmetry**: `d(a,b) = d(b,a)`
 4. **Triangle inequality**: `d(a,c) ≤ d(a,b) + d(b,c)`
 
 ### **Relationship to Other Metrics:**
+
 - **Lower bound**: `Chebyshev(a,b) ≤ Manhattan(a,b)`
 - **Upper bound**: `Euclidean(a,b) ≤ Chebyshev(a,b) × √2`
 - **Special case**: When `dx = dy`, Chebyshev = Euclidean = dx
@@ -118,6 +121,7 @@ Diamond shape           Circle shape            Square shape
 ## 💻 **Implementation Patterns**
 
 ### **Basic Implementation**
+
 ```rust
 fn chebyshev_distance(a: (usize, usize), b: (usize, usize)) -> usize {
     let dx = a.0.abs_diff(b.0);
@@ -127,6 +131,7 @@ fn chebyshev_distance(a: (usize, usize), b: (usize, usize)) -> usize {
 ```
 
 ### **With TutorialCoord**
+
 ```rust
 fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
     let dx = if a.x > b.x { a.x - b.x } else { b.x - a.x };
@@ -136,6 +141,7 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 ```
 
 ### **3D Extension**
+
 ```rust
 fn chebyshev_distance_3d(a: (i32, i32, i32), b: (i32, i32, i32)) -> i32 {
     let dx = (a.0 - b.0).abs();
@@ -150,6 +156,7 @@ fn chebyshev_distance_3d(a: (i32, i32, i32), b: (i32, i32, i32)) -> i32 {
 ## 🎮 **Practical Examples**
 
 ### **Example 1: Range Detection in Strategy Games**
+
 ```rust
 // Check if enemy is in attack range (8-directional)
 fn is_in_range(unit_pos: Coord, target_pos: Coord, range: usize) -> bool {
@@ -160,6 +167,7 @@ fn is_in_range(unit_pos: Coord, target_pos: Coord, range: usize) -> bool {
 ```
 
 ### **Example 2: A* Heuristic for 8-Connected Grid**
+
 ```rust
 fn astar_8connected(start: Coord, goal: Coord, grid: &Grid) -> Option<Path> {
     // Use Chebyshev as admissible heuristic
@@ -170,6 +178,7 @@ fn astar_8connected(start: Coord, goal: Coord, grid: &Grid) -> Option<Path> {
 ```
 
 ### **Example 3: Chess King Mobility**
+
 ```rust
 fn king_can_reach(from: Square, to: Square, moves: usize) -> bool {
     chebyshev_distance(from, to) <= moves
@@ -184,16 +193,19 @@ assert!(king_can_reach((4,4), (6,6), 2));
 ## 🔗 **Related Concepts**
 
 ### **Distance Metrics:**
+
 - [[Manhattan Distance]] - For 4-connected grids (L₁ metric)
 - [[Euclidean Distance]] - For continuous space (L₂ metric)
 - [[Distance Metrics Comparison]] - Complete comparison guide
 
 ### **Pathfinding:**
+
 - [[A-Star Algorithm]] - Uses distance as heuristic
 - [[BFS Pathfinding]] - Optimal for unweighted graphs
 - [[Heuristic Functions]] - Admissibility and consistency
 
 ### **Applications:**
+
 - [[Grid-Based Pathfinding]] - Tutorial implementation
 - [[Mission 6 Overview]] - Step 4 pathfinding algorithms
 - [[AoC Grid Patterns]] - Common competitive programming patterns
@@ -203,9 +215,11 @@ assert!(king_can_reach((4,4), (6,6), 2));
 ## 🎓 **From Tutorial Implementation**
 
 See practical usage in:
+
 - **File**: `tutorials/Mission6_tut/examples/step4_pathfinding.rs`
 - **Section 6**: "Heuristic Functions Deep Dive"
 - **Example output**:
+
   ```
   Position    Manhattan    Euclidean    Chebyshev
   (1, 1)             10         7.21            6
@@ -238,15 +252,18 @@ See practical usage in:
 ## 🔗 **Related Documentation**
 
 ### **Core Concepts:**
+
 - [[Distance Metrics Comparison]]
 - [[Heuristic Functions]]
 - [[A-Star Algorithm]]
 
 ### **Tutorial Steps:**
+
 - [[Mission6_tut/README.md]] - Complete tutorial overview
 - Step 4: Pathfinding Algorithms
 
 ### **Applications:**
+
 - [[AoC Grid Patterns]]
 - [[Strategy Game Patterns]]
 - [[Image Processing Patterns]]

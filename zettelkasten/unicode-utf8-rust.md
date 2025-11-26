@@ -18,6 +18,7 @@ Unicode and UTF-8 are fundamental to understanding Rust's `String` type and why 
 ### The Problem Unicode Solves
 
 Before Unicode, different character encoding systems existed for different languages:
+
 - **ASCII** (American): 128 characters (7 bits)
 - **Latin-1** (Western Europe): 256 characters (8 bits)
 - **Shift-JIS** (Japanese), **GB2312** (Chinese), **KOI8-R** (Russian), etc.
@@ -29,12 +30,14 @@ Before Unicode, different character encoding systems existed for different langu
 **Unicode** is a universal character set that assigns a unique number (called a **code point**) to every character in every writing system.
 
 **Key Concepts:**
+
 - **Code Point:** A number from `U+0000` to `U+10FFFF` (over 1.1 million possible values)
 - **Plane:** Unicode is divided into 17 planes (0-16)
   - **Plane 0 (BMP - Basic Multilingual Plane):** `U+0000` to `U+FFFF` - Most common characters
   - **Planes 1-16:** Supplementary characters (emoji, historical scripts, etc.)
 
 **Examples:**
+
 ```
 'A' = U+0041  (Latin capital letter A)
 '文' = U+6587  (Chinese character for "text")
@@ -45,9 +48,11 @@ Before Unicode, different character encoding systems existed for different langu
 ### Scalar Values vs. Grapheme Clusters
 
 **Unicode Scalar Value:** A single code point (U+0000 to U+D7FF and U+E000 to U+10FFFF)
+
 - Excludes surrogate pairs (U+D800 to U+DFFF) used in UTF-16
 
 **Grapheme Cluster:** What humans perceive as a single "character"
+
 - May be composed of multiple scalar values
 - Example: "é" can be:
   - Single scalar: `U+00E9` (é precomposed)
@@ -64,12 +69,14 @@ Before Unicode, different character encoding systems existed for different langu
 **UTF-8** is a variable-width character encoding that represents Unicode code points using 1 to 4 bytes.
 
 **Advantages:**
+
 1. **ASCII Compatibility:** First 128 characters (U+0000 to U+007F) use 1 byte with same values as ASCII
 2. **Space Efficient:** Common characters use fewer bytes
 3. **Self-Synchronizing:** You can find character boundaries by examining bytes
 4. **No Byte Order Mark (BOM) needed:** Unlike UTF-16/UTF-32
 
 **Why Rust Chose UTF-8:**
+
 - Web standard (HTML, JSON, URLs)
 - Most efficient for English/Latin text (dominant in programming)
 - Prevents endianness issues
@@ -84,7 +91,8 @@ Before Unicode, different character encoding systems existed for different langu
 | U+0800 to U+FFFF      | 3 bytes     | `1110xxxx 10xxxxxx 10xxxxxx`                    | '€' = `0xE2 0x82 0xAC` |
 | U+10000 to U+10FFFF   | 4 bytes     | `11110xxx 10xxxxxx 10xxxxxx 10xxxxxx`           | '🦀' = `0xF0 0x9F 0xA6 0x80` |
 
-**Key Pattern:** 
+**Key Pattern:**
+
 - Leading byte indicates how many bytes in the character
 - Continuation bytes always start with `10`
 
@@ -106,6 +114,7 @@ for c in s.chars() {
 ```
 
 **Output:**
+
 ```
 H = U+0048  (1 byte)
 e = U+0065  (1 byte)
@@ -130,6 +139,7 @@ o = U+006F  (1 byte)
 Rust considers strings from three viewpoints:
 
 #### 1. **Bytes** (`u8` values)
+
 ```rust
 let s = String::from("नमस्ते");
 println!("{:?}", s.as_bytes());
@@ -138,6 +148,7 @@ println!("{:?}", s.as_bytes());
 ```
 
 #### 2. **Scalar Values** (Unicode code points)
+
 ```rust
 let s = String::from("नमस्ते");
 for c in s.chars() {
@@ -148,6 +159,7 @@ for c in s.chars() {
 ```
 
 #### 3. **Grapheme Clusters** (perceived characters)
+
 ```rust
 // Requires external crate: unicode-segmentation
 use unicode_segmentation::UnicodeSegmentation;
@@ -178,6 +190,7 @@ let hello = String::from("Здравствуйте");
 ```
 
 **Rust's Decision:** **Disallow indexing entirely** to avoid:
+
 1. **Performance surprises:** `s[n]` would be O(n), not O(1) as expected
 2. **Ambiguity:** No clear consensus on what should be returned
 3. **Bugs:** Easy to accidentally slice mid-character
@@ -185,6 +198,7 @@ let hello = String::from("Здравствуйте");
 ### Safe Alternatives to Indexing
 
 #### 1. **Iterating Over Characters**
+
 ```rust
 let s = String::from("नमस्ते");
 
@@ -206,6 +220,7 @@ for g in s.graphemes(true) {
 ```
 
 #### 2. **Slicing (With Caution)**
+
 ```rust
 let hello = "Здравствуйте";
 
@@ -220,6 +235,7 @@ println!("{}", s);
 **Rule:** Only slice at valid UTF-8 character boundaries. Use `.char_indices()` to find safe boundaries.
 
 #### 3. **Using `.chars().nth(n)`**
+
 ```rust
 let s = String::from("Hello");
 
@@ -232,6 +248,7 @@ if let Some(c) = s.chars().nth(2) {
 ```
 
 #### 4. **Collecting into Vec for Random Access**
+
 ```rust
 let s = String::from("Hello, 世界!");
 let chars: Vec<char> = s.chars().collect();
@@ -258,6 +275,7 @@ println!("9th char: {}", chars[8]);  // '界'
 | **Conversion**       | `s.as_str()` or `&s`        | `s.to_string()` or `.into()`  |
 
 **Mental Model:**
+
 - `String` is like `Vec<T>` - owns its data
 - `&str` is like `&[T]` - borrows a view into string data
 
@@ -324,6 +342,7 @@ println!("{}-{}-{}", s1, s2, s3);  // ✅ Still valid
 ```
 
 **Why does `+` take ownership?**
+
 ```rust
 // The + operator uses this signature:
 fn add(self, s: &str) -> String { /* ... */ }
@@ -450,6 +469,7 @@ let s = String::from("Hello");
 ```
 
 **Growth Strategy:**
+
 - Doubling capacity when full (similar to `Vec<T>`)
 - `String::with_capacity(n)` pre-allocates to avoid reallocations
 
@@ -888,18 +908,23 @@ fn truncate_display(s: &str, max_chars: usize) -> String {
 ## Related Concepts for Further Study
 
 ### 1. **String Interning**
+
 Storing only one copy of each distinct string value. Rust doesn't have built-in interning, but crates like `string_cache` provide it.
 
 ### 2. **Zero-Copy String Parsing**
+
 Using `&str` slices to avoid allocations when parsing text.
 
 ### 3. **Rope Data Structures**
+
 Efficient string representation for text editors (large insertions/deletions).
 
 ### 4. **Small String Optimization (SSO)**
+
 Storing short strings inline to avoid heap allocation. `SmartString` and `SmallVec` crates provide this.
 
 ### 5. **Unicode Normalization**
+
 Converting strings to canonical forms (NFC, NFD, NFKC, NFKD) for comparison.
 
 ---

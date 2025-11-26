@@ -17,6 +17,7 @@ pub struct Graph<T> {
 ## Key Implementation Details
 
 ### **Node Management**
+
 ```rust
 impl<T> Graph<T> {
     pub fn add_node(&mut self, data: T) -> usize {
@@ -31,6 +32,7 @@ impl<T> Graph<T> {
 **Design Decision**: Using indices instead of pointers avoids Rust ownership complexity while maintaining O(1) node access.
 
 ### **Edge Operations**
+
 ```rust
 pub fn add_edge(&mut self, from: usize, to: usize) -> Result<(), GraphError> {
     // Bounds checking
@@ -53,6 +55,7 @@ pub fn add_edge(&mut self, from: usize, to: usize) -> Result<(), GraphError> {
 **Safety First**: All operations include bounds checking to prevent panics.
 
 ### **Neighbor Access**
+
 ```rust
 pub fn neighbors(&self, node: usize) -> Option<&Vec<usize>> {
     if node < self.adjacency_list.len() {
@@ -68,6 +71,7 @@ pub fn neighbors(&self, node: usize) -> Option<&Vec<usize>> {
 ## Advanced Features
 
 ### **Edge Existence Check**
+
 ```rust
 pub fn has_edge(&self, from: usize, to: usize) -> bool {
     self.adjacency_list
@@ -80,6 +84,7 @@ pub fn has_edge(&self, from: usize, to: usize) -> bool {
 **Performance Note**: O(degree) complexity - consider `HashSet<usize>` for frequent edge queries.
 
 ### **Graph Statistics**
+
 ```rust
 pub fn edge_count(&self) -> usize {
     let total_edges: usize = self.adjacency_list
@@ -129,6 +134,7 @@ impl std::error::Error for GraphError {}
 ## Memory Layout Optimization
 
 ### **Capacity Pre-allocation**
+
 ```rust
 pub fn with_capacity(node_capacity: usize, is_directed: bool) -> Self {
     Graph {
@@ -140,6 +146,7 @@ pub fn with_capacity(node_capacity: usize, is_directed: bool) -> Self {
 ```
 
 ### **Neighbor List Optimization**
+
 ```rust
 // For vertices expected to have many neighbors
 pub fn reserve_neighbors(&mut self, node: usize, additional: usize) -> Result<(), GraphError> {
@@ -155,6 +162,7 @@ pub fn reserve_neighbors(&mut self, node: usize, additional: usize) -> Result<()
 ## Iterator Support
 
 ### **Node Iterator**
+
 ```rust
 pub fn nodes(&self) -> impl Iterator<Item = (usize, &T)> {
     self.nodes.iter().enumerate()
@@ -162,6 +170,7 @@ pub fn nodes(&self) -> impl Iterator<Item = (usize, &T)> {
 ```
 
 ### **Edge Iterator**
+
 ```rust
 pub fn edges(&self) -> impl Iterator<Item = (usize, usize)> + '_ {
     self.adjacency_list
@@ -178,6 +187,7 @@ pub fn edges(&self) -> impl Iterator<Item = (usize, usize)> + '_ {
 ## Performance Characteristics
 
 ### **Time Complexity Summary**
+
 | Operation | Best Case | Average Case | Worst Case |
 |-----------|-----------|--------------|------------|
 | Add Node | O(1) | O(1) amortized | O(n) reallocation |
@@ -187,6 +197,7 @@ pub fn edges(&self) -> impl Iterator<Item = (usize, usize)> + '_ {
 | Get Neighbors | O(1) | O(1) | O(1) |
 
 ### **Space Complexity**
+
 - **Best Case**: O(V) for graphs with no edges
 - **Average Case**: O(V + E) for typical sparse graphs  
 - **Worst Case**: O(V²) for complete graphs (still better than adjacency matrix)
@@ -194,6 +205,7 @@ pub fn edges(&self) -> impl Iterator<Item = (usize, usize)> + '_ {
 ## Comparison with Alternative Approaches
 
 ### **vs HashSet-based Adjacency**
+
 ```rust
 // HashMap approach (not used in Mission 7)
 struct GraphWithHashSet<T> {
@@ -203,19 +215,23 @@ struct GraphWithHashSet<T> {
 ```
 
 **Trade-offs**:
+
 - ✅ HashSet: O(1) edge existence checks
 - ❌ HashSet: Higher memory overhead, worse cache locality
 - ✅ Vec: Better cache performance, lower memory usage
 - ❌ Vec: O(degree) edge existence checks
 
 ### **vs Adjacency Matrix**
+
 From [[mission-10]] tutorial analysis:
+
 - **Adjacency List**: O(V+E) space, better for sparse graphs
 - **Adjacency Matrix**: O(V²) space, O(1) edge queries, better for dense graphs
 
 ## Testing Strategy
 
 ### **Unit Test Structure**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -249,6 +265,7 @@ mod tests {
 ## Real-World Usage Patterns
 
 ### **Social Network Analysis**
+
 ```rust
 let mut social_network = Graph::new(false);  // Undirected friendships
 let alice = social_network.add_node("Alice");
@@ -261,6 +278,7 @@ let bob_friends = social_network.neighbors(bob).unwrap();
 ```
 
 ### **Dependency Graph**
+
 ```rust
 let mut dependencies = Graph::new(true);  // Directed dependencies
 let lib_a = dependencies.add_node("Library A");
@@ -269,6 +287,7 @@ dependencies.add_edge(lib_b, lib_a).unwrap();  // B depends on A
 ```
 
 ### **Route Planning**
+
 ```rust
 let mut road_network = Graph::new(false);  // Bidirectional roads
 let intersection1 = road_network.add_node("Main & 1st");
@@ -279,6 +298,7 @@ road_network.add_edge(intersection1, intersection2).unwrap();
 ## Integration with Graph Algorithms
 
 ### **DFS Implementation**
+
 ```rust
 pub fn dfs_visit<F>(&self, start: usize, mut visitor: F) -> Result<(), GraphError>
 where
@@ -308,6 +328,7 @@ where
 ```
 
 ### **BFS Implementation**  
+
 ```rust
 use std::collections::VecDeque;
 
@@ -341,6 +362,7 @@ where
 ## Production Quality Considerations
 
 ### **Thread Safety**
+
 ```rust
 use std::sync::{Arc, RwLock};
 
@@ -351,6 +373,7 @@ let shared_graph: ThreadSafeGraph<String> = Arc::new(RwLock::new(Graph::new(fals
 ```
 
 ### **Serialization Support**
+
 ```rust
 #[cfg(feature = "serde")]
 use serde::{Serialize, Deserialize};
@@ -365,6 +388,7 @@ pub struct Graph<T> {
 ```
 
 ### **Custom Debug Implementation**
+
 ```rust
 impl<T: std::fmt::Debug> std::fmt::Debug for Graph<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -389,6 +413,7 @@ impl<T: std::fmt::Debug> std::fmt::Debug for Graph<T> {
 ## Common Implementation Pitfalls
 
 ### **❌ Index Out of Bounds**
+
 ```rust
 // DON'T: No bounds checking
 self.adjacency_list[node].push(neighbor);
@@ -402,6 +427,7 @@ if node < self.adjacency_list.len() {
 ```
 
 ### **❌ Forgetting Bidirectional Edges**
+
 ```rust
 // DON'T: Only add one direction for undirected graph
 self.adjacency_list[from].push(to);
@@ -413,6 +439,7 @@ if !self.is_directed {
 ```
 
 ### **❌ Memory Leaks in Edge Removal**
+
 ```rust
 // DON'T: Leave dangling references
 self.adjacency_list[from].retain(|&x| x != to);

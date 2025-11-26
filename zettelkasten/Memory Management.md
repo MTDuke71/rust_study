@@ -7,12 +7,15 @@
 ## 🎯 **Core Concepts**
 
 ### **The Memory Safety Trinity**
+
 Rust achieves memory safety through three fundamental mechanisms:
+
 1. **Ownership** - Single owner per value
 2. **Borrowing** - Temporary access without ownership transfer
 3. **Lifetimes** - Ensuring references remain valid
 
 ### **Zero-Cost Memory Safety**
+
 - No garbage collector runtime overhead
 - Memory errors caught at compile time
 - Performance equivalent to manual memory management
@@ -23,6 +26,7 @@ Rust achieves memory safety through three fundamental mechanisms:
 ## 📚 **Memory Layout Fundamentals**
 
 ### **Stack vs Heap**
+
 ```rust
 // Stack allocation - fast, fixed size, automatic cleanup
 fn stack_example() {
@@ -39,6 +43,7 @@ fn heap_example() {
 ```
 
 ### **Memory Regions**
+
 - **Stack**: Function parameters, local variables, return addresses
 - **Heap**: Dynamic allocations, growable collections
 - **Static/Global**: Program constants, static variables
@@ -49,6 +54,7 @@ fn heap_example() {
 ## 🏗️ **Ownership System**
 
 ### **Ownership Rules**
+
 1. Each value has exactly one owner
 2. When owner goes out of scope, value is dropped
 3. Ownership can be transferred (moved) but not duplicated
@@ -73,6 +79,7 @@ fn give_ownership() -> String {
 ```
 
 ### **Copy vs Move Semantics**
+
 ```rust
 // Copy types (stored on stack)
 let x = 5;
@@ -94,6 +101,7 @@ println!("s2: {}, s3: {}", s2, s3); // ✅ Both valid after clone
 ## 🔗 **Borrowing and References**
 
 ### **Immutable Borrowing**
+
 ```rust
 fn borrowing_example() {
     let s = String::from("hello");
@@ -107,6 +115,7 @@ fn calculate_length(s: &String) -> usize {
 ```
 
 ### **Mutable Borrowing**
+
 ```rust
 fn mutable_borrowing() {
     let mut s = String::from("hello");
@@ -120,6 +129,7 @@ fn change(s: &mut String) {
 ```
 
 ### **Borrowing Rules**
+
 - Any number of immutable references **OR** exactly one mutable reference
 - References must always be valid (no dangling pointers)
 - Cannot modify through immutable reference
@@ -143,6 +153,7 @@ let r1 = &s;
 ## ⏰ **Lifetimes**
 
 ### **Lifetime Annotations**
+
 ```rust
 // Explicit lifetime parameter
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
@@ -167,6 +178,7 @@ impl<'a> ImportantExcerpt<'a> {
 ```
 
 ### **Lifetime Elision Rules**
+
 1. Each reference parameter gets its own lifetime
 2. If exactly one input lifetime, it's assigned to all outputs
 3. If multiple inputs but one is `&self`, its lifetime assigned to outputs
@@ -182,6 +194,7 @@ fn first_word<'a>(s: &'a str) -> &'a str { /* ... */ }
 ## 📦 **Smart Pointers**
 
 ### **Box<T> - Heap Allocation**
+
 ```rust
 // Simple heap allocation
 let boxed_int = Box::new(42);
@@ -198,6 +211,7 @@ let list = Cons(1, Box::new(Cons(2, Box::new(Nil))));
 ```
 
 ### **Rc<T> - Reference Counting**
+
 ```rust
 use std::rc::Rc;
 
@@ -211,6 +225,7 @@ println!("Reference count: {}", Rc::strong_count(&data)); // 3
 ```
 
 ### **RefCell<T> - Interior Mutability**
+
 ```rust
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -229,6 +244,7 @@ println!("{:?}", reference.borrow()); // [1, 2, 3, 4]
 ## 🔧 **RAII and Drop Trait**
 
 ### **Automatic Resource Management**
+
 ```rust
 struct CustomResource {
     name: String,
@@ -254,6 +270,7 @@ fn raii_example() {
 ```
 
 ### **Manual Memory Management**
+
 ```rust
 use std::alloc::{alloc, dealloc, Layout};
 
@@ -274,6 +291,7 @@ unsafe fn manual_allocation() {
 ## 🔄 **Memory Patterns and Best Practices**
 
 ### **Avoiding Common Pitfalls**
+
 ```rust
 // ❌ Dangling reference
 // fn dangling_reference() -> &String {
@@ -302,6 +320,7 @@ fn proper_usage() {
 ```
 
 ### **Performance Considerations**
+
 ```rust
 // Prefer borrowing for read operations
 fn process_data(data: &Vec<i32>) -> i32 {
@@ -330,6 +349,7 @@ fn process_string(data: Cow<str>) -> String {
 ## 🧪 **Memory-Related Testing Patterns**
 
 ### **Testing Drop Behavior**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -376,18 +396,21 @@ impl Drop for TrackingResource {
 ## 🔗 **Integration with Mission Work**
 
 ### **Mission Connections**
+
 - **[[mission-1|Mission1]]**: Stack-based memory management in stack implementation
 - **[[mission-4]]**: Heap allocation patterns in linked list nodes
 - **[[mission-5]]**: Memory layout optimization in HashMap implementation
 - **[[Box Smart Pointer Patterns]]**: Detailed Box<T> usage patterns
 
 ### **Daily Study Connections**
+
 - **[[daily-study/Day02]]**: Variables and memory layout fundamentals
 - **[[daily-study/Day03]]**: References and borrowing basics
 - **[[rust_book/rust-book-ch4]]**: Ownership system foundations
 - **[[rust_book/rust-book-ch15]]**: Smart pointers and advanced patterns
 
 ### **Real-World Applications**
+
 - **Resource management**: File handles, network connections
 - **Performance optimization**: Zero-copy operations, memory pools
 - **Safety guarantees**: Preventing memory leaks and use-after-free
@@ -408,4 +431,4 @@ Memory management in Rust is about **compile-time guarantees** rather than runti
 ---
 
 *Tags: #memory-management #ownership #borrowing #lifetimes #smart-pointers #raii #heap #stack #performance #safety*
-*Links: [[zettel-index]] | [[mission-1|Mission1]] | [[mission-4]] | [[Box Smart Pointer Patterns]] | [[rust_book/rust-book-ch4]] | [[rust_book/rust-book-ch15]]*
+*Links: [[zettel-index]] | [[mission-1|Mission1]] | [[mission-4]] | [[Box Smart Pointer Patterns]] | [[rust_book/rust-book-ch4]] | [[rust_book/rust-book-ch15]] | [[Memory Optimization]]*

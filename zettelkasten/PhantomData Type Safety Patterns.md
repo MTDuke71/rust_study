@@ -9,6 +9,7 @@
 ## 🔍 The Problem PhantomData Solves
 
 ### **Without Type Safety:**
+
 ```rust
 // Easy to mix up different types of IDs
 fn process_user(id: u64) { ... }
@@ -22,6 +23,7 @@ process_user(product_id);  // ❌ Wrong ID type, but no error
 ```
 
 ### **With PhantomData:**
+
 ```rust
 struct Id<T> {
     value: u64,
@@ -39,6 +41,7 @@ process_user(product_id);  // ❌ Compile error! Type mismatch
 ## 🛠️ Basic PhantomData Pattern
 
 ### **Generic Struct with PhantomData:**
+
 ```rust
 use std::marker::PhantomData;
 
@@ -62,6 +65,7 @@ impl<T> Id<T> {
 ```
 
 ### **Type Aliases for Safety:**
+
 ```rust
 type UserId = Id<User>;
 type ProductId = Id<Product>;
@@ -75,6 +79,7 @@ struct Order { id: u64 }
 ## 🎯 How PhantomData Creates Type Uniqueness
 
 ### **The Magic of Generic Type Substitution:**
+
 ```rust
 // Generic template
 Id<T> {
@@ -99,6 +104,7 @@ Id<Product> {
 ## 🚀 Real-World Applications
 
 ### **1. Database Entity IDs**
+
 ```rust
 type UserId = Id<User>;
 type OrderId = Id<Order>;
@@ -113,6 +119,7 @@ let user = get_user(order_id);  // ❌ Compile error!
 ```
 
 ### **2. API Endpoint Safety**
+
 ```rust
 fn delete_user(id: UserId) -> Result<(), Error> { ... }
 fn delete_product(id: ProductId) -> Result<(), Error> { ... }
@@ -122,6 +129,7 @@ delete_user(product_id);  // ❌ Compile error!
 ```
 
 ### **3. Resource Handles**
+
 ```rust
 struct FileHandle<T> {
     fd: i32,
@@ -139,6 +147,7 @@ write_data(read_handle, &data);  // ❌ Compile error!
 ```
 
 ### **4. Unit Type Safety**
+
 ```rust
 struct Length<T> {
     value: f64,
@@ -159,6 +168,7 @@ let total = add_lengths(meters, feet);  // ❌ Compile error!
 ## 🔧 Advanced Patterns
 
 ### **PhantomData with Lifetime Parameters**
+
 ```rust
 struct Cursor<'a, T> {
     data: &'a [T],
@@ -178,6 +188,7 @@ impl<'a, T> Cursor<'a, T> {
 ```
 
 ### **PhantomData with Multiple Type Parameters**
+
 ```rust
 struct Container<K, V> {
     data: Vec<u8>,
@@ -189,6 +200,7 @@ type ProductMap = Container<u64, Product>;
 ```
 
 ### **PhantomData with Trait Bounds**
+
 ```rust
 struct Processor<T: Processable> {
     config: Config,
@@ -212,6 +224,7 @@ impl<T: Processable> Processor<T> {
 ## 🎯 PhantomData Variants
 
 ### **PhantomData<T> - Owns T**
+
 ```rust
 struct Owns<T> {
     data: u32,
@@ -220,6 +233,7 @@ struct Owns<T> {
 ```
 
 ### **PhantomData<&T> - Borrows T**
+
 ```rust
 struct Borrows<T> {
     data: u32,
@@ -228,6 +242,7 @@ struct Borrows<T> {
 ```
 
 ### **PhantomData<&mut T> - Mutably Borrows T**
+
 ```rust
 struct MutBorrows<T> {
     data: u32,
@@ -238,6 +253,7 @@ struct MutBorrows<T> {
 ## 💡 Best Practices
 
 ### **1. Use Underscore Prefix**
+
 ```rust
 struct Id<T> {
     value: u64,
@@ -246,6 +262,7 @@ struct Id<T> {
 ```
 
 ### **2. Document the Purpose**
+
 ```rust
 struct Id<T> {
     value: u64,
@@ -255,6 +272,7 @@ struct Id<T> {
 ```
 
 ### **3. Consider Type Aliases**
+
 ```rust
 // Make intent clear with type aliases
 type UserId = Id<User>;
@@ -262,6 +280,7 @@ type ProductId = Id<Product>;
 ```
 
 ### **4. Add Convenience Methods**
+
 ```rust
 impl<T> Id<T> {
     fn cast<U>(self) -> Id<U> {
@@ -306,16 +325,19 @@ mod tests {
 ## 🔗 Integration with Learning Tracks
 
 ### **Mission Integration**
+
 - **Mission 5**: Type-safe HashMap keys with PhantomData
 - **Mission 6**: Grid coordinates with unit type safety
 - **Advanced Missions**: Resource management with type safety
 
 ### **Daily Study Integration**
+
 - **Day 15**: Generics and type parameters
 - **Day 16**: Advanced type system patterns
 - **Day 17**: Zero-cost abstractions
 
 ### **AoC Applications**
+
 - Type-safe coordinate systems
 - Entity ID management
 - Resource handle safety

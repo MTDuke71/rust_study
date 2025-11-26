@@ -7,6 +7,7 @@
 ## 🎯 **Why Binary Search in AoC?**
 
 Binary search appears in AoC problems more often than you'd expect:
+
 - **Direct**: Find element in sorted array
 - **Monotonic predicates**: Find first/last element matching condition
 - **Range queries**: Find all elements in a range
@@ -28,6 +29,7 @@ match coordinates.binary_search(&47) {
 ```
 
 **AoC Use Cases:**
+
 - Checking if coordinate is in valid set
 - Verifying ID exists in sorted list
 - Fast membership testing
@@ -44,6 +46,7 @@ let twos: Vec<_> = data.find_all_equal(&2).collect();
 ```
 
 **Implementation:**
+
 ```rust
 pub fn find_all_equal<'a, T: Ord>(slice: &'a [T], target: &T) -> RangeIter<'a, T> {
     let left = search_left_bound(slice, target);   // O(log n)
@@ -53,6 +56,7 @@ pub fn find_all_equal<'a, T: Ord>(slice: &'a [T], target: &T) -> RangeIter<'a, T
 ```
 
 **AoC Use Cases:**
+
 - Finding all timestamps at specific time
 - Grouping identical values
 - Range sum queries with duplicates
@@ -69,12 +73,14 @@ let range: Vec<_> = data.find_range(&7, &13).collect();
 ```
 
 **AoC Use Cases:**
+
 - Finding coordinates in bounding box
 - Time-based event filtering
 - Energy level thresholds
 - Temperature ranges
 
 **Example - Coordinate Filtering:**
+
 ```rust
 // Find all points in rectangular region
 struct Point { x: i32, y: i32 }
@@ -100,12 +106,14 @@ let first_big = data.find_first_matching(|&x| x >= 10);
 ```
 
 **AoC Use Cases:**
+
 - First timestamp after event
 - Minimum energy level to succeed
 - First valid configuration
 - Threshold crossing
 
 **Example - Energy Threshold:**
+
 ```rust
 let energy_levels = [5, 10, 15, 20, 25, 30];
 let required = 18;
@@ -143,12 +151,14 @@ fn find_minimum(resources: &[i32]) -> i32 {
 ```
 
 **AoC Use Cases:**
+
 - Minimum time to complete task
 - Maximum capacity under constraints
 - Optimal resource allocation
 - Finding equilibrium points
 
 **Real AoC Example - Ship Fuel (AoC 2019 Day 1):**
+
 ```rust
 // Find minimum fuel to reach position
 fn fuel_cost(pos: i32, target: i32) -> i32 {
@@ -246,12 +256,14 @@ let first_viable = resources
 ### **When to Use Binary Search:**
 
 ✅ **Good Cases:**
+
 - Data is sorted (or can be sorted once)
 - Many queries on same dataset
 - Large dataset (n > 1000)
 - Need O(log n) guarantee
 
 ❌ **Bad Cases:**
+
 - Unsorted data with infrequent queries (sorting overhead)
 - Very small datasets (linear search faster)
 - Need to find multiple elements scattered throughout array

@@ -9,7 +9,8 @@
 **Computational complexity classes** categorize problems based on the resources (time, space, non-determinism) required to solve them, not specific algorithms. This is distinct from [[Big-O Analysis]], which measures how fast a particular algorithm runs.
 
 **Key Distinction:**
-- **Big-O (Algorithm Complexity)** → *"How fast does THIS algorithm run?"* 
+
+- **Big-O (Algorithm Complexity)** → *"How fast does THIS algorithm run?"*
 - **Complexity Classes (Problem Complexity)** → *"How hard is THIS problem to solve by ANY algorithm?"*
 
 ```rust
@@ -26,6 +27,7 @@ fn merge_sort<T: Ord>(arr: &mut [T]) { /* ... */ }
 ## 🎯 **Major Complexity Classes**
 
 ### **P (Polynomial Time)**
+
 *Problems that can be solved efficiently*
 
 **Definition:** Problems solvable by a deterministic Turing machine in polynomial time: O(n^k) for some constant k.
@@ -57,6 +59,7 @@ fn gcd_problem(a: u64, b: u64) -> u64 {
 ```
 
 **P Problems in Your Missions:**
+
 - **Mission1 (Stack):** All operations O(1) → In P
 - **Mission3 (Binary Search):** O(log n) → In P
 - **Mission5 (HashMap):** O(1) average insert/lookup → In P
@@ -65,6 +68,7 @@ fn gcd_problem(a: u64, b: u64) -> u64 {
 ---
 
 ### **NP (Nondeterministic Polynomial Time)**
+
 *Problems where solutions can be verified efficiently*
 
 **Definition:** Problems where a proposed solution can be verified in polynomial time.
@@ -121,6 +125,7 @@ fn verify_sat_assignment(formula: &Formula, assignment: &HashMap<Var, bool>) -> 
 ---
 
 ### **Co-NP (Complement of NP)**
+
 *Problems where "NO" answers can be verified efficiently*
 
 **Definition:** Problems where you can efficiently verify that something is **NOT** a solution.
@@ -152,6 +157,7 @@ fn verify_not_3_colorable(graph: &Graph, proof: &ImpossibilityProof) -> bool {
 ---
 
 ### **NP-Hard**
+
 *At least as hard as the hardest NP problems*
 
 **Definition:** A problem H is NP-hard if every problem in NP can be reduced to H in polynomial time.
@@ -187,6 +193,7 @@ fn has_tour_within_distance(cities: &[City], max_distance: f64) -> bool {
 ```
 
 **NP-Hard Problems (Rust Contexts):**
+
 - Optimal register allocation in compiler
 - Package dependency resolution (general case)
 - Optimal branch prediction
@@ -194,9 +201,11 @@ fn has_tour_within_distance(cities: &[City], max_distance: f64) -> bool {
 ---
 
 ### **NP-Complete**
+
 *The hardest problems in NP*
 
 **Definition:** A problem is NP-complete if:
+
 1. It is in NP (solutions verifiable in polynomial time)
 2. It is NP-hard (all NP problems reduce to it)
 
@@ -263,6 +272,7 @@ fn has_subset_sum(numbers: &[i32], target: i32) -> bool {
 ```
 
 **Why NP-Complete Matters:**
+
 - If you encounter an NP-complete problem, don't expect to find an efficient exact algorithm
 - Use approximation algorithms, heuristics, or constraint solvers
 - For small inputs, exponential algorithms may be acceptable
@@ -295,12 +305,14 @@ fn has_subset_sum(numbers: &[i32], target: i32) -> bool {
 ```
 
 **Known Relationships:**
+
 - P ⊆ NP (if solvable quickly, verifiable quickly)
 - P ⊆ Co-NP (same reasoning)
 - NP-Complete ⊆ NP ∩ NP-Hard
 - If P = NP, then P = NP = Co-NP = NP-Complete
 
 **Unknown Relationships:**
+
 - P ?= NP (Millennium Prize Problem - $1 million reward!)
 - NP ?= Co-NP
 - Many others in complexity theory
@@ -337,6 +349,7 @@ fn find_best_tour(cities: &[City]) -> Vec<City> {
 ### **Dealing with NP-Complete Problems**
 
 **Strategy 1: Approximation Algorithms**
+
 ```rust
 // Example: Vertex Cover (NP-complete)
 // Goal: Find smallest set of vertices covering all edges
@@ -357,6 +370,7 @@ fn approx_vertex_cover(graph: &Graph) -> HashSet<NodeId> {
 ```
 
 **Strategy 2: Heuristics and Metaheuristics**
+
 ```rust
 // Example: TSP with simulated annealing
 fn simulated_annealing_tsp(cities: &[City]) -> Vec<City> {
@@ -379,6 +393,7 @@ fn simulated_annealing_tsp(cities: &[City]) -> Vec<City> {
 ```
 
 **Strategy 3: Constraint Solvers**
+
 ```rust
 // Use existing SAT/SMT solvers for NP-complete problems
 // Example with z3 solver (for Boolean satisfiability)
@@ -413,6 +428,7 @@ fn solve_with_sat_solver() {
 ```
 
 **Strategy 4: Problem-Specific Optimizations**
+
 ```rust
 // Example: If problem has special structure, exploit it
 
@@ -439,6 +455,7 @@ fn subset_sum_dp(numbers: &[i32], target: i32) -> bool {
 ## 🔬 **AoC and Complexity Classes**
 
 ### **P Problems in AoC**
+
 ```rust
 // Most AoC problems are in P
 // - Parsing and simulation: O(n)
@@ -452,6 +469,7 @@ fn aoc_day1_p(input: &[i32]) -> i32 {
 ```
 
 ### **NP-Complete-Like Problems in AoC**
+
 ```rust
 // Some AoC problems resemble NP-complete problems
 // but have exploitable structure or small inputs
@@ -470,6 +488,7 @@ fn aoc_tsp_like(cities: &[City]) -> i32 {
 ```
 
 **Key Insight:** AoC problems that look NP-complete usually have:
+
 1. Small input sizes (brute force feasible)
 2. Special structure (dynamic programming works)
 3. Greedy solution (problem is actually in P)
@@ -479,6 +498,7 @@ fn aoc_tsp_like(cities: &[City]) -> i32 {
 ## 📊 **Decision Problems vs Optimization Problems**
 
 ### **Decision Problem (NP)**
+
 ```rust
 // Question: "Does a solution exist?"
 // Answer: Yes/No
@@ -490,6 +510,7 @@ fn has_solution(instance: &Problem) -> bool {
 ```
 
 ### **Optimization Problem (NP-Hard)**
+
 ```rust
 // Question: "What's the BEST solution?"
 // Answer: Actual solution value
@@ -501,6 +522,7 @@ fn find_best_solution(instance: &Problem) -> Solution {
 ```
 
 **Relationship:**
+
 - Optimization version is at least as hard as decision version
 - If optimization is in P, decision is in P
 - Optimization TSP is NP-hard (not in NP)
@@ -535,14 +557,17 @@ fn find_best_solution(instance: &Problem) -> Solution {
 ## 📚 **Further Reading**
 
 ### **Classic Papers**
+
 - Cook's Theorem (1971) - Proving SAT is NP-complete
 - Karp's 21 NP-complete problems (1972)
 
 ### **Books**
+
 - *Introduction to the Theory of Computation* by Sipser
 - *Computers and Intractability: A Guide to NP-Completeness* by Garey & Johnson
 
 ### **Online Resources**
+
 - Complexity Zoo - Comprehensive list of complexity classes
 - Scott Aaronson's blog - Quantum Computing and Complexity
 

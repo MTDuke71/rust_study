@@ -16,6 +16,7 @@ Cognitive Load Budget
 Every line of code consumes "cognitive RAM" to understand. Quality standards (like low cyclomatic complexity) ensure that a function fits entirely within a developer's short-term memory, preventing bugs caused by mental overflow.
 
 🔍 Detailed Content
+
 1. Fundamental Hygiene (The "Must-Haves")
 These are binary states: the code either passes or it fails.
 
@@ -33,7 +34,7 @@ Naming: See [[NAMING_CONVENTIONS]] for full details.
 - **PascalCase** for types/traits.
 - **SCREAMING_SNAKE_CASE** for constants.
 
-2. Complexity Metrics
+1. Complexity Metrics
 To ensure maintainability, we enforce strict limits on code density.
 
 | Metric              | Limit         | Reason                                                        |
@@ -43,7 +44,7 @@ To ensure maintainability, we enforce strict limits on code density.
 | Argument count      | < 4          | More than 3 arguments usually suggests a struct is needed.    |
 | Nesting depth       | < 3 levels   | Prevents "arrow code"; encourages early returns.             |
 
-3. Idiomatic Rust Patterns
+1. Idiomatic Rust Patterns
 Quality Rust code utilizes the specific strengths of the language.
 
 Expression-Oriented: Prefer implicit returns (omitting `;` on the last expression) over explicit `return` where possible.
@@ -58,7 +59,7 @@ Error Handling:
 
 ✅ Require: `Result<T, E>`, `Option<T>`, and the `?` operator for all fallible logic.
 
-4. Documentation Standards
+1. Documentation Standards
 Code describes how; documentation describes why.
 
 Public API: Every `pub` item must have `///` doc comments.
@@ -126,6 +127,7 @@ Rust API Guidelines: Official style guide for public interfaces.
 
 🔍 Code Examples
 ❌ Non-Compliant (Bad Quality)
+
 ```rust
 // Violation: Bad naming, high nesting, manual loop, unwrap
 pub fn Process_Data(input: Vec<i32>) -> i32 {
@@ -142,7 +144,9 @@ pub fn Process_Data(input: Vec<i32>) -> i32 {
     return total; 
 }
 ```
+
 ✅ Compliant (Good Quality)
+
 ```rust
 /// Processes data by summing even numbers greater than 10.
 ///
@@ -157,6 +161,7 @@ pub fn process_data(input: &[i32]) -> i32 {
         .sum()
 }
 ```
+
 Tags: #code-quality #standards #best-practices #rust-idioms #clean-code #intermediate #maintainability
 
 Links: [[zettel-index]] | [[Quality Assurance]] | [[test-quality-framework]] | [[documentation-standards]]

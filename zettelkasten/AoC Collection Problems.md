@@ -26,6 +26,7 @@ Collections are the **foundation** of most AoC solutions. Understanding when and
 ## 🗂️ HashMap/HashSet Patterns
 
 ### **Frequency Analysis Pattern**
+
 *Most common AoC pattern - appears in ~30% of problems*
 
 ```rust
@@ -71,6 +72,7 @@ fn count_positions(moves: &str) -> HashMap<(i32, i32), usize> {
 ```
 
 ### **Set Operations for Deduplication**
+
 ```rust
 use std::collections::HashSet;
 
@@ -119,6 +121,7 @@ fn unique_houses(directions: &str) -> usize {
 ## 📈 Vector Patterns
 
 ### **Dynamic Array Operations**
+
 ```rust
 // Growing sequences (Fibonacci, population growth, etc.)
 fn simulate_growth(initial: Vec<u64>, days: usize) -> Vec<u64> {
@@ -157,6 +160,7 @@ fn two_sum_sorted(nums: &[i32], target: i32) -> Option<(usize, usize)> {
 ```
 
 ### **Stack Operations with Vec**
+
 ```rust
 // Bracket matching and parsing
 fn validate_brackets(input: &str) -> bool {
@@ -203,6 +207,7 @@ where T: Clone + Eq + std::hash::Hash {
 ## 🔤 String Collection Patterns
 
 ### **String Parsing and Transformation**
+
 ```rust
 // Multi-step string processing pipeline
 fn process_input_lines(input: &str) -> Vec<(String, i32, char)> {
@@ -254,6 +259,7 @@ fn build_large_string(parts: &[&str]) -> String {
 ## 🗺️ Grid and 2D Collection Patterns
 
 ### **2D Grid Representation**
+
 ```rust
 // Dense grid with Vec<Vec<T>>
 type Grid<T> = Vec<Vec<T>>;
@@ -311,6 +317,7 @@ fn flood_fill(grid: &mut Grid<char>, start: (usize, usize), new_char: char) -> u
 ## 🎲 Real AoC Problem Examples
 
 ### **2015 Day 1: Floor Navigation**
+
 ```rust
 // Simple character counting with fold
 fn final_floor(instructions: &str) -> i32 {
@@ -340,6 +347,7 @@ fn basement_position(instructions: &str) -> Option<usize> {
 ```
 
 ### **2015 Day 3: Grid Navigation with HashSet**
+
 ```rust
 fn santa_houses(directions: &str) -> usize {
     let mut visited = HashSet::new();
@@ -383,6 +391,7 @@ fn santa_and_robot_houses(directions: &str) -> usize {
 ```
 
 ### **2018 Day 2: Checksum with HashMap**
+
 ```rust
 fn checksum(box_ids: &[&str]) -> i32 {
     let mut twos = 0;
@@ -422,6 +431,7 @@ fn find_similar_boxes(box_ids: &[&str]) -> Option<String> {
 ```
 
 ### **2020 Day 1: Two-Sum/Three-Sum with Vec**
+
 ```rust
 // Two-sum variant
 fn find_two_entries(expenses: &[i32], target: i32) -> Option<(i32, i32)> {
@@ -456,6 +466,7 @@ fn find_three_entries(expenses: &[i32], target: i32) -> Option<(i32, i32, i32)> 
 ## ⚡ Performance Optimization Strategies
 
 ### **Memory Allocation Patterns**
+
 ```rust
 // Pre-allocate when size is known
 fn efficient_collection_building(input_size: usize) -> Vec<String> {
@@ -491,6 +502,7 @@ fn process_batches(batches: &[Vec<String>]) -> Vec<String> {
 ```
 
 ### **Iterator vs Loop Performance**
+
 ```rust
 // Iterator chains (often fastest due to LLVM optimization)
 fn functional_approach(numbers: &[i32]) -> i32 {
@@ -531,6 +543,7 @@ fn hybrid_approach(numbers: &[i32]) -> Vec<i32> {
 ## 🔧 Common Troubleshooting Patterns
 
 ### **Ownership Issues**
+
 ```rust
 // ❌ Common mistake: borrowing while mutating
 fn bad_example(map: &mut HashMap<String, Vec<i32>>) {
@@ -556,6 +569,7 @@ fn better_example(map: &mut HashMap<String, Vec<i32>>) {
 ```
 
 ### **Performance Pitfalls**
+
 ```rust
 // ❌ Inefficient: repeated allocations
 fn slow_string_building(words: &[&str]) -> String {
@@ -609,6 +623,7 @@ fn fast_processing(data: &[i32]) -> Vec<Vec<i32>> {
 ## 📝 Code Templates
 
 ### **Standard Parsing Template**
+
 ```rust
 use std::collections::{HashMap, HashSet};
 use std::str::FromStr;
@@ -636,6 +651,7 @@ impl FromStr for ProcessedLine {
 ```
 
 ### **Collection-Based Solution Template**
+
 ```rust
 fn solve_part1(input: &str) -> Result<String, Box<dyn std::error::Error>> {
     // 1. Parse input into appropriate collection
@@ -671,18 +687,21 @@ fn calculate_answer<T>(state: &HashMap<String, T>) -> usize {
 ## 🔗 Integration Points
 
 ### **Mission Connections**
+
 - **[[../Mission2/README]]**: Queue operations and VecDeque usage patterns
 - **[[../Mission5/README]]**: HashMap/HashSet implementation details and performance
 - **[[../Mission6/README]]**: Grid patterns and 2D coordinate systems
 - **[[../Mission1/README]]**: Stack operations using Vec as foundation
 
 ### **Daily Study Connections**
+
 - **[[../daily_study/rust_learning_week2_notes/Day08]]**: Vector fundamentals and capacity management
 - **[[../daily_study/rust_learning_week2_notes/Day09]]**: String processing and UTF-8 considerations  
 - **[[../daily_study/rust_learning_week2_notes/Day10]]**: HashMap operations and entry API patterns
 - **[[../daily_study/rust_learning_week2_notes/Day11]]**: HashSet operations and set theory applications
 
 ### **Rust Book References**
+
 - **[[../Ch8/vectors/README]]**: Vector details and performance characteristics
 - **[[../Ch8/strings/README]]**: String vs &str usage patterns
 - **[[../Ch8/hashmaps/README]]**: HashMap API and ownership considerations
@@ -705,6 +724,7 @@ fn calculate_answer<T>(state: &HashMap<String, T>) -> usize {
 | 2D sparse data | `HashMap<(i32,i32), T>` | Memory efficient for large/infinite grids |
 
 ### **Performance Rules of Thumb**
+
 1. **Pre-allocate** when size is known: `Vec::with_capacity()`, `HashMap::with_capacity()`
 2. **Prefer iterators** for functional operations: `.map()`, `.filter()`, `.fold()`
 3. **Use entry API** for complex HashMap operations: `.entry().or_insert()`

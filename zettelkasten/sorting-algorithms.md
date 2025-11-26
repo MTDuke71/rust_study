@@ -19,6 +19,7 @@ A comprehensive overview of sorting algorithms with implementations, analysis, a
 ## 📚 **Fundamental Concepts**
 
 ### **Stability**
+
 A sorting algorithm is **stable** if it preserves the relative order of equal elements.
 
 ```rust
@@ -29,6 +30,7 @@ let mut data = vec![(1, 'a'), (2, 'b'), (1, 'c')];
 ```
 
 ### **In-Place Sorting**
+
 **In-place** algorithms sort with O(1) extra space (excluding input).
 
 ```rust
@@ -44,6 +46,7 @@ fn merge_sort<T: Ord + Clone>(arr: &[T]) -> Vec<T> {
 ```
 
 ### **Adaptive Algorithms**
+
 **Adaptive** algorithms perform better on partially sorted data.
 
 ```rust
@@ -90,6 +93,7 @@ mod bubble_tests {
 ```
 
 **Analysis**:
+
 - **Time**: O(n²) worst/average, O(n) best (with early termination)
 - **Space**: O(1)
 - **Stable**: Yes
@@ -130,6 +134,7 @@ mod selection_tests {
 ```
 
 **Analysis**:
+
 - **Time**: O(n²) always
 - **Space**: O(1)
 - **Stable**: No (due to long-distance swaps)
@@ -197,6 +202,7 @@ mod insertion_tests {
 ```
 
 **Analysis**:
+
 - **Time**: O(n²) worst, O(n) best (nearly sorted)
 - **Space**: O(1)
 - **Stable**: Yes
@@ -269,6 +275,7 @@ mod merge_tests {
 ```
 
 **Analysis**:
+
 - **Time**: O(n log n) always (guaranteed)
 - **Space**: O(n)
 - **Stable**: Yes
@@ -339,6 +346,7 @@ mod quick_tests {
 ```
 
 **Analysis**:
+
 - **Time**: O(n log n) average, O(n²) worst case
 - **Space**: O(log n) (recursion stack)
 - **Stable**: No
@@ -399,6 +407,7 @@ mod heap_tests {
 ```
 
 **Analysis**:
+
 - **Time**: O(n log n) guaranteed
 - **Space**: O(1)
 - **Stable**: No
@@ -470,6 +479,7 @@ mod counting_tests {
 ```
 
 **Analysis**:
+
 - **Time**: O(n + k) where k is the range of input
 - **Space**: O(k)
 - **Stable**: Can be made stable
@@ -536,6 +546,7 @@ mod radix_tests {
 ```
 
 **Analysis**:
+
 - **Time**: O(d(n + k)) where d is number of digits
 - **Space**: O(n + k)
 - **Stable**: Yes
@@ -592,6 +603,7 @@ mod bucket_tests {
 ```
 
 **Analysis**:
+
 - **Time**: O(n + k) average, O(n²) worst case
 - **Space**: O(n + k)
 - **Stable**: Yes
@@ -827,21 +839,25 @@ Input Size?
 ## 🔗 **Real-World Applications**
 
 ### **Database Systems**
+
 - **External Merge Sort**: For datasets larger than memory
 - **Index Sorting**: B-tree maintenance uses various algorithms
 - **Query Optimization**: Sort-merge joins
 
 ### **Graphics & Games**
+
 - **Z-buffer Sorting**: Depth sorting for rendering
 - **Particle Systems**: Sorting by distance/priority
 - **Collision Detection**: Spatial sorting
 
 ### **Data Processing**
+
 - **ETL Pipelines**: Large dataset sorting
 - **Analytics**: Percentile calculations, ranking
 - **Search Engines**: Document ranking, index building
 
 ### **System Programming**
+
 - **Process Scheduling**: Priority queue sorting
 - **Memory Management**: Address sorting
 - **Network Protocols**: Packet ordering
@@ -1039,21 +1055,25 @@ mod sorting_tests {
 ## 📚 **Further Reading & Resources**
 
 ### **Books**
+
 - "Introduction to Algorithms" (CLRS) - Comprehensive algorithm analysis
 - "Algorithm Design Manual" (Skiena) - Practical algorithm selection
 - "Programming Pearls" (Bentley) - Real-world optimization techniques
 
 ### **Research Papers**
+
 - "Introsort or Introspective Sort" - David Musser (1997)
 - "Timsort" - Tim Peters (2002)
 - "Engineering a Sort Function" - Bentley & McIlroy (1993)
 
 ### **Online Resources**
+
 - [Sorting Algorithm Animations](https://www.sorting-algorithms.com/)
 - [Big-O Cheat Sheet](https://www.bigocheatsheet.com/)
 - [Rust Standard Library Sort](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.sort)
 
 ### **Implementation References**
+
 - [Rust std::slice::sort](https://github.com/rust-lang/rust/blob/master/library/alloc/src/slice.rs)
 - [Java Arrays.sort](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/Arrays.java)
 - [Python Timsort](https://github.com/python/cpython/blob/main/Objects/listobject.c)
@@ -1061,6 +1081,7 @@ mod sorting_tests {
 ## 🏷️ **Next Steps**
 
 ### **Practice Problems**
+
 1. Implement a custom sorting algorithm for specific constraints
 2. Optimize sorting for nearly-sorted data
 3. Create a stable version of quick sort
@@ -1068,6 +1089,7 @@ mod sorting_tests {
 5. Build a parallel sorting algorithm
 
 ### **Related Topics**
+
 - [[heap-data-structure]] - Binary heaps and priority queues
 - [[binary-search-algorithms]] - Searching in sorted arrays  
 - [[algorithm-analysis]] - Time and space complexity analysis

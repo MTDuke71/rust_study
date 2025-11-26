@@ -5,6 +5,7 @@
 ## Overview
 
 **Divide and Conquer** is a fundamental algorithm design paradigm that solves problems by:
+
 1. **Divide** - Breaking the problem into smaller subproblems
 2. **Conquer** - Recursively solving the subproblems
 3. **Combine** - Merging subproblem solutions into the final answer
@@ -63,6 +64,7 @@ fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
 ```
 
 **Analysis:**
+
 - **Divide:** O(1) - split array in half
 - **Conquer:** O(log n) - one recursive call, halving problem size
 - **Combine:** O(1) - just return result
@@ -111,6 +113,7 @@ fn merge<T: Ord + Clone>(left: &[T], right: &[T], result: &mut [T]) {
 ```
 
 **Analysis:**
+
 - **Divide:** O(1) - find midpoint
 - **Conquer:** 2T(n/2) - two recursive calls on half-size problems
 - **Combine:** O(n) - merge two sorted arrays
@@ -152,6 +155,7 @@ fn partition<T: Ord>(arr: &mut [T]) -> usize {
 ```
 
 **Analysis:**
+
 - **Average case:** O(n log n) with balanced partitions
 - **Worst case:** O(n²) with unbalanced partitions
 - **Space:** O(log n) stack space
@@ -296,6 +300,7 @@ fn closest_split_pair(points: &[Point], mid: usize, delta: f64) -> f64 {
 The **Master Theorem** helps analyze divide-and-conquer recurrences:
 
 **Recurrence:** T(n) = aT(n/b) + f(n)
+
 - a = number of subproblems
 - b = factor by which problem size decreases
 - f(n) = cost of divide + combine steps
@@ -411,6 +416,7 @@ let result = thread::Builder::new()
 ## When to Use Divide and Conquer
 
 ### **✅ Use When:**
+
 - Problem naturally divides into independent subproblems
 - Subproblems have same structure as original
 - Efficient combine step exists
@@ -418,6 +424,7 @@ let result = thread::Builder::new()
 - Examples: Sorting, searching, tree operations
 
 ### **❌ Avoid When:**
+
 - Subproblems overlap significantly (use DP instead)
 - Division step is expensive
 - Too many subproblems (exponential branching)
@@ -444,12 +451,14 @@ let result = thread::Builder::new()
 ## Links & Navigation
 
 **Core Concepts:**
+
 - [[Algorithms MOC]] - Algorithm catalog
 - [[Recursion]] - Recursive fundamentals
 - [[Dynamic Programming]] - Related paradigm
 - [[Algorithm Analysis]] - Complexity theory
 
 **Implementations:**
+
 - [[Binary Search]] - Search with D&C
 - [[Merge Sort]] - Sorting with D&C
 - [[Quick Sort]] - Partition-based D&C

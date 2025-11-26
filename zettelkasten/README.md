@@ -15,32 +15,38 @@ This directory contains the **Zettelkasten overlay** for the Rust Study workspac
 ## 🗂️ File Organization
 
 ### **Core Navigation**
+
 - **`zettel-index.md`** - Master entry point for all knowledge navigation
 - **`Obsidian Demo Guide.md`** - Getting started guide and workflows
 - **[[Obsidian Demo Guide]]** - Interactive walkthrough of knowledge graph navigation
 - **[[Daily Workflow]]** - Systematic daily learning routine setup
 
 ### **Maps of Content (MOCs)**  
+
 - **`Collections MOC.md`** - Comprehensive data structures overview
 - *(Future MOCs will be added as knowledge grows)*
 
 ### **Mission Overviews**
+
 - **`Mission5 Overview.md`** - HashMap/HashSet V-Cycle context and integration
 - **`Mission5_tut Overview.md`** - Tutorial progression and alignment tracking
 - *(Additional mission overviews will be created as needed)*
 
 ### **Concept Deep Dives**
+
 - **`HashMap Internals.md`** - Technical implementation details
 - *(More concept notes will be added organically)*
 
 ## 🔗 How It Works
 
 ### **Non-Disruptive Design**
+
 - **Existing files remain untouched** - only enhanced with `[[]]` links
 - **Project structure intact** - code, tests, examples stay in their directories  
 - **Zettelkasten overlay** - provides navigation layer on top of existing content
 
 ### **Integration Points**
+
 - Enhanced existing files with Zettelkasten links:
   - `Mission5/README.md` - Added concept navigation
   - `Mission5_tut/README.md` - Added learning path context  
@@ -57,12 +63,14 @@ This directory contains the **Zettelkasten overlay** for the Rust Study workspac
 ## 📈 Growth Strategy
 
 ### **Organic Expansion**
+
 - **Add links** as you study (2-3 per session)
 - **Create concept notes** for major topics as needed
 - **Build MOCs** for new subject areas (Algorithms, Concurrency, etc.)
 - **Cross-reference** between missions, daily study, and Rust Book
 
 ### **Maintenance**
+
 - **Weekly review** - Update progress tracking and alignment
 - **Monthly cleanup** - Reorganize as knowledge network grows
 - **Seasonal archive** - Move completed learning phases to archive sections

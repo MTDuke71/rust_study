@@ -27,6 +27,7 @@ O(n!)      → Factorial: Becomes impractical very quickly
 ## 🎯 **Common Complexity Classes**
 
 ### **O(1) - Constant Time**
+
 *Performance doesn't depend on input size*
 
 ```rust
@@ -49,12 +50,14 @@ let len = vec.len(); // O(1) - stored as field
 ```
 
 **Mission Applications:**
+
 - **Mission1 (Stack):** `push()`, `pop()`, `peek()` all O(1)
 - **Mission5 (HashMap):** `insert()`, `get()`, `remove()` average O(1)
 
 ---
 
 ### **O(log n) - Logarithmic Time**
+
 *Halves problem size each step (binary search, balanced trees)*
 
 ```rust
@@ -83,6 +86,7 @@ btree.get(&key);           // O(log n)
 ```
 
 **Why O(log n) is efficient:**
+
 ```
 n = 1,000         → ~10 operations
 n = 1,000,000     → ~20 operations  (100x larger, 2x operations)
@@ -90,12 +94,14 @@ n = 1,000,000,000 → ~30 operations  (1000x larger, 3x operations)
 ```
 
 **Mission Applications:**
+
 - **Mission3 (Binary Search):** Core algorithm O(log n)
 - **Mission9 (Priority Queue):** Heap operations O(log n)
 
 ---
 
 ### **O(n) - Linear Time**
+
 *Must process each element once*
 
 ```rust
@@ -127,6 +133,7 @@ vec.reverse();  // O(n)
 ```
 
 **Mission Applications:**
+
 - **Mission1 (Stack):** Printing all elements O(n)
 - **Mission4 (LinkedList):** Traversal O(n)
 - **Mission5 (HashMap):** Iterating all entries O(n)
@@ -134,6 +141,7 @@ vec.reverse();  // O(n)
 ---
 
 ### **O(n log n) - Linearithmic Time**
+
 *Efficient comparison-based sorting*
 
 ```rust
@@ -149,17 +157,20 @@ vec.sort_by_key(|x| x.abs());  // O(n log n)
 ```
 
 **Why O(n log n) for sorting:**
+
 - Must touch all n elements (factor of n)
 - Comparison tree has height log n (factor of log n)
 - Cannot beat O(n log n) for comparison-based sorting (proven lower bound)
 
 **Mission Applications:**
+
 - **Mission3 (Binary Search):** Preprocessing sorted array O(n log n)
 - **AoC Problems:** Many require sorting before processing
 
 ---
 
 ### **O(n²) - Quadratic Time**
+
 *Nested loops over same data*
 
 ```rust
@@ -202,17 +213,20 @@ fn has_duplicate_pairs_fast(arr: &[i32]) -> bool {
 ```
 
 **When O(n²) is acceptable:**
+
 - Small datasets (n < 100)
 - Simple implementation needed
 - Cache-friendly operations
 
 **Mission Applications:**
+
 - **Mission5 (HashMap):** Naive collision resolution O(n²) worst case
 - **AoC Problems:** Often need to optimize from O(n²) to O(n log n) or O(n)
 
 ---
 
 ### **O(2ⁿ) - Exponential Time**
+
 *Branches double at each step*
 
 ```rust
@@ -261,6 +275,7 @@ fn all_subsets<T: Clone>(items: &[T]) -> Vec<Vec<T>> {
 ```
 
 **AoC Applications:**
+
 - Day 10 (Look-and-Say): Can exhibit exponential growth
 - Subset problems often require dynamic programming to avoid O(2ⁿ)
 
@@ -269,6 +284,7 @@ fn all_subsets<T: Clone>(items: &[T]) -> Vec<Vec<T>> {
 ## 📏 **Space Complexity Analysis**
 
 ### **O(1) - Constant Space**
+
 ```rust
 // ✅ In-place operations
 fn reverse_in_place(arr: &mut [i32]) {
@@ -284,6 +300,7 @@ fn reverse_in_place(arr: &mut [i32]) {
 ```
 
 ### **O(n) - Linear Space**
+
 ```rust
 // ✅ Creating new collection
 fn double_all(arr: &[i32]) -> Vec<i32> {
@@ -297,6 +314,7 @@ let map: HashMap<i32, String> = HashMap::new();
 ```
 
 ### **O(log n) - Logarithmic Space**
+
 ```rust
 // ✅ Recursive binary search (call stack)
 fn binary_search_recursive<T: Ord>(
@@ -323,6 +341,7 @@ fn binary_search_recursive<T: Ord>(
 ## 🔍 **Analyzing Rust Collections**
 
 ### **Vec<T>**
+
 ```rust
 let mut vec = Vec::new();
 
@@ -350,6 +369,7 @@ vec.sort_by()       // O(n log n)
 ```
 
 ### **HashMap<K, V>**
+
 ```rust
 let mut map = HashMap::new();
 
@@ -367,10 +387,12 @@ map.clone()         // O(n)
 ```
 
 **Mission5 Insight:**
+
 - Good hash function → O(1) operations
 - Poor hash function → O(n) operations (many collisions)
 
 ### **BTreeMap<K, V>**
+
 ```rust
 let mut btree = BTreeMap::new();
 
@@ -385,11 +407,13 @@ btree.range(min..max) // O(log n) to find start, then O(k) for k elements
 ```
 
 **When to use BTreeMap over HashMap:**
+
 - Need sorted/ordered keys
 - Need range queries
 - Need guaranteed O(log n) (no hash collision issues)
 
 ### **VecDeque<T>**
+
 ```rust
 let mut deque = VecDeque::new();
 
@@ -540,6 +564,7 @@ fn factorial_tail(n: u32, acc: u32) -> u32 {
 ## 🎯 **Mission-Specific Complexity Analysis**
 
 ### **Mission1: Stack**
+
 ```rust
 impl<T> Stack<T> {
     pub fn new() -> Self              // O(1) time, O(1) space
@@ -551,6 +576,7 @@ impl<T> Stack<T> {
 ```
 
 ### **Mission3: Binary Search**
+
 ```rust
 pub fn binary_search<T: Ord>(
     arr: &[T], 
@@ -562,6 +588,7 @@ pub fn binary_search<T: Ord>(
 ```
 
 ### **Mission5: HashMap**
+
 ```rust
 impl<K, V> HashMap<K, V> {
     pub fn insert(&mut self, k: K, v: V) -> Option<V> {
@@ -578,6 +605,7 @@ impl<K, V> HashMap<K, V> {
 ```
 
 ### **Mission9: Pathfinding**
+
 ```rust
 // Dijkstra's Algorithm
 pub fn dijkstra(graph: &Graph, start: NodeId) -> HashMap<NodeId, Cost> {
@@ -712,6 +740,7 @@ fn verify_complexity() {
 ## 📚 **Common Mistakes to Avoid**
 
 ### **1. Hidden Complexity in Method Calls**
+
 ```rust
 // ❌ Looks O(n), actually O(n²)
 for i in 0..n {
@@ -728,6 +757,7 @@ vec.reverse();    // O(n)
 ```
 
 ### **2. Premature Optimization**
+
 ```rust
 // ❌ Micro-optimization that hurts readability
 fn sum_complex(arr: &[i32]) -> i32 {
@@ -748,6 +778,7 @@ fn sum_simple(arr: &[i32]) -> i32 {
 ```
 
 ### **3. Ignoring Space Complexity**
+
 ```rust
 // ❌ Time optimal, space wasteful
 fn fibonacci_memo(n: u32) -> HashMap<u32, u64> {
@@ -785,6 +816,7 @@ fn fibonacci_optimal(n: u32) -> u64 {
 ## 🔗 **Related Concepts**
 
 - **[[Algorithm Analysis]]** - Comprehensive algorithm analysis techniques including empirical analysis and profiling
+- **[[Amortized Analysis]]** - Average cost over operation sequences
 - **[[Performance Optimization]]** - Practical optimization techniques
 - **[[Rust Collections MOC]]** - Collection performance characteristics
 - **[[mission-5]]** - HashMap complexity analysis
@@ -799,11 +831,13 @@ fn fibonacci_optimal(n: u32) -> u64 {
 ## 📖 **Further Reading**
 
 ### **Rust Performance**
+
 - [The Rust Performance Book](https://nnethercote.github.io/perf-book/)
 - Criterion benchmarking guide
 - [[zettelkasten/rust_book/rust-book-ch10]] - Zero-cost abstractions
 
 ### **Algorithm Analysis**
+
 - *Introduction to Algorithms* (CLRS)
 - *The Algorithm Design Manual* (Skiena)
 - [[Performance Analysis]] - Real-world performance
@@ -812,4 +846,4 @@ fn fibonacci_optimal(n: u32) -> u64 {
 
 *Tags: #big-o #complexity-analysis #algorithms #performance #time-complexity #space-complexity #optimization #computer-science*
 
-*Links: [[Algorithm Analysis]] | [[Performance Optimization]] | [[Rust Collections MOC]] | [[mission-5]] | [[mission-9]] | [[AoC Patterns MOC]] | [[Algorithm Design Patterns]] | [[zettel-index]]*
+*Links: [[Algorithm Analysis]] | [[Amortized Analysis]] | [[Performance Optimization]] | [[Rust Collections MOC]] | [[mission-5]] | [[mission-9]] | [[AoC Patterns MOC]] | [[Algorithm Design Patterns]] | [[zettel-index]]*

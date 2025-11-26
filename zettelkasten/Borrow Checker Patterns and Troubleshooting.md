@@ -210,6 +210,7 @@ if let Some(top) = stack.peek() {        // Borrow starts here
 ```
 
 **Diagnostic Approach**:
+
 1. **Identify the borrow**: `stack.peek()` returns `&T`
 2. **Find the scope**: Borrow lasts until end of `if let` block
 3. **Locate the conflict**: `push()` needs `&mut self`
@@ -386,6 +387,7 @@ shared_ref.add(4);                      // ✅ Can mutate through RefCell
 ```
 
 **Trade-offs**:
+
 - ✅ Bypasses compile-time borrow checking
 - ❌ Runtime overhead for borrow checking
 - ❌ Can panic if borrow rules violated at runtime
@@ -563,6 +565,7 @@ fn bench_borrow_approach(b: &mut Bencher) {
 ```
 
 **Guidelines**:
+
 - **Cheap to clone** (i32, bool, small structs): Prefer cloning
 - **Expensive to clone** (Vec, HashMap, large structs): Prefer borrowing
 - **Frequent mutations**: Consider RefCell or redesign for ownership transfer
@@ -648,17 +651,20 @@ pub struct Node<T> {
 ## 🔗 **Integration with Broader Concepts**
 
 ### **Builds On**
+
 - [[Borrow Checker Fundamentals]] - Basic understanding of ownership rules
 - [[Ownership Transfer Patterns]] - When to move vs borrow
 - [[Stack vs Heap Memory]] - Memory layout implications
 
 ### **Enables**
+
 - [[Smart Pointers]] - Advanced ownership patterns (Box, Rc, Arc)
 - [[interior-mutability]] - RefCell, Cell, and Mutex patterns
 - [[Concurrent Programming]] - Thread-safe sharing with Arc + Mutex
 - [[Lifetime Management]] - Advanced lifetime relationships
 
 ### **Related Troubleshooting**
+
 - [[Debugging Lessons]] - General debugging strategies
 - [[Compiler Error Patterns]] - Understanding error messages
 - [[Performance Optimization]] - When borrow patterns impact performance

@@ -14,10 +14,10 @@ The quality of the hash function is the single most important factor in a hash m
 
 A high-quality hash function must balance four critical properties:
 
-1.  **Determinism**: The same input key must *always* produce the same output hash code. This is non-negotiable.
-2.  **Uniform Distribution**: Keys should be spread as evenly as possible across all available buckets. This is the primary defense against [[Collision Resolution|collisions]].
-3.  **Speed**: The function must be computationally inexpensive. A slow hash function would negate the O(1) benefits of the hash map itself.
-4.  **Sensitivity (Avalanche Effect)**: A small change in the input key (e.g., flipping a single bit) should produce a drastically different hash code. This prevents keys that are "close" to each other from clustering in the same buckets.
+1. **Determinism**: The same input key must *always* produce the same output hash code. This is non-negotiable.
+2. **Uniform Distribution**: Keys should be spread as evenly as possible across all available buckets. This is the primary defense against [[Collision Resolution|collisions]].
+3. **Speed**: The function must be computationally inexpensive. A slow hash function would negate the O(1) benefits of the hash map itself.
+4. **Sensitivity (Avalanche Effect)**: A small change in the input key (e.g., flipping a single bit) should produce a drastically different hash code. This prevents keys that are "close" to each other from clustering in the same buckets.
 
 ---
 
@@ -121,24 +121,24 @@ assert_ne!(hash1, hash2);
 
 ## ❓ Key Questions & Trade-offs
 
-*   **What are the trade-offs between speed and distribution quality?**
-    *   **Fast but Simple (e.g., FNV, xxHash):** Excellent for scenarios where keys are known to be well-distributed and performance is critical (e.g., game engines, short-lived caches). They have higher collision rates for adversarial inputs.
-    *   **Secure but Slower (e.g., SipHash):** Rust's default. Provides resistance against HashDoS (Denial of Service) attacks where an attacker intentionally sends keys that all hash to the same bucket. It's a safe default for public-facing services.
+* **What are the trade-offs between speed and distribution quality?**
+  * **Fast but Simple (e.g., FNV, xxHash):** Excellent for scenarios where keys are known to be well-distributed and performance is critical (e.g., game engines, short-lived caches). They have higher collision rates for adversarial inputs.
+  * **Secure but Slower (e.g., SipHash):** Rust's default. Provides resistance against HashDoS (Denial of Service) attacks where an attacker intentionally sends keys that all hash to the same bucket. It's a safe default for public-facing services.
 
-*   **How does hash function choice affect security?**
-    *   A predictable hash function allows attackers to craft inputs that cause massive collisions, degrading a hash map's performance from O(1) to O(n) and potentially freezing a server. SipHash was chosen specifically to mitigate this risk.
+* **How does hash function choice affect security?**
+  * A predictable hash function allows attackers to craft inputs that cause massive collisions, degrading a hash map's performance from O(1) to O(n) and potentially freezing a server. SipHash was chosen specifically to mitigate this risk.
 
-*   **When would you implement a custom `Hasher`?**
-    *   You have a very specific performance requirement and have benchmarked that `DefaultHasher` is a bottleneck.
-    *   You need a consistent hash value across different program executions or architectures (SipHash can produce different values). In this case, a stable algorithm like FNV or xxHash might be used, often through a crate.
-    *   You are integrating with a system that requires a specific, non-standard hash algorithm.
+* **When would you implement a custom `Hasher`?**
+  * You have a very specific performance requirement and have benchmarked that `DefaultHasher` is a bottleneck.
+  * You need a consistent hash value across different program executions or architectures (SipHash can produce different values). In this case, a stable algorithm like FNV or xxHash might be used, often through a crate.
+  * You are integrating with a system that requires a specific, non-standard hash algorithm.
 
 ---
 
 ## 🔗 Related Concepts
 
-*   **Primary Dependency**: [[HashMap Internals]], [[Collision Resolution]]
-*   **Core Rust Concepts**: [[Generic Programming]] (for `K: Hash` trait bounds), [[Traits]]
-*   **Implementation Details**: [[Mission5 HashMap]], [[entry-api-hashmap]]
-*   **Performance**: [[Load Factor Management]], [[Performance Analysis]]
-*   **Broader Context**: [[Collections MOC]], [[rust-concepts-MOC]]
+* **Primary Dependency**: [[HashMap Internals]], [[Collision Resolution]]
+* **Core Rust Concepts**: [[Generic Programming]] (for `K: Hash` trait bounds), [[Traits]]
+* **Implementation Details**: [[Mission5 HashMap]], [[entry-api-hashmap]]
+* **Performance**: [[Load Factor Management]], [[Performance Analysis]]
+* **Broader Context**: [[Collections MOC]], [[rust-concepts-MOC]]

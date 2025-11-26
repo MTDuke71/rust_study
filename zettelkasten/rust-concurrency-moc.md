@@ -282,6 +282,7 @@ For developers with AUTOSAR (automotive) background:
 ## ✅ Checklist: Concurrency Mastery
 
 ### Async Fundamentals
+
 - [ ] Understand Future trait and lazy evaluation
 - [ ] Master `.await` as yield points
 - [ ] Know when async blocks execute vs futures
@@ -289,6 +290,7 @@ For developers with AUTOSAR (automotive) background:
 - [ ] Understand runtime role (tokio/async-std)
 
 ### Concurrency Patterns
+
 - [ ] Use `select()` for racing futures
 - [ ] Use `join!()` for concurrent batch operations
 - [ ] Use `spawn_task()` for background work
@@ -296,6 +298,7 @@ For developers with AUTOSAR (automotive) background:
 - [ ] Implement interrupt-and-resume patterns
 
 ### Thread Fundamentals
+
 - [ ] Create and join threads with `std::thread`
 - [ ] Understand `Send` and `Sync` traits
 - [ ] Use `Arc<Mutex<T>>` for shared state
@@ -303,6 +306,7 @@ For developers with AUTOSAR (automotive) background:
 - [ ] Use `mpsc` channels for message passing
 
 ### Performance
+
 - [ ] Choose async for I/O-bound work
 - [ ] Choose threads/rayon for CPU-bound work
 - [ ] Measure concurrency overhead
@@ -310,6 +314,7 @@ For developers with AUTOSAR (automotive) background:
 - [ ] Profile contention and bottlenecks
 
 ### Production Readiness
+
 - [ ] Implement graceful shutdown
 - [ ] Add timeout handling
 - [ ] Implement retry with backoff

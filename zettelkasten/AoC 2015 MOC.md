@@ -15,30 +15,35 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 ## 🗓️ Completed Days
 
 ### **Day 1: Not Quite Lisp**
+
 - String iteration and character counting
 - Running sum pattern
 - Early termination conditions
 - **Implementation Discussion**: [[../../advent_of_code/aoc2015/discussions/day1]] - Complete walkthrough of scaffold usage and Rust vs Python comparison
 
 ### **Day 2: I Was Told There Would Be No Math**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day02.md|Day 2 Problem]]
 - Parsing structured input (`split()`, `parse()`)
 - Tuple destructuring
 - Mathematical formulas and min/max operations
 
 ### **Day 3: Perfectly Spherical Houses in a Vacuum**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day03.md|Day 3 Problem]]
 - 2D coordinate systems
 - HashSet for uniqueness tracking
 - Even/odd index splitting with iterators
 
 ### **Day 4: The Ideal Stocking Stuffer**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day04.md|Day 4 Problem]]
 - External crate integration (`md5`)
 - Computational optimization
 - Loop efficiency patterns
 
 ### **Day 5: Doesn't He Have Intern-Elves For This?**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day05.md|Day 5 Problem]]
 - Regex pattern matching
 - Multiple validation rules
@@ -46,6 +51,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - **Reference**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Walkthrough of Day 5 solution
 
 ### **Day 6: Probably a Fire Hazard**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day06.md|Day 6 Problem]]
 - 2D grid data structures
 - Coordinate range iteration
@@ -53,6 +59,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - `saturating_sub()` for safe arithmetic
 
 ### **Day 7: Some Assembly Required**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day07.md|Day 7 Problem]]
 - **Advanced**: Circuit simulation with DAG
 - HashMap memoization
@@ -64,6 +71,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - **Dependency Tree Analysis**: [[../advent_of_code/aoc2015/examples/day07_debug/DEPENDENCY_TREE_README]] - Visual gate-level dependency analysis for wire 'a'
 
 ### **Day 8: Matchsticks**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day08.md|Day 8 Problem]]
 - **String parsing & escape sequences**
 - **Critical Rust Concept**: [[../advent_of_code/aoc2015/examples/day08_rust_string_handling_explained]]
@@ -73,6 +81,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Part 2: String encoding/escaping
 
 ### **Day 9: All in a Single Night**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day09.md|Day 9 Problem]]
 - **Traveling Salesman Problem (TSP)**
 - Permutation generation with Heap's algorithm
@@ -81,6 +90,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Lifetime management with string slices
 
 ### **Day 10: Elves Look, Elves Say**
+
 - **Run-length encoding** and look-and-say sequences
 - **Performance Analysis**: [[../advent_of_code/aoc2015/examples/DAY10_BENCHMARK_ANALYSIS]] - Iterative vs Memoized comparison
 - **Deep Dive**: [[../advent_of_code/aoc2015/examples/DAY10_MEMOIZATION_WALKTHROUGH]] - Why memoization fails for Day 10
@@ -94,6 +104,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Understanding when memoization hurts performance (0% cache hit rate)
 
 ### **Day 11: Corporate Policy**
+
 - **Documentation Hub**: [[../advent_of_code/aoc2015/examples/Day11_README]] - Complete Day 11 guide and file links
 - **Quick Start**: [[../advent_of_code/aoc2015/examples/DAY11_QUICK_REFERENCE]] - Rules summary and implementation order
 - **Implementation Guide**: [[../advent_of_code/aoc2015/examples/DAY11_IMPLEMENTATION_GUIDE]] - Step-by-step coding walkthrough
@@ -105,6 +116,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - **Performance**: Smart range skipping optimization to avoid generating invalid passwords
 
 ### **Day 12: JSAbacusFramework.io**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day12.md|Day 12 Problem]]
 - **Deep Dive**: [[JSON Processing with serde_json]] - Complete guide to JSON parsing and traversal
 - JSON parsing with `serde_json::Value`
@@ -114,6 +126,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Dynamic typing in statically-typed language
 
 ### **Day 13: Knights of the Dinner Table**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day13.md|Day 13 Problem]]
 - **Traveling Salesman Problem** with circular seating constraints
 - **Complete Analysis**: [[../advent_of_code/aoc2015/examples/day13_analysis]] - TSP algorithms, graph theory, and mathematical proofs
@@ -123,6 +136,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Global vs. local optimization strategies
 
 ### **Day 14: Reindeer Olympics**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day14.md|Day 14 Problem]]
 - **Cyclic Behavior Simulation** and mathematical optimization
 - **Complete Analysis**: [[../advent_of_code/aoc2015/examples/day14_analysis]] - Comprehensive implementation guide for cyclic systems
@@ -135,6 +149,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Performance optimization through cycle mathematics
 
 ### **Day 15: Science for Hungry People**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day15.md|Day 15 Problem]]
 - Combinatorial optimization with constraints
 - Cookie recipe optimization using nested loops
@@ -142,6 +157,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Iterator patterns and constrained search space
 
 ### **Day 16: Aunt Sue**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day16.md|Day 16 Problem]]
 - HashMap sparse storage for partial data matching
 - Pattern matching on string keys with conditional logic
@@ -149,6 +165,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Linear search with early termination optimization
 
 ### **Day 17: No Such Thing as Too Much**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day17.md|Day 17 Problem]]
 - Subset sum problem (NP-complete) with backtracking
 - Exponential algorithm analysis and scaling limits
@@ -156,6 +173,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Two-phase optimization strategies
 
 ### **Day 18: Like a GIF For Your Yard**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day18.md|Day 18 Problem]]
 - Conway's Game of Life cellular automaton
 - Mission 6 Grid integration for neighbor counting
@@ -163,6 +181,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Grid simulation with stuck corner conditions
 
 ### **Day 19: Medicine for Rudolph**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day19.md|Day 19 Problem]]
 - Molecular replacement and string rewriting
 - Reverse greedy algorithms vs forward search
@@ -170,6 +189,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Bidirectional search optimization
 
 ### **Day 20: Infinite Elves and Infinite Houses**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day20.md|Day 20 Problem]]
 - Number theory and divisor sum calculations
 - Sieve-like simulation algorithms
@@ -177,6 +197,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Mathematical upper bound estimation
 
 ### **Day 21: RPG Simulator 20XX**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day21.md|Day 21 Problem]]
 - Equipment optimization with constraints
 - Turn-based combat simulation
@@ -184,6 +205,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Brute force search through valid combinations
 
 ### **Day 22: Wizard Simulator 20XX**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day22.md|Day 22 Problem]]
 - A* search algorithm implementation
 - Game state modeling with effect timers
@@ -191,6 +213,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Complex state space exploration
 
 ### **Day 23: Opening the Turing Lock**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day23.md|Day 23 Problem]]
 - Assembly language interpretation
 - Collatz conjecture computation
@@ -198,6 +221,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Mathematical algorithms in low-level code
 
 ### **Day 24: It Hangs in the Balance**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day24.md|Day 24 Problem]]
 - K-way partitioning with subset sum constraints
 - Quantum entanglement optimization (product minimization)
@@ -205,6 +229,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Index-based combination generation
 
 ### **Day 25: Let It Snow**
+
 - **Problem Statement**: [[../advent_of_code/aoc2015/Problem_Statements/day25.md|Day 25 Problem]]
 - Diagonal indexing with triangular numbers
 - Modular arithmetic and fast exponentiation
@@ -216,6 +241,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 ## 🎓 Key Learnings by Concept
 
 ### **String Processing**
+
 - [[../advent_of_code/aoc2015/examples/day08_rust_string_handling_explained]] - Compile-time vs runtime string handling
 - Day 8: Escape sequence parsing (`\\`, `\"`, `\xHH`)
 - Day 8: UTF-8 encoding vs byte arrays (C-style strings)
@@ -223,12 +249,14 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 11: Character arithmetic (`'a' as u8 + 1`) for consecutive sequence detection
 
 ### **Data Structures**
+
 - Day 3: HashSet for coordinate tracking
 - Day 6: 2D grids and array indexing
 - Day 7: HashMap for memoization
 - Day 12: JSON recursive traversal with `serde_json::Value`
 
 ### **Performance Optimization**
+
 - Day 4: Computational efficiency
 - Day 7: Memoization patterns
 - Day 8: Character counting algorithms
@@ -237,6 +265,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 11: [[../advent_of_code/aoc2015/examples/DAY11_QUICK_REFERENCE]] - Smart range skipping and rule ordering optimization
 
 ### **Parsing & Validation**
+
 - Day 2: Structured input parsing
 - Day 5: Regex patterns
 - Day 8: Custom escape sequence parser
@@ -245,12 +274,14 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 12: [[JSON Processing with serde_json]] - Dynamic JSON parsing and conditional filtering
 
 ### **Graph & Dependencies**
+
 - Day 7: DAG traversal
 - Day 7: Dependency resolution
 - Day 7: Cycle detection
 - [[../advent_of_code/aoc2015/examples/day07_debug/DEPENDENCY_TREE_README]] - Complete dependency tree analysis for circuit gates
 
 ### **Algorithm Patterns**
+
 - Day 11: Base-N counting systems (base-26 for alphabetic incrementing)
 - Day 11: Multi-constraint satisfaction with early termination
 - Day 11: Generation with validation loop - increment until valid pattern found
@@ -260,6 +291,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 14: Cyclic state machines with mathematical optimization vs simulation
 
 ### **Algorithms & Problem Solving**
+
 - Day 9: Heap's algorithm for permutations
 - Day 10: [[../advent_of_code/aoc2015/examples/DAY10_MEMOIZATION_WALKTHROUGH]] - Run-length encoding and sequence transformation
 - Day 10: [[../advent_of_code/aoc2015/examples/DAY10_EXECUTION_TRACE]] - Iterative vs recursive execution patterns
@@ -269,6 +301,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 ## 🔗 Integration with Learning Tracks
 
 ### **Mission Connections**
+
 - Day 7 → [[mission-5]] - HashMap memoization patterns
 - Day 8 → String parsing techniques
 - Day 3 → [[Collections MOC]] - HashSet usage
@@ -276,6 +309,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 10 → [[mission-5]] - MemoCache usage (educational example of when NOT to cache)
 
 ### **Daily Study Connections**
+
 - Day 8 → [[daily-study/Day09]] - String vs &str
 - Day 7 → [[daily-study/Day10]] - Key-value storage
 - Day 3 → [[daily-study/Day11]] - Set operations
@@ -283,6 +317,7 @@ Advent of Code 2015 solutions with deep dives into Rust concepts, implementation
 - Day 11 → [[../daily_study/rust_learning_week2_notes/Day09]] - Password validation patterns and string rule composition
 
 ### **Rust Concepts**
+
 - [[Error Handling Deep Dive]] - AoC input validation
 - [[Collections MOC]] - Data structure selection
 - [[../advent_of_code/aoc2015/examples/day08_rust_string_handling_explained]] - String internals
@@ -309,12 +344,14 @@ Based on [[../advent_of_code/aoc2015/Problem_Statements/summary]]:
 ## 🎯 Competitive Programming Techniques
 
 ### **AoC-Specific Patterns**
+
 - Reading and parsing input files
 - Handling edge cases (empty strings, zero values)
 - Part 1 → Part 2 evolution patterns
 - Testing with example data
 
 ### **Performance Considerations**
+
 - Pre-allocation strategies
 - Memoization for expensive computations
 - Iterator efficiency
@@ -328,18 +365,21 @@ Based on [[../advent_of_code/aoc2015/Problem_Statements/summary]]:
 ## 🧪 Testing Strategies
 
 ### **Day 7 Excellence** (36 tests)
+
 - Requirement-based test naming (`req1_*`, `req2_*`)
 - Integration tests with real data
 - Edge case coverage
 - Performance benchmarking
 
 ### **Day 8 Comprehensive** (18 tests)
+
 - Escape sequence validation
 - UTF-8 encoding edge cases
 - Part 1 and Part 2 coverage
 - Example-driven development
 
 ### **Day 10 Performance Testing**
+
 - **Criterion Benchmarking**: [[../advent_of_code/aoc2015/examples/DAY10_BENCHMARK_ANALYSIS]]
 - Release mode performance comparison
 - Iterative vs recursive with memoization
@@ -364,11 +404,13 @@ Based on [[../advent_of_code/aoc2015/Problem_Statements/summary]]:
 *Problem statements for cross-year pattern analysis and learning*
 
 ### **Early December 2024 Problems**
+
 - [[../advent_of_code/aoc2024/Problem_Statements/day01]] - Historian Hysteria (2024) - List processing and distance calculations
 - [[../advent_of_code/aoc2024/Problem_Statements/day02]] - Red-Nosed Reports (2024) - Sequence validation and safety analysis
 - [[../advent_of_code/aoc2024/Problem_Statements/day03]] - Mull It Over (2024) - String parsing and instruction processing
 
 **Note**: Python implementations exist in excluded `2024py/` directory. These problem statements serve as:
+
 - Cross-year pattern comparison with AoC 2015
 - Future Rust implementation reference
 - Problem-solving technique analysis

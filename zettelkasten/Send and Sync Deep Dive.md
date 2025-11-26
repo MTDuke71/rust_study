@@ -7,6 +7,7 @@
 ## Core Concepts
 
 ### The Marker Traits
+
 ```rust
 // These traits have no methods - they're just "markers"
 unsafe trait Send {}
@@ -19,15 +20,18 @@ unsafe trait Sync {}
 ### Essential Definitions
 
 **`Send`**: A type is `Send` if it's safe to **transfer ownership** to another thread
+
 - "Can I move this value to another thread?"
 - Examples: `i32`, `String`, `Vec<T>`, `Box<T>`
 
 **`Sync`**: A type is `Sync` if it's safe to **share references** between threads  
+
 - "Can multiple threads safely have `&T` references to this?"
 - If `T: Sync`, then `&T` is `Send`
 - Examples: `i32`, immutable data, `Arc<T>`, `Mutex<T>`
 
 ### Relationship Between Send and Sync
+
 ```rust
 // If T: Sync, then &T: Send
 // This is why immutable data can be shared safely
@@ -46,6 +50,7 @@ fn demonstrate_relationship() {
 ## Auto-Implementation Rules
 
 ### Types That Are Automatically Send
+
 ```rust
 // Primitive types
 let num: i32 = 42;          // Send
@@ -67,6 +72,7 @@ struct Container<T: Send> {
 ```
 
 ### Types That Are Automatically Sync
+
 ```rust
 // Immutable data
 let num: i32 = 42;          // Sync (safe to share &i32)
@@ -86,6 +92,7 @@ let atomic: AtomicUsize = AtomicUsize::new(0); // Sync
 ## Types That Are NOT Send or Sync
 
 ### Not Send Examples
+
 ```rust
 use std::rc::Rc;
 
@@ -104,6 +111,7 @@ let file = File::open("example.txt").unwrap();
 ```
 
 ### Not Sync Examples
+
 ```rust
 use std::cell::{Cell, RefCell};
 
@@ -121,6 +129,7 @@ let mut_ref = &mut data;
 ## Manual Implementation with `unsafe`
 
 ### When You Need Manual Implementation
+
 ```rust
 use std::ptr::NonNull;
 
@@ -136,6 +145,7 @@ unsafe impl<T: Sync> Sync for LinkedQueue<T> {}
 ```
 
 ### Safety Justification Template
+
 ```rust
 // Template for documenting safety
 unsafe impl<T: Send> Send for MyType<T> {}
@@ -154,6 +164,7 @@ SAFETY JUSTIFICATION:
 ## Common Patterns and Use Cases
 
 ### 1. Shared Ownership with Arc
+
 ```rust
 use std::sync::Arc;
 use std::thread;
@@ -178,6 +189,7 @@ fn shared_data_pattern() {
 ```
 
 ### 2. Mutable Shared State with Mutex
+
 ```rust
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -205,6 +217,7 @@ fn mutable_shared_pattern() {
 ```
 
 ### 3. Channel Communication
+
 ```rust
 use std::sync::mpsc;
 use std::thread;
@@ -232,6 +245,7 @@ fn channel_pattern() {
 ```
 
 ### 4. Read-Write Locks for Read-Heavy Workloads
+
 ```rust
 use std::sync::{Arc, RwLock};
 use std::thread;
@@ -268,6 +282,7 @@ fn rwlock_pattern() {
 ## Advanced Concepts
 
 ### 1. Blanket Implementations
+
 ```rust
 // Rust provides these blanket implementations:
 
@@ -282,6 +297,7 @@ unsafe impl<T: Send + ?Sized> Send for &mut T {}
 ```
 
 ### 2. Negative Reasoning
+
 ```rust
 // Understanding what CAN'T be shared helps design
 
@@ -297,6 +313,7 @@ struct NotSyncStruct {
 ```
 
 ### 3. Generic Constraints
+
 ```rust
 // Using Send/Sync as trait bounds
 fn spawn_task<T: Send + 'static>(data: T) -> std::thread::JoinHandle<()>
@@ -321,6 +338,7 @@ where
 ## Real-World Examples
 
 ### Mission2: LinkedQueue Implementation
+
 ```rust
 use std::ptr::NonNull;
 
@@ -349,6 +367,7 @@ impl<T> LinkedQueue<T> {
 ```
 
 ### Thread-Safe Ring Buffer
+
 ```rust
 use std::sync::{Arc, Mutex};
 
@@ -402,6 +421,7 @@ fn multi_producer_single_consumer() {
 ## Common Mistakes and Solutions
 
 ### Mistake 1: Trying to Share Non-Sync Types
+
 ```rust
 use std::cell::RefCell;
 
@@ -429,6 +449,7 @@ fn share_with_mutex() {
 ```
 
 ### Mistake 2: Forgetting Clone for Arc
+
 ```rust
 use std::sync::Arc;
 
@@ -459,6 +480,7 @@ fn multiple_threads_correct() {
 ```
 
 ### Mistake 3: Unnecessary Arc<Mutex<T>> Wrapping
+
 ```rust
 // ❌ Over-engineering - Arc<Mutex<i32>> for read-only data
 fn overengineered() {
@@ -486,6 +508,7 @@ fn optimized() {
 ## Testing Send and Sync
 
 ### Compile-Time Tests
+
 ```rust
 // Test that types implement Send/Sync at compile time
 fn assert_send<T: Send>() {}
@@ -503,6 +526,7 @@ fn test_thread_safety_traits() {
 ```
 
 ### Runtime Thread Safety Tests
+
 ```rust
 #[test]
 fn test_concurrent_access() {
@@ -540,6 +564,7 @@ fn test_concurrent_access() {
 ## Performance Implications
 
 ### Send/Sync Are Zero-Cost
+
 ```rust
 // These traits have no runtime impact
 struct MyData {
@@ -560,6 +585,7 @@ fn zero_cost_demonstration() {
 ```
 
 ### Lock Overhead Comparison
+
 ```rust
 use std::sync::{Arc, Mutex, RwLock};
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -585,6 +611,7 @@ fn rwlock_counter() -> Arc<RwLock<usize>> {
 ## Integration with Async Programming
 
 ### Send Bounds in Async Context
+
 ```rust
 // Async functions require Send for their futures
 async fn async_computation(data: Vec<i32>) -> i32 {
@@ -604,6 +631,7 @@ where
 ```
 
 ### Sync Bounds for Shared State
+
 ```rust
 use tokio::sync::{Mutex as AsyncMutex, RwLock as AsyncRwLock};
 
@@ -624,6 +652,7 @@ async fn async_shared_state() {
 ## Decision Tree: Choosing Synchronization
 
 ### For Shared Data
+
 ```
 1. Is data immutable after creation?
    └─ YES → Use Arc<T>
@@ -640,6 +669,7 @@ async fn async_shared_state() {
 ```
 
 ### For Communication
+
 ```
 1. One-to-one communication?
    └─ Use std::sync::mpsc channels
@@ -657,6 +687,7 @@ async fn async_shared_state() {
 ## Debugging Send/Sync Issues
 
 ### Common Compiler Messages
+
 ```rust
 // "cannot be sent between threads safely"
 // = Type is !Send
@@ -671,6 +702,7 @@ let cell_ref = &cell;
 ```
 
 ### Diagnostic Techniques
+
 ```rust
 // Check if type implements Send/Sync
 fn check_traits<T>() 
@@ -692,6 +724,7 @@ Need ready-made assertion helpers? [[sync-send-traits]] packages the `static_ass
 ## Best Practices
 
 ### Do's ✅
+
 - **Prefer immutable data** with `Arc<T>` for read-only sharing
 - **Use `Mutex<T>`** for exclusive mutable access
 - **Use `RwLock<T>`** for read-heavy workloads
@@ -700,6 +733,7 @@ Need ready-made assertion helpers? [[sync-send-traits]] packages the `static_ass
 - **Test thread safety** with integration tests
 
 ### Don'ts ❌
+
 - **Don't use `Arc<Mutex<T>>`** for read-only data
 - **Don't implement `Send`/`Sync`** without careful safety analysis
 - **Don't ignore compiler errors** - they prevent data races
@@ -707,6 +741,7 @@ Need ready-made assertion helpers? [[sync-send-traits]] packages the `static_ass
 - **Don't mix sync and async primitives** carelessly
 
 ### Guidelines for Manual Implementation
+
 1. **Document thoroughly** - explain why it's safe
 2. **Keep invariants** - ensure internal consistency
 3. **Hide unsafe details** - public API should be safe
@@ -716,16 +751,19 @@ Need ready-made assertion helpers? [[sync-send-traits]] packages the `static_ass
 ## Integration with Mission Codebase
 
 ### Mission2: Queue Implementations
+
 - **LinkedQueue**: Manual `Send`/`Sync` due to raw pointers
 - **RingQueue**: Automatic `Send`/`Sync` (all fields are safe)
 - **Thread safety**: Verified through integration tests
 
 ### Mission6: Grid Pathfinding
+
 - **Grid<T>**: `Send` + `Sync` when `T: Send + Sync`
 - **Coord**: Always `Send` + `Sync` (simple data)
 - **Parallel algorithms**: Using rayon for CPU-bound work
 
 ### Daily Study Integration
+
 - **Week 8**: Concurrency fundamentals and thread safety
 - **Day 50-56**: Thread basics, channels, shared state patterns
 - **Advanced examples**: Multi-producer, single-consumer patterns
@@ -737,4 +775,4 @@ Need ready-made assertion helpers? [[sync-send-traits]] packages the `static_ass
 
 *Tags: #send #sync #thread-safety #concurrency #marker-traits #unsafe #arc #mutex #rwlock #atomic #channels #async #performance #testing #best-practices*
 
-*Links: [[atomic-operations-memory-ordering]] | [[Unsafe Rust - Raw Pointers and Safety Contracts]] | [[interior-mutability]] | [[mission-2]] | [[Concurrency Patterns]] | [[Async Programming]] | [[Performance Engineering]] | [[zero-cost-abstractions]] | [[Testing Strategies]] | [[../missions/Mission2/README]] | [[Thread Safety Patterns]] | [[sync-send-traits]]*
+*Links: [[atomic-operations-memory-ordering]] | [[Unsafe Rust - Raw Pointers and Safety Contracts]] | [[interior-mutability]] | [[mission-2]] | [[Concurrency Patterns]] | [[Async Programming]] | [[Performance Engineering]] | [[Memory Optimization]] | [[zero-cost-abstractions]] | [[Testing Strategies]] | [[../missions/Mission2/README]] | [[Thread Safety Patterns]] | [[sync-send-traits]]*

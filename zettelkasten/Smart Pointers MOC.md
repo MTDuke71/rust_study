@@ -9,6 +9,7 @@
 Smart pointers are types that implement the `Deref` and/or `Drop` traits to provide pointer-like behavior with additional capabilities. They enable patterns that ordinary references can't support while maintaining Rust's memory safety guarantees.
 
 **Core Smart Pointer Types**:
+
 - **Box<T>** - Heap allocation, single ownership, recursive types
 - **Rc<T>** - Reference counting, multiple ownership (single-threaded)
 - **RefCell<T>** - Interior mutability, runtime borrow checking
@@ -21,17 +22,20 @@ Smart pointers are types that implement the `Deref` and/or `Drop` traits to prov
 ## 📚 **Fundamental Concepts**
 
 ### **Smart Pointer Traits**
+
 - [[deref-trait]] - Dereference operator overloading and coercion
 - [[drop-trait]] - Automatic cleanup and RAII patterns
 - [[smart-pointer-patterns]] - Common idioms and design patterns
 
 ### **Core Smart Pointers**
+
 - [[box-heap-allocation]] - Box<T> for heap allocation and recursive types
 - [[rc-shared-ownership]] - Rc<T> for multiple ownership and shared data
 - [[refcell-interior-mutability]] - RefCell<T> for runtime-checked mutation
 - [[reference-cycles]] - Memory leaks with Rc and prevention with Weak<T>
 
 ### **Memory Management**
+
 - [[arena-allocation]] - Alternative to reference counting using indices
 - [[memory-leaks-in-rust]] - How safe Rust can still leak memory
 - [[ownership-fundamentals]] - Foundation for understanding smart pointers
@@ -55,6 +59,7 @@ Smart pointers are types that implement the `Deref` and/or `Drop` traits to prov
 ### **Common Combinations**
 
 **Shared Mutable State (Single-threaded)**:
+
 ```rust
 Rc<RefCell<T>>
 // Multiple ownership + interior mutability
@@ -62,6 +67,7 @@ Rc<RefCell<T>>
 ```
 
 **Shared Mutable State (Multi-threaded)**:
+
 ```rust
 Arc<Mutex<T>>
 // Thread-safe shared ownership + exclusive mutation
@@ -69,6 +75,7 @@ Arc<Mutex<T>>
 ```
 
 **Tree with Parent Pointers**:
+
 ```rust
 Rc<Node> {
     children: Vec<Rc<Node>>,     // Strong references down
@@ -81,6 +88,7 @@ Rc<Node> {
 ## 🧠 **When to Use Which Smart Pointer**
 
 ### **Use Box<T> When**
+
 - ✅ Allocating large data on heap (avoid stack overflow)
 - ✅ Transferring ownership without copying large values
 - ✅ Implementing recursive types (linked lists, trees)
@@ -90,6 +98,7 @@ Rc<Node> {
 **Example**: Binary search tree, recursive enums
 
 ### **Use Rc<T> When**
+
 - ✅ Multiple parts of program need read access
 - ✅ Shared ownership of immutable data
 - ✅ Graph structures with shared nodes
@@ -99,6 +108,7 @@ Rc<Node> {
 **Example**: Graph nodes with multiple incoming edges
 
 ### **Use RefCell<T> When**
+
 - ✅ Need mutation through `&self` (immutable reference)
 - ✅ Borrow rules correct but compiler can't verify
 - ✅ Implementing mock objects for testing
@@ -108,6 +118,7 @@ Rc<Node> {
 **Example**: Cache that mutates on read, mock objects
 
 ### **Use Rc<RefCell<T>> When**
+
 - ✅ Multiple ownership + mutation needed
 - ✅ Shared mutable state (single-threaded)
 - ✅ Graph nodes that need to be mutated
@@ -117,6 +128,7 @@ Rc<Node> {
 **Example**: Doubly-linked list, graph with mutable nodes
 
 ### **Use Weak<T> When**
+
 - ✅ Preventing reference cycles in Rc graphs
 - ✅ Child → parent references in trees
 - ✅ Cache entries that can be evicted
@@ -130,6 +142,7 @@ Rc<Node> {
 ## 🏗️ **Common Patterns & Idioms**
 
 ### **Pattern: Recursive Data Structures**
+
 ```rust
 // Binary tree with Box
 enum Tree<T> {
@@ -137,9 +150,11 @@ enum Tree<T> {
     Node(T, Box<Tree<T>>, Box<Tree<T>>),
 }
 ```
+
 **See**: [[box-heap-allocation]], [[mission-3]]
 
 ### **Pattern: Shared Ownership Graph**
+
 ```rust
 // Graph with Rc
 struct GraphNode {
@@ -147,9 +162,11 @@ struct GraphNode {
     neighbors: Vec<Rc<RefCell<GraphNode>>>,
 }
 ```
+
 **See**: [[rc-shared-ownership]], [[mission-7]]
 
 ### **Pattern: Tree with Parent Pointers**
+
 ```rust
 // Cycle-free tree
 struct TreeNode {
@@ -158,9 +175,11 @@ struct TreeNode {
     parent: RefCell<Weak<RefCell<TreeNode>>>,
 }
 ```
+
 **See**: [[reference-cycles]], [[weak-references]]
 
 ### **Pattern: Interior Mutability**
+
 ```rust
 // Cache with lazy initialization
 struct Cache {
@@ -177,9 +196,11 @@ impl Cache {
     }
 }
 ```
+
 **See**: [[refcell-interior-mutability]]
 
 ### **Pattern: Arena Allocation (Alternative)**
+
 ```rust
 // Graph with indices instead of Rc
 struct Graph {
@@ -190,6 +211,7 @@ struct Node {
     neighbors: Vec<usize>, // Indices, not Rc!
 }
 ```
+
 **See**: [[arena-allocation]]
 
 ---
@@ -197,6 +219,7 @@ struct Node {
 ## 🎓 **Learning Path**
 
 ### **Beginner: Understanding the Basics**
+
 1. [[ownership-fundamentals]] - Start with ownership rules
 2. [[box-heap-allocation]] - First smart pointer: Box<T>
 3. [[deref-trait]] - How smart pointers act like references
@@ -205,6 +228,7 @@ struct Node {
 **Practice**: Implement binary search tree with Box<T>
 
 ### **Intermediate: Shared Ownership**
+
 1. [[rc-shared-ownership]] - Multiple ownership with Rc<T>
 2. [[refcell-interior-mutability]] - Runtime borrow checking
 3. [[reference-cycles]] - Understanding memory leaks
@@ -213,6 +237,7 @@ struct Node {
 **Practice**: Implement graph with Rc<RefCell<T>>
 
 ### **Advanced: Cycle Prevention & Optimization**
+
 1. [[weak-references]] - Breaking cycles with Weak<T>
 2. [[arena-allocation]] - Index-based alternative to Rc
 3. [[generational-indices]] - Safe deletion with arenas
@@ -225,20 +250,24 @@ struct Node {
 ## 🚀 **Mission & Study Integration**
 
 ### **Missions Using Smart Pointers**
+
 - [[mission-3]] - Binary Search Tree with `Box<T>`
 - [[mission-4]] - Doubly Linked List with `Rc<RefCell<T>>` and `Weak<T>`
 - [[mission-7]] - Graph Algorithms with shared ownership patterns
 
 ### **Daily Study Coverage**
+
 - [[daily-study/Day20]] - Introduction to smart pointers
 - [[daily-study/Day21]] - Deref and Drop traits
 - [[daily-study/Day22]] - Rc and RefCell patterns
 
 ### **Rust Book Integration**
+
 - [[rust_book/rust-book-ch15]] - Complete smart pointers chapter
 - [[rust-book-ch13-15-review]] - Comprehensive review with examples
 
 ### **Advent of Code Applications**
+
 - Tree problems → Box<T> for recursive structures
 - Graph traversal → Rc<T> for shared nodes
 - State machines → RefCell<T> for interior mutability
@@ -250,6 +279,7 @@ struct Node {
 ### **Common Errors**
 
 **1. Reference Cycles with Rc**
+
 ```rust
 // ❌ Problem: Cycle causes memory leak
 a.next = Rc::clone(&b);
@@ -258,9 +288,11 @@ b.prev = Rc::clone(&a); // Cycle!
 // ✅ Solution: Use Weak for back-references
 b.prev = Rc::downgrade(&a);
 ```
+
 **See**: [[reference-cycles]]
 
 **2. Runtime Borrow Panics with RefCell**
+
 ```rust
 // ❌ Problem: Multiple mutable borrows
 let mut a = data.borrow_mut();
@@ -273,9 +305,11 @@ let mut b = data.borrow_mut(); // Panic!
 } // a dropped here
 let mut b = data.borrow_mut(); // OK
 ```
+
 **See**: [[refcell-interior-mutability]]
 
 **3. Trying to Use Rc Across Threads**
+
 ```rust
 // ❌ Problem: Rc is not Send
 let data = Rc::new(42);
@@ -318,18 +352,22 @@ thread::spawn(move || println!("{}", data)); // OK
 ## 🔗 **Related Topics**
 
 ### **Core Concepts**
+
 - [[ownership-fundamentals]] | [[borrowing-rules]] | [[lifetimes]]
 - [[trait-system]] | [[generics]] | [[type-system]]
 
 ### **Memory Management**
+
 - [[heap-vs-stack]] | [[raii-pattern]] | [[memory-safety]]
 - [[zero-cost-abstractions]] | [[compile-time-guarantees]]
 
 ### **Advanced Patterns**
+
 - [[interior-mutability]] | [[shared-state]] | [[observer-pattern]]
 - [[state-machine-patterns]] | [[cache-patterns]]
 
 ### **Alternative Approaches**
+
 - [[arena-allocation]] | [[generational-indices]] | [[pool-allocation]]
 - [[lifetime-based-ownership]] | [[borrow-splitting]]
 
@@ -338,12 +376,14 @@ thread::spawn(move || println!("{}", data)); // OK
 ## 📚 **External Resources**
 
 ### **Official Documentation**
+
 - [The Rust Book - Chapter 15](https://doc.rust-lang.org/book/ch15-00-smart-pointers.html)
 - [std::boxed::Box](https://doc.rust-lang.org/std/boxed/struct.Box.html)
 - [std::rc::Rc](https://doc.rust-lang.org/std/rc/struct.Rc.html)
 - [std::cell::RefCell](https://doc.rust-lang.org/std/cell/struct.RefCell.html)
 
 ### **Further Reading**
+
 - [Rust RFC: Smart Pointers](https://github.com/rust-lang/rfcs)
 - [Rust Nomicon: Ownership](https://doc.rust-lang.org/nomicon/ownership.html)
 - [Too Many Lists](https://rust-unofficial.github.io/too-many-lists/) - Comprehensive linked list guide

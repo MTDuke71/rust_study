@@ -7,18 +7,21 @@ The Traveling Salesman Problem (TSP) is a classic optimization problem: given a 
 ## Problem Variants
 
 ### Classic TSP (Day 9)
+
 - **Goal**: Find shortest route through all cities
 - **Constraints**: Visit each city exactly once, return to start
 - **Graph**: Weighted, undirected, complete
 - **Real-world**: Package delivery, circuit board drilling
 
 ### Circular Seating TSP (Day 13)
+
 - **Goal**: Find arrangement maximizing happiness in circular seating
 - **Constraints**: Each person has exactly two neighbors (circular)
 - **Graph**: Weighted, directed, complete (adjacency graph)
 - **Key Difference**: No need to return to start (already circular)
 
 ### Linear Arrangement
+
 - **Goal**: Arrange items in a line (not circular)
 - **Constraints**: First/last items have only one neighbor
 - **Applications**: Assembly line optimization, DNA sequencing
@@ -26,6 +29,7 @@ The Traveling Salesman Problem (TSP) is a classic optimization problem: given a 
 ## Algorithm Approaches
 
 ### 1. Brute Force (Exact Solution)
+
 ```rust
 pub fn solve_tsp_brute_force(graph: &Graph) -> (i32, Vec<City>) {
     let cities = graph.get_cities();
@@ -50,6 +54,7 @@ pub fn solve_tsp_brute_force(graph: &Graph) -> (i32, Vec<City>) {
 **Practical Limit**: ~12-15 cities
 
 ### 2. Dynamic Programming (Held-Karp Algorithm)
+
 ```rust
 // State: (current_city, visited_set) -> min_cost
 fn tsp_dp(graph: &Graph) -> i32 {
@@ -92,6 +97,7 @@ fn tsp_dp(graph: &Graph) -> i32 {
 ### 3. Approximation Algorithms
 
 #### Nearest Neighbor Heuristic
+
 ```rust
 fn tsp_nearest_neighbor(graph: &Graph, start: usize) -> (i32, Vec<usize>) {
     let mut route = vec![start];
@@ -136,7 +142,9 @@ fn tsp_nearest_neighbor(graph: &Graph, start: usize) -> (i32, Vec<usize>) {
 ## Symmetry Optimizations
 
 ### Rotational Symmetry
+
 For circular arrangements, all rotations are equivalent:
+
 ```rust
 // These represent the same circular arrangement:
 [A, B, C, D] ≡ [B, C, D, A] ≡ [C, D, A, B] ≡ [D, A, B, C]
@@ -169,7 +177,9 @@ fn tsp_with_rotation_optimization(graph: &Graph) -> (i32, Vec<City>) {
 **Reduction**: n! → (n-1)! permutations (n× speedup)
 
 ### Reflectional Symmetry
+
 Clockwise and counter-clockwise arrangements are equivalent:
+
 ```rust
 // These represent the same circular arrangement:
 [A, B, C, D] ≡ [A, D, C, B]  (clockwise ≡ counter-clockwise)
@@ -204,17 +214,20 @@ fn tsp_full_optimization(graph: &Graph) -> (i32, Vec<City>) {
 ```
 
 **How It Works**:
+
 1. **Position 0**: Always contains `cities[0]` (eliminates rotational symmetry)
 2. **Position 1**: Always contains `cities[1]` (eliminates reflectional symmetry)  
 3. **Positions 2-N**: Permute `cities[2..]` only (reduces from n! to (n-2)!)
 
 **Combined Reduction**: n! → (n-2)! permutations  
+
 - **8 people**: 40,320 → 720 (56× speedup)
 - **10 people**: 3,628,800 → 40,320 (90× speedup)
 
 ## Implementation Patterns in Rust
 
 ### Permutation Generation
+
 ```rust
 // Heap's Algorithm - most efficient for TSP
 pub fn generate_permutations<T: Clone>(items: &mut [T], callback: &mut impl FnMut(&[T])) {
@@ -240,6 +253,7 @@ pub fn generate_permutations<T: Clone>(items: &mut [T], callback: &mut impl FnMu
 ```
 
 ### Distance/Cost Calculation
+
 ```rust
 // Linear route (start → cities → end)
 fn calculate_linear_cost(graph: &Graph, route: &[City]) -> i32 {
@@ -270,6 +284,7 @@ fn calculate_circular_cost(graph: &Graph, route: &[City]) -> i32 {
 ```
 
 ### Generic TSP Solver
+
 ```rust
 pub fn solve_tsp<T: Clone + Eq + Hash>(
     items: Vec<T>,
@@ -302,6 +317,7 @@ pub fn solve_tsp<T: Clone + Eq + Hash>(
 ## AoC Implementations
 
 ### Day 9: All in a Single Night
+
 ```rust
 // Classic TSP with distance matrix
 let (shortest, _) = solve_tsp(cities.clone(), |route| {
@@ -314,6 +330,7 @@ let (longest, _) = solve_tsp(cities.clone(), |route| {
 ```
 
 ### Day 13: Knights of the Dinner Table
+
 ```rust
 // Circular seating TSP with happiness optimization
 let (max_happiness, arrangement) = solve_tsp(people.clone(), |seating| {
@@ -342,18 +359,21 @@ let (part2_happiness, part2_arrangement) = solve_tsp(
 ## When to Use Each Approach
 
 ### Brute Force
+
 - ✅ **Small instances** (≤ 15 items)
 - ✅ **Guaranteed optimal** solution needed
 - ✅ **Simple implementation** required
 - ❌ **Larger instances** (exponential explosion)
 
 ### Dynamic Programming
+
 - ✅ **Medium instances** (15-25 items)
 - ✅ **Guaranteed optimal** solution needed
 - ✅ **More memory available** (for memoization)
 - ❌ **Very large instances** (still exponential)
 
 ### Heuristics
+
 - ✅ **Large instances** (25+ items)
 - ✅ **Quick approximation** acceptable
 - ✅ **Real-time constraints** (immediate response needed)
@@ -362,6 +382,7 @@ let (part2_happiness, part2_arrangement) = solve_tsp(
 ## Advanced Optimizations
 
 ### Branch and Bound
+
 ```rust
 fn tsp_branch_and_bound(graph: &Graph) -> i32 {
     let mut best_cost = i32::MAX;
@@ -411,6 +432,7 @@ fn tsp_branch_and_bound(graph: &Graph) -> i32 {
 ```
 
 ### Parallel Processing
+
 ```rust
 use rayon::prelude::*;
 
@@ -439,18 +461,21 @@ fn tsp_parallel(graph: &Graph) -> (i32, Vec<usize>) {
 ## Educational Value
 
 ### Algorithm Design Principles
+
 1. **Problem Recognition** - Identifying TSP variants in different contexts
 2. **Optimization Strategy** - When to use exact vs. approximate solutions
 3. **Symmetry Exploitation** - Mathematical insights for computational speedup
 4. **Trade-off Analysis** - Time vs. space vs. accuracy decisions
 
 ### Implementation Skills
+
 1. **Permutation Algorithms** - Heap's algorithm, lexicographic generation
 2. **Memoization Patterns** - Dynamic programming with complex state
 3. **Generic Programming** - Reusable TSP solver for different cost functions
 4. **Performance Engineering** - Measuring and optimizing algorithm performance
 
 ### Mathematical Foundations
+
 1. **Combinatorics** - Understanding factorial growth and permutation spaces
 2. **Graph Theory** - Adjacency representations and path calculations
 3. **Optimization Theory** - Local vs. global optimization, greedy algorithm failures
@@ -463,4 +488,4 @@ fn tsp_parallel(graph: &Graph) -> (i32, Vec<usize>) {
 
 *Tags: #traveling-salesman #algorithms #optimization #permutations #dynamic-programming #branch-and-bound #heuristics #graph-theory #combinatorial-optimization*
 
-*Links: [[Graph Theory MOC]] | [[day13_analysis]] | [[../advent_of_code/aoc2015/Problem_Statements/day09]] | [[Heap's Algorithm Deep Dive]] | [[Symmetry in Algorithms]] | [[Performance Engineering]] | [[Combinatorial Optimization]]*
+*Links: [[Graph Theory MOC]] | [[day13_analysis]] | [[../advent_of_code/aoc2015/Problem_Statements/day09]] | [[Heap's Algorithm Deep Dive]] | [[Symmetry in Algorithms]] | [[Performance Engineering]] | [[Memory Optimization]] | [[Combinatorial Optimization]]*

@@ -18,6 +18,7 @@
 ## 🧠 Algorithm Intuition
 
 ### **Mental Model: Course Prerequisites**
+
 ```
 Prerequisites: [Math101 → Stats201], [Math101 → CS202], [Stats201 → ML301]
 
@@ -29,9 +30,10 @@ Result: Math101 → Stats201 → CS202 → ML301 (valid topological order)
 ```
 
 ### **Queue-Based Processing**
+
 1. **Initialize**: Count in-degrees for all vertices
 2. **Seed Queue**: Add all vertices with in-degree 0
-3. **Process Loop**: 
+3. **Process Loop**:
    - Dequeue vertex → add to result
    - For each neighbor: decrease in-degree by 1
    - If neighbor's in-degree becomes 0 → enqueue it
@@ -42,6 +44,7 @@ Result: Math101 → Stats201 → CS202 → ML301 (valid topological order)
 ## 🏗️ Implementation Architecture
 
 ### **Core Data Structures**
+
 ```rust
 use std::collections::{HashMap, VecDeque, HashSet};
 
@@ -61,6 +64,7 @@ struct KahnsTopologicalSort {
 ```
 
 ### **Algorithm Implementation**
+
 ```rust
 impl KahnsTopologicalSort {
     pub fn topological_sort(
@@ -121,12 +125,14 @@ impl KahnsTopologicalSort {
 ## 🔍 Algorithm Walkthrough
 
 ### **Example: Dependency Graph**
+
 ```
 Graph: A → B, A → C, B → D, C → D
 Adjacency List: {A: [B,C], B: [D], C: [D], D: []}
 ```
 
 ### **Step-by-Step Execution**
+
 ```
 Initial State:
   in_degree: {A: 0, B: 1, C: 1, D: 2}
@@ -160,17 +166,20 @@ Final: All 4 vertices processed → Valid topological order
 ## 🎯 Key Characteristics
 
 ### **Advantages over DFS-based Topological Sort**
+
 1. **Explicit Cycle Detection**: Algorithm naturally detects cycles during execution
 2. **Iterative Implementation**: No recursion stack depth concerns
 3. **In-Degree Insight**: Provides dependency count information
 4. **Incremental Processing**: Can handle dynamic graph updates more naturally
 
 ### **Disadvantages**
+
 1. **Extra Memory**: Requires in-degree tracking (O(V) additional space)
 2. **Initialization Overhead**: Two-pass algorithm (calculate in-degrees, then process)
 3. **Less Intuitive**: Queue-based approach less intuitive than DFS traversal
 
 ### **Cycle Detection Capability**
+
 ```rust
 // Kahn's algorithm automatically detects cycles
 if result.len() != total_vertices {
@@ -185,6 +194,7 @@ if result.len() != total_vertices {
 ## 🚀 Real-World Applications
 
 ### **1. Build System Dependency Resolution**
+
 ```rust
 // Example: Cargo build order determination
 dependencies: {
@@ -198,6 +208,7 @@ dependencies: {
 ```
 
 ### **2. Course Scheduling**
+
 ```rust
 // University course prerequisites
 prerequisites: {
@@ -211,6 +222,7 @@ prerequisites: {
 ```
 
 ### **3. Task Scheduling with Dependencies**
+
 ```rust
 // Project management: task dependency resolution
 tasks: {
@@ -226,7 +238,8 @@ tasks: {
 
 ## 🔬 Mission Integration Examples
 
-### **AoC 2024 Day 5 Integration** 
+### **AoC 2024 Day 5 Integration**
+
 *Real-world application from completed implementation*
 
 ```rust
@@ -269,6 +282,7 @@ pub fn fix_sequence(&self, update: &[i32]) -> Result<Vec<i32>> {
 ```
 
 **Key Integration Insights**:
+
 - **Subgraph Extraction**: Only process vertices relevant to current problem
 - **Cycle Handling**: Detect cycles and gracefully fallback to alternative algorithms  
 - **Bidirectional Mapping**: Convert between problem space (page numbers) and graph space (NodeIds)
@@ -279,6 +293,7 @@ pub fn fix_sequence(&self, update: &[i32]) -> Result<Vec<i32>> {
 ## 📊 Performance Analysis
 
 ### **Complexity Breakdown**
+
 ```
 Phase 1 - In-degree Calculation: O(E)
 Phase 2 - Queue Initialization: O(V)  
@@ -289,6 +304,7 @@ Total: O(V + E) - Linear in graph size
 ```
 
 ### **Memory Usage**
+
 ```
 In-degree map: O(V)
 Processing queue: O(V) worst case
@@ -299,7 +315,9 @@ Total Additional: O(V) beyond input graph
 ```
 
 ### **Benchmark Comparison**
+
 *From AoC Day 5 real dataset*
+
 ```
 Graph Size: 49 nodes, 1,176 edges
 Kahn's Runtime: ~0.2ms
@@ -314,6 +332,7 @@ Winner: DFS for small graphs, Kahn's for explicit cycle detection
 ## 🧪 Testing Strategies
 
 ### **Core Test Cases**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -375,6 +394,7 @@ mod tests {
 ```
 
 ### **Property-Based Testing**
+
 ```rust
 use proptest::prelude::*;
 
@@ -419,12 +439,14 @@ proptest! {
 | **Performance** | O(V + E) | O(V + E) |
 
 ### **When to Choose Kahn's**
+
 - ✅ **Explicit cycle detection needed**
 - ✅ **Avoiding deep recursion** (large graphs)
 - ✅ **Understanding dependency counts** is valuable
 - ✅ **Incremental processing** of dynamic graphs
 
 ### **When to Choose DFS**
+
 - ✅ **Simpler implementation** preferred
 - ✅ **Memory constraints** (no extra in-degree storage)
 - ✅ **Small graphs** where recursion depth isn't a concern
@@ -435,6 +457,7 @@ proptest! {
 ## 🌐 Advanced Applications & Extensions
 
 ### **1. Parallel Kahn's Algorithm**
+
 ```rust
 // Process vertices with in-degree 0 in parallel
 use rayon::prelude::*;
@@ -453,6 +476,7 @@ for level_nodes in zero_in_degree_nodes.chunks(thread_count) {
 ```
 
 ### **2. Lexicographic Topological Ordering**
+
 ```rust
 // Use BinaryHeap instead of VecDeque for smallest-first ordering
 use std::collections::BinaryHeap;
@@ -474,6 +498,7 @@ while let Some(Reverse(node)) = priority_queue.pop() {
 ```
 
 ### **3. Incremental Topological Sort**
+
 ```rust
 // Handle dynamic edge insertion/deletion
 impl IncrementalKahns {
@@ -498,18 +523,21 @@ impl IncrementalKahns {
 ## 🎓 Learning Integration & Mastery
 
 ### **Conceptual Prerequisites**
+
 - **[[Graph Theory MOC]]** - Basic graph terminology and representation
 - **[[Queue Data Structure]]** - FIFO processing for algorithm execution
 - **[[HashMap Deep Dive]]** - Efficient key-value lookups for in-degree tracking
 - **[[Cycle Detection]]** - Understanding circular dependencies in graphs
 
 ### **Implementation Skills**
+
 - **[[Iterator Patterns]]** - Efficient graph traversal and processing
 - **[[Error Handling Patterns]]** - Robust cycle detection and error reporting
 - **[[Testing Strategies]]** - Comprehensive validation of sorting correctness
 - **[[Performance Analysis]]** - Understanding time/space complexity trade-offs
 
 ### **Application Domains**
+
 - **[[Build System Design]]** - Dependency resolution in software compilation
 - **[[Task Scheduling]]** - Project management and workflow optimization
 - **[[Constraint Satisfaction]]** - Dependency-based problem solving
@@ -520,6 +548,7 @@ impl IncrementalKahns {
 ## 🔧 Common Implementation Pitfalls
 
 ### **1. Incorrect In-degree Initialization**
+
 ```rust
 // ❌ Wrong: Only counting nodes that appear as sources
 for source in adj_list.keys() {
@@ -538,6 +567,7 @@ for targets in adj_list.values() {
 ```
 
 ### **2. Forgetting Cycle Validation**
+
 ```rust
 // ❌ Wrong: Assuming result is always valid
 pub fn topological_sort(adj_list: &HashMap<NodeId, Vec<NodeId>>) -> Vec<NodeId> {
@@ -560,6 +590,7 @@ pub fn topological_sort(
 ```
 
 ### **3. Modifying In-degree During Iteration**
+
 ```rust
 // ❌ Wrong: Modifying HashMap while iterating
 for (&node, &degree) in &in_degree {
@@ -588,17 +619,20 @@ for node in to_process {
 ## 📚 Further Reading & Resources
 
 ### **Academic Sources**
+
 - **Kahn, A. B. (1962)** - "Topological sorting of large networks" - Original algorithm paper
 - **Cormen, et al.** - "Introduction to Algorithms" - Section 22.4: Topological Sort
 - **Sedgewick & Wayne** - "Algorithms" - Directed graphs and topological ordering
 
 ### **Implementation References**
+
 - **[[Mission 8]]** - `has_cycle()` function used in AoC Day 5 integration
 - **[[DFS Patterns]]** - Alternative recursive approach to topological sorting
 - **[[Graph Algorithms]]** - Comprehensive graph algorithm implementations
 - **[[aoc2024-day5-mission-integration]]** - Real-world competitive programming application
 
 ### **Related Algorithms**
+
 - **[[strongly-connected-components]]** - Tarjan's and Kosaraju's algorithms
 - **[[minimum-spanning-tree]]** - Kruskal's and Prim's algorithms
 - **[[shortest-path-algorithms]]** - Dijkstra and Bellman-Ford implementations

@@ -11,6 +11,7 @@
 **Key Principle**: Sustainable motivation comes from **internal satisfaction** rather than external pressure. This system builds motivation through **progress visibility**, **mastery achievement**, and **autonomous learning control**.
 
 ### **The Motivation Paradox in Learning**
+
 - **Short-term motivation**: Relies on excitement, external rewards, social pressure
 - **Long-term discipline**: Built on habit, progress systems, and intrinsic satisfaction
 - **The Gap**: Most learners rely on short-term motivation, which inevitably fades
@@ -24,6 +25,7 @@
 ### **Self-Determination Theory (SDT) Applied to Rust Learning**
 
 **1. Autonomy**: Feeling in control of your learning journey
+
 ```rust
 // HIGH AUTONOMY: You choose learning path based on interests/goals  
 fn autonomous_learning() {
@@ -41,6 +43,7 @@ fn external_pressure() {
 ```
 
 **2. Competence**: Experiencing mastery and skill progression  
+
 ```rust
 // HIGH COMPETENCE: Clear skill progression with evidence
 fn visible_competence() {
@@ -59,6 +62,7 @@ fn invisible_progress() {
 ```
 
 **3. Relatedness**: Connection to community and shared purpose
+
 ```rust  
 // HIGH RELATEDNESS: Learning connects you to larger community
 fn connected_learning() {
@@ -81,7 +85,9 @@ fn isolated_learning() {
 ## 📈 **Motivation Infrastructure Design**
 
 ### **1. Progress Visualization System**
+
 **Daily Progress Evidence**:
+
 ```markdown
 ## Visual Progress Tracking
 
@@ -105,6 +111,7 @@ Async: 🔴 (not yet started)
 ```
 
 **Weekly Achievement Gallery**:
+
 ```rust
 // Create weekly showcase of best work
 // File: weekly_achievements/week_03_highlights.rs
@@ -119,7 +126,9 @@ pub struct Week3HashMap<K, V> where K: Hash + Eq {
 ```
 
 ### **2. Mastery Milestone System**
+
 **Celebration-Worthy Achievements**:
+
 ```markdown
 ## Rust Mastery Milestones
 
@@ -153,7 +162,9 @@ pub struct Week3HashMap<K, V> where K: Hash + Eq {
 ```
 
 ### **3. Autonomy Amplification**
+
 **Choice Architecture**:
+
 ```rust
 // Design learning system with meaningful choices
 fn learning_autonomy() {
@@ -186,6 +197,7 @@ fn learning_autonomy() {
 ## 🔥 **Motivation Maintenance Protocols**
 
 ### **Daily Motivation Rituals (5 minutes)**
+
 ```markdown
 ## Morning Ignition Routine
 
@@ -206,6 +218,7 @@ fn learning_autonomy() {
 ```
 
 **Evening Consolidation Routine**:
+
 ```markdown  
 ## Evening Satisfaction Ritual
 
@@ -221,6 +234,7 @@ fn learning_autonomy() {
 ```
 
 ### **Weekly Motivation Calibration**
+
 ```markdown
 ## Weekly Motivation Review - [Date]
 
@@ -258,6 +272,7 @@ Based on this week's assessment:
 ### **Crisis Types & Interventions**
 
 **Crisis Type 1: "I'm Not Making Progress"**
+
 ```markdown
 ## Progress Invisibility Crisis
 
@@ -284,6 +299,7 @@ Based on this week's assessment:
 ```
 
 **Crisis Type 2: "This Is Too Hard/I'm Not Smart Enough"**
+
 ```markdown
 ## Competence Crisis
 
@@ -310,6 +326,7 @@ Based on this week's assessment:
 ```
 
 **Crisis Type 3: "I Don't Have Time/Energy"**
+
 ```markdown
 ## Resource Scarcity Crisis
 
@@ -340,6 +357,7 @@ Based on this week's assessment:
 ## 💡 **Intrinsic Motivation Amplifiers**
 
 ### **1. Mastery-Based Goal Setting**
+
 ```rust
 // Instead of: Time-based or comparison-based goals
 let bad_goals = vec![
@@ -358,6 +376,7 @@ let good_goals = vec![
 ```
 
 ### **2. Purpose Connection Strategies**  
+
 ```markdown
 ## Personal Purpose Alignment
 
@@ -378,6 +397,7 @@ Today's HashMap iterator implementation → Next month's data pipeline → Next 
 ```
 
 ### **3. Community Integration**
+
 ```rust
 // Transform individual learning into community contribution
 fn community_motivation() {
@@ -404,6 +424,7 @@ fn community_motivation() {
 ## 📊 **Motivation Metrics & Tracking**
 
 ### **Leading Indicators (Daily)**
+
 ```markdown
 ## Daily Motivation Pulse Check
 
@@ -433,6 +454,7 @@ fn community_motivation() {
 ```
 
 ### **Lagging Indicators (Weekly)**
+
 ```markdown
 ## Weekly Motivation Assessment
 
@@ -460,6 +482,7 @@ fn community_motivation() {
 ## 🔄 **Integration with Learning System**
 
 ### **Mission Progress as Motivation Fuel**
+
 ```rust
 // Design missions to provide intrinsic satisfaction
 impl MissionProgress {
@@ -482,11 +505,13 @@ impl MissionProgress {
 ```
 
 ### **Spaced Repetition for Confidence Building**  
+
 - **Success Streaks**: Track consecutive days of successful reviews
 - **Mastery Progression**: Celebrate cards graduating to longer intervals  
 - **Knowledge Network**: Visualize how concepts connect and reinforce each other
 
 ### **Error Bank as Growth Evidence**
+
 - **Pattern Recognition**: See error types evolve from basic to advanced
 - **Prevention Success**: Track reduction in repeated mistake categories
 - **Debugging Skill**: Measure time-to-resolution improvement over weeks
@@ -498,24 +523,28 @@ impl MissionProgress {
 *Tags: #motivation-maintenance #intrinsic-motivation #self-determination-theory #progress-visualization #mastery-milestones #autonomy-amplification #competence-building #relatedness-connection #long-term-discipline*
 
 *Motivation Infrastructure:*  
+
 - [[Progress Visualization System]] - Making advancement visible and satisfying
 - [[Mastery Milestone System]] - Celebration-worthy achievement framework
 - [[Autonomy Amplification]] - Choice architecture for self-directed learning
 - [[Purpose Connection Strategies]] - Linking daily work to meaningful outcomes
 
 *Crisis Management:*
+
 - [[Motivation Crisis Protocols]] - Systematic intervention for motivation failures  
 - [[Progress Invisibility Solutions]] - Addressing "not making progress" feelings
 - [[Competence Crisis Management]] - Overcoming "not smart enough" thoughts
 - [[Resource Scarcity Adaptation]] - Maintaining commitment during busy periods
 
 *Learning System Integration:*
+
 - [[Progress Tracking]] - Evidence-based advancement measurement for motivation  
 - [[Time Management Optimization]] - Sustainable daily commitment systems
 - [[3-Track Integration]] - Coordinated learning for maximum satisfaction
 - [[developer-learning-habits]] - Evidence-based approaches to sustained learning
 
 *Community & Support:*
+
 - [[Learning Community Integration]] - Connection strategies for relatedness needs
 - [[Teaching and Sharing]] - Contributing to others as motivation amplifier  
 - [[Pair Learning Systems]] - Collaborative approaches to motivation maintenance

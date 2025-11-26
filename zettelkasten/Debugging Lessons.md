@@ -3,6 +3,7 @@
 **Real-world debugging strategies from Mission 2 development**
 
 ---
+
 *Navigation: [[zettel-index]] | [[Testing Strategies]] | [[Problem Solving]] | [[mission-2]]*
 *Quick Access: [[missions/Mission2/DEBUGGING_LESSONS|Full Debugging Guide]]*
 ---
@@ -24,21 +25,25 @@ This is one of the most important debugging skills in software development. The 
 ## 🔑 Key Concepts Covered
 
 ### **1. Error Message Analysis**
+
 - Reading assertion failures carefully
 - Understanding what was expected vs what happened
 - Tracing back to root causes
 
 ### **2. Cross-Referencing Tests**
+
 - Using simple passing tests to validate basic functionality
 - Identifying when complex tests make incorrect assumptions
 - Building confidence in implementation through test hierarchy
 
 ### **3. Design Contract Validation**
+
 - Ensuring tests match API documentation
 - Verifying test expectations align with implementation behavior
 - Identifying mismatched assumptions
 
 ### **4. Systematic Debugging Process**
+
 - Isolating the failing test
 - Checking implementation logic
 - Validating test logic
@@ -49,12 +54,14 @@ This is one of the most important debugging skills in software development. The 
 ## 🚩 Quick Reference: Red Flags
 
 ### **Test Issues:**
+
 - ❌ Test makes incorrect assumptions about behavior
 - ❌ Test doesn't match documented API contract
 - ❌ Simple tests pass, complex tests fail
 - ❌ Test logic has arithmetic errors or overflow
 
 ### **Implementation Issues:**
+
 - ❌ Basic operations fail
 - ❌ Invariants are violated
 - ❌ Memory safety issues (segfaults, use-after-free)
@@ -67,6 +74,7 @@ This is one of the most important debugging skills in software development. The 
 **➡️ [[missions/Mission2/DEBUGGING_LESSONS|Complete Debugging Lessons Guide]]**
 
 The full document includes:
+
 - ✅ Detailed systematic debugging approach
 - ✅ Real examples from Mission 2 development
 - ✅ Decision flowcharts
@@ -80,6 +88,7 @@ The full document includes:
 ## 🔗 Related Concepts
 
 ### **Testing & Quality Assurance**
+
 - [[Testing Strategies]] - Comprehensive testing approaches
 - [[Unit Testing]] - Testing individual components
 - [[Integration Testing]] - Testing component interactions
@@ -88,6 +97,7 @@ The full document includes:
 - [[Test Coverage]] - Measuring test completeness
 
 ### **Error Analysis & Problem Solving**
+
 - [[Error Analysis]] - Understanding and categorizing errors
 - [[Problem Solving]] - General problem-solving strategies
 - [[Error Messages]] - Reading compiler/runtime errors effectively
@@ -97,6 +107,7 @@ The full document includes:
 - [[../../advent_of_code/aoc2015/examples/day07_debug/DAY07_DEBUG_TOOLS_README]] - Advanced debug tools for AoC problem analysis
 
 ### **Software Engineering Practices**
+
 - [[Clean Code Principles]] - Writing testable, maintainable code
 - [[API Design Principles]] - Creating clear interface contracts
 - [[Documentation Standards]] - Documenting expected behavior
@@ -104,6 +115,7 @@ The full document includes:
 - [[Refactoring]] - Improving code safely with tests
 
 ### **Mission Context**
+
 - [[mission-2]] - Queue implementation project
 - [[RingBufferQueue]] - Fixed-capacity circular buffer
 - [[LinkedQueue]] - Unlimited-capacity linked list
@@ -118,6 +130,7 @@ The full document includes:
 > If basic operations don't work as expected, it's usually an implementation issue.
 
 The Mission 2 case study showed that:
+
 - Ring buffers have **fixed capacity** (returns Err when full)
 - Linked queues have **unlimited capacity** (always succeeds)
 - Tests must account for these fundamental behavioral differences
@@ -141,6 +154,7 @@ This debugging lesson is particularly valuable because:
 ## 🔄 When to Use This Guide
 
 Reference this debugging lesson when:
+
 - 🐛 You encounter failing tests and need to identify root cause
 - 🤔 You're unsure if the test or implementation is wrong
 - 📚 Teaching others about test-driven development

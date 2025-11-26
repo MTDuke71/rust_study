@@ -13,20 +13,25 @@ It is the mechanism that powers Rust's **zero-cost abstractions**, allowing high
 ## 🧠 **Mental Models**
 
 ### The Cookie Cutter
+
 The generic function is a cookie cutter. Monomorphization is the act of pressing it into dough (types) to create specific cookies (functions). You don't eat the cutter; you eat the cookies.
 
 ### Find and Replace
+
 Imagine the compiler doing a "Find and Replace" for the generic type parameter `T` with `i32`, then copying the function. Then doing it again for `f64`.
 
 ## 🔍 **Detailed Content**
 
 ### **Static Dispatch**
+
 Because the specific function is known at compile time, the compiler can inline calls, leading to highly optimized code. This is in contrast to dynamic dispatch, where the function to call is determined at runtime.
 
 ### **Code Bloat**
+
 Excessive use of generics with many different types can lead to large binary sizes, a trade-off known as "code bloat". Each unique instantiation of a generic function adds to the executable size.
 
 ### **Compilation Time**
+
 Monomorphization happens during the compilation phase. Heavy use of generics can increase compile times because the compiler has to generate and optimize code for every concrete type used.
 
 ## 💡 **Key Takeaways**
@@ -40,14 +45,17 @@ Monomorphization happens during the compilation phase. Heavy use of generics can
 ## 🔗 **Integration Points**
 
 ### **Builds On**
+
 - [[Generic Programming]] - The syntax and usage of generics
 - [[compilation-process]] - Where monomorphization fits in the pipeline
 
 ### **Enables**
+
 - [[zero-cost-abstractions]] - High-level code with low-level performance
 - [[static-dispatch]] - Direct function calls without vtables
 
 ### **Related Concepts**
+
 - [[Trait Objects]] - The alternative: dynamic dispatch
 - [[performance-patterns]] - Trade-offs between static and dynamic dispatch
 

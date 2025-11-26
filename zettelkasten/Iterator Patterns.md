@@ -7,6 +7,7 @@
 ## 🎯 **Iterator Philosophy in Rust**
 
 ### **Zero-Cost Abstractions**
+
 Rust's iterators are designed as zero-cost abstractions - they compile down to the same performance as hand-written loops while providing higher-level, more expressive code.
 
 ```rust
@@ -25,6 +26,7 @@ for &number in &numbers {
 ```
 
 ### **Core Iterator Concepts**
+
 - **Lazy evaluation** - Iterators do nothing until consumed
 - **Composability** - Chain operations together fluently
 - **Type safety** - Compile-time guarantees about iteration behavior
@@ -35,6 +37,7 @@ for &number in &numbers {
 ## 🏗️ **The Iterator Trait**
 
 ### **Basic Iterator Structure**
+
 ```rust
 trait Iterator {
     type Item;
@@ -51,6 +54,7 @@ trait Iterator {
 ```
 
 ### **Custom Iterator Implementation**
+
 ```rust
 struct CountDown {
     current: usize,
@@ -92,6 +96,7 @@ assert_eq!(values, vec![3, 2, 1]);
 ## 🔧 **Iterator Creation Patterns**
 
 ### **Standard Collection Iterators**
+
 ```rust
 let vec = vec![1, 2, 3, 4, 5];
 
@@ -112,6 +117,7 @@ let step_by = (0..20).step_by(2); // 0, 2, 4, 6, ...
 ```
 
 ### **Generator Patterns**
+
 ```rust
 // Infinite iterators
 fn fibonacci() -> impl Iterator<Item = u64> {
@@ -138,6 +144,7 @@ let first_10_powers: Vec<i32> = powers_of_2.take(10).collect();
 ```
 
 ### **Conditional Creation**
+
 ```rust
 // Create iterator based on condition
 fn create_iterator(use_range: bool) -> Box<dyn Iterator<Item = i32>> {
@@ -161,6 +168,7 @@ let iter_from_result: Vec<i32> = result.into_iter().collect(); // [42] or []
 ## 🔀 **Iterator Adaptor Patterns**
 
 ### **Transformation Adaptors**
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5];
 
@@ -184,6 +192,7 @@ let running_sum: Vec<i32> = numbers.iter()
 ```
 
 ### **Filtering Adaptors**
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -205,6 +214,7 @@ let after_small: Vec<&i32> = numbers.iter().skip_while(|&&x| x < 6).collect();
 ```
 
 ### **Grouping and Batching Adaptors**
+
 ```rust
 use itertools::Itertools; // External crate for advanced patterns
 
@@ -233,6 +243,7 @@ let windows: Vec<Vec<&i32>> = data.iter().windows(3)
 ## 🎯 **Iterator Consumer Patterns**
 
 ### **Collection Consumers**
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5];
 
@@ -253,6 +264,7 @@ let (nums, chars): (Vec<i32>, Vec<char>) = pairs.into_iter().unzip();
 ```
 
 ### **Aggregation Consumers**
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5];
 
@@ -275,6 +287,7 @@ let count = numbers.iter().count();
 ```
 
 ### **Search and Testing Consumers**
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5];
 
@@ -300,6 +313,7 @@ let last = numbers.iter().last(); // Some(&5)
 ## 🏆 **Mission-Specific Iterator Patterns**
 
 ### **Stack Iterator (Mission 1)**
+
 ```rust
 impl<T> Stack<T> {
     // Iterator that drains the stack (LIFO order)
@@ -340,6 +354,7 @@ let drained: Vec<i32> = stack.drain().collect(); // [3, 2, 1]
 ```
 
 ### **Tree Traversal Iterator (Mission 6)**
+
 ```rust
 pub struct TreeIterator<T> {
     stack: Vec<&'a TreeNode<T>>,
@@ -385,6 +400,7 @@ let values: Vec<&i32> = tree.iter(TraversalType::InOrder).collect();
 ```
 
 ### **HashMap Iterator Patterns (Mission 5)**
+
 ```rust
 impl<K, V> HashMap<K, V> {
     // Iterator over key-value pairs
@@ -440,6 +456,7 @@ let filtered_pairs: Vec<(&str, &i32)> = map.iter()
 ## ⚡ **Performance Iterator Patterns**
 
 ### **Avoiding Allocations**
+
 ```rust
 // ❌ Inefficient: Creates intermediate collections
 fn process_data_bad(data: &[i32]) -> Vec<i32> {
@@ -460,6 +477,7 @@ fn process_data_good(data: &[i32]) -> Vec<i32> {
 ```
 
 ### **Iterator Size Hints**
+
 ```rust
 struct EfficientIterator<I> {
     inner: I,
@@ -497,6 +515,7 @@ where
 ```
 
 ### **Parallel Iterator Patterns**
+
 ```rust
 use rayon::prelude::*;
 
@@ -525,6 +544,7 @@ let results: Vec<i32> = numbers.par_iter()
 ## 🔗 **Advanced Iterator Patterns**
 
 ### **Iterator Chaining**
+
 ```rust
 let vec1 = vec![1, 2, 3];
 let vec2 = vec![4, 5, 6];
@@ -552,6 +572,7 @@ let chars: Vec<char> = words.iter()
 ```
 
 ### **Error Handling with Iterators**
+
 ```rust
 // Collect Results - fails fast on first error
 fn parse_numbers(strings: &[&str]) -> Result<Vec<i32>, std::num::ParseIntError> {
@@ -584,6 +605,7 @@ fn parse_numbers_partition(strings: &[&str]) -> (Vec<i32>, Vec<std::num::ParseIn
 ```
 
 ### **State Machine Iterator**
+
 ```rust
 struct StateMachineIterator {
     state: State,
@@ -635,6 +657,7 @@ impl Iterator for StateMachineIterator {
 ## 🧪 **Testing Iterator Patterns**
 
 ### **Iterator Testing Strategies**
+
 ```rust
 #[cfg(test)]
 mod iterator_tests {
@@ -703,6 +726,7 @@ mod iterator_tests {
 ## 📚 **Iterator Best Practices**
 
 ### **Prefer Iterator Methods Over Loops**
+
 ```rust
 // ❌ Imperative style
 fn sum_even_squares_loop(numbers: &[i32]) -> i32 {
@@ -725,6 +749,7 @@ fn sum_even_squares_iter(numbers: &[i32]) -> i32 {
 ```
 
 ### **Choose Appropriate Iterator Types**
+
 ```rust
 fn demonstrate_iterator_types() {
     let mut vec = vec![1, 2, 3, 4, 5];
@@ -743,6 +768,7 @@ fn demonstrate_iterator_types() {
 ```
 
 ### **Optimize for Common Patterns**
+
 ```rust
 // Collecting to specific container types
 use std::collections::{HashMap, HashSet};
@@ -767,6 +793,7 @@ let first_large = numbers.iter().find(|&&x| x > 2);
 ## 🔗 **Integration with Learning System**
 
 ### **Mission Integration**
+
 - **[[mission-1]]** - Stack iterator implementation with LIFO ordering
 - **[[mission-2]]** - Queue iterator with FIFO guarantees
 - **[[mission-3]]** - Algorithm iterators for search and sort operations  
@@ -775,16 +802,19 @@ let first_large = numbers.iter().find(|&&x| x > 2);
 - **[[mission-7]]** - Graph iterator patterns for traversal algorithms
 
 ### **Rust Book Integration**
+
 - **[[Rust Book MOC]]** - Chapter 13 covers functional programming and iterators
 - **[[Chapter 4 Overview]]** - Ownership patterns in iterator implementation
 - **[[zettelkasten/rust_book/rust-book-ch8]]** - Collection iterators and common patterns
 
 ### **Pattern Integration**
+
 - **[[API Design Patterns]]** - Iterator as core API design pattern
 - **[[Testing Patterns]]** - Comprehensive iterator testing strategies
 - **[[Rest Patterns]]** - Pattern matching in iterator implementations
 
 ### **AoC Applications**
+
 - **[[AoC Patterns MOC]]** - Iterator patterns in competitive programming
 - **Data processing pipelines** for parsing AoC input
 - **Algorithm optimization** using iterator chains
@@ -795,16 +825,19 @@ let first_large = numbers.iter().find(|&&x| x > 2);
 ## 📚 **External Resources**
 
 ### **Official Documentation**
+
 - **[Iterator Trait](https://doc.rust-lang.org/std/iter/trait.Iterator.html)** - Complete Iterator trait reference
 - **[Iterator Module](https://doc.rust-lang.org/std/iter/index.html)** - All iterator types and functions
 - **[Rust Book Chapter 13](https://doc.rust-lang.org/book/ch13-00-functional-features.html)** - Functional programming features
 
 ### **Advanced Iterator Libraries**
+
 - **[itertools](https://crates.io/crates/itertools)** - Additional iterator adaptors and utilities
 - **[rayon](https://crates.io/crates/rayon)** - Parallel iterator processing
 - **[streaming-iterator](https://crates.io/crates/streaming-iterator)** - Zero-allocation iterator patterns
 
 ### **Performance Resources**
+
 - **[Iterator Zero Cost Abstractions](https://blog.rust-lang.org/2013/11/11/Rust-0.8.html)** - How Rust achieves zero-cost iterators
 - **[Iterator Benchmarking](https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md)** - Performance characteristics
 

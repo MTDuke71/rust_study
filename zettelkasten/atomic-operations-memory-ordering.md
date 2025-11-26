@@ -5,6 +5,7 @@
 ## 🎯 **Core Concept**
 
 **Atomics** are lock-free primitive types that provide thread-safe operations without `Mutex` overhead. They use CPU-level instructions to guarantee:
+
 1. **Atomicity**: Operation completes fully or not at all (no partial updates)
 2. **Visibility**: Changes are visible to other threads
 3. **Ordering**: Control how operations are reordered by compiler/CPU
@@ -292,6 +293,7 @@ impl HashMapStats {
 ```
 
 **Benchmark Reality** (typical x86-64):
+
 - `Relaxed` atomic operation: ~1-2 CPU cycles
 - `SeqCst` atomic operation: ~10-20 CPU cycles  
 - Uncontended `Mutex` lock: ~25-50 cycles
@@ -437,6 +439,7 @@ impl<K, V> HashMap<K, V> {
 7. **The Rust Book simplifies for good reason** - full memory models are genuinely complex
 
 **Bottom Line**: For most concurrent Rust code, `Arc<Mutex<T>>` is the right choice. Reach for atomics when:
+
 - Profiling shows lock contention on a single primitive value
 - You're implementing a lock-free data structure (rare)
 - You need wait-free statistics/metrics collection
@@ -444,6 +447,7 @@ impl<K, V> HashMap<K, V> {
 ## 📎 **Related Documentation**
 
 *Links:*
+
 - [[shared-state-concurrency]] - Arc<Mutex<T>> patterns and when to use locks
 - [[Send and Sync Deep Dive]] - Thread safety marker traits and atomic implementations
 - [[interior-mutability]] - Cell/RefCell vs Mutex vs Atomics comparison

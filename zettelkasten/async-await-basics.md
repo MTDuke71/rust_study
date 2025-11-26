@@ -26,6 +26,7 @@ let value = future.await;  // NOW it runs and prints
 ```
 
 **Key Properties:**
+
 - **Lazy evaluation**: Created but not executed until `.await`
 - **Zero-cost until polled**: No overhead for unused futures
 - **Single execution**: Each future runs once when awaited
@@ -47,6 +48,7 @@ enum Poll<T> {
 ```
 
 **Runtime Behavior:**
+
 1. Runtime calls `poll()` on future
 2. Future returns `Poll::Pending` if not ready (yields to runtime)
 3. Runtime switches to other tasks
@@ -72,6 +74,7 @@ async fn fetch_data() -> String {
 ```
 
 **What happens at `.await`:**
+
 1. Task starts async operation (HTTP request, sleep timer)
 2. Operation not immediately ready → returns `Poll::Pending`
 3. Task yields control back to runtime
@@ -114,6 +117,7 @@ let result = future.await;  // Executes the block, returns 42
 ```
 
 **With `move` keyword:**
+
 ```rust
 let data = vec![1, 2, 3];
 let future = async move {
@@ -143,6 +147,7 @@ fn main() {
 ```
 
 **Runtime responsibilities:**
+
 - Poll futures to drive them to completion
 - Manage task scheduling (which future to poll next)
 - Wake tasks when operations complete (I/O ready, timer expired)
@@ -151,12 +156,14 @@ fn main() {
 ### Cooperative vs Preemptive Multitasking
 
 **Async (Cooperative):**
+
 - Tasks explicitly yield at `.await` points
 - Runtime switches tasks only at yield points
 - Single-threaded by default (though can use thread pool)
 - Lightweight: ~KB per task, millions possible
 
 **Threads (Preemptive):**
+
 - OS forcibly switches threads (time slicing)
 - No explicit yield needed
 - Always multi-threaded
@@ -167,30 +174,35 @@ fn main() {
 ### Blocking vs Non-Blocking
 
 **Blocking (bad in async):**
+
 ```rust
 std::thread::sleep(Duration::from_secs(1));  // ❌ Freezes entire thread!
 // Runtime can't run other tasks during this
 ```
 
 **Non-Blocking (correct in async):**
+
 ```rust
 tokio::time::sleep(Duration::from_secs(1)).await;  // ✅ Yields to runtime
 // Runtime runs other tasks during 1-second wait
 ```
 
 **Key Difference:**
+
 - **`std::thread::sleep`**: Blocks OS thread, nothing else can run
 - **`tokio::time::sleep`**: Task yields, runtime switches to other tasks
 
 ### When to Use Async
 
 **✅ Async excels at I/O-bound work:**
+
 - Network requests (HTTP, database queries)
 - File I/O (reading/writing files)
 - Waiting on external events
 - Many concurrent connections (web servers)
 
 **❌ Avoid async for CPU-bound work:**
+
 - Heavy computation (image processing, cryptography)
 - Pure algorithm work (sorting, searching large datasets)
 - Use threads or `spawn_blocking()` instead
@@ -234,7 +246,8 @@ let result2 = future2.await;
 | `Poll::Ready` | Complete status | "Work finished" result |
 | Cooperative yield | Runnable completion | Explicit control handoff |
 
-**Key Insight:** 
+**Key Insight:**
+
 - AUTOSAR runnables are **callbacks** - RTE invokes them, they run to completion
 - Rust async functions are **pauseable** - can yield mid-execution at `.await` points
 - Both: Runtime/RTE orchestrates multiple concurrent work items
@@ -242,38 +255,45 @@ let result2 = future2.await;
 ## Performance Characteristics
 
 **Memory:**
+
 - Future size: Small (struct holding state)
 - Task overhead: ~1-2 KB (vs ~1 MB for thread)
 - Can have millions of tasks on modest hardware
 
 **CPU:**
+
 - Polling overhead: Minimal when yielding properly
 - Context switch: Faster than OS thread switch (no kernel involvement)
 - Best case: I/O-bound work where tasks mostly wait
 
 **Scaling:**
+
 - Thread model: ~1,000s of threads max
 - Async model: ~100,000s to millions of tasks possible
 
 ## Related Concepts
 
 **Foundations:**
+
 - [[futures-and-polling]] - Deep dive into Future trait and poll mechanism
 - [[runtime-executors]] - How tokio and async-std execute futures
 - [[pin-and-unpin]] - Memory safety for self-referential futures
 
 **Patterns:**
+
 - [[async-concurrency]] - Racing, joining, spawning tasks
 - [[async-error-handling]] - Result and ? operator in async contexts
 - [[async-streams]] - Async iteration over sequences
 
 **Architecture:**
+
 - [[sync-vs-async]] - When to use threads vs async
 - [[blocking-in-async]] - Handling CPU-bound work (spawn_blocking)
 - [[async-trait-objects]] - Dynamic dispatch with async
 - [[async-performance-timer-resolution]] - Timer granularity, runtime overhead, and yield_now performance
 
 **AUTOSAR Comparisons:**
+
 - [[rust-concurrency-vs-autosar]] - Mapping async patterns to automotive
 - [[event-driven-patterns]] - Callback vs future-based architectures
 

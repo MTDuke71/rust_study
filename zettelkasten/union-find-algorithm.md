@@ -18,6 +18,7 @@ The **Union-Find** (also called **Disjoint Set Union** or **DSU**) is a data str
 **The Core Invariant**: Elements `x` and `y` are in the same connected component **if and only if** `find(x) == find(y)`.
 
 This works because:
+
 1. Each set forms a **tree** with a unique **root**
 2. **Parent pointers** create paths from elements to roots
 3. **Following parent chains** always leads to the same root for elements in the same set
@@ -71,6 +72,7 @@ impl UnionFind {
 ```
 
 **Time Complexity (Basic):**
+
 - Find: O(n) worst case (degenerate tree)
 - Union: O(n) worst case (requires find)
 
@@ -88,6 +90,7 @@ fn find(&mut self, x: usize) -> usize {
 ```
 
 **Before Path Compression:**
+
 ```
     0
     |
@@ -99,6 +102,7 @@ fn find(&mut self, x: usize) -> usize {
 ```
 
 **After Path Compression:**
+
 ```
     0
    /|\
@@ -106,6 +110,7 @@ fn find(&mut self, x: usize) -> usize {
 ```
 
 **Time Complexity with Path Compression:**
+
 - Find: O(log n) amortized
 - Union: O(log n) amortized
 
@@ -146,6 +151,7 @@ fn union(&mut self, x: usize, y: usize) -> bool {
 ## 🌟 Combined Optimizations: O(α(n)) Performance
 
 When **both optimizations** are used together:
+
 - **Path Compression** + **Union by Rank** = **O(α(n))** amortized time
 - **α(n)** is the **inverse Ackermann function** - practically constant!
 
@@ -158,6 +164,7 @@ When **both optimizations** are used together:
 ```
 
 **Performance Comparison:**
+
 | Input Size | Operations | Basic | Path Compression | Union by Rank | Both Combined |
 |------------|------------|-------|------------------|---------------|---------------|
 | 1,000 | 10,000 | ~5s | ~0.1s | ~0.2s | **~0.01s** |
@@ -192,6 +199,7 @@ impl UnionFind {
 ## 🌍 Real-World Applications
 
 ### 1. **Minimum Spanning Tree (Kruskal's Algorithm)**
+
 ```rust
 // Kruskal's MST using Union-Find for cycle detection
 fn kruskal_mst(edges: &mut [Edge], n: usize) -> Vec<Edge> {
@@ -210,6 +218,7 @@ fn kruskal_mst(edges: &mut [Edge], n: usize) -> Vec<Edge> {
 ```
 
 ### 2. **Dynamic Connectivity**
+
 ```rust
 // Handle queries: "Are cities A and B connected by roads?"
 let mut cities = UnionFind::new(1000);
@@ -224,6 +233,7 @@ if cities.connected(5, 87) {
 ```
 
 ### 3. **Connected Components in Graphs**
+
 ```rust
 fn find_components(edges: &[Edge], n: usize) -> Vec<Vec<usize>> {
     let mut uf = UnionFind::new(n);
@@ -245,6 +255,7 @@ fn find_components(edges: &[Edge], n: usize) -> Vec<Vec<usize>> {
 ```
 
 ### 4. **Cycle Detection**
+
 ```rust
 // Detect if adding edge creates cycle in undirected graph
 fn has_cycle_after_adding(uf: &mut UnionFind, u: usize, v: usize) -> bool {
@@ -257,6 +268,7 @@ fn has_cycle_after_adding(uf: &mut UnionFind, u: usize, v: usize) -> bool {
 ```
 
 ### 5. **Social Networks (Friend Circles)**
+
 ```rust
 // Find friend circles: groups where everyone is connected through friendships
 let mut people = UnionFind::new(8);
@@ -275,6 +287,7 @@ if people.connected(alice, carol) {
 ## ⚡ Performance Characteristics
 
 ### **Time Complexity**
+
 | Operation | Without Optimizations | Path Compression Only | Union by Rank Only | Both Combined |
 |-----------|----------------------|---------------------|-------------------|---------------|
 | `new(n)` | O(n) | O(n) | O(n) | O(n) |
@@ -283,18 +296,22 @@ if people.connected(alice, carol) {
 | `connected(x,y)` | O(n) worst | O(log n) amortized | O(log n) worst | **O(α(n))** amortized |
 
 ### **Space Complexity**
+
 - **Basic**: O(n) for parent array
 - **With Union by Rank**: O(n) for parent + rank arrays  
 - **With Size Tracking**: O(n) for parent + size arrays
 - **Overall**: O(n) regardless of optimizations
 
 ### **Real-World Performance**
+
 For practical input sizes (n < 10^6), α(n) ≤ 4, making operations effectively **constant time**!
 
 ## 🔄 Advanced Variants
 
 ### **Weighted Union-Find**
+
 Track distances/weights between connected elements:
+
 ```rust
 struct WeightedUnionFind {
     parent: Vec<usize>,
@@ -307,7 +324,9 @@ fn distance(&mut self, x: usize, y: usize) -> Option<i64>
 ```
 
 ### **Union-Find with Undo**
+
 Support operation rollback for backtracking algorithms:
+
 ```rust
 struct UndoableUnionFind {
     parent: Vec<usize>,
@@ -319,7 +338,9 @@ fn undo(&mut self) -> bool // undo last union operation
 ```
 
 ### **Persistent Union-Find**
+
 Immutable versions with structural sharing:
+
 ```rust
 struct PersistentUnionFind {
     parent: Vec<usize>,
@@ -333,12 +354,14 @@ fn union(&self, x: usize, y: usize) -> Self // returns new version
 ## 🎓 Learning Path & Mastery
 
 ### **Beginner Level**
+
 1. ✅ Understand the **core problem**: tracking disjoint sets
 2. ✅ Implement **basic Union-Find** with simple find/union
 3. ✅ Learn the **fundamental invariant**: same root = same component
 4. ✅ Practice with simple **connectivity queries**
 
 ### **Intermediate Level**  
+
 1. ✅ Add **path compression** optimization
 2. ✅ Add **union by rank** optimization  
 3. ✅ Understand **amortized analysis** and α(n) complexity
@@ -346,6 +369,7 @@ fn union(&self, x: usize, y: usize) -> Self // returns new version
 5. ✅ Solve **connected components** problems
 
 ### **Advanced Level**
+
 1. ✅ Master **real-world applications** (5+ different domains)
 2. ✅ Implement **advanced variants** (weighted, undoable, persistent)
 3. ✅ **Performance benchmarking** and complexity verification
@@ -353,6 +377,7 @@ fn union(&self, x: usize, y: usize) -> Self // returns new version
 5. ✅ **System design** applications at scale
 
 ### **Expert Level**
+
 1. 🔄 **Distributed Union-Find** across multiple machines
 2. 🔄 **Lock-free concurrent** Union-Find for parallel processing
 3. 🔄 **Cache-optimized** implementations for HPC applications
@@ -361,6 +386,7 @@ fn union(&self, x: usize, y: usize) -> Self // returns new version
 ## 🧪 Testing & Validation Strategies
 
 ### **Correctness Testing**
+
 ```rust
 #[test]
 fn test_union_find_correctness() {
@@ -383,6 +409,7 @@ fn test_union_find_correctness() {
 ```
 
 ### **Performance Testing**
+
 ```rust
 #[test]  
 fn test_path_compression_performance() {
@@ -409,6 +436,7 @@ fn test_path_compression_performance() {
 ```
 
 ### **Application Testing**
+
 ```rust
 #[test]
 fn test_kruskals_algorithm() {
@@ -431,6 +459,7 @@ fn test_kruskals_algorithm() {
 ## 🚀 Production Considerations
 
 ### **Error Handling**
+
 ```rust
 #[derive(Debug)]
 enum UnionFindError {
@@ -451,6 +480,7 @@ impl UnionFind {
 ```
 
 ### **Thread Safety**
+
 ```rust
 use std::sync::{Arc, RwLock};
 
@@ -465,6 +495,7 @@ fn parallel_union_operations(uf: ConcurrentUnionFind, operations: Vec<(usize, us
 ```
 
 ### **Memory Optimization**
+
 ```rust
 // For sparse graphs, use HashMap-based implementation
 struct SparseUnionFind {
@@ -482,17 +513,20 @@ struct CompressedUnionFind {
 ## 🔗 Integration with Other Algorithms
 
 ### **Graph Algorithms**
+
 - **[[Kruskal's Algorithm]]**: MST construction with O(E log E) complexity
 - **[[Connected Components]]**: O(V + E) graph traversal alternative  
 - **[[Cycle Detection]]**: Online cycle detection during edge insertion
 - **[[Lowest Common Ancestor]]**: Offline LCA queries using Union-Find
 
 ### **Network Algorithms**
+
 - **[[Network Flow]]**: Augmenting path construction in residual graphs
 - **[[Clustering]]**: Community detection in social networks
 - **[[Percolation]]**: Connectivity threshold analysis in random graphs
 
 ### **Computational Geometry**
+
 - **[[Convex Hull]]**: Dynamic maintenance of convex hull updates
 - **[[Voronoi Diagrams]]**: Region connectivity in spatial partitioning
 - **[[Mesh Generation]]**: Triangle connectivity in finite element methods
@@ -500,6 +534,7 @@ struct CompressedUnionFind {
 ## 🐛 Common Pitfalls & Debug Strategies
 
 ### **Path Compression Implementation Bugs**
+
 ```rust
 // ❌ WRONG: Infinite recursion possible
 fn find_buggy(&mut self, x: usize) -> usize {
@@ -519,6 +554,7 @@ fn find(&mut self, x: usize) -> usize {
 ```
 
 ### **Union by Rank Bugs**
+
 ```rust
 // ❌ WRONG: Rank not updated correctly  
 fn union_buggy(&mut self, x: usize, y: usize) -> bool {
@@ -553,6 +589,7 @@ fn union(&mut self, x: usize, y: usize) -> bool {
 ```
 
 ### **Debugging Techniques**
+
 1. **Visualize Tree Structure**: Print parent arrays and draw trees
 2. **Trace Operations**: Log each find/union with before/after states
 3. **Invariant Checking**: Verify tree properties after each operation
@@ -561,16 +598,19 @@ fn union(&mut self, x: usize, y: usize) -> bool {
 ## 📚 Research & Advanced Topics
 
 ### **Theoretical Foundations**
+
 - **Inverse Ackermann Function**: Mathematical analysis of α(n) complexity
 - **Amortized Analysis**: Potential method proof of O(α(n)) bound
 - **Lower Bounds**: Theoretical limits on disjoint set operations
 
 ### **Advanced Optimizations**
+
 - **Path Halving**: Alternate path compression strategy
 - **Path Splitting**: Another compression variant with different trade-offs
 - **Link-Cut Trees**: Dynamic tree operations extending Union-Find
 
 ### **Applications in Research**
+
 - **Computational Biology**: Phylogenetic tree construction
 - **Machine Learning**: Clustering and community detection
 - **Distributed Systems**: Consensus protocols and partition tolerance
@@ -579,15 +619,18 @@ fn union(&mut self, x: usize, y: usize) -> bool {
 ## 📖 References & Further Reading
 
 ### **Classic Papers**
+
 - Tarjan, R. E. (1975). "Efficiency of a Good But Not Linear Set Union Algorithm"
 - Tarjan, R. E., & van Leeuwen, J. (1984). "Worst-case Analysis of Set Union Algorithms"
 
 ### **Textbook Coverage**
+
 - **CLRS**: Introduction to Algorithms, Chapter 21 (Data Structures for Disjoint Sets)
 - **Sedgewick**: Algorithms, Chapter 1.5 (Union-Find)
 - **Skiena**: Algorithm Design Manual, Chapter 6 (Weighted Graph Algorithms)
 
 ### **Online Resources**
+
 - **CP-Algorithms**: Comprehensive competitive programming reference
 - **Visualizations**: VisuAlgo Union-Find interactive demonstrations
 - **Leetcode**: Practice problems tagged with Union-Find

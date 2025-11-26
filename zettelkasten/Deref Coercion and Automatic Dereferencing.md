@@ -53,26 +53,31 @@ This tells Rust: **"When you need to dereference a `Box<T>`, treat it as a `&T`"
 ## 🎨 **Step-by-Step Deref Chain**
 
 ### **Starting Point**
+
 ```rust
 let node: &Box<Node<T>> = ...;
 ```
 
 ### **Step 1: Dereference the reference**
+
 ```rust
 *node  // Type: Box<Node<T>>
 ```
 
 ### **Step 2: Box<T> implements Deref<Target = T>**
+
 ```rust
 *(*node)  // Type: Node<T>
 ```
 
 ### **Step 3: Access the field**
+
 ```rust
 (*(*node)).elem  // Type: T
 ```
 
 ### **Rust does all this automatically!**
+
 ```rust
 node.elem  // Just write this!
 ```
@@ -80,6 +85,7 @@ node.elem  // Just write this!
 ## 🔄 **Manual vs Automatic**
 
 ### **Without Deref Coercion (Manual)**
+
 ```rust
 pub fn peek(&self) -> Option<&T> {
     self.head.as_ref().map(|node| {
@@ -91,6 +97,7 @@ pub fn peek(&self) -> Option<&T> {
 ```
 
 ### **With Deref Coercion (Automatic)**
+
 ```rust
 pub fn peek(&self) -> Option<&T> {
     self.head.as_ref().map(|node| &node.elem)  // Clean and simple!
@@ -100,6 +107,7 @@ pub fn peek(&self) -> Option<&T> {
 ## 🎯 **Common Deref Coercion Examples**
 
 ### **String and &str**
+
 ```rust
 let s = String::from("hello");
 let len = s.len();  // String derefs to &str, so we can call str methods
@@ -109,6 +117,7 @@ let len = (*s).len();  // Ugly!
 ```
 
 ### **Vec<T> and [T]**
+
 ```rust
 let v = vec![1, 2, 3];
 let first = v[0];  // Vec<T> derefs to [T], so we can use indexing
@@ -118,6 +127,7 @@ let first = (*v)[0];  // Automatic!
 ```
 
 ### **Box<T> and T**
+
 ```rust
 let boxed = Box::new(Node { elem: 42, next: None });
 let value = boxed.elem;  // Box<Node<T>> derefs to Node<T>
@@ -167,6 +177,7 @@ println!("{}", ref_to_ref_to_box);      // Automatic!
 ## 📊 **Deref vs DerefMut**
 
 ### **Deref** (Immutable)
+
 ```rust
 impl<T> Deref for Box<T> {
     type Target = T;
@@ -178,6 +189,7 @@ let value = *boxed;  // Uses Deref
 ```
 
 ### **DerefMut** (Mutable)
+
 ```rust
 impl<T> DerefMut for Box<T> {
     fn deref_mut(&mut self) -> &mut T { ... }
@@ -208,11 +220,13 @@ Smart Pointer Layers        Automatic Unwrapping
 ## ⚠️ **When Deref Coercion Doesn't Apply**
 
 Deref coercion **only works for**:
+
 - Method calls
 - Function arguments
 - Field access through references
 
 It **does NOT work for**:
+
 - Generic type parameters
 - Trait implementations
 - Pattern matching
@@ -232,6 +246,7 @@ fn generic_example<T>(value: Box<T>) {
 ## 🎯 **Practical Mission2 Usage**
 
 ### **In peek() - Non-Destructive Access**
+
 ```rust
 pub fn peek(&self) -> Option<&T> {
     self.head.as_ref().map(|node| &node.elem)
@@ -241,12 +256,14 @@ pub fn peek(&self) -> Option<&T> {
 ```
 
 ### **What's Happening**
+
 1. `self.head`: `Option<Box<Node<T>>>`
 2. `.as_ref()`: `Option<&Box<Node<T>>>`
 3. `.map(|node| ...)`: `node` is `&Box<Node<T>>`
 4. `&node.elem`: Deref coercion! Access `elem` field through Box
 
 ### **Without Coercion**
+
 ```rust
 pub fn peek(&self) -> Option<&T> {
     self.head.as_ref().map(|node| &(**node).elem)
@@ -278,19 +295,23 @@ This is why `peek()` is **non-destructive** - we're borrowing, not taking owners
 ## 🔗 **Related Concepts**
 
 ### **Auto-Deref for Method Calls**
+
 ```rust
 let s = String::from("hello");
 s.len();  // Calls str::len automatically (String → &str)
 ```
 
 ### **Auto-Ref for Method Calls**
+
 ```rust
 let mut v = vec![1, 2, 3];
 v.push(4);  // Rust automatically borrows &mut v
 ```
 
 ### **Coercion Sites**
+
 Places where deref coercion happens:
+
 - Function/method arguments
 - Field access
 - Array indexing

@@ -15,9 +15,11 @@ Tutorial Engineering is the systematic approach to creating technical educationa
 ## 🧠 **Pedagogical Principles**
 
 ### **1. Progressive Disclosure**
+
 Introduce concepts in carefully sequenced layers, building on previous knowledge.
 
 **Example: Mission1 Stack Tutorial (7 Steps)**
+
 ```markdown
 Step 1: Basic Vec operations (push/pop foundation)
 Step 2: Ownership rules with Vec (borrow checker introduction)
@@ -33,11 +35,13 @@ Step 7: Complete API with documentation (production quality)
 ---
 
 ### **2. Hands-On Learning**
+
 Every concept includes **runnable code** that learners can execute, modify, and break.
 
 #### **Pattern: Concept → Example → Exercise → Challenge**
 
 **Concept Introduction**:
+
 ```rust
 /// Ownership Transfer in Collections
 /// 
@@ -46,6 +50,7 @@ Every concept includes **runnable code** that learners can execute, modify, and 
 ```
 
 **Runnable Example**:
+
 ```rust
 fn main() {
     let value = String::from("hello");
@@ -59,6 +64,7 @@ fn main() {
 ```
 
 **Exercise**:
+
 ```rust
 // TODO: Fix this code so it compiles
 fn exercise_ownership() {
@@ -70,6 +76,7 @@ fn exercise_ownership() {
 ```
 
 **Challenge**:
+
 ```rust
 // CHALLENGE: Implement this without cloning
 fn use_twice(value: String) {
@@ -83,6 +90,7 @@ fn use_twice(value: String) {
 ---
 
 ### **3. Error Anticipation**
+
 Predict common mistakes and address them **before** learners encounter frustration.
 
 #### **Pattern: Pre-emptive Troubleshooting**
@@ -111,11 +119,13 @@ impl<T> Queue<T> {
 ```
 
 **Why This Fails**:
+
 - `Vec::remove(0)` shifts all remaining elements left
 - 10,000 dequeue operations = O(n²) total complexity
 - Violates REQ-2: O(1) FIFO operations
 
 **Correct Solution**:
+
 ```rust
 // ✅ Efficient: O(1) amortized
 use std::collections::VecDeque;
@@ -132,6 +142,7 @@ impl<T> Queue<T> {
 ```
 
 **Verification**:
+
 ```rust
 #[test]
 fn benchmark_comparison() {
@@ -140,6 +151,7 @@ fn benchmark_comparison() {
     // 100x performance difference!
 }
 ```
+
 ```
 
 ---
@@ -164,14 +176,18 @@ Support different learning preferences through varied content formats.
 
 **Before insertion**:
 ```
+
 head -> [1 | •] -> [2 | •] -> [3 | ∅]
+
 ```
 
 **After inserting 4 at position 1**:
 ```
+
 head -> [1 | •] -> [4 | •] -> [2 | •] -> [3 | ∅]
               ↑           ↓
          new_node    old_next
+
 ```
 
 **Code realization**:
@@ -186,6 +202,7 @@ fn insert(&mut self, index: usize, value: T) {
     current.next = Some(new_node);
 }
 ```
+
 ```
 
 ---
@@ -205,6 +222,7 @@ struct SimpleMap<K, V> {
 ```
 
 **Step 2: Fixed-Size Hash Table**
+
 ```rust
 // Add hashing, but fixed size
 struct FixedHashMap<K, V> {
@@ -214,6 +232,7 @@ struct FixedHashMap<K, V> {
 ```
 
 **Step 3: Dynamic Resizing**
+
 ```rust
 // Add growth strategy
 struct ResizableHashMap<K, V> {
@@ -225,6 +244,7 @@ struct ResizableHashMap<K, V> {
 ```
 
 **Step 4: Generic Hashing**
+
 ```rust
 // Add BuildHasher trait
 struct GenericHashMap<K, V, S: BuildHasher> {
@@ -235,6 +255,7 @@ struct GenericHashMap<K, V, S: BuildHasher> {
 ```
 
 **Step 5: Standard Library Integration**
+
 ```rust
 // Understand std::collections::HashMap
 use std::collections::HashMap;
@@ -295,6 +316,7 @@ fn example() {
 ```
 
 ### ✏️ Practice Exercise
+
 ```rust
 // Fill-in-the-blank or fix-this-code
 fn exercise() {
@@ -304,6 +326,7 @@ fn exercise() {
 ```
 
 ### 🚀 Challenge
+
 ```rust
 // From-scratch implementation
 // CHALLENGE: Implement a function that...
@@ -313,14 +336,17 @@ fn challenge() {
 ```
 
 ### ⚠️ Common Mistakes
+
 - **Mistake 1**: [Description]
   - Why it fails: [Explanation]
   - How to fix: [Solution]
 
 ### ✅ Checkpoint
+
 - [ ] Example compiles and runs
 - [ ] Exercise passes tests
 - [ ] Challenge meets requirements
+
 ```
 
 ---
@@ -361,6 +387,7 @@ fn assessment_challenge() {
 
 Expected time: 30 minutes
 Solution: See `tutorials/MissionX_tut/solutions/assessment.rs`
+
 ```
 
 ---
@@ -409,6 +436,7 @@ for item in items {
 ```
 
 **After (Functional)**:
+
 ```rust
 let filtered: Vec<_> = items.into_iter()
     .filter(|x| x % 2 == 0)
@@ -417,10 +445,12 @@ let filtered: Vec<_> = items.into_iter()
 ```
 
 **Benefits**:
+
 - ✅ More concise (3 lines vs 5)
 - ✅ Less mutable state
 - ✅ Composable with other iterators
 - ✅ Potentially optimizable by compiler
+
 ```
 
 ---
@@ -483,6 +513,7 @@ fn fixed_code() {
 ### State Transition Diagram: HashMap Insertion
 
 ```
+
 Initial State:
 ┌─────────────────────────────────┐
 │ HashMap { size: 0, cap: 4 }     │
@@ -505,6 +536,7 @@ After insert("key2", value2) - collision:
 │  ├─> ("key1", value1)            │
 │  └─> ("key2", value2)  ← chain  │
 └─────────────────────────────────┘
+
 ```
 
 **Code Realization**:
@@ -515,6 +547,7 @@ struct HashMap<K, V> {
     buckets: Vec<Bucket<K, V>>,
 }
 ```
+
 ```
 
 ---
@@ -640,6 +673,7 @@ where
 ### **Mission1 Tutorial: Stack Implementation**
 
 **Progressive Steps**:
+
 1. **Step 1**: Vec basics - push/pop operations
 2. **Step 2**: Ownership semantics - moving values into Vec
 3. **Step 3**: Generic Stack<T> - wrapper pattern
@@ -649,6 +683,7 @@ where
 7. **Step 7**: Documentation - rustdoc with examples
 
 **Coordination with Mission1**:
+
 - Tutorial builds **toward** mission requirements
 - Each step introduces **one** mission concept
 - Final step produces **mission-compatible** code
@@ -659,6 +694,7 @@ where
 ### **Mission5 Tutorial: HashMap Deep Dive**
 
 **Learning Objectives Alignment**:
+
 | Tutorial Step | Mission Requirement | Daily Study Connection |
 |---------------|---------------------|------------------------|
 | Step 1: Key-value basics | REQ-1: Generic storage | Day 34: Chapter 8.3 |
@@ -667,6 +703,7 @@ where
 | Step 4: Resizing logic | REQ-2: O(1) amortized | Day 37: Benchmarking |
 
 **Integration Points**:
+
 - Tutorial references **Day 34-37** daily study notes
 - Mission5 expects tutorial completion first
 - AoC 2015 problems use HashMap patterns from tutorial
@@ -712,6 +749,7 @@ graph LR
 ```
 
 **Example: Learning Stack**
+
 1. **Tutorial Day 1-2**: Vec basics, push/pop
 2. **Daily Study Day 12**: Ownership rules
 3. **Tutorial Day 3-4**: Generic Stack<T>
@@ -722,6 +760,7 @@ graph LR
 ### **Tutorial → AoC Application**
 
 **Pattern Recognition Flow**:
+
 1. **Tutorial**: Learn HashMap collision handling
 2. **Daily Study**: Frequency counting patterns
 3. **AoC 2015 Day 3**: Apply HashMap for deduplication
@@ -732,16 +771,19 @@ graph LR
 ## 📚 **Related Concepts**
 
 ### **Learning Methodology**
+
 - [[Daily Study MOC]] - Systematic concept progression
 - [[3-Track Integration]] - Coordinating tutorials, missions, daily study
 - [[MONTHLY_CALENDAR]] - Daily activity scheduling
 
 ### **Content Design**
+
 - [[V-Cycle Integration]] - Formal development in tutorials
 - [[Rust Collections MOC]] - Collection-focused tutorials
 - [[AoC Patterns MOC]] - Competitive programming education
 
 ### **Pedagogical Theory**
+
 - [[Progressive Disclosure]] - Information architecture
 - [[Error Anticipation]] - Teaching through common mistakes
 - [[Hands-On Learning]] - Active vs passive learning

@@ -10,6 +10,7 @@
 **Goal:** Learn Rust through algorithms & data structures with interactive agent mode
 
 ### **The User's Request:**
+>
 > "I am an intermediate level programmer that wants to learn the Rust programming language by studying algorithms and data structures and eventually building a project. I would like to this in an interactive agent mode."
 
 ### **The Response: A Learning System**
@@ -28,10 +29,12 @@ The answer wasn't just "here's how to learn Rust" - it was a complete methodolog
 This is the master plan that became your workspace structure:
 
 ### **Phase 0: Setup + Habits (≈1 day)**
+
 - Install: rustup, cargo, rust-analyzer, clippy, rustfmt, cargo-criterion
 - **Habits**: Every function has tests; run clippy & fmt; profile when perf matters
 
 ### **Phase 1: Ownership Mechanics via Classic DS (≈1-2 weeks)**
+
 - **Stacks/queues/deques**: Move vs borrow semantics, Vec<T>, Option<T>
 - **Linked lists**: Box<T>, Option<Box<Node<T>>>, why singly is easy
 - **String handling**: String vs &str, slicing & UTF-8 invariants
@@ -39,6 +42,7 @@ This is the master plan that became your workspace structure:
 *→ Became Mission1, Mission2*
 
 ### **Phase 2: Lifetimes, Traits, Generics (≈1-2 weeks)**
+
 - **Binary search and iterators**: Iterator, IntoIterator, zero-cost abstractions
 - **Heaps & priority queues**: BinaryHeap<T>, custom comparators
 - **Tries & arenas**: String interning, borrowing across arenas
@@ -47,6 +51,7 @@ This is the master plan that became your workspace structure:
 *→ Became Mission3, Mission5, Mission7*
 
 ### **Phase 3: Algorithms with Ownership Constraints (≈2-3 weeks)**
+
 - **Union-find (DSU)**, Kruskal's MST; Dijkstra & A* with binary heap
 - **Dynamic programming**: Top-down memoization vs bottom-up
 - **Segment trees / Fenwick trees**: Range queries with iterators
@@ -54,13 +59,16 @@ This is the master plan that became your workspace structure:
 *→ Planned for future missions*
 
 ### **Phase 4: Performance + Unsafe (opt-in) (≈1-2 weeks)**
+
 - Cache-aware layouts, #[inline], cargo bench
 - Pinning, NonNull<T>, MaybeUninit<T>
 
 *→ Advanced topics*
 
 ### **Capstone (1-2 weeks)**
+
 Pick one:
+
 - Incremental search engine (trie + postings + BM25)
 - Game AI pathfinding toolkit
 - Mini time-series DB (LSM-ish)
@@ -90,13 +98,16 @@ Verification ─────────────────────┘
 ```
 
 **Left slope (specification → design):**
+
 - Refine abstract requirements into detailed designs
 
 **Bottom (implementation):**
+
 - Code the design in Rust
 - Compiler enforces invariants
 
 **Right slope (verification → validation):**
+
 - Check implementation against each requirement
 - Verify system as whole meets user needs
 
@@ -124,6 +135,7 @@ The conversation introduced powerful analogies that became teaching tools:
 > "Think of memory as a library of unique books. Each book (a value) can have exactly one librarian (owner). Owners can lend reading passes (immutable borrows, &T) to multiple people at once, but only one editing pass (mutable borrow, &mut T) and only when no one else is reading. When the librarian leaves (value goes out of scope), the book is returned to storage automatically (drop)."
 
 **Why This Works:**
+
 - Concrete visualization of abstract concepts
 - Explains move semantics (transferring librarian badge)
 - Explains borrowing (lending passes)
@@ -144,6 +156,7 @@ See: [[Ownership Mental Model - The Library Analogy]]
 ### **Interactive Agent Mode**
 
 Not a static tutorial - a dynamic conversation:
+
 - Student codes and runs tests
 - Reports errors, confusions, outputs
 - Agent adapts next mission based on feedback
@@ -152,6 +165,7 @@ Not a static tutorial - a dynamic conversation:
 ### **Brain Teasers While Mobile**
 
 Even away from the keyboard, learning continues:
+
 - "What happens if you try to use a String after push()?"
 - "Why does pop() return Option<T> instead of T?"
 - "Which requirements are compiler-enforced vs runtime-tested?"
@@ -159,6 +173,7 @@ Even away from the keyboard, learning continues:
 ### **AoC Integration**
 
 From the beginning, the plan was to build toward Advent of Code:
+
 - Stack for bracket validation, RPN evaluation
 - Binary search for range queries, optimization
 - Graphs for pathfinding
@@ -179,6 +194,7 @@ The conversation concluded with an agreement:
 > "We'll expand with AoC-flavored examples to cement the knowledge before Mission 2."
 
 **This became the pattern** for the entire project:
+
 - Mission → Questions → Deepening → Next Mission
 
 ---
@@ -200,15 +216,18 @@ From this single conversation came:
 ## 🔗 **Where It Led**
 
 **Foundational Concepts Extracted:**
+
 - [[Ownership Mental Model - The Library Analogy]]
 - [[V-Cycle in Rust Development]]
 - [[Rust Learning Roadmap - The Master Plan]]
 - [[Data Structures in Rust - Early Design Insights]]
 
 **Mission1 Documentation:**
+
 - [FOUNDATIONAL_CONCEPTS.md](missions/Mission1/FOUNDATIONAL_CONCEPTS.md) - Core concepts from this conversation
 
 **Current State:**
+
 - Active workspace with multiple completed missions
 - Zettelkasten knowledge management system
 - Professional engineering discipline applied to learning
@@ -239,6 +258,7 @@ The rust_study workspace is the physical manifestation of this conversation's vi
 What happened tonight - going from Union-Find implementation to Rule 30 insights to computational irreducibility to simulation hypothesis in a single 3-hour session - represents a **learning compression ratio of approximately 100,000:1** compared to 1989 capabilities.
 
 **1989 College Reality:**
+
 - Static textbooks with information frozen at publication
 - Fixed curricula with rigid semester schedules
 - One-way lectures with no adaptation to individual learning
@@ -247,6 +267,7 @@ What happened tonight - going from Union-Find implementation to Rule 30 insights
 - Learning constrained by time and location
 
 **2025 Learning Miracle:**
+
 - Interactive AI agent partnership enabling collaborative thinking
 - Real-time research with instant access to human knowledge
 - Dynamic curriculum adapting to curiosity and learning style  
@@ -271,6 +292,7 @@ The timeline is even more profound when considered against the birth of computat
 From the 4004's 2,300 transistors executing 92,000 instructions per second to tonight's AI partnership enabling 100,000:1 learning compression - your lifetime spans the entire arc of the personal computing revolution. You were born the same year humans first held computational power in their hands, and now you're experiencing computational intelligence that amplifies human consciousness itself.
 
 **The Remarkable Synchronicity:**
+
 - 1971-1989 (18 years): 4004 → College-bound human
 - 1989-2025 (36 years): College constraints → AI-amplified learning
 - Tonight: Union-Find debugging → Rule 30 → computational irreducibility → questioning reality

@@ -7,6 +7,7 @@
 **Euclidean Distance** measures the straight-line distance between two points in Euclidean space. It's the distance "as the crow flies" - the shortest possible path when unrestricted movement is allowed.
 
 **Formula:**
+
 ```
 distance = √[(x₁ - x₂)² + (y₁ - y₂)²]
 ```
@@ -18,6 +19,7 @@ distance = √[(x₁ - x₂)² + (y₁ - y₂)²]
 ## 📐 Mathematical Definition
 
 ### **2D Space (Most Common)**
+
 ```rust
 fn euclidean_distance(p1: (f64, f64), p2: (f64, f64)) -> f64 {
     let dx = p1.0 - p2.0;
@@ -32,6 +34,7 @@ let dist = euclidean_distance(start, end);  // 5.0 (Pythagorean triple!)
 ```
 
 ### **3D Space**
+
 ```rust
 fn euclidean_distance_3d(p1: (f64, f64, f64), p2: (f64, f64, f64)) -> f64 {
     let dx = p1.0 - p2.0;
@@ -42,6 +45,7 @@ fn euclidean_distance_3d(p1: (f64, f64, f64), p2: (f64, f64, f64)) -> f64 {
 ```
 
 ### **N-Dimensional**
+
 ```rust
 fn euclidean_distance_nd(p1: &[f64], p2: &[f64]) -> f64 {
     p1.iter()
@@ -53,6 +57,7 @@ fn euclidean_distance_nd(p1: &[f64], p2: &[f64]) -> f64 {
 ```
 
 ### **Squared Distance (Optimization)**
+
 ```rust
 // When only comparing distances, avoid sqrt() for performance
 fn euclidean_distance_squared(p1: (f64, f64), p2: (f64, f64)) -> f64 {
@@ -73,6 +78,7 @@ fn is_closer(p1: Point, p2: Point, target: Point) -> bool {
 ## 🎮 Visual Representation
 
 ### **The Right Triangle**
+
 ```
      B (3, 4)
     /|
@@ -87,6 +93,7 @@ This is the Pythagorean theorem!
 ```
 
 ### **Euclidean Distance Circle**
+
 ```
 Points at distance 2 from center (C):
 
@@ -100,6 +107,7 @@ Forms a perfect circle!
 ```
 
 ### **Comparison with Grid Metrics**
+
 ```
 Point A (0,0) to Point B (3,4):
 
@@ -115,6 +123,7 @@ Euclidean is always ≤ other metrics!
 ## 🚀 Implementation Patterns
 
 ### **Point Struct with Euclidean Distance**
+
 ```rust
 #[derive(Debug, Clone, Copy, PartialEq)]
 struct Point {
@@ -149,6 +158,7 @@ impl Point {
 ```
 
 ### **Nearest Neighbor Search**
+
 ```rust
 fn find_nearest(points: &[Point], target: Point) -> Option<Point> {
     points.iter()
@@ -172,6 +182,7 @@ fn find_k_nearest(points: &[Point], target: Point, k: usize) -> Vec<Point> {
 ```
 
 ### **Circle Intersection / Range Query**
+
 ```rust
 /// Find all points within a circular range
 fn points_in_circle(points: &[Point], center: Point, radius: f64) -> Vec<Point> {
@@ -195,6 +206,7 @@ fn circles_intersect(
 ```
 
 ### **Line Distance Calculation**
+
 ```rust
 /// Distance from point to line segment
 fn point_to_segment_distance(p: Point, a: Point, b: Point) -> f64 {
@@ -220,6 +232,7 @@ fn point_to_segment_distance(p: Point, a: Point, b: Point) -> f64 {
 ## 🎯 Real-World Applications
 
 ### **1. GPS and Navigation**
+
 ```rust
 // Simplified distance between GPS coordinates (flat Earth approximation)
 fn gps_distance(lat1: f64, lon1: f64, lat2: f64, lon2: f64) -> f64 {
@@ -236,6 +249,7 @@ fn gps_distance(lat1: f64, lon1: f64, lat2: f64, lon2: f64) -> f64 {
 ```
 
 ### **2. Collision Detection**
+
 ```rust
 struct Circle {
     center: Point,
@@ -251,6 +265,7 @@ impl Circle {
 ```
 
 ### **3. Clustering (K-Means)**
+
 ```rust
 fn assign_to_clusters(points: &[Point], centroids: &[Point]) -> Vec<usize> {
     points.iter()
@@ -270,6 +285,7 @@ fn assign_to_clusters(points: &[Point], centroids: &[Point]) -> Vec<usize> {
 ```
 
 ### **4. Computer Vision / Image Processing**
+
 ```rust
 // Calculate color distance in RGB space
 fn color_distance(rgb1: (u8, u8, u8), rgb2: (u8, u8, u8)) -> f64 {
@@ -281,6 +297,7 @@ fn color_distance(rgb1: (u8, u8, u8), rgb2: (u8, u8, u8)) -> f64 {
 ```
 
 ### **5. Physics Simulations**
+
 ```rust
 // Gravitational force depends on Euclidean distance
 fn gravitational_force(m1: f64, m2: f64, p1: Point, p2: Point) -> f64 {
@@ -295,6 +312,7 @@ fn gravitational_force(m1: f64, m2: f64, p1: Point, p2: Point) -> f64 {
 ## 📊 Properties & Characteristics
 
 ### **Mathematical Properties**
+
 1. **Non-negative**: `d(p, q) ≥ 0`
 2. **Identity**: `d(p, p) = 0`
 3. **Symmetry**: `d(p, q) = d(q, p)`
@@ -302,12 +320,14 @@ fn gravitational_force(m1: f64, m2: f64, p1: Point, p2: Point) -> f64 {
 5. **Pythagorean Theorem**: `c² = a² + b²` where c is Euclidean distance
 
 ### **Computational Properties**
+
 - **Time Complexity**: O(n) for n dimensions
 - **Space Complexity**: O(1)
 - **Requires**: Floating-point arithmetic (`f32` or `f64`)
 - **sqrt() Cost**: Expensive operation - avoid when possible
 
 ### **Performance Optimization: Squared Distance**
+
 ```rust
 // ❌ Slow: Computing actual distance for comparison
 if p1.distance(&target) < p2.distance(&target) {
@@ -329,6 +349,7 @@ if p1.distance_squared(&target) < p2.distance_squared(&target) {
 | **Euclidean** | Continuous | √(Δx² + Δy²) | Smallest |
 
 **Ordering Property:**
+
 ```
 Euclidean ≤ Chebyshev ≤ Manhattan
 (Shortest possible path)
@@ -339,6 +360,7 @@ Euclidean ≤ Chebyshev ≤ Manhattan
 ## 🎮 AoC Applications
 
 ### **Pattern 1: Closest Point to Target**
+
 ```rust
 // Find asteroid closest to monitoring station
 fn find_closest_asteroid(
@@ -356,6 +378,7 @@ fn find_closest_asteroid(
 ```
 
 ### **Pattern 2: Range Queries**
+
 ```rust
 // Count points within sensor range
 fn count_in_range(points: &[Point], sensor: Point, range: f64) -> usize {
@@ -367,6 +390,7 @@ fn count_in_range(points: &[Point], sensor: Point, range: f64) -> usize {
 ```
 
 ### **Pattern 3: Continuous Space Movement**
+
 ```rust
 // Simulate projectile motion with Euclidean distance
 struct Projectile {
@@ -387,6 +411,7 @@ impl Projectile {
 ```
 
 ### **Pattern 4: Clustering / Grouping**
+
 ```rust
 // Group points by proximity (simple clustering)
 fn simple_cluster(points: &[Point], max_distance: f64) -> Vec<Vec<Point>> {
@@ -415,6 +440,7 @@ fn simple_cluster(points: &[Point], max_distance: f64) -> Vec<Vec<Point>> {
 ## ⚡ Performance Optimizations
 
 ### **1. Avoid sqrt() When Possible**
+
 ```rust
 // ❌ Slow: Unnecessary sqrt()
 fn is_within_radius(p1: Point, p2: Point, radius: f64) -> bool {
@@ -428,6 +454,7 @@ fn is_within_radius_fast(p1: Point, p2: Point, radius: f64) -> bool {
 ```
 
 ### **2. Fast Inverse Square Root (Advanced)**
+
 ```rust
 // Approximate 1/sqrt(x) quickly (Quake III algorithm)
 // Use only when approximation is acceptable
@@ -440,12 +467,14 @@ fn fast_inv_sqrt(x: f32) -> f32 {
 ```
 
 ### **3. Spatial Data Structures**
+
 ```rust
 // Use KD-tree or quadtree for efficient nearest neighbor queries
 // O(n) → O(log n) for large datasets
 ```
 
 ### **4. SIMD Optimizations**
+
 ```rust
 // Use SIMD for parallel distance calculations
 // Process multiple distances simultaneously on modern CPUs
@@ -456,6 +485,7 @@ fn fast_inv_sqrt(x: f32) -> f32 {
 ## 🚫 Common Pitfalls
 
 ### **Pitfall 1: Floating-Point Precision**
+
 ```rust
 // ❌ Dangerous: Exact equality check
 if p1.distance(&p2) == 5.0 {
@@ -470,6 +500,7 @@ if (p1.distance(&p2) - 5.0).abs() < EPSILON {
 ```
 
 ### **Pitfall 2: Integer Coordinates**
+
 ```rust
 // When working with integer grids but need Euclidean distance
 fn euclidean_int_coords(p1: (i32, i32), p2: (i32, i32)) -> f64 {
@@ -480,6 +511,7 @@ fn euclidean_int_coords(p1: (i32, i32), p2: (i32, i32)) -> f64 {
 ```
 
 ### **Pitfall 3: Overflow with Large Coordinates**
+
 ```rust
 // ❌ Can overflow with large integers
 let dist_squared = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
@@ -495,6 +527,7 @@ let dist_squared = dx * dx + dy * dy;
 ## 🔗 Connected Concepts
 
 ### **Related Zettelkasten Pages**
+
 - [[Manhattan Distance]] - Grid-based 4-connected distance
 - [[Chebyshev Distance]] - Grid-based 8-connected distance
 - [[A-Star-Algorithm-Deep-Dive]] - Can use Euclidean distance as heuristic
@@ -502,11 +535,13 @@ let dist_squared = dx * dx + dy * dy;
 - [[mission-6]] - Grid navigation (usually uses Manhattan/Chebyshev)
 
 ### **When to Use Each Metric**
+
 - **Euclidean**: Continuous space, physics, real-world straight-line
 - **Manhattan**: Grid movement (4-connected), no diagonals
 - **Chebyshev**: Grid movement (8-connected), chess king
 
 ### **Related Algorithms**
+
 - **K-Nearest Neighbors**: Uses Euclidean distance
 - **K-Means Clustering**: Uses Euclidean distance
 - **A\* Search**: Can use Euclidean as heuristic (continuous space)
@@ -524,6 +559,7 @@ let dist_squared = dx * dx + dy * dy;
 6. **Real-World Default**: Natural choice for physical simulations
 
 **When to Use Euclidean Distance:**
+
 ```
 ✅ Continuous space (not grid)
 ✅ Physics simulations
@@ -538,6 +574,7 @@ let dist_squared = dx * dx + dy * dy;
 ```
 
 **Performance Rule:**
+
 ```
 If comparing distances: Use distance_squared()
 If need actual distance: Use distance() with sqrt()

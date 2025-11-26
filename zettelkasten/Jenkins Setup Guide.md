@@ -11,6 +11,7 @@
 This guide provides step-by-step instructions for setting up Jenkins on Windows to automate your Rust learning quality assurance pipeline.
 
 ### **Benefits of Jenkins Integration**
+
 - **Automated Quality Checks**: Run quality pipeline on every git commit
 - **Scheduled Learning Reports**: Daily/weekly learning progress analysis  
 - **Quality Gate Enforcement**: Prevent poor-quality code from being committed
@@ -22,6 +23,7 @@ This guide provides step-by-step instructions for setting up Jenkins on Windows 
 ## 🛠️ **Jenkins Installation (Windows)**
 
 ### **Step 1: Prerequisites**
+
 ```powershell
 # Check Java installation (Jenkins requires Java 8 or 11)
 java -version
@@ -33,6 +35,7 @@ java -version
 ```
 
 ### **Step 2: Jenkins Installation**
+
 ```powershell
 # Download Jenkins Windows installer
 # https://www.jenkins.io/download/
@@ -55,6 +58,7 @@ java -jar "C:\Jenkins\jenkins.war" --httpPort=8080 --install
 ```
 
 ### **Step 3: Initial Jenkins Configuration**
+
 ```bash
 # Start Jenkins service
 net start jenkins
@@ -72,9 +76,11 @@ Get-Content "C:\Jenkins\secrets\initialAdminPassword"
 ## 🔧 **Jenkins Configuration for Rust Learning**
 
 ### **Step 1: Install Required Plugins**
+
 Navigate to **Manage Jenkins** → **Manage Plugins** → **Available**
 
 **Essential Plugins**:
+
 ```
 ✅ Git Plugin - Git repository integration
 ✅ Pipeline Plugin - Pipeline job support  
@@ -87,6 +93,7 @@ Navigate to **Manage Jenkins** → **Manage Plugins** → **Available**
 ```
 
 **Optional but Useful**:
+
 ```
 🔧 Slack Notification - Slack integration
 🔧 GitHub Integration - GitHub webhook support
@@ -96,24 +103,29 @@ Navigate to **Manage Jenkins** → **Manage Plugins** → **Available**
 ```
 
 ### **Step 2: Global Tool Configuration**
+
 **Manage Jenkins** → **Global Tool Configuration**
 
 **Git Configuration**:
+
 ```
 Name: Default
 Path to Git executable: C:\Program Files\Git\bin\git.exe
 ```
 
 **PowerShell Configuration** (if not default):
+
 ```
 Name: PowerShell
 Command: powershell.exe
 ```
 
 ### **Step 3: System Configuration**  
+
 **Manage Jenkins** → **Configure System**
 
 **Environment Variables**:
+
 ```powershell
 # Add these environment variables:
 CARGO_HOME = C:\Users\[USERNAME]\.cargo
@@ -122,6 +134,7 @@ PATH = $PATH;%CARGO_HOME%\bin
 ```
 
 **Email Notification** (optional):
+
 ```
 SMTP Server: smtp.gmail.com (or your provider)
 Port: 587 (TLS) or 465 (SSL)
@@ -134,10 +147,12 @@ Password: your-app-password
 ## 📋 **Pipeline Job Setup**
 
 ### **Step 1: Create New Pipeline Job**
+
 1. **New Item** → **Pipeline** → Enter name: `rust-learning-qa`
 2. Configure pipeline options:
 
 **General Settings**:
+
 ```
 ✅ Build Triggers:
    - Poll SCM: H/15 6-22 * * * (every 15 min during learning hours)
@@ -152,6 +167,7 @@ Password: your-app-password
 ```
 
 **Advanced Options**:
+
 ```
 ✅ Pipeline Speed/Durability Override: Performance-optimized
 ✅ Build Discard Policy: 
@@ -160,6 +176,7 @@ Password: your-app-password
 ```
 
 ### **Step 2: Pipeline Configuration Parameters**
+
 Add these build parameters for flexibility:
 
 ```groovy
@@ -174,6 +191,7 @@ choice(name: 'NOTIFICATION_LEVEL', choices: ['ALL', 'FAILURES_ONLY', 'NONE'], de
 ## 🚀 **Testing Your Jenkins Setup**
 
 ### **Step 1: Manual Pipeline Test**
+
 ```powershell
 # Ensure your quality scripts are in place
 Test-Path "scripts/quality-pipeline.ps1"
@@ -185,15 +203,18 @@ powershell -ExecutionPolicy Bypass -File scripts/quality-pipeline.ps1 -Quick
 ```
 
 ### **Step 2: Jenkins Pipeline Test**
+
 1. **Build with Parameters** in Jenkins UI
 2. Check **Console Output** for errors
 3. Verify **Workspace** has correct files
 4. Check **Build Artifacts** are generated
 
 ### **Step 3: Webhook Integration** (Optional)
+
 If using GitHub/GitLab:
 
 **GitHub Webhook**:
+
 ```
 Payload URL: http://[jenkins-server]:8080/github-webhook/
 Content type: application/json
@@ -206,10 +227,12 @@ Events: Just the push event
 ## 📊 **Quality Dashboard Setup**
 
 ### **Step 1: Create Dashboard View**
+
 1. **New View** → **Dashboard View** → Name: `Rust Learning Dashboard`
 2. Add widgets:
 
 **Build Statistics**:
+
 ```
 ✅ Test Result Trend Chart
 ✅ Build History Widget  
@@ -218,6 +241,7 @@ Events: Just the push event
 ```
 
 **Custom Widgets**:
+
 ```ruby
 // Add HTML widget with quality metrics
 <h3>📈 Learning Progress</h3>
@@ -228,6 +252,7 @@ Events: Just the push event
 ```
 
 ### **Step 2: Quality Trends Visualization**
+
 Create additional pipeline for trend analysis:
 
 ```groovy
@@ -264,6 +289,7 @@ pipeline {
 ## 🔔 **Notification Setup**
 
 ### **Email Notifications**
+
 Configure in **Manage Jenkins** → **Configure System** → **Extended E-mail Notification**:
 
 ```yaml
@@ -281,6 +307,7 @@ Default Content: |
 ```
 
 ### **Slack Integration** (Optional)
+
 Install Slack plugin and configure:
 
 ```yaml
@@ -300,6 +327,7 @@ Custom Message:
 ## 🛡️ **Security & Best Practices**
 
 ### **Security Configuration**
+
 ```powershell
 # Configure Jenkins security
 # Manage Jenkins → Configure Global Security
@@ -312,6 +340,7 @@ Custom Message:
 ```
 
 ### **Backup Strategy**
+
 ```powershell
 # Automated Jenkins backup script
 # File: backup-jenkins.ps1
@@ -335,6 +364,7 @@ Write-Host "Jenkins backup created: $BackupDir.zip"
 ```
 
 ### **Performance Optimization**
+
 ```groovy
 // Add to Jenkinsfile for better performance
 pipeline {
@@ -359,6 +389,7 @@ pipeline {
 ## 🔧 **Troubleshooting Common Issues**
 
 ### **PowerShell Execution Policy**
+
 ```powershell
 # If PowerShell scripts fail to run
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
@@ -368,6 +399,7 @@ powershell -ExecutionPolicy Bypass -File script.ps1
 ```
 
 ### **Cargo/Rust Not Found**
+
 ```groovy
 // Add to Jenkinsfile environment section
 environment {
@@ -378,6 +410,7 @@ environment {
 ```
 
 ### **Git Authentication Issues**
+
 ```powershell
 # Configure git credentials for Jenkins service account
 git config --global user.name "Jenkins CI"
@@ -387,6 +420,7 @@ git config --global user.email "jenkins@yourdomain.com"
 ```
 
 ### **Build Timeouts**
+
 ```groovy
 // Add timeout to pipeline stages
 stage('Quality Check') {
@@ -404,6 +438,7 @@ stage('Quality Check') {
 ## 📈 **Advanced Integration Features**
 
 ### **Quality Gate Integration**
+
 ```groovy
 // Advanced quality gates with SonarQube-style gates
 stage('Quality Gates') {
@@ -419,6 +454,7 @@ stage('Quality Gates') {
 ```
 
 ### **Learning Progress Integration**
+
 ```groovy
 // Integration with spaced repetition system
 stage('Update Learning Metrics') {
@@ -435,6 +471,7 @@ stage('Update Learning Metrics') {
 ```
 
 ### **Mission Completion Automation**
+
 ```groovy
 // Automatic mission completion detection
 stage('Mission Progress Check') {
@@ -457,18 +494,21 @@ stage('Mission Progress Check') {
 *Tags: #jenkins-setup #continuous-integration #automated-quality #windows-jenkins #rust-ci-cd #learning-automation #quality-pipeline #devops-learning*
 
 *Jenkins Configuration:*
+
 - [[Jenkins Installation Guide]] - Step-by-step Windows installation
 - [[Pipeline Configuration]] - Complete pipeline setup and parameters
 - [[Quality Dashboard Setup]] - Visual monitoring and reporting
 - [[Notification Configuration]] - Email and Slack integration setup
 
 *Automation Integration:*
+
 - [[Quality Assurance]] - Main quality assurance framework and standards  
 - [[Automated Quality Pipeline]] - PowerShell scripts for quality checking
 - [[Progress Tracking]] - Learning advancement measurement and reporting
 - [[Time Management Optimization]] - Maximizing efficiency through automation
 
 *Troubleshooting & Maintenance:*
+
 - [[Jenkins Security Best Practices]] - Security configuration and user management
 - [[Performance Optimization]] - Jenkins and pipeline performance tuning
 - [[Backup and Recovery]] - Data protection and disaster recovery procedures

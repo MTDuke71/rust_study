@@ -11,6 +11,7 @@
 ### Strategic Role
 
 AoC integration provides:
+
 - **Practical Application** - Real problems test theoretical knowledge
 - **Pattern Recognition** - Identify algorithmic patterns across problems
 - **Performance Validation** - Stress test implementations
@@ -20,9 +21,11 @@ AoC integration provides:
 ## Three-Track Integration
 
 ### Track 1: Mission System
+
 **Foundation Building** - Data structures and algorithms
 
 Missions provide the tools needed for AoC:
+
 - **Mission 1 (Stack)** → AoC bracket matching, parsing
 - **Mission 2 (Queue)** → AoC BFS pathfinding, simulation
 - **Mission 3 (Binary Search)** → AoC searching, optimization
@@ -35,9 +38,11 @@ Missions provide the tools needed for AoC:
 - **Mission 10 (Union-Find)** → AoC connected components
 
 ### Track 2: Daily Study
+
 **Concept Deep Dives** - Language features and patterns
 
 Daily study prepares for AoC challenges:
+
 - **Week 1** - Ownership, borrowing (memory-safe solutions)
 - **Week 2** - Collections (HashMap, HashSet for AoC patterns)
 - **Week 3** - Error handling (robust input parsing)
@@ -45,9 +50,11 @@ Daily study prepares for AoC challenges:
 - **Week 5** - Advanced patterns (complex problem solving)
 
 ### Track 3: Rust Book
+
 **Language Mastery** - Comprehensive Rust knowledge
 
 Rust Book chapters support AoC development:
+
 - **Ch 8 (Collections)** → Data structure selection
 - **Ch 10 (Generics)** → Reusable algorithms
 - **Ch 12 (CLI)** → Input processing
@@ -122,6 +129,7 @@ mod tests {
 ### Common AoC Patterns
 
 #### 1. **Grid Traversal** (Mission 6)
+
 ```rust
 // Pattern: Navigate 2D space
 use mission6::Grid;
@@ -133,12 +141,14 @@ fn solve_grid_problem(input: &str) -> usize {
 ```
 
 **AoC Applications:**
+
 - 2015 Day 3: Houses visited
 - 2015 Day 6: Light grid
 - 2015 Day 18: Game of Life
 - **[[aoc2024-day4-mission6-example]]** - 2024 Day 4: Word search with architectural benefits demonstration
 
 #### 2. **Frequency Counting** (Mission 5)
+
 ```rust
 // Pattern: Count occurrences
 use std::collections::HashMap;
@@ -153,11 +163,13 @@ fn count_frequencies(input: &str) -> HashMap<char, usize> {
 ```
 
 **AoC Applications:**
+
 - 2015 Day 5: String validation
 - 2015 Day 7: Circuit simulation
 - 2015 Day 16: Aunt Sue matching
 
 #### 3. **Pathfinding** (Mission 7, 9)
+
 ```rust
 // Pattern: Shortest path
 use mission9::{Graph, dijkstra};
@@ -169,11 +181,13 @@ fn shortest_path_problem(input: &str) -> u32 {
 ```
 
 **AoC Applications:**
+
 - 2015 Day 9: TSP (all pairs shortest path)
 - 2015 Day 13: Seating arrangement
 - 2015 Day 22: Wizard battle (state space search)
 
 #### 4. **State Space Search** (Mission 8, 9)
+
 ```rust
 // Pattern: BFS/DFS exploration
 use std::collections::VecDeque;
@@ -200,11 +214,13 @@ fn bfs_solution(start: State) -> usize {
 ```
 
 **AoC Applications:**
+
 - 2015 Day 11: Password generation
 - 2015 Day 17: Container combinations
 - 2015 Day 19: Molecule replacement
 
 #### 5. **Simulation** (Mission 6, 7)
+
 ```rust
 // Pattern: Iterative state updates
 struct Simulation {
@@ -226,6 +242,7 @@ impl Simulation {
 ```
 
 **AoC Applications:**
+
 - 2015 Day 14: Reindeer race
 - 2015 Day 18: Game of Life
 - 2015 Day 23: Assembly simulation
@@ -358,6 +375,7 @@ fn parse_input(input: &str) -> Vec<Item> {
 ```
 
 ### 2. Core Algorithm
+
 ```rust
 fn solve(items: Vec<Item>) -> usize {
     // Complete algorithm implementation
@@ -365,6 +383,7 @@ fn solve(items: Vec<Item>) -> usize {
 ```
 
 ### 3. Testing Strategy
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -376,8 +395,10 @@ mod tests {
 ```
 
 ## Related Missions
+
 - [[Mission X]] - Data structure used
 - [[Mission Y]] - Algorithm applied
+
 ```
 
 ## Quality Standards
@@ -475,6 +496,7 @@ pub fn identify_pattern(problem: &Problem) -> Vec<AocPattern> {
 ### Pattern Database
 
 Track successful patterns in zettelkasten:
+
 - [[AoC Patterns MOC]] - Pattern catalog
 - [[Grid Traversal]] - Spatial problems
 - [[State Space Search]] - BFS/DFS applications
@@ -525,6 +547,7 @@ Track successful patterns in zettelkasten:
 ### Pattern Expansion
 
 As new patterns emerge:
+
 1. Document in `aoc_pattern_recognition/`
 2. Create zettelkasten entry
 3. Map to relevant missions
@@ -533,12 +556,14 @@ As new patterns emerge:
 ## Resources
 
 ### Internal
+
 - `advent_of_code/aoc2015/` - Complete 2015 solutions
 - `advent_of_code/aoc_pattern_recognition/` - Pattern analysis
 - [[AoC Patterns MOC]] - Zettelkasten catalog
 - [[Missions Overview]] - Data structure implementations
 
 ### External
+
 - [Advent of Code](https://adventofcode.com/) - Official site
 - [AoC Reddit](https://www.reddit.com/r/adventofcode/) - Community solutions
 - [Visualization Tools](https://github.com/topics/advent-of-code-visualization) - Problem visualizers
@@ -546,6 +571,7 @@ As new patterns emerge:
 ---
 
 ## Related Resources
+
 - [[MONTHLY_CALENDAR]] - Integrated learning schedule
 - [[CALENDER_ARCHIVE]] - Historical AoC work
 - [[Complete Runnable Examples]] - Solution quality standards

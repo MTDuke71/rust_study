@@ -17,6 +17,7 @@ Memoization is an optimization technique where the results of expensive function
 ### What is Memoization?
 
 Memoization involves:
+
 - **Caching Results**: Store computed values for reuse
 - **Checking Cache First**: Before computation, check if we have a cached result
 - **Avoiding Redundant Work**: Eliminate exponential blowup in recursive algorithms
@@ -50,6 +51,7 @@ fn fib_memo(n: u32, cache: &mut std::collections::HashMap<u32, u64>) -> u64 {
 ### Why Memoization Matters
 
 **Scenario: Fibonacci sequence**
+
 - `fib(5)` without memoization: 15 function calls
 - `fib(10)` without memoization: 177 function calls
 - `fib(30)` without memoization: 2,178,308 function calls ❌ Unreasonable!
@@ -110,12 +112,14 @@ fn fib_with_pattern(n: u32) -> u64 {
 ```
 
 **Advantages:**
+
 - Handles sparse computation graphs efficiently
 - Works with any hashable key type
 - No pre-allocation needed
 - Cleaner for complex state representations
 
 **Disadvantages:**
+
 - HashMap lookups have O(log n) average overhead
 - More memory overhead per entry
 
@@ -161,12 +165,14 @@ fn fib_bottom_up_optimized(n: usize) -> u64 {
 ```
 
 **Advantages:**
+
 - O(1) cache lookup time (array indexing)
 - Minimal memory overhead
 - Cache-friendly (contiguous memory)
 - Works great for sequential indices
 
 **Disadvantages:**
+
 - Requires knowing state space bounds
 - Wasteful for sparse problems
 - Less flexible state representation
@@ -216,11 +222,13 @@ let fib = memoized_closure(|n: u32, cache: &mut HashMap<u32, u64>| -> u64 {
 ```
 
 **Advantages:**
+
 - Functional programming style
 - State encapsulated in closure
 - Elegant for simple problems
 
 **Disadvantages:**
+
 - Borrow checker challenges with recursive closures
 - Requires boxing or advanced techniques
 - May require `RefCell` or `Rc`
@@ -290,6 +298,7 @@ fn compute_results_with_memo(
 ```
 
 **Important Note:** As Day 10 teaches us, memoization isn't always the answer! For this problem:
+
 - String concatenation overhead dominates
 - Intermediate strings are unique, so cache hits are rare
 - Simple iteration without memoization is faster
@@ -375,6 +384,7 @@ Here, memoization prevents re-evaluating dependent wires multiple times!
 ### When to Use Memoization
 
 ✅ **Use memoization when:**
+
 - Problem has overlapping subproblems (Fibonacci, DP problems)
 - Recursive solution is natural and clear
 - State space is moderate-sized
@@ -382,6 +392,7 @@ Here, memoization prevents re-evaluating dependent wires multiple times!
 - Results are truly expensive to compute
 
 ❌ **Don't use memoization when:**
+
 - All subproblems are unique (no overlaps)
 - Cache overhead exceeds computation cost
 - Simple iterative solution exists

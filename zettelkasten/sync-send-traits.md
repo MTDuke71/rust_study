@@ -7,6 +7,7 @@
 ## 🎯 **Core Concept**
 
 Every type in Rust implicitly advertises its thread-safety guarantees through the **`Send`** and **`Sync`** auto traits:
+
 - `Send`: Ownership of values can be transferred across thread boundaries.
 - `Sync`: Shared references (`&T`) can be accessed from multiple threads simultaneously.
 
@@ -48,6 +49,7 @@ assert_not_impl_any!(RefCell<u8>: Sync);
 ### **Custom Types and Manual Implementations**
 
 Manual `unsafe impl Send/Sync for MyType {}` should be rare and justified. Before considering it:
+
 - Verify every field already satisfies the trait or is protected by synchronization primitives.
 - Prove that invariants hold even if a thread panics while mutating the type.
 - Prefer composition (e.g., `Arc<Mutex<_>>`) over unsafe impls unless you are building synchronization primitives yourself.
@@ -72,16 +74,19 @@ Manual `unsafe impl Send/Sync for MyType {}` should be rare and justified. Befor
 ## 🔗 **Integration Points**
 
 ### **Builds On**
+
 - [[ownership]] - Foundation for understanding moves vs borrows
 - [[rust-threading-basics]] - Thread spawning behavior rooted in Send/Sync
 - [[shared-state-concurrency]] - Practical Arc<Mutex<T>> usage that depends on correct trait bounds
 
 ### **Enables**
+
 - [[message-passing-channels]] - Choosing channels vs shared state based on type properties
 - [[Send and Sync Deep Dive]] - Further exploration of marker trait internals
 - [[rust_book/rust-book-ch16]] - Chapter 16.4 exercises on extensible concurrency
 
 ### **Related Concepts**
+
 - [[interior-mutability]] - When `Cell/RefCell` purposely reject Sync
 - [[deterministic-debugging]] - Logging Send/Sync violations during mission work
 - [[Mission10_tut Overview]] - Union-Find REST API guarantees rely on `Send + Sync` states

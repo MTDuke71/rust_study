@@ -29,15 +29,18 @@ std::thread::sleep(Duration::from_millis(1));
 ```
 
 **Measured Performance** (100 iterations):
-- **Without `timeBeginPeriod(1)`**: 15.61ms average per `trpl::sleep(1ms)` 
+
+- **Without `timeBeginPeriod(1)`**: 15.61ms average per `trpl::sleep(1ms)`
 - **With `timeBeginPeriod(1)`**: 2.51ms average per `trpl::sleep(1ms)`
 
 **Why This Happens:**
+
 - Default Windows timer: **64 Hz** = 15.625ms between interrupts
 - OS cannot wake a sleeping thread faster than timer tick rate
 - `timeBeginPeriod(1)` requests **1000 Hz** = 1ms resolution (power cost!)
 
 **Platform Differences:**
+
 | Platform | Default Timer | High-Res Available |
 |----------|---------------|-------------------|
 | Windows | 15.6ms (64 Hz) | 1ms with `timeBeginPeriod()` |
@@ -56,24 +59,26 @@ Even with high-resolution timers enabled, async sleep has measurable overhead:
 ```
 
 **Runtime Overhead Sources** (~1000μs total):
+
 1. **Timer wheel operations** (~200-300μs)
    - Red-black tree or hierarchical timing wheel insertion
    - Timer expiry processing and removal
-   
+
 2. **Task scheduling** (~200-400μs)
    - Task wake-up notification
    - Ready queue insertion
    - Context switch preparation
-   
+
 3. **Future state machine** (~100-200μs)
    - Poll invocation
    - State transitions in async block
-   
+
 4. **Executor polling loop** (~200-300μs)
    - Event loop iteration
    - I/O readiness checking
 
 **Measured Comparison** (100 iterations):
+
 | Operation | Time | Overhead vs OS |
 |-----------|------|----------------|
 | `thread::sleep(1ms)` | 1.54ms avg | Baseline (pure OS) |
@@ -96,6 +101,7 @@ Done! (No syscalls, no timers, no kernel)
 ```
 
 **Performance Hierarchy** (from experiments):
+
 | Approach | Time per Op | Relative Speed | Use Case |
 |----------|-------------|----------------|----------|
 | **`yield_now()`** | **~0.001ms** (1μs) | **1x** 🏆 | Cooperative multitasking |
@@ -104,6 +110,7 @@ Done! (No syscalls, no timers, no kernel)
 | `trpl::sleep(1ms)` default | ~15.6ms | 15,600x slower | ❌ Never use for yielding! |
 
 **Why `yield_now()` Wins:**
+
 - **No OS syscalls**: Stays entirely in user-space runtime
 - **No timer setup**: Doesn't interact with hardware timers
 - **Immediate scheduling**: Just moves task to back of ready queue
@@ -142,6 +149,7 @@ trpl::run(async {
 ```
 
 **Results** (original 1000 iterations):
+
 - `sleep(1ns)`: 1.45 seconds = **~1.45ms per iteration** (OS granularity dominates)
 - `yield_now()`: 0.11 seconds = **~0.11ms per iteration** (13x faster)
 
@@ -181,6 +189,7 @@ unsafe { timeEndPeriod(1); }
 #### ✅ Use `yield_now()` for Cooperative Multitasking
 
 **Perfect for**:
+
 - Giving other tasks a chance to run
 - Breaking up long CPU-bound work
 - Preventing task starvation
@@ -196,6 +205,7 @@ async fn process_large_dataset(items: Vec<Item>) {
 ```
 
 **Anti-pattern (2,500x slower!)**:
+
 ```rust
 // ❌ DON'T use sleep as a yield mechanism!
 async fn process_large_dataset(items: Vec<Item>) {
@@ -209,6 +219,7 @@ async fn process_large_dataset(items: Vec<Item>) {
 #### ⚠️ Use `sleep()` for Actual Timing Requirements
 
 **Perfect for**:
+
 - Rate limiting (1 request per second)
 - Periodic polling (check status every 100ms)
 - Timeout implementations
@@ -224,6 +235,7 @@ async fn rate_limited_requests() {
 ```
 
 **Not appropriate for**:
+
 ```rust
 // ❌ Using sleep to yield is wasteful
 async fn cooperative_task() {
@@ -237,18 +249,21 @@ async fn cooperative_task() {
 #### 🔧 Use `timeBeginPeriod()` Sparingly
 
 **When justified**:
+
 - Multimedia applications (audio/video playback)
 - Gaming engines (frame timing precision)
 - High-frequency trading systems
 - Real-time control systems
 
 **Costs of high-resolution timers**:
+
 - ⚠️ **Power consumption**: CPU wakes 1000x/sec vs 64x/sec
 - ⚠️ **Battery impact**: Can reduce laptop battery life by 10-25%
 - ⚠️ **System-wide effect**: Affects ALL processes, not just yours
 - ⚠️ **Windows-specific**: Linux/macOS have different mechanisms
 
 **Best practice**:
+
 ```rust
 // Only set high-res when needed, restore ASAP
 unsafe { timeBeginPeriod(1); }
@@ -259,6 +274,7 @@ unsafe { timeEndPeriod(1); }  // Restore default
 ### Async vs Threads for Different Workloads
 
 **I/O-Bound Work** (✅ Async Wins):
+
 ```rust
 // 10,000 concurrent HTTP requests
 // Threads: 10,000 × 1MB stack = 10GB memory ❌
@@ -271,6 +287,7 @@ for i in 0..10_000 {
 ```
 
 **CPU-Bound Work** (⚠️ Threads or `spawn_blocking`):
+
 ```rust
 // Image processing - doesn't benefit from async overhead
 async fn process_images(images: Vec<Image>) {
@@ -298,16 +315,19 @@ async fn process_images(images: Vec<Image>) {
 | Timer resolution | ECU timer tick rate | Platform-specific (1-10ms typical) |
 | Cooperative yield | Runnable chain execution | Explicit control handoff between components |
 
-**Key AUTOSAR Insight**: 
+**Key AUTOSAR Insight**:
+
 - **Runnable execution**: Fixed scheduling points (RTE invocation)
 - **Rust async tasks**: Can yield mid-execution at any `.await` point
 - **Performance**: AUTOSAR has ~10-100μs scheduling overhead, Rust async ~1ms (includes future polling state machine)
 
 **Why Rust has more overhead**:
+
 - AUTOSAR: Simple callback invocation (function pointer jump)
 - Rust: Full state machine polling, timer wheel management, dynamic task scheduling
 
 **Where Rust wins**:
+
 - AUTOSAR: Limited concurrent runnables (~100s)
 - Rust: Unlimited async tasks (~100,000s+)
 
@@ -316,6 +336,7 @@ async fn process_images(images: Vec<Image>) {
 **Production Experience**: Frequent interrupts requiring RTE context switching can **devastate system performance** - exactly analogous to the async timer resolution problem.
 
 **The AUTOSAR Scenario:**
+
 ```
 High-frequency interrupt (e.g., 1kHz sensor data)
   ↓
@@ -341,6 +362,7 @@ Repeat 1000 times per second = massive overhead!
 | **Total per switch** | **~200-800μs** | **~1000μs (1ms)** | **Multiplies by frequency!** |
 
 **Real Performance Impact:**
+
 ```
 Scenario: 1kHz interrupt (every 1ms)
 Context switch overhead: ~500μs per interrupt
@@ -360,6 +382,7 @@ With 10kHz interrupt:
 **AUTOSAR Solutions (Parallels to Rust Async):**
 
 1. **Batch Processing** (like batching yield_now):
+
    ```c
    // ❌ WRONG: Context switch per sample
    void InterruptHandler() {
@@ -378,6 +401,7 @@ With 10kHz interrupt:
    ```
 
 2. **Interrupt Coalescence** (like timeBeginPeriod tradeoff):
+
    ```c
    // Instead of 10kHz interrupts with 500μs overhead each,
    // Use 1kHz interrupts with DMA buffering
@@ -385,6 +409,7 @@ With 10kHz interrupt:
    ```
 
 3. **Direct ISR Processing** (like yield_now vs sleep):
+
    ```c
    // ❌ SLOW: ISR → RTE → Runnable (context switch)
    void ISR() {
@@ -401,6 +426,7 @@ With 10kHz interrupt:
 > "A 10kHz interrupt with 500μs RTE context switching overhead means the system **cannot possibly work** - you need 500% of available CPU just for overhead. The solution was batching interrupts and using DMA to reduce context switch frequency by 10x, making the system viable."
 
 **Direct Parallel to Async Discovery:**
+
 - **Your AUTOSAR issue**: Frequent interrupts → RTE overhead → system collapse
 - **Async timer issue**: Frequent sleeps → runtime overhead → 15.6ms delays
 - **Solution in both**: Reduce context switch frequency (batching) or eliminate it entirely (direct processing/yield_now)
@@ -408,6 +434,7 @@ With 10kHz interrupt:
 **Why This Matters for Rust Developers from AUTOSAR Background:**
 
 Understanding **context switching overhead** from embedded systems makes async performance characteristics immediately intuitive:
+
 - ✅ Know why `yield_now()` is fast (no context switch, just queue reorder)
 - ✅ Recognize `sleep()` overhead as similar to RTE scheduling
 - ✅ Understand batching strategies to amortize overhead
@@ -436,6 +463,7 @@ loop {
 ### Rule 2: Understand Sleep Isn't Free
 
 Even with high-resolution timers:
+
 - `sleep()` has **~1ms runtime overhead** minimum
 - Only use when you need actual time delay
 - For sub-millisecond delays, consider if you really need async
@@ -473,21 +501,25 @@ println!("Took: {}ms", duration.as_millis());
 ## Related Concepts
 
 **Async Foundations:**
+
 - [[async-await-basics]] - Core async/await concepts
 - [[async-concurrency]] - Racing, joining, spawning tasks
 - [[futures-and-polling]] - Future trait and poll mechanism
 
 **Performance:**
+
 - [[blocking-in-async]] - CPU-bound work with `spawn_blocking`
 - [[async-runtime-comparison]] - tokio vs async-std benchmarks
 - [[backpressure]] - Flow control in async systems
 
 **System Programming:**
+
 - [[os-scheduler-interaction]] - How async runtimes interact with OS
 - [[timer-wheels]] - Data structure for efficient timeout management
 - [[epoll-kqueue]] - Platform I/O multiplexing primitives
 
 **AUTOSAR:**
+
 - [[rust-concurrency-vs-autosar]] - Async vs AUTOSAR RTE comparison
 - [[event-driven-patterns]] - Callback vs future architectures
 
@@ -496,12 +528,14 @@ println!("Took: {}ms", duration.as_millis());
 ## Code References
 
 **Primary Example**: `[[../rust_book/Ch17/async_streams/examples/17_3_book.rs]]`
+
 - Example 12: Performance comparison (sleep vs yield_now)
 - Example 14: Windows timer resolution demonstration with `timeBeginPeriod()`
 
 **Rust Book Chapter**: `[[../rust_book/Ch17/README.md]]` - Chapter 17.3: Working with Any Number of Futures
 
 **Official Documentation**:
+
 - [The Rust Book Ch17-03: More Futures](https://doc.rust-lang.org/stable/book/ch17-03-more-futures.html)
 - [tokio::time::sleep](https://docs.rs/tokio/latest/tokio/time/fn.sleep.html)
 - [tokio::task::yield_now](https://docs.rs/tokio/latest/tokio/task/fn.yield_now.html)
@@ -511,12 +545,14 @@ println!("Took: {}ms", duration.as_millis());
 ## Summary
 
 **Performance Hierarchy** (fastest to slowest):
+
 1. **`yield_now()`**: ~1μs - Pure runtime operation, no OS
 2. **`thread::sleep()` high-res**: ~1.5ms - OS timer only
 3. **`trpl::sleep()` high-res**: ~2.5ms - OS timer + runtime overhead
 4. **`trpl::sleep()` default**: ~15.6ms - OS granularity dominates
 
 **Key Takeaways**:
+
 - ✅ **Use `yield_now()` for cooperative multitasking** - 2,500x faster than sleep
 - ⚠️ **Async has ~1ms inherent overhead** - runtime scheduling, timer wheels, polling
 - 📊 **OS timer resolution matters** - 15.6ms default on Windows vs 1ms with `timeBeginPeriod()`

@@ -3,6 +3,7 @@
 **Systematic testing approach for validating the first fundamental requirement of each mission**
 
 ---
+
 *Navigation: [[zettel-index]] | [[V-Cycle Methodology]] | [[TDD (Test-Driven Development]]*
 *Related: [[Missions Overview]] | [[Testing Patterns]] | [[Requirements Engineering]] | [[Debugging Lessons]]*
 ---
@@ -14,9 +15,11 @@ REQ-1 represents the **foundational requirement** in V-Cycle software developmen
 ## 📋 REQ-1 Across Missions
 
 ### **Mission1: Stack - Generic Support**
+
 **REQ-1**: Implement generic stack supporting any type `T`
 
 **Test Strategy:**
+
 ```rust
 #[test] // REQ-1
 fn req1_generic_support() {
@@ -31,15 +34,18 @@ fn req1_generic_support() {
 ```
 
 **Key Validations:**
+
 - ✅ Works with primitive types (i32, u64, bool)
 - ✅ Works with heap-allocated types (String, Vec)
 - ✅ Works with custom types (structs, enums)
 - ✅ Maintains type safety at compile time
 
 ### **Mission2: Queue - Generic FIFO Structure**
+
 **REQ-1**: Implement generic ring buffer queue
 
 **Test Strategy:**
+
 ```rust
 #[test] // REQ-1
 fn req1_generic_fifo_queue() {
@@ -52,15 +58,18 @@ fn req1_generic_fifo_queue() {
 ```
 
 **Key Validations:**
+
 - ✅ FIFO (First-In-First-Out) ordering maintained
 - ✅ Generic type parameter works
 - ✅ Fixed capacity constraint honored
 - ✅ Ring buffer wraparound functions correctly
 
 ### **Mission3: Search - Binary Search Implementation**
+
 **REQ-1**: Implement generic binary search
 
 **Test Strategy:**
+
 ```rust
 #[test] // REQ-1
 fn req1_binary_search_generic() {
@@ -73,15 +82,18 @@ fn req1_binary_search_generic() {
 ```
 
 **Key Validations:**
+
 - ✅ Works on sorted collections
 - ✅ Generic over comparable types (T: Ord)
 - ✅ Returns correct index on found
 - ✅ Returns None on not found
 
 ### **Mission4: Linked List - Safe Memory Management**
+
 **REQ-1**: Demonstrate memory safety with `Box<T>` vs `Rc<RefCell<T>>`
 
 **Test Strategy:**
+
 ```rust
 #[test] // REQ-1
 fn req1_safe_memory_management() {
@@ -97,15 +109,18 @@ fn req1_safe_memory_management() {
 ```
 
 **Key Validations:**
+
 - ✅ No unsafe code required
 - ✅ Automatic memory cleanup (Drop trait)
 - ✅ Compile-time ownership verification
 - ✅ Zero memory leaks
 
 ### **Mission5: HashMap - Generic Hash Table**
+
 **REQ-1**: Custom HashMap with generic key-value pairs
 
 **Test Strategy:**
+
 ```rust
 #[test] // REQ-1
 fn req1_generic_hashmap() {
@@ -120,15 +135,18 @@ fn req1_generic_hashmap() {
 ```
 
 **Key Validations:**
+
 - ✅ Generic over key type K (must be Hash + Eq)
 - ✅ Generic over value type V
 - ✅ Bucket-based collision handling
 - ✅ O(1) average-case operations
 
 ### **Mission6: Grid - 2D Spatial Structure**
+
 **REQ-1**: Implement generic 2D grid
 
 **Test Strategy:**
+
 ```rust
 #[test] // REQ-1
 fn req1_2d_grid_generic() {
@@ -143,15 +161,18 @@ fn req1_2d_grid_generic() {
 ```
 
 **Key Validations:**
+
 - ✅ Generic cell type T
 - ✅ Bounds checking
 - ✅ Row-major or column-major layout
 - ✅ Efficient indexing
 
 ### **Mission7: Graph - Node-Edge Structure**
+
 **REQ-1**: Implement generic graph with adjacency list
 
 **Test Strategy:**
+
 ```rust
 #[test] // REQ-1
 fn req1_generic_graph() {
@@ -164,6 +185,7 @@ fn req1_generic_graph() {
 ```
 
 **Key Validations:**
+
 - ✅ Generic node data type
 - ✅ Directed/undirected support
 - ✅ Efficient neighbor queries
@@ -172,6 +194,7 @@ fn req1_generic_graph() {
 ## 🧪 Common REQ-1 Testing Patterns
 
 ### **1. Type Flexibility Testing**
+
 ```rust
 // Test with multiple types
 #[test]
@@ -185,6 +208,7 @@ fn test_with_custom_types() { /* struct, enum */ }
 ```
 
 ### **2. Edge Case Testing**
+
 ```rust
 // Test boundary conditions
 #[test]
@@ -198,6 +222,7 @@ fn test_at_capacity() { /* full state */ }
 ```
 
 ### **3. Invariant Testing**
+
 ```rust
 // Test core guarantees
 #[test]
@@ -207,6 +232,7 @@ fn test_data_structure_invariant() {
 ```
 
 ### **4. Comparative Testing**
+
 ```rust
 // Compare with std library
 #[test]
@@ -260,23 +286,27 @@ Confirm REQ-1 meets user needs
 ## 🔗 Related Concepts
 
 **Testing Approaches:**
+
 - [[TDD (Test-Driven Development]] - Write tests before implementation
 - [[Requirements Traceability]] - Link tests to requirements
 - [[V-Cycle Methodology]] - Requirements-driven development
 - [[Unit Testing Patterns]] - Effective test organization
 
 **Mission Context:**
+
 - [[mission-1]] - Stack REQ-1 testing
 - [[mission-2]] - Queue REQ-1 testing
 - [[mission-5]] - HashMap REQ-1 testing
 - [[Missions Overview]] - All mission overviews
 
 **Quality Assurance:**
+
 - [[Testing Patterns]] - Common test patterns
 - [[Code Coverage]] - Measuring test effectiveness
 - [[Continuous Integration]] - Automated testing
 
 **Documentation:**
+
 - [[RUST_TEST_DOCUMENTATION_STANDARDS|../RUST_TEST_DOCUMENTATION_STANDARDS]] - Test documentation guide
 - [[V-Cycle Documentation]] - Requirements documentation
 

@@ -33,12 +33,14 @@ match select(future1, future2).await {
 ```
 
 **Key Characteristics:**
+
 - **First-to-finish wins**: Fastest operation determines result
 - **Losers cancelled**: Non-winning futures dropped immediately
 - **No waiting**: Returns as soon as ANY future completes
 - **Use cases**: Timeouts, redundant requests, fastest-source patterns
 
 **Common Pattern - Timeout:**
+
 ```rust
 let work = async { expensive_operation().await };
 let timeout = async { sleep(Duration::from_secs(5)).await };
@@ -67,6 +69,7 @@ println!("All complete: {}, {}, {}", result1, result2, result3);
 ```
 
 **Key Characteristics:**
+
 - **Concurrent execution**: All futures progress simultaneously
 - **Wait for completion**: Returns when ALL are done
 - **Preserves order**: Results in same order as futures
@@ -74,6 +77,7 @@ println!("All complete: {}, {}, {}", result1, result2, result3);
 - **Use cases**: Batch operations, parallel data fetching
 
 **Performance Impact:**
+
 ```rust
 // Sequential: 3 seconds total (1s + 1s + 1s)
 let r1 = fetch(url1).await;  // 1 second
@@ -113,6 +117,7 @@ handle.await.unwrap();
 ```
 
 **Key Characteristics:**
+
 - **Independent lifecycle**: Continues even after spawner moves on
 - **No automatic cancellation**: Must explicitly await or drop handle
 - **Background execution**: Runs concurrently with spawner
@@ -144,6 +149,7 @@ println!("All tasks complete!");
 ```
 
 **Timeline:**
+
 ```
 0ms:   Work task starts, HTTP request starts
 100ms: Work item 1 completes
@@ -183,6 +189,7 @@ match select(work_future, http_race).await {
 ```
 
 **Execution Flow:**
+
 - If HTTP completes at 200ms: Work items 1-2 execute, then HTTP interrupts
 - If work completes at 500ms: All 5 items execute, HTTP still pending
 
@@ -233,6 +240,7 @@ async fn example() {
 ```
 
 **Runtime Scheduling:**
+
 1. Poll `example()` future
 2. Reaches first `.await` → operation not ready → `Poll::Pending`
 3. Runtime switches to other tasks
@@ -255,6 +263,7 @@ for i in 1..=5 {
 ```
 
 **Timeline:**
+
 - 0ms: Iteration 1 starts
 - 0-100ms: Sleep active, task idle (no polling possible)
 - 100ms: Sleep completes, `.await` returns, print happens
@@ -264,6 +273,7 @@ for i in 1..=5 {
 - 200ms: Sleep completes, `.await` returns, then runtime can switch
 
 **Polling happens AFTER each sleep, not during:**
+
 - Runtime can only switch tasks at `.await` points
 - During `sleep()`, the task is suspended waiting for timer
 - If HTTP completes during sleep, it can't interrupt
@@ -384,16 +394,19 @@ async fn fast() {
 ## Performance Characteristics
 
 **Memory:**
+
 - `select()`: Same as single future (losers dropped immediately)
 - `join!()`: Sum of all futures' memory
 - `spawn_task()`: Additional task overhead (~1-2 KB per task)
 
 **CPU:**
+
 - Polling overhead: Minimal with proper yielding
 - Context switching: Faster than OS threads (no kernel)
 - Best throughput: I/O-bound work with many concurrent operations
 
 **Scalability:**
+
 - Can handle thousands to millions of concurrent tasks
 - Limited by memory (not thread count)
 - Ideal for high-concurrency scenarios (web servers, proxies)
@@ -401,22 +414,26 @@ async fn fast() {
 ## Related Concepts
 
 **Foundations:**
+
 - [[async-await-basics]] - Future trait, `.await`, runtime basics
 - [[futures-and-polling]] - How polling drives execution
 - [[runtime-executors]] - tokio, async-std, smol comparison
 
 **Advanced Patterns:**
+
 - [[async-streams]] - Async iteration and backpressure
 - [[async-channels]] - Message passing between tasks
 - [[async-timeouts]] - Timeout patterns and cancellation
 - [[async-retry-patterns]] - Retry with backoff
 
 **Architecture:**
+
 - [[task-spawning-strategies]] - When to spawn vs inline
 - [[structured-concurrency]] - Parent-child task relationships
 - [[graceful-shutdown]] - Coordinated task termination
 
 **Error Handling:**
+
 - [[async-error-propagation]] - ? operator in async contexts
 - [[timeout-error-handling]] - Timeout vs operation errors
 - [[concurrent-error-aggregation]] - Collecting errors from join!()

@@ -7,6 +7,7 @@
 **Trait Objects** enable **dynamic dispatch** in Rust - the ability to call methods on types whose concrete implementation is determined at runtime rather than compile time.
 
 **Key Distinction:**
+
 ```rust
 // Static Dispatch (Generics) - Compile-time polymorphism
 fn process_generic<T: Display>(item: T) {
@@ -20,6 +21,7 @@ fn process_dynamic(item: &dyn Display) {
 ```
 
 **When to Use:**
+
 - ✅ Heterogeneous collections (different types in same collection)
 - ✅ Plugin systems (load implementations at runtime)
 - ✅ Callback patterns (store closures with different captures)
@@ -123,6 +125,7 @@ VTable Structure:
 ```
 
 **Memory Representation:**
+
 ```rust
 // Static dispatch - compiler knows exact type
 let x: i32 = 42;
@@ -445,12 +448,14 @@ fn dynamic_sum(items: &[&dyn AsRef<i32>]) -> i32 {
 ```
 
 **When to Pay the Cost:**
+
 - Plugin systems loaded at runtime
 - Heterogeneous collections (different types together)
 - API boundaries where flexibility matters
 - Non-critical paths where clarity > speed
 
 **When to Avoid:**
+
 - Tight inner loops (hot paths)
 - Performance-critical algorithms
 - When all types are known at compile time
@@ -604,6 +609,7 @@ println!("Count: {}", counter.borrow().value());
 ## 🔗 Real-World Applications
 
 ### **1. GUI Event Handlers**
+
 ```rust
 trait EventHandler {
     fn handle(&mut self, event: &Event);
@@ -623,6 +629,7 @@ impl Button {
 ```
 
 ### **2. Serialization Framework**
+
 ```rust
 trait Serialize {
     fn to_json(&self) -> String;
@@ -635,6 +642,7 @@ struct Serializer {
 ```
 
 ### **3. Testing Mock Objects**
+
 ```rust
 trait Database {
     fn query(&self, sql: &str) -> Vec<String>;
@@ -662,6 +670,7 @@ fn test_query(db: &dyn Database) {
 ## 📚 Connected Concepts
 
 ### **Related Zettelkasten Pages**
+
 - [[Week 3 Overview]] - Day 19 covers trait objects in depth
 - [[mission-5]] - REQ-6 flexible APIs using trait objects
 - [[Generic Programming]] - Static dispatch alternative
@@ -669,10 +678,12 @@ fn test_query(db: &dyn Database) {
 - [[Collections MOC]] - Heterogeneous collections
 
 ### **Rust Book References**
+
 - Chapter 17.2 - Using Trait Objects That Allow for Values of Different Types
 - Chapter 19.2 - Advanced Traits (object safety)
 
 ### **Mission Integration**
+
 - **Mission5 (HashMap)**: Trait objects for flexible value storage
 - **Mission7 (Graphs)**: Plugin-based graph algorithms
 - **AoC Solutions**: Dynamic input handlers
@@ -689,6 +700,7 @@ fn test_query(db: &dyn Database) {
 6. **Pattern Rich**: Plugin systems, state machines, callbacks, strategies
 
 **When to Use Trait Objects:**
+
 ```
 ✅ Need heterogeneous collections
 ✅ Plugin/extension systems

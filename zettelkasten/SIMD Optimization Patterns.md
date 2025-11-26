@@ -7,6 +7,7 @@
 ## 🎯 **SIMD Fundamentals**
 
 ### **What is SIMD?**
+
 SIMD allows a single CPU instruction to operate on multiple data elements simultaneously:
 
 ```rust
@@ -24,6 +25,7 @@ for i in 0..4 {
 ```
 
 ### **SIMD Capabilities by Architecture**
+
 ```rust
 // x86/x86_64 SIMD extensions
 // SSE:    128-bit vectors (4×f32, 2×f64, 16×i8, 8×i16, 4×i32)
@@ -40,6 +42,7 @@ use std::arch::x86_64::*;
 ## 🏗️ **Rust SIMD Approaches**
 
 ### **1. std::simd (Portable SIMD) - Stable in 1.72+**
+
 ```rust
 #![feature(portable_simd)]
 use std::simd::{f32x4, f32x8, Simd};
@@ -66,6 +69,7 @@ fn simd_add_vectors(a: &[f32], b: &[f32], result: &mut [f32]) {
 ```
 
 ### **2. Platform-Specific Intrinsics**
+
 ```rust
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
@@ -102,6 +106,7 @@ unsafe fn avx2_sum_i32(data: &[i32]) -> i32 {
 ```
 
 ### **3. Auto-Vectorization**
+
 ```rust
 // Compiler can often auto-vectorize simple loops
 fn auto_vectorized_sum(data: &[f32]) -> f32 {
@@ -124,6 +129,7 @@ fn explicit_vectorizable(a: &mut [f32], b: &[f32]) {
 ## 🚀 **SIMD Data Structure Patterns**
 
 ### **Vectorized Array Operations**
+
 ```rust
 use std::simd::{f32x8, u32x8, Simd};
 
@@ -178,6 +184,7 @@ impl SimdArray<f32, 1024> {
 ```
 
 ### **SIMD-Friendly Matrix Storage**
+
 ```rust
 // Row-major storage for cache-friendly SIMD access
 struct Matrix<T> {
@@ -245,6 +252,7 @@ impl Matrix<f32> {
 ## 🔍 **Search and Filter Operations**
 
 ### **SIMD String Search**
+
 ```rust
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
@@ -280,6 +288,7 @@ unsafe fn simd_find_byte(haystack: &[u8], needle: u8) -> Option<usize> {
 ```
 
 ### **Parallel Comparison Operations**
+
 ```rust
 use std::simd::{u8x32, mask32};
 
@@ -344,6 +353,7 @@ fn simd_filter_range(data: &[i32], min: i32, max: i32) -> Vec<i32> {
 ## 📊 **Aggregation Operations**
 
 ### **SIMD Reductions**
+
 ```rust
 use std::simd::{f64x4, i32x8};
 
@@ -403,6 +413,7 @@ fn simd_min_max_i32(data: &[i32]) -> (i32, i32) {
 ```
 
 ### **Statistical Operations**
+
 ```rust
 fn simd_mean_variance(data: &[f32]) -> (f32, f32) {
     if data.is_empty() {
@@ -462,6 +473,7 @@ fn simd_sum_f32(data: &[f32]) -> f32 {
 ## 🧮 **Specialized Data Structure Operations**
 
 ### **SIMD Hash Table Probing**
+
 ```rust
 use std::simd::{u64x4, mask64};
 
@@ -509,6 +521,7 @@ impl<K: PartialEq, V> SimdHashMap<K, V> {
 ```
 
 ### **SIMD Sorting Networks**
+
 ```rust
 use std::simd::{i32x8, Simd};
 
@@ -545,6 +558,7 @@ fn shuffle_lanes(vec: i32x8, indices: [usize; 8]) -> i32x8 {
 ## 🎯 **Performance Optimization Techniques**
 
 ### **Memory Alignment**
+
 ```rust
 use std::alloc::{alloc, dealloc, Layout};
 
@@ -594,6 +608,7 @@ let mut aligned_data = AlignedVec::<f32>::new_aligned(1024, 32); // 32-byte alig
 ```
 
 ### **Loop Unrolling and Prefetching**
+
 ```rust
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
@@ -631,6 +646,7 @@ fn simd_transform_with_prefetch(input: &[f32], output: &mut [f32], factor: f32) 
 ```
 
 ### **Runtime SIMD Feature Detection**
+
 ```rust
 use std::sync::Once;
 
@@ -683,6 +699,7 @@ fn scalar_sum(data: &[i32]) -> i32 {
 ## 🧪 **Testing and Benchmarking**
 
 ### **SIMD Correctness Testing**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -719,6 +736,7 @@ mod tests {
 ```
 
 ### **SIMD Performance Benchmarks**
+
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
 
@@ -762,7 +780,9 @@ criterion_main!(benches);
 ## 📝 **Best Practices**
 
 ### **When to Use SIMD**
+
 ✅ **Good candidates:**
+
 - Mathematical operations on arrays
 - Image/signal processing
 - Cryptographic operations
@@ -770,12 +790,14 @@ criterion_main!(benches);
 - Statistical computations
 
 ❌ **Poor candidates:**
+
 - Irregular memory access patterns
 - Complex branching logic
 - Small data sets (overhead cost)
 - Operations with data dependencies
 
 ### **Performance Considerations**
+
 ```rust
 // Good: Data-parallel operations
 fn good_simd_candidate(a: &[f32], b: &[f32]) -> Vec<f32> {
@@ -800,6 +822,7 @@ fn bad_memory_pattern(data: &[f32], indices: &[usize]) -> Vec<f32> {
 ```
 
 ### **Portability Guidelines**
+
 ```rust
 // Use feature detection for runtime dispatch
 fn portable_simd_function(data: &[f32]) -> f32 {
@@ -837,4 +860,4 @@ fn portable_with_std_simd(data: &[f32]) -> f32 {
 
 *Tags: #simd #vectorization #performance #optimization #parallel-processing #cpu-architecture #high-performance-computing*
 
-*Links: [[zettel-index]] | [[Cache-Friendly Data Structures]] | [[Performance Analysis Patterns]] | [[Memory Layout Optimization]] | [[CPU Architecture Patterns]] | [[High-Performance Computing]] | [[Vector Processing]]* 
+*Links: [[zettel-index]] | [[Cache-Friendly Data Structures]] | [[Performance Analysis Patterns]] | [[Memory Layout Optimization]] | [[CPU Architecture Patterns]] | [[High-Performance Computing]] | [[Vector Processing]]*

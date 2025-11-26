@@ -9,7 +9,9 @@
 `Box<T>` is Rust's simplest smart pointer - a stack-allocated pointer that owns heap-allocated data. It's the go-to solution when you need to move data from stack to heap while maintaining Rust's ownership guarantees.
 
 ### **Mental Model: The Container**
+
 Think of `Box<T>` as a **labeled container**:
+
 - The **label** (pointer) lives on the stack
 - The **contents** (actual data) live on the heap  
 - When you drop the container, the contents are automatically cleaned up
@@ -23,6 +25,7 @@ let boxed = Box::new(42);
 ## 🔧 **Core Operations**
 
 ### **Creation and Access**
+
 ```rust
 // Create a Box
 let boxed = Box::new(100);
@@ -36,6 +39,7 @@ let value = *boxed;  // boxed is now unusable
 ```
 
 ### **Ownership Transfer**
+
 ```rust
 fn take_ownership(boxed: Box<i32>) -> i32 {
     *boxed  // Box is consumed, value returned
@@ -49,6 +53,7 @@ let value = take_ownership(my_box);  // my_box moved
 ## 🎯 **When to Use Box<T>**
 
 ### **1. Large Data → Prevent Stack Overflow**
+
 ```rust
 // This would cause stack overflow for large arrays
 // let huge_array = [0u8; 1_000_000];
@@ -58,6 +63,7 @@ let huge_array = Box::new([0u8; 1_000_000]);
 ```
 
 ### **2. Recursive Data Structures**
+
 ```rust
 // This won't compile - infinite size
 // struct List {
@@ -81,6 +87,7 @@ let list = List {
 ```
 
 ### **3. Trait Objects (Dynamic Dispatch)**
+
 ```rust
 trait Drawable {
     fn draw(&self);
@@ -111,6 +118,7 @@ for shape in shapes {
 ## 🏗️ **Mission Integration**
 
 ### **Mission2: Queue with Box**
+
 ```rust
 // Linked queue implementation
 struct Node<T> {
@@ -147,6 +155,7 @@ impl<T> LinkedQueue<T> {
 ```
 
 ### **Mission4: Binary Tree with Box**
+
 ```rust
 #[derive(Debug)]
 struct TreeNode<T> {
@@ -183,6 +192,7 @@ impl<T: Ord> TreeNode<T> {
 ## ⚡ **Performance Characteristics**
 
 ### **Memory Overhead**
+
 ```rust
 use std::mem::size_of;
 
@@ -194,12 +204,14 @@ println!("Box<i32> size: {}", size_of::<Box<i32>>());  // 8 (just the pointer)
 ```
 
 ### **Allocation Cost**
+
 - **Heap allocation**: More expensive than stack allocation
 - **Indirection**: One extra memory access to reach data
 - **Cache effects**: Heap data may not be cache-friendly
 - **Trade-off**: Flexibility vs performance
 
 ### **When Box is Zero-Cost**
+
 ```rust
 // These are equivalent at runtime:
 let direct: &i32 = &42;
@@ -214,6 +226,7 @@ let boxed: &i32 = Box::leak(Box::new(42));  // Both are just pointers
 ## 🔄 **Box Conversions**
 
 ### **Box ↔ Raw Pointer**
+
 ```rust
 let boxed = Box::new(42);
 
@@ -229,6 +242,7 @@ let boxed_again = unsafe { Box::from_raw(raw) };
 ```
 
 ### **Box ↔ Reference**
+
 ```rust
 let boxed = Box::new(42);
 
@@ -242,6 +256,7 @@ let leaked_ref: &'static i32 = Box::leak(boxed);  // Box never drops
 ## 🧪 **Common Patterns**
 
 ### **Optional Box (Box<Option<T>> vs Option<Box<T>>)**
+
 ```rust
 // Usually prefer Option<Box<T>>
 type OptionalBox<T> = Option<Box<T>>;
@@ -264,6 +279,7 @@ fn process_data(data: Option<Box<Vec<i32>>>) {
 ```
 
 ### **Error Handling with Box**
+
 ```rust
 use std::error::Error;
 
@@ -280,6 +296,7 @@ fn might_fail() -> Result<i32, Box<dyn Error>> {
 ## 🔍 **Debugging and Inspection**
 
 ### **Memory Layout Visualization**
+
 ```rust
 let boxed = Box::new(vec![1, 2, 3, 4, 5]);
 
@@ -292,6 +309,7 @@ assert!(!boxed.as_ptr().is_null());
 ```
 
 ### **Leak Detection**
+
 ```rust
 // Intentional leak for debugging
 let leaked = Box::leak(Box::new(42));
@@ -307,16 +325,19 @@ unsafe {
 ## 🎓 **Learning Path**
 
 ### **Beginner**
+
 1. **Basic usage**: `Box::new()`, dereferencing with `*`
 2. **Ownership**: Understanding move semantics with Box
 3. **Simple patterns**: Heap allocation for large data
 
 ### **Intermediate**  
+
 1. **Recursive structures**: Linked lists, trees with Box
 2. **Trait objects**: `Box<dyn Trait>` for dynamic dispatch
 3. **Performance trade-offs**: When to use Box vs alternatives
 
 ### **Advanced**
+
 1. **Raw pointer conversions**: `Box::into_raw()`, `Box::from_raw()`
 2. **Custom allocators**: Working with different heap allocators
 3. **Unsafe patterns**: Manual memory management with Box
@@ -324,16 +345,19 @@ unsafe {
 ## 🔗 **Related Concepts**
 
 ### **Other Smart Pointers**
+
 - **[[Rc and Arc]]**: Reference counting for shared ownership
 - **[[RefCell and Mutex]]**: Interior mutability patterns
 - **[[Weak]]**: Breaking reference cycles
 
 ### **Memory Management**
+
 - **[[Ownership and Borrowing]]**: Core ownership principles
 - **[[Memory Address Analysis]]**: Understanding heap vs stack
 - **[[Unsafe Rust - Raw Pointers and Safety Contracts]]**: Manual memory management
 
 ### **Data Structures**
+
 - **[[Box Smart Pointer Patterns]]**: Advanced Box usage patterns
 - **[[mission-4]]**: Linked lists and trees with Box
 - **[[Collections MOC]]**: Box in collection implementations

@@ -7,6 +7,7 @@
 `Box<T>` is Rust's **smart pointer** for heap-allocated data. It's a stack-allocated pointer that owns heap-allocated data, providing automatic memory management.
 
 ### **Memory Layout**
+
 ```rust
 let boxed = Box::new(42);
 
@@ -22,6 +23,7 @@ let boxed = Box::new(42);
 ## 🏗️ Basic Usage Patterns
 
 ### **Creating Box Values**
+
 ```rust
 // Basic creation
 let boxed_int = Box::new(42);
@@ -36,6 +38,7 @@ let boxed_data = Box::new(data);  // data is moved into Box
 ```
 
 ### **Accessing Box Data**
+
 ```rust
 let boxed = Box::new(42);
 
@@ -55,6 +58,7 @@ let length = boxed.to_string().len();
 ## 🔄 Ownership and Movement
 
 ### **Single Ownership**
+
 ```rust
 let boxed1 = Box::new(42);
 let boxed2 = boxed1;  // boxed1 is moved to boxed2
@@ -68,6 +72,7 @@ let boxed2 = boxed1;  // boxed1 is moved to boxed2
 ```
 
 ### **Borrowing from Box**
+
 ```rust
 let boxed = Box::new(String::from("Hello"));
 
@@ -87,6 +92,7 @@ let ref2 = &*boxed;  // OK - immutable borrows
 ## 🎯 Common Use Cases
 
 ### **1. Large Data Structures**
+
 ```rust
 // Stack has limited space - use heap for large data
 let large_array = Box::new([0u8; 1_000_000]);
@@ -94,6 +100,7 @@ let large_vec = Box::new(vec![0; 1_000_000]);
 ```
 
 ### **2. Recursive Data Structures**
+
 ```rust
 // Without Box, this would be infinite size
 enum List {
@@ -111,6 +118,7 @@ enum Tree {
 ```
 
 ### **3. Trait Objects (Dynamic Dispatch)**
+
 ```rust
 trait Drawable {
     fn draw(&self);
@@ -134,6 +142,7 @@ for shape in shapes {
 ```
 
 ### **4. Object-Safe Cloning**
+
 ```rust
 trait Clone {
     fn clone_box(&self) -> Box<dyn Clone>;
@@ -153,6 +162,7 @@ let cloned: Box<dyn Clone> = obj.clone_box();
 ## ⚡ Performance Characteristics
 
 ### **Allocation Costs**
+
 ```rust
 // Stack allocation - very fast
 let stack_data = 42;
@@ -166,6 +176,7 @@ let b = *heap_data;  // Dereference from heap
 ```
 
 ### **Memory Overhead**
+
 ```rust
 // Box overhead: 8 bytes (pointer) + heap allocation overhead
 let boxed = Box::new(42);  // 8 bytes on stack + 4 bytes on heap
@@ -177,6 +188,7 @@ let direct = 42;  // 4 bytes on stack only
 ## 🔧 Advanced Patterns
 
 ### **Box with Custom Drop**
+
 ```rust
 struct Resource {
     data: String,
@@ -195,6 +207,7 @@ let boxed_resource = Box::new(Resource {
 ```
 
 ### **Box in Generic Contexts**
+
 ```rust
 fn process_boxed<T>(boxed: Box<T>) -> T
 where
@@ -209,6 +222,7 @@ let value = process_boxed(boxed);  // value is now 42, not in Box
 ```
 
 ### **Box with Interior Mutability**
+
 ```rust
 use std::cell::RefCell;
 
@@ -223,6 +237,7 @@ let value = *boxed_cell.borrow();  // 100
 ## 🚫 Common Pitfalls
 
 ### **1. Unnecessary Boxing**
+
 ```rust
 // ❌ Don't box small, copyable types
 let unnecessary = Box::new(42);  // i32 is already efficient on stack
@@ -232,6 +247,7 @@ let necessary = Box::new(vec![0; 1_000_000]);  // Large data
 ```
 
 ### **2. Forgetting Dereference**
+
 ```rust
 let boxed = Box::new(42);
 
@@ -243,6 +259,7 @@ let result = *boxed + 10;
 ```
 
 ### **3. Double Boxing**
+
 ```rust
 // ❌ Unnecessary double indirection
 let double_boxed = Box::new(Box::new(42));
@@ -254,6 +271,7 @@ let single_boxed = Box::new(42);
 ## 🎯 When to Use Box<T>
 
 ### **✅ Use Box when:**
+
 - Data is too large for the stack
 - You need recursive data structures
 - You want trait objects (`Box<dyn Trait>`)
@@ -262,6 +280,7 @@ let single_boxed = Box::new(42);
 - You need object-safe cloning
 
 ### **❌ Don't use Box when:**
+
 - Data fits comfortably on the stack
 - You can use references instead
 - You need multiple owners (use `Rc<T>` or `Arc<T>`)
@@ -270,23 +289,27 @@ let single_boxed = Box::new(42);
 ## 🔗 Related Concepts
 
 ### **Smart Pointers Family**
+
 - `Box<T>` - Single ownership, heap allocation
 - `Rc<T>` - Reference counting, shared ownership
 - `Arc<T>` - Atomic reference counting, thread-safe
 - `RefCell<T>` - Interior mutability, runtime borrowing
 
 ### **Memory Management**
+
 - [[daily-study/Day02]] - Ownership fundamentals
 - [[daily-study/Day03]] - Reference semantics
 - [[daily-study/Day04]] - Reference lifetime management
 
 ### **Trait Objects**
+
 - [[daily-study/Day19]] - Dynamic dispatch patterns
 - [[Object Safety Patterns]] - Making traits object-safe
 
 ## 🧪 Practice Exercises
 
 ### **Exercise 1: Recursive List**
+
 ```rust
 // Implement a linked list using Box
 enum List<T> {
@@ -303,6 +326,7 @@ impl<T> List<T> {
 ```
 
 ### **Exercise 2: Binary Tree**
+
 ```rust
 // Implement a binary tree using Box
 enum Tree<T> {
@@ -319,6 +343,7 @@ impl<T> Tree<T> {
 ```
 
 ### **Exercise 3: Trait Object Collection**
+
 ```rust
 // Create a collection of different types implementing the same trait
 trait Animal {
@@ -358,7 +383,3 @@ for animal in animals {
 
 *Tags: #box #smart-pointers #heap-allocation #ownership #memory-management #trait-objects #recursive-structures*
 *Links: [[daily-study/Day02]] | [[daily-study/Day19]] | [[rust-concepts-MOC]] | [[Collections MOC]]*
-
-
-
-

@@ -31,12 +31,14 @@ Graph:     Adjacency List:
 ## Implementation Patterns
 
 ### **Mission 7 Implementation**
+
 - Uses `Vec<Vec<usize>>` for neighbor storage
 - Supports both directed and undirected graphs
 - O(1) vertex addition, O(degree) neighbor lookup
 - Generic over node data types
 
 ### **Performance Characteristics**
+
 | Operation | Time Complexity | Space |
 |-----------|----------------|-------|
 | Add Vertex | O(1) amortized | O(V) |
@@ -48,12 +50,14 @@ Graph:     Adjacency List:
 ## Advantages vs Alternatives
 
 ### **✅ Adjacency List Strengths**
+
 - **Space Efficient**: O(V + E) - only stores existing edges
 - **Sparse Graph Optimal**: Perfect for graphs with few edges
 - **Edge Iteration**: Fast to iterate through all edges
 - **Dynamic**: Easy to add/remove vertices and edges
 
 ### **❌ Adjacency List Weaknesses**  
+
 - **Edge Lookup**: O(degree) to check if specific edge exists
 - **Dense Graph Overhead**: Less efficient than matrix for dense graphs
 - **Cache Performance**: Pointer chasing can hurt cache locality
@@ -71,6 +75,7 @@ Graph:     Adjacency List:
 ## Union-Find Connection
 
 In [[mission-10]] Union-Find tutorial, we compared adjacency approaches:
+
 - **Union-Find**: O(V) space, O(α(V)) connectivity queries
 - **Adjacency List**: O(V+E) space, O(V+E) connectivity via DFS/BFS  
 - **Adjacency Matrix**: O(V²) space, O(1) edge queries
@@ -80,6 +85,7 @@ The choice depends on query patterns and graph density.
 ## Real-World Applications
 
 ### **Social Networks**
+
 ```rust
 // User connections - typically sparse
 let friends: Vec<Vec<UserId>> = vec![
@@ -90,6 +96,7 @@ let friends: Vec<Vec<UserId>> = vec![
 ```
 
 ### **Web Graph**
+
 ```rust
 // Web pages with outbound links
 let web_graph: Vec<Vec<PageId>> = vec![
@@ -100,6 +107,7 @@ let web_graph: Vec<Vec<PageId>> = vec![
 ```
 
 ### **Road Networks**
+
 ```rust
 // Intersections and connected roads
 let road_network: Vec<Vec<IntersectionId>> = vec![
@@ -111,6 +119,7 @@ let road_network: Vec<Vec<IntersectionId>> = vec![
 ## Implementation Variants
 
 ### **Weighted Adjacency List**
+
 ```rust
 struct WeightedGraph {
     adj_list: Vec<Vec<(usize, i32)>>,  // (neighbor, weight) pairs
@@ -118,6 +127,7 @@ struct WeightedGraph {
 ```
 
 ### **Generic Adjacency List**
+
 ```rust  
 struct GenericGraph<T> {
     nodes: Vec<T>,                    // Node data
@@ -126,7 +136,9 @@ struct GenericGraph<T> {
 ```
 
 ### **Bidirectional Links**
+
 For undirected graphs, ensure symmetry:
+
 ```rust
 fn add_undirected_edge(&mut self, u: usize, v: usize) {
     self.adj_list[u].push(v);
@@ -137,11 +149,13 @@ fn add_undirected_edge(&mut self, u: usize, v: usize) {
 ## Advanced Considerations
 
 ### **Memory Optimization**
+
 - Use `SmallVec` for vertices with few neighbors
 - Consider `HashMap<usize, Vec<usize>>` for very sparse graphs
 - Pack edge weights efficiently for weighted graphs
 
 ### **Concurrent Access**
+
 - Use `Arc<RwLock<Vec<Vec<usize>>>>` for thread-safe access
 - Consider lock-free data structures for high-performance scenarios
 - Separate read/write operations to minimize contention
@@ -158,6 +172,7 @@ fn add_undirected_edge(&mut self, u: usize, v: usize) {
 ## Code Examples
 
 See complete implementations in:
+
 - `missions/Mission7/` - Production-quality graph with adjacency lists
 - `tutorials/Mission7_tut/examples/step2_adjacency_lists.rs` - Educational examples
 - Advanced examples in `advanced_examples/` for specialized use cases

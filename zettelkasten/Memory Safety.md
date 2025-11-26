@@ -10,6 +10,7 @@ Memory safety in Rust is achieved through the **ownership system**, **borrowing 
 ## Core Safety Guarantees
 
 ### Memory Safety Violations Prevented
+
 ```rust
 // Use-after-free - PREVENTED at compile time
 fn use_after_free_prevented() {
@@ -49,6 +50,7 @@ fn data_race_prevented() {
 ```
 
 ### Ownership System Fundamentals
+
 ```rust
 // Single ownership prevents aliasing + mutation
 fn ownership_example() {
@@ -84,6 +86,7 @@ fn change_string(s: &mut String) {
 ## Mission Integration Examples
 
 ### Mission 1: Stack Memory Safety
+
 ```rust
 pub struct Stack<T> {
     items: Vec<T>, // Vec provides memory safety automatically
@@ -135,6 +138,7 @@ fn stack_safety_example() {
 ```
 
 ### Mission 4: Linked List with Safe References
+
 ```rust
 use std::rc::Rc;
 use std::cell::RefCell;
@@ -213,6 +217,7 @@ impl<T> Iterator for LinkedListIterator<T> {
 ```
 
 ### Mission 5: HashMap Memory Safety
+
 ```rust
 use std::hash::{Hash, Hasher};
 use std::collections::hash_map::DefaultHasher;
@@ -291,6 +296,7 @@ where
 ## AoC Memory Safety Patterns
 
 ### Day 18: Game of Life Safe Grid
+
 ```rust
 pub struct GameGrid {
     current: Vec<Vec<bool>>,
@@ -360,6 +366,7 @@ impl GameGrid {
 ```
 
 ### Day 15: Safe Combinatorial Search
+
 ```rust
 // Safe ingredient combination generation
 fn safe_ingredient_search(ingredients: &[Ingredient]) -> Option<i32> {
@@ -441,6 +448,7 @@ fn calculate_score_safe(ingredients: &[Ingredient], amounts: &[i32]) -> Option<i
 ## Unsafe Rust and Safety Boundaries
 
 ### When Unsafe is Necessary
+
 ```rust
 // Safe wrapper around unsafe operations
 pub struct SafeBuffer {
@@ -493,6 +501,7 @@ unsafe fn fast_memory_copy(src: *const u8, dst: *mut u8, len: usize) {
 ```
 
 ### Memory Safety Validation
+
 ```rust
 // Compile-time safety validation
 fn compile_time_safety_demo() {
@@ -534,6 +543,7 @@ fn runtime_safety_demo() {
 ## Concurrency Safety
 
 ### Thread Safety Guarantees
+
 ```rust
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -571,6 +581,7 @@ fn thread_safety_bounds<T: Send + Sync + 'static>(data: T) {
 ```
 
 ### Data Race Prevention
+
 ```rust
 use std::sync::Arc;
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -630,16 +641,19 @@ fn concurrent_counter_demo() {
 ## Daily Study Applications
 
 ### Week 1: Ownership and Borrowing
+
 - Understanding move semantics and memory safety
 - Preventing use-after-free with ownership
 - Safe reference management
 
 ### Week 3: Advanced Safety Patterns
+
 - Smart pointers for complex ownership scenarios
 - Interior mutability with runtime safety checks
 - Custom safe abstractions over unsafe code
 
 ### Week 4: Concurrency Safety
+
 - Thread safety with Send and Sync traits
 - Data race prevention with ownership system
 - Safe concurrent data structures
@@ -647,6 +661,7 @@ fn concurrent_counter_demo() {
 ## Mission Safety Requirements
 
 ### Memory Safety Validation Checklist
+
 1. **No raw pointers** in safe interfaces
 2. **Bounds checking** for all array/vector access
 3. **Option/Result** for operations that can fail
@@ -656,6 +671,7 @@ fn concurrent_counter_demo() {
 7. **Resource cleanup** through RAII
 
 ### Safety Testing Patterns
+
 ```rust
 #[cfg(test)]
 mod safety_tests {
@@ -696,6 +712,7 @@ mod safety_tests {
 ---
 
 *Memory Safety Links:*
+
 - [[ownership]] - Core safety mechanism
 - [[interior-mutability]] - Safe shared mutability
 - [[zero-cost-abstractions]] - Safety without cost

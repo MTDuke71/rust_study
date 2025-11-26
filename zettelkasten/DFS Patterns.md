@@ -7,6 +7,7 @@
 **Depth-First Search (DFS)** is a graph/grid traversal algorithm that explores as far as possible along each branch before backtracking. It uses a **stack** (LIFO) data structure or recursion.
 
 **Key Properties:**
+
 - ✅ **Explores deeply** before exploring widely
 - ✅ **Memory efficient** - O(depth) space
 - ✅ **Natural for backtracking** problems
@@ -14,6 +15,7 @@
 - ❌ **Does NOT guarantee shortest path**
 
 **When to Use DFS:**
+
 - Exhaustive search needed (find all paths/solutions)
 - Backtracking problems (puzzles, constraints)
 - Path existence check (any path, not shortest)
@@ -26,6 +28,7 @@
 ## 📐 DFS Algorithm Templates
 
 ### **Recursive DFS (Most Common)**
+
 ```rust
 use std::collections::HashSet;
 
@@ -56,6 +59,7 @@ dfs_recursive(&grid, start, &mut visited);
 ```
 
 ### **Iterative DFS with Explicit Stack**
+
 ```rust
 fn dfs_iterative(grid: &[Vec<bool>], start: Point) {
     let mut stack = vec![start];
@@ -82,6 +86,7 @@ fn dfs_iterative(grid: &[Vec<bool>], start: Point) {
 ```
 
 ### **DFS Path Finding**
+
 ```rust
 fn dfs_find_path(
     grid: &[Vec<bool>],
@@ -122,6 +127,7 @@ if dfs_find_path(&grid, start, goal, &mut visited, &mut path) {
 ```
 
 ### **DFS Find All Paths**
+
 ```rust
 fn dfs_all_paths(
     grid: &[Vec<bool>],
@@ -163,6 +169,7 @@ dfs_all_paths(&grid, start, goal, &mut visited, &mut path, &mut all_paths);
 ## 🎨 Common DFS Patterns
 
 ### **Pattern 1: Flood Fill (Region Coloring)**
+
 ```rust
 fn flood_fill(
     grid: &mut [Vec<char>],
@@ -212,6 +219,7 @@ fn flood_fill(
 ```
 
 ### **Pattern 2: Connected Components**
+
 ```rust
 fn count_connected_components(grid: &[Vec<bool>]) -> usize {
     let height = grid.len();
@@ -261,6 +269,7 @@ fn count_connected_components(grid: &[Vec<bool>]) -> usize {
 ```
 
 ### **Pattern 3: Backtracking (N-Queens, Sudoku)**
+
 ```rust
 fn solve_sudoku(board: &mut [Vec<u8>]) -> bool {
     fn is_valid(board: &[Vec<u8>], row: usize, col: usize, num: u8) -> bool {
@@ -326,6 +335,7 @@ fn solve_sudoku(board: &mut [Vec<u8>]) -> bool {
 ```
 
 ### **Pattern 4: Cycle Detection**
+
 ```rust
 #[derive(Clone, Copy, PartialEq)]
 enum VisitState {
@@ -377,6 +387,7 @@ fn has_cycle(graph: &HashMap<usize, Vec<usize>>) -> bool {
 ```
 
 ### **Pattern 5: Topological Sort**
+
 ```rust
 fn topological_sort(graph: &HashMap<usize, Vec<usize>>) -> Vec<usize> {
     let mut visited = HashSet::new();
@@ -419,6 +430,7 @@ fn topological_sort(graph: &HashMap<usize, Vec<usize>>) -> Vec<usize> {
 ## 🎮 AoC DFS Patterns
 
 ### **AoC Pattern 1: Find All Solutions**
+
 ```rust
 // Generate all valid combinations
 fn generate_combinations(
@@ -443,6 +455,7 @@ fn generate_combinations(
 ```
 
 ### **AoC Pattern 2: Path with Constraints**
+
 ```rust
 // Find path avoiding certain cells
 fn find_valid_path(
@@ -477,6 +490,7 @@ fn find_valid_path(
 ```
 
 ### **AoC Pattern 3: Maximum Path Value**
+
 ```rust
 // Find path with maximum collected value
 fn max_path_value(
@@ -525,6 +539,7 @@ fn max_path_value(
 ## ⚡ Performance Considerations
 
 ### **1. Stack Overflow Risk**
+
 ```rust
 // ❌ Deep recursion can overflow stack
 fn deep_dfs_recursive(n: usize) {
@@ -546,12 +561,14 @@ fn deep_dfs_iterative(start: usize, max: usize) {
 ```
 
 ### **2. Tail Recursion Optimization**
+
 ```rust
 // Rust doesn't guarantee tail call optimization
 // For very deep recursion, use iterative approach
 ```
 
 ### **3. Memory for Visited Set**
+
 ```rust
 // For grids: use Vec<Vec<bool>> instead of HashSet
 let mut visited = vec![vec![false; width]; height];
@@ -574,6 +591,7 @@ let mut visited = vec![vec![false; width]; height];
 ## 🚫 Common Pitfalls
 
 ### **Pitfall 1: Forgetting to Backtrack**
+
 ```rust
 // ❌ Wrong: No backtracking
 fn wrong_dfs(grid: &[Vec<bool>], current: Point, visited: &mut HashSet<Point>) {
@@ -591,6 +609,7 @@ fn correct_dfs(grid: &[Vec<bool>], current: Point, visited: &mut HashSet<Point>)
 ```
 
 ### **Pitfall 2: Infinite Recursion**
+
 ```rust
 // ❌ No base case or cycle detection
 fn infinite_dfs(graph: &HashMap<usize, Vec<usize>>, node: usize) {
@@ -615,6 +634,7 @@ fn safe_dfs(
 ```
 
 ### **Pitfall 3: Stack Overflow**
+
 ```rust
 // For very deep graphs (>10000 nodes), use iterative DFS
 // Rust's default stack size may not handle extreme recursion
@@ -625,6 +645,7 @@ fn safe_dfs(
 ## 🔗 Connected Concepts
 
 ### **Related Zettelkasten Pages**
+
 - [[BFS Patterns]] - Breadth-first alternative
 - [[A-Star-Algorithm-Deep-Dive]] - Heuristic-guided search
 - [[mission-7]] - Graph algorithms including DFS
@@ -632,6 +653,7 @@ fn safe_dfs(
 - [[directed-vs-undirected-graphs]] - Understanding graph types for DFS
 
 ### **Related Algorithms**
+
 - **Backtracking**: Subset problems, constraint satisfaction
 - **Topological Sort**: Dependency resolution
 - **Strongly Connected Components**: Tarjan's algorithm (uses DFS)
@@ -649,6 +671,7 @@ fn safe_dfs(
 6. **Cycle Detection Essential**: Prevent infinite loops
 
 **When to Use DFS:**
+
 ```
 ✅ Need to find ALL paths/solutions
 ✅ Backtracking problems (Sudoku, N-Queens)

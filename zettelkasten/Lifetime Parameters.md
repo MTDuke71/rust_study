@@ -52,6 +52,7 @@ let s: &'static str = "I have a static lifetime.";
 ## Common Use Cases
 
 ### 1. Function Parameters
+
 ```rust
 // When function returns a reference derived from input
 fn first_word<'a>(s: &'a str) -> &'a str {
@@ -66,6 +67,7 @@ fn first_word<'a>(s: &'a str) -> &'a str {
 ```
 
 ### 2. Struct Definitions
+
 ```rust
 // When struct holds references
 struct ParsedData<'a> {
@@ -89,6 +91,7 @@ struct ParsedData<'a> {
 ## Common Pitfalls
 
 ### Unnecessary Lifetime Annotations
+
 ```rust
 // Problem: Unnecessary explicit lifetime
 fn first_word<'a>(s: &'a str) -> &'a str { /* ... */ }
@@ -109,10 +112,12 @@ fn first_word(s: &str) -> &str { /* ... */ }
 ## Use Cases in Rust Study Projects
 
 ### Mission3 - Binary Search
+
 - **Usage:** Iterator APIs with lifetime parameters
 - **Example:** Search functions returning references into input data
 
 ### Mission4 - Linked Lists  
+
 - **Usage:** Node references and iterator implementations
 - **Example:** Safe traversal with lifetime guarantees
 

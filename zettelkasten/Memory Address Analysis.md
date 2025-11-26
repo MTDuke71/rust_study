@@ -9,6 +9,7 @@
 Memory address analysis in Rust provides insights into how data is stored and accessed, crucial for debugging ownership issues, optimizing performance, and understanding system-level behavior.
 
 ### **Address Printing Fundamentals**
+
 ```rust
 let x = 42i32;
 println!("x = {} at address {:p}", x, &x);
@@ -16,6 +17,7 @@ println!("x = {} at address {:p}", x, &x);
 ```
 
 **Key Format Specifiers:**
+
 - `{:p}` - Pointer/address formatting (hexadecimal)
 - `{:x}` - Hexadecimal formatting for numeric addresses
 - `{:?}` - Debug formatting (includes addresses for references)
@@ -23,6 +25,7 @@ println!("x = {} at address {:p}", x, &x);
 ## 🏗️ **Stack vs Heap Analysis**
 
 ### **Stack Allocation Patterns**
+
 ```rust
 let stack_array = [1, 2, 3, 4, 5];
 let x = 10;
@@ -37,6 +40,7 @@ println!("Variable y: {:p}", &y);
 ```
 
 ### **Heap Allocation Patterns**
+
 ```rust
 let heap_vec = vec![1, 2, 3, 4, 5];
 let heap_box = Box::new(42);
@@ -48,6 +52,7 @@ println!("Box pointer address: {:p}", &heap_box);
 ```
 
 **Key Insights:**
+
 - **Vec struct** lives on stack, **data** lives on heap
 - **Box pointer** on stack, **contents** on heap
 - Heap addresses are unpredictable and scattered
@@ -55,6 +60,7 @@ println!("Box pointer address: {:p}", &heap_box);
 ## 🔍 **Method Call Memory Analysis**
 
 ### **Method Dispatch and Self**
+
 ```rust
 struct Rectangle {
     width: u32,
@@ -74,11 +80,13 @@ let area = rect.area(); // Automatic referencing: &rect passed as self
 ```
 
 **Memory Behavior:**
+
 - `rect.area()` automatically converts to `Rectangle::area(&rect)`
 - `self` parameter receives same address as original struct
 - **Zero-cost abstraction**: No runtime overhead for method syntax
 
 ### **Ownership Transfer Analysis**
+
 ```rust
 impl Rectangle {
     fn consume(self) -> u32 {
@@ -96,6 +104,7 @@ let result = rect.consume(); // Moves ownership
 ## 🚀 **Performance Analysis Applications**
 
 ### **Cache Locality Verification**
+
 ```rust
 let data = vec![1, 2, 3, 4, 5];
 for (i, value) in data.iter().enumerate() {
@@ -105,6 +114,7 @@ for (i, value) in data.iter().enumerate() {
 ```
 
 ### **Memory Layout Optimization**
+
 ```rust
 #[repr(C)]  // C-style layout for predictable addressing
 struct OptimizedStruct {
@@ -130,6 +140,7 @@ println!("medium_field: {:p}", &opt.medium_field);
 ## 🧪 **Debugging Applications**
 
 ### **Ownership Issue Diagnosis**
+
 ```rust
 fn debug_ownership() {
     let original = vec![1, 2, 3];
@@ -147,6 +158,7 @@ fn debug_ownership() {
 ```
 
 ### **Memory Leak Detection**
+
 ```rust
 fn leak_analysis() {
     let large_allocation = vec![0u32; 1_000_000];
@@ -162,6 +174,7 @@ fn leak_analysis() {
 ## ⚠️ **Raw Pointer Analysis**
 
 ### **Unsafe Address Manipulation**
+
 ```rust
 let mut value = 100;
 let ptr = &mut value as *mut i32;
@@ -182,6 +195,7 @@ fn is_stack_address(addr: usize) -> bool {
 ```
 
 **Safety Considerations:**
+
 - Raw pointers bypass Rust's safety guarantees
 - Address arithmetic can lead to undefined behavior
 - Use only for system programming or FFI integration
@@ -189,6 +203,7 @@ fn is_stack_address(addr: usize) -> bool {
 ## 🎯 **Mission Integration Applications**
 
 ### **Mission2: Queue Memory Layout**
+
 ```rust
 // Analyze ring buffer memory access patterns
 struct RingBuffer<T> {
@@ -209,6 +224,7 @@ impl<T> RingBuffer<T> {
 ```
 
 ### **Mission5: HashMap Bucket Analysis**
+
 ```rust
 // Verify hash collision distribution
 struct HashMap<K, V> {
@@ -230,6 +246,7 @@ impl<K, V> HashMap<K, V> {
 ## 📊 **Real-World Use Cases**
 
 ### **When to Use Address Analysis**
+
 - ✅ **Debugging ownership/borrowing** issues
 - ✅ **Performance optimization** and cache analysis  
 - ✅ **Data structure verification** (independence, layout)
@@ -238,6 +255,7 @@ impl<K, V> HashMap<K, V> {
 - ✅ **FFI integration** with C libraries
 
 ### **When NOT to Use**
+
 - ❌ **Production logging** (addresses change between runs)
 - ❌ **Serialization/persistence** (addresses are temporary)
 - ❌ **Comparison operations** (use `std::ptr::eq` instead)
@@ -246,18 +264,21 @@ impl<K, V> HashMap<K, V> {
 ## 🔗 **Integration with Learning Tracks**
 
 ### **Mission Applications**
+
 - **[[mission-2]]**: Ring buffer memory access patterns
 - **[[mission-5]]**: HashMap bucket distribution analysis
 - **[[mission-6]]**: Grid memory layout optimization
 - **[[mission-7]]**: Graph adjacency list memory efficiency
 
 ### **Daily Study Connections**
+
 - **Week 1**: Ownership and borrowing visualization
 - **Week 2**: Collection memory patterns (Vec, HashMap, BTreeMap)
 - **Week 3**: Trait object memory layout and vtables
 - **Week 4**: Grid algorithms and spatial locality
 
 ### **Rust Book Integration**
+
 - **Chapter 4**: Ownership system memory model
 - **Chapter 5**: Struct layout and method dispatch
 - **Chapter 8**: Collection internal memory management
@@ -266,6 +287,7 @@ impl<K, V> HashMap<K, V> {
 ## 🛠️ **Tools and Techniques**
 
 ### **Built-in Rust Tools**
+
 ```rust
 // Memory size analysis
 println!("Size of u32: {}", std::mem::size_of::<u32>());
@@ -278,6 +300,7 @@ println!("Same data, different addresses: {}", !std::ptr::eq(&a, &b));
 ```
 
 ### **External Tools**
+
 - **Valgrind**: Memory error detection (Linux/macOS)
 - **AddressSanitizer**: Fast memory error detector  
 - **Heaptrack**: Heap memory profiler

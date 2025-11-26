@@ -10,6 +10,7 @@ Performance benchmarking in Rust involves **systematic measurement** of code exe
 ## Core Tools
 
 ### Criterion.rs - Gold Standard
+
 ```rust
 // Cargo.toml
 [dev-dependencies]
@@ -43,6 +44,7 @@ criterion_main!(benches);
 ```
 
 ### Built-in Benchmarking (Nightly)
+
 ```rust
 #![feature(test)]
 extern crate test;
@@ -65,6 +67,7 @@ mod benchmarks {
 ## Mission Benchmarking Patterns
 
 ### Mission 1: Stack Performance
+
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use mission1::Stack;
@@ -108,6 +111,7 @@ criterion_main!(benches);
 ```
 
 ### Mission 5: HashMap Performance
+
 ```rust
 fn benchmark_hashmap_vs_btreemap(c: &mut Criterion) {
     let mut group = c.benchmark_group("map_comparison");
@@ -139,6 +143,7 @@ fn benchmark_hashmap_vs_btreemap(c: &mut Criterion) {
 ```
 
 ### Mission 6: Grid Operations
+
 ```rust
 fn benchmark_grid_access_patterns(c: &mut Criterion) {
     let mut group = c.benchmark_group("grid_access");
@@ -177,6 +182,7 @@ fn benchmark_grid_access_patterns(c: &mut Criterion) {
 ## Advanced Benchmarking Techniques
 
 ### Input Size Scaling
+
 ```rust
 fn benchmark_scaling(c: &mut Criterion) {
     let mut group = c.benchmark_group("algorithm_scaling");
@@ -195,6 +201,7 @@ fn benchmark_scaling(c: &mut Criterion) {
 ```
 
 ### Memory Usage Profiling
+
 ```rust
 use criterion::{measurement::WallTime, BenchmarkGroup};
 use std::alloc::{GlobalAlloc, Layout, System};
@@ -239,6 +246,7 @@ fn benchmark_with_memory_tracking(c: &mut Criterion) {
 ## AoC Benchmarking Patterns
 
 ### String Processing Optimization
+
 ```rust
 fn benchmark_aoc_day11(c: &mut Criterion) {
     let mut group = c.benchmark_group("password_generation");
@@ -263,6 +271,7 @@ fn benchmark_aoc_day11(c: &mut Criterion) {
 ```
 
 ### Algorithm Comparison
+
 ```rust
 fn benchmark_pathfinding(c: &mut Criterion) {
     let mut group = c.benchmark_group("pathfinding_algorithms");
@@ -287,6 +296,7 @@ fn benchmark_pathfinding(c: &mut Criterion) {
 ## Performance Analysis Techniques
 
 ### Statistical Analysis
+
 ```rust
 fn benchmark_with_statistics(c: &mut Criterion) {
     let mut group = c.benchmark_group("statistical_analysis");
@@ -307,6 +317,7 @@ fn benchmark_with_statistics(c: &mut Criterion) {
 ```
 
 ### Regression Testing
+
 ```rust
 // Save baseline performance
 fn save_baseline(c: &mut Criterion) {
@@ -326,6 +337,7 @@ fn compare_optimization(c: &mut Criterion) {
 ## Profiling Integration
 
 ### CPU Profiling with perf
+
 ```bash
 # Build with debug symbols
 cargo build --release --bin my_app
@@ -341,6 +353,7 @@ perf script | stackcollapse-perf.pl | flamegraph.pl > profile.svg
 ```
 
 ### Memory Profiling with Valgrind
+
 ```bash
 # Install valgrind tools
 sudo apt install valgrind
@@ -355,6 +368,7 @@ ms_print massif.out.*
 ## Common Pitfalls
 
 ### Optimizer Interference
+
 ```rust
 // Wrong: optimizer might eliminate work
 fn bad_benchmark(b: &mut Bencher) {
@@ -372,6 +386,7 @@ fn good_benchmark(b: &mut Bencher) {
 ```
 
 ### Input Bias
+
 ```rust
 // Wrong: always same input
 fn biased_benchmark(b: &mut Bencher) {
@@ -389,6 +404,7 @@ fn unbiased_benchmark(b: &mut Bencher) {
 ```
 
 ### Measurement Noise
+
 ```rust
 // Configure for stable measurements
 fn stable_benchmark(c: &mut Criterion) {
@@ -421,20 +437,24 @@ fn stable_benchmark(c: &mut Criterion) {
 ## Daily Study Applications
 
 ### Week 2: Collections Performance
+
 - Benchmark different collection types
 - Measure iterator vs loop performance
 
 ### Week 5: Error Handling Costs
+
 - Result<T, E> vs Option<T> performance
 - Error propagation overhead measurement
 
 ### Week 6: Advanced Patterns
+
 - Trait object vs generic dispatch costs
 - Async runtime performance characteristics
 
 ## Mission Integration Examples
 
 ### Mission Reports
+
 - **Mission 1**: Stack operation Big-O validation
 - **Mission 4**: Rc<RefCell<T>> vs Box<T> comparison
 - **Mission 5**: Hash function performance analysis
@@ -442,6 +462,7 @@ fn stable_benchmark(c: &mut Criterion) {
 - **Mission 10**: Union-Find operation scaling
 
 ### Tutorial Validation
+
 - Benchmark tutorial examples vs hand-optimized code
 - Validate [[zero-cost-abstractions]] claims
 - Measure learning progression efficiency gains
@@ -456,6 +477,7 @@ fn stable_benchmark(c: &mut Criterion) {
 ---
 
 *Performance Benchmarking Links:*
+
 - [[zero-cost-abstractions]] - Validating abstraction costs
 - [[Performance Patterns]] - Optimization measurement
 - [[Big-O Notation]] - Complexity validation

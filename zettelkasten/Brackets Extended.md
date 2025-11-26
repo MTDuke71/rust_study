@@ -9,6 +9,7 @@
 Brackets Extended is a comprehensive bracket validation library that extends basic bracket matching with three powerful advanced features. It represents the evolution from simple stack-based validation to a production-ready, configurable validation system.
 
 ### **Evolution from Basic to Extended**
+
 ```
 Brackets Basic (REQ-1 to REQ-6)    →    Brackets Extended (REQ-7 to REQ-9)
 ├─ Fixed alphabet: ()[]{}                ├─ Configurable alphabet: any pairs
@@ -20,6 +21,7 @@ Brackets Basic (REQ-1 to REQ-6)    →    Brackets Extended (REQ-7 to REQ-9)
 ## 🚀 **Three Extended Requirements**
 
 ### **REQ-7: Configurable Alphabet**
+
 *Support arbitrary opener→closer mappings beyond traditional brackets*
 
 ```rust
@@ -48,12 +50,14 @@ assert!(validate_with_options("func<T>(arr[0])", &opts).is_ok());
 ```
 
 **Use Cases:**
+
 - **HTML/XML parsing**: `<div>content</div>`
 - **Generic type validation**: `Vec<HashMap<String, i32>>`
 - **Mathematical notation**: `⌊x⌋`, `⌈x⌉` (floor/ceiling)
 - **Custom DSLs**: Domain-specific bracket pairs
 
 ### **REQ-8: Error Collection Mode**
+
 *Choose between stop-at-first or collect-all error reporting*
 
 ```rust
@@ -79,12 +83,14 @@ for error in &errors {
 ```
 
 **Applications:**
+
 - **IDE integration**: Show all syntax errors at once
 - **Educational tools**: Highlight every mistake for learning
 - **Linting systems**: Comprehensive error reporting
 - **Batch processing**: Validate multiple expressions
 
 ### **REQ-9: Unclosed Policy**
+
 *Control which unclosed bracket to report when multiple remain open*
 
 ```rust
@@ -106,6 +112,7 @@ let error = validate_with_options(input, &earliest_opts).unwrap_err();
 ```
 
 **Policy Comparison:**
+
 | Input | LatestOpen Reports | EarliestOpen Reports | Use Case |
 |-------|-------------------|----------------------|----------|
 | `((([` | `[` at pos 3 | `(` at pos 0 | Code completion vs error recovery |
@@ -135,6 +142,7 @@ let result = validate_indexed(indexed_chars, &opts);
 ```
 
 ### **Iterator API Advantages**
+
 - **Memory efficiency**: Stream processing for large inputs
 - **Flexible preprocessing**: Filter, transform, or modify input
 - **Position preservation**: Maintain original byte/character positions
@@ -164,6 +172,7 @@ let result = validate_indexed(bracket_positions, &opts);
 ## 🏗️ **Architecture and Design**
 
 ### **Core Components**
+
 ```rust
 // Main validation engine
 pub struct BracketValidator {
@@ -192,6 +201,7 @@ pub enum ValidationResult {
 ### **Key Design Patterns**
 
 **1. Configuration Object Pattern**
+
 ```rust
 let mut opts = Options::default();
 opts.alphabet = Alphabet::with_pairs(&[('<', '>')]);
@@ -200,6 +210,7 @@ opts.unclosed_policy = UnclosedPolicy::EarliestOpen;
 ```
 
 **2. Strategy Pattern for Error Handling**
+
 ```rust
 enum ErrorMode {
     StopAtFirst,    // Early return strategy
@@ -208,6 +219,7 @@ enum ErrorMode {
 ```
 
 **3. Iterator Trait Abstraction**
+
 ```rust
 // Generic over any iterator that produces characters
 fn validate_iter<I>(iter: I, opts: &Options) -> ValidationResult
@@ -218,6 +230,7 @@ where
 ## 🎯 **Mission Integration**
 
 ### **Mission1: Stack Implementation Foundation**
+
 ```rust
 // Uses Mission1 Stack<T> internally
 use crate::stack::Stack;
@@ -245,6 +258,7 @@ impl BracketValidator {
 ```
 
 ### **AoC Pattern Applications**
+
 - **String parsing**: Advanced bracket validation in AoC problems
 - **Error accumulation**: Collect all parsing errors for debug output
 - **Custom grammars**: Validate problem-specific syntax rules
@@ -253,6 +267,7 @@ impl BracketValidator {
 ## 🧪 **Testing Strategy**
 
 ### **Requirements-Based Testing**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -296,6 +311,7 @@ mod tests {
 ```
 
 ### **Integration Testing with CSV Data**
+
 ```rust
 // tests/brackets_extended_integration.rs
 use std::fs;
@@ -324,11 +340,13 @@ fn test_with_aoc_dataset() {
 ## 📊 **Performance Characteristics**
 
 ### **Time Complexity**
+
 - **O(n)** where n is input length
 - **Single pass** through input with stack operations
 - **Constant time** bracket lookup with HashMap alphabet
 
 ### **Memory Usage**
+
 ```rust
 // Stack grows with nesting depth, not input length
 // Worst case: O(n) for input like "((((((("
@@ -339,6 +357,7 @@ let flat_sequence = "()".repeat(1000);                     // O(1) stack
 ```
 
 ### **Error Collection Overhead**
+
 ```rust
 // StopAtFirst: Early return, minimal allocation
 // CollectAll: Vec<BracketError> grows with error count
@@ -356,17 +375,20 @@ fn benchmark_error_modes(input: &str) {
 ## 🔗 **Related Projects and Concepts**
 
 ### **Project Series**
+
 - **[[../Brackets_Basic/README|Brackets Basic]]**: Foundation (REQ-1 to REQ-6)
 - **[[mission-1]]**: Stack implementation used internally
 - **[[AoC Collection Problems]]**: Bracket parsing in competitive programming
 
 ### **Core Concepts**
+
 - **[[Error Handling Patterns]]**: Multi-error collection strategies
 - **[[Iterator Design Patterns]]**: Flexible input processing
 - **[[Configuration Design Patterns]]**: Options and builder patterns
 - **[[Performance Optimization]]**: Memory and time complexity analysis
 
 ### **Advanced Topics**
+
 - **[[Unicode and String Processing]]**: Proper UTF-8 handling
 - **[[Parser Combinators]]**: Building more complex parsers
 - **[[Compiler Design]]**: Lexical analysis and syntax validation
@@ -374,18 +396,21 @@ fn benchmark_error_modes(input: &str) {
 ## 🎓 **Learning Outcomes**
 
 ### **Software Engineering Skills**
+
 - **Requirements evolution**: Extending basic requirements to advanced features
 - **API design**: Creating flexible, composable interfaces
 - **Configuration patterns**: Options structs and builder patterns
 - **Error handling**: Single vs multiple error collection strategies
 
 ### **Rust-Specific Learning**
+
 - **Iterator trait system**: Working with generic iterator bounds
 - **Error propagation**: `Result<T, E>` vs `Result<T, Vec<E>>`
 - **Memory management**: Stack-based algorithms with owned data
 - **Performance optimization**: Zero-allocation paths for common cases
 
 ### **Algorithm Design**
+
 - **Stack-based parsing**: Classical application of LIFO data structure
 - **Policy pattern**: Configurable behavior without code duplication
 - **Stream processing**: Iterator-based validation for large inputs
@@ -393,6 +418,7 @@ fn benchmark_error_modes(input: &str) {
 ## 🚀 **Real-World Applications**
 
 ### **IDE Integration**
+
 ```rust
 // Language server integration
 pub fn validate_code_brackets(source: &str, language: &Language) -> Vec<Diagnostic> {
@@ -413,6 +439,7 @@ pub fn validate_code_brackets(source: &str, language: &Language) -> Vec<Diagnost
 ```
 
 ### **Educational Tools**
+
 ```rust
 // Highlight all bracket errors for learning
 pub fn create_learning_feedback(input: &str) -> LearningReport {

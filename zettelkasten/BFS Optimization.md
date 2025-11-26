@@ -13,6 +13,7 @@ While [[BFS Algorithms]] covers the fundamental implementations and [[BFS Patter
 ### **1. Memory-Efficient Visited Tracking**
 
 #### **Grid-Based Optimization**
+
 *Use 2D boolean array instead of HashSet for grid problems*
 
 ```rust
@@ -52,6 +53,7 @@ fn bitpacked_grid_bfs(grid: &[Vec<bool>], start: (usize, usize)) {
 ```
 
 #### **Node ID Mapping**
+
 *Use sequential IDs instead of arbitrary node types*
 
 ```rust
@@ -126,6 +128,7 @@ where T: Clone + Eq + std::hash::Hash {
 ### **2. Queue Optimization**
 
 #### **Pre-sized VecDeque**
+
 *Avoid repeated allocations by pre-sizing queue*
 
 ```rust
@@ -161,6 +164,7 @@ where T: Clone + Eq + std::hash::Hash {
 ```
 
 #### **Circular Buffer Queue**
+
 *Lock-free circular buffer for single-threaded BFS*
 
 ```rust
@@ -214,6 +218,7 @@ impl<T> CircularQueue<T> {
 ### **3. Early Termination Strategies**
 
 #### **Target-Aware BFS**
+
 *Stop as soon as target is found*
 
 ```rust
@@ -249,6 +254,7 @@ where T: Clone + Eq + std::hash::Hash {
 ```
 
 #### **Bounded BFS**
+
 *Limit exploration depth or node count*
 
 ```rust
@@ -291,6 +297,7 @@ where T: Clone + Eq + std::hash::Hash {
 ### **4. Memory Layout Optimization**
 
 #### **Structure of Arrays (SoA)**
+
 *Optimize cache performance with data layout*
 
 ```rust
@@ -337,6 +344,7 @@ impl GraphData {
 ```
 
 #### **Memory Pool Allocation**
+
 *Reuse allocations across multiple BFS calls*
 
 ```rust
@@ -585,6 +593,7 @@ impl PreprocessedGraph {
 ## 📊 Performance Benchmarks
 
 ### **Memory Usage Comparison**
+
 ```rust
 #[cfg(test)]
 mod benchmarks {
@@ -621,6 +630,7 @@ mod benchmarks {
 ```
 
 ### **Performance Results**
+
 ```
 Benchmark Results (100K nodes, 500K edges):
 ===========================================
@@ -637,28 +647,33 @@ memory_pool        :  85.2 ms  (zero allocation)
 ### **Choose Based on Problem Characteristics**
 
 #### **Small Graphs (< 1K nodes)**
+
 - Use basic BFS with HashSet visited
 - Simplicity over optimization
 - Standard library implementations
 
 #### **Medium Graphs (1K - 100K nodes)**
+
 - Vec<bool> for visited tracking
 - Pre-sized collections
 - Early termination when applicable
 
 #### **Large Graphs (100K+ nodes)**
+
 - Bitset visited tracking
 - Memory pool allocation
 - SIMD optimization for dense graphs
 - Parallel BFS for multi-core systems
 
 #### **Competitive Programming**
+
 - ID-based nodes for cache efficiency
 - Circular buffer queues
 - Minimal memory allocations
 - Early exits and bounds
 
 ### **Memory-Constrained Environments**
+
 ```rust
 // Ultra-low memory BFS for embedded systems
 fn embedded_bfs(
@@ -688,11 +703,13 @@ fn embedded_bfs(
 ## 🔗 Integration with Graph Algorithms
 
 ### **Complementary Optimizations**
+
 - [[BFS Algorithms]] - Foundation algorithms that benefit from these optimizations
 - [[BFS Patterns]] - Usage patterns that can leverage optimization techniques
 - [[BFS Pathfinding]] - Pathfinding algorithms with performance requirements
 
 ### **Algorithm-Specific Optimizations**
+
 - **Dijkstra's Algorithm**: Priority queue optimization using binary heaps
 - **A* Pathfinding**: Heuristic caching and early termination
 - **Connected Components**: Union-Find for better than BFS performance
@@ -701,6 +718,7 @@ fn embedded_bfs(
 ## 💡 Key Takeaways
 
 ### **Optimization Hierarchy**
+
 1. **Algorithmic**: Choose right algorithm first (BFS vs alternatives)
 2. **Data Structure**: Optimize visited tracking and queue implementation  
 3. **Memory Layout**: Structure of arrays, cache-friendly access patterns
@@ -708,6 +726,7 @@ fn embedded_bfs(
 5. **Hardware**: SIMD, memory prefetching, and CPU-specific optimizations
 
 ### **Common Performance Pitfalls**
+
 ```
 ❌ Using HashMap<Node, bool> for small graphs
 ❌ Allocating new collections on each BFS call
@@ -724,6 +743,7 @@ fn embedded_bfs(
 ```
 
 ### **Optimization Philosophy**
+>
 > "Optimize for the common case. Make the simple case fast, and the complex case correct. In BFS, this means efficient visited tracking and minimal memory allocations." ⚡
 
 ---

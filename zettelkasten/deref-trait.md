@@ -20,6 +20,7 @@ trait Deref {
 ```
 
 ### **Fundamental Principle**
+
 When you use `*value`, Rust calls `*(value.deref())` - converting the dereference into a method call that returns a reference.
 
 ---
@@ -27,6 +28,7 @@ When you use `*value`, Rust calls `*(value.deref())` - converting the dereferenc
 ## Basic Implementation Pattern
 
 ### **Custom Smart Pointer Example**
+
 ```rust
 struct MyBox<T>(T);
 
@@ -51,6 +53,7 @@ assert_eq!(5, *y);  // *y becomes *(y.deref())
 ```
 
 ### **Mission Integration: Tracked Wrapper**
+
 ```rust
 use std::cell::Cell;
 
@@ -92,6 +95,7 @@ println!("Accesses: {}", tracked.accesses()); // 1
 ## Deref Coercion Magic
 
 ### **Automatic Type Conversion**
+
 Deref coercion automatically converts `&T` to `&U` when `T: Deref<Target=U>`:
 
 ```rust
@@ -104,6 +108,7 @@ greet(&boxed_string);  // &Box<String> -> &String -> &str
 ```
 
 ### **Multiple Coercion Chain**
+
 ```rust
 struct Wrapper<T>(T);
 
@@ -126,6 +131,7 @@ print_length(&wrapped);
 ## Practical Applications
 
 ### **1. Type Safety with Ergonomics**
+
 ```rust
 struct UserId(u64);
 struct Email(String);
@@ -156,6 +162,7 @@ println!("Domain: {}", email.domain());     // Custom method
 ```
 
 ### **2. AoC Problem: Configuration Wrapper**
+
 ```rust
 struct AocConfig {
     input: String,
@@ -186,6 +193,7 @@ fn solve_day1(config: &AocConfig) -> i32 {
 ```
 
 ### **3. Resource Management with Access Control**
+
 ```rust
 struct FileHandle {
     file: std::fs::File,
@@ -215,11 +223,13 @@ impl FileHandle {
 ## Deref Coercion Rules
 
 ### **The Three Rules**
+
 1. **`&T` → `&U`** when `T: Deref<Target=U>`
 2. **`&mut T` → `&mut U`** when `T: DerefMut<Target=U>`
 3. **`&mut T` → `&U`** when `T: Deref<Target=U>` *(mutable to immutable)*
 
 ### **Key Insight: Rule 3**
+
 ```rust
 fn read_data(data: &str) { /* read only */ }
 fn modify_data(data: &mut str) { /* can modify */ }
@@ -236,6 +246,7 @@ read_data(&mut s);    // ✅ &mut String -> &String -> &str (Rule 3)
 ## Performance Characteristics
 
 ### **Zero-Cost Abstraction**
+
 ```rust
 // These are identical after optimization:
 let boxed = Box::new(42);
@@ -246,6 +257,7 @@ let value2 = *(boxed.deref()); // What Rust actually does
 ```
 
 ### **When NOT to Use Deref**
+
 ```rust
 // ❌ Don't use Deref for conversions that might fail
 impl Deref for ResultWrapper<T> {
@@ -268,6 +280,7 @@ impl ResultWrapper<T> {
 ## Integration with Other Traits
 
 ### **Deref + Drop Pattern**
+
 ```rust
 struct ManagedResource<T> {
     resource: T,
@@ -291,6 +304,7 @@ impl<T> Drop for ManagedResource<T> {
 ```
 
 ### **Mission Connection: Union-Find Enhancement**
+
 ```rust
 struct TrackedUnionFind<T> {
     inner: UnionFind<T>,
@@ -321,6 +335,7 @@ println!("Operations: {}", uf.operations.get()); // 2
 ## Testing Patterns
 
 ### **Deref Behavior Tests**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -356,6 +371,7 @@ mod tests {
 ## Common Patterns & Idioms
 
 ### **Smart Pointer Composition**
+
 ```rust
 // Layer multiple smart pointer behaviors
 type LoggedTrackedBox<T> = LogWrapper<TrackedBox<T>>;
@@ -374,6 +390,7 @@ impl<T: Deref> Deref for LogWrapper<T> {
 ```
 
 ### **AoC Input Parsing Wrapper**
+
 ```rust
 struct AocInput(String);
 
@@ -404,16 +421,19 @@ let line_count = input.lines().count();       // Standard str method
 ## Best Practices
 
 ### **✅ When to Implement Deref**
+
 - **Smart pointers** that own and provide access to data
 - **Wrapper types** that should be transparent
 - **Newtype patterns** for domain modeling with ergonomics
 
 ### **❌ When NOT to Implement Deref**
+
 - **Conversions that might fail** or are expensive
 - **Types that aren't conceptually "smart pointers"**
 - **When you want explicit conversion** for clarity
 
 ### **Design Guidelines**
+
 1. **Deref should be cheap** - it's called implicitly and often
 2. **Target type should be obvious** - clear conceptual relationship
 3. **Don't break expectations** - `*ptr` should behave like direct access
@@ -424,6 +444,7 @@ let line_count = input.lines().count();       // Standard str method
 ## Learning Progression
 
 ### **Foundation → Application**
+
 1. **Understand `*` operator** and how Rust desugars it
 2. **Implement basic Deref** for simple wrapper types
 3. **Master deref coercion** and its automatic nature
@@ -431,6 +452,7 @@ let line_count = input.lines().count();       // Standard str method
 5. **Combine with other traits** for powerful abstractions
 
 ### **Mission Integration Path**
+
 - **Mission 4**: `Rc<RefCell<T>>` uses Deref extensively
 - **Mission 10**: Could enhance Union-Find with tracking wrappers
 - **AoC Problems**: Input parsing and configuration wrappers
@@ -441,6 +463,7 @@ let line_count = input.lines().count();       // Standard str method
 ## Advanced Topics
 
 ### **Deref and Lifetimes**
+
 ```rust
 struct BorrowedWrapper<'a, T> {
     data: &'a T,
@@ -455,6 +478,7 @@ impl<'a, T> Deref for BorrowedWrapper<'a, T> {
 ```
 
 ### **Generic Deref Implementations**
+
 ```rust
 struct Container<T, U> {
     inner: T,

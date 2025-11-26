@@ -34,12 +34,14 @@ struct Rectangle {
 ```
 
 ### **Key Characteristics:**
+
 - **Data storage** - holds fields/variables
 - **Custom types** - define your own data structures
 - **Memory layout** - determines how data is stored
 - **Ownership** - defines who owns the data
 
 ### **Struct Patterns:**
+
 ```rust
 // Tuple struct
 struct Point(f64, f64);
@@ -75,12 +77,14 @@ trait Describable {
 ```
 
 ### **Key Characteristics:**
+
 - **Method signatures** - defines what methods must exist
 - **No implementation** - just the contract
 - **Multiple implementers** - many types can implement one trait
 - **Composable** - types can implement multiple traits
 
 ### **Trait Patterns:**
+
 ```rust
 // Simple trait
 trait Draw {
@@ -138,6 +142,7 @@ impl Drawable for Square {
 ```
 
 ### **Key Characteristics:**
+
 - **Method bodies** - actual implementation code
 - **Type-specific** - each type implements traits differently
 - **Required** - must implement all trait methods
@@ -146,6 +151,7 @@ impl Drawable for Square {
 ## 🔄 The Complete Pattern
 
 ### **Step 1: Define the Data (Struct)**
+
 ```rust
 struct Circle { radius: f64, color: String }
 struct Square { side: f64, color: String }
@@ -153,6 +159,7 @@ struct Rectangle { width: f64, height: f64, color: String }
 ```
 
 ### **Step 2: Define the Behavior Contract (Trait)**
+
 ```rust
 trait Drawable {
     fn draw(&self) -> String;
@@ -162,6 +169,7 @@ trait Drawable {
 ```
 
 ### **Step 3: Implement the Behavior (Impl)**
+
 ```rust
 impl Drawable for Circle { /* Circle-specific implementation */ }
 impl Drawable for Square { /* Square-specific implementation */ }
@@ -169,6 +177,7 @@ impl Drawable for Rectangle { /* Rectangle-specific implementation */ }
 ```
 
 ### **Step 4: Use with Polymorphism**
+
 ```rust
 let shapes: Vec<Box<dyn Drawable>> = vec![
     Box::new(Circle { radius: 5.0, color: "red".to_string() }),
@@ -188,12 +197,14 @@ for shape in shapes {
 ### **Think of it like a Restaurant:**
 
 **`struct`** = **Menu Items** (what ingredients you have)
+
 ```rust
 struct Pizza { dough: String, cheese: String, toppings: Vec<String> }
 struct Salad { greens: String, dressing: String, extras: Vec<String> }
 ```
 
 **`trait`** = **Cooking Standards** (what every dish must do)
+
 ```rust
 trait Cookable {
     fn cook(&self) -> String;
@@ -203,6 +214,7 @@ trait Cookable {
 ```
 
 **`impl`** = **Actual Recipes** (how you make each dish)
+
 ```rust
 impl Cookable for Pizza {
     fn cook(&self) -> String { "Bake at 450°F for 15 minutes".to_string() }
@@ -220,6 +232,7 @@ impl Cookable for Salad {
 ## 🔗 Multiple Traits per Type
 
 ### **One Struct, Multiple Behaviors**
+
 ```rust
 struct Circle { radius: f64, color: String }
 
@@ -231,6 +244,7 @@ impl Describable for Circle { /* ... */ }
 ```
 
 ### **One Trait, Multiple Types**
+
 ```rust
 trait Drawable { fn draw(&self) -> String; }
 
@@ -253,6 +267,7 @@ impl Drawable for Hexagon { /* ... */ }
 ## 🚀 Advanced Patterns
 
 ### **Generic Structs with Traits**
+
 ```rust
 struct Container<T: Drawable> {
     item: T,
@@ -271,6 +286,7 @@ impl<T: Drawable> Container<T> {
 ```
 
 ### **Trait Bounds**
+
 ```rust
 fn process_drawable<T: Drawable>(item: T) -> String {
     format!("Processing: {}", item.draw())
@@ -286,6 +302,7 @@ where
 ```
 
 ### **Trait Objects**
+
 ```rust
 // Dynamic dispatch with trait objects
 let shapes: Vec<Box<dyn Drawable>> = vec![
@@ -301,6 +318,7 @@ for shape in shapes {
 ## 🧪 Practice Exercises
 
 ### **Exercise 1: Vehicle System**
+
 ```rust
 // Define vehicle data
 struct Car { model: String, year: u32 }
@@ -319,6 +337,7 @@ impl Vehicle for Truck { /* ... */ }
 ```
 
 ### **Exercise 2: Animal System**
+
 ```rust
 // Define animal data
 struct Dog { name: String, breed: String }
@@ -358,12 +377,14 @@ impl Animal for Cat { /* ... */ }
 ### **Key Differences from OOP:**
 
 **Rust's Separation of Concerns:**
+
 - **Data** (struct) and **behavior** (trait) are **separate**
 - **Multiple traits** can be implemented for one struct
 - **One trait** can be implemented by **multiple structs**
 - **Composition over inheritance**
 
 **OOP's Unified Approach:**
+
 - **Data** and **behavior** are **combined** in classes
 - **Inheritance** for code reuse
 - **Single inheritance** (usually) with interfaces for multiple behaviors
@@ -371,6 +392,7 @@ impl Animal for Cat { /* ... */ }
 ### **Polymorphism Comparison:**
 
 **Rust Trait Objects:**
+
 ```rust
 let shapes: Vec<Box<dyn Drawable>> = vec![
     Box::new(Circle { radius: 5.0 }),
@@ -383,6 +405,7 @@ for shape in shapes {
 ```
 
 **OOP Equivalent (Java):**
+
 ```java
 List<Drawable> shapes = Arrays.asList(
     new Circle(5.0),
@@ -395,6 +418,7 @@ for (Drawable shape : shapes) {
 ```
 
 ### **Rust's Advantages:**
+
 - **Zero-cost abstractions** - compile-time polymorphism
 - **Memory safety** - no null pointers, no data races
 - **Flexible composition** - multiple traits per struct
@@ -403,16 +427,19 @@ for (Drawable shape : shapes) {
 ## 🔗 Related Concepts
 
 ### **Ownership & Memory**
+
 - [[daily-study/Day02]] - How structs own their data
 - [[Box Smart Pointer Patterns]] - Heap allocation for trait objects
 
 ### **Advanced Type System**
+
 - [[daily-study/Day15]] - Deep dive into traits
 - [[daily-study/Day16]] - Generic structs and traits
 - [[daily-study/Day18]] - Associated types and defaults
 - [[daily-study/Day19]] - Dynamic dispatch patterns
 
 ### **Collections & Data Structures**
+
 - [[Collections MOC]] - How structs and traits work in collections
 - [[Generic Programming]] - Reusable code patterns
 

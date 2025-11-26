@@ -10,6 +10,7 @@ HashMap in Rust is a **hash table implementation** providing average O(1) insert
 ## Core Architecture
 
 ### Internal Structure
+
 ```rust
 use std::collections::HashMap;
 
@@ -23,6 +24,7 @@ struct HashMapInternal<K, V> {
 ```
 
 ### Hash Function and Bucket Selection
+
 ```rust
 use std::hash::{Hash, Hasher};
 use std::collections::hash_map::DefaultHasher;
@@ -42,6 +44,7 @@ fn bucket_index(hash: u64, capacity: usize) -> usize {
 ## Robin Hood Hashing Implementation
 
 ### Collision Resolution Strategy
+
 ```rust
 // Robin Hood hashing - steals from rich buckets to give to poor ones
 // Distance = how far element is from its ideal position
@@ -86,6 +89,7 @@ fn robin_hood_insert<K, V>(
 ```
 
 ### Performance Characteristics
+
 ```rust
 use std::collections::HashMap;
 use criterion::{black_box, Criterion};
@@ -120,6 +124,7 @@ fn benchmark_hashmap_operations(c: &mut Criterion) {
 ## Mission 5 Integration
 
 ### Generic HashMap Implementation
+
 ```rust
 use std::hash::{Hash, Hasher};
 use std::collections::hash_map::DefaultHasher;
@@ -212,6 +217,7 @@ where
 ## AoC HashMap Usage Patterns
 
 ### Day 6: Light Grid Optimization
+
 ```rust
 use std::collections::HashMap;
 
@@ -248,6 +254,7 @@ impl LightGrid {
 ```
 
 ### Day 12: JSON Object Processing
+
 ```rust
 use std::collections::HashMap;
 use serde_json::Value;
@@ -276,6 +283,7 @@ fn sum_numbers_excluding_red(value: &Value) -> i64 {
 ```
 
 ### Day 16: Aunt Sue Detection
+
 ```rust
 use std::collections::HashMap;
 
@@ -312,6 +320,7 @@ fn find_matching_aunt(aunts: &[AuntSue], mfcsam: &HashMap<String, u32>) -> Optio
 ## Advanced HashMap Patterns
 
 ### Custom Hash Functions
+
 ```rust
 use std::collections::HashMap;
 use std::hash::{BuildHasher, Hasher};
@@ -348,6 +357,7 @@ fn create_int_map() -> HashMap<i32, String, FastIntBuildHasher> {
 ```
 
 ### Memory-Efficient String Keys
+
 ```rust
 use std::collections::HashMap;
 use std::rc::Rc;
@@ -390,6 +400,7 @@ impl StringInterner {
 ```
 
 ### Entry API Patterns
+
 ```rust
 use std::collections::HashMap;
 
@@ -433,6 +444,7 @@ struct PlayerStats {
 ## Performance Optimization Techniques
 
 ### Load Factor Management
+
 ```rust
 use std::collections::HashMap;
 
@@ -460,6 +472,7 @@ fn create_optimally_sized_map<K, V>(expected_size: usize) -> HashMap<K, V> {
 ```
 
 ### Bulk Operations
+
 ```rust
 use std::collections::HashMap;
 
@@ -493,6 +506,7 @@ where
 ## Error Handling and Safety
 
 ### Safe HashMap Operations
+
 ```rust
 use std::collections::HashMap;
 
@@ -554,16 +568,19 @@ where
 ## Daily Study Applications
 
 ### Week 2: Collections Deep Dive
+
 - HashMap vs BTreeMap performance comparison
 - Custom hash function implementation
 - Load factor optimization strategies
 
 ### Week 3: Advanced Data Structures
+
 - HashMap-based caching patterns
 - Composite key strategies
 - Memory-efficient value storage
 
 ### Week 5: Error Handling Integration
+
 - Result<T, E> with HashMap operations
 - Graceful key lookup failure handling
 - Validation patterns for HashMap data
@@ -571,6 +588,7 @@ where
 ## Mission Integration Examples
 
 ### Mission 5 Requirements Traceability
+
 - **REQ-1**: Generic HashMap<K, V> implementation ✓
 - **REQ-2**: O(1) average-case operations ✓
 - **REQ-3**: Collision resolution strategy ✓
@@ -578,6 +596,7 @@ where
 - **REQ-5**: Iterator support for traversal ✓
 
 ### Performance Validation
+
 - **Insertion**: O(1) amortized with load factor management
 - **Lookup**: O(1) average case with Robin Hood hashing
 - **Deletion**: O(1) average case with tombstone handling
@@ -593,6 +612,7 @@ where
 ---
 
 *HashMap Deep Dive Links:*
+
 - [[Performance Benchmarking]] - HashMap performance measurement
 - [[zero-cost-abstractions]] - Iterator optimization
 - [[Performance Patterns]] - HashMap optimization techniques  

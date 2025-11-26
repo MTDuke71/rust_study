@@ -7,6 +7,7 @@
 **Manhattan Distance** (also called **taxicab distance** or **L1 distance**) measures the distance between two points by summing the absolute differences of their coordinates. It represents the shortest path when you can only move horizontally or vertically (4-connected movement).
 
 **Formula:**
+
 ```
 distance = |x₁ - x₂| + |y₁ - y₂|
 ```
@@ -18,6 +19,7 @@ distance = |x₁ - x₂| + |y₁ - y₂|
 ## 📐 Mathematical Definition
 
 ### **2D Grid (Most Common)**
+
 ```rust
 fn manhattan_distance(p1: (i32, i32), p2: (i32, i32)) -> u32 {
     ((p1.0 - p2.0).abs() + (p1.1 - p2.1).abs()) as u32
@@ -30,6 +32,7 @@ let dist = manhattan_distance(start, end);  // 3 + 4 = 7
 ```
 
 ### **3D Space**
+
 ```rust
 fn manhattan_distance_3d(p1: (i32, i32, i32), p2: (i32, i32, i32)) -> u32 {
     ((p1.0 - p2.0).abs() + (p1.1 - p2.1).abs() + (p1.2 - p2.2).abs()) as u32
@@ -37,6 +40,7 @@ fn manhattan_distance_3d(p1: (i32, i32, i32), p2: (i32, i32, i32)) -> u32 {
 ```
 
 ### **N-Dimensional**
+
 ```rust
 fn manhattan_distance_nd(p1: &[i32], p2: &[i32]) -> u32 {
     p1.iter()
@@ -51,6 +55,7 @@ fn manhattan_distance_nd(p1: &[i32], p2: &[i32]) -> u32 {
 ## 🎮 Visual Representation
 
 ### **4-Connected Movement Pattern**
+
 ```
 Distance = 5 from S to E:
 
@@ -64,6 +69,7 @@ All paths have same length: 5
 ```
 
 ### **Manhattan Distance Circle**
+
 ```
 Points at distance 3 from center (C):
 
@@ -77,6 +83,7 @@ Forms a diamond/rhombus shape!
 ```
 
 ### **vs [[Euclidean Distance]]**
+
 ```
 Manhattan: |3-0| + |4-0| = 7
 Euclidean: √(3² + 4²) = 5
@@ -98,6 +105,7 @@ Euclidean cuts diagonally (5 units)
 ## 🚀 Implementation Patterns
 
 ### **Basic Distance Calculation**
+
 ```rust
 use std::ops::{Add, Sub};
 
@@ -124,6 +132,7 @@ let dist = p1.manhattan_distance(&p2);  // 7
 ```
 
 ### **Grid-Based Distance Map**
+
 ```rust
 use std::collections::VecDeque;
 
@@ -162,6 +171,7 @@ fn distance_map(grid: &[Vec<bool>], start: Point) -> Vec<Vec<Option<u32>>> {
 ```
 
 ### **Finding All Points at Distance D**
+
 ```rust
 fn points_at_manhattan_distance(center: Point, distance: u32) -> Vec<Point> {
     let mut points = Vec::new();
@@ -191,7 +201,9 @@ let pts = points_at_manhattan_distance(Point::new(0, 0), 2);
 ## 🎯 Real-World Applications
 
 ### **1. Grid-Based Pathfinding**
+
 Manhattan distance is the **perfect heuristic for A\*** when:
+
 - Movement is restricted to 4 directions (up, down, left, right)
 - Diagonal movement is not allowed
 - Each step has equal cost
@@ -206,6 +218,7 @@ fn heuristic(current: Point, goal: Point) -> u32 {
 ```
 
 ### **2. Taxi Routing / City Navigation**
+
 ```rust
 // Estimate taxi fare based on grid distance
 fn estimate_fare(pickup: Point, dropoff: Point, rate_per_block: f64) -> f64 {
@@ -215,6 +228,7 @@ fn estimate_fare(pickup: Point, dropoff: Point, rate_per_block: f64) -> f64 {
 ```
 
 ### **3. Circuit Board Layout**
+
 ```rust
 // Estimate wire length in Manhattan routing
 fn wire_length(start: Point, end: Point) -> u32 {
@@ -223,6 +237,7 @@ fn wire_length(start: Point, end: Point) -> u32 {
 ```
 
 ### **4. Sensor Coverage**
+
 ```rust
 // Check if a point is within sensor range
 fn in_sensor_range(sensor: Point, target: Point, range: u32) -> bool {
@@ -231,6 +246,7 @@ fn in_sensor_range(sensor: Point, target: Point, range: u32) -> bool {
 ```
 
 ### **5. AoC Pattern: Beacon Exclusion Zone**
+
 ```rust
 // Day 15 (2022): Beacons and sensors with Manhattan distance ranges
 struct Sensor {
@@ -256,12 +272,14 @@ impl Sensor {
 ## 📊 Properties & Characteristics
 
 ### **Mathematical Properties**
+
 1. **Non-negative**: `d(p, q) ≥ 0`
 2. **Identity**: `d(p, p) = 0`
 3. **Symmetry**: `d(p, q) = d(q, p)`
 4. **Triangle Inequality**: `d(p, r) ≤ d(p, q) + d(q, r)`
 
 ### **Computational Properties**
+
 - **Time Complexity**: O(n) where n is number of dimensions
 - **Space Complexity**: O(1) - no extra memory needed
 - **Integer Arithmetic**: No floating-point errors
@@ -276,12 +294,14 @@ impl Sensor {
 | [[Euclidean Distance\|Euclidean]] | Continuous | √(Δx² + Δy²) | Real-world straight-line |
 
 ### **When Manhattan Distance is Optimal**
+
 ✅ 4-connected grid movement (most roguelikes, puzzles)
 ✅ City street navigation (grid-based roads)
 ✅ Circuit board routing (Manhattan routing)
 ✅ Warehouse robot navigation (orthogonal aisles)
 
 ### **When to Use Other Metrics**
+
 ❌ Diagonal movement allowed → Use [[Chebyshev Distance]]
 ❌ Continuous space → Use [[Euclidean Distance]]
 ❌ Weighted terrain → Use actual path cost
@@ -293,6 +313,7 @@ impl Sensor {
 ### **Common AoC Patterns Using Manhattan Distance**
 
 **Pattern 1: Sensor Coverage (2022 Day 15)**
+
 ```rust
 // Check if point is covered by any sensor
 fn is_covered(sensors: &[Sensor], point: Point) -> bool {
@@ -301,6 +322,7 @@ fn is_covered(sensors: &[Sensor], point: Point) -> bool {
 ```
 
 **Pattern 2: Shortest Path in Grid**
+
 ```rust
 // BFS with Manhattan distance tracking
 fn shortest_path(grid: &[Vec<bool>], start: Point, goal: Point) -> Option<u32> {
@@ -310,6 +332,7 @@ fn shortest_path(grid: &[Vec<bool>], start: Point, goal: Point) -> Option<u32> {
 ```
 
 **Pattern 3: Area Coverage**
+
 ```rust
 // Count cells within Manhattan distance
 fn count_cells_in_range(center: Point, range: u32, grid_size: u32) -> u32 {
@@ -327,6 +350,7 @@ fn count_cells_in_range(center: Point, range: u32, grid_size: u32) -> u32 {
 ```
 
 **Pattern 4: Closest Point Finding**
+
 ```rust
 fn find_closest(points: &[Point], target: Point) -> Option<Point> {
     points.iter()
@@ -340,6 +364,7 @@ fn find_closest(points: &[Point], target: Point) -> Option<Point> {
 ## 🚀 Performance Optimizations
 
 ### **Avoid Repeated Calculations**
+
 ```rust
 // Cache distance if used multiple times
 let dist = p1.manhattan_distance(&p2);
@@ -349,6 +374,7 @@ if dist < threshold && expensive_check(p1, p2) {
 ```
 
 ### **Early Exit in Range Checks**
+
 ```rust
 fn in_range_optimized(p1: Point, p2: Point, max_dist: u32) -> bool {
     let dx = (p1.x - p2.x).abs();
@@ -361,6 +387,7 @@ fn in_range_optimized(p1: Point, p2: Point, max_dist: u32) -> bool {
 ```
 
 ### **Squared Distance for Comparisons**
+
 ```rust
 // When only comparing distances, can avoid abs() sometimes
 fn closer_manhattan(p1: Point, target: Point, p2: Point) -> bool {
@@ -373,6 +400,7 @@ fn closer_manhattan(p1: Point, target: Point, p2: Point) -> bool {
 ## 🔗 Connected Concepts
 
 ### **Related Zettelkasten Pages**
+
 - [[Chebyshev Distance]] - 8-connected grid distance (king moves)
 - [[Euclidean Distance]] - Straight-line distance in continuous space
 - [[A-Star-Algorithm-Deep-Dive]] - Uses Manhattan distance as heuristic
@@ -381,11 +409,13 @@ fn closer_manhattan(p1: Point, target: Point, p2: Point) -> bool {
 - [[mission-6]] - Grid navigation and pathfinding
 
 ### **Mission Integration**
+
 - **Mission6**: 4-connected grid navigation using Manhattan distance
 - **Mission7**: Graph algorithms with Manhattan distance heuristics
 - **AoC Solutions**: Many grid-based puzzles use Manhattan distance
 
 ### **Related Algorithms**
+
 - **BFS**: Finds shortest path in unweighted grids (Manhattan distance)
 - **A\* Search**: Uses Manhattan distance as heuristic function
 - **Flood Fill**: Explores cells in Manhattan distance order
@@ -402,6 +432,7 @@ fn closer_manhattan(p1: Point, target: Point, p2: Point) -> bool {
 6. **Forms Diamond Shape**: Points equidistant form rhombus, not circle
 
 **When to Use Manhattan Distance:**
+
 ```
 ✅ 4-connected grid pathfinding
 ✅ City block navigation

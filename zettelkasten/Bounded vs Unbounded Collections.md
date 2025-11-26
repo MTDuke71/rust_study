@@ -7,12 +7,14 @@
 ## 🎯 **Core Distinction**
 
 ### **Bounded Collections**
+
 - **Fixed maximum capacity** determined at creation
 - **Fail or overwrite** when capacity exceeded
 - **Predictable memory usage** and performance
 - **Suitable for resource-constrained environments**
 
 ### **Unbounded Collections**
+
 - **Grow dynamically** as elements are added
 - **Limited only by available memory**
 - **Unpredictable allocation patterns**
@@ -32,6 +34,7 @@
 ## 🏗️ **Implementation Patterns**
 
 ### **Bounded Queue Example**
+
 ```rust
 pub struct BoundedQueue<T> {
     buf: Vec<Option<T>>,
@@ -66,6 +69,7 @@ impl<T> BoundedQueue<T> {
 ```
 
 ### **Unbounded Queue Example**
+
 ```rust
 use std::collections::VecDeque;
 
@@ -95,6 +99,7 @@ impl<T> UnboundedQueue<T> {
 ### **When to Choose Bounded**
 
 #### **1. Real-Time Systems**
+
 ```rust
 // Audio processing - must not allocate during playback
 struct AudioBuffer {
@@ -112,6 +117,7 @@ impl AudioBuffer {
 **Requirements**: Deterministic timing, no allocation pauses
 
 #### **2. Embedded Systems**
+
 ```rust
 // Sensor data collection with limited RAM
 struct SensorBuffer {
@@ -131,6 +137,7 @@ impl SensorBuffer {
 **Requirements**: Memory constraints, predictable resource usage
 
 #### **3. Rate Limiting / Back-pressure**
+
 ```rust
 // Network packet buffer with flow control
 struct PacketBuffer {
@@ -148,6 +155,7 @@ impl PacketBuffer {
 **Requirements**: Flow control, prevent memory exhaustion
 
 #### **4. Resource Pools**
+
 ```rust
 // Connection pool with maximum connections
 struct ConnectionPool {
@@ -170,6 +178,7 @@ impl ConnectionPool {
 ### **When to Choose Unbounded**
 
 #### **1. General-Purpose Applications**
+
 ```rust
 // Task queue that processes work items
 struct TaskQueue {
@@ -186,6 +195,7 @@ impl TaskQueue {
 **Benefits**: Simple API, no capacity planning needed
 
 #### **2. Data Collection and Analysis**
+
 ```rust
 // Log aggregation - collect all events
 struct LogCollector {
@@ -202,6 +212,7 @@ impl LogCollector {
 **Requirements**: Complete data retention, analysis flexibility
 
 #### **3. User Interface Components**
+
 ```rust
 // Command history in text editor
 struct CommandHistory {
@@ -218,6 +229,7 @@ impl CommandHistory {
 **Benefits**: Better user experience, no artificial limits
 
 #### **4. Caching Without Size Limits**
+
 ```rust
 use std::collections::HashMap;
 
@@ -258,6 +270,7 @@ impl<T> BoundedQueue<T> {
 ```
 
 **Performance Profile**:
+
 - ✅ **Consistent timing** - no allocation pauses
 - ✅ **Predictable memory access** patterns
 - ✅ **Cache-friendly** with contiguous storage
@@ -276,6 +289,7 @@ impl<T> UnboundedQueue<T> {
 ```
 
 **Performance Profile**:
+
 - ✅ **Simple implementation** - delegate to allocator
 - ✅ **No capacity limits** to plan for
 - ❌ **Allocation spikes** during growth
@@ -284,6 +298,7 @@ impl<T> UnboundedQueue<T> {
 ## 🔄 **Hybrid Approaches**
 
 ### **1. Bounded with Overflow Strategy**
+
 ```rust
 pub enum OverflowStrategy {
     DropOldest,     // Ring buffer behavior
@@ -309,6 +324,7 @@ impl<T> BoundedQueueWithOverflow<T> {
 ```
 
 ### **2. Growable with Maximum Limit**
+
 ```rust
 pub struct LimitedGrowthQueue<T> {
     buf: Vec<T>,
@@ -328,6 +344,7 @@ impl<T> LimitedGrowthQueue<T> {
 ```
 
 ### **3. Adaptive Capacity**
+
 ```rust
 pub struct AdaptiveQueue<T> {
     buf: VecDeque<T>,
@@ -357,6 +374,7 @@ impl<T> AdaptiveQueue<T> {
 ## 🛡️ **Safety and Error Handling**
 
 ### **Bounded Collection Errors**
+
 ```rust
 #[derive(Debug, PartialEq)]
 pub enum BoundedError<T> {
@@ -377,6 +395,7 @@ impl<T> BoundedQueue<T> {
 ```
 
 ### **Unbounded Collection Monitoring**
+
 ```rust
 pub struct MonitoredUnboundedQueue<T> {
     buf: VecDeque<T>,
@@ -405,6 +424,7 @@ impl<T> MonitoredUnboundedQueue<T> {
 ## 🎛️ **Configuration Patterns**
 
 ### **Runtime Configuration**
+
 ```rust
 pub struct ConfigurableQueue<T> {
     inner: QueueImpl<T>,
@@ -431,6 +451,7 @@ impl<T> ConfigurableQueue<T> {
 ```
 
 ### **Feature-Based Selection**
+
 ```rust
 #[cfg(feature = "bounded-only")]
 type DefaultQueue<T> = BoundedQueue<T>;
@@ -446,6 +467,7 @@ pub struct Queue<T> {
 ## 📈 **Memory Usage Patterns**
 
 ### **Bounded Memory Profile**
+
 ```
 Memory Usage
      ▲
@@ -459,6 +481,7 @@ Memory Usage
 ```
 
 ### **Unbounded Memory Profile**
+
 ```
 Memory Usage
      ▲

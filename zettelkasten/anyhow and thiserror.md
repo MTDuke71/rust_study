@@ -9,6 +9,7 @@
 `anyhow` and `thiserror` are complementary crates that revolutionize error handling in Rust, each serving distinct use cases in the error handling ecosystem.
 
 ### **Quick Decision Matrix**
+
 | Use Case | Choose | Why |
 |----------|--------|-----|
 | **Application development** | `anyhow` | Easy error propagation, rich context |
@@ -19,9 +20,11 @@
 ## 📦 **anyhow: Application Error Handling**
 
 ### **Core Philosophy**
+
 `anyhow` prioritizes **developer ergonomics** and **error context** over type safety, perfect for applications where you need to handle diverse error types efficiently.
 
 ### **Key Features**
+
 ```rust
 use anyhow::{Result, Context, bail, ensure};
 
@@ -44,6 +47,7 @@ fn parse_config() -> anyhow::Result<Config> {
 ```
 
 ### **Error Context Chaining**
+
 ```rust
 use anyhow::Context;
 
@@ -62,6 +66,7 @@ fn process_user_data(user_id: u64) -> anyhow::Result<UserProfile> {
 ```
 
 ### **Advanced anyhow Patterns**
+
 ```rust
 use anyhow::{Result, Context, ensure, bail};
 
@@ -102,10 +107,12 @@ fn handle_specific_errors() -> Result<()> {
 
 ## 🏗️ **thiserror: Library Error Design**
 
-### **Core Philosophy** 
+### **Core Philosophy**
+
 `thiserror` prioritizes **type safety** and **API stability** for libraries, enabling structured error types that downstream users can handle programmatically.
 
 ### **Derive Macro Magic**
+
 ```rust
 use thiserror::Error;
 
@@ -132,6 +139,7 @@ pub enum ConfigError {
 ```
 
 ### **Error Source Chaining**
+
 ```rust
 #[derive(Error, Debug)]
 pub enum DatabaseError {
@@ -165,6 +173,7 @@ match database_operation() {
 ```
 
 ### **Advanced thiserror Patterns**
+
 ```rust
 use thiserror::Error;
 
@@ -206,6 +215,7 @@ impl std::fmt::Display for ValidationErrors {
 ## 🔄 **Combining anyhow and thiserror**
 
 ### **Library + Application Pattern**
+
 ```rust
 // Library crate: uses thiserror for structured errors
 pub use thiserror::Error;
@@ -248,6 +258,7 @@ fn main() -> Result<()> {
 ## 🎯 **Mission Integration Applications**
 
 ### **Mission5: HashMap Error Handling**
+
 ```rust
 use thiserror::Error;
 
@@ -283,6 +294,7 @@ fn process_hashmap_data() -> Result<()> {
 ```
 
 ### **AoC Problem Error Handling**
+
 ```rust
 use anyhow::{Result, Context, bail, ensure};
 
@@ -324,18 +336,21 @@ fn parse_instruction(line: &str) -> Result<Instruction> {
 ## 📊 **Performance Considerations**
 
 ### **anyhow Performance**
+
 - **Low overhead**: Uses `Box<dyn Error>` internally
 - **Context chains**: Each `.context()` adds minimal cost
 - **String formatting**: Only happens when error is displayed
 - **Good for applications**: Performance impact acceptable
 
 ### **thiserror Performance**
+
 - **Zero cost**: Compiles to same code as manual `impl Error`
 - **Type safety**: No boxing unless converted to `Box<dyn Error>`
 - **Enum dispatch**: Fast pattern matching on error variants
 - **Optimal for libraries**: No runtime overhead
 
 ### **Benchmarking Example**
+
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
@@ -366,6 +381,7 @@ fn benchmark_error_handling(c: &mut Criterion) {
 ## 🧪 **Testing Error Handling**
 
 ### **Testing anyhow Errors**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -401,6 +417,7 @@ mod tests {
 ```
 
 ### **Testing thiserror Errors**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -445,16 +462,19 @@ mod tests {
 ## 🔗 **Integration with Learning Tracks**
 
 ### **Daily Study Applications**
+
 - **Week 5**: Error handling patterns and recovery strategies
 - **Error banks**: Collect and categorize common error patterns
 - **AoC solutions**: Robust input validation and error reporting
 
 ### **Mission Applications**
+
 - **Mission implementations**: Use `thiserror` for library-like APIs
 - **Application demos**: Use `anyhow` for ergonomic error handling
 - **Testing strategies**: Comprehensive error condition coverage
 
 ### **Rust Book Connections**
+
 - **Chapter 9**: Error handling fundamentals (`Result`, `panic!`)
 - **Chapter 10**: Traits and generics (understanding `Error` trait)
 - **Chapter 17**: Advanced error handling patterns
@@ -462,6 +482,7 @@ mod tests {
 ## 📚 **Best Practices Summary**
 
 ### **anyhow Best Practices**
+
 - ✅ Use for **applications** and **scripts**
 - ✅ Add **context** at each error boundary
 - ✅ Use `ensure!` and `bail!` for validations
@@ -470,6 +491,7 @@ mod tests {
 - ❌ Don't over-context (each level should add value)
 
 ### **thiserror Best Practices**
+
 - ✅ Use for **library APIs** and **structured errors**
 - ✅ Design **meaningful error variants**
 - ✅ Use `#[from]` for **automatic conversions**
@@ -481,18 +503,21 @@ mod tests {
 ## 🎓 **Learning Path**
 
 ### **Beginner (Week 1-2)**
+
 1. Understand `Result<T, E>` and `?` operator
 2. Learn basic `anyhow::Result` usage
 3. Practice with `.context()` method
 4. Simple error handling in AoC solutions
 
 ### **Intermediate (Week 3-4)**
+
 1. Design structured errors with `thiserror`
 2. Understand error trait bounds and conversions
 3. Implement error handling in mission projects
 4. Error testing strategies
 
 ### **Advanced (Week 5+)**
+
 1. Custom error trait implementations
 2. Error handling in async contexts
 3. Performance optimization for error paths

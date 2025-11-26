@@ -252,6 +252,7 @@ enum Result<T, E> {
 ```
 
 **When to use which:**
+
 - **`Option<T>`**: Value might be absent (not an error)
 - **`Result<T, E>`**: Operation might fail (error needs explanation)
 
@@ -319,11 +320,13 @@ assert_eq!(add_two_numbers(Some(3), None), None);
 ## 🔗 Navigation
 
 ### 📚 Zettelkasten
+
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[rust-concepts-MOC]]** - Core language features
 - **[[Collections MOC]]** - HashMap, Vec operations that return Option
 
 ### 🎯 Related Learning
+
 - **[[daily-study/Day05]]** - Foundational introduction
 - **[[Error Handling Deep Dive]]** - Advanced patterns
 - **[[pattern-matching]]** - Essential for working with Option

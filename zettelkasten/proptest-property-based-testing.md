@@ -10,6 +10,7 @@
 ## Core Philosophy: Properties vs Examples
 
 ### Traditional Example-Based Testing
+
 ```rust
 #[test]
 fn test_sort_specific_cases() {
@@ -20,6 +21,7 @@ fn test_sort_specific_cases() {
 ```
 
 ### Property-Based Testing Approach
+
 ```rust
 use proptest::prelude::*;
 
@@ -47,12 +49,15 @@ proptest! {
 ## Key Advantages Over Traditional Testing
 
 ### **1. Comprehensive Coverage**
+
 Property-based testing explores a vastly larger input space than manually written test cases:
+
 - **Boundary conditions**: Automatically finds edge cases like empty collections, maximum values, Unicode edge cases
 - **Unexpected combinations**: Discovers interactions between inputs that humans rarely consider
 - **Systematic exploration**: Tests across different data sizes, types, and combinations
 
 ### **2. Automatic Shrinking**
+
 When proptest finds a failing case, it performs **automatic shrinking** to find the minimal example:
 
 ```rust
@@ -63,7 +68,9 @@ When proptest finds a failing case, it performs **automatic shrinking** to find 
 Shrinking dramatically reduces debugging time by eliminating irrelevant complexity from failing test cases.
 
 ### **3. Better Bug Discovery**
+
 Proptest excels at finding bugs that traditional testing misses:
+
 - **Off-by-one errors** in boundary conditions
 - **Integer overflow** and underflow scenarios  
 - **Unicode handling issues** with edge case characters
@@ -73,6 +80,7 @@ Proptest excels at finding bugs that traditional testing misses:
 ## Proptest Architecture
 
 ### **Generators and Strategies**
+
 Proptest uses **strategies** to generate test data:
 
 ```rust
@@ -96,6 +104,7 @@ fn valid_email() -> impl Strategy<Value = String> {
 ```
 
 ### **Strategy Combinators**
+
 Combine simple strategies to create complex data:
 
 ```rust
@@ -119,6 +128,7 @@ any::<bool>().prop_flat_map(|b| {
 ## Advanced Proptest Features
 
 ### **State Machine Testing**
+
 Test complex stateful systems by modeling operations and invariants:
 
 ```rust
@@ -168,6 +178,7 @@ impl ReferenceStateMachine for ReferenceHashMap {
 ```
 
 ### **Regression Testing**
+
 Proptest can save failing cases for future regression testing:
 
 ```rust
@@ -191,6 +202,7 @@ proptest! {
 ```
 
 ### **Performance-Aware Testing**
+
 Control generation complexity for performance-critical testing:
 
 ```rust
@@ -218,6 +230,7 @@ proptest! {
 ## Integration Patterns
 
 ### **With Standard Test Framework**
+
 Proptest generates standard `#[test]` functions:
 
 ```rust
@@ -248,6 +261,7 @@ mod tests {
 ```
 
 ### **Custom Derive for Complex Types**
+
 Generate tests for custom data structures:
 
 ```rust
@@ -277,6 +291,7 @@ proptest! {
 ```
 
 ### **Workspace Integration**
+
 In multi-crate workspaces, configure proptest consistently:
 
 ```toml
@@ -294,6 +309,7 @@ proptest-derive = { workspace = true }
 ## Common Property Patterns
 
 ### **1. Invariant Properties**
+
 Properties that must always hold:
 
 ```rust
@@ -323,6 +339,7 @@ proptest! {
 ```
 
 ### **2. Round-Trip Properties**
+
 Serialization, encoding, transformations that should be reversible:
 
 ```rust
@@ -344,6 +361,7 @@ proptest! {
 ```
 
 ### **3. Metamorphic Properties**
+
 Relationships between different inputs:
 
 ```rust
@@ -365,6 +383,7 @@ proptest! {
 ```
 
 ### **4. Performance Properties**
+
 Validate algorithmic complexity:
 
 ```rust
@@ -393,6 +412,7 @@ proptest! {
 ## Best Practices
 
 ### **1. Start Simple, Build Complexity**
+
 ```rust
 // Begin with basic properties
 proptest! {
@@ -420,6 +440,7 @@ proptest! {
 ```
 
 ### **2. Use Appropriate Generators**
+
 ```rust
 // Too general - may generate unhelpful cases
 any::<String>()
@@ -435,6 +456,7 @@ prop::strategy::Strategy::prop_filter_map(
 ```
 
 ### **3. Handle Assumptions Carefully**
+
 ```rust
 proptest! {
     #[test]
@@ -449,6 +471,7 @@ proptest! {
 ```
 
 ### **4. Combine with Other Testing Strategies**
+
 ```rust
 // Unit tests for specific cases
 #[test]
@@ -474,16 +497,19 @@ fn integration_specific_scenario() {
 ## Limitations and Considerations
 
 ### **Performance Impact**
+
 - Property tests are **slower** than unit tests (1000+ generated cases vs single examples)
 - **Memory usage** can be significant for large generated data
 - Consider **test time budgets** in CI/CD pipelines
 
 ### **Test Flakiness**
+
 - **Random generation** can occasionally produce different results
 - Use **seeds** for reproducible test runs when debugging
 - **Shrinking** helps but may not always find the minimal case
 
 ### **Property Design Challenges**
+
 - **Difficult to specify properties** for some algorithms
 - **Tautological properties** that don't catch real bugs
 - **Over-constraining** that makes tests pass trivially
@@ -491,6 +517,7 @@ fn integration_specific_scenario() {
 ## Integration with Mission Work
 
 ### **Union-Find Property Testing**
+
 ```rust
 proptest! {
     #[test]
@@ -527,17 +554,20 @@ proptest! {
 ## Tools and Ecosystem
 
 ### **Related Crates**
+
 - **`proptest-derive`**: Automatic `Arbitrary` implementations for custom types
 - **`proptest-state-machine`**: State machine testing framework
 - **`bolero`**: Alternative property-based testing framework with different design
 - **`arbitrary`**: Trait for generating arbitrary instances (used by other fuzzers)
 
 ### **IDE Integration**
+
 - Works with standard Rust tooling (`cargo test`)
 - **VS Code extensions** show property test results like normal tests
 - **Failure persistence** creates regression test files automatically
 
 ### **CI/CD Considerations**
+
 ```toml
 # Reduce test cases in CI for speed
 [dev-dependencies]
@@ -565,12 +595,14 @@ proptest! {
 ## Links
 
 **Outgoing:**
+
 - **[[black-box-benchmarking]]** - Performance testing techniques that complement proptest
 - **[[unit-testing-rust]]** - Traditional testing patterns to combine with property testing
 - **[[fuzzing-techniques]]** - Related automated input generation approaches
 - **[[mission-testing-strategies]]** - How to apply proptest to mission implementations
 
 **Incoming:**
+
 - **[[Day39]]** - Day 39 workspace management where proptest is demonstrated
 - **[[testing-best-practices]]** - Comprehensive testing strategy including property testing
 - **[[data-structure-validation]]** - Using proptest for algorithm correctness validation

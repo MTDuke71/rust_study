@@ -36,6 +36,7 @@ let editor = &mut book;                 // ✏️ Now exclusive editing allowed
 Every value in Rust exists in one of three states:
 
 ### **State 1: Owned**
+
 - You have full control over the value
 - Can read, modify, or transfer ownership
 - Responsible for cleanup when done
@@ -48,6 +49,7 @@ let other = data;                       // ✅ I can give it away
 ```
 
 ### **State 2: Immutably Borrowed (`&T`)**
+
 - Multiple readers allowed simultaneously
 - Original owner can't modify while borrowed
 - Read-only access to the data
@@ -63,6 +65,7 @@ println!("{} {} {}", reader1[0], reader2[1], reader3[0]); // ✅ All can read
 ```
 
 ### **State 3: Mutably Borrowed (`&mut T`)**
+
 - Exclusive access for one borrower
 - No other readers or writers allowed
 - Can read and modify through the borrow
@@ -85,12 +88,14 @@ println!("{:?}", editor);               // ✅ Editor can still read
 Rust enforces exactly these rules at compile time:
 
 ### **Rule 1: Single Owner**
+
 ```rust
 ✅ let owner = String::from("data");
 ❌ let owner1, owner2 = String::from("data"); // Can't have two owners
 ```
 
 ### **Rule 2: Multiple Immutable Borrows OR Single Mutable Borrow**
+
 ```rust
 // Pattern A: Multiple readers
 let data = vec![1, 2, 3];
@@ -105,6 +110,7 @@ let w1 = &mut data; // ✅
 ```
 
 ### **Rule 3: Borrows Must Not Outlive the Owner**
+
 ```rust
 let r: &i32;
 {
@@ -115,6 +121,7 @@ let r: &i32;
 ```
 
 ### **Rule 4: Data Cannot Be Modified While Immutably Borrowed**
+
 ```rust
 let mut vec = vec![1, 2, 3];
 let first = &vec[0];                    // Immutable borrow
@@ -129,6 +136,7 @@ println!("{}", first);                  // Borrow still active here
 The borrow checker analyzes your code in three phases:
 
 ### **Phase 1: Ownership Tracking**
+
 ```rust
 fn analyze_ownership() {
     let s = String::from("hello");      // s owns the String
@@ -139,6 +147,7 @@ fn analyze_ownership() {
 ```
 
 ### **Phase 2: Borrow Scope Analysis**
+
 ```rust
 fn analyze_scopes() {
     let mut data = vec![1, 2, 3];
@@ -153,6 +162,7 @@ fn analyze_scopes() {
 ```
 
 ### **Phase 3: Lifetime Validation**
+
 ```rust
 fn analyze_lifetimes<'a>(input: &'a str) -> &'a str {
     let result = &input[0..5];          // result borrows from input
@@ -165,6 +175,7 @@ fn analyze_lifetimes<'a>(input: &'a str) -> &'a str {
 ## 🎲 **Common Mental Models for Understanding**
 
 ### **Model 1: The Relay Race**
+
 Ownership is like a relay baton - only one runner (variable) holds it at a time:
 
 ```rust
@@ -174,6 +185,7 @@ let next_runner = baton;                // I pass it to next_runner
 ```
 
 ### **Model 2: The Library Book**
+
 Borrowing is like checking out library books:
 
 ```rust
@@ -184,6 +196,7 @@ let reader2 = &book;                    // Lend to reader2 (another photocopy)
 ```
 
 ### **Model 3: The Compiler as Safety Inspector**
+
 The borrow checker is a safety inspector preventing dangerous operations:
 
 ```rust
@@ -202,6 +215,7 @@ println!("{}", ptr);                    // Inspector: "❌ ptr might be invalid!
 Rust's ownership model implements **RAII (Resource Acquisition Is Initialization)**:
 
 ### **Automatic Cleanup**
+
 ```rust
 {
     let file = File::create("temp.txt")?;  // Resource acquired
@@ -210,6 +224,7 @@ Rust's ownership model implements **RAII (Resource Acquisition Is Initialization
 ```
 
 ### **No Manual Memory Management**
+
 ```rust
 {
     let data = vec![1; 1000000];           // Memory allocated
@@ -218,6 +233,7 @@ Rust's ownership model implements **RAII (Resource Acquisition Is Initialization
 ```
 
 ### **Exception Safety**
+
 ```rust
 fn risky_operation() -> Result<(), Error> {
     let _guard = acquire_lock();           // Lock acquired
@@ -231,6 +247,7 @@ fn risky_operation() -> Result<(), Error> {
 ## 🔧 **Understanding Borrow Checker Error Messages**
 
 ### **Error E0382: Use After Move**
+
 ```rust
 let s = String::from("hello");
 let other = s;                          // Move occurs here
@@ -240,6 +257,7 @@ println!("{}", s);                      // ❌ Error E0382
 **Mental Model**: You gave away your toy, you can't play with it anymore.
 
 **Fix Options**:
+
 ```rust
 // Option 1: Clone if you need both
 let s = String::from("hello");
@@ -258,6 +276,7 @@ let other = s;                          // Move at the end
 ```
 
 ### **Error E0502: Cannot Borrow as Mutable While Borrowed as Immutable**
+
 ```rust
 let mut vec = vec![1, 2, 3];
 let first = &vec[0];                    // Immutable borrow
@@ -268,6 +287,7 @@ println!("{}", first);
 **Mental Model**: Can't edit a document while someone is reading it.
 
 **Fix Options**:
+
 ```rust
 // Option 1: Limit immutable borrow scope
 let mut vec = vec![1, 2, 3];
@@ -285,6 +305,7 @@ println!("{}", first);
 ```
 
 ### **Error E0499: Cannot Borrow as Mutable More Than Once**
+
 ```rust
 let mut data = vec![1, 2, 3];
 let editor1 = &mut data;
@@ -294,6 +315,7 @@ let editor2 = &mut data;                // ❌ Error E0499
 **Mental Model**: Can't let two people edit the same document simultaneously.
 
 **Fix Options**:
+
 ```rust
 // Option 1: Sequential mutable borrows
 let mut data = vec![1, 2, 3];
@@ -317,6 +339,7 @@ let editor2 = &mut right[0];            // Edit second half ✅
 Understanding the borrow checker isn't just about correctness - it enables optimizations:
 
 ### **Zero-Cost Abstractions**
+
 ```rust
 // High-level code...
 for item in collection.iter() {
@@ -328,6 +351,7 @@ for item in collection.iter() {
 ```
 
 ### **Eliminates Runtime Checks**
+
 ```rust
 // C++ with runtime checking:
 // if (ptr != nullptr && ptr->valid) { ... }
@@ -338,6 +362,7 @@ let reference = &valid_data;            // Borrow checker ensures validity
 ```
 
 ### **Memory Layout Optimizations**
+
 ```rust
 struct Container {
     data: Vec<i32>,
@@ -359,6 +384,7 @@ impl Container {
 ## 🎯 **Practical Application: Mission Integration**
 
 ### **Mission 1: Stack with Ownership**
+
 ```rust
 // The borrow checker ensures stack operations are memory-safe
 impl<T> Stack<T> {
@@ -385,6 +411,7 @@ println!("{:?}", top);                  // ✅ Borrowed data accessible
 ```
 
 ### **Mission 4: Linked List Borrow Challenges**
+
 ```rust
 // Borrow checker makes linked lists more complex in Rust
 pub struct Node<T> {
@@ -404,17 +431,20 @@ pub struct Node<T> {
 ## 🔗 **Integration with Learning Path**
 
 ### **Prerequisites**
+
 - Basic understanding of ownership (Mission 1)
 - Stack and heap concepts
 - Variable scope and lifetimes
 
 ### **Builds Toward**
+
 - [[Borrow Checker Patterns and Troubleshooting]] - Common patterns and solutions
 - [[Lifetime Management]] - Advanced lifetime concepts
 - [[Smart Pointers]] - Working around borrow checker limitations
 - [[interior-mutability]] - RefCell, Cell, and Mutex patterns
 
 ### **Related Concepts**
+
 - [[Ownership Transfer Patterns]] - When and how to move values
 - [[Reference Lifetimes]] - Understanding lifetime parameters
 - [[Memory Safety Guarantees]] - What the borrow checker prevents

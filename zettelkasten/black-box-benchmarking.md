@@ -40,6 +40,7 @@ fn benchmark_search_good() {
 ## How black_box Works
 
 `black_box` is a hint to the compiler that:
+
 1. **The value might be used in ways the compiler can't see**
 2. **The computation producing the value must not be eliminated**
 3. **Side effects leading to this value must be preserved**
@@ -217,6 +218,7 @@ fn fibonacci_benchmark(c: &mut Criterion) {
 ## Performance Impact
 
 `black_box` itself has minimal runtime overhead:
+
 - **Release mode**: Usually optimizes to a no-op
 - **Debug mode**: May have slight overhead
 - **The goal**: Preserve the behavior you want to measure without adding significant measurement error
@@ -276,6 +278,7 @@ fn demonstrate_black_box_impact() {
 ## Links
 
 **Outgoing:**
+
 - [[criterion-benchmarking]] - Professional benchmarking framework usage
 - [[rust-performance-optimization]] - Broader performance optimization context  
 - [[compiler-optimizations-rust]] - Understanding what optimizations black_box prevents
@@ -283,6 +286,7 @@ fn demonstrate_black_box_impact() {
 - [[std-hint-module]] - Other optimization hints available in std::hint
 
 **Incoming:**
+
 - [[rust-book-ch13-4-performance]] - Chapter 13.4 where black_box usage was demonstrated
 - [[benchmarking-best-practices]] - General benchmarking methodology
 - [[optimization-barriers]] - Compiler optimization control techniques

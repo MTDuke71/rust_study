@@ -202,22 +202,27 @@ for _ in 0..(num_vertices - 1) {
 ## 🎮 Real-World Applications
 
 ### **Navigation & Mapping**
+
 - **GPS Systems**: Road network shortest path calculation
 - **[[Network Routing]]**: Internet packet routing (OSPF protocol)
 - **Public Transit**: Optimal route planning with transfer costs
 
 ### **Game Development**
+
 - **[[Game AI]]**: NPC pathfinding in game worlds
 - **Strategy Games**: Unit movement and tactical positioning
 - **Procedural Generation**: Connected world layout optimization
 
 ### **Infrastructure**
+
 - **Transportation Networks**: Traffic flow optimization
 - **Utility Networks**: Pipeline and cable routing
 - **Supply Chain**: Distribution and logistics optimization
 
 ### **Why These Work with Dijkstra**
+
 All these domains use **non-negative costs**:
+
 - Distance is always ≥ 0
 - Time is always ≥ 0  
 - Energy/fuel consumption is always ≥ 0
@@ -245,6 +250,7 @@ This handles duplicate queue entries efficiently without expensive decrease-key 
 ### **Visited Set vs Distance Check**
 
 **Option 1: Visited Set**
+
 ```rust
 let mut visited = HashSet::new();
 if visited.contains(&current.node) {
@@ -254,6 +260,7 @@ visited.insert(current.node);
 ```
 
 **Option 2: Distance Comparison** (preferred)
+
 ```rust
 if current.cost > distances[&current.node] {
     continue;
@@ -303,22 +310,26 @@ fn test_tie_breaking() {
 ## 🔗 Relationship to Other Algorithms
 
 ### **Simpler Alternatives**
+
 - **[[BFS Patterns]]**: For unweighted graphs (all edges weight 1)
   - BFS is simpler and faster when weights don't matter
   - Use case: Social networks, maze solving
 
 ### **Enhanced Versions**
+
 - **[[A* Algorithm]]**: Dijkstra + heuristic for faster goal-directed search
   - Uses estimated distance to goal to prioritize exploration
   - Perfect for single-target pathfinding (games, robotics)
   - Falls back to Dijkstra when heuristic is always 0
 
 ### **Alternative Approaches**
+
 - **Bellman-Ford**: Handles negative edges, detects negative cycles
   - Slower but more versatile: `O(V · E)` vs `O(E log V)`
   - Use when edge weights can be negative
 
 ### **Specialized Variants**
+
 - **Bidirectional Dijkstra**: Search from both start and goal
 - **Contraction Hierarchies**: Preprocessing for repeated queries
 - **Highway Hierarchies**: Road network optimization
@@ -328,16 +339,19 @@ fn test_tie_breaking() {
 ## 📚 Learning Resources
 
 ### **Tutorial Progression**
+
 - **[[../tutorials/Mission9_tut/examples/step1_priority_queue_foundation]]**: Priority queue foundations
 - **[[../tutorials/Mission9_tut/examples/step2_dijkstra_basics]]**: Core algorithm implementation
 - **[[../missions/Mission9/README]]**: Production pathfinding system
 
 ### **Supporting Concepts**
+
 - **[[Priority Queue Patterns]]**: Binary heap and min-heap conversion
 - **[[Graph Representation]]**: Adjacency list for efficient neighbor access
 - **[[Pathfinding Strategies]]**: When to use different algorithms
 
 ### **Advanced Topics**
+
 - **[[Heuristic Design]]**: Transitioning from Dijkstra to A*
 - **[[Algorithm Composition]]**: Combining pathfinding with other algorithms
 - **[[Performance Analysis]]**: Profiling and optimization techniques
@@ -380,6 +394,7 @@ fn test_tie_breaking() {
 ## 🎯 Mission Integration
 
 ### **Mission 9 Implementation**
+
 - **Location**: `missions/Mission9/src/`
 - **Core Files**:
   - `priority_queue.rs`: Min-heap priority queue implementation
@@ -388,6 +403,7 @@ fn test_tie_breaking() {
 - **Status**: ✅ Complete with comprehensive tests
 
 ### **Tutorial Support**
+
 - **Step 1**: [[../tutorials/Mission9_tut/examples/step1_priority_queue_foundation]]
 - **Step 2**: [[../tutorials/Mission9_tut/examples/step2_dijkstra_basics]]
 - **Progress**: Steps 1-5 complete, building toward A* integration

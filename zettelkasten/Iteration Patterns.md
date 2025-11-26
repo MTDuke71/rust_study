@@ -7,6 +7,7 @@ Iteration is a fundamental programming pattern for processing sequences of data.
 ## Core Iterator Concepts
 
 ### The Iterator Trait
+
 ```rust
 trait Iterator {
     type Item;
@@ -18,6 +19,7 @@ trait Iterator {
 ```
 
 ### Three Ownership Patterns
+
 ```rust
 let vec = vec![1, 2, 3, 4, 5];
 
@@ -42,6 +44,7 @@ for item in vec {          // item: i32
 ## Basic Iteration Patterns
 
 ### 1. For Loop Iteration
+
 ```rust
 // Array/slice iteration
 let arr = [10, 20, 30, 40, 50];
@@ -67,6 +70,7 @@ for (index, item) in items.iter().enumerate() {
 ```
 
 ### 2. While Loop with Iterator
+
 ```rust
 let mut iter = vec![1, 2, 3].into_iter();
 while let Some(value) = iter.next() {
@@ -75,6 +79,7 @@ while let Some(value) = iter.next() {
 ```
 
 ### 3. Manual Index-Based Iteration
+
 ```rust
 let arr = [1, 2, 3, 4, 5];
 
@@ -94,6 +99,7 @@ for (i, value) in arr.iter().enumerate() {
 ## Iterator Methods and Transformations
 
 ### Transformation Methods (Lazy)
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5, 6];
 
@@ -128,6 +134,7 @@ let flattened: Vec<i32> = nested.iter()
 ```
 
 ### Consuming Methods (Eager)
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5];
 
@@ -158,6 +165,7 @@ let count = numbers.iter().filter(|&&x| x % 2 == 0).count();
 ## Custom Iterator Implementation
 
 ### Basic Custom Iterator
+
 ```rust
 struct Counter {
     current: usize,
@@ -192,6 +200,7 @@ let doubled: Vec<usize> = Counter::new(3)
 ```
 
 ### Iterator with Lifetime Parameters
+
 ```rust
 struct RangeIter<'a, T> {
     slice: &'a [T],
@@ -236,6 +245,7 @@ for (index, value) in RangeIter::new(&data, 1, 4) {
 ## Specialized Iteration Patterns
 
 ### 1. Grid/2D Iteration Patterns
+
 ```rust
 // Row-major iteration
 fn iterate_grid_rows<T>(grid: &[Vec<T>]) {
@@ -280,6 +290,7 @@ fn neighbors_4(coord: Coord, width: usize, height: usize) -> impl Iterator<Item 
 ```
 
 ### 2. Enum Iteration Patterns
+
 ```rust
 // Manual array (simple enums)
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -314,6 +325,7 @@ for color in Color::iter() {
 ```
 
 ### 3. Tree/Graph Iteration Patterns
+
 ```rust
 use std::collections::VecDeque;
 
@@ -360,6 +372,7 @@ impl<'a> Iterator for BfsIterator<'a> {
 ## Performance Patterns and Optimizations
 
 ### Zero-Cost Abstractions
+
 ```rust
 // These compile to identical assembly
 fn manual_sum(data: &[i32]) -> i32 {
@@ -384,6 +397,7 @@ fn fold_sum(data: &[i32]) -> i32 {
 ```
 
 ### Lazy vs Eager Evaluation
+
 ```rust
 let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -404,6 +418,7 @@ let processed: Vec<i32> = numbers.iter()
 ```
 
 ### Memory-Efficient Patterns
+
 ```rust
 // Bad: Creates intermediate collections
 fn process_data_inefficient(data: Vec<i32>) -> Vec<i32> {
@@ -434,6 +449,7 @@ fn process_data_iterator(data: &[i32]) -> impl Iterator<Item = i32> + '_ {
 ## Common Iterator Patterns by Use Case
 
 ### 1. Data Processing Pipelines
+
 ```rust
 // Sales data analysis
 #[derive(Debug)]
@@ -478,6 +494,7 @@ fn top_regions(sales: &[Sale], limit: usize) -> Vec<String> {
 ```
 
 ### 2. String Processing
+
 ```rust
 // Word frequency counting
 fn word_frequency(text: &str) -> std::collections::HashMap<String, usize> {
@@ -505,6 +522,7 @@ fn process_csv_lines(content: &str) -> Vec<Vec<String>> {
 ```
 
 ### 3. Numeric Computations
+
 ```rust
 // Statistical operations
 fn statistics(data: &[f64]) -> (f64, f64, f64) {
@@ -534,6 +552,7 @@ fn running_averages(data: &[i32], window_size: usize) -> Vec<f64> {
 ## Error Handling in Iteration
 
 ### Result Iterator Patterns
+
 ```rust
 // Collecting Results
 fn parse_numbers(strings: &[&str]) -> Result<Vec<i32>, std::num::ParseIntError> {
@@ -563,6 +582,7 @@ fn parse_numbers_partition(strings: &[&str]) -> (Vec<i32>, Vec<String>) {
 ```
 
 ### Option Iterator Patterns
+
 ```rust
 // Working with Option iterators
 fn find_valid_configs(configs: &[Option<Config>]) -> Vec<Config> {
@@ -585,6 +605,7 @@ fn process_optional_data(data: Option<Vec<i32>>) -> Vec<i32> {
 ## Testing Iterator Implementations
 
 ### Unit Tests for Custom Iterators
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -632,7 +653,8 @@ mod tests {
 
 ### When to Use Each Pattern
 
-#### Use For Loops When:
+#### Use For Loops When
+
 - **Simple iteration** over collections
 - **Clear, readable code** is priority
 - **Index access** needed with `enumerate()`
@@ -649,7 +671,8 @@ for (index, item) in collection.iter().enumerate() {
 }
 ```
 
-#### Use Iterator Chains When:
+#### Use Iterator Chains When
+
 - **Data transformation** pipelines
 - **Functional programming** style preferred
 - **Performance** is critical (zero-cost abstractions)
@@ -663,7 +686,8 @@ let result: Vec<_> = data.iter()
     .collect();
 ```
 
-#### Use Custom Iterators When:
+#### Use Custom Iterators When
+
 - **Complex iteration logic** needed
 - **Lazy evaluation** beneficial
 - **Reusable iteration patterns** across codebase
@@ -685,14 +709,16 @@ impl<'a, T> Iterator for WindowIterator<'a, T> {
 
 ### Performance Considerations
 
-#### Do:
+#### Do
+
 - ✅ **Prefer iterator chains** over manual loops for transformations
 - ✅ **Use `collect()` only when necessary** - return iterators when possible
 - ✅ **Chain operations** to avoid intermediate collections
 - ✅ **Use `size_hint()`** in custom iterators for optimization
 - ✅ **Implement `ExactSizeIterator`** when possible
 
-#### Don't:
+#### Don't
+
 - ❌ **Create unnecessary intermediate collections**
 - ❌ **Use `collect()` just to iterate again**
 - ❌ **Ignore borrowing in iterator chains**
@@ -714,17 +740,20 @@ for item in data.iter().map(|x| x * 2) {
 ## Integration with Daily Study and Missions
 
 ### Daily Study Applications
+
 - **Day 8 (Vectors)**: Basic iteration patterns with `Vec<T>`
 - **Day 13 (Advanced Iterators)**: Transformation and custom iterators
 - **Week 2 Focus**: Iterator methods and functional programming patterns
 
 ### Mission Integration
+
 - **Mission 3**: Search algorithms using iterator patterns
 - **Mission 4**: Linked list iteration implementation
 - **Mission 5**: HashMap iteration and key-value processing
 - **Mission 6**: Grid iteration for pathfinding algorithms
 
 ### Real-World Examples
+
 - **AoC Day 9**: TSP problem using permutation iteration
 - **AoC Day 10**: Look-and-say sequence with string iteration
 - **Grid Navigation**: 2D coordinate iteration patterns
@@ -737,4 +766,4 @@ for item in data.iter().map(|x| x * 2) {
 
 *Tags: #iteration #iterators #for-loops #while-loops #functional-programming #zero-cost-abstractions #performance #data-processing #rust-patterns #collections #custom-iterators #lazy-evaluation*
 
-*Links: [[Collections MOC]] | [[Day08]] | [[Day13]] | [[mission-3]] | [[mission-4]] | [[mission-5]] | [[Custom Iterator Implementation]] | [[Performance Engineering]] | [[Functional Programming Patterns]] | [[zero-cost-abstractions]] | [[enum-iteration-patterns]] | [[While Let Pattern Deep Dive]]*
+*Links: [[Collections MOC]] | [[Day08]] | [[Day13]] | [[mission-3]] | [[mission-4]] | [[mission-5]] | [[Custom Iterator Implementation]] | [[Performance Engineering]] | [[Memory Optimization]] | [[Functional Programming Patterns]] | [[zero-cost-abstractions]] | [[enum-iteration-patterns]] | [[While Let Pattern Deep Dive]]*

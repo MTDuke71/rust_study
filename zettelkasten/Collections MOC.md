@@ -5,24 +5,28 @@
 ## 🏗️ Core Data Structures
 
 ### **Hash-Based Collections**
+
 - [[HashMap Internals]] - Hash table implementation details
 - [[HashSet Applications]] - Unique collection use cases
 - [[Collision Resolution]] - Chaining vs open addressing strategies
 - [[Hash Function Design]] - Creating good hash functions
 - [[Predicates and Higher-Order Functions Deep Dive]] - Filtering and searching with predicates
 
-### **Tree-Based Collections** 
+### **Tree-Based Collections**
+
 - [[BTreeMap Patterns]] - Ordered key-value storage
 - [[BTreeSet Operations]] - Ordered unique collections
 - [[Tree Traversal]] - In-order, pre-order, post-order
 - [[union-find-algorithm]] - Disjoint Set Union with path compression (NEW)
 
 ### **Sequential Collections**
+
 - [[Vec Patterns]] - Dynamic arrays and capacity management
 - [[VecDeque Usage]] - Double-ended queue operations
 - [[LinkedList Design]] - When to use linked structures
 
 ### **Smart Pointers for Collections**
+
 - [[box-heap-allocation]] - Box<T> for recursive data structures and AoC tree problems (NEW)
 - [[deref-trait]] - Transparent wrapper behavior for collection types (NEW)
 - [[drop-trait]] - Automatic resource cleanup for collection wrappers (NEW)
@@ -30,6 +34,7 @@
 ## 🎯 Mission Implementations
 
 ### **Mission 4: Linked Lists**
+
 - [[../../tutorials/Mission4_tut/README]] - Complete linked list tutorial
 - [[../../tutorials/Mission4_tut/examples/README]] - Step-by-step runnable examples
 - [[../../tutorials/Mission4_tut/compilation_stages/VISUAL_COMPILATION_PROCESS]] - Visual compilation: Rust → LLVM → Assembly → Machine Code
@@ -39,6 +44,7 @@
 - 7 progressive examples from basic to performance analysis
 
 ### **Mission 5: Hash Collections**
+
 - [[Mission5 HashMap]] - Custom hash table from scratch
 - [[Mission5 HashSet]] - Set wrapper implementation
 - [[Mission5 Iterator]] - Custom iteration patterns
@@ -46,9 +52,11 @@
 - [[Predicates and Higher-Order Functions Deep Dive]] - Advanced HashMap operations with predicates
 
 ### **Mission 1: Stack** → [[Stack Implementation Patterns]]
+
 - **Application**: [[../../advanced_examples/Brackets_Ext/README_EXTENDED|Brackets Extended Validator]] - Advanced bracket validation with configurable alphabet and multi-error reporting
 
 ### **Mission 2: Queue & Ring Buffer**
+
 - **Tutorial**: [[../../tutorials/Mission2_tut/README]] - Progressive queue learning with 7 comprehensive steps
 - Ring buffer algorithms and circular indexing
 - FIFO queue implementation with Option<T> patterns
@@ -56,12 +64,14 @@
 - **Basic Implementation**: [[../../advanced_examples/Brackets_Basic/README_BASIC]] - V-Cycle bracket validation with requirements traceability
 - **Extended Features**: [[../../advanced_examples/Brackets_Ext/README (2)]] - Advanced bracket validation with comprehensive error handling
 
-### **Mission 2: Queue** → [[Queue Implementation Strategies]] 
+### **Mission 2: Queue** → [[Queue Implementation Strategies]]
 
 ### **Mission 6: Grids** → [[2D Array Navigation Patterns]]
+
 - [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator optimization for grid traversal
 
 ### **Mission 10: Union-Find Disjoint Sets**
+
 - **Tutorial**: [[../../tutorials/Mission10_tut/README]] - 7-step Union-Find mastery progression
 - **Algorithm Reference**: [[union-find-algorithm]] - Comprehensive theoretical foundation (NEW)
 - Path compression and union by rank optimizations
@@ -72,6 +82,7 @@
 ## 📖 Daily Study Integration
 
 ### **Week 2: Collections Mastery**
+
 - [[daily-study/Day08]] - Dynamic arrays, capacity vs length
 - [[daily-study/Day09]] - String vs &str, UTF-8 handling
   - **Pattern Matching**: [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE|Regex Quick Reference]] - Comprehensive regex guide
@@ -84,6 +95,7 @@
 ## 🔄 Iterator Patterns
 
 ### **Core Iterator Concepts**
+
 - [[daily-study/Day13]] - Iterator adaptors and chains
 - [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - size_hint() for performance optimization
 - [[../../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - When size_hint() is actually invoked
@@ -92,18 +104,23 @@
 ## 🔗 Cross-Concept Connections
 
 ### **Ownership & Collections**
+
 - [[Ownership in HashMap]] - Key and value borrowing patterns
 - [[Clone vs Move]] - When collections take ownership
 - [[interior-mutability]] - RefCell in collections
 
 ### **Performance Patterns**
+
 - [[O(1) vs O(log n)]] - HashMap vs BTreeMap trade-offs  
 - [[Memory Layout]] - Contiguous vs fragmented storage
 - [[Cache Efficiency]] - Access pattern optimization
+- [[Amortized Analysis]] - Vec/HashMap O(1) amortized operations
+- [[Benchmarking]] - Measuring collection performance
 - [[../../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size hints for allocation optimization
 - [[../../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - Understanding when optimizations trigger
 
 ### **AoC Applications**
+
 - [[AoC 2015 MOC]] - Advent of Code 2015 solutions (8 days completed)
   - Day 3: HashSet for coordinate tracking
   - Day 7: HashMap memoization patterns
@@ -118,6 +135,7 @@
 ## 🧪 Tutorial Progression
 
 ### **Mission5_tut Learning Path**
+
 - **Step 1 - Basic HashMap** → HashMap structure setup
 - **Step 2 - Collision Handling** → Chaining implementation
 - **Step 3 - Advanced Operations** → Complex HashMap methods

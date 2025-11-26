@@ -9,6 +9,7 @@
 Error propagation is the process of passing errors up the call stack without losing context or information. In Rust, this is primarily achieved through the `Result<T, E>` type and the `?` operator, enabling clean error handling without the complexity of traditional exception mechanisms.
 
 ### **The Error Propagation Spectrum**
+
 ```rust
 // Manual propagation (verbose)
 match operation() {
@@ -29,6 +30,7 @@ let value = operation().map_err(|e| MyError::from(e))?;
 ## 🔧 **The ? Operator: Rust's Propagation Superpower**
 
 ### **Basic Mechanics**
+
 ```rust
 use std::fs::File;
 use std::io::Read;
@@ -62,6 +64,7 @@ fn read_file_concise(path: &str) -> Result<String, std::io::Error> {
 ```
 
 ### **? Operator Mechanics Deep Dive**
+
 ```rust
 // What ? operator actually does
 let result = operation()?;
@@ -76,6 +79,7 @@ let result = match operation() {
 ## 🔄 **Error Conversion and Propagation**
 
 ### **Automatic Error Conversion**
+
 ```rust
 use std::num::ParseIntError;
 use std::io::Error as IoError;
@@ -110,6 +114,7 @@ fn process_file(path: &str) -> Result<i32, AppError> {
 ```
 
 ### **thiserror for Automatic Conversions**
+
 ```rust
 use thiserror::Error;
 
@@ -153,6 +158,7 @@ fn process_data(path: &str) -> Result<Vec<i32>, ProcessError> {
 ## 🏗️ **Propagation Patterns and Strategies**
 
 ### **Early Return Pattern**
+
 ```rust
 fn validate_user_input(input: &UserInput) -> Result<ValidatedInput, ValidationError> {
     // Chain of validations with early returns
@@ -178,6 +184,7 @@ fn validate_email(email: &str) -> Result<String, ValidationError> {
 ```
 
 ### **Accumulating Errors Pattern**
+
 ```rust
 // When you want to collect ALL errors, not just the first one
 fn validate_all_fields(input: &UserInput) -> Result<ValidatedInput, Vec<ValidationError>> {
@@ -231,6 +238,7 @@ fn validate_numbers(inputs: &[&str]) -> Result<Vec<i32>, Vec<String>> {
 ```
 
 ### **Chain Propagation with Context**
+
 ```rust
 use anyhow::{Result, Context};
 
@@ -257,6 +265,7 @@ fn process_config_pipeline(config_path: &str) -> Result<AppConfig> {
 ## 🎯 **Mission Integration Applications**
 
 ### **Mission2: Queue Error Propagation**
+
 ```rust
 use thiserror::Error;
 
@@ -316,6 +325,7 @@ impl<T> RingBufferQueue<T> {
 ```
 
 ### **Mission5: HashMap Error Propagation**
+
 ```rust
 use thiserror::Error;
 
@@ -382,6 +392,7 @@ where
 ```
 
 ### **AoC Problem Error Propagation**
+
 ```rust
 use anyhow::{Result, Context, bail, ensure};
 
@@ -440,6 +451,7 @@ fn parse_line(line: &str) -> Result<Node> {
 ## 🚀 **Advanced Propagation Techniques**
 
 ### **Result Chaining and Composition**
+
 ```rust
 // Functional style error propagation
 fn process_user_pipeline(user_id: u64) -> Result<ProcessedUser, AppError> {
@@ -489,6 +501,7 @@ where
 ```
 
 ### **Parallel Error Propagation**
+
 ```rust
 use std::thread;
 use std::sync::mpsc;
@@ -539,6 +552,7 @@ fn process_parallel_tasks(tasks: Vec<Task>) -> Result<Vec<TaskResult>, Vec<TaskE
 ```
 
 ### **Async Error Propagation**
+
 ```rust
 use tokio;
 use anyhow::{Result, Context};
@@ -584,6 +598,7 @@ async fn fetch_parallel_sources() -> Result<CombinedData> {
 ## 🧪 **Testing Error Propagation**
 
 ### **Unit Testing Error Paths**
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -648,6 +663,7 @@ mod tests {
 ```
 
 ### **Integration Testing with Error Scenarios**
+
 ```rust
 #[cfg(test)]
 mod integration_tests {
@@ -688,6 +704,7 @@ mod integration_tests {
 ## 📊 **Performance Considerations**
 
 ### **Error Propagation Overhead**
+
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
@@ -724,6 +741,7 @@ fn question_mark_chain() -> Result<i32, std::io::Error> {
 ```
 
 ### **Memory Efficiency**
+
 ```rust
 // Efficient error types avoid unnecessary allocations
 #[derive(Error, Debug)]
@@ -749,16 +767,19 @@ pub enum ExpensiveError {
 ## 🔗 **Integration with Learning Tracks**
 
 ### **Daily Study Applications**
+
 - **Week 5**: Advanced error handling patterns and propagation strategies
 - **Error analysis**: Building error banks for common patterns
 - **AoC solutions**: Robust error propagation in competitive programming
 
 ### **Mission Applications**
+
 - **All Missions**: Consistent error propagation patterns
 - **Mission5**: HashMap error handling with proper propagation
 - **Mission7**: Graph algorithm error handling and propagation
 
 ### **Rust Book Connections**
+
 - **Chapter 9**: `Result<T, E>` and `?` operator fundamentals
 - **Chapter 10**: Trait bounds and error conversion patterns
 - **Chapter 16**: Error handling in concurrent contexts
@@ -766,6 +787,7 @@ pub enum ExpensiveError {
 ## 📚 **Best Practices Summary**
 
 ### **✅ Do**
+
 - Use the `?` operator for clean error propagation
 - Implement `From` traits for automatic error conversion
 - Add context at meaningful boundaries
@@ -775,6 +797,7 @@ pub enum ExpensiveError {
 - Use `anyhow` for application error context
 
 ### **❌ Don't**
+
 - Ignore errors with `.unwrap()` in production code
 - Create overly complex error hierarchies
 - Lose error context during propagation
@@ -785,16 +808,19 @@ pub enum ExpensiveError {
 ## 🎓 **Learning Progression**
 
 ### **Beginner**
+
 1. Master the `?` operator mechanics
 2. Understand `Result<T, E>` composition
 3. Practice basic error propagation patterns
 
 ### **Intermediate**
+
 1. Implement custom error types with `thiserror`
 2. Use `anyhow` for application error context
 3. Design error handling for mission projects
 
 ### **Advanced**
+
 1. Optimize error propagation performance
 2. Handle errors in async and concurrent contexts
 3. Design composable error handling systems

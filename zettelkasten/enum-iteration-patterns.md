@@ -52,24 +52,28 @@ for dir in Direction::all() {
 ```
 
 ### Pros ✅
+
 - **Zero dependencies** - No external crates needed
 - **Simple and explicit** - Easy to understand for beginners
 - **Fast** - Returns array directly, no heap allocation
 - **Clear intent** - Obvious what the function does
 
 ### Cons ❌
+
 - **Manual maintenance** - Must update if enum changes
 - **Easy to forget variants** - Compiler won't warn if you miss one
 - **Duplication** - Enum variants listed twice (definition + array)
 - **Not DRY** - Violates "Don't Repeat Yourself" principle
 
 ### When to Use
+
 - **Learning/educational code** (like Day 23 daily study)
 - **Stable enums** that rarely change
 - **Quick prototypes** where you need something fast
 - **When avoiding dependencies** is critical
 
 ### Real-World Example
+
 ```rust
 // Simple enums that never change
 pub enum HttpMethod {
@@ -129,6 +133,7 @@ const DIRECTIONS: &[Direction] = &Direction::ALL;
 ```
 
 ### Pros ✅
+
 - **Zero dependencies** - No external crates
 - **Const evaluation** - Can use in const contexts
 - **No allocation** - Static array in binary
@@ -136,17 +141,20 @@ const DIRECTIONS: &[Direction] = &Direction::ALL;
 - **Zero runtime cost** - Compile-time array
 
 ### Cons ❌
+
 - **Manual maintenance** - Still must update if enum changes
 - **Duplication** - Enum variants still listed twice
 - **Not DRY** - Same maintenance burden as Pattern 1
 
 ### When to Use
+
 - **Production code** without external dependencies
 - **Const contexts** where you need compile-time arrays
 - **Performance-critical** code (though all patterns are fast)
 - **Public APIs** where you want both constant and function access
 
 ### Real-World Example
+
 ```rust
 pub enum LogLevel {
     Trace, Debug, Info, Warn, Error,
@@ -205,6 +213,7 @@ let all_directions: Vec<Direction> = Direction::iter().collect();
 ```
 
 ### Pros ✅
+
 - **Automatic maintenance** - Compiler ensures all variants included
 - **DRY principle** - Enum variants defined once
 - **Type-safe** - Compiler error if you forget `#[derive(EnumIter)]`
@@ -213,11 +222,13 @@ let all_directions: Vec<Direction> = Direction::iter().collect();
 - **Zero runtime overhead** - Iterator is optimized away
 
 ### Cons ❌
+
 - **External dependency** - Requires `strum` and `strum_macros` crates
 - **Compile-time cost** - Proc macros add to build time
 - **Slightly more complex** - Beginners must understand derive macros
 
 ### When to Use
+
 - ✅ **Production code** (this is the recommended pattern)
 - ✅ **Large enums** (10+ variants)
 - ✅ **Evolving enums** that change frequently
@@ -225,6 +236,7 @@ let all_directions: Vec<Direction> = Direction::iter().collect();
 - ✅ **Public libraries** where correctness is critical
 
 ### Setup
+
 ```toml
 # Cargo.toml
 [dependencies]
@@ -233,6 +245,7 @@ strum_macros = "0.26"
 ```
 
 ### Real-World Example
+
 ```rust
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
@@ -326,24 +339,28 @@ for dir in Direction::iter() {
 ```
 
 ### Pros ✅
+
 - **Zero dependencies** - No external crates
 - **Iterator interface** - Can use `.filter()`, `.map()`, etc.
 - **Educational** - Learn how iterators work
 - **Full control** - Customize behavior as needed
 
 ### Cons ❌
+
 - **Boilerplate** - Lots of code to maintain
 - **Manual maintenance** - Must update if enum changes
 - **Error-prone** - Easy to forget variants in match
 - **More complex** - Harder to understand than simple array
 
 ### When to Use
+
 - **Learning Rust** - Understanding iterator internals
 - **Custom iteration order** - Need non-standard ordering
 - **Stateful iteration** - Need to track complex state
 - **Teaching** - Demonstrating iterator patterns
 
 ### Real-World Example
+
 ```rust
 // Iterator that returns directions in clockwise order starting from North
 pub struct ClockwiseDirectionIter {
@@ -425,6 +442,7 @@ for dir in Direction::iter() {
 ```
 
 ### Pros ✅
+
 - **Zero dependencies** - No external crates
 - **DRY principle** - Enum variants defined once
 - **Automatic** - Iteration code generated automatically
@@ -432,18 +450,21 @@ for dir in Direction::iter() {
 - **Educational** - Learn macro programming
 
 ### Cons ❌
+
 - **Complex** - Requires macro programming knowledge
 - **Hard to debug** - Macro errors can be cryptic
 - **Limited IDE support** - Autocomplete may not work perfectly
 - **Maintenance burden** - You own the macro code
 
 ### When to Use
+
 - **Library development** - Building reusable patterns
 - **Advanced Rust projects** - When you need custom behavior
 - **Learning macros** - Educational purpose
 - **When you need more** than strum provides
 
 ### Real-World Example
+
 ```rust
 // Macro that generates both iteration and conversion methods
 macro_rules! enum_with_helpers {
@@ -555,6 +576,7 @@ Pattern 5: Static array in binary (.rodata section)
 ### From Pattern 1 (Manual Array) → Pattern 3 (Strum)
 
 **Before:**
+
 ```rust
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Direction {
@@ -569,6 +591,7 @@ impl Direction {
 ```
 
 **After:**
+
 ```rust
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
@@ -586,6 +609,7 @@ impl Direction {
 ```
 
 **Steps:**
+
 1. Add `strum` dependencies to `Cargo.toml`
 2. Add `use strum::IntoEnumIterator; use strum_macros::EnumIter;`
 3. Add `EnumIter` to derive list
@@ -595,6 +619,7 @@ impl Direction {
 ### From Pattern 2 (Const Array) → Pattern 3 (Strum)
 
 **Before:**
+
 ```rust
 impl Direction {
     pub const ALL: [Direction; 4] = [
@@ -604,6 +629,7 @@ impl Direction {
 ```
 
 **After:**
+
 ```rust
 #[derive(EnumIter)]
 pub enum Direction { North, South, East, West }
@@ -622,6 +648,7 @@ impl Direction {
 ```
 
 **Migration Strategy:**
+
 - Keep `ALL` constant for existing code
 - Add `iter()` for new code
 - Gradually migrate call sites
@@ -727,6 +754,7 @@ pub fn neighbors_4(&self, width: usize, height: usize) -> Vec<Coord> {
 ```
 
 **Why This Works for Day 23:**
+
 - ✅ Educational context - learning grid navigation
 - ✅ Simple enum - only 4 variants, unlikely to change
 - ✅ Zero dependencies - keeps daily study self-contained
@@ -760,6 +788,7 @@ pub fn neighbors_4(&self, width: usize, height: usize) -> impl Iterator<Item = C
 ```
 
 **Why Upgrade for Mission 6:**
+
 - ✅ Production-quality code
 - ✅ Future-proof if directions expand
 - ✅ Iterator interface enables lazy evaluation
@@ -774,6 +803,7 @@ pub fn neighbors_4(&self, width: usize, height: usize) -> impl Iterator<Item = C
 **Day 12 Problem:** Navigate a height map finding shortest path.
 
 **Pattern 1 Implementation (Learning):**
+
 ```rust
 // Quick prototype for solving puzzle
 enum Direction { North, South, East, West }
@@ -792,6 +822,7 @@ fn bfs(grid: &Grid, start: Coord) -> Option<usize> {
 ```
 
 **Pattern 3 Implementation (Refactoring):**
+
 ```rust
 // After solving, refactor for reusability
 #[derive(EnumIter)]
@@ -878,30 +909,35 @@ fn test_iterator_methods() {
 
 ## Summary: Quick Reference
 
-### Choose Pattern 1 (Manual Array) When:
+### Choose Pattern 1 (Manual Array) When
+
 - 📚 Learning Rust (Day 1-30 daily study)
 - 🚀 Quick prototypes
 - ❌ Dependencies not allowed
 - 🎯 Enum is stable and simple
 
-### Choose Pattern 2 (Const Array) When:
+### Choose Pattern 2 (Const Array) When
+
 - 🏢 Production code without dependencies
 - ⚡ Need const contexts
 - 📊 Want both constant and function access
 - 🎯 Enum is stable
 
-### Choose Pattern 3 (Strum Iterator) When:
+### Choose Pattern 3 (Strum Iterator) When
+
 - ✅ **Production/mission code** (RECOMMENDED)
 - 🔧 Enum might change
 - 🛡️ Want compile-time safety
 - 📦 Dependencies are acceptable
 
-### Choose Pattern 4 (Manual Iterator) When:
+### Choose Pattern 4 (Manual Iterator) When
+
 - 🎓 Learning iterators
 - 🔄 Need custom iteration order
 - 🎮 Complex iteration state
 
-### Choose Pattern 5 (Macro-Generated) When:
+### Choose Pattern 5 (Macro-Generated) When
+
 - 📚 Building a library
 - 🧙 Advanced Rust programming
 - 🔧 Need custom behavior beyond strum

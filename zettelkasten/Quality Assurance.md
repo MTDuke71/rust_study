@@ -11,6 +11,7 @@
 **Key Principle**: Quality assurance in learning systems ensures **sustainable skill development** through **measurable standards**, **continuous improvement**, and **systematic error prevention**. This applies both to code quality and learning process quality.
 
 ### **Dual Quality Assurance Framework**
+
 ```rust
 // Quality applies to both code output AND learning process
 pub struct QualityAssurance {
@@ -33,7 +34,9 @@ impl QualityAssurance {
 ## 📏 **Code Quality Standards**
 
 ### **1. Rust Code Quality Metrics**
+
 **Daily Quality Gates**:
+
 ```rust
 // Pre-commit quality checklist (automated where possible)
 // Comprehensive automation via scripts/quality-pipeline.ps1
@@ -61,6 +64,7 @@ fn daily_quality_gates() -> QualityReport {
 ```
 
 **Code Quality Evolution Tracking**:
+
 ```markdown
 ## Weekly Code Quality Assessment
 
@@ -85,7 +89,9 @@ fn daily_quality_gates() -> QualityReport {
 ```
 
 ### **2. Test Quality Standards**  
+
 **Test Effectiveness Framework**:
+
 ```rust
 // Comprehensive test quality metrics
 mod test_quality {
@@ -119,6 +125,7 @@ mod test_quality {
 ```
 
 **Test Quality Checklist**:
+
 ```markdown
 ## Test Quality Standards
 
@@ -142,7 +149,9 @@ mod test_quality {
 ```
 
 ### **3. Documentation Quality Standards**
+
 **Documentation Effectiveness**:
+
 ```rust
 //! # Mission 5: HashMap Implementation
 //! 
@@ -202,7 +211,9 @@ pub fn insert(&mut self, key: K, value: V) -> Option<V> {
 ## 📊 **Learning Process Quality Standards**
 
 ### **1. Daily Learning Quality Metrics**
+
 **Session Effectiveness Measurement**:
+
 ```markdown
 ## Daily Learning Quality Assessment
 
@@ -229,7 +240,9 @@ pub fn insert(&mut self, key: K, value: V) -> Option<V> {
 ```
 
 ### **2. Knowledge Retention Quality**
+
 **Spaced Repetition Success Metrics**:
+
 ```rust
 // Track retention quality over time
 struct RetentionMetrics {
@@ -251,7 +264,9 @@ impl RetentionMetrics {
 ```
 
 ### **3. Skill Transfer Quality**  
+
 **Application Effectiveness Tracking**:
+
 ```markdown
 ## Weekly Skill Transfer Assessment
 
@@ -280,7 +295,9 @@ Week 5: Can optimize solutions and teach approaches to others
 ## 🔧 **Quality Assurance Tools & Automation**
 
 ### **1. Automated Code Quality Pipeline**
+
 **PowerShell Implementation** (Windows-optimized):
+
 ```powershell
 # Daily quality assurance script for Windows
 # File: scripts/quality-pipeline.ps1
@@ -311,6 +328,7 @@ Week 5: Can optimize solutions and teach approaches to others
 ```
 
 **Jenkins Integration**:
+
 ```groovy
 // Jenkinsfile usage
 stage('Quality Pipeline') {
@@ -323,6 +341,7 @@ stage('Quality Pipeline') {
 ```
 
 **Manual Daily Usage**:
+
 ```powershell
 # Before each commit (pre-commit hook)
 & "scripts\quality-pipeline.ps1"
@@ -341,7 +360,9 @@ stage('Quality Pipeline') {
 ```
 
 ### **2. Learning Process Automation**
+
 **PowerShell Weekly Review** (Windows-optimized):
+
 ```powershell
 # Weekly learning quality assessment script
 # File: scripts/weekly-quality-review.ps1
@@ -368,6 +389,7 @@ stage('Quality Pipeline') {
 ```
 
 **Integration with Jenkins**:
+
 ```groovy
 // Weekly automated review
 stage('Learning Metrics') {
@@ -385,6 +407,7 @@ stage('Learning Metrics') {
 ```
 
 ### **3. Quality Metrics Dashboard**
+
 ```rust
 // Generate daily quality dashboard
 use std::collections::HashMap;
@@ -436,11 +459,92 @@ impl QualityDashboard {
 }
 ```
 
+### **4. Markdown Linting with markdownlint-cli2**
+
+**Purpose**: Enforce consistent markdown formatting across all zettelkasten documentation.
+
+**Installation**:
+
+```powershell
+# Install globally via npm
+npm install -g markdownlint-cli2
+```
+
+**Configuration** (`.markdownlint.json` in repository root):
+
+```json
+{
+  "default": true,
+  "MD003": false,
+  "MD013": false,
+  "MD024": { "siblings_only": true },
+  "MD033": false,
+  "MD036": false,
+  "MD040": false,
+  "MD041": false,
+  "MD060": false
+}
+```
+
+**Rule Explanations**:
+
+| Rule | Status | Reason |
+|------|--------|--------|
+| MD003 | Disabled | Heading style flexibility (atx vs setext) |
+| MD013 | Disabled | Line length - code examples often exceed 80 chars |
+| MD024 | Siblings only | Allow repeating headings in different sections |
+| MD033 | Disabled | Rust generics like `<T>` are detected as HTML |
+| MD036 | Disabled | Emphasis as heading is common in notes |
+| MD040 | Disabled | Not all code blocks need language specified |
+| MD041 | Disabled | First line heading not required |
+| MD060 | Disabled | Table column style flexibility |
+
+**Usage**:
+
+```powershell
+# Check all zettelkasten files for lint errors
+markdownlint-cli2 "zettelkasten/*.md"
+
+# Auto-fix what can be fixed automatically
+markdownlint-cli2 --fix "zettelkasten/*.md"
+
+# Check specific file
+markdownlint-cli2 "zettelkasten/Quality Assurance.md"
+```
+
+**Auto-Fixable Issues**:
+
+- ✅ MD022 - Blanks around headings
+- ✅ MD032 - Blanks around lists
+- ✅ MD047 - Single trailing newline
+
+**Manual Review Required**:
+
+- MD024 - Duplicate headings (rename for uniqueness)
+- MD056 - Table column count mismatches (fix table structure)
+- MD025 - Multiple H1 headings (remove duplicates)
+
+**Integration with Quality Pipeline**:
+
+```powershell
+# Add to daily quality checks
+function Test-MarkdownLint {
+    $result = markdownlint-cli2 "zettelkasten/*.md" 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "✅ Markdown lint: 0 errors" -ForegroundColor Green
+    } else {
+        Write-Host "❌ Markdown lint errors found" -ForegroundColor Red
+        $result | Select-Object -Last 5
+    }
+}
+```
+
 ---
 
 ## 🚦 **Quality Gates & Standards**
 
 ### **Daily Quality Gates**
+
 ```markdown
 ## Daily QA Checklist (5 minutes before session end)
 
@@ -466,6 +570,7 @@ impl QualityDashboard {
 ```
 
 ### **Weekly Quality Reviews**
+
 ```markdown
 ## Weekly Quality Assessment - [Date]
 
@@ -489,6 +594,7 @@ Based on this week's assessment:
 ```
 
 ### **Monthly Quality Calibration**
+
 ```rust
 // Quarterly quality standard evolution
 impl QualityStandards {
@@ -517,7 +623,9 @@ impl QualityStandards {
 ## 📈 **Quality Improvement Strategies**
 
 ### **1. Continuous Code Quality Improvement**
+
 **Quality Evolution Protocol**:
+
 ```rust
 // Month 1: Basic quality standards
 fn month_1_standards() {
@@ -550,7 +658,9 @@ fn month_3_standards() {
 ```
 
 ### **2. Learning Process Quality Enhancement**
+
 **Process Refinement Cycle**:
+
 ```markdown
 ## Monthly Learning Process Quality Review
 
@@ -575,7 +685,9 @@ Try for next month (one at a time):
 ```
 
 ### **3. Standard Evolution Framework**
+
 **Adaptive Quality Standards**:
+
 ```rust
 impl QualityEvolution {
     fn adapt_standards(&mut self, evidence: &LearningEvidence) {
@@ -602,6 +714,7 @@ impl QualityEvolution {
 ## 🔄 **Integration with Learning System**
 
 ### **V-Cycle Quality Integration**
+
 ```rust
 // Quality assurance embedded in V-Cycle phases
 impl VCycleMission {
@@ -624,11 +737,13 @@ impl VCycleMission {
 ```
 
 ### **3-Track Quality Coordination**  
+
 - **Mission Quality**: Code standards, architectural decisions, test coverage
 - **Daily Study Quality**: Concept retention, application ability, teaching readiness
 - **Rust Book Quality**: Integration with practical work, concept connections
 
 ### **Error Bank Quality Enhancement**
+
 - **Prevention Effectiveness**: Track how well prevention rules actually prevent errors
 - **Pattern Evolution**: Monitor whether error types are advancing (basic → advanced)
 - **Resolution Speed**: Measure improvement in debugging and fix application time
@@ -640,6 +755,7 @@ impl VCycleMission {
 *Tags: #quality-assurance #code-quality #learning-process-quality #continuous-improvement #standards-maintenance #test-quality #documentation-standards #automation #quality-gates #quality-evolution*
 
 *Code Quality Framework:*
+
 - [[Code Quality Standards]] - Comprehensive metrics and requirements for Rust code
 - [[Test Quality Framework]] - Effective testing strategies and coverage requirements  
 - [[Documentation Standards]] - API documentation and code comment best practices
@@ -648,12 +764,14 @@ impl VCycleMission {
 - [[broken links output]] - Zettelkasten maintenance and link integrity reporting
 
 *Learning Quality Framework:*  
+
 - [[Learning Process Quality]] - Session effectiveness and focus maintenance standards
 - [[Knowledge Retention Quality]] - Spaced repetition and skill transfer measurement
 - [[Skill Application Quality]] - Cross-context learning application effectiveness
 - [[Quality Improvement Strategies]] - Systematic approaches to raising learning standards
 
 *Quality Assurance Tools:*
+
 - [[Quality Metrics Dashboard]] - Real-time tracking of code and learning quality  
 - [[Automated Quality Scripts]] - Daily and weekly quality assessment automation
 - **[[../../scripts/QUALITY_PIPELINE_USAGE]]** - Comprehensive local quality pipeline guide (10 checks)
@@ -663,6 +781,7 @@ impl VCycleMission {
 - [[Jenkins Setup Guide]] - Automated CI/CD pipeline setup for quality assurance
 
 *Learning System Integration:*
+
 - [[V-Cycle Methodology]] - Quality gates embedded in requirements-driven development
 - [[Progress Tracking]] - Quality metrics as part of advancement measurement
 - [[developer-learning-habits]] - Evidence-based quality assurance in learning process

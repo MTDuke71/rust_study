@@ -10,6 +10,7 @@ String manipulation in Rust involves working with UTF-8 encoded text through mul
 ## Core String Types
 
 ### String vs &str
+
 ```rust
 // Owned, growable UTF-8 string
 let mut owned = String::from("Hello");
@@ -21,12 +22,14 @@ let borrowed: &str = &owned; // Borrow from String
 ```
 
 ### Key Differences
+
 - **String**: Owned, heap-allocated, growable
 - **&str**: Borrowed, immutable view, can point to stack/heap/binary
 
 ## Common Operations
 
 ### Creation and Conversion
+
 ```rust
 // Various creation methods
 let s1 = String::new();
@@ -40,6 +43,7 @@ let s6 = 42_i32.to_string();
 ```
 
 ### Modification
+
 ```rust
 let mut s = String::new();
 s.push('H');           // Single character
@@ -49,6 +53,7 @@ s = s + "!";           // Takes ownership, returns new String
 ```
 
 ### Inspection and Search
+
 ```rust
 let text = "Hello, 世界";
 
@@ -65,6 +70,7 @@ println!("Position: {:?}", text.find("世"));       // Some(7)
 ## AoC String Patterns
 
 ### Day 11: Password Generation
+
 ```rust
 // Increment string like number
 fn increment_password(password: &mut String) {
@@ -89,6 +95,7 @@ fn has_straight(s: &str) -> bool {
 ```
 
 ### Day 12: JSON Parsing
+
 ```rust
 // Recursive string processing
 fn sum_numbers(json: &str) -> i32 {
@@ -115,6 +122,7 @@ fn sum_numbers(json: &str) -> i32 {
 ```
 
 ### Day 1: String Traversal
+
 ```rust
 // Character-by-character processing
 fn solve_elevator(instructions: &str) -> (i32, Option<usize>) {
@@ -140,6 +148,7 @@ fn solve_elevator(instructions: &str) -> (i32, Option<usize>) {
 ## Performance Considerations
 
 ### Memory Allocation
+
 ```rust
 // Efficient: pre-allocate capacity
 let mut result = String::with_capacity(1000);
@@ -155,6 +164,7 @@ for i in 0..100 {
 ```
 
 ### String Building Patterns
+
 ```rust
 // collect() method - efficient
 let numbers: Vec<i32> = vec![1, 2, 3, 4, 5];
@@ -178,6 +188,7 @@ for (i, &num) in numbers.iter().enumerate() {
 ## Unicode Handling
 
 ### Character vs Byte Operations
+
 ```rust
 let s = "Hello, 世界!";
 
@@ -198,6 +209,7 @@ let result = String::from_utf8(bytes)?;
 ```
 
 ### Slicing Safely
+
 ```rust
 // Dangerous: may panic on UTF-8 boundaries
 // let slice = &s[0..5]; // Could panic
@@ -214,20 +226,24 @@ if s.is_char_boundary(5) {
 ## Mission Integration
 
 ### Mission 1: Stack<String>
+
 - String ownership in stack operations
 - Move semantics with string data
 
 ### Mission 5: HashMap<String, V>
+
 - String keys and hash computation
 - Borrowing vs owning string keys
 
 ### Mission 9: JSON Processing
+
 - String parsing and validation
 - Memory-efficient string building
 
 ## Common Patterns
 
 ### String Interning
+
 ```rust
 use std::collections::HashMap;
 
@@ -251,6 +267,7 @@ impl StringInterner {
 ```
 
 ### String Pool Pattern
+
 ```rust
 // Avoid repeated allocations
 fn process_words(text: &str) -> HashMap<String, usize> {
@@ -268,6 +285,7 @@ fn process_words(text: &str) -> HashMap<String, usize> {
 ## Error Handling
 
 ### String Validation
+
 ```rust
 use std::str::FromStr;
 
@@ -290,6 +308,7 @@ impl FromStr for ValidatedString {
 ```
 
 ### UTF-8 Conversion
+
 ```rust
 // Safe UTF-8 handling
 fn process_bytes(bytes: Vec<u8>) -> Result<String, String> {
@@ -314,14 +333,17 @@ fn process_bytes_lossy(bytes: Vec<u8>) -> String {
 ## Daily Study Applications
 
 ### Week 2: Collections and String Processing
+
 - String as a collection of UTF-8 bytes
 - Efficient string building patterns
 
 ### Week 3: Advanced String Patterns
+
 - Regular expressions and pattern matching
 - Custom string types and validation
 
 ### Week 5: Error Handling with Strings
+
 - String parsing and error propagation
 - Custom error types with string descriptions
 
@@ -335,6 +357,7 @@ fn process_bytes_lossy(bytes: Vec<u8>) -> String {
 ---
 
 *String Manipulation Links:*
+
 - [[Performance Benchmarking]] - String operation measurement
 - [[zero-cost-abstractions]] - Iterator patterns over strings
 - [[Memory Safety]] - Safe string operations

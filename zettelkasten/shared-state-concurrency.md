@@ -87,8 +87,8 @@ fn main() {
 |------|---------|------------|
 | **Deadlock** | Thread A locks registry, Thread B locks cache, then they wait on each other | Establish a lock ordering discipline, or consolidate data into one mutexed struct |
 | **Long Critical Sections** | Parsing + computation happen while holding the lock | Do heavy work outside the lock; capture inputs, release, then compute |
-| **Excessive Contention** | Hundreds of workers compete for one mutex | Use sharded maps (`Vec<Mutex<_>>`), `DashMap`, or switch to [[message-passing-channels]] |
-| **Lock Poisoning** | Worker panics mid-update | Wrap `lock()` with `unwrap_or_else(|e| e.into_inner())` and log the failure |
+| **Excessive Contention** | Hundreds of workers compete for one mutex | Use sharded maps (`Vec<Mutex<_>>`), `DashMap`, or switch to message-passing-channels |
+| **Lock Poisoning** | Worker panics mid-update | Wrap `lock()` with `unwrap_or_else(\|e\| e.into_inner())` and log the failure |
 
 ### **When to Prefer Shared State vs Message Passing**
 
@@ -107,16 +107,19 @@ fn main() {
 ## 🔗 **Integration Points**
 
 ### **Builds On**
+
 - [[rust-threading-basics]] - Thread spawning, JoinHandle patterns, and ownership moves
 - [[ownership]] - Transfer semantics matter when moving data into the shared structure
 - [[Send and Sync Deep Dive]] - Guarantees for sharing `Arc<Mutex<T>>` across threads
 
 ### **Enables**
+
 - [[sync-send-traits]] - Analyzing whether custom AoC data structures stay thread-safe after wrapping in locks
 - [[AoC Pattern Library]] - Adds a reusable shared-state aggregation recipe
 - [[deterministic-debugging]] - Centralized logging/state capture for multi-threaded scenarios
 
 ### **Related Concepts**
+
 - [[atomic-operations-memory-ordering]] - Lock-free alternative to Mutex for simple counters and flags
 - [[message-passing-channels]] - Ownership-transfer alternative without shared mutation
 - [[Performance Patterns]] - Measuring contention, batching updates, and using lock-free data structures

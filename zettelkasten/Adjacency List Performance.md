@@ -9,6 +9,7 @@ Adjacency list performance depends heavily on graph density, operation patterns,
 ## Theoretical Time Complexity
 
 ### **Core Operations**
+
 | Operation | Time Complexity | Space Impact | Notes |
 |-----------|----------------|--------------|--------|
 | **Add Vertex** | O(1) amortized | O(1) | Vec reallocation triggers |
@@ -20,6 +21,7 @@ Adjacency list performance depends heavily on graph density, operation patterns,
 | **Edge Count** | O(V) | O(0) | Sum all neighbor list lengths |
 
 ### **Graph Algorithms**
+
 | Algorithm | Adjacency List | Adjacency Matrix | Winner |
 |-----------|----------------|------------------|---------|
 | **DFS/BFS** | O(V + E) | O(V²) | 🏆 Adjacency List |
@@ -30,6 +32,7 @@ Adjacency list performance depends heavily on graph density, operation patterns,
 ## Space Complexity Analysis
 
 ### **Memory Usage Patterns**
+
 ```rust
 // Adjacency List Space: O(V + E)
 struct Graph<T> {
@@ -42,6 +45,7 @@ struct Graph<T> {
 ```
 
 ### **Density Impact**
+
 | Graph Density | Edges (E) | Adjacency List | Adjacency Matrix | Better Choice |
 |---------------|-----------|----------------|------------------|---------------|
 | **Very Sparse** | E ≈ V | O(V) | O(V²) | 🏆 Adjacency List (10x-100x better) |
@@ -52,6 +56,7 @@ struct Graph<T> {
 ## Empirical Benchmarks
 
 ### **Mission 7 Benchmark Results**
+
 From `missions/Mission7/benches/performance.rs`:
 
 ```rust
@@ -79,12 +84,14 @@ Graph Size: 1000 vertices
 ### **Key Performance Insights**
 
 #### **🚀 Performance Strengths**
+
 1. **Vertex Operations**: Consistently O(1) regardless of graph density
 2. **Edge Addition**: Extremely fast (constant time) for all densities  
 3. **Traversal Algorithms**: Linear scaling O(V+E), excellent for sparse graphs
 4. **Memory Efficiency**: Only pays for existing edges
 
 #### **⚠️ Performance Bottlenecks**
+
 1. **Edge Queries**: Degrades linearly with vertex degree
 2. **Dense Graph Overhead**: Cache misses from pointer chasing  
 3. **Edge Removal**: Requires linear search through neighbor lists
@@ -95,6 +102,7 @@ Graph Size: 1000 vertices
 ### **1. Neighbor Storage Optimization**
 
 #### **Use SmallVec for Low-Degree Vertices**
+
 ```rust
 use smallvec::{SmallVec, smallvec};
 
@@ -111,6 +119,7 @@ struct OptimizedGraph<T> {
 ```
 
 #### **HashSet for High-Degree Vertices**
+
 ```rust
 use std::collections::HashSet;
 
@@ -126,6 +135,7 @@ enum NeighborStorage {
 ### **2. Memory Layout Optimization**
 
 #### **Node and Edge Co-location**
+
 ```rust  
 // Better cache locality: store node data with neighbor count
 #[repr(C)]
@@ -144,6 +154,7 @@ struct CacheOptimizedGraph<T> {
 ```
 
 #### **Compact Representation**
+
 ```rust
 // Use u32 instead of usize for node IDs if possible
 struct CompactGraph<T> {
@@ -157,6 +168,7 @@ struct CompactGraph<T> {
 ### **3. Algorithm-Specific Optimizations**
 
 #### **Pre-sorted Neighbor Lists**
+
 ```rust
 impl<T> Graph<T> {
     pub fn add_edge_sorted(&mut self, from: usize, to: usize) -> Result<(), GraphError> {
@@ -182,6 +194,7 @@ impl<T> Graph<T> {
 ```
 
 #### **Degree-Based Storage Strategy**
+
 ```rust
 const LOW_DEGREE_THRESHOLD: usize = 8;
 const HIGH_DEGREE_THRESHOLD: usize = 64;
@@ -197,6 +210,7 @@ enum OptimalStorage {
 ### **4. Concurrent Access Optimization**
 
 #### **Read-Heavy Workloads**
+
 ```rust
 use std::sync::Arc;
 use parking_lot::RwLock;  // Better performance than std::sync::RwLock
@@ -211,6 +225,7 @@ struct ConcurrentGraph<T> {
 ```
 
 #### **Lock-Free Edge Queries**
+
 ```rust
 use std::sync::atomic::{AtomicPtr, Ordering};
 
@@ -228,6 +243,7 @@ struct LockFreeGraph<T> {
 From [[mission-10]] analysis, comparing connectivity query performance:
 
 ### **Connectivity Query Patterns**
+
 | Approach | Preprocessing | Single Query | Batch Queries | Memory |
 |----------|---------------|--------------|---------------|---------|
 | **DFS on Adjacency List** | O(1) | O(V+E) | O(k×(V+E)) | O(V+E) |
@@ -235,6 +251,7 @@ From [[mission-10]] analysis, comparing connectivity query performance:
 | **Adjacency Matrix + DFS** | O(1) | O(V²) | O(k×V²) | O(V²) |
 
 ### **Use Case Recommendations**
+
 ```rust
 // Choose based on query pattern:
 
@@ -254,6 +271,7 @@ let matrix = AdjacencyMatrix::new(vertex_count);
 ## Real-World Performance Case Studies
 
 ### **Case Study 1: Social Network Analysis**
+
 ```
 Dataset: 1M users, 50M friendships (avg degree: 100)
 Operation Mix: 70% neighbor queries, 20% edge additions, 10% traversals
@@ -269,6 +287,7 @@ Result: 🏆 Adjacency list wins decisively due to sparsity
 ```
 
 ### **Case Study 2: Computer Vision - Dense Grid Graph**
+
 ```
 Dataset: 4K image (16M pixels), 8-connected grid (128M edges)  
 Operation Mix: 90% edge queries, 10% traversals
@@ -287,6 +306,7 @@ Result: 🏆 Adjacency list by necessity, but consider specialized grid represen
 ```
 
 ### **Case Study 3: Route Planning - Road Networks**
+
 ```  
 Dataset: City roads (500K intersections, 1.2M road segments)
 Operation Mix: 95% shortest path queries, 5% map updates
@@ -303,6 +323,7 @@ Result: 🏆 Adjacency list optimal for routing applications
 ## Benchmarking Best Practices
 
 ### **Representative Test Data**
+
 ```rust
 // Create realistic graph structures for benchmarking
 fn generate_scale_free_graph(n: usize, m: usize) -> Graph<usize> {
@@ -319,6 +340,7 @@ fn generate_random_graph(n: usize, p: f64) -> Graph<usize> {
 ```
 
 ### **Comprehensive Benchmark Suite**
+
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
@@ -347,24 +369,28 @@ fn benchmark_adjacency_list(c: &mut Criterion) {
 ## Production Optimization Checklist
 
 ### **✅ Memory Optimization**
+
 - [ ] Use `SmallVec` for low-degree vertices  
 - [ ] Consider `u32` node IDs for memory reduction
 - [ ] Pre-allocate neighbor lists with capacity hints
 - [ ] Monitor memory fragmentation in long-running applications
 
 ### **✅ Performance Optimization**  
+
 - [ ] Profile hot paths with `perf` or `cargo flamegraph`
 - [ ] Use `HashSet` for high-degree vertices if edge queries dominate
 - [ ] Keep neighbor lists sorted for O(log n) binary search
 - [ ] Consider bit-packed representations for very dense subgraphs
 
 ### **✅ Algorithm Selection**
+
 - [ ] Choose Union-Find for connectivity-heavy workloads
 - [ ] Use adjacency matrix for dense graphs with frequent edge queries
 - [ ] Consider specialized representations (CSR, bit-packed) for specific use cases
 - [ ] Benchmark with realistic data distributions
 
 ### **✅ Concurrency Optimization**
+
 - [ ] Use fine-grained locking (per-vertex) for concurrent updates
 - [ ] Consider lock-free data structures for read-heavy workloads  
 - [ ] Implement work-stealing for parallel graph algorithms
@@ -381,6 +407,7 @@ fn benchmark_adjacency_list(c: &mut Criterion) {
 ## Tools and Profiling
 
 ### **Rust Profiling Tools**
+
 ```bash
 # CPU profiling with flamegraph
 cargo flamegraph --bench performance
@@ -393,6 +420,7 @@ perf stat -e cache-misses,cache-references ./target/release/deps/performance-*
 ```
 
 ### **Custom Performance Metrics**
+
 ```rust  
 // Track performance metrics during development
 #[derive(Debug)]

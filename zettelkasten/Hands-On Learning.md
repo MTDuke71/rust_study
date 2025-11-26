@@ -68,11 +68,13 @@ fn main() {
 ```
 
 **Run it**:
+
 ```bash
 cargo run --example step1_basic_stack
 ```
 
 **Expected Output**:
+
 ```
 Stack: [1, 2, 3]
 Pop: Some(3)
@@ -82,9 +84,11 @@ Pop: None
 ```
 
 **Observation Questions**:
+
 1. What order do elements come out? (Last-in-first-out)
 2. What happens when you pop an empty stack? (Returns `None`)
 3. Why does pop return `Option<T>`? (Handles empty case safely)
+
 ```
 
 **Goal**: Build familiarity with behavior before writing code.
@@ -120,6 +124,7 @@ fn main() {
 ```
 
 **Challenge 2**: What happens with different types?
+
 ```rust
 fn main() {
     let mut stack = Vec::new();
@@ -135,6 +140,7 @@ fn main() {
 ```
 
 **Challenge 3**: Break it intentionally
+
 ```rust
 fn main() {
     let mut stack = Vec::new();
@@ -148,9 +154,11 @@ fn main() {
 ```
 
 **Reflection Questions**:
+
 - Which challenge caused a panic? Why?
 - How does the Vec type change with different element types?
 - What's the relationship between push order and pop order?
+
 ```
 
 **Goal**: Develop intuition through safe experimentation.
@@ -207,6 +215,7 @@ fn pop(&mut self) -> Option<i32> {
     self.items.pop()  // Vec::pop already returns Option
 }
 ```
+
 </details>
 
 <details>
@@ -224,11 +233,13 @@ fn test_empty_pop() {
     assert_eq!(value, None);  // ✅ Correctly handles empty case
 }
 ```
+
 </details>
 
 ---
 
 **Exercise 2: Complete the implementation**
+
 ```rust
 struct Stack<T> {
     items: Vec<T>,
@@ -284,9 +295,11 @@ mod tests {
 ```
 
 **Run tests to validate**:
+
 ```bash
 cargo test
 ```
+
 </details>
 ```
 
@@ -341,6 +354,7 @@ impl<T> IntoIterator for Stack<T> {
 ```
 
 **Test Suite** (must pass):
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -383,6 +397,7 @@ mod tests {
 ```
 
 **Success Criteria**:
+
 - [ ] All tests pass
 - [ ] Zero compiler warnings
 - [ ] Documented with `cargo doc`
@@ -391,6 +406,7 @@ mod tests {
 **Time Estimate**: 2-3 hours
 
 **Compare Your Solution**: `tutorials/Mission1_tut/solutions/complete_stack.rs`
+
 ```
 
 **Goal**: Achieve independent implementation competency.
@@ -418,6 +434,7 @@ fn test_double() {
 ```
 
 **Benefits**:
+
 - ✅ Reduces cognitive load (focus on one blank)
 - ✅ Provides working scaffold
 - ✅ Immediate feedback from tests
@@ -462,6 +479,7 @@ Can't push while an immutable borrow exists. Limit the scope of `first`.
 </details>
 
 **Benefits**:
+
 - ✅ Teaches error recognition
 - ✅ Builds debugging intuition
 - ✅ Progressive hints prevent frustration
@@ -515,6 +533,7 @@ fn test_extensions() {
 ```
 
 **Benefits**:
+
 - ✅ Encourages API design thinking
 - ✅ Practice with lifetimes and traits
 - ✅ Builds on working foundation
@@ -553,6 +572,7 @@ fn test_extensions() {
 ```
 
 **Benefits**:
+
 - ✅ Tests full implementation skills
 - ✅ Validates independent problem-solving
 - ✅ Simulates real-world development
@@ -607,12 +627,14 @@ fn test_extensions() {
 - [ ] **Feedback-rich**: Tests provide clear error messages
 
 **Example of Poor Exercise**:
+
 ```rust
 // TODO: Implement a thread-safe concurrent HashMap with lock-free reads
 // No template, no hints, no time estimate, no tests
 ```
 
 **Example of Good Exercise**:
+
 ```rust
 /// Implement `peek()` to view top element without removing it
 /// 
@@ -640,6 +662,7 @@ fn test_peek() {
 ### **Daily Study Integration**
 
 **Week 1: Ownership (Days 1-7)**
+
 - **Day 1**: Execute ownership transfer examples
 - **Day 2**: Modify borrowing examples  
 - **Day 3**: Debug borrow checker errors
@@ -655,12 +678,14 @@ fn test_peek() {
 ### **Mission Integration**
 
 **Tutorial → Mission Flow**:
+
 1. **Tutorial**: Hands-on practice with scaffolding
 2. **Daily Study**: Concept reinforcement through experiments
 3. **Mission**: Independent production implementation
 4. **AoC**: Apply to competitive problems
 
 **Example: HashMap Learning Path**
+
 - **Day 34**: Execute std::HashMap examples
 - **Tutorial Step 1**: Modify linear search to hash-based
 - **Tutorial Step 5**: Debug collision handling bugs
@@ -672,18 +697,21 @@ fn test_peek() {
 ## 🔗 **Related Concepts**
 
 ### **Tutorial Engineering**
+
 - [[Tutorial Engineering]] - Parent methodology
 - [[Progressive Disclosure]] - Layer practice difficulty
 - [[Error Anticipation]] - Debugging practice
 - [[Incremental Complexity]] - Practice stepping stones
 
 ### **Learning Science**
+
 - [[Active Learning Theory]] - Research foundation
 - [[Deliberate Practice]] - Skill development through repetition
 - [[Feedback Loops]] - Test-driven learning validation
 - [[Spaced Repetition]] - Distributing practice over time
 
 ### **Mission Applications**
+
 - [[Mission1 Tutorial]] - 7 stages of hands-on practice
 - [[Mission5 Tutorial]] - Problem-based learning
 - [[Daily Study MOC]] - Daily hands-on experiments

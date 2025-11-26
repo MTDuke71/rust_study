@@ -7,12 +7,14 @@
 ## 📖 Core Concept
 
 **Performance analysis** is the process of measuring and understanding how your code behaves at runtime. It answers questions like:
+
 - *"Where is my code spending most of its time?"*
 - *"Which functions are performance bottlenecks?"*
 - *"How does performance scale with input size?"*
 - *"Is my optimization actually helping?"*
 
 **Key Distinction:**
+
 - **Performance Analysis** (this page) = **Measuring and diagnosing** performance
 - **[[Performance Optimization]]** = **Improving** performance after analysis
 - **[[Big-O Analysis]]** = **Theoretical** complexity analysis
@@ -24,15 +26,19 @@
 ## 🎯 **Types of Performance Analysis**
 
 ### **1. Benchmarking**
+
 *Measuring execution time under controlled conditions*
 
 ### **2. Profiling**
+
 *Identifying where time/memory is spent during execution*
 
 ### **3. Complexity Analysis**
+
 *Understanding scaling behavior as input grows*
 
 ### **4. Resource Analysis**
+
 *Measuring memory, CPU, I/O, and other resource usage*
 
 ---
@@ -80,6 +86,7 @@ criterion_main!(benches);
 **Run with:** `cargo bench`
 
 **Output:**
+
 ```
 fib_recursive_20    time:   [2.7831 ms 2.7945 ms 2.8067 ms]
 fib_iterative_20    time:   [32.847 ns 32.987 ns 33.141 ns]
@@ -174,6 +181,7 @@ cargo flamegraph --bin my_program
 ```
 
 **Mission9 Example:**
+
 ```bash
 # Profile Dijkstra's algorithm
 cd missions/Mission9
@@ -656,6 +664,7 @@ fn analyze_branch_prediction() {
 ## 📋 **Performance Analysis Checklist**
 
 ### **Before Optimization**
+
 - [ ] Establish baseline measurements
 - [ ] Identify bottlenecks with profiling
 - [ ] Verify Big-O complexity matches expectations
@@ -664,6 +673,7 @@ fn analyze_branch_prediction() {
 - [ ] Document current performance
 
 ### **During Optimization**
+
 - [ ] Benchmark each change in isolation
 - [ ] Compare against baseline
 - [ ] Check for statistical significance (p < 0.05)
@@ -671,6 +681,7 @@ fn analyze_branch_prediction() {
 - [ ] Monitor memory usage changes
 
 ### **After Optimization**
+
 - [ ] Generate performance report
 - [ ] Update documentation with new benchmarks
 - [ ] Add regression tests
@@ -753,22 +764,26 @@ fn memory_profile() {
 ## 📚 **Tools Reference**
 
 ### **Benchmarking**
+
 - `criterion` - Statistical benchmarking
 - `cargo bench` - Run benchmarks
 - `iai` - Cachegrind-based benchmarking
 
 ### **Profiling**
+
 - `cargo flamegraph` - Flame graph generation
 - `perf` - Linux performance analysis
 - `valgrind` - Memory profiling
 - `cargo-instruments` - macOS profiling
 
 ### **Analysis**
+
 - `cargo-llvm-lines` - Code size analysis
 - `cargo-bloat` - Binary size analysis
 - `cargo-asm` - Inspect generated assembly
 
 ### **Mission Examples**
+
 - Mission1: Stack operation benchmarks
 - Mission3: Binary search complexity verification
 - Mission5: HashMap load factor analysis

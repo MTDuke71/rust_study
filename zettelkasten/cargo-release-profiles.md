@@ -123,43 +123,55 @@ codegen-units = 1
 ## Real-World Applications
 
 ### Development Workflow
+
 - Use **dev** profile for rapid iteration
 - Optionally set `opt-level = 1` for better dev performance
 
 ### CI/CD Pipeline
+
 - Use **release** profile with `lto = true`
 - Run tests in **release** mode to catch optimization bugs
 
 ### Embedded/WebAssembly
+
 - Use **release-min-size** profile
 - Critical for size-constrained environments
 
 ### Performance-Critical Applications
+
 - Use **release-max-perf** profile
 - Accept longer compile times for maximum runtime speed
 
 ## Integration with Other Concepts
 
 ### Rust Book Chapter 14.1 Connection
+
 See [[rust-book-ch14]] for detailed examples and demonstrations.
+
 - Example location: `rust_book/Ch14/release_profiles/`
 - **Comprehensive technical reference**: [[../rust_book/Ch14/release_profiles/PROFILES|PROFILES.md]] - 200+ line guide with detailed tables, commands, and best practices
 - Shows impact of optimization levels on performance
 
 ### Performance Patterns
+
 Profiles directly impact [[Performance Patterns]] through:
+
 - Optimization level choices
 - LTO enabling cross-crate optimizations
 - Codegen units affecting compile-time parallelism
 
 ### Binary Size Optimization
+
 Profile settings are primary tool for [[binary-size-optimization]]:
+
 - `opt-level = "z"` for aggressive size reduction
 - `strip = true` to remove debug symbols
 - `panic = 'abort'` for smaller panic handler
 
 ### Debugging and Profiling
+
 Profile configuration affects [[debugging-rust]] workflow:
+
 - Debug symbols needed for debuggers (gdb, lldb)
 - Release with debug for profiling tools (perf, flamegraph)
 - Balance between optimization and debuggability
@@ -244,6 +256,7 @@ cargo test --release
 ## Links
 
 *Incoming Links:*
+
 - [[rust-book-ch14]] - Chapter covering profile customization
 - [[Performance Patterns]] - Uses profiles for optimization
 - [[binary-size-optimization]] - Profile settings for size reduction
@@ -251,6 +264,7 @@ cargo test --release
 - [[cargo-workspace-management]] - Workspace-level profile configuration
 
 *Outgoing Links:*
+
 - [[rust-optimization-techniques]] - Advanced optimization strategies
 - [[cross-compilation]] - Profiles for different targets
 - [[rust-toolchain-configuration]] - Related build configuration
@@ -258,6 +272,7 @@ cargo test --release
 - [[embedded-rust]] - Size-critical profile configurations
 
 *Related Concepts:*
+
 - [[compiler-flags]] - Lower-level compilation control
 - [[link-time-optimization]] - Deep dive into LTO
 - [[incremental-compilation]] - Dev profile feature

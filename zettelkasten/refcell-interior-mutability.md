@@ -9,12 +9,14 @@
 **Interior mutability** is a design pattern in Rust that allows you to mutate data even when there are immutable references to that data. `RefCell<T>` enforces Rust's borrowing rules at **runtime** instead of compile-time, enabling mutation through shared references while maintaining memory safety.
 
 **Key Characteristics**:
+
 - **Runtime borrow checking**: Panics if borrowing rules are violated at runtime
 - **Single-threaded only**: Not `Sync` - cannot be shared across threads safely
 - **Flexible mutation**: Allows mutation through `&self` (shared reference)
 - **Common pattern**: `Rc<RefCell<T>>` for shared mutable state
 
 **Why Interior Mutability Matters**:
+
 1. **Shared mutable state**: Multiple owners can mutate shared data
 2. **API flexibility**: Mutation through immutable methods (`&self`)
 3. **Design patterns**: Enables observer, cache, and state machine patterns
@@ -27,6 +29,7 @@
 ### **The Librarian Analogy**
 
 **Regular Borrowing** (compile-time checked):
+
 ```
 Librarian checks rules BEFORE you leave:
 - "You can't take this book, someone else has it checked out"
@@ -34,6 +37,7 @@ Librarian checks rules BEFORE you leave:
 ```
 
 **`RefCell` Borrowing** (runtime checked):
+
 ```
 Librarian gives you a tracking badge that checks rules WHILE you read:
 - You can borrow the book
@@ -80,6 +84,7 @@ Arc<Mutex<T>>             // Thread-safe version (multi-threaded)
 **Key Insight**: Because `RefCell<T>` allows mutable borrows checked at **runtime**, you can mutate the value inside the `RefCell<T>` even when the `RefCell<T>` itself is immutable. This is the essence of interior mutability.
 
 **Common Combinations**:
+
 - `Box<T>` - Unique ownership on heap
 - `Rc<T>` - Shared read-only data
 - `Rc<RefCell<T>>` - Shared mutable data (single-threaded) ✨
@@ -92,6 +97,7 @@ Arc<Mutex<T>>             // Thread-safe version (multi-threaded)
 ### **Basic RefCell Operations**
 
 #### **Creating and Borrowing**
+
 ```rust
 use std::cell::RefCell;
 
@@ -120,6 +126,7 @@ fn basic_refcell_usage() {
 ```
 
 #### **Runtime Panic Example**
+
 ```rust
 use std::cell::RefCell;
 
@@ -138,6 +145,7 @@ fn runtime_borrow_violation() {
 ### **Common Pattern: `Rc<RefCell<T>>`**
 
 #### **Shared Mutable Graph Node**
+
 ```rust
 use std::rc::Rc;
 use std::cell::RefCell;
@@ -180,6 +188,7 @@ fn graph_example() {
 ### **State Management Pattern**
 
 #### **State Machine with Interior Mutability**
+
 ```rust
 use std::cell::RefCell;
 
@@ -379,18 +388,21 @@ fn cache_demo() {
 ## 🔗 **Integration Points**
 
 ### **Builds On**
+
 - [[interior-mutability]] - Overview of all interior mutability patterns (Cell, RefCell, Mutex, RwLock, Atomics)
 - [[ownership-fundamentals]] - Understanding Rust's ownership and borrowing rules
 - [[smart-pointer-patterns]] - `RefCell` is a smart pointer with interior mutability
 - [[rc-shared-ownership]] - Often used together as `Rc<RefCell<T>>`
 
 ### **Enables**
+
 - [[graph-data-structures]] - Shared mutable nodes in graphs and trees
 - [[observer-pattern]] - Dynamic subscription and notification systems
 - [[state-machine-patterns]] - State transitions through immutable interfaces
 - [[testing-mocks]] - Mock objects with internal state changes
 
 ### **Related Concepts**
+
 - [[interior-mutability]] - Complete overview of all interior mutability types and patterns
 - [[cell-types-comparison]] - `Cell<T>` vs `RefCell<T>` vs `Mutex<T>` trade-offs
 - [[reference-cycles]] - Potential memory leaks with `Rc<RefCell<T>>`
@@ -402,6 +414,7 @@ fn cache_demo() {
 ## 🚀 **Mission Applications**
 
 ### **Mission 4**: LinkedList with Shared Nodes
+
 ```rust
 // Interior mutability enables shared mutable node references
 type Link<T> = Option<Rc<RefCell<Node<T>>>>;
@@ -414,6 +427,7 @@ struct Node<T> {
 ```
 
 ### **Mission 7**: Graph Algorithms
+
 ```rust
 // BFS/DFS with mutable visited tracking through shared references
 struct GraphNode {
@@ -424,6 +438,7 @@ struct GraphNode {
 ```
 
 ### **Advanced Example**: Dynamic Graph Construction
+
 ```rust
 // Build graphs where nodes can add edges after creation
 fn build_dynamic_graph() {
@@ -441,15 +456,19 @@ fn build_dynamic_graph() {
 ## 📚 **Learning Progression**
 
 ### **Introduction**: [[rust_book/rust-book-ch15]]
+
 Rust Book Chapter 15 introduces smart pointers including `Box<T>`, `Rc<T>`, and `RefCell<T>` with interior mutability patterns.
 
 ### **Foundation**: [[daily-study/Day07]]
+
 Week 1 summary briefly mentions `Cell` and `RefCell` as part of ownership patterns cheat sheet.
 
 ### **Application**: [[mission-4]]
+
 Mission 4 (Linked Lists) applies `Rc<RefCell<T>>` pattern for shared mutable node references in doubly-linked lists.
 
 ### **Mastery**: Advanced design patterns
+
 Observer pattern, state machines, caching strategies, and graph algorithms using interior mutability for flexible API design.
 
 ---

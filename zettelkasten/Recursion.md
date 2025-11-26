@@ -29,6 +29,7 @@ fn recursive_function(input: T) -> Result {
 ```
 
 **Essential Components:**
+
 1. **Base Case** - Termination condition (prevents infinite recursion)
 2. **Recursive Case** - Self-call with reduced problem size
 3. **Progress** - Each call moves toward base case
@@ -330,6 +331,7 @@ fn find_node<'a>(tree: &'a TreeNode, target: i32) -> Option<&'a TreeNode> {
 ## When to Use Recursion
 
 ### **✅ Use Recursion When:**
+
 - Problem has natural recursive structure (trees, graphs)
 - Divide-and-conquer approach applies
 - Problem size is guaranteed small (no stack overflow)
@@ -338,6 +340,7 @@ fn find_node<'a>(tree: &'a TreeNode, target: i32) -> Option<&'a TreeNode> {
 - Working with recursive data structures
 
 ### **❌ Avoid Recursion When:**
+
 - Problem requires deep recursion (risk of stack overflow)
 - Iterative solution is simpler
 - Performance is critical (function call overhead)
@@ -464,17 +467,20 @@ fn fib_fast(n: u64, memo: &mut HashMap<u64, u64>) -> u64 {
 ## Links & Navigation
 
 **Core Concepts:**
+
 - [[Algorithms MOC]] - Algorithm patterns overview
 - [[Dynamic Programming]] - Optimized recursion
 - [[Divide and Conquer]] - Recursive decomposition
 - [[Backtracking]] - Recursive search
 
 **Applications:**
+
 - [[DFS Patterns]] - Recursive graph traversal
 - [[Tree Traversal]] - Binary tree recursion
 - [[Graph Algorithms]] - Recursive graph algorithms
 
 **Related Topics:**
+
 - [[Stack Data Structure]] - Implicit recursion stack
 - [[Memoization]] - Caching recursive results
 - [[Algorithm Analysis]] - Recursion complexity

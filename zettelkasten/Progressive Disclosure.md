@@ -30,7 +30,8 @@ Level 5: Integration & Advanced Use
 
 **Anti-Pattern**: Introducing generics, lifetimes, traits, and error handling simultaneously.
 
-**Progressive Pattern**: 
+**Progressive Pattern**:
+
 1. Concrete Vec<i32> (Level 1)
 2. Generic Vec<T> (Level 2)
 3. Lifetime annotations (Level 3)
@@ -44,6 +45,7 @@ Level 5: Integration & Advanced Use
 ### **Example: Mission1 Stack Tutorial (7-Layer Progression)**
 
 #### **Layer 1: Concrete Foundation**
+
 ```rust
 // Step 1: Work with basic Vec operations
 fn main() {
@@ -63,6 +65,7 @@ fn main() {
 ---
 
 #### **Layer 2: Abstraction Introduction**
+
 ```rust
 // Step 2: Wrap Vec in custom type
 struct Stack {
@@ -89,6 +92,7 @@ impl Stack {
 ---
 
 #### **Layer 3: Generic Types**
+
 ```rust
 // Step 3: Now introduce generics (after concrete works)
 struct Stack<T> {  // Generic parameter added
@@ -115,6 +119,7 @@ impl<T> Stack<T> {
 ---
 
 #### **Layer 4: Trait Bounds & Constraints**
+
 ```rust
 // Step 4: Add trait bounds (after generics are comfortable)
 impl<T: std::fmt::Display> Stack<T> {
@@ -136,6 +141,7 @@ impl<T: Clone> Stack<T> {
 ---
 
 #### **Layer 5: Lifetimes & Borrowing**
+
 ```rust
 // Step 5: Introduce lifetime annotations (after understanding references)
 impl<T> Stack<T> {
@@ -157,6 +163,7 @@ impl<T> Stack<T> {
 ---
 
 #### **Layer 6: Iterator Patterns**
+
 ```rust
 // Step 6: Advanced iterator integration (after comfort with basics)
 impl<T> Stack<T> {
@@ -180,6 +187,7 @@ impl<T> IntoIterator for Stack<T> {
 ---
 
 #### **Layer 7: Production Polish**
+
 ```rust
 // Step 7: Add error handling, documentation, testing
 impl<T> Stack<T> {
@@ -226,6 +234,7 @@ mod tests {
 ### **Pattern 1: Concrete → Abstract**
 
 **Start**: `Vec::new()` with specific types
+
 ```rust
 let mut numbers = Vec::new();
 numbers.push(1);
@@ -233,6 +242,7 @@ numbers.push(2);
 ```
 
 **Progress**: Generic collections
+
 ```rust
 fn create_collection<T>() -> Vec<T> {
     Vec::new()
@@ -246,6 +256,7 @@ fn create_collection<T>() -> Vec<T> {
 ### **Pattern 2: Happy Path → Error Cases**
 
 **Start**: Assume success
+
 ```rust
 fn divide(a: i32, b: i32) -> i32 {
     a / b  // Ignores division by zero
@@ -253,6 +264,7 @@ fn divide(a: i32, b: i32) -> i32 {
 ```
 
 **Progress**: Handle errors
+
 ```rust
 fn divide(a: i32, b: i32) -> Result<i32, String> {
     if b == 0 {
@@ -270,6 +282,7 @@ fn divide(a: i32, b: i32) -> Result<i32, String> {
 ### **Pattern 3: Single Feature → Composed Features**
 
 **Start**: One operation
+
 ```rust
 fn filter_evens(nums: Vec<i32>) -> Vec<i32> {
     let mut result = Vec::new();
@@ -283,6 +296,7 @@ fn filter_evens(nums: Vec<i32>) -> Vec<i32> {
 ```
 
 **Progress**: Chained operations
+
 ```rust
 fn filter_and_double_evens(nums: Vec<i32>) -> Vec<i32> {
     nums.into_iter()
@@ -293,6 +307,7 @@ fn filter_and_double_evens(nums: Vec<i32>) -> Vec<i32> {
 ```
 
 **Progress further**: Multiple transformations
+
 ```rust
 fn complex_pipeline(nums: Vec<i32>) -> Vec<i32> {
     nums.into_iter()
@@ -311,6 +326,7 @@ fn complex_pipeline(nums: Vec<i32>) -> Vec<i32> {
 ### **Pattern 4: Mutable → Immutable**
 
 **Start**: Mutable operations (easier mental model)
+
 ```rust
 fn update_scores(scores: &mut HashMap<String, i32>, name: &str) {
     let score = scores.get_mut(name).unwrap();
@@ -319,6 +335,7 @@ fn update_scores(scores: &mut HashMap<String, i32>, name: &str) {
 ```
 
 **Progress**: Immutable transformations
+
 ```rust
 fn update_scores(scores: HashMap<String, i32>, name: &str) -> HashMap<String, i32> {
     scores.into_iter()
@@ -376,6 +393,7 @@ fn update_scores(scores: HashMap<String, i32>, name: &str) -> HashMap<String, i3
 ### **Anti-Pattern 1: Information Dumping**
 
 ❌ **Bad**: Introduce all concepts at once
+
 ```rust
 // Step 1: Here's a generic HashMap with BuildHasher!
 struct HashMap<K, V, S = RandomState> 
@@ -393,6 +411,7 @@ where
 **Problem**: Learners face generics, trait bounds, default type parameters, and implementation details simultaneously.
 
 ✅ **Good**: Start simple
+
 ```rust
 // Step 1: Just a Vec of key-value pairs
 struct SimpleMap {
@@ -405,6 +424,7 @@ struct SimpleMap {
 ### **Anti-Pattern 2: Premature Optimization**
 
 ❌ **Bad**: Optimize before understanding
+
 ```rust
 // Step 1: Here's an optimized lock-free concurrent queue!
 use std::sync::atomic::{AtomicPtr, Ordering};
@@ -417,6 +437,7 @@ struct LockFreeQueue<T> {
 **Problem**: Introduces concurrency, unsafe code, atomics before basic queue semantics.
 
 ✅ **Good**: Optimize after mastery
+
 ```rust
 // Step 1: Single-threaded queue with VecDeque
 struct Queue<T> {
@@ -431,6 +452,7 @@ struct Queue<T> {
 ### **Anti-Pattern 3: Skipping Intermediate Steps**
 
 ❌ **Bad**: Jump from basic to advanced
+
 ```rust
 // Step 1: Vec basics
 let mut v = vec![1, 2, 3];
@@ -443,6 +465,7 @@ let result: HashMap<_, _> = v.into_iter()
 ```
 
 ✅ **Good**: Add intermediate steps
+
 ```rust
 // Step 1: Vec basics
 let mut v = vec![1, 2, 3];
@@ -474,6 +497,7 @@ let evens: Vec<_> = v.iter()
 **Research**: Miller's Law - humans can hold 7±2 items in working memory.
 
 **Application in Tutorials**:
+
 - Introduce **max 3-4 new concepts** per step
 - Reinforce through **immediate practice**
 - Use **spaced repetition** across missions
@@ -495,6 +519,7 @@ Each layer stays within cognitive capacity.
 ### **Scaffolding Techniques**
 
 **Technique 1: Fill-in-the-Blank** (Reduces cognitive load)
+
 ```rust
 // Complete this function (scaffolding provided)
 fn push_item<T>(stack: &mut Stack<T>, item: ___) {
@@ -503,6 +528,7 @@ fn push_item<T>(stack: &mut Stack<T>, item: ___) {
 ```
 
 **Technique 2: Guided Transformation** (Step-by-step changes)
+
 ```rust
 // Transform this code from concrete to generic in 3 steps
 
@@ -523,6 +549,7 @@ impl<___> Stack<___> {
 ```
 
 **Technique 3: Progressive Uncommenting** (Controlled revelation)
+
 ```rust
 fn example() {
     let mut stack = Stack::new();
@@ -559,17 +586,20 @@ fn example() {
 ## 🔗 **Related Concepts**
 
 ### **Tutorial Engineering**
+
 - [[Tutorial Engineering]] - Parent methodology
 - [[Error Anticipation]] - Complementary principle
 - [[Hands-On Learning]] - Practice integration
 - [[Incremental Complexity]] - Building block approach
 
 ### **Cognitive Science**
+
 - [[Working Memory Limitations]] - Miller's Law application
 - [[Cognitive Load Theory]] - Managing mental effort
 - [[Chunking Strategies]] - Grouping related concepts
 
 ### **Mission Applications**
+
 - [[Mission1 Tutorial]] - 7-layer stack progression
 - [[Mission5 Tutorial]] - HashMap complexity layers
 - [[Daily Study MOC]] - Week-by-week disclosure

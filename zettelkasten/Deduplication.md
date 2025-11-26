@@ -12,6 +12,7 @@ let numbers = vec![1, 2, 3, 2, 4, 1, 5, 3];
 ```
 
 **Challenge**: Different use cases require different approaches based on:
+
 - Whether order matters
 - Performance requirements (time vs space)
 - Whether you need to count occurrences
@@ -53,6 +54,7 @@ let unique: Vec<_> = numbers.iter()
 ```
 
 **Characteristics**:
+
 - ✅ O(n) time complexity
 - ✅ Simple and readable
 - ❌ Doesn't preserve insertion order
@@ -75,6 +77,7 @@ numbers.dedup();  // Removes consecutive duplicates
 ```
 
 **Characteristics**:
+
 - ✅ O(1) space (in-place)
 - ✅ Built-in, no external crates
 - ❌ O(n log n) time for sort
@@ -103,11 +106,13 @@ let unique = deduplicate_preserve_order(numbers);
 ```
 
 **How it works**:
+
 - `HashSet::insert()` returns `true` if value was newly inserted
 - Returns `false` if value already existed
 - Filter keeps only items that were newly inserted (first occurrence)
 
 **Characteristics**:
+
 - ✅ O(n) time complexity
 - ✅ Preserves insertion order
 - ❌ O(n) space for HashSet
@@ -128,6 +133,7 @@ let unique: Vec<_> = numbers.iter()
 ```
 
 **Characteristics**:
+
 - ✅ Lazy evaluation (doesn't allocate until collected)
 - ✅ Preserves order
 - ✅ Works with iterators (composable)
@@ -159,6 +165,7 @@ let unique_with_counts = deduplicate_with_counts(&numbers);
 ```
 
 **Characteristics**:
+
 - ✅ Provides occurrence counts
 - ✅ O(n) time complexity
 - ❌ Doesn't preserve original order
@@ -312,26 +319,31 @@ data.dedup();
 ## 🎯 Decision Guide
 
 **Choose HashSet when:**
+
 - ✅ Order doesn't matter
 - ✅ Need fastest performance
 - ✅ Working with large collections
 
 **Choose sort + dedup when:**
+
 - ✅ Memory is constrained
 - ✅ Sorted output is acceptable
 - ✅ No external dependencies needed
 
 **Choose preserve-order with HashSet when:**
+
 - ✅ Order matters (most common case)
 - ✅ Good performance needed
 - ✅ Can afford O(n) space
 
 **Choose itertools::unique when:**
+
 - ✅ Already using itertools
 - ✅ Working with iterator chains
 - ✅ Want lazy evaluation
 
 **Choose HashMap counting when:**
+
 - ✅ Need frequency information
 - ✅ Finding most/least common elements
 - ✅ Statistical analysis needed
@@ -396,26 +408,31 @@ fn deduplicate_normalized(strings: Vec<String>) -> Vec<String> {
 ## 🔗 Navigation
 
 ### 📚 Zettelkasten
+
 - **[[zettel-index]]** - Main knowledge base entry point
 - **[[Collections MOC]]** - Data structures overview
 - **[[rust-concepts-MOC]]** - Core language features
 
 ### 🎯 Related Data Structures
+
 - **[[HashMap Internals]]** - Hash-based collections (HashSet = HashMap<K, ()>)
 - **[[Vec Patterns]]** - Dynamic array operations
 - **[[Iterator Traits]]** - Iterator-based transformations
 
 ### 📖 Learning Path
+
 - **[[daily-study/Day10]]** - Hash-based collections introduction
 - **[[daily-study/Day09]]** - Iterator patterns for deduplication
 - **[[Performance Optimization]]** - Choosing the right strategy
 
 ### 🎄 AoC Applications
+
 - **[[AoC Patterns MOC]]** - Competitive programming patterns
 - **[[Frequency Analysis]]** - Counting occurrences
 - **[[Set Operations]]** - Unique element operations
 
 ### 🏗️ Mission Integration
+
 - **[[mission-5]]** - HashMap applications
 - **[Mission5 README](../missions/Mission5/README.md)** - Hash-based collection implementation
 

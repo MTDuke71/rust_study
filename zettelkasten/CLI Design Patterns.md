@@ -7,6 +7,7 @@
 ## 🎯 **CLI Philosophy in Rust**
 
 ### **Core Principles**
+
 - **Fail fast** - Validate inputs early and provide clear error messages
 - **Composability** - Design tools that work well with Unix pipes and other CLI tools
 - **Predictable behavior** - Follow established CLI conventions and patterns
@@ -14,6 +15,7 @@
 - **Error clarity** - Make errors actionable and user-friendly
 
 ### **Rust CLI Advantages**
+
 - **Zero-cost performance** - Compiled binaries with minimal runtime overhead
 - **Memory safety** - No segfaults or memory leaks in CLI tools
 - **Cross-platform** - Single codebase works across Windows, macOS, Linux
@@ -24,6 +26,7 @@
 ## 🏗️ **Basic Argument Parsing**
 
 ### **Using `std::env`**
+
 ```rust
 use std::env;
 
@@ -84,6 +87,7 @@ fn process_file(filename: &str) -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 ### **Environment Variable Integration**
+
 ```rust
 use std::env;
 
@@ -133,6 +137,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ## 📦 **Using `clap` for Advanced Parsing**
 
 ### **Derive API (Recommended)**
+
 ```rust
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
@@ -269,6 +274,7 @@ fn main() {
 ```
 
 ### **Validation and Custom Types**
+
 ```rust
 use clap::{Parser, builder::TypedValueParser};
 use std::str::FromStr;
@@ -362,6 +368,7 @@ fn validate_density(s: &str) -> Result<f64, String> {
 ## 🎨 **User Experience Patterns**
 
 ### **Progress Bars and Status Updates**
+
 ```rust
 use indicatif::{ProgressBar, ProgressStyle, MultiProgress};
 use std::time::Duration;
@@ -425,6 +432,7 @@ fn process_large_graph(nodes: u32) -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 ### **Colored Output and Formatting**
+
 ```rust
 use colored::*;
 use std::fmt;
@@ -481,6 +489,7 @@ pub fn print_info(message: &str) {
 ```
 
 ### **Interactive Prompts**
+
 ```rust
 use dialoguer::{Confirm, Select, Input, MultiSelect};
 
@@ -583,6 +592,7 @@ fn interactive_pathfinding() -> Result<(), Box<dyn std::error::Error>> {
 ## 🏆 **Mission-Specific CLI Patterns**
 
 ### **Pathfinding CLI (Mission 9)**
+
 ```rust
 use clap::{Parser, Subcommand};
 
@@ -719,6 +729,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 ### **Graph Analysis CLI (Mission 7)**
+
 ```rust
 #[derive(Parser)]
 #[command(name = "graph-analyzer")]
@@ -780,21 +791,25 @@ enum AnalysisCommands {
 ## 🔗 **Integration with Learning System**
 
 ### **Mission Integration**
+
 - **[[mission-9]]** - Pathfinding CLI tools for Dijkstra and A* algorithms
 - **[[mission-7]]** - Graph analysis CLI for structure analysis and visualization
 - **[[Mission12 Overview]]** - Parser CLI tools for custom input format processing
 
 ### **Pattern Integration**
+
 - **[[Custom Error Types]]** - CLI error handling with domain-specific error types
 - **[[API Design Patterns]]** - Command pattern implementation in CLI tools
 - **[[Testing Patterns]]** - CLI testing strategies and integration testing
 
 ### **Rust Book Integration**
+
 - **[[Rust Book MOC]]** - Chapter 12 I/O project with CLI argument handling
 - **Command line parsing** with `std::env` and advanced crate integration
 - **Error handling** patterns specific to CLI applications
 
 ### **Daily Study Integration**
+
 - **[[Daily Study MOC]]** - Week 5 CLI development and user interface design
 - **Environment variable integration** for configuration management
 - **Cross-platform considerations** for CLI tool deployment
@@ -804,6 +819,7 @@ enum AnalysisCommands {
 ## 📚 **External Resources**
 
 ### **Essential Crates**
+
 - **[clap](https://docs.rs/clap/)** - Command line argument parsing (most popular)
 - **[structopt](https://docs.rs/structopt/)** - Deprecated, use clap's derive API instead
 - **[colored](https://docs.rs/colored/)** - Terminal color output
@@ -811,12 +827,14 @@ enum AnalysisCommands {
 - **[dialoguer](https://docs.rs/dialoguer/)** - Interactive CLI prompts
 
 ### **Advanced CLI Features**
+
 - **[termion](https://docs.rs/termion/)** - Low-level terminal control
 - **[crossterm](https://docs.rs/crossterm/)** - Cross-platform terminal manipulation
 - **[tui-rs](https://docs.rs/tui/)** - Terminal user interfaces
 - **[console](https://docs.rs/console/)** - Terminal utilities and styling
 
 ### **Best Practices**
+
 - **[Command Line Interface Guidelines](https://clig.dev/)** - General CLI design principles
 - **[The Rust CLI Book](https://rust-cli.github.io/book/)** - Comprehensive CLI development guide
 - **[CLI Testing Strategies](https://rust-cli.github.io/book/tutorial/testing.html)** - Testing CLI applications

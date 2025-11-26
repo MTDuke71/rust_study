@@ -545,30 +545,35 @@ fn measure_performance() {
 ## 📈 Performance Optimization Checklist
 
 ### **Before Optimizing**
+
 - [ ] **Profile first** - Use `cargo bench` or profiling tools
 - [ ] **Identify bottlenecks** - Focus on hot paths (80/20 rule)
 - [ ] **Measure baseline** - Document current performance
 - [ ] **Set performance goals** - Define success criteria
 
 ### **Algorithm Optimization**
+
 - [ ] **Choose right data structure** - HashMap vs BTreeMap vs Vec
 - [ ] **Optimize time complexity** - O(n²) → O(n log n) → O(n)
 - [ ] **Reduce unnecessary work** - Early returns, filtering
 - [ ] **Cache results** - Memoization, lookup tables
 
 ### **Memory Optimization**
+
 - [ ] **Pre-allocate collections** - `Vec::with_capacity()`
 - [ ] **Avoid unnecessary allocations** - Reuse buffers
 - [ ] **Use references** - `&str` instead of `String` when possible
 - [ ] **Optimize data layout** - Structure of arrays vs array of structures
 
 ### **CPU Optimization**
+
 - [ ] **Enable release optimizations** - `opt-level = 3`
 - [ ] **Inline hot functions** - `#[inline]` attributes
 - [ ] **Eliminate bounds checks** - Use `get_unchecked()` in hot paths
 - [ ] **Optimize branches** - Sort data by branch conditions
 
 ### **After Optimizing**
+
 - [ ] **Verify correctness** - Tests still pass
 - [ ] **Measure improvement** - Quantify performance gains
 - [ ] **Document changes** - Explain why optimization was needed
@@ -579,24 +584,28 @@ fn measure_performance() {
 ## 🔗 Related Concepts
 
 ### **Core Performance Concepts**
+
 - **[[zero-cost-abstractions]]** - How Rust achieves performance without runtime overhead
 - **[[Generic Programming]]** - Monomorphization and compile-time optimization
 - **[[Iterator Traits]]** - Efficient functional programming patterns
 - **[[bounds-checking-performance]]** - Eliminating runtime checks in hot paths
 
 ### **Data Structure Performance**
+
 - **[[HashMap Internals]]** - Hash table optimization strategies
 - **[[Collections MOC]]** - Choosing the right collection for the job
 - **[[Binary Search Iterator Patterns]]** - Efficient search algorithms
 - **[[Deduplication]]** - Performance trade-offs in duplicate removal
 
 ### **Mission-Specific Optimization**
+
 - **[[mission-1]]** - Stack implementation performance
 - **[[mission-3]]** - Iterator and trait optimization
 - **[[mission-6]]** - Pathfinding algorithm optimization
 - **[[Chess Engine Architecture]]** - High-performance game engine patterns
 
 ### **Tools and Techniques**
+
 - **[[Benchmarking Guide]]** - Measuring performance accurately
 - **[[Profiling Techniques]]** - Finding bottlenecks in real applications
 - **[[Unsafe Rust Guidelines]]** - When and how to use unsafe for performance

@@ -11,6 +11,7 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ### **Search & Traversal Algorithms**
 
 **Graph Traversal:**
+
 - [[BFS Patterns]] - Breadth-first search for shortest paths and level-order traversal
 - [[DFS Patterns]] - Depth-first search for exhaustive exploration and backtracking
 - [[Graph Algorithms]] - General graph algorithm patterns and applications
@@ -18,11 +19,13 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 - [[Dijkstra Algorithm]] - Single-source shortest paths with priority queue
 
 **Tree Algorithms:**
+
 - [[Binary Search Tree Patterns]] - BST operations and balancing
 - [[Tree Traversal]] - In-order, pre-order, post-order patterns
 - [[Lowest Common Ancestor]] - LCA algorithms and applications
 
 **Array & String Search:**
+
 - [[Binary Search]] - Efficient searching in sorted arrays
 - [[Binary Search Iterator Patterns]] - Iterator-based binary search in Rust
 - [[Pattern Matching]] - String search algorithms (KMP, Boyer-Moore)
@@ -50,11 +53,13 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ### **Sorting & Ordering**
 
 **Comparison Sorts:**
+
 - [[Merge Sort]] - Stable O(n log n) divide-and-conquer
 - [[Quick Sort]] - In-place O(n log n) average case
 - [[Heap Sort]] - O(n log n) using binary heap
 
 **Linear Time Sorts:**
+
 - [[Counting Sort]] - O(n + k) for small range integers
 - [[Radix Sort]] - O(d * n) for fixed-length keys
 - [[Bucket Sort]] - O(n) average for uniform distribution
@@ -62,18 +67,21 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ### **Graph Algorithms**
 
 **Shortest Paths:**
+
 - [[Dijkstra Algorithm]] - Single-source shortest paths
 - [[Bellman-Ford]] - Single-source with negative weights
 - [[Floyd-Warshall]] - All-pairs shortest paths
 - [[A-Star-Algorithm-Deep-Dive]] - Heuristic search
 
 **Graph Structures:**
+
 - [[Union-Find]] - Disjoint set with path compression
 - [[Minimum Spanning Tree]] - Kruskal's and Prim's algorithms
 - [[Topological Sort]] - DAG ordering
 - [[Strongly Connected Components]] - Tarjan's and Kosaraju's algorithms
 
 **Graph Properties:**
+
 - [[Graph Network Density]] - Network connectivity metrics
 - [[Cycle Detection]] - Finding cycles in graphs
 - [[Bipartite Graph Detection]] - Two-coloring algorithms
@@ -81,11 +89,13 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ### **Computational Geometry**
 
 **Distance Metrics:**
+
 - [[Manhattan Distance]] - L1 norm, 4-connected grid distance
 - [[Euclidean Distance]] - L2 norm, continuous space distance
 - [[Chebyshev Distance]] - L∞ norm, 8-connected chessboard distance
 
 **Spatial Algorithms:**
+
 - [[Convex Hull]] - Graham scan, Jarvis march
 - [[Line Intersection]] - Computational geometry basics
 - [[Closest Pair Problem]] - Divide and conquer approach
@@ -123,7 +133,8 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 
 ### **Benchmarking & Profiling**
 
-- [[performance-benchmarking-grid-optimization]] - Comprehensive benchmarking guide
+- [[Benchmarking]] - Comprehensive benchmarking guide
+- [[performance-benchmarking-grid-optimization]] - Grid-specific benchmarking
 - [[Criterion Benchmarking]] - Statistical performance measurement
 - [[Profiling Tools]] - Finding performance bottlenecks
 
@@ -139,16 +150,19 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ### **Common Techniques**
 
 **Two Pointers:**
+
 - Fast-slow pointer (cycle detection)
 - Left-right pointer (sorted array problems)
 - Sliding window (substring problems)
 
 **Prefix Sum:**
+
 - Range query optimization
 - Subarray sum problems
 - 2D prefix sum for grids
 
 **Backtracking:**
+
 - Constraint satisfaction
 - Combinatorial generation
 - Puzzle solving
@@ -198,12 +212,14 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ## 📊 Learning Progression
 
 ### **Beginner Level**
+
 1. Linear search and basic iteration
 2. Simple sorting (bubble, insertion)
 3. Stack and queue operations
 4. Basic recursion
 
 ### **Intermediate Level**
+
 1. Binary search variants
 2. Merge sort and quick sort
 3. BFS and DFS traversal
@@ -211,6 +227,7 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 5. Basic dynamic programming
 
 ### **Advanced Level**
+
 1. Advanced graph algorithms
 2. Segment trees and range queries
 3. String algorithms (KMP, Z-algorithm)
@@ -218,6 +235,7 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 5. Advanced DP and optimization
 
 ### **Expert Level**
+
 1. Network flow algorithms
 2. Suffix arrays and trees
 3. Advanced data structures (treaps, splay trees)
@@ -227,18 +245,21 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ## 🔗 Cross-References
 
 ### **Related MOCs**
+
 - [[AoC Patterns MOC]] - Competitive programming applications
 - [[Collections MOC]] - Data structure fundamentals
 - [[rust-concepts-MOC]] - Language features for algorithms
 - [[Daily Study MOC]] - Progressive learning path
 
 ### **Key Concepts**
+
 - [[Complexity Analysis]] - Performance understanding
 - [[Testing Strategies]] - Algorithm verification
 - [[Debugging Strategies]] - Problem-solving techniques
 - [[Code Optimization]] - Performance improvement
 
 ### **Applications**
+
 - [[Mission Testing Strategies]] - Testing algorithm implementations
 - [[Performance Benchmarking]] - Measuring algorithm efficiency
 - [[AoC Problem Solving]] - Competitive programming practice
@@ -246,16 +267,19 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ## 📚 Resources & References
 
 ### **Books**
+
 - Introduction to Algorithms (CLRS)
 - Algorithm Design Manual (Skiena)
 - Competitive Programmer's Handbook
 
 ### **Online Resources**
+
 - [Algorithmica](https://en.algorithmica.org/hpc/) - High-performance algorithms
 - [Rust Algorithm Club](https://github.com/EbTech/rust-algorithms)
 - [LeetCode](https://leetcode.com/) - Practice problems
 
 ### **Workspace Resources**
+
 - [[rust_book/rust-book-ch10]] - Generics and traits for algorithms
 - [[rust_book/rust-book-ch13]] - Iterators and closures
 - [[tutorials/Mission8_tut/README]] - Advanced algorithm composition
@@ -265,12 +289,14 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 ## Navigation
 
 **Quick Access:**
+
 - [[zettel-index]] - Main knowledge base
 - [[Daily Study MOC]] - Learning progression
 - [[Missions Overview]] - Implementation projects
 - [[Rust Book MOC]] - Language fundamentals
 
 **Problem Solving:**
+
 - [[AoC Patterns MOC]] - Competition patterns
 - [[Grid Pattern Recognition]] - 2D problem strategies
 - [[Graph Algorithms]] - Network analysis

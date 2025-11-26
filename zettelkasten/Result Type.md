@@ -24,7 +24,8 @@ try {
 }
 ```
 
-**The Problems**: 
+**The Problems**:
+
 - Error conditions can be ignored
 - Function signatures don't indicate error possibilities
 - Exceptions can be thrown from anywhere
@@ -113,6 +114,7 @@ fn process_content(content: &str) -> Result<String, io::Error> {
 ```
 
 **The `?` operator**:
+
 - Returns early with error if `Result` is `Err`
 - Unwraps value if `Result` is `Ok`
 - Only works in functions that return `Result`
@@ -398,6 +400,7 @@ fn read_and_process_file(filename: &str) -> Result<String, String> {
 ## 🎯 Best Practices
 
 ### **DO:**
+
 - **Use `Result<T, E>` for recoverable errors**
 - **Make error types descriptive and actionable**
 - **Use `?` operator for clean error propagation**
@@ -405,6 +408,7 @@ fn read_and_process_file(filename: &str) -> Result<String, String> {
 - **Use `map_err()` to add context to errors**
 
 ### **DON'T:**
+
 - **Don't use `unwrap()` in production code without good reason**
 - **Don't ignore errors - handle them explicitly**
 - **Don't use overly generic error types**
@@ -427,18 +431,21 @@ fn load_user_by_id(id: u32) -> Result<User, DatabaseError> {
 ## 🔗 Related Concepts
 
 ### **Error Handling Integration**
+
 - **[[Error Handling Patterns]]** - Comprehensive error handling strategies
 - **[[Option Type]]** - Handling absence vs errors
 - **[[anyhow and thiserror]]** - Advanced error handling crates
 - **[[Error Propagation]]** - Patterns for error flow
 
 ### **Mission Applications**
+
 - **[[mission-2]]** - Queue operations with Result error handling
 - **[[mission-4]]** - Linked list operations with borrow errors
 - **[[mission-5]]** - HashMap operations with key errors
 - **[[mission-6]]** - Grid operations with bounds errors
 
 ### **Daily Study Integration**
+
 - **[[daily-study/Day05]]** - Option and Result introduction
 - **[[daily-study/Day29]]** - Error handling patterns
 - **[[daily-study/Day30]]** - Custom error types

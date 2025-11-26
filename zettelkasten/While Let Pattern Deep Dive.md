@@ -17,11 +17,13 @@ This is Rust's elegant way to say: **"Process each item until the container is e
 ## 📖 **What It Does**
 
 The `while let` pattern combines:
+
 1. **Looping** - Repeats until condition fails
 2. **Pattern matching** - Extracts value from `Option` or `Result`
 3. **Automatic exit** - Stops when `None` is encountered
 
 ### **Equivalent Long Form**
+
 ```rust
 loop {
     match queue.dequeue() {
@@ -39,6 +41,7 @@ loop {
 ## 🎯 **Why This Pattern is Idiomatic**
 
 ### **1. Safe & Elegant**
+
 ```rust
 // ❌ Unsafe - what if queue becomes empty?
 for i in 0..queue.len() {
@@ -52,6 +55,7 @@ while let Some(value) = queue.dequeue() {
 ```
 
 ### **2. Ownership Friendly**
+
 ```rust
 // The value is MOVED out of the queue into the variable
 while let Some(value) = queue.dequeue() {
@@ -62,11 +66,13 @@ while let Some(value) = queue.dequeue() {
 ```
 
 ### **3. Clear Intent**
+
 The pattern clearly communicates: *"Process each item until the container is empty"*
 
 ## 🔄 **Common Use Cases**
 
 ### **Draining a Queue**
+
 ```rust
 while let Some(message) = message_queue.dequeue() {
     process_message(message);
@@ -74,6 +80,7 @@ while let Some(message) = message_queue.dequeue() {
 ```
 
 ### **Processing File Lines**
+
 ```rust
 let file = BufReader::new(File::open("data.txt")?);
 let mut lines = file.lines();
@@ -84,6 +91,7 @@ while let Some(Ok(line)) = lines.next() {
 ```
 
 ### **Consuming a Channel**
+
 ```rust
 while let Ok(data) = receiver.recv() {
     handle_incoming_data(data);
@@ -93,6 +101,7 @@ while let Ok(data) = receiver.recv() {
 ## 🎨 **For Loop vs While Let**
 
 ### **When to use `for` loops (iterating)**
+
 ```rust
 // Non-destructive iteration over collection
 for item in &collection {
@@ -106,6 +115,7 @@ for i in 0..10 {
 ```
 
 ### **When to use `while let` (consuming)**
+
 ```rust
 // Destructive consumption - items removed from queue
 while let Some(item) = queue.dequeue() {
@@ -121,6 +131,7 @@ while let Ok(result) = try_something() {
 ## 🏆 **Key Differences from Other Languages**
 
 ### **Traditional Style (C/Java/Python)**
+
 ```java
 // Java - index-based loop
 for (int i = 0; i < queue.size(); i++) {
@@ -133,6 +144,7 @@ while not queue.empty():
 ```
 
 ### **Rust Style - Pattern Based**
+
 ```rust
 // Rust - pattern matching naturally handles empty case
 while let Some(value) = queue.dequeue() {
@@ -150,6 +162,7 @@ while let Some(value) = queue.dequeue() {
 ## 🔗 **Related Patterns**
 
 ### **if let** (Single Pattern Match)
+
 ```rust
 if let Some(value) = queue.peek() {
     println!("Next: {}", value); // Non-destructive peek
@@ -157,6 +170,7 @@ if let Some(value) = queue.peek() {
 ```
 
 ### **match** (Multiple Patterns)
+
 ```rust
 match queue.dequeue() {
     Some(value) if value > 10 => println!("Big: {}", value),
@@ -166,6 +180,7 @@ match queue.dequeue() {
 ```
 
 ### **Iterator::drain** (When Available)
+
 ```rust
 // If collection implements drain iterator
 for value in queue.drain() {
@@ -183,6 +198,7 @@ for value in queue.drain() {
 ## 🎮 **Real-World Mission2 Example**
 
 From Queue demonstration:
+
 ```rust
 // After filling ring buffer with wrap-around
 println!("Final order:");
@@ -198,6 +214,7 @@ Think of `while let` as:
 > "Keep asking the container for items until it says 'I have nothing left'"
 
 The pattern naturally handles:
+
 - Empty containers (immediate exit)
 - Partial containers (process what's there)
 - Full containers (drain everything)

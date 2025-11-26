@@ -32,6 +32,7 @@ scores.entry("Blue".to_string()).or_insert(10);
 ### Basic Operations
 
 #### Insertion and Access
+
 ```rust
 let mut scores = HashMap::new();
 
@@ -50,6 +51,7 @@ if scores.contains_key("Blue") {
 ```
 
 #### Updating Values
+
 ```rust
 let mut map = HashMap::new();
 
@@ -118,11 +120,13 @@ for value in map.values_mut() {
 ## Memory and Performance
 
 ### Hash Function and Collision Handling
+
 - Uses **SipHash** by default (cryptographically secure)
 - **Open addressing** with Robin Hood probing
 - Load factor maintained around 0.9 for optimal performance
 
 ### Performance Characteristics
+
 ```rust
 // Average case: O(1)
 map.get("key");
@@ -134,6 +138,7 @@ map.remove("key");
 ```
 
 ### Memory Layout
+
 ```rust
 let map: HashMap<String, i32> = HashMap::new();
 println!("Capacity: {}", map.capacity());  // Initial capacity
@@ -143,6 +148,7 @@ println!("Capacity: {}", map.capacity());  // Initial capacity
 ## Common Patterns
 
 ### Grouping and Aggregation
+
 ```rust
 use std::collections::HashMap;
 
@@ -156,6 +162,7 @@ for (category, item) in items {
 ```
 
 ### Caching and Memoization
+
 ```rust
 use std::collections::HashMap;
 
@@ -184,6 +191,7 @@ impl Fibonacci {
 ```
 
 ### Configuration and Lookups
+
 ```rust
 use std::collections::HashMap;
 
@@ -199,6 +207,7 @@ fn create_config() -> HashMap<String, String> {
 ## Advanced Usage
 
 ### Custom Hash Functions
+
 ```rust
 use std::collections::HashMap;
 use std::hash::BuildHasherDefault;
@@ -209,6 +218,7 @@ type FastHashMap<K, V> = HashMap<K, V, BuildHasherDefault<DefaultHasher>>;
 ```
 
 ### Owned vs Borrowed Keys
+
 ```rust
 use std::collections::HashMap;
 
@@ -222,6 +232,7 @@ borrowed.insert("key", 42);
 ```
 
 ### Converting Between Collections
+
 ```rust
 // HashMap to Vec of tuples
 let map: HashMap<&str, i32> = [("a", 1), ("b", 2)].into_iter().collect();
@@ -235,6 +246,7 @@ let map: HashMap<&str, i32> = data.into_iter().collect();
 ## Error Handling and Safety
 
 ### Safe Access Patterns
+
 ```rust
 match map.get("key") {
     Some(value) => println!("Found: {}", value),
@@ -248,6 +260,7 @@ if let Some(value) = map.get("key") {
 ```
 
 ### Avoiding Panics
+
 ```rust
 // This panics if key doesn't exist:
 // let value = map["missing_key"];
@@ -260,6 +273,7 @@ let value = map.get("missing_key").copied().unwrap_or(0);
 ## Integration with Ownership System
 
 ### Borrowing Rules
+
 ```rust
 let mut map = HashMap::new();
 map.insert("key", vec![1, 2, 3]);
@@ -270,6 +284,7 @@ println!("{:?}", value_ref);  // Borrow ends here
 ```
 
 ### Clone vs Move
+
 ```rust
 let map1: HashMap<String, Vec<i32>> = HashMap::new();
 let map2 = map1.clone();  // Deep clone - expensive
@@ -279,17 +294,20 @@ let map3 = map1;          // Move - map1 no longer accessible
 ## Use Cases in Rust Study Projects
 
 ### Advent of Code Applications
+
 - **Day 4:** MD5 hash mining and result caching
 - **Day 7:** Circuit wire value storage  
 - **Day 9:** Distance tables and path optimization
 - **Memoization:** Dynamic programming solutions
 
 ### Mission Projects
+
 - **Mission 5:** Primary data structure focus
 - **API patterns:** Key-value configuration storage
 - **Caching:** Performance optimization techniques
 
 ### Advanced Examples
+
 - **Frequency counting:** Character and word analysis
 - **Graph algorithms:** Adjacency maps and vertex properties
 - **Data aggregation:** Grouping and statistical operations
@@ -297,11 +315,13 @@ let map3 = map1;          // Move - map1 no longer accessible
 ## Performance Tips
 
 1. **Pre-size when possible**
+
    ```rust
    let mut map = HashMap::with_capacity(expected_size);
    ```
 
 2. **Use entry API for conditional operations**
+
    ```rust
    // Efficient
    map.entry(key).or_insert(default_value);
@@ -313,6 +333,7 @@ let map3 = map1;          // Move - map1 no longer accessible
    ```
 
 3. **Consider `&str` vs `String` for keys**
+
    ```rust
    // If you own the strings
    HashMap<String, V>
@@ -324,6 +345,7 @@ let map3 = map1;          // Move - map1 no longer accessible
 ## Common Pitfalls
 
 ### Key Ownership Issues
+
 ```rust
 let key = "temporary".to_string();
 let mut map = HashMap::new();
@@ -332,6 +354,7 @@ drop(key);  // Error: key borrowed by map
 ```
 
 ### Hash Quality
+
 ```rust
 // Poor hash distribution can degrade performance
 #[derive(Hash, Eq, PartialEq)]

@@ -575,6 +575,7 @@ fn parse_int_grid(filename: &str) -> Vec<Vec<i32>> {
 ## 🔗 Related Concepts
 
 ### **Core Parsing Techniques**
+
 - **[[Number Processing]]** - Advanced number parsing and validation
 - **[[Grid Input Handling]]** - 2D data ingestion patterns
 - **[[Multi-Format Parsing]]** - Handling diverse input formats
@@ -582,18 +583,21 @@ fn parse_int_grid(filename: &str) -> Vec<Vec<i32>> {
 - **[[unicode-utf8-rust]]** - Understanding UTF-8 encoding for text parsing
 
 ### **Algorithm Integration**
+
 - **[[BFS Patterns]]** - Parsing graph structures for BFS
 - **[[DFS Patterns]]** - Tree and graph parsing for DFS
 - **[[Binary Search]]** - Parsing sorted data for search algorithms
 - **[[AoC Collection Problems]]** - Choosing collections for parsed data
 
 ### **Performance and Testing**
+
 - **[[Performance Optimization]]** - Efficient parsing strategies
 - **[[Testing Patterns]]** - Validating parser correctness
 - **[[Error Handling Patterns]]** - Robust parsing with error recovery
 - **[[Stream Processing]]** - Memory-efficient large file parsing
 
 ### **Advanced Patterns**
+
 - **[[pattern-matching]]** - Regex and string matching techniques
 - **[[String Manipulation]]** - Text transformation and cleaning
 - **[[Parsing Techniques]]** - Recursive descent and state machines

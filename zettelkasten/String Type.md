@@ -7,6 +7,7 @@
 ## 🎯 **String Type Fundamentals**
 
 ### **What is String?**
+
 `String` is Rust's **owned, heap-allocated, growable** string type:
 
 ```rust
@@ -16,12 +17,14 @@ pub struct String {
 ```
 
 **Key Properties**:
+
 - ✅ **Owned** - Has exclusive ownership of its data
 - ✅ **Growable** - Can be extended and modified
 - ✅ **UTF-8 encoded** - Guarantees valid Unicode text
 - ✅ **Heap allocated** - Stored on the heap, not the stack
 
 ### **String vs &str Relationship**
+
 ```rust
 // String: Owned, heap-allocated, growable
 let owned: String = String::from("Hello, world!");
@@ -35,6 +38,7 @@ let static_str: &'static str = "constant";   // Points to program binary
 ## 🏗️ **Creation Patterns**
 
 ### **1. From String Literals**
+
 ```rust
 // Multiple ways to create from &str
 let s1 = String::from("hello");
@@ -47,6 +51,7 @@ let s4 = String::new() + "hello";  // Less efficient
 ```
 
 ### **2. Empty String Creation**
+
 ```rust
 // Create empty string
 let mut s = String::new();
@@ -59,6 +64,7 @@ let s: String = ['h', 'e', 'l', 'l', 'o'].iter().collect();
 ```
 
 ### **3. From Other Types**
+
 ```rust
 // From numbers
 let num = 42;
@@ -76,6 +82,7 @@ let s = unsafe { String::from_utf8_unchecked(bytes) };
 ## 📝 **Modification Operations**
 
 ### **Growing Operations**
+
 ```rust
 let mut s = String::from("Hello");
 
@@ -94,6 +101,7 @@ s.extend(" 🦀".chars());        // "→Hello beautiful, world!! 🦀"
 ```
 
 ### **Replacement Operations**
+
 ```rust
 let mut s = String::from("Hello, world!");
 
@@ -108,6 +116,7 @@ s.replace_range(0..5, "Hi");        // "Hi, Rust!"
 ```
 
 ### **Removal Operations**
+
 ```rust
 let mut s = String::from("Hello, world!");
 
@@ -124,6 +133,7 @@ s.clear();                 // s = ""
 ## 🔄 **Conversion Patterns**
 
 ### **String ↔ &str Conversions**
+
 ```rust
 let owned = String::from("hello");
 let borrowed: &str = &owned;        // Deref coercion
@@ -137,6 +147,7 @@ let owned = slice.to_owned();
 ```
 
 ### **String ↔ Bytes Conversions**
+
 ```rust
 let s = String::from("Hello 🦀");
 
@@ -155,6 +166,7 @@ let s = String::from_utf8_lossy(&bytes);
 ```
 
 ### **String ↔ OsString Conversions**
+
 ```rust
 use std::ffi::OsString;
 
@@ -168,6 +180,7 @@ let s = os_string.into_string().unwrap();
 ## 🎭 **String Formatting**
 
 ### **format! Macro Family**
+
 ```rust
 let name = "Alice";
 let age = 30;
@@ -190,6 +203,7 @@ let s = format!("Binary: {:08b}", 42);      // "Binary: 00101010"
 ```
 
 ### **Write Trait Implementation**
+
 ```rust
 use std::fmt::Write;
 
@@ -202,6 +216,7 @@ writeln!(&mut s, " How are you?").unwrap();
 ## 🧠 **Memory Management**
 
 ### **Capacity vs Length**
+
 ```rust
 let mut s = String::with_capacity(10);
 println!("Capacity: {}, Length: {}", s.capacity(), s.len()); // 10, 0
@@ -214,6 +229,7 @@ println!("Capacity: {}, Length: {}", s.capacity(), s.len()); // ≥12, 12
 ```
 
 ### **Memory Optimization**
+
 ```rust
 let mut s = String::with_capacity(1000);
 s.push_str("small");
@@ -231,6 +247,7 @@ s.reserve_exact(50);
 ```
 
 ### **Avoiding Reallocations**
+
 ```rust
 // Bad - multiple reallocations
 let mut s = String::new();
@@ -251,6 +268,7 @@ let s: String = (0..1000).map(|i| i.to_string()).collect();
 ## 🔍 **String Analysis and Querying**
 
 ### **Length and Indexing**
+
 ```rust
 let s = "Hello 🦀 world";
 
@@ -274,6 +292,7 @@ let hello = &s[0..5];  // "Hello" - safe because ASCII
 ```
 
 ### **Pattern Matching**
+
 ```rust
 let s = "The quick brown fox jumps over the lazy dog";
 
@@ -297,6 +316,7 @@ let parts: Vec<&str> = s.split("the").collect();
 ## ⚡ **Performance Considerations**
 
 ### **String Concatenation**
+
 ```rust
 // Inefficient - creates new String each time
 let mut result = String::new();
@@ -316,6 +336,7 @@ let result: String = ["hello", " ", "world"].concat();
 ```
 
 ### **Clone vs Reference**
+
 ```rust
 fn process_string_bad(s: String) {  // Takes ownership
     println!("{}", s);
@@ -331,6 +352,7 @@ process_string_good(&s);            // Cheap borrow
 ```
 
 ### **UTF-8 Validation Costs**
+
 ```rust
 // Validates UTF-8 every time
 let bytes = vec![72, 101, 108, 108, 111];
@@ -344,6 +366,7 @@ let s = unsafe { String::from_utf8_unchecked(bytes) };  // O(1) no validation
 ## 🌐 **Unicode Handling**
 
 ### **Character Iteration**
+
 ```rust
 let s = "नमस्ते"; // Hindi greeting
 
@@ -362,6 +385,7 @@ for ch in s.chars() {
 ```
 
 ### **String Normalization**
+
 ```rust
 // Different Unicode representations for same text
 let s1 = "é";           // Single character: é (U+00E9)
@@ -378,6 +402,7 @@ assert_ne!(s1.len(), s2.len()); // Different lengths
 ## 🛡️ **Error Handling**
 
 ### **UTF-8 Validation Errors**
+
 ```rust
 // Invalid UTF-8 bytes
 let invalid_bytes = vec![0xFF, 0xFE];
@@ -398,6 +423,7 @@ match String::from_utf8(invalid_bytes) {
 ```
 
 ### **Index Out of Bounds**
+
 ```rust
 let s = String::from("hello");
 
@@ -415,6 +441,7 @@ if let Some(ch) = s.chars().nth(2) {
 ## 🔗 **Common Patterns**
 
 ### **String Builder Pattern**
+
 ```rust
 struct StringBuilder {
     buffer: String,
@@ -456,6 +483,7 @@ let result = StringBuilder::with_capacity(1000)
 ```
 
 ### **String Interning**
+
 ```rust
 use std::collections::HashMap;
 
@@ -492,6 +520,7 @@ impl StringInterner {
 ## 📊 **Memory Layout**
 
 ### **String Structure**
+
 ```rust
 // Simplified representation
 struct String {
@@ -505,6 +534,7 @@ assert_eq!(std::mem::size_of::<String>(), 24);
 ```
 
 ### **Small String Optimization (Not in std)**
+
 ```rust
 // Some crates implement SSO to avoid heap allocation for small strings
 // Example concept (not actual std implementation):

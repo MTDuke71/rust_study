@@ -5,6 +5,7 @@
 ## 🎯 **Learning Objectives**
 
 By the end of Week 5, you will master:
+
 - **Custom Error Types** - Building robust error types with proper trait implementations
 - **Error Propagation** - Using the `?` operator and `From` trait for clean error handling
 - **Industry Crates** - `anyhow` and `thiserror` for real-world error management
@@ -28,6 +29,7 @@ By the end of Week 5, you will master:
 ## 🛠️ **Advanced Examples**
 
 ### **Real-World Applications**
+
 - **[[../daily_study/rust_learning_week5_notes/examples/web_api_errors|Web API Error Handling]]**
   - HTTP status codes and error responses
   - Authentication and authorization errors
@@ -43,17 +45,20 @@ By the end of Week 5, you will master:
 ## 🔗 **Integration Points**
 
 ### **Mission Integration**
+
 - **All Missions** - Error handling patterns for robust implementations
 - **Mission 6** - Grid navigation edge cases and panic recovery
 - **Mission 5** - HashMap operations with proper error handling
 - **Mission 2** - Ring buffer overflow handling
 
 ### **AoC Applications**
+
 - **Robust Input Parsing** - Handling malformed puzzle inputs gracefully
 - **Grid Edge Cases** - Bounds checking and coordinate validation
 - **File Format Variations** - Parsing different input formats with recovery
 
 ### **Rust Book Integration**
+
 - **[[rust-book-ch9-12-review]]** - **Comprehensive Chapters 9-12 Review** - Deep dive into error handling (Ch9), generics/traits/lifetimes (Ch10), testing (Ch11), and CLI projects (Ch12)
 - **Chapter 9** - Error handling fundamentals
 - **Chapter 10** - Error trait implementations
@@ -62,11 +67,13 @@ By the end of Week 5, you will master:
 ## 📚 **Key Learning Resources**
 
 ### **Core Concepts**
+
 - [[Error Handling Deep Dive]] - Comprehensive error handling philosophy
 - [[daily-study/Day05]] - Foundation concepts review
-- [[../rust_book/Ch9]] - Rust Book error handling chapter
+- [[rust_book/rust-book-ch9]] - Rust Book error handling chapter
 
 ### **Practical Examples**
+
 - [[../daily_study/rust_learning_week5_notes/examples]] - All Week 5 runnable examples
 - [[Text Parsing Patterns]] - Parsing with error recovery
 - [[Performance Optimization]] - Error handling performance considerations
@@ -74,6 +81,7 @@ By the end of Week 5, you will master:
 ## 🎯 **Week 5 Success Criteria**
 
 ### **Technical Mastery**
+
 - ✅ Can implement custom error types with proper trait implementations
 - ✅ Can use `anyhow` and `thiserror` for real-world error handling
 - ✅ Can chain Result operations with combinators
@@ -81,6 +89,7 @@ By the end of Week 5, you will master:
 - ✅ Can build fault-tolerant parsers with error recovery
 
 ### **Practical Application**
+
 - ✅ Can handle errors in file I/O operations
 - ✅ Can implement robust API error handling
 - ✅ Can build parsers that recover from malformed input
@@ -104,6 +113,7 @@ cargo run -p rust_learning_week5_error_handling --examples
 ## 🔄 **Next Steps**
 
 After completing Week 5:
+
 - **Week 6** - Advanced Algorithms (graph representations, A* pathfinding)
 - **Mission Work** - Apply error handling patterns to all mission implementations
 - **AoC Practice** - Use robust error handling for competitive programming

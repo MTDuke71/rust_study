@@ -10,6 +10,7 @@ Ownership is Rust's **core memory management system** that ensures **memory safe
 ## The Three Rules of Ownership
 
 ### Rule 1: Each value has a single owner
+
 ```rust
 fn single_ownership_demo() {
     let s1 = String::from("Hello"); // s1 owns the string
@@ -31,6 +32,7 @@ fn stack_vs_heap() {
 ```
 
 ### Rule 2: When owner goes out of scope, value is dropped
+
 ```rust
 fn scope_and_cleanup() {
     {
@@ -50,6 +52,7 @@ fn raii_demo() {
 ```
 
 ### Rule 3: There can only be one owner at a time
+
 ```rust
 fn ownership_transfer() {
     let s1 = String::from("hello");
@@ -67,6 +70,7 @@ fn take_ownership(s: String) -> String {
 ## Borrowing System
 
 ### Immutable Borrowing
+
 ```rust
 fn immutable_borrowing() {
     let s1 = String::from("hello");
@@ -89,6 +93,7 @@ fn multiple_immutable_borrows() {
 ```
 
 ### Mutable Borrowing
+
 ```rust
 fn mutable_borrowing() {
     let mut s = String::from("hello");
@@ -122,6 +127,7 @@ fn no_mixed_borrows() {
 ## Mission Integration Examples
 
 ### Mission 1: Stack Ownership
+
 ```rust
 pub struct Stack<T> {
     items: Vec<T>, // Stack owns the Vec, Vec owns the elements
@@ -177,6 +183,7 @@ fn stack_ownership_demo() {
 ```
 
 ### Mission 4: Linked List Ownership Challenges
+
 ```rust
 // Traditional approach fails due to ownership rules
 // struct Node<T> {
@@ -260,6 +267,7 @@ impl<T> Iterator for LinkedListIterator<T> {
 ```
 
 ### Mission 5: HashMap Key-Value Ownership
+
 ```rust
 use std::collections::HashMap;
 
@@ -329,6 +337,7 @@ fn hashmap_ownership_demo() {
 ## AoC Ownership Patterns
 
 ### Day 15: Ingredient Ownership in Optimization
+
 ```rust
 #[derive(Clone, Debug)]
 struct Ingredient {
@@ -375,6 +384,7 @@ fn calculate_score(ingredients: &[Ingredient], amounts: &[i32]) -> i32 {
 ```
 
 ### Day 11: String Ownership in Password Generation
+
 ```rust
 // Takes ownership of current password, returns new owned password
 fn increment_password(mut password: String) -> String {
@@ -426,6 +436,7 @@ fn password_ownership_demo() {
 ## Lifetimes and Advanced Ownership
 
 ### Lifetime Annotations
+
 ```rust
 // Explicit lifetime annotations for references
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
@@ -456,6 +467,7 @@ impl<'a> ImportantExcerpt<'a> {
 ```
 
 ### Ownership Transfer Patterns
+
 ```rust
 // Builder pattern with ownership transfer
 pub struct ConfigBuilder {
@@ -515,6 +527,7 @@ fn builder_ownership_demo() {
 ## Common Ownership Patterns
 
 ### Option and Result Ownership
+
 ```rust
 // Option<T> owns T when Some(T)
 fn option_ownership_demo() {
@@ -542,6 +555,7 @@ fn result_ownership_demo() -> Result<String, String> {
 ```
 
 ### Iterator Ownership Patterns
+
 ```rust
 // Different iterator methods have different ownership semantics
 fn iterator_ownership_demo() {
@@ -579,16 +593,19 @@ fn iterator_ownership_demo() {
 ## Daily Study Applications
 
 ### Week 1: Ownership Fundamentals
+
 - Move semantics and ownership transfer
 - Borrowing rules and lifetime basics
 - Stack vs heap allocation patterns
 
 ### Week 2: Advanced Ownership Patterns
+
 - Smart pointers for complex ownership scenarios
 - Reference counting with Rc<T>
 - Interior mutability with RefCell<T>
 
 ### Week 3: Lifetime Management
+
 - Explicit lifetime annotations
 - Lifetime elision rules
 - Static lifetimes and global data
@@ -596,6 +613,7 @@ fn iterator_ownership_demo() {
 ## Mission Ownership Requirements
 
 ### Ownership Design Checklist
+
 1. **Clear ownership boundaries** for each data structure
 2. **Minimal cloning** - prefer borrowing when possible
 3. **Appropriate smart pointers** for shared ownership scenarios
@@ -605,6 +623,7 @@ fn iterator_ownership_demo() {
 7. **Error handling** with owned vs borrowed data
 
 ### Testing Ownership Patterns
+
 ```rust
 #[cfg(test)]
 mod ownership_tests {
@@ -658,6 +677,7 @@ mod ownership_tests {
 ---
 
 *ownership Links:*
+
 - [[Memory Safety]] - Safety through ownership
 - [[interior-mutability]] - Flexible ownership patterns
 - [[zero-cost-abstractions]] - Performance benefits

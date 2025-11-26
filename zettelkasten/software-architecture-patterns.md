@@ -10,9 +10,11 @@ Software architecture patterns define how code is organized at the highest level
 ## Layer-Based Architecture
 
 ### Definition
+
 Layer-based architecture organizes code by **technical concerns**, creating horizontal layers where each layer has a specific technical responsibility.
 
 ### Structure
+
 ```
 src/
 ├── controllers/     # HTTP handlers, API endpoints
@@ -24,12 +26,14 @@ src/
 ```
 
 ### Characteristics
+
 - **Horizontal separation** by technical function
 - **Dependency flow**: Controllers → Services → Repositories → Models
 - **Cross-cutting concerns** handled by dedicated layers
 - **Familiar pattern** from traditional enterprise development
 
 ### Advantages
+
 - ✅ **Clear separation of concerns** - each layer has single responsibility
 - ✅ **Easy to understand** - intuitive for developers familiar with MVC patterns
 - ✅ **Consistent patterns** - same structure applied across all features
@@ -38,6 +42,7 @@ src/
 - ✅ **Easy to apply middleware** - authentication, logging, validation
 
 ### Disadvantages
+
 - ❌ **Cross-cutting feature changes are expensive** - requires touching multiple layers
 - ❌ **Tight vertical coupling** - changes propagate up/down the stack
 - ❌ **Poor team parallelization** - multiple teams modify same layers
@@ -46,6 +51,7 @@ src/
 - ❌ **Difficult feature removal** - feature code spread across all layers
 
 ### Best Use Cases
+
 - Small to medium applications (< 50k LOC)
 - CRUD-heavy applications
 - Simple business domains
@@ -55,9 +61,11 @@ src/
 ## Feature-Based Architecture
 
 ### Definition
+
 Feature-based architecture organizes code by **business capabilities**, creating vertical slices where each feature contains all necessary technical layers.
 
 ### Structure
+
 ```
 src/
 ├── user/
@@ -80,12 +88,14 @@ src/
 ```
 
 ### Characteristics
+
 - **Vertical separation** by business capability
 - **Self-contained features** with internal layering
 - **Minimal shared dependencies** - shared module for truly common code
 - **Business domain alignment** - structure reflects user-facing features
 
 ### Advantages
+
 - ✅ **High cohesion** - related code lives together
 - ✅ **Low coupling** - features are independent
 - ✅ **Parallel development** - teams can work on different features simultaneously
@@ -96,6 +106,7 @@ src/
 - ✅ **Scalable team structure** - teams can own entire features
 
 ### Disadvantages
+
 - ❌ **Potential code duplication** - without careful shared module design
 - ❌ **Cross-cutting concerns complexity** - harder to apply consistent patterns
 - ❌ **Requires discipline** - developers must avoid circular dependencies
@@ -103,6 +114,7 @@ src/
 - ❌ **Shared code extraction** - determining what should be shared vs duplicated
 
 ### Best Use Cases
+
 - Large applications (> 50k LOC)
 - Complex business domains
 - Multiple development teams
@@ -113,6 +125,7 @@ src/
 ## Hybrid Approaches
 
 ### Screaming Architecture
+
 Combines both patterns by organizing around features but maintaining clear technical boundaries:
 
 ```
@@ -133,6 +146,7 @@ src/
 ```
 
 ### Package by Feature with Layers
+
 Features as primary organization, layers within features:
 
 ```
@@ -150,21 +164,27 @@ src/
 ## Rust-Specific Considerations
 
 ### Module System Benefits
+
 Rust's module system naturally supports feature-based architecture:
+
 - **Clear boundaries** with `mod.rs` files
 - **Explicit privacy** with `pub` visibility
 - **Dependency control** through module imports
 - **Compile-time enforcement** of architectural rules
 
 ### Ownership Model
+
 Rust's ownership model encourages good architectural practices:
+
 - **Clear interfaces** between features
 - **Minimal shared mutable state**
 - **Zero-cost abstractions** for shared utilities
 - **Memory safety** without runtime overhead
 
 ### Cargo Workspaces
+
 Large feature-based applications can use workspaces:
+
 ```toml
 [workspace]
 members = [
@@ -176,7 +196,9 @@ members = [
 ```
 
 ### Example: Mission 10 Structure Analysis
+
 The Union-Find implementation follows feature-based principles:
+
 ```
 missions/Mission10/
 ├── src/
@@ -193,6 +215,7 @@ missions/Mission10/
 ```
 
 This structure demonstrates:
+
 - **Feature cohesion** - all Union-Find code in one place
 - **Clear boundaries** - public API through lib.rs
 - **Self-contained testing** - tests specific to Union-Find
@@ -200,7 +223,8 @@ This structure demonstrates:
 
 ## Decision Framework
 
-### Choose Layer-Based When:
+### Choose Layer-Based When
+
 - ✅ Application size < 50k lines of code
 - ✅ Simple CRUD operations dominate
 - ✅ Single team development
@@ -208,7 +232,8 @@ This structure demonstrates:
 - ✅ Heavy database-centric operations
 - ✅ Team unfamiliar with domain-driven design
 
-### Choose Feature-Based When:
+### Choose Feature-Based When
+
 - ✅ Application size > 50k lines of code
 - ✅ Complex business domains with distinct capabilities
 - ✅ Multiple teams working simultaneously
@@ -218,7 +243,9 @@ This structure demonstrates:
 - ✅ Strong business domain boundaries exist
 
 ### Migration Strategy
+
 Moving from layer-based to feature-based:
+
 1. **Identify feature boundaries** through domain analysis
 2. **Extract one feature at a time** - gradual migration
 3. **Create shared modules** for truly common code
@@ -228,21 +255,24 @@ Moving from layer-based to feature-based:
 
 ## Best Practices
 
-### For Layer-Based Architecture:
+### For Layer-Based Architecture
+
 - Keep layers thin and focused
 - Avoid god objects in service layers
 - Use dependency injection for testability
 - Implement clear interfaces between layers
 - Document cross-cutting concerns
 
-### For Feature-Based Architecture:
+### For Feature-Based Architecture
+
 - Define clear feature boundaries early
 - Extract shared code judiciously - avoid premature optimization
 - Use dependency inversion for shared services
 - Establish conventions for inter-feature communication
 - Monitor for circular dependencies
 
-### Universal Principles:
+### Universal Principles
+
 - **Single Responsibility Principle** - whether layers or features
 - **Dependency Inversion** - depend on abstractions, not concretions
 - **Interface Segregation** - small, focused interfaces
@@ -251,13 +281,15 @@ Moving from layer-based to feature-based:
 
 ## Common Anti-Patterns
 
-### Layer-Based Anti-Patterns:
+### Layer-Based Anti-Patterns
+
 - **Leaky Abstractions** - business logic in controllers
 - **God Services** - massive service classes doing everything
 - **Data Transfer Object Explosion** - excessive mapping between layers
 - **Circular Dependencies** - layers depending on higher layers
 
-### Feature-Based Anti-Patterns:
+### Feature-Based Anti-Patterns
+
 - **Big Ball of Mud Features** - features that are too large
 - **Shared Everything** - over-sharing defeats the purpose
 - **Circular Feature Dependencies** - features depending on each other
@@ -266,21 +298,27 @@ Moving from layer-based to feature-based:
 ## Related Concepts
 
 ### Domain-Driven Design (DDD)
+
 Feature-based architecture aligns well with DDD principles:
+
 - **Bounded Contexts** map to features
 - **Aggregates** define feature boundaries
 - **Domain Services** live within features
 - **Anti-Corruption Layers** at feature boundaries
 
 ### Hexagonal Architecture
+
 Can be applied within features:
+
 - **Domain core** - business logic
 - **Ports** - interfaces to external systems
 - **Adapters** - concrete implementations
 - **Feature boundary** - hexagon boundary
 
 ### Clean Architecture
+
 Similar principles but different organization:
+
 - **Entities** - business objects
 - **Use Cases** - application services
 - **Interface Adapters** - controllers/presenters
@@ -288,14 +326,16 @@ Similar principles but different organization:
 
 ## Measuring Success
 
-### Metrics for Good Architecture:
+### Metrics for Good Architecture
+
 - **Change Impact Radius** - how many files need modification for typical changes
 - **Team Parallelization** - can teams work without conflicts
 - **Build Time** - does structure support incremental compilation
 - **Test Isolation** - can features be tested independently
 - **Code Ownership** - clear responsibility boundaries
 
-### Warning Signs:
+### Warning Signs
+
 - **Shotgun Surgery** - small changes require many file modifications
 - **Merge Conflicts** - frequent conflicts between team members
 - **Integration Complexity** - difficult to combine feature work
@@ -304,7 +344,9 @@ Similar principles but different organization:
 ## Tools and Techniques
 
 ### Architecture Decision Records (ADRs)
+
 Document architectural choices:
+
 ```markdown
 # ADR 001: Feature-Based Architecture
 
@@ -322,14 +364,18 @@ Negative: Need to establish shared module conventions
 ```
 
 ### Dependency Analysis Tools
+
 For Rust projects:
+
 - `cargo-deps` - visualize dependency graphs
 - `cargo-modules` - analyze module structure  
 - `cargo-audit` - security dependency analysis
 - Custom linting rules for architectural boundaries
 
 ### Code Organization Scripts
+
 Automate structure validation:
+
 ```bash
 # Check for circular dependencies
 cargo deps --all-deps | grep -E "cycle|circular"
@@ -340,30 +386,35 @@ find src/features -name "*.rs" -exec grep -l "use.*features::" {} \;
 
 ## Real-World Examples
 
-### Layer-Based Success Stories:
+### Layer-Based Success Stories
+
 - **Ruby on Rails** - convention over configuration
 - **Spring Boot** - enterprise Java applications
 - **ASP.NET MVC** - Microsoft web applications
 
-### Feature-Based Success Stories:
+### Feature-Based Success Stories
+
 - **Netflix** - microservices architecture
 - **Shopify** - e-commerce platform modules
 - **GitHub** - feature-based development teams
 
-### Rust Examples:
+### Rust Examples
+
 - **Cargo** - feature-based with shared utilities
 - **Rustc** - compiler phases with shared infrastructure
 - **Tokio** - runtime components as features
 
 ## Future Considerations
 
-### Emerging Patterns:
+### Emerging Patterns
+
 - **Micro-frontends** - feature-based UI architecture
 - **Event-driven architecture** - features communicate via events  
 - **CQRS/Event Sourcing** - separate read/write feature models
 - **Serverless functions** - ultimate feature isolation
 
-### Technology Trends:
+### Technology Trends
+
 - **Containerization** - features as deployable units
 - **Service mesh** - infrastructure for feature communication
 - **GraphQL** - unified API over feature-based services
@@ -382,26 +433,31 @@ The key insight is that **architecture is not about the code - it's about the pe
 ## Links
 
 **Architecture Patterns**:
+
 - [[Clean Code Principles]] - Code-level design principles
 - [[V-Cycle Methodology]] - Software development process
 - [[TDD (Test-Driven Development)]] - Testing strategies for different architectures
 
 **Rust-Specific**:
+
 - [[rust-best-practices]] - Language-specific recommendations
 - [[mission-10]] - Example of feature-based organization in practice
 - [[Cargo Workspaces]] - Multi-crate project organization
 
 **Domain Modeling**:
+
 - [[Domain-Driven Design]] - Business-aligned architecture
 - [[Event-Driven Architecture]] - Decoupled feature communication
 - [[Microservices Patterns]] - Service-based architecture
 
 **Project Organization**:
+
 - [[project-structure-patterns]] - Directory organization strategies
 - [[code-ownership-models]] - Team and code responsibility patterns
 - [[refactoring-techniques]] - Evolving architecture over time
 
 **Quality Assurance**:
+
 - [[test-pyramid]] - Testing strategies for different architectures
 - [[code-quality-metrics]] - Measuring architectural success
 - [[technical-debt-management]] - Managing architectural evolution

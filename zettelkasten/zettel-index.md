@@ -39,12 +39,14 @@
 ## 🗺️ Navigation Hub
 
 ### **Active Learning Tracks**
+
 - [[Collections MOC]] - HashMap, HashSet, BTreeMap, Iterators
 - [[Missions Overview]] - V-Cycle engineering projects
 - [[Daily Study MOC]] - Week 1-4 systematic progression  
 - [[AoC Patterns MOC]] - Competitive programming techniques
 
 ### **Find Today's Content**
+
 - **Current Day**: See [[../MONTHLY_CALENDAR]] Day activities
 - **Daily Notes**: [[Daily Notes/README|Daily Notes Index]] - Complete timeline of daily learning activities
 - **Latest Study Notes**: [[Daily Study MOC]] → Current Week
@@ -52,6 +54,7 @@
 - **Daily Workflow**: [[Daily Workflow]] - Systematic learning routine setup
 
 ### **Mission Track** - Engineering Projects
+
 - **[[mission-1|Mission 1]]** or **[[mission-1]]** - Stack Implementation  
   - **Quick Start**: [[../missions/Mission1/QUICK_REFERENCE|Quick Reference]] - 2-minute ownership essentials
   - **Beginner Guide**: [[../missions/Mission1/SIMPLE_GUIDE|Simple Guide]] - Mental models for ownership
@@ -81,6 +84,7 @@
   - **Philosophical Insights**: [[rule-30-computational-irreducibility]] - How debugging Union-Find led to fundamental questions about computational reality
 
 ### **Daily Study Track** - Systematic Learning
+
 - [[Week 1 Overview]] - Collections Fundamentals
   - [[daily_study/rust_learning_week2_notes/Day10]] - HashMap basics
   - [[daily_study/rust_learning_week2_notes/Day11]] - HashSet operations  
@@ -111,6 +115,7 @@
   - [[daily_study/rust_learning_week5_notes/Day35]] - Robust parsing
 
 ### **Advent of Code Track**
+
 - [[AoC Patterns MOC]] - Common competitive programming patterns
 - **2015 Solutions:**
   - [[AoC 2015 MOC]] - Complete 2015 challenge overview
@@ -124,6 +129,7 @@
   - [[aoc2024-day5-mission-integration]] - Day 5 dependency resolution with Mission 7+8 integration
 
 ### **Rust Book Integration**
+
 - [[rust_book/rust-book-ch1]] - **Getting Started** - Installation and first programs ✅
 - [[rust_book/rust-book-ch2]] - **Guessing Game** - Hands-on programming intro ✅
 - [[rust_book/rust-book-ch3]] - **Programming Concepts** - Variables, types, functions ✅
@@ -152,10 +158,12 @@
 🎓 **RUST BOOK COMPLETE** - All chapters mastered with comprehensive competency!
 
 ### **Rust Book Comprehensive Reviews**
+
 - [[rust-book-ch5-8-review]] - **Chapters 5-8 Review** - Structs, Enums, Modules, and Collections comprehensive synthesis
 - [[rust-book-ch9-12-review]] - **Chapters 9-12 Review** - Error Handling, Generics/Traits/Lifetimes, Testing, and CLI Projects comprehensive synthesis
 
 ### **Detailed Chapter Guides**
+
 - [[../../rust_book/Ch5/README]] - **Chapter 5 Complete Guide** - Structs with mission integration examples
 - [[../../rust_book/Ch7/README]] - **Chapter 7 Complete Guide** - Modules and project organization
 - [[../../rust_book/Ch9/README]] - **Chapter 9 Complete Guide** - Error handling with comprehensive examples
@@ -164,12 +172,14 @@
 ### **Key Concept Areas**
 
 **Grid Algorithms:**
+
 - [[find-all-components]] - Connected component detection algorithm (NEW)
 - [[flood-fill]] - Single-region modification (recursive, iterative, BFS)
 - [[explore-component]] - DFS helper for component exploration
 - [[4-connectivity]] - Grid neighbor patterns and connectivity rules
 
 **Data Structures & Collections:**
+
 - [[entry-api-hashmap]] - **Entry API** - Efficient single-lookup HashMap patterns
 - [[hashmap-ownership-patterns]] - **HashMap Ownership Patterns** - Owned vs Reference Storage (NEW)
 - [[HashMap Internals]] or [[hashmap-internals]] - Hash table implementation details
@@ -178,6 +188,7 @@
 - [[Ring Buffer Overwriting Semantics]] - Circular buffer capacity management strategies
 
 **Language Features:**
+
 - [[Memory Management]] - **Memory Management** - Ownership, borrowing, lifetimes, and smart pointers
 - [[While Let Pattern Deep Dive]] - Idiomatic consuming collection patterns
 - [[Closures in Rust]] - Anonymous functions with environment capture
@@ -185,6 +196,7 @@
 - [[JSON Processing with serde_json]] - JSON parsing, traversal, and type-safe processing
 
 **Advanced Topics:**
+
 - [[Error Handling Deep Dive]] - Comprehensive error handling
 - [[Standard Error and Stream Separation]] - CLI stdout/stderr patterns and testing
 - [[Generic Programming]] - Type parameterization techniques
@@ -194,18 +206,29 @@
 - [[rule-30-computational-irreducibility]] - **Rule 30 & Computational Irreducibility** - How simple deterministic rules generate infinite complexity, connecting Mission 10 debugging to fundamental questions about computational reality
 
 **Software Architecture:**
+
 - [[software-architecture-patterns]] - **Layer-based vs Feature-based Architecture** - Project organization patterns, decision framework, and Rust-specific considerations
 - [[deterministic-debugging]] - **Deterministic Debugging** - Reproducible bug detection, HashMap non-determinism solutions, and professional debugging methodologies
 
 **Performance & Optimization:**
+
+- [[Performance Engineering]] - Systematic optimization strategies
+- [[Amortized Analysis]] - Average cost over operation sequences
+- [[Benchmarking]] - Systematic performance measurement
 - [[performance-benchmarking-grid-optimization]] - Comprehensive guide to performance benchmarking
 - [[../missions/Mission6/SIZE_HINT_EXPLAINED]] - Iterator size optimization
 - [[../missions/Mission6/WHEN_SIZE_HINT_CALLED]] - When optimizations trigger
 - Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
 
+**Testing:**
+
+- [[Testing Strategies]] - Comprehensive testing approaches
+- [[Property-Based Testing]] - Testing invariants with generated data
+
 ## 🔄 Cross-Track Integration
 
 ### **Mission ↔ Daily Study Alignment**
+
 - Ownership fundamentals connect to [[../daily_study/rust_learning_week1_notes/Day02_expanded|Day 2 Expanded - Variables & Ownership Deep Dive]]
 - Borrowing and references connect to [[../daily_study/rust_learning_week1_notes/Day03_expanded|Day 3 Expanded - Functions & References Deep Dive]]
 - HashMap implementation ([[mission-5]]) connects to [[daily_study/rust_learning_week2_notes/Day10]]
@@ -215,6 +238,7 @@
 - Grid algorithms ([[mission-6]]) connect to [[daily_study/rust_learning_week4_notes/Day24]]
 
 ### **Mission ↔ Rust Book Connections**  
+
 - Struct design connects to [[rust-book-ch5]]
 - Generic implementation connects to [[rust-book-ch10]]
 - Error handling connects to [[rust_book/Ch9/README]]
@@ -222,6 +246,7 @@
 - Collections fundamentals connect to [[rust-book-ch8]]
 
 ### **Progress Tracking**
+
 - **Live Progress**: See [[../MONTHLY_CALENDAR]] for today's activities
 
 ## 📦 Smart Pointers & Memory Management
@@ -260,6 +285,7 @@
 - [[Graph Network Density]] - Network connectivity metrics and graph analysis
 
 ### **Production Algorithm Tools**
+
 - **[[../missions/Mission9/docs/CLI_GUIDE]]** - Command-line pathfinding tools for practical algorithm application
 - **[[../missions/Mission9/docs/INTEGRATION_GUIDE]]** - Real-world algorithm integration patterns and examples
 
@@ -277,6 +303,7 @@
 - Reference: [Algorithmica HPC Guide](https://en.algorithmica.org/hpc/)
 
 ### **Advanced Algorithm Performance**
+
 - **[[../missions/Mission9/docs/PERFORMANCE_TUNING]]** - Pathfinding optimization, algorithm selection, and benchmarking techniques
 - **[[../missions/Mission9/docs/API_DOCUMENTATION]]** - Production-quality algorithm implementations with performance characteristics
 

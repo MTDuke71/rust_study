@@ -11,6 +11,7 @@
 ## 📚 Learning Tracks
 
 ### Core Rust Book
+
 ```dataview
 LIST 
 FROM "zettelkasten" 
@@ -19,6 +20,7 @@ SORT file.name ASC
 ```
 
 ### Daily Study Progression  
+
 ```dataview
 LIST
 FROM "daily_study" 
@@ -28,6 +30,7 @@ LIMIT 10
 ```
 
 ### Mission Projects
+
 ```dataview
 TABLE tags, file.mtime as "Last Modified"
 FROM "missions" OR "tutorials"
@@ -53,6 +56,7 @@ LIMIT 8
 ## 🔗 Quick Links
 
 ### Recent Activity
+
 ```dataview  
 LIST file.mtime as "Modified"
 FROM "zettelkasten"
@@ -61,6 +65,7 @@ LIMIT 5
 ```
 
 ### Most Linked Notes
+
 ```dataview
 TABLE length(file.inlinks) as "Backlinks"
 FROM "zettelkasten" 
@@ -73,12 +78,14 @@ LIMIT 10
 ## 📊 Study Statistics
 
 ### By Category
+
 - **Concepts:** `= length(filter(file.tags, (t) => contains(t, "concept")))`
 - **Daily Notes:** `= length(filter(file.tags, (t) => contains(t, "daily-study")))`  
 - **Mission Projects:** `= length(filter(file.tags, (t) => contains(t, "mission")))`
 - **Chapter Overviews:** `= length(filter(file.tags, (t) => contains(t, "chapter-overview")))`
 
 ### Current Streak
+
 - **Days studied:** [Track manually or use plugin]
 - **Last study session:** `= date(now)`
 
@@ -87,6 +94,7 @@ LIMIT 10
 ## 🎮 Adventures in Code
 
 ### Advent of Code Progress
+
 ```dataview
 TABLE tags, file.mtime as "Last Updated"
 FROM "advent_of_code"
@@ -96,6 +104,7 @@ LIMIT 5
 ```
 
 ### Advanced Examples  
+
 ```dataview
 LIST
 FROM "advanced_examples"
@@ -108,11 +117,13 @@ LIMIT 5
 ## 🛠️ Development Tools
 
 ### Recent Scripts & Utilities
+
 - [[Recent Activity Report]] - Track file changes
 - [[Clippy Automation]] - Code quality workflows
 - [[Quality Pipeline]] - Comprehensive analysis
 
 ### Build & Test Status
+
 - **Last Clippy Run:** [Check GitHub Actions]
 - **Last Quality Report:** [[Quality Report]]
 - **Coverage Status:** [View latest report]
@@ -122,20 +133,23 @@ LIMIT 5
 ## 📝 Quick Capture
 
 ### Today's Learning Log
-- **Key Insight:** 
-- **Challenge:** 
-- **Next Step:** 
+
+- **Key Insight:**
+- **Challenge:**
+- **Next Step:**
 
 ### Ideas & TODOs
-- [ ] 
-- [ ] 
-- [ ] 
+
+- [ ]
+- [ ]
+- [ ]
 
 ---
 
 ## 🔍 Search & Discovery
 
 ### Recently Modified
+
 ```dataview
 LIST file.mtime
 FROM ""
@@ -145,6 +159,7 @@ LIMIT 8
 ```
 
 ### Orphaned Notes (Needs Linking)
+
 ```dataview
 LIST
 FROM "zettelkasten"
@@ -159,6 +174,7 @@ LIMIT 5
 ![[Graph View of Learning Network]]
 
 **Tags to Explore:**
+
 - #rust #collections #data-structures #algorithms
 - #daily-study #mission #chapter-overview
 - #aoc #competitive #patterns

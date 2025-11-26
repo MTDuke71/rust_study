@@ -9,6 +9,7 @@
 JSON (JavaScript Object Notation) is a lightweight, text-based data interchange format. In Rust, the `serde_json` crate provides powerful, type-safe JSON processing capabilities with excellent performance and ergonomics.
 
 **Key Benefits:**
+
 - **Zero-copy parsing** for string slices where possible
 - **Type safety** with Rust's type system integration
 - **Flexible APIs** supporting both dynamic and strongly-typed approaches
@@ -36,6 +37,7 @@ pub enum Value {
 ```
 
 **Pattern Matching Example:**
+
 ```rust
 use serde_json::Value;
 
@@ -134,7 +136,9 @@ fn get_number_value(value: &Value) -> Option<i64> {
 ## 🎄 **Real-World Example: AoC 2015 Day 12**
 
 ### **Problem Context**
+
 **AoC 2015 Day 12** demonstrates advanced JSON processing:
+
 - **Part 1**: Sum all numbers in JSON document
 - **Part 2**: Same, but ignore objects containing "red" string values
 

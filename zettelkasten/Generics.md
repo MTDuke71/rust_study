@@ -284,6 +284,7 @@ unique_numbers.insert(1);
 ## 🎓 Mission Applications
 
 ### **Mission 1 - Generic Stack**
+
 ```rust
 struct Stack<T> {
     items: Vec<T>,
@@ -305,6 +306,7 @@ impl<T> Stack<T> {
 ```
 
 ### **Mission 2 - Generic Queue**
+
 ```rust
 struct Queue<T> {
     items: Vec<T>,
@@ -326,6 +328,7 @@ impl<T> Queue<T> {
 ```
 
 ### **Mission 3 - Generic Binary Search**
+
 ```rust
 fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
     let mut left = 0;
@@ -346,6 +349,7 @@ fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
 ```
 
 ### **Mission 5 - Generic HashMap**
+
 ```rust
 use std::hash::Hash;
 
@@ -368,6 +372,7 @@ impl<K: Hash + Eq, V> HashMap<K, V> {
 ## 💡 Best Practices
 
 ### **1. Use Generic Functions for Flexibility**
+
 ```rust
 // Good: Works with any type
 fn first<T>(list: &[T]) -> Option<&T> {
@@ -381,6 +386,7 @@ fn first_i32(list: &[i32]) -> Option<&i32> {
 ```
 
 ### **2. Add Trait Bounds Only When Needed**
+
 ```rust
 // Good: Minimal constraints
 fn store<T>(value: T) -> Box<T> {
@@ -394,6 +400,7 @@ fn store_bad<T: Clone + Debug>(value: T) -> Box<T> {
 ```
 
 ### **3. Use Type Inference When Possible**
+
 ```rust
 // Explicit type annotation
 let v: Vec<i32> = Vec::new();
@@ -404,6 +411,7 @@ v.push(5); // Compiler infers Vec<i32>
 ```
 
 ### **4. Consider Default Type Parameters**
+
 ```rust
 struct Counter<T = i32> {
     count: T,
@@ -416,6 +424,7 @@ let c2: Counter<_> = Counter { count: 0 }; // Uses default i32
 ## 🔍 Advanced Patterns
 
 ### **Phantom Types**
+
 ```rust
 use std::marker::PhantomData;
 
@@ -435,6 +444,7 @@ impl<T> Container<T> {
 ```
 
 ### **Associated Types vs Generic Parameters**
+
 ```rust
 // Generic parameter
 trait Iterator<T> {
@@ -451,6 +461,7 @@ trait Iterator {
 ## 🐛 Common Pitfalls
 
 ### **Lifetime Annotation Confusion**
+
 ```rust
 // Need lifetime when returning references
 fn first<'a, T>(list: &'a [T]) -> Option<&'a T> {
@@ -459,6 +470,7 @@ fn first<'a, T>(list: &'a [T]) -> Option<&'a T> {
 ```
 
 ### **Type Inference Ambiguity**
+
 ```rust
 // Ambiguous
 let v = Vec::new(); // What type?
@@ -471,6 +483,7 @@ v.push(5); // Now compiler knows it's Vec<i32>
 ```
 
 ### **Recursive Generic Types**
+
 ```rust
 // Need Box for recursive types
 enum List<T> {

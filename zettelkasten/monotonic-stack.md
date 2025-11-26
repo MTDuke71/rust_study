@@ -12,6 +12,7 @@ A **Monotonic Stack** is a stack where elements are maintained in a strictly inc
 **Key Property**: Elements in the stack form a monotonic sequence (increasing or decreasing order).
 
 **Common Use Cases**:
+
 - Next/Previous Greater/Smaller Element
 - Largest Rectangle in Histogram
 - Trapping Rain Water
@@ -24,6 +25,7 @@ A **Monotonic Stack** is a stack where elements are maintained in a strictly inc
 ## 🔍 Core Concepts
 
 ### **Monotonic Increasing Stack**
+
 Maintains elements in **strictly increasing** order from bottom to top.
 
 ```
@@ -35,6 +37,7 @@ Add 1: Stack = [1]        // Pop 2 because 1 < 2, then pop 1 because 1 ≤ 1
 ```
 
 ### **Monotonic Decreasing Stack**
+
 Maintains elements in **strictly decreasing** order from bottom to top.
 
 ```
@@ -70,11 +73,13 @@ Output: [3, 4, 4, -1]
 ```
 
 **Algorithm**:
+
 1. Use **decreasing monotonic stack** to find next greater
 2. When you find a larger element, it's the "next greater" for all smaller elements you pop
 3. Elements popped from stack found their answer
 
 **Rust Implementation**:
+
 ```rust
 fn next_greater_element(nums: Vec<i32>) -> Vec<i32> {
     let n = nums.len();
@@ -98,7 +103,8 @@ fn next_greater_element(nums: Vec<i32>) -> Vec<i32> {
 // Output: [3, 4, 4, -1] ✓
 ```
 
-**Complexity**: 
+**Complexity**:
+
 - **Time**: O(n) - each element pushed/popped once
 - **Space**: O(n) - stack storage
 
@@ -121,11 +127,13 @@ Answer: 10 (width 2, height 5, or other combinations)
 ```
 
 **Algorithm**:
+
 1. Use **increasing monotonic stack** to store indices
 2. When height decreases, pop from stack and calculate areas
 3. For each popped bar, it becomes the height; width is determined by boundary indices
 
 **Rust Implementation**:
+
 ```rust
 fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
     let mut stack: Vec<usize> = Vec::new();
@@ -158,6 +166,7 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 ```
 
 **Complexity**:
+
 - **Time**: O(n) - each bar pushed/popped once
 - **Space**: O(n) - stack storage
 
@@ -175,11 +184,13 @@ Output: [ 1,  1,  4,  2,  1,  1,  0,  0]
 ```
 
 **Algorithm**:
+
 1. Use **decreasing monotonic stack** (store temperatures/indices)
 2. For each new temperature, check if it's warmer than stack top
 3. When warmer found, calculate days elapsed
 
 **Rust Implementation**:
+
 ```rust
 fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {
     let n = temperatures.len();
@@ -203,6 +214,7 @@ fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {
 ```
 
 **Complexity**:
+
 - **Time**: O(n) - each temperature processed once
 - **Space**: O(n) - stack storage
 
@@ -225,11 +237,13 @@ Water trapped = 6 units
 ```
 
 **Algorithm**:
+
 1. Use **decreasing monotonic stack** (store heights/indices)
 2. When height increases, calculate trapped water between popped element and current
 3. Water depth determined by min of left and right boundaries
 
 **Rust Implementation**:
+
 ```rust
 fn trap(height: Vec<i32>) -> i32 {
     let mut stack: Vec<usize> = Vec::new();
@@ -261,6 +275,7 @@ fn trap(height: Vec<i32>) -> i32 {
 ```
 
 **Complexity**:
+
 - **Time**: O(n) - each bar processed once
 - **Space**: O(n) - stack storage
 
@@ -280,11 +295,13 @@ Explanation:
 ```
 
 **Algorithm**:
-1. Use **increasing monotonic stack** 
+
+1. Use **increasing monotonic stack**
 2. Scan left to right, remove larger digits when smaller digit found
 3. If removals remain, remove from end
 
 **Rust Implementation**:
+
 ```rust
 fn remove_k_digits(num: String, k: i32) -> String {
     let mut stack: Vec<char> = Vec::new();
@@ -322,6 +339,7 @@ fn remove_k_digits(num: String, k: i32) -> String {
 ```
 
 **Complexity**:
+
 - **Time**: O(n) - each digit processed once
 - **Space**: O(n) - stack storage
 
@@ -388,26 +406,31 @@ Is your problem about finding:
 ## 🔗 Real-World Applications
 
 ### **1. Stock Market Analysis**
+
 - **Problem**: When will a stock price go higher than today?
 - **Solution**: Monotonic stack to find next higher closing price
 - **Impact**: O(n) instead of O(n²) brute force
 
 ### **2. Building Skyline**
+
 - **Problem**: Given buildings with height and position, trace the skyline
 - **Solution**: Monotonic stack maintains active building heights
 - **Impact**: Efficient boundary detection
 
 ### **3. Data Stream Analysis**
+
 - **Problem**: Process streaming sensor data for anomalies
 - **Solution**: Monotonic stack finds spikes/drops in real-time
 - **Impact**: Single pass, constant space per decision
 
 ### **4. Graphics Rendering**
+
 - **Problem**: Rasterize polygon edges efficiently
 - **Solution**: Monotonic stack for edge scanning
 - **Impact**: Used in OpenGL and game engines
 
 ### **5. Compiler Design**
+
 - **Problem**: Expression parsing and optimization
 - **Solution**: Monotonic stack for operator precedence
 - **Impact**: Efficient AST construction
@@ -425,6 +448,7 @@ Is your problem about finding:
 | Remove K Digits | O(n) | O(n) | Greedy optimization |
 
 **vs. Brute Force Alternatives**:
+
 - Brute force scanning: **O(n²)** → Monotonic stack: **O(n)** ✅
 - Space trade-off: Small constant space overhead for massive time gain
 
@@ -433,6 +457,7 @@ Is your problem about finding:
 ## ⚠️ Common Pitfalls
 
 ### **Pitfall 1: Wrong Monotonic Direction**
+
 ```rust
 // ❌ WRONG - Using increasing stack for "next greater"
 while !stack.is_empty() && nums[i] < nums[*stack.last().unwrap()] {
@@ -447,6 +472,7 @@ while !stack.is_empty() && nums[i] > nums[*stack.last().unwrap()] {
 ```
 
 ### **Pitfall 2: Forgetting Boundary Checks**
+
 ```rust
 // ❌ WRONG - Doesn't handle non-existent answers
 fn next_greater(nums: Vec<i32>) -> Vec<i32> {
@@ -462,6 +488,7 @@ fn next_greater(nums: Vec<i32>) -> Vec<i32> {
 ```
 
 ### **Pitfall 3: Index vs Value Confusion**
+
 ```rust
 // ❌ WRONG - Storing values when you need indices
 let mut stack: Vec<i32> = Vec::new();  // Values only
@@ -475,6 +502,7 @@ result[stack.pop().unwrap()] = nums[i];  // Know which position found answer
 ```
 
 ### **Pitfall 4: Sentinel Values**
+
 ```rust
 // ❌ WRONG - Histogram problem without sentinels
 fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
@@ -494,6 +522,7 @@ let heights = [vec![0], heights, vec![0]].concat();
 ### **Test Case Categories**
 
 **1. Basic Cases**
+
 ```rust
 #[test]
 fn test_next_greater_basic() {
@@ -507,6 +536,7 @@ fn test_histogram_basic() {
 ```
 
 **2. Edge Cases**
+
 ```rust
 #[test]
 fn test_next_greater_empty() {
@@ -530,6 +560,7 @@ fn test_histogram_decreasing() {
 ```
 
 **3. Complex Cases**
+
 ```rust
 #[test]
 fn test_next_greater_all_decreasing() {
@@ -574,6 +605,7 @@ fn test_histogram_mixed_pattern() {
 ## 🔗 Cross-References
 
 ### **Related Zettelkasten Pages**
+
 - **[[Stack & Queue]]** - Fundamental data structure theory
 - **[[pattern-matching]]** - Pattern recognition in algorithms
 - **[[Algorithm Analysis]]** - Complexity analysis framework
@@ -582,12 +614,14 @@ fn test_histogram_mixed_pattern() {
 - **[[Trapping Rain Water]]** - Water accumulation pattern
 
 ### **Workspace Integration**
+
 - **[[10-common-interview-problems]]** - Problem #10 uses monotonic stack
 - **[[mission-1|Mission1]]** - Stack fundamentals
 - **[[mission-2]]** - Queue and sequence problems
 - **[[daily-study/Day-??]]** - Stack pattern practice
 
 ### **LeetCode Problems**
+
 - LeetCode 496: Next Greater Element I
 - LeetCode 503: Next Greater Element II (circular)
 - LeetCode 84: Largest Rectangle in Histogram
@@ -697,6 +731,7 @@ fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {
 ```
 
 **Output**:
+
 ```
 === Monotonic Stack Patterns ===
 

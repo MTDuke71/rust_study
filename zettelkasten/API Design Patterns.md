@@ -9,7 +9,9 @@
 ## 🏗️ **Core Design Principles**
 
 ### **Rust's API Design Philosophy**
+
 Rust's approach to API design emphasizes:
+
 - **Zero-cost abstractions** - High-level APIs with no runtime overhead
 - **Explicit error handling** - No hidden failures or exceptions
 - **Memory safety** - APIs that prevent undefined behavior
@@ -19,6 +21,7 @@ Rust's approach to API design emphasizes:
 *For detailed exploration of these foundational principles, see [[API Design Principles]].*
 
 ### **The "Principle of Least Surprise"**
+
 ```rust
 // ✅ GOOD: Follows Rust conventions
 impl HashMap<K, V> {
@@ -41,6 +44,7 @@ impl HashMap<K, V> {
 ## 🔧 **Constructor Patterns**
 
 ### **Standard Constructor: `new()`**
+
 ```rust
 // ✅ Simple constructor for zero-parameter initialization
 impl<T> Vec<T> {
@@ -58,6 +62,7 @@ impl<T> HashMap<K, V> {
 ```
 
 ### **Builder Pattern for Complex Construction**
+
 ```rust
 pub struct ConfigBuilder {
     debug: bool,
@@ -101,6 +106,7 @@ let config = ConfigBuilder::new()
 ```
 
 ### **Type-State Pattern for Compile-Time Safety**
+
 ```rust
 pub struct ConnectionBuilder<State> {
     url: Option<String>,
@@ -141,6 +147,7 @@ impl ConnectionBuilder<Ready> {
 ## 📋 **Method Design Patterns**
 
 ### **Ownership and Borrowing Conventions**
+
 ```rust
 impl<T> MyCollection<T> {
     // Taking ownership - consumes the value
@@ -161,6 +168,7 @@ impl<T> MyCollection<T> {
 ```
 
 ### **Infallible vs Fallible Operations**
+
 ```rust
 impl<T> MyCollection<T> {
     // Infallible operations - always succeed
@@ -179,6 +187,7 @@ impl<T> MyCollection<T> {
 ```
 
 ### **Method Naming Conventions**
+
 ```rust
 impl MyType {
     // Query methods - immutable access
@@ -203,6 +212,7 @@ impl MyType {
 ## 🛡️ **Error Handling Patterns**
 
 ### **Error Type Design**
+
 ```rust
 // ✅ Comprehensive error type with context
 #[derive(Debug, thiserror::Error)]
@@ -242,6 +252,7 @@ impl User {
 ```
 
 ### **Result vs Option Guidelines**
+
 ```rust
 impl Configuration {
     // Use Option for missing/optional values
@@ -264,6 +275,7 @@ impl Configuration {
 ## 🔄 **Iterator Design Patterns**
 
 ### **Standard Iterator Implementation**
+
 ```rust
 impl<T> MyCollection<T> {
     // Standard iteration patterns
@@ -302,6 +314,7 @@ impl<T> IntoIterator for &MyCollection<T> {
 ```
 
 ### **Custom Iterator Types**
+
 ```rust
 pub struct FilteredIter<I, F> {
     inner: I,
@@ -338,6 +351,7 @@ impl<T> MyCollection<T> {
 ## 🏷️ **Trait Design Patterns**
 
 ### **Marker Traits for Capabilities**
+
 ```rust
 // Marker trait for types that can be safely shared between threads
 pub trait ThreadSafe: Send + Sync {}
@@ -352,6 +366,7 @@ pub fn process_concurrently<T: ThreadSafe>(data: T) -> impl Future<Output = T> {
 ```
 
 ### **Extension Traits for Additional Functionality**
+
 ```rust
 // Extend existing types with domain-specific methods
 pub trait VecExt<T> {
@@ -381,6 +396,7 @@ impl<T: PartialEq> VecExt<T> for Vec<T> {
 ```
 
 ### **Associated Type vs Generic Parameter Trade-offs**
+
 ```rust
 // ✅ Associated types - one natural output type per implementation
 pub trait Collect<T> {
@@ -416,6 +432,7 @@ impl ConvertTo<String, f64> for String {
 ## 📖 **Documentation Patterns**
 
 ### **Comprehensive API Documentation**
+
 ```rust
 /// Validates bracket sequences for proper nesting and matching.
 /// 
@@ -469,6 +486,7 @@ pub fn validate_brackets(input: &str) -> Result<(), BracketError> {
 ```
 
 ### **Module-Level Documentation**
+
 ```rust
 //! # Bracket Validation Library
 //! 
@@ -502,6 +520,7 @@ pub fn validate_brackets(input: &str) -> Result<(), BracketError> {
 ## 🔧 **Configuration and Customization Patterns**
 
 ### **Configuration Structs with Defaults**
+
 ```rust
 #[derive(Debug, Clone)]
 pub struct ParserConfig {
@@ -543,6 +562,7 @@ impl ParserConfig {
 ```
 
 ### **Strategy Pattern with Trait Objects**
+
 ```rust
 pub trait HashStrategy {
     fn hash(&self, data: &[u8]) -> u64;
@@ -587,6 +607,7 @@ impl HashTable {
 ## 🎯 **Forward Compatibility Patterns**
 
 ### **Rest Patterns for Struct Evolution**
+
 ```rust
 pub struct Config {
     pub debug: bool,
@@ -602,6 +623,7 @@ fn process_config(config: Config) {
 ```
 
 ### **Non-Exhaustive Enums**
+
 ```rust
 #[non_exhaustive]
 pub enum ApiVersion {
@@ -621,6 +643,7 @@ fn handle_version(version: ApiVersion) {
 ```
 
 ### **Feature Flags and Conditional Compilation**
+
 ```rust
 #[cfg(feature = "advanced-parsing")]
 impl Parser {
@@ -642,6 +665,7 @@ impl Parser {
 ## 📊 **Performance-Conscious API Design**
 
 ### **Zero-Cost Abstractions**
+
 ```rust
 // Iterator that compiles to the same assembly as hand-written loop
 impl<T> MyCollection<T> {
@@ -669,6 +693,7 @@ where
 ```
 
 ### **Avoiding Unnecessary Allocations**
+
 ```rust
 impl MyString {
     // ✅ Returns iterator instead of allocating Vec
@@ -697,6 +722,7 @@ impl MyString {
 ## ✅ **API Design Checklist**
 
 ### **Consistency Checklist**
+
 - [ ] **Naming follows Rust conventions** (snake_case for functions, PascalCase for types)
 - [ ] **Method names are descriptive and unambiguous**
 - [ ] **Similar operations have consistent signatures**
@@ -704,6 +730,7 @@ impl MyString {
 - [ ] **Documentation includes examples and error conditions**
 
 ### **Usability Checklist**
+
 - [ ] **Common operations are easy and obvious**
 - [ ] **Uncommon operations are possible but clearly marked**
 - [ ] **Impossible operations are prevented at compile time**
@@ -711,6 +738,7 @@ impl MyString {
 - [ ] **Configuration is available for edge cases**
 
 ### **Performance Checklist**
+
 - [ ] **No unnecessary allocations in hot paths**
 - [ ] **Iterator-based APIs where appropriate**
 - [ ] **Zero-cost abstractions are truly zero-cost**
@@ -718,6 +746,7 @@ impl MyString {
 - [ ] **Performance characteristics are documented**
 
 ### **Forward Compatibility Checklist**
+
 - [ ] **Structs use rest patterns where evolution is expected**
 - [ ] **Enums are marked #[non_exhaustive] for public APIs**
 - [ ] **New functionality can be added without breaking changes**
@@ -729,17 +758,20 @@ impl MyString {
 ## 🔗 **Real-World Examples**
 
 ### **Mission Implementations**
+
 - **[[mission-1]]** - Stack API with push/pop operations
 - **[[mission-2]]** - Queue API with FIFO semantics
 - **[[mission-5]]** - HashMap API with key-value operations
 
 ### **Standard Library Patterns**
+
 - **[`Vec<T>`]** - Dynamic array with growth strategies
 - **[`HashMap<K, V>`]** - Hash table with configurable hasher
 - **[`Result<T, E>`]** - Explicit error handling without exceptions
 - **[`Option<T>`]** - Null safety with explicit absence
 
 ### **External Crate Examples**
+
 - **[[anyhow and thiserror]]** - Error handling library design patterns
 - **[`serde`]** - Serialization API with derive macros
 - **[`tokio`]** - Async runtime with trait-based abstractions
@@ -750,16 +782,19 @@ impl MyString {
 ## 📚 **Learning Resources**
 
 ### **Rust API Guidelines**
+
 - [Official Rust API Guidelines](https://rust-lang.github.io/api-guidelines/) - Comprehensive style guide
 - [The Rust Programming Language Book](https://doc.rust-lang.org/book/) - Language fundamentals
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/) - Practical examples
 
 ### **Advanced Topics**
+
 - **[[Unsafe Rust - Raw Pointers and Safety Contracts]]** - Safe abstractions over unsafe code
 - **[[PhantomData Type Safety Patterns]]** - Zero-cost type safety
 - **[[Memory Address Analysis]]** - Understanding memory layout and performance
 
 ### **Project-Specific Resources**
+
 - **[[RUST_DOCUMENTATION_STANDARDS]]** - Documentation guidelines for this workspace
 - **[[V-Cycle in Rust Development]]** - Requirements-driven API design
 - **[[Testing Strategies]]** - Comprehensive API testing approaches

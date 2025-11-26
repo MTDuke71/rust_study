@@ -7,6 +7,7 @@
 ## 🎯 **What It Does**
 
 `find_all_components` is a grid analysis algorithm that:
+
 - **Scans** every cell in a grid systematically (left-to-right, top-to-bottom)
 - **Identifies** all separate connected regions matching a target value
 - **Groups** cells by connectivity using 4-directional adjacency
@@ -26,15 +27,18 @@ pub fn find_all_components<T: PartialEq + Clone>(
 ```
 
 **Generic Type `<T: PartialEq + Clone>`:**
+
 - `T`: Any type the grid can hold (usually `char`, `i32`, etc.)
 - `PartialEq`: Required for `==` comparison with target
 - `Clone`: Required for internal operations
 
 **Parameters:**
+
 - `grid: &Grid<T>` - Immutable reference to grid (preserves original data)
 - `target: &T` - Value to search for (e.g., `'#'` for walls, `'.'` for floors)
 
 **Returns:**
+
 - `Vec<Vec<Coord>>` - List of components (each component = list of coordinates)
 - Example: `[[(0,0), (0,1)], [(5,5), (5,6)]]` = 2 separate regions
 
@@ -45,6 +49,7 @@ pub fn find_all_components<T: PartialEq + Clone>(
 ### **Two-Phase Approach**
 
 #### **Phase 1: Systematic Grid Sweep**
+
 ```rust
 for row in 0..grid.height() {
     for col in 0..grid.width() {
@@ -62,11 +67,13 @@ for row in 0..grid.height() {
 ```
 
 **Key Features:**
+
 - **Exhaustive**: Checks every cell exactly once
 - **Order**: Left-to-right, top-to-bottom (like reading a book)
 - **Early skip**: Uses `visited` set to avoid reprocessing
 
 #### **Phase 2: Component Exploration (DFS)**
+
 ```rust
 fn explore_component<T: PartialEq + Clone>(
     grid: &Grid<T>,
@@ -98,6 +105,7 @@ fn explore_component<T: PartialEq + Clone>(
 ```
 
 **Key Features:**
+
 - **Depth-First Search**: Uses explicit stack (no recursion limits)
 - **4-Connectivity**: Only horizontal/vertical neighbors (not diagonal)
 - **Visited tracking**: Global set prevents revisiting cells
@@ -108,6 +116,7 @@ fn explore_component<T: PartialEq + Clone>(
 ## 🎨 **Visual Example**
 
 ### **Input Grid:**
+
 ```
 ##....##
 ##....##
@@ -119,18 +128,22 @@ fn explore_component<T: PartialEq + Clone>(
 ### **Execution Trace:**
 
 **Step 1**: Sweep encounters `(0,0)` = `#`
+
 - Not visited ✓, Matches target ✓
 - Explore component from `(0,0)` using DFS
 - **Result**: Component 1 = `[(0,0), (0,1), (1,0), (1,1)]`
 - Mark all 4 cells as visited
 
 **Step 2**: Sweep continues to `(0,1)`
+
 - Already visited ✗ (skip)
 
 **Step 3**: Sweep continues to `(0,2)` through `(0,5)`
+
 - All are `.` (not target) → skip
 
 **Step 4**: Sweep encounters `(0,6)` = `#`
+
 - Not visited ✓, Matches target ✓
 - Explore component from `(0,6)` using DFS
 - **Result**: Component 2 = `[(0,6), (0,7), (1,6), (1,7)]`
@@ -139,11 +152,13 @@ fn explore_component<T: PartialEq + Clone>(
 **Step 5**: Continue sweep through rows 1-2 (all visited or non-target)
 
 **Step 6**: Sweep encounters `(3,2)` = `#`
+
 - Not visited ✓, Matches target ✓
 - Explore component from `(3,2)` using DFS
 - **Result**: Component 3 = `[(3,2), (3,3), (3,4), (4,2), (4,3), (4,4)]`
 
 **Final Output:**
+
 ```rust
 [
     [(0,0), (0,1), (1,0), (1,1)],     // Top-left island
@@ -157,40 +172,48 @@ fn explore_component<T: PartialEq + Clone>(
 ## 🔑 **Key Design Decisions**
 
 ### **1. Global Visited Set**
+
 ```rust
 let mut visited = HashSet::new();  // Shared across ALL components
 ```
 
 **Why global?**
+
 - Once explored as part of Component 1, never need to check again
 - Prevents redundant DFS explorations
 - O(1) lookup prevents performance degradation
 
 **Alternative (bad):**
+
 - Create new visited set per component → re-explores cells multiple times
 - Would increase complexity from O(W×H) to O(W²×H²)
 
 ### **2. Immutable Grid Reference**
+
 ```rust
 grid: &Grid<T>  // Borrow, don't modify
 ```
 
 **Why immutable?**
+
 - Only reading grid data, not changing it
 - Allows multiple analyses on same grid
 - Original data preserved for further operations
 
 ### **3. Mutable Visited Reference**
+
 ```rust
 &mut visited  // Passed to explore_component()
 ```
 
 **Why mutable?**
+
 - Each exploration updates shared visited set
 - Outer loop sees updates from inner explorations
 - Prevents duplicate component detection
 
 ### **4. 4-Connectivity Rule**
+
 ```rust
 pub fn neighbors_4(&self, coord: Coord) -> Vec<Coord> {
     let offsets = [(-1, 0), (1, 0), (0, -1), (0, 1)];
@@ -198,9 +221,11 @@ pub fn neighbors_4(&self, coord: Coord) -> Vec<Coord> {
 ```
 
 **Why only 4 directions?**
+
 - Standard for grid-based problems (AoC, competitive programming)
 - Diagonal cells are NOT connected
 - Example:
+
   ```
   #.#  ← These are TWO components (not connected diagonally)
   ...
@@ -214,10 +239,12 @@ pub fn neighbors_4(&self, coord: Coord) -> Vec<Coord> {
 ### **Time Complexity: O(W × H)**
 
 **Outer Loop:**
+
 - Checks every cell once: W × H iterations
 - Each check: O(1) visited lookup
 
 **Component Exploration (all DFS combined):**
+
 - Each target cell explored exactly once across ALL components
 - Each cell: O(1) visited check + up to 4 neighbor checks
 - Total: N cells × 5 operations (where N ≤ W×H)
@@ -227,12 +254,15 @@ pub fn neighbors_4(&self, coord: Coord) -> Vec<Coord> {
 ### **Space Complexity: O(W × H)**
 
 **Visited Set:**
+
 - Worst case: all cells are target → O(W×H)
 
 **Components Vector:**
+
 - Worst case: every cell is its own component → O(W×H)
 
 **DFS Stack:**
+
 - Worst case: entire grid is one component → O(W×H) stack depth
 
 **Total:** **O(W×H)** ✅
@@ -241,6 +271,7 @@ pub fn neighbors_4(&self, coord: Coord) -> Vec<Coord> {
 
 **Grid Size:** 160 cells
 **Operation Counts:**
+
 - Outer loop checks: 160
 - DFS pop checks: ~156 (only target cells)
 - Neighbor checks: ~620 (156 × 4)
@@ -253,12 +284,14 @@ pub fn neighbors_4(&self, coord: Coord) -> Vec<Coord> {
 ## 🎯 **Common Use Cases**
 
 ### **1. Island Counting**
+
 ```rust
 let islands = find_all_components(&ocean, &'#');
 println!("Total islands: {}", islands.len());
 ```
 
 **Example:**
+
 ```
 ~~~#####~~~
 ~~~##~##~~~  → 1 island (all connected)
@@ -266,12 +299,14 @@ println!("Total islands: {}", islands.len());
 ```
 
 ### **2. Room Detection**
+
 ```rust
 let rooms = find_all_components(&dungeon, &'.');
 println!("Detected {} rooms", rooms.len());
 ```
 
 **Example:**
+
 ```
 ################
 #....#.....#...#  → 1 large corridor component
@@ -281,6 +316,7 @@ println!("Detected {} rooms", rooms.len());
 ```
 
 ### **3. Region Classification**
+
 ```rust
 let components = find_all_components(&map, &'.');
 for (i, region) in components.iter().enumerate() {
@@ -290,6 +326,7 @@ for (i, region) in components.iter().enumerate() {
 ```
 
 ### **4. Connectivity Testing**
+
 ```rust
 fn are_connected(grid: &Grid<char>, pos1: Coord, pos2: Coord) -> bool {
     let component = explore_component(grid, pos1, &'.', &mut HashSet::new());
@@ -302,6 +339,7 @@ fn are_connected(grid: &Grid<char>, pos1: Coord, pos2: Coord) -> bool {
 ## 🚨 **Common Pitfalls & Solutions**
 
 ### **Pitfall 1: Diagonal Connectivity Confusion**
+
 ```rust
 // WRONG: Assuming these are connected
 #.#
@@ -317,6 +355,7 @@ fn are_connected(grid: &Grid<char>, pos1: Coord, pos2: Coord) -> bool {
 **Solution:** Remember only 4-directional (up/down/left/right) neighbors count.
 
 ### **Pitfall 2: Forgetting to Pass Mutable Visited**
+
 ```rust
 // WRONG: Creates new visited set
 let component = explore_component(grid, pos, target, &mut HashSet::new());
@@ -328,6 +367,7 @@ let component = explore_component(grid, pos, target, &mut visited);
 **Solution:** Always pass the outer loop's `visited` set by mutable reference.
 
 ### **Pitfall 3: Modifying Grid During Search**
+
 ```rust
 // WRONG: Mutates grid while searching
 let components = find_all_components(&mut grid, &'#');  // Takes &mut
@@ -341,6 +381,7 @@ let components = find_all_components(&grid, &'#');  // Takes &
 **Solution:** Use immutable reference unless you specifically need to modify the grid.
 
 ### **Pitfall 4: Not Handling Empty Components**
+
 ```rust
 // Handle case where no target cells exist
 let components = find_all_components(&grid, &'X');
@@ -354,6 +395,7 @@ if components.is_empty() {
 ## 🔗 **Related Algorithms**
 
 ### **Flood Fill (Single Component)**
+
 ```rust
 // Find ONE component from a starting point
 flood_fill_iterative(&mut grid, start, &'.', 'X');
@@ -362,6 +404,7 @@ flood_fill_iterative(&mut grid, start, &'.', 'X');
 **Difference:** Flood fill modifies the grid and finds one region. `find_all_components` finds ALL regions without modification.
 
 ### **BFS Component Detection**
+
 ```rust
 // Same result, but explores in layers instead of depth
 fn explore_component_bfs(...) -> Vec<Coord> {
@@ -373,6 +416,7 @@ fn explore_component_bfs(...) -> Vec<Coord> {
 **Difference:** BFS explores breadth-first (layers), DFS explores depth-first (exhaustive paths). Result is the same for component detection.
 
 ### **Union-Find (Disjoint Set)**
+
 ```rust
 // Alternative approach for static grids
 let mut uf = UnionFind::new(w * h);
@@ -386,18 +430,21 @@ let mut uf = UnionFind::new(w * h);
 ## 📚 **Real-World Applications**
 
 ### **Advent of Code Patterns**
+
 - **2023 Day 21**: Garden plot connectivity
 - **2022 Day 12**: Hill climbing regions
 - **2021 Day 9**: Basin detection (low point flooding)
 - **2020 Day 17**: Active cube region tracking
 
 ### **Game Development**
+
 - **Pathfinding**: Separate reachable areas
 - **Fog of War**: Visible regions from player position
 - **Level Generation**: Room connectivity validation
 - **AI Navigation**: Valid movement zones
 
 ### **Image Processing**
+
 - **Object Detection**: Connected pixel regions
 - **Segmentation**: Separate color/intensity regions
 - **Blob Analysis**: Shape detection and classification
@@ -407,6 +454,7 @@ let mut uf = UnionFind::new(w * h);
 ## 💡 **Optimization Opportunities**
 
 ### **1. Early Exit for Single Component**
+
 ```rust
 if components.len() == 1 {
     return components;  // Found what we need
@@ -414,6 +462,7 @@ if components.len() == 1 {
 ```
 
 ### **2. Component Size Filtering**
+
 ```rust
 let large_components: Vec<_> = components.into_iter()
     .filter(|comp| comp.len() >= min_size)
@@ -421,6 +470,7 @@ let large_components: Vec<_> = components.into_iter()
 ```
 
 ### **3. Parallel Component Analysis**
+
 ```rust
 use rayon::prelude::*;
 let stats: Vec<_> = components.par_iter()
@@ -429,6 +479,7 @@ let stats: Vec<_> = components.par_iter()
 ```
 
 ### **4. 8-Connectivity Variant**
+
 ```rust
 pub fn neighbors_8(&self, coord: Coord) -> Vec<Coord> {
     let offsets = [
@@ -445,6 +496,7 @@ pub fn neighbors_8(&self, coord: Coord) -> Vec<Coord> {
 ## 🧪 **Testing Strategies**
 
 ### **Unit Tests**
+
 ```rust
 #[test]
 fn empty_grid_returns_empty_components() {
@@ -470,6 +522,7 @@ fn diagonal_cells_are_separate() {
 ```
 
 ### **Property-Based Tests**
+
 ```rust
 #[quickcheck]
 fn total_cells_equals_sum_of_components(grid: Grid<char>) -> bool {
@@ -484,6 +537,7 @@ fn total_cells_equals_sum_of_components(grid: Grid<char>) -> bool {
 ## 📖 **Further Reading**
 
 ### **Related Zettelkasten Notes**
+
 - [[explore-component]] - DFS helper function details
 - [[flood-fill]] - Single-component modification algorithm
 - [[component-info]] - Component analysis and metrics
@@ -492,6 +546,7 @@ fn total_cells_equals_sum_of_components(grid: Grid<char>) -> bool {
 - [[grid-traversal-patterns]] - Common grid scanning approaches
 
 ### **External Resources**
+
 - [[mission-6]] (or [[m6]]): Complete flood fill implementation with multiple algorithms
 - [[daily-study/Day24]] (or [[ds-day24]]): Visual demonstrations and complete runnable examples
 - **Competitive Programming**: Graph theory and connectivity problems

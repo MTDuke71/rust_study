@@ -11,6 +11,7 @@ The A* (A-star) algorithm is an informed search algorithm that finds the shortes
 A* uses the evaluation function: **f(n) = g(n) + h(n)**
 
 Where:
+
 - **g(n)**: Actual cost from start to current node
 - **h(n)**: Heuristic estimate from current node to goal  
 - **f(n)**: Total estimated cost of path through current node
@@ -18,12 +19,16 @@ Where:
 ## Key Properties
 
 ### Admissible Heuristic
+
 A heuristic is **admissible** if it never overestimates the true cost to reach the goal:
+
 - `h(n) ≤ h*(n)` where h*(n) is the true cost
 - Ensures A* finds the optimal solution
 
 ### Consistent Heuristic  
+
 A heuristic is **consistent** if:
+
 - `h(n) ≤ c(n, n') + h(n')` for all neighbors n' of n
 - Where c(n, n') is the cost of moving from n to n'
 - Implies the heuristic is admissible and improves efficiency
@@ -31,6 +36,7 @@ A heuristic is **consistent** if:
 ## Common Heuristics for Grids
 
 ### [[Euclidean Distance]] (Straight-line)
+
 ```rust
 fn euclidean_distance(a: TutorialCoord, b: TutorialCoord) -> f64 {
     let dx = (a.x as f64) - (b.x as f64);
@@ -38,11 +44,13 @@ fn euclidean_distance(a: TutorialCoord, b: TutorialCoord) -> f64 {
     (dx * dx + dy * dy).sqrt()
 }
 ```
+
 - **Best for**: Open spaces, 8-directional movement
 - **Properties**: Admissible, consistent
 - **Performance**: More accurate but computationally expensive
 
 ### [[Manhattan Distance]]
+
 ```rust
 fn manhattan_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
     let dx = a.x.abs_diff(b.x);
@@ -50,11 +58,13 @@ fn manhattan_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
     dx + dy
 }
 ```
+
 - **Best for**: Grid-based games, 4-directional movement
 - **Properties**: Admissible, consistent
 - **Performance**: Fast computation, good for most grid problems
 
 ### [[Chebyshev Distance]]
+
 ```rust
 fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
     let dx = a.x.abs_diff(b.x);
@@ -62,6 +72,7 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
     dx.max(dy)
 }
 ```
+
 - **Best for**: 8-directional movement, diagonal paths
 - **Properties**: Admissible, consistent
 - **Performance**: Fast, good for diagonal movement
@@ -100,6 +111,7 @@ fn chebyshev_distance(a: TutorialCoord, b: TutorialCoord) -> usize {
 ## Rust Implementation Considerations
 
 ### Priority Queue
+
 ```rust
 use std::collections::BinaryHeap;
 use std::cmp::Reverse;
@@ -110,6 +122,7 @@ open_set.push(Reverse((f_score, node)));
 ```
 
 ### Path Reconstruction
+
 ```rust
 fn reconstruct_path(came_from: &HashMap<TutorialCoord, TutorialCoord>, 
                    current: TutorialCoord) -> Vec<TutorialCoord> {
@@ -127,6 +140,7 @@ fn reconstruct_path(came_from: &HashMap<TutorialCoord, TutorialCoord>,
 ```
 
 ### Grid-Specific Optimizations
+
 ```rust
 // Pre-compute neighbors for each position
 fn get_neighbors_8(coord: TutorialCoord, width: usize, height: usize) -> Vec<TutorialCoord> {
@@ -151,15 +165,18 @@ fn get_neighbors_8(coord: TutorialCoord, width: usize, height: usize) -> Vec<Tut
 ## Performance Characteristics
 
 ### Time Complexity
+
 - **Best Case**: O(b^d) where b is branching factor, d is depth
 - **Worst Case**: O(b^d) - same as breadth-first search
 - **With good heuristic**: Significantly better than BFS
 
 ### Space Complexity
+
 - **O(b^d)** for storing the search tree
-- Can be optimized with iterative deepening A* (IDA*)
+- Can be optimized with iterative deepening A*(IDA*)
 
 ### Optimization Tips
+
 1. **Use consistent heuristics** for better performance
 2. **Pre-compute neighbor lists** to avoid repeated calculations
 3. **Use efficient data structures** (BinaryHeap for priority queue)
@@ -179,6 +196,7 @@ fn get_neighbors_8(coord: TutorialCoord, width: usize, height: usize) -> Vec<Tut
 When implementing A* for Mission 6:
 
 ### Grid Integration
+
 ```rust
 impl<T> TutorialGrid<T> {
     pub fn find_path_astar<F>(
@@ -197,6 +215,7 @@ impl<T> TutorialGrid<T> {
 ```
 
 ### AoC Problem Patterns
+
 - **Day 15**: Pathfinding in caves with risk values
 - **Day 17**: Shortest path with movement constraints  
 - **Day 23**: Navigation with complex movement rules
@@ -205,16 +224,19 @@ impl<T> TutorialGrid<T> {
 ## Advanced Topics
 
 ### Weighted A*
+
 - Modify heuristic: `h'(n) = w * h(n)` where w > 1
 - Trades optimality for speed
 - Useful for real-time pathfinding
 
 ### Hierarchical A*
+
 - Pre-compute paths at different abstraction levels
 - Dramatically faster for large maps
 - Used in commercial games
 
 ### Jump Point Search
+
 - Optimization for uniform-cost grids
 - Skips redundant nodes in open areas
 - Significant speedup for sparse grids
@@ -222,6 +244,7 @@ impl<T> TutorialGrid<T> {
 ## Testing Strategy
 
 ### Unit Tests
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -258,6 +281,7 @@ mod tests {
 ```
 
 ### Performance Tests
+
 ```rust
 #[cfg(test)]
 mod bench_tests {
@@ -282,8 +306,8 @@ mod bench_tests {
 
 ## Resources
 
-- **Algorithm Visualization**: https://www.redblobgames.com/pathfinding/a-star/introduction.html
-- **Interactive Demo**: https://qiao.github.io/PathFinding.js/visual/
+- **Algorithm Visualization**: <https://www.redblobgames.com/pathfinding/a-star/introduction.html>
+- **Interactive Demo**: <https://qiao.github.io/PathFinding.js/visual/>
 - **Academic Paper**: "A Formal Basis for the Heuristic Determination of Minimum Cost Paths" (Hart, Nilsson, Raphael, 1968)
 
 ## Mission 6 Checklist

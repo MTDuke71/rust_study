@@ -21,11 +21,13 @@ Evidence-based learning habits from cognitive science, optimized for software de
 **Goal:** Strengthen memory circuits through active recall
 
 ### Why It Works
+
 Recalling information from memory forces the brain to reconstruct knowledge pathways, strengthening neural connections. Rereading creates false familiarity without building retrieval strength.
 
 ### Daily Micro-Routine
 
 **Checkpoint Tasks:**
+
 - [ ] List 3 concepts you *nearly* forgot yesterday (e.g., lifetimes, DFS, `async/await`)
 - [ ] For each concept, **explain from memory** in 3-5 bullet points (no looking!)
 - [ ] Write a 60-second code sketch demonstrating the concept (no copy/paste)
@@ -48,10 +50,12 @@ Recalling information from memory forces the brain to reconstruct knowledge path
 // Your minimal working example
 ```
 
-### One gotcha:
-- 
+### One gotcha
+
+-
 
 ### Verification date: YYYY-MM-DD
+
 ```
 
 ### Rust-Specific Examples
@@ -95,6 +99,7 @@ The brain consolidates information during sleep and rest periods. Reviewing at i
 ```
 
 **High-Tech (Anki/RemNote):**
+
 - Use pre-built decks or create custom cards
 - Add code snippets as images or markdown
 - Tag by topic (e.g., #rust #algorithms #patterns)
@@ -102,16 +107,19 @@ The brain consolidates information during sleep and rest periods. Reviewing at i
 ### Card Prompt Examples
 
 **Concept Cards:**
+
 - "Implement recursive in-order traversal from scratch"
 - "What's the difference between `&str` and `String`? Give 2 code examples"
 - "Explain the borrow checker's three rules with counterexamples"
 
 **Pattern Recognition Cards:**
+
 - "When is `Vec<T>` better than `&[T]`? List 3 scenarios"
 - "Identify the graph problem: [scenario description]"
 - "Why use `Rc<RefCell<T>>` vs `Arc<Mutex<T>>`?"
 
 **Proof/Verification Cards:**
+
 - "Prove why binary search invariants prevent off-by-one errors"
 - "Show how Rust's type system prevents data races at compile time"
 
@@ -123,6 +131,7 @@ The brain consolidates information during sleep and rest periods. Reviewing at i
 **Goal:** Reduce cognitive load while building independent problem-solving
 
 ### Why It Works
+
 Cognitive load theory shows that beginners benefit from worked examples (full solutions with explanations), then gradually removing scaffolding (faded examples), finally solving independently (bare problems). This prevents overwhelm while building competence.
 
 ### Three-Phase Protocol
@@ -132,6 +141,7 @@ Cognitive load theory shows that beginners benefit from worked examples (full so
 **Task:** Read a clean, annotated solution
 
 **Annotation Rubric:**
+
 - [ ] Problem specification in 1 sentence
 - [ ] Identify the key invariant/algorithm pattern
 - [ ] Mark potential pitfalls (off-by-one, aliasing, panics)
@@ -139,6 +149,7 @@ Cognitive load theory shows that beginners benefit from worked examples (full so
 - [ ] Sketch a property-based test approach
 
 **Example WE Annotation:**
+
 ```rust
 // Problem: Find first occurrence of target in sorted array
 // Invariant: target is in [left, right] if it exists
@@ -166,6 +177,7 @@ fn binary_search(arr: &[i32], target: i32) -> Option<usize> {
 **Task:** Fill in blanks (30-50% of solution hidden)
 
 **Example FE:**
+
 ```rust
 fn binary_search(arr: &[i32], target: i32) -> Option<usize> {
     let mut left = 0;
@@ -189,6 +201,7 @@ fn binary_search(arr: &[i32], target: i32) -> Option<usize> {
 **Task:** Solve from scratch, then diff against trusted solution
 
 **Process:**
+
 1. Write solution without looking
 2. Run tests to verify correctness
 3. Compare against reference implementation
@@ -229,17 +242,18 @@ fn binary_search(arr: &[i32], target: i32) -> Option<usize> {
 **Goal:** Transform mistakes into learning assets
 
 ### Why It Works
+
 Errors contain high-signal information about mental models and knowledge gaps. By systematically cataloging and drilling errors, you prevent repeated mistakes and build robust debugging skills.
 
 ### Error Bank Table Structure
 
 Create `error_bank.md` or use a spreadsheet:
 
-| Date       | Language | Symptom                           | Root Cause                    | Fast Repro (≤10 lines)           | Prevention Rule                     | Tags           |
-| ---------- | -------- | --------------------------------- | ----------------------------- | -------------------------------- | ----------------------------------- | -------------- |
-| 2025-10-10 | Rust     | "cannot move out of borrowed"     | Moved `String` after borrowing| `let s = &String; drop(s.clone())` | "Clone before move or use `&str`"   | #ownership     |
-| 2025-10-09 | Rust     | "lifetime mismatch in closure"    | Captured ref outlived owner   | `|| &local_var` in long-lived fn | "Use `move` or extend lifetimes"    | #lifetimes     |
-| 2025-10-08 | Python   | `KeyError` in dict access         | Assumed key existed           | `d['missing']`                   | "Use `.get()` or check `in d`"      | #error-handling|
+| Date       | Language | Symptom                        | Root Cause                     | Fast Repro                       | Prevention Rule                   | Tags            |
+| ---------- | -------- | ------------------------------ | ------------------------------ | -------------------------------- | --------------------------------- | --------------- |
+| 2025-10-10 | Rust     | cannot move out of borrowed    | Moved String after borrowing   | `let s = &String; drop(s.clone())` | Clone before move or use &str   | #ownership      |
+| 2025-10-09 | Rust     | lifetime mismatch in closure   | Captured ref outlived owner    | `\|\| &local_var` in long-lived fn | Use move or extend lifetimes    | #lifetimes      |
+| 2025-10-08 | Python   | KeyError in dict access        | Assumed key existed            | `d['missing']`                   | Use .get() or check in d        | #error-handling |
 
 ### Bug Drill Protocol
 
@@ -287,6 +301,7 @@ fn fix2_scope() {
 Keep this in your IDE or print it:
 
 **Before Committing:**
+
 - [ ] Variable names reflect invariants (e.g., `sorted_vec`, `valid_count`)
 - [ ] Panics only at truly impossible states (use `expect()` with clear messages)
 - [ ] Tests cover: happy path + boundary conditions + edge cases
@@ -301,6 +316,7 @@ Keep this in your IDE or print it:
 **Goal:** Optimize your learning process itself
 
 ### Why It Works
+
 Metacognition (thinking about thinking) helps identify what learning strategies work best *for you*. Regular reflection accelerates improvement by surfacing patterns and blind spots.
 
 ### Daily Exit Ticket (5 min)
@@ -363,67 +379,82 @@ Metacognition (thinking about thinking) helps identify what learning strategies 
 ### Day 1 (Monday) - Foundation
 
 **Morning (10 min):**
+
 - [ ] Create 3 retrieval cards on Topic A (e.g., Rust ownership)
 - [ ] Schedule in spaced repetition system
 
 **Afternoon (30 min):**
+
 - [ ] Work through one WE→FE→BP cycle on small algorithm (binary search)
 - [ ] Log one generalizable pattern
 
 **Evening (10 min):**
+
 - [ ] Add 1 entry to error bank from today's mistakes
 - [ ] Daily exit ticket
 
 ### Day 2 (Tuesday) - Reinforcement
 
 **Morning (10 min):**
+
 - [ ] Review Day 1 cards (1→3 spacing)
 - [ ] Add 2 new cards on Topic A
 
 **Afternoon (25 min):**
+
 - [ ] Tiny project using Topic A with 10-line test
 - [ ] Document one bug and prevention rule
 
 **Evening (5 min):**
+
 - [ ] Exit ticket
 
 ### Day 3 (Wednesday) - Expansion
 
 **Morning (10 min):**
+
 - [ ] Create 2 cards on Topic B (e.g., graph algorithms)
 - [ ] Review old cards due today
 
 **Afternoon (30 min):**
+
 - [ ] FE→BP cycle on parsing/string handling
 - [ ] Add prevention rule to checklist
 
 **Evening (5 min):**
+
 - [ ] Exit ticket
 
 ### Day 4 (Thursday) - Integration
 
 **Morning (10 min):**
+
 - [ ] Review cards due today
 - [ ] Create 1 integration card (Topics A + B)
 
 **Afternoon (35 min):**
+
 - [ ] Solve problem interleaving A + B
 - [ ] Note where you slow down (knowledge gaps)
 
 **Evening (5 min):**
+
 - [ ] Exit ticket
 
 ### Day 5 (Friday) - Assessment + Reflection
 
 **Morning (10 min):**
+
 - [ ] Review cards due today
 
 **Afternoon (30 min):**
+
 - [ ] Bare problem from scratch (no guidance)
 - [ ] Diff against reference solution
 - [ ] Document learning deltas
 
 **Evening (15 min):**
+
 - [ ] Weekly retrospective
 - [ ] Adjust next week's deck and drill focus
 
@@ -434,11 +465,13 @@ Metacognition (thinking about thinking) helps identify what learning strategies 
 ### Ultra-Light Setup (Zero Friction)
 
 **Files needed:**
+
 1. `cheatsheet.md` - This document
 2. `cards.md` - Spaced repetition cards with due dates
 3. `error_bank.md` - Bug catalog table
 
 **Daily workflow:**
+
 1. Check `cards.md` for today's reviews
 2. Do retrieval practice in scratch file
 3. Add new cards/errors to respective files
@@ -447,36 +480,40 @@ Metacognition (thinking about thinking) helps identify what learning strategies 
 ### Moderate Setup (Balanced)
 
 **Tools:**
+
 - **Anki** or **RemNote** for spaced repetition
 - `~/code/learning/error_bank/` folder with snippets
 - Simple markdown journal for daily logs
 
 **Automation:**
+
 - Git aliases: `git learning-log` opens today's log
 - Snippet templates in IDE for recall cards
 
 ### Full Send Setup (Maximum ROI)
 
 **Tools:**
+
 - Anki with custom card types (code blocks, syntax highlighting)
 - `Makefile` with `make drills` target to run bug snippets
 - Pre-commit hooks to run checklist
 - Weekly cron job to remind retrospective
 
 **Example Makefile:**
+
 ```makefile
 .PHONY: drills review log
 
 drills:
-	@echo "Running bug drills..."
-	@cargo test --quiet bug_drills::
+ @echo "Running bug drills..."
+ @cargo test --quiet bug_drills::
 
 review:
-	@echo "Opening spaced repetition..."
-	@open anki://
+ @echo "Opening spaced repetition..."
+ @open anki://
 
 log:
-	@code ~/learning/$(shell date +%Y-%m-%d).md
+ @code ~/learning/$(shell date +%Y-%m-%d).md
 ```
 
 ---
@@ -484,6 +521,7 @@ log:
 ## Mentoring & Pairing Add-Ons
 
 ### Solo Enhancement
+
 - **Rubber duck debugging:** Narrate your thought process out loud
 - **Pattern recognition practice:** Label problem types before solving
 - **Deliberate struggle:** Time-box hard problems (Pomodoro technique)
@@ -491,11 +529,13 @@ log:
 ### Pair Programming Integration
 
 **During Pairing:**
+
 - [ ] Narrate pattern recognition ("This looks like a graph problem because...")
 - [ ] Swap WE/FE/BP roles (driver reads WE, navigator solves FE)
 - [ ] Share error banks; discuss prevention strategies
 
 **Team Practices:**
+
 - [ ] Weekly "bug postmortem" sessions (celebrate good error analysis)
 - [ ] Shared error bank repository (team knowledge base)
 - [ ] Spaced repetition on team patterns/conventions
@@ -536,26 +576,31 @@ log:
 ### Topic Rotation Schedule
 
 **Week 1-2:** Ownership & Borrowing
+
 - Retrieval: Explain borrow checker rules
 - WE→FE→BP: Lifetime annotation exercises
 - Error bank: Common borrowing mistakes
 
 **Week 3-4:** Collections & Iterators
+
 - Retrieval: Vec vs slice vs array trade-offs
 - WE→FE→BP: Iterator transformation chains
 - Error bank: Off-by-one errors, mutation while iterating
 
 **Week 5-6:** Traits & Generics
+
 - Retrieval: When to use `impl Trait` vs `dyn Trait`
 - WE→FE→BP: Implementing custom traits
 - Error bank: Trait bound errors, orphan rule violations
 
 **Week 7-8:** Error Handling
+
 - Retrieval: `Result` vs `Option` vs `panic!`
 - WE→FE→BP: Error propagation with `?` operator
 - Error bank: Unwrap abuse, missing error context
 
 **Week 9-10:** Concurrency
+
 - Retrieval: `Send` vs `Sync` marker traits
 - WE→FE→BP: Channel patterns, `Arc<Mutex<T>>` usage
 - Error bank: Data races caught by type system
@@ -572,18 +617,21 @@ log:
 ## Success Metrics
 
 ### Leading Indicators (Track Weekly)
+
 - Number of cards reviewed consistently
 - Error bank entries with prevention rules
 - Completed WE→FE→BP cycles
 - Daily exit tickets filled out
 
 ### Lagging Indicators (Track Monthly)
+
 - Time to solve similar problems (decreasing)
 - Mistakes repeated from error bank (decreasing)
 - Comfort with new concepts (self-rated 1-10)
 - Project completion velocity (increasing)
 
 ### Adjustment Triggers
+
 - **Too many failed cards:** Add more worked examples
 - **Too easy:** Increase problem difficulty, expand spacing
 - **Taking too long:** Reduce scope, focus on fundamentals
@@ -594,18 +642,23 @@ log:
 ## Common Pitfalls & Solutions
 
 ### Pitfall 1: "I don't have time"
+
 **Solution:** Start with 15 minutes (Habit 1 only). Consistency beats volume.
 
 ### Pitfall 2: "My cards are too hard/easy"
+
 **Solution:** Calibrate difficulty in weekly retro. Use FE phase as bridge.
 
 ### Pitfall 3: "I forget to do my reviews"
+
 **Solution:** Calendar reminders, habit stacking (after morning coffee), accountability partner.
 
 ### Pitfall 4: "This feels like busywork"
+
 **Solution:** Measure outcomes (problem-solving speed, bug reduction). If not improving after 1 month, adjust.
 
 ### Pitfall 5: "I'm just memorizing, not understanding"
+
 **Solution:** Focus more on WE→FE→BP (understanding) vs raw flashcards. Add "explain why" to retrieval prompts.
 
 ---
@@ -613,17 +666,20 @@ log:
 ## References & Further Reading
 
 ### Primary Source
+
 - **"10 Things Software Developers Should Learn about Learning"**  
   Neil Brown, Felienne Hermans, Lauren Margulieux  
   [Link to paper/article if available]
 
 ### Supporting Research
+
 - **Cognitive Load Theory:** Sweller et al.
 - **Spacing Effect:** Ebbinghaus forgetting curve
 - **Deliberate Practice:** Ericsson & Pool
 - **Testing Effect:** Roediger & Karpicke
 
 ### Tools Mentioned
+
 - **Anki:** Open-source spaced repetition software
 - **RemNote:** Note-taking + spaced repetition
 - **Obsidian:** Markdown-based note system (Zettelkasten)
@@ -637,6 +693,7 @@ log:
 ---
 
 **Next Actions:**
+
 - [ ] Set up initial card deck (10 cards minimum)
 - [ ] Create `error_bank.md` file
 - [ ] Print reminder card and tape to monitor

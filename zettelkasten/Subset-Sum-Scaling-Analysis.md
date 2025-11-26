@@ -17,9 +17,11 @@ The **subset sum problem** asks: given a set of integers, find all subsets that 
 ## Computational Complexity Analysis
 
 ### **Problem Statement**
+
 Given `n` containers with capacities and a target volume, count how many distinct combinations sum to exactly the target.
 
 ### **Brute Force Complexity**
+
 ```rust
 // Time complexity breakdown:
 // - Each combination: O(n) work to sum values
@@ -66,6 +68,7 @@ Assumes ~1 billion simple operations per second on modern hardware:
 ## Why Exponential Algorithms Break Down
 
 ### **1. Exponential Growth (Doubling Effect)**
+
 ```rust
 // Each additional container DOUBLES the search space
 n = 20: 2^20 = 1,048,576
@@ -77,6 +80,7 @@ n = 30: 2^30 = 1,073,741,824  // 1024x more than n=20!
 **Impact**: Adding 10 containers increases runtime by ~1000x
 
 ### **2. Memory Constraints (When Storing Combinations)**
+
 ```rust
 // If storing ALL combinations (needed for Part 2 analysis):
 // For n=30 with average 15 containers per combo:
@@ -92,6 +96,7 @@ fn find_all_combinations(containers: &[usize], target: usize) -> Vec<Vec<usize>>
 ```
 
 ### **3. CPU Cache Misses**
+
 ```rust
 // At large n, working set doesn't fit in CPU cache
 // Cache miss penalty: ~100 cycles vs ~1 cycle for cache hit
@@ -168,12 +173,14 @@ fn precompute_suffix_sums(containers: &[usize]) -> Vec<usize> {
 ```
 
 **Benefits**:
+
 - Eliminates entire subtrees that can't possibly succeed
 - No change to algorithm correctness
 - Simple to implement
 - Typical speedup: 2-5x
 
 **Limitations**:
+
 - Still exponential time complexity
 - Pruning effectiveness depends on input distribution
 - Only extends feasibility by ~5 containers
@@ -187,6 +194,7 @@ fn precompute_suffix_sums(containers: &[usize]) -> Vec<usize> {
 ### **Impact Analysis by Algorithm**
 
 #### **1. Brute Force Recursive (No Sorting Needed)**
+
 ```rust
 // Baseline: no sorting
 fn count_combinations(containers: &[usize], target: usize) -> usize {
@@ -199,6 +207,7 @@ fn count_combinations(containers: &[usize], target: usize) -> usize {
 **Cost**: O(n log n) sorting overhead for zero gain
 
 #### **2. Brute Force with Pruning (Sort DESCENDING = Better)**
+
 ```rust
 // Sort largest first for better pruning
 fn count_combinations_pruned_sorted(containers: &[usize], target: usize) -> usize {
@@ -212,11 +221,13 @@ fn count_combinations_pruned_sorted(containers: &[usize], target: usize) -> usiz
 
 **Impact**: ✅ **2-5x speedup** from better pruning  
 **Why it works**:
+
 - Large containers eliminate more possibilities early
 - If `containers[0] > target`, immediately skip include branch
 - Earlier detection of "sum too large" conditions
 
 **Example**:
+
 ```rust
 // Unsorted: [5, 5, 10, 15, 20], target = 25
 // Must explore: 20, 15, 10 branches even if sum already exceeds target
@@ -228,6 +239,7 @@ fn count_combinations_pruned_sorted(containers: &[usize], target: usize) -> usiz
 ```
 
 #### **3. Dynamic Programming (Sorting = NO BENEFIT)**
+
 ```rust
 // Order doesn't matter for DP
 fn count_combinations_dp(containers: &[usize], target: usize) -> usize {
@@ -248,6 +260,7 @@ fn count_combinations_dp(containers: &[usize], target: usize) -> usize {
 **Cost**: Sorting adds O(n log n) overhead unnecessarily
 
 #### **4. Meet-in-the-Middle (Sorting = NO BENEFIT)**
+
 ```rust
 // Order doesn't affect hash table lookups
 fn count_combinations_mitm(containers: &[usize], target: usize) -> usize {
@@ -265,6 +278,7 @@ fn count_combinations_mitm(containers: &[usize], target: usize) -> usize {
 **Cost**: Sorting overhead for no gain
 
 #### **5. Branch and Bound (Sort DESCENDING = CRITICAL)**
+
 ```rust
 // Sorting is ESSENTIAL for branch and bound!
 fn count_with_branch_and_bound(containers: &[usize], target: usize) -> usize {
@@ -296,6 +310,7 @@ fn count_with_branch_and_bound(containers: &[usize], target: usize) -> usize {
 
 **Impact**: ✅ **5-20x speedup** - absolutely essential!  
 **Why it's critical**:
+
 - Larger items create tighter bounds
 - Reaches "impossible" states faster
 - More aggressive pruning in upper tree levels
@@ -467,6 +482,7 @@ fn count_combinations_dp(containers: &[usize], target: usize) -> usize {
 ```
 
 **Performance Comparison**:
+
 ```rust
 // For n = 40, target = 150:
 // Brute force: 2^40 = 1,099,511,627,776 operations (12 hours)
@@ -475,18 +491,21 @@ fn count_combinations_dp(containers: &[usize], target: usize) -> usize {
 ```
 
 **Benefits**:
+
 - Polynomial time complexity
 - Handles much larger inputs (n ≤ 40+)
 - Predictable performance
 - Simple implementation
 
 **Limitations**:
+
 - Only counts combinations, doesn't enumerate them
 - Requires reasonable target value (not good for target >> 10^6)
 - Can't easily track which containers were used
 - Doesn't work for "find actual combinations" problems
 
 **When to Use**:
+
 - Part 1 type problems (counting only)
 - Target value is manageable (< 10^6)
 - Need exact count, not actual combinations
@@ -554,6 +573,7 @@ fn count_combinations_mitm(containers: &[usize], target: usize) -> usize {
 ```
 
 **Performance Analysis**:
+
 ```text
 Brute Force vs Meet-in-the-Middle:
 
@@ -563,18 +583,21 @@ n=45: 2^45 vs 2×2^22 = 35T vs 8M (4,400,000x speedup)
 ```
 
 **Benefits**:
+
 - Dramatically reduces search space
 - Still finds exact count
 - Can be adapted to enumerate combinations
 - Extends feasibility to n ≈ 45
 
 **Limitations**:
+
 - Requires O(2^(n/2)) memory for HashMap
 - More complex implementation
 - Still exponential (just better exponent)
 - Memory becomes bottleneck at n > 45
 
 **When to Use**:
+
 - 30 < n ≤ 45
 - Need exact count or actual combinations
 - Have enough memory (~100 MB for n=40)
@@ -633,18 +656,21 @@ fn count_with_branch_and_bound(containers: &[usize], target: usize) -> usize {
 ```
 
 **Benefits**:
+
 - Can handle n ≤ 50 with good input structure
 - Adapts to problem characteristics
 - Combines multiple pruning strategies
 - Best practical performance for "hard" inputs
 
 **Limitations**:
+
 - Highly input-dependent performance
 - Worst case still exponential
 - Complex to implement correctly
 - Hard to predict runtime
 
 **When to Use**:
+
 - Other methods infeasible
 - Input has structure (e.g., many large/small containers)
 - Need exact solution for n > 40
@@ -697,6 +723,7 @@ Input Size n?
 ## Practical Example: AoC 2015 Day 17
 
 ### **Problem Characteristics**
+
 - Input size: n ≈ 20 containers
 - Target: 150 liters
 - Part 1: Count combinations
@@ -720,12 +747,14 @@ pub fn solve_part1(input: &str) -> Result<String> {
 ```
 
 **Performance**:
+
 - Search space: 1,048,576 combinations
 - Operations: ~21 million
 - Runtime: 10-20 ms on modern CPU
 - Memory: ~KB for recursion stack
 
 **Why Not Optimize?**:
+
 1. **Already fast**: 20ms is instant to users
 2. **Simple code**: Easy to understand and debug
 3. **Handles Part 2**: Need actual combinations, not just count
@@ -733,6 +762,7 @@ pub fn solve_part1(input: &str) -> Result<String> {
 5. **AoC philosophy**: Brute force is acceptable for n ≤ 25
 
 **When to Optimize**:
+
 - If input grows to n > 30
 - If Part 2 requires analyzing all combinations (memory issue)
 - If runtime matters (e.g., online judge with time limits)
@@ -742,6 +772,7 @@ pub fn solve_part1(input: &str) -> Result<String> {
 ## Memory Considerations
 
 ### **Counting Only (Part 1)**
+
 ```rust
 // Memory usage: O(n) for recursion stack
 fn count_recursive(containers: &[usize], index: usize, remaining: usize) -> usize {
@@ -754,6 +785,7 @@ fn count_recursive(containers: &[usize], index: usize, remaining: usize) -> usiz
 **Scales linearly**: Even n=1000 only uses ~64 KB
 
 ### **Storing Combinations (Part 2)**
+
 ```rust
 // Memory usage: O(k × m) where k = # combinations, m = avg size
 fn find_all_combinations(containers: &[usize], target: usize) -> Vec<Vec<usize>> {
@@ -774,6 +806,7 @@ fn find_all_combinations(containers: &[usize], target: usize) -> Vec<Vec<usize>>
 ## Common Pitfalls
 
 ### **1. Underestimating Exponential Growth**
+
 ```rust
 // "It's only 10 more containers, how bad can it be?"
 n = 20: 1 million combinations (20ms)
@@ -782,6 +815,7 @@ n = 30: 1 BILLION combinations (30 seconds!)
 ```
 
 ### **2. Not Considering Memory for Combination Storage**
+
 ```rust
 // Works for n=20
 let combos = find_all_combinations(&containers, target);
@@ -791,6 +825,7 @@ let combos = find_all_combinations(&containers, target);
 ```
 
 ### **3. Using Wrong Algorithm for Input Size**
+
 ```rust
 // Using brute force for n=35
 // Runtime: 20 minutes (should use DP or MITM)
@@ -800,6 +835,7 @@ let combos = find_all_combinations(&containers, target);
 ```
 
 ### **4. Forgetting to Sort for Branch and Bound**
+
 ```rust
 // Without sorting: random pruning effectiveness
 count_with_branch_and_bound(containers, target);
@@ -855,6 +891,7 @@ fn benchmark_approaches() {
 ```
 
 **Expected Output** (for n=20):
+
 ```
 Brute Force: 4372 in 15.2ms
 With Pruning: 4372 in 7.8ms (1.9x speedup)

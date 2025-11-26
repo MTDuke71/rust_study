@@ -80,6 +80,7 @@ println!("{}", map[&String::from("name")]);  // "Alice Smith"
 ```
 
 **What Happens:**
+
 1. `get_mut()` returns `Option<&mut String>` - mutable reference to the **owned** String
 2. You can modify the String because HashMap owns it
 3. Changes persist in the HashMap
@@ -158,6 +159,7 @@ let mut map: HashMap<&str, &String> = HashMap::new();
 ```
 
 **Compiler Error:**
+
 ```
 error[E0597]: `value` does not live long enough
   --> src/main.rs:5:24
@@ -283,6 +285,7 @@ if let Some(v1) = map.get_mut(&"first") {
 ### **When Mutable References Make Sense**
 
 Very specialized scenarios where you need:
+
 1. External ownership of data
 2. Temporary mutation through map
 3. Single-access pattern (one at a time)
@@ -322,6 +325,7 @@ map.insert("key", &value);
 ```
 
 **Trade-off:**
+
 - **References**: Less memory in map (just pointers)
 - **Ownership**: More memory, but simpler lifetime management
 
@@ -392,6 +396,7 @@ Heap:           ↓
 ```
 
 **Types That Implement Copy:**
+
 - All integer types (`i32`, `u64`, etc.)
 - Floating point types (`f32`, `f64`)
 - `bool`, `char`
@@ -534,6 +539,7 @@ let mut map: HashMap<String, String> = HashMap::new();
 ## 🎯 Decision Guide
 
 **Use Owned Values (`T`) When:**
+
 - ✅ HashMap should control lifetime
 - ✅ Need to modify values through map
 - ✅ Passing HashMap between functions
@@ -541,6 +547,7 @@ let mut map: HashMap<String, String> = HashMap::new();
 - ✅ Default choice (simplest)
 
 **Use Immutable References (`&T`) When:**
+
 - ✅ Data outlives the map
 - ✅ Creating temporary indexes
 - ✅ Read-only aggregations
@@ -548,12 +555,14 @@ let mut map: HashMap<String, String> = HashMap::new();
 - ⚠️ Comfortable with lifetime annotations
 
 **Use Mutable References (`&mut T`) When:**
+
 - ⚠️ Rarely - very specialized scenarios
 - ⚠️ External ownership required
 - ⚠️ Single-access mutation pattern
 - ❌ Not recommended for beginners
 
 **Use Copy Types When:**
+
 - ✅ Dealing with primitives (integers, bools)
 - ✅ Small, cheap-to-copy data
 - ✅ Want to keep original and copy in map
@@ -618,6 +627,7 @@ fn test_copy_types() {
 When implementing your own HashMap:
 
 **Type Parameters:**
+
 ```rust
 pub struct MyHashMap<K, V> {
     buckets: Vec<Vec<(K, V)>>,  // Stores OWNED keys and values
@@ -631,6 +641,7 @@ pub struct MyHashMap<'a, K, V> {
 ```
 
 **Implementation Choice:**
+
 - **Recommended**: Store owned values `(K, V)` for simplicity
 - **Advanced**: Support references with lifetime parameters
 - **Most Flexible**: Generic over storage strategy (like std::HashMap with `S: BuildHasher`)
@@ -644,6 +655,7 @@ pub struct MyHashMap<'a, K, V> {
 *Links: [[zettel-index]] | [[ownership]] | [[Borrow Checker Fundamentals]] | [[lifetimes]] | [[mission-5]] | [[entry-api-hashmap]] | [[rust-book-ch8]] | [[copy-trait]]*
 
 *Related Concepts:*
+
 - [[ownership]] - Fundamental ownership system
 - [[Borrow Checker Fundamentals]] - Reference rules and constraints
 - [[lifetimes]] - Reference lifetime annotations
@@ -652,12 +664,14 @@ pub struct MyHashMap<'a, K, V> {
 - [[hashmap-internals]] - Internal implementation details
 
 *Related Daily Study:*
+
 - [[daily-study/Day02]] - Ownership basics
 - [[daily-study/Day03]] - Borrowing and references
 - [[daily-study/Day04]] - Lifetime fundamentals
 - [[daily-study/Day10]] - HashMap operations
 
 *Practical Applications:*
+
 - Configuration storage (owned values)
 - Temporary indexes (immutable references)
 - Data aggregation (owned or references depending on use case)

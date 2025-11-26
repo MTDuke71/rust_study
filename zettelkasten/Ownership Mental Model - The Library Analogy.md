@@ -103,6 +103,7 @@ println!("{}, {}", page, page_copy);  // ✅ Both work - it was copied
 **Why the Reading/Editing Pass System Exists**
 
 If you could have multiple editors simultaneously:
+
 - One editor might be reading while another is resizing
 - Memory could be freed while someone is still reading
 - Classic data race conditions
@@ -194,6 +195,7 @@ impl<T> Stack<T> {
 ```
 
 **Usage:**
+
 ```rust
 let mut stack = Stack::new();
 stack.push(String::from("Book1"));  // Transfer ownership to stack
@@ -235,6 +237,7 @@ fn process(data: &mut Vec<i32>) {
 **Question:** How do you fix this?
 
 **Answer:** Copy or clone the value before mutation:
+
 ```rust
 fn process(data: &mut Vec<i32>) {
     let first = data[0];  // Copy the i32 (it's Copy type)

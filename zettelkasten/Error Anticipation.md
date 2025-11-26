@@ -31,6 +31,7 @@ Learning Effectiveness
 ```
 
 **Error Anticipation Goal**: Keep learners in the productive struggle zone by:
+
 1. Warning about common pitfalls **before** they occur
 2. Providing **context** for why errors happen
 3. Offering **concrete fixes** with explanations
@@ -61,11 +62,13 @@ fn broken_example() {
 ```
 
 **Compiler Error**:
+
 ```
 error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immutable
 ```
 
 **Why This Fails**:
+
 1. `first` holds a reference to data inside `v`
 2. `push()` may reallocate the Vec, invalidating all references
 3. Using `first` after reallocation = use-after-free (memory safety violation!)
@@ -74,6 +77,7 @@ error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immuta
 **Mental Model**: References "lock" the data they point to. Mutable operations need exclusive access.
 
 **How to Fix - Option 1: Limit reference scope**:
+
 ```rust
 fn fixed_scope() {
     let mut v = vec![1, 2, 3];
@@ -88,6 +92,7 @@ fn fixed_scope() {
 ```
 
 **How to Fix - Option 2: Copy the value**:
+
 ```rust
 fn fixed_copy() {
     let mut v = vec![1, 2, 3];
@@ -99,6 +104,7 @@ fn fixed_copy() {
 ```
 
 **How to Fix - Option 3: Restructure logic**:
+
 ```rust
 fn fixed_restructure() {
     let mut v = vec![1, 2, 3];
@@ -110,6 +116,7 @@ fn fixed_restructure() {
 ```
 
 **When You'll See This**: HashMap iteration with concurrent modification, Vec iteration with insertion/removal, any time you mix reads and writes.
+
 ```
 
 ---
@@ -133,11 +140,13 @@ fn broken_move() {
 ```
 
 **Compiler Error**:
+
 ```
 error[E0382]: borrow of moved value: `s`
 ```
 
 **Why This Fails**:
+
 1. `String` doesn't implement `Copy` (heap-allocated data)
 2. `push()` takes ownership: `fn push(&mut self, value: T)`
 3. After move, `s` is invalid (prevents double-free)
@@ -146,6 +155,7 @@ error[E0382]: borrow of moved value: `s`
 **Mental Model**: Ownership is like a relay baton - only one runner holds it at a time.
 
 **How to Fix - Option 1: Clone if you need both**:
+
 ```rust
 fn fixed_clone() {
     let s = String::from("hello");
@@ -157,6 +167,7 @@ fn fixed_clone() {
 ```
 
 **How to Fix - Option 2: Use references**:
+
 ```rust
 fn fixed_borrow() {
     let s = String::from("hello");
@@ -168,6 +179,7 @@ fn fixed_borrow() {
 ```
 
 **How to Fix - Option 3: Reorder operations**:
+
 ```rust
 fn fixed_reorder() {
     let s = String::from("hello");
@@ -179,11 +191,13 @@ fn fixed_reorder() {
 ```
 
 **Trade-offs**:
+
 - **Clone**: Simple but allocates memory (O(n) for String)
 - **Borrow**: Efficient but introduces lifetime constraints
 - **Reorder**: Free but not always possible
 
 **When You'll See This**: Inserting into collections, returning values from functions, passing to closures that capture by value.
+
 ```
 
 ---
@@ -210,11 +224,13 @@ fn iterator_confusion() {
 ```
 
 **Compiler Error**:
+
 ```
 error[E0277]: cannot multiply `&i32` by `i32`
 ```
 
 **Why This Fails**:
+
 - `iter()` yields `&T` (references to elements)
 - `map(|x| ...)` receives `x: &i32`
 - `x * 2` tries to multiply reference by value
@@ -228,6 +244,7 @@ error[E0277]: cannot multiply `&i32` by `i32`
 | `.into_iter()` | `T` | Consume elements | Consumes Vec |
 
 **How to Fix - Option 1: Dereference**:
+
 ```rust
 fn fixed_deref() {
     let v = vec![1, 2, 3];
@@ -239,6 +256,7 @@ fn fixed_deref() {
 ```
 
 **How to Fix - Option 2: Use into_iter()**:
+
 ```rust
 fn fixed_into_iter() {
     let v = vec![1, 2, 3];
@@ -250,6 +268,7 @@ fn fixed_into_iter() {
 ```
 
 **How to Fix - Option 3: Reference-aware closure**:
+
 ```rust
 fn fixed_reference_aware() {
     let v = vec![1, 2, 3];
@@ -260,6 +279,7 @@ fn fixed_reference_aware() {
 ```
 
 **When You'll See This**: Any iterator operation (map, filter, fold), collecting results, working with collections.
+
 ```
 
 ---
@@ -285,11 +305,13 @@ fn broken_lifetime(s1: &str, s2: &str) -> &str {
 ```
 
 **Compiler Error**:
+
 ```
 error[E0106]: missing lifetime specifier
 ```
 
 **Why This Fails**:
+
 - Function returns a reference (`&str`)
 - Compiler doesn't know if return is tied to `s1` or `s2` lifetime
 - Can't verify reference validity without this information
@@ -297,6 +319,7 @@ error[E0106]: missing lifetime specifier
 **Mental Model**: Lifetime annotations tell the compiler **which input reference** the output is tied to.
 
 **How to Fix - Add explicit lifetime**:
+
 ```rust
 fn fixed_lifetime<'a>(s1: &'a str, s2: &'a str) -> &'a str {
     if s1.len() > s2.len() {
@@ -308,6 +331,7 @@ fn fixed_lifetime<'a>(s1: &'a str, s2: &'a str) -> &'a str {
 ```
 
 **Reading the Signature**:
+
 - `<'a>`: Declares a lifetime parameter named `'a`
 - `s1: &'a str`: `s1` is a reference that lives for `'a`
 - `-> &'a str`: Return value lives as long as `'a`
@@ -333,6 +357,7 @@ struct Excerpt<'a> {
 ```
 
 **When You'll See This**: Returning references from functions, structs holding references, complex ownership patterns.
+
 ```
 
 ---
@@ -350,11 +375,13 @@ struct Excerpt<'a> {
 ```
 
 **Compiler Error** (or **Runtime Behavior**):
+
 ```
 [Exact error message or unexpected output]
 ```
 
 **Why This Fails**:
+
 1. [Root cause explanation - step by step]
 2. [Memory/safety implications]
 3. [Rust's reasoning for preventing this]
@@ -362,22 +389,27 @@ struct Excerpt<'a> {
 **Mental Model**: [Analogy or conceptual framework]
 
 **How to Fix - Option 1: [Approach Name]**:
+
 ```rust
 // Fixed code with inline comments
 ```
+
 - **Pros**: [Benefits]
 - **Cons**: [Trade-offs]
 
 **How to Fix - Option 2: [Alternative Approach]**:
+
 ```rust
 // Alternative solution
 ```
+
 - **Pros**: [Benefits]
 - **Cons**: [Trade-offs]
 
 **When You'll See This**: [Context where error commonly appears]
 
 **Related Errors**: [Links to similar patterns]
+
 ```
 
 ---
@@ -400,6 +432,7 @@ let value = stack.pop().unwrap();  // ❌ Panics if empty!
 **Why This Fails**: `pop()` returns `Option<T>`, which is `None` when empty. `unwrap()` panics on `None`.
 
 **Better Approaches**:
+
 ```rust
 // Option 1: Handle None explicitly
 if let Some(value) = stack.pop() {
@@ -417,6 +450,7 @@ fn process_stack(stack: &mut Stack<i32>) -> Option<i32> {
     Some(value * 2)
 }
 ```
+
 ```
 
 ---
@@ -446,11 +480,13 @@ impl<T> Queue<T> {
 ```
 
 **Why This Is Bad**:
+
 - `remove(0)` shifts all remaining elements left
 - 10,000 dequeues = **O(n²) total complexity**
 - Benchmark: ~50ms vs VecDeque's ~0.5ms (100x slower!)
 
 **Proof**:
+
 ```rust
 #[test]
 fn benchmark_vec_vs_vecdeque() {
@@ -480,6 +516,7 @@ fn benchmark_vec_vs_vecdeque() {
 ```
 
 **Correct Solution**:
+
 ```rust
 use std::collections::VecDeque;
 
@@ -493,6 +530,7 @@ impl<T> Queue<T> {
     }
 }
 ```
+
 ```
 
 ---
@@ -521,16 +559,19 @@ fn main() {
 ```
 
 **Compiler Error**:
+
 ```
 error[E0277]: the trait bound `Point: Hash` is not satisfied
 error[E0277]: the trait bound `Point: Eq` is not satisfied
 ```
 
 **Why This Fails**: HashMap requires:
+
 - `Hash` trait to compute bucket index
 - `Eq` trait to compare keys in case of collisions
 
 **How to Fix - Option 1: Derive traits**:
+
 ```rust
 #[derive(Hash, Eq, PartialEq)]
 struct Point {
@@ -541,6 +582,7 @@ struct Point {
 ```
 
 **How to Fix - Option 2: Manual implementation**:
+
 ```rust
 use std::hash::{Hash, Hasher};
 
@@ -561,10 +603,12 @@ impl Eq for Point {}
 ```
 
 **Warning**: If you manually implement `Hash` and `Eq`, ensure:
+
 ```rust
 // INVARIANT: k1 == k2 => hash(k1) == hash(k2)
 // If two keys are equal, their hashes MUST be equal
 ```
+
 ```
 
 ---
@@ -598,9 +642,11 @@ Intentionally show broken code, explain why, then fix:
 **Understanding the Error**: [Explanation]
 
 **Fixed Version**:
+
 ```rust
 // Corrected code
 ```
+
 ```
 
 ---
@@ -623,6 +669,7 @@ fn checkpoint_ownership() {
 ```
 
 If you get compilation errors, review the "Ownership Transfer" section above.
+
 ```
 
 ---
@@ -654,6 +701,7 @@ Create a reference section for quick lookup:
 **Day 6: Lifetimes** - Anticipate dangling reference errors
 
 Each day includes:
+
 - **Common Mistakes** section
 - **Checkpoint exercises** to catch misconceptions
 - **Troubleshooting guide** for specific errors
@@ -671,17 +719,20 @@ Each day includes:
 ## 🔗 **Related Concepts**
 
 ### **Tutorial Engineering**
+
 - [[Tutorial Engineering]] - Parent methodology
 - [[Progressive Disclosure]] - Layer complexity to reduce errors
 - [[Hands-On Learning]] - Practice catching errors
 - [[Debugging Lessons]] - Learning from error patterns
 
 ### **Error Handling**
+
 - [[Result and Option Patterns]] - Idiomatic error handling
 - [[Panic vs Result]] - When to panic vs return errors
 - [[Error Propagation]] - Using ? operator
 
 ### **Compiler Understanding**
+
 - [[Borrow Checker Fundamentals]] - Understanding ownership errors
 - [[Lifetime Elision Rules]] - When lifetimes are implicit
 - [[Trait Bounds]] - Understanding trait requirement errors

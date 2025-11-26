@@ -10,11 +10,13 @@ Big-O notation describes the **asymptotic behavior** of algorithms by expressing
 ## Fundamental Concepts
 
 ### Mathematical Definition
+
 For functions f(n) and g(n), we say **f(n) = O(g(n))** if there exist positive constants c and n₀ such that:
 
 **f(n) ≤ c × g(n)** for all n ≥ n₀
 
 ### Common Complexity Classes
+
 ```rust
 // O(1) - Constant Time
 fn constant_time_access(arr: &[i32], index: usize) -> Option<i32> {
@@ -80,6 +82,7 @@ fn fibonacci_naive(n: u32) -> u64 {
 ## Complexity Hierarchy
 
 ### Time Complexity Ranking (Best to Worst)
+
 1. **O(1)** - Constant: Hash table lookup, array access
 2. **O(log n)** - Logarithmic: Binary search, balanced tree operations  
 3. **O(n)** - Linear: Array traversal, linear search
@@ -90,6 +93,7 @@ fn fibonacci_naive(n: u32) -> u64 {
 8. **O(n!)** - Factorial: Permutation generation, traveling salesman brute force
 
 ### Growth Rate Visualization
+
 ```rust
 // Relative growth for n = 1000
 // O(1):        1 operation
@@ -103,6 +107,7 @@ fn fibonacci_naive(n: u32) -> u64 {
 ## Mission Integration Examples
 
 ### Mission 1: Stack Analysis
+
 ```rust
 impl<T> Stack<T> {
     // O(1) - Amortized constant time
@@ -143,6 +148,7 @@ fn validate_stack_complexity() {
 ```
 
 ### Mission 4: Linked List Complexity
+
 ```rust
 impl<T> LinkedList<T> {
     // O(1) - Constant time insertion at head
@@ -187,6 +193,7 @@ impl<T> LinkedList<T> {
 ```
 
 ### Mission 5: HashMap Analysis
+
 ```rust
 use std::collections::HashMap;
 
@@ -233,6 +240,7 @@ fn analyze_hashmap_space() {
 ```
 
 ### Mission 6: Grid Operations
+
 ```rust
 impl<T> Grid<T> {
     // O(1) - Direct array indexing
@@ -278,6 +286,7 @@ impl<T> Grid<T> {
 ## AoC Complexity Analysis
 
 ### Day 15: Combinatorial Optimization
+
 ```rust
 // Problem: Find optimal ingredient combination (4 ingredients, 100 teaspoons)
 
@@ -316,6 +325,7 @@ fn solve_optimized() -> i32 {
 ```
 
 ### Day 11: Password Generation
+
 ```rust
 // String-based approach: O(n×m) where n=iterations, m=string length
 fn increment_password_string(password: &mut String) {
@@ -349,6 +359,7 @@ fn increment_password_bytes(password: &mut [u8]) {
 ```
 
 ### Day 18: Conway's Game of Life
+
 ```rust
 // Each generation: O(n×m) where n=height, m=width
 fn next_generation(current: &Grid<bool>) -> Grid<bool> {
@@ -378,6 +389,7 @@ fn next_generation(current: &Grid<bool>) -> Grid<bool> {
 ## Advanced Analysis Techniques
 
 ### Amortized Analysis
+
 ```rust
 // Dynamic Array (Vec) push operation
 impl<T> DynamicArray<T> {
@@ -404,6 +416,7 @@ impl<T> DynamicArray<T> {
 ```
 
 ### Best, Average, and Worst Case
+
 ```rust
 // Quicksort complexity analysis
 fn quicksort<T: Ord>(arr: &mut [T]) {
@@ -433,6 +446,7 @@ fn quicksort<T: Ord>(arr: &mut [T]) {
 ## Practical Performance Validation
 
 ### Empirical Complexity Testing
+
 ```rust
 use std::time::Instant;
 
@@ -490,6 +504,7 @@ fn test_sorting_complexity() {
 ```
 
 ### Space Complexity Analysis
+
 ```rust
 // Recursive vs Iterative Space Usage
 fn factorial_recursive(n: u64) -> u64 {
@@ -533,16 +548,19 @@ fn factorial_tail_recursive(n: u64) -> u64 {
 ## Daily Study Applications
 
 ### Week 2: Algorithm Analysis Foundations
+
 - Basic complexity classes and examples
 - Empirical testing of theoretical predictions
 - Trade-offs between time and space complexity
 
 ### Week 3: Advanced Analysis Techniques
+
 - Amortized analysis for dynamic data structures
 - Best/average/worst case scenario analysis
 - Probabilistic complexity analysis
 
 ### Week 5: Real-World Performance
+
 - Profiling tools and complexity validation
 - Optimization guided by complexity analysis
 - Measuring actual vs theoretical performance
@@ -550,6 +568,7 @@ fn factorial_tail_recursive(n: u64) -> u64 {
 ## Mission Applications
 
 ### Complexity Validation Requirements
+
 1. **Mission 1**: Stack operations must be O(1) amortized
 2. **Mission 4**: LinkedList operations complexity documented
 3. **Mission 5**: HashMap average O(1) with load factor analysis
@@ -557,6 +576,7 @@ fn factorial_tail_recursive(n: u64) -> u64 {
 5. **Mission 10**: Union-Find path compression amortized analysis
 
 ### Performance Testing Protocol
+
 ```rust
 // Standard complexity validation pattern
 fn validate_complexity<T, F>(
@@ -602,6 +622,7 @@ where
 ---
 
 *Big-O Notation Links:*
+
 - [[Performance Benchmarking]] - Empirical complexity validation
 - [[Performance Patterns]] - Complexity-guided optimization
 - [[HashMap Deep Dive]] - Hash table analysis

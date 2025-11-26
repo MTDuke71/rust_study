@@ -7,11 +7,13 @@
 ## 🎯 **Two Buffer Strategies**
 
 ### **1. Reject-on-Full (Standard)**
+
 ```rust
 queue.enqueue(10)?; // Returns Err(10) if full
 ```
 
 ### **2. Overwrite-Oldest (Circular)**
+
 ```rust
 queue.enqueue_overwrite(10); // Always succeeds, overwrites oldest
 ```
@@ -19,6 +21,7 @@ queue.enqueue_overwrite(10); // Always succeeds, overwrites oldest
 ## 🔄 **Behavioral Comparison**
 
 ### **Reject-on-Full Semantics**
+
 ```rust
 let mut queue = RingBufferQueue::with_capacity(3);
 queue.enqueue(1)?; // Ok(())
@@ -30,6 +33,7 @@ queue.enqueue(4); // Err(4) - Rejected!
 **Queue state**: `[1, 2, 3]` - Fourth value rejected
 
 ### **Overwrite-Oldest Semantics**
+
 ```rust
 let mut queue = RingBufferQueue::with_capacity(3);
 queue.enqueue_overwrite(1);
@@ -57,12 +61,14 @@ pub fn enqueue_overwrite(&mut self, value: T) {
 }
 ```
 
-### **Key Insight**: 
+### **Key Insight**
+
 When full, we **artificially dequeue** by moving head forward, then enqueue normally.
 
 ## 📊 **Memory Layout During Overwrite**
 
 ### **Before Overwrite** (Capacity = 3, Full)
+
 ```
 buf:  [Some(1), Some(2), Some(3)]
 head:  0
@@ -71,6 +77,7 @@ len:   3
 ```
 
 ### **After `enqueue_overwrite(4)`**
+
 ```
 buf:  [Some(4), Some(2), Some(3)]
 head:  1 (advanced - "forgot" value 1)
@@ -78,11 +85,12 @@ tail:  1 (wrapped and placed at old head position)
 len:   3
 ```
 
-### **Next dequeue returns**: `Some(2)` - FIFO order maintained!
+### **Next dequeue returns**: `Some(2)` - FIFO order maintained
 
 ## 🎮 **Real-World Use Cases**
 
 ### **1. Recent History Tracking**
+
 ```rust
 struct CommandHistory {
     buffer: RingBufferQueue<String>,
@@ -99,6 +107,7 @@ impl CommandHistory {
 **Application**: Shells, game replay systems, undo buffers
 
 ### **2. Sensor Data Buffering**
+
 ```rust
 struct SensorBuffer {
     readings: RingBufferQueue<Reading>,
@@ -115,6 +124,7 @@ impl SensorBuffer {
 **Application**: Real-time monitoring, data acquisition systems
 
 ### **3. Game Frame History**
+
 ```rust
 struct FrameHistory {
     frames: RingBufferQueue<GameState>,
@@ -131,6 +141,7 @@ impl FrameHistory {
 **Application**: Netcode rollback, replay systems, debugging
 
 ### **4. Log Rotation**
+
 ```rust
 struct CircularLog<T> {
     log: RingBufferQueue<T>,
@@ -157,12 +168,14 @@ impl<T> CircularLog<T> {
 ## ⚠️ **Trade-offs**
 
 ### **Advantages Over Unbounded**
+
 - ✅ Fixed memory footprint
 - ✅ No allocation overhead
 - ✅ Predictable performance
 - ✅ Suitable for real-time systems
 
 ### **Disadvantages**
+
 - ❌ Data loss (oldest values discarded)
 - ❌ Requires capacity planning
 - ❌ Not suitable when all data must be preserved
@@ -208,12 +221,14 @@ fn test_overwrite_behavior() {
 This feature adds to Mission2's requirements:
 
 **REQ-R5**: Overwriting Circular Buffer Support
+
 - When full, `enqueue_overwrite` shall replace the oldest element
 - Maintains FIFO ordering of remaining elements
 - Operation completes in O(1) time
 - Preserves ring buffer invariants
 
 **REQ-R6**: Dual Enqueue Semantics
+
 - `enqueue()` - Returns `Err(T)` when full (reject-on-full)
 - `enqueue_overwrite()` - Overwrites oldest when full (always succeeds)
 - Users can choose appropriate strategy per use case

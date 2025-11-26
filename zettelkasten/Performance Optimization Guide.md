@@ -7,7 +7,6 @@ The Performance Optimization Guide collects strategies, benchmarks, and case stu
 Use this as the hub when you add new notes about profiling, algorithmic improvements, or micro-optimizations, and cross-link them back to the concrete code paths they improve.
 
 *Links: [[Performance Optimization]] [[Performance Benchmarking]] [[Graph Theory MOC]] [[Algorithms MOC]]*
-# Performance Optimization Guide
 
 **Comprehensive guide to optimizing Rust code for competitive programming and production systems**
 
@@ -16,6 +15,7 @@ Use this as the hub when you add new notes about profiling, algorithmic improvem
 ## 🎯 **Optimization Philosophy**
 
 ### **Measurement-Driven Approach**
+
 1. **Profile First** - Never optimize without measuring
 2. **Target Bottlenecks** - Focus on the highest-impact improvements  
 3. **Validate Improvements** - Measure before and after changes
@@ -23,6 +23,7 @@ Use this as the hub when you add new notes about profiling, algorithmic improvem
 5. **Consider Readability** - Balance performance with maintainability
 
 ### **Rust-Specific Advantages**
+
 - **Zero-Cost Abstractions** - High-level code compiles to optimal machine code
 - **Ownership System** - Eliminates garbage collection overhead
 - **Trait System** - Monomorphization enables aggressive optimization
@@ -34,6 +35,7 @@ Use this as the hub when you add new notes about profiling, algorithmic improvem
 ## 🏗️ **Algorithmic Optimization**
 
 ### **Algorithm Selection Priority**
+
 ```rust
 // ❌ O(n²) - Nested loops
 fn slow_search(haystack: &[i32], needles: &[i32]) -> Vec<bool> {
@@ -48,6 +50,7 @@ fn fast_search(haystack: &[i32], needles: &[i32]) -> Vec<bool> {
 ```
 
 ### **Data Structure Impact**
+
 | Operation | Vec | HashMap | BTreeMap | HashSet |
 |-----------|-----|---------|----------|---------|
 | **Insert** | O(1)* | O(1)* | O(log n) | O(1)* |
@@ -58,6 +61,7 @@ fn fast_search(haystack: &[i32], needles: &[i32]) -> Vec<bool> {
 *Amortized time complexity
 
 ### **Common Algorithm Improvements**
+
 ```rust
 // Two-Sum: O(n²) → O(n) with HashMap
 fn two_sum_optimized(nums: &[i32], target: i32) -> Option<(usize, usize)> {
@@ -86,6 +90,7 @@ fn count_frequencies(text: &str) -> HashMap<char, usize> {
 ## 🧠 **Memory Optimization**
 
 ### **Allocation Strategies**
+
 ```rust
 // ❌ Repeated allocations
 fn slow_string_building(words: &[&str]) -> String {
@@ -117,6 +122,7 @@ fn optimized_collection_building(input_size: usize) -> Vec<ProcessedItem> {
 ```
 
 ### **Memory Layout Considerations**
+
 ```rust
 // ❌ Poor cache locality - pointer chasing
 struct BadNode {
@@ -143,6 +149,7 @@ fn process_large_dataset(data: &[i32]) -> i32 {
 ```
 
 ### **Stack vs Heap Allocation**
+
 ```rust
 // ❌ Heap allocation for small, known-size data
 fn slow_small_buffer() -> Vec<u8> {
@@ -166,6 +173,7 @@ fn optimal_small_buffer() -> SmallVec<[u8; 64]> {
 ## ⚡ **Iterator Optimization**
 
 ### **Iterator vs Loop Performance**
+
 ```rust
 // Both compile to identical optimized code
 fn functional_sum(numbers: &[i32]) -> i32 {
@@ -191,6 +199,7 @@ fn complex_processing(numbers: &[i32]) -> Vec<i32> {
 ```
 
 ### **Lazy vs Eager Evaluation**
+
 ```rust
 // ❌ Eager - creates intermediate collections
 fn eager_processing(data: &[String]) -> Vec<String> {
@@ -213,6 +222,7 @@ fn lazy_processing(data: &[String]) -> Vec<String> {
 ```
 
 ### **Collect vs Extend Performance**
+
 ```rust
 // ❌ Repeated collections and concatenation
 fn slow_aggregation(groups: &[Vec<i32>]) -> Vec<i32> {
@@ -241,6 +251,7 @@ fn fast_aggregation(groups: &[Vec<i32>]) -> Vec<i32> {
 ## 📊 **Collection-Specific Optimizations**
 
 ### **HashMap Optimization**
+
 ```rust
 use std::collections::HashMap;
 use rustc_hash::FxHashMap; // Faster hasher for integers
@@ -274,6 +285,7 @@ fn efficient_grouping(items: &[(String, i32)]) -> HashMap<String, Vec<i32>> {
 ```
 
 ### **Vec Optimization**
+
 ```rust
 // ✅ Reserve vs with_capacity
 fn build_large_vec(input: &[i32]) -> Vec<i32> {
@@ -301,6 +313,7 @@ fn fast_removal_unordered(vec: &mut Vec<i32>, index: usize) {
 ```
 
 ### **String Optimization**
+
 ```rust
 // ✅ String capacity management
 fn build_config_string(pairs: &[(&str, &str)]) -> String {
@@ -332,6 +345,7 @@ fn efficient_string_processing(input: &str) -> Vec<&str> {
 ## 🎲 **AoC-Specific Optimizations**
 
 ### **Input Parsing Performance**
+
 ```rust
 // ✅ Efficient line-by-line processing
 fn parse_aoc_input(input: &str) -> Vec<(i32, i32)> {
@@ -364,6 +378,7 @@ fn batch_parse_numbers(input: &str) -> Vec<Vec<i32>> {
 ```
 
 ### **Grid Processing Optimization**
+
 ```rust
 // ✅ Flat array for 2D grid (better cache performance)
 struct OptimizedGrid<T> {
@@ -413,6 +428,7 @@ fn get_neighbors(x: usize, y: usize, width: usize, height: usize)
 ```
 
 ### **State Space Search Optimization**
+
 ```rust
 use std::collections::{VecDeque, HashSet};
 
@@ -444,6 +460,7 @@ where State: Clone + Eq + std::hash::Hash {
 ## 🔧 **Profiling and Measurement**
 
 ### **Benchmarking with Criterion**
+
 ```rust
 // Cargo.toml
 // [dev-dependencies]
@@ -490,6 +507,7 @@ criterion_main!(benches);
 ```
 
 ### **Memory Usage Analysis**
+
 ```rust
 // Use heaptrack, valgrind, or built-in allocation tracking
 
@@ -510,6 +528,7 @@ fn profile_memory_usage() {
 ```
 
 ### **Compile-Time Optimization**
+
 ```rust
 // Cargo.toml release profile
 [profile.release]
@@ -529,12 +548,14 @@ rustflags = ["-C", "target-cpu=native"] # Use all CPU features
 ## 🚀 **Quick Optimization Checklist**
 
 ### **Algorithm Level**
+
 - [ ] Choose optimal algorithm for problem size and constraints
 - [ ] Consider time vs space tradeoffs  
 - [ ] Use appropriate data structures (HashMap vs Vec vs BTreeMap)
 - [ ] Minimize algorithmic complexity (nested loops → hash lookups)
 
 ### **Implementation Level**
+
 - [ ] Pre-allocate collections with known or estimated sizes
 - [ ] Use iterator chains instead of intermediate collections
 - [ ] Prefer `&str` over `String` when possible
@@ -542,6 +563,7 @@ rustflags = ["-C", "target-cpu=native"] # Use all CPU features
 - [ ] Consider `smallvec` for small, variable-size data
 
 ### **Memory Level**  
+
 - [ ] Minimize allocations in hot loops
 - [ ] Reuse buffers with `.clear()` instead of creating new ones
 - [ ] Use stack allocation for small, fixed-size data
@@ -549,6 +571,7 @@ rustflags = ["-C", "target-cpu=native"] # Use all CPU features
 - [ ] Profile memory usage for large datasets
 
 ### **Compilation Level**
+
 - [ ] Use release profile for benchmarking
 - [ ] Enable LTO for final optimization
 - [ ] Consider target-specific optimization flags

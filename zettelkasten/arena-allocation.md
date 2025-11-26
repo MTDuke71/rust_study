@@ -9,12 +9,14 @@
 **Arena allocation** (also called **region-based memory management** or **bump allocation**) is a memory management pattern where you allocate all objects in a single contiguous memory region (the "arena"), and deallocate the entire region at once when you're done. Instead of managing individual object lifetimes with reference counting or garbage collection, you tie all objects to the arena's lifetime.
 
 **Key Characteristics**:
+
 - **Bulk allocation**: All objects live in one memory region
 - **Bulk deallocation**: Free entire arena at once, not individual objects
 - **Index-based references**: Use array indices instead of pointers/`Rc<T>`
 - **Lifetime simplification**: All objects share the arena's lifetime
 
 **Why Arena Allocation Matters**:
+
 1. **Eliminates reference cycles**: Indices can't create ownership cycles
 2. **Performance**: No reference counting overhead, better cache locality
 3. **Simplicity**: No `Rc<RefCell<T>>` complexity for graphs
@@ -27,6 +29,7 @@
 ### **The Event Venue Analogy**
 
 **Traditional Allocation** (Reference Counting):
+
 ```
 Individual ticket sales:
 - Each person (object) gets their own ticket (Rc counter)
@@ -36,6 +39,7 @@ Individual ticket sales:
 ```
 
 **Arena Allocation**:
+
 ```
 Conference hall rental:
 - Rent entire hall (arena) for the day
@@ -109,6 +113,7 @@ Arena Allocation:
 ### **Basic Arena Pattern**
 
 #### **Simple Graph with Arena**
+
 ```rust
 struct GraphNode {
     value: i32,
@@ -356,6 +361,7 @@ impl<'arena> ScopedArena<'arena> {
 ### **Real-World Libraries**
 
 #### **`typed-arena` Crate**
+
 ```rust
 use typed_arena::Arena;
 
@@ -368,6 +374,7 @@ let node2 = arena.alloc(GraphNode { value: 2, neighbors: vec![] });
 ```
 
 #### **`bumpalo` Crate** (WebAssembly optimized)
+
 ```rust
 use bumpalo::Bump;
 
@@ -378,6 +385,7 @@ let node = bump.alloc(GraphNode { value: 42, neighbors: vec![] });
 ```
 
 #### **`generational-arena` Crate**
+
 ```rust
 use generational_arena::Arena;
 
@@ -408,12 +416,14 @@ assert!(arena.get(idx1).is_none());
 | **Thread Safety** | Depends on arena | ❌ Not thread-safe |
 
 **When Arena Allocation Wins**:
+
 - Many objects with same lifetime
 - Graph structures with cycles
 - Performance-critical allocation (games, compilers)
 - Predictable memory usage patterns
 
 **When Rc<RefCell<T>> Wins**:
+
 - Independent object lifetimes needed
 - Small number of objects
 - Objects move between containers
@@ -435,28 +445,33 @@ assert!(arena.get(idx1).is_none());
 ## 🔗 **Integration Points**
 
 ### **Builds On**
+
 - [[ownership-fundamentals]] - Understanding Rust ownership model
 - [[smart-pointers]] - Alternative to Rc/Box for memory management
 - [[vec-dynamic-arrays]] - Arena typically implemented with Vec<T>
 
 ### **Enables**
+
 - [[graph-data-structures]] - Cycle-free graph implementations
 - [[compiler-design-patterns]] - AST and IR storage in compilers
 - [[memory-optimization]] - Bulk deallocation and cache-friendly layouts
 - [[game-engine-patterns]] - Entity-component systems and scene graphs
 
 ### **Related Concepts**
+
 - [[rc-shared-ownership]] - Alternative: reference counting for shared ownership
 - [[refcell-interior-mutability]] - Alternative: runtime borrow checking
 - [[box-heap-allocation]] - Single-owner heap allocation
 - [[lifetime-management]] - Arena ties all objects to single lifetime
 
 ### **Mission Applications**
+
 - [[mission-7]] - Graph implementation could use arena instead of Rc<RefCell<T>>
 - [[mission-5]] - HashMap bucket allocation could use arena for entries
 - [[mission-4]] - LinkedList could use arena allocation for nodes
 
 ### **Real-World Examples**
+
 - **rustc compiler**: Uses arenas for AST and HIR storage
 - **servo browser**: Uses arenas for DOM nodes
 - **petgraph crate**: Graph library using index-based node references
@@ -467,17 +482,20 @@ assert!(arena.get(idx1).is_none());
 ## 📚 **Further Reading**
 
 ### **Crates**
+
 - [`typed-arena`](https://crates.io/crates/typed-arena) - Simple typed arena allocator
 - [`bumpalo`](https://crates.io/crates/bumpalo) - Fast bump allocation (WASM-friendly)
 - [`generational-arena`](https://crates.io/crates/generational-arena) - Safe arena with generational indices
 - [`id-arena`](https://crates.io/crates/id-arena) - Arena with strongly-typed indices
 
 ### **Articles**
+
 - [Fast Bump Allocation in Rust](https://fitzgen.github.io/bumpalo/)
 - [Generational Indices in Rust](https://lucumr.pocoo.org/2018/7/15/arena-allocation/)
 - [rustc-dev-guide: The Arena Allocator](https://rustc-dev-guide.rust-lang.org/memory.html)
 
 ### **Workspace Resources**
+
 - [[rust_book/rust-book-ch15]] - Smart pointers as alternative
 - [[refcell-interior-mutability]] - Runtime borrow checking comparison
 - [[daily-study/Day20]] - Smart pointer patterns
