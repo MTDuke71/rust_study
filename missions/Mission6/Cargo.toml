@@ -7,6 +7,9 @@ edition = "2021"
 # No external dependencies for this mission - pure Rust std library
 # Focus on 2D grids, coordinate systems, and pathfinding for competitive programming
 
+[dev-dependencies]
+criterion = "0.5"
+
 [[example]]
 name = "mission6_demo"
 path = "examples/demo.rs"

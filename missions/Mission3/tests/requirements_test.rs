@@ -275,15 +275,15 @@ fn req6_multi_criteria_search() {
 // Property-based tests with random data
 #[test] // Cross-verification with std library
 fn property_test_against_std_library() {
-    use rand::{thread_rng, Rng};
+    use rand::{rng, Rng};
 
-    let mut rng = thread_rng();
+    let mut rng = rng();
 
     for _ in 0..100 {
-        let mut data: Vec<i32> = (0..50).map(|_| rng.gen_range(-100..100)).collect();
+        let mut data: Vec<i32> = (0..50).map(|_| rng.random_range(-100..100)).collect();
         data.sort();
 
-        let target = rng.gen_range(-100..100);
+        let target = rng.random_range(-100..100);
 
         let std_result = data.binary_search(&target);
         let our_result = binary_search::search_slice(&data, &target);
