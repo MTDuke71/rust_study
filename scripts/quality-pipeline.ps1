@@ -22,7 +22,14 @@ param(
     [switch]$SkipSecurityAudit,
     
     [Parameter(HelpMessage="Skip dependency checks")]
-    [switch]$SkipDependencyChecks
+    [switch]$SkipDependencyChecks,
+    
+    [Parameter(HelpMessage="Show interactive menu to select which checks to run")]
+    [switch]$Menu,
+    
+    [Parameter(HelpMessage="Run specific check(s) by name. Valid values: Compilation, Formatting, Clippy, Tests, Documentation, Coverage, Security, Outdated, Unused, DeadCode")]
+    [ValidateSet("Compilation", "Formatting", "Clippy", "Tests", "Documentation", "Coverage", "Security", "Outdated", "Unused", "DeadCode", "All")]
+    [string[]]$Run
 )
 
 # Quality Pipeline Configuration
@@ -43,6 +50,114 @@ function Write-QAInfo { param([string]$Message) Write-Host "🔍 $Message" -Fore
 function Write-QASuccess { param([string]$Message) Write-Host "✅ $Message" -ForegroundColor Green }
 function Write-QAWarning { param([string]$Message) Write-Host "⚠️ $Message" -ForegroundColor Yellow }
 function Write-QAError { param([string]$Message) Write-Host "❌ $Message" -ForegroundColor Red }
+
+# Check definition mapping
+$script:CheckDefinitions = @{
+    "Compilation"   = @{ Name = "Compilation Check"; Function = "Test-Compilation"; Quick = $true }
+    "Formatting"    = @{ Name = "Code Formatting"; Function = "Format-Code"; Quick = $true }
+    "Clippy"        = @{ Name = "Clippy Analysis"; Function = "Test-Clippy"; Quick = $true }
+    "Tests"         = @{ Name = "Test Suite"; Function = "Test-Suite"; Quick = $true }
+    "Documentation" = @{ Name = "Documentation"; Function = "Generate-Documentation"; Quick = $true }
+    "Coverage"      = @{ Name = "Coverage Analysis"; Function = "Test-Coverage"; Quick = $false }
+    "Security"      = @{ Name = "Security Audit"; Function = "Test-SecurityAudit"; Quick = $false }
+    "Outdated"      = @{ Name = "Outdated Dependencies"; Function = "Test-OutdatedDependencies"; Quick = $false }
+    "Unused"        = @{ Name = "Unused Dependencies"; Function = "Test-UnusedDependencies"; Quick = $false }
+    "DeadCode"      = @{ Name = "Dead Code Detection"; Function = "Test-DeadCode"; Quick = $false }
+}
+
+# Interactive menu function
+function Show-QAMenu {
+    $selectedChecks = @()
+    
+    Write-Host @"
+
+🎯 QUALITY ASSURANCE PIPELINE - INTERACTIVE MENU
+================================================
+
+Select which checks to run:
+
+  QUICK CHECKS (included in -Quick mode):
+    [1] Compilation    - Verify workspace compiles without errors
+    [2] Formatting     - Check/apply code formatting (cargo fmt)
+    [3] Clippy         - Run Clippy linter with warnings as errors
+    [4] Tests          - Run full test suite
+    [5] Documentation  - Generate and check documentation
+
+  EXTENDED CHECKS (skipped in -Quick mode):
+    [6] Coverage       - Calculate test coverage (requires cargo-tarpaulin)
+    [7] Security       - Security vulnerability audit (requires cargo-audit)
+    [8] Outdated       - Check for outdated dependencies (requires cargo-outdated)
+    [9] Unused         - Find unused dependencies (requires cargo-udeps + nightly)
+    [0] DeadCode       - Detect dead/unused code
+
+  PRESETS:
+    [A] All Checks     - Run everything
+    [Q] Quick Checks   - Run checks 1-5 only
+    [E] Extended Only  - Run checks 6-0 only
+
+  [X] Exit without running
+
+"@ -ForegroundColor Blue
+
+    $validInput = $false
+    while (-not $validInput) {
+        $input = Read-Host "Enter your selection (e.g., '1,2,3' or 'A' for all)"
+        $input = $input.Trim().ToUpper()
+        
+        if ($input -eq 'X') {
+            Write-Host "Exiting without running checks." -ForegroundColor Yellow
+            return @()
+        }
+        
+        if ($input -eq 'A') {
+            $selectedChecks = @("Compilation", "Formatting", "Clippy", "Tests", "Documentation", "Coverage", "Security", "Outdated", "Unused", "DeadCode")
+            $validInput = $true
+        }
+        elseif ($input -eq 'Q') {
+            $selectedChecks = @("Compilation", "Formatting", "Clippy", "Tests", "Documentation")
+            $validInput = $true
+        }
+        elseif ($input -eq 'E') {
+            $selectedChecks = @("Coverage", "Security", "Outdated", "Unused", "DeadCode")
+            $validInput = $true
+        }
+        else {
+            # Parse comma-separated numbers
+            $numbers = $input -split '[,\s]+' | Where-Object { $_ -match '^\d$' }
+            
+            $numberMapping = @{
+                '1' = "Compilation"
+                '2' = "Formatting"
+                '3' = "Clippy"
+                '4' = "Tests"
+                '5' = "Documentation"
+                '6' = "Coverage"
+                '7' = "Security"
+                '8' = "Outdated"
+                '9' = "Unused"
+                '0' = "DeadCode"
+            }
+            
+            foreach ($num in $numbers) {
+                if ($numberMapping.ContainsKey($num)) {
+                    $selectedChecks += $numberMapping[$num]
+                }
+            }
+            
+            if ($selectedChecks.Count -gt 0) {
+                $validInput = $true
+            } else {
+                Write-Host "Invalid selection. Please try again." -ForegroundColor Red
+            }
+        }
+    }
+    
+    # Remove duplicates while preserving order
+    $selectedChecks = $selectedChecks | Select-Object -Unique
+    
+    Write-Host "`nSelected checks: $($selectedChecks -join ', ')" -ForegroundColor Green
+    return $selectedChecks
+}
 
 # Function to save check results to individual files
 function Save-CheckResult {
@@ -119,31 +234,76 @@ Working Directory: $PWD
     # Check prerequisites
     Test-Prerequisites
     
-    # Run quality checks
-    $checks = @(
-        @{ Name = "Compilation Check"; Function = "Test-Compilation" },
-        @{ Name = "Code Formatting"; Function = "Format-Code" },
-        @{ Name = "Clippy Analysis"; Function = "Test-Clippy" },
-        @{ Name = "Test Suite"; Function = "Test-Suite" },
-        @{ Name = "Documentation"; Function = "Generate-Documentation" }
-    )
+    # Determine which checks to run
+    $checksToRun = @()
     
-    if (-not $Quick) {
-        $checks += @{ Name = "Coverage Analysis"; Function = "Test-Coverage" }
-        
-        if (-not $SkipSecurityAudit) {
-            $checks += @{ Name = "Security Audit"; Function = "Test-SecurityAudit" }
+    # Handle -Menu parameter
+    if ($Menu) {
+        $selectedChecks = Show-QAMenu
+        if ($selectedChecks.Count -eq 0) {
+            Write-Host "No checks selected. Exiting." -ForegroundColor Yellow
+            return
+        }
+        foreach ($checkName in $selectedChecks) {
+            $checkDef = $script:CheckDefinitions[$checkName]
+            $checksToRun += @{ Name = $checkDef.Name; Function = $checkDef.Function }
+        }
+    }
+    # Handle -Run parameter for specific checks
+    elseif ($Run -and $Run.Count -gt 0) {
+        if ($Run -contains "All") {
+            # Run all checks
+            foreach ($checkName in @("Compilation", "Formatting", "Clippy", "Tests", "Documentation", "Coverage", "Security", "Outdated", "Unused", "DeadCode")) {
+                $checkDef = $script:CheckDefinitions[$checkName]
+                $checksToRun += @{ Name = $checkDef.Name; Function = $checkDef.Function }
+            }
+        } else {
+            foreach ($checkName in $Run) {
+                if ($script:CheckDefinitions.ContainsKey($checkName)) {
+                    $checkDef = $script:CheckDefinitions[$checkName]
+                    $checksToRun += @{ Name = $checkDef.Name; Function = $checkDef.Function }
+                } else {
+                    Write-QAWarning "Unknown check: $checkName"
+                }
+            }
         }
         
-        if (-not $SkipDependencyChecks) {
-            $checks += @{ Name = "Outdated Dependencies"; Function = "Test-OutdatedDependencies" }
-            $checks += @{ Name = "Unused Dependencies"; Function = "Test-UnusedDependencies" }
+        if ($checksToRun.Count -eq 0) {
+            Write-QAError "No valid checks specified."
+            return
         }
         
-        $checks += @{ Name = "Dead Code Detection"; Function = "Test-DeadCode" }
+        Write-QAInfo "Running selected checks: $($Run -join ', ')"
+    }
+    # Default behavior (original logic)
+    else {
+        # Build default check list
+        $checksToRun = @(
+            @{ Name = "Compilation Check"; Function = "Test-Compilation" },
+            @{ Name = "Code Formatting"; Function = "Format-Code" },
+            @{ Name = "Clippy Analysis"; Function = "Test-Clippy" },
+            @{ Name = "Test Suite"; Function = "Test-Suite" },
+            @{ Name = "Documentation"; Function = "Generate-Documentation" }
+        )
+        
+        if (-not $Quick) {
+            $checksToRun += @{ Name = "Coverage Analysis"; Function = "Test-Coverage" }
+            
+            if (-not $SkipSecurityAudit) {
+                $checksToRun += @{ Name = "Security Audit"; Function = "Test-SecurityAudit" }
+            }
+            
+            if (-not $SkipDependencyChecks) {
+                $checksToRun += @{ Name = "Outdated Dependencies"; Function = "Test-OutdatedDependencies" }
+                $checksToRun += @{ Name = "Unused Dependencies"; Function = "Test-UnusedDependencies" }
+            }
+            
+            $checksToRun += @{ Name = "Dead Code Detection"; Function = "Test-DeadCode" }
+        }
     }
     
-    foreach ($check in $checks) {
+    # Run the selected checks
+    foreach ($check in $checksToRun) {
         Write-QAInfo "Running $($check.Name)..."
         try {
             & $check.Function

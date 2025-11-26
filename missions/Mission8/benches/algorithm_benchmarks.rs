@@ -1,7 +1,7 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use mission8::{bfs, connected_components, dfs, find_cycle, has_cycle, shortest_path};
-use std::hint::black_box;
 use std::collections::{HashMap, HashSet};
+use std::hint::black_box;
 
 /// Create a small graph (10 nodes) for quick benchmarks
 fn create_small_graph() -> HashMap<u32, Vec<u32>> {
