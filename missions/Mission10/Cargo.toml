@@ -28,7 +28,8 @@ uuid = { version = "1", features = ["v4", "serde"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
 utoipa = { version = "5.4.0", features = ["axum_extras", "uuid"] }
-utoipa-swagger-ui = { version = "9.0.2", features = ["axum"] }
+# Note: utoipa-swagger-ui removed to avoid zlib-rs const eval bug on Rust 1.91.x
+# OpenAPI JSON is served directly at /api-docs/openapi.json - use external tools to view
 
 [[bench]]
 name = "performance"

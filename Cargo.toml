@@ -88,9 +88,3 @@ members = [
     "rust_book/Ch17/hello-async"]
 
 resolver = "3"
-
-# Force flate2 to use git version which defaults to miniz_oxide backend
-# instead of zlib-rs which has const evaluation bugs on Rust 1.91.x
-# See: https://github.com/trifectatechfoundation/zlib-rs/issues
-[patch.crates-io]
-flate2 = { git = "https://github.com/rust-lang/flate2-rs" }

@@ -3,12 +3,11 @@
 //! This example demonstrates how to expose the Union-Find data structure
 //! as a RESTful API using Axum and Utoipa.
 
-use axum::{http::StatusCode, response::IntoResponse, routing::get, Router};
+use axum::{http::StatusCode, response::IntoResponse, routing::get, Json, Router};
 use std::net::SocketAddr;
 use tower_http::cors::CorsLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use utoipa::OpenApi;
-use utoipa_swagger_ui::SwaggerUi;
 
 mod errors;
 mod handlers;
@@ -37,7 +36,7 @@ async fn main() {
     // Build router
     let app = Router::new()
         .route("/health", get(health_check))
-        .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
+        .route("/api-docs/openapi.json", get(openapi_json))
         .nest("/api/v1", handlers::routes())
         .layer(CorsLayer::permissive())
         .with_state(app_state);
@@ -45,7 +44,8 @@ async fn main() {
     // Run server
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("✅ Server listening on http://{}", addr);
-    println!("📚 Swagger UI: http://{}/swagger-ui", addr);
+    println!("📚 OpenAPI spec: http://{}/api-docs/openapi.json", addr);
+    println!("   (Use Swagger Editor, Postman, or Insomnia to view the spec)");
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
@@ -53,4 +53,8 @@ async fn main() {
 
 async fn health_check() -> impl IntoResponse {
     (StatusCode::OK, "Union-Find API is healthy")
+}
+
+async fn openapi_json() -> impl IntoResponse {
+    Json(ApiDoc::openapi())
 }
