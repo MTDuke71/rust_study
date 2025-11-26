@@ -1,6 +1,7 @@
 use aoc2015::solver::day10;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
 use mission5::MemoCache;
+use std::hint::black_box;
 
 /// Non-memoized iterative approach (your implementation)
 fn look_and_say_iterative(input: &str, iterations: usize) -> String {

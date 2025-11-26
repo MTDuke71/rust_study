@@ -1,8 +1,9 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
 use mission9::{
     AstarPathfinder, DijkstraPathfinder, EuclideanHeuristic, HeuristicContext, Pathfinder,
     SimpleWeightedGraph,
 };
+use std::hint::black_box;
 
 fn create_grid_graph(size: usize) -> (SimpleWeightedGraph, HeuristicContext) {
     let mut graph = SimpleWeightedGraph::new();

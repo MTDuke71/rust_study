@@ -468,7 +468,11 @@ impl MultiObjectiveAStar {
             // Check termination conditions
             let elapsed = start_time.elapsed().as_secs_f64();
             if elapsed > self.time_limit || stats.nodes_explored > self.max_nodes {
-                let _ = stats.terminated_early = true;
+                // stats tracked for debugging even when no path found
+                #[allow(unused_assignments)]
+                {
+                    stats.terminated_early = true;
+                }
                 break;
             }
 
@@ -546,7 +550,11 @@ impl MultiObjectiveAStar {
             stats.peak_memory = stats.peak_memory.max(open_set.len() + closed_set.len());
         }
 
-        let _ = stats.search_time_ms = (start_time.elapsed().as_secs_f64() * 1000.0) as u128;
+        // stats tracked for debugging even when no path found
+        #[allow(unused_assignments)]
+        {
+            stats.search_time_ms = (start_time.elapsed().as_secs_f64() * 1000.0) as u128;
+        }
         None
     }
 

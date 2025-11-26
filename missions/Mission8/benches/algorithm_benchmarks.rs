@@ -1,5 +1,6 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
 use mission8::{bfs, connected_components, dfs, find_cycle, has_cycle, shortest_path};
+use std::hint::black_box;
 use std::collections::{HashMap, HashSet};
 
 /// Create a small graph (10 nodes) for quick benchmarks
