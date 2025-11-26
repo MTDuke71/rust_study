@@ -10,8 +10,8 @@
 //! Generate flamegraph: `cargo bench --bench performance -- --profile-time=5`
 
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
-use std::hint::black_box;
 use mission10::UnionFind;
+use std::hint::black_box;
 
 // ============================================================================
 // Benchmark Parameters

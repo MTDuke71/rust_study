@@ -1,15 +1,15 @@
 
 🎯 QUALITY ASSURANCE REPORT
 ===========================
-Timestamp: 2025-11-25 16:51:49
-Duration: 07:00
+Timestamp: 2025-11-25 20:40:46
+Duration: 06:04
 
 📊 CODE QUALITY RESULTS:
   Compilation: ✅ Clean
-  Formatting: ✅ Already formatted  
+  Formatting: ✅ Applied  
   Clippy Issues: 0
   Tests: 1711/1711 passed
-  Coverage: 37.69%
+  Coverage: Failed
   Doc Warnings: 0
 
 🔒 SECURITY & DEPENDENCIES:
@@ -19,6 +19,11 @@ Duration: 07:00
   Dead Code Warnings: 0
 
 🎉 OVERALL STATUS: ❌ ISSUES FOUND
+
+⚠️  FORMATTING ISSUES (1 files):
+--------------------------------------------------
+  Diff in \\?\D:\repos\rust_study\missions\Mission10\benches\performance.rs:10:
+
 
 📦 OUTDATED DEPENDENCIES (1):
 --------------------------------------------------

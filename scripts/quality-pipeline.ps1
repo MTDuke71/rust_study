@@ -672,37 +672,63 @@ function Test-SecurityAudit {
     }
     
     try {
-        $auditOutput = & cargo audit --json 2>&1
+        # Run cargo audit without --json first to get human-readable output for parsing
+        $auditOutput = & cargo audit 2>&1
         $exitCode = $LASTEXITCODE
         
         # Save audit results
         Save-CheckResult -CheckName "Security_Audit" -Output ($auditOutput -join "`n") -ExitCode $exitCode
         
-        if ($exitCode -eq 0) {
-            # Parse JSON output
-            try {
-                $auditData = $auditOutput -join "`n" | ConvertFrom-Json
-                $vulnCount = if ($auditData.vulnerabilities) { $auditData.vulnerabilities.found.Count } else { 0 }
-                
-                $QualityReport.SecurityVulnerabilities = $vulnCount
-                
-                if ($vulnCount -eq 0) {
-                    Write-QASuccess "No known security vulnerabilities found"
-                } else {
-                    $QualityReport.SecurityDetails = $auditData.vulnerabilities.list | ForEach-Object {
-                        "$($_.advisory.id): $($_.advisory.title) in $($_.package.name) $($_.package.version)"
-                    }
-                    Write-QAWarning "Found $vulnCount security vulnerabilities"
-                    $QualityReport.SecurityDetails | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
-                }
+        # Parse the output to count actual vulnerabilities vs warnings
+        # Vulnerabilities are serious (CVE with security impact)
+        # Warnings are unmaintained/yanked packages (less critical)
+        $vulnerabilityLines = $auditOutput | Where-Object { $_ -match 'Vulnerability:|vulnerability' -and $_ -notmatch 'vulnerabilities' }
+        $warningLines = $auditOutput | Where-Object { $_ -match 'Warning:\s+unmaintained|Warning:\s+yanked' }
+        
+        $vulnCount = ($vulnerabilityLines | Measure-Object).Count
+        $warningCount = ($warningLines | Measure-Object).Count
+        
+        # Also check for the summary line
+        $summaryMatch = $auditOutput | Select-String '(\d+) (vulnerabilities|vulnerability) found'
+        if ($summaryMatch) {
+            $vulnCount = [int]$summaryMatch.Matches[0].Groups[1].Value
+        }
+        
+        $allowedWarningsMatch = $auditOutput | Select-String '(\d+) allowed warnings? found'
+        if ($allowedWarningsMatch) {
+            $warningCount = [int]$allowedWarningsMatch.Matches[0].Groups[1].Value
+        }
+        
+        $QualityReport.SecurityVulnerabilities = $vulnCount
+        
+        # Capture details about issues found
+        $securityDetails = @()
+        
+        # Parse crate warnings/vulnerabilities
+        $currentCrate = $null
+        foreach ($line in $auditOutput) {
+            if ($line -match '^Crate:\s+(.+)$') {
+                $currentCrate = $matches[1]
             }
-            catch {
-                Write-QAWarning "Failed to parse audit JSON, using text output"
-                $QualityReport.SecurityVulnerabilities = 0
-                Write-QASuccess "Security audit completed"
+            elseif ($line -match '^Title:\s+(.+)$' -and $currentCrate) {
+                $title = $matches[1]
+                $securityDetails += "$currentCrate - $title"
+            }
+        }
+        
+        $QualityReport.SecurityDetails = $securityDetails
+        
+        if ($vulnCount -eq 0 -and $warningCount -eq 0) {
+            Write-QASuccess "No known security vulnerabilities or warnings found"
+        } elseif ($vulnCount -eq 0) {
+            Write-QASuccess "No security vulnerabilities found ($warningCount unmaintained package warnings)"
+            if ($securityDetails.Count -gt 0) {
+                Write-QAInfo "Unmaintained packages:"
+                $securityDetails | ForEach-Object { Write-Host "  ⚠️ $_" -ForegroundColor Yellow }
             }
         } else {
-            Write-QAWarning "Security audit completed with warnings"
+            Write-QAWarning "Found $vulnCount security vulnerabilities and $warningCount warnings"
+            $securityDetails | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
         }
     }
     catch {
@@ -728,20 +754,33 @@ function Test-OutdatedDependencies {
         # Save outdated dependencies results
         Save-CheckResult -CheckName "Outdated_Dependencies" -Output ($outdatedOutput -join "`n") -ExitCode $exitCode
         
-        # Count outdated dependencies from output
-        $outdatedLines = $outdatedOutput | Where-Object { $_ -match '^\s*\w+' -and $_ -notmatch 'Name|---' }
-        $outdatedCount = ($outdatedLines | Measure-Object).Count
+        # Check if all dependencies are up to date (special message from cargo-outdated)
+        $allUpToDate = $outdatedOutput | Where-Object { $_ -match 'All dependencies are up to date' }
         
-        $QualityReport.OutdatedDependencies = $outdatedCount
-        
-        if ($outdatedCount -eq 0) {
+        if ($allUpToDate) {
+            $QualityReport.OutdatedDependencies = 0
             Write-QASuccess "All dependencies are up to date"
         } else {
-            $QualityReport.OutdatedDetails = $outdatedLines
-            Write-QAWarning "Found $outdatedCount outdated dependencies"
-            $outdatedLines | Select-Object -First 10 | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
-            if ($outdatedCount -gt 10) {
-                Write-Host "  ... and $($outdatedCount - 10) more" -ForegroundColor Gray
+            # Count outdated dependencies from output - exclude header rows and empty lines
+            $outdatedLines = $outdatedOutput | Where-Object { 
+                $_ -match '^\s*\w+' -and 
+                $_ -notmatch '^Name\s+' -and 
+                $_ -notmatch '^---' -and
+                $_ -notmatch 'Fetching|Parsing|Checking'
+            }
+            $outdatedCount = ($outdatedLines | Measure-Object).Count
+            
+            $QualityReport.OutdatedDependencies = $outdatedCount
+            
+            if ($outdatedCount -eq 0) {
+                Write-QASuccess "All dependencies are up to date"
+            } else {
+                $QualityReport.OutdatedDetails = $outdatedLines
+                Write-QAWarning "Found $outdatedCount outdated dependencies"
+                $outdatedLines | Select-Object -First 10 | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+                if ($outdatedCount -gt 10) {
+                    Write-Host "  ... and $($outdatedCount - 10) more" -ForegroundColor Gray
+                }
             }
         }
     }
