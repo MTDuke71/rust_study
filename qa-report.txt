@@ -1,8 +1,8 @@
 
 🎯 QUALITY ASSURANCE REPORT
 ===========================
-Timestamp: 2025-11-25 21:30:28
-Duration: 06:50
+Timestamp: 2025-11-25 21:41:28
+Duration: 06:52
 
 📊 CODE QUALITY RESULTS:
   Compilation: ✅ Clean
@@ -14,10 +14,22 @@ Duration: 06:50
 
 🔒 SECURITY & DEPENDENCIES:
   Security Vulnerabilities: 0
-  Outdated Dependencies: 0
-  Unused Dependencies: 0
+  Outdated Dependencies: 2
+  Unused Dependencies: 2
   Dead Code Warnings: 0
 
 🎉 OVERALL STATUS: ✅ PASSED
+
+📦 OUTDATED DEPENDENCIES (2):
+--------------------------------------------------
+  mission6
+  criterion  0.5.1    ---     0.7.0   Development  ---
+
+
+
+🧹 UNUSED DEPENDENCIES (2):
+--------------------------------------------------
+      = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+  unused dependencies:
 
 
