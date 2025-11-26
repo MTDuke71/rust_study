@@ -1,33 +1,23 @@
 
 🎯 QUALITY ASSURANCE REPORT
 ===========================
-Timestamp: 2025-11-25 20:40:46
-Duration: 06:04
+Timestamp: 2025-11-25 20:54:03
+Duration: 05:41
 
 📊 CODE QUALITY RESULTS:
   Compilation: ✅ Clean
-  Formatting: ✅ Applied  
+  Formatting: ✅ Already formatted  
   Clippy Issues: 0
-  Tests: 1711/1711 passed
-  Coverage: Failed
+  Tests: 0/0 passed
+  Coverage: 37.68%
   Doc Warnings: 0
 
 🔒 SECURITY & DEPENDENCIES:
-  Security Vulnerabilities: 1
-  Outdated Dependencies: 1
+  Security Vulnerabilities: 0
+  Outdated Dependencies: 0
   Unused Dependencies: 0
   Dead Code Warnings: 0
 
-🎉 OVERALL STATUS: ❌ ISSUES FOUND
-
-⚠️  FORMATTING ISSUES (1 files):
---------------------------------------------------
-  Diff in \\?\D:\repos\rust_study\missions\Mission10\benches\performance.rs:10:
-
-
-📦 OUTDATED DEPENDENCIES (1):
---------------------------------------------------
-  All dependencies are up to date, yay!
-
+🎉 OVERALL STATUS: ✅ PASSED
 
 
