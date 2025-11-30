@@ -20,3 +20,7 @@ path = "examples/async_iteration.rs"
 [[example]]
 name = "buffering"
 path = "examples/buffering.rs"
+
+[[bin]]
+name = "ch17_04_book_examples"
+path = "src/ch17_04_book_examples.rs"
