@@ -29,27 +29,38 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 
 ## Day-by-Day Summary
 
-### Day 1: Historian Hysteria
-**Title**: Historian Hysteria  
-**Part 1 Type**: Data Structures + Mathematical  
-**Part 1 Description**: Calculate total distance between two lists by pairing smallest elements after sorting  
-**Part 2 Type**: Data Structures + Mathematical  
-**Part 2 Description**: Calculate similarity score by multiplying each left number by its frequency in right list  
-**Key Concepts**: List processing, sorting algorithms, frequency counting with HashMap, iterator chains  
+### Day 1: Secret Entrance
+**Title**: Secret Entrance  
+**Part 1 Type**: Simulation + Mathematical  
+**Part 1 Description**: Simulate safe dial rotations (L/R with distance) on circular 0-99 positions, count how many times dial ends at position 0  
+**Part 2 Type**: Simulation + Mathematical  
+**Part 2 Description**: Count every time dial points at 0 (both final positions AND during rotations), using password method 0x434C49434B  
+**Key Concepts**: Circular arithmetic, modular mathematics, boundary crossing detection, signed integer arithmetic, edge case handling for position 0  
 
 **🧩 Algorithm Analysis**:
-- **Problem Pattern**: Two-part escalation (distance metric → similarity metric)
-- **Data Structure**: Vec for sorting, HashMap for frequency counting
-- **Complexity**: Part 1: O(n log n) sorting, Part 2: O(n) frequency map construction + O(n) scoring
-- **AoC Theme**: Classic "process pairs of lists" with different metrics
+- **Problem Pattern**: Simulation escalation (endpoint counting → comprehensive zero detection including intermediate states)
+- **Data Structure**: Simple state tracking with signed integers, boundary crossing arithmetic
+- **Complexity**: Part 1: O(n) single pass through rotations, Part 2: O(n) with boundary crossing calculations
+- **AoC Theme**: "Safe dial manipulation" with classic Part 2 escalation (simple counting → complex state tracking)
 
-**🦀 Rust Conversion Highlights**:
-- **From Python manual loops** → **Functional iterator chains** (`zip`, `map`, `fold`, `sum`)
-- **From exception handling** → **Explicit `Result<T, E>` with detailed error context**
-- **From dynamic typing** → **Compile-time type safety with pattern matching**
-- **From multiple data copies** → **In-place sorting and zero-cost abstractions**
+**🦀 Rust Implementation Highlights**:
+- **Circular arithmetic safety** → **Modular operations with overflow protection** using signed `i32` arithmetic
+- **Edge case handling** → **Special position 0 logic** preventing overcounting when starting from zero
+- **Boundary detection** → **Division-based crossing counts** `(dial / 100).abs()` for natural zero detection
+- **Error resilience** → **Comprehensive parsing with `anyhow::Result`** and detailed error context
 
-**Performance**: Python→Rust identical results, significantly improved safety and performance
+**Debugging Journey**: 
+- **Initial overcounting (6037)** → Fixed edge cases when starting from position 0
+- **Overcorrection (5015)** → Balanced approach using signed arithmetic and boundary crossing
+- **Final solution (5941)** → Elegant division-based detection with special Left-from-0 handling
+
+**🔧 Key Implementation Insights**:
+- **Special case**: `if dial == 0 && rotation.direction == Direction::Left { dial = 100; }` prevents edge case issues
+- **Boundary crossing**: `zero_count += (dial / 100).abs();` naturally detects zero passages
+- **Wrap handling**: `if dial < 1 { zero_count += 1; }` catches wrap-around cases
+- **Normalization**: Final `dial % 100` with negative correction ensures 0-99 range
+
+**Performance**: Pure Rust implementation, no Python comparison available for AoC 2025
 
 ---
 
@@ -67,7 +78,7 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 | Encoding | 0 | 0 |
 | Graph Algorithms | 0 | 0 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 0 | 0 |
+| Mathematical | 1 | 1 |
 | Number Theory | 0 | 0 |
 | Optimization | 0 | 0 |
 | Parsing | 0 | 0 |
@@ -75,18 +86,21 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
 | Search/Traversal | 0 | 0 |
-| Simulation | 0 | 0 |
+| Simulation | 1 | 1 |
 | String Processing | 0 | 0 |
 
 ## Implementation Notes
 
 ### Common Patterns Observed
 
-
+### Early 2025 Themes
+- **Mathematical simulations**: Day 1 demonstrates circular arithmetic challenges with edge case complexity
+- **Boundary detection**: Division-based algorithms for detecting state transitions (dial crossing zero)
+- **Signed arithmetic benefits**: Using `i32` over `u32` simplifies wrap-around and negative value handling
 
 ### Rust-Specific Considerations
 
-- **Day 1**: 
+- **Day 1**: Demonstrates signed integer arithmetic advantages for circular problems, comprehensive error handling with `anyhow::Result`, and the importance of special case handling for boundary conditions (position 0)
 
 ---
 
@@ -127,9 +141,9 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 26, 2025*
-*Days Implemented: 1 *
-*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 *
+*Last Updated: December 1, 2025*
+*Days Implemented: 1*
+*Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 *Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning

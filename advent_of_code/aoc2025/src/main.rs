@@ -1,5 +1,5 @@
 use anyhow::Result;
-use aoc2024::prelude::*;
+use aoc2025::prelude::*;
 use std::fs;
 
 fn main() -> Result<()> {

@@ -1,103 +1,97 @@
-# --- Day 1: Historian Hysteria ---
-The Chief Historian is always present for the big Christmas sleigh launch, but nobody has seen him in months! Last anyone heard, he was visiting locations that are historically significant to the North Pole; a group of Senior Historians has asked you to accompany them as they check the places they think he was most likely to visit.
+--- Day 1: Secret Entrance ---
+The Elves have good news and bad news.
 
-As each location is checked, they will mark it on their list with a star. They figure the Chief Historian must be in one of the first fifty places they'll look, so in order to save Christmas, you need to help them get fifty stars on their list before Santa takes off on December 25th.
+The good news is that they've discovered project management! This has given them the tools they need to prevent their usual Christmas emergency. For example, they now know that the North Pole decorations need to be finished soon so that other critical tasks can start on time.
 
-Collect stars by solving puzzles. Two puzzles will be made available on each day in the Advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
+The bad news is that they've realized they have a different emergency: according to their resource planning, none of them have any time left to decorate the North Pole!
 
-You haven't even left yet and the group of Elvish Senior Historians has already hit a problem: their list of locations to check is currently empty. Eventually, someone decides that the best place to check first would be the Chief Historian's office.
+To save Christmas, the Elves need you to finish decorating the North Pole by December 12th.
 
-Upon pouring into the office, everyone confirms that the Chief Historian is indeed nowhere to be found. Instead, the Elves discover an assortment of notes and lists of historically significant locations! This seems to be the planning the Chief Historian was doing before he left. Perhaps these notes can be used to determine which locations to search?
+Collect stars by solving puzzles. Two puzzles will be made available on each day; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
 
-Throughout the Chief's office, the historically significant locations are listed not by name but by a unique number called the location ID. To make sure they don't miss anything, The Historians split into two groups, each searching the office and trying to create their own complete list of location IDs.
+You arrive at the secret entrance to the North Pole base ready to start decorating. Unfortunately, the password seems to have been changed, so you can't get in. A document taped to the wall helpfully explains:
 
-There's just one problem: by holding the two lists up side by side (your puzzle input), it quickly becomes clear that the lists aren't very similar. Maybe you can help The Historians reconcile their lists?
+"Due to new security protocols, the password is locked in the safe below. Please see the attached document for the new combination."
 
-For example:
+The safe has a dial with only an arrow on it; around the dial are the numbers 0 through 99 in order. As you turn the dial, it makes a small click noise as it reaches each number.
 
-3   4
-4   3
-2   5
-1   3
-3   9
-3   3
-Maybe the lists are only off by a small amount! To find out, pair up the numbers and measure how far apart they are. Pair up the smallest number in the left list with the smallest number in the right list, then the second-smallest left number with the second-smallest right number, and so on.
+The attached document (your puzzle input) contains a sequence of rotations, one per line, which tell you how to open the safe. A rotation starts with an L or R which indicates whether the rotation should be to the left (toward lower numbers) or to the right (toward higher numbers). Then, the rotation has a distance value which indicates how many clicks the dial should be rotated in that direction.
 
-Within each pair, figure out how far apart the two numbers are; you'll need to add up all of those distances. For example, if you pair up a 3 from the left list with a 7 from the right list, the distance apart is 4; if you pair up a 9 with a 3, the distance apart is 6.
+So, if the dial were pointing at 11, a rotation of R8 would cause the dial to point at 19. After that, a rotation of L19 would cause it to point at 0.
 
-In the example list above, the pairs and distances would be as follows:
+Because the dial is a circle, turning the dial left from 0 one click makes it point at 99. Similarly, turning the dial right from 99 one click makes it point at 0.
 
-The smallest number in the left list is 1, and the smallest number in the right list is 3. The distance between them is 2.
-The second-smallest number in the left list is 2, and the second-smallest number in the right list is another 3. The distance between them is 1.
-The third-smallest number in both lists is 3, so the distance between them is 0.
-The next numbers to pair up are 3 and 4, a distance of 1.
-The fifth-smallest numbers in each list are 3 and 5, a distance of 2.
-Finally, the largest number in the left list is 4, while the largest number in the right list is 9; these are a distance 5 apart.
-To find the total distance between the left list and the right list, add up the distances between all of the pairs you found. In the example above, this is 2 + 1 + 0 + 1 + 2 + 5, a total distance of 11!
+So, if the dial were pointing at 5, a rotation of L10 would cause it to point at 95. After that, a rotation of R5 could cause it to point at 0.
 
-Your actual left and right lists contain many location IDs. What is the total distance between your lists?
+The dial starts by pointing at 50.
 
-Your puzzle answer was 2196996.
+You could follow the instructions, but your recent required official North Pole secret entrance security training seminar taught you that the safe is actually a decoy. The actual password is the number of times the dial is left pointing at 0 after any rotation in the sequence.
+
+For example, suppose the attached document contained the following rotations:
+
+L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82
+Following these rotations would cause the dial to move as follows:
+
+The dial starts by pointing at 50.
+The dial is rotated L68 to point at 82.
+The dial is rotated L30 to point at 52.
+The dial is rotated R48 to point at 0.
+The dial is rotated L5 to point at 95.
+The dial is rotated R60 to point at 55.
+The dial is rotated L55 to point at 0.
+The dial is rotated L1 to point at 99.
+The dial is rotated L99 to point at 0.
+The dial is rotated R14 to point at 14.
+The dial is rotated L82 to point at 32.
+Because the dial points at 0 a total of three times during this process, the password in this example is 3.
+
+Analyze the rotations in your attached document. What's the actual password to open the door?
+
+Your puzzle answer was 989.
 
 The first half of this puzzle is complete! It provides one gold star: *
 
 --- Part Two ---
-Your analysis only confirmed what everyone feared: the two lists of location IDs are indeed very different.
+You're sure that's the right password, but the door won't open. You knock, but nobody answers. You build a snowman while you think.
 
-Or are they?
+As you're rolling the snowballs for your snowman, you find another security document that must have fallen into the snow:
 
-The Historians can't agree on which group made the mistakes or how to read most of the Chief's handwriting, but in the commotion you notice an interesting detail: a lot of location IDs appear in both lists! Maybe the other numbers aren't location IDs at all but rather misinterpreted handwriting.
+"Due to newer security protocols, please use password method 0x434C49434B until further notice."
 
-This time, you'll need to figure out exactly how often each number from the left list appears in the right list. Calculate a total similarity score by adding up each number in the left list after multiplying it by the number of times that number appears in the right list.
+You remember from the training seminar that "method 0x434C49434B" means you're actually supposed to count the number of times any click causes the dial to point at 0, regardless of whether it happens during a rotation or at the end of one.
 
-Here are the same example lists again:
+Following the same rotations as in the above example, the dial points at zero a few extra times during its rotations:
 
-3   4
-4   3
-2   5
-1   3
-3   9
-3   3
-For these example lists, here is the process of finding the similarity score:
+The dial starts by pointing at 50.
+The dial is rotated L68 to point at 82; during this rotation, it points at 0 once.
+The dial is rotated L30 to point at 52.
+The dial is rotated R48 to point at 0.
+The dial is rotated L5 to point at 95.
+The dial is rotated R60 to point at 55; during this rotation, it points at 0 once.
+The dial is rotated L55 to point at 0.
+The dial is rotated L1 to point at 99.
+The dial is rotated L99 to point at 0.
+The dial is rotated R14 to point at 14.
+The dial is rotated L82 to point at 32; during this rotation, it points at 0 once.
+In this example, the dial points at 0 three times at the end of a rotation, plus three more times during a rotation. So, in this example, the new password would be 6.
 
-The first number in the left list is 3. It appears in the right list three times, so the similarity score increases by 3 * 3 = 9.
-The second number in the left list is 4. It appears in the right list once, so the similarity score increases by 4 * 1 = 4.
-The third number in the left list is 2. It does not appear in the right list, so the similarity score does not increase (2 * 0 = 0).
-The fourth number, 1, also does not appear in the right list.
-The fifth number, 3, appears in the right list three times; the similarity score increases by 9.
-The last number, 3, appears in the right list three times; the similarity score again increases by 9.
-So, for these example lists, the similarity score at the end of this process is 31 (9 + 4 + 0 + 0 + 9 + 9).
+Be careful: if the dial were pointing at 50, a single rotation like R1000 would cause the dial to point at 0 ten times before returning back to 50!
 
-Once again consider your left and right lists. What is their similarity score?
+Using password method 0x434C49434B, what is the password to open the door?
 
-Your puzzle answer was 23655822.
+Your puzzle answer was 5941.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
-
----
-
-## 🔗 **Related Concepts**
-
-**Problem Patterns**:
-- [[../../zettelkasten/AoC Patterns MOC]] - List processing and sorting patterns
-- [[../../zettelkasten/Collections MOC]] - Vec operations and HashMap frequency counting
-- [[../../zettelkasten/AoC Collection Problems]] - Similar collection-based puzzles
-
-**Implementation Techniques**:
-- Dual list processing with `zip()` iterators
-- Distance calculation using `abs_diff()` 
-- Frequency counting with HashMap aggregation
-- Similarity scoring with multiplicative accumulation
-
-**Cross-Year Patterns**:
-- [[../../zettelkasten/AoC 2015 MOC]] - Compare with AoC 2015 list processing problems
 
 At this point, you should return to your Advent calendar and try another puzzle.
 
 If you still want to see it, you can get your puzzle input.
-
-You can also [Share] this puzzle.
-
----
-*Links: [[day02]] [[AoC 2024 Overview]]*
-
