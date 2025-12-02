@@ -59,7 +59,7 @@ Choosing between **async/await** and **threads** is a fundamental architectural 
    - HTTP requests, API calls
    - Database queries
    - WebSocket connections
-   
+
 2. **High Concurrency I/O**
    - Handling thousands of connections
    - Chat servers, web servers
@@ -275,27 +275,27 @@ fn find_solution(range: Range<u64>) -> Option<u64> {
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                  CHOOSE YOUR APPROACH                    │
+│                  CHOOSE YOUR APPROACH                   │
 ├─────────────────────────────────────────────────────────┤
-│                                                          │
+│                                                         │
 │  "Am I mostly WAITING?"                                 │
 │      YES → ASYNC (network, file I/O, timers)            │
-│                                                          │
+│                                                         │
 │  "Am I mostly COMPUTING?"                               │
 │      YES → THREADS (CPU-bound, parallelism)             │
-│                                                          │
+│                                                         │
 │  "Both waiting AND computing?"                          │
 │      → ASYNC with spawn_blocking for CPU parts          │
-│                                                          │
+│                                                         │
 │  "How many concurrent operations?"                      │
 │      < 100   → Either works fine                        │
 │      100-1K  → Threads OK, async better                 │
 │      > 1K    → Async strongly preferred                 │
-│                                                          │
+│                                                         │
 │  "Can I tolerate blocking?"                             │
 │      YES → Threads are simpler                          │
 │      NO  → Must use async                               │
-│                                                          │
+│                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
 
