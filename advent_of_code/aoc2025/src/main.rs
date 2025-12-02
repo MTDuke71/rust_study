@@ -21,8 +21,8 @@ fn main() -> Result<()> {
         }
     }
 
-    // If no input file provided, use default: inputs/day{day:02}_example.txt
-    let path = input_file.unwrap_or_else(|| format!("inputs/day{day:02}_example.txt"));
+    // If no input file provided, use default: inputs/day{day:02}.txt
+    let path = input_file.unwrap_or_else(|| format!("inputs/day{day:02}.txt"));
 
     let input = fs::read_to_string(&path)
         .map_err(|e| anyhow::anyhow!("Failed to read file '{}': {}", path, e))?;
