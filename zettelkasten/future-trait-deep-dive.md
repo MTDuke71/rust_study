@@ -275,6 +275,7 @@ impl Future for CountdownFuture {
 
 ### Runtime & Execution
 - [[rust-threading-basics]] - Thread-based concurrency comparison
+- [[async-vs-threads-decision]] - When to choose async vs threads
 - [[sync-send-traits]] - Thread safety markers
 
 ### Memory & Safety
