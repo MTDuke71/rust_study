@@ -1,5 +1,5 @@
 {
   "format": "YYYY-MM-DD",
-  "folder": "daily_study",
-  "template": ".obsidian/templates/Daily Study Template.md"
+  "folder": "/zettelkasten/Daily Notes/",
+  "template": "templates/Daily Notes Template"
 }
