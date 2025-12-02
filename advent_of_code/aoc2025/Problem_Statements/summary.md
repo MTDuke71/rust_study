@@ -94,6 +94,49 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 - Part 1: `23534117921`
 - Part 2: `31755323497`
 
+**⏱️ Performance Note**: The actual puzzle input uses small, bounded ranges that complete instantly with the brute force approach. The O(R×d²) complexity is perfectly acceptable when R (range size) is small.
+
+**🚀 Reddit Challenge: Full 32-bit Range Benchmark**
+
+The Reddit community posed an extreme scaling challenge: what if the input was a single range from 1 to 4,294,967,296 (2³²)? This exposed the limitations of the brute force approach and required a fundamentally different algorithm.
+
+**Brute Force Approach** (`day02_full_range.rs`) - works fine for puzzle input, struggles at scale:
+- Iterates through all 4.3 billion numbers, checking each one
+- Part 1: 114.42 seconds (~1.9 minutes)
+- Part 2: 479.98 seconds (~8 minutes)
+- Total: **594.40 seconds** (~10 minutes)
+
+**Optimized Approach** (`day02_full_range_optimized.rs`):
+- Key insight: **Generate valid patterns directly** instead of checking every number
+- For D-digit numbers, only pattern lengths P where D % P == 0 and D/P ≥ 2 are valid
+- Example: 7-digit numbers (prime) only have pattern length 1 → just 9 valid numbers (1111111-9999999)
+
+| Version | Part 1 | Part 2 | Total |
+|---------|--------|--------|-------|
+| Brute force | 114.42s | 479.98s | **594.40s** |
+| Optimized | 287.70µs | 1.15ms | **1.43ms** |
+| **Speedup** | 397,000x | 417,000x | **~415,000x** |
+
+**Pattern Analysis by Digit Count**:
+```
+1 digits: NO valid patterns (prime)
+2 digits: pattern lengths [1]
+3 digits: pattern lengths [1]
+4 digits: pattern lengths [1, 2]
+5 digits: pattern lengths [1]
+6 digits: pattern lengths [1, 2, 3]
+7 digits: pattern lengths [1]
+8 digits: pattern lengths [1, 2, 4]
+9 digits: pattern lengths [1, 3]
+10 digits: pattern lengths [1, 2, 5]
+```
+
+**Full Range Results**:
+- Part 1 (doubled): 87,729,849,870,725 (42,949 numbers)
+- Part 2 (repeated): 88,304,989,965,662 (43,987 numbers)
+
+**Lesson**: Classic example of when brute force is "good enough" for the actual problem, but extreme inputs reveal the need for algorithmic thinking. The optimized approach changes from "check every number" O(N × d²) to "generate only valid patterns" O(valid_patterns), reducing 4.3 billion checks to ~44,000 generations.
+
 ---
 
 ## Problem Type Distribution (Available Days)
