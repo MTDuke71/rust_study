@@ -337,4 +337,4 @@ Think of this like **AUTOSAR component scheduling**:
 
 *Tags: #async #threads #concurrency #decision-guide #rust-book-ch17 #performance*
 
-*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[async-await-basics]] | [[rust-threading-basics]] | [[future-trait-deep-dive]] | [[shared-state-concurrency]] | [[sync-send-traits]]*
+*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[async-await-basics]] | [[rust-threading-basics]] | [[future-trait-deep-dive]] | [[shared-state-concurrency]] | [[sync-send-traits]] | [[rayon-parallel-iterators]]*

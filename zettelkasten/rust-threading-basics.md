@@ -723,4 +723,4 @@ fn main() {
 
 *Tags: #concurrency #threading #std-thread #parallelism #aoc-optimization #cpu-bound #performance #rust-book-ch16 #week8 #beginner #practical*
 
-*Links: [[zettel-index]] | [[concurrency-fundamentals]] | [[message-passing-channels]] | [[shared-state-concurrency]] | [[sync-send-traits]] | [[ownership-fundamentals]] | [[closures-rust]] | [[aoc-optimization-strategies]] | [[rust-book-ch16-1]] | [[async-vs-threads-decision]]*
+*Links: [[zettel-index]] | [[concurrency-fundamentals]] | [[message-passing-channels]] | [[shared-state-concurrency]] | [[sync-send-traits]] | [[ownership-fundamentals]] | [[closures-rust]] | [[aoc-optimization-strategies]] | [[rust-book-ch16-1]] | [[async-vs-threads-decision]] | [[rayon-parallel-iterators]]*
