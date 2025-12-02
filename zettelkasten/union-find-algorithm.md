@@ -2,7 +2,7 @@
 
 **Tags:** #algorithm #union-find #disjoint-sets #graph-algorithms #optimization #data-structures #path-compression #union-by-rank  
 **Created:** 2025-11-11  
-**Related:** [[mission-10]], [[Graph Algorithms]], [[Tree Algorithms]], [[Performance Optimization]], [[Kruskal's Algorithm]], [[Connected Components]]
+**Related:** [[mission-10]], [[graph-algorithms]], [[Tree Algorithms]], [[Performance Optimization]], [[Kruskal's Algorithm]], [[Connected Components]]
 
 ---
 
@@ -639,7 +639,7 @@ fn union(&mut self, x: usize, y: usize) -> bool {
 
 ## *Links:*
 
-**Core Concepts:** [[mission-10]] | [[Graph Algorithms]] | [[Tree Algorithms]] | [[Performance Optimization]]
+**Core Concepts:** [[mission-10]] | [[graph-algorithms]] | [[Tree Algorithms]] | [[Performance Optimization]]
 
 **Applications:** [[Kruskal's Algorithm]] | [[Connected Components]] | [[Cycle Detection]] | [[Minimum Spanning Tree]]
 

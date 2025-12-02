@@ -132,7 +132,7 @@ pub trait Pathfinder<G: WeightedGraph> {
 
 ### **Learning Resources**
 - **[[Algorithm Design Patterns]]** - General algorithmic thinking
-- **[[Graph Algorithms]]** - Comprehensive graph algorithm reference
+- **[[graph-algorithms]]** - Comprehensive graph algorithm reference
 - **[[Data Structure Patterns]]** - Efficient data structure usage
 - **[[Testing Strategies]]** - Algorithm validation approaches
 
@@ -286,7 +286,7 @@ pub trait Pathfinder<G: WeightedGraph> {
 
 ### Core Algorithm Concepts
 - [[A-Star-Algorithm-Deep-Dive]] - Comprehensive A* theory and implementation
-- [[Graph Algorithms]] - Foundation graph theory and basic algorithms
+- [[graph-algorithms]] - Foundation graph theory and basic algorithms
 - [[Priority Queue Patterns]] - Data structure foundations for pathfinding
 - [[Dijkstra Algorithm]] - Shortest path algorithm theory and applications
 
@@ -313,7 +313,7 @@ pub trait Pathfinder<G: WeightedGraph> {
 
 ### Knowledge Graph Integration
 - **[[performance-benchmarking-grid-optimization]]** - Connects to Mission9 benchmarking strategies
-- **[[Graph Algorithms]]** - Foundation concepts for pathfinding algorithms
+- **[[graph-algorithms]]** - Foundation concepts for pathfinding algorithms
 - **[[Priority Queue Patterns]]** - Core data structure used in Dijkstra and A*
 - **[[BFS Patterns]]** - Related search algorithms for comparison
 - **[[Algorithm Analysis]]** - Time/space complexity analysis methods used in Mission9
@@ -326,4 +326,4 @@ pub trait Pathfinder<G: WeightedGraph> {
 
 *Tags: #mission9 #pathfinding #dijkstra #astar #algorithms #graphs #optimization #data-structures*
 
-*Links: [[rust-book-ch9-12-review]] | [[mission-7]] | [[Mission10 Overview]] | [[Graph Algorithms]] | [[Algorithm Design Patterns]] | [[Performance Analysis]] | [[Priority Queue Patterns]] | [[Dijkstra Algorithm]] | [[A* Algorithm]] | [[Pathfinding Strategies]] | [[day2_completion_summary]] | [[Daily Notes/2025-10-23]] | [[zettel-index]]*
+*Links: [[rust-book-ch9-12-review]] | [[mission-7]] | [[Mission10 Overview]] | [[graph-algorithms]] | [[Algorithm Design Patterns]] | [[Performance Analysis]] | [[Priority Queue Patterns]] | [[Dijkstra Algorithm]] | [[A* Algorithm]] | [[Pathfinding Strategies]] | [[day2_completion_summary]] | [[Daily Notes/2025-10-23]] | [[zettel-index]]*

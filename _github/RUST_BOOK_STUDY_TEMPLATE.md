@@ -184,7 +184,7 @@ Think of [concept] as:
 
 *This chapter forms the foundation for [why it matters]. Essential for writing idiomatic Rust code.*
 
-*Links: [[Rust Book MOC]] | [[Chapter {X-1} Overview]] | [[Chapter {X+1} Overview]]*
+*Links: [[rust-book]] | [[Chapter {X-1} Overview]] | [[Chapter {X+1} Overview]]*
 *Tags: #rust-book #chapter{X} #[main-topic] #concept #foundation*
 ```
 
@@ -514,5 +514,5 @@ Each section's main.rs could follow the pattern shown in Mission5_tut examples w
 
 ---
 
-*Links: [[Rust Book MOC]] | [[3-Track Integration]] | [[MONTHLY_CALENDAR]]*
+*Links: [[rust-book]] | [[3-Track Integration]] | [[MONTHLY_CALENDAR]]*
 *Tags: #rust-book #template #standards #3-track #foundation*

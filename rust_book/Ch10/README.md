@@ -6,7 +6,7 @@
 - **Next**: [[zettelkasten/rust_book/rust-book-ch11]]
 - **Missions**: [[mission-3]] - Trait-based algorithms | [[mission-5]] - Generic collections
 - **Daily Study**: [[daily-study/Day15]] | [[daily-study/Day16]] | [[daily-study/Day17]]
-- **Book MOC**: [[Rust Book MOC]]
+- **Book MOC**: [[rust-book]]
 
 ## 📚 Overview
 
@@ -436,5 +436,5 @@ Before moving to Chapter 11, ensure you can:
 
 *This chapter forms the foundation for writing reusable, type-safe Rust code. Essential for understanding Rust's type system and memory safety guarantees.*
 
-*Links: [[Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch9]] | [[zettelkasten/rust_book/rust-book-ch11]]*
+*Links: [[rust-book]] | [[zettelkasten/rust_book/rust-book-ch9]] | [[zettelkasten/rust_book/rust-book-ch11]]*
 *Tags: #rust-book #chapter10 #generics #traits #lifetimes #foundation*

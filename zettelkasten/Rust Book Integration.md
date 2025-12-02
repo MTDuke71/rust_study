@@ -6,4 +6,4 @@ Rust Book Integration tracks how concepts from the official Rust Book are reinfo
 
 This note serves as a coordination hub rather than a deep-dive chapter summary. When a chapter drives new code or study material, add a short bullet here and link back to the specific mission, daily note, or AoC problem.
 
-*Links: [[Rust Book MOC]] [[Daily Study MOC]] [[Missions Overview]] [[AoC Patterns MOC]]*
+*Links: [[rust-book]] [[Daily Study MOC]] [[Missions Overview]] [[AoC Patterns MOC]]*

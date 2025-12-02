@@ -385,7 +385,7 @@ fn find_path_optimized(grid: &Grid, start: Coord, end: Coord) -> Option<usize> {
 
 - [[Symmetry in Algorithms]] - Mathematical optimization techniques
 - [[TSP Algorithms]] - Combinatorial optimization implementations
-- [[Graph Algorithms]] - Efficient graph traversal and pathfinding
+- [[graph-algorithms]] - Efficient graph traversal and pathfinding
 - [[BFS Patterns]] - Optimized breadth-first search implementations
 
 ### Related Concepts
@@ -415,4 +415,4 @@ fn find_path_optimized(grid: &Grid, start: Coord, end: Coord) -> Option<usize> {
 
 *Tags: #performance-engineering #optimization #algorithms #benchmarking #profiling #zero-cost-abstractions #cache-efficiency #parallelism #competitive-programming #pattern #intermediate*
 
-*Links: [[zettel-index]] | [[Memory Optimization]] | [[Symmetry in Algorithms]] | [[TSP Algorithms]] | [[Graph Algorithms]] | [[Iteration Patterns]] | [[AoC Patterns MOC]] | [[mission-5]] | [[mission-6]] | [[mission-8]]*
+*Links: [[zettel-index]] | [[Memory Optimization]] | [[Symmetry in Algorithms]] | [[TSP Algorithms]] | [[graph-algorithms]] | [[Iteration Patterns]] | [[AoC Patterns MOC]] | [[mission-5]] | [[mission-6]] | [[mission-8]]*

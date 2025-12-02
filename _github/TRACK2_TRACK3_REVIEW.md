@@ -63,7 +63,7 @@ Ch10/
    - ✅ Links to [[zettelkasten/rust_book/rust-book-ch9]] and [[zettelkasten/rust_book/rust-book-ch11]]
    - ✅ Links to missions: [[mission-3]], [[mission-5]]
    - ✅ Links to daily study: [[daily-study/Day15]], [[daily-study/Day16]], [[daily-study/Day17]]
-   - ✅ Links to [[Rust Book MOC]]
+   - ✅ Links to [[rust-book]]
 
 #### ⚠️ **What Needs Improvement**
 

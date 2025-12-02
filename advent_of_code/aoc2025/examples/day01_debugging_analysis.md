@@ -124,3 +124,9 @@ Using `i32` instead of `u32` allows negative values during calculation, making b
 ## Final Answer: 5941 ✅
 
 The working solution correctly handles all edge cases and provides the right answer through elegant signed arithmetic rather than complex boundary detection logic.
+
+---
+
+*Links: [[../Problem_Statements/day01]] | [[../Problem_Statements/summary]] | [[../../aoc_pattern_recognition/README]]*
+
+*Tags: #aoc #2025 #day01 #debugging #signed-arithmetic #edge-cases #lessons-learned*

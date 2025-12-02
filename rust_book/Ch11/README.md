@@ -6,7 +6,7 @@
 - **Next**: [[zettelkasten/rust_book/rust-book-ch12]]
 - **Missions**: [[mission-8]] - Testing algorithm implementations | [[mission-1]] - Unit testing data structures
 - **Daily Study**: [[daily-study/Day25]] | [[daily-study/Day26]] | [[daily-study/Day27]]
-- **Book MOC**: [[Rust Book MOC]]
+- **Book MOC**: [[rust-book]]
 
 ## 📚 Overview
 
@@ -306,4 +306,4 @@ cargo tarpaulin --out Html     # Generate coverage report
 ---
 
 *Tags: #rust-book #chapter11 #testing #unit-tests #integration-tests #tdd #assertions*
-*Links: [[Rust Book MOC]] | [[Testing Patterns]] | [[Mission Testing Strategies]] | [[Daily Study MOC]]*
+*Links: [[rust-book]] | [[Testing Patterns]] | [[Mission Testing Strategies]] | [[Daily Study MOC]]*

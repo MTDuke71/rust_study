@@ -274,7 +274,7 @@ The **Brackets_Extended** project now has **enterprise-grade documentation** tha
 - [[RUST_DOCUMENTATION_STANDARDS]] - Workspace documentation guide
 
 ### Learning Resources
-- [[Rust Book]] - Documentation conventions
+- [[rust-book]] - Documentation conventions
 - [[Daily Study MOC]] - Structured learning
 - [[Missions Overview]] - V-Cycle projects
 

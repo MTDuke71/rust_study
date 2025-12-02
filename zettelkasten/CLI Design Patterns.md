@@ -804,7 +804,7 @@ enum AnalysisCommands {
 
 ### **Rust Book Integration**
 
-- **[[Rust Book MOC]]** - Chapter 12 I/O project with CLI argument handling
+- **[[rust-book]]** - Chapter 12 I/O project with CLI argument handling
 - **Command line parsing** with `std::env` and advanced crate integration
 - **Error handling** patterns specific to CLI applications
 
@@ -842,4 +842,4 @@ enum AnalysisCommands {
 ---
 
 *Tags: #cli #command-line #clap #argument-parsing #user-experience #mission9 #pathfinding #rust #terminal*
-*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Standard Error and Stream Separation]] | [[Custom Error Types]] | [[API Design Patterns]] | [[Testing Patterns]] | [[mission-9]] | [[mission-7]] | [[Rust Book MOC]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Standard Error and Stream Separation]] | [[Custom Error Types]] | [[API Design Patterns]] | [[Testing Patterns]] | [[mission-9]] | [[mission-7]] | [[rust-book]] | [[Daily Study MOC]]*

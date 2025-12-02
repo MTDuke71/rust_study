@@ -7,7 +7,7 @@
 - **Next**: [[zettelkasten/rust_book/rust-book-ch8]]
 - **Missions**: [[mission-6]] - Applies module organization concepts
 - **Daily Study**: [[daily-study/Day15]] - Reinforces this chapter
-- **Book MOC**: [[Rust Book MOC]]
+- **Book MOC**: [[rust-book]]
 
 ## 📚 Overview
 
@@ -174,5 +174,5 @@ The module tree is like a file system where you navigate from root to find what 
 
 *This chapter forms the foundation for organizing larger Rust projects. Essential for writing maintainable, reusable Rust code.*
 
-*Links: [[Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch6]] | [[zettelkasten/rust_book/rust-book-ch8]]*
+*Links: [[rust-book]] | [[zettelkasten/rust_book/rust-book-ch6]] | [[zettelkasten/rust_book/rust-book-ch8]]*
 *Tags: #rust-book #chapter7 #modules #packages #crates #organization #foundation*

@@ -449,4 +449,4 @@ fn is_valid_neighbor(grid: &[Vec<i32>], row: usize, col: usize,
 
 *Tags: #flood-fill #grid-algorithms #connectivity #region-modification #graph-traversal #component-detection #game-development #image-processing*
 
-*Links: [[zettel-index]] | [[mission-6]] | [[find-all-components]] | [[4-connectivity]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Collections MOC]] | [[Missions Overview]] | [[performance-benchmarking-grid-optimization]] | [[Graph Algorithms]] | [[A-Star-Algorithm-Deep-Dive]] | [[Daily Study MOC]] | [[../missions/Mission6/README]] | [[../daily_study/rust_learning_week4_notes/Day24]]*
+*Links: [[zettel-index]] | [[mission-6]] | [[find-all-components]] | [[4-connectivity]] | [[BFS Patterns]] | [[DFS Patterns]] | [[Collections MOC]] | [[Missions Overview]] | [[performance-benchmarking-grid-optimization]] | [[graph-algorithms]] | [[A-Star-Algorithm-Deep-Dive]] | [[Daily Study MOC]] | [[../missions/Mission6/README]] | [[../daily_study/rust_learning_week4_notes/Day24]]*

@@ -1067,4 +1067,4 @@ while let Some(current) = queue.pop_front() {
 
 ---
 
-*Links: [[BFS Algorithms]] | [[BFS Patterns]] | [[BFS Optimization]] | [[Chebyshev Distance]] | [[Manhattan Distance]] | [[Graph Algorithms]] | [[A-Star-Algorithm-Deep-Dive]] | [[mission-9]] | [[zettel-index]]*
+*Links: [[BFS Algorithms]] | [[BFS Patterns]] | [[BFS Optimization]] | [[Chebyshev Distance]] | [[Manhattan Distance]] | [[graph-algorithms]] | [[A-Star-Algorithm-Deep-Dive]] | [[mission-9]] | [[zettel-index]]*

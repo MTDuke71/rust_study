@@ -155,7 +155,7 @@ For detailed analysis and additional solutions, see:
 ### **Algorithm Learning Resources**
 - [[AoC Patterns MOC]] - Catalog of competitive programming patterns
 - [[Priority Queue Patterns]] - Pathfinding and optimization techniques
-- [[Graph Algorithms]] - Traversal, shortest path, and connectivity algorithms
+- [[graph-algorithms]] - Traversal, shortest path, and connectivity algorithms
 - [[Frequency Counting]] - Hash-based analysis techniques
 - [[Grid Traversal]] - 2D problem solving strategies
 

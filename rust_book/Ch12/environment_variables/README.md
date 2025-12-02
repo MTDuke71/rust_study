@@ -2,7 +2,7 @@
 
 **Tags:** #rust-book #chapter12 #cli #environment-variables #minigrep  
 **Created:** 2025-10-22  
-**Related:** [[zettelkasten/rust_book/rust-book-ch12]], [[CLI Design Patterns]], [[Environment Variables]], [[Error Handling Patterns]], [[Rust Book MOC]]
+**Related:** [[zettelkasten/rust_book/rust-book-ch12]], [[CLI Design Patterns]], [[Environment Variables]], [[Error Handling Patterns]], [[rust-book]]
 
 **Chapter 12.5: Complete Standalone Implementation**
 

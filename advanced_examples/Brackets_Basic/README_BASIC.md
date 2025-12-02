@@ -98,7 +98,7 @@ cargo clippy -- -D warnings
 - [[Stack-Based Parsing]] - Delimiter matching
 
 ### Learning Resources
-- [[Rust Book]] - Language fundamentals
+- [[rust-book]] - Language fundamentals
 - [[Daily Study MOC]] - Structured learning
 - [[Competitive Programming]] - AoC-style problems
 - [[RUST_TEST_DOCUMENTATION_STANDARDS]] - Testing guide

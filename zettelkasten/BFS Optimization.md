@@ -748,4 +748,4 @@ fn embedded_bfs(
 
 ---
 
-*Links: [[BFS Algorithms]] | [[BFS Patterns]] | [[BFS Pathfinding]] | [[Graph Algorithms]] | [[Performance Analysis]] | [[Memory Management]] | [[Parallel Algorithms]] | [[zettel-index]]*
+*Links: [[BFS Algorithms]] | [[BFS Patterns]] | [[BFS Pathfinding]] | [[graph-algorithms]] | [[Performance Analysis]] | [[Memory Management]] | [[Parallel Algorithms]] | [[zettel-index]]*

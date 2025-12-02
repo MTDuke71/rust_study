@@ -949,7 +949,7 @@ fn comprehensive_error_messages() {
 
 - **[[Documentation Standards]]** - Testing documentation requirements
 - **[[API Design Patterns]]** - Testable API design principles
-- **[[Rust Book MOC]]** - Chapter 11 testing foundations
+- **[[rust-book]]** - Chapter 11 testing foundations
 
 ### **Quality Assurance**
 
@@ -983,4 +983,4 @@ fn comprehensive_error_messages() {
 ---
 
 *Tags: #testing #patterns #rust #unit-tests #integration-tests #tdd #quality-assurance #best-practices #mission-testing #documentation-tests*
-*Links: [[zettel-index]] | [[Quality Assurance]] | [[Documentation Standards]] | [[API Design Patterns]] | [[Rust Book MOC]] | [[V-Cycle Methodology]] | [[mission-1]] | [[AoC Patterns MOC]]*
+*Links: [[zettel-index]] | [[Quality Assurance]] | [[Documentation Standards]] | [[API Design Patterns]] | [[rust-book]] | [[V-Cycle Methodology]] | [[mission-1]] | [[AoC Patterns MOC]]*

@@ -401,4 +401,4 @@ fn main() {
 ---
 
 *Tags: #rust-book #chapter12 #cli #error-handling #stderr #stdout #exit-codes #best-practices*
-*Links: [[Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch12]]*
+*Links: [[rust-book]] | [[zettelkasten/rust_book/rust-book-ch12]]*

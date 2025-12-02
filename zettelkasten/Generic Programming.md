@@ -646,7 +646,7 @@ Related: [[daily-study/Day19]]
 
 - [[Daily Study MOC]] - Progressive learning track
 - [[rust-concepts-MOC]] - Core language features
-- [[Rust Book]] - The Rust Programming Language (Chapter 10)
+- [[rust-book]] - The Rust Programming Language (Chapter 10)
 - [[AoC Patterns MOC]] - Competitive programming with generics
 
 ## 📊 Complexity Analysis

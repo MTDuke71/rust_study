@@ -22,6 +22,32 @@ Each daily note includes:
 ## 📅 **Daily Notes Timeline**
 
 ### **November 2025** 
+### **December 2025**
+- **[[2025-12-01]]** - Rust Book Ch17.5 & AoC 2025 Day 1 ✅
+  - Completed Chapter 17.5: Future trait deep dive (Pin/Unpin, Poll, Context)
+  - Created ~370 line `ch17_05_traits.rs` with custom Future implementations
+  - Solved AoC 2025 Day 1 (Safe Dial) - Part 1: 989, Part 2: 5941
+  - Key insight: `Poll::Pending` ≈ UDS NRC 0x78 (requestCorrectlyReceivedResponsePending)
+  - Created [[future-trait-deep-dive]] zettelkasten note
+
+### **November 2025** 
+- **[[2025-11-30]]** - Rust Book Ch17.4 Streams Deep Dive ✅
+  - Created comprehensive `async-streams.md` (488+ lines)
+  - 7 core stream processing patterns documented
+  - Explored official Rust Book examples (Listings 17-31 through 17-40)
+  - AUTOSAR parallels for integrator perspective
+- **[[2025-11-26]]** - Rust Book Ch17.3 Select/Join Patterns
+  - Async concurrency with `tokio::select!` and `tokio::join!`
+  - Racing futures and graceful cancellation patterns
+- **[[2025-11-25]]** - Rust Book Ch17.2 Async Fundamentals
+  - Basic async/await syntax and mechanics
+  - Tokio runtime setup and configuration
+- **[[2025-11-23]]** - AoC Pattern Recognition Framework
+  - Algorithm pattern categorization system
+  - Mission-to-AoC mapping guidelines
+- **[[2025-11-22]]** - Rust Book Ch17.1 Introduction to Async
+  - Async motivation and when to use it
+  - Comparison with threading models
 - **[[2025-11-21]]** - Rust Book Chapter 17.2 - Async Concurrency Deep Dive ✅
   - Created book.rs with all 8 Rust Book listings (17-6 through 17-13)
   - Enhanced select_futures.rs with concurrent execution demonstrations

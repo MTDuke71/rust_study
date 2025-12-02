@@ -494,7 +494,7 @@ while let Some(node) = pq.pop() {
 ### Data Structures
 
 - [[Binary Heap Data Structure]] - Underlying implementation
-- [[Graph Algorithms]] - Primary use case
+- [[graph-algorithms]] - Primary use case
 - [[Rust Collections MOC]] - Collection type overview
 
 ### Algorithms
@@ -550,7 +550,7 @@ while let Some(node) = pq.pop() {
 ## Related Resources
 
 - [[Binary Heap Data Structure]] - Implementation details and heap operations
-- [[Graph Algorithms]] - Algorithms using priority queues (Dijkstra, A*, Prim's)
+- [[graph-algorithms]] - Algorithms using priority queues (Dijkstra, A*, Prim's)
 - [[missions/mission-9]] - Mission 9 pathfinding with priority queue patterns
 - [[Mission 9 Tutorial]] - Tutorial progression teaching priority queues
 - [[Dijkstra Algorithm]] - Shortest path algorithm using priority queues

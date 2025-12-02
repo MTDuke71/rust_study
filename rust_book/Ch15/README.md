@@ -6,7 +6,7 @@
 - **Next**: [[zettelkasten/rust_book/rust-book-ch16]]
 - **Missions**: [[mission-3]] - Box<T> for BST nodes | [[mission-4]] - Rc<T> and RefCell<T> for linked lists
 - **Daily Study**: [[daily-study/Day20]] | [[daily-study/Day21]] | [[daily-study/Day22]]
-- **Book MOC**: [[Rust Book MOC]]
+- **Book MOC**: [[rust-book]]
 
 ## 📚 Overview
 

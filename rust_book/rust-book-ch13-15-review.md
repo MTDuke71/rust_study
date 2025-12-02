@@ -1036,4 +1036,4 @@ struct GraphNode {
 
 *Tags: #rust-book #functional-programming #closures #iterators #cargo #smart-pointers #box #rc #refcell #ch13 #ch14 #ch15 #review*
 
-*Links: [[rust-book-ch9-12-review]] | [[zettelkasten/Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch13]] | [[zettelkasten/rust_book/rust-book-ch14]] | [[zettelkasten/rust_book/rust-book-ch15]] | [[zettelkasten/zettel-index]]*
+*Links: [[rust-book-ch9-12-review]] | [[rust-book]] | [[zettelkasten/rust_book/rust-book-ch13]] | [[zettelkasten/rust_book/rust-book-ch14]] | [[zettelkasten/rust_book/rust-book-ch15]] | [[zettelkasten/zettel-index]]*

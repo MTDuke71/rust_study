@@ -6,7 +6,7 @@
 - **Next**: [[zettelkasten/rust_book/rust-book-ch7]] - Packages, crates, and modules
 - **Missions**: [[mission-3]] (LinkedList with Option) | [[mission-2]] (Queue with Result)
 - **Daily Study**: [[daily-study/Day14]] - Uses Result enum extensively
-- **Book MOC**: [[Rust Book MOC]]
+- **Book MOC**: [[rust-book]]
 
 ## 📚 Overview
 
@@ -435,5 +435,5 @@ fn handle_response(response: ApiResponse) {
 
 *This chapter introduces Rust's approach to null safety and algebraic data types, which are fundamental to writing safe, expressive Rust code. Enums combined with pattern matching eliminate entire classes of bugs common in other languages.*
 
-*Links: [[Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch5]] | [[zettelkasten/rust_book/rust-book-ch7]] | [[3-Track Integration]]*
+*Links: [[rust-book]] | [[zettelkasten/rust_book/rust-book-ch5]] | [[zettelkasten/rust_book/rust-book-ch7]] | [[3-Track Integration]]*
 *Tags: #rust-book #chapter6 #enums #pattern-matching #option #result #match #if-let #foundation*

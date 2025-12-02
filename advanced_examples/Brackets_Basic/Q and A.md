@@ -193,7 +193,7 @@ Claude Sonnet 4 • 1x
 - [[V-Cycle Methodology]] - Requirements and validation
 
 ### Learning Resources
-- [[Rust Book]] - Language fundamentals
+- [[rust-book]] - Language fundamentals
 - [[Daily Study MOC]] - Structured learning
 - [[Clean Code Principles]] - Code quality standards
 

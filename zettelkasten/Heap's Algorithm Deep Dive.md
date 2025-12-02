@@ -459,7 +459,7 @@ for route in generate_permutations(&cities) {
 
 **Next Steps**: This algorithm is essential for many competitive programming problems. Practice with TSP variations, constraint satisfaction problems, and enumeration tasks to master its applications.
 
-**Related Learning**: [[Dynamic Programming]], [[Backtracking Algorithms]], [[Graph Algorithms]], [[Combinatorial Optimization]]
+**Related Learning**: [[Dynamic Programming]], [[Backtracking Algorithms]], [[graph-algorithms]], [[Combinatorial Optimization]]
 
 ---
 
@@ -492,7 +492,7 @@ for route in generate_permutations(&cities) {
 
 ### 📖 Related Algorithms
 
-- **[[Graph Algorithms]]** - Path finding and traversal
+- **[[graph-algorithms]]** - Path finding and traversal
 - **[[Combinatorial Optimization]]** - Mathematical optimization techniques
 - **[[Constraint Satisfaction]]** - Rule-based problem solving
 

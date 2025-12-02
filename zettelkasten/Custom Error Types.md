@@ -557,7 +557,7 @@ pub enum GraphError {
 
 ### **Rust Book Integration**
 
-- **[[Rust Book MOC]]** - Chapter 9 error handling fundamentals
+- **[[rust-book]]** - Chapter 9 error handling fundamentals
 - **Chapter 12** - CLI error handling in I/O project context
 
 ### **Daily Study Integration**
@@ -585,4 +585,4 @@ pub enum GraphError {
 ---
 
 *Tags: #custom-errors #error-handling #std-error #thiserror #rust #mission9 #pathfinding #api-design #testing*
-*Links: [[zettel-index]] | [[API Design Patterns]] | [[Testing Patterns]] | [[mission-9]] | [[CLI Design Patterns]] | [[Rust Book MOC]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[API Design Patterns]] | [[Testing Patterns]] | [[mission-9]] | [[CLI Design Patterns]] | [[rust-book]] | [[Daily Study MOC]]*

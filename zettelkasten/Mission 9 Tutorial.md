@@ -270,7 +270,7 @@ pub struct CustomHeuristic<F: Fn(T, T) -> f64> {
 
 - **[[A-Star-Algorithm-Deep-Dive]]** - Theoretical foundation and advanced concepts
 - **[[Priority Queue Patterns]]** - Data structure foundations from Step 1
-- **[[Graph Algorithms]]** - Broader algorithmic context and related techniques
+- **[[graph-algorithms]]** - Broader algorithmic context and related techniques
 - **[[Performance Optimization]]** - General optimization principles applied to pathfinding
 
 ### Mission System Coherence
@@ -321,7 +321,7 @@ pub struct CustomHeuristic<F: Fn(T, T) -> f64> {
 - [[Priority Queue Patterns]] - Essential data structure for all pathfinding algorithms
 - [[missions/mission-9]] - Mission 9 pathfinding implementations
 - [[Dijkstra Algorithm]] - Shortest path algorithm details
-- [[Graph Algorithms]] - Complete graph algorithms reference
+- [[graph-algorithms]] - Complete graph algorithms reference
 - [[Binary Heap Data Structure]] - Underlying heap implementation
 - [[Tutorials MOC]] - Tutorial system overview
 - [[Missions Overview]] - Mission series navigation

@@ -147,7 +147,7 @@ Application 5: Image Segmentation - O(pixels × α(pixels)) region growing
 
 ### **Learning Resources**
 - **[[Algorithm Design Patterns]]** - Union-Find as fundamental building block
-- **[[Graph Algorithms]]** - Integration with broader graph theory concepts
+- **[[graph-algorithms]]** - Integration with broader graph theory concepts
 - **[[V-Cycle Methodology]]** - Professional development practices applied
 - **[[Testing Strategies]]** - Requirements-based validation approaches
 
@@ -250,7 +250,7 @@ Benchmarking results for various graph sizes:
 ## 🌐 Knowledge Network Connections
 
 ### **Algorithm Family**
-- **[[Graph Algorithms]]** - Union-Find as fundamental graph algorithm building block
+- **[[graph-algorithms]]** - Union-Find as fundamental graph algorithm building block
 - **[[Greedy Algorithms]]** - Kruskal's MST as greedy algorithm application
 - **[[Tree Algorithms]]** - Union-Find maintains forest of trees with optimizations
 - **[[Dynamic Programming]]** - Optimization principles applied to data structure design
@@ -352,7 +352,7 @@ Mission 10 uniquely contributed to professional debugging capabilities:
 
 ### **Core Algorithm Concepts**  
 - **[[union-find-algorithm]]** - Complete algorithmic theory and implementation
-- **[[Graph Algorithms]]** - Foundation graph theory concepts
+- **[[graph-algorithms]]** - Foundation graph theory concepts
 - **[[Tree Algorithms]]** - Forest maintenance and path compression techniques
 - **[[Performance Analysis]]** - Complexity analysis and benchmarking methodologies
 

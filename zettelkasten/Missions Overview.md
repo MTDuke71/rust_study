@@ -297,7 +297,7 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 - **[[Error Handling Patterns]]** - Mission 2, 3, 4 focus
 - **[[Smart Pointer Patterns]]** - Mission 2, 4, 7 focus  
 - **[[Iterator Patterns]]** - Mission 5, 7 focus
-- **[[Graph Algorithms]]** - Mission 6, 8 focus
+- **[[graph-algorithms]]** - Mission 6, 8 focus
 - **[[Generic Programming]]** - Mission 8 focus
 
 ## 📊 Progress Tracking

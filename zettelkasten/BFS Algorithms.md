@@ -453,7 +453,7 @@ where
 
 - [[BFS Patterns]] - Common BFS usage patterns and templates
 - [[DFS Patterns]] - Depth-first search alternatives
-- [[Graph Algorithms]] - Comprehensive graph algorithm reference
+- [[graph-algorithms]] - Comprehensive graph algorithm reference
 
 ### **Pathfinding Extensions**  
 
@@ -504,4 +504,4 @@ Use Specialized Variants when:
 
 ---
 
-*Links: [[BFS Patterns]] | [[BFS Optimization]] | [[BFS Pathfinding]] | [[mission-7]] | [[Graph Algorithms]] | [[DFS Patterns]] | [[mission-7]] | [[zettel-index]]*
+*Links: [[BFS Patterns]] | [[BFS Optimization]] | [[BFS Pathfinding]] | [[mission-7]] | [[graph-algorithms]] | [[DFS Patterns]] | [[mission-7]] | [[zettel-index]]*

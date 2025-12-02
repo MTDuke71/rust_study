@@ -414,4 +414,4 @@ fn measure_vec_allocations() {
 
 *Tags: #memory-optimization #performance #cache-efficiency #data-structures #competitive-programming #aoc #pattern #intermediate*
 
-*Links: [[zettel-index]] | [[Memory Management]] | [[AoC Patterns MOC]] | [[Graph Algorithms]] | [[Performance Optimization]] | [[mission-6]] | [[BFS Patterns]]*
+*Links: [[zettel-index]] | [[Memory Management]] | [[AoC Patterns MOC]] | [[graph-algorithms]] | [[Performance Optimization]] | [[mission-6]] | [[BFS Patterns]]*

@@ -628,7 +628,7 @@ for node in to_process {
 
 - **[[Mission 8]]** - `has_cycle()` function used in AoC Day 5 integration
 - **[[DFS Patterns]]** - Alternative recursive approach to topological sorting
-- **[[Graph Algorithms]]** - Comprehensive graph algorithm implementations
+- **[[graph-algorithms]]** - Comprehensive graph algorithm implementations
 - **[[aoc2024-day5-mission-integration]]** - Real-world competitive programming application
 
 ### **Related Algorithms**
@@ -642,4 +642,4 @@ for node in to_process {
 
 *Tags: #graph-algorithms #topological-sort #kahn-algorithm #cycle-detection #dependency-resolution #queue-algorithms #dag #competitive-programming #mission-integration*
 
-*Links: [[Graph Algorithms]] | [[Graph Theory MOC]] | [[DFS Patterns]] | [[aoc2024-day5-mission-integration]] | [[Mission 8]] | [[Queue Data Structure]] | [[Cycle Detection]] | [[HashMap Deep Dive]] | [[Algorithm Design Patterns]] | [[Build System Design]] | [[Task Scheduling]] | [[Performance Analysis]] | [[Testing Strategies]] | [[zettel-index]]*
+*Links: [[graph-algorithms]] | [[Graph Theory MOC]] | [[DFS Patterns]] | [[aoc2024-day5-mission-integration]] | [[Mission 8]] | [[Queue Data Structure]] | [[Cycle Detection]] | [[HashMap Deep Dive]] | [[Algorithm Design Patterns]] | [[Build System Design]] | [[Task Scheduling]] | [[Performance Analysis]] | [[Testing Strategies]] | [[zettel-index]]*

@@ -388,7 +388,7 @@ Solution: Bellman-Ford detects this on Vth iteration!
 
 ### **Related Concepts**
 
-- **[[Graph Algorithms]]**: Overall algorithm landscape
+- **[[graph-algorithms]]**: Overall algorithm landscape
 - **[[Pathfinding Strategies]]**: When to use which algorithm
 - **[[Dynamic Programming]]**: Bellman-Ford as DP on graphs
 
@@ -440,4 +440,4 @@ Solution: Bellman-Ford detects this on Vth iteration!
 
 *Tags: #bellman-ford #shortest-path #negative-edges #graph-algorithms #dynamic-programming #cycle-detection #pathfinding*
 
-*Backlinks: [[Graph Algorithms]] | [[Dijkstra Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[Dynamic Programming]] | [[Network Flow Algorithms]] | [[Graph Representation]]*
+*Backlinks: [[graph-algorithms]] | [[Dijkstra Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[Dynamic Programming]] | [[Network Flow Algorithms]] | [[Graph Representation]]*

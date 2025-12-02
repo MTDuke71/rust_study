@@ -6931,7 +6931,7 @@ Similar code found with 2 license types
 
 ### Learning Resources
 - [[Daily Study MOC]] - Structured learning progression
-- [[Rust Book]] - The Rust Programming Language guide
+- [[rust-book]] - The Rust Programming Language guide
 - [[AoC Patterns]] - Advent of Code problem-solving patterns
 
 *Links: [[zettel-index]] | [[Missions Overview]] | [[rust-concepts-MOC]]*

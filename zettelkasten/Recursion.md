@@ -477,7 +477,7 @@ fn fib_fast(n: u64, memo: &mut HashMap<u64, u64>) -> u64 {
 
 - [[DFS Patterns]] - Recursive graph traversal
 - [[Tree Traversal]] - Binary tree recursion
-- [[Graph Algorithms]] - Recursive graph algorithms
+- [[graph-algorithms]] - Recursive graph algorithms
 
 **Related Topics:**
 

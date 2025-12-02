@@ -6,7 +6,7 @@
 - **Next**: [[zettelkasten/rust_book/rust-book-ch13]]
 - **Missions**: [[mission-8]] - Advanced project structure | [[mission-9]] - CLI pathfinding tools
 - **Daily Study**: [[daily-study/Day42]] - Reinforces this chapter
-- **Book MOC**: [[Rust Book MOC]]
+- **Book MOC**: [[rust-book]]
 
 ## 📚 Overview
 Chapter 12 builds a complete command-line program that combines many Rust concepts learned in previous chapters. We'll create `minigrep`, a simplified version of the `grep` tool, demonstrating real-world Rust development patterns including command-line argument parsing, file I/O, error handling, and project organization.
@@ -313,5 +313,5 @@ fn main() {
 
 *This chapter demonstrates how to combine multiple Rust concepts into a cohesive, real-world application. Essential for understanding how to structure larger Rust projects and handle I/O operations safely.*
 
-*Links: [[Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch11]] | [[zettelkasten/rust_book/rust-book-ch13]]*
+*Links: [[rust-book]] | [[zettelkasten/rust_book/rust-book-ch11]] | [[zettelkasten/rust_book/rust-book-ch13]]*
 *Tags: #rust-book #chapter12 #cli #io #error-handling #project-structure #testing #foundation*

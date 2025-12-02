@@ -5,7 +5,7 @@
 - **Source**: [[zettelkasten/rust_book/rust-book-ch12]] - Detailed implementation in Ch12/accepting_arguments
 - **Related Concepts**: [[Error Handling Patterns]], [[Rust CLI Applications]], [[Input Validation]]
 - **Examples**: [[CLI Best Practices]], [[Defensive Programming]]
-- **Book Connection**: [[Rust Book MOC]]
+- **Book Connection**: [[rust-book]]
 - **Missions**: [[mission-8]] - Advanced argument parsing | [[Mission9 TUT]] - CLI pathfinding args
 
 ## 📋 Overview

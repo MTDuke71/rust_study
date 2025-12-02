@@ -146,7 +146,7 @@ The broken links fall into **4 main categories**:
 
 #### **Algorithm Concepts**
 
-- [ ] `[[Algorithm Design Patterns]]` - Mission9, graph algorithms
+- [x] `[[Algorithm Design Patterns]]` - ✅ Created 2025-12-02 (comprehensive patterns guide)
 - [ ] `[[Dynamic Programming]]` - AoC, Mission9, Bellman-Ford
 - [ ] `[[Priority Queue Patterns]]` - Mission9 Dijkstra (referenced 7+ times)
 - [ ] `[[Performance Analysis]]` - Mission9, hash maps, multiple references
@@ -332,7 +332,7 @@ Get-ChildItem -Recurse -Filter "*.md" | ForEach-Object {
 - [[Documentation Standards]] - File creation guidelines
 - [[Quality Assurance]] - Validation workflows
 - [[mission-9]] - Mission 9 pathfinding implementation
-- [[Rust Book MOC]] - Rust book chapter integration
+- [[rust-book]] - Rust book chapter integration
 
 ---
 

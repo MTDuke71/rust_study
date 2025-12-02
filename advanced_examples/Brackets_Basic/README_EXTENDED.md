@@ -98,7 +98,7 @@ enum UnclosedPolicy { LatestOpen, EarliestOpen }
 - [[Mathematical Notation]] - Custom bracket types
 
 ### Learning Resources
-- [[Rust Book]] - Language fundamentals
+- [[rust-book]] - Language fundamentals
 - [[Daily Study MOC]] - Structured learning
 - [[AoC Patterns]] - Problem-solving strategies
 - [[RUST_DOCUMENTATION_STANDARDS]] - Documentation guide

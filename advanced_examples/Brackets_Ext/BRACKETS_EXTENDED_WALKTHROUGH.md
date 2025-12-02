@@ -332,7 +332,7 @@ The **Brackets_Extended** project demonstrates sophisticated Rust development pr
 - [[Educational Use Cases]] - Step-by-step error feedback
 
 ### Learning Resources
-- [[Rust Book]] - Language fundamentals
+- [[rust-book]] - Language fundamentals
 - [[Daily Study MOC]] - Structured learning
 - [[AoC Patterns]] - Problem-solving strategies
 - [[RUST_DOCUMENTATION_STANDARDS]] - Documentation guide

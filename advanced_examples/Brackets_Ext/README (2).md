@@ -85,7 +85,7 @@ cargo clippy -- -D warnings
 - [[String Processing]] - Character-by-character scanning
 
 ### Learning Resources
-- [[Rust Book]] - The Rust Programming Language
+- [[rust-book]] - The Rust Programming Language
 - [[Daily Study MOC]] - Structured learning
 - [[Competitive Programming]] - AoC-style problems
 

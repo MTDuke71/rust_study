@@ -14,7 +14,7 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 
 - [[BFS Patterns]] - Breadth-first search for shortest paths and level-order traversal
 - [[DFS Patterns]] - Depth-first search for exhaustive exploration and backtracking
-- [[Graph Algorithms]] - General graph algorithm patterns and applications
+- [[graph-algorithms]] - General graph algorithm patterns and applications
 - [[A-Star-Algorithm-Deep-Dive]] - Heuristic-based optimal pathfinding
 - [[Dijkstra Algorithm]] - Single-source shortest paths with priority queue
 
@@ -293,13 +293,13 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 - [[zettel-index]] - Main knowledge base
 - [[Daily Study MOC]] - Learning progression
 - [[Missions Overview]] - Implementation projects
-- [[Rust Book MOC]] - Language fundamentals
+- [[rust-book]] - Language fundamentals
 
 **Problem Solving:**
 
 - [[AoC Patterns MOC]] - Competition patterns
 - [[Grid Pattern Recognition]] - 2D problem strategies
-- [[Graph Algorithms]] - Network analysis
+- [[graph-algorithms]] - Network analysis
 
 ---
 

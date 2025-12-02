@@ -8,7 +8,7 @@ This chapter covers advanced Cargo features for managing Rust projects, publishi
 - **Next**: [[zettelkasten/rust_book/rust-book-ch15]]
 - **Missions**: [[mission10 Overview]] - Crate publishing and workspace management
 - **Daily Study**: [[daily-study/Day40]] - Publishing crates and documentation
-- **Book MOC**: [[Rust Book MOC]]
+- **Book MOC**: [[rust-book]]
 
 ## 📚 Overview
 
@@ -184,6 +184,6 @@ cargo --list  # See available commands
 
 *This chapter provides essential knowledge for professional Rust development, enabling you to manage complex projects, share code with the community, and extend the Rust toolchain to fit your needs.*
 
-*Links: [[Rust Book MOC]] | [[zettelkasten/rust_book/rust-book-ch13]] | [[zettelkasten/rust_book/rust-book-ch15]]*
+*Links: [[rust-book]] | [[zettelkasten/rust_book/rust-book-ch13]] | [[zettelkasten/rust_book/rust-book-ch15]]*
 *Tags: #rust-book #chapter14 #cargo #crates-io #workspaces #release-profiles #publishing #custom-commands #professional-development*
 

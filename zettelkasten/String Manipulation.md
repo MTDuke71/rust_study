@@ -349,7 +349,7 @@ fn process_bytes_lossy(bytes: Vec<u8>) -> String {
 
 ## Further Reading
 
-- [[Rust Book]] Chapter 8: Collections - Strings
+- [[rust-book]] Chapter 8: Collections - Strings
 - [[Performance Patterns]]: String optimization techniques
 - [[ownership]]: String ownership semantics
 - [[Memory Safety]]: Safe string manipulation
@@ -363,6 +363,6 @@ fn process_bytes_lossy(bytes: Vec<u8>) -> String {
 - [[Memory Safety]] - Safe string operations
 - [[ownership]] - String ownership rules
 - [[Performance Patterns]] - String optimization
-- [[Rust Book]] - String documentation
+- [[rust-book]] - String documentation
 - [[mission-5]] - HashMap with string keys
 - [[mission-9]] - JSON string processing
