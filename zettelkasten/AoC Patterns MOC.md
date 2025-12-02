@@ -2,6 +2,8 @@
 
 **Comprehensive guide to Advent of Code problem-solving patterns, strategies, and implementation techniques**
 
+> **Quick Reference**: [[AoC Pattern Library]] - Copy-paste code templates for common patterns
+
 ---
 
 ## 🎯 **Problem Classification System**
