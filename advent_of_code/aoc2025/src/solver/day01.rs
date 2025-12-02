@@ -89,6 +89,12 @@ pub fn solve_part1(input: &str) -> Result<String> {
 /// Count how many times the dial passes through 0 during a rotation
 ///
 /// This counts intermediate positions during the rotation, not the starting or final positions.
+///
+/// **NOTE:** This function was an early attempt at Part 2 that produced incorrect results
+/// (5046 instead of 5941). It fails on large rotations like L819 from position 50.
+/// See `examples/day01_failed_approach_analysis.md` for detailed analysis.
+/// Kept for educational purposes.
+#[allow(dead_code)]
 fn count_zeros_during_rotation(current_position: u32, rotation: Rotation) -> u32 {
     const DIAL_SIZE: u32 = 100; // 0 through 99
     let distance = rotation.distance;
@@ -178,9 +184,9 @@ pub fn solve_part2(input: &str) -> Result<String> {
         }
         
         // Normalize dial position to 0-99 range
-        dial = dial % 100;
+        dial %= 100;
         if dial < 0 {
-            dial = dial + 100;
+            dial += 100;
         }
     }
 
