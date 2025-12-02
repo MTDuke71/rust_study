@@ -21,4 +21,4 @@
 
 **Session Status**: 
 **Files Created**: 
-**References**: `[[{{yesterday}}]]` | `[[{{tomorrow}}]]`
+**References**: [[{{yesterday}}]] | [[{{tomorrow}}]]

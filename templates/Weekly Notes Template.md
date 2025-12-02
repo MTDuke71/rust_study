@@ -64,4 +64,4 @@
 ---
 
 **Week Status**: 
-**References**: `[[{{sunday}}]]` | `[[{{saturday}}]]`
+**References**: [[{{sunday}}]] | [[{{saturday}}]]
