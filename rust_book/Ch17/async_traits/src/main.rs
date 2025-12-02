@@ -1,6 +1,7 @@
 // Sections 17.5-17.6: Deep dive into async traits and choosing concurrency models
 
 mod ch17_05_traits;
+mod ch17_06_futures_tasks_threads;
 
 use std::future::Future;
 use std::pin::Pin;
@@ -92,4 +93,8 @@ async fn main() {
     println!("- Poll::Pending: Not ready yet, wake me later");
     println!("- Poll::Ready(value): Future completed");
     println!("- Pin: Prevents moving self-referential data");
+
+    // Run Chapter 17.6 demonstrations
+    println!("\n");
+    ch17_06_futures_tasks_threads::run_all_demos().await;
 }
