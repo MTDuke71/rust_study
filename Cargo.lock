@@ -285,6 +285,7 @@ dependencies = [
 name = "async_traits"
 version = "0.1.0"
 dependencies = [
+ "futures",
  "tokio",
 ]
 

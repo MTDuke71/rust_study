@@ -356,6 +356,7 @@ async fn main() {
 
 *Tags: #rust #async #futures #concurrency #await #cooperative-multitasking #non-blocking*
 
-*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[async-concurrency]] | [[futures-and-polling]] | [[runtime-executors]]*
+*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[async-concurrency]] | [[futures-and-polling]] | [[runtime-executors]] | [[future-trait-deep-dive]]*
 
-*Last Updated: November 21, 2025*
+*Last Updated: December 1, 2025*
+

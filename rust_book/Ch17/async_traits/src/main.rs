@@ -1,5 +1,7 @@
 // Sections 17.5-17.6: Deep dive into async traits and choosing concurrency models
 
+mod ch17_05_traits;
+
 use std::future::Future;
 use std::pin::Pin;
 use std::task::{Context, Poll};
@@ -40,6 +42,10 @@ impl Future for Delay {
 #[tokio::main]
 async fn main() {
     println!("=== Understanding Async Traits ===\n");
+
+    // Run the comprehensive trait explanations from ch17_05
+    ch17_05_traits::demonstrate_traits();
+    println!();
 
     // Example 1: Using our custom Future
     println!("Example 1: Custom Future implementation");

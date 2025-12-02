@@ -221,6 +221,7 @@
 - **Defense in Depth**: Validation in both parse_grid() and Grid::from_vec2d()
 
 **Documentation Updated**:
+
 - [[advent_of_code/aoc2024/Problem_Statements/summary.md|AoC 2024 Summary]]: Added Day 12 across all sections (~120 lines)
 - 4 new algorithm patterns documented (connected components, corner counting, generic functions, region metadata)
 - Python vs Rust comparison (string manipulation + rotation vs mathematical corner counting)
@@ -228,17 +229,21 @@
 **Key Learning**: Mission composition (Grid + FloodFill) demonstrates integrator philosophy - ~85 lines saved through library reuse while maintaining type safety and correctness.
 
 ### **Tuesday, November 26** 💡
+
 **Session Focus**: AoC 2024 Day 13 - Claw Contraption (Linear Algebra with Cramer's Rule)
 **[[zettelkasten/Daily Notes/2025-11-26|Daily Note: 2025-11-26]]** - Complete implementation documentation
 ---
 
 ## 🗓️ Week 7: November 30 - December 6, 2025
+
 **FOCUS**: Complete Chapter 17 (Async) + Begin Chapter 18 (OOP)
 
 ### **Sunday, November 30** 🌊
+
 **Rust Book**: Chapter 17.4 - Streams: Futures in Sequence
 **AoC Focus**: Async iteration patterns for sequential processing
 **Zettelkasten**: Create [[async-streams]] with stream processing patterns
+
 ```bash
 # Daily Tasks
 cd rust_book/Ch17/async_streams
@@ -249,9 +254,11 @@ cargo run --example async_iteration        # for await loops
 ```
 
 ### **Monday, December 1** 🔍
+
 **Rust Book**: Chapter 17.5 - A Closer Look at the Traits for Async
 **AoC Focus**: Understanding Future trait for AoC 2025 Day 1
 **Zettelkasten**: Create [[future-trait-deep-dive]] with Pin/Unpin concepts
+
 ```bash
 # Daily Tasks
 cd rust_book/Ch17/async_traits
@@ -261,10 +268,12 @@ cargo run --example pin_unpin              # Pin fundamentals
 # Document Future, Pin, and Waker mechanics
 ```
 
-### **Tuesday, December 2** ⚙️
+### **Tuesday, December 2**⚙️
+
 **Rust Book**: Chapter 17.6 - Futures, Tasks, and Threads
 **AoC Focus**: Choosing async vs threads for AoC 2025 Day 2
 **Zettelkasten**: Create [[async-vs-threads-decision]] with decision tree
+
 ```bash
 # Daily Tasks
 cd rust_book/Ch17/async_traits

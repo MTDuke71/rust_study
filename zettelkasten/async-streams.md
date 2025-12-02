@@ -618,6 +618,6 @@ async fn process_item(item: i32) -> i32 {
 
 *Tags: #rust #async #streams #futures #iterator #pipeline #concurrent-processing #buffering*
 
-*Links: [[zettel-index]] | [[async-await-basics]] | [[async-concurrency]] | [[futures-and-polling]] | [[rust-concurrency-moc]]*
+*Links: [[zettel-index]] | [[async-await-basics]] | [[async-concurrency]] | [[futures-and-polling]] | [[rust-concurrency-moc]] | [[future-trait-deep-dive]]*
 
-*Last Updated: November 30, 2025*
+*Last Updated: December 1, 2025*

@@ -15,6 +15,7 @@ This Map of Content (MOC) organizes all concurrency-related concepts in Rust, sp
 ### Foundations
 
 - [[async-await-basics]] - Futures, `.await`, runtime execution model, non-blocking I/O
+- [[future-trait-deep-dive]] - Future trait internals, Pin/Unpin, Stream trait (Ch17.5)
 - [[futures-and-polling]] - Future trait, `poll()` mechanism, `Poll::Ready`/`Pending`
 - [[runtime-executors]] - tokio, async-std, smol comparison and selection guide
 - [[pin-and-unpin]] - Memory safety for self-referential futures, `Pin<T>`

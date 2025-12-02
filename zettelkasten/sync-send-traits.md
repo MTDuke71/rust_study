@@ -84,6 +84,7 @@ Manual `unsafe impl Send/Sync for MyType {}` should be rare and justified. Befor
 - [[message-passing-channels]] - Choosing channels vs shared state based on type properties
 - [[Send and Sync Deep Dive]] - Further exploration of marker trait internals
 - [[rust_book/rust-book-ch16]] - Chapter 16.4 exercises on extensible concurrency
+- [[future-trait-deep-dive]] - Pin/Unpin for async safety guarantees
 
 ### **Related Concepts**
 
@@ -95,4 +96,4 @@ Manual `unsafe impl Send/Sync for MyType {}` should be rare and justified. Befor
 
 *Tags: #concurrency #thread-safety #pattern #rust-book #intermediate*
 
-*Links: [[zettel-index]] | [[rust-threading-basics]] | [[shared-state-concurrency]] | [[message-passing-channels]] | [[Send and Sync Deep Dive]] | [[deterministic-debugging]]*
+*Links: [[zettel-index]] | [[rust-threading-basics]] | [[shared-state-concurrency]] | [[message-passing-channels]] | [[Send and Sync Deep Dive]] | [[deterministic-debugging]] | [[future-trait-deep-dive]]*
