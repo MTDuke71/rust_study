@@ -178,9 +178,9 @@ pub fn solve_part2(input: &str) -> Result<String> {
         }
         
         // Normalize dial position to 0-99 range
-        dial = dial % 100;
+        dial %= 100;
         if dial < 0 {
-            dial = dial + 100;
+            dial += 100;
         }
     }
 
