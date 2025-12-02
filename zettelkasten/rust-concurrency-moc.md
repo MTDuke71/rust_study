@@ -47,7 +47,7 @@ This Map of Content (MOC) organizes all concurrency-related concepts in Rust, sp
 
 ### Foundations
 
-- [[thread-basics]] - `std::thread`, `JoinHandle`, thread creation and joining
+- [[rust-threading-basics]] - `std::thread`, `JoinHandle`, thread creation and joining
 - [[thread-safety]] - `Send` and `Sync` traits, thread-safe types
 - [[data-races]] - Race conditions, undefined behavior, prevention strategies
 - [[thread-local-storage]] - Thread-local data, `thread_local!` macro
@@ -164,7 +164,7 @@ Advanced (atomics, lock-free)
 
 ### Beginner (Foundation)
 
-1. Start with [[thread-basics]] - Understand preemptive multithreading
+1. Start with [[rust-threading-basics]] - Understand preemptive multithreading
 2. Learn [[mutex-and-rwlock]] - Basic synchronization primitives
 3. Study [[async-await-basics]] - Async fundamentals and Future trait
 4. Practice [[async-concurrency]] - select, join, spawn patterns
@@ -326,6 +326,6 @@ For developers with AUTOSAR (automotive) background:
 
 *Tags: #moc #rust #concurrency #async #threads #parallelism #tokio #rayon*
 
-*Links: [[zettel-index]] | [[async-await-basics]] | [[async-concurrency]] | [[thread-basics]] | [[rayon-parallel-iterators]]*
+*Links: [[zettel-index]] | [[async-await-basics]] | [[async-concurrency]] | [[rust-threading-basics]] | [[rayon-parallel-iterators]]*
 
 *Last Updated: November 21, 2025*
