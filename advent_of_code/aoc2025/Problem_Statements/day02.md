@@ -1,80 +1,70 @@
---- Day 2: Red-Nosed Reports ---
-Fortunately, the first location The Historians want to search isn't a long walk from the Chief Historian's office.
+--- Day 2: Gift Shop ---
+You get inside and take the elevator to its only other stop: the gift shop. "Thank you for visiting the North Pole!" gleefully exclaims a nearby sign. You aren't sure who is even allowed to visit the North Pole, but you know you can access the lobby through here, and from there you can access the rest of the North Pole base.
 
-While the Red-Nosed Reindeer nuclear fusion/fission plant appears to contain no sign of the Chief Historian, the engineers there run up to you as soon as they see you. Apparently, they still talk about the time Rudolph was saved through molecular synthesis from a single electron.
+As you make your way through the surprisingly extensive selection, one of the clerks recognizes you and asks for your help.
 
-They're quick to add that - since you're already here - they'd really appreciate your help analyzing some unusual data from the Red-Nosed reactor. You turn to check if The Historians are waiting for you, but they seem to have already divided into groups that are currently searching every corner of the facility. You offer to help with the unusual data.
+As it turns out, one of the younger Elves was playing on a gift shop computer and managed to add a whole bunch of invalid product IDs to their gift shop database! Surely, it would be no trouble for you to identify the invalid product IDs for them, right?
 
-The unusual data (your puzzle input) consists of many reports, one report per line. Each report is a list of numbers called levels that are separated by spaces. For example:
+They've even checked most of the product ID ranges already; they only have a few product ID ranges (your puzzle input) that you'll need to check. For example:
 
-7 6 4 2 1
-1 2 7 8 9
-9 7 6 2 1
-1 3 2 4 5
-8 6 4 4 1
-1 3 6 7 9
-This example data contains six reports each containing five levels.
+11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
+1698522-1698528,446443-446449,38593856-38593862,565653-565659,
+824824821-824824827,2121212118-2121212124
+(The ID ranges are wrapped here for legibility; in your input, they appear on a single long line.)
 
-The engineers are trying to figure out which reports are safe. The Red-Nosed reactor safety systems can only tolerate levels that are either gradually increasing or gradually decreasing. So, a report only counts as safe if both of the following are true:
+The ranges are separated by commas (,); each range gives its first ID and last ID separated by a dash (-).
 
-The levels are either all increasing or all decreasing.
-Any two adjacent levels differ by at least one and at most three.
-In the example above, the reports can be found safe or unsafe by checking those rules:
+Since the young Elf was just doing silly patterns, you can find the invalid IDs by looking for any ID which is made only of some sequence of digits repeated twice. So, 55 (5 twice), 6464 (64 twice), and 123123 (123 twice) would all be invalid IDs.
 
-7 6 4 2 1: Safe because the levels are all decreasing by 1 or 2.
-1 2 7 8 9: Unsafe because 2 7 is an increase of 5.
-9 7 6 2 1: Unsafe because 6 2 is a decrease of 4.
-1 3 2 4 5: Unsafe because 1 3 is increasing but 3 2 is decreasing.
-8 6 4 4 1: Unsafe because 4 4 is neither an increase or a decrease.
-1 3 6 7 9: Safe because the levels are all increasing by 1, 2, or 3.
-So, in this example, 2 reports are safe.
+None of the numbers have leading zeroes; 0101 isn't an ID at all. (101 is a valid ID that you would ignore.)
 
-Analyze the unusual data from the engineers. How many reports are safe?
+Your job is to find all of the invalid IDs that appear in the given ranges. In the above example:
 
-Your puzzle answer was 472.
+11-22 has two invalid IDs, 11 and 22.
+95-115 has one invalid ID, 99.
+998-1012 has one invalid ID, 1010.
+1188511880-1188511890 has one invalid ID, 1188511885.
+222220-222224 has one invalid ID, 222222.
+1698522-1698528 contains no invalid IDs.
+446443-446449 has one invalid ID, 446446.
+38593856-38593862 has one invalid ID, 38593859.
+The rest of the ranges contain no invalid IDs.
+Adding up all the invalid IDs in this example produces 1227775554.
+
+What do you get if you add up all of the invalid IDs?
+
+Your puzzle answer was 23534117921.
+
+The first half of this puzzle is complete! It provides one gold star: *
 
 --- Part Two ---
-The engineers are surprised by the low number of safe reports until they realize they forgot to tell you about the Problem Dampener.
+The clerk quickly discovers that there are still invalid IDs in the ranges in your list. Maybe the young Elf was doing other silly patterns as well?
 
-The Problem Dampener is a reactor-mounted module that lets the reactor safety systems tolerate a single bad level in what would otherwise be a safe report. It's like the bad level never happened!
+Now, an ID is invalid if it is made only of some sequence of digits repeated at least twice. So, 12341234 (1234 two times), 123123123 (123 three times), 1212121212 (12 five times), and 1111111 (1 seven times) are all invalid IDs.
 
-Now, the same rules apply as before, except if removing a single level from an unsafe report would make it safe, the report instead counts as safe.
+From the same example as before:
 
-More of the above example's reports are now safe:
+11-22 still has two invalid IDs, 11 and 22.
+95-115 now has two invalid IDs, 99 and 111.
+998-1012 now has two invalid IDs, 999 and 1010.
+1188511880-1188511890 still has one invalid ID, 1188511885.
+222220-222224 still has one invalid ID, 222222.
+1698522-1698528 still contains no invalid IDs.
+446443-446449 still has one invalid ID, 446446.
+38593856-38593862 still has one invalid ID, 38593859.
+565653-565659 now has one invalid ID, 565656.
+824824821-824824827 now has one invalid ID, 824824824.
+2121212118-2121212124 now has one invalid ID, 2121212121.
+Adding up all the invalid IDs in this example produces 4174379265.
 
-7 6 4 2 1: Safe without removing any level.
-1 2 7 8 9: Unsafe regardless of which level is removed.
-9 7 6 2 1: Unsafe regardless of which level is removed.
-1 3 2 4 5: Safe by removing the second level, 3.
-8 6 4 4 1: Safe by removing the third level, 4.
-1 3 6 7 9: Safe without removing any level.
-Thanks to the Problem Dampener, 4 reports are actually safe!
+What do you get if you add up all of the invalid IDs using these new rules?
 
-Update your analysis by handling situations where the Problem Dampener can remove a single level from unsafe reports. How many reports are now safe?
-
-Your puzzle answer was 520.
+Your puzzle answer was 31755323497.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
 
-At this point, you should return to your Advent calendar and try another puzzle.
-
 ---
 
-## 🔗 **Related Concepts**
+*Links: [[summary]] | [[day01]] | [[../../aoc_pattern_recognition/README]]*
 
-**Problem Patterns**:
-- [[../../zettelkasten/AoC Patterns MOC]] - Sequence validation and safety analysis patterns
-- [[../../zettelkasten/Iterator Patterns]] - Sliding window techniques with `windows(2)`
-- [[../../zettelkasten/Error Handling Patterns]] - Validation with boolean logic
-
-**Algorithm Techniques**:
-- Monotonic sequence detection (all increasing/decreasing)
-- Range validation with `abs_diff()` bounds checking
-- Sliding window analysis for adjacent element pairs
-- Dampener logic with single-element removal validation
-
-**Cross-Year Patterns**:
-- [[../../zettelkasten/AoC 2015 MOC]] - Compare with AoC 2015 validation problems
-
----
-*Links: [[day01]] [[day03]] [[AoC 2024 Overview]]*
+*Tags: #aoc #2025 #day02 #string-processing #pattern-matching #repetition-detection*

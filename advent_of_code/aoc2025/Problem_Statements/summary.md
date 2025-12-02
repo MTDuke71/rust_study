@@ -64,6 +64,38 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 
 ---
 
+### Day 2: Gift Shop
+**Title**: Gift Shop  
+**Part 1 Type**: String Processing + Pattern Matching  
+**Part 1 Description**: Find invalid product IDs where the number's string representation is a sequence repeated exactly twice (e.g., 55, 1010, 123123)  
+**Part 2 Type**: String Processing + Pattern Matching  
+**Part 2 Description**: Find invalid product IDs where the number's string representation is a sequence repeated at least twice (e.g., 111, 999, 123123123)  
+**Key Concepts**: String manipulation, pattern detection, range iteration, divisibility checks  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Pattern matching escalation (exact doubling → general repetition detection)
+- **Data Structure**: String-based pattern matching, range iteration
+- **Complexity**: Part 1: O(n) per number (string halving), Part 2: O(n²) per number (trying all pattern lengths)
+- **AoC Theme**: "Invalid product IDs" with classic Part 2 escalation (simple pattern → complex pattern)
+
+**🦀 Rust Implementation Highlights**:
+- **String slicing** → **`split_at()` for efficient halving** in Part 1
+- **Pattern repetition** → **Try all divisors of length** using `is_multiple_of()` for clean divisibility
+- **Functional iteration** → **`filter()` and `sum()`** for range processing
+- **Error handling** → **`anyhow::Result`** for consistent error propagation
+
+**Key Implementation Insights**:
+- **Part 1 Algorithm**: Check if string length is even, split at midpoint, compare halves
+- **Part 2 Algorithm**: For pattern lengths 1 to len/2, check if length is divisible and pattern repeats
+- **Optimization**: Early exit when pattern doesn't match, avoiding unnecessary string operations
+- **String reconstruction**: `pattern.repeat(repetitions)` for verification
+
+**Answers**:
+- Part 1: `23534117921`
+- Part 2: `31755323497`
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -82,12 +114,12 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 | Number Theory | 0 | 0 |
 | Optimization | 0 | 0 |
 | Parsing | 0 | 0 |
-| Pattern Matching | 0 | 0 |
+| Pattern Matching | 1 | 1 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
 | Search/Traversal | 0 | 0 |
 | Simulation | 1 | 1 |
-| String Processing | 0 | 0 |
+| String Processing | 1 | 1 |
 
 ## Implementation Notes
 
@@ -97,10 +129,13 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 - **Mathematical simulations**: Day 1 demonstrates circular arithmetic challenges with edge case complexity
 - **Boundary detection**: Division-based algorithms for detecting state transitions (dial crossing zero)
 - **Signed arithmetic benefits**: Using `i32` over `u32` simplifies wrap-around and negative value handling
+- **String pattern matching**: Day 2 showcases string manipulation and repetition detection algorithms
+- **Part 2 escalation pattern**: Both days follow classic AoC pattern of Part 2 expanding the problem scope
 
 ### Rust-Specific Considerations
 
 - **Day 1**: Demonstrates signed integer arithmetic advantages for circular problems, comprehensive error handling with `anyhow::Result`, and the importance of special case handling for boundary conditions (position 0)
+- **Day 2**: Showcases string slicing with `split_at()`, pattern repetition detection using divisibility checks, and functional iteration with `filter()`/`sum()` for range processing
 
 ---
 
@@ -141,11 +176,11 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 1, 2025*
-*Days Implemented: 1*
+*Last Updated: December 2, 2025*
+*Days Implemented: 1, 2*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
-*Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning
+*Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning*
 
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] *
+*Links: [[day01]] | [[day02]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
