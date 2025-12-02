@@ -70,13 +70,13 @@ async fn main() {
 
     // Example 4: Scalability comparison
     println!("Example 4: Scalability");
-    println!("┌────────────────┬─────────────┬─────────────┐");
-    println!("│ Scenario       │ Threads     │ Async Tasks │");
-    println!("├────────────────┼─────────────┼─────────────┤");
-    println!("│ 10 concurrent  │ ~10 MB      │ ~100 KB     │");
-    println!("│ 1000 concurrent│ ~1 GB       │ ~10 MB      │");
+    println!("┌─────────────────┬─────────────┬─────────────┐");
+    println!("│ Scenario        │ Threads     │ Async Tasks │");
+    println!("├─────────────────┼─────────────┼─────────────┤");
+    println!("│ 10 concurrent   │ ~10 MB      │ ~100 KB     │");
+    println!("│ 1000 concurrent │ ~1 GB       │ ~10 MB      │");
     println!("│ 10000 concurrent│ Crashes     │ ~100 MB     │");
-    println!("└────────────────┴─────────────┴─────────────┘\n");
+    println!("└─────────────────┴─────────────┴─────────────┘\n");
 
     // Example 5: Real-world decision matrix
     println!("Example 5: When to use what");
