@@ -1,0 +1,26 @@
+[package]
+name = "rust_book_ch18"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "ch18"
+path = "src/lib.rs"
+
+[[example]]
+name = "ch18_1_oop_characteristics"
+path = "examples/ch18_1_oop_characteristics.rs"
+
+[[example]]
+name = "ch18_2_trait_objects"
+path = "examples/ch18_2_trait_objects.rs"
+
+[[example]]
+name = "ch18_3_state_pattern"
+path = "examples/ch18_3_state_pattern.rs"
+
+[[example]]
+name = "ch18_3_type_states"
+path = "examples/ch18_3_type_states.rs"
+
+[dependencies]
