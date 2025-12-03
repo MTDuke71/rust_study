@@ -68,6 +68,7 @@
 ### **Generics & Traits**
 
 - [[zettelkasten/rust_book/rust-book-ch10]] - **Complete Chapter 10 Summary**: Generics, traits, and lifetimes integration
+- [[rust-oop-characteristics]] - **NEW (Ch 18)**: Rust vs traditional OOP comparison
 - [[daily-study/Day15]] - Defining and implementing traits
 - [[daily-study/Day16]] - Type parameters and constraints
 - [[daily-study/Day18]] - Associated types and defaults

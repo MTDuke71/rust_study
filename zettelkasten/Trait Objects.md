@@ -2,6 +2,8 @@
 
 **Runtime polymorphism in Rust through vtable-based method dispatch**
 
+> See also: [[rust-oop-characteristics]] for how trait objects enable OOP-style polymorphism in Rust
+
 ## 🎯 Core Concept
 
 **Trait Objects** enable **dynamic dispatch** in Rust - the ability to call methods on types whose concrete implementation is determined at runtime rather than compile time.

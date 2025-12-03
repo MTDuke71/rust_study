@@ -435,6 +435,7 @@ trait ObjectSafe {
 - [[Ownership and Borrowing]] - Trait implementations and ownership
 - [[Error Handling Patterns]] - Result and Option traits
 - [[rust-concepts-MOC]] - Core language features overview
+- [[rust-oop-characteristics]] - **NEW**: Comparing Rust to traditional OOP (Ch 18)
 
 ---
 
