@@ -15,9 +15,7 @@ pub trait State {
     fn approve(self: Box<Self>) -> Box<dyn State>;
     
     /// Reject - transition back to Draft
-    fn reject(self: Box<Self>) -> Box<dyn State> {
-        self // Default: no change
-    }
+    fn reject(self: Box<Self>) -> Box<dyn State>;
     
     /// Get content - only Published state returns content
     fn content<'a>(&self, _post: &'a Post) -> &'a str {
@@ -40,6 +38,11 @@ impl State for Draft {
 
     fn approve(self: Box<Self>) -> Box<dyn State> {
         // Can't approve a draft directly
+        self
+    }
+
+    fn reject(self: Box<Self>) -> Box<dyn State> {
+        // Already in draft state
         self
     }
 
@@ -77,6 +80,11 @@ impl State for Published {
 
     fn approve(self: Box<Self>) -> Box<dyn State> {
         // Already published
+        self
+    }
+
+    fn reject(self: Box<Self>) -> Box<dyn State> {
+        // Can't reject published post
         self
     }
 

@@ -146,7 +146,7 @@ fn main() {
     println!("\n   pending.add_text()       // ✗ PendingReviewPost has no add_text()");
     println!("   pending.request_review() // ✗ Already in review");
     
-    let published = pending.approve();
+    let _published = pending.approve();
     println!("\n   published.add_text()     // ✗ Post has no add_text()");
     println!("   published.approve()      // ✗ Already published");
     println!("\n   ✓ Invalid operations prevented at COMPILE TIME!");
