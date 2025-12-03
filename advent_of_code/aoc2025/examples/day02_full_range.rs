@@ -11,7 +11,7 @@ fn is_doubled(n: u64) -> bool {
     let s = n.to_string();
     let len = s.len();
     
-    if len % 2 != 0 {
+    if !len.is_multiple_of(2) {
         return false;
     }
     
@@ -26,7 +26,7 @@ fn is_repeated(n: u64) -> bool {
     let len = s.len();
     
     for pattern_len in 1..=len / 2 {
-        if len % pattern_len != 0 {
+        if !len.is_multiple_of(pattern_len) {
             continue;
         }
         
