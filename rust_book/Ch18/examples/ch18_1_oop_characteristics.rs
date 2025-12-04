@@ -211,14 +211,16 @@ mod tests {
     fn test_encapsulation_maintains_invariant() {
         let mut collection = AveragedCollection::new();
         
-        // Add several values
-        for value in [5, 10, 15, 20, 25] {
+        // Add several values and track running sum
+        let values = [5, 10, 15, 20, 25];
+        let mut running_sum = 0;
+        
+        for (i, &value) in values.iter().enumerate() {
             collection.add(value);
+            running_sum += value;
             
             // Verify average matches expected
-            let expected: f64 = (1..=value/5 + 1)
-                .map(|i| i * 5)
-                .sum::<i32>() as f64 / collection.len() as f64;
+            let expected: f64 = running_sum as f64 / (i + 1) as f64;
             
             assert!((collection.average() - expected).abs() < 0.001);
         }
