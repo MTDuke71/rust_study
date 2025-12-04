@@ -457,6 +457,109 @@ where State: Clone + Eq + std::hash::Hash {
 
 ---
 
+## 🎭 **Static vs Dynamic Dispatch**
+
+### **Understanding the Trade-off**
+
+Rust offers two approaches for polymorphism, with significant performance implications:
+
+| Aspect | Static Dispatch (`impl Trait`) | Dynamic Dispatch (`dyn Trait`) |
+|--------|-------------------------------|-------------------------------|
+| **Resolution** | Compile-time | Runtime |
+| **Mechanism** | Monomorphization (code duplication) | Virtual table (vtable) lookup |
+| **Inline potential** | Full inlining possible | Cannot inline through vtable |
+| **Binary size** | Larger (copies for each type) | Smaller (single implementation) |
+| **Memory** | No pointer indirection | Requires pointer + vtable |
+| **Flexibility** | Type known at compile time | Type can vary at runtime |
+
+### **Performance Comparison**
+
+```rust
+// ✅ Static dispatch - maximum performance
+fn process_static<T: Iterator<Item = i32>>(iter: T) -> i32 {
+    iter.sum()  // LLVM can inline and optimize everything
+}
+
+// ⚠️ Dynamic dispatch - runtime flexibility, some overhead
+fn process_dynamic(iter: &mut dyn Iterator<Item = i32>) -> i32 {
+    iter.sum()  // Each .next() call goes through vtable
+}
+
+// Real-world impact (typical):
+// Static: ~1-3ns per call (fully inlined)
+// Dynamic: ~5-15ns per call (vtable lookup + no inlining)
+```
+
+### **When to Use Each**
+
+**Prefer Static Dispatch (`impl Trait`, generics):**
+- Hot loops with many iterations
+- Small functions that benefit from inlining
+- When you know types at compile time
+- Performance-critical AoC solutions
+
+**Accept Dynamic Dispatch (`dyn Trait`):**
+- Heterogeneous collections (different types in one Vec)
+- Plugin architectures
+- Reducing compilation time / binary size
+- When flexibility outweighs performance
+
+### **Heterogeneous Collections Pattern**
+
+```rust
+// Dynamic dispatch required for mixed types
+trait Animal {
+    fn speak(&self) -> &str;
+}
+
+struct Dog;
+struct Cat;
+impl Animal for Dog { fn speak(&self) -> &str { "woof" } }
+impl Animal for Cat { fn speak(&self) -> &str { "meow" } }
+
+// ✅ Only way to store different types together
+let animals: Vec<Box<dyn Animal>> = vec![
+    Box::new(Dog),
+    Box::new(Cat),
+];
+
+// Each speak() call has vtable overhead (~5-15ns)
+for animal in &animals {
+    println!("{}", animal.speak());
+}
+```
+
+### **Optimization Tip: Enum Alternative**
+
+When you have a closed set of types, consider enum dispatch instead:
+
+```rust
+// ✅ Enum dispatch - nearly as fast as static, stores heterogeneous
+enum AnimalEnum {
+    Dog(Dog),
+    Cat(Cat),
+}
+
+impl AnimalEnum {
+    fn speak(&self) -> &str {
+        match self {
+            AnimalEnum::Dog(d) => d.speak(),
+            AnimalEnum::Cat(c) => c.speak(),
+        }
+    }
+}
+
+// No vtable overhead - match compiles to efficient jump table
+let animals: Vec<AnimalEnum> = vec![
+    AnimalEnum::Dog(Dog),
+    AnimalEnum::Cat(Cat),
+];
+```
+
+**See Also**: [[trait-objects-polymorphism]] - Comprehensive guide to trait objects, object safety rules, and design patterns
+
+---
+
 ## 🔧 **Profiling and Measurement**
 
 ### **Benchmarking with Criterion**
@@ -582,4 +685,4 @@ rustflags = ["-C", "target-cpu=native"] # Use all CPU features
 ---
 
 *Tags: #performance #optimization #algorithms #memory #benchmarking #profiling #competitive-programming #rust-specific*
-*Links: [[zettel-index]] | [[AoC Collection Problems]] | [[Rust Collections MOC]] | [[AoC Patterns MOC]] | [[../missions/Mission8/PERFORMANCE_REPORT]] | [[../tutorials/Mission8_tut/DAY4_EXERCISE_SOLUTIONS]] | [[mission-8]] | [[Algorithm Complexity Analysis]] | [[../advent_of_code/aoc2015/examples/day14_analysis]] | [[../advent_of_code/aoc2015/examples/GRAPHICS_GUIDE]]*
+*Links: [[zettel-index]] | [[AoC Collection Problems]] | [[Rust Collections MOC]] | [[AoC Patterns MOC]] | [[trait-objects-polymorphism]] | [[../missions/Mission8/PERFORMANCE_REPORT]] | [[../tutorials/Mission8_tut/DAY4_EXERCISE_SOLUTIONS]] | [[mission-8]] | [[Algorithm Complexity Analysis]] | [[../advent_of_code/aoc2015/examples/day14_analysis]] | [[../advent_of_code/aoc2015/examples/GRAPHICS_GUIDE]]*
