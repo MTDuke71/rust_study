@@ -731,7 +731,7 @@ As workspace grows:
 
 ## See Also
 
-- [[MONTHLY_CALENDAR]] - Three-track coordination
+- [[learning-plan]] - Three-track coordination
 - [[CALENDER_ARCHIVE]] - Historical zettelkasten evolution
 - [[Complete Runnable Examples]] - Documentation standard
 - [[AoC Integration]] - Application proving ground

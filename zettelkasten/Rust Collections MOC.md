@@ -119,7 +119,7 @@
 
 ### **Learning Track Integration**
 
-- **[[../MONTHLY_CALENDAR]]** - Daily study coordination with collection topics
+- **[[learning-plan]]** - Daily study coordination with collection topics
 - **[[V-Cycle Integration]]** - How collections fit into formal development
 - **[[Tutorial Engineering]]** - Creating educational content for collections
 

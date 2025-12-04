@@ -26,7 +26,7 @@ WHERE contains(content, dateformat(date(today), "MMMM d"))
 
 ## 🔗 Quick Navigation
 
-- **[[MONTHLY_CALENDAR]]** - Full monthly calendar
+- **[[learning-plan]]** - Full monthly calendar
 - **[[zettel-index]]** - Main knowledge hub
 - **[[Daily Study MOC]]** - Current week overview
 - **[[Missions Overview]]** - Active missions
@@ -34,4 +34,4 @@ WHERE contains(content, dateformat(date(today), "MMMM d"))
 ---
 
 *Tags: #dashboard #auto-generated #daily-focus*
-*Links: [[MONTHLY_CALENDAR]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions Overview]]*
+*Links: [[learning-plan]] | [[zettel-index]] | [[Daily Study MOC]] | [[Missions Overview]]*

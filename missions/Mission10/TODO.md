@@ -789,7 +789,7 @@ Mission 10 **Production-Ready Implementation** ACTUAL status:
 - [[../../tutorials/Mission10_tut/TODO]] - Tutorial development roadmap
 - [[../../zettelkasten/Missions Overview]] - All missions overview and progress tracking
 - [[../../zettelkasten/Daily Notes/2025-11-03]] - November 3 learning plan (Mission 10 focus)
-- [[../../MONTHLY_CALENDAR]] - Week 6 schedule (November 2-8, 2025)
+- [[learning-plan]] - Week 6 schedule (November 2-8, 2025)
 - [[../../daily_study/rust_learning_week6_notes/Day37]] - Crate organization (applies to Mission 10 structure)
 
 *Tags: #mission10 #union-find #disjoint-sets #v-cycle #todo #development-roadmap #rest-api #openapi*

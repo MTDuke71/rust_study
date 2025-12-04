@@ -22,7 +22,7 @@
 
 ## 📚 Tutorial-Mission Alignment
 
-### **Daily Calendar Integration** (from [[MONTHLY_CALENDAR]])
+### **Daily Calendar Integration** (from [[learning-plan]])
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
@@ -283,4 +283,4 @@ Overhead ratio:   2.29x
 ---
 
 *Tags: #mission4 #tutorial #linked-list #smart-pointers #interior-mutability #ownership*
-*Links: [[zettel-index]] | [[mission-4]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Box Smart Pointer Patterns]] | [[interior-mutability]] | [[Rc and RefCell Patterns]]*
+*Links: [[zettel-index]] | [[mission-4]] | [[Collections MOC]] | [[learning-plan]] | [[Box Smart Pointer Patterns]] | [[interior-mutability]] | [[Rc and RefCell Patterns]]*

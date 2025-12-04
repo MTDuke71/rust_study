@@ -124,4 +124,4 @@ Mission6_tut/
 
 *Tags: #mission6 #tutorial #grid #pathfinding #2d-arrays #spatial-algorithms #step-by-step*
 
-*Links: [[zettel-index]] | [[mission-6]] | [[Algorithms MOC]] | [[MONTHLY_CALENDAR]] | [[Missions Overview]] | [[mission-6]]*
+*Links: [[zettel-index]] | [[mission-6]] | [[Algorithms MOC]] | [[learning-plan]] | [[Missions Overview]] | [[mission-6]]*

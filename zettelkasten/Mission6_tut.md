@@ -22,7 +22,7 @@
 
 ## 📚 Tutorial-Mission Alignment
 
-### **Daily Calendar Integration** (from [[MONTHLY_CALENDAR]])
+### **Daily Calendar Integration** (from [[learning-plan]])
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
@@ -256,4 +256,4 @@ Mission6_tut/
 
 ---
 *Tags: #mission6 #tutorial #grids #pathfinding #overview #step-by-step #learning-progression #spatial-algorithms*
-*Links: [[zettel-index]] | [[mission-6]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Mission5_tut Overview]]*
+*Links: [[zettel-index]] | [[mission-6]] | [[Collections MOC]] | [[learning-plan]] | [[Mission5_tut Overview]]*

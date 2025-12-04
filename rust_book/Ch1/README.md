@@ -78,7 +78,7 @@ These basics are essential for all mission work:
 - **[[../../zettelkasten/rust_book/rust-book-ch2.md|Chapter 2]]**: Programming a Guessing Game
 - **[[../../zettelkasten/rust_book/rust-book-ch14.md|Chapter 14]]**: Advanced Cargo and Crates.io
 - **[[../../zettelkasten/Daily Study MOC.md|Daily Study MOC]]**: Systematic learning progression
-- **[[../../MONTHLY_CALENDAR.md|Monthly Calendar]]**: Coordinated learning schedule
+- **[[learning-plan|Monthly Calendar]]**: Coordinated learning schedule
 
 ## ✅ Chapter Completion Checklist
 

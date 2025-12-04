@@ -194,7 +194,7 @@ Each daily note follows a consistent structure:
 - **[[../Daily Study MOC]]** - Structured learning progression overview
 - **[[../Missions Overview]]** - V-Cycle project coordination
 - **[[../zettel-index]]** - Main zettelkasten navigation hub
-- **[[../../MONTHLY_CALENDAR]]** - Master calendar with daily activities
+- **[[learning-plan]]** - Master calendar with daily activities
 
 ### **Future Daily Notes**
 Daily notes continue to be created as needed for:
@@ -207,4 +207,4 @@ Daily notes continue to be created as needed for:
 
 *Tags: #daily-notes #progress-tracking #3-track-system #mission-coordination #daily-study #rust-book #tutorial-progression #workflow-integration*
 
-*Links: [[../zettel-index]] | [[../Daily Study MOC]] | [[../Missions Overview]] | [[../../MONTHLY_CALENDAR]]*
+*Links: [[../zettel-index]] | [[../Daily Study MOC]] | [[../Missions Overview]] | [[learning-plan]]*

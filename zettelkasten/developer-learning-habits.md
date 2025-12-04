@@ -688,7 +688,7 @@ log:
 
 *Tags: #learning-science #deliberate-practice #spaced-repetition #retrieval-practice #error-analysis #metacognition #rust #software-development #pedagogy*
 
-*Links: [[zettel-index]] | [[MONTHLY_CALENDAR]] | [[mission-1]] | [[mission-7]] | [[course-creation-strategy]]*
+*Links: [[zettel-index]] | [[learning-plan]] | [[mission-1]] | [[mission-7]] | [[course-creation-strategy]]*
 
 ---
 

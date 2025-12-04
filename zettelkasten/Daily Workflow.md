@@ -21,13 +21,13 @@
 
 ### **1. Open Monthly Calendar**
 
-- Press `Ctrl+Shift+M` or click [[MONTHLY_CALENDAR]]
+- Press `Ctrl+Shift+M` or click [[learning-plan]]
 - Review today's learning objectives
 - Check mission focus and daily study topics
 
 ### **2. Navigate to Current Day**
 
-- Open [[MONTHLY_CALENDAR]]
+- Open [[learning-plan]]
 - Click on today's date in the Quick Start section
 - Review specific tasks and commands
 
@@ -49,8 +49,8 @@
 
 ### **Daily Focus**
 
-- [[MONTHLY_CALENDAR]] - Calendar with daily notes navigation
-- [[MONTHLY_CALENDAR]] - Full monthly calendar with jump links
+- [[learning-plan]] - Calendar with daily notes navigation
+- [[learning-plan]] - Full monthly calendar with jump links
 - [[Daily Study MOC]] - Current week overview
 
 ### **Learning Resources**
@@ -72,7 +72,7 @@
 
 1. **Sync**: Enable Obsidian Sync or use Git sync
 2. **Quick Capture**: Use daily note template for mobile notes
-3. **Review**: Check [[MONTHLY_CALENDAR]] for today's daily note
+3. **Review**: Check [[learning-plan]] for today's daily note
 
 ---
 
@@ -99,4 +99,4 @@ Create a dashboard note with:
 ---
 
 *Tags: #workflow #automation #daily-routine #navigation*
-*Links: [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions Overview]]*
+*Links: [[learning-plan]] | [[Daily Study MOC]] | [[Missions Overview]]*

@@ -383,4 +383,4 @@ expensive_operation(&value);
 
 *Tags: #rust-book #ch16 #concurrency #threads #message-passing #shared-state #sync-send #fearless-concurrency*
 
-*Links: [[../README]] | [[../../zettelkasten/rust-threading-basics]] | [[../../zettelkasten/message-passing-channels]] | [[../../MONTHLY_CALENDAR]]*
+*Links: [[../README]] | [[../../zettelkasten/rust-threading-basics]] | [[../../zettelkasten/message-passing-channels]] | [[learning-plan]]*

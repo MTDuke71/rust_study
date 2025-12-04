@@ -326,7 +326,7 @@ See `tutorials/Mission8_tut/` for step-by-step progression:
 
 ## 🔗 **References**
 
-- [MONTHLY_CALENDAR.md](../../MONTHLY_CALENDAR.md) - Daily mission alignment
+- [MONTHLY_CALENDAR.md](learning-plan.md) - Daily mission alignment
 - [RUST_DOCUMENTATION_STANDARDS.md](../../.github/RUST_DOCUMENTATION_STANDARDS.md)
 - [CONTRIBUTING.md](../../.github/CONTRIBUTING.md) - Development workflow
 - [Mission8_tut README](../../tutorials/Mission8_tut/README.md) - Tutorial guide

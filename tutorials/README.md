@@ -171,7 +171,7 @@ All tutorials follow workspace documentation standards:
 ### 📖 Learning Resources
 - **[[../zettelkasten/PROJECT_ORIGIN|Project Origin]]** - Founding philosophy and 3-track system
 - **[[../zettelkasten/V-Cycle in Rust Development|V-Cycle Methodology]]** - Requirements-driven approach
-- **[MONTHLY_CALENDAR.md](../MONTHLY_CALENDAR.md)** - 30-day learning plan with track alignment
+- **[MONTHLY_CALENDAR.md](learning-plan.md)** - 30-day learning plan with track alignment
 - **[daily_study/](../daily_study/)** - Daily systematic concept progression
 - **[advanced_examples/](../advanced_examples/)** - Real-world competitive programming applications
 

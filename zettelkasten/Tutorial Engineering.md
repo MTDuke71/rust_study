@@ -774,7 +774,7 @@ graph LR
 
 - [[Daily Study MOC]] - Systematic concept progression
 - [[3-Track Integration]] - Coordinating tutorials, missions, daily study
-- [[MONTHLY_CALENDAR]] - Daily activity scheduling
+- [[learning-plan]] - Daily activity scheduling
 
 ### **Content Design**
 
@@ -806,4 +806,4 @@ graph LR
 
 *Tags: #tutorial-engineering #pedagogy #education #learning-design #progressive-disclosure #hands-on-learning #rust-education #teaching-methodology #curriculum-design*
 
-*Links: [[zettel-index]] | [[Daily Study MOC]] | [[3-Track Integration]] | [[V-Cycle Integration]] | [[Rust Collections MOC]] | [[AoC Patterns MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Daily Study MOC]] | [[3-Track Integration]] | [[V-Cycle Integration]] | [[Rust Collections MOC]] | [[AoC Patterns MOC]] | [[learning-plan]]*

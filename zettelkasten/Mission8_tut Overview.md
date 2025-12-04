@@ -139,4 +139,4 @@ Mission8_tut/
 
 *Tags: #mission8 #tutorial #bfs #dfs #graph-algorithms #traits #generics #algorithm-composition #step-by-step*
 
-*Links: [[zettel-index]] | [[mission-8]] | [[Algorithms MOC]] | [[MONTHLY_CALENDAR]] | [[Missions Overview]] | [[BFS Patterns]] | [[DFS Patterns]]*
+*Links: [[zettel-index]] | [[mission-8]] | [[Algorithms MOC]] | [[learning-plan]] | [[Missions Overview]] | [[BFS Patterns]] | [[DFS Patterns]]*

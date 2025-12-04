@@ -146,7 +146,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 ### **Find Your Current Day**
 
-1. Check [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]] for today's daily note
+1. Check [[learning-plan|learning-plan]] for today's daily note
 2. Navigate to the corresponding Day file
 3. Complete the runnable example
 4. Explore cross-references to related content
@@ -262,7 +262,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 ### **Progress Tracking**
 
-- Mark completed days in [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]]
+- Mark completed days in [[learning-plan|learning-plan]]
 - Track mission implementations in [[Missions Overview]]
 - Note patterns discovered in personal notes
 
@@ -381,4 +381,4 @@ Daily notes provide detailed task breakdowns and learning objectives that align 
 
 *Tags: #daily-study #moc #learning-progression #rust-fundamentals #collections #algorithms #competitive-programming #3-track-system*
 
-*Links: [[zettel-index]] | [[Missions Overview]] | [[Collections MOC]] | [[AoC Patterns MOC]] | [[rust-concepts-MOC]] | [[Day 5 Exercise Solutions]] | [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Missions Overview]] | [[Collections MOC]] | [[AoC Patterns MOC]] | [[rust-concepts-MOC]] | [[Day 5 Exercise Solutions]] | [[learning-plan|learning-plan]]*

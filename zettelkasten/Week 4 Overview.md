@@ -579,4 +579,4 @@ See how these Week 4 concepts apply to real competitive programming:
 
 *Tags: #week4 #overview #grids #bfs #dfs #parsing #pathfinding #spatial-algorithms #aoc-patterns #learning-track #aoc2015*
 
-*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 3 Overview]] | [[mission-6]] | [[mission-7]] | [[BFS Patterns]] | [[DFS Patterns]] | [[MONTHLY_CALENDAR]] | [[AoC 2015 MOC]]*
+*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 3 Overview]] | [[mission-6]] | [[mission-7]] | [[BFS Patterns]] | [[DFS Patterns]] | [[learning-plan]] | [[AoC 2015 MOC]]*

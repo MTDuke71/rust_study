@@ -275,4 +275,4 @@ All Week 4 content has been successfully created and integrated into the knowled
 ---
 
 *Tags: #verification #week4 #zettelkasten #daily-study #integration*
-*Links: [[zettel-index]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Daily Study MOC]] | [[learning-plan]]*

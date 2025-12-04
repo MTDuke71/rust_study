@@ -384,4 +384,4 @@ Week 3 built the **theoretical foundation** for generic, reusable code. Week 4 a
 
 *Tags: #week3 #overview #traits #generics #lifetimes #trait-objects #type-system #learning-track*
 
-*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 2 Overview]] | [[Week 4 Overview]] | [[mission-5]] | [[Generic Programming]] | [[Trait Objects]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Daily Study MOC]] | [[Week 2 Overview]] | [[Week 4 Overview]] | [[mission-5]] | [[Generic Programming]] | [[Trait Objects]] | [[learning-plan]]*

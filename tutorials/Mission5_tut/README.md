@@ -7,7 +7,7 @@
 - **Main Mission**: [[mission-5]] - V-Cycle implementation context  
 - **Concepts**: [[HashMap Internals]] - Technical deep dive
 - **Collections**: [[Collections MOC]] - Broader data structures ecosystem
-- **Calendar**: [[MONTHLY_CALENDAR]] - Daily learning schedule integration
+- **Calendar**: [[learning-plan]] - Daily learning schedule integration
 
 ---
 

@@ -125,7 +125,7 @@ The concepts learned here form the foundation for all Rust programming!
 - [[Testing Patterns MOC]] - Test organization strategies
 
 ### **Learning Tracks**
-- [[MONTHLY_CALENDAR]] - 30-day learning plan integration
+- [[learning-plan]] - 30-day learning plan integration
 - [[Daily Study MOC]] - Structured daily practice
 - [[AoC Patterns MOC]] - Competitive programming patterns
 

@@ -122,4 +122,4 @@ After completing Week 5:
 
 *Tags: #week5 #error-handling #anyhow #thiserror #result-combinators #panic-recovery #robust-parsing*
 
-*Links: [[Daily Study MOC]] | [[Error Handling Deep Dive]] | [[Missions Overview]] | [[AoC Patterns MOC]] | [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]]*
+*Links: [[Daily Study MOC]] | [[Error Handling Deep Dive]] | [[Missions Overview]] | [[AoC Patterns MOC]] | [[learning-plan|learning-plan]]*

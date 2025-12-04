@@ -124,4 +124,4 @@ Mission3_tut/
 
 *Tags: #mission3 #tutorial #binary-search #traits #iterators #lifetimes #algorithms #step-by-step*
 
-*Links: [[zettel-index]] | [[mission-3]] | [[Algorithms MOC]] | [[MONTHLY_CALENDAR]] | [[Missions Overview]]*
+*Links: [[zettel-index]] | [[mission-3]] | [[Algorithms MOC]] | [[learning-plan]] | [[Missions Overview]]*

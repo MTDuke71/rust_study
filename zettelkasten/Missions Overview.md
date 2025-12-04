@@ -324,7 +324,7 @@ fn req_g1_r2_ring_buffer_full_behavior() { /* ... */ }
 - **Test Coverage**: 100% requirement coverage across all missions
 - **Documentation**: Complete API docs with working examples
 - **Performance**: Big-O analysis verified with benchmarks
-- **Integration**: Cross-track alignment verified with [[MONTHLY_CALENDAR]]
+- **Integration**: Cross-track alignment verified with [[learning-plan]]
 
 ### **Learning Outcomes**
 

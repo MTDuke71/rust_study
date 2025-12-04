@@ -447,4 +447,4 @@ fn reql1_linked_structure() { ... }
 
 *Tags: #mission2 #queue #ring-buffer #fifo #linked-queue #performance #memory-optimization #data-structures #v-cycle #overview*
 
-*Links: [[../zettel-index.md|Zettel Index]] | [[mission-1|Mission 1]] | [[mission-3|Mission 3]] | [[mission-3.md|Mission 3 (alternate)]] | [[mission-4.md|Mission 4]] | [[mission-5.md|Mission 5]] | [[Collections MOC]] | [[While Let Pattern Deep Dive]] | [[Ring Buffer Overwriting Semantics]] | [[../../MONTHLY_CALENDAR.md|Monthly Calendar]]*
+*Links: [[../zettel-index.md|Zettel Index]] | [[mission-1|Mission 1]] | [[mission-3|Mission 3]] | [[mission-3.md|Mission 3 (alternate)]] | [[mission-4.md|Mission 4]] | [[mission-5.md|Mission 5]] | [[Collections MOC]] | [[While Let Pattern Deep Dive]] | [[Ring Buffer Overwriting Semantics]] | [[learning-plan|Monthly Calendar]]*

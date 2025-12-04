@@ -132,7 +132,7 @@ Get-ChildItem daily_study\rust_learning_week2_notes\Day*.md |
 - **📚 [[../README|Daily Study Home]]** - All weeks overview
 - **➡️ [[../rust_learning_week3_notes/README|Week 3: Abstractions]]** - Next week
 - **🗺️ [[../../zettelkasten/Daily Study MOC]]** - Complete study navigation
-- **📅 [[../../MONTHLY_CALENDAR]]** - 30-day learning plan
+- **📅 [[learning-plan]]** - 30-day learning plan
 
 ---
 

@@ -48,7 +48,7 @@ daily_study/
 
 ### **Navigation**
 - **📚 Full Learning Guide**: [[../zettelkasten/Daily Study MOC]] - Complete weekly breakdown
-- **📅 Daily Navigation**: [[../MONTHLY_CALENDAR]] - Current day activities
+- **📅 Daily Navigation**: [[learning-plan]] - Current day activities
 - **🗺️ Central Hub**: [[../zettelkasten/zettel-index]] - Knowledge network entry point
 
 ---
@@ -171,4 +171,4 @@ Each day file (`DayXX.md`) includes:
 *This structured approach ensures systematic skill development while maintaining clear connections between learning tracks and practical applications.*
 
 *Tags: #daily-study #learning-progression #rust-fundamentals #collections #algorithms #competitive-programming #systematic-learning*
-*Links: [[../zettelkasten/Rust Collections MOC]] | [[../zettelkasten/AoC Collection Problems]] | [[../Mission5/README]] | [[../MONTHLY_CALENDAR]] | [[../aoc2015/README]]*
+*Links: [[../zettelkasten/Rust Collections MOC]] | [[../zettelkasten/AoC Collection Problems]] | [[../Mission5/README]] | [[learning-plan]] | [[../aoc2015/README]]*

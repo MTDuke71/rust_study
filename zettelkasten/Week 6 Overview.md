@@ -156,4 +156,4 @@ After completing Week 6:
 
 *Tags: #week6 #modules #crates #cargo #workspaces #publishing #features #dependencies #project-organization*
 
-*Links: [[Daily Study MOC]] | [[Module System Deep Dive]] | [[Missions Overview]] | [[mission-10]] | [[../MONTHLY_CALENDAR|MONTHLY_CALENDAR]]*
+*Links: [[Daily Study MOC]] | [[Module System Deep Dive]] | [[Missions Overview]] | [[mission-10]] | [[learning-plan|learning-plan]]*

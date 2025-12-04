@@ -21,7 +21,7 @@
 
 ## 📚 Tutorial-Mission Alignment
 
-### **Daily Calendar Integration** (from [[MONTHLY_CALENDAR]])
+### **Daily Calendar Integration** (from [[learning-plan]])
 
 | Date | Mission Focus | Tutorial Step | Daily Study |
 |------|---------------|---------------|-------------|
@@ -125,4 +125,4 @@ Mission5_tut/
 
 ---
 *Tags: #mission5 #tutorial #hashmap #overview #step-by-step #learning-progression*
-*Links: [[zettel-index]] | [[mission-5]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[mission-5]] | [[Collections MOC]] | [[learning-plan]]*

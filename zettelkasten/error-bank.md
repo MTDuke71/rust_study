@@ -325,7 +325,7 @@ Print this and keep near your coding setup:
 
 *Tags: #error-analysis #debugging #learning-from-mistakes #rust #ownership #borrowing #lifetimes*
 
-*Links: [[zettel-index]] | [[developer-learning-habits]] | [[spaced-repetition-cards]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[developer-learning-habits]] | [[spaced-repetition-cards]] | [[learning-plan]]*
 
 **Next Actions:**
 

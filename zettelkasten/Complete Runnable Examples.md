@@ -566,7 +566,7 @@ Read Example → Run Code → See Results → Understand Concept
 
 ## Related Resources
 
-- [[MONTHLY_CALENDAR]] - Learning schedule with complete examples
+- [[learning-plan]] - Learning schedule with complete examples
 - [[CALENDER_ARCHIVE]] - Historical examples and patterns
 - [[Zettelkasten System]] - Knowledge management approach
 - [[AoC Integration]] - Advent of Code complete solutions

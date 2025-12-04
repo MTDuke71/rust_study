@@ -47,7 +47,7 @@
 
 ### **Find Today's Content**
 
-- **Current Day**: See [[../MONTHLY_CALENDAR]] Day activities
+- **Current Day**: See [[learning-plan]] Day activities
 - **Daily Notes**: [[Daily Notes/README|Daily Notes Index]] - Complete timeline of daily learning activities
 - **Latest Study Notes**: [[Daily Study MOC]] → Current Week
 - **Recent Work**: Check most recently modified files
@@ -247,7 +247,7 @@
 
 ### **Progress Tracking**
 
-- **Live Progress**: See [[../MONTHLY_CALENDAR]] for today's activities
+- **Live Progress**: See [[learning-plan]] for today's activities
 
 ## 📦 Smart Pointers & Memory Management
 
@@ -319,4 +319,4 @@
 
 ---
 *Tags: #index #overview #navigation #cross-track #zettelkasten #moc*
-*Links: [[../MONTHLY_CALENDAR]] | [[Collections MOC]] | [[Missions Overview]] | [[Daily Study MOC]] | [[README]]*
+*Links: [[learning-plan]] | [[Collections MOC]] | [[Missions Overview]] | [[Daily Study MOC]] | [[README]]*

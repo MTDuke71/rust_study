@@ -26,8 +26,8 @@
 
 ## 🔗 Quick Links
 
-- **[[MONTHLY_CALENDAR]]** - Full monthly calendar
-- **[[MONTHLY_CALENDAR]]** - Navigate to any day
+- **[[learning-plan]]** - Full monthly calendar
+- **[[learning-plan]]** - Navigate to any day
 - **[[Daily Study MOC]]** - Current week overview
 - **[[Missions Overview]]** - Active missions
 
@@ -47,4 +47,4 @@
 ---
 
 *Tags: #daily-learning #session-notes #<% tp.date.now("YYYY-MM-DD") %>*
-*Links: [[MONTHLY_CALENDAR]] | [[Daily Study MOC]] | [[Missions Overview]]*
+*Links: [[learning-plan]] | [[Daily Study MOC]] | [[Missions Overview]]*

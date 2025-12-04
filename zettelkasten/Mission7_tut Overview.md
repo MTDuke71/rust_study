@@ -122,4 +122,4 @@ Mission7_tut/
 
 *Tags: #mission7 #tutorial #graph #dfs #bfs #data-structures #algorithms #step-by-step*
 
-*Links: [[zettel-index]] | [[mission-7]] | [[Graph Theory MOC]] | [[MONTHLY_CALENDAR]] | [[Missions Overview]]*
+*Links: [[zettel-index]] | [[mission-7]] | [[Graph Theory MOC]] | [[learning-plan]] | [[Missions Overview]]*

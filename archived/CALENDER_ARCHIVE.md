@@ -1,5 +1,5 @@
 
-*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] 
+*Navigation: [[zettel-index]] | [[scripts/README]] | [[Daily Study MOC]] | [[Missions Overview]] 
 ---
 # 🗓️ Monthly Learning Calendar Archive
 
@@ -810,6 +810,105 @@ cargo install ripgrep fd-find            # Practice cargo install
 
 ---
 
+## 🗓️ Week 7: November 30 - December 6, 2025
+
+**FOCUS**: Complete Chapter 17 (Async) + Begin Chapter 18 (OOP)
+
+### **Sunday, November 30** 🌊
+
+**Rust Book**: Chapter 17.4 - Streams: Futures in Sequence
+**AoC Focus**: Async iteration patterns for sequential processing
+**Zettelkasten**: Create [[async-streams]] with stream processing patterns
+
+```bash
+# Daily Tasks
+cd rust_book/Ch17/async_streams
+cargo run --example stream_processing      # Async iteration
+cargo run --example async_iteration        # for await loops
+# Document stream vs iterator differences
+# Link to [[async-await-fundamentals]]
+```
+
+### **Monday, December 1** 🔍
+
+**Rust Book**: Chapter 17.5 - A Closer Look at the Traits for Async
+**AoC Focus**: Understanding Future trait for AoC 2025 Day 1
+**Zettelkasten**: Create [[future-trait-deep-dive]] with Pin/Unpin concepts
+
+```bash
+# Daily Tasks
+cd rust_book/Ch17/async_traits
+cargo run --example future_trait           # Custom Future impl
+cargo run --example pin_unpin              # Pin fundamentals
+# AoC 2025 Day 1 preparation
+# Document Future, Pin, and Waker mechanics
+```
+
+### **Tuesday, December 2**⚙️
+
+**Rust Book**: Chapter 17.6 - Futures, Tasks, and Threads
+**AoC Focus**: Choosing async vs threads for AoC 2025 Day 2
+**Zettelkasten**: Create [[async-vs-threads-decision]] with decision tree
+
+```bash
+# Daily Tasks
+cd rust_book/Ch17/async_traits
+cargo run --example tasks_vs_threads       # Concurrency comparison
+# AoC 2025 Day 2 - apply concurrency if applicable
+# Document when to use async vs threads
+# Link to [[rust-threading-basics]]
+```
+
+### **Wednesday, December 3** 🎯
+**Rust Book**: Chapter 18.1 - Characteristics of Object-Oriented Languages
+**AoC Focus**: OOP patterns in AoC 2025 Day 3
+**Zettelkasten**: Create [[rust-oop-characteristics]] comparing Rust to traditional OOP
+```bash
+# Daily Tasks
+cd rust_book/Ch18
+# Study encapsulation, inheritance alternatives, polymorphism in Rust
+# AoC 2025 Day 3 - look for trait object opportunities
+# Document how Rust achieves OOP goals differently
+```
+
+### **Thursday, December 4** 🧩
+**Rust Book**: Chapter 18.2 - Using Trait Objects That Allow for Values of Different Types
+**AoC Focus**: Trait objects for polymorphic AoC solutions (Day 4)
+**Zettelkasten**: Create [[trait-objects-polymorphism]] with dyn Trait patterns
+```bash
+# Daily Tasks
+# Study Box<dyn Trait> for runtime polymorphism
+# Learn object safety rules and limitations
+# AoC 2025 Day 4 - apply trait objects if beneficial
+# Link to [[traits]] and [[dynamic-dispatch]]
+```
+
+### **Friday, December 5** 🏗️
+**Rust Book**: Chapter 18.3 - Implementing an Object-Oriented Design Pattern
+**AoC Focus**: State pattern for AoC 2025 Day 5
+**Zettelkasten**: Create [[state-pattern-rust]] with type-state alternatives
+```bash
+# Daily Tasks
+# Study state pattern and type-state pattern in Rust
+# Compare OOP state pattern vs Rust enum approach
+# AoC 2025 Day 5 - identify state machine problems
+# Document when to use each pattern
+```
+
+### **Saturday, December 6** 📚
+**Chapter Review**: Complete Ch17 + Ch18 integration
+**AoC Focus**: Apply week's concepts to AoC 2025 Days 1-6
+**Zettelkasten**: Update async/OOP MOCs, strengthen connections
+```bash
+# Daily Tasks
+# Review all Ch17 async examples - run full suite
+# Review all Ch18 OOP patterns - compare approaches
+# Create [[async-oop-integration]] MOC
+# Strengthen bidirectional links across async and OOP concepts
+# Document patterns from AoC 2025 first week
+```
+---
+
 Original Plan (Put on Hold due to time constraints)
 ## 🗓️ Week 7: November 9-15, 2025
 
@@ -1155,4 +1254,4 @@ git add . && git commit -m "Day X progress" # Save daily progress
 ---
 
 *Last Updated: October 10, 2025*
-*Navigation: [[zettel-index]] | [[README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[MONTHLY_CALENDAR]]*
+*Navigation: [[zettel-index]] | [[scripts/README]] | [[Daily Study MOC]] | [[Missions Overview]] | [[learning-plan]]*

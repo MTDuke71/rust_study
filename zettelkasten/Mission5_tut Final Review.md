@@ -5,7 +5,7 @@
 ---
 
 *Navigation: [[zettel-index]] | [[Mission5_tut Overview]] | [[mission-5]] | [[Collections MOC]]*
-*Quick Links: [[HashMap Internals]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
+*Quick Links: [[HashMap Internals]] | [[Daily Study MOC]] | [[learning-plan]]*
 ---
 
 ## 🎯 Tutorial Completion Summary
@@ -241,7 +241,7 @@ Now that you've mastered the tutorial, you should be able to:
 - [[mission-5]] - Main V-Cycle implementation context
 - [[Mission5 API Reference]] - Complete API documentation
 - [[mission-6]] - Next mission (Grid systems)
-- [[MONTHLY_CALENDAR]] - Overall learning timeline
+- [[learning-plan]] - Overall learning timeline
 
 ---
 
@@ -279,7 +279,7 @@ If you've worked through all steps and can confidently tackle the challenges abo
 
 *Tags: #mission5-tut #final-review #mastery-checklist #hashmap #hashset #completion #learning-validation #self-assessment*
 
-*Links: [[zettel-index]] | [[Mission5_tut Overview]] | [[mission-5]] | [[Collections MOC]] | [[HashMap Internals]] | [[mission-6]] | [[MONTHLY_CALENDAR]] | [[Daily Study MOC]]*
+*Links: [[zettel-index]] | [[Mission5_tut Overview]] | [[mission-5]] | [[Collections MOC]] | [[HashMap Internals]] | [[mission-6]] | [[learning-plan]] | [[Daily Study MOC]]*
 
 ---
 

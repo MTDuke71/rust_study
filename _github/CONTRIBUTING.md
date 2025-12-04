@@ -321,7 +321,7 @@ Include:
 - **Documentation Standards**: [[RUST_DOCUMENTATION_STANDARDS.md]]
 - **Test Documentation**: [[RUST_TEST_DOCUMENTATION_STANDARDS.md]]
 - **Runnable Example Template**: [[COMPLETE_RUNNABLE_EXAMPLE_TEMPLATE.md]]
-- **Learning Calendar**: [[../MONTHLY_CALENDAR.md]]
+- **Learning Calendar**: [[learning-plan]]
 
 ---
 

@@ -1,7 +1,7 @@
 # Spaced Repetition Cards - Rust Learning System
 
 *Created: 2025-10-10*  
-*Navigation: [[zettel-index]] | [[developer-learning-habits]] | [[MONTHLY_CALENDAR]]*
+*Navigation: [[zettel-index]] | [[developer-learning-habits]] | [[learning-plan]]*
 
 ---
 
@@ -281,7 +281,7 @@ RUST-001: Created 2025-10-07
 
 *Tags: #spaced-repetition #retrieval-practice #learning-system #rust #algorithms #memory-retention*
 
-*Links: [[zettel-index]] | [[developer-learning-habits]] | [[Progress Tracking]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[developer-learning-habits]] | [[Progress Tracking]] | [[learning-plan]]*
 
 **Next Actions:**
 

@@ -398,7 +398,7 @@ Collections are fundamental to all missions:
 
 *Tags: #rust-book #chapter8 #collections #vector #string #hashmap #heap-allocation #dynamic-data*
 
-*Links: [[zettel-index]] | [[Collections MOC]] | [[Vec Type]] | [[String]] | [[HashMap]] | [[mission-5]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[Vec Type]] | [[String]] | [[HashMap]] | [[mission-5]] | [[Daily Study MOC]] | [[learning-plan]]*
 
 ---
 

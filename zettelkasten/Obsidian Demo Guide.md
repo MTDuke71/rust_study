@@ -41,7 +41,7 @@ When you open Obsidian and enable the Graph view, you'll see:
 
 - Today's checkboxes in [[mission-5]]
 - Tutorial alignment verification in [[Mission5_tut Overview]]  
-- Cross-reference with [[MONTHLY_CALENDAR]] daily goals
+- Cross-reference with [[learning-plan]] daily goals
 
 ## 💡 Immediate Benefits You'll Experience
 

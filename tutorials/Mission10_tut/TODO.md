@@ -771,7 +771,7 @@ Tutorial is complete when:
 - [[../../missions/Mission10/TODO]] - Main mission development TODO
 - [[../../missions/Mission10/README]] - Union-Find V-Cycle requirements and design
 - [[../../zettelkasten/Missions Overview]] - All missions and tutorials overview
-- [[../../MONTHLY_CALENDAR]] - Week 6 schedule (Mission 10 focus: November 2-8)
+- [[learning-plan]] - Week 6 schedule (Mission 10 focus: November 2-8)
 - [[../../daily_study/rust_learning_week6_notes/Day37]] - Crate organization patterns
 - [[examples/step1_basic_union_find]] - Basic implementation (completed)
 - [[examples/step2_path_compression]] - Path compression optimization (completed)

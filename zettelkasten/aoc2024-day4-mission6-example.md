@@ -149,7 +149,7 @@ cargo run --example day04_wm6
 ### **Learning Tracks**
 
 - **[[Missions Overview]]** - Complete mission system architecture
-- **[[MONTHLY_CALENDAR]]** - Integrated learning schedule coordination
+- **[[learning-plan]]** - Integrated learning schedule coordination
 - **[[daily-study/Day24]]** - Grid-related daily study concepts
 
 ## 📈 **Performance Analysis**

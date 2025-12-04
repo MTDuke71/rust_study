@@ -250,4 +250,4 @@ fn req5_peek_aliasing_rules() { ... }
 
 *Tags: #mission1 #stack #overview #v-cycle #ownership #foundational #data-structures #lifo*
 
-*Links: [[zettel-index]] | [[Collections MOC]] | [[V-Cycle in Rust Development]] | [[Ownership Mental Model - The Library Analogy]] | [[mission-2]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[V-Cycle in Rust Development]] | [[Ownership Mental Model - The Library Analogy]] | [[mission-2]] | [[learning-plan]]*

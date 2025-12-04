@@ -383,4 +383,4 @@ pub fn solve_part1(input: &str) -> Result<String> {
 
 ---
 *Tags: #v-cycle #methodology #software-engineering #requirements #testing #traceability #quality-assurance #professional-development*
-*Links: [[zettel-index]] | [[software-architecture-patterns]] | [[deterministic-debugging]] | [[mission-1]] | [[mission-2]] | [[mission-3]] | [[mission-4]] | [[mission-5]] | [[mission-6]] | [[mission-7]] | [[MONTHLY_CALENDAR]] | [[../../advanced_examples/Brackets_Basic/README_BASIC]] | [[../../advanced_examples/Brackets_Ext/README (2)]]*
+*Links: [[zettel-index]] | [[software-architecture-patterns]] | [[deterministic-debugging]] | [[mission-1]] | [[mission-2]] | [[mission-3]] | [[mission-4]] | [[mission-5]] | [[mission-6]] | [[mission-7]] | [[learning-plan]] | [[../../advanced_examples/Brackets_Basic/README_BASIC]] | [[../../advanced_examples/Brackets_Ext/README (2)]]*

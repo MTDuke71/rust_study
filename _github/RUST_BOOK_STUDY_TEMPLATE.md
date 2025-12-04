@@ -514,5 +514,5 @@ Each section's main.rs could follow the pattern shown in Mission5_tut examples w
 
 ---
 
-*Links: [[rust-book]] | [[3-Track Integration]] | [[MONTHLY_CALENDAR]]*
+*Links: [[rust-book]] | [[3-Track Integration]] | [[learning-plan]]*
 *Tags: #rust-book #template #standards #3-track #foundation*

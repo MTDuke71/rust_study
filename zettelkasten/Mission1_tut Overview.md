@@ -112,4 +112,4 @@ Mission1_tut/
 
 *Tags: #mission1 #tutorial #stack #lifo #ownership #generics #data-structures #step-by-step*
 
-*Links: [[zettel-index]] | [[mission-1]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Missions Overview]]*
+*Links: [[zettel-index]] | [[mission-1]] | [[Collections MOC]] | [[learning-plan]] | [[Missions Overview]]*

@@ -132,7 +132,7 @@
 ### **Learning Framework Integration**
 - [[Daily Notes/2025-10-23]] - Today's specific learning objectives and task breakdown
 - [[Daily Notes/2025-10-22]] - Yesterday's Mission 9 setup and foundation work
-- [[MONTHLY_CALENDAR]] - October 2025 learning schedule and weekly milestones
+- [[learning-plan]] - October 2025 learning schedule and weekly milestones
 - [[Daily Study MOC]] - Integration with systematic Rust concept progression
 - [[3-Track Integration]] - Coordination between Missions, Daily Study, and Rust Book
 

@@ -241,7 +241,7 @@ This curriculum represents **9 weeks of advanced Rust topics** (Days 43-105) cov
 ## 🔗 **Cross-References**
 
 **Current Learning Focus**:
-- [[MONTHLY_CALENDAR]] - Current AoC + Zettelkasten + Rust Book plan
+- [[learning-plan]] - Current AoC + Zettelkasten + Rust Book plan
 - [[daily_study/rust_learning_week6_notes/]] - Last completed daily study week
 
 **Integration Resources**:
@@ -265,4 +265,4 @@ This curriculum represents **9 weeks of advanced Rust topics** (Days 43-105) cov
 
 *Tags*: #advanced-rust #curriculum #archive #future-learning #type-system #concurrency #macros #memory-management #simd #ffi #wasm*
 
-*Related*: [[MONTHLY_CALENDAR]] | [[zettelkasten/Advanced Rust MOC]] | [[daily_study/]] | [[rust_book/]]
+*Related*: [[learning-plan]] | [[zettelkasten/Advanced Rust MOC]] | [[daily_study/]] | [[rust_book/]]

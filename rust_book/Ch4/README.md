@@ -328,7 +328,7 @@ This chapter's concepts are fundamental to all missions:
 
 *Tags: #rust-book #chapter4 #ownership #borrowing #references #slices #memory-management #foundation*
 
-*Links: [[zettel-index]] | [[Ownership and Borrowing]] | [[Memory Management]] | [[mission-1]] | [[mission-2]] | [[Daily Study MOC]] | [[MONTHLY_CALENDAR]]*
+*Links: [[zettel-index]] | [[Ownership and Borrowing]] | [[Memory Management]] | [[mission-1]] | [[mission-2]] | [[Daily Study MOC]] | [[learning-plan]]*
 
 ---
 

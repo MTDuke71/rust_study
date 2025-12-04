@@ -572,7 +572,7 @@ As new patterns emerge:
 
 ## Related Resources
 
-- [[MONTHLY_CALENDAR]] - Integrated learning schedule
+- [[learning-plan]] - Integrated learning schedule
 - [[CALENDER_ARCHIVE]] - Historical AoC work
 - [[Complete Runnable Examples]] - Solution quality standards
 - [[Zettelkasten System]] - Knowledge management

@@ -112,4 +112,4 @@ Mission2_tut/
 
 *Tags: #mission2 #tutorial #queue #fifo #ring-buffer #linked-list #data-structures #step-by-step*
 
-*Links: [[zettel-index]] | [[mission-2]] | [[Collections MOC]] | [[MONTHLY_CALENDAR]] | [[Missions Overview]]*
+*Links: [[zettel-index]] | [[mission-2]] | [[Collections MOC]] | [[learning-plan]] | [[Missions Overview]]*

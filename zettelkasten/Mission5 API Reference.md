@@ -65,7 +65,7 @@ See: [[../missions/Mission5/README|Mission5 README.md]] - Scroll to "API Documen
 **Learning Path:**
 
 - [[Week 2 Overview]] - HashMap week overview
-- [[MONTHLY_CALENDAR|../MONTHLY_CALENDAR]] - Daily integration schedule
+- [[learning-plan|../MONTHLY_CALENDAR]] - Daily integration schedule
 
 ---
 

@@ -702,4 +702,4 @@ let results: Vec<_> = futures
 
 **Tags:** #rust-book #ch17 #async #await #futures #streams #tokio #concurrency #io-bound #async-programming
 
-**Links:** [[../README]] | [[../Ch16/README]] | [[../../zettelkasten/async-await-basics]] | [[../../zettelkasten/async-concurrency]] | [[../../zettelkasten/async-performance-timer-resolution]] | [[../../MONTHLY_CALENDAR]]
+**Links:** [[../README]] | [[../Ch16/README]] | [[../../zettelkasten/async-await-basics]] | [[../../zettelkasten/async-concurrency]] | [[../../zettelkasten/async-performance-timer-resolution]] | [[learning-plan]]
