@@ -1,62 +1,59 @@
---- Day 3: Mull It Over ---
-"Our computers are having issues, so I have no idea if we have any Chief Historians in stock! You're welcome to check the warehouse, though," says the mildly flustered shopkeeper at the North Pole Toboggan Rental Shop. The Historians head out to take a look.
+--- Day 3: Lobby ---
+You descend a short staircase, enter the surprisingly vast lobby, and are quickly cleared by the security checkpoint. When you get to the main elevators, however, you discover that each one has a red light above it: they're all offline.
 
-The shopkeeper turns to you. "Any chance you can see why our computers are having issues again?"
+"Sorry about that," an Elf apologizes as she tinkers with a nearby control panel. "Some kind of electrical surge seems to have fried them. I'll try to get them online soon."
 
-The computer appears to be trying to run a program, but its memory (your puzzle input) is corrupted. All of the instructions have been jumbled up!
+You explain your need to get further underground. "Well, you could at least take the escalator down to the printing department, not that you'd get much further than that without the elevators working. That is, you could if the escalator weren't also offline."
 
-It seems like the goal of the program is just to multiply some numbers. It does that with instructions like mul(X,Y), where X and Y are each 1-3 digit numbers. For instance, mul(44,46) multiplies 44 by 46 to get a result of 2024. Similarly, mul(123,4) would multiply 123 by 4.
+"But, don't worry! It's not fried; it just needs power. Maybe you can get it running while I keep working on the elevators."
 
-However, because the program's memory has been corrupted, there are also many invalid characters that should be ignored, even if they look like part of a mul instruction. Sequences like mul(4*, mul(6,9!, ?(12,34), or mul ( 2 , 4 ) do nothing.
+There are batteries nearby that can supply emergency power to the escalator for just such an occasion. The batteries are each labeled with their joltage rating, a value from 1 to 9. You make a note of their joltage ratings (your puzzle input). For example:
 
-For example, consider the following section of corrupted memory:
+987654321111111
+811111111111119
+234234234234278
+818181911112111
+The batteries are arranged into banks; each line of digits in your input corresponds to a single bank of batteries. Within each bank, you need to turn on exactly two batteries; the joltage that the bank produces is equal to the number formed by the digits on the batteries you've turned on. For example, if you have a bank like 12345 and you turn on batteries 2 and 4, the bank would produce 24 jolts. (You cannot rearrange batteries.)
 
-xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))
-Only the four highlighted sections are real mul instructions. Adding up the result of each instruction produces 161 (2*4 + 5*5 + 11*8 + 8*5).
+You'll need to find the largest possible joltage each bank can produce. In the above example:
 
-Scan the corrupted memory for uncorrupted mul instructions. What do you get if you add up all of the results of the multiplications?
+In 987654321111111, you can make the largest joltage possible, 98, by turning on the first two batteries.
+In 811111111111119, you can make the largest joltage possible by turning on the batteries labeled 8 and 9, producing 89 jolts.
+In 234234234234278, you can make 78 by turning on the last two batteries (marked 7 and 8).
+In 818181911112111, the largest joltage you can produce is 92.
+The total output joltage is the sum of the maximum joltage from each bank, so in this example, the total output joltage is 98 + 89 + 78 + 92 = 357.
 
-Your puzzle answer was 183380722.
+There are many batteries in front of you. Find the maximum joltage possible from each bank; what is the total output joltage?
+
+Your puzzle answer was 17427.
 
 --- Part Two ---
-As you scan through the corrupted memory, you notice that some of the conditional statements are also still intact. If you handle some of the uncorrupted conditional statements in the program, you might be able to get an even more accurate result.
+The escalator doesn't move. The Elf explains that it probably needs more joltage to overcome the static friction of the system and hits the big red "joltage limit safety override" button. You lose count of the number of times she needs to confirm "yes, I'm sure" and decorate the lobby a bit while you wait.
 
-There are two new instructions you'll need to handle:
+Now, you need to make the largest joltage by turning on exactly twelve batteries within each bank.
 
-The do() instruction enables future mul instructions.
-The don't() instruction disables future mul instructions.
-Only the most recent do() or don't() instruction applies. At the beginning of the program, mul instructions are enabled.
+The joltage output for the bank is still the number formed by the digits of the batteries you've turned on; the only difference is that now there will be 12 digits in each bank's joltage output instead of two.
 
-For example:
+Consider again the example from before:
 
-xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))
-This corrupted memory is similar to the example from before, but this time the mul(5,5) and mul(11,8) instructions are disabled because there is a don't() instruction before them. The other mul instructions function normally, including the one at the end that gets re-enabled by a do() instruction.
+987654321111111
+811111111111119
+234234234234278
+818181911112111
+Now, the joltages are much larger:
 
-This time, the sum of the results is 48 (2*4 + 8*5).
+In 987654321111111, the largest joltage can be found by turning on everything except some 1s at the end to produce 987654321111.
+In the digit sequence 811111111111119, the largest joltage can be found by turning on everything except some 1s, producing 811111111119.
+In 234234234234278, the largest joltage can be found by turning on everything except a 2 battery, a 3 battery, and another 2 battery near the start to produce 434234234278.
+In 818181911112111, the joltage 888911112111 is produced by turning on everything except some 1s near the front.
+The total output joltage is now much larger: 987654321111 + 811111111119 + 434234234278 + 888911112111 = 3121910778619.
 
-Handle the new instructions; what do you get if you add up all of the results of just the enabled multiplications?
+What is the new total output joltage?
 
-Your puzzle answer was 82733683.
+Your puzzle answer was 173161749617495.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
 
----
+At this point, you should return to your Advent calendar and try another puzzle.
 
-## 🔗 **Related Concepts**
-
-**Problem Patterns**:
-- [[../../zettelkasten/AoC Patterns MOC]] - String parsing and instruction processing patterns
-- [[../../tutorials/Mission5_tut/REGEX_QUICK_REFERENCE]] - Regular expression patterns for parsing
-- [[../../zettelkasten/String Processing]] - Pattern matching and extraction techniques
-
-**Implementation Techniques**:
-- Regex pattern matching with `mul(\d+,\d+)` capture groups
-- Conditional instruction processing with `do()` and `don't()` state toggles
-- String scanning with stateful parsing
-- Numeric extraction and multiplication accumulation
-
-**Cross-Year Patterns**:
-- [[../../zettelkasten/AoC 2015 MOC]] - Compare with Day 5 string validation patterns
-
----
-*Links: [[day02]] [[day04]] [[AoC 2024 Overview]]*
+If you still want to see it, you can get your puzzle input.

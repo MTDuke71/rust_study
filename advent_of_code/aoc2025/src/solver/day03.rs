@@ -1,173 +1,155 @@
+//! Day 3: Lobby - Battery Bank Maximum Joltage
+//!
+//! # Part 1
+//! Find the maximum two-digit number that can be formed by selecting
+//! exactly two digits from each row (in order), then sum all maximums.
+//!
+//! # Part 2
+//! Find the maximum **12-digit** number from each bank (same rules, more digits).
+//!
+//! # Algorithm
+//!
+//! ## Part 1 (2 digits)
+//! For each bank, find positions i < j that maximize `digits[i] * 10 + digits[j]`.
+//!
+//! ## Part 2 (k digits) - Greedy Selection
+//! To select k digits from n digits (k <= n) to form the maximum number:
+//! 1. For position 1: pick the largest digit from indices 0..=(n-k)
+//!    (must leave k-1 digits for remaining positions)
+//! 2. For position 2: pick the largest digit from (prev_idx+1)..=(n-k+1)
+//! 3. Continue until all k positions filled
+//!
+//! **Key Insight**: At each step, greedily pick the largest available digit
+//! that still leaves enough digits for the remaining positions.
+//!
+//! # Mission Integration
+//! This problem is simple enough that no complex data structures are needed.
+//! It's primarily a string parsing and greedy optimization problem.
+
 use anyhow::{Context, Result};
-use regex::Regex;
 
-/// Parse valid mul instructions from corrupted memory
+/// Parse a single bank (line) into a vector of digit values
+fn parse_bank(line: &str) -> Result<Vec<u8>> {
+    line.trim()
+        .chars()
+        .map(|c| {
+            c.to_digit(10)
+                .map(|d| d as u8)
+                .ok_or_else(|| anyhow::anyhow!("Invalid digit '{}'", c))
+        })
+        .collect()
+}
+
+/// Find the maximum two-digit joltage from a single bank
 ///
-/// Finds all instances of `mul(X,Y)` where X and Y are 1-3 digit numbers.
-/// Invalid patterns like `mul(4*`, `mul(6,9!`, `?(12,34)`, or `mul ( 2 , 4 )` are ignored.
-fn parse_mul_instructions(input: &str) -> Result<Vec<(i32, i32)>> {
-    let re = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)")
-        .context("Failed to compile regex for mul instructions")?;
-
-    let mut instructions = Vec::new();
-
-    for captures in re.captures_iter(input) {
-        let x_str = &captures[1];
-        let y_str = &captures[2];
-
-        let x = x_str.parse::<i32>().with_context(|| {
-            format!(
-                "Failed to parse first number: '{}' (full match: '{}')",
-                x_str,
-                captures.get(0).unwrap().as_str()
-            )
-        })?;
-        let y = y_str.parse::<i32>().with_context(|| {
-            format!(
-                "Failed to parse second number: '{}' (full match: '{}')",
-                y_str,
-                captures.get(0).unwrap().as_str()
-            )
-        })?;
-
-        instructions.push((x, y));
+/// Returns the maximum value of `digits[i] * 10 + digits[j]` where i < j
+fn max_joltage_from_bank(digits: &[u8]) -> u32 {
+    if digits.len() < 2 {
+        return 0;
     }
 
-    Ok(instructions)
-}
+    let mut max_joltage = 0;
 
-/// Parse mul instructions and conditional statements from corrupted memory
-///
-/// Finds all instances of:
-/// - `mul(X,Y)` where X and Y are 1-3 digit numbers
-/// - `do()` which enables future mul instructions
-/// - `don't()` which disables future mul instructions
-///
-/// Returns a vector of instructions in order, where each instruction is either:
-/// - `Mul(x, y)` for multiplication
-/// - `Do` to enable multiplications
-/// - `Dont` to disable multiplications
-#[derive(Debug, PartialEq)]
-enum Instruction {
-    Mul(i32, i32),
-    Do,
-    Dont,
-}
+    // For each possible first digit position
+    for i in 0..digits.len() - 1 {
+        let first_digit = digits[i] as u32;
 
-fn parse_instructions_with_conditionals(input: &str) -> Result<Vec<Instruction>> {
-    let re = Regex::new(r"(?:mul\((\d{1,3}),(\d{1,3})\))|(do\(\)|don't\(\))")
-        .context("Failed to compile regex for instructions with conditionals")?;
+        // Find the maximum digit in remaining positions
+        let max_second = digits[i + 1..]
+            .iter()
+            .map(|&d| d as u32)
+            .max()
+            .unwrap_or(0);
 
-    let mut instructions = Vec::new();
-
-    for captures in re.captures_iter(input) {
-        if let Some(conditional) = captures.get(3) {
-            // This is a conditional instruction
-            match conditional.as_str() {
-                "do()" => instructions.push(Instruction::Do),
-                "don't()" => instructions.push(Instruction::Dont),
-                _ => {
-                    return Err(anyhow::anyhow!(
-                        "Unknown conditional: {}",
-                        conditional.as_str()
-                    ))
-                }
-            }
-        } else if let (Some(x_match), Some(y_match)) = (captures.get(1), captures.get(2)) {
-            // This is a mul instruction
-            let x = x_match
-                .as_str()
-                .parse::<i32>()
-                .with_context(|| format!("Failed to parse first number: {}", x_match.as_str()))?;
-            let y = y_match
-                .as_str()
-                .parse::<i32>()
-                .with_context(|| format!("Failed to parse second number: {}", y_match.as_str()))?;
-
-            instructions.push(Instruction::Mul(x, y));
-        }
+        let joltage = first_digit * 10 + max_second;
+        max_joltage = max_joltage.max(joltage);
     }
 
-    Ok(instructions)
+    max_joltage
 }
 
-/// Solve Part 1: Sum all valid mul instructions
+/// Part 1: Sum of maximum joltage from each bank
 ///
-/// Scans the corrupted memory for uncorrupted `mul(X,Y)` instructions and adds up
-/// the results of all multiplications.
-///
-/// # Arguments
-///
-/// * `input` - The corrupted memory as a string
-///
-/// # Returns
-///
-/// The sum of all multiplication results
-///
-/// # Example
-///
-/// ```
-/// use aoc2024::solver::day03::solve_part1;
-///
-/// let input = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
-/// assert_eq!(solve_part1(input).unwrap(), "161");
-/// ```
+/// For each bank, find the two batteries (digits) that form the largest
+/// two-digit number when turned on (preserving order).
 pub fn solve_part1(input: &str) -> Result<String> {
-    let instructions = parse_mul_instructions(input.trim())
-        .context("Failed to parse mul instructions from input")?;
-
-    let total: i32 = instructions.iter().map(|(x, y)| x * y).sum();
+    let total: u32 = input
+        .lines()
+        .filter(|line| !line.trim().is_empty())
+        .enumerate()
+        .map(|(line_num, line)| {
+            let digits = parse_bank(line)
+                .with_context(|| format!("Failed to parse bank on line {}", line_num + 1))?;
+            Ok(max_joltage_from_bank(&digits))
+        })
+        .collect::<Result<Vec<u32>>>()?
+        .into_iter()
+        .sum();
 
     Ok(total.to_string())
 }
 
-/// Solve Part 2: Sum enabled mul instructions with conditional processing
+/// Find the maximum k-digit number by selecting k digits from the bank (preserving order)
 ///
-/// Handles conditional statements in the corrupted memory:
-/// - `do()` enables future mul instructions
-/// - `don't()` disables future mul instructions
-/// - At the beginning, mul instructions are enabled
+/// Uses greedy algorithm: at each position, pick the largest digit that still
+/// leaves enough digits for remaining positions.
 ///
-/// Only the most recent `do()` or `don't()` instruction applies.
-///
-/// # Arguments
-///
-/// * `input` - The corrupted memory as a string
-///
-/// # Returns
-///
-/// The sum of all enabled multiplication results
-///
-/// # Example
-///
-/// ```
-/// use aoc2024::solver::day03::solve_part2;
-///
-/// let input = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
-/// assert_eq!(solve_part2(input).unwrap(), "48");
-/// ```
-pub fn solve_part2(input: &str) -> Result<String> {
-    let instructions = parse_instructions_with_conditionals(input.trim())
-        .context("Failed to parse instructions with conditionals from input")?;
-
-    let mut enabled = true; // mul instructions are enabled at the beginning
-    let mut total = 0;
-
-    for instruction in instructions {
-        match instruction {
-            Instruction::Mul(x, y) => {
-                if enabled {
-                    total += x * y;
-                }
-            }
-            Instruction::Do => {
-                enabled = true;
-            }
-            Instruction::Dont => {
-                enabled = false;
-            }
-        }
+/// **Tie-breaking**: When multiple positions have the same max digit,
+/// pick the EARLIEST one to leave maximum flexibility for later positions.
+fn max_k_digit_joltage(digits: &[u8], k: usize) -> u64 {
+    if digits.len() < k || k == 0 {
+        return 0;
     }
+
+    let n = digits.len();
+    let mut result: u64 = 0;
+    let mut start_idx = 0;
+
+    for positions_remaining in (1..=k).rev() {
+        // We need to pick 1 digit now, and leave (positions_remaining - 1) for later
+        // So we can search from start_idx to (n - positions_remaining) inclusive
+        let end_idx = n - positions_remaining;
+
+        // Find the maximum digit in this range
+        let max_digit = (start_idx..=end_idx)
+            .map(|i| digits[i])
+            .max()
+            .unwrap();
+
+        // Find the FIRST index with this max digit (to leave more room for later)
+        let best_idx = (start_idx..=end_idx)
+            .find(|&i| digits[i] == max_digit)
+            .unwrap();
+
+        // Add this digit to result
+        result = result * 10 + max_digit as u64;
+
+        // Next search starts after this position
+        start_idx = best_idx + 1;
+    }
+
+    result
+}
+
+/// Part 2: Sum of maximum 12-digit joltage from each bank
+///
+/// For each bank, find the 12 batteries (digits) that form the largest
+/// 12-digit number when turned on (preserving order).
+pub fn solve_part2(input: &str) -> Result<String> {
+    const K: usize = 12;
+
+    let total: u64 = input
+        .lines()
+        .filter(|line| !line.trim().is_empty())
+        .enumerate()
+        .map(|(line_num, line)| {
+            let digits = parse_bank(line)
+                .with_context(|| format!("Failed to parse bank on line {}", line_num + 1))?;
+            Ok(max_k_digit_joltage(&digits, K))
+        })
+        .collect::<Result<Vec<u64>>>()?
+        .into_iter()
+        .sum();
 
     Ok(total.to_string())
 }
@@ -176,114 +158,123 @@ pub fn solve_part2(input: &str) -> Result<String> {
 mod tests {
     use super::*;
 
-    // Test examples from the problem statement
-    const PART1_EXAMPLE: &str =
-        "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
-    const PART2_EXAMPLE: &str =
-        "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
+    const EXAMPLE: &str = r#"987654321111111
+811111111111119
+234234234234278
+818181911112111"#;
 
     #[test]
-    fn test_parse_mul_instructions() {
-        let instructions = parse_mul_instructions(PART1_EXAMPLE).unwrap();
-
-        // Only valid mul instructions should be parsed
-        assert_eq!(instructions.len(), 4);
-        assert_eq!(instructions[0], (2, 4));
-        assert_eq!(instructions[1], (5, 5));
-        assert_eq!(instructions[2], (11, 8));
-        assert_eq!(instructions[3], (8, 5));
+    fn test_parse_bank() {
+        let digits = parse_bank("12345").unwrap();
+        assert_eq!(digits, vec![1, 2, 3, 4, 5]);
     }
 
     #[test]
-    fn test_parse_instructions_with_conditionals() {
-        let instructions = parse_instructions_with_conditionals(PART2_EXAMPLE).unwrap();
-
-        // Expected: mul(2,4), don't(), mul(5,5), mul(11,8), do() [from "undo()"], mul(8,5)
-        assert_eq!(instructions.len(), 6);
-        assert_eq!(instructions[0], Instruction::Mul(2, 4));
-        assert_eq!(instructions[1], Instruction::Dont);
-        assert_eq!(instructions[2], Instruction::Mul(5, 5));
-        assert_eq!(instructions[3], Instruction::Mul(11, 8));
-        assert_eq!(instructions[4], Instruction::Do); // This is "do()" from "undo()"
-        assert_eq!(instructions[5], Instruction::Mul(8, 5));
+    fn test_max_joltage_first_two() {
+        // 987654321111111 -> max is 98 (first two digits)
+        let digits = parse_bank("987654321111111").unwrap();
+        assert_eq!(max_joltage_from_bank(&digits), 98);
     }
 
     #[test]
-    fn test_solve_part1_example() {
-        let result = solve_part1(PART1_EXAMPLE).unwrap();
-
-        // 2*4 + 5*5 + 11*8 + 8*5 = 8 + 25 + 88 + 40 = 161
-        assert_eq!(result, "161");
+    fn test_max_joltage_first_and_last() {
+        // 811111111111119 -> max is 89 (8 from first, 9 from last)
+        let digits = parse_bank("811111111111119").unwrap();
+        assert_eq!(max_joltage_from_bank(&digits), 89);
     }
 
     #[test]
-    fn test_solve_part2_example() {
-        let result = solve_part2(PART2_EXAMPLE).unwrap();
-
-        // 2*4 + 8*5 = 8 + 40 = 48 (mul(5,5) and mul(11,8) are disabled)
-        assert_eq!(result, "48");
+    fn test_max_joltage_last_two() {
+        // 234234234234278 -> max is 78 (last two)
+        let digits = parse_bank("234234234234278").unwrap();
+        assert_eq!(max_joltage_from_bank(&digits), 78);
     }
 
     #[test]
-    fn test_solve_part2_with_do_instruction() {
-        let input = "mul(2,4)don't()mul(5,5)do()mul(8,5)";
-        let result = solve_part2(input).unwrap();
-
-        // 2*4 + 8*5 = 8 + 40 = 48 (mul(5,5) disabled by don't(), mul(8,5) re-enabled by do())
-        assert_eq!(result, "48");
+    fn test_max_joltage_scattered() {
+        // 818181911112111 -> max is 92
+        // 9 appears at position 6, then we need max after position 6
+        // After position 6: 11112111 -> max is 2
+        // So 9*10 + 2 = 92
+        let digits = parse_bank("818181911112111").unwrap();
+        assert_eq!(max_joltage_from_bank(&digits), 92);
     }
 
     #[test]
-    fn test_invalid_mul_instructions() {
-        let input = "mul(4* mul(6,9! ?(12,34) mul ( 2 , 4 )";
-        let instructions = parse_mul_instructions(input).unwrap();
-
-        // None of these should be valid
-        assert_eq!(instructions.len(), 0);
+    fn test_example_part1() {
+        // 98 + 89 + 78 + 92 = 357
+        let result = solve_part1(EXAMPLE).unwrap();
+        assert_eq!(result, "357");
     }
 
     #[test]
-    fn test_large_numbers() {
-        let input = "mul(123,456)";
-        let instructions = parse_mul_instructions(input).unwrap();
-
-        assert_eq!(instructions.len(), 1);
-        assert_eq!(instructions[0], (123, 456));
-
-        let result = solve_part1(input).unwrap();
-        assert_eq!(result, "56088"); // 123 * 456
+    fn test_simple_two_digits() {
+        assert_eq!(max_joltage_from_bank(&[1, 2]), 12);
+        assert_eq!(max_joltage_from_bank(&[2, 1]), 21);
+        assert_eq!(max_joltage_from_bank(&[5, 5]), 55);
     }
 
     #[test]
-    fn test_four_digit_numbers_ignored() {
-        let input = "mul(1234,5678) mul(12,34)";
-        let instructions = parse_mul_instructions(input).unwrap();
+    fn test_three_digits() {
+        // 123 -> choices: 12, 13, 23 -> max is 23
+        assert_eq!(max_joltage_from_bank(&[1, 2, 3]), 23);
+        // 321 -> choices: 32, 31, 21 -> max is 32
+        assert_eq!(max_joltage_from_bank(&[3, 2, 1]), 32);
+        // 192 -> choices: 19, 12, 92 -> max is 92
+        assert_eq!(max_joltage_from_bank(&[1, 9, 2]), 92);
+    }
 
-        // Only 1-3 digit numbers are valid
-        assert_eq!(instructions.len(), 1);
-        assert_eq!(instructions[0], (12, 34));
+    // Part 2 tests
+
+    #[test]
+    fn test_max_k_digit_simple() {
+        // Select 3 digits from "12345" -> max is 345 (skip 1,2)
+        let digits = parse_bank("12345").unwrap();
+        assert_eq!(max_k_digit_joltage(&digits, 3), 345);
+
+        // Select 4 digits from "12345" -> max is 2345 (skip 1)
+        assert_eq!(max_k_digit_joltage(&digits, 4), 2345);
+
+        // Select all 5 digits -> 12345
+        assert_eq!(max_k_digit_joltage(&digits, 5), 12345);
     }
 
     #[test]
-    fn test_consecutive_conditionals() {
-        let input = "mul(2,3)don't()don't()do()don't()mul(4,5)do()mul(6,7)";
-        let result = solve_part2(input).unwrap();
-
-        // mul(2,3)=6 (enabled), mul(4,5) disabled, mul(6,7)=42 (re-enabled)
-        // Total: 6 + 42 = 48
-        assert_eq!(result, "48");
+    fn test_max_12_digit_example1() {
+        // 987654321111111 (15 digits) -> select 12 -> 987654321111
+        // Skip 3 digits from the end (the 1s)
+        let digits = parse_bank("987654321111111").unwrap();
+        assert_eq!(max_k_digit_joltage(&digits, 12), 987654321111);
     }
 
     #[test]
-    fn test_empty_input() {
-        assert_eq!(solve_part1("").unwrap(), "0");
-        assert_eq!(solve_part2("").unwrap(), "0");
+    fn test_max_12_digit_example2() {
+        // 811111111111119 (15 digits) -> select 12 -> 811111111119
+        // Keep the 8 at start, skip three 1s, keep the 9 at end
+        let digits = parse_bank("811111111111119").unwrap();
+        assert_eq!(max_k_digit_joltage(&digits, 12), 811111111119);
     }
 
     #[test]
-    fn test_no_valid_instructions() {
-        let input = "invalid mul invalid don't invalid do invalid";
-        assert_eq!(solve_part1(input).unwrap(), "0");
-        assert_eq!(solve_part2(input).unwrap(), "0");
+    fn test_max_12_digit_example3() {
+        // 234234234234278 (15 digits) -> select 12 -> 434234234278
+        // Skip a 2, 3, and another 2 near the start
+        let digits = parse_bank("234234234234278").unwrap();
+        assert_eq!(max_k_digit_joltage(&digits, 12), 434234234278);
+    }
+
+    #[test]
+    fn test_max_12_digit_example4() {
+        // 818181911112111 (15 digits) -> select 12 -> 888911112111
+        // Keep the 8s and 9, skip some 1s near the front
+        let digits = parse_bank("818181911112111").unwrap();
+        assert_eq!(max_k_digit_joltage(&digits, 12), 888911112111);
+    }
+
+    #[test]
+    fn test_example_part2() {
+        // 987654321111 + 811111111119 + 434234234278 + 888911112111 = 3121910778619
+        let result = solve_part2(EXAMPLE).unwrap();
+        assert_eq!(result, "3121910778619");
     }
 }

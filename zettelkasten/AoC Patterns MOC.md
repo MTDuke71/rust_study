@@ -36,6 +36,13 @@
 - **[[BFS Patterns]]** - Shortest path, level-order, and state exploration
 - **[[DFS Patterns]]** - Recursive exploration, backtracking, and cycle detection
 - **[[A-Star-Algorithm-Deep-Dive]]** - Heuristic search for optimal pathfinding
+
+### **Greedy Algorithms**
+
+- **[[Greedy Algorithms]]** - Optimal local choices leading to global solutions
+  - **[[../../advent_of_code/aoc2025/Problem_Statements/day03|AoC 2025 Day 3]]** - K-digit selection with tie-breaking (earliest-max strategy)
+  - **[[Dijkstra Algorithm]]** - Greedy shortest path with priority queue
+  - **[[Minimum Spanning Tree]]** - Kruskal's/Prim's greedy edge selection
   - **[[Chebyshev Distance]]** - Chessboard/8-connected distance metric
   - **[[Manhattan Distance]]** - 4-connected grid distance
   - **[[Euclidean Distance]]** - Continuous space distance

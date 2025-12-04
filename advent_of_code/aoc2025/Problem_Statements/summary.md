@@ -139,6 +139,40 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 
 ---
 
+### Day 3: Lobby
+**Title**: Lobby  
+**Part 1 Type**: Greedy Algorithms + String Processing  
+**Part 1 Description**: From each battery bank (row of digits), select exactly 2 batteries to form the largest possible two-digit number (preserving digit order)  
+**Part 2 Type**: Greedy Algorithms + String Processing  
+**Part 2 Description**: Same as Part 1, but select exactly 12 batteries to form the largest possible 12-digit number  
+**Key Concepts**: Greedy selection, tie-breaking strategy, digit ordering constraints  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Greedy selection with constraints (k-out-of-n digit maximization)
+- **Data Structure**: Simple array iteration, no complex structures needed
+- **Complexity**: Part 1: O(n²) per line, Part 2: O(k×n) per line where k=12
+- **AoC Theme**: "Battery joltage" with classic Part 2 scaling (2 digits → 12 digits)
+
+**🦀 Rust Implementation Highlights**:
+- **Greedy iteration** → **Two-phase max finding**: first find max digit, then find first occurrence
+- **Tie-breaking** → **Use `.find()` for earliest max** to leave maximum flexibility for remaining positions
+- **Large numbers** → **`u64` for 12-digit results** (up to 999,999,999,999)
+- **Clean iteration** → **Range-based selection** with `(start_idx..=end_idx)` bounds
+
+**Key Implementation Insights**:
+- **Part 1 Algorithm**: For each first position i, find max(digits[i] × 10 + max(digits[i+1..]))
+- **Part 2 Algorithm**: Greedy k-digit selection - at each position, pick largest digit leaving k-1 positions available
+- **Critical Fix**: When multiple positions have same max digit, pick EARLIEST (not last via `max_by_key`)
+- **Bounds calculation**: For position p of k total, search range is `[start..=(n-k+p)]`
+
+**Answers**:
+- Part 1: `17427`
+- Part 2: `173161749617495`
+
+**⏱️ Performance**: O(k×n) per line is efficient for k=12 and n~100.
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -152,7 +186,7 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 | Data Structures | 0 | 0 |
 | Encoding | 0 | 0 |
 | Graph Algorithms | 0 | 0 |
-| Greedy Algorithms | 0 | 0 |
+| Greedy Algorithms | 1 | 1 |
 | Mathematical | 1 | 1 |
 | Number Theory | 0 | 0 |
 | Optimization | 0 | 0 |
@@ -162,7 +196,7 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 | Search | 0 | 0 |
 | Search/Traversal | 0 | 0 |
 | Simulation | 1 | 1 |
-| String Processing | 1 | 1 |
+| String Processing | 2 | 2 |
 
 ## Implementation Notes
 
@@ -173,12 +207,14 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Boundary detection**: Division-based algorithms for detecting state transitions (dial crossing zero)
 - **Signed arithmetic benefits**: Using `i32` over `u32` simplifies wrap-around and negative value handling
 - **String pattern matching**: Day 2 showcases string manipulation and repetition detection algorithms
-- **Part 2 escalation pattern**: Both days follow classic AoC pattern of Part 2 expanding the problem scope
+- **Greedy selection**: Day 3 introduces optimal k-digit selection with tie-breaking strategies
+- **Part 2 escalation pattern**: All days follow classic AoC pattern of Part 2 expanding the problem scope
 
 ### Rust-Specific Considerations
 
 - **Day 1**: Demonstrates signed integer arithmetic advantages for circular problems, comprehensive error handling with `anyhow::Result`, and the importance of special case handling for boundary conditions (position 0)
 - **Day 2**: Showcases string slicing with `split_at()`, pattern repetition detection using divisibility checks, and functional iteration with `filter()`/`sum()` for range processing
+- **Day 3**: Highlights greedy iteration patterns, `.find()` for first-match semantics in tie-breaking, and `u64` for large number results
 
 ---
 
@@ -219,11 +255,11 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 2, 2025*
-*Days Implemented: 1, 2*
+*Last Updated: December 3, 2025*
+*Days Implemented: 1, 2, 3*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 *Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning*
 
-*Links: [[day01]] | [[day02]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
+*Links: [[day01]] | [[day02]] | [[day03]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
