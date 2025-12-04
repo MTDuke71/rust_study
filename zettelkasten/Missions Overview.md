@@ -417,4 +417,4 @@ The workspace includes complete solutions for Advent of Code 2015, demonstrating
 > **💡 Tip**: Use this MOC to navigate between related missions and find the right learning path for your current skill level and interests.
 
 *Tags: #missions #overview #v-cycle #engineering #projects #requirements #testing #architecture*
-*Links: [[zettel-index]] | [[Collections MOC]] | [[rust-concepts-MOC]] | [[V-Cycle Methodology]] | [[mission-8]] | [[Day 5 Exercise Solutions]] | [[Mission Progress Tracker]]*
+*Links: [[zettel-index]] | [[Collections MOC]] | [[rust-concepts-MOC]] | [[V-Cycle Methodology]] | [[mission-composition-patterns]] | [[mission-8]] | [[Day 5 Exercise Solutions]] | [[Mission Progress Tracker]]*

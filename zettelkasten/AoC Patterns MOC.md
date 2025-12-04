@@ -250,4 +250,4 @@
 ---
 
 *Tags: #aoc #patterns #algorithms #competitive-programming #problem-solving #reference #navigation #moc*
-*Links: [[AoC Collection Problems]] | [[Performance Optimization Guide]] | [[Rust Collections MOC]] | [[../aoc2015/README]] | [[../Mission5/README]]*
+*Links: [[AoC Collection Problems]] | [[Performance Optimization Guide]] | [[Rust Collections MOC]] | [[mission-composition-patterns]] | [[../aoc2015/README]] | [[../Mission5/README]]*

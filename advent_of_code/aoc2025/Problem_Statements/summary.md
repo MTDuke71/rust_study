@@ -14,6 +14,8 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 - **Encoding**: String encoding, character escaping
 - **Graph Algorithms**: Graph traversal, shortest path, connectivity analysis
 - **Greedy Algorithms**: Optimal greedy strategies, reverse optimization, exploiting problem structure
+- **Grid Processing**: 2D grid parsing, coordinate-based access, neighbor queries, spatial reasoning
+- **Iterative Erosion**: Repeated state modification until convergence, layer-by-layer removal, fixpoint algorithms
 - **Mathematical**: Arithmetic calculations, formulas, geometric problems
 - **Number Theory**: Divisor sums, highly composite numbers, sieve algorithms, multiplicative functions
 - **Optimization**: Finding minimum/maximum values
@@ -173,13 +175,50 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 
 ---
 
+### Day 4: Printing Department
+**Title**: Printing Department  
+**Part 1 Type**: Cellular Automaton + Grid Processing  
+**Part 1 Description**: Count paper rolls (@) accessible by forklifts - a roll is accessible if it has fewer than 4 adjacent rolls in its 8 neighboring positions  
+**Part 2 Type**: Cellular Automaton + Iterative Erosion  
+**Part 2 Description**: Iteratively remove accessible rolls until none remain accessible, counting total rolls removed  
+**Key Concepts**: 8-connected neighbor counting, grid erosion, iterative state modification, boundary handling  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Cellular automaton with erosion (single-pass counting → iterative removal)
+- **Data Structure**: 2D Grid with 8-connectivity neighbor queries
+- **Complexity**: Part 1: O(W×H), Part 2: O(W×H×iterations) where iterations depends on grid density
+- **AoC Theme**: "Forklift accessibility" with Part 2 escalation (static count → dynamic erosion)
+
+**🦀 Rust Implementation Highlights**:
+- **Mission 6 Integration** → **`Grid<char>`, `Coord`, `AocGridParser`** for grid infrastructure
+- **Bounded neighbors** → **`neighbors_8_bounded(width, height)`** handles edge/corner cases automatically
+- **Functional filtering** → **`.filter(|&coord| is_accessible(&grid, coord))`** for clean accessibility checks
+- **In-place mutation** → **`grid[coord] = '.'`** for Part 2 roll removal
+
+**Mission Integration**:
+- **Mission 6**: `AocGridParser::parse_char_grid()` for parsing, `Coord::neighbors_8_bounded()` for neighbor iteration, `Grid` indexing for access/mutation
+
+**Key Implementation Insights**:
+- **Accessibility rule**: Roll has <4 adjacent rolls → accessible (includes corners with ≤3 neighbors)
+- **Part 2 algorithm**: Collect all accessible → remove all → repeat until empty set
+- **No flood fill needed**: Each cell evaluated independently based on immediate neighbors only
+- **Erosion pattern**: Like peeling an onion - outer accessible layers removed first, exposing inner layers
+
+**Answers**:
+- Part 1: `1604`
+- Part 2: `9397`
+
+**⏱️ Performance**: Part 1 is single-pass O(W×H). Part 2 completes quickly due to efficient batch removal per iteration.
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
 | Advanced Pattern Matching | 0 | 0 |
 | Brute Force | 0 | 0 |
-| Cellular Automaton | 0 | 0 |
+| Cellular Automaton | 1 | 1 |
 | Combinatorial Optimization | 0 | 0 |
 | Conditional Logic | 0 | 0 |
 | Cryptographic | 0 | 0 |
@@ -187,6 +226,8 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 | Encoding | 0 | 0 |
 | Graph Algorithms | 0 | 0 |
 | Greedy Algorithms | 1 | 1 |
+| Grid Processing | 1 | 0 |
+| Iterative Erosion | 0 | 1 |
 | Mathematical | 1 | 1 |
 | Number Theory | 0 | 0 |
 | Optimization | 0 | 0 |
@@ -208,6 +249,8 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Signed arithmetic benefits**: Using `i32` over `u32` simplifies wrap-around and negative value handling
 - **String pattern matching**: Day 2 showcases string manipulation and repetition detection algorithms
 - **Greedy selection**: Day 3 introduces optimal k-digit selection with tie-breaking strategies
+- **Grid-based problems**: Day 4 introduces 2D grid processing with Mission 6 infrastructure reuse
+- **Cellular automaton patterns**: Day 4 demonstrates neighbor-counting and iterative erosion algorithms
 - **Part 2 escalation pattern**: All days follow classic AoC pattern of Part 2 expanding the problem scope
 
 ### Rust-Specific Considerations
@@ -215,11 +258,11 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Day 1**: Demonstrates signed integer arithmetic advantages for circular problems, comprehensive error handling with `anyhow::Result`, and the importance of special case handling for boundary conditions (position 0)
 - **Day 2**: Showcases string slicing with `split_at()`, pattern repetition detection using divisibility checks, and functional iteration with `filter()`/`sum()` for range processing
 - **Day 3**: Highlights greedy iteration patterns, `.find()` for first-match semantics in tie-breaking, and `u64` for large number results
+- **Day 4**: Demonstrates Mission 6 Grid integration, `neighbors_8_bounded()` for automatic boundary handling, and iterative state modification with in-place mutation
 
 ---
 
 ## Adding New Days
-
 
 To add a new day to this summary:
 
@@ -255,11 +298,11 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 3, 2025*
-*Days Implemented: 1, 2, 3*
+*Last Updated: December 4, 2025*
+*Days Implemented: 1, 2, 3, 4*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 *Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning*
 
-*Links: [[day01]] | [[day02]] | [[day03]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
+*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
