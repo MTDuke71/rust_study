@@ -106,12 +106,12 @@ Eighth mission demonstrating how Rust's type system enables highly generic, reus
 - **Advanced patterns**: Building trait-based abstractions on concrete structures
 
 ### **Daily Study Connections**
-- **[[../daily-study/rust_learning_week5_notes/Day30|Day 30]]** - Reinforce graph basics with collections
-- **[[../daily-study/rust_learning_week5_notes/Day31|Day 31]]** - HashMap/HashSet algorithms (fundamental for Mission 8)
-- **[[../daily-study/rust_learning_week5_notes/Day32|Day 32]]** - Trait-based designs
-- **[[../daily-study/rust_learning_week5_notes/Day33|Day 33]]** - Generic programming patterns
-- **[[../daily-study/rust_learning_week5_notes/Day34|Day 34]]** - Performance optimization
-- **[[../daily-study/rust_learning_week5_notes/Day35|Day 35]]** - Real-world applications
+- **[[../../daily_study/rust_learning_week5_notes/Day30|Day 30]]** - Reinforce graph basics with collections
+- **[[../../daily_study/rust_learning_week5_notes/Day31|Day 31]]** - HashMap/HashSet algorithms (fundamental for Mission 8)
+- **[[../../daily_study/rust_learning_week5_notes/Day32|Day 32]]** - Trait-based designs
+- **[[../../daily_study/rust_learning_week5_notes/Day33|Day 33]]** - Generic programming patterns
+- **[[../../daily_study/rust_learning_week5_notes/Day34|Day 34]]** - Performance optimization
+- **[[../../daily_study/rust_learning_week5_notes/Day35|Day 35]]** - Real-world applications
 
 ### **Rust Book Connections**
 - **[[../rust_book/rust-book-ch10|Chapter 10]]** - Generics, Traits, Lifetimes (foundational concepts)
