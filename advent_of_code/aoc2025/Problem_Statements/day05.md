@@ -53,6 +53,10 @@ The ingredient IDs that these ranges consider to be fresh are 3, 4, 5, 10, 11, 1
 
 Process the database file again. How many ingredient IDs are considered to be fresh according to the fresh ingredient ID ranges?
 
+Your puzzle answer was 358155203664116.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
+
 ---
 
 *Links: [[summary]] | [[../src/solver/day05.rs]]*
