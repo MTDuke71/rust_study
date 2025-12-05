@@ -15,12 +15,14 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 - **Graph Algorithms**: Graph traversal, shortest path, connectivity analysis
 - **Greedy Algorithms**: Optimal greedy strategies, reverse optimization, exploiting problem structure
 - **Grid Processing**: 2D grid parsing, coordinate-based access, neighbor queries, spatial reasoning
+- **Interval Merging**: Combining overlapping ranges, computing union of intervals, deduplication by range
 - **Iterative Erosion**: Repeated state modification until convergence, layer-by-layer removal, fixpoint algorithms
 - **Mathematical**: Arithmetic calculations, formulas, geometric problems
 - **Number Theory**: Divisor sums, highly composite numbers, sieve algorithms, multiplicative functions
 - **Optimization**: Finding minimum/maximum values
 - **Parsing**: Escape sequence parsing, character-level analysis
 - **Pattern Matching**: Regular expressions, string validation, substring detection
+- **Range Containment**: Checking membership in inclusive ranges, interval queries, boundary testing
 - **Real-time Analysis**: Temporal scoring, moment-by-moment leader tracking, time-dependent calculations
 - **Search**: Informed search algorithms, A* search, heuristics, state space exploration
 - **Search/Traversal**: Finding positions, tracking states
@@ -212,6 +214,60 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 
 ---
 
+### Day 5: Cafeteria
+**Title**: Cafeteria  
+**Part 1 Type**: Range Containment + Conditional Logic  
+**Part 1 Description**: Count how many ingredient IDs are "fresh" by checking if each falls within any of the given inclusive ranges  
+**Part 2 Type**: Interval Merging + Mathematical  
+**Part 2 Description**: Count total unique IDs considered fresh across all overlapping ranges  
+**Key Concepts**: Inclusive ranges, range containment checking, interval merging algorithm, overlapping range deduplication  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Range query escalation (membership testing → total unique counting)
+- **Data Structure**: Sorted intervals for merging
+- **Complexity**: Part 1: O(n×m) where n=ingredients, m=ranges, Part 2: O(m log m) for sort + O(m) for merge
+- **AoC Theme**: "Fresh ingredient detection" with classic Part 2 scope expansion (check given items → enumerate all valid items)
+
+**🦀 Rust Implementation Highlights**:
+- **Two-section parsing** → **`split("\n\n")`** to separate ranges from ingredients
+- **Struct for clarity** → **`FreshRange { start, end }`** with `contains()` method
+- **Functional filtering** → **`.filter(|&&id| is_fresh(id, &ranges))`** for Part 1 counting
+- **Interval merging** → **Sort by start, extend overlapping ranges** for Part 2
+
+**🚨 Initial Approach & Why It Failed**:
+- **Initial idea**: Use `HashSet` to collect all IDs from ranges, count unique values
+- **Code**: `ranges.iter().flat_map(|r| r.start..=r.end).collect::<HashSet<u64>>()`
+- **Problem**: Input ranges were ENORMOUS (e.g., `169486974574545-170251643963353` = ~765 billion values!)
+- **Result**: Would require trillions of HashSet entries - memory impossible, runtime infinite
+- **Lesson**: Always check input scale before choosing data structures!
+
+**✅ Correct Approach - Interval Merging**:
+- **Algorithm**: Sort ranges by start, merge overlapping/adjacent ranges, sum lengths
+- **Key insight**: Don't enumerate IDs - compute count mathematically
+- **Merge logic**: If `current.start <= last.end + 1`, extend last range; otherwise add new range
+- **Final count**: Sum of `(end - start + 1)` for each merged interval
+
+**🔑 Why Sorting is Critical**:
+- **Without sorting**: Must compare each new range against ALL existing merged ranges → O(n²)
+- **With sorting**: Only compare against the LAST merged range → O(n) single pass
+- **Guarantee**: After sorting by start, if current range doesn't overlap with last merged range, it can't overlap with ANY earlier range
+- **Bonus**: Sorting also handles cascading merges automatically (e.g., ranges A, B, C where A overlaps B and B overlaps C all merge naturally in one pass)
+- **Trade-off**: O(n log n) sort cost is far better than O(n²) comparison cost
+
+**Key Implementation Insights**:
+- **Part 1**: Simple O(n×m) nested iteration - fine for typical AoC input sizes
+- **Part 2**: O(m log m) sorting + O(m) single-pass merge - instant regardless of range sizes
+- **Adjacent handling**: `start <= last.end + 1` catches both overlapping AND touching ranges (e.g., 3-5 and 6-8 merge to 3-8)
+- **Inclusive math**: Range length = `end - start + 1` (not `end - start`)
+
+**Answers**:
+- Part 1: `679`
+- Part 2: `358155203664116`
+
+**⏱️ Performance**: Part 1 is O(n×m) which is fine for small inputs. Part 2 interval merging runs instantly even with trillion-scale ranges.
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -221,6 +277,8 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 | Cellular Automaton | 1 | 1 |
 | Combinatorial Optimization | 0 | 0 |
 | Conditional Logic | 0 | 0 |
+| Range Containment | 1 | 0 |
+| Interval Merging | 0 | 1 |
 | Cryptographic | 0 | 0 |
 | Data Structures | 0 | 0 |
 | Encoding | 0 | 0 |
@@ -251,6 +309,8 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Greedy selection**: Day 3 introduces optimal k-digit selection with tie-breaking strategies
 - **Grid-based problems**: Day 4 introduces 2D grid processing with Mission 6 infrastructure reuse
 - **Cellular automaton patterns**: Day 4 demonstrates neighbor-counting and iterative erosion algorithms
+- **Range/interval problems**: Day 5 introduces interval merging for overlapping range problems
+- **Input scale awareness**: Day 5 demonstrates why checking input magnitude is critical before choosing algorithms
 - **Part 2 escalation pattern**: All days follow classic AoC pattern of Part 2 expanding the problem scope
 
 ### Rust-Specific Considerations
@@ -259,6 +319,7 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Day 2**: Showcases string slicing with `split_at()`, pattern repetition detection using divisibility checks, and functional iteration with `filter()`/`sum()` for range processing
 - **Day 3**: Highlights greedy iteration patterns, `.find()` for first-match semantics in tie-breaking, and `u64` for large number results
 - **Day 4**: Demonstrates Mission 6 Grid integration, `neighbors_8_bounded()` for automatic boundary handling, and iterative state modification with in-place mutation
+- **Day 5**: Showcases importance of checking input scale before choosing algorithms, interval merging for huge ranges, and the difference between enumeration vs mathematical counting
 
 ---
 
@@ -298,11 +359,11 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 4, 2025*
-*Days Implemented: 1, 2, 3, 4*
+*Last Updated: December 5, 2025*
+*Days Implemented: 1, 2, 3, 4, 5*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 *Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning*
 
-*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
+*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
