@@ -15,25 +15,42 @@
 /// - Withdraw with insufficient funds fails
 #[allow(dead_code)]
 pub struct BankAccount {
-    // TODO: Add private balance field
+    balance: f64,
 }
 
 #[allow(dead_code)]
 impl BankAccount {
-    pub fn new(_initial_balance: f64) -> Self {
-        todo!("Create new account with initial balance")
+    pub fn new(initial_balance: f64) -> Self {
+        Self {
+            balance: if initial_balance.is_sign_negative() {
+                0.0
+            } else {
+                initial_balance
+            },
+        }
     }
 
-    pub fn deposit(&mut self, _amount: f64) {
-        todo!("Add amount to balance")
+    pub fn deposit(&mut self, amount: f64) {
+        if amount.is_sign_positive() {
+            self.balance += amount;
+        }
     }
 
-    pub fn withdraw(&mut self, _amount: f64) -> Result<(), String> {
-        todo!("Remove amount from balance if sufficient funds")
+    pub fn withdraw(&mut self, amount: f64) -> Result<(), String> {
+        if amount.is_sign_negative() || amount == 0.0 {
+            return Err("Withdrawal amount must be positive".into());
+        }
+
+        if self.balance >= amount {
+            self.balance -= amount;
+            Ok(())
+        } else {
+            Err("Insufficient funds".into())
+        }
     }
 
     pub fn balance(&self) -> f64 {
-        todo!("Return current balance")
+        self.balance
     }
 }
 
@@ -71,7 +88,23 @@ pub struct Triangle {
     pub height: f64,
 }
 
-// TODO: Implement Shape for Circle, Rectangle, Triangle
+impl Shape for Circle {
+    fn area(&self) -> f64 {
+        std::f64::consts::PI * self.radius * self.radius
+    }
+}
+
+impl Shape for Rectangle {
+    fn area(&self) -> f64 {
+        self.width * self.height
+    }
+}
+
+impl Shape for Triangle {
+    fn area(&self) -> f64 {
+        0.5 * self.base * self.height
+    }
+}
 
 #[allow(dead_code)]
 pub struct Canvas {
@@ -81,15 +114,15 @@ pub struct Canvas {
 #[allow(dead_code)]
 impl Canvas {
     pub fn new() -> Self {
-        todo!("Create empty canvas")
+        Self { shapes: Vec::new() }
     }
 
-    pub fn add_shape(&mut self, _shape: Box<dyn Shape>) {
-        todo!("Add shape to canvas")
+    pub fn add_shape(&mut self, shape: Box<dyn Shape>) {
+        self.shapes.push(shape);
     }
 
     pub fn total_area(&self) -> f64 {
-        todo!("Calculate sum of all shape areas")
+        self.shapes.iter().map(|shape| shape.area()).sum()
     }
 }
 
@@ -124,7 +157,47 @@ pub struct YellowLight {}
 #[allow(dead_code)]
 pub struct GreenLight {}
 
-// TODO: Implement TrafficLightState for Red, Yellow, Green
+impl TrafficLightState for RedLight {
+    fn next(self: Box<Self>) -> Box<dyn TrafficLightState> {
+        Box::new(GreenLight {})
+    }
+
+    fn color(&self) -> &str {
+        "Red"
+    }
+
+    fn duration(&self) -> u32 {
+        60
+    }
+}
+
+impl TrafficLightState for YellowLight {
+    fn next(self: Box<Self>) -> Box<dyn TrafficLightState> {
+        Box::new(RedLight {})
+    }
+
+    fn color(&self) -> &str {
+        "Yellow"
+    }
+
+    fn duration(&self) -> u32 {
+        5
+    }
+}
+
+impl TrafficLightState for GreenLight {
+    fn next(self: Box<Self>) -> Box<dyn TrafficLightState> {
+        Box::new(YellowLight {})
+    }
+
+    fn color(&self) -> &str {
+        "Green"
+    }
+
+    fn duration(&self) -> u32 {
+        45
+    }
+}
 
 #[allow(dead_code)]
 pub struct TrafficLight {
@@ -134,15 +207,22 @@ pub struct TrafficLight {
 #[allow(dead_code)]
 impl TrafficLight {
     pub fn new() -> Self {
-        todo!("Create traffic light starting at Red")
+        Self {
+            state: Some(Box::new(RedLight {})),
+        }
     }
 
     pub fn current_color(&self) -> &str {
-        todo!("Return current light color")
+        self.state
+            .as_ref()
+            .map(|state| state.color())
+            .unwrap_or("Unknown")
     }
 
     pub fn advance(&mut self) {
-        todo!("Move to next state")
+        if let Some(state) = self.state.take() {
+            self.state = Some(state.next());
+        }
     }
 }
 
@@ -174,12 +254,45 @@ pub struct SavedDocument {
     filename: String,
 }
 
-// TODO: Implement methods for each document type
-// EmptyDocument::new() -> EmptyDocument
-// EmptyDocument::add_text(self, text) -> DraftDocument
-// DraftDocument::edit(&mut self, text)
-// DraftDocument::save(self, filename) -> SavedDocument
-// SavedDocument::open(self) -> DraftDocument
+#[allow(dead_code)]
+impl EmptyDocument {
+    pub fn new() -> Self {
+        Self {}
+    }
+
+    pub fn add_text(self, text: String) -> DraftDocument {
+        DraftDocument { content: text }
+    }
+}
+
+impl Default for EmptyDocument {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+#[allow(dead_code)]
+impl DraftDocument {
+    pub fn edit(&mut self, text: String) {
+        self.content = text;
+    }
+
+    pub fn save(self, filename: String) -> SavedDocument {
+        SavedDocument {
+            content: self.content,
+            filename,
+        }
+    }
+}
+
+#[allow(dead_code)]
+impl SavedDocument {
+    pub fn open(self) -> DraftDocument {
+        DraftDocument {
+            content: self.content,
+        }
+    }
+}
 
 /// Exercise 5: Plugin System
 /// 
@@ -202,7 +315,39 @@ pub struct ValidationPlugin {}
 #[allow(dead_code)]
 pub struct CachePlugin {}
 
-// TODO: Implement Plugin for each plugin type
+impl Plugin for LoggingPlugin {
+    fn name(&self) -> &str {
+        "LoggingPlugin"
+    }
+
+    fn execute(&self, data: &str) -> String {
+        format!("[LOG] {}", data)
+    }
+}
+
+impl Plugin for ValidationPlugin {
+    fn name(&self) -> &str {
+        "ValidationPlugin"
+    }
+
+    fn execute(&self, data: &str) -> String {
+        if data.trim().is_empty() {
+            "Validation failed: empty input".into()
+        } else {
+            "Validation passed".into()
+        }
+    }
+}
+
+impl Plugin for CachePlugin {
+    fn name(&self) -> &str {
+        "CachePlugin"
+    }
+
+    fn execute(&self, data: &str) -> String {
+        format!("Cache lookup for '{}'", data)
+    }
+}
 
 #[allow(dead_code)]
 pub struct PluginManager {
@@ -212,15 +357,18 @@ pub struct PluginManager {
 #[allow(dead_code)]
 impl PluginManager {
     pub fn new() -> Self {
-        todo!("Create empty plugin manager")
+        Self { plugins: Vec::new() }
     }
 
-    pub fn register(&mut self, _plugin: Box<dyn Plugin>) {
-        todo!("Add plugin to manager")
+    pub fn register(&mut self, plugin: Box<dyn Plugin>) {
+        self.plugins.push(plugin);
     }
 
-    pub fn execute_all(&self, _data: &str) -> Vec<String> {
-        todo!("Run all plugins and collect results")
+    pub fn execute_all(&self, data: &str) -> Vec<String> {
+        self.plugins
+            .iter()
+            .map(|plugin| format!("{}: {}", plugin.name(), plugin.execute(data)))
+            .collect()
     }
 }
 
@@ -240,8 +388,218 @@ impl Default for PluginManager {
 /// Type State Version: Use type system
 /// 
 /// Document trade-offs in comments
-/// 
-/// TODO: Implement both approaches
+///
+/// # OOP VERSION (Runtime Flexibility)
+///
+/// Trade-offs:
+/// + Can store different states in same collection
+/// + State can be changed at runtime based on conditions
+/// + More familiar to developers from OOP languages
+/// - State transitions checked at runtime (can panic/error)
+/// - Requires Box allocation for each state
+/// - Less compile-time safety
+#[allow(dead_code)]
+pub trait UserState {
+    fn state_name(&self) -> &str;
+    fn can_verify_email(&self) -> bool { false }
+    fn can_verify_phone(&self) -> bool { false }
+    fn is_fully_verified(&self) -> bool { false }
+}
+
+#[allow(dead_code)]
+pub struct UnverifiedUser {
+    pub email: String,
+    pub phone: String,
+}
+
+#[allow(dead_code)]
+pub struct EmailVerifiedUser {
+    pub email: String,
+    pub phone: String,
+}
+
+#[allow(dead_code)]
+pub struct PhoneVerifiedUser {
+    pub email: String,
+    pub phone: String,
+}
+
+#[allow(dead_code)]
+pub struct FullyVerifiedUser {
+    pub email: String,
+    pub phone: String,
+}
+
+impl UserState for UnverifiedUser {
+    fn state_name(&self) -> &str { "Unverified" }
+    fn can_verify_email(&self) -> bool { true }
+    fn can_verify_phone(&self) -> bool { true }
+}
+
+impl UserState for EmailVerifiedUser {
+    fn state_name(&self) -> &str { "EmailVerified" }
+    fn can_verify_phone(&self) -> bool { true }
+}
+
+impl UserState for PhoneVerifiedUser {
+    fn state_name(&self) -> &str { "PhoneVerified" }
+    fn can_verify_email(&self) -> bool { true }
+}
+
+impl UserState for FullyVerifiedUser {
+    fn state_name(&self) -> &str { "FullyVerified" }
+    fn is_fully_verified(&self) -> bool { true }
+}
+
+/// OOP User Registration - runtime state transitions
+#[allow(dead_code)]
+pub struct OopUserRegistration {
+    state: Box<dyn UserState>,
+    email: String,
+    phone: String,
+}
+
+#[allow(dead_code)]
+impl OopUserRegistration {
+    pub fn new(email: String, phone: String) -> Self {
+        Self {
+            state: Box::new(UnverifiedUser { email: email.clone(), phone: phone.clone() }),
+            email,
+            phone,
+        }
+    }
+
+    pub fn state_name(&self) -> &str {
+        self.state.state_name()
+    }
+
+    pub fn verify_email(&mut self) -> Result<(), &'static str> {
+        if !self.state.can_verify_email() {
+            return Err("Cannot verify email in current state");
+        }
+        
+        if self.state.state_name() == "PhoneVerified" {
+            self.state = Box::new(FullyVerifiedUser { 
+                email: self.email.clone(), 
+                phone: self.phone.clone() 
+            });
+        } else {
+            self.state = Box::new(EmailVerifiedUser { 
+                email: self.email.clone(), 
+                phone: self.phone.clone() 
+            });
+        }
+        Ok(())
+    }
+
+    pub fn verify_phone(&mut self) -> Result<(), &'static str> {
+        if !self.state.can_verify_phone() {
+            return Err("Cannot verify phone in current state");
+        }
+        
+        if self.state.state_name() == "EmailVerified" {
+            self.state = Box::new(FullyVerifiedUser { 
+                email: self.email.clone(), 
+                phone: self.phone.clone() 
+            });
+        } else {
+            self.state = Box::new(PhoneVerifiedUser { 
+                email: self.email.clone(), 
+                phone: self.phone.clone() 
+            });
+        }
+        Ok(())
+    }
+
+    pub fn is_fully_verified(&self) -> bool {
+        self.state.is_fully_verified()
+    }
+}
+
+/// TYPE STATE VERSION (Compile-Time Safety)
+///
+/// Trade-offs:
+/// + Invalid state transitions are compile errors
+/// + Zero runtime overhead for state checking
+/// + Self-documenting API via type signatures
+/// - Cannot store different states in same collection
+/// - More complex type signatures
+/// - State must be known at compile time
+#[allow(dead_code)]
+pub struct Unverified;
+#[allow(dead_code)]
+pub struct EmailVerified;
+#[allow(dead_code)]
+pub struct PhoneVerified;
+#[allow(dead_code)]
+pub struct FullyVerified;
+
+#[allow(dead_code)]
+pub struct TypeStateUser<State> {
+    email: String,
+    phone: String,
+    _state: std::marker::PhantomData<State>,
+}
+
+#[allow(dead_code)]
+impl TypeStateUser<Unverified> {
+    pub fn new(email: String, phone: String) -> Self {
+        Self {
+            email,
+            phone,
+            _state: std::marker::PhantomData,
+        }
+    }
+
+    pub fn verify_email(self) -> TypeStateUser<EmailVerified> {
+        TypeStateUser {
+            email: self.email,
+            phone: self.phone,
+            _state: std::marker::PhantomData,
+        }
+    }
+
+    pub fn verify_phone(self) -> TypeStateUser<PhoneVerified> {
+        TypeStateUser {
+            email: self.email,
+            phone: self.phone,
+            _state: std::marker::PhantomData,
+        }
+    }
+}
+
+#[allow(dead_code)]
+impl TypeStateUser<EmailVerified> {
+    pub fn verify_phone(self) -> TypeStateUser<FullyVerified> {
+        TypeStateUser {
+            email: self.email,
+            phone: self.phone,
+            _state: std::marker::PhantomData,
+        }
+    }
+}
+
+#[allow(dead_code)]
+impl TypeStateUser<PhoneVerified> {
+    pub fn verify_email(self) -> TypeStateUser<FullyVerified> {
+        TypeStateUser {
+            email: self.email,
+            phone: self.phone,
+            _state: std::marker::PhantomData,
+        }
+    }
+}
+
+#[allow(dead_code)]
+impl TypeStateUser<FullyVerified> {
+    pub fn get_verified_email(&self) -> &str {
+        &self.email
+    }
+
+    pub fn get_verified_phone(&self) -> &str {
+        &self.phone
+    }
+}
 /// Exercise 7: Advanced - Builder with Type States
 /// 
 /// Create a type-safe builder for HTTP requests:
@@ -252,31 +610,145 @@ impl Default for PluginManager {
 /// 
 /// Each state transition should consume the previous state
 /// Invalid states should be impossible to create
+/// HTTP Method enum for builder
+#[derive(Debug, Clone, PartialEq)]
+#[allow(dead_code)]
+pub enum HttpMethod {
+    Get,
+    Post,
+    Put,
+    Delete,
+}
+
+/// HTTP Response (simplified)
+#[derive(Debug)]
+#[allow(dead_code)]
+pub struct HttpResponse {
+    pub status: u16,
+    pub body: String,
+}
+
+/// Marker types for builder states
+#[allow(dead_code)]
+pub struct NoMethod;
+#[allow(dead_code)]
+pub struct HasMethod;
+#[allow(dead_code)]
+pub struct HasUrl;
+#[allow(dead_code)]
+pub struct ReadyToSend;
+
+/// Type-safe HTTP Request Builder
+/// 
+/// State transitions:
+/// NoMethod -> HasMethod (after method())
+/// HasMethod -> HasUrl (after url())
+/// HasUrl -> ReadyToSend (after build())
+/// ReadyToSend -> execute() returns HttpResponse
 #[allow(dead_code)]
 pub struct HttpRequestBuilder<State> {
+    method: Option<HttpMethod>,
+    url: Option<String>,
+    headers: Vec<(String, String)>,
+    body: Option<String>,
     _state: std::marker::PhantomData<State>,
 }
 
 #[allow(dead_code)]
-pub struct UnsetMethod;
+impl HttpRequestBuilder<NoMethod> {
+    pub fn new() -> Self {
+        Self {
+            method: None,
+            url: None,
+            headers: Vec::new(),
+            body: None,
+            _state: std::marker::PhantomData,
+        }
+    }
+
+    pub fn method(self, method: HttpMethod) -> HttpRequestBuilder<HasMethod> {
+        HttpRequestBuilder {
+            method: Some(method),
+            url: self.url,
+            headers: self.headers,
+            body: self.body,
+            _state: std::marker::PhantomData,
+        }
+    }
+}
+
+impl Default for HttpRequestBuilder<NoMethod> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 #[allow(dead_code)]
-pub struct SetMethod;
+impl HttpRequestBuilder<HasMethod> {
+    pub fn url(self, url: impl Into<String>) -> HttpRequestBuilder<HasUrl> {
+        HttpRequestBuilder {
+            method: self.method,
+            url: Some(url.into()),
+            headers: self.headers,
+            body: self.body,
+            _state: std::marker::PhantomData,
+        }
+    }
+}
 
 #[allow(dead_code)]
-pub struct SetUrl;
+impl HttpRequestBuilder<HasUrl> {
+    pub fn header(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
+        self.headers.push((key.into(), value.into()));
+        self
+    }
+
+    pub fn body(mut self, body: impl Into<String>) -> Self {
+        self.body = Some(body.into());
+        self
+    }
+
+    pub fn build(self) -> HttpRequestBuilder<ReadyToSend> {
+        HttpRequestBuilder {
+            method: self.method,
+            url: self.url,
+            headers: self.headers,
+            body: self.body,
+            _state: std::marker::PhantomData,
+        }
+    }
+}
 
 #[allow(dead_code)]
-pub struct Ready;
+impl HttpRequestBuilder<ReadyToSend> {
+    /// Execute the HTTP request (simulated)
+    pub fn execute(self) -> HttpResponse {
+        // In real implementation, this would make actual HTTP call
+        HttpResponse {
+            status: 200,
+            body: format!(
+                "Executed {:?} request to {} with {} headers",
+                self.method.unwrap(),
+                self.url.unwrap(),
+                self.headers.len()
+            ),
+        }
+    }
 
-// TODO: Implement type-safe builder pattern
+    pub fn get_method(&self) -> &HttpMethod {
+        self.method.as_ref().unwrap()
+    }
+
+    pub fn get_url(&self) -> &str {
+        self.url.as_ref().unwrap()
+    }
+}
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    #[ignore]
     fn test_bank_account() {
         let mut account = BankAccount::new(100.0);
         assert_eq!(account.balance(), 100.0);
@@ -292,10 +764,7 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn test_canvas_shapes() {
-        // TODO: Implement Shape trait first
-        /*
         let mut canvas = Canvas::new();
         
         canvas.add_shape(Box::new(Circle { radius: 5.0 }));
@@ -305,11 +774,9 @@ mod tests {
         let total = canvas.total_area();
         let expected = std::f64::consts::PI * 25.0 + 24.0 + 6.0;
         assert!((total - expected).abs() < 0.001);
-        */
     }
 
     #[test]
-    #[ignore]
     fn test_traffic_light() {
         let mut light = TrafficLight::new();
         assert_eq!(light.current_color(), "Red");
@@ -324,5 +791,157 @@ mod tests {
         assert_eq!(light.current_color(), "Red");
     }
 
-    // Add more tests for other exercises
+    #[test]
+    fn test_document_editor_type_states() {
+        // EmptyDocument -> DraftDocument -> SavedDocument -> DraftDocument
+        let empty = EmptyDocument::new();
+        
+        // Add text transitions to Draft
+        let mut draft = empty.add_text("Hello, world!".into());
+        
+        // Edit the draft
+        draft.edit("Updated content".into());
+        
+        // Save transitions to Saved
+        let saved = draft.save("document.txt".into());
+        
+        // Open transitions back to Draft
+        let reopened = saved.open();
+        
+        // Verify we can still edit after reopening
+        let mut final_draft = reopened;
+        final_draft.edit("Final version".into());
+    }
+
+    #[test]
+    fn test_plugin_system() {
+        let mut manager = PluginManager::new();
+        
+        manager.register(Box::new(LoggingPlugin {}));
+        manager.register(Box::new(ValidationPlugin {}));
+        manager.register(Box::new(CachePlugin {}));
+        
+        let results = manager.execute_all("test data");
+        
+        assert_eq!(results.len(), 3);
+        assert!(results[0].contains("LoggingPlugin"));
+        assert!(results[0].contains("[LOG]"));
+        assert!(results[1].contains("ValidationPlugin"));
+        assert!(results[1].contains("passed"));
+        assert!(results[2].contains("CachePlugin"));
+        assert!(results[2].contains("Cache lookup"));
+    }
+
+    #[test]
+    fn test_plugin_validation_empty_input() {
+        let mut manager = PluginManager::new();
+        manager.register(Box::new(ValidationPlugin {}));
+        
+        let results = manager.execute_all("   ");
+        assert!(results[0].contains("failed"));
+    }
+
+    #[test]
+    fn test_user_registration_oop() {
+        // OOP version - runtime state transitions
+        let mut user = OopUserRegistration::new(
+            "user@example.com".into(),
+            "555-1234".into(),
+        );
+        
+        assert_eq!(user.state_name(), "Unverified");
+        assert!(!user.is_fully_verified());
+        
+        // Verify email first
+        assert!(user.verify_email().is_ok());
+        assert_eq!(user.state_name(), "EmailVerified");
+        
+        // Verify phone second -> fully verified
+        assert!(user.verify_phone().is_ok());
+        assert_eq!(user.state_name(), "FullyVerified");
+        assert!(user.is_fully_verified());
+    }
+
+    #[test]
+    fn test_user_registration_oop_phone_first() {
+        // Alternative path: phone first, then email
+        let mut user = OopUserRegistration::new(
+            "user@example.com".into(),
+            "555-1234".into(),
+        );
+        
+        assert!(user.verify_phone().is_ok());
+        assert_eq!(user.state_name(), "PhoneVerified");
+        
+        assert!(user.verify_email().is_ok());
+        assert_eq!(user.state_name(), "FullyVerified");
+    }
+
+    #[test]
+    fn test_user_registration_type_state() {
+        // Type state version - compile-time safety
+        let user = TypeStateUser::<Unverified>::new(
+            "user@example.com".into(),
+            "555-1234".into(),
+        );
+        
+        // Each transition consumes the previous state and returns new type
+        let email_verified = user.verify_email();
+        let fully_verified = email_verified.verify_phone();
+        
+        // Only FullyVerified has access to verified getters
+        assert_eq!(fully_verified.get_verified_email(), "user@example.com");
+        assert_eq!(fully_verified.get_verified_phone(), "555-1234");
+    }
+
+    #[test]
+    fn test_user_registration_type_state_phone_first() {
+        // Alternative path: phone first, then email
+        let user = TypeStateUser::<Unverified>::new(
+            "user@example.com".into(),
+            "555-1234".into(),
+        );
+        
+        let phone_verified = user.verify_phone();
+        let fully_verified = phone_verified.verify_email();
+        
+        assert_eq!(fully_verified.get_verified_email(), "user@example.com");
+    }
+
+    #[test]
+    fn test_http_builder_type_safe() {
+        // Type-safe builder pattern - invalid states are compile errors
+        let request = HttpRequestBuilder::new()
+            .method(HttpMethod::Get)
+            .url("https://api.example.com/data")
+            .header("Authorization", "Bearer token123")
+            .header("Content-Type", "application/json")
+            .build();
+        
+        assert_eq!(*request.get_method(), HttpMethod::Get);
+        assert_eq!(request.get_url(), "https://api.example.com/data");
+        
+        let response = request.execute();
+        assert_eq!(response.status, 200);
+        assert!(response.body.contains("Get"));
+        assert!(response.body.contains("2 headers"));
+    }
+
+    #[test]
+    fn test_http_builder_post_with_body() {
+        let request = HttpRequestBuilder::new()
+            .method(HttpMethod::Post)
+            .url("https://api.example.com/users")
+            .header("Content-Type", "application/json")
+            .body(r#"{"name": "John"}"#)
+            .build();
+        
+        let response = request.execute();
+        assert!(response.body.contains("Post"));
+    }
+
+    // Note: The following code would NOT compile with type state pattern:
+    // HttpRequestBuilder::new().url("...")  // Error: url() not available on NoMethod
+    // HttpRequestBuilder::new().method(Get).build()  // Error: build() not available on HasMethod
+    // This demonstrates compile-time safety!
 }
