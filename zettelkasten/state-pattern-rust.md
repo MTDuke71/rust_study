@@ -268,10 +268,39 @@ impl PendingReviewPost {
     }
 }
 
-// Usage:
-let pending = draft.request_review();
-let pending = pending.approve().unwrap_err();  // First approval
-let published = pending.approve().unwrap();    // Second approval
+// Real-world usage - handle unknown number of approvals:
+fn approval_workflow(mut pending: PendingReviewPost) -> Post {
+    loop {
+        match pending.approve() {
+            Ok(published) => {
+                println!("Post published!");
+                return published;
+            }
+            Err(still_pending) => {
+                println!("Needs more approvals, waiting...");
+                pending = still_pending;
+                // In real code: wait for next approval event
+            }
+        }
+    }
+}
+
+// Or with explicit state tracking:
+enum PostState {
+    Draft(DraftPost),
+    Pending(PendingReviewPost),
+    Published(Post),
+}
+
+fn handle_approval_event(state: PostState) -> PostState {
+    match state {
+        PostState::Pending(p) => match p.approve() {
+            Ok(published) => PostState::Published(published),
+            Err(still_pending) => PostState::Pending(still_pending),
+        },
+        other => other,  // Can't approve non-pending posts
+    }
+}
 ```
 
 ---
