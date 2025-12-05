@@ -172,3 +172,7 @@ Start with your original diagram. How many rolls of paper in total can be remove
 Your puzzle answer was 9397.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
+
+---
+
+*Links: [[summary]] | [[../src/solver/day04.rs]]*

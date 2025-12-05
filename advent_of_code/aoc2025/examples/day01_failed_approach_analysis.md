@@ -204,3 +204,5 @@ The `count_zeros_during_rotation` function and its tests remain in `day01.rs` as
 
 *Generated: December 2, 2025*
 *AoC 2025 Day 1 - Debugging Artifact Preservation*
+
+*Links: [[../Problem_Statements/summary]] | [[../src/solver/day01.rs]]*
