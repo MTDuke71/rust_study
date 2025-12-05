@@ -28,9 +28,9 @@ While Rust isn't traditionally object-oriented, it provides powerful features th
 ## Cross-References
 
 - **[[Design Patterns in Rust]]** - Complete guide to OOP patterns in Rust context
-- **[[Trait Objects and Dynamic Dispatch]]** - Deep dive into runtime polymorphism
+- **[[trait-objects-polymorphism]]** - Deep dive into runtime polymorphism
 - **[[Encapsulation Strategies]]** - Data hiding and API design principles
-- **[[State Pattern Implementation]]** - Object-oriented state management in Rust
+- **[[state-pattern-rust]]** - OOP vs Type State approaches for state machines
 - **[[OOP vs Functional Programming]]** - Choosing the right paradigm
 
 ## Learning Path
