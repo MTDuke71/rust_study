@@ -314,4 +314,4 @@ trait Processor {
 
 *Tags: #concept #rust-book #oop #traits #polymorphism #intermediate*
 
-*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[Trait Objects]] | [[Traits]] | [[rust_book/Ch18/README]]*
+*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[Trait Objects]] | [[Traits]] | [[rust_book/Ch18/README]] | [[async-trait-objects]]*

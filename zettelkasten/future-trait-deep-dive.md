@@ -319,6 +319,6 @@ cargo test                          # Unit tests for custom futures
 
 *Links:*
 - Builds on: [[async-await-basics]]
-- Related to: [[async-concurrency]], [[async-streams]], [[sync-send-traits]]
+- Related to: [[async-concurrency]], [[async-streams]], [[sync-send-traits]], [[async-trait-objects]]
 - Applied in: [[rust_book/Ch17/async_traits]]
 - Part of: [[rust-concurrency-moc]], [[rust-book]]
