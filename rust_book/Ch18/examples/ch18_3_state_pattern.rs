@@ -207,7 +207,7 @@ fn main() {
     println!("\n3. Rejection Workflow:");
     let mut post3 = Post::new();
     post3.add_text("Draft article about Rust");
-    println!("   Created draft: '{}'", "Draft article about Rust");
+    println!("   Created draft: 'Draft article about Rust'");
     
     post3.request_review();
     println!("   Requested review");
