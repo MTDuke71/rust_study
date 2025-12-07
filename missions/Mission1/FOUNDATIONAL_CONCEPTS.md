@@ -297,4 +297,4 @@ Mission1 isn't just about stacks - it's about **learning how to learn Rust**.
 
 *Tags: #mission1 #foundations #ownership #v-cycle #learning-philosophy #mental-models*
 
-*Links: [[zettel-index]] | [[Project Origin Story]] | [[Ownership Mental Model - The Library Analogy]] | [[V-Cycle in Rust Development]]*
+*Links: [[zettel-index]] | [[PROJECT_ORIGIN]] | [[Ownership Mental Model - The Library Analogy]] | [[V-Cycle in Rust Development]]*

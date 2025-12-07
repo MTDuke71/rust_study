@@ -271,7 +271,7 @@ fn process(data: &mut Vec<i32>) {
 - **Rust Book Ch4:** Ownership
 - **Rust Book Ch10:** Lifetimes
 - **Too Many Linked Lists:** Why linked lists are hard in Rust
-- [[Project Origin Story]] - Where this analogy first appeared
+- [[PROJECT_ORIGIN]] - Where this analogy first appeared
 
 ---
 
@@ -289,4 +289,4 @@ When you encounter borrow checker errors, think: "What would the librarian say?"
 
 *Tags: #ownership #borrowing #lifetimes #mental-models #analogies #learning #fundamentals*
 
-*Links: [[zettel-index]] | [[Project Origin Story]] | [[mission-1]] | [[V-Cycle in Rust Development]]*
+*Links: [[zettel-index]] | [[PROJECT_ORIGIN]] | [[mission-1]] | [[V-Cycle in Rust Development]]*

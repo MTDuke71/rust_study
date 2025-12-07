@@ -448,7 +448,7 @@ for item in data.iter().filter(|x| **x > 0).map(|x| x * 2) {
 
 ### **Related Concepts:**
 
-- [[Project Origin Story]] - Where V-cycle was introduced
+- [[PROJECT_ORIGIN]] - Where V-cycle was introduced
 - [[Ownership Mental Model - The Library Analogy]] - How compiler enforces requirements
 - [[Binary Search Iterator Patterns]] - V-cycle applied to algorithms
 
@@ -468,4 +468,4 @@ for item in data.iter().filter(|x| **x > 0).map(|x| x * 2) {
 
 *Tags: #v-cycle #software-engineering #testing #requirements #verification #validation #methodology*
 
-*Links: [[zettel-index]] | [[Project Origin Story]] | [[mission-1]] | [[Rust Testing Strategies]]*
+*Links: [[zettel-index]] | [[PROJECT_ORIGIN]] | [[mission-1]] | [[Rust Testing Strategies]]*

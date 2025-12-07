@@ -378,7 +378,7 @@ Instead of "learn Rust then build projects," this roadmap **learns Rust BY build
 
 ## 🔗 **Related Resources**
 
-- [[Project Origin Story]] - How this roadmap was created
+- [[PROJECT_ORIGIN]] - How this roadmap was created
 - [[V-Cycle in Rust Development]] - The methodology
 - [[Ownership Mental Model - The Library Analogy]] - Core concepts
 - [[zettel-index]] - All extracted knowledge
@@ -401,4 +401,4 @@ The roadmap is a **guide, not a prison**. Adapt based on what confuses you.
 
 *Tags: #roadmap #learning-plan #curriculum #rust #algorithms #data-structures #aoc*
 
-*Links: [[zettel-index]] | [[Project Origin Story]] | [[V-Cycle in Rust Development]]*
+*Links: [[zettel-index]] | [[PROJECT_ORIGIN]] | [[V-Cycle in Rust Development]]*
