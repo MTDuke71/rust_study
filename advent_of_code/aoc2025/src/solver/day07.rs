@@ -1,5 +1,6 @@
 use anyhow::{Context, Result};
 use mission6::{Grid, Coord, Direction};
+use mission8::Graph;
 use std::collections::{HashSet, VecDeque, HashMap};
 
 /// Cell types in the tachyon manifold
@@ -8,6 +9,80 @@ enum Cell {
     Empty,      // '.' - tachyon passes through
     Splitter,   // '^' - beam splits left and right
     Start,      // 'S' - starting position
+}
+
+/// Wrapper for Grid that implements Mission 8's Graph trait
+/// 
+/// Demonstrates Mission integration: Mission 6 Grid + Mission 8 Graph trait
+#[allow(dead_code)]
+struct ManifoldGraph<'a> {
+    grid: &'a Grid<Cell>,
+}
+
+#[allow(dead_code)]
+impl<'a> ManifoldGraph<'a> {
+    fn new(grid: &'a Grid<Cell>) -> Self {
+        ManifoldGraph { grid }
+    }
+}
+
+impl<'a> Graph for ManifoldGraph<'a> {
+    type Node = Coord;
+    
+    /// Get neighbors for tachyon beam simulation
+    /// 
+    /// For a position, returns possible next positions based on cell type:
+    /// - At splitter: Returns left and right positions (quantum split)
+    /// - At empty/start: Returns position below (beams move South)
+    fn neighbors(&self, node: Self::Node) -> Vec<Self::Node> {
+        let mut neighbors = Vec::new();
+        
+        if let Some(cell) = self.grid.get(node) {
+            match cell {
+                Cell::Splitter => {
+                    // Quantum split: both left and right positions
+                    if let Some(left) = node.try_move_in_direction(Direction::West, 1) {
+                        if self.grid.get(left).is_some() {
+                            neighbors.push(left);
+                        }
+                    }
+                    if let Some(right) = node.try_move_in_direction(Direction::East, 1) {
+                        if self.grid.get(right).is_some() {
+                            neighbors.push(right);
+                        }
+                    }
+                }
+                Cell::Empty | Cell::Start => {
+                    // Continue moving South
+                    if let Some(south) = node.try_move_in_direction(Direction::South, 1) {
+                        if self.grid.get(south).is_some() {
+                            neighbors.push(south);
+                        }
+                    }
+                }
+            }
+        }
+        
+        neighbors
+    }
+    
+    fn contains(&self, node: Self::Node) -> bool {
+        self.grid.get(node).is_some()
+    }
+    
+    /// Returns all grid cells as nodes
+    /// 
+    /// Note: For this problem, we don't need to enumerate all nodes (beam simulation
+    /// starts from a specific position), but we implement this for trait completeness.
+    fn nodes(&self) -> Vec<Self::Node> {
+        let mut all_nodes = Vec::new();
+        for y in 0..self.grid.height() {
+            for x in 0..self.grid.width() {
+                all_nodes.push(Coord { x, y });
+            }
+        }
+        all_nodes
+    }
 }
 
 /// Parse the manifold grid from input
@@ -125,6 +200,21 @@ pub fn solve_part2(input: &str) -> Result<String> {
     count_timelines(&grid, start_pos)
 }
 
+/// Count all possible quantum timelines from a position
+/// 
+/// **Mission Integration Note**: While we implement Graph trait above for the manifold,
+/// we can't directly use Mission 8's generic `dfs()` for this problem because:
+/// 1. Standard DFS counts nodes, not paths
+/// 2. This problem requires counting ALL unique paths from start to any exit
+/// 3. Memoization is critical - without it, the solution times out (O(2^n) paths)
+/// 
+/// This demonstrates an important integrator principle: Use mission components as
+/// building blocks (Grid, Graph trait), but add problem-specific optimizations
+/// (memoization, path counting) where the generic implementations don't fit.
+/// 
+/// # Pattern Matching Applied (Ch19.1)
+/// - `if let Some(...)` - Option handling for cache lookups and grid bounds
+/// - `match cell` - Cell type branching for beam physics
 fn count_timelines(grid: &Grid<Cell>, start: Coord) -> Result<String> {
     // Memoized DFS to count all possible paths efficiently
     fn count_paths_memo(
