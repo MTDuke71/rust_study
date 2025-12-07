@@ -59,10 +59,9 @@ Both parts of this puzzle are complete! They provide two gold stars: **
 ## Links
 
 **Solution**: [[../src/solver/day06.rs|day06.rs]]
-**AoC 2025 Overview**: [[../../../zettelkasten/AoC 2025 MOC|AoC 2025 MOC]]
 **Daily Note**: [[../../../zettelkasten/Daily Notes/2025-12-06|2025-12-06]]
 
 ### Concepts Used
-- [[../../../zettelkasten/rust-iterators|Iterators]] - `split_whitespace()`, `filter_map()`, `char_indices()`
-- [[../../../zettelkasten/rust-string-types|String Parsing]] - `chars().nth()`, `parse::<T>()`
+- [[../../../zettelkasten/Iterator Patterns|Iterators]] - `split_whitespace()`, `filter_map()`, `char_indices()`
+- [[../../../zettelkasten/String Manipulation|String Parsing]] - `chars().nth()`, `parse::<T>()`
 - Column-based parsing with operator position detection
