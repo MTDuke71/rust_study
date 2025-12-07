@@ -27,8 +27,8 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 | Day | Topic | Key Concepts | Links |
 |-----|-------|--------------|-------|
 | [[daily-study/Day01\|Day 1]] | Setup & Tooling | Cargo, rustc, project structure | [[rust_book/rust-book-ch1\|Rust Book Ch1]] |
-| [[daily-study/Day02\|Day 2]] | Ownership Basics | Move semantics, stack vs heap | [[rust_book/rust-book-ch4\|Ch4]] · [[../daily_study/rust_learning_week1_notes/Day02_expanded\|**Expanded Deep Dive**]] |
-| [[daily-study/Day03\|Day 3]] | Borrowing Rules | Immutable/mutable references | [[rust_book/rust-book-ch4\|Ch4]] · [[../daily_study/rust_learning_week1_notes/Day03_expanded\|**Expanded Deep Dive**]] |
+| [[daily-study/Day02\|Day 2]] | Ownership Basics | Move semantics, stack vs heap | [[rust_book/rust-book-ch4\|Ch4]] · [[../../daily_study/rust_learning_week1_notes/Day02_expanded\|**Expanded Deep Dive**]] |
+| [[daily-study/Day03\|Day 3]] | Borrowing Rules | Immutable/mutable references | [[rust_book/rust-book-ch4\|Ch4]] · [[../../daily_study/rust_learning_week1_notes/Day03_expanded\|**Expanded Deep Dive**]] |
 | [[daily-study/Day04\|Day 4]] | Lifetimes | Reference validity, scope | [[rust_book/rust-book-ch10\|Ch10]] |
 | [[daily-study/Day05\|Day 5]] | Error Handling | Option, Result, ? operator | [[rust_book/rust-book-ch9\|Ch9]] |
 | [[daily-study/Day06\|Day 6]] | Pattern Matching | match, if let, destructuring | [[rust_book/rust-book-ch6\|Ch6]] |
@@ -121,10 +121,10 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 |-----|-------|--------------|-------|
 | [[daily-study/Day29\|Day 29]] | Custom Error Types | `Display`, `Error` traits, error chains | [[Error Handling Deep Dive]] |
 | [[daily-study/Day30\|Day 30]] | Error Propagation | `?` operator, `From` trait, early returns | [[rust_book/rust-book-ch9\|Ch9]] |
-| [[daily-study/Day31\|Day 31]] | Error Crates | `anyhow`, `thiserror`, real-world patterns | [[../daily_study/rust_learning_week5_notes/examples\|Week 5 Examples]] |
-| [[daily-study/Day32\|Day 32]] | Result Combinators | `map`, `and_then`, `or_else`, chaining | [[../daily_study/rust_learning_week5_notes/examples/day32_result_combinators\|Combinator Examples]] |
-| [[daily-study/Day33\|Day 33]] | Panic Recovery | `catch_unwind`, graceful failure handling | [[../daily_study/rust_learning_week5_notes/examples/day33_panic_recovery\|Recovery Examples]] |
-| [[daily-study/Day34\|Day 34]] | Error Patterns | Panic vs errors, best practices, patterns | [[../daily_study/rust_learning_week5_notes/examples/day34_error_patterns\|Pattern Examples]] |
+| [[daily-study/Day31\|Day 31]] | Error Crates | `anyhow`, `thiserror`, real-world patterns | [[../../daily_study/rust_learning_week5_notes/examples\|Week 5 Examples]] |
+| [[daily-study/Day32\|Day 32]] | Result Combinators | `map`, `and_then`, `or_else`, chaining | [[../../daily_study/rust_learning_week5_notes/examples/day32_result_combinators\|Combinator Examples]] |
+| [[daily-study/Day33\|Day 33]] | Panic Recovery | `catch_unwind`, graceful failure handling | [[../../daily_study/rust_learning_week5_notes/examples/day33_panic_recovery\|Recovery Examples]] |
+| [[daily-study/Day34\|Day 34]] | Error Patterns | Panic vs errors, best practices, patterns | [[../../daily_study/rust_learning_week5_notes/examples/day34_error_patterns\|Pattern Examples]] |
 | [[daily-study/Day35\|Day 35]] | Robust Parsing | Error recovery, fault-tolerant parsers | [[Text Parsing Patterns]] |
 
 **Mission Integration**:
@@ -136,8 +136,8 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 
 **Real-World Applications**:
 
-- **Web APIs**: [[../daily_study/rust_learning_week5_notes/examples/web_api_errors\|API Error Handling]] - HTTP status codes, validation errors
-- **File Processing**: [[../daily_study/rust_learning_week5_notes/examples/file_processor\|File Processing Pipeline]] - Multi-format parsing with recovery
+- **Web APIs**: [[../../daily_study/rust_learning_week5_notes/examples/web_api_errors\|API Error Handling]] - HTTP status codes, validation errors
+- **File Processing**: [[../../daily_study/rust_learning_week5_notes/examples/file_processor\|File Processing Pipeline]] - Multi-format parsing with recovery
 - **AoC Problems**: Robust input parsing, graceful handling of malformed data
 
 ---
@@ -313,7 +313,7 @@ Deep language understanding
 - [[daily-study/Day33|Day 33]] - `catch_unwind` and graceful error recovery
 - [[daily-study/Day34|Day 34]] - When to panic vs return errors, best practices
 - [[daily-study/Day35|Day 35]] - Building fault-tolerant parsers with error recovery
-- **Advanced Examples**: [[../daily_study/rust_learning_week5_notes/examples/web_api_errors|Web API Error Handling]] | [[../daily_study/rust_learning_week5_notes/examples/file_processor|File Processing Pipeline]]
+- **Advanced Examples**: [[../../daily_study/rust_learning_week5_notes/examples/web_api_errors|Web API Error Handling]] | [[../../daily_study/rust_learning_week5_notes/examples/file_processor|File Processing Pipeline]]
 
 ### **Week 6: Module System & Project Organization** (Days 36-42) 🚧 **IN PROGRESS**
 
@@ -323,7 +323,7 @@ Deep language understanding
 |-----|-------|--------------|-------|
 | [[daily-study/Day36\|Day 36]] | Module Basics | `mod`, `pub`, visibility rules | [[rust_book/rust-book-ch13\|Ch13.1]] |
 | [[daily-study/Day37\|Day 37]] | Crate Organization | lib vs bin, module trees, API design | [[../missions/Mission10/README\|Mission10]], [[zettelkasten/Daily Notes/2025-11-03\|Nov 3 Plan]] |
-| [[daily-study/Day38\|Day 38]] | Cargo Features | Conditional compilation, feature flags | [[rust_book/rust-book-ch13\|Ch13.3]], [[../daily_study/rust_learning_week6_notes/Day38_Summary\|Day38 Summary]], [[../daily_study/rust_learning_week6_notes/Day38_Alloc_Warnings_Analysis\|Day38 Analysis]] |
+| [[daily-study/Day38\|Day 38]] | Cargo Features | Conditional compilation, feature flags | [[rust_book/rust-book-ch13\|Ch13.3]], [[../../daily_study/rust_learning_week6_notes/Day38_Summary\|Day38 Summary]], [[../../daily_study/rust_learning_week6_notes/Day38_Alloc_Warnings_Analysis\|Day38 Analysis]] |
 | [[daily-study/Day39\|Day 39]] | Workspace Management | Multi-crate projects | [[Collections MOC]] |
 | [[daily-study/Day40\|Day 40]] | Publishing Crates | `Cargo.toml`, documentation, versioning | [[rust_book/rust-book-ch14\|Ch14.1]] |
 | [[daily-study/Day41\|Day 41]] | Week 6 Review | Integration & practice | [[Week 6 Overview]] |
@@ -375,7 +375,7 @@ Daily notes provide detailed task breakdowns and learning objectives that align 
 
 ### **Archive & Future Study**
 
-- [[../daily_study/ADVANCED_CURRICULUM_ARCHIVE|Advanced Curriculum Archive]] - 9 weeks of advanced topics (Days 43-105) for post-AoC mastery: type system, async programming, metaprogramming, SIMD, FFI, WebAssembly
+- [[../../daily_study/ADVANCED_CURRICULUM_ARCHIVE|Advanced Curriculum Archive]] - 9 weeks of advanced topics (Days 43-105) for post-AoC mastery: type system, async programming, metaprogramming, SIMD, FFI, WebAssembly
 
 ---
 

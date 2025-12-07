@@ -99,11 +99,6 @@ See [TUTORIAL.md](TUTORIAL.md) for:
 - [[../../../../../missions/Mission10/PHASE6_REVIEW]] - Phase 6 completion review and quality report
 - [[../../../../../zettelkasten/missions/mission-10]] - Mission 10 zettelkasten page
 
-**Related Concepts**:
-- [[../../../../../zettelkasten/rest-api-design]] - RESTful API design patterns
-- [[../../../../../zettelkasten/axum-framework]] - Axum web framework concepts
-- [[../../../../../zettelkasten/async-rust]] - Async/await patterns in Rust
-
 **Learning Integration**:
 - [[../../../../../zettelkasten/Missions Overview]] - All missions progress tracking
 - [[../../../../../zettelkasten/Quality Assurance]] - Quality standards and testing
