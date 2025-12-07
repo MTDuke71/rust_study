@@ -1,0 +1,22 @@
+[package]
+name = "rust_book_ch19"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "ch19"
+path = "src/lib.rs"
+
+[[example]]
+name = "ch19_1_pattern_locations"
+path = "examples/ch19_1_pattern_locations.rs"
+
+[[example]]
+name = "ch19_2_refutability"
+path = "examples/ch19_2_refutability.rs"
+
+[[example]]
+name = "ch19_3_pattern_syntax"
+path = "examples/ch19_3_pattern_syntax.rs"
+
+[dependencies]
