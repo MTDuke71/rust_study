@@ -317,7 +317,7 @@ fn test_tie_breaking() {
 
 ### **Enhanced Versions**
 
-- **[[A* Algorithm]]**: Dijkstra + heuristic for faster goal-directed search
+- **[[A-Star-Algorithm-Deep-Dive|A* Algorithm]]**: Dijkstra + heuristic for faster goal-directed search
   - Uses estimated distance to goal to prioritize exploration
   - Perfect for single-target pathfinding (games, robotics)
   - Falls back to Dijkstra when heuristic is always 0
@@ -424,4 +424,4 @@ fn test_tie_breaking() {
 
 *Tags: #dijkstra #pathfinding #graph-algorithms #shortest-path #priority-queue #greedy-algorithm #optimization #mission9*
 
-*Backlinks: [[graph-algorithms]] | [[Priority Queue Patterns]] | [[A* Algorithm]] | [[Bellman-Ford Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[mission-9]] | [[Network Routing]] | [[Game AI]] | [[Graph Representation]] | [[Greedy Algorithms]]*
+*Backlinks: [[graph-algorithms]] | [[Priority Queue Patterns]] | [[A-Star-Algorithm-Deep-Dive|A* Algorithm]] | [[Bellman-Ford Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[mission-9]] | [[Network Routing]] | [[Game AI]] | [[Graph Representation]] | [[Greedy Algorithms]]*

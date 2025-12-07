@@ -200,7 +200,7 @@ assert!(king_can_reach((4,4), (6,6), 2));
 
 ### **Pathfinding:**
 
-- [[A-Star Algorithm]] - Uses distance as heuristic
+- [[A-Star-Algorithm-Deep-Dive|A* Algorithm]] - Uses distance as heuristic
 - [[BFS Pathfinding]] - Optimal for unweighted graphs
 - [[Heuristic Functions]] - Admissibility and consistency
 
@@ -255,7 +255,7 @@ See practical usage in:
 
 - [[Distance Metrics Comparison]]
 - [[Heuristic Functions]]
-- [[A-Star Algorithm]]
+- [[A-Star-Algorithm-Deep-Dive|A* Algorithm]]
 
 ### **Tutorial Steps:**
 
@@ -272,4 +272,4 @@ See practical usage in:
 
 *Tags: #distance-metrics #chebyshev #pathfinding #astar #heuristics #mission6 #8-connected #grid-algorithms #chess #competitive-programming*
 
-*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[Mission 6 Overview]] | [[Manhattan Distance]] | [[Euclidean Distance]] | [[A-Star Algorithm]]*
+*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[Mission 6 Overview]] | [[Manhattan Distance]] | [[Euclidean Distance]] | [[A-Star-Algorithm-Deep-Dive|A* Algorithm]]*

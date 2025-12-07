@@ -168,7 +168,7 @@
 - [[Advanced Algorithms MOC]] - Context within broader algorithmic studies
 
 *Next Learning Connections:*
-- [[A* Algorithm Implementation]] - Tomorrow's primary focus and learning objectives
+- [[A-Star-Algorithm-Deep-Dive|A* Algorithm Implementation]] - Tomorrow's primary focus and learning objectives
 - [[Heuristic Functions]] - Core concept for Day 3 implementation success
 - [[Comparative Algorithm Analysis]] - Performance studies between Dijkstra and A*
 

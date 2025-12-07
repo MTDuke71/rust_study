@@ -363,7 +363,7 @@ For shortest path with state beyond just position:
 
 **Examples in This Workspace**:
 - [[mission-9]] - A* and Dijkstra integration
-- [[A* Algorithm]] - Detailed heuristic analysis
+- [[A-Star-Algorithm-Deep-Dive|A* Algorithm]] - Detailed heuristic analysis
 
 ---
 

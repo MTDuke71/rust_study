@@ -77,7 +77,7 @@
 
 #### **A* Search Algorithm**
 
-- **[[A* Algorithm]]** - Heuristic-guided pathfinding optimization
+- **[[A-Star-Algorithm-Deep-Dive|A* Algorithm]]** - Heuristic-guided pathfinding optimization
 - **[[Heuristic Design]]** - Manhattan, Euclidean, and custom heuristic functions
 - **Implementation**: [[../missions/Mission9/docs/API_DOCUMENTATION]] - Complete A* implementation with bidirectional search
 - **Performance Guide**: [[../missions/Mission9/docs/PERFORMANCE_TUNING]] - Algorithm selection and optimization strategies
@@ -295,4 +295,4 @@ pub trait WeightedGraph {
 *Tags: #graph-algorithms #data-structures #pathfinding #network-analysis #algorithm-design #performance-optimization #graph-theory*
 
 *Links: [[mission-7]] | [[mission-9]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] |
-[[Dijkstra Algorithm]] | [[Bellman-Ford Algorithm]] | [[A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[Priority Queue Patterns]] | [[Binary Heap Data Structure]] | [[kahns-topological-sort]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*
+[[Dijkstra Algorithm]] | [[Bellman-Ford Algorithm]] | [[A-Star-Algorithm-Deep-Dive|A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[Priority Queue Patterns]] | [[Binary Heap Data Structure]] | [[kahns-topological-sort]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*

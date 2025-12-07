@@ -30,7 +30,7 @@
 
 ### **Algorithmic Mastery**
 - **[[Dijkstra Algorithm]]** - Shortest path with guaranteed optimality for weighted graphs
-- **[[A* Algorithm]]** - Heuristic-guided pathfinding for faster goal-directed search  
+- **[[A-Star-Algorithm-Deep-Dive|A* Algorithm]]** - Heuristic-guided pathfinding for faster goal-directed search  
 - **[[Priority Queue Patterns]]** - Efficient data structures for algorithm implementation
 - **[[Pathfinding Strategies]]** - Understanding when to use different pathfinding approaches
 
@@ -326,4 +326,4 @@ pub trait Pathfinder<G: WeightedGraph> {
 
 *Tags: #mission9 #pathfinding #dijkstra #astar #algorithms #graphs #optimization #data-structures*
 
-*Links: [[rust-book-ch9-12-review]] | [[mission-7]] | [[Mission10 Overview]] | [[graph-algorithms]] | [[Algorithm Design Patterns]] | [[Performance Analysis]] | [[Priority Queue Patterns]] | [[Dijkstra Algorithm]] | [[A* Algorithm]] | [[Pathfinding Strategies]] | [[day2_completion_summary]] | [[Daily Notes/2025-10-23]] | [[zettel-index]]*
+*Links: [[rust-book-ch9-12-review]] | [[mission-7]] | [[Mission10 Overview]] | [[graph-algorithms]] | [[Algorithm Design Patterns]] | [[Performance Analysis]] | [[Priority Queue Patterns]] | [[Dijkstra Algorithm]] | [[A-Star-Algorithm-Deep-Dive|A* Algorithm]] | [[Pathfinding Strategies]] | [[day2_completion_summary]] | [[Daily Notes/2025-10-23]] | [[zettel-index]]*

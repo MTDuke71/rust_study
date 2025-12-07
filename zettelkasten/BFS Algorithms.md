@@ -459,7 +459,7 @@ where
 
 - [[BFS Pathfinding]] - Shortest path algorithms using BFS
 - [[Dijkstra Algorithm]] - Weighted shortest paths (Mission 9)
-- [[A-Star Algorithm]] - Heuristic-guided pathfinding (Mission 9)
+- [[A-Star-Algorithm-Deep-Dive|A* Algorithm]] - Heuristic-guided pathfinding (Mission 9)
 
 ### **Optimization Variants**
 
