@@ -322,10 +322,10 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 | Greedy Algorithms | 1 | 1 |
 | Grid Processing | 1 | 0 |
 | Iterative Erosion | 0 | 1 |
-| Mathematical | 1 | 1 |
+| Mathematical | 2 | 2 |
 | Number Theory | 0 | 0 |
 | Optimization | 0 | 0 |
-| Parsing | 0 | 0 |
+| Parsing | 1 | 1 |
 | Pattern Matching | 1 | 1 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
@@ -347,6 +347,7 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Cellular automaton patterns**: Day 4 demonstrates neighbor-counting and iterative erosion algorithms
 - **Range/interval problems**: Day 5 introduces interval merging for overlapping range problems
 - **Input scale awareness**: Day 5 demonstrates why checking input magnitude is critical before choosing algorithms
+- **Parsing simplification**: Day 6 shows how `split_whitespace()` can eliminate complex column-index math
 - **Part 2 escalation pattern**: All days follow classic AoC pattern of Part 2 expanding the problem scope
 
 ### Rust-Specific Considerations
@@ -356,6 +357,7 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Day 3**: Highlights greedy iteration patterns, `.find()` for first-match semantics in tie-breaking, and `u64` for large number results
 - **Day 4**: Demonstrates Mission 6 Grid integration, `neighbors_8_bounded()` for automatic boundary handling, and iterative state modification with in-place mutation
 - **Day 5**: Showcases importance of checking input scale before choosing algorithms, interval merging for huge ranges, and the difference between enumeration vs mathematical counting
+- **Day 6**: Demonstrates `split_whitespace()` for natural token alignment, `char_indices().filter()` for pattern finding, `filter_map()` with `and_then()` for chained Option processing, and iterative refactoring from 640→212 lines
 
 ---
 
@@ -395,11 +397,11 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 5, 2025*
-*Days Implemented: 1, 2, 3, 4, 5*
+*Last Updated: December 6, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 *Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning*
 
-*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
+*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[day06]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
