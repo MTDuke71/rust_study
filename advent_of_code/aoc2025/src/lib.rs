@@ -83,7 +83,7 @@ pub mod solver;
 pub mod prelude {
     pub use crate::grid::*;
     pub use crate::parser::*;
-    pub use crate::solver::{day01, run_day};
+    pub use crate::solver::{day01, run_day, run_day_with_timeout};
     // Add more days here as you implement them:
     // pub use crate::solver::{day02, day03, day04, day05, day06, day07, day08, day09};
     // pub use crate::solver::{day10, day11, day12};
