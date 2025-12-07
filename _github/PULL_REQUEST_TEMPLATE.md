@@ -176,7 +176,7 @@ Example output here
 ---
 
 **By submitting this PR, I confirm:**
-- [ ] I have read and followed the [CONTRIBUTING.md](.github/CONTRIBUTING.md) guidelines
+- [ ] I have read and followed the [CONTRIBUTING.md](_github/CONTRIBUTING.md) guidelines
 - [ ] I have completed the verification checklist above
 - [ ] All tests pass locally with zero warnings
 - [ ] Documentation is updated and accurate

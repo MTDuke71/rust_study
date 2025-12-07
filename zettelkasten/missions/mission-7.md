@@ -97,15 +97,6 @@ Seventh mission implementing graph structures and fundamental traversal algorith
 - **[[mission-5|Mission 5]]** - HashMap for node data storage and visited tracking
 - **[[mission-1|Mission 1]]** - Stack/Queue for DFS/BFS traversal
 - **Graph traversal**: Building on grid navigation concepts
-
-### **Daily Study Connections**
-- **[[../../daily_study/rust_learning_week4_notes/Day17|Day 17]]** - Reference management for graph nodes
-- **[[../../daily_study/rust_learning_week4_notes/Day18|Day 18]]** - Algorithm traits
-- **[[../../daily_study/rust_learning_week4_notes/Day19|Day 19]]** - Dynamic algorithm selection
-- **[[../../daily_study/rust_learning_week4_notes/Day20|Day 20]]** - Complex data structures
-- **[[../../daily_study/rust_learning_week4_notes/Day21|Day 21]]** - BFS algorithms
-- **[[../../daily_study/rust_learning_week4_notes/Day22|Day 22]]** - DFS algorithms
-
 ### **Rust Book Connections**
 - **[[../rust_book/rust-book-ch6|Chapter 6]]** - Enums (graph type enums and pattern matching)
 - **[[../rust_book/rust-book-ch7|Chapter 7]]** - Modules (organizing graph, algorithms, utilities modules)
