@@ -5,7 +5,7 @@
 //! - Pin and Unpin traits
 //! - Stream trait
 //!
-//! Reference: https://doc.rust-lang.org/stable/book/ch17-05-traits-for-async.html
+//! Reference: <https://doc.rust-lang.org/stable/book/ch17-05-traits-for-async.html>
 
 use std::future::Future;
 use std::pin::Pin;
