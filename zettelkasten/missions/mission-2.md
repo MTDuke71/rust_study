@@ -247,7 +247,7 @@ Why use `Vec<Option<T>>` instead of `Vec<T>`?
 - **[[daily-study/Day02|Day 2]]** - Borrowing in peek operations
 - **[[daily-study/Day05|Day 5]]** - Error handling for empty queue
 - **[[daily-study/Day08|Day 8]]** - Result types for capacity errors
-- **[[../daily_study/rust_learning_week4_notes/Day25.md|Day 25]]** - Queue applications and patterns
+- **[[../../daily_study/rust_learning_week4_notes/Day25.md|Day 25]]** - Queue applications and patterns
 
 ### **Mission Connections**
 - **[[mission-1|Mission 1]]** - Previous: Stack implementation foundations (LIFO)

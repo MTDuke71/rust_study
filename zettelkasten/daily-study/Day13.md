@@ -6,7 +6,7 @@
 
 ## 🔗 Access Full Content
 
-**➡️ [[daily_study/rust_learning_week2_notes/Day13|Day 13 Complete Content]]**
+**➡️ [[../../daily_study/rust_learning_week2_notes/Day13|Day 13 Complete Content]]**
 
 Or navigate directly to: `daily_study/rust_learning_week2_notes/Day13.md`
 
@@ -36,8 +36,8 @@ Or navigate directly to: `daily_study/rust_learning_week2_notes/Day13.md`
 - [[Collections MOC]] - Iterator integration with collections
 
 ### Daily Study Progression
-- [[daily_study/rust_learning_week2_notes/Day12]] - Previous day (ordered collections)
-- **Current**: [[../daily_study/rust_learning_week2_notes/Day13|Day 13 - Advanced Iterators]]
+- [[../../daily_study/rust_learning_week2_notes/Day12]] - Previous day (ordered collections)
+- **Current**: [[../../daily_study/rust_learning_week2_notes/Day13|Day 13 - Advanced Iterators]]
 - [[daily-study/Day14]] - Next day (error handling patterns)
 
 ### Mission Applications
@@ -103,7 +103,7 @@ let indexed: Vec<(usize, i32)> = vec1.iter()
 - Lazy evaluation concepts
 - Functional programming techniques
 
-**Direct Link**: [[../daily_study/rust_learning_week2_notes/Day13|📖 Day 13 - Advanced Iterators (Full Content)]]
+**Direct Link**: [[../../daily_study/rust_learning_week2_notes/Day13|📖 Day 13 - Advanced Iterators (Full Content)]]
 
 ---
 

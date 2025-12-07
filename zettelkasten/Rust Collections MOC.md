@@ -15,7 +15,7 @@
 
 ### **Dynamic Arrays & Sequences**
 
-- **[[../daily_study/rust_learning_week2_notes/Day8]]** - Vector fundamentals and capacity management
+- **[[../daily_study/rust_learning_week2_notes/Day08]]** - Vector fundamentals and capacity management
 - **[[../Mission1/README]]** - Stack implementation using Vec<T>
 - **[[../Mission2/README]]** - Queue operations with VecDeque<T>
 - **[[VecDeque Deep Dive]]** - Ring buffer patterns and performance
@@ -40,7 +40,7 @@
 
 ### **String Collections**
 
-- **[[../daily_study/rust_learning_week2_notes/Day9]]** - String processing and UTF-8 considerations
+- **[[../daily_study/rust_learning_week2_notes/Day09]]** - String processing and UTF-8 considerations
 - **[[String Building Patterns]]** - Efficient string construction and manipulation
 - **[[Text Processing]]** - Parsing, tokenization, and string algorithms
 

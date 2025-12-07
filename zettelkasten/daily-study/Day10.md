@@ -35,7 +35,7 @@ From the daily study file, Day 10 covers:
 
 ### Daily Study Progression
 - [[daily-study/Day09]] - Previous day (string manipulation)
-- **Current**: [[../daily_study/rust_learning_week2_notes/Day10|Day 10 - HashMap Basics]]
+- **Current**: [[../../daily_study/rust_learning_week2_notes/Day10|Day 10 - HashMap Basics]]
 - [[daily-study/Day11]] - Next day (unique collections)
 
 ### Mission Applications
@@ -86,7 +86,7 @@ let result = map.get("key");  // Borrows &str for lookup
 - Performance considerations
 - Practical examples and exercises
 
-**Direct Link**: [[../daily_study/rust_learning_week2_notes/Day10|📖 Day 10 - HashMap Basics (Full Content)]]
+**Direct Link**: [[../../daily_study/rust_learning_week2_notes/Day10|📖 Day 10 - HashMap Basics (Full Content)]]
 
 ---
 

@@ -166,8 +166,8 @@ cd rust_book/Ch3 && cargo test --workspace
 - **[[../Mission6/README]]** - Advanced algorithms with Ch7 module organization
 
 ### **Daily Study Connections**
-- **[[../daily_study/rust_learning_week1_notes/Day1]]** - Ch1-2 concepts in practice
-- **[[../daily_study/rust_learning_week2_notes/Day8]]** - Ch3-4 collections and ownership
+- **[[../daily_study/rust_learning_week1_notes/Day01]]** - Ch1-2 concepts in practice
+- **[[../daily_study/rust_learning_week2_notes/Day08]]** - Ch3-4 collections and ownership
 - **[[../daily_study/rust_learning_week3_notes/Day15]]** - Ch5-6 advanced data structures
 - **[[../daily_study/rust_learning_week3_notes/Day18]]** - Ch7 module system and project organization
 

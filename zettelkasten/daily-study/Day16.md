@@ -2,7 +2,7 @@
 
 > **📍 This is a navigation page. See the full daily study content:**
 > 
-> **[[../daily_study/rust_learning_week3_notes/Day16|📖 Day 16 - Generic Types (Full Content)]]**
+> **[[../../daily_study/rust_learning_week3_notes/Day16|📖 Day 16 - Generic Types (Full Content)]]**
 
 ---
 
@@ -39,7 +39,7 @@ From the daily study file, Day 16 covers:
 
 ### Daily Study Progression
 - [[daily-study/Day15]] - Previous day (trait fundamentals)
-- **Current**: [[../daily_study/rust_learning_week3_notes/Day16|Day 16 - Generic Types]]
+- **Current**: [[../../daily_study/rust_learning_week3_notes/Day16|Day 16 - Generic Types]]
 - [[daily-study/Day17]] - Next day (lifetime parameters)
 
 ### Mission Applications
@@ -118,7 +118,7 @@ fn compare_and_print<T: PartialOrd + std::fmt::Display>(a: T, b: T) {
 - Generic enum and method implementations
 - Mission5 HashMap<K, V> generic design
 
-**Direct Link**: [[../daily_study/rust_learning_week3_notes/Day16|📖 Day 16 - Generic Types (Full Content)]]
+**Direct Link**: [[../../daily_study/rust_learning_week3_notes/Day16|📖 Day 16 - Generic Types (Full Content)]]
 
 ---
 

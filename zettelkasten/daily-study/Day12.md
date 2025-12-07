@@ -126,7 +126,7 @@ Common Advent of Code scenarios where BTreeMap excels:
 
 For detailed examples, code demonstrations, and practice exercises:
 
-**[[../daily_study/rust_learning_week2_notes/Day12]]**
+**[[../../daily_study/rust_learning_week2_notes/Day12]]**
 
 The full day's content includes:
 - Complete BTreeMap/BTreeSet API reference
