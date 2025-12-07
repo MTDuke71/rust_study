@@ -151,7 +151,7 @@ cargo run --example day05_with_missions
 ### **Related Documentation**
 - **[AoC 2024 Main README](../README.md)** - Complete solver system overview
 - **[Mission System Overview](../../missions/README.md)** - V-Cycle foundational development
-- **[Learning System Documentation](../../.github/copilot-instructions.md)** - Complete workspace guide
+- **[Learning System Documentation](../../_github/copilot-instructions.md)** - Complete workspace guide
 
 ### **Implementation Files**
 - **[Day 5 Manual Solver](../src/solver/day05.rs)** - Custom implementation baseline

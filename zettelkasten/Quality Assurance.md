@@ -775,7 +775,7 @@ impl VCycleMission {
 - [[Quality Metrics Dashboard]] - Real-time tracking of code and learning quality  
 - [[Automated Quality Scripts]] - Daily and weekly quality assessment automation
 - **[[../../scripts/QUALITY_PIPELINE_USAGE]]** - Comprehensive local quality pipeline guide (10 checks)
-- **[[../../.github/CODE_COVERAGE_INTEGRATION]]** - Nightly CI/CD coverage analysis documentation
+- **[[../../_github/CODE_COVERAGE_INTEGRATION]]** - Nightly CI/CD coverage analysis documentation
 - [[Quality Gate Checklists]] - Pre-commit and session-end quality verification
 - [[Standards Evolution Framework]] - Adaptive quality requirements based on skill progression
 - [[Jenkins Setup Guide]] - Automated CI/CD pipeline setup for quality assurance
