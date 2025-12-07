@@ -24,7 +24,7 @@ Fifth mission focusing on hash-based data structures with real-world performance
 ### **Main Implementation**
 - **[[../../missions/Mission5/README.md|Mission 5 README]]** - Complete V-Cycle documentation
 - **[[../../missions/Mission5/src/lib.rs|HashMap Implementation]]** - Hash table core with collision handling
-- **[[../../missions/Mission5/tests/|Test Suite]]** - Hash collision and performance tests
+- **[[../../missions/Mission5/tests/hash_structures_tests.rs|Test Suite]]** - Hash collision and performance tests
 
 ### **Tutorial Integration**
 - **[[../../tutorials/Mission5_tut/README.md|Mission 5 Tutorial]]** - HashMap learning progression

@@ -24,7 +24,7 @@ Sixth mission implementing grids with navigation algorithms, coordinate systems,
 ### **Main Implementation**
 - **[[../../missions/Mission6/README.md|Mission 6 README]]** - Complete V-Cycle documentation
 - **[[../../missions/Mission6/src/lib.rs|Grid Implementation]]** - 2D grid, coordinates, and navigation algorithms
-- **[[../../missions/Mission6/tests/|Test Suite]]** - Coordinate, boundary validation, and algorithm tests
+- **[[../../missions/Mission6/src/lib.rs|Implementation & Tests]]** - Coordinate, boundary validation, and algorithm tests
 
 ### **Tutorial Integration**
 - **[[../../tutorials/Mission6_tut/README.md|Mission 6 Tutorial]]** - Grid learning progression

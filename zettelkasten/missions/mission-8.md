@@ -24,7 +24,7 @@ Eighth mission demonstrating how Rust's type system enables highly generic, reus
 ### **Main Implementation**
 - **[[../../missions/Mission8/README.md|Mission 8 README]]** - Complete V-Cycle documentation with 6 requirements
 - **[[../../missions/Mission8/src/lib.rs|Advanced Graph Implementation]]** - Generic trait-based algorithms
-- **[[../../missions/Mission8/tests/|Test Suite]]** - 35+ test functions covering edge cases and integration scenarios
+- **[[../../missions/Mission8/tests/req1_generic_algorithms.rs|Test Suite]]** - 35+ test functions covering edge cases and integration scenarios
 
 ### **Tutorial Integration**
 - **[[../../tutorials/Mission8_tut/README.md|Mission 8 Tutorial]]** - 7-day progressive learning path
@@ -38,11 +38,7 @@ Eighth mission demonstrating how Rust's type system enables highly generic, reus
 - **Day 7**: Final Review & Complete rustdoc
 
 ### **Development Reports**
-- **[[../../missions/Mission8/DAY6_VERIFICATION_SUMMARY|Day 6 Verification]]** - Integration testing completion summary (100% complete)
-- **[[../../missions/Mission8/DAY4_EXERCISE_SOLUTIONS|Day 4 Exercise Solutions]]** - Performance analysis solutions
-- **[[../../missions/Mission8/DAY5_EXERCISE_SOLUTIONS|Day 5 Exercise Solutions]]** - Maze solver implementation
-
-### **Performance Analysis**
+- **[[../../missions/Mission8/DAY6_VERIFICATION_SUMMARY.md|Day 6 Verification]]** - Integration testing completion summary (100% complete)
 - **[[../../missions/Mission8/PERFORMANCE_REPORT.md|Performance Report]]** - Comprehensive benchmarking analysis
 - **Optimization techniques**: Memory usage and execution time analysis
 - **Benchmark results**: Criterion verification of optimal O(V+E) complexity

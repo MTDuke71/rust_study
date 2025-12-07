@@ -219,7 +219,7 @@ Why use `Vec<Option<T>>` instead of `Vec<T>`?
 ### **Main Implementation**
 - **[[../../missions/Mission2/README.md|Mission 2 README]]** - Complete V-Cycle documentation
 - **[[../../missions/Mission2/src/lib.rs|Queue Implementation]]** - Core ring buffer code
-- **[[../../missions/Mission2/tests/|Test Suite]]** - FIFO behavior validation
+- **[[../../missions/Mission2/tests/queue_test.rs|Test Suite]]** - FIFO behavior validation
 - **Source**: `missions/Mission2/src/queue.rs`
 - **Tests**: `missions/Mission2/tests/queue_test.rs`
 - **Examples**: `missions/Mission2/examples/demo.rs`

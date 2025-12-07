@@ -22,7 +22,7 @@ Fourth mission implementing singly and doubly linked lists with advanced pointer
 ### **Main Implementation**
 - **[[../../missions/Mission4/README.md|Mission 4 README]]** - Complete V-Cycle documentation
 - **[[../../missions/Mission4/src/lib.rs|LinkedList Implementation]]** - Node-based storage with Box and Rc/RefCell
-- **[[../../missions/Mission4/tests/|Test Suite]]** - Pointer safety validation (32 unit tests + 18 doctests)
+- **[[../../missions/Mission4/tests/linked_list_tests.rs|Test Suite]]** - Pointer safety validation (32 unit tests + 18 doctests)
 
 ### **Tutorial Integration**
 - **[[../../tutorials/Mission4_tut/README.md|Mission 4 Tutorial]]** - Linked list learning progression

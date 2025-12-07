@@ -24,7 +24,7 @@ Seventh mission implementing graph structures and fundamental traversal algorith
 ### **Main Implementation**
 - **[[../../missions/Mission7/README.md|Mission 7 README]]** - Complete V-Cycle documentation
 - **[[../../missions/Mission7/src/lib.rs|Graph Implementation]]** - Adjacency lists and DFS/BFS algorithms
-- **[[../../missions/Mission7/tests/unit_tests.rs|Test Suite]]** - Graph property and algorithm validation (11+ tests)
+- **[[../../missions/Mission7/tests/graph_integration_tests.rs|Test Suite]]** - Graph property and algorithm validation (11+ tests)
 
 ### **Tutorial Integration**
 - **[[../../tutorials/Mission7_tut/README.md|Mission 7 Tutorial]]** - Graph learning progression
