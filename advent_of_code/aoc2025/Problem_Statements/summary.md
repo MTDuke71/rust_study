@@ -9,6 +9,7 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 - **Cellular Automaton**: Conway's Game of Life, state evolution, neighbor counting, grid simulation
 - **Combinatorial Optimization**: Subset sum, container packing, constrained combination enumeration
 - **Conditional Logic**: Property-based filtering, range-based matching, rule-based comparisons
+- **DFS/Path Counting**: Depth-first search with path enumeration, memoization for exponential problems
 - **Cryptographic**: Hash functions, encryption, cryptographic puzzles
 - **Data Structures**: Working with arrays, lists, sets, maps
 - **Encoding**: String encoding, character escaping
@@ -304,6 +305,60 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 
 ---
 
+### Day 7: Laboratories
+**Title**: Laboratories (Tachyon Manifold)  
+**Part 1 Type**: Simulation + Grid Processing  
+**Part 1 Description**: Simulate tachyon beams moving downward through a grid, count how many times beams hit splitters (^) that create left/right beam emissions  
+**Part 2 Type**: DFS/Path Counting + Graph Algorithms  
+**Part 2 Description**: Count total unique quantum timelines - each path from start to exit where particle takes both left/right at splitters (many-worlds interpretation)  
+**Key Concepts**: BFS simulation, DFS path enumeration, memoization for exponential complexity, quantum timeline branching  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Simulation escalation (event counting → path enumeration)
+- **Data Structure**: Grid<Cell> for manifold, VecDeque for BFS, HashMap for memoization
+- **Complexity**: Part 1: O(W×H) BFS simulation, Part 2: O(2^n) paths reduced to O(W×H) with memoization
+- **AoC Theme**: "Tachyon beam splitting" with Part 2 quantum mechanics twist (classical → quantum many-worlds)
+
+**🦀 Rust Implementation Highlights**:
+- **Mission 6 Integration** → **`Grid<Cell>`, `Coord`, `Direction`, `try_move_in_direction()`** for grid infrastructure
+- **Mission 8 Integration** → **Implemented `Graph` trait for `ManifoldGraph`** demonstrating component composition
+- **BFS simulation** → **`VecDeque` queue with `HashSet` visited tracking** for Part 1 split counting
+- **Memoized DFS** → **`HashMap<Coord, usize>` cache** prevents exponential blowup in Part 2
+- **Pattern matching** → **`match cell` for beam physics, `if let` for bounds checking, `while let` for queue processing**
+
+**Mission Integration - The Integrator Approach**:
+- **Mission 6**: Grid storage, coordinate system, directional movement primitives
+- **Mission 8**: Implemented `Graph` trait with `neighbors()`, `contains()`, `nodes()` methods
+- **Custom optimization**: Generic Mission 8 `dfs()` counts nodes, not paths - added memoized path counter
+- **Key insight**: Use mission components as building blocks, add problem-specific logic where needed
+
+**🔑 Key Implementation Insights**:
+- **Part 1 physics**: ALL beams move South; splitters stop beam and spawn left/right beams (also moving South)
+- **Part 2 algorithm**: Recursive DFS counting all paths from start to any exit (bottom edge or no next cell)
+- **Memoization critical**: Without cache, 390 trillion paths cause timeout; with cache, instant
+- **Cycle detection**: `visited` HashSet prevents infinite loops when beams overlap
+- **Graph trait demo**: Shows how Mission 6 Grid + Mission 8 Graph compose, even when generic algorithms don't fit exactly
+
+**Debugging Journey**:
+- **Initial misunderstanding**: Thought beams continued in original direction after split
+- **Corrected physics**: Splitters create beams to left/right that ALSO move downward
+- **Part 2 timeout**: Naive DFS enumerated 2^n paths - added HashMap memoization
+- **Mission integration**: Demonstrated integrator pattern by implementing Graph trait for educational value
+
+**Answers**:
+- Part 1: `1687`
+- Part 2: `390684413472684`
+
+**⏱️ Performance**: Part 1 BFS completes instantly. Part 2 memoized DFS reduces exponential O(2^n) to linear O(W×H) passes.
+
+**🎓 Learning Highlights (Ch19.1 Pattern Matching Applied)**:
+- **match expression**: Cell type branching (`match cell { Splitter => ..., Empty => ... }`)
+- **if let**: Option handling for cache lookups and grid bounds (`if let Some(cached) = memo.get(&pos)`)
+- **while let**: Queue processing (`while let Some((pos, dir)) = queue.pop_front()`)
+- **let destructuring**: Tuple patterns (`let (grid, start_pos) = parse_manifold(input)?`)
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -313,14 +368,15 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 | Cellular Automaton | 1 | 1 |
 | Combinatorial Optimization | 0 | 0 |
 | Conditional Logic | 0 | 0 |
+| DFS/Path Counting | 0 | 1 |
 | Range Containment | 1 | 0 |
 | Interval Merging | 0 | 1 |
 | Cryptographic | 0 | 0 |
 | Data Structures | 0 | 0 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 0 | 0 |
+| Graph Algorithms | 0 | 1 |
 | Greedy Algorithms | 1 | 1 |
-| Grid Processing | 1 | 0 |
+| Grid Processing | 2 | 0 |
 | Iterative Erosion | 0 | 1 |
 | Mathematical | 2 | 2 |
 | Number Theory | 0 | 0 |
@@ -330,7 +386,7 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
 | Search/Traversal | 0 | 0 |
-| Simulation | 1 | 1 |
+| Simulation | 2 | 1 |
 | String Processing | 2 | 2 |
 
 ## Implementation Notes
@@ -348,6 +404,8 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Range/interval problems**: Day 5 introduces interval merging for overlapping range problems
 - **Input scale awareness**: Day 5 demonstrates why checking input magnitude is critical before choosing algorithms
 - **Parsing simplification**: Day 6 shows how `split_whitespace()` can eliminate complex column-index math
+- **Mission composition**: Day 7 demonstrates integrator approach - composing Mission 6 (Grid) + Mission 8 (Graph trait)
+- **Memoization for exponential problems**: Day 7 Part 2 shows HashMap caching reducing O(2^n) to O(n)
 - **Part 2 escalation pattern**: All days follow classic AoC pattern of Part 2 expanding the problem scope
 
 ### Rust-Specific Considerations
@@ -358,6 +416,7 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Day 4**: Demonstrates Mission 6 Grid integration, `neighbors_8_bounded()` for automatic boundary handling, and iterative state modification with in-place mutation
 - **Day 5**: Showcases importance of checking input scale before choosing algorithms, interval merging for huge ranges, and the difference between enumeration vs mathematical counting
 - **Day 6**: Demonstrates `split_whitespace()` for natural token alignment, `char_indices().filter()` for pattern finding, `filter_map()` with `and_then()` for chained Option processing, and iterative refactoring from 640→212 lines
+- **Day 7**: Showcases Mission 6+8 composition (Grid + Graph trait), BFS with VecDeque/HashSet, memoized DFS with HashMap caching, pattern matching from Ch19.1 (match, if let, while let, tuple destructuring), and the integrator philosophy (compose validated components, add custom optimizations)
 
 ---
 
@@ -397,11 +456,11 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 6, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6*
+*Last Updated: December 7, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 *Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning*
 
-*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[day06]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
+*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[day06]] | [[day07]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
