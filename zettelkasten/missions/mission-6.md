@@ -65,7 +65,7 @@ Sixth mission implementing grids with navigation algorithms, coordinate systems,
 - BFS for unweighted shortest paths
 - A* algorithm with customizable heuristics
 - Dijkstra's algorithm for weighted graphs
-- **Connected to**: [[../daily-study/rust_learning_week4_notes/Day22|Day 22 - Pathfinding]]
+- **Connected to**: [[../../daily_study/rust_learning_week4_notes/Day22|Day 22 - Pathfinding]]
 - **Integration**: Graph algorithms on spatial data
 
 ### **REQ-4: AoC Utilities**
@@ -100,12 +100,12 @@ Sixth mission implementing grids with navigation algorithms, coordinate systems,
 - **Spatial algorithms**: Foundation for graph traversal
 
 ### **Daily Study Connections**
-- **[[../daily-study/rust_learning_week4_notes/Day19|Day 19]]** - Grid navigation patterns
-- **[[../daily-study/rust_learning_week4_notes/Day20|Day 20]]** - Coordinate systems
-- **[[../daily-study/rust_learning_week4_notes/Day22|Day 22]]** - 2D array foundations and pathfinding
-- **[[../daily-study/rust_learning_week4_notes/Day23|Day 23]]** - Direction-based movement
-- **[[../daily-study/rust_learning_week4_notes/Day24|Day 24]]** - Flood fill algorithms
-- **[[../daily-study/rust_learning_week4_notes/Day25|Day 25]]** - BFS implementation
+- **[[../../daily_study/rust_learning_week4_notes/Day19|Day 19]]** - Grid navigation patterns
+- **[[../../daily_study/rust_learning_week4_notes/Day20|Day 20]]** - Coordinate systems
+- **[[../../daily_study/rust_learning_week4_notes/Day22|Day 22]]** - 2D array foundations and pathfinding
+- **[[../../daily_study/rust_learning_week4_notes/Day23|Day 23]]** - Direction-based movement
+- **[[../../daily_study/rust_learning_week4_notes/Day24|Day 24]]** - Flood fill algorithms
+- **[[../../daily_study/rust_learning_week4_notes/Day25|Day 25]]** - BFS implementation
 
 ### **Rust Book Connections**
 - **[[../rust_book/rust-book-ch6|Chapter 6]]** - Enums (Direction enum and pattern matching)
@@ -463,4 +463,4 @@ fn req6_hashmap_coordinate_storage() { ... }
 
 *Tags: #mission6 #2d-grids #navigation #spatial-algorithms #pathfinding #coordinates #flood-fill #v-cycle*
 
-*Links: [[../zettel-index|Zettel Index]] | [[mission-5|Mission 5]] | [[mission-7|Mission 7]] | [[../flood-fill|Flood Fill]] | [[../daily-study/rust_learning_week4_notes/Day24|Day 24]] | [[../aoc2024-day4-mission6-example|AoC Day 4 Example]] | [[../Missions Overview|Missions Overview]]*
+*Links: [[../zettel-index|Zettel Index]] | [[mission-5|Mission 5]] | [[mission-7|Mission 7]] | [[../flood-fill|Flood Fill]] | [[../../daily_study/rust_learning_week4_notes/Day24|Day 24]] | [[../aoc2024-day4-mission6-example|AoC Day 4 Example]] | [[../Missions Overview|Missions Overview]]*

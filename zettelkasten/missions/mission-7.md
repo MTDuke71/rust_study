@@ -99,12 +99,12 @@ Seventh mission implementing graph structures and fundamental traversal algorith
 - **Graph traversal**: Building on grid navigation concepts
 
 ### **Daily Study Connections**
-- **[[../daily-study/rust_learning_week4_notes/Day17|Day 17]]** - Reference management for graph nodes
-- **[[../daily-study/rust_learning_week4_notes/Day18|Day 18]]** - Algorithm traits
-- **[[../daily-study/rust_learning_week4_notes/Day19|Day 19]]** - Dynamic algorithm selection
-- **[[../daily-study/rust_learning_week4_notes/Day20|Day 20]]** - Complex data structures
-- **[[../daily-study/rust_learning_week4_notes/Day21|Day 21]]** - BFS algorithms
-- **[[../daily-study/rust_learning_week4_notes/Day22|Day 22]]** - DFS algorithms
+- **[[../../daily_study/rust_learning_week4_notes/Day17|Day 17]]** - Reference management for graph nodes
+- **[[../../daily_study/rust_learning_week4_notes/Day18|Day 18]]** - Algorithm traits
+- **[[../../daily_study/rust_learning_week4_notes/Day19|Day 19]]** - Dynamic algorithm selection
+- **[[../../daily_study/rust_learning_week4_notes/Day20|Day 20]]** - Complex data structures
+- **[[../../daily_study/rust_learning_week4_notes/Day21|Day 21]]** - BFS algorithms
+- **[[../../daily_study/rust_learning_week4_notes/Day22|Day 22]]** - DFS algorithms
 
 ### **Rust Book Connections**
 - **[[../rust_book/rust-book-ch6|Chapter 6]]** - Enums (graph type enums and pattern matching)
