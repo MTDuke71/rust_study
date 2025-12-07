@@ -13,7 +13,7 @@
 use anyhow::Result;
 
 /// A parsed math problem: numbers and an operator.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 struct Problem {
     numbers: Vec<i64>,
     operator: char,
@@ -76,11 +76,10 @@ pub fn solve_part2(input: &str) -> Result<String> {
         anyhow::bail!("Empty input");
     }
 
-    // For Part 2, we need column-based parsing.
-    // Find separator columns (all spaces) to identify problem boundaries.
-    let separators = find_separator_columns(&lines);
+    // Find problem ranges by locating operators in the last row
+    let op_line = lines.last().unwrap();
     let width = lines.iter().map(|l| l.len()).max().unwrap_or(0);
-    let ranges = get_problem_ranges(&separators, width);
+    let ranges = get_problem_ranges_from_operators(op_line, width);
 
     let mut total: i64 = 0;
 
@@ -97,51 +96,33 @@ pub fn solve_part2(input: &str) -> Result<String> {
 // Part 2 Helper Functions (column-based parsing still needed)
 // ============================================================================
 
-/// Find columns that are all spaces (separators between problems).
-fn find_separator_columns(lines: &[&str]) -> Vec<usize> {
-    let width = lines.iter().map(|l| l.len()).max().unwrap_or(0);
+/// Find problem ranges by locating operators (+/*) in the operator row.
+/// Each operator marks the start of a problem's column range.
+fn get_problem_ranges_from_operators(op_line: &str, width: usize) -> Vec<(usize, usize)> {
+    // Find positions of all operators
+    let op_positions: Vec<usize> = op_line
+        .char_indices()
+        .filter(|(_, c)| *c == '+' || *c == '*')
+        .map(|(i, _)| i)
+        .collect();
 
-    (0..width)
-        .filter(|&col| {
-            lines
-                .iter()
-                .all(|line| line.chars().nth(col).unwrap_or(' ') == ' ')
+    if op_positions.is_empty() {
+        return vec![];
+    }
+
+    // Convert operator positions to ranges
+    // Each range starts at an operator and ends just before the next operator (or at width)
+    op_positions
+        .iter()
+        .enumerate()
+        .map(|(i, &start)| {
+            let end = op_positions
+                .get(i + 1)
+                .map(|&next| next - 1)  // Stop before separator
+                .unwrap_or(width);
+            (start, end)
         })
         .collect()
-}
-
-/// Convert separator columns into (start, end) ranges for each problem.
-fn get_problem_ranges(separators: &[usize], width: usize) -> Vec<(usize, usize)> {
-    if separators.is_empty() {
-        return vec![(0, width)];
-    }
-
-    let mut ranges = Vec::new();
-    let mut pos = 0;
-    let mut i = 0;
-
-    while i < separators.len() {
-        let sep_start = separators[i];
-
-        // Problem before this separator group
-        if sep_start > pos {
-            ranges.push((pos, sep_start));
-        }
-
-        // Skip consecutive separators
-        while i < separators.len() - 1 && separators[i + 1] == separators[i] + 1 {
-            i += 1;
-        }
-        pos = separators[i] + 1;
-        i += 1;
-    }
-
-    // Problem after last separator
-    if pos < width {
-        ranges.push((pos, width));
-    }
-
-    ranges
 }
 
 /// Parse a problem for Part 2: columns right-to-left, digits top-to-bottom.
@@ -164,10 +145,8 @@ fn parse_problem_part2(lines: &[&str], start: usize, end: usize) -> Option<Probl
             })
             .collect();
 
-        if !digit_str.is_empty() {
-            if let Ok(num) = digit_str.parse::<i64>() {
-                numbers.push(num);
-            }
+        if let Ok(num) = digit_str.parse::<i64>() {
+            numbers.push(num);
         }
     }
 

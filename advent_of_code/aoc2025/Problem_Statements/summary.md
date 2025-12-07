@@ -284,15 +284,16 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 
 **🦀 Rust Implementation Highlights**:
 - **Part 1 simplification** → **`split_whitespace()` on each row**, tokens at same index belong to same problem
-- **Iterator elegance** → **`enumerate()` over operator tokens**, collect numbers at matching indices
+- **Iterator elegance** → **`enumerate()` over operator tokens**, collect numbers at matching indices via `filter_map`
 - **Part 2 necessity** → **Column-based parsing still needed** for vertical digit extraction
-- **Separator detection** → **Scan columns where ALL rows have space** using functional `filter()`
+- **Operator-based ranges** → **Find operators directly with `char_indices()`** - no separator scanning needed
 - **Struct encapsulation** → **`Problem { numbers, operator }`** with `compute()` method
 
 **Key Implementation Insights**:
 - **Part 1 key insight**: `split_whitespace()` naturally aligns tokens by position - no column math needed!
-- **Part 2 algorithm**: For each column range, iterate columns `(end-1)..start`, collect digits vertically
-- **Refactoring lesson**: Initial over-engineered column-index approach (640 lines) → simplified whitespace approach (241 lines)
+- **Part 2 range finding**: Operators mark problem boundaries - `char_indices().filter()` finds them directly
+- **Part 2 algorithm**: For each column range, iterate columns right-to-left `(start..end).rev()`, collect digits top-to-bottom
+- **Refactoring journey**: Initial over-engineered column-index approach (640 lines) → simplified (212 lines, 67% reduction)
 - **No missions used**: Pure string parsing, no grid/graph infrastructure needed
 
 **Answers**:
