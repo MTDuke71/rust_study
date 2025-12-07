@@ -7,7 +7,7 @@
 //! - Public interface design
 
 /// AveragedCollection demonstrates encapsulation in Rust
-/// 
+///
 /// The internal list and cached average are private, ensuring
 /// the average is always kept in sync with the list contents.
 pub struct AveragedCollection {
@@ -25,7 +25,7 @@ impl AveragedCollection {
     }
 
     /// Add a value to the collection
-    /// 
+    ///
     /// Automatically updates the cached average
     pub fn add(&mut self, value: i32) {
         self.list.push(value);
@@ -33,7 +33,7 @@ impl AveragedCollection {
     }
 
     /// Remove and return the last value
-    /// 
+    ///
     /// Returns None if the collection is empty
     /// Automatically updates the cached average
     pub fn remove(&mut self) -> Option<i32> {
@@ -63,7 +63,7 @@ impl AveragedCollection {
     }
 
     /// Private method - implementation detail
-    /// 
+    ///
     /// This method is hidden from users of the API,
     /// ensuring internal consistency is maintained
     fn update_average(&mut self) {
@@ -88,15 +88,15 @@ fn main() {
     // Demonstrating encapsulation
     println!("1. Encapsulation Example:");
     let mut numbers = AveragedCollection::new();
-    
+
     println!("   Adding numbers: 5, 10, 15");
     numbers.add(5);
     numbers.add(10);
     numbers.add(15);
-    
+
     println!("   Average: {}", numbers.average());
     println!("   Length: {}", numbers.len());
-    
+
     println!("\n   Removing last number");
     numbers.remove();
     println!("   Average: {}", numbers.average());
@@ -108,14 +108,14 @@ fn main() {
     println!("   ✓ Can't access 'average' directly");
     println!("   ✓ Can't call 'update_average()' directly");
     println!("   ✓ Average is always consistent with list contents");
-    
+
     // Demonstrating empty collection edge case
     println!("\n3. Edge Cases:");
     let mut empty = AveragedCollection::new();
     println!("   Empty collection average: {}", empty.average());
     println!("   Is empty: {}", empty.is_empty());
     println!("   Remove from empty: {:?}", empty.remove());
-    
+
     empty.add(42);
     println!("   After adding 42, average: {}", empty.average());
 
@@ -143,11 +143,11 @@ fn main() {
     scores.add(85);
     scores.add(90);
     scores.add(78);
-    
+
     println!("   Test scores: {}, {}, {}", 85, 90, 78);
     println!("   Class average: {:.1}", scores.average());
     println!("   Number of students: {}", scores.len());
-    
+
     println!("\n   If fields were public, users could:");
     println!("   ✗ Modify list without updating average");
     println!("   ✗ Set average to wrong value");
@@ -177,10 +177,10 @@ mod tests {
         let mut collection = AveragedCollection::new();
         collection.add(10);
         assert_eq!(collection.average(), 10.0);
-        
+
         collection.add(20);
         assert_eq!(collection.average(), 15.0);
-        
+
         collection.add(30);
         assert_eq!(collection.average(), 20.0);
     }
@@ -192,10 +192,10 @@ mod tests {
         collection.add(20);
         collection.add(30);
         assert_eq!(collection.average(), 20.0);
-        
+
         collection.remove();
         assert_eq!(collection.average(), 15.0);
-        
+
         collection.remove();
         assert_eq!(collection.average(), 10.0);
     }
@@ -210,18 +210,18 @@ mod tests {
     #[test]
     fn test_encapsulation_maintains_invariant() {
         let mut collection = AveragedCollection::new();
-        
+
         // Add several values and track running sum
         let values = [5, 10, 15, 20, 25];
         let mut running_sum = 0;
-        
+
         for (i, &value) in values.iter().enumerate() {
             collection.add(value);
             running_sum += value;
-            
+
             // Verify average matches expected
             let expected: f64 = running_sum as f64 / (i + 1) as f64;
-            
+
             assert!((collection.average() - expected).abs() < 0.001);
         }
     }

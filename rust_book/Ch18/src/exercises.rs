@@ -1,13 +1,13 @@
 //! Practice exercises for Chapter 18: Object-Oriented Programming
 
 /// Exercise 1: Create an encapsulated Bank Account
-/// 
+///
 /// Implement a BankAccount struct with:
 /// - Private balance field
 /// - deposit() method
 /// - withdraw() method (returns error if insufficient funds)
 /// - balance() method to check current balance
-/// 
+///
 /// Test that:
 /// - Cannot access balance directly
 /// - Deposit increases balance
@@ -55,15 +55,15 @@ impl BankAccount {
 }
 
 /// Exercise 2: Create a Shape trait with trait objects
-/// 
+///
 /// Define a Shape trait with:
 /// - area() method
-/// 
+///
 /// Implement Shape for:
 /// - Circle (radius)
 /// - Rectangle (width, height)
 /// - Triangle (base, height)
-/// 
+///
 /// Create a Canvas struct that can hold heterogeneous shapes
 /// and calculate total area
 #[allow(dead_code)]
@@ -133,13 +133,13 @@ impl Default for Canvas {
 }
 
 /// Exercise 3: Traffic Light State Machine (OOP Pattern)
-/// 
+///
 /// Implement a traffic light using the OOP state pattern:
 /// - States: Red, Yellow, Green
 /// - Red -> Green (after timer)
 /// - Green -> Yellow -> Red
 /// - Each state has different duration
-/// 
+///
 /// Use trait objects for state
 #[allow(dead_code)]
 pub trait TrafficLightState {
@@ -233,12 +233,12 @@ impl Default for TrafficLight {
 }
 
 /// Exercise 4: Document Editor (Type State Pattern)
-/// 
+///
 /// Implement a document editor using type states:
 /// - EmptyDocument: can add text -> DraftDocument
 /// - DraftDocument: can edit, save, or discard
 /// - SavedDocument: can only open (back to Draft)
-/// 
+///
 /// Ensure compile-time safety for state transitions
 #[allow(dead_code)]
 pub struct EmptyDocument {}
@@ -295,7 +295,7 @@ impl SavedDocument {
 }
 
 /// Exercise 5: Plugin System
-/// 
+///
 /// Create a plugin system using trait objects:
 /// - Plugin trait with execute() method
 /// - LoggingPlugin, ValidationPlugin, CachePlugin
@@ -357,7 +357,9 @@ pub struct PluginManager {
 #[allow(dead_code)]
 impl PluginManager {
     pub fn new() -> Self {
-        Self { plugins: Vec::new() }
+        Self {
+            plugins: Vec::new(),
+        }
     }
 
     pub fn register(&mut self, plugin: Box<dyn Plugin>) {
@@ -379,14 +381,14 @@ impl Default for PluginManager {
 }
 
 /// Exercise 6: Compare OOP vs Type State
-/// 
+///
 /// Implement the same workflow both ways and compare:
 /// - User registration workflow
 /// - States: Unverified, EmailVerified, PhoneVerified, FullyVerified
-/// 
+///
 /// OOP Version: Use trait objects
 /// Type State Version: Use type system
-/// 
+///
 /// Document trade-offs in comments
 ///
 /// # OOP VERSION (Runtime Flexibility)
@@ -401,9 +403,15 @@ impl Default for PluginManager {
 #[allow(dead_code)]
 pub trait UserState {
     fn state_name(&self) -> &str;
-    fn can_verify_email(&self) -> bool { false }
-    fn can_verify_phone(&self) -> bool { false }
-    fn is_fully_verified(&self) -> bool { false }
+    fn can_verify_email(&self) -> bool {
+        false
+    }
+    fn can_verify_phone(&self) -> bool {
+        false
+    }
+    fn is_fully_verified(&self) -> bool {
+        false
+    }
 }
 
 #[allow(dead_code)]
@@ -431,24 +439,42 @@ pub struct FullyVerifiedUser {
 }
 
 impl UserState for UnverifiedUser {
-    fn state_name(&self) -> &str { "Unverified" }
-    fn can_verify_email(&self) -> bool { true }
-    fn can_verify_phone(&self) -> bool { true }
+    fn state_name(&self) -> &str {
+        "Unverified"
+    }
+    fn can_verify_email(&self) -> bool {
+        true
+    }
+    fn can_verify_phone(&self) -> bool {
+        true
+    }
 }
 
 impl UserState for EmailVerifiedUser {
-    fn state_name(&self) -> &str { "EmailVerified" }
-    fn can_verify_phone(&self) -> bool { true }
+    fn state_name(&self) -> &str {
+        "EmailVerified"
+    }
+    fn can_verify_phone(&self) -> bool {
+        true
+    }
 }
 
 impl UserState for PhoneVerifiedUser {
-    fn state_name(&self) -> &str { "PhoneVerified" }
-    fn can_verify_email(&self) -> bool { true }
+    fn state_name(&self) -> &str {
+        "PhoneVerified"
+    }
+    fn can_verify_email(&self) -> bool {
+        true
+    }
 }
 
 impl UserState for FullyVerifiedUser {
-    fn state_name(&self) -> &str { "FullyVerified" }
-    fn is_fully_verified(&self) -> bool { true }
+    fn state_name(&self) -> &str {
+        "FullyVerified"
+    }
+    fn is_fully_verified(&self) -> bool {
+        true
+    }
 }
 
 /// OOP User Registration - runtime state transitions
@@ -463,7 +489,10 @@ pub struct OopUserRegistration {
 impl OopUserRegistration {
     pub fn new(email: String, phone: String) -> Self {
         Self {
-            state: Box::new(UnverifiedUser { email: email.clone(), phone: phone.clone() }),
+            state: Box::new(UnverifiedUser {
+                email: email.clone(),
+                phone: phone.clone(),
+            }),
             email,
             phone,
         }
@@ -477,16 +506,16 @@ impl OopUserRegistration {
         if !self.state.can_verify_email() {
             return Err("Cannot verify email in current state");
         }
-        
+
         if self.state.state_name() == "PhoneVerified" {
-            self.state = Box::new(FullyVerifiedUser { 
-                email: self.email.clone(), 
-                phone: self.phone.clone() 
+            self.state = Box::new(FullyVerifiedUser {
+                email: self.email.clone(),
+                phone: self.phone.clone(),
             });
         } else {
-            self.state = Box::new(EmailVerifiedUser { 
-                email: self.email.clone(), 
-                phone: self.phone.clone() 
+            self.state = Box::new(EmailVerifiedUser {
+                email: self.email.clone(),
+                phone: self.phone.clone(),
             });
         }
         Ok(())
@@ -496,16 +525,16 @@ impl OopUserRegistration {
         if !self.state.can_verify_phone() {
             return Err("Cannot verify phone in current state");
         }
-        
+
         if self.state.state_name() == "EmailVerified" {
-            self.state = Box::new(FullyVerifiedUser { 
-                email: self.email.clone(), 
-                phone: self.phone.clone() 
+            self.state = Box::new(FullyVerifiedUser {
+                email: self.email.clone(),
+                phone: self.phone.clone(),
             });
         } else {
-            self.state = Box::new(PhoneVerifiedUser { 
-                email: self.email.clone(), 
-                phone: self.phone.clone() 
+            self.state = Box::new(PhoneVerifiedUser {
+                email: self.email.clone(),
+                phone: self.phone.clone(),
             });
         }
         Ok(())
@@ -601,13 +630,13 @@ impl TypeStateUser<FullyVerified> {
     }
 }
 /// Exercise 7: Advanced - Builder with Type States
-/// 
+///
 /// Create a type-safe builder for HTTP requests:
 /// - UnsetMethod -> SetMethod (after method())
 /// - SetMethod -> SetUrl (after url())
 /// - SetUrl -> Ready (after headers/body)
 /// - Ready -> execute() returns Response
-/// 
+///
 /// Each state transition should consume the previous state
 /// Invalid states should be impossible to create
 /// HTTP Method enum for builder
@@ -639,7 +668,7 @@ pub struct HasUrl;
 pub struct ReadyToSend;
 
 /// Type-safe HTTP Request Builder
-/// 
+///
 /// State transitions:
 /// NoMethod -> HasMethod (after method())
 /// HasMethod -> HasUrl (after url())
@@ -766,10 +795,16 @@ mod tests {
     #[test]
     fn test_canvas_shapes() {
         let mut canvas = Canvas::new();
-        
+
         canvas.add_shape(Box::new(Circle { radius: 5.0 }));
-        canvas.add_shape(Box::new(Rectangle { width: 4.0, height: 6.0 }));
-        canvas.add_shape(Box::new(Triangle { base: 3.0, height: 4.0 }));
+        canvas.add_shape(Box::new(Rectangle {
+            width: 4.0,
+            height: 6.0,
+        }));
+        canvas.add_shape(Box::new(Triangle {
+            base: 3.0,
+            height: 4.0,
+        }));
 
         let total = canvas.total_area();
         let expected = std::f64::consts::PI * 25.0 + 24.0 + 6.0;
@@ -795,19 +830,19 @@ mod tests {
     fn test_document_editor_type_states() {
         // EmptyDocument -> DraftDocument -> SavedDocument -> DraftDocument
         let empty = EmptyDocument::new();
-        
+
         // Add text transitions to Draft
         let mut draft = empty.add_text("Hello, world!".into());
-        
+
         // Edit the draft
         draft.edit("Updated content".into());
-        
+
         // Save transitions to Saved
         let saved = draft.save("document.txt".into());
-        
+
         // Open transitions back to Draft
         let reopened = saved.open();
-        
+
         // Verify we can still edit after reopening
         let mut final_draft = reopened;
         final_draft.edit("Final version".into());
@@ -816,13 +851,13 @@ mod tests {
     #[test]
     fn test_plugin_system() {
         let mut manager = PluginManager::new();
-        
+
         manager.register(Box::new(LoggingPlugin {}));
         manager.register(Box::new(ValidationPlugin {}));
         manager.register(Box::new(CachePlugin {}));
-        
+
         let results = manager.execute_all("test data");
-        
+
         assert_eq!(results.len(), 3);
         assert!(results[0].contains("LoggingPlugin"));
         assert!(results[0].contains("[LOG]"));
@@ -836,7 +871,7 @@ mod tests {
     fn test_plugin_validation_empty_input() {
         let mut manager = PluginManager::new();
         manager.register(Box::new(ValidationPlugin {}));
-        
+
         let results = manager.execute_all("   ");
         assert!(results[0].contains("failed"));
     }
@@ -844,18 +879,15 @@ mod tests {
     #[test]
     fn test_user_registration_oop() {
         // OOP version - runtime state transitions
-        let mut user = OopUserRegistration::new(
-            "user@example.com".into(),
-            "555-1234".into(),
-        );
-        
+        let mut user = OopUserRegistration::new("user@example.com".into(), "555-1234".into());
+
         assert_eq!(user.state_name(), "Unverified");
         assert!(!user.is_fully_verified());
-        
+
         // Verify email first
         assert!(user.verify_email().is_ok());
         assert_eq!(user.state_name(), "EmailVerified");
-        
+
         // Verify phone second -> fully verified
         assert!(user.verify_phone().is_ok());
         assert_eq!(user.state_name(), "FullyVerified");
@@ -865,14 +897,11 @@ mod tests {
     #[test]
     fn test_user_registration_oop_phone_first() {
         // Alternative path: phone first, then email
-        let mut user = OopUserRegistration::new(
-            "user@example.com".into(),
-            "555-1234".into(),
-        );
-        
+        let mut user = OopUserRegistration::new("user@example.com".into(), "555-1234".into());
+
         assert!(user.verify_phone().is_ok());
         assert_eq!(user.state_name(), "PhoneVerified");
-        
+
         assert!(user.verify_email().is_ok());
         assert_eq!(user.state_name(), "FullyVerified");
     }
@@ -880,15 +909,12 @@ mod tests {
     #[test]
     fn test_user_registration_type_state() {
         // Type state version - compile-time safety
-        let user = TypeStateUser::<Unverified>::new(
-            "user@example.com".into(),
-            "555-1234".into(),
-        );
-        
+        let user = TypeStateUser::<Unverified>::new("user@example.com".into(), "555-1234".into());
+
         // Each transition consumes the previous state and returns new type
         let email_verified = user.verify_email();
         let fully_verified = email_verified.verify_phone();
-        
+
         // Only FullyVerified has access to verified getters
         assert_eq!(fully_verified.get_verified_email(), "user@example.com");
         assert_eq!(fully_verified.get_verified_phone(), "555-1234");
@@ -897,14 +923,11 @@ mod tests {
     #[test]
     fn test_user_registration_type_state_phone_first() {
         // Alternative path: phone first, then email
-        let user = TypeStateUser::<Unverified>::new(
-            "user@example.com".into(),
-            "555-1234".into(),
-        );
-        
+        let user = TypeStateUser::<Unverified>::new("user@example.com".into(), "555-1234".into());
+
         let phone_verified = user.verify_phone();
         let fully_verified = phone_verified.verify_email();
-        
+
         assert_eq!(fully_verified.get_verified_email(), "user@example.com");
     }
 
@@ -917,10 +940,10 @@ mod tests {
             .header("Authorization", "Bearer token123")
             .header("Content-Type", "application/json")
             .build();
-        
+
         assert_eq!(*request.get_method(), HttpMethod::Get);
         assert_eq!(request.get_url(), "https://api.example.com/data");
-        
+
         let response = request.execute();
         assert_eq!(response.status, 200);
         assert!(response.body.contains("Get"));
@@ -935,7 +958,7 @@ mod tests {
             .header("Content-Type", "application/json")
             .body(r#"{"name": "John"}"#)
             .build();
-        
+
         let response = request.execute();
         assert!(response.body.contains("Post"));
     }

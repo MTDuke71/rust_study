@@ -60,7 +60,7 @@ fn parse_input(input: &str) -> Result<Vec<ClawMachine>> {
     // Collect lines and group by blank line separators
     let mut machines = Vec::new();
     let mut current_block = Vec::new();
-    
+
     for line in input.lines() {
         if line.trim().is_empty() {
             if !current_block.is_empty() {
@@ -71,12 +71,12 @@ fn parse_input(input: &str) -> Result<Vec<ClawMachine>> {
             current_block.push(line);
         }
     }
-    
+
     // Don't forget the last block
     if !current_block.is_empty() {
         machines.push(parse_machine_from_lines(&current_block)?);
     }
-    
+
     Ok(machines)
 }
 
@@ -94,16 +94,16 @@ fn parse_machine_from_lines(lines: &[&str]) -> Result<ClawMachine> {
 }
 
 /// Solve the linear system for a single claw machine using Cramer's rule.
-/// 
+///
 /// We need to solve:
 ///   a * Ax + b * Bx = Px
 ///   a * Ay + b * By = Py
-/// 
+///
 /// Using Cramer's rule:
 ///   det = Ax * By - Bx * Ay
 ///   a = (Px * By - Bx * Py) / det
 ///   b = (Ax * Py - Px * Ay) / det
-/// 
+///
 /// Returns Some((a, b)) if valid integer solution exists, None otherwise.
 fn solve_machine(machine: &ClawMachine) -> Option<(i64, i64)> {
     let (ax, ay) = machine.button_a;
@@ -112,7 +112,7 @@ fn solve_machine(machine: &ClawMachine) -> Option<(i64, i64)> {
 
     // Calculate determinant
     let det = ax * by - bx * ay;
-    
+
     if det == 0 {
         // Lines are parallel - no unique solution
         // (Could have infinite solutions if collinear with prize, but problem implies unique solutions)
@@ -161,7 +161,7 @@ pub fn solve_part1(input: &str) -> Result<String> {
 
 pub fn solve_part2(input: &str) -> Result<String> {
     let mut machines = parse_input(input)?;
-    
+
     // Add 10000000000000 to each prize coordinate
     const OFFSET: i64 = 10_000_000_000_000;
     for machine in &mut machines {
@@ -201,7 +201,10 @@ Prize: X=18641, Y=10279";
 
     #[test]
     fn test_parse_prize_line() {
-        assert_eq!(parse_prize_line("Prize: X=8400, Y=5400").unwrap(), (8400, 5400));
+        assert_eq!(
+            parse_prize_line("Prize: X=8400, Y=5400").unwrap(),
+            (8400, 5400)
+        );
     }
 
     #[test]

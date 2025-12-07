@@ -9,11 +9,11 @@ use ch18::*;
 #[test]
 fn test_encapsulation_averaged_collection() {
     let mut collection = AveragedCollection::new();
-    
+
     collection.add(5);
     collection.add(10);
     collection.add(15);
-    
+
     assert_eq!(collection.average(), 10.0);
     assert_eq!(collection.len(), 3);
 }
@@ -21,16 +21,16 @@ fn test_encapsulation_averaged_collection() {
 #[test]
 fn test_encapsulation_maintains_invariant() {
     let mut collection = AveragedCollection::new();
-    
+
     collection.add(10);
     assert_eq!(collection.average(), 10.0);
-    
+
     collection.add(20);
     assert_eq!(collection.average(), 15.0);
-    
+
     collection.remove();
     assert_eq!(collection.average(), 10.0);
-    
+
     collection.remove();
     assert_eq!(collection.average(), 0.0);
 }
@@ -50,28 +50,25 @@ fn test_encapsulation_empty_collection() {
 #[test]
 fn test_trait_objects_heterogeneous_collection() {
     let mut screen = Screen::new();
-    
+
     screen.add_component(Box::new(Button {
         width: 50,
         height: 10,
         label: String::from("OK"),
     }));
-    
+
     screen.add_component(Box::new(SelectBox {
         width: 75,
         height: 10,
-        options: vec![
-            String::from("Yes"),
-            String::from("No"),
-        ],
+        options: vec![String::from("Yes"), String::from("No")],
     }));
-    
+
     screen.add_component(Box::new(TextField {
         width: 60,
         placeholder: String::from("Enter text"),
         value: String::from(""),
     }));
-    
+
     assert_eq!(screen.components.len(), 3);
     screen.run(); // Should not panic
 }
@@ -83,7 +80,7 @@ fn test_trait_objects_button_implements_draw() {
         height: 2,
         label: String::from("Test"),
     };
-    
+
     // If this compiles, Button implements Draw
     let _drawable: &dyn Draw = &button;
 }
@@ -95,7 +92,7 @@ fn test_trait_objects_selectbox_implements_draw() {
         height: 3,
         options: vec![String::from("A"), String::from("B")],
     };
-    
+
     let _drawable: &dyn Draw = &selectbox;
 }
 
@@ -104,13 +101,13 @@ fn test_trait_objects_function_parameter() {
     fn render(component: &dyn Draw) {
         component.draw();
     }
-    
+
     let button = Button {
         width: 5,
         height: 1,
         label: String::from("Hi"),
     };
-    
+
     render(&button); // Should not panic
 }
 
@@ -145,15 +142,15 @@ fn test_state_pattern_approved_post_has_content() {
 #[test]
 fn test_state_pattern_full_workflow() {
     let mut post = StatePost::new();
-    
+
     // Draft state
     post.add_text("I ate a salad for lunch today");
     assert_eq!(post.content(), "");
-    
+
     // Request review
     post.request_review();
     assert_eq!(post.content(), "");
-    
+
     // Approve
     post.approve();
     assert_eq!(post.content(), "I ate a salad for lunch today");
@@ -163,11 +160,11 @@ fn test_state_pattern_full_workflow() {
 fn test_state_pattern_approve_before_review_does_nothing() {
     let mut post = StatePost::new();
     post.add_text("Test");
-    
+
     // Try to approve without requesting review
     post.approve();
     assert_eq!(post.content(), "");
-    
+
     // Proper workflow
     post.request_review();
     post.approve();
@@ -182,10 +179,10 @@ fn test_state_pattern_approve_before_review_does_nothing() {
 fn test_type_states_draft_to_published() {
     let mut post = Post::new();
     post.add_text("Test content");
-    
+
     let post = post.request_review();
     let post = post.approve();
-    
+
     assert_eq!(post.content(), "Test content");
 }
 
@@ -193,10 +190,10 @@ fn test_type_states_draft_to_published() {
 fn test_type_states_workflow() {
     let mut draft = Post::new();
     draft.add_text("I ate a salad for lunch today");
-    
+
     let pending = draft.request_review();
     let published = pending.approve();
-    
+
     assert_eq!(published.content(), "I ate a salad for lunch today");
 }
 
@@ -235,14 +232,14 @@ fn test_compare_oop_vs_type_states() {
     oop_post.request_review();
     oop_post.approve();
     assert_eq!(oop_post.content(), "OOP content");
-    
+
     // Type State Pattern
     let mut type_post = Post::new();
     type_post.add_text("Type state content");
     let type_post = type_post.request_review();
     let type_post = type_post.approve();
     assert_eq!(type_post.content(), "Type state content");
-    
+
     // Both achieve the same result with different trade-offs
 }
 
@@ -253,10 +250,10 @@ fn test_encapsulation_vs_public_fields() {
     encapsulated.add(10);
     encapsulated.add(20);
     assert_eq!(encapsulated.average(), 15.0);
-    
+
     // Cannot access internal state directly:
     // let _ = encapsulated.list; // ERROR: field `list` is private
     // let _ = encapsulated.average; // ERROR: field `average` is private
-    
+
     // This ensures the average is always consistent with the list
 }

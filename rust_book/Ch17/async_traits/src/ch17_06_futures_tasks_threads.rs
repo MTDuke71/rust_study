@@ -20,7 +20,7 @@ use tokio_stream::wrappers::ReceiverStream;
 use tokio_stream::{Stream, StreamExt};
 
 /// Listing 17-40: Using async task with trpl::spawn_task (tokio equivalent)
-/// 
+///
 /// Creates a stream that yields intervals using an async task.
 /// The task runs on the async runtime and yields to other tasks during sleep.
 pub fn get_intervals_async() -> impl Stream<Item = u32> {
@@ -50,10 +50,10 @@ pub fn get_intervals_async() -> impl Stream<Item = u32> {
 }
 
 /// Listing 17-41: Using std::thread instead of async task
-/// 
+///
 /// Creates a stream that yields intervals using an OS thread.
 /// This is *not* async - it uses blocking thread::sleep.
-/// 
+///
 /// Notice how similar the API is to the async version above!
 /// The calling code doesn't need to know whether it's async or threaded.
 pub fn get_intervals_thread() -> impl Stream<Item = u32> {
@@ -88,11 +88,11 @@ pub fn get_intervals_thread() -> impl Stream<Item = u32> {
 }
 
 /// Listing 17-42: Mixing threads and async - sending from thread, receiving async
-/// 
+///
 /// This demonstrates a common real-world pattern:
 /// - Use a thread for blocking/CPU-intensive work
 /// - Use async for I/O-bound message handling
-/// 
+///
 /// Example use case: Video encoding (CPU-bound) notifying UI (async) when done.
 pub async fn mixed_thread_and_async_demo() {
     println!("\n=== Listing 17-42: Mixing Threads and Async ===");
@@ -162,7 +162,7 @@ pub async fn tasks_vs_threads_comparison() {
             break;
         }
     }
-    
+
     println!("\n   ↑ Notice: Both produce identical output!");
     println!("   The calling code doesn't know (or care) which backs the stream.");
 }
@@ -170,7 +170,7 @@ pub async fn tasks_vs_threads_comparison() {
 /// Demonstrates work-stealing concept (conceptual, not actual implementation)
 pub fn explain_work_stealing() {
     println!("\n=== Work Stealing Explained ===\n");
-    
+
     println!("Modern async runtimes (like Tokio) use WORK STEALING:");
     println!();
     println!("  ┌──────────────────────────────────────────────┐");
@@ -195,24 +195,24 @@ pub fn chapter_summary() {
     println!("\n{}", "=".repeat(60));
     println!("          CHAPTER 17.6 SUMMARY");
     println!("{}", "=".repeat(60));
-    
+
     println!("\n📚 Hierarchy of Concurrency:");
     println!("   Futures (finest) → Tasks → Threads (coarsest)");
-    
+
     println!("\n🔑 Key Takeaways:");
     println!("   1. Threads and async are COMPLEMENTARY, not competing");
     println!("   2. Tasks are lightweight (millions possible)");
     println!("   3. Threads have no built-in cancellation");
     println!("   4. Futures compose naturally; threads don't");
     println!("   5. Use spawn_blocking for CPU work in async context");
-    
+
     println!("\n📋 Decision Guide:");
     println!("   ┌─────────────────────┬─────────────────────┐");
     println!("   │ Parallelism needed? │ → Use threads       │");
     println!("   │ Concurrency needed? │ → Use async         │");
     println!("   │ Both needed?        │ → Combine them!     │");
     println!("   └─────────────────────┴─────────────────────┘");
-    
+
     println!("\n🎯 Real-World Pattern (Listing 17-42):");
     println!("   Thread (CPU work) ──channel──▶ Async (I/O handling)");
     println!("   Example: Video encoder notifying UI when done");
@@ -223,7 +223,7 @@ pub async fn run_all_demos() {
     println!("{}", "=".repeat(60));
     println!("  CHAPTER 17.6: Futures, Tasks, and Threads");
     println!("{}", "=".repeat(60));
-    
+
     tasks_vs_threads_comparison().await;
     explain_work_stealing();
     mixed_thread_and_async_demo().await;
@@ -254,7 +254,7 @@ mod tests {
     async fn test_mixed_thread_async() {
         // Just verify it runs without panic
         let (tx, mut rx) = mpsc::channel(4);
-        
+
         thread::spawn(move || {
             for i in 1..=3 {
                 tx.blocking_send(i).unwrap();
@@ -265,7 +265,7 @@ mod tests {
         while let Some(msg) = rx.recv().await {
             received.push(msg);
         }
-        
+
         assert_eq!(received, vec![1, 2, 3]);
     }
 }

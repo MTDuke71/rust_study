@@ -20,19 +20,9 @@ pub struct Button {
 
 impl Draw for Button {
     fn draw(&self) {
-        println!(
-            "┌{}┐",
-            "─".repeat(self.width as usize)
-        );
-        println!(
-            "│{:^width$}│",
-            self.label,
-            width = self.width as usize
-        );
-        println!(
-            "└{}┘",
-            "─".repeat(self.width as usize)
-        );
+        println!("┌{}┐", "─".repeat(self.width as usize));
+        println!("│{:^width$}│", self.label, width = self.width as usize);
+        println!("└{}┘", "─".repeat(self.width as usize));
     }
 }
 
@@ -45,34 +35,20 @@ pub struct SelectBox {
 
 impl Draw for SelectBox {
     fn draw(&self) {
-        println!(
-            "╔{}╗",
-            "═".repeat(self.width as usize)
-        );
-        
+        println!("╔{}╗", "═".repeat(self.width as usize));
+
         for (i, option) in self.options.iter().enumerate() {
             if i < self.height as usize {
-                println!(
-                    "║{:<width$}║",
-                    option,
-                    width = self.width as usize
-                );
+                println!("║{:<width$}║", option, width = self.width as usize);
             }
         }
-        
+
         // Fill remaining height
         for _ in self.options.len()..(self.height as usize) {
-            println!(
-                "║{:<width$}║",
-                "",
-                width = self.width as usize
-            );
+            println!("║{:<width$}║", "", width = self.width as usize);
         }
-        
-        println!(
-            "╚{}╝",
-            "═".repeat(self.width as usize)
-        );
+
+        println!("╚{}╝", "═".repeat(self.width as usize));
     }
 }
 
@@ -85,27 +61,17 @@ pub struct TextField {
 
 impl Draw for TextField {
     fn draw(&self) {
-        println!(
-            "[{}]",
-            "─".repeat(self.width as usize)
-        );
-        
+        println!("[{}]", "─".repeat(self.width as usize));
+
         let display_text = if self.value.is_empty() {
             &self.placeholder
         } else {
             &self.value
         };
-        
-        println!(
-            " {:<width$} ",
-            display_text,
-            width = self.width as usize
-        );
-        
-        println!(
-            "[{}]",
-            "─".repeat(self.width as usize)
-        );
+
+        println!(" {:<width$} ", display_text, width = self.width as usize);
+
+        println!("[{}]", "─".repeat(self.width as usize));
     }
 }
 
@@ -116,9 +82,7 @@ pub struct Screen {
 
 impl Screen {
     pub fn new() -> Self {
-        Screen {
-            components: vec![],
-        }
+        Screen { components: vec![] }
     }
 
     pub fn add_component(&mut self, component: Box<dyn Draw>) {
@@ -129,7 +93,7 @@ impl Screen {
         println!("\n╔════════════════════════════════════╗");
         println!("║         Screen Rendering           ║");
         println!("╚════════════════════════════════════╝\n");
-        
+
         for (i, component) in self.components.iter().enumerate() {
             println!("Component {}:", i + 1);
             component.draw();
@@ -151,9 +115,7 @@ pub struct ScreenGeneric<T: Draw> {
 
 impl<T: Draw> ScreenGeneric<T> {
     pub fn new() -> Self {
-        ScreenGeneric {
-            components: vec![],
-        }
+        ScreenGeneric { components: vec![] }
     }
 
     pub fn add_component(&mut self, component: T) {
@@ -207,7 +169,7 @@ fn main() {
     // 2. Demonstrating why generics don't work for heterogeneous collections
     println!("\n2. Generic Limitation:");
     println!("   Generic Screen<T> can only hold ONE type:");
-    
+
     let mut button_screen = ScreenGeneric::new();
     button_screen.add_component(Button {
         width: 15,
@@ -219,10 +181,10 @@ fn main() {
         height: 2,
         label: String::from("Button 2"),
     });
-    
+
     println!("   ✓ All buttons - compiles fine");
     println!("   ✗ Mix of Button and SelectBox - won't compile");
-    
+
     // This would NOT compile:
     // button_screen.add_component(SelectBox { ... });
 
@@ -241,7 +203,7 @@ fn main() {
     println!("   ✓ Runtime polymorphism");
     println!("   ✗ Small runtime cost (vtable lookup)");
     println!("   ✗ No compiler optimizations like inlining");
-    
+
     println!("\n   Static Dispatch (Generics):");
     println!("   ✓ Zero-cost abstraction");
     println!("   ✓ Compiler can inline and optimize");
@@ -254,7 +216,7 @@ fn main() {
     println!("   ✓ No generic methods");
     println!("   ✓ No Self in return types (except receiver)");
     println!("   ✓ No associated const or types (with exceptions)");
-    
+
     println!("\n   Draw trait is object-safe because:");
     println!("   ✓ draw(&self) - no generics");
     println!("   ✓ Returns () - no Self");
@@ -268,15 +230,16 @@ fn main() {
     println!("   ✓ Strategy pattern implementations");
 
     println!("\n7. Performance Considerations:");
-    let components: Vec<Box<dyn Draw>> = vec![
-        Box::new(Button {
-            width: 10,
-            height: 2,
-            label: String::from("Test"),
-        }),
-    ];
-    
-    println!("   Trait object size: {} bytes", std::mem::size_of_val(&components[0]));
+    let components: Vec<Box<dyn Draw>> = vec![Box::new(Button {
+        width: 10,
+        height: 2,
+        label: String::from("Test"),
+    })];
+
+    println!(
+        "   Trait object size: {} bytes",
+        std::mem::size_of_val(&components[0])
+    );
     println!("   (Pointer to data + pointer to vtable)");
     println!("   Cost: One extra indirection per method call");
 
@@ -290,38 +253,38 @@ mod tests {
     #[test]
     fn test_heterogeneous_screen() {
         let mut screen = Screen::new();
-        
+
         screen.add_component(Box::new(Button {
             width: 10,
             height: 2,
             label: String::from("OK"),
         }));
-        
+
         screen.add_component(Box::new(SelectBox {
             width: 10,
             height: 3,
             options: vec![String::from("Yes"), String::from("No")],
         }));
-        
+
         assert_eq!(screen.components.len(), 2);
     }
 
     #[test]
     fn test_generic_screen_single_type() {
         let mut screen = ScreenGeneric::new();
-        
+
         screen.add_component(Button {
             width: 10,
             height: 2,
             label: String::from("Button 1"),
         });
-        
+
         screen.add_component(Button {
             width: 10,
             height: 2,
             label: String::from("Button 2"),
         });
-        
+
         assert_eq!(screen.components.len(), 2);
     }
 
@@ -332,7 +295,7 @@ mod tests {
             height: 2,
             label: String::from("Test"),
         };
-        
+
         // If this compiles, Button implements Draw
         let _drawable: &dyn Draw = &button;
     }
@@ -342,13 +305,13 @@ mod tests {
         fn render(component: &dyn Draw) {
             component.draw();
         }
-        
+
         let button = Button {
             width: 5,
             height: 1,
             label: String::from("Hi"),
         };
-        
+
         render(&button);
     }
 
@@ -371,7 +334,7 @@ mod tests {
                 value: String::from(""),
             }),
         ];
-        
+
         assert_eq!(components.len(), 3);
     }
 }

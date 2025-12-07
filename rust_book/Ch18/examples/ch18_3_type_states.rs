@@ -89,7 +89,7 @@ impl PendingReviewPostV2 {
     /// Add an approval - requires two approvals to publish
     pub fn approve(mut self) -> Result<Post, PendingReviewPostV2> {
         self.approvals += 1;
-        
+
         if self.approvals >= 2 {
             Ok(Post {
                 content: self.content,
@@ -137,15 +137,15 @@ fn main() {
     println!("\n2. Compile-Time Safety:");
     let mut draft = Post::new();
     draft.add_text("Rust is awesome");
-    
+
     println!("   The following WON'T COMPILE:");
     println!("   draft.approve()          // ✗ DraftPost has no approve()");
     println!("   draft.content()          // ✗ DraftPost has no content()");
-    
+
     let pending = draft.request_review();
     println!("\n   pending.add_text()       // ✗ PendingReviewPost has no add_text()");
     println!("   pending.request_review() // ✗ Already in review");
-    
+
     let _published = pending.approve();
     println!("\n   published.add_text()     // ✗ Post has no add_text()");
     println!("   published.approve()      // ✗ Already published");
@@ -163,16 +163,16 @@ fn main() {
     println!("\n4. Rejection and Revision:");
     let mut draft2 = Post::new();
     draft2.add_text("Initial content");
-    
+
     let pending2 = draft2.request_review();
     println!("   Submitted for review");
-    
+
     let mut draft3 = pending2.reject();
     println!("   Rejected - back to draft");
-    
+
     draft3.add_text(" (revised)");
     println!("   Added revision");
-    
+
     let pending3 = draft3.request_review();
     let final_post = pending3.approve();
     println!("   Re-submitted and approved");
@@ -182,21 +182,24 @@ fn main() {
     println!("\n5. Enhanced: Two-Approval Requirement:");
     let mut draft4 = Post::new();
     draft4.add_text("Important document");
-    
+
     let pending4 = draft4.request_review_v2();
     println!("   Submitted for review (needs 2 approvals)");
-    
+
     let pending5 = match pending4.approve() {
         Ok(_post) => {
             println!("   First approval - but this won't happen!");
             return;
         }
         Err(still_pending) => {
-            println!("   First approval (count: {})", still_pending.approval_count());
+            println!(
+                "   First approval (count: {})",
+                still_pending.approval_count()
+            );
             still_pending
         }
     };
-    
+
     let final_post2 = match pending5.approve() {
         Ok(post) => {
             println!("   Second approval - published!");
@@ -207,7 +210,7 @@ fn main() {
             return;
         }
     };
-    
+
     println!("   Content: '{}'", final_post2.content());
 
     // 6. Comparison: Type States vs OOP State Pattern
@@ -219,7 +222,7 @@ fn main() {
     println!("   ✓ No trait objects or dynamic dispatch");
     println!("   ✗ Less flexible (compile-time only)");
     println!("   ✗ Value is consumed on transition");
-    
+
     println!("\n   OOP State Pattern:");
     println!("   ✓ Runtime flexibility");
     println!("   ✓ Can query current state");
@@ -234,7 +237,7 @@ fn main() {
     println!("   ✓ Want maximum safety guarantees");
     println!("   ✓ Performance is critical");
     println!("   ✓ State transitions are clear and linear");
-    
+
     println!("\n   When to Use OOP State Pattern:");
     println!("   ✓ States determined at runtime");
     println!("   ✓ Need to query/inspect current state");
@@ -267,10 +270,10 @@ mod tests {
     fn test_published_post_has_content() {
         let mut post = Post::new();
         post.add_text("Test content");
-        
+
         let post = post.request_review();
         let post = post.approve();
-        
+
         assert_eq!(post.content(), "Test content");
     }
 
@@ -278,10 +281,10 @@ mod tests {
     fn test_reject_returns_to_draft() {
         let mut draft = Post::new();
         draft.add_text("Initial");
-        
+
         let pending = draft.request_review();
         let mut draft2 = pending.reject();
-        
+
         draft2.add_text(" Revised");
         assert_eq!(draft2.preview(), "Initial Revised");
     }
@@ -290,21 +293,21 @@ mod tests {
     fn test_two_approvals_required() {
         let mut draft = Post::new();
         draft.add_text("Test");
-        
+
         let pending = draft.request_review_v2();
         assert_eq!(pending.approval_count(), 0);
-        
+
         let pending = match pending.approve() {
             Ok(_) => panic!("Should need 2 approvals"),
             Err(p) => p,
         };
         assert_eq!(pending.approval_count(), 1);
-        
+
         let post = match pending.approve() {
             Ok(p) => p,
             Err(_) => panic!("Second approval should succeed"),
         };
-        
+
         assert_eq!(post.content(), "Test");
     }
 
@@ -312,30 +315,30 @@ mod tests {
     fn test_full_workflow_type_safety() {
         let mut draft = Post::new();
         draft.add_text("Rust");
-        
+
         // Type transitions
         let pending = draft.request_review(); // DraftPost -> PendingReviewPost
-        let post = pending.approve();         // PendingReviewPost -> Post
-        
+        let post = pending.approve(); // PendingReviewPost -> Post
+
         assert_eq!(post.content(), "Rust");
     }
 
     // These tests demonstrate COMPILE-TIME safety
     // Uncomment to see compiler errors:
-    
+
     // #[test]
     // fn test_cannot_add_text_to_pending() {
     //     let mut draft = Post::new();
     //     let pending = draft.request_review();
     //     pending.add_text("Won't compile");  // ERROR: no method `add_text`
     // }
-    
+
     // #[test]
     // fn test_cannot_get_content_of_draft() {
     //     let draft = Post::new();
     //     let _ = draft.content();  // ERROR: no method `content`
     // }
-    
+
     // #[test]
     // fn test_cannot_use_after_transition() {
     //     let mut draft = Post::new();

@@ -108,8 +108,13 @@ pub mod gui {
 
     impl Draw for TextField {
         fn draw(&self) {
-            println!("Drawing TextField: {}", 
-                if self.value.is_empty() { &self.placeholder } else { &self.value }
+            println!(
+                "Drawing TextField: {}",
+                if self.value.is_empty() {
+                    &self.placeholder
+                } else {
+                    &self.value
+                }
             );
         }
     }
@@ -120,9 +125,7 @@ pub mod gui {
 
     impl Screen {
         pub fn new() -> Self {
-            Screen {
-                components: vec![],
-            }
+            Screen { components: vec![] }
         }
 
         pub fn add_component(&mut self, component: Box<dyn Draw>) {

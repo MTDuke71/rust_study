@@ -10,18 +10,18 @@
 pub trait State {
     /// Request review - transition from Draft to PendingReview
     fn request_review(self: Box<Self>) -> Box<dyn State>;
-    
+
     /// Approve - transition from PendingReview to Published
     fn approve(self: Box<Self>) -> Box<dyn State>;
-    
+
     /// Reject - transition back to Draft
     fn reject(self: Box<Self>) -> Box<dyn State>;
-    
+
     /// Get content - only Published state returns content
     fn content<'a>(&self, _post: &'a Post) -> &'a str {
         ""
     }
-    
+
     /// Check if can add text - only Draft allows editing
     fn can_add_text(&self) -> bool {
         false
@@ -186,17 +186,17 @@ fn main() {
     // 2. Demonstrating state-specific behavior
     println!("\n2. State-Specific Behavior:");
     let mut post2 = Post::new();
-    
+
     println!("   Draft state:");
     post2.add_text("First paragraph. ");
     println!("   ✓ Can add text");
-    
+
     post2.request_review();
     println!("\n   PendingReview state:");
     post2.add_text("This won't be added. ");
     println!("   ✗ Cannot add text");
     println!("   ✗ Content not visible");
-    
+
     post2.approve();
     println!("\n   Published state:");
     println!("   ✓ Content visible: '{}'", post2.content());
@@ -208,16 +208,16 @@ fn main() {
     let mut post3 = Post::new();
     post3.add_text("Draft article about Rust");
     println!("   Created draft: '{}'", "Draft article about Rust");
-    
+
     post3.request_review();
     println!("   Requested review");
-    
+
     post3.reject();
     println!("   Rejected - back to Draft");
-    
+
     post3.add_text(" (revised)");
     println!("   Added revision: 'Draft article about Rust (revised)'");
-    
+
     post3.request_review();
     post3.approve();
     println!("   Re-submitted and approved");
@@ -227,17 +227,17 @@ fn main() {
     println!("\n4. Invalid State Transitions:");
     let mut post4 = Post::new();
     post4.add_text("Test post");
-    
+
     println!("   Draft state:");
     post4.approve();
     println!("   ✗ approve() in Draft - no effect");
     println!("   Content: '{}'", post4.content());
-    
+
     post4.request_review();
     println!("\n   PendingReview state:");
     post4.request_review();
     println!("   ✗ request_review() again - no effect");
-    
+
     post4.approve();
     println!("\n   Published state:");
     post4.approve();
@@ -258,7 +258,7 @@ fn main() {
     println!("   ✓ Familiar to OOP developers");
     println!("   ✓ Runtime state changes");
     println!("   ✓ Dynamic behavior modification");
-    
+
     println!("\n   Cons:");
     println!("   ✗ Runtime cost (trait objects)");
     println!("   ✗ Can't prevent invalid states at compile-time");
@@ -321,7 +321,7 @@ mod tests {
         post.reject();
         post.add_text(" Revised");
         assert_eq!(post.content(), ""); // Still not published
-        
+
         post.request_review();
         post.approve();
         assert_eq!(post.content(), "Initial Revised");
@@ -338,15 +338,15 @@ mod tests {
     #[test]
     fn test_full_workflow() {
         let mut post = Post::new();
-        
+
         // Draft
         post.add_text("I ate a salad for lunch today");
         assert_eq!(post.content(), "");
-        
+
         // Pending review
         post.request_review();
         assert_eq!(post.content(), "");
-        
+
         // Published
         post.approve();
         assert_eq!(post.content(), "I ate a salad for lunch today");
