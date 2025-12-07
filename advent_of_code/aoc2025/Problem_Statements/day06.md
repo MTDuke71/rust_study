@@ -9,8 +9,8 @@ Cephalopod math doesn't look that different from normal math. The math worksheet
 
 However, the problems are arranged a little strangely; they seem to be presented next to each other in a very long horizontal list. For example:
 
-123 328  51 64 
- 45 64  387 23 
+123 328  51 64
+ 45 64  387 23
   6 98  215 314
 *   +   *   +  
 Each problem's numbers are arranged vertically; at the bottom of the problem is the symbol for the operation that needs to be performed. Problems are separated by a full column of only spaces. The left/right alignment of numbers within each problem can be ignored.
@@ -27,11 +27,7 @@ Of course, the actual worksheet is much wider. You'll need to make sure to unrol
 
 Solve the problems on the math worksheet. What is the grand total found by adding together all of the answers to the individual problems?
 
-To begin, get your puzzle input.
-
 Your puzzle answer was 5873191732773.
-
-The first half of this puzzle is complete! It provides one gold star: *
 
 --- Part Two ---
 The big cephalopods come back to check on how things are going. When they see that your grand total doesn't match the one expected by the worksheet, they realize they forgot to explain how to read cephalopod math.
@@ -40,8 +36,8 @@ Cephalopod math is written right-to-left in columns. Each number is given in its
 
 Here's the example worksheet again:
 
-123 328  51 64 
- 45 64  387 23 
+123 328  51 64
+ 45 64  387 23
   6 98  215 314
 *   +   *   +  
 Reading the problems right-to-left one column at a time, the problems are now quite different:
@@ -53,3 +49,20 @@ Finally, the leftmost problem is 356 * 24 * 1 = 8544
 Now, the grand total is 1058 + 3253600 + 625 + 8544 = 3263827.
 
 Solve the problems on the math worksheet again. What is the grand total found by adding together all of the answers to the individual problems?
+
+Your puzzle answer was 11386445308378.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
+
+---
+
+## Links
+
+**Solution**: [[../src/solver/day06.rs|day06.rs]]
+**AoC 2025 Overview**: [[../../../zettelkasten/AoC 2025 MOC|AoC 2025 MOC]]
+**Daily Note**: [[../../../zettelkasten/Daily Notes/2025-12-06|2025-12-06]]
+
+### Concepts Used
+- [[../../../zettelkasten/rust-iterators|Iterators]] - `split_whitespace()`, `filter_map()`, `char_indices()`
+- [[../../../zettelkasten/rust-string-types|String Parsing]] - `chars().nth()`, `parse::<T>()`
+- Column-based parsing with operator position detection
