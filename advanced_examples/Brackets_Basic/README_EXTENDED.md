@@ -52,7 +52,7 @@ enum UnclosedPolicy { LatestOpen, EarliestOpen }
 - [[Iterator API Design]] - Streaming validation patterns
 
 ### Data Structures
-- [[Stack Data Structure]] - LIFO bracket tracking
+- [[mission-1|Stack Data Structure]] - LIFO bracket tracking
 - [[HashMap]] - Alphabet configuration storage
 - [[Vec Type]] - Multiple error collection
 - [[Options Pattern]] - Configuration struct

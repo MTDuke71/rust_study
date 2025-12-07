@@ -147,7 +147,7 @@ Claude Sonnet 4 • 1x
 - [[Type Safety]] - Compile-time correctness
 
 ### Data Structures
-- [[Stack Data Structure]] - LIFO operations and invariants
+- [[mission-1|Stack Data Structure]] - LIFO operations and invariants
 - [[Vec Type]] - Underlying storage and reallocation
 - [[Tuples]] - (expected_closer, open_index) pairs
 

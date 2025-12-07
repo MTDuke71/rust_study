@@ -48,7 +48,7 @@ cargo clippy -- -D warnings
 ## 📚 Related Zettelkasten Concepts
 
 ### Core Concepts
-- [[Stack Data Structure]] - LIFO structure for bracket matching
+- [[mission-1|Stack Data Structure]] - LIFO structure for bracket matching
 - [[V-Cycle Methodology]] - Requirements-driven development (REQ-1 to REQ-6)
 - [[Algorithm Design]] - Stack-based validation algorithm
 - [[Big-O Notation]] - Time and space complexity analysis
@@ -103,6 +103,6 @@ cargo clippy -- -D warnings
 - [[Competitive Programming]] - AoC-style problems
 - [[RUST_TEST_DOCUMENTATION_STANDARDS]] - Testing guide
 
-*Links: [[zettel-index]] | [[Brackets Extended]] | [[mission-1]] | [[V-Cycle Methodology]] | [[Stack Data Structure]]*
+*Links: [[zettel-index]] | [[Brackets Extended]] | [[mission-1]] | [[V-Cycle Methodology]] | [[mission-1|Stack Data Structure]]*
 
 *Tags: #brackets-basic #v-cycle #stack #validation #requirements #testing #error-handling #aoc-patterns #req1-6*

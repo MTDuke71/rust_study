@@ -32,14 +32,14 @@ This project follows the workspace documentation standards:
 ## 📚 **Additional Resources**
 
 ### **Deep Dive Documentation**
-- [[Q and A]] - Comprehensive technical analysis answering complex questions about:
+- [[Q and A|Q and A]] - Comprehensive technical analysis answering complex questions about:
   - Stack invariants and state management
   - UTF-8 handling with char_indices()
   - Algorithm complexity proofs
   - Memory safety and aliasing analysis
   - API design tradeoffs
   
-- [[README_EXTENDED]] - Extended bracket validator with advanced features:
+- [[README_EXTENDED|README_EXTENDED]] - Extended bracket validator with advanced features:
   - REQ-7: Configurable alphabet (arbitrary opener-closer mappings)
   - REQ-8: Multiple error collection mode
   - REQ-9: Unclosed bracket policies (LatestOpen vs EarliestOpen)

@@ -32,21 +32,21 @@ This project follows the workspace documentation standards:
 ## 📚 **Additional Resources**
 
 ### **Foundation Documentation**
-- [[Brackets_Basic Q and A]] - Deep technical analysis of bracket validation fundamentals:
+- [[../Brackets_Basic/Q and A|Brackets_Basic Q and A]] - Deep technical analysis of bracket validation fundamentals:
   - Stack invariants and correctness proofs
   - UTF-8 byte indexing with char_indices()
   - Algorithm complexity analysis (O(n) proof)
   - Memory safety guarantees and aliasing prevention
   - API design principles and Rust idioms
 
-- [[Brackets_Basic README_EXTENDED]] - Extended validator design documentation:
+- [[../Brackets_Basic/README_EXTENDED|Brackets_Basic README_EXTENDED]] - Extended validator design documentation:
   - REQ-7: Configurable alphabet implementation
   - REQ-8: Multiple error collection strategies
   - REQ-9: Unclosed bracket policy options
   - Iterator API design patterns
 
 ### **Related Projects**
-- [[Brackets_Basic]] - Foundation implementation (REQ-1 through REQ-6)
+- [[../Brackets_Basic/README|Brackets_Basic]] - Foundation implementation (REQ-1 through REQ-6)
 - [[mission-1]] - Stack data structure foundation
 
 ### **Learning Resources**
