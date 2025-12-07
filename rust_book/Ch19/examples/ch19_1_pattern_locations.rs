@@ -19,6 +19,8 @@ fn main() {
     demonstrate_for_loops();
     demonstrate_let_statements();
     demonstrate_function_parameters();
+    demonstrate_integration();
+
 
     println!("\n✅ All pattern locations demonstrated!");
 }
@@ -212,7 +214,7 @@ fn demonstrate_function_parameters() {
 }
 
 /// Integration example: Combining pattern locations
-fn _demonstrate_integration() {
+fn demonstrate_integration() {
     println!("--- Integration: Multiple Pattern Locations ---");
 
     fn process_events(events: Vec<Event>) {
