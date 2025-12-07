@@ -159,4 +159,4 @@ Feel free to:
 
 *Tags: #week5 #error-handling #examples #anyhow #thiserror #result-combinators #panic-recovery*
 
-*Links: [[../README]] | [[../../README]] | [[../../Day29]] | [[../../Day30]] | [[../../Day31]] | [[../../Day32]] | [[../../Day33]] | [[../../Day34]] | [[../../Day35]] | [[Error Handling Deep Dive]] | [[Week 5 Overview]] | [[zettel-index]]*
+*Links: [[../README]] | [[../../README]] | [[../Day29]] | [[../Day30]] | [[../Day31]] | [[../Day32]] | [[../Day33]] | [[../Day34]] | [[../Day35]] | [[Error Handling Deep Dive]] | [[Week 5 Overview]] | [[zettel-index]]*
