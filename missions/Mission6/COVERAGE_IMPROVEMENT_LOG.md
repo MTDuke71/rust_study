@@ -868,7 +868,7 @@ You used Tarpaulin to identify, test, and verify untested code!
 - [[Test Coverage]] - Measuring code coverage metrics
 - [[Tarpaulin]] - Code coverage tool for Rust
 - [[TDD (Test-Driven Development]] - Testing methodology and best practices
-- [[Edge Case Testing]] - Testing boundary conditions
+- [[edge-case-testing|Edge Case Testing]] - Testing boundary conditions
 - [[Property-Based Testing]] - Testing invariants and properties
 - [[REQ-1 Test Strategy]] - Requirements-based testing approach
 - [[V-Cycle Methodology]] - Verification and validation

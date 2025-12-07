@@ -1,7 +1,7 @@
 # Test Pyramid: Balancing Unit, Integration, and System Tests
 
 *Tags: #testing #test-pyramid #quality-assurance #software-engineering #tdd #software-architecture*  
-*Links: [[zettel-index]] | [[TDD (Test-Driven Development)]] | [[Testing Strategies]] | [[Unit Testing]] | [[Integration Testing]] | [[Debugging Lessons]]*
+*Links: [[zettel-index]] | [[TDD (Test-Driven Development)]] | [[Testing Strategies]] | [[Unit Testing]] | [[Integration Testing]] | [[edge-case-testing]] | [[Debugging Lessons]]*
 
 ---
 

@@ -183,12 +183,12 @@ Claude Sonnet 4 • 1x
 
 ### Testing & Verification
 - [[Property-Based Testing]] - Invariant verification
-- [[Edge Case Testing]] - Boundary conditions
+- [[edge-case-testing|Edge Case Testing]] - Boundary conditions
 - [[Unit Testing]] - Component-level tests
 - [[Integration Testing]] - End-to-end scenarios
 
 ### Mission Integration
-- [[Brackets Basic]] - Implementation project
+- [[advanced_examples/Brackets_Basic/README|Brakets_Basic]] - Implementation project
 - [[mission-1]] - Stack implementation foundation
 - [[V-Cycle Methodology]] - Requirements and validation
 
