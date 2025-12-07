@@ -79,3 +79,77 @@ fn correct_ownership_patterns() {
     // And immutable borrow again
     println!("Modified to: {}", s.peek().unwrap());
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ownership_violations_compiles() {
+        // This test ensures the ownership_violations function exists and compiles
+        // We can't actually call it because it has intentionally broken examples
+        // But we can verify the function signature is valid
+        let _fn_exists = ownership_violations as fn();
+    }
+
+    #[test]
+    fn test_correct_ownership_patterns() {
+        // Test that correct_ownership_patterns runs without panicking
+        correct_ownership_patterns();
+    }
+
+    #[test]
+    fn test_ownership_move_and_pop() {
+        let mut s = Stack::new();
+        let val = String::from("test");
+        s.push(val);
+
+        let popped = s.pop().unwrap();
+        assert_eq!(popped, "test");
+        assert!(s.is_empty());
+    }
+
+    #[test]
+    fn test_multiple_immutable_borrows() {
+        let mut s = Stack::new();
+        s.push(String::from("hello"));
+
+        let peek1 = s.peek().unwrap();
+        let peek2 = s.peek().unwrap();
+        assert_eq!(peek1, "hello");
+        assert_eq!(peek2, "hello");
+        assert_eq!(peek1, peek2);
+    }
+
+    #[test]
+    fn test_mutable_borrow_modification() {
+        let mut s = Stack::new();
+        s.push(String::from("original"));
+
+        {
+            let mut_ref = s.peek_mut().unwrap();
+            *mut_ref = String::from("modified");
+        }
+
+        assert_eq!(s.peek().unwrap(), "modified");
+    }
+
+    #[test]
+    fn test_ownership_sequence() {
+        let mut s = Stack::new();
+
+        // Push and verify
+        s.push(42);
+        assert_eq!(s.len(), 1);
+        assert_eq!(*s.peek().unwrap(), 42);
+
+        // Modify via mutable reference
+        *s.peek_mut().unwrap() = 99;
+        assert_eq!(*s.peek().unwrap(), 99);
+
+        // Pop and verify ownership transfer
+        let owned_value = s.pop().unwrap();
+        assert_eq!(owned_value, 99);
+        assert!(s.is_empty());
+    }
+}
