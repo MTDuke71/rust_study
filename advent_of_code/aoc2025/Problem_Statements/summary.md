@@ -268,6 +268,42 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 
 ---
 
+### Day 6: Trash Compactor
+**Title**: Trash Compactor  
+**Part 1 Type**: Parsing + Mathematical  
+**Part 1 Description**: Parse vertical math worksheet with numbers arranged in columns, operators at bottom. Compute each problem (multiply or add) and sum all results.  
+**Part 2 Type**: Parsing + Column-wise Reading  
+**Part 2 Description**: Same worksheet, but read numbers column-by-column right-to-left (digits top-to-bottom form each number), then compute and sum results.  
+**Key Concepts**: Column-based text parsing, separator detection, coordinate-based string extraction, directional reading  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Parsing twist (row-wise reading → column-wise right-to-left reading)
+- **Data Structure**: String slicing by column ranges, character extraction by position
+- **Complexity**: O(W×H) where W=worksheet width, H=number of rows
+- **AoC Theme**: "Cephalopod math" with Part 2 twist (same data, different reading direction)
+
+**🦀 Rust Implementation Highlights**:
+- **Separator detection** → **Scan columns where ALL rows have space** using `lines.iter().all()`
+- **Range grouping** → **Handle consecutive separators** (double spaces) as single gap
+- **Part 1 parsing** → **Extract row substrings, trim, parse as numbers**
+- **Part 2 parsing** → **Iterate columns right-to-left, collect digits top-to-bottom per column**
+- **Struct encapsulation** → **`Problem { numbers, operator }`** with `compute()` method
+
+**Key Implementation Insights**:
+- **Separator columns**: Columns where every row (including operator row) has a space
+- **Part 1 algorithm**: For each column range, extract substring from each row, parse as number
+- **Part 2 algorithm**: For each column range, iterate columns `(end-1)..start`, collect digits vertically
+- **Operator extraction**: Find `'+'` or `'*'` character in operator row's column range
+- **No missions used**: Pure string parsing, no grid/graph infrastructure needed
+
+**Answers**:
+- Part 1: `5873191732773`
+- Part 2: `11386445308378`
+
+**⏱️ Performance**: Single-pass parsing, O(W×H) for both parts. No heavy data structures needed.
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |

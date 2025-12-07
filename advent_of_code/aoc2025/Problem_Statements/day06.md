@@ -1,191 +1,55 @@
---- Day 6: Guard Gallivant ---
-The Historians use their fancy device again, this time to whisk you all away to the North Pole prototype suit manufacturing lab... in the year 1518! It turns out that having direct access to history is very convenient for a group of historians.
+--- Day 6: Trash Compactor ---
+After helping the Elves in the kitchen, you were taking a break and helping them re-enact a movie scene when you over-enthusiastically jumped into the garbage chute!
 
-You still have to be careful of time paradoxes, and so it will be important to avoid anyone from 1518 while The Historians search for the Chief. Unfortunately, a single guard is patrolling this part of the lab.
+A brief fall later, you find yourself in a garbage smasher. Unfortunately, the door's been magnetically sealed.
 
-Maybe you can work out where the guard will go ahead of time so that The Historians can search safely?
+As you try to find a way out, you are approached by a family of cephalopods! They're pretty sure they can get the door open, but it will take some time. While you wait, they're curious if you can help the youngest cephalopod with her math homework.
 
-You start by making a map (your puzzle input) of the situation. For example:
+Cephalopod math doesn't look that different from normal math. The math worksheet (your puzzle input) consists of a list of problems; each problem has a group of numbers that need to be either added (+) or multiplied (*) together.
 
-....#.....
-.........#
-..........
-..#.......
-.......#..
-..........
-.#..^.....
-........#.
-#.........
-......#...
-The map shows the current position of the guard with ^ (to indicate the guard is currently facing up from the perspective of the map). Any obstructions - crates, desks, alchemical reactors, etc. - are shown as #.
+However, the problems are arranged a little strangely; they seem to be presented next to each other in a very long horizontal list. For example:
 
-Lab guards in 1518 follow a very strict patrol protocol which involves repeatedly following these steps:
+123 328  51 64 
+ 45 64  387 23 
+  6 98  215 314
+*   +   *   +  
+Each problem's numbers are arranged vertically; at the bottom of the problem is the symbol for the operation that needs to be performed. Problems are separated by a full column of only spaces. The left/right alignment of numbers within each problem can be ignored.
 
-If there is something directly in front of you, turn right 90 degrees.
-Otherwise, take a step forward.
-Following the above protocol, the guard moves up several times until she reaches an obstacle (in this case, a pile of failed suit prototypes):
+So, this worksheet contains four problems:
 
-....#.....
-....^....#
-..........
-..#.......
-.......#..
-..........
-.#........
-........#.
-#.........
-......#...
-Because there is now an obstacle in front of the guard, she turns right before continuing straight in her new facing direction:
+123 * 45 * 6 = 33210
+328 + 64 + 98 = 490
+51 * 387 * 215 = 4243455
+64 + 23 + 314 = 401
+To check their work, cephalopod students are given the grand total of adding together all of the answers to the individual problems. In this worksheet, the grand total is 33210 + 490 + 4243455 + 401 = 4277556.
 
-....#.....
-........>#
-..........
-..#.......
-.......#..
-..........
-.#........
-........#.
-#.........
-......#...
-Reaching another obstacle (a spool of several very long polymers), she turns right again and continues downward:
+Of course, the actual worksheet is much wider. You'll need to make sure to unroll it completely so that you can read the problems clearly.
 
-....#.....
-.........#
-..........
-..#.......
-.......#..
-..........
-.#......v.
-........#.
-#.........
-......#...
-This process continues for a while, but the guard eventually leaves the mapped area (after walking past a tank of universal solvent):
+Solve the problems on the math worksheet. What is the grand total found by adding together all of the answers to the individual problems?
 
-....#.....
-.........#
-..........
-..#.......
-.......#..
-..........
-.#........
-........#.
-#.........
-......#v..
-By predicting the guard's route, you can determine which specific positions in the lab will be in the patrol path. Including the guard's starting position, the positions visited by the guard before leaving the area are marked with an X:
+To begin, get your puzzle input.
 
-....#.....
-....XXXXX#
-....X...X.
-..#.X...X.
-..XXXXX#X.
-..X.X.X.X.
-.#XXXXXXX.
-.XXXXXXX#.
-#XXXXXXX..
-......#X..
-In this example, the guard will visit 41 distinct positions on your map.
+Your puzzle answer was 5873191732773.
 
-Predict the path of the guard. How many distinct positions will the guard visit before leaving the mapped area?
-
-Your puzzle answer was 5551.
+The first half of this puzzle is complete! It provides one gold star: *
 
 --- Part Two ---
-While The Historians begin working around the guard's patrol route, you borrow their fancy device and step outside the lab. From the safety of a supply closet, you time travel through the last few months and record the nightly status of the lab's guard post on the walls of the closet.
+The big cephalopods come back to check on how things are going. When they see that your grand total doesn't match the one expected by the worksheet, they realize they forgot to explain how to read cephalopod math.
 
-Returning after what seems like only a few seconds to The Historians, they explain that the guard's patrol area is simply too large for them to safely search the lab without getting caught.
+Cephalopod math is written right-to-left in columns. Each number is given in its own column, with the most significant digit at the top and the least significant digit at the bottom. (Problems are still separated with a column consisting only of spaces, and the symbol at the bottom of the problem is still the operator to use.)
 
-Fortunately, they are pretty sure that adding a single new obstruction won't cause a time paradox. They'd like to place the new obstruction in such a way that the guard will get stuck in a loop, making the rest of the lab safe to search.
+Here's the example worksheet again:
 
-To have the lowest chance of creating a time paradox, The Historians would like to know all of the possible positions for such an obstruction. The new obstruction can't be placed at the guard's starting position - the guard is there right now and would notice.
+123 328  51 64 
+ 45 64  387 23 
+  6 98  215 314
+*   +   *   +  
+Reading the problems right-to-left one column at a time, the problems are now quite different:
 
-In the above example, there are only 6 different positions where a new obstruction would cause the guard to get stuck in a loop. The diagrams of these six situations use O to mark the new obstruction, | to show a position where the guard moves up/down, - to show a position where the guard moves left/right, and + to show a position where the guard moves both up/down and left/right.
+The rightmost problem is 4 + 431 + 623 = 1058
+The second problem from the right is 175 * 581 * 32 = 3253600
+The third problem from the right is 8 + 248 + 369 = 625
+Finally, the leftmost problem is 356 * 24 * 1 = 8544
+Now, the grand total is 1058 + 3253600 + 625 + 8544 = 3263827.
 
-Option one, put a printing press next to the guard's starting position:
-
-....#.....
-....+---+#
-....|...|.
-..#.|...|.
-....|..#|.
-....|...|.
-.#.O^---+.
-........#.
-#.........
-......#...
-Option two, put a stack of failed suit prototypes in the bottom right quadrant of the mapped area:
-
-
-....#.....
-....+---+#
-....|...|.
-..#.|...|.
-..+-+-+#|.
-..|.|.|.|.
-.#+-^-+-+.
-......O.#.
-#.........
-......#...
-Option three, put a crate of chimney-squeeze prototype fabric next to the standing desk in the bottom right quadrant:
-
-....#.....
-....+---+#
-....|...|.
-..#.|...|.
-..+-+-+#|.
-..|.|.|.|.
-.#+-^-+-+.
-.+----+O#.
-#+----+...
-......#...
-Option four, put an alchemical retroencabulator near the bottom left corner:
-
-....#.....
-....+---+#
-....|...|.
-..#.|...|.
-..+-+-+#|.
-..|.|.|.|.
-.#+-^-+-+.
-..|...|.#.
-#O+---+...
-......#...
-Option five, put the alchemical retroencabulator a bit to the right instead:
-
-....#.....
-....+---+#
-....|...|.
-..#.|...|.
-..+-+-+#|.
-..|.|.|.|.
-.#+-^-+-+.
-....|.|.#.
-#..O+-+...
-......#...
-Option six, put a tank of sovereign glue right next to the tank of universal solvent:
-
-....#.....
-....+---+#
-....|...|.
-..#.|...|.
-..+-+-+#|.
-..|.|.|.|.
-.#+-^-+-+.
-.+----++#.
-#+----++..
-......#O..
-It doesn't really matter what you choose to use as an obstacle so long as you and The Historians can put it into position without the guard noticing. The important thing is having enough options that you can find one that minimizes time paradoxes, and in this example, there are 6 different positions you could choose.
-
-You need to get the guard stuck in a loop by adding a single new obstruction. How many different positions could you choose for this obstruction?
-
-Your puzzle answer was 1939.
-
-Both parts of this puzzle are complete! They provide two gold stars: **
-
-At this point, you should return to your Advent calendar and try another puzzle.
-
-If you still want to see it, you can get your puzzle input.
-
-You can also [Share] this puzzle.
-
----
-*Links: [[day05]] [[day07]] [[AoC 2024 Overview]]*
+Solve the problems on the math worksheet again. What is the grand total found by adding together all of the answers to the individual problems?
