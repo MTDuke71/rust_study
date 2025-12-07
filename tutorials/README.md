@@ -139,7 +139,7 @@ Students will have:
 ## 📝 **Documentation Standards**
 
 All tutorials follow workspace documentation standards:
-- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)
+- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../_github/RUST_DOCUMENTATION_STANDARDS.md)
 - **Test Documentation**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
 - **Tutorial Design**: [tutorial.engineer.md](../.github/tutorial.engineer.md)
 

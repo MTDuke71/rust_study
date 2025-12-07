@@ -194,8 +194,8 @@ REQ-5	peek / peek_mut	req5_peek_aliasing_rules
 
 ---
 
-## �📝 Documentation Standards
+## 📝 Documentation Standards
 
 This mission follows the workspace documentation standards:
-- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../../.github/RUST_DOCUMENTATION_STANDARDS.md)
-- **Test Documentation**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
+- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../../_github/RUST_DOCUMENTATION_STANDARDS.md)
+- **Test Documentation**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../../_github/RUST_TEST_DOCUMENTATION_STANDARDS.md)

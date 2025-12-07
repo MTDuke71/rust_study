@@ -107,7 +107,7 @@ cargo rustc -p mission1 -- --emit asm
 ```
 
 ### **Documentation and Standards**
-- **[RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)** - API documentation rules
+- **[RUST_DOCUMENTATION_STANDARDS.md](../_github/RUST_DOCUMENTATION_STANDARDS.md)** - API documentation rules
 - **[RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)** - Test naming conventions
 - **[[V-Cycle Methodology]]** - Requirements engineering process
 - **[[Missions Overview]]** - Learning navigation and progress tracking

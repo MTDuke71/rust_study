@@ -168,7 +168,7 @@ cargo run --example grid_patterns_demo
 ## 📝 **Documentation Standards**
 
 All AoC projects follow comprehensive documentation standards:
-- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)
+- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../_github/RUST_DOCUMENTATION_STANDARDS.md)
 - **Test Documentation**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
 - **Algorithm Complexity**: Big-O analysis for all core algorithms
 - **Pattern Classification**: Clear categorization of problem types and solution approaches

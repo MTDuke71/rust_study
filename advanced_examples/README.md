@@ -23,7 +23,7 @@ This folder contains advanced, production-ready examples that extend beyond the 
 ### **Professional Implementation Patterns**
 - **V-Cycle Methodology**: Requirements → Design → Implementation → Verification → Validation
 - **Comprehensive Testing**: Unit tests, integration tests, requirement-based tests, AoC datasets
-- **Documentation Standards**: Following workspace [RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)
+- **Documentation Standards**: Following workspace [RUST_DOCUMENTATION_STANDARDS.md](../_github/RUST_DOCUMENTATION_STANDARDS.md)
 - **Performance Analysis**: Big-O complexity, benchmarking, memory usage optimization
 
 ### **Competitive Programming Applications**
@@ -115,8 +115,8 @@ Mission2 (Queues) → competitive_ring_bfs, competitive_linked_tree
 ## 📝 **Documentation Standards**
 
 All projects follow the workspace documentation standards:
-- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../.github/RUST_DOCUMENTATION_STANDARDS.md)
-- **Test Documentation**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
+- **Code Documentation**: [RUST_DOCUMENTATION_STANDARDS.md](../_github/RUST_DOCUMENTATION_STANDARDS.md)
+- **Test Documentation**: [RUST_TEST_DOCUMENTATION_STANDARDS.md](../_github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
 - **V-Cycle Methodology**: Complete traceability from requirements to validation
 
 ---
