@@ -184,7 +184,7 @@ Think of [concept] as:
 
 *This chapter forms the foundation for [why it matters]. Essential for writing idiomatic Rust code.*
 
-*Links: [[rust-book]] | [[Chapter {X-1} Overview]] | [[Chapter {X+1} Overview]]*
+*Links: [[rust-book]] | Chapter {X-1} Overview | Chapter {X+1} Overview*
 *Tags: #rust-book #chapter{X} #[main-topic] #concept #foundation*
 ```
 
@@ -347,10 +347,10 @@ Located in: `Ch{X}/`
 
 ## Next Steps
 1. Complete all section exercises
-2. Review [[Chapter {X+1} Overview]]
+2. Review Chapter {X+1} Overview
 3. Apply concepts in [[Mission{Y} Overview]]
 
-*Links: [[Rust Book MOC]] | [[Chapter {X-1} Overview]] | [[Chapter {X+1} Overview]] | [[3-Track Integration]]*
+*Links: [[Rust Book MOC]] | Chapter {X-1} Overview | Chapter {X+1} Overview | [[3-Track Integration]]*
 *Tags: #rust-book #chapter{X} #overview #foundation*
 ```
 
