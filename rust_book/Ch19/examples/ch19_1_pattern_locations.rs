@@ -12,14 +12,14 @@ use ch19::*;
 
 fn main() {
     println!("=== Chapter 19.1: Pattern Locations ===\n");
-    
+
     demonstrate_match_expressions();
     demonstrate_if_let();
     demonstrate_while_let();
     demonstrate_for_loops();
     demonstrate_let_statements();
     demonstrate_function_parameters();
-    
+
     println!("\n✅ All pattern locations demonstrated!");
 }
 
@@ -29,11 +29,11 @@ fn main() {
 /// **Key Learning**: match requires exhaustive patterns
 fn demonstrate_match_expressions() {
     println!("--- Location 1: match Expressions ---");
-    
+
     let point = Point::new(3, 0);
     let description = describe_point(point);
     println!("Point {:?} is: {}", point, description);
-    
+
     // Multiple match patterns
     let number = 5;
     let category = match number {
@@ -43,7 +43,7 @@ fn demonstrate_match_expressions() {
         _ => "large",
     };
     println!("Number {} is {}", number, category);
-    
+
     // Enum matching
     let msg = Message::Move { x: 10, y: 20 };
     match msg {
@@ -52,7 +52,7 @@ fn demonstrate_match_expressions() {
         Message::Write(ref text) => println!("Writing: {}", text),
         Message::ChangeColor(r, g, b) => println!("Color: RGB({}, {}, {})", r, g, b),
     }
-    
+
     println!("💡 match expressions are exhaustive and type-safe");
     println!();
 }
@@ -63,19 +63,19 @@ fn demonstrate_match_expressions() {
 /// **Integration**: Cleaner than match for single pattern
 fn demonstrate_if_let() {
     println!("--- Location 2: if let Expressions ---");
-    
+
     let config_max = Some(3u8);
-    
+
     // if let - cleaner than match for single case
     if let Some(max) = config_max {
         println!("The maximum is configured to be {}", max);
     }
-    
+
     // if let with else
     let favorite_color: Option<&str> = None;
     let is_tuesday = false;
     let age: Result<u8, _> = "34".parse();
-    
+
     if let Some(color) = favorite_color {
         println!("Using favorite color: {}", color);
     } else if is_tuesday {
@@ -89,7 +89,7 @@ fn demonstrate_if_let() {
     } else {
         println!("Using blue as default");
     }
-    
+
     println!("💡 if let is perfect for single-pattern matching");
     println!();
 }
@@ -100,17 +100,17 @@ fn demonstrate_if_let() {
 /// **Key Learning**: Loop while pattern continues to match
 fn demonstrate_while_let() {
     println!("--- Location 3: while let Loops ---");
-    
+
     let mut stack = vec![1, 2, 3];
     println!("Draining stack: {:?}", stack);
-    
+
     // while let - continues until pattern fails to match
     while let Some(top) = stack.pop() {
         println!("  Popped: {}", top);
     }
-    
+
     println!("Stack is now empty: {:?}", stack);
-    
+
     // Another example: processing iterator
     let mut chars = "hello".chars();
     let mut count = 0;
@@ -118,7 +118,7 @@ fn demonstrate_while_let() {
         count += 1;
     }
     println!("Counted {} characters", count);
-    
+
     println!("💡 while let loops until pattern stops matching");
     println!();
 }
@@ -129,26 +129,22 @@ fn demonstrate_while_let() {
 /// **Key Learning**: for loops always use patterns
 fn demonstrate_for_loops() {
     println!("--- Location 4: for Loops ---");
-    
+
     // Tuple destructuring in for loop
-    let points = vec![
-        Point::new(0, 0),
-        Point::new(1, 1),
-        Point::new(2, 4),
-    ];
-    
+    let points = vec![Point::new(0, 0), Point::new(1, 1), Point::new(2, 4)];
+
     println!("Iterating over points with destructuring:");
     for Point { x, y } in points {
         println!("  Point: ({}, {})", x, y);
     }
-    
+
     // Enumerate with tuple destructuring
     let v = vec!['a', 'b', 'c'];
     println!("\nEnumerate with destructuring:");
     for (index, value) in v.iter().enumerate() {
         println!("  {} is at index {}", value, index);
     }
-    
+
     println!("💡 for loops always destructure - even `x` in `for x` is a pattern!");
     println!();
 }
@@ -159,27 +155,27 @@ fn demonstrate_for_loops() {
 /// **Key Learning**: let ALWAYS uses a pattern
 fn demonstrate_let_statements() {
     println!("--- Location 5: let Statements ---");
-    
+
     // Simple pattern
     let x = 5;
     println!("Simple pattern: x = {}", x);
-    
+
     // Tuple destructuring
     let (a, b, c) = (1, 2, 3);
     println!("Tuple destructuring: a={}, b={}, c={}", a, b, c);
-    
+
     // Nested destructuring
     let ((x1, y1), (x2, y2)) = ((1, 2), (3, 4));
     println!("Nested tuple: ({}, {}), ({}, {})", x1, y1, x2, y2);
-    
+
     // Struct destructuring
     let Point { x: px, y: py } = Point::new(10, 20);
     println!("Struct destructuring: px={}, py={}", px, py);
-    
+
     // Shorthand struct destructuring
     let Point { x, y } = Point::new(30, 40);
     println!("Shorthand destructuring: x={}, y={}", x, y);
-    
+
     println!("💡 Every let statement uses a pattern - `let x = 5` has pattern `x`!");
     println!();
 }
@@ -190,24 +186,27 @@ fn demonstrate_let_statements() {
 /// **Key Learning**: Function parameters are patterns too
 fn demonstrate_function_parameters() {
     println!("--- Location 6: Function Parameters ---");
-    
+
     // Function with tuple destructuring parameter
     fn print_coordinates(&(x, y): &(i32, i32)) {
         println!("  Current location: ({}, {})", x, y);
     }
-    
+
     let point = (3, 5);
     println!("Using destructuring in function parameter:");
     print_coordinates(&point);
-    
+
     // Function with struct destructuring
     fn describe_point_param(Point { x, y }: Point) -> String {
         format!("Point at ({}, {})", x, y)
     }
-    
+
     let p = Point::new(7, 9);
-    println!("Struct destructuring in parameter: {}", describe_point_param(p));
-    
+    println!(
+        "Struct destructuring in parameter: {}",
+        describe_point_param(p)
+    );
+
     println!("💡 Function parameters are patterns - enables concise destructuring");
     println!();
 }
@@ -215,7 +214,7 @@ fn demonstrate_function_parameters() {
 /// Integration example: Combining pattern locations
 fn _demonstrate_integration() {
     println!("--- Integration: Multiple Pattern Locations ---");
-    
+
     fn process_events(events: Vec<Event>) {
         // Location 4: for loop with destructuring
         for event in events {
@@ -229,14 +228,14 @@ fn _demonstrate_integration() {
             }
         }
     }
-    
+
     let events = vec![
         Event::ChangeColor(Color::Rgb(255, 0, 0)),
         Event::Move(Point::new(10, 20)),
         Event::Quit,
     ];
-    
+
     process_events(events);
-    
+
     println!("💡 Patterns work together seamlessly across all locations");
 }

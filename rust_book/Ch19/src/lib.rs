@@ -14,7 +14,7 @@ impl Point {
     pub fn new(x: i32, y: i32) -> Self {
         Point { x, y }
     }
-    
+
     pub fn origin() -> Self {
         Point { x: 0, y: 0 }
     }
