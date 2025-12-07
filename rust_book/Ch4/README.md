@@ -288,11 +288,11 @@ This chapter's concepts are fundamental to all missions:
 - [[Week 1 Overview]] - Ownership fundamentals in daily practice
 
 ### **Related Rust Book Chapters**
-- [[Ch3 - Common Programming Concepts]] - Variables and mutability foundation
-- [[Ch5 - Structs]] - Ownership in custom types
-- [[Ch6 - Enums]] - Option and Result with ownership
-- [[Ch10 - Generics]] - Generic types with ownership constraints
-- [[Ch15 - Smart Pointers]] - Advanced ownership patterns
+- [[zettelkasten/rust_book/rust-book-ch3|Ch3 - Common Programming Concepts]] - Variables and mutability foundation
+- [[zettelkasten/rust_book/rust-book-ch5|Ch5 - Structs]] - Ownership in custom types
+- [[zettelkasten/rust_book/rust-book-ch6|Ch6 - Enums]] - Option and Result with ownership
+- [[zettelkasten/rust_book/rust-book-ch10|Ch10 - Generics]] - Generic types with ownership constraints
+- [[zettelkasten/rust_book/rust-book-ch15|Ch15 - Smart Pointers]] - Advanced ownership patterns
 
 ### **Core Concepts Deep Dives**
 - [[Ownership and Borrowing]] - Comprehensive ownership and borrowing concepts

@@ -323,11 +323,11 @@ Collections are fundamental to all missions:
 - [[Week 2 Overview]] - Collections mastery week
 
 ### **Related Rust Book Chapters**
-- [[Ch4 - Ownership]] - Foundation for collection ownership
-- [[Ch6 - Enums]] - Option and Result with collections
-- [[Ch10 - Generics]] - Generic collection types
-- [[Ch13 - Iterators]] - Functional programming with collections
-- [[Ch15 - Smart Pointers]] - Box, Rc, RefCell with collections
+- [[zettelkasten/rust_book/rust-book-ch4|Ch4 - Ownership]] - Foundation for collection ownership
+- [[zettelkasten/rust_book/rust-book-ch6|Ch6 - Enums]] - Option and Result with collections
+- [[zettelkasten/rust_book/rust-book-ch10|Ch10 - Generics]] - Generic collection types
+- [[zettelkasten/rust_book/rust-book-ch13|Ch13 - Iterators]] - Functional programming with collections
+- [[zettelkasten/rust_book/rust-book-ch15|Ch15 - Smart Pointers]] - Box, Rc, RefCell with collections
 
 ### **Core Concepts Deep Dives**
 - [[Vec Type]] - Vector internals and patterns
