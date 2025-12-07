@@ -1,6 +1,6 @@
 use anyhow::{Context, Result};
 use mission6::{Grid, Coord, Direction};
-use std::collections::{HashSet, VecDeque};
+use std::collections::{HashSet, VecDeque, HashMap};
 
 /// Cell types in the tachyon manifold
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -117,8 +117,83 @@ fn solve_part1_with_debug(input: &str, debug: bool) -> Result<String> {
     Ok(split_count.to_string())
 }
 
-pub fn solve_part2(_input: &str) -> Result<String> {
-    Ok("Not implemented".to_string())
+pub fn solve_part2(input: &str) -> Result<String> {
+    let (grid, start_pos) = parse_manifold(input)?;
+    
+    // For Part 2: Count total number of timeline paths
+    // Use DFS to count all paths from start to exit
+    count_timelines(&grid, start_pos)
+}
+
+fn count_timelines(grid: &Grid<Cell>, start: Coord) -> Result<String> {
+    // Memoized DFS to count all possible paths efficiently
+    fn count_paths_memo(
+        grid: &Grid<Cell>,
+        pos: Coord,
+        visited: &mut HashSet<Coord>,
+        memo: &mut HashMap<Coord, usize>,
+    ) -> usize {
+        // Check memo first
+        if let Some(&cached) = memo.get(&pos) {
+            return cached;
+        }
+        
+        // Check if we've visited this position in current path (cycle detection)
+        if visited.contains(&pos) {
+            return 0;
+        }
+        
+        visited.insert(pos);
+        
+        let result = {
+            // Check current cell
+            if let Some(cell) = grid.get(pos) {
+                if *cell == Cell::Splitter {
+                    // Split into two paths - quantum particle takes BOTH
+                    let mut total = 0;
+                    
+                    if let Some(left_pos) = pos.try_move_in_direction(Direction::West, 1) {
+                        if grid.get(left_pos).is_some() {
+                            total += count_paths_memo(grid, left_pos, visited, memo);
+                        }
+                    }
+                    
+                    if let Some(right_pos) = pos.try_move_in_direction(Direction::East, 1) {
+                        if grid.get(right_pos).is_some() {
+                            total += count_paths_memo(grid, right_pos, visited, memo);
+                        }
+                    }
+                    
+                    total
+                } else {
+                    // Empty or Start - continue moving South
+                    if let Some(next_pos) = pos.try_move_in_direction(Direction::South, 1) {
+                        if grid.get(next_pos).is_some() {
+                            count_paths_memo(grid, next_pos, visited, memo)
+                        } else {
+                            // Exiting grid - one timeline
+                            1
+                        }
+                    } else {
+                        // Can't move (underflow) - one timeline
+                        1
+                    }
+                }
+            } else {
+                // Outside grid - should not happen
+                0
+            }
+        };
+        
+        visited.remove(&pos);
+        memo.insert(pos, result);
+        result
+    }
+    
+    let mut visited = HashSet::new();
+    let mut memo = HashMap::new();
+    let timeline_count = count_paths_memo(grid, start, &mut visited, &mut memo);
+    Ok(timeline_count.to_string())
 }
 
 #[cfg(test)]
@@ -162,5 +237,11 @@ mod tests {
     fn test_part1_example() {
         let result = solve_part1(EXAMPLE).unwrap();
         assert_eq!(result, "21");
+    }
+
+    #[test]
+    fn test_part2_example() {
+        let result = solve_part2(EXAMPLE).unwrap();
+        assert_eq!(result, "40");
     }
 }
