@@ -113,6 +113,12 @@ pub struct ScreenGeneric<T: Draw> {
     pub components: Vec<T>,
 }
 
+impl<T: Draw> Default for ScreenGeneric<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T: Draw> ScreenGeneric<T> {
     pub fn new() -> Self {
         ScreenGeneric { components: vec![] }

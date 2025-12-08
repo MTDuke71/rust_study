@@ -114,9 +114,9 @@ fn demonstrate_while_let() {
     println!("Stack is now empty: {:?}", stack);
 
     // Another example: processing iterator
-    let mut chars = "hello".chars();
+    let chars = "hello".chars();
     let mut count = 0;
-    while let Some(_c) = chars.next() {
+    for _c in chars {
         count += 1;
     }
     println!("Counted {} characters", count);
@@ -141,7 +141,7 @@ fn demonstrate_for_loops() {
     }
 
     // Enumerate with tuple destructuring
-    let v = vec!['a', 'b', 'c'];
+    let v = ['a', 'b', 'c'];
     println!("\nEnumerate with destructuring:");
     for (index, value) in v.iter().enumerate() {
         println!("  {} is at index {}", value, index);

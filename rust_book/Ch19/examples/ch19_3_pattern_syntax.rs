@@ -87,7 +87,7 @@ fn demonstrate_multiple_patterns() {
     let x = 1;
     match x {
         1 | 2 => println!("  one or two"),
-        3 | 4 | 5 => println!("  three, four, or five"),
+        3..=5 => println!("  three, four, or five"),
         _ => println!("  something else"),
     }
 
@@ -236,7 +236,7 @@ fn demonstrate_match_guards() {
     let x = 4;
     let y = false;
     match x {
-        4 | 5 | 6 if y => println!("  yes"), // Guard applies to ALL alternatives
+        4..=6 if y => println!("  yes"), // Guard applies to ALL alternatives
         _ => println!("  no (guard failed or different value)"),
     }
 
