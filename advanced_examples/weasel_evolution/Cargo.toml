@@ -1,0 +1,15 @@
+[package]
+name = "weasel_evolution"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.8"
+colored = "2.1"
+
+[[bin]]
+name = "weasel"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
