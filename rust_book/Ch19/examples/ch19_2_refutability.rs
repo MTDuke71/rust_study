@@ -10,6 +10,7 @@ fn main() {
     demonstrate_refutable_patterns();
     demonstrate_refutability_rules();
     demonstrate_common_errors();
+    demonstrate_practical_example();
 
     println!("\n✅ Refutability concepts demonstrated!");
 }
@@ -199,7 +200,7 @@ fn demonstrate_common_errors() {
 }
 
 /// Practical example: Processing optional configuration
-fn _demonstrate_practical_example() {
+fn demonstrate_practical_example() {
     println!("--- Practical Example: Configuration Processing ---");
 
     #[derive(Debug)]
