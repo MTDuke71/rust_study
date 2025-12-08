@@ -641,13 +641,15 @@ fn union(&mut self, x: usize, y: usize) -> bool {
 
 **Core Concepts:** [[mission-10]] | [[graph-algorithms]] | [[Tree Algorithms]] | [[Performance Optimization]]
 
-**Applications:** [[Kruskal's Algorithm]] | [[Connected Components]] | [[Cycle Detection]] | [[Minimum Spanning Tree]]
+**Applications:** [[Kruskal's Algorithm]] | [[Connected Components]] | [[Cycle Detection]] | [[Minimum Spanning Tree]] | [[union-find-patterns]]
 
 **Advanced Topics:** [[Path Compression]] | [[Union by Rank]] | [[Inverse Ackermann Function]] | [[Amortized Analysis]]
 
 **Implementation:** [[deterministic-debugging]] | [[Testing Strategies]] | [[V-Cycle Methodology]] | [[Algorithm Design Patterns]]
 
 **Mission System:** [[Missions Overview]] | [[mission-9]] | [[Advanced Examples]] | [[competitive-programming]]
+
+**AoC Examples:** [[aoc-day-08]] | [[AoC Patterns MOC]]
 
 ---
 
