@@ -164,6 +164,7 @@ fn demonstrate_common_errors() {
     let value = 5;
 
     // ❌ This triggers warning (match unnecessary):
+    #[allow(clippy::match_single_binding)]
     match value {
         x => println!("  ⚠️  match with single irrefutable pattern: {}", x),
     }
