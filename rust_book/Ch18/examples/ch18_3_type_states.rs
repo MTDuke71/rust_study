@@ -23,6 +23,8 @@ pub struct Post {
 
 impl Post {
     /// Create a new post - starts in Draft state
+    /// Note: Returns DraftPost instead of Self - this is the type state pattern
+    #[allow(clippy::new_ret_no_self)]
     pub fn new() -> DraftPost {
         DraftPost {
             content: String::new(),

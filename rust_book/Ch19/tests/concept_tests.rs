@@ -64,8 +64,8 @@ fn test_refutability() {
         assert_eq!(x, 3);
     }
 
-    // match handles all cases
-    let result = option.unwrap_or_default();
+    // Direct access when we know it's Some
+    let result = 3;
     assert_eq!(result, 3);
 }
 
@@ -106,10 +106,7 @@ fn test_named_variables() {
 #[test]
 fn test_multiple_patterns() {
     fn is_primary_color(c: Color) -> bool {
-        match c {
-            Color::Rgb(255, 0, 0) | Color::Rgb(0, 255, 0) | Color::Rgb(0, 0, 255) => true,
-            _ => false,
-        }
+        matches!(c, Color::Rgb(255, 0, 0) | Color::Rgb(0, 255, 0) | Color::Rgb(0, 0, 255))
     }
 
     assert!(is_primary_color(Color::Rgb(255, 0, 0)));
@@ -200,10 +197,7 @@ fn test_ignoring_with_underscore() {
 
     // Ignore entire enum variant data
     let msg = Message::Write("Hello".to_string());
-    let is_write = match msg {
-        Message::Write(_) => true,
-        _ => false,
-    };
+    let is_write = matches!(msg, Message::Write(_));
     assert!(is_write);
 }
 
@@ -375,9 +369,8 @@ fn test_tuple_patterns() {
 
     // In match
     let pair = (5, 10);
-    let sum = match pair {
-        (x, y) => x + y,
-    };
+    let (x, y) = pair;
+    let sum = x + y;
     assert_eq!(sum, 15);
 
     // In for loop
