@@ -1178,6 +1178,18 @@ trait system and ownership model."
 
 ---
 
+**Top5 Rust Books**
+Based on a YouTube video by Let's Get Rusty, "Top 5 Rust Books for Advanced Rustaceans," here are the recommended books along with their timestamps in the video:  
+
+"Rust for Rustaceans" by Jon Gjengset (0:06) - For deep understanding of Rust's core features and thinking like a Rustacean.
+"Rust in Action" by Tim McNamara (0:47) - Focuses on practical, hands-on programming through real-world projects like building a DNS client or an OS kernel.
+"Zero to Production in Rust" by Luca Palmieri (1:17) - Ideal for backend development, teaching how to build a production-grade web application from scratch.
+"Idiomatic Rust" by Brendan Matthews (1:48) - Teaches how to write clean, efficient, and idiomatic Rust code using best practices.
+"Programming Rust" by Jim Blandy and Jason Orendorff (2:20) - A comprehensive guide for those coming from other low-level languages like C or C++.
+The video also mentions honorable mentions like "Rust Atomics and Locks," "Black Hat Rust," and "Programming WebAssembly with Rust."
+
+---
+
 **Your 2026 isn't just learning Rust - it's building the foundation for a career transition.**
 
 **By December 2027, you could be a professional Rust developer.** 🦀🚀
