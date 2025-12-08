@@ -359,6 +359,63 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 
 ---
 
+### Day 8: Playground
+**Title**: Playground (Junction Box Connectivity)  
+**Part 1 Type**: Graph Algorithms + Greedy Algorithms  
+**Part 1 Description**: Connect 1000 closest pairs of junction boxes (3D coordinates by Euclidean distance), find product of three largest circuit sizes  
+**Part 2 Type**: Graph Algorithms + Optimization  
+**Part 2 Description**: Continue connecting pairs until all boxes form one circuit, multiply X coordinates of the last pair connected  
+**Key Concepts**: Union-Find (Disjoint Set Union), 3D Euclidean distance, greedy edge selection, minimum spanning tree variant, component tracking  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Classic Union-Find connectivity problem (partial connectivity → full connectivity)
+- **Data Structure**: Mission 10 UnionFind with path compression and union by rank
+- **Complexity**: Part 1: O(n² log n) for pair generation/sorting + O(n α(n)) for union-find operations, Part 2: O(n² α(n)) worst case
+- **AoC Theme**: "Electrical junction boxes" with Part 2 escalation (limited connections → complete spanning tree)
+
+**🦀 Rust Implementation Highlights**:
+- **Mission 10 Integration** → **`UnionFind::new(n)`, `find()`, `union()`, `components()`** for connectivity tracking
+- **3D geometry** → **`sqrt(dx² + dy² + dz²)`** for Euclidean distance calculation
+- **Pair generation** → **Nested loops `(i..n, i+1..n)`** creating all unique pairs with distances
+- **Greedy sorting** → **`sort_by()` with `partial_cmp()`** ordering pairs by distance (shortest first)
+- **Component iteration** → **`components().map(|c| c.len())`** extracting circuit sizes from member lists
+
+**Mission Integration - Validating Mission 10**:
+- **Mission 10**: UnionFind data structure with path compression optimization
+- **Perfect use case**: Junction box connectivity is textbook Union-Find problem
+- **API discovery**: `components()` returns `ComponentIter` yielding `Vec<usize>` (member lists, not sizes)
+- **Performance validation**: Handled 1000 boxes (499,500 pairs) with instant execution
+- **Integrator win**: Reused battle-tested V-Cycle implementation instead of reimplementing DSU
+
+**🔑 Key Implementation Insights**:
+- **Part 1 critical detail**: "Examine 1000 closest pairs" ≠ "Make 1000 connections" (some pairs already connected)
+- **Part 1 algorithm**: Sort all pairs by distance, iterate first 1000, union if not already connected
+- **Part 1 result**: Examined 1000 pairs, made 698 connections, created multiple circuits
+- **Part 2 algorithm**: Continue union-find until `num_components == 1`, track last connection made
+- **Part 2 optimization**: Decrement component counter on successful union to avoid recomputing
+- **Component tracking**: Start with n components (each box solo), decrease by 1 on each union
+
+**Debugging Journey**:
+- **Initial error**: All 1000 boxes in ONE circuit (answer: 1 component)
+- **Root cause**: Stopped after making 1000 connections, not examining 1000 pairs
+- **The fix**: Change loop to `for (i, (box_a, box_b, _)) in pairs.iter().enumerate()` with `if i >= 1000 { break }`
+- **Result**: Examined 1000 pairs, made only 698 connections (302 skipped as already connected)
+- **Mission 10 API learning**: `components()` returns iterator, not HashMap - needed `.map(|c| c.len())`
+
+**Answers**:
+- Part 1: `50568`
+- Part 2: `36045012`
+
+**⏱️ Performance**: Part 1 completes instantly despite 499,500 pair evaluations. Part 2 continues until full connectivity with efficient Union-Find operations.
+
+**🎓 Learning Highlights (Mission 10 Validation)**:
+- **Union-Find in practice**: Real AoC problem demonstrating DSU's power for connectivity queries
+- **Component iteration**: Understanding iterator vs HashMap APIs (`ComponentIter` yields members, not sizes)
+- **Greedy correctness**: Sorting pairs by distance ensures optimal circuit formation
+- **The integrator approach**: Mission 10 composition saved hours of DSU implementation/testing
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -374,13 +431,13 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 | Cryptographic | 0 | 0 |
 | Data Structures | 0 | 0 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 0 | 1 |
-| Greedy Algorithms | 1 | 1 |
+| Graph Algorithms | 1 | 1 |
+| Greedy Algorithms | 2 | 1 |
 | Grid Processing | 2 | 0 |
 | Iterative Erosion | 0 | 1 |
 | Mathematical | 2 | 2 |
 | Number Theory | 0 | 0 |
-| Optimization | 0 | 0 |
+| Optimization | 0 | 1 |
 | Parsing | 1 | 1 |
 | Pattern Matching | 1 | 1 |
 | Real-time Analysis | 0 | 0 |
@@ -406,6 +463,8 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Parsing simplification**: Day 6 shows how `split_whitespace()` can eliminate complex column-index math
 - **Mission composition**: Day 7 demonstrates integrator approach - composing Mission 6 (Grid) + Mission 8 (Graph trait)
 - **Memoization for exponential problems**: Day 7 Part 2 shows HashMap caching reducing O(2^n) to O(n)
+- **Union-Find patterns**: Day 8 showcases Mission 10 for connectivity tracking with path compression
+- **3D geometry**: Day 8 introduces spatial distance calculations in 3D coordinate space
 - **Part 2 escalation pattern**: All days follow classic AoC pattern of Part 2 expanding the problem scope
 
 ### Rust-Specific Considerations
@@ -417,6 +476,7 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Day 5**: Showcases importance of checking input scale before choosing algorithms, interval merging for huge ranges, and the difference between enumeration vs mathematical counting
 - **Day 6**: Demonstrates `split_whitespace()` for natural token alignment, `char_indices().filter()` for pattern finding, `filter_map()` with `and_then()` for chained Option processing, and iterative refactoring from 640→212 lines
 - **Day 7**: Showcases Mission 6+8 composition (Grid + Graph trait), BFS with VecDeque/HashSet, memoized DFS with HashMap caching, pattern matching from Ch19.1 (match, if let, while let, tuple destructuring), and the integrator philosophy (compose validated components, add custom optimizations)
+- **Day 8**: Demonstrates Mission 10 Union-Find integration for connectivity problems, `partial_cmp()` for floating-point sorting, iterator patterns with `enumerate()` for bounded loops, component counting vs member enumeration API differences, and the importance of reading problem statements carefully ("examine N pairs" vs "make N connections")
 
 ---
 
@@ -456,11 +516,11 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 7, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7*
+*Last Updated: December 8, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 *Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning*
 
-*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[day06]] | [[day07]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
+*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[day06]] | [[day07]] | [[day08]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*

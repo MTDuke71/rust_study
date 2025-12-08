@@ -11,5 +11,6 @@ mission5 = { path = "../../missions/Mission5" }
 mission6 = { path = "../../missions/Mission6" }
 mission7 = { path = "../../missions/Mission7" }
 mission8 = { path = "../../missions/Mission8" }
+mission10 = { path = "../../missions/Mission10" }
 
 [workspace]
