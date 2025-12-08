@@ -33,7 +33,7 @@ fn test_pattern_locations() {
 
     // for loop
     let mut results = vec![];
-    for (index, value) in vec!['a', 'b', 'c'].iter().enumerate() {
+    for (index, value) in ['a', 'b', 'c'].iter().enumerate() {
         results.push((index, *value));
     }
     assert_eq!(results, vec![(0, 'a'), (1, 'b'), (2, 'c')]);
@@ -65,10 +65,7 @@ fn test_refutability() {
     }
 
     // match handles all cases
-    let result = match option {
-        Some(x) => x,
-        None => 0,
-    };
+    let result = option.unwrap_or_default();
     assert_eq!(result, 3);
 }
 
@@ -140,7 +137,7 @@ fn test_ranges() {
 
     // Character ranges
     fn is_lowercase(c: char) -> bool {
-        matches!(c, 'a'..='z')
+        c.is_ascii_lowercase()
     }
 
     assert!(is_lowercase('m'));
@@ -253,7 +250,7 @@ fn test_match_guards() {
 fn test_guards_with_multiple_patterns() {
     fn check(x: i32, flag: bool) -> &'static str {
         match x {
-            4 | 5 | 6 if flag => "yes",
+            4..=6 if flag => "yes",
             _ => "no",
         }
     }
