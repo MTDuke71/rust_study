@@ -408,11 +408,50 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 
 **⏱️ Performance**: Part 1 completes instantly despite 499,500 pair evaluations. Part 2 continues until full connectivity with efficient Union-Find operations.
 
+**🔬 Reddit Optimization Study - Distance Calculation**:
+
+**Question**: Is there benefit to skipping `sqrt()` and using integer squared distances?
+
+**Answer**: **YES! ~12% performance improvement**
+
+**Benchmark Results** (Criterion.rs on 1000 boxes, 499,500 pairs):
+- Part 1: 24.31ms → 21.64ms (**11% faster**, saved 2.67ms)
+- Part 2: 24.32ms → 21.58ms (**11% faster**, saved 2.74ms)
+- ✅ **Identical correctness**: Both versions produce same answers
+
+**Why it works**:
+```rust
+// Original (f64 with sqrt)
+fn calculate_distance(a, b) -> f64 {
+    let dx = (a.x - b.x) as f64;
+    (dx*dx + dy*dy + dz*dz).sqrt()  // 👈 expensive!
+}
+
+// Optimized (i64 squared)
+fn calculate_distance_squared(a, b) -> i64 {
+    let dx = (a.x - b.x) as i64;
+    dx*dx + dy*dy + dz*dz  // 👈 no sqrt, just multiply/add
+}
+```
+
+**Key insight**: Monotonicity preserved - if `a² < b²` then `a < b`
+- Sorting by squared distance gives **identical ordering** to sorting by actual distance
+- We only need **relative ordering**, not absolute values
+- Eliminates 499,500 expensive `sqrt()` calls (10-20x slower than multiply)
+- Integer arithmetic often has better CPU pipeline/SIMD utilization
+
+**Bonus**: Can use cleaner `sort_by_key(|&(_, _, d)| d)` instead of `sort_by()` with `partial_cmp()`
+
+**When to apply**: Use squared distances when you only need relative ordering (sorting, min/max). Don't use if you need actual distance values (sums, thresholds).
+
+**Files**: See `benches/day08_benchmark.rs` and `benches/day08_benchmark_results.md` for full analysis
+
 **🎓 Learning Highlights (Mission 10 Validation)**:
 - **Union-Find in practice**: Real AoC problem demonstrating DSU's power for connectivity queries
 - **Component iteration**: Understanding iterator vs HashMap APIs (`ComponentIter` yields members, not sizes)
 - **Greedy correctness**: Sorting pairs by distance ensures optimal circuit formation
 - **The integrator approach**: Mission 10 composition saved hours of DSU implementation/testing
+- **Performance optimization**: Squared distance pattern is common in competitive programming - question absolute value necessity
 
 ---
 
@@ -476,7 +515,7 @@ The Reddit community posed an extreme scaling challenge: what if the input was a
 - **Day 5**: Showcases importance of checking input scale before choosing algorithms, interval merging for huge ranges, and the difference between enumeration vs mathematical counting
 - **Day 6**: Demonstrates `split_whitespace()` for natural token alignment, `char_indices().filter()` for pattern finding, `filter_map()` with `and_then()` for chained Option processing, and iterative refactoring from 640→212 lines
 - **Day 7**: Showcases Mission 6+8 composition (Grid + Graph trait), BFS with VecDeque/HashSet, memoized DFS with HashMap caching, pattern matching from Ch19.1 (match, if let, while let, tuple destructuring), and the integrator philosophy (compose validated components, add custom optimizations)
-- **Day 8**: Demonstrates Mission 10 Union-Find integration for connectivity problems, `partial_cmp()` for floating-point sorting, iterator patterns with `enumerate()` for bounded loops, component counting vs member enumeration API differences, and the importance of reading problem statements carefully ("examine N pairs" vs "make N connections")
+- **Day 8**: Demonstrates Mission 10 Union-Find integration for connectivity problems, `partial_cmp()` for floating-point sorting, iterator patterns with `enumerate()` for bounded loops, component counting vs member enumeration API differences, the importance of reading problem statements carefully ("examine N pairs" vs "make N connections"), and **performance optimization via squared distances** (12% speedup by eliminating `sqrt()` and using `i64` instead of `f64` - monotonicity preservation means sorting by d² gives same order as d)
 
 ---
 

@@ -13,4 +13,11 @@ mission7 = { path = "../../missions/Mission7" }
 mission8 = { path = "../../missions/Mission8" }
 mission10 = { path = "../../missions/Mission10" }
 
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "day08_benchmark"
+harness = false
+
 [workspace]
