@@ -37,6 +37,15 @@
 - **[[DFS Patterns]]** - Recursive exploration, backtracking, and cycle detection
 - **[[A-Star-Algorithm-Deep-Dive]]** - Heuristic search for optimal pathfinding
 
+### **Computational Geometry**
+
+- **[[computational-geometry]]** - Spatial algorithms and geometric primitives
+- **[[ray-casting-algorithm]]** - Point-in-polygon tests with O(n) complexity
+- **[[bresenham-line-algorithm]]** - Discrete line generation without floating-point
+- **[[aabb-sampling-optimization]]** - Strategic point sampling for large region validation
+- **[[sparse-data-structures]]** - When to avoid grid materialization
+  - **[[aoc-2025-day09]]** - Rectangle optimization with circular polygon constraints (4 failed approaches documented)
+
 ### **Greedy Algorithms**
 
 - **[[Greedy Algorithms]]** - Optimal local choices leading to global solutions

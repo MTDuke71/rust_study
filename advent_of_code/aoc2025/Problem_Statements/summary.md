@@ -4,10 +4,12 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 
 ## Problem Categories
 
+- **AABB Sampling**: Axis-Aligned Bounding Box optimization for large rectangle validation
 - **Advanced Pattern Matching**: Complex pattern constraints, non-overlapping patterns
 - **Brute Force**: Exhaustive search through solution space
 - **Cellular Automaton**: Conway's Game of Life, state evolution, neighbor counting, grid simulation
 - **Combinatorial Optimization**: Subset sum, container packing, constrained combination enumeration
+- **Computational Geometry**: Point-in-polygon tests, ray casting, polygon boundaries
 - **Conditional Logic**: Property-based filtering, range-based matching, rule-based comparisons
 - **DFS/Path Counting**: Depth-first search with path enumeration, memoization for exponential problems
 - **Cryptographic**: Hash functions, encryption, cryptographic puzzles
@@ -28,6 +30,7 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 - **Search**: Informed search algorithms, A* search, heuristics, state space exploration
 - **Search/Traversal**: Finding positions, tracking states
 - **Simulation**: State tracking, following instructions step-by-step
+- **Sparse Representation**: HashSet/HashMap for large coordinate spaces, avoiding grid materialization
 - **String Processing**: Character manipulation, parsing, pattern matching
 
 ---
@@ -455,14 +458,91 @@ fn calculate_distance_squared(a, b) -> i64 {
 
 ---
 
+### Day 9: Movie Theater
+**Title**: Movie Theater (Rectangle Area Maximization)  
+**Part 1 Type**: Brute Force + Mathematical  
+**Part 1 Description**: Find largest rectangle using any two red tiles (496 points) as opposite corners, inclusive tile counting  
+**Part 2 Type**: Computational Geometry + AABB Sampling + Sparse Representation  
+**Part 2 Description**: Connect points into circular polygon boundary, flood fill interior, find largest rectangle containing only red/green tiles  
+**Key Concepts**: Inclusive area calculation, point-in-polygon ray casting, AABB sampling optimization, sparse HashSet boundaries, Bresenham's line algorithm  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Geometric constraint escalation (unconstrained rectangles → polygon-bounded rectangles)
+- **Data Structure**: HashSet for sparse boundary (~589K tiles), no grid materialization
+- **Complexity**: Part 1: O(n²) = 122,760 pairs, Part 2: O(n² × samples × polygon_edges) with adaptive sampling
+- **AoC Theme**: "Movie theater seating" with Part 2 dramatic constraint (any rectangle → interior-only rectangle)
+
+**🦀 Rust Implementation Highlights**:
+- **Part 1 simplicity** → **Pure brute force checking all pairs** with inclusive tile counting
+- **Sparse boundary** → **HashSet<(i64, i64)>** for 588,656 boundary tiles (not 9.36B grid!)
+- **Ray casting** → **Point-in-polygon algorithm** crossing edges to determine interior membership
+- **AABB sampling** → **Strategic point checks** (corners, edges, interior grid) instead of all tiles
+- **Mission 6 awareness** → **Grid used only for small examples**, geometric algorithms for real input
+
+**🚨 Failed Approaches - The Journey**:
+
+**Attempt 1: Dense Grid** (❌ 37GB memory crash)
+- Tried `Grid<char>` for full coordinate space (96,800 × 96,600)
+- **Problem**: 9.36 billion cells = 37GB allocation failure
+- **Lesson**: Never materialize dense grids for sparse, large coordinate spaces
+
+**Attempt 2: Sparse HashSet with Interior Fill** (❌ 18GB memory crash)
+- Tried storing all boundary + interior points in HashSet
+- **Problem**: Circular interior has ~7.4 billion tiles = 18GB crash
+- **Lesson**: Circular shapes maximize area - even sparse representation can be too large
+
+**Attempt 3: Boundary-Only with Naive Ray Casting** (❌ 10s timeout)
+- Stored boundary only, checked every tile in rectangles
+- **Problem**: Largest rectangles have billions of tiles × ray casting = 2.3 trillion operations
+- **Lesson**: Cannot iterate every tile in large rectangles
+
+**Attempt 4: AABB Sampling + Ray Casting** (✅ SUCCESS!)
+- **Key insight from Reddit**: "Use AABB collision or compacted space"
+- Only check strategic sample points (corners, edges at intervals, interior grid)
+- Sample rate adapts to rectangle size: `max(10, dimension/100)`
+- **Result**: 122,760 pairs × ~10K samples × 496 ray casts = 633M operations (feasible!)
+
+**Key Implementation Insights**:
+- **Inclusive counting**: Rectangle from (2,5) to (9,7) has area 8×3=24, not 7×2=14
+- **Circular polygon**: Input forms near-perfect circle with radius ~48,386 tiles
+- **Boundary tiles**: Bresenham's line creates ~589K edge tiles (vs 304K theoretical circumference)
+- **Part 1 strategy**: Diagonal square spanning circle diameter (68,593 × 69,388)
+- **Part 2 strategy**: Wide horizontal band through center (89,340 × 17,229)
+- **Area reduction**: Part 2 only 32% of Part 1 due to circular boundary constraint
+
+**Answers**:
+- Part 1: `4,759,531,084` - Points (83188, 85814) and (14596, 16427)
+- Part 2: `1,539,238,860` - Points (5398, 67501) and (94737, 50273)
+
+**⏱️ Performance**: Part 1 instant (milliseconds), Part 2 ~3-5 seconds with AABB sampling
+
+**📊 Visualizations**:
+Three Python scripts in `examples/` directory visualize the problem:
+1. **`plot_day09_polygon.py`**: Shows circular polygon shape (reveals ~7.4B interior tiles)
+2. **`plot_day09_largest_rectangle.py`**: Part 1 diagonal square solution
+3. **`plot_day09_part2_largest_rectangle.py`**: Part 2 horizontal band solution
+
+**🎓 Learning Highlights**:
+- **Input scale matters**: Example (8 points) vs real (496 points, 100K coordinates) requires completely different approaches
+- **Geometric over materialization**: Ray casting beats flood fill when interior is huge
+- **AABB sampling**: Strategic point checking reduces billions of checks to thousands
+- **Mission applicability**: Grid infrastructure perfect for small problems, not massive sparse spaces
+- **The integrator lesson**: Use Mission 6 concepts (flood fill theory) even when Grid itself doesn't fit
+
+**Deep Dive**: See [[../examples/day09_approaches]] for complete analysis of all 4 approaches, memory calculations, performance breakdowns, and geometric insights about circular constraints.
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
+| AABB Sampling | 0 | 1 |
 | Advanced Pattern Matching | 0 | 0 |
-| Brute Force | 0 | 0 |
+| Brute Force | 1 | 0 |
 | Cellular Automaton | 1 | 1 |
 | Combinatorial Optimization | 0 | 0 |
+| Computational Geometry | 0 | 1 |
 | Conditional Logic | 0 | 0 |
 | DFS/Path Counting | 0 | 1 |
 | Range Containment | 1 | 0 |
@@ -474,7 +554,7 @@ fn calculate_distance_squared(a, b) -> i64 {
 | Greedy Algorithms | 2 | 1 |
 | Grid Processing | 2 | 0 |
 | Iterative Erosion | 0 | 1 |
-| Mathematical | 2 | 2 |
+| Mathematical | 3 | 2 |
 | Number Theory | 0 | 0 |
 | Optimization | 0 | 1 |
 | Parsing | 1 | 1 |
@@ -483,6 +563,7 @@ fn calculate_distance_squared(a, b) -> i64 {
 | Search | 0 | 0 |
 | Search/Traversal | 0 | 0 |
 | Simulation | 2 | 1 |
+| Sparse Representation | 0 | 1 |
 | String Processing | 2 | 2 |
 
 ## Implementation Notes
@@ -504,6 +585,10 @@ fn calculate_distance_squared(a, b) -> i64 {
 - **Memoization for exponential problems**: Day 7 Part 2 shows HashMap caching reducing O(2^n) to O(n)
 - **Union-Find patterns**: Day 8 showcases Mission 10 for connectivity tracking with path compression
 - **3D geometry**: Day 8 introduces spatial distance calculations in 3D coordinate space
+- **Computational geometry**: Day 9 introduces point-in-polygon ray casting and geometric constraint optimization
+- **Sparse representation strategies**: Day 9 demonstrates HashSet boundaries for massive coordinate spaces
+- **AABB sampling optimization**: Day 9 shows strategic point checking vs exhaustive tile iteration
+- **Algorithm evolution through failure**: Day 9 documents complete journey from memory crashes to timeout to success
 - **Part 2 escalation pattern**: All days follow classic AoC pattern of Part 2 expanding the problem scope
 
 ### Rust-Specific Considerations
@@ -516,6 +601,7 @@ fn calculate_distance_squared(a, b) -> i64 {
 - **Day 6**: Demonstrates `split_whitespace()` for natural token alignment, `char_indices().filter()` for pattern finding, `filter_map()` with `and_then()` for chained Option processing, and iterative refactoring from 640→212 lines
 - **Day 7**: Showcases Mission 6+8 composition (Grid + Graph trait), BFS with VecDeque/HashSet, memoized DFS with HashMap caching, pattern matching from Ch19.1 (match, if let, while let, tuple destructuring), and the integrator philosophy (compose validated components, add custom optimizations)
 - **Day 8**: Demonstrates Mission 10 Union-Find integration for connectivity problems, `partial_cmp()` for floating-point sorting, iterator patterns with `enumerate()` for bounded loops, component counting vs member enumeration API differences, the importance of reading problem statements carefully ("examine N pairs" vs "make N connections"), and **performance optimization via squared distances** (12% speedup by eliminating `sqrt()` and using `i64` instead of `f64` - monotonicity preservation means sorting by d² gives same order as d)
+- **Day 9**: Demonstrates **when NOT to materialize grids** (37GB crash teaches sparse representation), `HashSet<(i64, i64)>` for boundary-only storage (~589K tiles vs 9.36B), Bresenham's line algorithm for polygon edge generation, ray casting point-in-polygon with edge crossing counter, **AABB sampling pattern** with adaptive rate `max(10, dim/100)` reducing billions of checks to thousands, **algorithm evolution documentation** (4 failed approaches before success), Mission applicability limits (Grid perfect for small examples, geometric algorithms for massive sparse spaces), and the critical lesson that **checking input scale first prevents wasted implementation effort**
 
 ---
 
@@ -555,8 +641,8 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 8, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8*
+*Last Updated: December 9, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
