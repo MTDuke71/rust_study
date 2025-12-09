@@ -1,0 +1,28 @@
+[package]
+name = "rust_book_ch20"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[dev-dependencies]
+
+[[example]]
+name = "ch20_1_unsafe_rust"
+path = "examples/ch20_1_unsafe_rust.rs"
+
+[[example]]
+name = "ch20_2_advanced_traits"
+path = "examples/ch20_2_advanced_traits.rs"
+
+[[example]]
+name = "ch20_3_advanced_types"
+path = "examples/ch20_3_advanced_types.rs"
+
+[[example]]
+name = "ch20_4_functions_closures"
+path = "examples/ch20_4_functions_closures.rs"
+
+[[example]]
+name = "ch20_5_macros"
+path = "examples/ch20_5_macros.rs"
