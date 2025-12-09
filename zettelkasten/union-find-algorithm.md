@@ -527,6 +527,7 @@ struct CompressedUnionFind {
 
 ### **Computational Geometry**
 
+- **[[computational-geometry]]**: Spatial algorithms and geometric primitives
 - **[[convex-hull-algorithm]]**: Dynamic maintenance of convex hull updates
 - **[[Voronoi Diagrams]]**: Region connectivity in spatial partitioning
 - **[[Mesh Generation]]**: Triangle connectivity in finite element methods

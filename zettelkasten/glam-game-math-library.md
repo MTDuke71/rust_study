@@ -2,7 +2,7 @@
 
 **Tags:** #rust-crate #linear-algebra #game-development #graphics #SIMD #performance #mathematics #vectors #matrices #quaternions  
 **Created:** 2025-12-08  
-**Related:** [[rust-performance-optimization]], [[computational-geometry]], [[SIMD-optimization]], [[bevy-game-engine]]
+**Related:** [[computational-geometry]], [[convex-hull-algorithm]], [[rust-performance-optimization]], [[SIMD-optimization]], [[bevy-game-engine]]
 
 ---
 

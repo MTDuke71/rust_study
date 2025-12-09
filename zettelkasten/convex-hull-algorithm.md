@@ -2,7 +2,7 @@
 
 **Tags:** #algorithm #computational-geometry #convex-hull #graham-scan #jarvis-march #monotone-chain #geometry #2d-geometry  
 **Created:** 2025-12-08  
-**Related:** [[union-find-algorithm]], [[computational-geometry]], [[sorting-algorithms]], [[angle-calculations]]
+**Related:** [[computational-geometry]], [[union-find-algorithm]], [[glam-game-math-library]], [[sorting-algorithms]], [[angle-calculations]]
 
 ---
 
