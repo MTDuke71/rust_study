@@ -12,6 +12,7 @@
 - [[Daily Study MOC]] - Daily study track overview
 - [[Missions Overview]] - Mission track progress
 - [[Rust Book Integration]] - Rust Book chapter coordination
+- [[2026_LEARNING_PLAN]] - Plans for 2026 study
 
 --- 
 

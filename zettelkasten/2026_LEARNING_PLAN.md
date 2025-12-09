@@ -1,5 +1,7 @@
 # 2026 Learning Plan - Rust Mastery Journey
 
+[[learning-plan]] - The  overall plan covering all different aspects of learning
+
 **Goal:** Achieve advanced Rust proficiency through systematic study, daily practice, and production-quality implementations.
 
 **Timeline:** January 1 - December 31, 2026  
