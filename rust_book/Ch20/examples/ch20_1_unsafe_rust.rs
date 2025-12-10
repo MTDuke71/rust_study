@@ -155,7 +155,7 @@ fn demonstrate_static_variables() {
         increment_counter(5);
 
         // Read through raw pointer (safer than direct reference)
-        let count = *(&raw const COUNTER);
+        let count = COUNTER;
         println!("  Mutable static (unsafe): COUNTER = {}", count);
     }
 
