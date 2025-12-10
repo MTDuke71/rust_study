@@ -1,6 +1,8 @@
 use anyhow::Result;
-use mission6::{FloodFill, Grid};
 use std::collections::HashSet;
+
+#[cfg(test)]
+use mission6::{FloodFill, Grid};
 
 /// Parse input into a vector of (x, y) coordinates
 fn parse_points(input: &str) -> Result<Vec<(i64, i64)>> {
@@ -43,6 +45,7 @@ fn find_largest_rectangle(points: &[(i64, i64)]) -> i64 {
 }
 
 /// Draw a line between two points on a grid using Bresenham's algorithm
+#[cfg(test)]
 fn draw_line(grid: &mut Grid<char>, p1: (i64, i64), p2: (i64, i64), value: char, offset: (i64, i64)) {
     let x1 = (p1.0 - offset.0) as usize;
     let y1 = (p1.1 - offset.1) as usize;
@@ -221,6 +224,7 @@ fn find_largest_rectangle_in_polygon(
 }
 
 /// Build a grid with red tiles and green boundary/interior (for small examples only)
+#[cfg(test)]
 fn build_grid_with_polygon(points: &[(i64, i64)]) -> (Grid<char>, i64, i64) {
     // Find bounds
     let min_x = points.iter().map(|p| p.0).min().unwrap();
@@ -263,6 +267,7 @@ fn build_grid_with_polygon(points: &[(i64, i64)]) -> (Grid<char>, i64, i64) {
 }
 
 /// Check if a rectangle contains only red or green tiles (grid version for tests)
+#[cfg(test)]
 fn rectangle_contains_only_red_or_green(
     grid: &Grid<char>,
     p1: (i64, i64),
@@ -295,6 +300,7 @@ fn rectangle_contains_only_red_or_green(
 }
 
 /// Find the largest rectangle using only red and green tiles (grid version for tests)
+#[cfg(test)]
 fn find_largest_rectangle_with_constraint(
     points: &[(i64, i64)],
     grid: &Grid<char>,

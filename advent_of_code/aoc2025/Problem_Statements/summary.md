@@ -18,6 +18,7 @@ This document provides a categorized overview of all Advent of Code 2025 problem
 - **Graph Algorithms**: Graph traversal, shortest path, connectivity analysis
 - **Greedy Algorithms**: Optimal greedy strategies, reverse optimization, exploiting problem structure
 - **Grid Processing**: 2D grid parsing, coordinate-based access, neighbor queries, spatial reasoning
+- **Integer Linear Programming**: Constraint optimization with specialized solvers, minimizing objective functions subject to linear constraints
 - **Interval Merging**: Combining overlapping ranges, computing union of intervals, deduplication by range
 - **Iterative Erosion**: Repeated state modification until convergence, layer-by-layer removal, fixpoint algorithms
 - **Mathematical**: Arithmetic calculations, formulas, geometric problems
@@ -533,6 +534,106 @@ Three Python scripts in `examples/` directory visualize the problem:
 
 ---
 
+### Day 10: Factory
+**Title**: Factory (Button Optimization)  
+**Part 1 Type**: Mathematical + Graph Algorithms  
+**Part 1 Description**: Binary toggle problem - find minimum button presses to reach target light configuration using Gaussian elimination over GF(2) (binary field)  
+**Part 2 Type**: Integer Linear Programming + Optimization  
+**Part 2 Description**: Integer counter problem - find minimum button presses to reach exact joltage counter values using ILP solver  
+**Key Concepts**: Gaussian elimination over GF(2), XOR operations, free variable enumeration, Integer Linear Programming, constraint optimization, floating-point precision handling  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Two distinct optimization problems (binary toggles → integer accumulation)
+- **Data Structure**: Part 1: Augmented matrix for RREF, Part 2: good_lp constraint solver
+- **Complexity**: Part 1: O(n³) Gaussian elimination, Part 2: Polynomial LP relaxation + branch-and-bound
+- **AoC Theme**: "Factory button optimization" with Part 2 fundamentally different problem (GF(2) → ILP)
+
+**🦀 Rust Implementation Highlights**:
+- **Part 1: Pure Rust** → **Gaussian elimination with XOR**, free variable enumeration, optimal 2^f combination search
+- **Part 2: Library-assisted** → **`good_lp` crate with minilp solver** (pure Rust, no native dependencies)
+- **Critical precision fix** → **`.round() as usize`** instead of truncation (16754 → 16757 correct answer)
+- **Credit** → **Based on Tom Wilkinson's ILP approach** adapted for our infrastructure
+
+**🚨 Failed Approaches - The Long Journey**:
+
+See **[[../examples/day10_solution_analysis]]** for complete 6-attempt analysis with code samples and performance comparisons.
+
+**Attempt 1: Backtracking DFS** (❌ Timeout)
+- Tried all button combinations with upper bound pruning
+- **Problem**: O(T^B) exponential, machine 3 has 194^9 ≈ 10^20 states
+- **Result**: Exceeded 10-second timeout
+
+**Attempt 2: Greedy Heuristic** (❌ Suboptimal)
+- Selected buttons affecting most unfulfilled counters
+- **Problem**: Local optimum ≠ global optimum
+- **Result**: Got 19 presses instead of optimal 10
+
+**Attempt 3: BFS (Breadth-First Search)** (❌ Timeout on large inputs)
+- Level-by-level state space exploration
+- **Pros**: Guaranteed optimal solution
+- **Test cases**: ✅ All passed (10, 12, 11 → 33)
+- **Actual input**: ❌ Machine 3 timeout - visited HashMap grew to millions of entries
+- **State space**: O(∏ target_i) - for targets [168, 164, 176, ...] = billions of states
+
+**Attempt 4: A* Search with Heuristic** (❌ Inadmissible heuristic)
+- Used heuristic `h = Σ(remaining / affecting_buttons)`
+- **Problem**: Heuristic not truly admissible (overestimates in some cases)
+- **Result**: Got 12 instead of optimal 11 for test case 3
+
+**Attempt 5: Z3 SMT Solver** (❌ Compilation failed)
+- Tried `z3 = "0.12"` Rust crate for constraint solving
+- **Problem**: Requires libclang.dll (native dependency), CMake, Visual Studio Build Tools
+- **Errors**: "couldn't find libclang.dll", cmake version detection failure
+- **Conclusion**: Native dependency hell on Windows
+
+**Attempt 6: Integer Linear Programming with good_lp** (✅ SUCCESS!)
+- **Mathematical formulation**:
+  ```
+  Minimize: Σ x_i (total button presses)
+  Subject to:
+    For each counter j: Σ (a_ij * x_i) = t_j
+    x_i ≥ 0, x_i ∈ ℤ (non-negative integers)
+  ```
+- **Implementation**: `good_lp = { version = "1.8", features = ["minilp"] }`
+- **Result**: All 157 machines solved instantly, correct answer 16757
+
+**Key Implementation Insights**:
+- **Part 1 algorithm**: Build augmented matrix [A|b], row-reduce to RREF using XOR, enumerate 2^f free variable combinations, return minimum
+- **Part 2 algorithm**: Model as ILP with integer button variables, counter equality constraints, minimize objective function
+- **Critical fix**: `minilp` returns near-integer solutions (16756.999...) - must use `.round()` not truncation
+- **Why ILP works**: Polynomial-time LP relaxation + branch-and-bound beats exponential search
+- **Solver choice**: `minilp` (pure Rust) over `highs` (faster but requires CMake/C++)
+
+**Performance Comparison**:
+
+| Approach | Test Cases | Machine 3 (Large) | Complexity |
+|----------|------------|-------------------|------------|
+| Backtracking | ❌ Timeout | ❌ Timeout | O(T^B) exponential |
+| Greedy | ❌ Wrong (19 vs 10) | Fast | O(B×C) suboptimal |
+| BFS | ✅ Optimal | ❌ Timeout | O(∏ T_i) exponential space |
+| A* | ❌ Wrong (12 vs 11) | ❌ Timeout | O(∏ T_i) bad heuristic |
+| Z3 | N/A | N/A | Compilation failed |
+| **ILP (minilp)** | ✅ Optimal | ✅ <1s | **Polynomial + branch-and-bound** |
+
+**Answers**:
+- Part 1: `385`
+- Part 2: `16757` (initially got 16754 due to truncation bug)
+
+**⏱️ Performance**: Part 1 instant (Gaussian elimination), Part 2 instant for all 157 machines (ILP solver)
+
+**🎓 Learning Highlights**:
+- **Problem recognition**: Part 2 is NP-hard ILP - requires specialized solvers, not naive search
+- **Native dependencies are painful**: Z3 would work but Windows compilation issues blocked it
+- **Pure Rust alternatives exist**: good_lp with minilp feature compiles out-of-the-box
+- **Floating-point precision matters**: Always `.round()` when converting solver results to integers
+- **Test early on large inputs**: BFS passed tests but actual input revealed scalability issues
+- **Community resources valuable**: Reddit/Tom Wilkinson's solution provided the ILP approach
+- **State space analysis crucial**: Machine 3 (9 counters × 194 max) = massive search space needs proper algorithm
+
+**Deep Dive**: See [[../examples/day10_solution_analysis]] for complete documentation of all 6 attempts, mathematical formulations, code samples, and why ILP succeeds where search fails.
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -550,13 +651,14 @@ Three Python scripts in `examples/` directory visualize the problem:
 | Cryptographic | 0 | 0 |
 | Data Structures | 0 | 0 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 1 | 1 |
+| Graph Algorithms | 2 | 1 |
 | Greedy Algorithms | 2 | 1 |
 | Grid Processing | 2 | 0 |
+| Integer Linear Programming | 0 | 1 |
 | Iterative Erosion | 0 | 1 |
-| Mathematical | 3 | 2 |
+| Mathematical | 4 | 3 |
 | Number Theory | 0 | 0 |
-| Optimization | 0 | 1 |
+| Optimization | 0 | 2 |
 | Parsing | 1 | 1 |
 | Pattern Matching | 1 | 1 |
 | Real-time Analysis | 0 | 0 |
@@ -590,6 +692,10 @@ Three Python scripts in `examples/` directory visualize the problem:
 - **AABB sampling optimization**: Day 9 shows strategic point checking vs exhaustive tile iteration
 - **Algorithm evolution through failure**: Day 9 documents complete journey from memory crashes to timeout to success
 - **Part 2 escalation pattern**: All days follow classic AoC pattern of Part 2 expanding the problem scope
+- **Integer Linear Programming**: Day 10 introduces constraint optimization with specialized solvers
+- **Problem type recognition**: Day 10 shows importance of identifying NP-hard problems early (search vs solver)
+- **Floating-point precision**: Day 10 demonstrates rounding vs truncation when converting solver results
+- **Native dependency avoidance**: Day 10 chooses pure Rust solver over faster but compilation-problematic alternatives
 
 ### Rust-Specific Considerations
 
@@ -602,6 +708,7 @@ Three Python scripts in `examples/` directory visualize the problem:
 - **Day 7**: Showcases Mission 6+8 composition (Grid + Graph trait), BFS with VecDeque/HashSet, memoized DFS with HashMap caching, pattern matching from Ch19.1 (match, if let, while let, tuple destructuring), and the integrator philosophy (compose validated components, add custom optimizations)
 - **Day 8**: Demonstrates Mission 10 Union-Find integration for connectivity problems, `partial_cmp()` for floating-point sorting, iterator patterns with `enumerate()` for bounded loops, component counting vs member enumeration API differences, the importance of reading problem statements carefully ("examine N pairs" vs "make N connections"), and **performance optimization via squared distances** (12% speedup by eliminating `sqrt()` and using `i64` instead of `f64` - monotonicity preservation means sorting by d² gives same order as d)
 - **Day 9**: Demonstrates **when NOT to materialize grids** (37GB crash teaches sparse representation), `HashSet<(i64, i64)>` for boundary-only storage (~589K tiles vs 9.36B), Bresenham's line algorithm for polygon edge generation, ray casting point-in-polygon with edge crossing counter, **AABB sampling pattern** with adaptive rate `max(10, dim/100)` reducing billions of checks to thousands, **algorithm evolution documentation** (4 failed approaches before success), Mission applicability limits (Grid perfect for small examples, geometric algorithms for massive sparse spaces), and the critical lesson that **checking input scale first prevents wasted implementation effort**
+- **Day 10**: Demonstrates **problem type recognition** (Part 1 = GF(2) linear algebra, Part 2 = NP-hard ILP requiring specialized solvers), **Gaussian elimination over binary field** with XOR operations and free variable enumeration, **pure Rust ILP solver** via `good_lp` crate with minilp feature (avoiding native dependency issues), **floating-point precision handling** with `.round()` instead of truncation (critical fix changing 16754→16757), **algorithm evolution through 6 failed attempts** (backtracking timeout, greedy suboptimal, BFS exponential space, A* inadmissible heuristic, Z3 compilation failure, finally ILP success), **state space analysis** revealing why search fails (machine 3: 194^9 ≈ 10^20 states), **community solution adaptation** (Tom Wilkinson's ILP approach), and the lesson that **specialized algorithms beat general search for constraint optimization** - see [[../examples/day10_solution_analysis]] for complete journey with performance comparisons and mathematical formulations
 
 ---
 
@@ -641,11 +748,11 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 9, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9*
+*Last Updated: December 10, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 *Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning*
 
-*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[day06]] | [[day07]] | [[day08]] | [[../examples/day01_debugging_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
+*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[day06]] | [[day07]] | [[day08]] | [[day09]] | [[day10]] | [[../examples/day01_debugging_analysis]] | [[../examples/day10_solution_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
