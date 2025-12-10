@@ -319,6 +319,9 @@ Think of this like **AUTOSAR component scheduling**:
 
 ## Related Concepts
 
+### Execution Models
+- [[sync-vs-async]] - **NEW**: Sync blocking vs async non-blocking comparison
+
 ### Async Ecosystem
 - [[async-await-basics]] - Foundation of async/await syntax and semantics
 - [[future-trait-deep-dive]] - How futures work internally (poll, Pin, Waker)

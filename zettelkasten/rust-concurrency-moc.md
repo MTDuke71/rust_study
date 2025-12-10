@@ -10,6 +10,13 @@ This Map of Content (MOC) organizes all concurrency-related concepts in Rust, sp
 
 ---
 
+## 🔀 Execution Model Comparison
+
+- [[sync-vs-async]] - **NEW**: When to use blocking sync vs non-blocking async code
+- [[async-vs-threads-decision]] - Decision tree for choosing async or threads
+
+---
+
 ## 🔄 Async/Await (Cooperative Concurrency)
 
 ### Foundations
