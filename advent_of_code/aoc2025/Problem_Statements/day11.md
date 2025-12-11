@@ -73,3 +73,23 @@ svr,bbb,tty,ccc,eee,dac,fff,hhh,out
 However, only 2 paths from svr to out visit both dac and fft.
 
 Find all of the paths that lead from svr to out. How many of those paths visit both dac and fft?
+
+---
+
+## Solution Notes
+
+**Algorithm**: DFS with state-based memoization  
+**Part 1**: Simple memoization with `HashMap<String, usize>` (node → count)  
+**Part 2**: Composite state memoization with `HashMap<(String, usize), usize>` (node + visited_mask → count)
+
+**Key Insight**: Proper state representation prevents exponential blowup - 549 trillion paths computed via memoization, not enumeration.
+
+**Performance**: Both parts complete instantly despite massive path counts.
+
+### Related Content
+- **[[summary]]** - Day 11 detailed analysis with algorithm evolution and learning highlights
+- **[[../../zettelkasten/state-based-memoization]]** - Deep dive on composite state memoization patterns (Day 7 + Day 11)
+- **[[../../zettelkasten/AoC Patterns MOC]]** - Graph algorithms and DFS/path counting patterns
+- **[[day07]]** - Day 7 used simple position-based memoization (390T timelines)
+
+*Tags: #aoc2025 #day11 #graph-algorithms #dfs #memoization #state-representation #bitmask #path-counting*

@@ -147,3 +147,22 @@ Using two red tiles as opposite corners, what is the largest area of any rectang
 Your puzzle answer was 1539238860.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
+
+---
+
+## Solution Notes
+
+**Algorithm**: Computational geometry with AABB sampling optimization  
+**Part 1**: Brute force all red tile pairs → 4,759,531,084 area  
+**Part 2**: Ray casting + strategic sampling → 1,539,238,860 area (circular boundary constraint)
+
+**Key Insight**: Never materialize 9.36B grid - use sparse HashSet boundaries + ray casting point-in-polygon.
+
+### Related Content
+- **[[summary]]** - Day 9 detailed analysis with 4 failed approaches and memory calculations
+- **[[../examples/day09_approaches]]** - Complete journey: dense grid crash → sparse crash → timeout → AABB success
+- **[[../../zettelkasten/AoC Patterns MOC]]** - Computational geometry and sparse representation patterns
+- **[[../../zettelkasten/ray-casting-algorithm]]** - Point-in-polygon algorithm details
+- **[[../../zettelkasten/aabb-sampling-optimization]]** - Strategic sampling technique
+
+*Tags: #aoc2025 #day9 #computational-geometry #ray-casting #aabb-sampling #sparse-representation #point-in-polygon*

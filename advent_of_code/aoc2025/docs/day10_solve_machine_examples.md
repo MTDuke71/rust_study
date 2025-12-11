@@ -15,6 +15,15 @@ This document walks through two complete examples of how the `solve_machine` fun
 
 ---
 
+## Related Documentation
+- **[[../Problem_Statements/day10]]** - Original problem statement
+- **[[../Problem_Statements/summary]]** - Day 10 complete analysis with all solution attempts
+- **[[../Part2_ILP_NOTES]]** - Part 2 ILP problem and why search fails
+- **[[day10_z3_setup]]** - Alternative Z3 solver implementation
+- **[[../examples/day10_solution_analysis]]** - Why ILP succeeds where search fails
+
+---
+
 ## Example 1: Simple Case - Unique Solution
 
 ### Problem Setup
@@ -576,3 +585,14 @@ for free_mask in 0..(1 << num_free) {
 5. **Brute force over small space:** 2^k is manageable for small k (typically k ≤ 10)
 
 The beauty is that what looks like a combinatorial explosion (6 buttons = 2^6 = 64 combinations to try naively) reduces to just 2^k combinations where k is typically much smaller (in our example, k=2 → only 4 combinations).
+
+---
+
+## Related Documentation
+- **[[../Problem_Statements/day10]]** - Original problem statement
+- **[[../Problem_Statements/summary]]** - Day 10 complete analysis with all solution attempts
+- **[[../Part2_ILP_NOTES]]** - Part 2 ILP problem and why search fails
+- **[[day10_z3_setup]]** - Alternative Z3 solver implementation
+- **[[../examples/day10_solution_analysis]]** - Why ILP succeeds where search fails
+
+*Tags: #aoc2025 #day10 #gaussian-elimination #gf2 #binary-field #xor #linear-algebra*

@@ -71,3 +71,22 @@ At this point, you should return to your Advent calendar and try another puzzle.
 If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
+
+---
+
+## Solution Notes
+
+**Algorithm**: Union-Find (Disjoint Set Union) with greedy edge selection  
+**Data Structure**: Mission 10 UnionFind with path compression  
+**Part 1**: Examine 1000 closest pairs, make 698 connections → 3 circuits (50,568 product)  
+**Part 2**: Continue until single circuit, last connection at (36045012 product)
+
+**Optimization**: Squared distances eliminate sqrt() for 11% performance improvement.
+
+### Related Content
+- **[[summary]]** - Day 8 detailed analysis with Mission 10 validation and benchmark results
+- **[[../benches/day08_benchmark_results]]** - Performance analysis: sqrt vs squared distances (24.3ms → 21.6ms)
+- **[[../../zettelkasten/AoC Patterns MOC]]** - Union-Find patterns and connectivity problems
+- **[[../../missions/Mission10/README]]** - UnionFind implementation with path compression
+
+*Tags: #aoc2025 #day8 #union-find #dsu #greedy #3d-geometry #euclidean-distance #mission10*
