@@ -614,3 +614,13 @@ The polygon boundary contains **588,656 tiles**:
 This boundary is stored efficiently in a `HashSet` for O(1) containment checks during AABB sampling.
 
 ---
+
+## Related Documentation
+
+- **[[Problem_Statements/summary]]** - Day 9 entry with full solution context
+- **[[Problem_Statements/day09]]** - Original problem statement
+- **[[ray-casting-algorithm]]** - Point-in-polygon containment algorithm
+- **[[aabb-sampling-optimization]]** - Axis-aligned bounding box optimization
+- **[[AoC Patterns MOC]]** - Computational geometry pattern
+
+*Tags: #computational-geometry #flood-fill #polygon #ray-casting #aabb #optimization*

@@ -82,3 +82,21 @@ Analyze each machine's joltage requirements and button wiring schematics. What i
 Your puzzle answer was 16757.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
+
+---
+
+## Solution Notes
+
+**Part 1**: Gaussian elimination over GF(2) - System of linear equations with XOR operations. Built augmented matrix [A|b], row-reduced to RREF, enumerated free variable combinations to find minimum solution. **Answer: 385 presses**
+
+**Part 2**: Integer Linear Programming (ILP) using minilp crate. Part 1 approach doesn't work because addition (not XOR) creates dependencies. State space explosion makes search infeasible (194^9 ≈ 10^20 states). ILP solver handles linear constraints efficiently. **Answer: 16,757 presses**
+
+### Related Documentation
+- **[[Problem_Statements/summary]]** - Day 10 complete analysis
+- **[[examples/day10_solution_analysis]]** - Detailed solution approach comparisons
+- **[[docs/Part2_ILP_NOTES]]** - Part 2 ILP formulation and state space analysis
+- **[[docs/day10_solve_machine_examples]]** - Gaussian elimination walkthrough with examples
+- **[[docs/day10_z3_setup]]** - Z3 SMT solver alternative approach
+- **[[AoC Patterns MOC]]** - Linear algebra and optimization patterns
+
+*Tags: #gaussian-elimination #gf2 #ilp #linear-algebra #optimization*

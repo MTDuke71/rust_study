@@ -181,4 +181,20 @@ Want to go further? Try implementing:
 
 ---
 
+## Related Concepts
+
+- **Evolutionary algorithms** - Mutation, selection, and fitness functions
+- **Genetic algorithms** - Population-based optimization with crossover and mutation
+- **Simulated annealing** - Optimization with gradually decreasing randomness
+- **Hill climbing** - Greedy local search strategies
+
+### Related Documentation
+
+- **[[AoC Patterns MOC]]** - Optimization and search patterns
+- **[[daily-study/Day13]]** - Genetic algorithms and evolutionary computation (if covered)
+
+*Tags: #evolutionary-algorithm #genetic-programming #mutation #selection #cumulative-selection #dawkins*
+
+---
+
 **Enjoy watching evolution in action!** 🧬✨

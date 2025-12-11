@@ -114,5 +114,16 @@ fn test_optimized_versions_match() {
 
 ---
 
+## Related Documentation
+
+- **[[Problem_Statements/summary]]** - Day 8 solution context (nearest junction boxes)
+- **[[Problem_Statements/day08]]** - Original problem statement
+- **[[Mission10]]** - Union-Find data structure used in Day 8 solution
+- **[[AoC Patterns MOC]]** - Distance optimization patterns
+
+*Tags: #optimization #benchmarking #distance-calculation #integer-math #criterion*
+
+---
+
 *Benchmarked on: Windows, Rust 1.83, Criterion 0.5.1*
 *Date: December 8, 2025*

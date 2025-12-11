@@ -383,3 +383,16 @@ This problem demonstrates the importance of:
 5. **Community learning**: Leveraging existing solutions and adapting them
 
 The journey from naive backtracking → BFS → A* → Z3 → ILP shows the iterative problem-solving process and the value of knowing when to switch approaches rather than optimizing a fundamentally flawed algorithm.
+
+---
+
+## Related Documentation
+
+- **[[Problem_Statements/summary]]** - Day 10 entry with complete analysis
+- **[[Problem_Statements/day10]]** - Original problem statement
+- **[[docs/Part2_ILP_NOTES]]** - Detailed Part 2 ILP formulation
+- **[[docs/day10_solve_machine_examples]]** - Gaussian elimination walkthrough
+- **[[docs/day10_z3_setup]]** - Z3 alternative approach
+- **[[AoC Patterns MOC]]** - Linear algebra and ILP patterns
+
+*Tags: #gaussian-elimination #ilp #gf2 #optimization #problem-classification*
