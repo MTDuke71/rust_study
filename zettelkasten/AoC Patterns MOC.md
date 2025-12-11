@@ -61,6 +61,11 @@
 ### **Dynamic Programming**
 
 - **[[Memoization Patterns]]** - Top-down DP with HashMap caching
+- **[[state-based-memoization]]** - Composite state representation for path counting with constraints
+  - **AoC 2025 Day 7** - Simple position-based memoization (390T timelines)
+  - **AoC 2025 Day 11** - Composite state with bitmask (549T paths, timeout → instant)
+  - Bitmask techniques for small set membership (2-5 items)
+  - Performance: Exponential → linear complexity via proper state design
 - **[[Tabulation Patterns]]** - Bottom-up DP with Vec storage
 - **[[State Space Analysis]]** - Identifying DP subproblems and transitions
 - **[[Optimization Problems]]** - Min/max cost paths and resource allocation
