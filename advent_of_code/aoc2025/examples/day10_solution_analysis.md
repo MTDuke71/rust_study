@@ -262,6 +262,32 @@ fn solve_machine_joltage(machine: &Machine, targets: &[i64]) -> usize {
 3. **Constraint propagation**: Reduces search space intelligently
 4. **Dual bounds**: Provides upper/lower bounds for pruning
 
+### Why All Search Approaches Failed: NP-Hard Complexity
+
+**The fundamental issue**: Part 2 is an **Integer Linear Programming problem**, which is **NP-hard**.
+
+All search-based approaches (DFS, Greedy, BFS, A*) failed because they tried to **explore state space** instead of **solving mathematically**:
+
+| Approach | Why It Failed | Root Cause |
+|----------|---------------|------------|
+| **DFS/Backtracking** | O(T^B) states - exponential in max target value | Brute force through infinite solution space |
+| **Greedy** | Local optimal ≠ global optimal | No guarantee of finding best solution |
+| **BFS** | O(∏ T_i) visited states - millions of HashMap entries | State space explosion |
+| **A*** | Inadmissible heuristic → wrong answer | Hard to find good lower bound for ILP |
+
+**The key insight**: These are **not path-finding problems** - they're **optimization problems over continuous domains with integer constraints**.
+
+- **Wrong paradigm**: "Search for solution by exploring states"
+- **Right paradigm**: "Solve system of linear constraints with integer variables"
+
+ILP solvers don't search the state space - they:
+1. Solve LP relaxation (continuous, polynomial time)
+2. Use branch-and-bound with cutting planes (intelligent search)
+3. Exploit problem structure (constraint propagation)
+4. Prune suboptimal branches early (dual bounds)
+
+**Bottom line**: The exponential search space of NP-hard problems requires **specialized optimization algorithms**, not generic search algorithms.
+
 ### Solver Choice: minilp vs highs
 - **highs**: State-of-the-art solver, fastest, best integer support
   - ❌ Requires CMake/native compilation
@@ -287,9 +313,12 @@ fn solve_machine_joltage(machine: &Machine, targets: &[i64]) -> usize {
 
 ## Key Learnings
 
-### 1. Problem Recognition
+### 1. Problem Recognition - The Critical Insight
 - **Part 2 is NP-hard ILP**: Requires specialized solvers, not naive search
-- Recognizing problem class early saves implementation time
+- **All search attempts failed due to NP-hardness**: DFS, Greedy, BFS, A* all hit exponential complexity
+- **Paradigm shift required**: From "search for path" to "solve optimization problem"
+- **Mathematical structure matters**: Underdetermined linear system (m < n equations) with integer constraints
+- Recognizing problem class early saves days of implementation time
 
 ### 2. Solver Selection Matters
 - **Native dependencies are painful**: Z3 would have worked but compilation issues

@@ -12,6 +12,7 @@ pub mod day07;
 pub mod day08;
 pub mod day09;
 pub mod day10;
+pub mod day10_alt;  // Alternative Z3-based implementation
 pub mod day11;
 pub mod day12;
 
