@@ -16,6 +16,7 @@ fn main() {
     demonstrate_static_variables();
     demonstrate_unsafe_traits();
     demonstrate_unions();
+    documented_unsafe_example();
 
     println!("\n✅ All unsafe Rust concepts demonstrated!");
     println!("💡 Remember: unsafe gives you superpowers, not safety!");
