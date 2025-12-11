@@ -687,6 +687,7 @@ mod tests {
 
 - **[[Tabulation Patterns]]** - Bottom-up DP alternative
 - **[[Dynamic Programming Patterns]]** - General DP strategies
+- **[[state-based-memoization]]** - Composite state representation for path counting with constraints (Day 7 + Day 11 examples)
 - **[[HashMap Deep Dive]]** - Cache implementation details
 - **[[Performance Optimization Guide]]** - Broader optimization techniques
 - **[[Algorithm Complexity Analysis]]** - Understanding when memo helps
