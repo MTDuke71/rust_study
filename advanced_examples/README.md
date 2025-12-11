@@ -16,6 +16,9 @@ This folder contains advanced, production-ready examples that extend beyond the 
 - **[competitive_ring_bfs/](competitive_ring_bfs/)** - BFS maze solver using RingBufferQueue for bounded grids
 - **[competitive_linked_tree/](competitive_linked_tree/)** - Tree diameter calculation using LinkedQueue for unbounded growth
 
+### **Simulation & Evolution**
+- **[weasel_evolution/](weasel_evolution/)** - Dawkins' evolutionary algorithm demonstrating cumulative selection
+
 ---
 
 ## 🎯 **Learning Objectives**
@@ -134,13 +137,14 @@ All projects follow the workspace documentation standards:
 - **[Mission1 README](../Mission1/readme.md)** - Stack implementation details
 - **[Mission2 README](../Mission2/README.md)** - Queue implementation details
 
-### 🏗️ Project-Specific Resources
+### 🏗️ **Project-Specific Resources**
 - **[Brackets_Basic README](Brackets_Basic/README.md)** - AoC bracket validation
 - **[Brackets_Ext README](Brackets_Ext/README.md)** - Extended validator with custom alphabets
 - **[competitive_ring_bfs README](competitive_ring_bfs/README.md)** - BFS maze solver
 - **[competitive_linked_tree README](competitive_linked_tree/README.md)** - Tree diameter calculation
+- **[weasel_evolution README](weasel_evolution/README.md)** - Evolutionary algorithm simulation
 
-### 🎄 AoC Integration
+### 🎄 **AoC Integration**
 - **[[../zettelkasten/AoC Patterns MOC|AoC Patterns MOC]]** - Pattern recognition and strategies
 - **[AoC Pattern Recognition](../aoc_pattern_recognition/README.md)** - Advanced pattern matching
 - **[AoC 2015 Solutions](../aoc2015/README.md)** - Historical problem solutions

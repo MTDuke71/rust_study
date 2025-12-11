@@ -448,7 +448,7 @@ fn calculate_distance_squared(a, b) -> i64 {
 
 **When to apply**: Use squared distances when you only need relative ordering (sorting, min/max). Don't use if you need actual distance values (sums, thresholds).
 
-**Files**: See `benches/day08_benchmark.rs` and `benches/day08_benchmark_results.md` for full analysis
+**Files**: See `benches/day08_benchmark.rs` and [[../benches/day08_benchmark_results]] for full analysis
 
 **🎓 Learning Highlights (Mission 10 Validation)**:
 - **Union-Find in practice**: Real AoC problem demonstrating DSU's power for connectivity queries
@@ -631,6 +631,11 @@ See **[[../examples/day10_solution_analysis]]** for complete 6-attempt analysis 
 - **State space analysis crucial**: Machine 3 (9 counters × 194 max) = massive search space needs proper algorithm
 
 **Deep Dive**: See [[../examples/day10_solution_analysis]] for complete documentation of all 6 attempts, mathematical formulations, code samples, and why ILP succeeds where search fails.
+
+**Additional Resources**:
+- **[[../docs/day10_solve_machine_examples]]** - Detailed walkthrough of Gaussian elimination over GF(2) with 2 complete examples
+- **[[../Part2_ILP_NOTES]]** - ILP problem formulation and why search approaches fail (state space analysis)
+- **[[../docs/day10_z3_setup]]** - Alternative Z3 SMT solver implementation (exact integers vs floating-point)
 
 ---
 
