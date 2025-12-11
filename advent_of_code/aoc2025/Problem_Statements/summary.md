@@ -634,24 +634,108 @@ See **[[../examples/day10_solution_analysis]]** for complete 6-attempt analysis 
 
 ---
 
+### Day 11: Network
+**Title**: Network (Graph Path Counting)  
+**Part 1 Type**: DFS/Path Counting + Graph Algorithms  
+**Part 1 Description**: Count all distinct paths from node "you" to node "out" in a directed acyclic graph  
+**Part 2 Type**: DFS/Path Counting + Advanced Pattern Matching  
+**Part 2 Description**: Count paths from "svr" to "out" that visit BOTH "dac" AND "fft" (in any order)  
+**Key Concepts**: Depth-first search, memoization, state-based caching, bitmask for set membership, composite state representation, exponential complexity reduction  
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Path counting escalation (simple counting → path filtering with constraints)
+- **Data Structure**: HashMap<String, Vec<String>> for adjacency list, HashMap for memoization caches
+- **Complexity**: Part 1: O(V+E) with memo, Part 2: O(V × 2^R) where R=required nodes (O(V × 4) for 2 required)
+- **AoC Theme**: "Network packet routing" with Part 2 adding state complexity (position → position + history)
+
+**🦀 Rust Implementation Highlights**:
+- **Simple memoization** → **`HashMap<String, usize>`** for Part 1 (state = node only)
+- **Composite state memoization** → **`HashMap<(String, usize), usize>`** for Part 2 (state = node + visited_mask)
+- **Bitmask encoding** → **`visited_mask |= 1 << i`** for compact set representation (2 required → 4 states)
+- **Mission 8 attempted** → **Discovered Graph trait requires Copy nodes** (String not Copy, couldn't use)
+- **HashMap direct use** → **`.get()`, `.contains_key()`** work fine without trait abstraction
+
+**🚨 Failed Approach - Part 2 v1**:
+- **Naive DFS**: Track full path as `Vec<String>`, check requirements at target
+- **Problem**: No memoization → explores every path completely
+- **Result**: Timed out after 10 seconds (exit code 0xc000013a)
+- **Diagnosis**: 549 trillion paths exist, can't enumerate them all
+
+**✅ Successful Approach - Part 2 v2 (State-Based Memoization)**:
+- **Key insight**: State = (current_node, set_of_visited_required_nodes)
+- **Bitmask representation**: 
+  ```
+  0b00 (0): visited neither dac nor fft
+  0b01 (1): visited dac only
+  0b10 (2): visited fft only
+  0b11 (3): visited both (valid path!)
+  ```
+- **Update logic**: When visiting required[i], set bit i: `new_mask |= 1 << i`
+- **Memoization**: Cache `(node, mask)` → count, reuse across recursive calls
+- **Result**: Completes instantly despite 549 trillion paths
+
+**Mission Integration Attempt**:
+- **Tried**: Mission 8's Graph trait for HashMap<String, Vec<String>>
+- **Compiler error**: 
+  ```rust
+  error[E0277]: the trait bound `std::string::String: Copy` is not satisfied
+  required for `HashMap<String, Vec<String>>` to implement `Graph`
+  ```
+- **Mission 8 design**: Trait requires `type Node: Copy` for performance (optimized for u32, &str)
+- **Resolution**: Used HashMap methods directly without trait abstraction
+- **Learning**: Mission libraries have design constraints, adapt when needed
+
+**Key Implementation Insights**:
+- **Part 1 algorithm**: Recursive DFS with memo[node] = sum of paths from neighbors
+- **Part 2 algorithm**: Recursive DFS with memo[(node, visited_mask)] = count
+- **Base case**: At target with mask==0b11 → return 1, else return 0
+- **Exponential → linear**: Memoization reduces O(2^n) path enumeration to O(V × 2^R) state computation
+- **For 2 required**: Only 4 states per node (00, 01, 10, 11) → effectively O(V)
+
+**Debugging Journey**:
+- **Part 1**: Clean implementation, worked first try (466 paths)
+- **Part 2 v1**: Naive full-path tracking → timeout after 10 seconds
+- **Recognition**: User said "Ok" → immediately understood need for optimization
+- **Part 2 v2**: Redesigned with state-based memo → instant completion
+- **The fix**: Changed from tracking full path to tracking only visited required nodes
+
+**Answers**:
+- Part 1: `466`
+- Part 2: `549705036748518` (549 trillion paths!)
+
+**⏱️ Performance**: 
+- Part 1: Instant (simple memoization)
+- Part 2 v1: Timeout after 10 seconds
+- Part 2 v2: Instant (state memoization handles exponential paths)
+
+**🎓 Learning Highlights**:
+- **State representation matters**: (node) vs (node, history) fundamentally different complexity
+- **Bitmask for small sets**: When tracking 2-5 items, bit flags are compact and fast
+- **Memoization prevents enumeration**: Can count 549 trillion paths without listing them
+- **Mission constraints**: Copy requirement in Mission 8 Graph trait excludes owned String types
+- **Pragmatic adaptation**: Use mission concepts (DFS, memoization) even when mission code doesn't fit exactly
+- **Performance debugging**: Timeout → recognize exponential growth → redesign state representation
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
 |----------|--------------|--------------|
 | AABB Sampling | 0 | 1 |
-| Advanced Pattern Matching | 0 | 0 |
+| Advanced Pattern Matching | 0 | 1 |
 | Brute Force | 1 | 0 |
 | Cellular Automaton | 1 | 1 |
 | Combinatorial Optimization | 0 | 0 |
 | Computational Geometry | 0 | 1 |
 | Conditional Logic | 0 | 0 |
-| DFS/Path Counting | 0 | 1 |
+| DFS/Path Counting | 1 | 2 |
 | Range Containment | 1 | 0 |
 | Interval Merging | 0 | 1 |
 | Cryptographic | 0 | 0 |
 | Data Structures | 0 | 0 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 2 | 1 |
+| Graph Algorithms | 3 | 2 |
 | Greedy Algorithms | 2 | 1 |
 | Grid Processing | 2 | 0 |
 | Integer Linear Programming | 0 | 1 |
@@ -691,11 +775,15 @@ See **[[../examples/day10_solution_analysis]]** for complete 6-attempt analysis 
 - **Sparse representation strategies**: Day 9 demonstrates HashSet boundaries for massive coordinate spaces
 - **AABB sampling optimization**: Day 9 shows strategic point checking vs exhaustive tile iteration
 - **Algorithm evolution through failure**: Day 9 documents complete journey from memory crashes to timeout to success
-- **Part 2 escalation pattern**: All days follow classic AoC pattern of Part 2 expanding the problem scope
 - **Integer Linear Programming**: Day 10 introduces constraint optimization with specialized solvers
 - **Problem type recognition**: Day 10 shows importance of identifying NP-hard problems early (search vs solver)
 - **Floating-point precision**: Day 10 demonstrates rounding vs truncation when converting solver results
 - **Native dependency avoidance**: Day 10 chooses pure Rust solver over faster but compilation-problematic alternatives
+- **State-based memoization**: Day 11 shows composite state keys for tracking position + history in path counting
+- **Bitmask techniques**: Day 11 demonstrates compact set representation using bit flags (2 required → 4 states)
+- **Graph path counting**: Day 11 introduces DFS with memoization for counting paths in DAGs
+- **Performance through state representation**: Day 11 shows how proper state design prevents exponential blowup (549T paths)
+- **Mission trait constraints**: Day 11 reveals when library abstractions don't fit (Copy requirement) and how to adapt
 
 ### Rust-Specific Considerations
 
@@ -709,6 +797,7 @@ See **[[../examples/day10_solution_analysis]]** for complete 6-attempt analysis 
 - **Day 8**: Demonstrates Mission 10 Union-Find integration for connectivity problems, `partial_cmp()` for floating-point sorting, iterator patterns with `enumerate()` for bounded loops, component counting vs member enumeration API differences, the importance of reading problem statements carefully ("examine N pairs" vs "make N connections"), and **performance optimization via squared distances** (12% speedup by eliminating `sqrt()` and using `i64` instead of `f64` - monotonicity preservation means sorting by d² gives same order as d)
 - **Day 9**: Demonstrates **when NOT to materialize grids** (37GB crash teaches sparse representation), `HashSet<(i64, i64)>` for boundary-only storage (~589K tiles vs 9.36B), Bresenham's line algorithm for polygon edge generation, ray casting point-in-polygon with edge crossing counter, **AABB sampling pattern** with adaptive rate `max(10, dim/100)` reducing billions of checks to thousands, **algorithm evolution documentation** (4 failed approaches before success), Mission applicability limits (Grid perfect for small examples, geometric algorithms for massive sparse spaces), and the critical lesson that **checking input scale first prevents wasted implementation effort**
 - **Day 10**: Demonstrates **problem type recognition** (Part 1 = GF(2) linear algebra, Part 2 = NP-hard ILP requiring specialized solvers), **Gaussian elimination over binary field** with XOR operations and free variable enumeration, **pure Rust ILP solver** via `good_lp` crate with minilp feature (avoiding native dependency issues), **floating-point precision handling** with `.round()` instead of truncation (critical fix changing 16754→16757), **algorithm evolution through 6 failed attempts** (backtracking timeout, greedy suboptimal, BFS exponential space, A* inadmissible heuristic, Z3 compilation failure, finally ILP success), **state space analysis** revealing why search fails (machine 3: 194^9 ≈ 10^20 states), **community solution adaptation** (Tom Wilkinson's ILP approach), and the lesson that **specialized algorithms beat general search for constraint optimization** - see [[../examples/day10_solution_analysis]] for complete journey with performance comparisons and mathematical formulations
+- **Day 11**: Demonstrates **state-based memoization** with composite keys `(node, visited_mask)`, **bitmask state representation** for tracking visited required nodes (2 required → 4 states per node), **HashMap<String, Vec<String>>** for adjacency list storage, **Mission 8 Graph trait limitation** (Copy constraint blocks String nodes), **performance debugging** (naive v1 timeout → optimized v2 instant), and the lesson that **proper state representation prevents exponential blowup** (549 trillion paths computed via memo, not enumeration)
 
 ---
 
@@ -748,11 +837,11 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 10, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10*
+*Last Updated: December 11, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12*
 
 ---
 *Tags: #aoc #2025 #problem-analysis #patterns #algorithm-learning*
 
-*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[day06]] | [[day07]] | [[day08]] | [[day09]] | [[day10]] | [[../examples/day01_debugging_analysis]] | [[../examples/day10_solution_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*
+*Links: [[day01]] | [[day02]] | [[day03]] | [[day04]] | [[day05]] | [[day06]] | [[day07]] | [[day08]] | [[day09]] | [[day10]] | [[day11]] | [[../examples/day01_debugging_analysis]] | [[../examples/day10_solution_analysis]] | [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]]*

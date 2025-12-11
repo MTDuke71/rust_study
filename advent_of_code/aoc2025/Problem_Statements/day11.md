@@ -1,100 +1,75 @@
---- Day 11: Plutonian Pebbles ---
-The ancient civilization on Pluto was known for its ability to manipulate spacetime, and while The Historians explore their infinite corridors, you've noticed a strange set of physics-defying stones.
+--- Day 11: Reactor ---
+You hear some loud beeping coming from a hatch in the floor of the factory, so you decide to check it out. Inside, you find several large electrical conduits and a ladder.
 
-At first glance, they seem like normal stones: they're arranged in a perfectly straight line, and each stone has a number engraved on it.
+Climbing down the ladder, you discover the source of the beeping: a large, toroidal reactor which powers the factory above. Some Elves here are hurriedly running between the reactor and a nearby server rack, apparently trying to fix something.
 
-The strange part is that every time you blink, the stones change.
+One of the Elves notices you and rushes over. "It's a good thing you're here! We just installed a new server rack, but we aren't having any luck getting the reactor to communicate with it!" You glance around the room and see a tangle of cables and devices running from the server rack to the reactor. She rushes off, returning a moment later with a list of the devices and their outputs (your puzzle input).
 
-Sometimes, the number engraved on a stone changes. Other times, a stone might split in two, causing all the other stones to shift over a bit to make room in their perfectly straight line.
+For example:
 
-As you observe them for a while, you find that the stones have a consistent behavior. Every time you blink, the stones each simultaneously change according to the first applicable rule in this list:
+aaa: you hhh
+you: bbb ccc
+bbb: ddd eee
+ccc: ddd eee fff
+ddd: ggg
+eee: out
+fff: out
+ggg: out
+hhh: ccc fff iii
+iii: out
+Each line gives the name of a device followed by a list of the devices to which its outputs are attached. So, bbb: ddd eee means that device bbb has two outputs, one leading to device ddd and the other leading to device eee.
 
-If the stone is engraved with the number 0, it is replaced by a stone engraved with the number 1.
-If the stone is engraved with a number that has an even number of digits, it is replaced by two stones. The left half of the digits are engraved on the new left stone, and the right half of the digits are engraved on the new right stone. (The new numbers don't keep extra leading zeroes: 1000 would become stones 10 and 0.)
-If none of the other rules apply, the stone is replaced by a new stone; the old stone's number multiplied by 2024 is engraved on the new stone.
-No matter how the stones change, their order is preserved, and they stay on their perfectly straight line.
+The Elves are pretty sure that the issue isn't due to any specific device, but rather that the issue is triggered by data following some specific path through the devices. Data only ever flows from a device through its outputs; it can't flow backwards.
 
-How will the stones evolve if you keep blinking at them? You take a note of the number engraved on each stone in the line (your puzzle input).
+After dividing up the work, the Elves would like you to focus on the devices starting with the one next to you (an Elf hastily attaches a label which just says you) and ending with the main output to the reactor (which is the device with the label out).
 
-If you have an arrangement of five stones engraved with the numbers 0 1 10 99 999 and you blink once, the stones transform as follows:
+To help the Elves figure out which path is causing the issue, they need you to find every path from you to out.
 
-The first stone, 0, becomes a stone marked 1.
-The second stone, 1, is multiplied by 2024 to become 2024.
-The third stone, 10, is split into a stone marked 1 followed by a stone marked 0.
-The fourth stone, 99, is split into two stones marked 9.
-The fifth stone, 999, is replaced by a stone marked 2021976.
-So, after blinking once, your five stones would become an arrangement of seven stones engraved with the numbers 1 2024 1 0 9 9 2021976.
+In this example, these are all of the paths from you to out:
 
-Here is a longer example:
+Data could take the connection from you to bbb, then from bbb to ddd, then from ddd to ggg, then from ggg to out.
+Data could take the connection to bbb, then to eee, then to out.
+Data could go to ccc, then ddd, then ggg, then out.
+Data could go to ccc, then eee, then out.
+Data could go to ccc, then fff, then out.
+In total, there are 5 different paths leading from you to out.
 
-Initial arrangement:
-125 17
+How many different paths lead from you to out?
 
-After 1 blink:
-253000 1 7
+Your puzzle answer was 466.
 
-After 2 blinks:
-253 0 2024 14168
-
-After 3 blinks:
-512072 1 20 24 28676032
-
-After 4 blinks:
-512 72 2024 2 0 2 4 2867 6032
-
-After 5 blinks:
-1036288 7 2 20 24 4048 1 4048 8096 28 67 60 32
-
-After 6 blinks:
-2097446912 14168 4048 2 0 2 4 40 48 2024 40 48 80 96 2 8 6 7 6 0 3 2
-In this example, after blinking six times, you would have 22 stones. After blinking 25 times, you would have 55312 stones!
-
-Consider the arrangement of stones in front of you. How many stones will you have after blinking 25 times?
-
-Your puzzle answer was 187738.
+The first half of this puzzle is complete! It provides one gold star: *
 
 --- Part Two ---
-The Historians sure are taking a long time. To be fair, the infinite corridors are very large.
+Thanks in part to your analysis, the Elves have figured out a little bit about the issue. They now know that the problematic data path passes through both dac (a digital-to-analog converter) and fft (a device which performs a fast Fourier transform).
 
-How many stones would you have after blinking a total of 75 times?
+They're still not sure which specific path is the problem, and so they now need you to find every path from svr (the server rack) to out. However, the paths you find must all also visit both dac and fft (in any order).
 
-Your puzzle answer was 223767210249237.
+For example:
 
-Both parts of this puzzle are complete! They provide two gold stars: **
+svr: aaa bbb
+aaa: fft
+fft: ccc
+bbb: tty
+tty: ccc
+ccc: ddd eee
+ddd: hub
+hub: fff
+eee: dac
+dac: fff
+fff: ggg hhh
+ggg: out
+hhh: out
+This new list of devices contains many paths from svr to out:
 
-At this point, you should return to your Advent calendar and try another puzzle.
+svr,aaa,fft,ccc,ddd,hub,fff,ggg,out
+svr,aaa,fft,ccc,ddd,hub,fff,hhh,out
+svr,aaa,fft,ccc,eee,dac,fff,ggg,out
+svr,aaa,fft,ccc,eee,dac,fff,hhh,out
+svr,bbb,tty,ccc,ddd,hub,fff,ggg,out
+svr,bbb,tty,ccc,ddd,hub,fff,hhh,out
+svr,bbb,tty,ccc,eee,dac,fff,ggg,out
+svr,bbb,tty,ccc,eee,dac,fff,hhh,out
+However, only 2 paths from svr to out visit both dac and fft.
 
-If you still want to see it, you can get your puzzle input.
-
-You can also [Share] this puzzle.
-
----
-
-## 🚀 Parallelization Opportunity
-
-**Good candidate for parallel processing (⭐⭐):**
-- Each stone transformation is independent during blink operations
-- Can use `rayon`'s `.par_iter()` to process stones in parallel
-- **Challenge:** Needs memoization/caching for Part 2 efficiency (75 blinks)
-- Consider using `DashMap` for thread-safe shared cache
-
-```rust
-// Example parallel approach
-fn blink_parallel(stones: Vec<u64>) -> Vec<u64> {
-    stones.par_iter()
-        .flat_map(|&stone| transform_stone(stone))
-        .collect()
-}
-```
-
----
-
-## 📊 Deep Dive Analysis
-
-See [[../examples/day11_cache_analysis]] for detailed memoization analysis showing:
-- Why naive simulation fails at 75 blinks (time + memory)
-- Cache efficiency: 130K entries vs. 223 trillion stones
-- Complete execution trace of memoization algorithm
-
----
-*Links: [[day10]] [[day12]] [[AoC 2024 Overview]] [[../examples/day11_cache_analysis]]*
+Find all of the paths that lead from svr to out. How many of those paths visit both dac and fft?

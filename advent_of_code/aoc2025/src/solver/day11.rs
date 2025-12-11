@@ -1,194 +1,181 @@
-use anyhow::{Context, Result};
+//! Day 11: Reactor - Path Counting in Directed Acyclic Graph
+//!
+//! ## Problem Summary
+//! - Given a directed graph of device connections
+//! - Count all distinct paths from "you" to "out"
+//! - Data flows forward only (DAG - no cycles)
+//!
+//! ## Solution Approach
+//! - Parse input into HashMap<String, Vec<String>> (adjacency list)
+//! - Use memoized DFS to count paths efficiently
+//! - Time: O(V + E) with memoization, Space: O(V)
+//!
+//! ## Note on Mission 8
+//! - Mission 8's Graph trait requires `Copy` nodes (e.g., u32, &str)
+//! - String is not Copy, so we can't use Graph trait directly
+//! - Instead: implement custom traversal using HashMap methods
+
+use anyhow::Result;
 use std::collections::HashMap;
 
-/// Parse the initial arrangement of stones.
-/// Input is a single line with space-separated numbers.
-fn parse_stones(input: &str) -> Result<Vec<u64>> {
+/// Parse input into adjacency list representation.
+///
+/// Format: "source: target1 target2 target3"
+/// Example: "you: bbb ccc" → you has edges to bbb and ccc
+fn parse_input(input: &str) -> HashMap<String, Vec<String>> {
     input
-        .split_whitespace()
-        .map(|s| {
-            s.parse::<u64>()
-                .with_context(|| format!("Invalid number: {}", s))
+        .lines()
+        .filter_map(|line| {
+            let line = line.trim();
+            if line.is_empty() {
+                return None;
+            }
+            
+            let (source, targets) = line.split_once(": ")?;
+            let neighbors: Vec<String> = targets
+                .split_whitespace()
+                .map(String::from)
+                .collect();
+            
+            Some((source.to_string(), neighbors))
         })
         .collect()
 }
 
-/// Count the number of digits in a number using logarithm.
-/// More efficient than string conversion.
-fn count_digits(n: u64) -> u32 {
-    if n == 0 {
-        return 1;
-    }
-    (n as f64).log10().floor() as u32 + 1
-}
-
-/// Apply the transformation rules to a single stone.
-/// Returns a vector of new stones (1 or 2 stones).
+/// Count all paths from start to end using memoized DFS.
 ///
-/// Rules:
-/// 1. If stone is 0 → becomes 1
-/// 2. If stone has even number of digits → split into left half and right half
-/// 3. Otherwise → multiply by 2024
-fn transform_stone(stone: u64) -> Vec<u64> {
-    if stone == 0 {
-        // Rule 1: 0 becomes 1
-        vec![1]
-    } else {
-        // Math-based approach: use logarithm instead of string conversion
-        let num_digits = count_digits(stone);
-
-        if num_digits.is_multiple_of(2) {
-            // Rule 2: Even number of digits - split using integer math
-            let divisor = 10_u64.pow(num_digits / 2);
-            let left = stone / divisor;
-            let right = stone % divisor;
-            vec![left, right]
-        } else {
-            // Rule 3: Multiply by 2024
-            vec![stone * 2024]
-        }
-    }
-}
-
-/* Original string-based approach (slower due to allocations):
-fn transform_stone(stone: u64) -> Vec<u64> {
-    if stone == 0 {
-        vec![1]
-    } else {
-        let num_str = stone.to_string();
-        let num_digits = num_str.len();
-
-        if num_digits % 2 == 0 {
-            let mid = num_digits / 2;
-            let left = num_str[..mid].parse::<u64>().unwrap();
-            let right = num_str[mid..].parse::<u64>().unwrap();
-            vec![left, right]
-        } else {
-            vec![stone * 2024]
-        }
-    }
-}
-*/
-
-/// Simulate blinks by applying transformation rules.
-/// Returns the stones after the specified number of blinks.
-fn simulate_blinks(initial_stones: Vec<u64>, blinks: usize) -> Vec<u64> {
-    let mut stones = initial_stones;
-
-    for _ in 0..blinks {
-        stones = stones.into_iter().flat_map(transform_stone).collect();
-    }
-
-    stones
-}
-
-/// Count stones after blinks using memoization for efficiency.
-/// Uses dynamic programming: cache (stone_value, blinks_remaining) -> count
-fn count_stones_memoized(
-    stone: u64,
-    blinks_remaining: usize,
-    cache: &mut HashMap<(u64, usize), usize>,
+/// # Algorithm
+/// - If current == target: found one path, return 1
+/// - If already computed: return cached result
+/// - Otherwise: sum paths from all neighbors, cache result
+///
+/// # Complexity
+/// - Time: O(V + E) - each node visited once due to memoization
+/// - Space: O(V) - memo table stores result for each node
+fn count_paths(
+    graph: &HashMap<String, Vec<String>>,
+    current: &str,
+    target: &str,
+    memo: &mut HashMap<String, usize>,
 ) -> usize {
-    // Base case: no more blinks, this stone counts as 1
-    if blinks_remaining == 0 {
+    // Base case: reached target
+    if current == target {
         return 1;
     }
-
-    // Check cache
-    if let Some(&cached) = cache.get(&(stone, blinks_remaining)) {
+    
+    // Check memo cache
+    if let Some(&cached) = memo.get(current) {
         return cached;
     }
-
-    // Apply transformation and recursively count
-    let transformed = transform_stone(stone);
-    let count = transformed
-        .iter()
-        .map(|&s| count_stones_memoized(s, blinks_remaining - 1, cache))
-        .sum();
-
-    // Cache the result
-    cache.insert((stone, blinks_remaining), count);
+    
+    // Recursive case: sum paths through all neighbors
+    let count: usize = graph
+        .get(current)
+        .map(|neighbors| {
+            neighbors
+                .iter()
+                .map(|next| count_paths(graph, next, target, memo))
+                .sum()
+        })
+        .unwrap_or(0);
+    
+    // Cache result
+    memo.insert(current.to_string(), count);
     count
-}
-
-/// Count stones with detailed tracing for educational purposes.
-#[allow(dead_code)]
-fn count_stones_with_trace(
-    stone: u64,
-    blinks_remaining: usize,
-    cache: &mut HashMap<(u64, usize), usize>,
-    depth: usize,
-) -> usize {
-    let indent = "  ".repeat(depth);
-
-    // Base case: no more blinks, this stone counts as 1
-    if blinks_remaining == 0 {
-        println!(
-            "{}Stone {} with 0 blinks → count = 1 (base case)",
-            indent, stone
-        );
-        return 1;
-    }
-
-    // Check cache
-    if let Some(&cached) = cache.get(&(stone, blinks_remaining)) {
-        println!(
-            "{}Stone {} with {} blinks → count = {} (CACHED ✓)",
-            indent, stone, blinks_remaining, cached
-        );
-        return cached;
-    }
-
-    // Apply transformation and recursively count
-    let transformed = transform_stone(stone);
-    println!(
-        "{}Stone {} with {} blinks → transforms to {:?}",
-        indent, stone, blinks_remaining, transformed
-    );
-
-    let count = transformed
-        .iter()
-        .map(|&s| count_stones_with_trace(s, blinks_remaining - 1, cache, depth + 1))
-        .sum();
-
-    // Cache the result
-    println!(
-        "{}→ CACHE: ({}, {}) = {}",
-        indent, stone, blinks_remaining, count
-    );
-    cache.insert((stone, blinks_remaining), count);
-    count
-}
-
-/// Count total stones after blinks using memoization.
-fn count_stones_after_blinks(initial_stones: &[u64], blinks: usize) -> usize {
-    let mut cache = HashMap::new();
-    initial_stones
-        .iter()
-        .map(|&stone| count_stones_memoized(stone, blinks, &mut cache))
-        .sum()
-}
-
-/// Count total stones and return both count and cache size for analysis.
-#[allow(dead_code)]
-fn count_with_cache_stats(initial_stones: &[u64], blinks: usize) -> (usize, usize) {
-    let mut cache = HashMap::new();
-    let count: usize = initial_stones
-        .iter()
-        .map(|&stone| count_stones_memoized(stone, blinks, &mut cache))
-        .sum();
-    (count, cache.len())
 }
 
 pub fn solve_part1(input: &str) -> Result<String> {
-    let stones = parse_stones(input)?;
-    let final_stones = simulate_blinks(stones, 25);
-    Ok(final_stones.len().to_string())
+    let graph = parse_input(input);
+    
+    // Verify graph contains start node
+    let start = "you";
+    let end = "out";
+    
+    if !graph.contains_key(start) {
+        anyhow::bail!("Graph doesn't contain start node 'you'");
+    }
+    
+    let mut memo = HashMap::new();
+    let count = count_paths(&graph, start, end, &mut memo);
+    
+    Ok(count.to_string())
+}
+
+/// Count paths from start to end that pass through all required nodes.
+///
+/// Uses memoization with state = (current_node, set_of_visited_required_nodes)
+/// This dramatically reduces computation by caching results for each unique state.
+///
+/// # Algorithm
+/// - State: (current node, bitmask of which required nodes visited)
+/// - For 2 required nodes: 4 possible states per node (00, 01, 10, 11)
+/// - Cache results for each state to avoid recomputation
+///
+/// # Complexity
+/// - Time: O(V * 2^R) where R = number of required nodes
+/// - Space: O(V * 2^R) for memo table
+fn count_paths_with_requirements_memo(
+    graph: &HashMap<String, Vec<String>>,
+    current: &str,
+    target: &str,
+    required: &[&str],
+    visited_mask: usize,  // Bitmask: which required nodes visited
+    memo: &mut HashMap<(String, usize), usize>,
+) -> usize {
+    // Base case: reached target
+    if current == target {
+        // Check if all required nodes visited (all bits set)
+        let all_visited = (1 << required.len()) - 1;
+        return if visited_mask == all_visited { 1 } else { 0 };
+    }
+    
+    // Check memo cache
+    let state = (current.to_string(), visited_mask);
+    if let Some(&cached) = memo.get(&state) {
+        return cached;
+    }
+    
+    // Update visited mask if current node is required
+    let mut new_mask = visited_mask;
+    for (i, &req) in required.iter().enumerate() {
+        if current == req {
+            new_mask |= 1 << i;
+        }
+    }
+    
+    // Recursive case: explore all neighbors
+    let count: usize = graph
+        .get(current)
+        .map(|neighbors| {
+            neighbors
+                .iter()
+                .map(|next| {
+                    count_paths_with_requirements_memo(graph, next, target, required, new_mask, memo)
+                })
+                .sum()
+        })
+        .unwrap_or(0);
+    
+    // Cache result
+    memo.insert(state, count);
+    count
 }
 
 pub fn solve_part2(input: &str) -> Result<String> {
-    let stones = parse_stones(input)?;
-    let count = count_stones_after_blinks(&stones, 75);
+    let graph = parse_input(input);
+    
+    // Part 2: count paths from "svr" to "out" that visit both "dac" and "fft"
+    let start = "svr";
+    let end = "out";
+    let required = vec!["dac", "fft"];
+    
+    if !graph.contains_key(start) {
+        anyhow::bail!("Graph doesn't contain start node 'svr'");
+    }
+    
+    let mut memo = HashMap::new();
+    let count = count_paths_with_requirements_memo(&graph, start, end, &required, 0, &mut memo);
+    
     Ok(count.to_string())
 }
 
@@ -196,231 +183,92 @@ pub fn solve_part2(input: &str) -> Result<String> {
 mod tests {
     use super::*;
 
+    const EXAMPLE: &str = r#"aaa: you hhh
+you: bbb ccc
+bbb: ddd eee
+ccc: ddd eee fff
+ddd: ggg
+eee: out
+fff: out
+ggg: out
+hhh: ccc fff iii
+iii: out"#;
+
     #[test]
-    fn test_parse_simple() {
-        let input = "125 17";
-        let stones = parse_stones(input).unwrap();
-        assert_eq!(stones, vec![125, 17]);
+    fn test_parse_input() {
+        let graph = parse_input(EXAMPLE);
+        
+        // Check "you" node
+        assert!(graph.contains_key("you"));
+        let you_neighbors = graph.get("you").unwrap();
+        assert_eq!(you_neighbors.len(), 2);
+        assert!(you_neighbors.contains(&"bbb".to_string()));
+        assert!(you_neighbors.contains(&"ccc".to_string()));
+        
+        // Check "ccc" node has 3 neighbors
+        let ccc_neighbors = graph.get("ccc").unwrap();
+        assert_eq!(ccc_neighbors.len(), 3);
     }
 
     #[test]
-    fn test_parse_single_stone() {
-        let input = "0";
-        let stones = parse_stones(input).unwrap();
-        assert_eq!(stones, vec![0]);
+    fn test_example_paths() {
+        let result = solve_part1(EXAMPLE).unwrap();
+        assert_eq!(result, "5", "Example should have 5 paths from you to out");
     }
 
     #[test]
-    fn test_parse_multiple_stones() {
-        let input = "0 1 10 99 999";
-        let stones = parse_stones(input).unwrap();
-        assert_eq!(stones, vec![0, 1, 10, 99, 999]);
+    fn test_simple_path_count() {
+        // Simple linear path: A -> B -> C
+        let input = "A: B\nB: C\nC: out";
+        let graph = parse_input(input);
+        let mut memo = HashMap::new();
+        let count = count_paths(&graph, "A", "out", &mut memo);
+        assert_eq!(count, 1, "Linear path should have 1 path");
     }
 
     #[test]
-    fn test_parse_with_leading_trailing_whitespace() {
-        let input = "  125 17  \n";
-        let stones = parse_stones(input).unwrap();
-        assert_eq!(stones, vec![125, 17]);
+    fn test_branching_paths() {
+        // A has 2 branches both leading to out
+        //     B
+        //    / \
+        //   A   out
+        //    \ /
+        //     C
+        let input = "A: B C\nB: out\nC: out";
+        let graph = parse_input(input);
+        let mut memo = HashMap::new();
+        let count = count_paths(&graph, "A", "out", &mut memo);
+        assert_eq!(count, 2, "Should have 2 paths: A->B->out and A->C->out");
     }
 
     #[test]
-    fn test_parse_invalid_number() {
-        let input = "125 abc";
-        assert!(parse_stones(input).is_err());
+    fn test_part2_example() {
+        let example = r#"svr: aaa bbb
+aaa: fft
+fft: ccc
+bbb: tty
+tty: ccc
+ccc: ddd eee
+ddd: hub
+hub: fff
+eee: dac
+dac: fff
+fff: ggg hhh
+ggg: out
+hhh: out"#;
+        
+        let result = solve_part2(example).unwrap();
+        assert_eq!(result, "2", "Part 2 example should have 2 paths visiting both dac and fft");
     }
 
     #[test]
-    fn test_transform_rule1_zero_becomes_one() {
-        // Rule 1: 0 → 1
-        assert_eq!(transform_stone(0), vec![1]);
-    }
-
-    #[test]
-    fn test_transform_rule2_even_digits_split() {
-        // Rule 2: Even number of digits splits in half
-        assert_eq!(transform_stone(10), vec![1, 0]);
-        assert_eq!(transform_stone(99), vec![9, 9]);
-        assert_eq!(transform_stone(1000), vec![10, 0]);
-        assert_eq!(transform_stone(253000), vec![253, 0]);
-    }
-
-    #[test]
-    fn test_transform_rule3_multiply_2024() {
-        // Rule 3: Odd number of digits → multiply by 2024
-        assert_eq!(transform_stone(1), vec![2024]);
-        assert_eq!(transform_stone(999), vec![999 * 2024]);
-    }
-
-    #[test]
-    fn test_simulate_example_1_blink() {
-        // Example from problem: "125 17" after 1 blink
-        // 125 has 3 digits (odd) → 125 * 2024 = 253000
-        // 17 has 2 digits (even) → splits to 1 and 7
-        let stones = vec![125, 17];
-        let result = simulate_blinks(stones, 1);
-        assert_eq!(result, vec![253000, 1, 7]);
-    }
-
-    #[test]
-    fn test_simulate_example_2_blinks() {
-        // After 2 blinks from "125 17":
-        // [253000, 1, 7]
-        // 253000 (6 digits, even) → 253, 0
-        // 1 (1 digit, odd) → 2024
-        // 7 (1 digit, odd) → 14168
-        let stones = vec![125, 17];
-        let result = simulate_blinks(stones, 2);
-        assert_eq!(result, vec![253, 0, 2024, 14168]);
-    }
-
-    #[test]
-    fn test_simulate_example_6_blinks() {
-        // After 6 blinks, the example shows 22 stones
-        let stones = vec![125, 17];
-        let result = simulate_blinks(stones, 6);
-        assert_eq!(result.len(), 22);
-    }
-
-    #[test]
-    fn test_simulate_example_25_blinks() {
-        // After 25 blinks, the example shows 55312 stones
-        let stones = vec![125, 17];
-        let result = simulate_blinks(stones, 25);
-        assert_eq!(result.len(), 55312);
-    }
-
-    #[test]
-    fn test_memoized_matches_naive_25_blinks() {
-        // Verify memoized version matches naive for 25 blinks
-        let stones = vec![125, 17];
-        let naive_count = simulate_blinks(stones.clone(), 25).len();
-        let memoized_count = count_stones_after_blinks(&stones, 25);
-        assert_eq!(memoized_count, naive_count);
-        assert_eq!(memoized_count, 55312);
-    }
-
-    #[test]
-    fn test_memoized_small_example() {
-        // Test memoization with smaller examples
-        let stones = vec![0];
-        assert_eq!(count_stones_after_blinks(&stones, 1), 1); // 0 -> 1
-
-        let stones = vec![1];
-        assert_eq!(count_stones_after_blinks(&stones, 1), 1); // 1 -> 2024
-
-        let stones = vec![10];
-        assert_eq!(count_stones_after_blinks(&stones, 1), 2); // 10 -> 1, 0
-    }
-
-    #[test]
-    #[ignore] // Expensive test - run manually
-    fn test_naive_simulation_limits() {
-        use std::time::Instant;
-
-        // Test how far naive simulation can go before hitting limits
-        let stones = vec![125, 17];
-
-        for blinks in [25, 30, 35, 40] {
-            let start = Instant::now();
-            let result = simulate_blinks(stones.clone(), blinks);
-            let elapsed = start.elapsed();
-
-            println!("\nNaive simulation - {} blinks:", blinks);
-            println!("  Stones: {}", result.len());
-            println!("  Time: {:?}", elapsed);
-            println!(
-                "  Memory estimate: ~{} bytes",
-                result.len() * std::mem::size_of::<u64>()
-            );
-        }
-    }
-
-    #[test]
-    #[ignore] // Expensive test - run manually
-    fn test_memoized_vs_naive_comparison() {
-        use std::time::Instant;
-
-        let stones = vec![125, 17];
-
-        println!("\nComparing naive vs memoized:");
-
-        // Test both approaches up to where naive is still feasible
-        for blinks in [10, 15, 20, 25] {
-            // Naive
-            let start = Instant::now();
-            let naive_result = simulate_blinks(stones.clone(), blinks);
-            let naive_time = start.elapsed();
-
-            // Memoized
-            let start = Instant::now();
-            let memo_result = count_stones_after_blinks(&stones, blinks);
-            let memo_time = start.elapsed();
-
-            println!("\n{} blinks:", blinks);
-            println!(
-                "  Naive:    {} stones in {:?}",
-                naive_result.len(),
-                naive_time
-            );
-            println!("  Memoized: {} stones in {:?}", memo_result, memo_time);
-            assert_eq!(naive_result.len(), memo_result);
-        }
-    }
-
-    #[test]
-    fn test_cache_size_analysis() {
-        // Analyze how many unique (stone, blinks) states we actually cache
-        let stones = vec![125, 17];
-
-        println!("\nCache size analysis for example input [125, 17]:");
-        for blinks in [10, 25, 50, 75] {
-            let (count, cache_size) = count_with_cache_stats(&stones, blinks);
-            println!(
-                "  {} blinks: {} stones, {} cache entries",
-                blinks, count, cache_size
-            );
-        }
-
-        // Test with actual puzzle input
-        let puzzle_input = vec![77, 515, 6779622, 6, 91370, 959685, 0, 9861];
-        println!("\nCache size analysis for puzzle input:");
-        for blinks in [25, 75] {
-            let (count, cache_size) = count_with_cache_stats(&puzzle_input, blinks);
-            println!(
-                "  {} blinks: {} stones, {} cache entries",
-                blinks, count, cache_size
-            );
-        }
-    }
-
-    #[test]
-    fn test_trace_example_5_blinks() {
-        // Trace execution with 3 initial stones and 5 blinks
-        println!("\n=== TRACING: [0, 1, 2] with 5 blinks ===\n");
-
-        let stones = vec![0, 1, 2];
-        let mut cache = HashMap::new();
-
-        let mut total = 0;
-        for stone in stones {
-            println!("Processing initial stone: {}", stone);
-            let count = count_stones_with_trace(stone, 5, &mut cache, 1);
-            println!(
-                "→ Stone {} produces {} stones after 5 blinks\n",
-                stone, count
-            );
-            total += count;
-        }
-
-        println!("=== FINAL RESULTS ===");
-        println!("Total stones: {}", total);
-        println!("Cache entries: {}", cache.len());
-        println!("\n=== CACHE CONTENTS ===");
-        let mut cache_vec: Vec<_> = cache.iter().collect();
-        cache_vec.sort_by_key(|((stone, blinks), _)| (blinks, stone));
-        for ((stone, blinks), count) in cache_vec {
-            println!("  ({}, {}) → {}", stone, blinks, count);
-        }
+    fn test_path_with_requirements() {
+        // Simple test: A -> B -> C -> D -> out
+        // Requirement: must visit B and D
+        let input = "A: B\nB: C\nC: D\nD: out";
+        let graph = parse_input(input);
+        let mut memo = HashMap::new();
+        let count = count_paths_with_requirements_memo(&graph, "A", "out", &["B", "D"], 0, &mut memo);
+        assert_eq!(count, 1, "Should have 1 path visiting both B and D");
     }
 }
