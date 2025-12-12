@@ -32,8 +32,8 @@ Level 5: Integration & Advanced Use
 
 **Progressive Pattern**:
 
-1. Concrete Vec<i32> (Level 1)
-2. Generic Vec<T> (Level 2)
+1. Concrete `Vec<i32>` (Level 1)
+2. Generic `Vec<T>` (Level 2)
 3. Lifetime annotations (Level 3)
 4. Trait bounds (Level 4)
 5. Advanced patterns (Level 5)
@@ -364,7 +364,7 @@ fn update_scores(scores: HashMap<String, i32>, name: &str) -> HashMap<String, i3
 | 2 | Performance problem | Benchmark Vec::remove(0) - O(n) |
 | 3 | VecDeque introduction | Replace with VecDeque::pop_front() |
 | 4 | Ring buffer concept | Visualize circular buffer |
-| 5 | Generic Queue<T> | Wrap VecDeque with custom type |
+| 5 | Generic `Queue<T>` | Wrap VecDeque with custom type |
 | 6 | Iterator integration | Implement IntoIterator |
 | 7 | Production features | Capacity management, testing |
 
@@ -376,7 +376,7 @@ fn update_scores(scores: HashMap<String, i32>, name: &str) -> HashMap<String, i3
 
 | Layer | Concept | Code Focus |
 |-------|---------|-----------|
-| 1 | Key-value concept | Vec<(K, V)> with linear search |
+| 1 | Key-value concept | `Vec<(K, V)>` with linear search |
 | 2 | Performance bottleneck | Benchmark O(n) lookup |
 | 3 | Hash function basics | Simple modulo hash |
 | 4 | Collision handling | Chaining with Vec in each bucket |
