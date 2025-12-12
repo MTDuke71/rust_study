@@ -21,6 +21,8 @@ Smart pointers are types that implement the `Deref` and/or `Drop` traits to prov
 
 ## 📚 **Fundamental Concepts**
 
+- [[smart-pointers]] - Overview and selection guide for pointer types
+
 ### **Smart Pointer Traits**
 
 - [[deref-trait]] - Dereference operator overloading and coercion
