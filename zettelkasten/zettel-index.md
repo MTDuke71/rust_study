@@ -52,6 +52,7 @@
 - **Latest Study Notes**: [[Daily Study MOC]] → Current Week
 - **Recent Work**: Check most recently modified files
 - **Daily Workflow**: [[Daily Workflow]] - Systematic learning routine setup
+- **Zettel Promotion**: [[zettel-promotion-checklist]] - When to create a new node (keep the graph maintainable)
 
 ### **Mission Track** - Engineering Projects
 
