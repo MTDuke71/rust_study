@@ -634,7 +634,7 @@ See **[[../examples/day10_solution_analysis]]** for complete 6-attempt analysis 
 
 **Additional Resources**:
 - **[[../docs/day10_solve_machine_examples]]** - Detailed walkthrough of Gaussian elimination over GF(2) with 2 complete examples
-- **[[../Part2_ILP_NOTES]]** - ILP problem formulation and why search approaches fail (state space analysis)
+- **[[Part2_ILP_NOTES]]** - ILP problem formulation and why search approaches fail (state space analysis)
 - **[[../docs/day10_z3_setup]]** - Alternative Z3 SMT solver implementation (exact integers vs floating-point)
 
 ---

@@ -98,10 +98,10 @@ python solve_day10_part2.py < ../../inputs/day10.txt
 
 ## Related Documentation
 
-- **[[Problem_Statements/summary]]** - Day 10 complete analysis with all 6 solution attempts and performance comparison
+- **[[advent_of_code/aoc2025/Problem_Statements/summary]]** - Day 10 complete analysis with all 6 solution attempts and performance comparison
 - **[[docs/day10_solve_machine_examples]]** - Part 1 Gaussian elimination walkthrough with complete examples
 - **[[docs/day10_z3_setup]]** - Z3 alternative implementation (exact integers vs floating-point)
 - **[[examples/day10_solution_analysis]]** - Deep dive on why ILP succeeds where search fails
-- **[[Problem_Statements/day10]]** - Original problem statement
+- **[[advent_of_code/aoc2025/Problem_Statements/day10]]** - Original problem statement
 
 *Tags: #aoc2025 #day10 #ilp #integer-linear-programming #optimization #np-hard #state-space-analysis*

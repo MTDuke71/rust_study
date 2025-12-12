@@ -18,7 +18,7 @@ This document walks through two complete examples of how the `solve_machine` fun
 ## Related Documentation
 - **[[../Problem_Statements/day10]]** - Original problem statement
 - **[[../Problem_Statements/summary]]** - Day 10 complete analysis with all solution attempts
-- **[[../Part2_ILP_NOTES]]** - Part 2 ILP problem and why search fails
+- **[[Part2_ILP_NOTES]]** - Part 2 ILP problem and why search fails
 - **[[day10_z3_setup]]** - Alternative Z3 solver implementation
 - **[[../examples/day10_solution_analysis]]** - Why ILP succeeds where search fails
 
@@ -591,7 +591,7 @@ The beauty is that what looks like a combinatorial explosion (6 buttons = 2^6 = 
 ## Related Documentation
 - **[[../Problem_Statements/day10]]** - Original problem statement
 - **[[../Problem_Statements/summary]]** - Day 10 complete analysis with all solution attempts
-- **[[../Part2_ILP_NOTES]]** - Part 2 ILP problem and why search fails
+- **[[Part2_ILP_NOTES]]** - Part 2 ILP problem and why search fails
 - **[[day10_z3_setup]]** - Alternative Z3 solver implementation
 - **[[../examples/day10_solution_analysis]]** - Why ILP succeeds where search fails
 

@@ -158,7 +158,7 @@ Then conditionally compile day10_alt only when feature is enabled.
 ## Related Documentation
 - **[[../Problem_Statements/day10]]** - Original problem statement
 - **[[../Problem_Statements/summary]]** - Complete Day 10 analysis with 6 solution attempts
-- **[[../Part2_ILP_NOTES]]** - ILP formulation and state space analysis
+- **[[Part2_ILP_NOTES]]** - ILP formulation and state space analysis
 - **[[day10_solve_machine_examples]]** - Part 1 Gaussian elimination walkthrough
 - **[[../examples/day10_solution_analysis]]** - Deep dive on solver comparison
 
