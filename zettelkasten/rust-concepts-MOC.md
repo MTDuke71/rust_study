@@ -191,6 +191,7 @@
 - [[advent_of_code/aoc2015/Problem_Statements/Day14-Algorithmic-Complexity-Comparison]] - Performance comparison
 - [[advent_of_code/aoc2015/Problem_Statements/Day14-Performance-Comparison]] - Implementation analysis
 - [[advent_of_code/aoc2015/Problem_Statements/Day14-Graphics-Guide]] - Data visualization
+- [[cross-platform-graphics]] - Choosing portable visualization outputs
 - [[advent_of_code/aoc2015/Problem_Statements/Day14-Documentation-Enhancement-Guide]] - Technical documentation
 
 ### **Mission Development**
