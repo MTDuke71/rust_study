@@ -1,147 +1,85 @@
---- Day 12: Garden Groups ---
-Why not search for the Chief Historian near the gardener and his massive farm? There's plenty of food, so The Historians grab something to eat while they search.
+--- Day 12: Christmas Tree Farm ---
+You're almost out of time, but there can't be much left to decorate. Although there are no stairs, elevators, escalators, tunnels, chutes, teleporters, firepoles, or conduits here that would take you deeper into the North Pole base, there is a ventilation duct. You jump in.
 
-You're about to settle near a complex arrangement of garden plots when some Elves ask if you can lend a hand. They'd like to set up fences around each region of garden plots, but they can't figure out how much fence they need to order or how much it will cost. They hand you a map (your puzzle input) of the garden plots.
+After bumping around for a few minutes, you emerge into a large, well-lit cavern full of Christmas trees!
 
-Each garden plot grows only a single type of plant and is indicated by a single letter on your map. When multiple garden plots are growing the same type of plant and are touching (horizontally or vertically), they form a region. For example:
+There are a few Elves here frantically decorating before the deadline. They think they'll be able to finish most of the work, but the one thing they're worried about is the presents for all the young Elves that live here at the North Pole. It's an ancient tradition to put the presents under the trees, but the Elves are worried they won't fit.
 
-AAAA
-BBCD
-BBCC
-EEEC
-This 4x4 arrangement includes garden plots growing five different types of plants (labeled A, B, C, D, and E), each grouped into their own region.
+The presents come in a few standard but very weird shapes. The shapes and the regions into which they need to fit are all measured in standard units. To be aesthetically pleasing, the presents need to be placed into the regions in a way that follows a standardized two-dimensional unit grid; you also can't stack presents.
 
-In order to accurately calculate the cost of the fence around a single region, you need to know that region's area and perimeter.
+As always, the Elves have a summary of the situation (your puzzle input) for you. First, it contains a list of the presents' shapes. Second, it contains the size of the region under each tree and a list of the number of presents of each shape that need to fit into that region. For example:
 
-The area of a region is simply the number of garden plots the region contains. The above map's type A, B, and C plants are each in a region of area 4. The type E plants are in a region of area 3; the type D plants are in a region of area 1.
+0:
+###
+##.
+##.
 
-Each garden plot is a square and so has four sides. The perimeter of a region is the number of sides of garden plots in the region that do not touch another garden plot in the same region. The type A and C plants are each in a region with perimeter 10. The type B and E plants are each in a region with perimeter 8. The lone D plot forms its own region with perimeter 4.
+1:
+###
+##.
+.##
 
-Visually indicating the sides of plots in each region that contribute to the perimeter using - and |, the above map's regions' perimeters are measured as follows:
+2:
+.##
+###
+##.
 
-+-+-+-+-+
-|A A A A|
-+-+-+-+-+     +-+
-              |D|
-+-+-+   +-+   +-+
-|B B|   |C|
-+   +   + +-+
-|B B|   |C C|
-+-+-+   +-+ +
-          |C|
-+-+-+-+   +-+
-|E E E|
-+-+-+-+
-Plants of the same type can appear in multiple separate regions, and regions can even appear within other regions. For example:
+3:
+##.
+###
+##.
 
-OOOOO
-OXOXO
-OOOOO
-OXOXO
-OOOOO
-The above map contains five regions, one containing all of the O garden plots, and the other four each containing a single X plot.
+4:
+###
+#..
+###
 
-The four X regions each have area 1 and perimeter 4. The region containing 21 type O plants is more complicated; in addition to its outer edge contributing a perimeter of 20, its boundary with each X region contributes an additional 4 to its perimeter, for a total perimeter of 36.
+5:
+###
+.#.
+###
 
-Due to "modern" business practices, the price of fence required for a region is found by multiplying that region's area by its perimeter. The total price of fencing all regions on a map is found by adding together the price of fence for every region on the map.
+4x4: 0 0 0 0 2 0
+12x5: 1 0 1 0 2 2
+12x5: 1 0 1 0 3 2
+The first section lists the standard present shapes. For convenience, each shape starts with its index and a colon; then, the shape is displayed visually, where # is part of the shape and . is not.
 
-In the first example, region A has price 4 * 10 = 40, region B has price 4 * 8 = 32, region C has price 4 * 10 = 40, region D has price 1 * 4 = 4, and region E has price 3 * 8 = 24. So, the total price for the first example is 140.
+The second section lists the regions under the trees. Each line starts with the width and length of the region; 12x5 means the region is 12 units wide and 5 units long. The rest of the line describes the presents that need to fit into that region by listing the quantity of each shape of present; 1 0 1 0 3 2 means you need to fit one present with shape index 0, no presents with shape index 1, one present with shape index 2, no presents with shape index 3, three presents with shape index 4, and two presents with shape index 5.
 
-In the second example, the region with all of the O plants has price 21 * 36 = 756, and each of the four smaller X regions has price 1 * 4 = 4, for a total price of 772 (756 + 4 + 4 + 4 + 4).
+Presents can be rotated and flipped as necessary to make them fit in the available space, but they have to always be placed perfectly on the grid. Shapes can't overlap (that is, the # part from two different presents can't go in the same place on the grid), but they can fit together (that is, the . part in a present's shape's diagram does not block another present from occupying that space on the grid).
 
-Here's a larger example:
+The Elves need to know how many of the regions can fit the presents listed. In the above example, there are six unique present shapes and three regions that need checking.
 
-RRRRIICCFF
-RRRRIICCCF
-VVRRRCCFFF
-VVRCCCJFFF
-VVVVCJJCFE
-VVIVCCJJEE
-VVIIICJJEE
-MIIIIIJJEE
-MIIISIJEEE
-MMMISSJEEE
-It contains:
+The first region is 4x4:
 
-A region of R plants with price 12 * 18 = 216.
-A region of I plants with price 4 * 8 = 32.
-A region of C plants with price 14 * 28 = 392.
-A region of F plants with price 10 * 18 = 180.
-A region of V plants with price 13 * 20 = 260.
-A region of J plants with price 11 * 20 = 220.
-A region of C plants with price 1 * 4 = 4.
-A region of E plants with price 13 * 18 = 234.
-A region of I plants with price 14 * 22 = 308.
-A region of M plants with price 5 * 12 = 60.
-A region of S plants with price 3 * 8 = 24.
-So, it has a total price of 1930.
+....
+....
+....
+....
+In it, you need to determine whether you could fit two presents that have shape index 4:
 
-What is the total price of fencing all regions on your map?
+###
+#..
+###
+After some experimentation, it turns out that you can fit both presents in this region. Here is one way to do it, using A to represent one present and B to represent the other:
 
-Your puzzle answer was 1450816.
+AAA.
+ABAB
+ABAB
+.BBB
+The second region, 12x5: 1 0 1 0 2 2, is 12 units wide and 5 units long. In that region, you need to try to fit one present with shape index 0, one present with shape index 2, two presents with shape index 4, and two presents with shape index 5.
 
---- Part Two ---
-Fortunately, the Elves are trying to order so much fence that they qualify for a bulk discount!
+It turns out that these presents can all fit in this region. Here is one way to do it, again using different capital letters to represent all the required presents:
 
-Under the bulk discount, instead of using the perimeter to calculate the price, you need to use the number of sides each region has. Each straight section of fence counts as a side, regardless of how long it is.
+....AAAFFE.E
+.BBBAAFFFEEE
+DDDBAAFFCECE
+DBBB....CCC.
+DDD.....C.C.
+The third region, 12x5: 1 0 1 0 3 2, is the same size as the previous region; the only difference is that this region needs to fit one additional present with shape index 4. Unfortunately, no matter how hard you try, there is no way to fit all of the presents into this region.
 
-Consider this example again:
+So, in this example, 2 regions can fit all of their listed presents.
 
-AAAA
-BBCD
-BBCC
-EEEC
-The region containing type A plants has 4 sides, as does each of the regions containing plants of type B, D, and E. However, the more complex region containing the plants of type C has 8 sides!
+Consider the regions beneath each tree and the presents the Elves would like to fit into each of them. How many of the regions can fit all of the presents listed?
 
-Using the new method of calculating the per-region price by multiplying the region's area by its number of sides, regions A through E have prices 16, 16, 32, 4, and 12, respectively, for a total price of 80.
-
-The second example above (full of type X and O plants) would have a total price of 436.
-
-Here's a map that includes an E-shaped region full of type E plants:
-
-EEEEE
-EXXXX
-EEEEE
-EXXXX
-EEEEE
-The E-shaped region has an area of 17 and 12 sides for a price of 204. Including the two regions full of type X plants, this map has a total price of 236.
-
-This map has a total price of 368:
-
-AAAAAA
-AAABBA
-AAABBA
-ABBAAA
-ABBAAA
-AAAAAA
-It includes two regions full of type B plants (each with 4 sides) and a single region full of type A plants (with 4 sides on the outside and 8 more sides on the inside, a total of 12 sides). Be especially careful when counting the fence around regions like the one full of type A plants; in particular, each section of fence has an in-side and an out-side, so the fence does not connect across the middle of the region (where the two B regions touch diagonally). (The Elves would have used the Möbius Fencing Company instead, but their contract terms were too one-sided.)
-
-The larger example from before now has the following updated prices:
-
-A region of R plants with price 12 * 10 = 120.
-A region of I plants with price 4 * 4 = 16.
-A region of C plants with price 14 * 22 = 308.
-A region of F plants with price 10 * 12 = 120.
-A region of V plants with price 13 * 10 = 130.
-A region of J plants with price 11 * 12 = 132.
-A region of C plants with price 1 * 4 = 4.
-A region of E plants with price 13 * 8 = 104.
-A region of I plants with price 14 * 16 = 224.
-A region of M plants with price 5 * 6 = 30.
-A region of S plants with price 3 * 6 = 18.
-Adding these together produces its new total price of 1206.
-
-What is the new total price of fencing all regions on your map?
-
-Your puzzle answer was 865662.
-
-Both parts of this puzzle are complete! They provide two gold stars: **
-
-At this point, you should return to your Advent calendar and try another puzzle.
-
-If you still want to see it, you can get your puzzle input.
-
-You can also [Share] this puzzle.
-
----
-*Links: [[day11]] [[day13]] [[AoC 2024 Overview]]*
+To begin, get your puzzle input.
