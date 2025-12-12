@@ -44,9 +44,9 @@ fn demonstrate_associated_types() {
         }
     }
 
-    let mut counter = Counter { count: 0 };
+    let counter = Counter { count: 0 };
     println!("  Counter iterator:");
-    while let Some(n) = counter.next() {
+    for n in counter {
         print!("    {}", n);
     }
     println!();
