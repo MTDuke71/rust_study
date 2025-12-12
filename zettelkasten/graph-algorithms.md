@@ -24,7 +24,7 @@
 
 ### **Graph Theory Foundations**
 
-- **[[Graph Representation]]** - Adjacency lists, matrices, and edge list formats
+- **[[graph-representation]]** - Adjacency lists, matrices, and edge list formats
 - **[[Graph Types]]** - Directed, undirected, weighted, unweighted classifications
 - **[[Graph Properties]]** - Connectivity, cycles, bipartiteness, planarity
 - **[[Graph Metrics]]** - Degree, diameter, clustering coefficient, centrality measures
@@ -294,5 +294,5 @@ pub trait WeightedGraph {
 
 *Tags: #graph-algorithms #data-structures #pathfinding #network-analysis #algorithm-design #performance-optimization #graph-theory*
 
-*Links: [[mission-7]] | [[mission-9]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[Graph Representation]] |
+*Links: [[mission-7]] | [[mission-9]] | [[Algorithm Design Patterns]] | [[Data Structure Patterns]] | [[Performance Analysis]] | [[Testing Strategies]] | [[graph-representation]] |
 [[Dijkstra Algorithm]] | [[Bellman-Ford Algorithm]] | [[A-Star-Algorithm-Deep-Dive|A* Algorithm]] | [[BFS Patterns]] | [[DFS Applications]] | [[Pathfinding Strategies]] | [[Network Routing]] | [[Game AI]] | [[Priority Queue Patterns]] | [[Binary Heap Data Structure]] | [[kahns-topological-sort]] | [[zettel-index]] | [[Daily Notes/2025-10-23]]*

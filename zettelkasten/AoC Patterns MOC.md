@@ -20,7 +20,7 @@
 ### **Data Structure Selection**
 
 - **[[AoC Collection Problems]]** - When to use each collection type
-- **[[Graph Representation]]** - Adjacency lists, matrices, and edge lists
+- **[[graph-representation]]** - Adjacency lists, matrices, and edge lists
 - **[[Tree Structures]]** - Binary trees, n-ary trees, and traversal patterns
 - **[[Queue vs Stack Usage]]** - BFS, DFS, and state management
 - **[[Coordinate Systems]]** - 2D/3D grids, hex grids, and navigation

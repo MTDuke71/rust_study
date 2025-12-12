@@ -217,7 +217,7 @@ pub trait Pathfinder<G: WeightedGraph> {
 
 ### **Data Structure Integration**
 - **[[Binary Heap Patterns]]** - Priority queue implementation details
-- **[[Graph Representation]]** - Adjacency lists and edge weight storage
+- **[[graph-representation]]** - Adjacency lists and edge weight storage
 - **[[Hash Map Usage]]** - Efficient predecessor and distance tracking
 - **[[Vector Operations]]** - Path reconstruction and result formatting
 

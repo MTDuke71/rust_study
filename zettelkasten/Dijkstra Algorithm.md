@@ -347,7 +347,7 @@ fn test_tie_breaking() {
 ### **Supporting Concepts**
 
 - **[[Priority Queue Patterns]]**: Binary heap and min-heap conversion
-- **[[Graph Representation]]**: Adjacency list for efficient neighbor access
+- **[[graph-representation]]**: Adjacency list for efficient neighbor access
 - **[[Pathfinding Strategies]]**: When to use different algorithms
 
 ### **Advanced Topics**
@@ -424,4 +424,4 @@ fn test_tie_breaking() {
 
 *Tags: #dijkstra #pathfinding #graph-algorithms #shortest-path #priority-queue #greedy-algorithm #optimization #mission9*
 
-*Backlinks: [[graph-algorithms]] | [[Priority Queue Patterns]] | [[A-Star-Algorithm-Deep-Dive|A* Algorithm]] | [[Bellman-Ford Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[mission-9]] | [[Network Routing]] | [[Game AI]] | [[Graph Representation]] | [[Greedy Algorithms]]*
+*Backlinks: [[graph-algorithms]] | [[Priority Queue Patterns]] | [[A-Star-Algorithm-Deep-Dive|A* Algorithm]] | [[Bellman-Ford Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[mission-9]] | [[Network Routing]] | [[Game AI]] | [[graph-representation]] | [[Greedy Algorithms]]*

@@ -327,7 +327,7 @@ fn good_heuristic(pos: Pos, goal: Pos) -> i32 {
 ### **Data Structures**
 - [[Priority Queue Patterns]] - Efficient frontier management
 - [[Binary Heap Data Structure]] - Min/max heap for Dijkstra
-- [[Graph Representation]] - Adjacency list vs matrix
+- [[graph-representation]] - Adjacency list vs matrix
 
 ### **Mission Integration**
 - [[missions/mission-9]] - Pathfinding algorithms implementation

@@ -382,7 +382,7 @@ Solution: Bellman-Ford detects this on Vth iteration!
 
 ### **Prerequisite Knowledge**
 
-- **[[Graph Representation]]**: Understanding graph data structures
+- **[[graph-representation]]**: Understanding graph data structures
 - **[[BFS Patterns]]**: Basic graph traversal concepts
 - **[[Dijkstra Algorithm]]**: Context for why Bellman-Ford is needed
 
@@ -440,4 +440,4 @@ Solution: Bellman-Ford detects this on Vth iteration!
 
 *Tags: #bellman-ford #shortest-path #negative-edges #graph-algorithms #dynamic-programming #cycle-detection #pathfinding*
 
-*Backlinks: [[graph-algorithms]] | [[Dijkstra Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[Dynamic Programming]] | [[Network Flow Algorithms]] | [[Graph Representation]]*
+*Backlinks: [[graph-algorithms]] | [[Dijkstra Algorithm]] | [[BFS Patterns]] | [[Pathfinding Strategies]] | [[Dynamic Programming]] | [[Network Flow Algorithms]] | [[graph-representation]]*
