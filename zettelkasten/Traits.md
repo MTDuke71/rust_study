@@ -431,6 +431,7 @@ trait ObjectSafe {
 ## 📚 Related Concepts
 
 - [[Generic Programming]] - Using traits with generics
+- [[advanced-traits-patterns]] - Associated types, defaults, and supertraits (pattern summary)
 - [[zettelkasten/rust_book/rust-book-ch10]] - Rust Book Chapter 10: Traits and Generics
 - [[Ownership and Borrowing]] - Trait implementations and ownership
 - [[Error Handling Patterns]] - Result and Option traits
@@ -452,4 +453,4 @@ trait ObjectSafe {
 ---
 
 *Tags: #rust #traits #polymorphism #generics #interfaces #type-system*
-*Links: [[rust-book-ch9-12-review]] | [[Generic Programming]] | [[zettelkasten/rust_book/rust-book-ch10]] | [[rust-concepts-MOC]]*
+*Links: [[rust-book-ch9-12-review]] | [[Generic Programming]] | [[advanced-traits-patterns]] | [[zettelkasten/rust_book/rust-book-ch10]] | [[rust-concepts-MOC]]*

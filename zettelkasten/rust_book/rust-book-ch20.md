@@ -26,6 +26,8 @@ This chapter covers Rust's most sophisticated language features including unsafe
 - **Supertraits** - Requiring one trait's functionality within another
 - **Newtype Pattern** - Implementing external traits on external types
 
+See [[advanced-traits-patterns]] for a practical pattern-oriented summary.
+
 ### 20.3 Advanced Types
 - **Type Aliases** - Creating type synonyms with `type` keyword
 - **Never Type** - `!` type that never returns
@@ -73,7 +75,7 @@ This chapter covers Rust's most sophisticated language features including unsafe
 
 *Tags: #rust-book #unsafe-rust #advanced-traits #macros #type-system #function-pointers #advanced-features #ch20 #completed*
 
-*Links: [[../../rust_book/Ch20/README]] | [[Unsafe Rust Patterns]] | [[Advanced Trait Techniques]] | [[Macro Programming]] | [[Type System Deep Dive]] | [[zettel-index]]*
+*Links: [[../../rust_book/Ch20/README]] | [[Unsafe Rust Patterns]] | [[advanced-traits-patterns]] | [[Advanced Trait Techniques]] | [[Macro Programming]] | [[Type System Deep Dive]] | [[zettel-index]]*
 
 ---
 

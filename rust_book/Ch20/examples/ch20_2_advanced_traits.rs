@@ -59,6 +59,31 @@ fn demonstrate_associated_types() {
 fn demonstrate_default_type_parameters() {
     println!("--- 2. Default Type Parameters ---");
 
+    // Define types locally to implement Add
+    #[derive(Debug, Copy, Clone)]
+    struct Point {
+        x: i32,
+        y: i32,
+    }
+    
+    impl Point {
+        fn new(x: i32, y: i32) -> Self {
+            Point { x, y }
+        }
+    }
+    
+    impl fmt::Display for Point {
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            write!(f, "({}, {})", self.x, self.y)
+        }
+    }
+
+    #[derive(Debug)]
+    struct Millimeters(u32);
+    
+    #[derive(Debug)]
+    struct Meters(u32);
+
     // Add<Rhs=Self> has default parameter
     impl Add for Point {
         type Output = Point;
@@ -115,6 +140,25 @@ fn demonstrate_method_disambiguation() {
 /// 4. Supertraits
 fn demonstrate_supertraits() {
     println!("--- 4. Supertraits ---");
+
+    // Define Point locally to implement OutlinePrint
+    #[derive(Debug, Copy, Clone)]
+    struct Point {
+        x: i32,
+        y: i32,
+    }
+    
+    impl Point {
+        fn new(x: i32, y: i32) -> Self {
+            Point { x, y }
+        }
+    }
+    
+    impl fmt::Display for Point {
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            write!(f, "({}, {})", self.x, self.y)
+        }
+    }
 
     trait OutlinePrint: fmt::Display {
         fn outline_print(&self) {

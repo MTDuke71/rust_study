@@ -496,6 +496,7 @@ enum List<T> {
 
 - [[Generic Programming]] - Comprehensive generic programming patterns
 - [[Traits]] - Trait system and trait bounds
+- [[advanced-traits-patterns]] - Associated types and default type parameters (advanced patterns)
 - [[zettelkasten/rust_book/rust-book-ch10]] - Rust Book Chapter 10: Generics, Traits, Lifetimes
 - [[Ownership and Borrowing]] - Generic types and ownership
 - [[rust-concepts-MOC]] - Core language features
@@ -515,4 +516,4 @@ enum List<T> {
 ---
 
 *Tags: #rust #generics #type-parameters #monomorphization #zero-cost-abstractions*
-*Links: [[Generic Programming]] | [[Traits]] | [[zettelkasten/rust_book/rust-book-ch10]] | [[rust-concepts-MOC]]*
+*Links: [[Generic Programming]] | [[Traits]] | [[advanced-traits-patterns]] | [[zettelkasten/rust_book/rust-book-ch10]] | [[rust-concepts-MOC]]*

@@ -72,6 +72,7 @@
 - [[daily-study/Day15]] - Defining and implementing traits
 - [[daily-study/Day16]] - Type parameters and constraints
 - [[daily-study/Day18]] - Associated types and defaults
+- [[advanced-traits-patterns]] - Associated types, default type params, supertraits (Ch20.2 patterns)
 - [[daily-study/Day19]] - Dynamic dispatch with `dyn`
 - [[daily-study/Day21]] - Integrated mastery project
 - [[Rust Trinity - Struct Trait Impl]] - The three fundamental building blocks
