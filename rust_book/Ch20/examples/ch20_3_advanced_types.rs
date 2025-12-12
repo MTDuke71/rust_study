@@ -38,6 +38,7 @@ fn demonstrate_type_aliases() {
 fn demonstrate_never_type() {
     println!("--- 2. Never Type (!) ---");
 
+    #[allow(dead_code)]
     fn returns_never() -> ! {
         loop {
             break; // For demonstration - real ! never breaks
