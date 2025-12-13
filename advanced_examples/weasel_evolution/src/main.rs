@@ -11,7 +11,6 @@
 /// - Fitness: How closely a string matches the target
 /// - Selection: Always pick the best offspring
 /// - Cumulative Selection: Small improvements compound over generations
-
 use colored::Colorize;
 use rand::Rng;
 use std::fmt;
