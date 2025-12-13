@@ -57,6 +57,8 @@ macro_rules! say_hello {
 say_hello!();  // Expands to println!("Hello!")
 ```
 
+**→ Deep dive: [[declarative-macros]]**
+
 ### **2. Procedural Macros** (proc macros)
 
 Functions that take token streams as input and produce token streams as output.
@@ -73,6 +75,8 @@ fn index() -> &'static str { "Hello" }
 // Function-like macro
 let sql = sql!(SELECT * FROM users WHERE id = 1);
 ```
+
+**→ Deep dive: [[procedural-macros]]**
 
 ---
 
