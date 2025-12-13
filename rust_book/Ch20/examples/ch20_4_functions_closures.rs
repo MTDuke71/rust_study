@@ -29,7 +29,7 @@ fn demonstrate_function_pointers() {
     println!("  do_twice(add_one, 5) = {}", answer);
 
     // Function pointer with map
-    let numbers = vec![1, 2, 3];
+    let numbers = [1, 2, 3];
     let strings: Vec<String> = numbers.iter().map(ToString::to_string).collect();
     println!("  Map with function pointer: {:?}", strings);
 
