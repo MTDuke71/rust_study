@@ -1,0 +1,18 @@
+[package]
+name = "rust_book_ch21"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[example]]
+name = "ch21_1_single_threaded"
+path = "examples/ch21_1_single_threaded.rs"
+
+[[example]]
+name = "ch21_2_multithreaded"
+path = "examples/ch21_2_multithreaded.rs"
+
+[[example]]
+name = "ch21_3_graceful_shutdown"
+path = "examples/ch21_3_graceful_shutdown.rs"

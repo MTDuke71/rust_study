@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>404 - Page Not Found</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 600px;
+        margin: 100px auto;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        text-align: center;
+      }
+      .container {
+        background-color: white;
+        padding: 60px 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      }
+      .error-code {
+        font-size: 150px;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0;
+        line-height: 1;
+      }
+      h1 {
+        color: #333;
+        margin-top: 20px;
+      }
+      p {
+        color: #666;
+        font-size: 18px;
+        line-height: 1.6;
+        margin: 20px 0;
+      }
+      .ferris {
+        font-size: 100px;
+        margin: 20px 0;
+        animation: bounce 2s infinite;
+      }
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+      a {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: transform 0.2s;
+      }
+      a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      }
+      .info {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px solid #ddd;
+        font-size: 14px;
+        color: #999;
+      }
+      code {
+        background-color: #f4f4f4;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        color: #667eea;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="ferris">🦀</div>
+      <p class="error-code">404</p>
+      <h1>Page Not Found</h1>
+      <p>
+        Oops! The page you're looking for doesn't exist on this Rust web server.
+      </p>
+      <p>
+        The server successfully handled your request, but the resource at<br>
+        this URL was not found.
+      </p>
+      <a href="/">🏠 Return Home</a>
+      
+      <div class="info">
+        <p>
+          <strong>Server Information:</strong><br>
+          Multithreaded Rust Web Server<br>
+          Built with Chapter 21 concepts<br>
+          <br>
+          Available routes: <code>/</code>, <code>/about</code>, <code>/sleep</code>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
