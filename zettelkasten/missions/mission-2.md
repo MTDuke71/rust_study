@@ -431,7 +431,7 @@ fn reql1_linked_structure() { ... }
 - [[Circular Buffer Patterns]] - Wraparound logic
 - [[Pointer-Based Data Structures]] - Linked structures
 - [[Option Type in Collections]] - Safe null handling
-- [[Box Smart Pointer]] - Heap allocation ownership
+- [[box-learning-guide]] - Heap allocation ownership
 - [[Queue API Design Patterns]]
 - [[Queue Invariants]]
 - [[Queue Performance Analysis]]

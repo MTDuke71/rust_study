@@ -146,7 +146,7 @@ This type signature embodies Rust's philosophy: **"Fast, safe, expressive - pick
 - [[mission-4|../../missions/Mission4/README]] - Linked list V-Cycle implementation
 
 **Zettelkasten Type System:**
-- [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Heap allocation with Box
+- [[box-learning-guide|../../zettelkasten/Box Smart Pointer]] - Heap allocation with Box
 - [[Option Type|../../zettelkasten/Option Type]] - Null safety with Option
 - [[Generic Types|../../zettelkasten/Generic Types]] - Type parameters and monomorphization
 - [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership

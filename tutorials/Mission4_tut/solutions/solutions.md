@@ -71,7 +71,7 @@ The solutions follow Rust best practices and demonstrate real-world patterns you
 - [[exercise3_doubly_linked]] - Doubly linked list exercise
 
 **Smart Pointer Patterns:**
-- [[Box Smart Pointer Patterns]] - Box<T> solutions
+- [[box-pattern-catalog]] - Box<T> solutions
 - [[interior-mutability]] - RefCell patterns
 - [[rc-try-unwrap]] - Safe Rc unwrapping
 - [[weak-upgrade-pattern]] - Weak<T> upgrade handling

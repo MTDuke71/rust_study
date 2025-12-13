@@ -34,8 +34,10 @@ fn demonstrate_function_pointers() {
     println!("  Map with function pointer: {:?}", strings);
 
     // Enum initializers as function pointers
+    #[allow(dead_code)]
     enum Status {
         Value(u32),
+        Stop,
     }
 
     let statuses: Vec<Status> = (0u32..5).map(Status::Value).collect();

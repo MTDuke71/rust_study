@@ -233,7 +233,7 @@ This debugging approach gives you deep insight into how Rust's high-level constr
 - [[instruction-counting]] - Counting actual CPU instructions
 
 **Smart Pointers:**
-- [[Box Smart Pointer Patterns]] - Box<T> assembly patterns
+- [[box-pattern-catalog]] - Box<T> assembly patterns
 - [[option-lowering]] - Option<T> in assembly
 - [[memory-layout]] - Struct layout in memory
 

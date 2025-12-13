@@ -83,9 +83,9 @@
 5. **Weekly Review** → Strengthen weak connections, identify knowledge gaps
 
 **Example Integration (Smart Pointers + AoC)**:
-- Study Rust Book Ch 15.1 (Box<T>) → Create [[box-heap-allocation]] note
+- Study Rust Book Ch 15.1 (Box<T>) → Create [[box-in-aoc-problems]] note
 - Solve AoC problems requiring recursive data structures → Apply Box<T>
-- Document recursive tree patterns → Link to [[box-heap-allocation]] note
+- Document recursive tree patterns → Link to [[box-in-aoc-problems]] note
 - Create [[aoc-tree-patterns]] note → Bidirectional link to Box<T> concept
 
 ---

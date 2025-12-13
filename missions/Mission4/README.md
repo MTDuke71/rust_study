@@ -431,7 +431,7 @@ This linked list implementation provides foundation for:
 
 **Zettelkasten Knowledge:**
 - [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership concepts
-- [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Heap allocation with Box
+- [[box-learning-guide|../../zettelkasten/Box Smart Pointer]] - Heap allocation with Box
 - [[Rc and RefCell|../../zettelkasten/Rc and RefCell]] - Shared ownership and interior mutability
 - [[Linked List Patterns|../../zettelkasten/Linked List Patterns]] - Data structure implementations
 - [[rust-concepts-MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts

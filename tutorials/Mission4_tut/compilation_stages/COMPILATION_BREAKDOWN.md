@@ -196,7 +196,7 @@ This compilation process demonstrates how Rust's high-level safety features tran
 - [[heap-allocation]] - Box<T> allocation patterns
 
 **Smart Pointers:**
-- [[Box Smart Pointer Patterns]] - Box<T> implementation details
+- [[box-pattern-catalog]] - Box<T> implementation details
 - [[option-compilation]] - How Option<T> compiles
 - [[pointer-representation]] - Pointer encoding in assembly
 

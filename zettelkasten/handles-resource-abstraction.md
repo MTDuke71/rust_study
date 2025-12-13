@@ -270,7 +270,7 @@ println!("Result: {}", *counter.lock().unwrap());
 - [[rust-threading-basics]] - Thread spawning and ownership transfer
 - [[message-passing-channels]] - Alternative to shared state concurrency
 - [[shared-state-concurrency]] - Using Arc<Mutex<T>> with thread handles
-- [[box-heap-allocation]] - Another form of indirection/abstraction
+- [[box-in-aoc-problems]] - Another form of indirection/abstraction
 - [[deref-trait]] - How smart pointer handles work
 
 ---

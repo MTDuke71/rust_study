@@ -133,7 +133,7 @@ This is the power of modern systems programming! 🦀
 - [[LLVM and Rust|../../../zettelkasten/LLVM and Rust]] - Backend code generation
 - [[zero-cost-abstractions|../../../zettelkasten/Zero-Cost Abstractions]] - Performance analysis
 - [[Monomorphization|../../../zettelkasten/Monomorphization]] - Generic type specialization
-- [[Box Smart Pointer|../../../zettelkasten/Box Smart Pointer]] - Heap allocation patterns
+- [[box-learning-guide|../../../zettelkasten/Box Smart Pointer]] - Heap allocation patterns
 - [[rust-concepts-MOC|../../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts
 
 **Performance Topics:**

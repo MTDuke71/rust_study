@@ -2,7 +2,7 @@
 
 **Tags:** #drop #cleanup #raii #resource-management #rust-book-ch15 #automatic-cleanup #deterministic #zero-cost
 
-**Related:** [[Smart Pointers MOC]], [[deref-trait]], [[box-heap-allocation]], [[rc-shared-ownership]], [[raii-pattern]], [[resource-management]], [[smart-pointers]], [[ownership]]
+**Related:** [[Smart Pointers MOC]], [[deref-trait]], [[box-in-aoc-problems]], [[rc-shared-ownership]], [[raii-pattern]], [[resource-management]], [[smart-pointers]], [[ownership]]
 
 ---
 

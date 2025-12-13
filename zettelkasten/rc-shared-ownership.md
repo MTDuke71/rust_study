@@ -544,7 +544,7 @@ struct SharedGraph<T> {
 
 **Smart Pointers**:
 
-- [[box-heap-allocation]] - Single ownership heap allocation
+- [[box-in-aoc-problems]] - Single ownership heap allocation
 - [[refcell-interior-mutability]] - Interior mutability pattern (often used with Rc)
 - [[arc-atomic-rc]] - Thread-safe reference counting
 - [[weak-references]] - Breaking reference cycles
@@ -605,4 +605,4 @@ struct SharedGraph<T> {
 
 *Navigation: [[zettel-index]] | [[Smart Pointers MOC]] | [[Rust Book Ch15]]*  
 *Tags: #rust #smart-pointers #rc #reference-counting #shared-ownership #graphs #aoc-patterns #memory-management*  
-*Related: [[box-heap-allocation]] [[refcell-interior-mutability]] [[reference-cycles]] [[arena-allocation]] [[mission-7]] [[aoc-graph-problems]]*
+*Related: [[box-in-aoc-problems]] [[refcell-interior-mutability]] [[reference-cycles]] [[arena-allocation]] [[mission-7]] [[aoc-graph-problems]]*

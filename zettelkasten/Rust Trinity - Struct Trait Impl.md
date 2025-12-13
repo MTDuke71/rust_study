@@ -429,7 +429,7 @@ for (Drawable shape : shapes) {
 ### **Ownership & Memory**
 
 - [[daily-study/Day02]] - How structs own their data
-- [[Box Smart Pointer Patterns]] - Heap allocation for trait objects
+- [[box-pattern-catalog]] - Heap allocation for trait objects
 
 ### **Advanced Type System**
 
@@ -446,4 +446,4 @@ for (Drawable shape : shapes) {
 ---
 
 *Tags: #struct #trait #impl #type-system #polymorphism #data-structures #behavior-contracts #rust-trinity*
-*Links: [[daily-study/Day15]] | [[daily-study/Day16]] | [[Box Smart Pointer Patterns]] | [[rust-concepts-MOC]] | [[rust_book/Ch5/method_syntax/README]]*
+*Links: [[daily-study/Day15]] | [[daily-study/Day16]] | [[box-pattern-catalog]] | [[rust-concepts-MOC]] | [[rust_book/Ch5/method_syntax/README]]*

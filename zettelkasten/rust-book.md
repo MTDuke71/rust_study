@@ -142,7 +142,7 @@ This MOC provides complete access to both:
 
 - **📁 Implementations**: [[../rust_book/Ch15/README.md|Ch15 README]] - Box<T>, Rc<T>, RefCell<T>
 - **📝 Study Notes**: [[rust_book/rust-book-ch15]] - Memory management with smart pointers
-- **🔗 Pointer Connection**: [[Box Smart Pointer Patterns]] - Heap allocation patterns
+- **🔗 Pointer Connection**: [[box-pattern-catalog]] - Heap allocation patterns
 
 ### **Chapter 16: Fearless Concurrency**
 

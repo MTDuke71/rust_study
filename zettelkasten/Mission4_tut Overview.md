@@ -226,7 +226,7 @@ Overhead ratio:   2.29x
 
 ### **Smart Pointer Integration**
 
-- **[[Box Smart Pointer Patterns]]** - Heap allocation and unique ownership
+- **[[box-pattern-catalog]]** - Heap allocation and unique ownership
 - **[[interior-mutability]]** - RefCell runtime borrow checking
 - **[[Rc and RefCell Patterns]]** - Shared ownership with interior mutability
 
@@ -283,4 +283,4 @@ Overhead ratio:   2.29x
 ---
 
 *Tags: #mission4 #tutorial #linked-list #smart-pointers #interior-mutability #ownership*
-*Links: [[zettel-index]] | [[mission-4]] | [[Collections MOC]] | [[learning-plan]] | [[Box Smart Pointer Patterns]] | [[interior-mutability]] | [[Rc and RefCell Patterns]]*
+*Links: [[zettel-index]] | [[mission-4]] | [[Collections MOC]] | [[learning-plan]] | [[box-pattern-catalog]] | [[interior-mutability]] | [[Rc and RefCell Patterns]]*

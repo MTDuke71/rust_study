@@ -2,7 +2,7 @@
 
 **Tags:** #deref #smart-pointers #trait #ergonomics #coercion #rust-book-ch15 #zero-cost-abstractions
 
-**Related:** [[Smart Pointers MOC]], [[drop-trait]], [[box-heap-allocation]], [[rc-shared-ownership]], [[smart-pointers]], [[wrapper-pattern]], [[zero-cost-abstractions]], [[trait-system]]
+**Related:** [[Smart Pointers MOC]], [[drop-trait]], [[box-in-aoc-problems]], [[rc-shared-ownership]], [[smart-pointers]], [[wrapper-pattern]], [[zero-cost-abstractions]], [[trait-system]]
 
 ---
 
@@ -498,6 +498,6 @@ where
 
 **Core Concepts:** [[smart-pointers]] | [[wrapper-pattern]] | [[zero-cost-abstractions]] | [[trait-system]]  
 **Applications:** [[aoc-input-parsing]] | [[configuration-management]] | [[resource-wrappers]] | [[type-safety-patterns]]  
-**Integration:** [[drop-trait]] | [[box-heap-allocation]] | [[mission-4]] | [[rust-book-ch15]]
+**Integration:** [[drop-trait]] | [[box-in-aoc-problems]] | [[mission-4]] | [[rust-book-ch15]]
 
 *Links: [[deref-coercion]] | [[smart-pointer-composition]] | [[ergonomic-apis]] | [[zero-cost-wrapper-pattern]] | [[automatic-type-conversion]]*

@@ -29,7 +29,7 @@
 - [[daily-study/Day20]] - Elision rules and complex relationships
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns and scenarios
 - [[Ownership in Collections]] - Memory management with data structures
-- [[Box Smart Pointer Patterns]] - Heap allocation and smart pointer usage
+- [[box-pattern-catalog]] - Heap allocation and smart pointer usage
 - [[Deref Coercion and Automatic Dereferencing]] - Smart pointer unwrapping mechanics
 
 ### **Error Handling**

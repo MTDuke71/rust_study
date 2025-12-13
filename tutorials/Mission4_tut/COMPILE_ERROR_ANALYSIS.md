@@ -170,7 +170,7 @@ For linked lists, `Box<T>` and `Rc<RefCell<T>>` provide the same functionality w
 **Zettelkasten Concepts:**
 - [[Unsafe Rust|../../zettelkasten/Unsafe Rust]] - When and why to use unsafe
 - [[Memory Safety|../../zettelkasten/Memory Safety]] - Rust's safety guarantees
-- [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Safe heap allocation
+- [[box-learning-guide|../../zettelkasten/Box Smart Pointer]] - Safe heap allocation
 - [[Rc and RefCell|../../zettelkasten/Rc and RefCell]] - Safe shared ownership
 - [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core concepts
 - [[rust-concepts-MOC|../../zettelkasten/Rust Concepts MOC]] - Navigate all concepts

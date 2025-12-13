@@ -108,7 +108,7 @@
 ### **Outgoing Links** (Concepts this chapter teaches)
 
 - **[[smart-pointers-fundamentals]]** - Core smart pointer concepts from this chapter
-- **[[box-heap-allocation]]** - Box<T> for heap allocation and recursive types  
+- **[[box-in-aoc-problems]]** - Box<T> for heap allocation and recursive types  
 - **[[deref-coercion]]** - Automatic reference conversion for ergonomic APIs
 - **[[drop-trait-raii]]** - Resource Acquisition Is Initialization pattern
 - **[[rc-reference-counting]]** - Multiple ownership through reference counting
@@ -240,7 +240,7 @@ struct Node {
 *Tags: #rust-book #chapter-summary #smart-pointers #box #rc #refcell #weak #deref #drop #concept-mastery #integration-complete*
 
 *ChapterLinks: [[rust_book/Ch14]] | [[rust_book/Ch16]]*  
-*ConceptLinks: [[smart-pointers-fundamentals]] | [[box-heap-allocation]] | [[rc-reference-counting]] | [[refcell-interior-mutability]] | [[weak-reference-cycles]]*  
+*ConceptLinks: [[smart-pointers-fundamentals]] | [[box-in-aoc-problems]] | [[rc-reference-counting]] | [[refcell-interior-mutability]] | [[weak-reference-cycles]]*  
 *ApplicationLinks: [[mission-3]] | [[mission-4]] | [[daily-study/Day20]] | [[daily-study/Day21]]*
 
 *Chapter: [[rust_book/Ch15/CHAPTER_SUMMARY]]*

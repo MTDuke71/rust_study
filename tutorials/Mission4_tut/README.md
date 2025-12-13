@@ -619,7 +619,7 @@ pub struct DoublyLinkedList<T> {
 
 - [[../Mission4/README]] - Mission4 main implementation
 - [[../../zettelkasten/Missions Overview]] - All mission overviews
-- [[../../zettelkasten/Box Smart Pointer Patterns]] - Box<T> deep dive
+- [[box-pattern-catalog]] - Box<T> deep dive
 - [[../../zettelkasten/Collections MOC]] - Data structure patterns
 - [[compilation_stages/README]] - Understanding Rust compilation
 - [[compilation_stages/VISUAL_COMPILATION_PROCESS]] - Visual diagrams showing Rust → Assembly → Machine Code

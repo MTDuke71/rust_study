@@ -400,7 +400,7 @@ impl Drop for TrackingResource {
 - **[[mission-1|Mission1]]**: Stack-based memory management in stack implementation
 - **[[mission-4]]**: Heap allocation patterns in linked list nodes
 - **[[mission-5]]**: Memory layout optimization in HashMap implementation
-- **[[Box Smart Pointer Patterns]]**: Detailed Box<T> usage patterns
+- **[[box-pattern-catalog]]**: Detailed Box<T> usage patterns
 
 ### **Daily Study Connections**
 
@@ -431,4 +431,4 @@ Memory management in Rust is about **compile-time guarantees** rather than runti
 ---
 
 *Tags: #memory-management #ownership #borrowing #lifetimes #smart-pointers #raii #heap #stack #performance #safety*
-*Links: [[zettel-index]] | [[mission-1|Mission1]] | [[mission-4]] | [[Box Smart Pointer Patterns]] | [[rust_book/rust-book-ch4]] | [[rust_book/rust-book-ch15]] | [[Memory Optimization]]*
+*Links: [[zettel-index]] | [[mission-1|Mission1]] | [[mission-4]] | [[box-pattern-catalog]] | [[rust_book/rust-book-ch4]] | [[rust_book/rust-book-ch15]] | [[Memory Optimization]]*

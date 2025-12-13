@@ -48,7 +48,7 @@ A quick rule-of-thumb:
 ### 2) How this shows up in this workspace
 
 - `Box<T>` is the foundation for recursive structures and heap placement.
-  - See [[box-heap-allocation]].
+  - See [[box-in-aoc-problems]].
 - `Deref` + deref-coercion is what makes wrapper types ergonomic.
   - See [[deref-trait]].
 - `Drop` is the deterministic cleanup story that makes RAII work.
@@ -84,7 +84,7 @@ That tends to be simpler, faster, and easier to test.
 
 ### Enables
 - [[Smart Pointers MOC]] - Full ecosystem map and deeper dives
-- [[box-heap-allocation]] - Recursive structures and heap placement
+- [[box-in-aoc-problems]] - Recursive structures and heap placement
 - [[rc-shared-ownership]] - Multiple owners
 - [[refcell-interior-mutability]] - Runtime borrow checking
 - [[reference-cycles]] - Avoiding leaks in reference-counted graphs

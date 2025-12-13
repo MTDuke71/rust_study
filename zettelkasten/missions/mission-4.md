@@ -43,7 +43,7 @@ Fourth mission implementing singly and doubly linked lists with advanced pointer
 - Demonstrate `Box<T>` unique ownership
 - Show `Rc<RefCell<T>>` shared ownership
 - Compare memory management strategies
-- **Pattern**: [[../Box Smart Pointer|Box]] vs [[../Rc Smart Pointer|Rc]]
+- **Pattern**: [[box-learning-guide|Box]] vs [[../Rc Smart Pointer|Rc]]
 - **Connected to**: [[../ownership-fundamentals|Ownership Fundamentals]]
 
 ### **REQ-2: Interior Mutability**
@@ -282,7 +282,7 @@ struct Node<T> {
 
 ### **Concept Deep Dives**
 - **[[../ownership-fundamentals|Ownership Fundamentals]]** - Core ownership understanding required
-- **[[../Box Smart Pointer|Box Smart Pointer]]** - Unique heap ownership
+- **[[box-learning-guide|Box Smart Pointer]]** - Unique heap ownership
 - **[[../Rc Smart Pointer|Rc Smart Pointer]]** - Reference counting
 - **[[../refcell-interior-mutability|RefCell Interior Mutability]]** - Runtime borrow checking
 - **[[../reference-cycles|Reference Cycles]]** - Memory leak prevention with Weak
@@ -409,4 +409,4 @@ fn req6_rc_list_weak_references_prevent_cycles() { ... }
 
 *Tags: #mission4 #linked-list #smart-pointers #iterators #dynamic-allocation #interior-mutability #reference-counting #weak-pointers #v-cycle*
 
-*Links: [[../zettel-index|Zettel Index]] | [[mission-3|Mission 3]] | [[mission-5|Mission 5]] | [[../ownership-fundamentals|Ownership Fundamentals]] | [[../Box Smart Pointer|Box]] | [[../Rc Smart Pointer|Rc]] | [[../refcell-interior-mutability|RefCell]] | [[../reference-cycles|Reference Cycles]] | [[../Missions Overview|Missions Overview]]*
+*Links: [[../zettel-index|Zettel Index]] | [[mission-3|Mission 3]] | [[mission-5|Mission 5]] | [[../ownership-fundamentals|Ownership Fundamentals]] | [[box-learning-guide|Box]] | [[../Rc Smart Pointer|Rc]] | [[../refcell-interior-mutability|RefCell]] | [[../reference-cycles|Reference Cycles]] | [[../Missions Overview|Missions Overview]]*

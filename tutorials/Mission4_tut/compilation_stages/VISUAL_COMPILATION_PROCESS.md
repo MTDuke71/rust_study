@@ -255,7 +255,7 @@ This transformation shows how Rust's high-level safety features compile into eff
 - **[[daily-study/Day02]]** - Ownership fundamentals needed for Box<T>
 - **[[daily-study/Day03]]** - Reference rules in linked structures
 - **[[daily-study/Day04]]** - Lifetime management in recursive types
-- **[[Box Smart Pointer Patterns]]** - Box<T> usage patterns and heap allocation
+- **[[box-pattern-catalog]]** - Box<T> usage patterns and heap allocation
 - **[[Performance Optimization Guide]]** - Compilation level optimizations
 
 ### **Main Mission**
@@ -266,4 +266,4 @@ This transformation shows how Rust's high-level safety features compile into eff
 
 *Tags: #mission4 #compilation #assembly #llvm #box #linked-list #tutorial #visualization #zero-cost-abstractions #monomorphization #memory-layout*
 
-*Links: [[zettel-index]] | [[Mission4_tut Overview]] | [[Collections MOC]] | [[Box Smart Pointer Patterns]] | [[Performance Optimization Guide]]*
+*Links: [[zettel-index]] | [[Mission4_tut Overview]] | [[Collections MOC]] | [[box-pattern-catalog]] | [[Performance Optimization Guide]]*

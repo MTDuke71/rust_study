@@ -447,7 +447,7 @@ impl<T> ListBuilder<T> {
 **Zettelkasten Core Concepts:**
 - [[Ownership and Borrowing|../../zettelkasten/Ownership and Borrowing]] - Core ownership rules
 - [[Borrow Checker Fundamentals|../../zettelkasten/Borrow Checker Fundamentals]] - The borrow checker explained
-- [[Box Smart Pointer|../../zettelkasten/Box Smart Pointer]] - Unique ownership
+- [[box-learning-guide|../../zettelkasten/Box Smart Pointer]] - Unique ownership
 - [[Rc and RefCell|../../zettelkasten/Rc and RefCell]] - Shared ownership and interior mutability
 - [[Memory Safety|../../zettelkasten/Memory Safety]] - Rust's safety guarantees
 - [[Error Handling Deep Dive|../../zettelkasten/Error Handling Deep Dive]] - Result and error patterns

@@ -358,7 +358,7 @@ unsafe {
 
 ### **Data Structures**
 
-- **[[Box Smart Pointer Patterns]]**: Advanced Box usage patterns
+- **[[box-pattern-catalog]]**: Advanced Box usage patterns
 - **[[mission-4]]**: Linked lists and trees with Box
 - **[[Collections MOC]]**: Box in collection implementations
 
@@ -366,4 +366,4 @@ unsafe {
 
 *Tags: #box #smart-pointers #heap-allocation #ownership #memory-management #recursive-structures #trait-objects #performance #mission-integration #fundamentals*
 
-*Links: [[zettel-index]] | [[Box Smart Pointer Patterns]] | [[Ownership and Borrowing]] | [[Memory Address Analysis]] | [[mission-4]] | [[Collections MOC]] | [[rust-concepts-MOC]]*
+*Links: [[zettel-index]] | [[box-pattern-catalog]] | [[Ownership and Borrowing]] | [[Memory Address Analysis]] | [[mission-4]] | [[Collections MOC]] | [[rust-concepts-MOC]]*

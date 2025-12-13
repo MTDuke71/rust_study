@@ -20,14 +20,14 @@ Smart pointers provide additional capabilities beyond regular references. This c
 ## Mission Integration
 
 - **[[Mission4]]** - Linked list implementation uses Box<T> extensively
-- **[[Box Smart Pointer Patterns]]** - Comprehensive Box<T> usage guide
+- **[[box-pattern-catalog]]** - Comprehensive Box<T> usage guide
 - **[[Memory Management]]** - Advanced memory management strategies
 - **Recursive data structures** in mission implementations
 
 ## Cross-References
 
-- **[[Box Smart Pointer Patterns]]** - Complete guide to Box<T> usage and patterns
-- **[[../box-heap-allocation]]** - Box<T> for recursive structures and heap allocation
+- **[[box-pattern-catalog]]** - Complete guide to Box<T> usage and patterns
+- **[[box-in-aoc-problems]]** - Box<T> for recursive structures and heap allocation
 - **[[../rc-shared-ownership]]** - Rc<T> reference counting and shared ownership with graph examples
 - **[[Memory Management]]** - Advanced memory management and ownership patterns
 - **[[interior-mutability]]** - RefCell<T> and interior mutability concepts
@@ -36,7 +36,7 @@ Smart pointers provide additional capabilities beyond regular references. This c
 ## Learning Path
 
 1. Read [[../../rust_book/Ch15/README]] for comprehensive smart pointer mastery ✅
-2. Master Box patterns with [[Box Smart Pointer Patterns]]
+2. Master Box patterns with [[box-pattern-catalog]]
 3. Explore memory management in [[Memory Management]]
 4. Apply smart pointers in mission implementations (especially Mission4)
 
@@ -48,4 +48,4 @@ Smart pointers provide additional capabilities beyond regular references. This c
 
 *Tags: #rust-book #smart-pointers #box #rc #refcell #memory-management #ch15 #completed*
 
-*Links: [[../../rust_book/Ch15/README]] | [[Box Smart Pointer Patterns]] | [[Memory Management]] | [[interior-mutability]] | [[zettel-index]]*
+*Links: [[../../rust_book/Ch15/README]] | [[box-pattern-catalog]] | [[Memory Management]] | [[interior-mutability]] | [[zettel-index]]*

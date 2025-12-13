@@ -137,7 +137,7 @@ You're now ready to see **exactly** how Rust's memory safety features translate 
 - [[memory-layout]] - Struct memory organization
 
 **Smart Pointers:**
-- [[Box Smart Pointer Patterns]] - Box<T> implementation
+- [[box-pattern-catalog]] - Box<T> implementation
 - [[option-assembly]] - How Option<T> compiles
 - [[zero-cost-abstractions]] - Performance guarantees
 

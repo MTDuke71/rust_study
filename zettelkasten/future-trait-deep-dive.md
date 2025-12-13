@@ -280,7 +280,7 @@ impl Future for CountdownFuture {
 
 ### Memory & Safety
 - [[ownership-fundamentals]] - Ownership model that enables Pin safety
-- [[Box Smart Pointer]] - Heap allocation and `Box::pin()`
+- [[box-learning-guide]] - Heap allocation and `Box::pin()`
 - [[interior-mutability]] - RefCell patterns in async contexts
 
 ### Advanced Topics

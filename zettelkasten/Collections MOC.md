@@ -27,7 +27,7 @@
 
 ### **Smart Pointers for Collections**
 
-- [[box-heap-allocation]] - Box<T> for recursive data structures and AoC tree problems (NEW)
+- [[box-in-aoc-problems]] - Box<T> for recursive data structures and AoC tree problems (NEW)
 - [[deref-trait]] - Transparent wrapper behavior for collection types (NEW)
 - [[drop-trait]] - Automatic resource cleanup for collection wrappers (NEW)
 

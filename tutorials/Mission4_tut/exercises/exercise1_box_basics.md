@@ -132,7 +132,7 @@ Once you complete this exercise:
 ## 🔗 Related Zettelkasten Concepts
 
 **Core Smart Pointers:**
-- [[Box Smart Pointer Patterns]] - Heap allocation and ownership management
+- [[box-pattern-catalog]] - Heap allocation and ownership management
 - [[box]] - Box<T> for single ownership on the heap
 - [[ownership]] - Rust ownership system fundamentals
 - [[move-semantics]] - Transfer of ownership without copying

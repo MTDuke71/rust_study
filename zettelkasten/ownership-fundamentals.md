@@ -452,7 +452,7 @@ let r2 = &mut s;     // OK: r1 no longer active
 
 ### Smart Pointers (Build on Ownership)
 
-- **[[box-heap-allocation]]** - Single ownership on heap
+- **[[box-in-aoc-problems]]** - Single ownership on heap
 - **[[rc-shared-ownership]]** - Multiple ownership via reference counting
 - **[[refcell-interior-mutability]]** - Runtime-checked mutable borrowing
 - **[[Smart Pointers MOC]]** - Complete smart pointer ecosystem

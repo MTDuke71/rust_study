@@ -288,4 +288,4 @@ fn test_tail_pointer_consistency() {
 
 *Tags: #unsafe #raw-pointers #send-sync #memory-safety #mission2 #performance #thread-safety #linked-structures*
 
-*Links: [[zettel-index]] | [[Box Smart Pointer Patterns]] | [[../missions/Mission2/README|Mission2 Queue]] | [[NonNull and Pointer Safety]] | [[Building Safe Abstractions]] | [[Send and Sync Deep Dive]]*
+*Links: [[zettel-index]] | [[box-pattern-catalog]] | [[../missions/Mission2/README|Mission2 Queue]] | [[NonNull and Pointer Safety]] | [[Building Safe Abstractions]] | [[Send and Sync Deep Dive]]*

@@ -461,7 +461,7 @@ assert!(arena.get(idx1).is_none());
 
 - [[rc-shared-ownership]] - Alternative: reference counting for shared ownership
 - [[refcell-interior-mutability]] - Alternative: runtime borrow checking
-- [[box-heap-allocation]] - Single-owner heap allocation
+- [[box-in-aoc-problems]] - Single-owner heap allocation
 - [[lifetime-management]] - Arena ties all objects to single lifetime
 
 ### **Mission Applications**

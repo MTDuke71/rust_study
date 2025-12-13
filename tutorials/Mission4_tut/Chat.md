@@ -177,7 +177,7 @@ This follows the V-Cycle methodology from your rust_study workspace while implem
 - [[V-Cycle Methodology]] - Engineering approach
 
 **Smart Pointers:**
-- [[Box Smart Pointer Patterns]] - Box<T> patterns
+- [[box-pattern-catalog]] - Box<T> patterns
 - [[interior-mutability]] - RefCell patterns
 - [[weak-references]] - Weak<T> for cycles
 

@@ -168,7 +168,7 @@ After running each example, try these modifications:
 ### **Zettelkasten Knowledge Base**
 - [[../../../zettelkasten/Missions Overview]] - All mission overviews
 - [[../../../zettelkasten/Collections MOC]] - Data structure patterns
-- [[../../../zettelkasten/Box Smart Pointer Patterns]] - Box<T> deep dive
+- [[box-pattern-catalog]] - Box<T> deep dive
 - [[../../../zettelkasten/zettel-index]] - Main knowledge index
 
 ### **Compilation & Debugging**

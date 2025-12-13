@@ -640,7 +640,7 @@ Related: [[daily-study/Day19]]
 - [[PhantomData Type Safety Patterns]] - Zero-cost type state
 - [[Clone vs Copy]] - Value semantics with generics
 - [[zero-cost-abstractions]] - Monomorphization and performance
-- [[Box Smart Pointer Patterns]] - Heap allocation with generics
+- [[box-pattern-catalog]] - Heap allocation with generics
 
 ### **Learning Resources**
 

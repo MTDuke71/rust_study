@@ -31,7 +31,7 @@ Smart pointers are types that implement the `Deref` and/or `Drop` traits to prov
 
 ### **Core Smart Pointers**
 
-- [[box-heap-allocation]] - Box<T> for heap allocation and recursive types
+- [[box-in-aoc-problems]] - Box<T> for heap allocation and recursive types
 - [[rc-shared-ownership]] - Rc<T> for multiple ownership and shared data
 - [[refcell-interior-mutability]] - RefCell<T> for runtime-checked mutation
 - [[reference-cycles]] - Memory leaks with Rc and prevention with Weak<T>
@@ -153,7 +153,7 @@ enum Tree<T> {
 }
 ```
 
-**See**: [[box-heap-allocation]], [[mission-3]]
+**See**: [[box-in-aoc-problems]], [[mission-3]]
 
 ### **Pattern: Shared Ownership Graph**
 
@@ -223,7 +223,7 @@ struct Node {
 ### **Beginner: Understanding the Basics**
 
 1. [[ownership-fundamentals]] - Start with ownership rules
-2. [[box-heap-allocation]] - First smart pointer: Box<T>
+2. [[box-in-aoc-problems]] - First smart pointer: Box<T>
 3. [[deref-trait]] - How smart pointers act like references
 4. [[drop-trait]] - Automatic cleanup and RAII
 
