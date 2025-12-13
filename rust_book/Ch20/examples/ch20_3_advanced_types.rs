@@ -40,9 +40,7 @@ fn demonstrate_never_type() {
 
     #[allow(dead_code)]
     fn returns_never() -> ! {
-        loop {
-            break; // For demonstration - real ! never breaks
-        }
+        // Never type means function never returns
         panic!("This diverges")
     }
 

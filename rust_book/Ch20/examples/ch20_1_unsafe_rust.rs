@@ -171,6 +171,10 @@ fn demonstrate_static_variables() {
 fn demonstrate_unsafe_traits() {
     println!("--- 5. Unsafe Traits ---");
 
+    /// # Safety
+    ///
+    /// Implementors must ensure that the method implementation
+    /// maintains the trait's safety invariants.
     unsafe trait UnsafeTrait {
         fn method(&self);
     }
