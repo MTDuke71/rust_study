@@ -731,6 +731,89 @@ Validity checks:
 
 ---
 
+### Day 14: Restroom Redoubt
+
+**Title**: Restroom Redoubt
+**Part 1 Type**: Simulation + Mathematical
+**Part 1 Description**: Simulate 500 robots moving on a 101×103 grid with wraparound for 100 seconds. Each robot has position (px, py) and velocity (vx, vy). Calculate safety factor by multiplying quadrant counts (excluding robots on midlines).
+**Part 2 Type**: Pattern Matching + Optimization
+**Part 2 Description**: Find the timestep when robots form a Christmas tree pattern by detecting when all robots occupy unique positions (no overlaps).
+**Key Concepts**: Modular arithmetic with `rem_euclid()`, quadrant classification, parallel processing with rayon, pattern detection via uniqueness, Mission 6 Grid integration
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Simulation with escalation (simple position calculation → pattern detection across time)
+- **Data Structure**: `Robot` struct with position/velocity, Mission 6 `Grid<usize>` for visualization, `HashSet<(i32, i32)>` for uniqueness checking
+- **Complexity**: Part 1: O(N) robots × O(1) position calculation; Part 2: O(T×N) where T = timesteps until pattern found (~6516)
+- **AoC Theme**: "Robot simulation" with classic Part 2 pattern search (calculate metric → find special configuration)
+
+**🦀 Rust Conversion Highlights**:
+
+- **From manual modulo** → **`rem_euclid()` for proper wraparound** (handles negative velocities correctly)
+- **From sequential processing** → **Rayon parallelization** with `par_iter()` for large-scale performance testing
+- **From implicit bounds** → **Mission 6 `Grid<T>` and `Coord`** for safe spatial operations
+- **From ad-hoc pattern detection** → **Type-safe uniqueness check** with HashSet membership testing
+- **From single solution** → **Educational parallel example** (day14_rayon_learning.rs) demonstrating 6 rayon concepts
+
+**Rayon Parallelization Analysis**:
+
+| **Dataset Size** | **Serial** | **Parallel** | **Speedup** | **Winner** |
+|------------------|------------|--------------|-------------|------------|
+| 5 items          | 400 ns     | 96.6 µs      | 0.004x      | Serial (241x faster) |
+| 1,000 robots     | 37.8 µs    | 733 µs       | 0.05x       | Serial (19x faster) |
+| 1,000,000 items  | 5.01 ms    | 1.41 ms      | **3.54x**   | **Parallel** |
+
+**Key Finding**: Parallel overhead ~100µs; only beneficial when total work > 1ms. Demonstrates real-world performance trade-offs for data parallelism.
+
+**Real-World Complexity Handling**:
+
+- **Negative Velocity Wraparound**: `rem_euclid()` correctly handles negative velocities where standard `%` fails (e.g., `-3 % 101 = -3` vs `rem_euclid() = 98`)
+- **Quadrant Classification**: Uses `Ordering::cmp()` for clean three-way comparisons, skips robots on midlines
+- **Pattern Detection**: Christmas tree identified by uniqueness property—all 500 robots at distinct positions (insight from community after brute force visualization)
+- **Performance Instrumentation**: Dedicated `examples/day14_rayon_learning.rs` teaches parallel patterns with timing measurements
+
+**Python vs Rust Comparison**:
+
+- **Algorithm Approach**:
+  - **Python**: Direct computation avoiding simulation loop—`(x + 100 * (vx + width)) % width` calculates final position immediately for Part 1
+  - **Rust**: Position calculation method `position_at(seconds)` enables both direct computation and iterative simulation
+- **Part 2 Discovery**:
+  - **Python**: Comments reveal process—printed all frames, noticed 10,403-frame pattern, found 101-frame sub-pattern with clustering, manual inspection found answer; key insight: "no robot stands in the same spot" when forming tree
+  - **Rust**: Implemented `has_pattern()` checking for unique positions, validates Python's discovery with type-safe HashSet membership
+- **Performance Optimization**:
+  - **Python**: Efficient single-pass per timestep with early exit when duplicate position found (`valid = False; break`)
+  - **Rust**: Both serial implementation matching Python's approach AND parallel variants for educational comparison
+- **Code Philosophy**:
+  - **Python**: ~55 lines pragmatic solution, comments document discovery process, relies on visual inspection + community insight
+  - **Rust**: ~260 lines with comprehensive rayon tutorial (181 lines), transforms discovered pattern into programmatic validation, educational infrastructure for parallel processing
+
+**Educational Value - Rayon Learning**:
+
+Created `examples/day14_rayon_learning.rs` demonstrating:
+1. **Basic `par_iter()`** - Just add 'par_' prefix for parallelization
+2. **`reduce()` pattern** - Parallel aggregation (sum, product, tuple reduction)
+3. **`into_par_iter()`** - Consuming parallel iterators
+4. **`find_first()`** - Early exit searches with deterministic ordering
+5. **Performance trade-offs** - When parallel helps vs hurts (overhead analysis)
+6. **`par_extend()`** - Parallel collection building
+
+**Mission 6 Integration Benefits**:
+
+- `Grid<T>` for robot position visualization (`build_grid()` helper)
+- `Coord` type prevents x/y coordinate confusion (never used)
+- Type-safe spatial operations (prepared for future grid-based solutions)
+
+**Results**: Part 1 = 217,132,650, Part 2 = 6,516 (timestep when Christmas tree forms)
+
+**Test Coverage**: 5 comprehensive tests:
+- Parsing validation (robot position/velocity extraction)
+- Movement simulation (wraparound behavior with small 11×7 example)
+- Example integration (12 robots, safety factor = 12)
+- Serial vs parallel equivalence (functional correctness of rayon implementation)
+- Large dataset performance (demonstrates 19x overhead for 1k robots)
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -745,15 +828,15 @@ Validity checks:
 | Encoding | 0 | 0 |
 | Graph Algorithms | 3 | 3 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 7 | 5 |
+| Mathematical | 8 | 5 |
 | Number Theory | 0 | 0 |
-| Optimization | 1 | 6 |
+| Optimization | 1 | 7 |
 | Parsing | 0 | 0 |
-| Pattern Matching | 2 | 2 |
+| Pattern Matching | 2 | 3 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
 | Search/Traversal | 3 | 3 |
-| Simulation | 3 | 2 |
+| Simulation | 4 | 2 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
@@ -800,6 +883,11 @@ Validity checks:
 38. **Linear Algebra for Constraint Solving**: Cramer's rule for 2×2 systems providing O(1) closed-form solutions instead of brute force search (Day 13: claw machine button press combinations)
 39. **Scale-Driven Algorithm Selection**: Problem constraints that force analytical solutions over brute force approaches (Day 13: Part 2 adds 10 trillion offset making search impossible)
 40. **Integer Precision for Large Coordinates**: Using integer modulo for divisibility checking instead of floating-point `.is_integer()` to avoid precision loss at large scales (Day 13: 10 trillion-scale coordinates)
+41. **Modular Arithmetic with Wraparound**: Using `rem_euclid()` for proper modulo with negative numbers in grid simulation (Day 14: robot movement with negative velocities wrapping correctly)
+42. **Parallel Performance Analysis**: Empirical measurement of parallel overhead vs benefit, identifying when parallelization helps (Day 14: 3.54x speedup at 1M items, 19x overhead at 1k items)
+43. **Pattern Detection via Uniqueness**: Finding special configurations by testing constraint satisfaction (Day 14: Christmas tree when all robots occupy unique positions)
+44. **Data Parallelism with Rayon**: Converting sequential iterators to parallel with minimal code changes for CPU-bound workloads (Day 14: educational example with 6 core rayon patterns)
+45. **Tuple-Based Parallel Reduction**: Mapping items to tuple components and reducing by adding corresponding fields for multiple counters (Day 14: quadrant counting with `(q1, q2, q3, q4)` tuple reduction)
 
 ### Rust-Specific Considerations
 
@@ -816,6 +904,7 @@ Validity checks:
 - **Day 11**: Showcases optimization journey from string-based to math-based approaches. Demonstrates dynamic programming with `HashMap<(u64, usize), usize>` memoization cache using composite state keys for O(1) lookups. Highlights performance analysis through dedicated tests comparing naive O(S^B) vs memoized O(U×B) approaches. **Math Optimization**: Evolved from `to_string().len()` to `log10()` for digit counting, from string parsing to integer arithmetic (`division/modulo`) for splitting stones—eliminates heap allocations while maintaining correctness. **Educational Infrastructure**: `count_stones_with_trace()` and `count_with_cache_stats()` test helpers (marked `#[allow(dead_code)]`) provide instrumentation for understanding memoization mechanics. **Test-Driven Analysis**: 18 comprehensive tests including performance validation (naive vs memoized timing), cache efficiency measurement (130K entries for 223T stones), and traced execution examples. **Python Comparison**: Python used math-based approach from start with `@cache` decorator; Rust's manual cache management provides deeper understanding of memoization mechanics. Shows when optimization transitions from optional (Part 1 ≤25 blinks) to essential (Part 2 = 75 blinks), with concrete performance metrics validating the necessity.
 - **Day 12**: Exemplifies Mission 6 integration for region-based problems with flood fill for connected component detection. Demonstrates generic higher-order functions with closures—`calculate_total_cost<F>()` eliminates ~30 lines of duplication while accepting different cost formulas (area × perimeter vs area × sides). **Corner Counting Algorithm**: Mathematical approach leveraging geometric theorem (sides = corners for polygons), distinguishing outer corners (!N && !W) from inner corners (N && W && !NW), handling complex shapes including nested regions with holes. **Mission Integration**: `FloodFill::analyze_region_4()` provides area, perimeter, and coordinates in single call; `Grid<char>` + `Coord` eliminate manual bounds checking; row-major scanning (y outer, x inner) matches memory layout for cache efficiency. **Defense in Depth**: Validation in both `parse_grid()` and `Grid::from_vec2d()` provides better error messages despite redundancy. **Test Coverage**: 22 comprehensive tests covering parsing edge cases (11), Part 1 integration (5), Part 2 geometric shapes (6). **Python Comparison**: Python's creative string manipulation + grid rotation approach (creates padded grid, counts edge segments, rotates 90° for vertical edges) vs Rust's mathematical corner counting (HashSet lookups, no grid allocations, leverages polygon property). Shows functional programming patterns (closures for algorithm families) and foundational library composition (Grid + FloodFill = complete region detection framework).
 - **Day 13**: Demonstrates pure mathematical problem solving with minimal data structure complexity. Showcases Cramer's rule implementation for 2×2 linear systems with integer arithmetic avoiding floating-point precision issues. **Algorithm Choice**: Direct closed-form solution instead of brute force—O(1) vs O(N²) complexity; Part 2's 10 trillion offset makes brute force literally impossible. **Integer Precision**: Uses `i64` throughout and modulo checks (`a_num % det != 0`) instead of floating-point `.is_integer()`, critical for large-scale coordinates. **Cross-Platform Parsing**: `.lines()` iterator handles both LF and CRLF line endings automatically, fixing initial parsing failure on Windows. **Code Organization**: Clean separation with `ClawMachine` struct, dedicated parse functions with error context, and shared `total_tokens()` helper between parts. **Test Coverage**: 11 comprehensive tests covering parsing, individual machine solving (solvable and unsolvable cases), and Part 2 behavior changes. **Key Learning**: Not all AoC problems need complex data structures or mission libraries—recognizing when mathematical analysis is the right tool shows problem-solving maturity.
+- **Day 14**: Showcases **rayon data parallelism** for robot simulation with comprehensive educational infrastructure. Demonstrates `rem_euclid()` for proper modulo with negative numbers (critical for wraparound), quadrant classification with `Ordering::cmp()`, and pattern detection via uniqueness constraint (HashSet checking for collision-free positioning). **Rayon Excellence**: Created `examples/day14_rayon_learning.rs` (181 lines) teaching 6 core patterns—`par_iter()`, `reduce()`, `into_par_iter()`, `find_first()`, overhead analysis, `par_extend()`—with empirical performance data showing 3.54x speedup at 1M items vs 19x overhead at 1k items (parallel overhead ~100µs). **Tuple Reduction Pattern**: Demonstrates elegant multi-counter aggregation by mapping items to tuples `(q1, q2, q3, q4)` and reducing component-wise for parallel quadrant counting. **Python Comparison**: Python's pragmatic ~55-line solution with direct position calculation and manual pattern discovery (printing frames, visual inspection) vs Rust's ~260-line educational approach with programmatic validation, comprehensive parallel variants, and performance instrumentation. **Mission 6 Integration**: Prepared `Grid<T>` for visualization and spatial operations, demonstrating readiness for grid-based algorithms. **Key Insight**: Python documented discovery process in comments ("printed all frames, noticed patterns, found answer via community insight"), Rust formalized the insight into type-safe validation logic with parallel alternatives. **Test Coverage**: 5 tests validating parsing, wraparound simulation, serial/parallel equivalence, and large-scale performance characteristics.
 
 ---
 
@@ -856,10 +945,10 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: November 26, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13*
+*Last Updated: December 13, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]]*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]]*

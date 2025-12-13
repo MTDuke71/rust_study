@@ -128,6 +128,7 @@ dependencies = [
  "mission6",
  "mission7",
  "mission8",
+ "rayon",
  "regex",
 ]
 

@@ -193,6 +193,41 @@ fn step(current: &Grid) -> Grid {
 }
 ```
 
+### Pattern 3.5: Parallel Reduction with Tuples (AoC 2024 Day 14)
+
+```rust
+use rayon::prelude::*;
+use mission6::Grid;
+
+// Parallel quadrant counting with tuple reduction
+fn calculate_safety_factor_parallel(robots: &[Robot], width: i32, height: i32) -> usize {
+    let mid_x = width / 2;
+    let mid_y = height / 2;
+    
+    // Map each robot to (q1_count, q2_count, q3_count, q4_count)
+    let (q1, q2, q3, q4) = robots
+        .par_iter()
+        .map(|robot| {
+            let (x, y) = robot.position_at(100, width, height);
+            match (x.cmp(&mid_x), y.cmp(&mid_y)) {
+                (Less, Less) => (1, 0, 0, 0),
+                (Greater, Less) => (0, 1, 0, 0),
+                (Less, Greater) => (0, 0, 1, 0),
+                (Greater, Greater) => (0, 0, 0, 1),
+                _ => (0, 0, 0, 0),  // On midline, skip
+            }
+        })
+        .reduce(
+            || (0, 0, 0, 0),
+            |a, b| (a.0 + b.0, a.1 + b.1, a.2 + b.2, a.3 + b.3),
+        );
+    
+    q1 * q2 * q3 * q4
+}
+```
+
+**Pattern**: Map items to tuple components, reduce by adding corresponding fields. Elegantly handles multiple counters in parallel.
+
 ### Pattern 4: Multiple Independent Parts
 
 ```rust
@@ -307,6 +342,18 @@ Rayon benefits when:
 - Work per element > ~1µs
 - Total work > ~10ms
 
+### Empirical Data (AoC 2024 Day 14)
+
+Concrete performance measurements from robot simulation:
+
+| **Dataset Size** | **Serial** | **Parallel** | **Speedup** | **Winner** |
+|------------------|------------|--------------|-------------|-----------|
+| 5 items          | 400 ns     | 96.6 µs      | 0.004x      | Serial (241x faster) |
+| 1,000 items      | 37.8 µs    | 733 µs       | 0.05x       | Serial (19x faster) |
+| 1,000,000 items  | 5.01 ms    | 1.41 ms      | **3.54x**   | **Parallel** |
+
+**Key Finding**: Parallel overhead is ~100µs. Only worth it when total work > 1ms.
+
 ---
 
 ## Adding Rayon to Your Project
@@ -336,7 +383,31 @@ Think of Rayon like **AUTOSAR parallel runnables**:
 | `collect()` | Barrier synchronization |
 
 **Key insight**: You don't manually manage threads—you declare *what* should be parallel, and the runtime handles *how*.
+### Mission Library Composition
 
+Rayon composes beautifully with mission data structures:
+
+```rust
+use mission6::{Grid, Coord};
+use rayon::prelude::*;
+
+// Parallel grid processing with Mission 6
+fn process_grid_parallel(grid: &Grid<i32>) -> i32 {
+    (0..grid.height())
+        .into_par_iter()
+        .map(|row| {
+            (0..grid.width())
+                .map(|col| {
+                    let coord = Coord::new(row, col);
+                    grid.get(coord).copied().unwrap_or(0)
+                })
+                .sum::<i32>()
+        })
+        .sum()
+}
+```
+
+**Integrator approach**: Compose validated mission components (Grid, Graph, UnionFind) with Rayon's parallel patterns.
 ---
 
 ## Related Concepts
@@ -353,6 +424,7 @@ Think of Rayon like **AUTOSAR parallel runnables**:
 ### AoC Patterns
 - [[aoc-optimization-strategies]] - Performance optimization techniques
 - [[AoC Pattern Library]] - Reusable solution patterns
+- **AoC 2024 Day 14** - Robot simulation with parallel safety factor calculation (see `advent_of_code/aoc2024/examples/day14_rayon_learning.rs`)
 
 ---
 
