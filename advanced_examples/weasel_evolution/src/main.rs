@@ -11,7 +11,6 @@
 /// - Fitness: How closely a string matches the target
 /// - Selection: Always pick the best offspring
 /// - Cumulative Selection: Small improvements compound over generations
-
 use colored::Colorize;
 use rand::Rng;
 use std::fmt;
@@ -181,7 +180,7 @@ impl WeaselSimulation {
         loop {
             let found = self.evolve_generation();
 
-            if verbose || self.generation % 10 == 0 || found {
+            if verbose || self.generation.is_multiple_of(10) || found {
                 println!(
                     "Generation {:4}: {}",
                     self.generation,

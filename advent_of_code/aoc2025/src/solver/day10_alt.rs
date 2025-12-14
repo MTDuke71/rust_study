@@ -227,7 +227,7 @@ fn solve_machine_joltage_z3(machine: &Machine, targets: &[i64]) -> Result<usize>
         // Add contribution from each button that affects this counter
         for (button_idx, button_affects) in raw_buttons.iter().enumerate() {
             if button_affects.contains(&counter_idx) {
-                sum = sum + &button_vars[button_idx];
+                sum += &button_vars[button_idx];
             }
         }
         
@@ -238,7 +238,7 @@ fn solve_machine_joltage_z3(machine: &Machine, targets: &[i64]) -> Result<usize>
     // Minimize: sum of all button presses
     let mut total = Int::from_i64(&ctx, 0);
     for btn in &button_vars {
-        total = total + btn;
+        total += btn;
     }
     opt.minimize(&total);
     
