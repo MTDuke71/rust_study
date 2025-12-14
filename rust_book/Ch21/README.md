@@ -35,6 +35,7 @@ Ch21/
 │   └── static/
 │       ├── hello.html
 │       └── 404.html
+├── favicon.svg              # Favicon for the server
 ├── hello.html               # Sample HTML for examples
 └── 404.html                 # Error page for examples
 ```
@@ -366,10 +367,18 @@ loop {
 
 ## 📚 Additional Resources
 
+### Official Documentation
 - [RFC 7230 - HTTP/1.1 Message Syntax](https://tools.ietf.org/html/rfc7230)
 - [Rust std::net documentation](https://doc.rust-lang.org/std/net/)
 - [Thread Pool Pattern](https://en.wikipedia.org/wiki/Thread_pool)
 - [RAII in Rust](https://doc.rust-lang.org/rust-by-example/scope/raii.html)
+
+### Zettelkasten Connections
+- [[../../zettelkasten/tcp-listener]] - TCP listener fundamentals, binding, sync vs async patterns
+- [[../../zettelkasten/http-request-parsing]] - HTTP request parsing, headers, routing
+- [[../../zettelkasten/rust-threading-basics]] - Thread spawning and ownership transfer
+- [[../../zettelkasten/shared-state-concurrency]] - Arc<Mutex<T>> coordination patterns
+- [[../../zettelkasten/message-passing-channels]] - mpsc channels for thread communication
 
 ---
 

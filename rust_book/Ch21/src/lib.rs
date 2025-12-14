@@ -30,6 +30,7 @@ pub struct ThreadPool {
 type Job = Box<dyn FnOnce() + Send + 'static>;
 
 /// Messages sent to worker threads
+#[allow(dead_code)]
 enum Message {
     NewJob(Job),
     Terminate,

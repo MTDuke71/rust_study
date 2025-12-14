@@ -2271,6 +2271,10 @@ name = "rust_book_ch20"
 version = "0.1.0"
 
 [[package]]
+name = "rust_book_ch21"
+version = "0.1.0"
+
+[[package]]
 name = "rust_learning_week5_error_handling"
 version = "0.1.0"
 dependencies = [

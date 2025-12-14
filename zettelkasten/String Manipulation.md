@@ -366,3 +366,5 @@ fn process_bytes_lossy(bytes: Vec<u8>) -> String {
 - [[rust-book]] - String documentation
 - [[mission-5]] - HashMap with string keys
 - [[mission-9]] - JSON string processing
+- [[http-request-parsing]] - HTTP text protocol parsing
+- [[Text Parsing Patterns]] - General text processing

@@ -153,7 +153,7 @@
 - [[rust_book/rust-book-ch18]] - **Object-Oriented Programming Features** - OOP patterns and traits as interfaces ✅
 - [[rust_book/rust-book-ch19]] - **Patterns and Matching** - Advanced pattern syntax and destructuring ✅
 - [[rust_book/rust-book-ch20]] - **Advanced Features** - Unsafe Rust, advanced traits, types, functions, and macros ✅
-- [[rust_book/rust-book-ch21]] - **Final Project** - Multithreaded web server ✅
+- [[rust_book/rust-book-ch21]] - **Final Project** - Multithreaded web server, TCP listener, HTTP request parsing ✅
 - [[rust_book/rust-book-ch22]] - **Appendix** - Keywords, operators, traits, tools, editions, and Rust development ✅
 
 🎓 **RUST BOOK COMPLETE** - All chapters mastered with comprehensive competency!
@@ -271,6 +271,11 @@
 - [[message-passing-channels]] - mpsc-based producer/consumer pipelines for AoC parsing, processing, and aggregation
 - [[shared-state-concurrency]] - Arc<Mutex<T>> coordination patterns, contention controls, and AoC shared scoreboard examples
 - [[sync-send-traits]] - Thread-safety marker trait audits, static assertions, and lock-wrapping safety guides
+
+## 🌐 Networking & I/O
+
+- [[tcp-listener]] - **TCP Listener** - Network connection basics, binding addresses, accepting clients, sync vs async patterns
+- [[http-request-parsing]] - **HTTP Request Parsing** - Reading and parsing HTTP requests from TCP streams, request line, headers, body handling
 
 ## 🎯 Algorithms & Problem Solving
 

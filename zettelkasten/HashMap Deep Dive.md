@@ -620,3 +620,4 @@ where
 - [[Memory Safety]] - Safe HashMap operations
 - [[mission-5]] - HashMap implementation project
 - [[Big-O Notation]] - Complexity analysis
+- [[http-request-parsing]] - Using HashMap for HTTP headers

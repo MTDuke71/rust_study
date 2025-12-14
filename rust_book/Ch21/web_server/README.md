@@ -37,6 +37,7 @@ web_server/
 └── static/              # Static files served by the server
     ├── hello.html       # Home page (beautifully styled)
     └── 404.html         # Error page
+    └── favicon.svg       # Favicon for the server
 ```
 
 ## 🎓 Learning Features

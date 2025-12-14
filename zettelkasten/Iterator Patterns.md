@@ -844,4 +844,4 @@ let first_large = numbers.iter().find(|&&x| x > 2);
 ---
 
 *Tags: #iterator #patterns #rust #functional-programming #zero-cost-abstractions #performance #collections #api-design #mission-iterators*
-*Links: [[zettel-index]] | [[API Design Patterns]] | [[Testing Patterns]] | [[rust-book]] | [[mission-1]] | [[mission-5]] | [[mission-6]] | [[AoC Patterns MOC]] | [[Rest Patterns]]*
+*Links: [[zettel-index]] | [[API Design Patterns]] | [[Testing Patterns]] | [[rust-book]] | [[mission-1]] | [[mission-5]] | [[mission-6]] | [[AoC Patterns MOC]] | [[Rest Patterns]] | [[http-request-parsing]]*

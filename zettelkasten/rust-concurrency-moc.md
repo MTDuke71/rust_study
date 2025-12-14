@@ -111,6 +111,13 @@ This Map of Content (MOC) organizes all concurrency-related concepts in Rust, sp
 
 ## 🔧 Advanced Topics
 
+### Networking & I/O
+
+- [[tcp-listener]] - TCP server basics, binding, accepting connections, sync vs async
+- [[http-request-parsing]] - Parsing HTTP requests, headers, body, routing patterns
+- [[async-networking]] - Non-blocking I/O with Tokio, connection handling
+- [[web-server-architecture]] - Server design patterns, thread pools, async runtimes
+
 ### Memory Models
 
 - [[rust-memory-model]] - Happens-before, synchronizes-with relationships

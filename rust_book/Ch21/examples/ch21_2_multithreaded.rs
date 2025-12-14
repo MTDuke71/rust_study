@@ -49,13 +49,14 @@ fn handle_connection(mut stream: TcpStream) {
     println!("📨 Request: {} (handled by {:?})", request_line, thread_id);
 
     let (status_line, filename) = match &request_line[..] {
-        "GET / HTTP/1.1" => ("HTTP/1.1 200 OK", "hello.html"),
+        "GET / HTTP/1.1" => ("HTTP/1.1 200 OK", "rust_book/Ch21/hello.html"),
+        "GET /favicon.svg HTTP/1.1" => ("HTTP/1.1 200 OK", "rust_book/Ch21/favicon.svg"),
         "GET /sleep HTTP/1.1" => {
             println!("💤 Worker {:?} sleeping for 5 seconds...", thread_id);
             thread::sleep(Duration::from_secs(5));
-            ("HTTP/1.1 200 OK", "hello.html")
+            ("HTTP/1.1 200 OK", "rust_book/Ch21/hello.html")
         }
-        _ => ("HTTP/1.1 404 NOT FOUND", "404.html"),
+        _ => ("HTTP/1.1 404 NOT FOUND", "rust_book/Ch21/404.html"),
     };
 
     let contents = fs::read_to_string(filename).unwrap();

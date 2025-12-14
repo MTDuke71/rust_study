@@ -548,4 +548,4 @@ proptest! {
 ---
 
 *Tags: #result-type #error-handling #type-safety #rust-enum #composable-errors*
-*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Error Handling Patterns]] | [[Option Type]] | [[anyhow and thiserror]] | [[Error Propagation]] | [[daily-study/Day05]] | [[daily-study/Day29]] | [[daily-study/Day30]] | [[Week 5 Overview]] | [[mission-2]] | [[mission-4]] | [[mission-5]] | [[mission-6]]*
+*Links: [[zettel-index]] | [[rust-book-ch9-12-review]] | [[Error Handling Patterns]] | [[Option Type]] | [[anyhow and thiserror]] | [[Error Propagation]] | [[daily-study/Day05]] | [[daily-study/Day29]] | [[daily-study/Day30]] | [[Week 5 Overview]] | [[mission-2]] | [[mission-4]] | [[mission-5]] | [[mission-6]] | [[tcp-listener]] | [[http-request-parsing]]*

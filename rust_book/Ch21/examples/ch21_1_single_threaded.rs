@@ -44,13 +44,14 @@ fn handle_connection(mut stream: TcpStream) {
 
     // Match on request path
     let (status_line, filename) = match &request_line[..] {
-        "GET / HTTP/1.1" => ("HTTP/1.1 200 OK", "hello.html"),
+        "GET / HTTP/1.1" => ("HTTP/1.1 200 OK", "rust_book/Ch21/hello.html"),
+        "GET /favicon.svg HTTP/1.1" => ("HTTP/1.1 200 OK", "rust_book/Ch21/favicon.svg"),
         "GET /sleep HTTP/1.1" => {
             println!("💤 Sleeping for 5 seconds (simulating slow request)...");
             thread::sleep(Duration::from_secs(5));
-            ("HTTP/1.1 200 OK", "hello.html")
+            ("HTTP/1.1 200 OK", "rust_book/Ch21/hello.html")
         }
-        _ => ("HTTP/1.1 404 NOT FOUND", "404.html"),
+        _ => ("HTTP/1.1 404 NOT FOUND", "rust_book/Ch21/404.html"),
     };
 
     // Read HTML file
