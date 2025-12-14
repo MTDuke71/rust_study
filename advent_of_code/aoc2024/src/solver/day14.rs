@@ -92,6 +92,7 @@ fn calculate_safety_factor(robots: &[Robot], seconds: i32, width: i32, height: i
 /// - Each robot's position calculation is independent
 /// - No shared mutable state during calculation
 /// - Reduction operation (counting by quadrant) is associative
+#[allow(dead_code)]
 fn calculate_safety_factor_parallel(robots: &[Robot], seconds: i32, width: i32, height: i32) -> usize {
     let mid_x = width / 2;
     let mid_y = height / 2;

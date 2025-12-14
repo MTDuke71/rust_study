@@ -1,11 +1,12 @@
-/// Day 15: Warehouse Woes - Robot box-pushing simulation
-/// 
-/// Uses Mission 6's Grid<T> for warehouse layout
-/// Part 1: Single-width boxes
-/// Part 2: Double-width boxes (everything except robot is 2x wide)
+//! Day 15: Warehouse Woes - Robot box-pushing simulation
+//!
+//! Uses Mission 6's Grid<T> for warehouse layout
+//! Part 1: Single-width boxes
+//! Part 2: Double-width boxes (everything except robot is 2x wide)
 
 use anyhow::Result;
 use mission6::{Grid, Coord};
+use std::collections::HashSet;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Tile {
@@ -200,14 +201,9 @@ fn calculate_gps_sum(grid: &Grid<Tile>) -> usize {
     for y in 0..grid.height() {
         for x in 0..grid.width() {
             let coord = Coord::new(x, y);
-            if let Some(&tile) = grid.get(coord) {
-                match tile {
-                    Tile::Box | Tile::BoxLeft => {
-                        // GPS coordinate: 100 * row + col
-                        sum += 100 * y + x;
-                    }
-                    _ => {}
-                }
+            if let Some(&Tile::Box | &Tile::BoxLeft) = grid.get(coord) {
+                // GPS coordinate: 100 * row + col
+                sum += 100 * y + x;
             }
         }
     }
@@ -302,13 +298,56 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
             // Wide box pushing is more complex - need to check both halves
             match dir {
                 Direction::Left | Direction::Right => {
-                    // Horizontal: simpler, just push in direction
-                    if let Some(box_new_pos) = try_move_wide(grid, new_pos, dir) {
-                        if let Some(cell) = grid.get_mut(box_new_pos) {
-                            *cell = target;
+                    // Horizontal: need to find the far edge of the box and push from there
+                    // For pushing right: [...][...] -> if we hit [, we need to check past ]
+                    // For pushing left: [...][...] -> if we hit ], we need to check past [
+                    
+                    // First, find where this box ends in our direction
+                    let box_far_edge = if dir.delta().1 > 0 {
+                        // Pushing right - if we hit [, far edge is at x+1 (the ])
+                        // if we hit ], far edge is here
+                        if target == Tile::BoxLeft {
+                            Coord::new(new_pos.x + 1, new_pos.y)
+                        } else {
+                            new_pos
                         }
-                        if let Some(cell) = grid.get_mut(new_pos) {
+                    } else {
+                        // Pushing left - if we hit ], far edge is at x-1 (the [)
+                        // if we hit [, far edge is here
+                        if target == Tile::BoxRight {
+                            Coord::new(new_pos.x - 1, new_pos.y)
+                        } else {
+                            new_pos
+                        }
+                    };
+                    
+                    // Try to push from the far edge
+                    if try_move_wide(grid, box_far_edge, dir).is_some() {
+                        // Move the entire box: shift both cells in direction
+                        let (box_left_x, box_right_x) = if target == Tile::BoxLeft {
+                            (new_pos.x, new_pos.x + 1)
+                        } else {
+                            (new_pos.x - 1, new_pos.x)
+                        };
+                        
+                        let left_pos = Coord::new(box_left_x, new_pos.y);
+                        let right_pos = Coord::new(box_right_x, new_pos.y);
+                        let new_left = Coord::new((box_left_x as i32 + dc) as usize, new_pos.y);
+                        let new_right = Coord::new((box_right_x as i32 + dc) as usize, new_pos.y);
+                        
+                        // Clear old positions
+                        if let Some(cell) = grid.get_mut(left_pos) {
                             *cell = Tile::Empty;
+                        }
+                        if let Some(cell) = grid.get_mut(right_pos) {
+                            *cell = Tile::Empty;
+                        }
+                        // Set new positions
+                        if let Some(cell) = grid.get_mut(new_left) {
+                            *cell = Tile::BoxLeft;
+                        }
+                        if let Some(cell) = grid.get_mut(new_right) {
+                            *cell = Tile::BoxRight;
                         }
                         Some(new_pos)
                     } else {
@@ -317,29 +356,47 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
                 }
                 Direction::Up | Direction::Down => {
                     // Vertical: need to push both halves of box
-                    let (box_left_x, box_right_x) = if target == Tile::BoxLeft {
-                        (new_pos.x, new_pos.x + 1)
+                    // Collect all boxes that need to move (avoid double-moving)
+                    let box_left_x = if target == Tile::BoxLeft {
+                        new_pos.x
                     } else {
-                        (new_pos.x - 1, new_pos.x)
+                        new_pos.x - 1
                     };
 
                     let left_pos = Coord::new(box_left_x, new_pos.y);
-                    let right_pos = Coord::new(box_right_x, new_pos.y);
-
-                    // Check if both halves can move
-                    let can_move_left = can_push_wide(grid, left_pos, dir);
-                    let can_move_right = can_push_wide(grid, right_pos, dir);
-
-                    if can_move_left && can_move_right {
-                        // Actually push both halves
-                        try_move_wide(grid, left_pos, dir);
-                        try_move_wide(grid, right_pos, dir);
-                        
-                        if let Some(cell) = grid.get_mut(left_pos) {
-                            *cell = Tile::BoxLeft;
+                    
+                    // Collect all box left-positions that need to move
+                    let mut boxes_to_move: HashSet<Coord> = HashSet::new();
+                    if collect_boxes_vertical(grid, left_pos, dir, &mut boxes_to_move) {
+                        // Move all boxes - furthest first
+                        let mut boxes_vec: Vec<Coord> = boxes_to_move.into_iter().collect();
+                        // Sort by y - if going up, move highest (smallest y) first
+                        // If going down, move lowest (largest y) first
+                        if dr < 0 {
+                            boxes_vec.sort_by_key(|c| c.y);
+                        } else {
+                            boxes_vec.sort_by_key(|c| std::cmp::Reverse(c.y));
                         }
-                        if let Some(cell) = grid.get_mut(right_pos) {
-                            *cell = Tile::BoxRight;
+                        
+                        for box_left in boxes_vec {
+                            let box_right = Coord::new(box_left.x + 1, box_left.y);
+                            let new_left = Coord::new(box_left.x, (box_left.y as i32 + dr) as usize);
+                            let new_right = Coord::new(box_right.x, (box_right.y as i32 + dr) as usize);
+                            
+                            // Clear old positions
+                            if let Some(cell) = grid.get_mut(box_left) {
+                                *cell = Tile::Empty;
+                            }
+                            if let Some(cell) = grid.get_mut(box_right) {
+                                *cell = Tile::Empty;
+                            }
+                            // Set new positions
+                            if let Some(cell) = grid.get_mut(new_left) {
+                                *cell = Tile::BoxLeft;
+                            }
+                            if let Some(cell) = grid.get_mut(new_right) {
+                                *cell = Tile::BoxRight;
+                            }
                         }
                         Some(new_pos)
                     } else {
@@ -352,46 +409,74 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
     }
 }
 
-fn can_push_wide(grid: &Grid<Tile>, pos: Coord, dir: Direction) -> bool {
-    let (dr, dc) = dir.delta();
-    let new_y = pos.y as i32 + dr;
-    let new_x = pos.x as i32 + dc;
-    
-    if new_x < 0 || new_y < 0 {
-        return false;
+/// Collect all boxes that need to move vertically starting from a box's left position
+/// Returns true if the move is possible, false if blocked by wall
+fn collect_boxes_vertical(
+    grid: &Grid<Tile>, 
+    box_left: Coord, 
+    dir: Direction, 
+    boxes: &mut HashSet<Coord>
+) -> bool {
+    // Already visited this box
+    if boxes.contains(&box_left) {
+        return true;
     }
     
-    let new_pos = Coord::new(new_x as usize, new_y as usize);
+    boxes.insert(box_left);
     
-    if !grid.in_bounds(new_pos) {
-        return false;
-    }
-
-    if let Some(&target) = grid.get(new_pos) {
-        match target {
-            Tile::Empty => true,
-            Tile::Wall => false,
-            Tile::BoxLeft | Tile::BoxRight => {
-                match dir {
-                    Direction::Up | Direction::Down => {
-                        let (left_x, right_x) = if target == Tile::BoxLeft {
-                            (new_pos.x, new_pos.x + 1)
-                        } else {
-                            (new_pos.x - 1, new_pos.x)
-                        };
-                        let left_pos = Coord::new(left_x, new_pos.y);
-                        let right_pos = Coord::new(right_x, new_pos.y);
-                        can_push_wide(grid, left_pos, dir) 
-                            && can_push_wide(grid, right_pos, dir)
-                    }
-                    _ => can_push_wide(grid, new_pos, dir)
+    let (dr, _) = dir.delta();
+    let box_right = Coord::new(box_left.x + 1, box_left.y);
+    
+    // Check both positions above/below this box
+    let next_left = Coord::new(box_left.x, (box_left.y as i32 + dr) as usize);
+    let next_right = Coord::new(box_right.x, (box_right.y as i32 + dr) as usize);
+    
+    // Check left side
+    if let Some(&tile) = grid.get(next_left) {
+        match tile {
+            Tile::Wall => return false,
+            Tile::BoxLeft => {
+                // Box directly above/below, aligned
+                if !collect_boxes_vertical(grid, next_left, dir, boxes) {
+                    return false;
                 }
             }
-            _ => false,
+            Tile::BoxRight => {
+                // Box above/below, shifted left - its left is at next_left.x - 1
+                let other_box_left = Coord::new(next_left.x - 1, next_left.y);
+                if !collect_boxes_vertical(grid, other_box_left, dir, boxes) {
+                    return false;
+                }
+            }
+            Tile::Empty => {}
+            _ => {}
         }
-    } else {
-        false
     }
+    
+    // Check right side
+    if let Some(&tile) = grid.get(next_right) {
+        match tile {
+            Tile::Wall => return false,
+            Tile::BoxLeft => {
+                // Box above/below, shifted right
+                if !collect_boxes_vertical(grid, next_right, dir, boxes) {
+                    return false;
+                }
+            }
+            Tile::BoxRight => {
+                // This is the right side of the same box we might have checked on left
+                // Its left is at next_right.x - 1
+                let other_box_left = Coord::new(next_right.x - 1, next_right.y);
+                if !collect_boxes_vertical(grid, other_box_left, dir, boxes) {
+                    return false;
+                }
+            }
+            Tile::Empty => {}
+            _ => {}
+        }
+    }
+    
+    true
 }
 
 fn simulate_robot_wide(mut grid: Grid<Tile>, moves: Vec<Direction>, mut robot_pos: Coord) -> Grid<Tile> {
