@@ -814,6 +814,173 @@ Created `examples/day14_rayon_learning.rs` demonstrating:
 
 ---
 
+### Day 15: Warehouse Woes
+
+**Title**: Warehouse Woes
+**Part 1 Type**: Simulation + Search/Traversal
+**Part 1 Description**: Robot pushes single-width boxes (`O`) in a warehouse grid following movement commands (`^v<>`). Boxes form 1D chains that shift together when space is found. Calculate GPS sum (100 × row + col) of all final box positions.
+**Part 2 Type**: Simulation + Graph Algorithms
+**Part 2 Description**: Transform warehouse to double-width (walls `##`, boxes `[]`, robot stays 1-wide). Boxes form 2D overlapping structures requiring recursive collection to move multiple boxes simultaneously. Calculate GPS sum using left bracket positions.
+**Key Concepts**: Grid simulation, box-pushing mechanics, recursive traversal, HashSet deduplication, check-then-execute pattern, Mission 6 Grid integration
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Simulation with dimensional escalation (1D box chains → 2D overlapping box structures)
+- **Data Structure**: Mission 6 `Grid<Tile>` for warehouse state, `HashSet<Coord>` for vertical box collection (Part 2), enum `Tile` for cell types, `Coord` for type-safe positions
+- **Complexity**:
+  - Part 1: O(M × C) where M = moves, C = chain length (scan to find empty space)
+  - Part 2 Horizontal: Similar to Part 1, find far edge and recurse
+  - Part 2 Vertical: O(M × B) where B = boxes in overlapping structure (recursive collection with memoization via HashSet)
+- **AoC Theme**: "Robot simulation" with classic Part 2 complexity escalation (simple chains → complex overlapping structures)
+
+**🦀 Rust Conversion Highlights**:
+
+- **From Python's tuple positions** → **Type-safe `Coord` from Mission 6** (prevents x/y confusion)
+- **From manual bounds checking** → **`grid.in_bounds()` and `grid.get()`/`grid.get_mut()` with `Option` returns**
+- **From nested function calls** → **Explicit enum `Direction` with `delta()` method for directional offsets**
+- **From Python sets for tracking** → **Rust `HashSet<Coord>` with `contains()` for duplicate prevention**
+- **From dynamic typing** → **Strongly typed `enum Tile` with exhaustive pattern matching**
+
+**Algorithm Deep Dive - Part 1 Optimization Journey**:
+
+The solution evolved through three approaches:
+
+1. **Initial Buggy Approach** (commit a09d182): Only moved first and last box in chain
+   - Bug: `. O O O @>` became `O . . O @` (middle boxes vanished)
+   - Issue: Cleared first position, placed box at empty, ignored intermediate boxes
+
+2. **Over-Engineered Fix** (commit 4bb6c60): Tracked all boxes, moved each in reverse order
+   - Correct but complex: Vec of all box positions, iterate reverse to avoid overwrites
+   - Unnecessary work: Updated every box position (`O` → `O` for middle boxes)
+
+3. **Elegant Solution** (current): Two-position update only
+   - Key insight: Middle boxes don't change state (`O` → `O`), no update needed!
+   - Algorithm: Scan for empty space → place box at empty → clear first position
+   - **Check-Then-Execute Pattern**: Validate entire chain before any modifications (atomic success/failure)
+
+**Algorithm Deep Dive - Part 2 Vertical Complexity**:
+
+Part 2 introduces **2D overlapping boxes** that require sophisticated handling:
+
+**Python's BFS Collection Approach** (`get_adjs_and_edges`):
+```python
+queue = [(y, x)]
+while queue:
+    y, x = queue.pop(0)  # BFS traversal
+    if (y, x) in adjs:
+        continue  # Skip visited
+    adjs.add((y, x))
+    
+    # Check above/below for connected boxes
+    if grid[ny][nx] == "[":
+        queue.append((ny, nx))
+        queue.append((ny, nx + 1))  # Both halves
+```
+- Uses BFS with set-based deduplication
+- Collects ALL affected positions (edges and adjacent cells)
+- Sorts by distance before moving (`sorted_coords`)
+
+**Rust's Recursive Collection Approach** (`collect_boxes_vertical`):
+```rust
+fn collect_boxes_vertical(
+    grid: &Grid<Tile>, 
+    box_left: Coord,  // Track by left bracket position
+    dir: Direction, 
+    boxes: &mut HashSet<Coord>
+) -> bool {
+    if boxes.contains(&box_left) {
+        return true;  // Already visited
+    }
+    boxes.insert(box_left);
+    
+    // Recurse on both halves' neighbors
+    // Returns false if any path hits a wall
+}
+```
+- Uses recursion with HashSet deduplication
+- Returns `bool` for validation (wall detection)
+- Collects only box positions (not all cells)
+
+**Why HashSet is Critical**:
+```
+  []         Box A
+ [][]        Box B, Box C
+  @^
+```
+When robot pushes up from Box B:
+- Check above-left: finds `[` of Box A → recurse
+- Check above-right: finds `]` of Box A → recurse **again**
+- Without HashSet: Box A added twice, moved twice! 🐛
+- With HashSet: Second encounter skipped, Box A moves once ✅
+
+**The Two-Phase Execute Pattern**:
+
+Both languages use **collect-then-execute**:
+
+**Phase 1 - Collection** (No grid modifications):
+- Scan all affected boxes recursively/iteratively
+- Validate no walls block the move
+- Build complete set of boxes to move
+
+**Phase 2 - Execution** (Atomic modification):
+- Sort boxes by distance (furthest first)
+- Move each box to new position
+- Clear old positions
+- **Critical**: Distance sorting prevents overwriting unmoved boxes
+
+**Key Architectural Differences**:
+
+| **Aspect** | **Python** | **Rust** |
+|------------|------------|----------|
+| **Traversal** | BFS with `list.pop(0)` (O(n)) | Recursion with call stack |
+| **Collection** | All cells (`adjs` set) + edge markers | Box positions only (left brackets) |
+| **Sorting** | `sorted()` with key function | `sort_by_key()` with `Reverse()` |
+| **Grid Updates** | Direct list indexing | `grid.get_mut()` with `Option` |
+| **Coordinate Type** | Tuples `(y, x)` | Type-safe `Coord{x, y}` |
+| **Validation** | Count blocked edges | Boolean return from recursion |
+
+**Mission 6 Integration Benefits**:
+
+- **`Grid<Tile>`**: Type-safe 2D storage with bounds checking
+- **`Coord`**: Prevents x/y confusion (never wrote `grid[x][y]` by mistake)
+- **`in_bounds()`**: Eliminates manual boundary checks
+- **`get()`/`get_mut()`**: Returns `Option` for safe access patterns
+- **`from_vec2d()`**: Clean grid construction from parsed input
+
+**Results**: Part 1 = 1,465,152, Part 2 = 1,511,259
+
+**Test Coverage**: 3 comprehensive tests:
+- Small example (8×8 grid, simple movements, GPS = 2,028)
+- Large example Part 1 (10×10 grid, complex chains, GPS = 10,092)
+- Large example Part 2 (widened grid, vertical overlaps, GPS = 9,021)
+
+**Code Organization**:
+- **Part 1**: `try_move()` handles 1D box chains with endpoint updates
+- **Part 2**: `try_move_wide()` dispatches to horizontal (recursive scan) vs vertical (collect-then-execute)
+- **Separation of Concerns**: `try_move*()` handles box logic, `simulate_robot*()` handles robot tile updates
+- **Helper Functions**: `widen_grid()` transforms Part 1 → Part 2, `calculate_gps_sum()` shared scoring
+
+**Educational Insights**:
+
+1. **Simplification Through Understanding**: The Part 1 optimization journey shows how deep problem understanding leads to simpler code (tracking all boxes → updating two positions)
+
+2. **Check-Then-Execute Pattern**: Validate entire operation before any modifications ensures atomic success/failure (no partial states, no rollback needed)
+
+3. **Deduplication is Critical**: Part 2's overlapping boxes prove why HashSet tracking prevents double-processing in graph-like traversals
+
+4. **Distance-Based Ordering**: Moving furthest boxes first prevents overwriting unmoved boxes (common pattern in grid simulations)
+
+5. **Mission Library Composition**: Grid + Coord infrastructure eliminates entire bug classes (bounds errors, coordinate confusion)
+
+**Python vs Rust Philosophy**:
+
+- **Python**: ~130 lines, BFS with list-based queue, tuple coordinates, dynamic typing, direct grid indexing
+- **Rust**: ~520 lines (including comprehensive tests), recursive collection, type-safe Coord/Tile, explicit error handling, Mission 6 integration
+- **Both Correct**: Python optimizes for brevity and rapid development; Rust optimizes for safety, educational clarity, and integration with mission libraries
+- **Key Difference**: Python's pragmatic approach vs Rust's educational infrastructure with comprehensive type safety
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -826,7 +993,7 @@ Created `examples/day14_rayon_learning.rs` demonstrating:
 | Cryptographic | 0 | 0 |
 | Data Structures | 2 | 2 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 3 | 3 |
+| Graph Algorithms | 3 | 4 |
 | Greedy Algorithms | 0 | 0 |
 | Mathematical | 8 | 5 |
 | Number Theory | 0 | 0 |
@@ -835,8 +1002,8 @@ Created `examples/day14_rayon_learning.rs` demonstrating:
 | Pattern Matching | 2 | 3 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
-| Search/Traversal | 3 | 3 |
-| Simulation | 4 | 2 |
+| Search/Traversal | 4 | 4 |
+| Simulation | 5 | 3 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
@@ -888,6 +1055,11 @@ Created `examples/day14_rayon_learning.rs` demonstrating:
 43. **Pattern Detection via Uniqueness**: Finding special configurations by testing constraint satisfaction (Day 14: Christmas tree when all robots occupy unique positions)
 44. **Data Parallelism with Rayon**: Converting sequential iterators to parallel with minimal code changes for CPU-bound workloads (Day 14: educational example with 6 core rayon patterns)
 45. **Tuple-Based Parallel Reduction**: Mapping items to tuple components and reducing by adding corresponding fields for multiple counters (Day 14: quadrant counting with `(q1, q2, q3, q4)` tuple reduction)
+46. **Check-Then-Execute Pattern**: Validate entire operation atomically before any modifications, eliminating need for rollback or partial state handling (Day 15: scan for empty space before moving any boxes)
+47. **Box-Chain Simulation**: 1D chain pushing where intermediate elements don't need updates if their state remains unchanged (Day 15 Part 1: only update endpoints of box chain)
+48. **Recursive Collection with Deduplication**: Using HashSet to prevent double-processing in overlapping graph-like structures (Day 15 Part 2: vertical box pushing where boxes share edges)
+49. **Distance-Based Ordering for Cascading Updates**: Sort entities by distance from change source to prevent overwriting unmoved elements (Day 15: move furthest boxes first in chain/structure)
+50. **Dimensional Escalation in Simulations**: Increasing complexity from 1D chains to 2D overlapping structures requiring fundamentally different algorithms (Day 15: simple chains → recursive collection)
 
 ### Rust-Specific Considerations
 
@@ -905,6 +1077,7 @@ Created `examples/day14_rayon_learning.rs` demonstrating:
 - **Day 12**: Exemplifies Mission 6 integration for region-based problems with flood fill for connected component detection. Demonstrates generic higher-order functions with closures—`calculate_total_cost<F>()` eliminates ~30 lines of duplication while accepting different cost formulas (area × perimeter vs area × sides). **Corner Counting Algorithm**: Mathematical approach leveraging geometric theorem (sides = corners for polygons), distinguishing outer corners (!N && !W) from inner corners (N && W && !NW), handling complex shapes including nested regions with holes. **Mission Integration**: `FloodFill::analyze_region_4()` provides area, perimeter, and coordinates in single call; `Grid<char>` + `Coord` eliminate manual bounds checking; row-major scanning (y outer, x inner) matches memory layout for cache efficiency. **Defense in Depth**: Validation in both `parse_grid()` and `Grid::from_vec2d()` provides better error messages despite redundancy. **Test Coverage**: 22 comprehensive tests covering parsing edge cases (11), Part 1 integration (5), Part 2 geometric shapes (6). **Python Comparison**: Python's creative string manipulation + grid rotation approach (creates padded grid, counts edge segments, rotates 90° for vertical edges) vs Rust's mathematical corner counting (HashSet lookups, no grid allocations, leverages polygon property). Shows functional programming patterns (closures for algorithm families) and foundational library composition (Grid + FloodFill = complete region detection framework).
 - **Day 13**: Demonstrates pure mathematical problem solving with minimal data structure complexity. Showcases Cramer's rule implementation for 2×2 linear systems with integer arithmetic avoiding floating-point precision issues. **Algorithm Choice**: Direct closed-form solution instead of brute force—O(1) vs O(N²) complexity; Part 2's 10 trillion offset makes brute force literally impossible. **Integer Precision**: Uses `i64` throughout and modulo checks (`a_num % det != 0`) instead of floating-point `.is_integer()`, critical for large-scale coordinates. **Cross-Platform Parsing**: `.lines()` iterator handles both LF and CRLF line endings automatically, fixing initial parsing failure on Windows. **Code Organization**: Clean separation with `ClawMachine` struct, dedicated parse functions with error context, and shared `total_tokens()` helper between parts. **Test Coverage**: 11 comprehensive tests covering parsing, individual machine solving (solvable and unsolvable cases), and Part 2 behavior changes. **Key Learning**: Not all AoC problems need complex data structures or mission libraries—recognizing when mathematical analysis is the right tool shows problem-solving maturity.
 - **Day 14**: Showcases **rayon data parallelism** for robot simulation with comprehensive educational infrastructure. Demonstrates `rem_euclid()` for proper modulo with negative numbers (critical for wraparound), quadrant classification with `Ordering::cmp()`, and pattern detection via uniqueness constraint (HashSet checking for collision-free positioning). **Rayon Excellence**: Created `examples/day14_rayon_learning.rs` (181 lines) teaching 6 core patterns—`par_iter()`, `reduce()`, `into_par_iter()`, `find_first()`, overhead analysis, `par_extend()`—with empirical performance data showing 3.54x speedup at 1M items vs 19x overhead at 1k items (parallel overhead ~100µs). **Tuple Reduction Pattern**: Demonstrates elegant multi-counter aggregation by mapping items to tuples `(q1, q2, q3, q4)` and reducing component-wise for parallel quadrant counting. **Python Comparison**: Python's pragmatic ~55-line solution with direct position calculation and manual pattern discovery (printing frames, visual inspection) vs Rust's ~260-line educational approach with programmatic validation, comprehensive parallel variants, and performance instrumentation. **Mission 6 Integration**: Prepared `Grid<T>` for visualization and spatial operations, demonstrating readiness for grid-based algorithms. **Key Insight**: Python documented discovery process in comments ("printed all frames, noticed patterns, found answer via community insight"), Rust formalized the insight into type-safe validation logic with parallel alternatives. **Test Coverage**: 5 tests validating parsing, wraparound simulation, serial/parallel equivalence, and large-scale performance characteristics.
+- **Day 15**: Demonstrates **Mission 6 Grid mastery** for complex box-pushing simulations with sophisticated algorithm evolution. Showcases **check-then-execute pattern** where entire operation is validated before any modifications (atomic success/failure, no rollback needed). **Optimization Journey**: Evolved from buggy endpoint-only updates → over-engineered full-chain tracking → elegant two-position updates (recognizing middle boxes don't change state). **Part 2 Complexity**: Handles 2D overlapping box structures requiring recursive collection with HashSet deduplication to prevent double-processing. **Key Algorithms**: Part 1 uses simple scan-for-empty pattern (O(C) chain length); Part 2 horizontal uses recursive edge-finding; Part 2 vertical uses collect-then-execute with distance-based sorting to prevent overwriting unmoved boxes. **Mission Integration Benefits**: `Grid<Tile>` eliminates bounds errors, `Coord` type prevents x/y confusion, `in_bounds()`/`get()`/`get_mut()` provide safe access patterns. **Python Comparison**: Python's BFS with `list.pop(0)` (O(n) per pop) and tuple coordinates vs Rust's recursion with call stack and type-safe Coord; Python collects all cells vs Rust collects box positions only; both use collect-then-execute for Part 2 vertical but different traversal strategies. **Code Organization**: Clean separation with `try_move*()` for box logic, `simulate_robot*()` for robot tile management, `widen_grid()` for Part 2 transformation. **Educational Value**: Shows how deep problem understanding leads to simpler code (tracking all boxes → updating two positions); demonstrates when HashSet deduplication is critical (overlapping structures); proves distance-based ordering prevents overwrite bugs. **Test Coverage**: 3 comprehensive tests covering small example, large Part 1 chains, and large Part 2 overlapping structures. **Results**: Part 1 = 1,465,152, Part 2 = 1,511,259
 
 ---
 
@@ -945,8 +1118,8 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 13, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14*
+*Last Updated: December 14, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---

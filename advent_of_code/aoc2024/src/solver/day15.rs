@@ -130,9 +130,7 @@ fn try_move(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Coord> 
         Tile::Wall => None, // Can't move into wall
         Tile::Empty => Some(new_pos), // Can move into empty space
         Tile::Box => {
-            // For a box, check if we can push it by finding the chain of boxes
-            // and checking if there's empty space at the end
-            let mut box_positions = vec![new_pos];
+            // Scan forward until we find empty space or hit a wall
             let mut check_pos = new_pos;
             
             loop {
@@ -151,27 +149,20 @@ fn try_move(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Coord> 
                 
                 match grid.get(next_pos) {
                     Some(&Tile::Empty) => {
-                        // Found empty space - shift all boxes in the chain
-                        // Move from far to near to avoid overwriting boxes that haven't moved yet
-                        for box_pos in box_positions.iter().rev() {
-                            let target_y = box_pos.y as i32 + dr;
-                            let target_x = box_pos.x as i32 + dc;
-                            let target_pos = Coord::new(target_x as usize, target_y as usize);
-                            
-                            if let Some(cell) = grid.get_mut(target_pos) {
-                                *cell = Tile::Box;
-                            }
+                        // Found empty space - place box at empty space
+                        if let Some(cell) = grid.get_mut(next_pos) {
+                            *cell = Tile::Box;
                         }
                         
-                        // Clear the original first box position (robot will move here)
+                        // Clear first box position (robot will move here)
                         if let Some(cell) = grid.get_mut(new_pos) {
                             *cell = Tile::Empty;
                         }
+                        
                         return Some(new_pos);
                     }
                     Some(&Tile::Box) => {
-                        // Another box in the chain, add it and keep checking
-                        box_positions.push(next_pos);
+                        // Another box in chain, keep scanning
                         check_pos = next_pos;
                     }
                     Some(&Tile::Wall) | None => {
