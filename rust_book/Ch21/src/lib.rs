@@ -2,7 +2,6 @@
 /// 
 /// This is the core abstraction used in Chapter 21 to manage worker threads
 /// and distribute work across them using message passing.
-
 use std::{
     sync::{mpsc, Arc, Mutex},
     thread,
@@ -234,7 +233,6 @@ mod tests {
         // Drop happens here - should wait for job to finish
         drop(pool);
         
-        // If we reach here, shutdown was successful
-        assert!(true);
+        // If we reach here, shutdown was successful (no panic = test passes)
     }
 }
