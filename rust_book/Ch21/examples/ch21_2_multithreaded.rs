@@ -16,7 +16,8 @@ use std::{
 };
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    let listener = TcpListener::bind("127.0.0.1:7878")
+        .expect("❌ Port 7878 already in use! Kill existing server or use different port.");
     
     // Create thread pool with 4 worker threads
     let pool = ThreadPool::new(4);
@@ -42,7 +43,19 @@ fn main() {
 
 fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&mut stream);
-    let request_line = buf_reader.lines().next().unwrap().unwrap();
+    
+    // Handle empty connections (browser pre-connections, early disconnects)
+    let request_line = match buf_reader.lines().next() {
+        Some(Ok(line)) => line,
+        Some(Err(e)) => {
+            eprintln!("❌ Error reading request: {}", e);
+            return;
+        }
+        None => {
+            // Connection closed before sending data - this is normal
+            return;
+        }
+    };
 
     // Get thread ID for logging
     let thread_id = thread::current().id();

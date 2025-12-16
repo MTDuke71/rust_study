@@ -191,6 +191,7 @@ This mirrors many AoC tasks (e.g., **2023 Day 20 pulse processing**) where parsi
 
 ### **Enables**
 
+- [[thread-pool-pattern]] - MPSC channels distribute jobs to fixed worker threads
 - [[AoC Pattern Library]] - Adds producer/consumer pipeline recipes to the catalog
 - [[AoC Integration]] - Builds the concurrency strand of the three-track workflow
 - [[deterministic-debugging]] - Channel logging provides reproducible event streams for tricky bugs

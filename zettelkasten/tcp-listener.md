@@ -199,13 +199,15 @@ See [[rust_book/rust-book-ch21]] for complete thread pool implementation.
 - [[Iterator Patterns]] - Understanding `incoming()` as infinite iterator
 
 ### **Enables**
+- [[thread-pool-pattern]] - Fixed worker threads for bounded concurrency
 - [[http-request-parsing]] - Reading HTTP requests from TcpStream
 - [[rust-book/rust-book-ch21]] - Building complete web servers
 - [[async-await-basics]] - Async networking with Tokio
 
 ### **Related Concepts**
+- [[thread-pool-pattern]] - Production-ready concurrency design for servers
 - [[message-passing-channels]] - Thread communication in multi-threaded servers
-- [[shared-state-concurrency]] - Thread pool pattern for workers
+- [[shared-state-concurrency]] - Arc<Mutex<>> pattern for sharing receiver across workers
 - [[async-concurrency]] - Non-blocking alternatives to thread-per-connection
 
 ### **Practical Applications**

@@ -981,6 +981,205 @@ Both languages use **collect-then-execute**:
 
 ---
 
+### Day 16: Reindeer Maze
+
+**Title**: Reindeer Maze  
+**Part 1 Type**: Graph Algorithms + Search  
+**Part 1 Description**: Maze pathfinding where moving forward costs 1 point and rotating 90° costs 1000 points. Find minimum cost path from start (facing East) to end.  
+**Part 2 Type**: Graph Algorithms + Optimization  
+**Part 2 Description**: Count all distinct tiles that are part of at least one optimal path through the maze (backtracking from optimal end states).  (Determined from running the python solution there are 8 best routes)
+**Key Concepts**: Dijkstra's algorithm with compound state, BFS with cost tracking, state space design (position + direction), priority queues, backtracking for path reconstruction, Mission 6 Grid integration
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Pathfinding with escalation (shortest path → all optimal paths)
+- **Data Structure**: 
+  - **Rust**: Mission 6 `Grid<char>` for maze, `BinaryHeap` for Dijkstra priority queue, `HashMap<State, usize>` for distances, `State` struct containing `(position, direction)`, enum `Direction` with delta/rotation methods
+  - **Python**: 2D list for grid, plain list as BFS queue with `pop(0)`, dict for `visited[((y, x), direction)]`, tuple-based state tracking
+- **Complexity**: 
+  - **Rust Part 1**: O(V log V + E) Dijkstra with min-heap, V = positions × 4 directions, E = 3 transitions per state (forward + 2 rotations)
+  - **Rust Part 2**: Additional O(V + E) backtracking from optimal end states
+  - **Python**: O(V + E) BFS with full history tracking per route, larger memory footprint but simpler implementation
+- **AoC Theme**: "Maze navigation with rotation costs" featuring classic Part 2 enumeration (find one path → find all paths)
+
+**🦀 Rust Conversion Highlights**:
+
+- **From tuple state `((y, x), direction)`** → **Type-safe `struct State { pos: (usize, usize), dir: Direction }` with Hash + Eq**
+- **From list-based BFS queue** → **`BinaryHeap<Node>` for O(log n) push/pop with custom `Ord` for min-heap behavior**
+- **From direction indices 0-3** → **Explicit `enum Direction { North, East, South, West }` with `delta()`, `rotate_cw()`, `rotate_ccw()` methods**
+- **From direct grid indexing** → **Mission 6 `Grid<char>` with `grid[pos]` and `in_bounds(pos.into())` for safe access**
+- **From full history tracking** → **Distance map only for Part 1, backtracking for Part 2 path reconstruction (memory efficient)**
+
+**Key Algorithmic Differences**:
+
+**State Space Design**:
+- **Critical Insight**: State must be `(position, direction)` not just position!
+- Why: Same position facing different directions has different future paths and costs
+- Example: Reaching `(5,5)` from North requires different rotations than from East
+
+**Python's BFS Approach with History**:
+```python
+queue = [(start, [start], 0, 0)]  # position, history, score, direction
+while queue:
+    (y, x), history, curr_score, curr_dir = queue.pop(0)
+    
+    # Key: Store full path history with each state
+    # Enables immediate Part 2 solution by filtering routes by min_score
+    if (y, x) == end:
+        routes.append((history, curr_score))
+```
+- Tracks complete path with every queue node
+- Simple Part 2: filter routes by minimum score, union all positions
+- Memory cost: O(P × L) where P = paths explored, L = average path length
+- Time cost: O(n) per `pop(0)` for list-based queue
+
+**Rust's Dijkstra Approach with Backtracking**:
+```rust
+// Part 1: Track only best distance to each state
+let mut distances = HashMap<State, usize>::new();
+heap.push(Node { cost: 0, state: start_state });
+
+// Part 2: Backtrack from optimal end states
+let end_states = all_directions
+    .filter(|state| distances.get(state) == Some(&min_cost));
+
+for state in end_states {
+    // Reconstruct paths by checking predecessors
+    if prev_cost + edge_cost == current_cost {
+        queue.push(prev_state);  // Valid predecessor
+    }
+}
+```
+- Stores only best cost to each state (no path history)
+- Separate backtracking phase for Part 2
+- Memory cost: O(V) where V = position × direction states
+- Time cost: O(log n) per heap operation via `BinaryHeap`
+
+**Visited State Pruning**:
+
+**Python's Subtle Optimization**:
+```python
+# For Part 1 only (faster):
+if visited[((y, x), curr_dir)] <= curr_score:
+    continue  # Skip if we've seen better or equal
+
+# For both parts (slower but necessary):
+if visited[((y, x), curr_dir)] < curr_score:
+    continue  # Skip only if strictly better exists
+```
+- Uses `<` instead of `<=` to allow multiple paths with same cost
+- Critical for Part 2: same-cost paths must be explored
+- Python author documented this explicitly in comments!
+
+**Rust's Dijkstra Pruning**:
+```rust
+if let Some(&best) = distances.get(&state) {
+    if cost > best {
+        continue;  // Skip if we've found strictly better
+    }
+}
+// Updates distance if cost == best (implicit allow-same-cost)
+distances.insert(state, cost);
+```
+- Allows equal-cost paths implicitly through HashMap updates
+- Dijkstra naturally handles this via min-heap ordering
+
+**Transition Generation**:
+
+**Python** (4 directions, skip opposite):
+```python
+dirs = [(0, 1), (-1, 0), (0, -1), (1, 0)]  # E, N, W, S
+for _dir, (dy, dx) in enumerate(dirs):
+    if (curr_dir + 2) % 4 == _dir:
+        continue  # Skip 180° turn (impossible)
+    
+    if _dir == curr_dir:
+        # Move forward (+1)
+    else:
+        # Rotate (+1000)
+```
+- Rotation implicit: try different direction from same position
+- Clever opposite check: `(curr_dir + 2) % 4`
+
+**Rust** (explicit transitions):
+```rust
+fn get_neighbors(state: State) -> Vec<(State, usize)> {
+    vec![
+        (move_forward(state), 1),          // Same direction
+        (rotate_cw(state), 1000),          // 90° clockwise
+        (rotate_ccw(state), 1000),         // 90° counterclockwise
+    ]
+}
+```
+- Explicit 3 transitions per state
+- Type-safe `Direction` enum with rotation methods
+- No 180° turn needed (only CW/CCW from any position)
+
+**Mission 6 Integration**:
+
+**Grid Operations**:
+- `Grid::new(rows, cols, '#')` - Create maze with wall default
+- `grid[(r, c)] = ch` - Index by tuple (Mission 6 `impl Index`)
+- `grid.in_bounds(pos.into())` - Safe bounds checking with `Coord` conversion
+- `grid[pos]` - Direct character access (bounds checked via Index)
+
+**Type Safety Benefits**:
+- `Coord` type prevents x/y confusion (never wrote `grid[x][y]` by mistake)
+- Direction enum eliminates magic numbers (0=East, 1=North, etc.)
+- State struct ensures position and direction always paired
+
+**Results**: Part 1 = 92,432, Part 2 = 458
+
+**Test Coverage**: 4 comprehensive tests:
+- Example 1 Part 1 (small 15×15 maze, score = 7,036)
+- Example 2 Part 1 (large 17×17 maze, score = 11,048)
+- Example 1 Part 2 (45 tiles on optimal paths)
+- Example 2 Part 2 (64 tiles on optimal paths)
+
+**Code Organization**:
+- **`State` struct**: Encapsulates `(position, direction)` with Hash/Eq for HashMap keys
+- **`Direction` enum**: Type-safe directions with `delta()`, `rotate_cw()`, `rotate_ccw()` methods
+- **`Node` struct**: Priority queue wrapper with custom `Ord` for min-heap (reverse ordering)
+- **`parse_maze()`**: Grid construction with start/end detection
+- **`get_neighbors()`**: Transition generation (forward or rotate)
+- **`dijkstra()`**: Single-source shortest path with all-directions tracking
+- **`part1()`**: Extract minimum cost to end
+- **`part2()`**: Backtrack from optimal end states to count tiles
+
+**Educational Insights**:
+
+1. **Compound State Space**: Rotation costs require state = `(position, direction)`, not just position. This expands graph size but enables correct cost modeling.
+
+2. **Algorithm Choice Matters**: 
+   - **Python's BFS with history**: Simple, unified approach for both parts, higher memory cost
+   - **Rust's Dijkstra with backtracking**: Optimal complexity, two-phase approach, memory efficient
+
+3. **Same-Cost Path Handling**: Part 2 requires exploring all paths with minimum cost, not just the first one found. Python explicitly documents this with `<` vs `<=` comparison; Rust handles implicitly via HashMap updates.
+
+4. **Backtracking Pattern**: When Part 1 asks "find best" and Part 2 asks "find all best", backtracking from optimal solutions is often more efficient than tracking all paths upfront.
+
+5. **Mission Integration Value**: Mission 6 Grid + Coord eliminates coordinate confusion, bounds errors, and provides clean indexing patterns for maze problems.
+
+**Python vs Rust Comparison**:
+
+| **Aspect** | **Python** | **Rust** |
+|------------|------------|----------|
+| **Algorithm** | BFS with full history | Dijkstra with backtracking |
+| **Queue** | `list.pop(0)` O(n) | `BinaryHeap` O(log n) |
+| **State** | Tuple `((y, x), dir)` | `struct State { pos, dir }` |
+| **History** | Tracked per route | Reconstructed in Part 2 |
+| **Memory** | O(P × L) paths × length | O(V) states only |
+| **Visited Check** | `< curr_score` explicitly | `> best` implicitly |
+| **Transitions** | Loop over 4 directions | 3 explicit transitions |
+| **Grid Access** | `grid[ny][nx]` direct | `grid[pos]` with bounds check |
+| **LOC** | ~68 lines unified solution | ~355 lines with 4 tests |
+
+**Both Correct**: Python optimizes for midnight racing with simple BFS and full history tracking (~68 lines). Rust optimizes for educational clarity with Dijkstra, type-safe state management, Mission 6 integration, and comprehensive test coverage (~355 lines). Python's pragmatic approach gets correct answer efficiently; Rust's structured approach provides deeper algorithmic insights and reusable patterns.
+
+**Key Learning**: When rotation costs matter, state space must include direction. When Part 2 asks for "all optimal", ensure your algorithm explores equal-cost paths, not just first-found paths.
+
+---
+
 ## Problem Type Distribution (Available Days)
 
 | Category | Part 1 Count | Part 2 Count |
@@ -993,16 +1192,16 @@ Both languages use **collect-then-execute**:
 | Cryptographic | 0 | 0 |
 | Data Structures | 2 | 2 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 3 | 4 |
+| Graph Algorithms | 4 | 5 |
 | Greedy Algorithms | 0 | 0 |
 | Mathematical | 8 | 5 |
 | Number Theory | 0 | 0 |
-| Optimization | 1 | 7 |
+| Optimization | 1 | 8 |
 | Parsing | 0 | 0 |
 | Pattern Matching | 2 | 3 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 0 |
-| Search/Traversal | 4 | 4 |
+| Search/Traversal | 5 | 5 |
 | Simulation | 5 | 3 |
 | String Processing | 2 | 0 |
 
@@ -1060,6 +1259,11 @@ Both languages use **collect-then-execute**:
 48. **Recursive Collection with Deduplication**: Using HashSet to prevent double-processing in overlapping graph-like structures (Day 15 Part 2: vertical box pushing where boxes share edges)
 49. **Distance-Based Ordering for Cascading Updates**: Sort entities by distance from change source to prevent overwriting unmoved elements (Day 15: move furthest boxes first in chain/structure)
 50. **Dimensional Escalation in Simulations**: Increasing complexity from 1D chains to 2D overlapping structures requiring fundamentally different algorithms (Day 15: simple chains → recursive collection)
+51. **Compound State Space Design**: Expanding state representation beyond position to include direction/orientation when rotation costs exist (Day 16: state = `(position, direction)` not just position, enables correct pathfinding with rotation penalties)
+52. **Dijkstra with Priority Queues**: Using `BinaryHeap` for optimal shortest path with O(log n) operations, custom `Ord` implementation for min-heap behavior (Day 16: Dijkstra's algorithm for weighted pathfinding)
+53. **Backtracking for Path Reconstruction**: Two-phase approach where Phase 1 finds optimal distance, Phase 2 reconstructs all paths achieving that distance (Day 16: Part 1 finds minimum cost, Part 2 backtracks from optimal end states)
+54. **Same-Cost Path Exploration**: Algorithm design allowing multiple paths with equal cost to be explored, not just first-found path (Day 16: critical for Part 2 "all optimal paths" enumeration, Python uses `<` not `<=` for visited check)
+55. **Transition Generation Patterns**: Explicit enumeration of valid state transitions with associated costs (Day 16: 3 transitions per state—move forward +1, rotate CW +1000, rotate CCW +1000)
 
 ### Rust-Specific Considerations
 
@@ -1078,6 +1282,7 @@ Both languages use **collect-then-execute**:
 - **Day 13**: Demonstrates pure mathematical problem solving with minimal data structure complexity. Showcases Cramer's rule implementation for 2×2 linear systems with integer arithmetic avoiding floating-point precision issues. **Algorithm Choice**: Direct closed-form solution instead of brute force—O(1) vs O(N²) complexity; Part 2's 10 trillion offset makes brute force literally impossible. **Integer Precision**: Uses `i64` throughout and modulo checks (`a_num % det != 0`) instead of floating-point `.is_integer()`, critical for large-scale coordinates. **Cross-Platform Parsing**: `.lines()` iterator handles both LF and CRLF line endings automatically, fixing initial parsing failure on Windows. **Code Organization**: Clean separation with `ClawMachine` struct, dedicated parse functions with error context, and shared `total_tokens()` helper between parts. **Test Coverage**: 11 comprehensive tests covering parsing, individual machine solving (solvable and unsolvable cases), and Part 2 behavior changes. **Key Learning**: Not all AoC problems need complex data structures or mission libraries—recognizing when mathematical analysis is the right tool shows problem-solving maturity.
 - **Day 14**: Showcases **rayon data parallelism** for robot simulation with comprehensive educational infrastructure. Demonstrates `rem_euclid()` for proper modulo with negative numbers (critical for wraparound), quadrant classification with `Ordering::cmp()`, and pattern detection via uniqueness constraint (HashSet checking for collision-free positioning). **Rayon Excellence**: Created `examples/day14_rayon_learning.rs` (181 lines) teaching 6 core patterns—`par_iter()`, `reduce()`, `into_par_iter()`, `find_first()`, overhead analysis, `par_extend()`—with empirical performance data showing 3.54x speedup at 1M items vs 19x overhead at 1k items (parallel overhead ~100µs). **Tuple Reduction Pattern**: Demonstrates elegant multi-counter aggregation by mapping items to tuples `(q1, q2, q3, q4)` and reducing component-wise for parallel quadrant counting. **Python Comparison**: Python's pragmatic ~55-line solution with direct position calculation and manual pattern discovery (printing frames, visual inspection) vs Rust's ~260-line educational approach with programmatic validation, comprehensive parallel variants, and performance instrumentation. **Mission 6 Integration**: Prepared `Grid<T>` for visualization and spatial operations, demonstrating readiness for grid-based algorithms. **Key Insight**: Python documented discovery process in comments ("printed all frames, noticed patterns, found answer via community insight"), Rust formalized the insight into type-safe validation logic with parallel alternatives. **Test Coverage**: 5 tests validating parsing, wraparound simulation, serial/parallel equivalence, and large-scale performance characteristics.
 - **Day 15**: Demonstrates **Mission 6 Grid mastery** for complex box-pushing simulations with sophisticated algorithm evolution. Showcases **check-then-execute pattern** where entire operation is validated before any modifications (atomic success/failure, no rollback needed). **Optimization Journey**: Evolved from buggy endpoint-only updates → over-engineered full-chain tracking → elegant two-position updates (recognizing middle boxes don't change state). **Part 2 Complexity**: Handles 2D overlapping box structures requiring recursive collection with HashSet deduplication to prevent double-processing. **Key Algorithms**: Part 1 uses simple scan-for-empty pattern (O(C) chain length); Part 2 horizontal uses recursive edge-finding; Part 2 vertical uses collect-then-execute with distance-based sorting to prevent overwriting unmoved boxes. **Mission Integration Benefits**: `Grid<Tile>` eliminates bounds errors, `Coord` type prevents x/y confusion, `in_bounds()`/`get()`/`get_mut()` provide safe access patterns. **Python Comparison**: Python's BFS with `list.pop(0)` (O(n) per pop) and tuple coordinates vs Rust's recursion with call stack and type-safe Coord; Python collects all cells vs Rust collects box positions only; both use collect-then-execute for Part 2 vertical but different traversal strategies. **Code Organization**: Clean separation with `try_move*()` for box logic, `simulate_robot*()` for robot tile management, `widen_grid()` for Part 2 transformation. **Educational Value**: Shows how deep problem understanding leads to simpler code (tracking all boxes → updating two positions); demonstrates when HashSet deduplication is critical (overlapping structures); proves distance-based ordering prevents overwrite bugs. **Test Coverage**: 3 comprehensive tests covering small example, large Part 1 chains, and large Part 2 overlapping structures. **Results**: Part 1 = 1,465,152, Part 2 = 1,511,259
+- **Day 16**: Exemplifies **Dijkstra's algorithm implementation** with Mission 6 Grid integration and compound state space design. Showcases **type-safe state representation** using `struct State { pos: (usize, usize), dir: Direction }` with `Hash + Eq` for HashMap keys, and `enum Direction` with methods (`delta()`, `rotate_cw()`, `rotate_ccw()`) eliminating magic numbers. **Algorithm Choice**: Rust's Dijkstra with `BinaryHeap<Node>` and custom `Ord` for min-heap (O(log n) operations) vs Python's BFS with `list.pop(0)` (O(n) per operation). **Two-Phase Pattern**: Phase 1 stores only best distances in `HashMap<State, usize>` (memory efficient O(V) where V = positions × 4 directions); Phase 2 backtracks from optimal end states to reconstruct all paths. **Mission 6 Benefits**: `Grid<char>` with safe indexing (`grid[pos]`), `in_bounds(pos.into())` with `Coord` conversion, type-safe coordinate handling preventing x/y confusion. **State Space Design**: Critical insight that rotation costs require `(position, direction)` state not just position—same location facing different directions has different future costs. **Transition Modeling**: Explicit 3-transition pattern (move forward +1, rotate CW +1000, rotate CCW +1000) vs Python's implicit rotation through direction loop. **Same-Cost Path Handling**: Rust's HashMap updates implicitly allow equal-cost paths; Python explicitly uses `<` not `<=` for visited check (documented in comments). **Code Organization**: Clean separation with `State`/`Direction`/`Node` structs, `parse_maze()`, `get_neighbors()`, `dijkstra()`, separate `part1()`/`part2()` functions. **Educational Value**: Demonstrates when state space expansion is necessary (rotation costs), showcases priority queue patterns with custom ordering, proves backtracking efficiency for "find best" → "find all best" escalations. **Test Coverage**: 4 comprehensive tests covering two different maze sizes for both parts (15×15 with score 7,036, 17×17 with score 11,048). **Results**: Part 1 = 92,432, Part 2 = 458. **Python Comparison**: Python's ~68-line unified BFS with full history tracking vs Rust's ~355-line Dijkstra with backtracking—Python optimizes for midnight racing brevity, Rust optimizes for algorithmic clarity and type safety.
 
 ---
 
@@ -1118,10 +1323,10 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 14, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15*
+*Last Updated: December 15, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]]*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]]*

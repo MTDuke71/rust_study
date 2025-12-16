@@ -114,6 +114,7 @@ fn main() {
 
 ### **Enables**
 
+- [[thread-pool-pattern]] - Arc<Mutex<Receiver>> for sharing work queue across workers
 - [[sync-send-traits]] - Analyzing whether custom AoC data structures stay thread-safe after wrapping in locks
 - [[AoC Pattern Library]] - Adds a reusable shared-state aggregation recipe
 - [[deterministic-debugging]] - Centralized logging/state capture for multi-threaded scenarios
