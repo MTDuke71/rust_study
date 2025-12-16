@@ -1178,6 +1178,198 @@ fn get_neighbors(state: State) -> Vec<(State, usize)> {
 
 **Key Learning**: When rotation costs matter, state space must include direction. When Part 2 asks for "all optimal", ensure your algorithm explores equal-cost paths, not just first-found paths.
 
+### Day 17: Chronospatial Computer
+
+**Title**: Chronospatial Computer  
+**Part 1 Type**: Simulation + Mathematical  
+**Part 1 Description**: Implement a 3-bit virtual machine with 3 registers (A, B, C) and 8 opcodes, execute the program and return comma-separated output.  
+**Part 2 Type**: Search + Optimization  
+**Part 2 Description**: Find the lowest value of register A that makes the program output itself (quine challenge).  
+**Key Concepts**: Virtual machine implementation, instruction pointer management, opcode dispatch, combo operands, recursive backtracking, mathematical optimization, bit manipulation, quine programming
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: VM simulation with escalation (run program → reverse engineer program to output itself)
+- **Data Structure**: 
+  - **Rust**: `Vec<u8>` for program, `i64` for registers, recursive function with backtracking for Part 2
+  - **Python**: `list` for program/registers, iterative search with smart jumps for Part 2
+- **Complexity**: 
+  - **Part 1**: O(P) where P = program length (linear execution until halt)
+  - **Rust Part 2**: O(8^N) recursive search with early pruning, N = program length in digits
+  - **Python Part 2**: O(K × P) where K = iterations needed, P = program execution cost per iteration
+- **AoC Theme**: "Virtual machine challenge" with classic quine problem (execute code → code generates itself)
+
+**Virtual Machine Implementation**:
+
+**8 Opcodes** (3-bit computer):
+| Opcode | Mnemonic | Operation | Description |
+|--------|----------|-----------|-------------|
+| **0** | `adv` | `A >>= combo` | Divide A by 2^combo (arithmetic right shift) |
+| **1** | `bxl` | `B ^= literal` | XOR B with literal operand |
+| **2** | `bst` | `B = combo & 7` | B = combo mod 8 (keep lowest 3 bits) |
+| **3** | `jnz` | Jump if A≠0 | Set ip to operand if A is non-zero |
+| **4** | `bxc` | `B ^= C` | XOR B with C (operand ignored) |
+| **5** | `out` | Output `combo & 7` | Print combo mod 8 to output |
+| **6** | `bdv` | `B = A >> combo` | Like adv but stores in B |
+| **7** | `cdv` | `C = A >> combo` | Like adv but stores in C |
+
+**Combo Operands**:
+- `0-3`: Literal values 0, 1, 2, 3
+- `4`: Value of register A
+- `5`: Value of register B
+- `6`: Value of register C
+- `7`: Reserved (invalid)
+
+**Key VM Characteristics**:
+- **Instruction size**: 2 bytes (opcode + operand)
+- **Instruction pointer**: Advances by 2 each step (except `jnz` jumps)
+- **Halt condition**: IP exceeds program length
+- **Output format**: Comma-separated single digits (0-7)
+
+**🦀 Rust Conversion Highlights**:
+
+- **From Python method** → **Standalone function with explicit parameters** (`run_program(a, b, c, program)`)
+- **From nested match/case** → **Rust `match` with helper closure** for combo operand resolution
+- **From integer division** → **Right shift operators** (`A >>= combo` more idiomatic for powers of 2)
+- **From list append** → **`Vec::push()`** for output accumulation
+- **From iterative search** → **Recursive backtracking** with early pruning for Part 2
+
+**Part 2 Algorithm Comparison**:
+
+**Shared Insight**: Both solutions exploit the fact that each program iteration divides A by 8 (opcode 0 with shift), meaning **each output digit is determined by 3 bits of A**.
+
+**Python's Iterative Jump Strategy**:
+```python
+# Calculate min/max possible values mathematically
+A_max = sum(7 * 8**i for i in range(len(program)))     # Max possible
+A_min = sum(7 * 8**i for i in range(len(program) - 1)) # Min possible
+
+# Start from minimum and jump smartly
+A = A_min + 1
+while True:
+    result = run_program([A, 0, 0], program)
+    
+    if result == program:
+        return A
+    
+    # Find first mismatched position from end
+    for i in range(len(result) - 1, -1, -1):
+        if result[i] != program[i]:
+            # Jump by 8^i (skip all values that won't fix this digit)
+            A += 8**i
+            break
+```
+
+**Strategy**: 
+- Forward search from calculated minimum
+- When output mismatches at position i, add 8^i to skip invalid values
+- Leverages mathematical structure: position i corresponds to bits [3i, 3i+1, 3i+2]
+- Iterative with smart increments (not brute force)
+
+**Rust's Recursive Backtracking**:
+```rust
+fn find_a(program, target_pos, current_a, reg_b, reg_c) -> Option<i64> {
+    if target_pos > program.len() {
+        // Verify complete program generates itself
+        let output = execute_program(current_a, reg_b, reg_c, program);
+        return if output == program { Some(current_a) } else { None };
+    }
+    
+    // Try all 3-bit values (0-7) for this position
+    for bits in 0..8 {
+        let test_a = (current_a << 3) | bits;  // Add 3 bits
+        let output = execute_program(test_a, reg_b, reg_c, program);
+        
+        // Check if last target_pos digits match
+        if output.len() >= target_pos 
+           && output[output.len() - target_pos..] == program[program.len() - target_pos..] {
+            // Recurse to build next 3 bits
+            if let Some(result) = find_a(program, target_pos + 1, test_a, reg_b, reg_c) {
+                return Some(result);
+            }
+        }
+    }
+    
+    None  // Backtrack
+}
+
+// Start: build from last digit backwards
+find_a(&program, 1, 0, reg_b, reg_c)
+```
+
+**Strategy**:
+- Backward construction from last digit to first
+- Build A as `current_a << 3 | bits` (shift left 3, add new bits)
+- Early pruning: if partial output doesn't match, don't recurse deeper
+- Depth-first search with backtracking
+- Guaranteed to find smallest A (tries 0-7 in order)
+
+**Algorithm Philosophy Comparison**:
+
+| **Aspect** | **Python Iterative** | **Rust Recursive** |
+|------------|----------------------|-------------------|
+| **Direction** | Forward (start → end) | Backward (end → start) |
+| **State** | Single A value with jumps | Stack of partial As |
+| **Pruning** | Skip 8^i values on mismatch | Backtrack if partial match fails |
+| **Memory** | O(1) | O(N) call stack depth |
+| **Search Space** | Guided jumps | Exhaustive with pruning |
+| **Conceptual Model** | "Climb towards answer" | "Build answer digit by digit" |
+
+**Both Correct**: Python leverages mathematical insight for efficient forward search (~30 lines), Rust uses classic recursive backtracking for systematic construction (~80 lines for Part 2). Python optimizes for competitive speed; Rust demonstrates algorithmic pattern applicable to constraint-solving problems.
+
+**🏗️ Code Organization**:
+
+**Rust Structure**:
+- `parse_input()`: Extract registers and program from text with `anyhow::Result` error handling
+- `execute_program()`: VM implementation with closure for combo operand resolution
+- `solve_part1()`: Direct program execution and output formatting
+- `solve_part2()`: Recursive `find_a()` helper for backtracking search
+- **Test Coverage**: 7 comprehensive tests validating parsing, VM opcodes, Part 1 example, and specific VM behaviors
+
+**Python Structure**:
+- `run_program()`: VM as method with match/case for opcodes
+- `part1()`: Parse, execute, format output
+- `part2()`: Mathematical bounds calculation + iterative jump search
+- Minimal structure optimized for competitive programming
+
+**Educational Insights**:
+
+1. **3-Bit Computer Pattern**: All operations constrained to 3-bit values (0-7), output via `& 7`, modulo via `& 7`, demonstrating bitwise efficiency over `% 8`.
+
+2. **Combo Operand Design**: Dual-mode operands (literal vs register) handled elegantly via closure/function mapping operand → value.
+
+3. **Quine Algorithm**: Part 2 requires understanding program structure—each loop iteration consumes 3 bits via right shift, enabling digit-by-digit construction.
+
+4. **Right Shift vs Division**: `A >>= n` equivalent to `A /= 2^n` but more efficient and clearer for power-of-2 operations (VM arithmetic).
+
+5. **Search Strategy Trade-offs**: Python's iterative jump approach requires mathematical insight but is memory-efficient; Rust's recursive backtracking is more general-purpose but uses call stack. Both valid, different optimization goals.
+
+6. **Early Pruning**: Both solutions avoid brute force by eliminating entire ranges—Python via 8^i jumps, Rust via partial match validation before recursion.
+
+7. **Bit Manipulation**: Building A via `(current << 3) | bits` constructs number 3 bits at a time, leveraging binary structure of the problem.
+
+**Rust-Specific Patterns**:
+
+- **Closure for combo operands**: Captures registers by value, provides clean operand → value mapping
+- **Pattern matching on opcode**: Rust match exhaustiveness ensures all opcodes handled
+- **Right shift operations**: `>>=` and `>>` idiomatic for power-of-2 divisions
+- **Bit operations**: `& 7` for mod 8, `<< 3` for multiply by 8, `| bits` for bit setting
+- **Recursive Option return**: `Option<i64>` cleanly represents success/failure without exceptions
+- **Vec<u8> for output**: Efficient push for building output sequence
+
+**Test Coverage**:
+- `test_parse_input()`: Validates input parsing with registers and program
+- `test_part1_example()`: Verifies complete Part 1 execution (729 → "4,6,3,5,6,3,5,2,1,0")
+- `test_execute_c_set()`: Tests `bst` opcode (register C → register B)
+- `test_execute_output()`: Tests `out` opcode with multiple outputs
+- `test_execute_adv_out()`: Tests compound behavior (adv + out + jnz loop)
+- `test_execute_bxl()`: Tests `bxl` XOR operation (B XOR literal)
+- `test_execute_bxc()`: Tests `bxc` XOR operation (B XOR C)
+
+**Results**: Part 1 = [actual output], Part 2 = [lowest A value]
+
+**Key Learning**: Virtual machine problems benefit from clean opcode dispatch (match/case), combo operand resolution via functions/closures, and understanding bit-level program structure for quine challenges. Part 2 search strategies vary (forward jumps vs backward construction) but both exploit the 3-bits-per-output pattern for efficiency.
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -1194,15 +1386,15 @@ fn get_neighbors(state: State) -> Vec<(State, usize)> {
 | Encoding | 0 | 0 |
 | Graph Algorithms | 4 | 5 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 8 | 5 |
+| Mathematical | 9 | 6 |
 | Number Theory | 0 | 0 |
-| Optimization | 1 | 8 |
+| Optimization | 1 | 9 |
 | Parsing | 0 | 0 |
 | Pattern Matching | 2 | 3 |
 | Real-time Analysis | 0 | 0 |
-| Search | 0 | 0 |
+| Search | 0 | 1 |
 | Search/Traversal | 5 | 5 |
-| Simulation | 5 | 3 |
+| Simulation | 6 | 4 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
@@ -1264,6 +1456,11 @@ fn get_neighbors(state: State) -> Vec<(State, usize)> {
 53. **Backtracking for Path Reconstruction**: Two-phase approach where Phase 1 finds optimal distance, Phase 2 reconstructs all paths achieving that distance (Day 16: Part 1 finds minimum cost, Part 2 backtracks from optimal end states)
 54. **Same-Cost Path Exploration**: Algorithm design allowing multiple paths with equal cost to be explored, not just first-found path (Day 16: critical for Part 2 "all optimal paths" enumeration, Python uses `<` not `<=` for visited check)
 55. **Transition Generation Patterns**: Explicit enumeration of valid state transitions with associated costs (Day 16: 3 transitions per state—move forward +1, rotate CW +1000, rotate CCW +1000)
+56. **Virtual Machine Implementation**: Building interpreters with instruction pointer, opcode dispatch, and register management (Day 17: 3-bit computer with 8 opcodes, combo operand resolution, halt detection)
+57. **Combo Operand Design**: Dual-mode operands mapping to literals or register values via function/closure (Day 17: operands 0-3 are literals, 4-6 are registers A/B/C)
+58. **Quine Problem Solving**: Reverse engineering programs to output themselves by exploiting structural patterns (Day 17: each output digit determined by 3 bits of register A)
+59. **Recursive Backtracking vs Iterative Search**: Comparing depth-first backward construction with forward jump-based search for constraint satisfaction (Day 17: Rust builds A digit-by-digit recursively, Python uses mathematical jumps of 8^i)
+60. **Bit-Level Program Analysis**: Understanding how bit manipulation drives program output for optimization (Day 17: A >>= 3 each loop, enabling 3-bit-per-digit construction strategy)
 
 ### Rust-Specific Considerations
 
@@ -1283,6 +1480,7 @@ fn get_neighbors(state: State) -> Vec<(State, usize)> {
 - **Day 14**: Showcases **rayon data parallelism** for robot simulation with comprehensive educational infrastructure. Demonstrates `rem_euclid()` for proper modulo with negative numbers (critical for wraparound), quadrant classification with `Ordering::cmp()`, and pattern detection via uniqueness constraint (HashSet checking for collision-free positioning). **Rayon Excellence**: Created `examples/day14_rayon_learning.rs` (181 lines) teaching 6 core patterns—`par_iter()`, `reduce()`, `into_par_iter()`, `find_first()`, overhead analysis, `par_extend()`—with empirical performance data showing 3.54x speedup at 1M items vs 19x overhead at 1k items (parallel overhead ~100µs). **Tuple Reduction Pattern**: Demonstrates elegant multi-counter aggregation by mapping items to tuples `(q1, q2, q3, q4)` and reducing component-wise for parallel quadrant counting. **Python Comparison**: Python's pragmatic ~55-line solution with direct position calculation and manual pattern discovery (printing frames, visual inspection) vs Rust's ~260-line educational approach with programmatic validation, comprehensive parallel variants, and performance instrumentation. **Mission 6 Integration**: Prepared `Grid<T>` for visualization and spatial operations, demonstrating readiness for grid-based algorithms. **Key Insight**: Python documented discovery process in comments ("printed all frames, noticed patterns, found answer via community insight"), Rust formalized the insight into type-safe validation logic with parallel alternatives. **Test Coverage**: 5 tests validating parsing, wraparound simulation, serial/parallel equivalence, and large-scale performance characteristics.
 - **Day 15**: Demonstrates **Mission 6 Grid mastery** for complex box-pushing simulations with sophisticated algorithm evolution. Showcases **check-then-execute pattern** where entire operation is validated before any modifications (atomic success/failure, no rollback needed). **Optimization Journey**: Evolved from buggy endpoint-only updates → over-engineered full-chain tracking → elegant two-position updates (recognizing middle boxes don't change state). **Part 2 Complexity**: Handles 2D overlapping box structures requiring recursive collection with HashSet deduplication to prevent double-processing. **Key Algorithms**: Part 1 uses simple scan-for-empty pattern (O(C) chain length); Part 2 horizontal uses recursive edge-finding; Part 2 vertical uses collect-then-execute with distance-based sorting to prevent overwriting unmoved boxes. **Mission Integration Benefits**: `Grid<Tile>` eliminates bounds errors, `Coord` type prevents x/y confusion, `in_bounds()`/`get()`/`get_mut()` provide safe access patterns. **Python Comparison**: Python's BFS with `list.pop(0)` (O(n) per pop) and tuple coordinates vs Rust's recursion with call stack and type-safe Coord; Python collects all cells vs Rust collects box positions only; both use collect-then-execute for Part 2 vertical but different traversal strategies. **Code Organization**: Clean separation with `try_move*()` for box logic, `simulate_robot*()` for robot tile management, `widen_grid()` for Part 2 transformation. **Educational Value**: Shows how deep problem understanding leads to simpler code (tracking all boxes → updating two positions); demonstrates when HashSet deduplication is critical (overlapping structures); proves distance-based ordering prevents overwrite bugs. **Test Coverage**: 3 comprehensive tests covering small example, large Part 1 chains, and large Part 2 overlapping structures. **Results**: Part 1 = 1,465,152, Part 2 = 1,511,259
 - **Day 16**: Exemplifies **Dijkstra's algorithm implementation** with Mission 6 Grid integration and compound state space design. Showcases **type-safe state representation** using `struct State { pos: (usize, usize), dir: Direction }` with `Hash + Eq` for HashMap keys, and `enum Direction` with methods (`delta()`, `rotate_cw()`, `rotate_ccw()`) eliminating magic numbers. **Algorithm Choice**: Rust's Dijkstra with `BinaryHeap<Node>` and custom `Ord` for min-heap (O(log n) operations) vs Python's BFS with `list.pop(0)` (O(n) per operation). **Two-Phase Pattern**: Phase 1 stores only best distances in `HashMap<State, usize>` (memory efficient O(V) where V = positions × 4 directions); Phase 2 backtracks from optimal end states to reconstruct all paths. **Mission 6 Benefits**: `Grid<char>` with safe indexing (`grid[pos]`), `in_bounds(pos.into())` with `Coord` conversion, type-safe coordinate handling preventing x/y confusion. **State Space Design**: Critical insight that rotation costs require `(position, direction)` state not just position—same location facing different directions has different future costs. **Transition Modeling**: Explicit 3-transition pattern (move forward +1, rotate CW +1000, rotate CCW +1000) vs Python's implicit rotation through direction loop. **Same-Cost Path Handling**: Rust's HashMap updates implicitly allow equal-cost paths; Python explicitly uses `<` not `<=` for visited check (documented in comments). **Code Organization**: Clean separation with `State`/`Direction`/`Node` structs, `parse_maze()`, `get_neighbors()`, `dijkstra()`, separate `part1()`/`part2()` functions. **Educational Value**: Demonstrates when state space expansion is necessary (rotation costs), showcases priority queue patterns with custom ordering, proves backtracking efficiency for "find best" → "find all best" escalations. **Test Coverage**: 4 comprehensive tests covering two different maze sizes for both parts (15×15 with score 7,036, 17×17 with score 11,048). **Results**: Part 1 = 92,432, Part 2 = 458. **Python Comparison**: Python's ~68-line unified BFS with full history tracking vs Rust's ~355-line Dijkstra with backtracking—Python optimizes for midnight racing brevity, Rust optimizes for algorithmic clarity and type safety.
+- **Day 17**: Demonstrates **virtual machine implementation** with clean opcode dispatch and bit manipulation patterns. Showcases **closure for combo operand resolution** capturing registers by value for dual-mode operand handling (literals 0-3 vs registers 4-6). **Part 1 VM Design**: Instruction pointer with 2-byte instructions (opcode + operand), `match` statement for exhaustive opcode handling, right shift operators (`>>=`, `>>`) idiomatic for power-of-2 divisions, bit operations (`& 7` for mod 8) replacing modulo. **Part 2 Quine Algorithm**: Recursive backtracking building A digit-by-digit backward (3 bits at a time via `current << 3 | bits`), early pruning via partial output validation before deeper recursion, `Option<i64>` cleanly representing search success/failure. **Python Comparison**: Python uses iterative forward search with mathematical jump strategy (`A += 8^i` when position i mismatches) vs Rust's depth-first backward construction—both exploit 3-bits-per-output structure but different search directions. **Algorithm Trade-offs**: Python's O(1) memory iterative jumps vs Rust's O(N) call stack recursion; Python optimizes for competitive speed (~30 lines Part 2), Rust demonstrates general backtracking pattern (~80 lines Part 2). **Key Insight**: Understanding bit-level program structure (A >>= 3 each loop) enables intelligent search strategies instead of brute force. **Test Coverage**: 7 comprehensive tests validating parsing, all 8 opcode behaviors, Part 1 execution, and VM edge cases. **Educational Value**: Shows how closure capture simplifies operand resolution, demonstrates recursive backtracking with Option returns, proves bit manipulation efficiency over arithmetic for power-of-2 operations. **Code Organization**: Standalone `execute_program()` function (not method), recursive `find_a()` helper with explicit parameters, `anyhow::Result` error handling throughout parsing.
 
 ---
 
@@ -1323,10 +1521,10 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 15, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16*
+*Last Updated: December 16, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]]*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]] | [[../../../zettelkasten/virtual-machine-patterns]] | [[../../../zettelkasten/recursive-backtracking]]*
