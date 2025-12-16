@@ -5,7 +5,6 @@
 /// - Graceful shutdown by sending Terminate messages
 /// - Joining worker threads to ensure completion
 /// - Proper resource cleanup
-
 use rust_book_ch21::ThreadPool;
 use std::{
     fs,

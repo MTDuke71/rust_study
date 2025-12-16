@@ -5,7 +5,6 @@
 /// - HTTP request/response format
 /// - Serving HTML files
 /// - The blocking problem with slow requests
-
 use std::{
     fs,
     io::{prelude::*, BufReader},
