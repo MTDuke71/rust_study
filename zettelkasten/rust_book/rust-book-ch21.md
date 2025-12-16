@@ -107,13 +107,19 @@ fn handle_connection(mut stream: TcpStream) {
 
 ### **Concurrency & Threading**
 - **[[rust-book-ch16]]**: Fearless concurrency foundations
-- **Thread pool patterns**: Custom worker implementation
+- **[[../thread-pool-pattern]]**: Custom worker implementation and architecture
+- **[[../graceful-shutdown-patterns]]**: Clean thread pool termination (Ch21.3)
 - **Channel communication**: Producer-consumer patterns
 
 ### **Error Handling**
 - **[[rust-book-ch9]]**: Error handling fundamentals
 - **[[Error Handling Deep Dive]]**: Advanced error patterns
 - **Network error handling**: IO-specific error cases
+
+### **Resource Management**
+- **[[../drop-trait]]**: Automatic cleanup with RAII
+- **[[../graceful-shutdown-patterns]]**: Coordinated resource release
+- **Connection pooling**: Resource lifecycle management
 
 ### **Collections & Data Structures**
 - **[[rust-book-ch8]]**: Vec for request queues
@@ -163,5 +169,5 @@ After completing Chapter 21, you should be able to:
 
 ---
 
-*Tags: #rust-book #final-project #web-server #concurrency #networking #thread-pool #http #tcp #system-programming*
-*Links: [[../zettel-index]] | [[rust-book-ch20]] | [[rust-book-ch22]] | [[mission-2]] | [[Error Handling Deep Dive]]*
+*Tags: #rust-book #final-project #web-server #concurrency #networking #thread-pool #http #tcp #system-programming #graceful-shutdown*
+*Links: [[../zettel-index]] | [[rust-book-ch20]] | [[rust-book-ch22]] | [[mission-2]] | [[Error Handling Deep Dive]] | [[../thread-pool-pattern]] | [[../graceful-shutdown-patterns]] | [[../drop-trait]] | [[../tcp-listener]]*

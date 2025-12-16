@@ -382,6 +382,7 @@ impl Drop for ThreadPool {
 - [[async-concurrency]] - Modern alternative for I/O-bound workloads (event loop vs threads)
 - [[handles-resource-abstraction]] - `JoinHandle` as resource management pattern
 - [[drop-trait]] - Automatic cleanup of worker threads on pool destruction
+- [[graceful-shutdown-patterns]] - Coordinated thread pool termination (Ch21.3)
 - [[tcp-listener]] - Practical application in web servers (see [[rust_book/rust-book-ch21]])
 
 ### **Real-World Applications**
@@ -394,4 +395,4 @@ impl Drop for ThreadPool {
 
 *Tags: #concurrency #threading #design-patterns #rust-book-ch21 #arc-mutex #mpsc #performance #web-servers #resource-management*
 
-*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[message-passing-channels]] | [[shared-state-concurrency]] | [[rust-threading-basics]] | [[async-vs-threads-decision]] | [[rust_book/rust-book-ch21]] | [[tcp-listener]]*
+*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[message-passing-channels]] | [[shared-state-concurrency]] | [[rust-threading-basics]] | [[async-vs-threads-decision]] | [[rust_book/rust-book-ch21]] | [[tcp-listener]] | [[graceful-shutdown-patterns]]*
