@@ -27,9 +27,9 @@ fn main() {
     println!("\n✨ NEW: Graceful shutdown when server stops!");
     println!("   Press Ctrl+C to see workers shut down cleanly.\n");
 
-    // Take only 2 requests for demonstration, then exit
+    // Take only 4 requests (2 source and 2 icons) for demonstration, then exit
     // In production, this would run indefinitely until interrupted
-    for stream in listener.incoming().take(2) {
+    for stream in listener.incoming().take(4) {
         let stream = stream.unwrap();
 
         pool.execute(|| {
@@ -190,7 +190,7 @@ Clean exit! All workers finished gracefully.
    {
        let pool = ThreadPool::new(4);  // Create pool
        
-       // Handle 2 requests...
+       // Handle 4 requests...
        
    } // pool goes out of scope → Drop::drop() called
    ```
