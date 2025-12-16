@@ -7,7 +7,6 @@
 /// Problem: Find minimum cost path where:
 /// - Moving forward costs 1 point
 /// - Rotating 90° costs 1000 points
-
 use mission6::Grid;
 use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::cmp::Ordering;
@@ -173,7 +172,7 @@ fn dijkstra(
             
             let is_better = distances
                 .get(&next_state)
-                .map_or(true, |&current| next_cost < current);
+                .is_none_or(|&current| next_cost < current);
             
             if is_better {
                 distances.insert(next_state, next_cost);

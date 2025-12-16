@@ -5,7 +5,6 @@
 /// - Concurrent request handling
 /// - Message passing with MPSC channels
 /// - Arc<Mutex<>> for shared receiver
-
 use rust_book_ch21::ThreadPool;
 use std::{
     fs,

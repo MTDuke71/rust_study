@@ -2,7 +2,6 @@
 /// 
 /// This example visualizes the robot positions when they form the Christmas tree pattern.
 /// The tree appears at timestep 6516 when all robots occupy unique positions.
-
 use mission6::{Grid, Coord};
 use std::collections::HashSet;
 use std::fs;
