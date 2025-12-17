@@ -128,7 +128,7 @@ cargo clippy --fix                        # Auto-fix issues where possible
 - **Performance**: Inefficient code patterns
 - **Pedantic**: Extra-strict suggestions
 
-**This Workspace Policy**: 
+**This Workspace Policy**:
 - **Zero warnings tolerance**: `cargo clippy --workspace -- -D warnings` must pass
 - Runs in nightly CI: `.github/workflows/nightly-clippy.yml`
 - Uses `#[allow(dead_code)]` for demonstration code in `daily_study/`
@@ -149,7 +149,7 @@ cargo clippy --fix                        # Auto-fix issues where possible
 - ✅ Refactoring tools (rename, extract function)
 - ✅ Macro expansion viewing
 
-**VS Code Integration**: 
+**VS Code Integration**:
 - Extension: `rust-lang.rust-analyzer`
 - Configured via `settings.json`
 
