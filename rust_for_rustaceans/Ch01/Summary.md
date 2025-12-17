@@ -21,7 +21,7 @@ The combination of a type and an element of that type's domain (e.g., the number
 Named slots on the stack that hold values.
 
 #### Pointers
-Values that hold the address of a region of memory. See also [[Smart Pointers MOC]] for advanced pointer types.
+Values that hold the address of a region of memory (references). See also [[Smart Pointers MOC]] for advanced pointer types.
 
 ---
 
@@ -29,10 +29,10 @@ Values that hold the address of a region of memory. See also [[Smart Pointers MO
 
 **Related:** [[ownership-fundamentals]], [[Ownership Mental Model - The Library Analogy]]
 
-#### High-Level Model
+#### High-Level Model (useful at level of lifetimes and borrows)
 Views variables as names given to values within dependency flows; variables exist only as long as they hold legal values.
 
-#### Low-Level Model
+#### Low-Level Model (useful at level of unsafe code and raw pointers)
 Views variables as memory locations (value slots) that may or may not hold legal values at any given time. See [[memory-address-analysis]] for low-level details.
 
 ---
