@@ -1348,6 +1348,215 @@ find_a(&program, 1, 0, reg_b, reg_c)
 
 7. **Bit Manipulation**: Building A via `(current << 3) | bits` constructs number 3 bits at a time, leveraging binary structure of the problem.
 
+### Day 18: RAM Run
+
+**Title**: RAM Run  
+**Part 1 Type**: Graph Algorithms + Simulation  
+**Part 1 Description**: Find shortest path through 71×71 memory grid from (0,0) to (70,70) after 1024 bytes have corrupted specific coordinates.  
+**Part 2 Type**: Search + Optimization  
+**Part 2 Description**: Binary search to find first byte coordinate that blocks all paths from start to exit (Part 1: 282, Part 2: 64,29).  
+**Key Concepts**: Grid pathfinding, BFS shortest path, binary search, coordinate parsing, Mission 6 Grid integration, Mission 8 Graph trait implementation, library composition
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Pathfinding with escalation (find shortest path after fixed corruption → find first blocking byte via binary search)
+- **Data Structure**:
+  - **Rust**: Mission 6 `Grid<bool>` for corruption tracking, `Coord` for type-safe positions, Mission 8 `Graph` trait on custom `MemorySpace`, `shortest_path()` algorithm
+  - **Python**: `networkx.Graph` with explicit node/edge construction OR 2D list with custom BFS fallback
+- **Complexity**:
+  - **Part 1**: O(W×H) BFS pathfinding where W=H=71 (explores up to 5,041 positions)
+  - **Part 2**: O(log N × W×H) binary search over N=3,450 bytes, each testing path existence
+- **AoC Theme**: "Memory corruption pathfinding" with classic binary search optimization (simulate fixed corruption → find blocking threshold)
+
+**Mission Integration Excellence**:
+
+This problem perfectly demonstrates the **integrator philosophy**—building solutions by composing validated foundational libraries rather than reimplementing algorithms:
+
+**Mission 6 Benefits**:
+- `Grid<bool>`: Automatic bounds checking, no manual array indexing
+- `Coord`: Type-safe coordinates preventing x/y confusion
+- `in_bounds()`: Built-in validation, no manual range checks
+
+**Mission 8 Benefits**:
+- `Graph` trait: Standard interface enabling generic algorithms
+- `shortest_path()`: BFS implementation with parent tracking for path reconstruction
+- Returns `Result<Vec<Coord>, GraphError>`: Type-safe error handling
+
+**Implementation Focus**: Zero lines of custom BFS code, zero lines of manual grid indexing—entire solution focused on problem-specific logic (corruption simulation, binary search strategy).
+
+**🦀 Rust Conversion Highlights**:
+
+**From Python networkx Library**:
+```python
+# Python builds explicit graph structure
+self.graph = ntx.Graph()
+for y in range(self.size):
+    for x in range(self.size):
+        if self.grid[y][x] == ".":
+            self.graph.add_node((x, y))
+            for dx, dy in [(0,1), (1,0), (0,-1), (-1,0)]:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < self.size and 0 <= ny < self.size and self.grid[ny][nx] == ".":
+                    self.graph.add_edge((x, y), (nx, ny))
+
+# Find path
+path = ntx.shortest_path(self.graph, start, end)
+```
+
+**To Rust Mission Composition**:
+```rust
+// Rust implements Graph trait directly on MemorySpace
+impl Graph for MemorySpace {
+    type Node = Coord;
+    
+    fn neighbors(&self, node: Self::Node) -> Vec<Self::Node> {
+        // 4-directional movement with safe checking
+        // Returns only valid, non-corrupted neighbors
+    }
+    
+    fn contains(&self, node: Self::Node) -> bool {
+        node.x < self.width && node.y < self.height
+    }
+    
+    fn nodes(&self) -> Vec<Self::Node> {
+        // All grid coordinates
+    }
+}
+
+// Find path - zero-copy, no graph construction needed
+match shortest_path(&memory, start, goal) {
+    Ok(path) => path.len() - 1,  // Steps = nodes - 1
+    Err(_) => bail!("No path found"),
+}
+```
+
+**Key Differences**:
+- **Python**: Builds explicit graph structure with `add_node()`/`add_edge()`, consumes memory proportional to edges
+- **Rust**: Implements trait methods, zero-copy adapter pattern, computes neighbors on-demand
+- **Python**: Uses networkx library for graph operations OR custom BFS with `list.pop(0)` (O(n) per pop)
+- **Rust**: Mission 8 provides `shortest_path()` using efficient `VecDeque` (O(1) per pop)
+
+**Part 2 Binary Search - Algorithm Evolution**:
+
+**Python's Learning Journey** (documented in code comments):
+```python
+# Original approach: test every corrupted coord (slow)
+for cx, cy in self.corrupted[self.corrupted_length:]:
+    self.add_corrupted(cx, cy)
+    steps = self.get_shortest_path_steps()
+    if steps == -1:
+        return f"{cx},{cy}"  # Found blocker!
+
+# Learned from Reddit: binary search over byte count
+```
+
+**Educational Insight**: Python developer documented their optimization journey—started with sequential testing (~3,450 iterations), learned binary search pattern from community, applied it to reduce to ~12 iterations. This shows competitive programming learning process.
+
+**Rust Implementation** (binary search from start):
+```rust
+let mut left = 0;
+let mut right = bytes.len();  // 3,450 bytes
+
+while left < right {
+    let mid = (left + right) / 2;
+    
+    // Simulate first 'mid' bytes falling
+    let mut memory = MemorySpace::new(width, height);
+    for coord in bytes.iter().take(mid) {
+        memory.corrupt(*coord);
+    }
+    
+    // Test if path still exists
+    if shortest_path(&memory, start, goal).is_ok() {
+        left = mid + 1;  // Path exists, try more bytes
+    } else {
+        right = mid;     // Path blocked, try fewer bytes
+    }
+}
+
+// left-1 is last byte where path existed
+// left is first blocking byte
+let blocking_byte = bytes[left - 1];
+```
+
+**Algorithm Philosophy**:
+- Python: Documented learning/optimization process in production code (shows growth)
+- Rust: Applied binary search pattern immediately (demonstrates algorithmic thinking)
+- Both correct, Python's comments provide educational value about problem-solving journey
+
+**Library Strategy Comparison**:
+
+| **Aspect** | **Python (networkx)** | **Rust (Missions)** |
+|------------|----------------------|---------------------|
+| **Graph Building** | Explicit `add_node()`/`add_edge()` | Implicit trait implementation |
+| **Memory Model** | Materialized graph structure | On-demand neighbor computation |
+| **Dynamic Updates** | `remove_node()` for Part 2 (original) | Rebuild grid (binary search) |
+| **Algorithm Access** | `shortest_path()` library function | `shortest_path()` mission function |
+| **Trade-offs** | Batteries-included, more memory | Trait-based, zero-copy, extensible |
+
+**Python Alternative - Custom BFS**:
+```python
+# Fallback when networkx disabled
+queue = [(start, 0)]  # (position, length)
+seen = set()
+while queue:
+    pos, length = queue.pop(0)  # O(n) operation!
+    if pos == end:
+        return length
+    if pos in seen:
+        continue
+    seen.add(pos)
+    # ... add neighbors
+```
+
+**Performance Note**: Python's `list.pop(0)` is O(n) because lists are arrays requiring element shifting. Rust's `VecDeque.pop_front()` is O(1) using ring buffer. For competitive programming at midnight, Python's simplicity wins; for education, understanding data structure impact matters.
+
+**🏗️ Code Organization**:
+
+**Rust Structure**:
+- `struct MemorySpace`: Wraps `Grid<bool>` with corruption tracking
+- `impl Graph for MemorySpace`: Adapter pattern enabling mission algorithms
+- `parse_bytes()`: Coordinate parsing with `anyhow::Result` error context
+- `part1()`: Size detection (7×7 vs 71×71), simulation, pathfinding
+- `part2()`: Binary search with efficient grid recreation each iteration
+- **Test Coverage**: 2 comprehensive tests with example data (7×7, 12 bytes → 22 steps; blocker at 6,1)
+
+**Python Structure**:
+- Class-based with mutable state (`self.grid`, `self.graph`, etc.)
+- `use_networkx` flag for algorithm switching (demonstration vs production)
+- Size auto-detection via input length (clever: 25 coords = example, else real)
+- Part 2 shows evolution: commented-out original O(N) + active binary search O(log N)
+
+**Educational Insights**:
+
+1. **Integrator Philosophy**: Rust solution is **pure composition**—Mission 6 + Mission 8 + problem logic. No algorithm implementation, only trait methods and binary search loop. This is the goal: focus on problem, leverage validated components.
+
+2. **Zero-Copy Adapters**: Python builds explicit graph consuming memory; Rust implements trait methods computing neighbors on-demand. Trait pattern enables efficient abstractions.
+
+3. **Binary Search Efficiency**: Reduces 3,450 iterations to ~12 iterations (log₂(3450) ≈ 11.75). Critical for problems with large search spaces.
+
+4. **Type Safety Benefits**: `Coord` type prevents tuple confusion ((x,y) vs (y,x)), `Grid<bool>` eliminates bounds errors, `Result<Vec<Coord>, GraphError>` makes errors explicit.
+
+5. **Library Composition vs Implementation**: Python's networkx is feature-complete batteries-included library; Rust's missions are foundational types requiring trait implementation but enabling custom optimizations and learning.
+
+6. **Learning Documentation**: Python's commented-out code shows problem-solving evolution (original slow approach → community-learned optimization). Valuable for understanding thought process.
+
+7. **Algorithm Selection**: Both solutions ultimately use BFS for pathfinding + binary search for optimization. Core algorithms are universal; library integration patterns differ by language ecosystem.
+
+**Performance Comparison**:
+
+Both solutions achieve correct results efficiently:
+- **Part 1**: Both O(W×H) BFS, Rust's `VecDeque` vs Python's `list.pop(0)` or networkx internals
+- **Part 2**: Both O(log N × W×H) binary search, Python originally tested all coordinates (O(N × W×H)) before Reddit learning
+
+**Real-World Complexity**:
+- Grid: 71×71 = 5,041 positions
+- Byte coordinates: 3,450 total
+- Part 1 simulates: 1,024 bytes
+- Part 2 binary search: ~12 iterations finding first of 2,426 remaining bytes that blocks path
+
+**Key Takeaway**: This problem demonstrates **mission system maturity**—when foundational libraries (Grid, Graph, pathfinding) are production-ready, competitive programming becomes **problem composition** rather than algorithm implementation. Python uses batteries-included networkx; Rust builds lightweight trait adapters. Both approaches valid; Rust's teaches architectural patterns while solving problems.
+
 **Rust-Specific Patterns**:
 
 - **Closure for combo operands**: Captures registers by value, provides clean operand → value mapping
@@ -1461,6 +1670,11 @@ find_a(&program, 1, 0, reg_b, reg_c)
 58. **Quine Problem Solving**: Reverse engineering programs to output themselves by exploiting structural patterns (Day 17: each output digit determined by 3 bits of register A)
 59. **Recursive Backtracking vs Iterative Search**: Comparing depth-first backward construction with forward jump-based search for constraint satisfaction (Day 17: Rust builds A digit-by-digit recursively, Python uses mathematical jumps of 8^i)
 60. **Bit-Level Program Analysis**: Understanding how bit manipulation drives program output for optimization (Day 17: A >>= 3 each loop, enabling 3-bit-per-digit construction strategy)
+61. **Binary Search Over Simulation State**: Efficient threshold detection by binary searching over parameter space and testing simulation outcome at each point (Day 18: O(log N) search over byte count, testing pathfinding at each midpoint to find first blocking coordinate)
+62. **Zero-Copy Graph Adapters**: Implementing Graph trait directly on existing data structures for algorithm composition without memory overhead (Day 18: `impl Graph for MemorySpace` enables Mission 8 shortest_path() with zero-copy neighbor computation)
+63. **On-Demand Neighbor Generation**: Computing graph edges dynamically via trait methods rather than materializing explicit graph structure (Day 18: `neighbors()` checks 4 directions with corruption validation, no pre-built adjacency list)
+64. **Integrator Philosophy Application**: Building complete solutions through pure library composition without algorithm implementation (Day 18: Mission 6 Grid + Mission 8 Graph trait + problem logic = pathfinding solution with zero custom BFS code)
+65. **Algorithm Reuse via Traits**: Enabling generic algorithms through trait implementation on custom types (Day 18: custom MemorySpace implements Graph trait → gains access to Mission 8 pathfinding algorithms)
 
 ### Rust-Specific Considerations
 
@@ -1481,6 +1695,7 @@ find_a(&program, 1, 0, reg_b, reg_c)
 - **Day 15**: Demonstrates **Mission 6 Grid mastery** for complex box-pushing simulations with sophisticated algorithm evolution. Showcases **check-then-execute pattern** where entire operation is validated before any modifications (atomic success/failure, no rollback needed). **Optimization Journey**: Evolved from buggy endpoint-only updates → over-engineered full-chain tracking → elegant two-position updates (recognizing middle boxes don't change state). **Part 2 Complexity**: Handles 2D overlapping box structures requiring recursive collection with HashSet deduplication to prevent double-processing. **Key Algorithms**: Part 1 uses simple scan-for-empty pattern (O(C) chain length); Part 2 horizontal uses recursive edge-finding; Part 2 vertical uses collect-then-execute with distance-based sorting to prevent overwriting unmoved boxes. **Mission Integration Benefits**: `Grid<Tile>` eliminates bounds errors, `Coord` type prevents x/y confusion, `in_bounds()`/`get()`/`get_mut()` provide safe access patterns. **Python Comparison**: Python's BFS with `list.pop(0)` (O(n) per pop) and tuple coordinates vs Rust's recursion with call stack and type-safe Coord; Python collects all cells vs Rust collects box positions only; both use collect-then-execute for Part 2 vertical but different traversal strategies. **Code Organization**: Clean separation with `try_move*()` for box logic, `simulate_robot*()` for robot tile management, `widen_grid()` for Part 2 transformation. **Educational Value**: Shows how deep problem understanding leads to simpler code (tracking all boxes → updating two positions); demonstrates when HashSet deduplication is critical (overlapping structures); proves distance-based ordering prevents overwrite bugs. **Test Coverage**: 3 comprehensive tests covering small example, large Part 1 chains, and large Part 2 overlapping structures. **Results**: Part 1 = 1,465,152, Part 2 = 1,511,259
 - **Day 16**: Exemplifies **Dijkstra's algorithm implementation** with Mission 6 Grid integration and compound state space design. Showcases **type-safe state representation** using `struct State { pos: (usize, usize), dir: Direction }` with `Hash + Eq` for HashMap keys, and `enum Direction` with methods (`delta()`, `rotate_cw()`, `rotate_ccw()`) eliminating magic numbers. **Algorithm Choice**: Rust's Dijkstra with `BinaryHeap<Node>` and custom `Ord` for min-heap (O(log n) operations) vs Python's BFS with `list.pop(0)` (O(n) per operation). **Two-Phase Pattern**: Phase 1 stores only best distances in `HashMap<State, usize>` (memory efficient O(V) where V = positions × 4 directions); Phase 2 backtracks from optimal end states to reconstruct all paths. **Mission 6 Benefits**: `Grid<char>` with safe indexing (`grid[pos]`), `in_bounds(pos.into())` with `Coord` conversion, type-safe coordinate handling preventing x/y confusion. **State Space Design**: Critical insight that rotation costs require `(position, direction)` state not just position—same location facing different directions has different future costs. **Transition Modeling**: Explicit 3-transition pattern (move forward +1, rotate CW +1000, rotate CCW +1000) vs Python's implicit rotation through direction loop. **Same-Cost Path Handling**: Rust's HashMap updates implicitly allow equal-cost paths; Python explicitly uses `<` not `<=` for visited check (documented in comments). **Code Organization**: Clean separation with `State`/`Direction`/`Node` structs, `parse_maze()`, `get_neighbors()`, `dijkstra()`, separate `part1()`/`part2()` functions. **Educational Value**: Demonstrates when state space expansion is necessary (rotation costs), showcases priority queue patterns with custom ordering, proves backtracking efficiency for "find best" → "find all best" escalations. **Test Coverage**: 4 comprehensive tests covering two different maze sizes for both parts (15×15 with score 7,036, 17×17 with score 11,048). **Results**: Part 1 = 92,432, Part 2 = 458. **Python Comparison**: Python's ~68-line unified BFS with full history tracking vs Rust's ~355-line Dijkstra with backtracking—Python optimizes for midnight racing brevity, Rust optimizes for algorithmic clarity and type safety.
 - **Day 17**: Demonstrates **virtual machine implementation** with clean opcode dispatch and bit manipulation patterns. Showcases **closure for combo operand resolution** capturing registers by value for dual-mode operand handling (literals 0-3 vs registers 4-6). **Part 1 VM Design**: Instruction pointer with 2-byte instructions (opcode + operand), `match` statement for exhaustive opcode handling, right shift operators (`>>=`, `>>`) idiomatic for power-of-2 divisions, bit operations (`& 7` for mod 8) replacing modulo. **Part 2 Quine Algorithm**: Recursive backtracking building A digit-by-digit backward (3 bits at a time via `current << 3 | bits`), early pruning via partial output validation before deeper recursion, `Option<i64>` cleanly representing search success/failure. **Python Comparison**: Python uses iterative forward search with mathematical jump strategy (`A += 8^i` when position i mismatches) vs Rust's depth-first backward construction—both exploit 3-bits-per-output structure but different search directions. **Algorithm Trade-offs**: Python's O(1) memory iterative jumps vs Rust's O(N) call stack recursion; Python optimizes for competitive speed (~30 lines Part 2), Rust demonstrates general backtracking pattern (~80 lines Part 2). **Key Insight**: Understanding bit-level program structure (A >>= 3 each loop) enables intelligent search strategies instead of brute force. **Test Coverage**: 7 comprehensive tests validating parsing, all 8 opcode behaviors, Part 1 execution, and VM edge cases. **Educational Value**: Shows how closure capture simplifies operand resolution, demonstrates recursive backtracking with Option returns, proves bit manipulation efficiency over arithmetic for power-of-2 operations. **Code Organization**: Standalone `execute_program()` function (not method), recursive `find_a()` helper with explicit parameters, `anyhow::Result` error handling throughout parsing.
+- **Day 18**: Exemplifies **integrator philosophy** through pure mission composition—demonstrating how to build complex solutions by combining validated foundational libraries without reimplementation. Showcases **Mission 6 Grid<bool> integration** for memory space corruption tracking with automatic bounds checking, **Mission 8 Graph trait implementation** adapting custom `MemorySpace` struct for generic pathfinding algorithms, **Mission 8 shortest_path() usage** providing BFS pathfinding without custom algorithm code. **Part 1 Algorithm**: Simulate 1024 falling bytes corrupting 71×71 grid positions, implement `Graph::neighbors()` for 4-directional safe movement validation (`is_safe()` checks corruption + bounds), call `shortest_path(start, goal)` returning `Result<Vec<Coord>, GraphError>` with path length. **Part 2 Binary Search**: Efficient O(log N) search over byte count (range 0 to 3450 bytes) testing path existence at each midpoint—when path exists try more bytes (left = mid + 1), when blocked try fewer (right = mid), converges to first blocking byte coordinate. **Mission Composition Benefits**: No manual BFS queue management, no custom grid indexing with bounds checks, no coordinate arithmetic errors—focus entirely on problem logic (corruption simulation, binary search strategy). **Python Comparison**: Python uses `networkx.Graph` with `add_node()`/`add_edge()` building explicit graph structure and `shortest_path()` library call OR custom BFS with `list.pop(0)` fallback; Rust implements lightweight `Graph` trait directly on grid enabling zero-copy algorithm composition. **Algorithm Philosophy**: Python's original Part 2 tested every corrupted coordinate sequentially (slow, learned binary search from Reddit community); Rust implements binary search from start demonstrating algorithmic thinking. **Library Strategy**: Python's networkx provides batteries-included graph operations with `remove_node()` for dynamic updates; Rust's mission system provides foundational types requiring trait implementation but enabling custom optimizations. **Test Coverage**: 2 comprehensive tests validating both parts with example data (7×7 grid, 12 bytes → 22 steps, first blocker at 6,1). **Educational Value**: Perfect demonstration of integrator approach—leveraging Mission 6 coordinate safety + Mission 8 graph algorithms = clean solution focusing on problem-specific logic (corruption tracking, binary search). **Code Organization**: Clean separation with `MemorySpace` struct, `Graph` trait implementation with `neighbors()`/`contains()`/`nodes()` methods, `parse_bytes()` helper with error context, `anyhow::Result` throughout. **Results**: Part 1 = 282 steps, Part 2 = byte at (64,29) blocks path.
 
 ---
 
@@ -1521,10 +1736,10 @@ To add a new day to this summary:
 
 ---
 
-*Last Updated: December 16, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17*
+*Last Updated: December 17, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]] | [[../../../zettelkasten/virtual-machine-patterns]] | [[../../../zettelkasten/recursive-backtracking]]*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation #binary-search #graph-adapters #pathfinding #integrator-philosophy*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]] | [[../../../zettelkasten/virtual-machine-patterns]] | [[../../../zettelkasten/recursive-backtracking]] | [[../../../zettelkasten/binary-search-patterns]] | [[../../../zettelkasten/graph-trait-adapters]]*
