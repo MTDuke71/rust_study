@@ -1,0 +1,28 @@
+[package]
+name = "rustaceans_ch01_foundations"
+version = "0.1.0"
+edition = "2021"
+
+[[example]]
+name = "memory_terminology"
+path = "examples/memory_terminology.rs"
+
+[[example]]
+name = "ownership_semantics"
+path = "examples/ownership_semantics.rs"
+
+[[example]]
+name = "borrowing_lifetimes"
+path = "examples/borrowing_lifetimes.rs"
+
+[[example]]
+name = "interior_mutability"
+path = "examples/interior_mutability.rs"
+
+[[example]]
+name = "variance"
+path = "examples/variance.rs"
+
+[[example]]
+name = "full_chapter"
+path = "examples/full_chapter.rs"

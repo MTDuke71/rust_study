@@ -1,12 +1,16 @@
-# Rust Book Instructions - Official Content Integration
+# Rust Book & Rustaceans Instructions - Systematic Content Integration
 
-**Purpose**: Create comprehensive summaries and exercises that integrate official Rust Book content with the repository's learning systems, ensuring systematic coverage of language fundamentals.
+**Purpose**: Create comprehensive summaries and exercises that integrate official Rust learning resources (The Rust Book and Rust for Rustaceans) with the repository's learning systems, ensuring systematic coverage of language fundamentals and advanced concepts.
+
+**Applies To**:
+- **`rust_book/ChX/`** - The Rust Book (official language fundamentals)
+- **`rust_for_rustaceans/ChX/`** - Rust for Rustaceans (intermediate/advanced concepts)
 
 ---
 
-## 📚 **Rust Book Integration Philosophy**
+## 📚 **Book Integration Philosophy**
 
-The Rust Book exercises are **NOT** redundant practice. They are **foundational knowledge integration** where:
+The Rust learning books are **NOT** redundant practice. They are **foundational and advanced knowledge integration** where:
 - **Official content validates** our learning approach and fills knowledge gaps
 - **Systematic coverage ensures** no fundamental concepts are missed
 - **Exercise integration connects** book theory to practical implementation
@@ -14,6 +18,10 @@ The Rust Book exercises are **NOT** redundant practice. They are **foundational 
 - **Cross-referencing strengthens** the overall knowledge system
 
 ### **Core Principle**: "Every official Rust concept has a clear place in our learning system, with practical exercises that demonstrate understanding."
+
+### **Book Progression**
+1. **The Rust Book (`rust_book/`)** - Language fundamentals, core concepts, standard library
+2. **Rust for Rustaceans (`rust_for_rustaceans/`)** - Advanced patterns, deep dives, production-ready techniques
 
 ---
 
@@ -29,36 +37,48 @@ Phase 3: Summary Generation     # Create comprehensive chapter summaries with li
 ```
 
 ### **Chapter Directory Structure (MANDATORY)**
+**Applies to both `rust_book/ChX/` and `rust_for_rustaceans/ChX/`**
+
 ```
-rust_book/ChX/
+[book_dir]/ChX/
 ├── README.md                   # Chapter overview and learning objectives
-├── Cargo.toml                  # Chapter-specific dependencies
-├── src/
-│   ├── main.rs                 # Complete runnable examples from chapter
-│   ├── concepts.rs             # Key concept implementations
-│   ├── exercises.rs            # Practice problems and solutions
-│   └── lib.rs                  # Public API for chapter concepts
-├── examples/
-│   ├── basic_example.rs        # Simple concept demonstration
-│   ├── intermediate_example.rs # Combined concepts
-│   └── advanced_example.rs     # Chapter integration with other concepts
-├── tests/
-│   ├── concept_tests.rs        # Validate understanding of each concept
-│   └── integration_tests.rs    # Test concepts working together
-└── CHAPTER_SUMMARY.md          # Comprehensive summary with zettelkasten links
+├── [package_name]/             # Named package (e.g., foundations, ownership)
+│   ├── Cargo.toml              # Package-specific dependencies
+│   ├── src/
+│   │   ├── main.rs             # Helper to list examples
+│   │   ├── lib.rs              # Public API for chapter concepts (optional)
+│   │   └── concepts.rs         # Key concept implementations (optional)
+│   ├── examples/
+│   │   ├── [concept1].rs       # Focused concept demonstration
+│   │   ├── [concept2].rs       # Another concept
+│   │   ├── [advanced].rs       # Advanced patterns
+│   │   └── full_chapter.rs     # All listings together (optional)
+│   └── tests/
+│       ├── concept_tests.rs    # Validate understanding of each concept
+│       └── integration_tests.rs # Test concepts working together
+├── Summary.md                  # Concise summary with zettelkasten links
+└── Ch0X.rs                     # Original code (if migrating from single file)
 ```
+
+**Example Structures**:
+- **Rust Book**: `rust_book/Ch10/generics/`, `rust_book/Ch10/traits/`, `rust_book/Ch10/lifetimes/`
+- **Rustaceans**: `rust_for_rustaceans/Ch01/foundations/`
 
 ---
 
 ## 📋 **Chapter Processing Template**
 
 ### **Chapter README.md Structure (REQUIRED)**
-Every `ChX/README.md` file must follow this template:
+Every `ChX/README.md` file must follow this template (adapt examples for book):
 
 ```markdown
-# Chapter X: [Chapter Title]
+# [Book Name] - Chapter X: [Chapter Title]
 
-**Official Reference**: [Rust Book Chapter URL]
+**Official Reference**: [Chapter URL or Book Reference]
+
+**Book Context**:
+- **The Rust Book**: Foundational concepts, standard library, core language features
+- **Rust for Rustaceans**: Advanced patterns, production techniques, deep implementation details
 
 **Learning Objectives**: By completing this chapter, you will understand:
 1. [Primary concept 1] - [Brief description]
@@ -672,10 +692,52 @@ cargo doc --package rust_book_chX       # Documentation builds
 
 ---
 
-*Remember: Rust Book chapters are foundational knowledge integration points that validate and strengthen our entire learning system. Every chapter should leave students more confident and capable across all learning tracks.*
+*Remember: Rust learning books are foundational and advanced knowledge integration points that validate and strengthen our entire learning system. Every chapter should leave students more confident and capable across all learning tracks.*
 
 ---
 
-*Tags: #rust-book #official-content #integration #systematic-learning #foundational-knowledge #instruction-guide*
+## 📘 **Rust for Rustaceans Specifics**
+
+### **Key Differences from The Rust Book**
+
+**Rust for Rustaceans** assumes Rust Book knowledge and dives deeper into:
+- **Memory models** - High-level vs low-level variable semantics
+- **Type system** - Variance, subtyping, trait object internals
+- **Unsafe Rust** - Raw pointers, UnsafeCell, FFI, safety contracts
+- **Async programming** - Futures, Pin, Waker, executor internals
+- **Performance** - Zero-cost abstractions, memory layout, compiler optimizations
+- **Production patterns** - Error handling, API design, testing strategies
+
+### **Example Structure (Already Applied)**
+
+See `rust_for_rustaceans/Ch01/foundations/` as the reference implementation:
+- ✅ Focused examples per concept (memory_terminology, ownership_semantics, etc.)
+- ✅ Beautiful formatted output with boxes and sections
+- ✅ Comprehensive README with learning path
+- ✅ Zettelkasten integration in Summary.md
+- ✅ All book listings preserved in full_chapter.rs
+- ✅ Clean compilation with zero warnings
+
+### **Rustaceans Chapter Workflow**
+
+1. **Read chapter thoroughly** - Take notes on advanced concepts
+2. **Create Summary.md** - Add zettelkasten links to related concepts
+3. **Identify code listings** - Extract all book code examples
+4. **Create focused examples** - One example per major section/concept
+5. **Create full_chapter.rs** - All listings in one comprehensive file
+6. **Add to workspace** - Update root Cargo.toml
+7. **Write README.md** - Learning path, quick reference, integration
+8. **Cross-reference** - Link to missions, daily study, Rust Book chapters
+
+### **Rustaceans Integration Points**
+
+- **Missions**: Apply advanced patterns to data structure implementations
+- **Rust Book**: Reference fundamentals, build on basics
+- **Zettelkasten**: Create deep-dive concept notes (variance, interior mutability, etc.)
+- **Daily Study**: Advanced topics archive can be integrated when relevant
+
+---
+
+*Tags: #rust-book #rust-for-rustaceans #official-content #integration #systematic-learning #foundational-knowledge #advanced-concepts #instruction-guide*
 
 *Links: [[copilot-instructions]] | [[mission-instructions]] | [[daily-study-instructions]] | [[tutorial-instructions]] | [[zettelkasten-instructions]]*
