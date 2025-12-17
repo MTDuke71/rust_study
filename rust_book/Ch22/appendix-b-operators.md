@@ -40,14 +40,14 @@ Many Rust operators can be overloaded by implementing the corresponding trait.
 
 ### Comparison Operators
 
-| Operator | Example | Description | Trait |
-|----------|---------|-------------|-------|
-| `==` | `expr == expr` | Equality | `PartialEq` |
-| `!=` | `expr != expr` | Not equal | `PartialEq` |
-| `<` | `expr < expr` | Less than | `PartialOrd` |
-| `<=` | `expr <= expr` | Less than or equal | `PartialOrd` |
-| `>` | `expr > expr` | Greater than | `PartialOrd` |
-| `>=` | `expr >= expr` | Greater than or equal | `PartialOrd` |
+| Operator | Example        | Description           | Trait        |     |
+| -------- | -------------- | --------------------- | ------------ | --- |
+| "=="     | `expr == expr` | Equality              | `PartialEq`  |     |
+| `!=`     | `expr != expr` | Not equal             | `PartialEq`  |     |
+| `<`      | `expr < expr`  | Less than             | `PartialOrd` |     |
+| `<=`     | `expr <= expr` | Less than or equal    | `PartialOrd` |     |
+| `>`      | `expr > expr`  | Greater than          | `PartialOrd` |     |
+| `>=`     | `expr >= expr` | Greater than or equal | `PartialOrd` |     |
 
 ### Range Operators
 
@@ -162,12 +162,12 @@ Many Rust operators can be overloaded by implementing the corresponding trait.
 
 ### Control Flow Symbols
 
-| Symbol | Example | Description |
-|--------|---------|-------------|
-| `?` | `expr?` | Error propagation |
-| `=>` | `pat => expr` | Match arm separator |
-| `;` | `expr;` | Statement terminator |
-| `:` | `'label: loop {...}` | Loop label |
+| Symbol | Example               | Description          |
+| ------ | --------------------- | -------------------- |
+| `?`    | `expr?`               | Error propagation    |
+| "=>"   | `pat => expr`         | Match arm separator  |
+| `;`    | `expr;`               | Statement terminator |
+| `:`    | `'label\: loop {...}` | Loop label           |
 
 ### Delimiters
 
@@ -197,7 +197,7 @@ Rust follows standard operator precedence rules:
 7. **Bitwise AND**: `&`
 8. **Bitwise XOR**: `^`
 9. **Bitwise OR**: `|`
-10. **Comparison**: `==`, `!=`, `<`, `>`, `<=`, `>=`
+10. **Comparison**: "==", `!=`, `<`, `>`, `<=`, `>=`
 11. **Logical AND**: `&&`
 12. **Logical OR**: `||`
 13. **Range**: `..`, `..=`

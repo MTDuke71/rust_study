@@ -694,4 +694,4 @@ fn safe_dfs(
 
 *Tags: #dfs #depth-first-search #backtracking #recursion #exhaustive-search #graph-algorithms #tree-traversal #aoc-patterns*
 
-*Links: [[zettel-index]] | [[BFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[mission-7]] | [[mission-8]] | [[Day 5 Exercise Solutions]] | [[Week 4 Overview]] | [[kahns-topological-sort]]*
+*Links: [[zettel-index]] | [[BFS Patterns]] | [[A-Star-Algorithm-Deep-Dive]] | [[mission-7]] | [[mission-8]] | [[Day 5 Exercise Solutions]] | [[Week 4 Overview]] | [[topological-sort]] | [[kahns-topological-sort]]*

@@ -155,4 +155,4 @@ struct GraphVec {
 
 *Tags: #graph-theory #adjacency-graph #algorithms #data-structures #moc #rust-implementation #competitive-programming #optimization #symmetry #tsp*
 
-*Links: [[AoC Patterns MOC]] | [[Collections MOC]] | [[TSP Algorithms]] | [[Symmetry in Algorithms]] | [[day13_analysis]] | [[../missions/Mission5/README]] | [[../missions/Mission7/README]]*
+*Links: [[AoC Patterns MOC]] | [[Collections MOC]] | [[TSP Algorithms]] | [[Symmetry in Algorithms]] | [[topological-sort]] | [[kahns-topological-sort]] | [[day13_analysis]] | [[../missions/Mission5/README]] | [[../missions/Mission7/README]]*

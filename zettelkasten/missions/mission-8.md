@@ -677,4 +677,4 @@ let mut queue = VecDeque::new();  // O(1) for both ends
 
 *Tags: #mission8 #advanced-graphs #traits #composition #generics #bfs-dfs #algorithm-design #zero-cost-abstractions #v-cycle #performance #benchmarking*
 
-*Links: [[../zettel-index|Zettel Index]] | [[mission-7|Mission 7]] | [[mission-9|Mission 9]] | [[../Mission8_tut|Mission 8 Tutorial]] | [[../rust_book/rust-book-ch10|Rust Book Ch10]] | [[../BFS Patterns|BFS Patterns]] | [[../DFS Patterns|DFS Patterns]] | [[../algorithm-composition|Algorithm Composition]] | [[../zero-cost-abstractions|Zero-Cost Abstractions]] | [[../Missions Overview|Missions Overview]]*
+*Links: [[../zettel-index|Zettel Index]] | [[mission-7|Mission 7]] | [[mission-9|Mission 9]] | [[../Mission8_tut|Mission 8 Tutorial]] | [[../topological-sort|Topological Sort]] | [[../kahns-topological-sort|Kahn's Algorithm]] | [[../rust_book/rust-book-ch10|Rust Book Ch10]] | [[../BFS Patterns|BFS Patterns]] | [[../DFS Patterns|DFS Patterns]] | [[../algorithm-composition|Algorithm Composition]] | [[../zero-cost-abstractions|Zero-Cost Abstractions]] | [[../Missions Overview|Missions Overview]]*

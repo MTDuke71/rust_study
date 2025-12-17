@@ -498,4 +498,4 @@ fn req6_bfs_shortest_path() { ... }
 
 *Tags: #mission7 #graphs #dfs #bfs #adjacency-lists #graph-traversal #algorithms #pathfinding #v-cycle*
 
-*Links: [[../zettel-index|Zettel Index]] | [[mission-6|Mission 6]] | [[mission-8|Mission 8]] | [[../Mission7_tut|Mission 7 Tutorial]] | [[../BFS Patterns|BFS Patterns]] | [[../DFS Patterns|DFS Patterns]] | [[../Missions Overview|Missions Overview]]*
+*Links: [[../zettel-index|Zettel Index]] | [[mission-6|Mission 6]] | [[mission-8|Mission 8]] | [[../Mission7_tut|Mission 7 Tutorial]] | [[../topological-sort|Topological Sort]] | [[../BFS Patterns|BFS Patterns]] | [[../DFS Patterns|DFS Patterns]] | [[../Missions Overview|Missions Overview]]*
