@@ -57,8 +57,8 @@ fn main() {
         println!("📚 THE STACK: Function Call Scratch Space");
         println!("   ────────────────────────────────────────");
         fn stack_example(a: i32, b: i32) -> i32 {
-            let sum = a + b;  // Local variable on stack
-            sum  // Returns value, stack frame deallocated after
+              // Local variable on stack
+            a + b  // Returns value, stack frame deallocated after
         }
         
         let result = stack_example(10, 20);
@@ -112,9 +112,9 @@ fn main() {
     {
         println!("📚 LOW-LEVEL MODEL: Memory Slots");
         println!("   ────────────────────────────────");
-        let x: i32;  // Slot exists but uninitialized
+          // Slot exists but uninitialized
         // println!("{}", x);  // ❌ Would fail - no valid value
-        x = 42;      // Slot now holds valid value
+        let x: i32 = 42;      // Slot now holds valid value
         println!("   Slot allocated → Initialized → Valid: {}", x);
         println!("   Variables are memory locations (may be invalid)\n");
     }

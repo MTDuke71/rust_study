@@ -55,7 +55,7 @@ fn main() {
         println!("📚 COVARIANCE: Shared References");
         println!("   ──────────────────────────────");
         
-        fn print_slice<'a>(slice: &'a [i32]) {
+        fn print_slice(slice: &[i32]) {
             println!("   Slice: {:?}", slice);
         }
         
@@ -173,7 +173,7 @@ fn main() {
         
         // Covariant: Can use longer lifetime
         {
-            fn accepts_any<'a>(s: &'a str) {
+            fn accepts_any(s: &str) {
                 println!("   Covariant: {}", s);
             }
             let static_s: &'static str = "hello";
@@ -182,7 +182,7 @@ fn main() {
         
         // Invariant: Must match exactly
         {
-            fn needs_exact<'a>(r: &mut &'a str) {
+            fn needs_exact(r: &mut &str) {
                 println!("   Invariant: {}", r);
             }
             let mut s = "world";
