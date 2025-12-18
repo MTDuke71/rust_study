@@ -250,7 +250,7 @@ pub trait Pathfinder<G: WeightedGraph> {
 - **[[Mission12 Overview]]** - Parser integration for complex graph data formats
 
 ### **Advanced Research Completed**
-- ✅ **[[Bidirectional Search]]** - Two-way pathfinding with 50-95% node reduction
+- ✅ **[[bidirectional-search]]** - Two-way pathfinding with 50-95% node reduction
 - ✅ **[[Jump Point Search]]** - Grid-based pathfinding acceleration (hierarchical module)
 - ✅ **[[Hierarchical Pathfinding]]** - Multi-level route planning with Contraction Hierarchies
 - ✅ **[[Multi-Objective Optimization]]** - Pareto-optimal solutions for conflicting objectives

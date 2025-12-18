@@ -43,7 +43,7 @@ println!("{:#?}", rect); // Pretty-printed format
 
 ### `PartialEq` and `Eq` - Equality Comparisons
 
-**`PartialEq` Purpose**: Enable `==` and `!=` operators.
+    **`PartialEq` Purpose**: Enable "==" and `!=` operators.
 
 **Generated behavior**:
 - **Structs**: Equal if all fields are equal
@@ -51,7 +51,7 @@ println!("{:#?}", rect); // Pretty-printed format
 
 **When required**:
 - Using `assert_eq!` macro
-- Comparisons with `==` and `!=`
+- Comparisons with "=="" and `!=`
 - Collections that need equality checks
 
 **Conditions**: All fields must implement `PartialEq`.
