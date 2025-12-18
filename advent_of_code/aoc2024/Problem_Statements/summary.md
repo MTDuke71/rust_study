@@ -1348,6 +1348,29 @@ find_a(&program, 1, 0, reg_b, reg_c)
 
 7. **Bit Manipulation**: Building A via `(current << 3) | bits` constructs number 3 bits at a time, leveraging binary structure of the problem.
 
+**Rust-Specific Patterns**:
+
+- **Closure for combo operands**: Captures registers by value, provides clean operand → value mapping
+- **Pattern matching on opcode**: Rust match exhaustiveness ensures all opcodes handled
+- **Right shift operations**: `>>=` and `>>` idiomatic for power-of-2 divisions
+- **Bit operations**: `& 7` for mod 8, `<< 3` for multiply by 8, `| bits` for bit setting
+- **Recursive Option return**: `Option<i64>` cleanly represents success/failure without exceptions
+- **Vec<u8> for output**: Efficient push for building output sequence
+
+**Test Coverage**:
+- `test_parse_input()`: Validates input parsing with registers and program
+- `test_part1_example()`: Verifies complete Part 1 execution (729 → "4,6,3,5,6,3,5,2,1,0")
+- `test_execute_c_set()`: Tests `bst` opcode (register C → register B)
+- `test_execute_output()`: Tests `out` opcode with multiple outputs
+- `test_execute_adv_out()`: Tests compound behavior (adv + out + jnz loop)
+- `test_execute_bxl()`: Tests `bxl` XOR operation (B XOR literal)
+- `test_execute_bxc()`: Tests `bxc` XOR operation (B XOR C)
+
+**Results**: Part 1 = [actual output], Part 2 = [lowest A value]
+
+**Key Learning**: Virtual machine problems benefit from clean opcode dispatch (match/case), combo operand resolution via functions/closures, and understanding bit-level program structure for quine challenges. Part 2 search strategies vary (forward jumps vs backward construction) but both exploit the 3-bits-per-output pattern for efficiency.
+---
+
 ### Day 18: RAM Run
 
 **Title**: RAM Run  
@@ -1557,27 +1580,6 @@ Both solutions achieve correct results efficiently:
 
 **Key Takeaway**: This problem demonstrates **mission system maturity**—when foundational libraries (Grid, Graph, pathfinding) are production-ready, competitive programming becomes **problem composition** rather than algorithm implementation. Python uses batteries-included networkx; Rust builds lightweight trait adapters. Both approaches valid; Rust's teaches architectural patterns while solving problems.
 
-**Rust-Specific Patterns**:
-
-- **Closure for combo operands**: Captures registers by value, provides clean operand → value mapping
-- **Pattern matching on opcode**: Rust match exhaustiveness ensures all opcodes handled
-- **Right shift operations**: `>>=` and `>>` idiomatic for power-of-2 divisions
-- **Bit operations**: `& 7` for mod 8, `<< 3` for multiply by 8, `| bits` for bit setting
-- **Recursive Option return**: `Option<i64>` cleanly represents success/failure without exceptions
-- **Vec<u8> for output**: Efficient push for building output sequence
-
-**Test Coverage**:
-- `test_parse_input()`: Validates input parsing with registers and program
-- `test_part1_example()`: Verifies complete Part 1 execution (729 → "4,6,3,5,6,3,5,2,1,0")
-- `test_execute_c_set()`: Tests `bst` opcode (register C → register B)
-- `test_execute_output()`: Tests `out` opcode with multiple outputs
-- `test_execute_adv_out()`: Tests compound behavior (adv + out + jnz loop)
-- `test_execute_bxl()`: Tests `bxl` XOR operation (B XOR literal)
-- `test_execute_bxc()`: Tests `bxc` XOR operation (B XOR C)
-
-**Results**: Part 1 = [actual output], Part 2 = [lowest A value]
-
-**Key Learning**: Virtual machine problems benefit from clean opcode dispatch (match/case), combo operand resolution via functions/closures, and understanding bit-level program structure for quine challenges. Part 2 search strategies vary (forward jumps vs backward construction) but both exploit the 3-bits-per-output pattern for efficiency.
 
 ---
 
@@ -1593,17 +1595,17 @@ Both solutions achieve correct results efficiently:
 | Cryptographic | 0 | 0 |
 | Data Structures | 2 | 2 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 4 | 5 |
+| Graph Algorithms | 5 | 5 |
 | Greedy Algorithms | 0 | 0 |
 | Mathematical | 9 | 6 |
 | Number Theory | 0 | 0 |
-| Optimization | 1 | 9 |
+| Optimization | 1 | 10 |
 | Parsing | 0 | 0 |
 | Pattern Matching | 2 | 3 |
 | Real-time Analysis | 0 | 0 |
-| Search | 0 | 1 |
+| Search | 0 | 2 |
 | Search/Traversal | 5 | 5 |
-| Simulation | 6 | 4 |
+| Simulation | 7 | 4 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
