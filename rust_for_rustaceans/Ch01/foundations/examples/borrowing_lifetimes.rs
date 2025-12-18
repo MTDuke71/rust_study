@@ -36,12 +36,15 @@ fn main() {
         println!("📚 SHARED REFERENCES: Function Parameters");
         println!("   ─────────────────────────────────────────");
         
-        fn calculate_length(s: &String) -> usize {
+        // Note: Using &str instead of &String is more idiomatic and flexible
+        // &str accepts both String references and string literals, making it more general
+        // This is a common Rust pattern: prefer string slices (&str) over owned String references
+        fn calculate_length(s: &str) -> usize {
             s.len()  // Can read but not modify
         }
         
         let text = String::from("hello");
-        let len = calculate_length(&text);
+        let len = calculate_length(&text);  // String automatically coerces to &str
         println!("   Length of \"{}\": {}", text, len);
         println!("   ✓ text still owned by caller\n");
     }
