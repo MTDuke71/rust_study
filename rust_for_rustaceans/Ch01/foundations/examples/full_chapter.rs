@@ -116,8 +116,8 @@ fn main() {
     {
         println!("📌 Low-Level Model: Uninitialized Memory");
         println!("   ───────────────────────────────────────");
-        let x: usize;
-        x = 6;
+        
+        let x: usize = 6;
         println!("   x value slot initialized to: {}", x);
         println!("   ✓ Variable is invalid until assignment\n");
     }
@@ -209,7 +209,7 @@ fn main() {
         
         for i in 0..5 {
             println!("   Iteration {}: z = {}", i, z);
-            x = Box::new(i);
+            *x = i;
             z = &x; // new lifetime 'a starts
         }
         println!("   Final z: {}", z);

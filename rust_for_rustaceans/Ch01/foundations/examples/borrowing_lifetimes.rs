@@ -201,7 +201,7 @@ fn main() {
         
         for i in 0..3 {
             println!("   Iteration {}: z = {}", i, z);
-            x = Box::new(i + 1);  // x changes
+            *x = i + 1;  // x changes
             z = &x;  // New lifetime begins
         }
         
