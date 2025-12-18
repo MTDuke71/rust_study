@@ -82,7 +82,9 @@ fn main() {
         let a: i32 = 5;      // Copy
         let b: bool = true;  // Copy
         let c: char = 'A';   // Copy
-        let d: f64 = 3.14;   // Copy
+        // Note: Changed from 3.14 to avoid clippy warning about approximating PI constant
+        // The focus here is demonstrating f64 implements Copy, not mathematical constants
+        let d: f64 = 2.5;    // Copy
         let e: (i32, i32) = (1, 2);  // Copy (if all elements are Copy)
         
         let _a2 = a; let _b2 = b; let _c2 = c; let _d2 = d; let _e2 = e;
