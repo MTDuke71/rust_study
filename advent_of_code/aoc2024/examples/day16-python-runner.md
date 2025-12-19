@@ -24,3 +24,14 @@ python -c "from solutions.day16 import Solution; import pathlib; data = pathlib.
 
 - This intentionally uses `Solution.__new__(Solution)` to avoid calling `SolutionBase.__init__()` (which expects the `2024py/data/dayXX/puzzle_input.txt` layout).
 - This runner uses `inputs/day16_example.txt`. Swap the path if you want puzzle input.
+
+---
+
+**Related Concepts**:
+- Pathfinding algorithms (Dijkstra's algorithm for shortest path)
+- Python-Rust cross-validation for correctness verification
+- Multiple optimal paths counting
+
+*Links: [[../../zettelkasten/weekly plans/2025-W51]] | [[../../zettelkasten/missions/mission-9]] | [[../../zettelkasten/A-Star-Algorithm-Deep-Dive]]*
+
+*Tags: #aoc2024 #day16 #pathfinding #python-reference #testing #validation*

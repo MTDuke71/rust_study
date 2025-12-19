@@ -438,3 +438,9 @@ Part 2: [lowest A value that produces [2,4,1,7,7,5,1,7,4,6,0,3,5,5,3,0]]
 - Input: `inputs/day17.txt`
 
 **Key Learning**: The 3-bit chunking pattern (`A >>= 3`) is the foundation for both Part 1's execution and Part 2's reverse engineering strategy!
+
+---
+
+*Links: [[../../zettelkasten/weekly plans/2025-W51]] | [[../../zettelkasten/rust-concepts-MOC]]*
+
+*Tags: #aoc2024 #day17 #virtual-machine #bitwise-operations #reverse-engineering #execution-trace*

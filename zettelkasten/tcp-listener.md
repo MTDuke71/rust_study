@@ -211,7 +211,7 @@ See [[rust_book/rust-book-ch21]] for complete thread pool implementation.
 - [[async-concurrency]] - Non-blocking alternatives to thread-per-connection
 
 ### **Practical Applications**
-- **HTTP servers**: Web servers, REST APIs
+- **HTTP servers**: Web servers, REST APIs → [[../rust_book/Ch21/web_server/README]]
 - **Chat servers**: Real-time communication
 - **Game servers**: Multiplayer networking
 - **Database proxies**: Connection pooling
@@ -221,4 +221,4 @@ See [[rust_book/rust-book-ch21]] for complete thread pool implementation.
 
 *Tags: #networking #tcp #io #rust-book-ch21 #concept #practical #intermediate*
 
-*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[rust-book/rust-book-ch21]] | [[http-request-parsing]] | [[async-await-basics]]*
+*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[rust-book/rust-book-ch21]] | [[http-request-parsing]] | [[async-await-basics]] | [[../rust_book/Ch21/web_server/README]]*

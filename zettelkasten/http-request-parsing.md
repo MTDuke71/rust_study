@@ -350,4 +350,4 @@ Manual parsing (as shown here) is educational and useful for:
 
 *Tags: #networking #http #parsing #rust-book-ch21 #concept #practical #intermediate*
 
-*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[tcp-listener]] | [[rust-book/rust-book-ch21]] | [[String Manipulation]] | [[Text Parsing Patterns]]*
+*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[tcp-listener]] | [[rust-book/rust-book-ch21]] | [[String Manipulation]] | [[Text Parsing Patterns]] | [[../rust_book/Ch21/README]] | [[../rust_book/Ch21/web_server/README]]*

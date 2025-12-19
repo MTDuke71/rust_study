@@ -206,4 +206,4 @@ This mirrors many AoC tasks (e.g., **2023 Day 20 pulse processing**) where parsi
 
 *Tags: #concurrency #pattern #aoc #rust-book #intermediate*
 
-*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[rust-threading-basics]] | [[AoC Integration]] | [[deterministic-debugging]] | [[shared-state-concurrency]] | [[sync-send-traits]]*
+*Links: [[zettel-index]] | [[AoC Patterns MOC]] | [[rust-threading-basics]] | [[AoC Integration]] | [[deterministic-debugging]] | [[shared-state-concurrency]] | [[sync-send-traits]] | [[../rust_book/Ch21/README]]*

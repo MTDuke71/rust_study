@@ -130,4 +130,4 @@ fn main() {
 
 *Tags: #concurrency #pattern #aoc #rust-book #intermediate*
 
-*Links: [[zettel-index]] | [[rust-threading-basics]] | [[message-passing-channels]] | [[sync-send-traits]] | [[deterministic-debugging]] | [[AoC Pattern Library]]*
+*Links: [[zettel-index]] | [[rust-threading-basics]] | [[message-passing-channels]] | [[sync-send-traits]] | [[deterministic-debugging]] | [[AoC Pattern Library]] | [[../rust_book/Ch21/README]]*

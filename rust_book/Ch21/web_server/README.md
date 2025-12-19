@@ -284,3 +284,9 @@ This server demonstrates:
 - ✅ Real-world application design
 
 **Next Steps**: Apply these concepts to your own projects!
+
+---
+
+*Links: [[../../../zettelkasten/rust_book/rust-book-ch21]] | [[../../../zettelkasten/tcp-listener]] | [[../../../zettelkasten/http-request-parsing]] | [[../../../zettelkasten/rust-threading-basics]] | [[../../../zettelkasten/weekly plans/2025-W51]]*
+
+*Tags: #rust-book #ch21 #web-server #multithreading #tcp #http #thread-pool #production-ready*
