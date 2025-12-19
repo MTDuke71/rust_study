@@ -1805,6 +1805,242 @@ While this problem doesn't require Mission libraries, it could benefit from:
 
 **Results**: Part 1 = 360 possible designs, Part 2 = 577,474,410,989,846 total arrangements
 
+### Day 20: Race Condition (Detailed Analysis)
+
+**Title**: Race Condition  
+**Part 1 Type**: Graph Algorithms + Mathematical  
+**Part 1 Description**: Find cheats (phasing through walls for up to 2 picoseconds) that save ≥100 picoseconds on a racetrack, count valid cheats  
+**Part 2 Type**: Graph Algorithms + Mathematical  
+**Part 2 Description**: Extend cheat duration to up to 20 picoseconds, find all cheats saving ≥100 picoseconds (much larger search space)  
+**Key Concepts**: Bidirectional BFS, distance maps, Manhattan distance, geometric optimization, cheat enumeration, Mission 6 Grid integration
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Pathfinding optimization with shortcuts (single path → find all beneficial shortcuts)
+- **Data Structure**:
+  - **Rust**: Mission 6 `Grid<char>` with `Coord`, `HashMap<Pos, usize>` for dual distance maps, `HashSet` for cheat deduplication
+  - **Python**: 2D list grid, list for path storage, nested loops for cheat enumeration
+- **Complexity**:
+  - **Time**: O(P) per BFS where P = path length, then O(P × M) cheat enumeration where M = positions within Manhattan distance
+  - **Space**: O(P) for distance maps
+  - **Critical Insight**: Precompute distances once → O(1) cheat calculation vs O(P³) naive pathfinding per cheat
+- **AoC Theme**: "Pathfinding with shortcuts" escalating from limited (2ps) to extended (20ps) cheat duration
+
+**Algorithm Comparison: Bidirectional Distance Maps vs Path List Approach**:
+
+**Python Approach** (Path-Based with Coordinate Dictionary):
+```python
+def find_shortest_path(grid, start, end):
+    # BFS returns steps and complete path list
+    queue = [(start, 0, [start])]
+    while queue:
+        (r, c), steps, path = queue.pop(0)  # O(n) pop
+        if (r, c) == end:
+            return steps, path
+            
+def find_cheatable_pairs_in_range(path, savings, cheat_moves):
+    coords_steps = {coord: i for i, coord in enumerate(path)}  # Map coord → index
+    
+    for y, x in path:
+        for dy in range(-cheat_moves, cheat_moves + 1):
+            for dx in range(-cheat_moves, cheat_moves + 1):
+                manhattan = abs(dy) + abs(dx)
+                if manhattan > cheat_moves:
+                    continue
+                ny, nx = y + dy, x + dx
+                if (ny, nx) in coords_steps:
+                    if savings <= (coords_steps[(ny, nx)] - coords_steps[(y, x)] - manhattan):
+                        cheats += 1
+```
+- **Strategy**: Build full path, create coordinate→step dictionary, enumerate all positions within Manhattan distance circle
+- **Trade-offs**: Stores entire path (O(P) memory), O(n) queue operations with `list.pop(0)`, simple coordinate dictionary lookup
+
+**Rust Approach** (Bidirectional Distance Maps):
+```rust
+fn bfs_distances(grid: &Grid<char>, start: Pos) -> HashMap<Pos, usize> {
+    // BFS storing only distances, not paths
+    let mut distances = HashMap::new();
+    let mut queue = VecDeque::new();  // O(1) operations
+    queue.push_back((start, 0));
+    distances.insert(start, 0);
+    
+    while let Some((pos, dist)) = queue.pop_front() {
+        for neighbor in valid_neighbors(pos) {
+            if !distances.contains_key(&neighbor) {
+                distances.insert(neighbor, dist + 1);
+                queue.push_back((neighbor, dist + 1));
+            }
+        }
+    }
+    distances
+}
+
+fn count_cheats(grid, start, end, max_cheat_length, min_savings) -> usize {
+    let dist_from_start = bfs_distances(grid, start);  // Distance from S to every position
+    let dist_to_end = bfs_distances(grid, end);        // Distance from every position to E
+    let normal_path_length = dist_from_start[&end];
+    
+    let mut cheat_count = 0;
+    for (&cheat_start, &dist_to_cheat_start) in &dist_from_start {
+        for (cheat_end, cheat_length) in cheat_start.positions_within_distance(max_cheat_length) {
+            if let Some(&dist_from_cheat_end) = dist_to_end.get(&cheat_end) {
+                let distance_with_cheat = dist_to_cheat_start + cheat_length + dist_from_cheat_end;
+                if distance_with_cheat < normal_path_length {
+                    let savings = normal_path_length - distance_with_cheat;
+                    if savings >= min_savings {
+                        cheat_count += 1;
+                    }
+                }
+            }
+        }
+    }
+    cheat_count
+}
+```
+- **Strategy**: Dual BFS creating "distance from start" and "distance to end" maps, calculate savings via map lookups
+- **Trade-offs**: Two BFS passes but enables O(1) cheat evaluation, VecDeque O(1) operations, no path storage needed
+
+**🦀 Rust Conversion Highlights**:
+
+**Bidirectional Distance Maps**:
+```python
+# Python: Store full path, derive distances implicitly
+path = find_shortest_path(grid, start, end)[1]
+coords_steps = {coord: i for i, coord in enumerate(path)}
+```
+```rust
+// Rust: Dual BFS creates explicit distance maps
+let dist_from_start = bfs_distances(grid, start);
+let dist_to_end = bfs_distances(grid, end);
+```
+**Advantage**: Rust's approach enables O(1) savings calculation: `dist_from_start[p1] + manhattan + dist_to_end[p2]` vs Python's path index arithmetic
+
+**Manhattan Distance Enumeration**:
+```python
+# Python: Nested loops with manual range calculation
+for dy in range(-cheat_moves, cheat_moves + 1):
+    for dx in range(-cheat_moves, cheat_moves + 1):
+        manhattan = abs(dy) + abs(dx)
+        if manhattan > cheat_moves:
+            continue
+```
+```rust
+// Rust: Method encapsulation with iterator return
+fn positions_within_distance(&self, max_dist: usize, rows: usize, cols: usize) -> Vec<(Pos, usize)> {
+    let mut positions = Vec::new();
+    for dr in -(max_dist as isize)..=(max_dist as isize) {
+        for dc in -(max_dist as isize)..=(max_dist as isize) {
+            let dist = self.manhattan_distance(&target);
+            if dist > 0 && dist <= max_dist {
+                positions.push((target, dist));
+            }
+        }
+    }
+    positions
+}
+```
+**Advantage**: Encapsulates geometry, returns (position, distance) pairs eliminating redundant calculations
+
+**Mission 6 Grid Integration**:
+```python
+# Python: Manual grid access with bounds checking
+if 0 < nr < rows - 1 and 0 < nc < cols - 1 and grid[nr][nc] != "#":
+```
+```rust
+// Rust: Safe Grid access with Coord type
+let coord = Coord::new(col, row);
+if let Some(&cell) = grid.get(coord) {
+    if cell != '#' { ... }
+}
+```
+**Advantage**: Compile-time safety, no buffer overruns possible, `Coord` type prevents x/y confusion
+
+**Python vs Rust Philosophy**:
+
+| Aspect | Python | Rust |
+|--------|--------|------|
+| **BFS Storage** | Full path list (easy reconstruction) | Distance-only maps (memory efficient) |
+| **Queue Operations** | `list.pop(0)` O(n) | `VecDeque` O(1) |
+| **Cheat Calculation** | Path index subtraction | Bidirectional map lookup |
+| **Grid Access** | Manual bounds checking | Mission 6 safe access |
+| **Code Length** | ~80 lines | ~250 lines with tests |
+| **Coordinate Type** | Tuples `(row, col)` | Custom `Pos` struct + Mission 6 `Coord` |
+
+**Educational Value**:
+
+**Python Strengths**:
+- Path storage intuitive for debugging (can inspect exact route)
+- Simple coordinate dictionary mapping
+- Straightforward Manhattan circle enumeration
+- Compact implementation for midnight racing (~15-20 minutes)
+
+**Rust Strengths**:
+- Bidirectional search pattern teaches advanced pathfinding optimization
+- Mission 6 integration demonstrates foundational library composition
+- Type safety prevents entire bug classes (coordinate confusion, bounds errors)
+- VecDeque teaches proper queue data structure selection
+- Comprehensive test suite (4 tests) validates algorithm correctness
+
+**Performance Characteristics**:
+
+**Small Input (Example 15×15 grid, 84 steps)**:
+- **Python**: Negligible difference, path storage overhead minimal
+- **Rust**: Negligible difference, dual BFS overhead minimal
+- **Both**: Complete in < 1ms
+
+**Large Input (Puzzle 141×141 grid, thousands of steps)**:
+- **Python**: `list.pop(0)` becomes bottleneck (O(n) per pop × path length)
+- **Rust**: VecDeque O(1) operations maintain efficiency
+- **Memory**: Rust uses ~2× space (dual maps) but eliminates path reconstruction overhead
+
+**Critical Optimization**: Precomputing distance maps transforms O(P²×C) naive approach (pathfind for each cheat) into O(2P + P×M) dual BFS + enumeration
+
+**Key Algorithmic Insight**: 
+
+**Bidirectional Distance Maps Pattern**:
+```
+Traditional bidirectional search: Meet in the middle during pathfinding
+This problem's variant: Precompute distances from both endpoints, enabling:
+  - O(1) cheat savings calculation: normal_dist - (dist_from_start[p1] + cheat + dist_to_end[p2])
+  - No repeated pathfinding for thousands of cheat combinations
+  - Spatial optimization technique generalizable to other "shortcut finding" problems
+```
+
+**Test Coverage**:
+
+Rust implementation includes comprehensive tests:
+1. **Parse Validation**: Extracts S and E positions correctly, builds grid
+2. **BFS Distance Calculation**: Verifies 84-step path in example maze
+3. **Part 1 Cheat Enumeration**: Validates 44 total cheats with ≥2ps savings (2ps cheat duration)
+4. **Part 2 Extended Range**: Confirms 285 cheats with ≥50ps savings (20ps cheat duration)
+
+**Code Organization**:
+
+- **`Pos` struct**: Custom position type with Manhattan distance and circle enumeration methods
+- **`parse_input()`**: Grid construction with S/E detection
+- **`bfs_distances()`**: Generic BFS returning distance map (reusable pattern)
+- **`count_cheats()`**: Main algorithm composing dual BFS + cheat enumeration + savings calculation
+- **Clean Separation**: Mission 6 Grid handles storage, custom logic handles cheat detection
+
+**Mission Integration Benefits**:
+
+- **Mission 6 Grid<char>**: Automatic bounds checking, safe indexing with `Coord` type
+- **Mission 6 Coord**: Prevents x/y confusion through type system
+- **Future Enhancement**: Could implement Mission 8 Graph trait for generic pathfinding (currently uses custom BFS)
+
+**Real-World Complexity Handling**:
+
+- **Geometric Insight**: Manhattan distance = physical cheat length (wall-phasing distance), not path distance
+- **Cheat Uniqueness**: Cheats identified by (start_pos, end_pos) pairs, not paths taken during cheat
+- **Savings Calculation**: Normal path length - (approach + cheat + exit) must meet threshold
+- **Large Search Space**: Part 2 enumerates ~300 positions × ~1200 circle positions = 360K+ cheat tests
+
+**Zettelkasten Connection**:
+
+Created [[bidirectional-search.md]] zettelkasten note the day before solving this problem—perfect timing! The concept of "distance from both ends" translated directly from traditional "meet in the middle" bidirectional search to this "precompute distance maps" variant.
+
+**Results**: Part 1 = 1429 cheats (2ps duration, ≥100ps savings), Part 2 = 988931 cheats (20ps duration, ≥100ps savings)
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -1819,9 +2055,9 @@ While this problem doesn't require Mission libraries, it could benefit from:
 | Cryptographic | 0 | 0 |
 | Data Structures | 2 | 2 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 5 | 5 |
+| Graph Algorithms | 6 | 6 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 9 | 6 |
+| Mathematical | 10 | 7 |
 | Number Theory | 0 | 0 |
 | Optimization | 1 | 10 |
 | Parsing | 0 | 0 |
@@ -1908,6 +2144,10 @@ While this problem doesn't require Mission libraries, it could benefit from:
 70. **Overlapping Subproblem Identification**: Recognizing when memoization transforms exponential O(P^L) complexity to linear O(P×L) through cache reuse (Day 19: same suffix reached via different prefix paths)
 71. **Lifetime-Parametric Recursion**: Using `<'a>` lifetime parameters ensuring borrowed cache keys remain valid throughout recursion (Day 19: cache borrows from input string without ownership, prevents dangling references)
 72. **Flexible Format Parsing**: Robust input handling detecting format variations automatically via split result testing (Day 19: handles both `\n\n` example format and `\n` puzzle format without hardcoding)
+73. **Bidirectional Distance Maps**: Dual BFS from start and end creating distance maps for O(1) path calculation instead of repeated pathfinding (Day 20: dist_from_start and dist_to_end enable cheat savings lookup without re-pathfinding)
+74. **Manhattan Distance Circle Enumeration**: Generating all positions within Manhattan distance N from a point for geometric range queries (Day 20: finding all potential cheat endpoints within phase-through distance)
+75. **Geometric Shortcut Detection**: Finding beneficial shortcuts by comparing normal path length to shortcut-enabled paths (Day 20: cheat savings = normal_distance - (approach + cheat_through_walls + exit))
+76. **Precomputation for Enumeration**: Computing expensive operations once, then using lookups during enumeration phase (Day 20: O(P) dual BFS + O(P×M) cheat enumeration vs O(P²×P) naive pathfinding per cheat)
 
 ### Rust-Specific Considerations
 
@@ -1930,6 +2170,7 @@ While this problem doesn't require Mission libraries, it could benefit from:
 - **Day 17**: Demonstrates **virtual machine implementation** with clean opcode dispatch and bit manipulation patterns. Showcases **closure for combo operand resolution** capturing registers by value for dual-mode operand handling (literals 0-3 vs registers 4-6). **Part 1 VM Design**: Instruction pointer with 2-byte instructions (opcode + operand), `match` statement for exhaustive opcode handling, right shift operators (`>>=`, `>>`) idiomatic for power-of-2 divisions, bit operations (`& 7` for mod 8) replacing modulo. **Part 2 Quine Algorithm**: Recursive backtracking building A digit-by-digit backward (3 bits at a time via `current << 3 | bits`), early pruning via partial output validation before deeper recursion, `Option<i64>` cleanly representing search success/failure. **Python Comparison**: Python uses iterative forward search with mathematical jump strategy (`A += 8^i` when position i mismatches) vs Rust's depth-first backward construction—both exploit 3-bits-per-output structure but different search directions. **Algorithm Trade-offs**: Python's O(1) memory iterative jumps vs Rust's O(N) call stack recursion; Python optimizes for competitive speed (~30 lines Part 2), Rust demonstrates general backtracking pattern (~80 lines Part 2). **Key Insight**: Understanding bit-level program structure (A >>= 3 each loop) enables intelligent search strategies instead of brute force. **Test Coverage**: 7 comprehensive tests validating parsing, all 8 opcode behaviors, Part 1 execution, and VM edge cases. **Educational Value**: Shows how closure capture simplifies operand resolution, demonstrates recursive backtracking with Option returns, proves bit manipulation efficiency over arithmetic for power-of-2 operations. **Code Organization**: Standalone `execute_program()` function (not method), recursive `find_a()` helper with explicit parameters, `anyhow::Result` error handling throughout parsing.
 - **Day 18**: Exemplifies **integrator philosophy** through pure mission composition—demonstrating how to build complex solutions by combining validated foundational libraries without reimplementation. Showcases **Mission 6 Grid<bool> integration** for memory space corruption tracking with automatic bounds checking, **Mission 8 Graph trait implementation** adapting custom `MemorySpace` struct for generic pathfinding algorithms, **Mission 8 shortest_path() usage** providing BFS pathfinding without custom algorithm code. **Part 1 Algorithm**: Simulate 1024 falling bytes corrupting 71×71 grid positions, implement `Graph::neighbors()` for 4-directional safe movement validation (`is_safe()` checks corruption + bounds), call `shortest_path(start, goal)` returning `Result<Vec<Coord>, GraphError>` with path length. **Part 2 Binary Search**: Efficient O(log N) search over byte count (range 0 to 3450 bytes) testing path existence at each midpoint—when path exists try more bytes (left = mid + 1), when blocked try fewer (right = mid), converges to first blocking byte coordinate. **Mission Composition Benefits**: No manual BFS queue management, no custom grid indexing with bounds checks, no coordinate arithmetic errors—focus entirely on problem logic (corruption simulation, binary search strategy). **Python Comparison**: Python uses `networkx.Graph` with `add_node()`/`add_edge()` building explicit graph structure and `shortest_path()` library call OR custom BFS with `list.pop(0)` fallback; Rust implements lightweight `Graph` trait directly on grid enabling zero-copy algorithm composition. **Algorithm Philosophy**: Python's original Part 2 tested every corrupted coordinate sequentially (slow, learned binary search from Reddit community); Rust implements binary search from start demonstrating algorithmic thinking. **Library Strategy**: Python's networkx provides batteries-included graph operations with `remove_node()` for dynamic updates; Rust's mission system provides foundational types requiring trait implementation but enabling custom optimizations. **Test Coverage**: 2 comprehensive tests validating both parts with example data (7×7 grid, 12 bytes → 22 steps, first blocker at 6,1). **Educational Value**: Perfect demonstration of integrator approach—leveraging Mission 6 coordinate safety + Mission 8 graph algorithms = clean solution focusing on problem-specific logic (corruption tracking, binary search). **Code Organization**: Clean separation with `MemorySpace` struct, `Graph` trait implementation with `neighbors()`/`contains()`/`nodes()` methods, `parse_bytes()` helper with error context, `anyhow::Result` throughout. **Results**: Part 1 = 282 steps, Part 2 = byte at (64,29) blocks path.
 - **Day 19**: Demonstrates **lifetime-parametric recursion with string slice memoization** for pattern composition problems. Showcases **zero-copy prefix matching** using `strip_prefix()` returning `Option<&str>` for simultaneous validation and remainder extraction—no substring allocations. **Lifetime Management**: Manual `HashMap<&'a str, bool/u64>` with explicit `<'a>` lifetime ensuring cache keys (borrowed from input) remain valid throughout recursion, preventing dangling references. **Substring vs Position Recursion**: Rust's suffix-based approach (`remaining: &str` → `strip_prefix()` → recurse on rest) vs Python's index-based (`pos: int` → slice design → recurse on next_pos); both O(P×L) but different memory profiles—Rust O(U) unique substrings vs Python O(L) positions. **Boolean-to-Counting DP Pattern**: Identical recursive structure for Part 1 (existence check with early-exit OR) and Part 2 (exhaustive counting with accumulative SUM)—demonstrates classic DP transformation where only reduction operator changes. **Cache Strategy Trade-offs**: Manual HashMap management (explicit insert/lookup, lifetime tracking) provides educational transparency vs Python's `@cache` decorator (automatic, hidden mechanics); both achieve equivalent performance with memoization. **Educational Transparency**: Explicit memoization demonstrates cache mechanics—when to check, when to insert, how lifetimes prevent invalidation—valuable for understanding DP vs production convenience. **Flexible Parsing**: Robust format handling detecting `\n\n` (example) vs `\n` (puzzle) by testing split result length, avoiding hardcoded assumptions. **Complexity Transformation**: Shows why memoization is critical—exponential O(P^L) explosion (overlapping subproblems recomputed) → linear O(P×L) efficiency (each unique substring computed once). **String Slice Excellence**: `&str` keys in HashMap enable zero-copy caching—cache entries borrow from input string without allocation or ownership transfer, demonstrating Rust's memory efficiency. **Test-Driven Validation**: 5 comprehensive tests covering parsing correctness, individual design checks (6 possible/2 impossible validated), Part 1 totals (6), arrangement counting accuracy, Part 2 totals (16)—proves algorithm correctness and memoization benefits. **Results**: Part 1 = 360 possible designs, Part 2 = 577,474,410,989,846 arrangements.
+- **Day 20**: Exemplifies **bidirectional distance maps** using dual BFS (from start S and end E) to enable O(1) cheat savings calculation without repeated pathfinding. Showcases **Manhattan distance circle enumeration** for cheat endpoint discovery (all positions within distance N from cheat start). **Mission 6 Integration**: `Grid<char>` with `Coord` type for maze representation, safe indexing with automatic bounds checking. **Algorithm Efficiency**: Precompute distances once (O(P) per BFS where P = path length), test all cheat combinations O(P×M) where M = positions within Manhattan distance—avoids O(P²×pathfinding) naive approach. **Python Comparison**: Python stores full path as list of coordinates, iterates path positions with distance checks; Rust uses HashMap distance maps enabling bidirectional lookup pattern. **Geometric Insight**: Manhattan distance determines cheat length through walls—physical distance (not path distance) enables phasing calculation. **Test Coverage**: 4 comprehensive tests validating parsing, BFS distance calculation (84 steps), Part 1 cheat counting (44 cheats ≥2ps savings), Part 2 extended range (285 cheats ≥50ps savings). **Results**: Part 1 = 1429 cheats ≥100ps, Part 2 = 988931 cheats ≥100ps.
 
 ---
 
@@ -2092,10 +2333,10 @@ When documenting solutions from previous years (2015-2023):
 
 ---
 
-*Last Updated: December 18, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19*
+*Last Updated: December 19, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation #binary-search #graph-adapters #pathfinding #integrator-philosophy*
-*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]] | [[../../../zettelkasten/virtual-machine-patterns]] | [[../../../zettelkasten/recursive-backtracking]] | [[../../../zettelkasten/binary-search-patterns]] | [[../../../zettelkasten/graph-trait-adapters]]*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation #binary-search #graph-adapters #pathfinding #integrator-philosophy #bidirectional-search #manhattan-distance #geometric-optimization*
+*Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]] | [[../../../zettelkasten/virtual-machine-patterns]] | [[../../../zettelkasten/recursive-backtracking]] | [[../../../zettelkasten/binary-search-patterns]] | [[../../../zettelkasten/graph-trait-adapters]] | [[../../../zettelkasten/bidirectional-search]] | [[../../../zettelkasten/line-intersection]]*
