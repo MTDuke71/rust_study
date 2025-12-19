@@ -86,7 +86,7 @@ fn main() {
         println!("📚 STATIC MEMORY: Program-Lifetime Storage");
         println!("   ──────────────────────────────────────────");
         static GLOBAL: i32 = 100;  // Lives for entire program
-        const PI: f64 = 3.14159;   // Compile-time constant
+        const PI: f64 = std::f64::consts::PI;   // Compile-time constant
         let literal = "hello";     // &'static str
         
         println!("   Static variable: {}", GLOBAL);
