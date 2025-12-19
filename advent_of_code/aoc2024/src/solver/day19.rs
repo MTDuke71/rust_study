@@ -144,7 +144,7 @@ bbrgwb";
 
     #[test]
     fn test_can_make_design() {
-        let (patterns, designs) = parse_input(EXAMPLE);
+        let (patterns, _designs) = parse_input(EXAMPLE);
         
         // Test known possible designs
         assert!(can_make_design(&patterns, "brwrr"));
