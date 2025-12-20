@@ -5,50 +5,61 @@
 
 ## 📅 **Daily Plan**
 
-### **Sunday** 🌊
-**Rust Book**: 
+### **Sunday ({{date}})** 🌊
+**Rust for Rustaceans**: 
 **AoC Focus**: 
+**Mission Work**: 
 **Zettelkasten**: 
 
 ### **Monday** 🔍
-**Rust Book**: 
+**Rust for Rustaceans**: 
 **AoC Focus**: 
+**Mission Work**: 
 **Zettelkasten**: 
 
 ### **Tuesday** ⚙️
-**Rust Book**: 
+**Rust for Rustaceans**: 
 **AoC Focus**: 
+**Mission Work**: 
 **Zettelkasten**: 
 
 ### **Wednesday** 🎯
-**Rust Book**: 
+**Rust for Rustaceans**: 
 **AoC Focus**: 
+**Mission Work**: 
 **Zettelkasten**: 
 
 ### **Thursday** 🧩
-**Rust Book**: 
+**Rust for Rustaceans**: 
 **AoC Focus**: 
+**Mission Work**: 
 **Zettelkasten**: 
 
 ### **Friday** 🏗️
-**Rust Book**: 
+**Rust for Rustaceans**: 
 **AoC Focus**: 
+**Mission Work**: 
 **Zettelkasten**: 
 
 ### **Saturday** 📚
-**Chapter Review**: 
+**Rust for Rustaceans**: 
 **AoC Focus**: 
+**Mission Work**: 
 **Zettelkasten**: 
 
 ## 📊 **Weekly Goals**
-- [ ] Complete Rust Book chapters: 
+- [ ] Complete Rust for Rustaceans sections: 
+- [ ] Complete Mission work: 
 - [ ] Solve AoC problems: 
 - [ ] Create zettelkasten notes: 
 - [ ] Strengthen knowledge connections
 
 ## ⚡ **Week Accomplishments**
 
-### Rust Book Progress
+### Rust for Rustaceans Progress
+- 
+
+### Mission Progress
 - 
 
 ### AoC Solutions
