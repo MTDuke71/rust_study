@@ -21,6 +21,7 @@ pub mod day17;
 pub mod day18;
 pub mod day19;
 pub mod day20;
+pub mod day21;
 
 pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
     match day {
@@ -44,7 +45,7 @@ pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
         18 => Ok((day18::part1(input)?, day18::part2(input)?)),
         19 => Ok((day19::solve_part1(input).to_string(), day19::solve_part2(input).to_string())),
         20 => Ok((day20::solve_part1(input), day20::solve_part2(input))),
-        // 21 => Ok((day21::solve_part1(input)?, day21::solve_part2(input)?)),
+        21 => Ok((day21::solve_part1(input).to_string(), day21::solve_part2(input).to_string())),
         // 22 => Ok((day22::solve_part1(input)?, day22::solve_part2(input)?)),
         // 23 => Ok((day23::solve_part1(input)?, day23::solve_part2(input)?)),
         // 24 => Ok((day24::solve_part1(input)?, day24::solve_part2(input)?)),

@@ -2041,6 +2041,162 @@ Created [[bidirectional-search.md]] zettelkasten note the day before solving thi
 
 **Results**: Part 1 = 1429 cheats (2ps duration, ≥100ps savings), Part 2 = 988931 cheats (20ps duration, ≥100ps savings)
 
+### Day 21: Keypad Conundrum
+**Title**: Keypad Conundrum  
+**Part 1 Type**: Mathematical + Simulation  
+**Part 1 Description**: Navigate robotic arm through directional keypad chain to type door codes on numeric keypad, finding minimum button presses with 3 robot layers (you → robot1 → robot2 → final_robot)  
+**Part 2 Type**: Mathematical + Optimization  
+**Part 2 Description**: Scale to 26 robot layers (you + 25 directional robots + final numeric robot), handling exponential sequence expansion through memoization  
+**Key Concepts**: Recursive sequence transformation, keypad navigation with gap avoidance, exponential amplification, memoization, dynamic programming, multi-level indirection
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Recursive sequence expansion with exponential scaling (3 levels → 26 levels)
+- **Data Structure**: `HashMap<char, (i32, i32)>` for keypad positions, `HashMap<(String, usize), usize>` for memoization cache
+- **Complexity**: Without memo: O(k^depth) where k=branching factor; With memo: O(unique_sequences × depth) = practical O(n × depth)
+- **AoC Theme**: "Chain of robot controllers" with classic Part 2 depth scaling (manageable → exponential without optimization)
+
+**🦀 Rust Conversion Highlights**:
+- **From Python's `@cache` decorator** → **Explicit `HashMap` memoization** with `(sequence, depth)` keys for full control and visibility
+- **From nested `defaultdict(list)` moves** → **Structured `Keypad` struct** with `positions` HashMap and `gap` coordinate for type-safe navigation
+- **From implicit path generation** → **Explicit `get_move_sequences()`** that validates gap avoidance for both horizontal-first and vertical-first orderings
+- **From Python's dynamic move building** → **Type-safe coordinate arithmetic** with overflow-protected direction strings (`">".repeat(dx as usize)`)
+- **From recursive `translate()` with depth parameter** → **Clear `min_presses()` recursion** with explicit base case and optimal path selection
+
+**Algorithm Deep Dive**:
+
+**Python Approach**:
+```python
+# Movement generation with gap avoidance
+moves = defaultdict(list)
+# Try horizontal-then-vertical
+if p1[0] != pos["#"][0] or p2[1] != pos["#"][1]:
+    moves[(key1, key2)].append(d1 * abs(diff) + d2 * abs(diff) + "A")
+# Try vertical-then-horizontal  
+if p1[1] != pos["#"][1] or p2[0] != pos["#"][0]:
+    moves[(key1, key2)].append(d1 * abs(diff) + d2 * abs(diff) + "A")
+
+# Recursive translation with @cache
+@cache
+def translate(code, depth):
+    moves = translate_numpad(code) if code[0].isnumeric() else translate_keypad(code)
+    if depth == 0:
+        return min(sum(map(len, move)) for move in moves)
+    else:
+        return min(sum(translate(curr_code, depth - 1) for curr_code in move) for move in moves)
+```
+
+**Rust Approach**:
+```rust
+// Structured keypad with explicit gap tracking
+struct Keypad {
+    positions: HashMap<char, (i32, i32)>,
+    gap: (i32, i32),
+}
+
+// Explicit gap avoidance with coordinate checking
+fn get_move_sequences(&self, from: char, to: char) -> Vec<String> {
+    let (x1, y1) = self.positions[&from];
+    let (x2, y2) = self.positions[&to];
+    
+    // Try horizontal-first (check intermediate point != gap)
+    if (x2, y1) != self.gap {
+        sequences.push(format!("{}{}", horizontal, vertical));
+    }
+    // Try vertical-first (check intermediate point != gap)
+    if (x1, y2) != self.gap {
+        sequences.push(format!("{}{}", vertical, horizontal));
+    }
+}
+
+// Explicit memoization with typed cache
+fn min_presses(sequence: &str, depth: usize, is_numeric: bool, memo: &mut Memo) -> usize {
+    if depth == 0 { return sequence.len(); }
+    
+    let key = (sequence.to_string(), depth);
+    if let Some(&cached) = memo.get(&key) { return cached; }
+    
+    // Process each button, try all paths, pick minimum
+    let min_cost = moves.iter()
+        .map(|path| min_presses(&format!("{}A", path), depth - 1, false, memo))
+        .min().unwrap_or(0);
+    
+    memo.insert(key, total);
+    total
+}
+```
+
+**Key Algorithmic Differences**:
+
+1. **Gap Avoidance Logic**:
+   - **Python**: Checks if source/target row/col matches gap row/col (prevents path from crossing gap line)
+   - **Rust**: Checks if intermediate point (x2,y1) or (x1,y2) equals gap position (explicit geometric validation)
+   - **Both Correct**: Different reasoning but equivalent results
+
+2. **Move Representation**:
+   - **Python**: Precomputes all moves in `parse_moves()`, returns `moves[(a,b)]` for each transition
+   - **Rust**: Generates moves on-demand in `get_move_sequences()`, clearer separation of concerns
+
+3. **Depth Semantics**:
+   - **Python**: `depth=2` for Part 1 (you → 2 robots → numeric), `depth=25` for Part 2  
+   - **Rust**: `depth=3` for Part 1 (you → 2 robots → numeric), `depth=26` for Part 2
+   - **Explanation**: Python counts intermediate robots, Rust counts total levels including final numeric
+
+4. **Memoization**:
+   - **Python**: `@cache` decorator automatic, functools handles key generation
+   - **Rust**: Explicit HashMap with `(String, usize)` keys, manual insert/lookup for full control
+
+**Real-World Complexity Handling**:
+- **Exponential Amplification**: Each level multiplies sequence length—68 presses at depth 3 becomes trillions without memo
+- **Gap Navigation**: Both keypads have "panic zones" requiring careful path planning (numeric gap at (0,3), directional at (0,0))
+- **Multiple Optimal Paths**: Some moves have 2 valid shortest paths, must try all and pick minimum expansion
+- **Sequence Independence**: Memoization key includes both sequence and depth, enabling reuse across different codes
+
+**Python vs Rust Comparison**:
+
+| Aspect | Python (~80 lines) | Rust (~320 lines with tests) |
+|--------|-------------------|-------------------------------|
+| **Move Generation** | Precomputed dictionary with gap validation | On-demand generation with explicit coordinate checking |
+| **Memoization** | `@cache` decorator automatic | Explicit HashMap with typed keys |
+| **Keypad Representation** | List of strings (`["789", "456", "123", "#0A"]`) | Structured `Keypad` with positions HashMap |
+| **Gap Avoidance** | Row/col match checks | Intermediate point validation |
+| **Recursion** | `translate()` handles both keypads via string detection | `min_presses()` with `is_numeric` flag for clarity |
+| **Depth Semantics** | Counts intermediate layers (0-indexed) | Counts total levels (1-indexed) |
+| **Code Philosophy** | Minimal, dynamic approach (~80 lines) | Structured, type-safe approach (~320 lines) |
+
+**Educational Insights**:
+- **Memoization Critical**: Without caching, Part 2 would take years; with it, completes instantly
+- **Sequence Expansion Problem**: Not a pathfinding problem but recursive transformation where each level amplifies length
+- **Multiple Optima Handling**: Must evaluate all shortest paths at each step, picking minimum at next level
+- **Gap Constraints**: Small geometric obstacles create interesting algorithmic challenges
+- **Type Safety Benefits**: Rust's structured `Keypad` prevents coordinate confusion, explicit memo prevents stale caches
+
+**Test Coverage**:
+
+Rust implementation includes 7 comprehensive tests:
+1. **Keypad Construction**: Validates numeric keypad positions (7 at (0,0), A at (2,3), gap at (0,3))
+2. **Keypad Construction**: Validates directional keypad positions (^ at (1,0), A at (2,0), gap at (0,0))
+3. **Simple Movement**: Tests trivial move A→0 returns single sequence "<"
+4. **Gap Avoidance**: Verifies A→7 only returns paths that don't cross (0,3) gap
+5. **Part 1 Example**: Confirms example input produces 126384 complexity
+6. **Single Code Validation**: Tests "029A" produces complexity 1972 (length=68, numeric=29)
+7. **Memoization Verification**: Ensures cache hits return identical results
+
+**Code Organization**:
+
+- **`Keypad` struct**: Encapsulates button positions and gap location with factory methods
+- **`get_move_sequences()`**: Generates all valid shortest paths between buttons avoiding gaps
+- **`min_presses()`**: Core recursive algorithm with memoization for optimal path selection
+- **`calculate_complexity()`**: Extracts numeric value and computes complexity score
+- **`solve_part1()` / `solve_part2()`**: Public interfaces differing only in depth parameter
+
+**Results**: Part 1 = 155252 (depth=3), Part 2 = 195664513288128 (depth=26)
+
+**Performance Analysis**:
+- **Without Memoization**: O(k^depth) ≈ 10^26 operations for Part 2 → infeasible
+- **With Memoization**: O(unique_sequences × depth) ≈ few thousand cached entries → instant
+- **Cache Hit Rate**: Very high due to repeated subsequence patterns across different codes
+- **Memory Usage**: Negligible—memo map stores ~1000 entries even for Part 2
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -2057,15 +2213,15 @@ Created [[bidirectional-search.md]] zettelkasten note the day before solving thi
 | Encoding | 0 | 0 |
 | Graph Algorithms | 6 | 6 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 10 | 7 |
+| Mathematical | 11 | 8 |
 | Number Theory | 0 | 0 |
-| Optimization | 1 | 10 |
+| Optimization | 1 | 11 |
 | Parsing | 0 | 0 |
 | Pattern Matching | 3 | 3 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 2 |
 | Search/Traversal | 5 | 5 |
-| Simulation | 7 | 4 |
+| Simulation | 8 | 5 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
@@ -2144,6 +2300,10 @@ Created [[bidirectional-search.md]] zettelkasten note the day before solving thi
 70. **Overlapping Subproblem Identification**: Recognizing when memoization transforms exponential O(P^L) complexity to linear O(P×L) through cache reuse (Day 19: same suffix reached via different prefix paths)
 71. **Lifetime-Parametric Recursion**: Using `<'a>` lifetime parameters ensuring borrowed cache keys remain valid throughout recursion (Day 19: cache borrows from input string without ownership, prevents dangling references)
 72. **Flexible Format Parsing**: Robust input handling detecting format variations automatically via split result testing (Day 19: handles both `\n\n` example format and `\n` puzzle format without hardcoding)
+73. **Recursive Sequence Transformation**: Problems where each recursion level amplifies/transforms input exponentially rather than traditional divide-and-conquer reduction (Day 21: button sequence expanding geometrically with depth—68 presses → trillions without memoization)
+74. **Multi-Level Indirection**: Chain-of-command problems where action at level N requires sequence of actions at level N-1 (Day 21: you → robot1 → robot2 → ... → final_robot, each translating movements into button presses)
+75. **Gap-Constrained Navigation**: Geometric path problems where certain positions cause failure requiring explicit avoidance (Day 21: keypad gaps at (0,3) and (0,0) causing robot panic, necessitating intermediate point validation during path generation)
+76. **Exponential Memoization**: Cache reuse transforming infeasible O(k^depth) exponential complexity to practical O(unique_sequences × depth) linear complexity (Day 21: Part 2's depth=26 requires memoization to avoid 10^26 operations)
 73. **Bidirectional Distance Maps**: Dual BFS from start and end creating distance maps for O(1) path calculation instead of repeated pathfinding (Day 20: dist_from_start and dist_to_end enable cheat savings lookup without re-pathfinding)
 74. **Manhattan Distance Circle Enumeration**: Generating all positions within Manhattan distance N from a point for geometric range queries (Day 20: finding all potential cheat endpoints within phase-through distance)
 75. **Geometric Shortcut Detection**: Finding beneficial shortcuts by comparing normal path length to shortcut-enabled paths (Day 20: cheat savings = normal_distance - (approach + cheat_through_walls + exit))
@@ -2171,6 +2331,7 @@ Created [[bidirectional-search.md]] zettelkasten note the day before solving thi
 - **Day 18**: Exemplifies **integrator philosophy** through pure mission composition—demonstrating how to build complex solutions by combining validated foundational libraries without reimplementation. Showcases **Mission 6 Grid<bool> integration** for memory space corruption tracking with automatic bounds checking, **Mission 8 Graph trait implementation** adapting custom `MemorySpace` struct for generic pathfinding algorithms, **Mission 8 shortest_path() usage** providing BFS pathfinding without custom algorithm code. **Part 1 Algorithm**: Simulate 1024 falling bytes corrupting 71×71 grid positions, implement `Graph::neighbors()` for 4-directional safe movement validation (`is_safe()` checks corruption + bounds), call `shortest_path(start, goal)` returning `Result<Vec<Coord>, GraphError>` with path length. **Part 2 Binary Search**: Efficient O(log N) search over byte count (range 0 to 3450 bytes) testing path existence at each midpoint—when path exists try more bytes (left = mid + 1), when blocked try fewer (right = mid), converges to first blocking byte coordinate. **Mission Composition Benefits**: No manual BFS queue management, no custom grid indexing with bounds checks, no coordinate arithmetic errors—focus entirely on problem logic (corruption simulation, binary search strategy). **Python Comparison**: Python uses `networkx.Graph` with `add_node()`/`add_edge()` building explicit graph structure and `shortest_path()` library call OR custom BFS with `list.pop(0)` fallback; Rust implements lightweight `Graph` trait directly on grid enabling zero-copy algorithm composition. **Algorithm Philosophy**: Python's original Part 2 tested every corrupted coordinate sequentially (slow, learned binary search from Reddit community); Rust implements binary search from start demonstrating algorithmic thinking. **Library Strategy**: Python's networkx provides batteries-included graph operations with `remove_node()` for dynamic updates; Rust's mission system provides foundational types requiring trait implementation but enabling custom optimizations. **Test Coverage**: 2 comprehensive tests validating both parts with example data (7×7 grid, 12 bytes → 22 steps, first blocker at 6,1). **Educational Value**: Perfect demonstration of integrator approach—leveraging Mission 6 coordinate safety + Mission 8 graph algorithms = clean solution focusing on problem-specific logic (corruption tracking, binary search). **Code Organization**: Clean separation with `MemorySpace` struct, `Graph` trait implementation with `neighbors()`/`contains()`/`nodes()` methods, `parse_bytes()` helper with error context, `anyhow::Result` throughout. **Results**: Part 1 = 282 steps, Part 2 = byte at (64,29) blocks path.
 - **Day 19**: Demonstrates **lifetime-parametric recursion with string slice memoization** for pattern composition problems. Showcases **zero-copy prefix matching** using `strip_prefix()` returning `Option<&str>` for simultaneous validation and remainder extraction—no substring allocations. **Lifetime Management**: Manual `HashMap<&'a str, bool/u64>` with explicit `<'a>` lifetime ensuring cache keys (borrowed from input) remain valid throughout recursion, preventing dangling references. **Substring vs Position Recursion**: Rust's suffix-based approach (`remaining: &str` → `strip_prefix()` → recurse on rest) vs Python's index-based (`pos: int` → slice design → recurse on next_pos); both O(P×L) but different memory profiles—Rust O(U) unique substrings vs Python O(L) positions. **Boolean-to-Counting DP Pattern**: Identical recursive structure for Part 1 (existence check with early-exit OR) and Part 2 (exhaustive counting with accumulative SUM)—demonstrates classic DP transformation where only reduction operator changes. **Cache Strategy Trade-offs**: Manual HashMap management (explicit insert/lookup, lifetime tracking) provides educational transparency vs Python's `@cache` decorator (automatic, hidden mechanics); both achieve equivalent performance with memoization. **Educational Transparency**: Explicit memoization demonstrates cache mechanics—when to check, when to insert, how lifetimes prevent invalidation—valuable for understanding DP vs production convenience. **Flexible Parsing**: Robust format handling detecting `\n\n` (example) vs `\n` (puzzle) by testing split result length, avoiding hardcoded assumptions. **Complexity Transformation**: Shows why memoization is critical—exponential O(P^L) explosion (overlapping subproblems recomputed) → linear O(P×L) efficiency (each unique substring computed once). **String Slice Excellence**: `&str` keys in HashMap enable zero-copy caching—cache entries borrow from input string without allocation or ownership transfer, demonstrating Rust's memory efficiency. **Test-Driven Validation**: 5 comprehensive tests covering parsing correctness, individual design checks (6 possible/2 impossible validated), Part 1 totals (6), arrangement counting accuracy, Part 2 totals (16)—proves algorithm correctness and memoization benefits. **Results**: Part 1 = 360 possible designs, Part 2 = 577,474,410,989,846 arrangements.
 - **Day 20**: Exemplifies **bidirectional distance maps** using dual BFS (from start S and end E) to enable O(1) cheat savings calculation without repeated pathfinding. Showcases **Manhattan distance circle enumeration** for cheat endpoint discovery (all positions within distance N from cheat start). **Mission 6 Integration**: `Grid<char>` with `Coord` type for maze representation, safe indexing with automatic bounds checking. **Algorithm Efficiency**: Precompute distances once (O(P) per BFS where P = path length), test all cheat combinations O(P×M) where M = positions within Manhattan distance—avoids O(P²×pathfinding) naive approach. **Python Comparison**: Python stores full path as list of coordinates, iterates path positions with distance checks; Rust uses HashMap distance maps enabling bidirectional lookup pattern. **Geometric Insight**: Manhattan distance determines cheat length through walls—physical distance (not path distance) enables phasing calculation. **Test Coverage**: 4 comprehensive tests validating parsing, BFS distance calculation (84 steps), Part 1 cheat counting (44 cheats ≥2ps savings), Part 2 extended range (285 cheats ≥50ps savings). **Results**: Part 1 = 1429 cheats ≥100ps, Part 2 = 988931 cheats ≥100ps.
+- **Day 21**: Demonstrates **recursive sequence transformation with exponential memoization** where each recursion level amplifies button sequences geometrically (68 presses → trillions without caching). Showcases **structured Keypad abstraction** with `positions: HashMap<char, (i32, i32)>` and `gap: (i32, i32)` enabling type-safe navigation with explicit gap avoidance validation—intermediate point checking prevents panic-inducing paths. **Memoization Critical**: `HashMap<(String, usize), usize>` cache with `(sequence, depth)` composite keys transforms infeasible O(k^depth) ≈ 10^26 operations (Part 2 depth=26) to practical O(unique_sequences × depth) ≈ few thousand cached entries completing instantly. **Multi-Level Indirection**: Chain-of-command problem where action at level N requires optimal sequence at level N-1—`min_presses()` recursion tries all shortest paths at current level, picks minimum expansion at next level. **Depth Semantics Difference**: Python counts intermediate robots (`depth=2` for Part 1 = you → 2 robots → numeric), Rust counts total levels (`depth=3` = you + 2 robots + numeric)—off-by-one convention difference, identical algorithms. **Gap Avoidance Logic**: Python checks row/col match vs gap line preventing crossing, Rust validates intermediate point `(x2,y1)` and `(x1,y2)` explicitly against gap position—equivalent geometric reasoning, different implementation philosophy. **Python Comparison**: Python's `@cache` decorator automatic memoization (~80 lines total) vs Rust's explicit HashMap management (~320 lines with tests)—Python optimizes for midnight racing brevity with dynamic keypad detection via `code[0].isnumeric()`, Rust structures with `is_numeric` flag for clarity and type safety. **Educational Value**: Explicit memo demonstrates cache mechanics (when to check, when to insert, composite keys for multi-parameter functions) vs hidden decorator magic; shows how sequence expansion problems differ fundamentally from pathfinding (not finding single optimal path but composing movements across recursion levels). **Test Coverage**: 7 comprehensive tests validating keypad construction (positions + gaps), movement generation (simple moves + gap avoidance), Part 1 integration (126384 complexity), individual code validation ("029A" → 1972 = 68×29), memoization cache hits. **Code Organization**: Clean separation with `Keypad` struct + factory methods, `get_move_sequences()` for path generation with gap validation, `min_presses()` core recursive algorithm with memo, `calculate_complexity()` extracting numeric value and computing score. **Performance Analysis**: Cache hit rate very high due to repeated subsequence patterns across different codes; memory negligible (~1000 entries even for Part 2); without memoization Part 2 literally impossible (years of computation). **Results**: Part 1 = 155252 (depth=3), Part 2 = 195664513288128 (depth=26).
 
 ---
 
@@ -2333,10 +2494,10 @@ When documenting solutions from previous years (2015-2023):
 
 ---
 
-*Last Updated: December 19, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20*
+*Last Updated: December 20, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation #binary-search #graph-adapters #pathfinding #integrator-philosophy #bidirectional-search #manhattan-distance #geometric-optimization*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation #binary-search #graph-adapters #pathfinding #integrator-philosophy #bidirectional-search #manhattan-distance #geometric-optimization #recursive-sequence-expansion #memoization #dynamic-programming #multi-level-indirection #gap-avoidance*
 *Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]] | [[../../../zettelkasten/virtual-machine-patterns]] | [[../../../zettelkasten/recursive-backtracking]] | [[../../../zettelkasten/binary-search-patterns]] | [[../../../zettelkasten/graph-trait-adapters]] | [[../../../zettelkasten/bidirectional-search]] | [[../../../zettelkasten/line-intersection]]*
