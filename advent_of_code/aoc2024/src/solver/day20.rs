@@ -107,8 +107,8 @@ pub fn bfs_distances(grid: &Grid<char>, start: Pos) -> HashMap<Pos, usize> {
                 if cell != '#' {  // Can walk on '.', 'S', or 'E'
                     let next_pos = Pos::new(new_row, new_col);
                     
-                    if !distances.contains_key(&next_pos) {
-                        distances.insert(next_pos, dist + 1);
+                    if let std::collections::hash_map::Entry::Vacant(e) = distances.entry(next_pos) {
+                        e.insert(dist + 1);
                         queue.push_back((next_pos, dist + 1));
                     }
                 }
