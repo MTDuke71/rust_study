@@ -246,6 +246,7 @@ let iter = data.iter().filter(|&&x| x > 5).map(|&x| x * 2);
 
 ## 🔗 **Related Concepts**
 
+- [[Binary Search]] - Foundational algorithm concept and complexity analysis
 - [[mission-3]] - Binary search implementation with this pattern
 - [[zero-cost-abstractions]] - How Rust achieves performance + ergonomics
 - [[Iterator Trait Deep Dive]] - Understanding the Iterator trait system

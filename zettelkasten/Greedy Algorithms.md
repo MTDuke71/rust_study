@@ -234,7 +234,7 @@ Ties can make or break greedy correctness:
 
 - **[[Priority Queue Patterns]]** - Efficient "get best" operations
 - **[[Union-Find]]** - Cycle detection for MST algorithms
-- **[[Sorting Algorithms]]** - Pre-processing for many greedy solutions
+- **[[sorting-algorithms]]** - Pre-processing for many greedy solutions
 
 ---
 

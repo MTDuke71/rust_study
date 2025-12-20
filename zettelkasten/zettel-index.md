@@ -30,11 +30,29 @@
 ## 🗺️ Maps of Content (MOCs)
 
 - [[rust-concepts-MOC]] - Core language features and patterns
+- [[Smart Pointers MOC]] - Box, Rc, RefCell, Arc, and memory management patterns
 - [[Missions Overview]] - V-Cycle project implementations  
 - [[Collections MOC]] - Data structures and algorithms
+- [[Rust Collections MOC]] - Standard library collections deep dive
+- [[Algorithms MOC]] - Algorithm implementations and analysis
+- [[Graph Theory MOC]] - Graph algorithms and traversal techniques
+- [[rust-concurrency-moc]] - Comprehensive concurrency patterns and thread safety
 - [[Daily Study MOC]] - Progressive learning track
 - [[AoC Patterns MOC]] - Competitive programming techniques
 - [[AoC 2015 MOC]] - Advent of Code 2015 solutions and learnings
+
+## 📚 Learning Strategy & Methodology
+
+- [[2026_LEARNING_PLAN]] - Future learning roadmap and strategic planning
+- [[Rust Learning Roadmap - The Master Plan]] - Comprehensive learning strategy and progression
+- [[3-Track Integration]] - How missions, daily study, and Rust Book work together
+- [[V-Cycle Methodology]] - Formal engineering methodology for mission implementations
+- [[Tutorial Engineering]] - Tutorial creation methodology and best practices
+- [[Zettelkasten System]] - Knowledge management system architecture and usage
+- [[Learning Plateau Solutions]] - Strategies for overcoming learning challenges
+- [[Motivation Maintenance]] - Techniques for sustained engagement and progress
+- [[Hands-On Learning]] - Active learning philosophy and practices
+- [[Progressive Disclosure]] - Gradual complexity approach to mastering concepts
 
 ## 🗺️ Navigation Hub
 
@@ -118,6 +136,9 @@
 ### **Advent of Code Track**
 
 - [[AoC Patterns MOC]] - Common competitive programming patterns
+- **Overview & Retrospectives:**
+  - [[AoC 2024 Overview]] - 2024 challenge overview and key patterns
+  - [[aoc-2025-retrospective]] - 2025 lessons learned and performance analysis
 - **2015 Solutions:**
   - [[AoC 2015 MOC]] - Complete 2015 challenge overview
   - [[advent_of_code/aoc2015/Problem_Statements/day01]] - Floor navigation (Day 1)

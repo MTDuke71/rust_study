@@ -81,28 +81,32 @@ WHERE length(filter(file.outlinks, (l) => !meta(l).path)) > 0
 
 ## 📊 Workspace-Wide Link Health
 
+### Total Files
 ```dataview
 TABLE WITHOUT ID
   "Total Files" as Metric,
-  length(file.name) as Count
-FROM ""
-GROUP BY true
-
-UNION
-
-TABLE WITHOUT ID
-  "Total Links" as Metric,
-  length(rows.file.outlinks) as Count
-FROM ""
-GROUP BY true
-
-UNION
-
-TABLE WITHOUT ID
-  "Orphaned Files (No incoming links)" as Metric,
   length(rows.file) as Count
-FROM ""
-WHERE length(file.inlinks) = 0
+FROM "zettelkasten"
+GROUP BY true
+```
+
+### Files with Outgoing Links
+```dataview
+TABLE WITHOUT ID
+  "Files with Links" as Metric,
+  length(rows.file) as Count
+FROM "zettelkasten"
+WHERE length(file.outlinks) > 0
+GROUP BY true
+```
+
+### Orphaned Files (No Incoming Links)
+```dataview
+TABLE WITHOUT ID
+  "Orphaned Files" as Metric,
+  length(rows.file) as Count
+FROM "zettelkasten"
+WHERE length(file.inlinks) = 0 AND file.name != "zettel-index"
 GROUP BY true
 ```
 

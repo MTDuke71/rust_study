@@ -484,7 +484,7 @@ fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
 ## Related Resources
 - [[Divide and Conquer]] - Algorithm family
 - [[mission-3]] - Primary implementation
-- [[Sorting Algorithms]] - Prerequisite for binary search
+- [[sorting-algorithms]] - Prerequisite for binary search
 - [[Algorithmic Thinking]] - Problem-solving approach
 
 *Tags: #binary-search #algorithms #divide-and-conquer #mission3 #aoc #optimization*

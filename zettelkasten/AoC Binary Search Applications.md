@@ -329,6 +329,7 @@ If you answered "yes" to 2+ questions, consider binary search!
 
 ## 🔗 **Related Patterns**
 
+- [[Binary Search]] - Foundational algorithm and complexity analysis
 - [[Binary Search Iterator Patterns]] - Iterator integration techniques
 - [[mission-3]] - Complete implementation with tests
 - [[Trait Design Patterns - Mission3 Lessons]] - API design insights

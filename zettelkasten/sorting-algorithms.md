@@ -16,6 +16,77 @@ A comprehensive overview of sorting algorithms with implementations, analysis, a
 | **Radix Sort** | O(d(n + k)) | O(n + k) | Yes | No | Integer/string keys |
 | **Bucket Sort** | O(n + k) avg | O(n + k) | Yes | No | Uniformly distributed data |
 
+## 🦀 **Rust Standard Library Sorting**
+
+### **slice::sort() - Stable Sort**
+
+```rust
+let mut data = vec![5, 2, 8, 1, 9];
+data.sort();  // [1, 2, 5, 8, 9]
+
+// Custom comparison
+data.sort_by(|a, b| b.cmp(a));  // Reverse sort
+
+// Sort by key
+struct Person { name: String, age: u32 }
+let mut people = vec![
+    Person { name: "Alice".into(), age: 30 },
+    Person { name: "Bob".into(), age: 25 },
+];
+people.sort_by_key(|p| p.age);  // Sort by age
+```
+
+**Implementation:** Adaptive merge sort (Timsort variant)
+- **Stable:** Equal elements maintain original order
+- **Adaptive:** O(n) on already sorted data
+- **Time:** O(n log n) worst case
+- **Space:** O(n)
+
+### **slice::sort_unstable() - Fast Sort**
+
+```rust
+let mut data = vec![5, 2, 8, 1, 9];
+data.sort_unstable();  // Faster but not stable
+
+// Custom comparison
+data.sort_unstable_by(|a, b| b.cmp(a));
+
+// Sort by key
+people.sort_unstable_by_key(|p| p.age);
+```
+
+**Implementation:** Pattern-defeating quicksort (pdqsort)
+- **Not stable:** May reorder equal elements
+- **Faster:** Better cache performance, less allocation
+- **Time:** O(n log n) average and worst case (unlike classic quicksort)
+- **Space:** O(log n)
+- **Use when:** Stability not needed, performance critical
+
+### **Choosing Between sort() and sort_unstable()**
+
+```rust
+// ✅ Use sort() when:
+// - Stability matters (maintaining relative order)
+// - Sorting complex types where order of equals matters
+struct Event { time: u64, id: u32 }
+events.sort_by_key(|e| e.time);  // Events at same time keep ID order
+
+// ✅ Use sort_unstable() when:
+// - Sorting primitives (i32, f64, etc.)
+// - Performance critical
+// - Don't care about relative order of equals
+let mut numbers = vec![5, 2, 8, 1, 9];
+numbers.sort_unstable();  // Faster for primitives
+```
+
+**Performance Comparison:**
+```rust
+// Benchmark results (typical):
+// sort():          ~100 µs for 10,000 elements
+// sort_unstable(): ~70 µs for 10,000 elements
+// ~30% faster for primitives, may vary by data
+```
+
 ## 📚 **Fundamental Concepts**
 
 ### **Stability**
@@ -694,6 +765,201 @@ fn merge_in_place<T: Ord + Clone>(arr: &mut [T], mid: usize) {
 }
 ```
 
+## 📈 **Sorting Complexity Lower Bound**
+
+**Theoretical Limit:** Comparison-based sorting cannot be faster than O(n log n) in the worst case.
+
+### **Proof Intuition**
+
+- Sorting n distinct elements has **n! possible outcomes**
+- Binary decision tree (compare A vs B) has **2^h leaves** for height h
+- Need at least **log₂(n!) ≈ n log n** comparisons
+
+**Example:**
+```
+For 3 elements [a, b, c], there are 3! = 6 possible orderings:
+1. a < b < c
+2. a < c < b
+3. b < a < c
+4. b < c < a
+5. c < a < b
+6. c < b < a
+
+Decision tree needs at least log₂(6) ≈ 2.58 → 3 comparisons minimum
+```
+
+### **Non-Comparison Sorts (Can Be Faster)**
+
+These avoid the O(n log n) lower bound by not using comparisons:
+
+- **Counting Sort:** O(n + k) when elements in small range
+- **Radix Sort:** O(d × n) for d-digit numbers
+- **Bucket Sort:** O(n) average for uniformly distributed data
+
+**Tradeoff:** These have limitations (specific data types, extra space, limited range)
+
+## 🎲 **Algorithm Performance by Input Type**
+
+### **Best Algorithms for Completely Unsorted/Random Data**
+
+When data is **completely random** with no pattern, certain algorithms excel:
+
+#### **🥇 Quick Sort (Best Overall)**
+
+```rust
+let mut random_data = vec![9, 3, 7, 1, 5, 2, 8, 4, 6];
+quick_sort(&mut random_data);
+// Or use Rust's optimized version:
+random_data.sort_unstable();  // Uses pdqsort
+```
+
+**Why it wins on random data:**
+- **Average case:** O(n log n) - very fast in practice
+- **Cache-friendly:** Excellent locality of reference (accesses nearby elements)
+- **In-place:** Only O(log n) space for recursion
+- **Partitioning:** Works equally well regardless of initial order
+- **Modern variants:** pdqsort (Rust's sort_unstable) handles all cases well
+
+⚠️ **Pitfall:** Classic quicksort degrades to O(n²) on sorted/reverse-sorted data with poor pivot selection. Use random pivot or Rust's sort_unstable() which handles this.
+
+#### **🥈 Merge Sort (Most Consistent)**
+
+```rust
+let mut random_data = vec![9, 3, 7, 1, 5, 2, 8, 4, 6];
+merge_sort(&mut random_data);
+// Or use Rust's stable sort:
+random_data.sort();  // Uses Timsort
+```
+
+**Why it's reliable on random data:**
+- **Always O(n log n):** Unaffected by initial distribution
+- **Stable:** Preserves relative order of equal elements
+- **Predictable:** No worst-case degradation like quicksort
+- **Divide-and-conquer:** Doesn't care about input patterns
+
+⚠️ **Tradeoff:** Requires O(n) extra space for merging
+
+#### **🥉 Heap Sort (Space-Efficient Guarantee)**
+
+```rust
+let mut random_data = vec![9, 3, 7, 1, 5, 2, 8, 4, 6];
+heap_sort(&mut random_data);
+```
+
+**Why it's solid on random data:**
+- **Always O(n log n):** Guaranteed performance
+- **In-place:** Only O(1) extra space
+- **Consistent:** Initial order doesn't affect heap construction
+
+⚠️ **Tradeoff:** Slower than quicksort in practice (~2x), not cache-friendly
+
+### **❌ Poor Choices for Random/Unsorted Data**
+
+#### **Insertion Sort**
+```rust
+// ❌ BAD for random data
+let mut random_data = vec![9, 3, 7, 1, 5, 2, 8, 4, 6];
+insertion_sort(&mut random_data);  // O(n²) - many element shifts!
+```
+- **Performance:** O(n²) on random data (worst case behavior)
+- **Why it fails:** Each element likely needs to shift through many positions
+- **Only use for:** Nearly sorted data (then it's O(n))
+
+#### **Bubble Sort**
+```rust
+// ❌ BAD for random data  
+bubble_sort(&mut random_data);  // O(n²) - educational only!
+```
+- **Performance:** O(n²) on random data
+- **No advantages:** Never better than O(n²) on unsorted data
+- **Use case:** Educational purposes only
+
+#### **Selection Sort**
+```rust
+// ❌ BAD for random data
+selection_sort(&mut random_data);  // Always O(n²)
+```
+- **Performance:** Always O(n²) - never adaptive
+- **Why it's bad:** Doesn't benefit from any partial ordering
+- **Only use for:** Memory severely limited AND minimal swaps needed
+
+### **Performance Comparison on Random Data**
+
+```rust
+// Benchmark results (10,000 random elements, typical hardware):
+
+// 🚀 Fast (O(n log n))
+quick_sort:       ~2-3 ms   // Fastest
+sort_unstable():  ~2 ms     // Rust's optimized quicksort
+merge_sort:       ~4-5 ms   // Stable, predictable
+sort():           ~5 ms     // Rust's stable sort
+heap_sort:        ~6-8 ms   // Guaranteed O(n log n), in-place
+
+// 🐌 Slow (O(n²))
+insertion_sort:   ~100-150 ms  // 50x slower!
+selection_sort:   ~120-180 ms  // Always slow
+bubble_sort:      ~200-300 ms  // Worst of all
+```
+
+### **Best Algorithms for Nearly Sorted Data**
+
+When data is **already sorted or nearly sorted**:
+
+#### **🥇 Insertion Sort**
+```rust
+let mut nearly_sorted = vec![1, 2, 3, 5, 4, 6, 7]; // Only one element out of place
+insertion_sort(&mut nearly_sorted);  // O(n) - lightning fast!
+```
+- **Best case:** O(n) when already sorted
+- **Adaptive:** Skips sorted portions
+- **Ideal for:** < 20 elements OR very few inversions
+
+#### **🥈 Timsort (Rust's sort())**
+```rust
+nearly_sorted.sort();  // Detects sorted runs
+```
+- **Adaptive:** O(n) to O(n log n) based on existing order
+- **Detects runs:** Identifies already-sorted subsequences
+- **Stable:** Maintains relative order
+
+### **🦀 Rust Standard Library Recommendations**
+
+```rust
+let mut unsorted = vec![9, 3, 7, 1, 5, 2, 8, 4, 6];
+
+// ✅ BEST for completely random/unsorted primitives:
+unsorted.sort_unstable();  
+// - Uses pdqsort (pattern-defeating quicksort)
+// - Handles all edge cases (sorted, reverse, duplicates)
+// - O(n log n) guaranteed (unlike classic quicksort)
+// - ~30% faster than sort()
+
+// ✅ BEST when stability needed:
+unsorted.sort();
+// - Uses Timsort (adaptive merge sort)
+// - Stable (preserves relative order)
+// - Adaptive (fast on nearly-sorted data)
+// - O(n log n) guaranteed
+
+// ✅ BEST for nearly sorted data (small arrays):
+if unsorted.len() < 20 {
+    insertion_sort(&mut unsorted);  // Custom implementation
+}
+// Rust's sort() already does this internally!
+```
+
+### **Summary Table: Algorithm vs Input Type**
+
+| Input Type | Best Choice | Why |
+|------------|-------------|-----|
+| **Random/Unsorted** | sort_unstable() | Fastest O(n log n), no stability needed |
+| **Random + Stability** | sort() | Stable O(n log n) |
+| **Nearly Sorted** | sort() | Adaptive (detects runs) |
+| **Small (< 20)** | Insertion or sort() | Low overhead |
+| **Reverse Sorted** | sort_unstable() | Handles edge cases |
+| **Many Duplicates** | sort_unstable() | Efficient partitioning |
+| **Integers, Small Range** | Counting Sort | O(n + k) non-comparison |
+
 ## 🧪 **Performance Testing & Benchmarks**
 
 ```rust
@@ -794,10 +1060,58 @@ fn requires_stability() -> bool {
 ### **Decision Tree**
 
 ```
-Input Size?
-├─ Small (≤16): Insertion Sort
-├─ Medium/Large:
-   ├─ Need Stability?
+Is data already sorted or nearly sorted?
+  └─ Yes → Insertion Sort (O(n) best case)
+  └─ No → Continue...
+
+Do you need stable sorting?
+  └─ Yes → Merge Sort or Rust's sort()
+  └─ No → Continue...
+
+Is memory very limited?
+  └─ Yes → Heap Sort (O(1) space)
+  └─ No → Quick Sort or Rust's sort_unstable()
+
+Is data very small (< 20 elements)?
+  └─ Yes → Insertion Sort (simple, low overhead)
+  └─ No → Quick Sort or sort_unstable()
+
+Need guaranteed O(n log n)?
+  └─ Yes → Merge Sort or Heap Sort
+  └─ No → Quick Sort (faster on average)
+
+Is data integers in small range?
+  └─ Yes → Counting Sort (O(n + k))
+  └─ No → Standard comparison sorts
+```
+
+### **Practical Recommendations for Rust**
+
+```rust
+// ✅ DEFAULT: Use standard library
+data.sort();           // Stable, optimized
+data.sort_unstable();  // Faster when stability not needed
+
+// ⚠️ RARELY implement custom sorting unless:
+// - Educational purposes
+// - Very specific constraints
+// - Embedded systems with no std
+```
+
+### **For AoC / Competitive Programming**
+
+```rust
+// Simple cases
+numbers.sort_unstable();  // Fast and simple
+
+// Custom ordering
+points.sort_unstable_by_key(|p| (p.x, p.y));
+
+// Reverse sort
+scores.sort_unstable_by(|a, b| b.cmp(a));
+```
+
+### **Original Decision Tree
    │  ├─ Yes: Merge Sort
    │  └─ No: Continue
    ├─ Memory Constrained?

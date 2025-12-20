@@ -36,7 +36,7 @@
 - **[[BTreeMap Guide]]** - Sorted key-value storage and range queries
 - **[[BTreeSet Operations]]** - Ordered unique elements and set operations
 - **[[Binary Heap Patterns]]** - Priority queues and heap algorithms
-- **[[Sorting Algorithms]]** - Collection sorting strategies and performance
+- **[[sorting-algorithms]]** - Collection sorting strategies and performance
 
 ### **String Collections**
 
