@@ -75,7 +75,7 @@
 
 - **[[Connected Components]]** - Union-Find and flood-fill techniques
 - **[[Shortest Path]]** - Dijkstra, Floyd-Warshall, and BFS variants
-- **[[Cycle Detection]]** - Directed and undirected cycle finding
+- **[[cycle-detection]]** - Directed and undirected cycle finding
 - **[[Topological Sort]]** - Dependency resolution and ordering
   - **[[aoc2024-day5-mission-integration]]** - Print queue with Mission 7+8 (40% code reduction)
 - **[[Minimum Spanning Tree]]** - Kruskal's and Prim's algorithms

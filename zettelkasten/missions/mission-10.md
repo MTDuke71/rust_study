@@ -35,7 +35,7 @@
 ### **Graph Theory Applications**
 - **[[Kruskal's Algorithm]]** - Minimum spanning tree using Union-Find for cycle detection
 - **[[Connected Components]]** - Dynamic connectivity queries in undirected graphs
-- **[[Cycle Detection]]** - Efficient cycle detection during incremental graph construction
+- **[[cycle-detection]]** - Efficient cycle detection during incremental graph construction
 - **[[Network Connectivity]]** - Real-time connectivity monitoring and validation
 
 ### **Systems Integration & Debugging**

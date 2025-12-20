@@ -527,7 +527,7 @@ impl IncrementalKahns {
 - **[[Graph Theory MOC]]** - Basic graph terminology and representation
 - **[[Queue Data Structure]]** - FIFO processing for algorithm execution
 - **[[HashMap Deep Dive]]** - Efficient key-value lookups for in-degree tracking
-- **[[Cycle Detection]]** - Understanding circular dependencies in graphs
+- **[[cycle-detection]]** - Understanding circular dependencies in graphs
 
 ### **Implementation Skills**
 
@@ -643,4 +643,4 @@ for node in to_process {
 
 *Tags: #graph-algorithms #topological-sort #kahn-algorithm #cycle-detection #dependency-resolution #queue-algorithms #dag #competitive-programming #mission-integration*
 
-*Links: [[topological-sort]] | [[graph-algorithms]] | [[Graph Theory MOC]] | [[DFS Patterns]] | [[aoc2024-day5-mission-integration]] | [[Mission 8]] | [[Queue Data Structure]] | [[Cycle Detection]] | [[HashMap Deep Dive]] | [[Algorithm Design Patterns]] | [[Build System Design]] | [[Task Scheduling]] | [[Performance Analysis]] | [[Testing Strategies]] | [[zettel-index]]*
+*Links: [[topological-sort]] | [[graph-algorithms]] | [[Graph Theory MOC]] | [[DFS Patterns]] | [[aoc2024-day5-mission-integration]] | [[Mission 8]] | [[Queue Data Structure]] | [[cycle-detection]] | [[HashMap Deep Dive]] | [[Algorithm Design Patterns]] | [[Build System Design]] | [[Task Scheduling]] | [[Performance Analysis]] | [[Testing Strategies]] | [[zettel-index]]*

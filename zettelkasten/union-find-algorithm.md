@@ -516,7 +516,7 @@ struct CompressedUnionFind {
 
 - **[[Kruskal's Algorithm]]**: MST construction with O(E log E) complexity
 - **[[Connected Components]]**: O(V + E) graph traversal alternative  
-- **[[Cycle Detection]]**: Online cycle detection during edge insertion
+- **[[cycle-detection]]**: Online cycle detection during edge insertion
 - **[[Lowest Common Ancestor]]**: Offline LCA queries using Union-Find
 
 ### **Network Algorithms**
@@ -642,7 +642,7 @@ fn union(&mut self, x: usize, y: usize) -> bool {
 
 **Core Concepts:** [[mission-10]] | [[graph-algorithms]] | [[Tree Algorithms]] | [[Performance Optimization]]
 
-**Applications:** [[Kruskal's Algorithm]] | [[Connected Components]] | [[Cycle Detection]] | [[Minimum Spanning Tree]] | [[union-find-patterns]]
+**Applications:** [[Kruskal's Algorithm]] | [[Connected Components]] | [[cycle-detection]] | [[Minimum Spanning Tree]] | [[union-find-patterns]]
 
 **Advanced Topics:** [[Path Compression]] | [[Union by Rank]] | [[Inverse Ackermann Function]] | [[Amortized Analysis]]
 

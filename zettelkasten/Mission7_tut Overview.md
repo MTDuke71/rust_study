@@ -52,7 +52,7 @@
 - [[Visited Tracking]] - Preventing infinite loops in graph algorithms
 - [[Path Reconstruction]] - Building paths from algorithm results
 - [[Component Analysis]] - Finding connected components
-- [[Cycle Detection]] - Identifying cycles in graphs
+- [[cycle-detection]] - Identifying cycles in graphs
 
 ## 📂 Tutorial Structure
 

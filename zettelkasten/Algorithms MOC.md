@@ -83,7 +83,7 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 **Graph Properties:**
 
 - [[Graph Network Density]] - Network connectivity metrics
-- [[Cycle Detection]] - Finding cycles in graphs
+- [[cycle-detection]] - Finding cycles in graphs
 - [[Bipartite Graph Detection]] - Two-coloring algorithms
 
 ### **Computational Geometry**
