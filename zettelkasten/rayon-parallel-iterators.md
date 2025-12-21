@@ -354,6 +354,51 @@ Concrete performance measurements from robot simulation:
 
 **Key Finding**: Parallel overhead is ~100µs. Only worth it when total work > 1ms.
 
+### Empirical Data (AoC 2024 Day 22)
+
+Concrete performance measurements from PRNG simulation (2020 buyers × 2000 secrets):
+
+**Part 1: Pure Computation (Embarrassingly Parallel)**
+
+| **Metric** | **Serial** | **Parallel** | **Result** |
+|------------|------------|--------------|------------|
+| Execution Time | 18.6 ms | 1.1 ms | **16.58x speedup** ✅ |
+| Problem Size | 2020 buyers | 2020 buyers | 12.1M PRNG operations |
+| Scaling | Linear (1 core) | Near-linear (multi-core) | Excellent parallelization |
+
+**Part 2: HashMap Aggregation (Shared State Challenge)**
+
+| **Approach** | **Time** | **Speedup** | **Analysis** |
+|--------------|----------|-------------|--------------|
+| Serial | 183.4 ms | 1.0x (baseline) | Single-threaded HashMap updates |
+| Parallel (Mutex) | 93.0 ms | 1.97x | Lock contention limits scaling |
+| **Parallel (Thread-local)** | **84.6 ms** | **2.17x** ✅ | Reduced contention, best performance |
+
+**Key Findings**:
+- **Part 1**: Near-perfect scaling (16.58x on multi-core CPU) - each buyer's PRNG is completely independent
+- **Part 2**: Thread-local HashMaps significantly outperform shared Mutex approach
+- **Pattern**: Even with shared state (HashMap), 2x+ speedup achievable with proper contention management
+- **Lesson**: Always measure Mutex vs thread-local patterns for parallel aggregation
+
+**Implementation Pattern (Thread-Local)**:
+```rust
+// Each thread builds its own HashMap, serial merge at end
+let thread_maps: Vec<HashMap<K, V>> = data
+    .par_iter()
+    .map(|item| process_to_hashmap(item))  // Independent per thread
+    .collect();
+
+// Serial merge (relatively cheap compared to parallel work)
+let mut result = HashMap::new();
+for map in thread_maps {
+    for (k, v) in map {
+        *result.entry(k).or_insert(0) += v;
+    }
+}
+```
+
+See `advent_of_code/aoc2024/examples/day22_rayon_benchmark.rs` for complete benchmark code.
+
 ---
 
 ## Adding Rayon to Your Project
@@ -425,6 +470,7 @@ fn process_grid_parallel(grid: &Grid<i32>) -> i32 {
 - [[aoc-optimization-strategies]] - Performance optimization techniques
 - [[AoC Pattern Library]] - Reusable solution patterns
 - **AoC 2024 Day 14** - Robot simulation with parallel safety factor calculation (see `advent_of_code/aoc2024/examples/day14_rayon_learning.rs`)
+- **AoC 2024 Day 22** - PRNG simulation with 16.58x speedup + HashMap aggregation patterns (see `advent_of_code/aoc2024/examples/day22_rayon_benchmark.rs`)
 
 ---
 
