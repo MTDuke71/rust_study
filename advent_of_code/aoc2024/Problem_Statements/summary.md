@@ -2197,6 +2197,189 @@ Rust implementation includes 7 comprehensive tests:
 - **Cache Hit Rate**: Very high due to repeated subsequence patterns across different codes
 - **Memory Usage**: Negligible—memo map stores ~1000 entries even for Part 2
 
+### Day 22: Monkey Market
+
+**Title**: Monkey Market  
+**Part 1 Type**: Mathematical + Simulation  
+**Part 1 Description**: Generate 2000th secret number for each buyer using PRNG algorithm (mix with XOR, prune with modulo 2^24), sum all results → 17163502021  
+**Part 2 Type**: Optimization + Data Structures  
+**Part 2 Description**: Find best 4-change price sequence maximizing banana sales across all buyers (first occurrence per buyer only) → 1938 bananas  
+**Key Concepts**: Pseudorandom number generation, bitwise operations (XOR mixing), power-of-2 optimizations, compiler analysis, sequence aggregation, HashMap deduplication, parallel iterators
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: PRNG simulation with escalation (simple secret generation → complex sequence pattern optimization)
+- **Data Structure**: 
+  - **Part 1**: Direct computation with no storage (streaming)
+  - **Part 2 (Rust)**: Two-level HashMap architecture—`buyer_sequences: HashMap<[i8; 4], i64>` (per-buyer local, first occurrence) + `sequence_totals: HashMap<[i8; 4], i64>` (global aggregation)
+  - **Part 2 (Python)**: `defaultdict(int)` for global aggregation + `set()` per buyer for seen-sequence tracking
+- **Complexity**:
+  - **Time Part 1**: O(B×2000) where B = buyers (2020 buyers), embarrassingly parallel
+  - **Time Part 2**: O(B×1997×S) where S = sequence operations (HashMap insert/lookup)—1997 = 2000 changes minus 3 for 4-element sliding window
+  - **Space**: Part 1 O(1), Part 2 O(unique_sequences) ≈ O(19^4) theoretical max (bounded by [-9,9] price changes)
+  - **Critical Insight**: First-occurrence-per-buyer rule requires two-level HashMap (local dedup → global aggregation) preventing double-counting when same sequence appears multiple times for one buyer
+- **AoC Theme**: "Marketplace PRNG patterns" with classic Part 2 optimization (compute values → find optimal strategy across all agents)
+
+**Algorithm Deep Dive**:
+
+**PRNG Evolution (3-Step Process)**:
+
+**Python Inline Approach**:
+```python
+# All operations chained in single loop
+for _ in range(2000):
+    secret = ((secret * 64) ^ secret) % 16777216   # Step 1: mix + prune
+    secret = ((secret // 32) ^ secret) % 16777216  # Step 2: mix + prune
+    secret = ((secret * 2048) ^ secret) % 16777216 # Step 3: mix + prune
+```
+- **Philosophy**: Inline operations minimize abstraction
+- **Trade-off**: Fast and clear but not individually testable
+
+**Rust Functional Decomposition**:
+```rust
+fn mix(secret: i64, value: i64) -> i64 { secret ^ value }
+fn prune(secret: i64) -> i64 { secret % PRUNE_MODULO }
+
+fn evolve_secret(mut secret: i64) -> i64 {
+    let step1 = secret * 64;
+    secret = mix(secret, step1);
+    secret = prune(secret);
+    // ... Steps 2 and 3 similar
+}
+```
+- **Philosophy**: Named functions document intent
+- **Trade-off**: More verbose, enables unit testing and assembly inspection
+
+**Part 2 Algorithm Comparison**:
+
+**Python's Pragmatic Approach**:
+```python
+amounts = defaultdict(int)  # Global aggregation
+for buyer_idx, change in enumerate(changes):
+    keys = set()  # Track seen sequences THIS buyer
+    for i in range(len(change) - 3):
+        key = tuple(change[i : i + 4])
+        if key in keys: continue  # Skip if already seen
+        amounts[key] += prices[buyer_idx][i + 4]
+        keys.add(key)
+max_amount = max(amounts.values())
+```
+
+**Rust's Two-Level HashMap**:
+```rust
+let mut sequence_totals: HashMap<[i8; 4], i64> = HashMap::new();
+
+for line in input.lines() {
+    let mut buyer_sequences: HashMap<[i8; 4], i64> = HashMap::new();
+    
+    for _ in 0..2000 {
+        // ... evolve secret, calculate price and change ...
+        buyer_sequences.entry(sequence).or_insert(price);  // First only!
+    }
+    
+    // Merge buyer's first occurrences into global totals
+    for (sequence, price) in buyer_sequences {
+        *sequence_totals.entry(sequence).or_insert(0) += price;
+    }
+}
+```
+
+**🦀 Rust Conversion Highlights**:
+
+**From Python Inline Operations** → **Rust Functional Decomposition**
+- Python: `((secret * 64) ^ secret) % 16777216`
+- Rust: Separate `mix()` and `prune()` functions with `#[inline]`
+- **Benefits**: Unit testable, assembly inspectable, self-documenting
+
+**From Python `defaultdict + set`** → **Rust Two-Level HashMap**
+- Python: Global dict + throwaway set per buyer
+- Rust: Explicit local→global merge with `.entry().or_insert()`
+- **Benefits**: Clear separation, explicit lifetimes, type-safe `[i8; 4]` arrays
+
+**From Python Manual Max** → **Rust Iterator Chain**
+- Python: `max(amounts.values())`
+- Rust: `.values().max().copied().unwrap_or(0).to_string()`
+- **Benefits**: Declarative style, chainable, idiomatic Rust
+
+**Compiler Optimization Insights (Rust Educational Infrastructure)**:
+
+**Power-of-2 Modulo Optimization** (verified with cargo-show-asm):
+```rust
+secret % 16777216  →  and eax, 0xFFFFFF  // 3 instructions
+secret % 16777213  →  imul + shifts      // 12 instructions (prime)
+```
+
+**Multiplication/Division by Powers of 2**:
+```rust
+secret * 64  →  shl rax, 6  // 1 cycle
+secret / 32  →  sar rax, 5  // 1 cycle
+```
+
+**Empirical Benchmark Results**:
+
+| Operation | Power-of-2 | Prime | Speedup |
+|-----------|-----------|-------|---------|
+| Modulo | 0.97 ns | 2.15 ns | **2.21x** |
+| Multiply | 0.39 ns | 0.57 ns | **1.45x** |
+| Divide | 0.76 ns | 1.44 ns | **1.90x** |
+| Full PRNG | 18.8 ms | 40.4 ms | **2.15x** |
+
+**Key Insight**: Day 22's use of 64, 32, 2048, 2^24 enabled massive optimizations!
+
+**Rayon Parallel Performance**:
+
+**Part 1 (Embarrassingly Parallel)**: 18.6 ms → 1.1 ms = **16.58x speedup** ✅  
+**Part 2 (Thread-Local Pattern)**: 183 ms → 84.6 ms = **2.17x speedup** ✅
+
+**Python vs Rust Comparison**:
+
+| Aspect | Python (~40 lines) | Rust (~280 lines) |
+|--------|-------------------|------------------|
+| **PRNG Structure** | Inline formula | Separate functions |
+| **Part 2 Deduplication** | `set()` + `defaultdict` | Two-level HashMap |
+| **Result Extraction** | `max(amounts.values())` | Iterator chain |
+| **Assembly Inspection** | Not accessible | cargo-show-asm tools |
+| **Test Coverage** | Minimal | 12 comprehensive tests |
+| **Performance Analysis** | Assumed fast | Rayon benchmarks, assembly |
+
+**Educational Value**:
+
+**Python Strengths**:
+- Rapid 40-line solution with minimal abstraction
+- Elegant list comprehensions for change calculation
+- defaultdict convenience eliminates boilerplate
+
+**Rust Strengths**:
+- Assembly inspection proves compiler optimizations empirically
+- Performance analysis with Criterion benchmarks and Rayon parallelization
+- Type safety with `[i8; 4]` array keys vs tuples
+- Educational depth: 5 example files documenting learning journey
+- Iterator mastery builds functional programming fluency
+
+**Test Coverage**:
+
+12 comprehensive tests covering:
+1. **mix() validation**: Self-inverse property, example cases
+2. **prune() validation**: Power-of-2 modulo behavior
+3. **evolve_secret()**: Single step and 10-step sequences
+4. **generate_nth_secret()**: Four buyer validation
+5. **Part 1/Part 2 integration**: Example and real input
+
+**Code Organization**:
+
+- **`mix()` / `prune()`**: Pure functions with `#[inline]`
+- **`evolve_secret()`**: Three-step evolution pipeline
+- **`part1()`**: Functional pipeline (lines → parse → evolve → sum)
+- **`part2()`**: Two-phase algorithm (per-buyer dedup → global aggregation)
+
+**Benchmark Infrastructure (Educational Examples)**:
+
+1. `examples/day22_rayon_benchmark.rs` - Serial vs parallel comparison
+2. `examples/day22_asm_runtime.rs` - Runtime assembly inspection
+3. `examples/day22_prime_vs_power2_benchmark.rs` - Power-of-2 vs prime constants
+4. `examples/DAY22_ASSEMBLY_ANALYSIS.md` - Comprehensive optimization docs
+
+**Results**: Part 1 = 17,163,502,021, Part 2 = 1,938 bananas
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -2209,19 +2392,19 @@ Rust implementation includes 7 comprehensive tests:
 | Combinatorial Optimization | 1 | 1 |
 | Conditional Logic | 1 | 2 |
 | Cryptographic | 0 | 0 |
-| Data Structures | 2 | 2 |
+| Data Structures | 2 | 3 |
 | Encoding | 0 | 0 |
 | Graph Algorithms | 6 | 6 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 11 | 8 |
+| Mathematical | 12 | 8 |
 | Number Theory | 0 | 0 |
-| Optimization | 1 | 11 |
+| Optimization | 1 | 12 |
 | Parsing | 0 | 0 |
 | Pattern Matching | 3 | 3 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 2 |
 | Search/Traversal | 5 | 5 |
-| Simulation | 8 | 5 |
+| Simulation | 9 | 5 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
@@ -2304,10 +2487,14 @@ Rust implementation includes 7 comprehensive tests:
 74. **Multi-Level Indirection**: Chain-of-command problems where action at level N requires sequence of actions at level N-1 (Day 21: you → robot1 → robot2 → ... → final_robot, each translating movements into button presses)
 75. **Gap-Constrained Navigation**: Geometric path problems where certain positions cause failure requiring explicit avoidance (Day 21: keypad gaps at (0,3) and (0,0) causing robot panic, necessitating intermediate point validation during path generation)
 76. **Exponential Memoization**: Cache reuse transforming infeasible O(k^depth) exponential complexity to practical O(unique_sequences × depth) linear complexity (Day 21: Part 2's depth=26 requires memoization to avoid 10^26 operations)
-73. **Bidirectional Distance Maps**: Dual BFS from start and end creating distance maps for O(1) path calculation instead of repeated pathfinding (Day 20: dist_from_start and dist_to_end enable cheat savings lookup without re-pathfinding)
-74. **Manhattan Distance Circle Enumeration**: Generating all positions within Manhattan distance N from a point for geometric range queries (Day 20: finding all potential cheat endpoints within phase-through distance)
-75. **Geometric Shortcut Detection**: Finding beneficial shortcuts by comparing normal path length to shortcut-enabled paths (Day 20: cheat savings = normal_distance - (approach + cheat_through_walls + exit))
-76. **Precomputation for Enumeration**: Computing expensive operations once, then using lookups during enumeration phase (Day 20: O(P) dual BFS + O(P×M) cheat enumeration vs O(P²×P) naive pathfinding per cheat)
+77. **Bidirectional Distance Maps**: Dual BFS from start and end creating distance maps for O(1) path calculation instead of repeated pathfinding (Day 20: dist_from_start and dist_to_end enable cheat savings lookup without re-pathfinding)
+78. **Manhattan Distance Circle Enumeration**: Generating all positions within Manhattan distance N from a point for geometric range queries (Day 20: finding all potential cheat endpoints within phase-through distance)
+79. **Geometric Shortcut Detection**: Finding beneficial shortcuts by comparing normal path length to shortcut-enabled paths (Day 20: cheat savings = normal_distance - (approach + cheat_through_walls + exit))
+80. **Precomputation for Enumeration**: Computing expensive operations once, then using lookups during enumeration phase (Day 20: O(P) dual BFS + O(P×M) cheat enumeration vs O(P²×P) naive pathfinding per cheat)
+81. **Power-of-2 Compiler Optimizations**: Choosing constants strategically to enable compiler optimizations—modulo by 2^N becomes bitwise AND, multiply/divide by 2^N becomes bit shifts (Day 22: % 16777216 → and eax,0xFFFFFF, *64 → shl rax,6, /32 → sar rax,5 proven via assembly inspection)
+82. **Assembly Inspection for Verification**: Using cargo-show-asm and benchmarks to empirically verify compiler optimizations rather than assuming (Day 22: 2.21x speedup power-of-2 vs prime modulo, educational prime comparison benchmark demonstrates when optimizations fail)
+83. **Two-Level HashMap Aggregation**: Local per-entity HashMap for deduplication + global HashMap for aggregation pattern prevents double-counting when same key appears multiple times within single entity (Day 22: buyer_sequences tracks first occurrence per buyer, sequence_totals aggregates across all buyers)
+84. **Embarrassingly Parallel Detection**: Identifying independent computations enabling near-linear Rayon speedups vs shared-state problems requiring thread-local patterns (Day 22: Part 1 16.58x speedup with simple par_iter(), Part 2 only 2.17x due to HashMap contention despite thread-local optimization)
 
 ### Rust-Specific Considerations
 
@@ -2332,6 +2519,7 @@ Rust implementation includes 7 comprehensive tests:
 - **Day 19**: Demonstrates **lifetime-parametric recursion with string slice memoization** for pattern composition problems. Showcases **zero-copy prefix matching** using `strip_prefix()` returning `Option<&str>` for simultaneous validation and remainder extraction—no substring allocations. **Lifetime Management**: Manual `HashMap<&'a str, bool/u64>` with explicit `<'a>` lifetime ensuring cache keys (borrowed from input) remain valid throughout recursion, preventing dangling references. **Substring vs Position Recursion**: Rust's suffix-based approach (`remaining: &str` → `strip_prefix()` → recurse on rest) vs Python's index-based (`pos: int` → slice design → recurse on next_pos); both O(P×L) but different memory profiles—Rust O(U) unique substrings vs Python O(L) positions. **Boolean-to-Counting DP Pattern**: Identical recursive structure for Part 1 (existence check with early-exit OR) and Part 2 (exhaustive counting with accumulative SUM)—demonstrates classic DP transformation where only reduction operator changes. **Cache Strategy Trade-offs**: Manual HashMap management (explicit insert/lookup, lifetime tracking) provides educational transparency vs Python's `@cache` decorator (automatic, hidden mechanics); both achieve equivalent performance with memoization. **Educational Transparency**: Explicit memoization demonstrates cache mechanics—when to check, when to insert, how lifetimes prevent invalidation—valuable for understanding DP vs production convenience. **Flexible Parsing**: Robust format handling detecting `\n\n` (example) vs `\n` (puzzle) by testing split result length, avoiding hardcoded assumptions. **Complexity Transformation**: Shows why memoization is critical—exponential O(P^L) explosion (overlapping subproblems recomputed) → linear O(P×L) efficiency (each unique substring computed once). **String Slice Excellence**: `&str` keys in HashMap enable zero-copy caching—cache entries borrow from input string without allocation or ownership transfer, demonstrating Rust's memory efficiency. **Test-Driven Validation**: 5 comprehensive tests covering parsing correctness, individual design checks (6 possible/2 impossible validated), Part 1 totals (6), arrangement counting accuracy, Part 2 totals (16)—proves algorithm correctness and memoization benefits. **Results**: Part 1 = 360 possible designs, Part 2 = 577,474,410,989,846 arrangements.
 - **Day 20**: Exemplifies **bidirectional distance maps** using dual BFS (from start S and end E) to enable O(1) cheat savings calculation without repeated pathfinding. Showcases **Manhattan distance circle enumeration** for cheat endpoint discovery (all positions within distance N from cheat start). **Mission 6 Integration**: `Grid<char>` with `Coord` type for maze representation, safe indexing with automatic bounds checking. **Algorithm Efficiency**: Precompute distances once (O(P) per BFS where P = path length), test all cheat combinations O(P×M) where M = positions within Manhattan distance—avoids O(P²×pathfinding) naive approach. **Python Comparison**: Python stores full path as list of coordinates, iterates path positions with distance checks; Rust uses HashMap distance maps enabling bidirectional lookup pattern. **Geometric Insight**: Manhattan distance determines cheat length through walls—physical distance (not path distance) enables phasing calculation. **Test Coverage**: 4 comprehensive tests validating parsing, BFS distance calculation (84 steps), Part 1 cheat counting (44 cheats ≥2ps savings), Part 2 extended range (285 cheats ≥50ps savings). **Results**: Part 1 = 1429 cheats ≥100ps, Part 2 = 988931 cheats ≥100ps.
 - **Day 21**: Demonstrates **recursive sequence transformation with exponential memoization** where each recursion level amplifies button sequences geometrically (68 presses → trillions without caching). Showcases **structured Keypad abstraction** with `positions: HashMap<char, (i32, i32)>` and `gap: (i32, i32)` enabling type-safe navigation with explicit gap avoidance validation—intermediate point checking prevents panic-inducing paths. **Memoization Critical**: `HashMap<(String, usize), usize>` cache with `(sequence, depth)` composite keys transforms infeasible O(k^depth) ≈ 10^26 operations (Part 2 depth=26) to practical O(unique_sequences × depth) ≈ few thousand cached entries completing instantly. **Multi-Level Indirection**: Chain-of-command problem where action at level N requires optimal sequence at level N-1—`min_presses()` recursion tries all shortest paths at current level, picks minimum expansion at next level. **Depth Semantics Difference**: Python counts intermediate robots (`depth=2` for Part 1 = you → 2 robots → numeric), Rust counts total levels (`depth=3` = you + 2 robots + numeric)—off-by-one convention difference, identical algorithms. **Gap Avoidance Logic**: Python checks row/col match vs gap line preventing crossing, Rust validates intermediate point `(x2,y1)` and `(x1,y2)` explicitly against gap position—equivalent geometric reasoning, different implementation philosophy. **Python Comparison**: Python's `@cache` decorator automatic memoization (~80 lines total) vs Rust's explicit HashMap management (~320 lines with tests)—Python optimizes for midnight racing brevity with dynamic keypad detection via `code[0].isnumeric()`, Rust structures with `is_numeric` flag for clarity and type safety. **Educational Value**: Explicit memo demonstrates cache mechanics (when to check, when to insert, composite keys for multi-parameter functions) vs hidden decorator magic; shows how sequence expansion problems differ fundamentally from pathfinding (not finding single optimal path but composing movements across recursion levels). **Test Coverage**: 7 comprehensive tests validating keypad construction (positions + gaps), movement generation (simple moves + gap avoidance), Part 1 integration (126384 complexity), individual code validation ("029A" → 1972 = 68×29), memoization cache hits. **Code Organization**: Clean separation with `Keypad` struct + factory methods, `get_move_sequences()` for path generation with gap validation, `min_presses()` core recursive algorithm with memo, `calculate_complexity()` extracting numeric value and computing score. **Performance Analysis**: Cache hit rate very high due to repeated subsequence patterns across different codes; memory negligible (~1000 entries even for Part 2); without memoization Part 2 literally impossible (years of computation). **Results**: Part 1 = 155252 (depth=3), Part 2 = 195664513288128 (depth=26).
+- **Day 22**: Demonstrates **PRNG simulation with power-of-2 compiler optimizations** and **sequence pattern aggregation** across multiple buyers. **XOR Mixing**: Self-inverse bitwise operations (`secret ^ value`) for avalanche effect randomization. **Modulo Optimization**: Compiler transforms `% 16777216` (2^24) into `& 0xFFFFFF` bitwise AND—verified via assembly inspection with cargo-show-asm showing 2.21x speedup vs prime modulo. **Rayon Parallelization**: Achieved 16.58x speedup Part 1 (embarrassingly parallel), 2.17x Part 2 (HashMap contention with thread-local pattern). **Two-Level HashMap**: Per-buyer `buyer_sequences` for first-occurrence deduplication + global `sequence_totals` for aggregation across all buyers—critical algorithm insight preventing double-counting. **Iterator Chains**: Functional pipelines (`.values().max().copied().unwrap_or(0)`) vs imperative loops demonstrating idiomatic Rust patterns. **Assembly Analysis**: Educational benchmarks comparing power-of-2 (shl/sar bit shifts) vs prime (imul/division) operations prove constant choice matters—Day 22's 64/32/2048/2^24 enabled massive optimizations. **Test Coverage**: 12 comprehensive tests covering PRNG correctness (mix/prune operations), secret evolution sequences, price extraction, change calculation, Part 1/Part 2 integration. **Results**: Part 1 = 17163502021, Part 2 = 1938 bananas.
 
 ---
 
@@ -2494,10 +2682,10 @@ When documenting solutions from previous years (2015-2023):
 
 ---
 
-*Last Updated: December 20, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21*
+*Last Updated: December 21, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation #binary-search #graph-adapters #pathfinding #integrator-philosophy #bidirectional-search #manhattan-distance #geometric-optimization #recursive-sequence-expansion #memoization #dynamic-programming #multi-level-indirection #gap-avoidance*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation #binary-search #graph-adapters #pathfinding #integrator-philosophy #bidirectional-search #manhattan-distance #geometric-optimization #recursive-sequence-expansion #memoization #dynamic-programming #multi-level-indirection #gap-avoidance #prng #xor-mixing #power-of-2-optimizations #compiler-analysis #assembly-inspection #iterator-chains #sequence-aggregation*
 *Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]] | [[../../../zettelkasten/virtual-machine-patterns]] | [[../../../zettelkasten/recursive-backtracking]] | [[../../../zettelkasten/binary-search-patterns]] | [[../../../zettelkasten/graph-trait-adapters]] | [[../../../zettelkasten/bidirectional-search]] | [[../../../zettelkasten/line-intersection]]*
