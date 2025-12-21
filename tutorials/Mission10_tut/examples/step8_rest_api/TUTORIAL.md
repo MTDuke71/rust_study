@@ -14,8 +14,8 @@
 ## 🎯 **What You'll Learn**
 
 ### Core Concepts
-1. **Axum Web Framework** - Modern, type-safe async web framework
-2. **OpenAPI/Swagger** - Compile-time API documentation generation
+1. **Axum Web Framework** - Modern, type-safe async web framework (Backend)
+2. **Utoipa (OpenAPI/Swagger)** - Compile-time API documentation generation using procedural macros
 3. **State Management** - Thread-safe shared state with Arc<Mutex<T>>
 4. **Error Handling** - HTTP status codes and structured error responses
 5. **REST Principles** - Resource-based API design
