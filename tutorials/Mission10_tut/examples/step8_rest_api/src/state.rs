@@ -35,6 +35,7 @@ impl AppState {
         self.instances.lock().unwrap().remove(&id).is_some()
     }
 
+    #[allow(dead_code)]
     pub fn instance_count(&self) -> usize {
         self.instances.lock().unwrap().len()
     }

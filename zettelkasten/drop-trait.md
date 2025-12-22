@@ -1,8 +1,8 @@
 # Drop Trait - Automatic Resource Cleanup
 
-**Tags:** #drop #cleanup #raii #resource-management #rust-book-ch15 #automatic-cleanup #deterministic #zero-cost
+**Tags:** #drop #cleanup #raii #resource-management #rust-book-ch15 #automatic-cleanup #deterministic #zero-cost #rust-for-rustaceans-ch1
 
-**Related:** [[Smart Pointers MOC]], [[deref-trait]], [[box-in-aoc-problems]], [[rc-shared-ownership]], [[raii-pattern]], [[resource-management]], [[smart-pointers]], [[ownership]]
+**Related:** [[Smart Pointers MOC]], [[move-semantics]], [[copy-trait]], [[deref-trait]], [[box-in-aoc-problems]], [[rc-shared-ownership]], [[raii-pattern]], [[resource-management]], [[smart-pointers]], [[ownership]], [[ownership-fundamentals]], [[Ownership and Borrowing]]
 
 ---
 
@@ -79,6 +79,42 @@ impl Drop for DatabaseConnection {
     }
 }
 ```
+
+---
+
+## Drop and Copy Are Mutually Exclusive
+
+### **Cannot Implement Both**
+
+Types that implement `Drop` **cannot** implement `Copy`. This prevents duplicate cleanup.
+
+```rust
+struct Resource {
+    id: i32,
+}
+
+impl Drop for Resource {
+    fn drop(&mut self) {
+        println!("Cleaning up resource {}", self.id);
+    }
+}
+
+// ❌ This won't compile - Drop and Copy are mutually exclusive
+// #[derive(Copy, Clone)]
+// struct Resource { id: i32 }
+```
+
+**Why?**: If `Resource` were `Copy`, this would happen:
+```rust
+// Hypothetical (doesn't compile):
+let r1 = Resource { id: 1 };
+let r2 = r1;  // If Copy, both r1 and r2 exist
+// } End of scope
+//   drop(r2);  // Cleanup runs for resource 1
+//   drop(r1);  // ❌ DOUBLE CLEANUP for same resource!
+```
+
+**See**: [[copy-trait]] for types that can be safely duplicated, [[move-semantics]] for ownership transfer without cleanup duplication.
 
 ---
 

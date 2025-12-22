@@ -49,6 +49,39 @@ fn main() {
     }
 
     {
+        println!("📚 KEEPING DATA AFTER FUNCTION CALLS");
+        println!("   ───────────────────────────────────");
+        
+        // Pattern 1: Return ownership back
+        fn take_and_return(s: String) -> String {
+            println!("   take_and_return received: \"{}\"", s);
+            s  // Return ownership to caller
+        }
+        
+        let text1 = String::from("pattern1");
+        let text1 = take_and_return(text1);
+        println!("   ✓ Got ownership back: \"{}\"", text1);
+        
+        // Pattern 2: Borrowing (most idiomatic)
+        fn borrow_text(s: &String) {
+            println!("   borrow_text received: \"{}\"", s);
+        }  // Reference dropped, original String unchanged
+        
+        let text2 = String::from("pattern2");
+        borrow_text(&text2);  // Pass reference
+        println!("   ✓ Still own text: \"{}\"", text2);
+        
+        // Pattern 3: Clone before passing
+        fn consume_clone(s: String) {
+            println!("   consume_clone received: \"{}\"", s);
+        }  // Clone dropped here
+        
+        let text3 = String::from("pattern3");
+        consume_clone(text3.clone());  // Give function a copy
+        println!("   ✓ Kept original: \"{}\"\n", text3);
+    }
+
+    {
         println!("📚 MOVE IN COLLECTIONS");
         println!("   ────────────────────");
         

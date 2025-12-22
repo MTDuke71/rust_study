@@ -24,7 +24,6 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 mod models;
 mod handlers;
 mod state;
-mod errors;
 mod openapi;
 
 use openapi::ApiDoc;
