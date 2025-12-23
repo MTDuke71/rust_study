@@ -112,11 +112,21 @@ fn bron_kerbosch(
     mut x: HashSet<String>,  // Already processed nodes (avoid duplicates)
     max_clique: &mut Vec<String>,
 ) {
+    // INSTRUMENTATION: Show current state
+    println!("\n─────────────────────────────────────");
+    println!("ENTER: R={:?} (size {})", 
+             r.iter().cloned().collect::<Vec<_>>(), r.len());
+    println!("       P size={}, X size={}", p.len(), x.len());
+    
     // BASE CASE: If no more candidates (P empty) and no exclusions (X empty),
     // then R is a maximal clique (can't be extended further)
     if p.is_empty() && x.is_empty() {
+        println!("🎯 BASE CASE! Found maximal clique of size {}: {:?}", 
+                 r.len(), r.iter().cloned().collect::<Vec<_>>());
+        
         // Check if this clique is larger than the current maximum
         if r.len() > max_clique.len() {
+            println!("   ✨ NEW MAXIMUM! (previous max was {})", max_clique.len());
             *max_clique = r.iter().cloned().collect();
         }
         return;
@@ -132,16 +142,26 @@ fn bron_kerbosch(
     
     // Calculate candidates: P \ N(pivot)
     // (All candidates EXCEPT those connected to the pivot)
-    let candidates: Vec<String> = if let Some(pivot_node) = pivot {
-        let pivot_neighbors = graph.get(&pivot_node).cloned().unwrap_or_default();
-        p.difference(&pivot_neighbors).cloned().collect()
+    let candidates: Vec<String> = if let Some(ref pivot_node) = pivot {
+        let pivot_neighbors = graph.get(pivot_node).cloned().unwrap_or_default();
+        println!("🔄 PIVOT: {:?} (has {} neighbors)", pivot_node, pivot_neighbors.len());
+        let cands = p.difference(&pivot_neighbors).cloned().collect();
+        println!("   Candidates after pivot: {} nodes (was {} before pivot)", 
+                 p.difference(&pivot_neighbors).count(), p.len());
+        cands
     } else {
+        println!("🔄 NO PIVOT (P∪X empty)");
         p.iter().cloned().collect()
     };
     
+    println!("📋 Will try {} candidates", candidates.len());
+    
     // RECURSIVE CASE: Try adding each candidate node to the clique
-    for v in candidates {
-        let neighbors = graph.get(&v).cloned().unwrap_or_default();
+    for (i, v) in candidates.iter().enumerate() {
+        let neighbors = graph.get(v).cloned().unwrap_or_default();
+        
+        println!("\n  ➜ Trying candidate {}/{}: {:?} (has {} neighbors)", 
+                 i + 1, candidates.len(), v, neighbors.len());
         
         // Build new R: Current clique + node v
         let mut new_r = r.clone();
@@ -154,13 +174,19 @@ fn bron_kerbosch(
         // Build new X: Processed nodes that are ALSO neighbors of v
         let new_x: HashSet<String> = x.intersection(&neighbors).cloned().collect();
         
+        println!("    New sets: R size={}, P size={}, X size={}", 
+                 new_r.len(), new_p.len(), new_x.len());
+        
         // Recurse: Try to extend the clique containing v
         bron_kerbosch(graph, new_r, new_p, new_x, max_clique);
         
         // Move v from P to X (mark as processed)
-        p.remove(&v);
-        x.insert(v);
+        println!("  ← Back from recursion. Moving {:?} from P to X", v);
+        p.remove(v);
+        x.insert(v.clone());
     }
+    
+    println!("✓ Done with this level. P now has {} nodes, X has {} nodes", p.len(), x.len());
 }
 
 #[cfg(test)]

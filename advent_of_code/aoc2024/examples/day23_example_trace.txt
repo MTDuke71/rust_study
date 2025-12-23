@@ -1,0 +1,498 @@
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   D:\repos\rust_study\advanced_examples\weasel_evolution\Cargo.toml
+workspace: D:\repos\rust_study\Cargo.toml
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.09s
+     Running unittests src\lib.rs (D:\repos\rust_study\target\debug\deps\aoc2024-1b4903fdd4a93f3a.exe)
+
+running 1 test
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=[] (size 0)
+       P size=16, X size=0
+≡ƒöä PIVOT: "wq" (has 4 neighbors)
+   Candidates after pivot: 12 nodes (was 16 before pivot)
+≡ƒôï Will try 12 candidates
+
+  Γ₧£ Trying candidate 1/12: "wq" (has 4 neighbors)
+    New sets: R size=1, P size=4, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["wq"] (size 1)
+       P size=4, X size=0
+≡ƒöä PIVOT: "vc" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 4 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "vc" (has 4 neighbors)
+    New sets: R size=2, P size=3, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["vc", "wq"] (size 2)
+       P size=3, X size=0
+≡ƒöä PIVOT: "aq" (has 4 neighbors)
+   Candidates after pivot: 3 nodes (was 3 before pivot)
+≡ƒôï Will try 3 candidates
+
+  Γ₧£ Trying candidate 1/3: "aq" (has 4 neighbors)
+    New sets: R size=3, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["aq", "vc", "wq"] (size 3)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 3: ["aq", "vc", "wq"]
+   Γ£¿ NEW MAXIMUM! (previous max was 0)
+  ΓåÉ Back from recursion. Moving "aq" from P to X
+
+  Γ₧£ Trying candidate 2/3: "tb" (has 4 neighbors)
+    New sets: R size=3, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["tb", "vc", "wq"] (size 3)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 3: ["tb", "vc", "wq"]
+  ΓåÉ Back from recursion. Moving "tb" from P to X
+
+  Γ₧£ Trying candidate 3/3: "ub" (has 4 neighbors)
+    New sets: R size=3, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ub", "vc", "wq"] (size 3)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 3: ["ub", "vc", "wq"]
+  ΓåÉ Back from recursion. Moving "ub" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 3 nodes
+  ΓåÉ Back from recursion. Moving "vc" from P to X
+Γ£ô Done with this level. P now has 3 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "wq" from P to X
+
+  Γ₧£ Trying candidate 2/12: "kh" (has 4 neighbors)
+    New sets: R size=1, P size=4, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["kh"] (size 1)
+       P size=4, X size=0
+≡ƒöä PIVOT: "ta" (has 4 neighbors)
+   Candidates after pivot: 4 nodes (was 4 before pivot)
+≡ƒôï Will try 4 candidates
+
+  Γ₧£ Trying candidate 1/4: "ta" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ta", "kh"] (size 2)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 2: ["ta", "kh"]
+  ΓåÉ Back from recursion. Moving "ta" from P to X
+
+  Γ₧£ Trying candidate 2/4: "qp" (has 4 neighbors)
+    New sets: R size=2, P size=1, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["qp", "kh"] (size 2)
+       P size=1, X size=0
+≡ƒöä PIVOT: "ub" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 1 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "ub" (has 4 neighbors)
+    New sets: R size=3, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["qp", "ub", "kh"] (size 3)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 3: ["qp", "ub", "kh"]
+  ΓåÉ Back from recursion. Moving "ub" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "qp" from P to X
+
+  Γ₧£ Trying candidate 3/4: "ub" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=1
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ub", "kh"] (size 2)
+       P size=0, X size=1
+≡ƒöä PIVOT: "qp" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 0 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "ub" from P to X
+
+  Γ₧£ Trying candidate 4/4: "tc" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["tc", "kh"] (size 2)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 2: ["tc", "kh"]
+  ΓåÉ Back from recursion. Moving "tc" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 4 nodes
+  ΓåÉ Back from recursion. Moving "kh" from P to X
+
+  Γ₧£ Trying candidate 3/12: "de" (has 4 neighbors)
+    New sets: R size=1, P size=4, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["de"] (size 1)
+       P size=4, X size=0
+≡ƒöä PIVOT: "co" (has 4 neighbors)
+   Candidates after pivot: 2 nodes (was 4 before pivot)
+≡ƒôï Will try 2 candidates
+
+  Γ₧£ Trying candidate 1/2: "co" (has 4 neighbors)
+    New sets: R size=2, P size=2, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["co", "de"] (size 2)
+       P size=2, X size=0
+≡ƒöä PIVOT: "ta" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 2 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "ta" (has 4 neighbors)
+    New sets: R size=3, P size=1, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["co", "ta", "de"] (size 3)
+       P size=1, X size=0
+≡ƒöä PIVOT: "ka" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 1 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "ka" (has 4 neighbors)
+    New sets: R size=4, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ta", "de", "ka", "co"] (size 4)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 4: ["ta", "de", "ka", "co"]
+   Γ£¿ NEW MAXIMUM! (previous max was 3)
+  ΓåÉ Back from recursion. Moving "ka" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "ta" from P to X
+Γ£ô Done with this level. P now has 1 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "co" from P to X
+
+  Γ₧£ Trying candidate 2/2: "cg" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["cg", "de"] (size 2)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 2: ["cg", "de"]
+  ΓåÉ Back from recursion. Moving "cg" from P to X
+Γ£ô Done with this level. P now has 2 nodes, X has 2 nodes
+  ΓåÉ Back from recursion. Moving "de" from P to X
+
+  Γ₧£ Trying candidate 4/12: "co" (has 4 neighbors)
+    New sets: R size=1, P size=3, X size=1
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["co"] (size 1)
+       P size=3, X size=1
+≡ƒöä PIVOT: "ka" (has 4 neighbors)
+   Candidates after pivot: 2 nodes (was 3 before pivot)
+≡ƒôï Will try 2 candidates
+
+  Γ₧£ Trying candidate 1/2: "ka" (has 4 neighbors)
+    New sets: R size=2, P size=1, X size=1
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ka", "co"] (size 2)
+       P size=1, X size=1
+≡ƒöä PIVOT: "ta" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 1 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "ta" (has 4 neighbors)
+    New sets: R size=3, P size=0, X size=1
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ta", "ka", "co"] (size 3)
+       P size=0, X size=1
+≡ƒöä PIVOT: "de" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 0 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "ta" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 2 nodes
+  ΓåÉ Back from recursion. Moving "ka" from P to X
+
+  Γ₧£ Trying candidate 2/2: "tc" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["tc", "co"] (size 2)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 2: ["tc", "co"]
+  ΓåÉ Back from recursion. Moving "tc" from P to X
+Γ£ô Done with this level. P now has 1 nodes, X has 3 nodes
+  ΓåÉ Back from recursion. Moving "co" from P to X
+
+  Γ₧£ Trying candidate 5/12: "qp" (has 4 neighbors)
+    New sets: R size=1, P size=3, X size=1
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["qp"] (size 1)
+       P size=3, X size=1
+≡ƒöä PIVOT: "ub" (has 4 neighbors)
+   Candidates after pivot: 3 nodes (was 3 before pivot)
+≡ƒôï Will try 3 candidates
+
+  Γ₧£ Trying candidate 1/3: "ub" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=1
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ub", "qp"] (size 2)
+       P size=0, X size=1
+≡ƒöä PIVOT: "kh" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 0 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "ub" from P to X
+
+  Γ₧£ Trying candidate 2/3: "wh" (has 4 neighbors)
+    New sets: R size=2, P size=1, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["wh", "qp"] (size 2)
+       P size=1, X size=0
+≡ƒöä PIVOT: "td" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 1 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "td" (has 4 neighbors)
+    New sets: R size=3, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["td", "wh", "qp"] (size 3)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 3: ["td", "wh", "qp"]
+  ΓåÉ Back from recursion. Moving "td" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "wh" from P to X
+
+  Γ₧£ Trying candidate 3/3: "td" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=1
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["td", "qp"] (size 2)
+       P size=0, X size=1
+≡ƒöä PIVOT: "wh" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 0 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "td" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 4 nodes
+  ΓåÉ Back from recursion. Moving "qp" from P to X
+
+  Γ₧£ Trying candidate 6/12: "ka" (has 4 neighbors)
+    New sets: R size=1, P size=2, X size=2
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ka"] (size 1)
+       P size=2, X size=2
+≡ƒöä PIVOT: "tb" (has 4 neighbors)
+   Candidates after pivot: 2 nodes (was 2 before pivot)
+≡ƒôï Will try 2 candidates
+
+  Γ₧£ Trying candidate 1/2: "tb" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["tb", "ka"] (size 2)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 2: ["tb", "ka"]
+  ΓåÉ Back from recursion. Moving "tb" from P to X
+
+  Γ₧£ Trying candidate 2/2: "ta" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=2
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ka", "ta"] (size 2)
+       P size=0, X size=2
+≡ƒöä PIVOT: "de" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 0 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 0 nodes, X has 2 nodes
+  ΓåÉ Back from recursion. Moving "ta" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 4 nodes
+  ΓåÉ Back from recursion. Moving "ka" from P to X
+
+  Γ₧£ Trying candidate 7/12: "ta" (has 4 neighbors)
+    New sets: R size=1, P size=0, X size=4
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["ta"] (size 1)
+       P size=0, X size=4
+≡ƒöä PIVOT: "ka" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 0 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 0 nodes, X has 4 nodes
+  ΓåÉ Back from recursion. Moving "ta" from P to X
+
+  Γ₧£ Trying candidate 8/12: "yn" (has 4 neighbors)
+    New sets: R size=1, P size=4, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["yn"] (size 1)
+       P size=4, X size=0
+≡ƒöä PIVOT: "aq" (has 4 neighbors)
+   Candidates after pivot: 3 nodes (was 4 before pivot)
+≡ƒôï Will try 3 candidates
+
+  Γ₧£ Trying candidate 1/3: "aq" (has 4 neighbors)
+    New sets: R size=2, P size=1, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["aq", "yn"] (size 2)
+       P size=1, X size=0
+≡ƒöä PIVOT: "cg" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 1 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "cg" (has 4 neighbors)
+    New sets: R size=3, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["aq", "cg", "yn"] (size 3)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 3: ["aq", "cg", "yn"]
+  ΓåÉ Back from recursion. Moving "cg" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "aq" from P to X
+
+  Γ₧£ Trying candidate 2/3: "wh" (has 4 neighbors)
+    New sets: R size=2, P size=1, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["wh", "yn"] (size 2)
+       P size=1, X size=0
+≡ƒöä PIVOT: "td" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 1 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "td" (has 4 neighbors)
+    New sets: R size=3, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["td", "wh", "yn"] (size 3)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 3: ["td", "wh", "yn"]
+  ΓåÉ Back from recursion. Moving "td" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "wh" from P to X
+
+  Γ₧£ Trying candidate 3/3: "td" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=1
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["td", "yn"] (size 2)
+       P size=0, X size=1
+≡ƒöä PIVOT: "wh" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 0 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "td" from P to X
+Γ£ô Done with this level. P now has 1 nodes, X has 3 nodes
+  ΓåÉ Back from recursion. Moving "yn" from P to X
+
+  Γ₧£ Trying candidate 9/12: "tc" (has 4 neighbors)
+    New sets: R size=1, P size=2, X size=2
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["tc"] (size 1)
+       P size=2, X size=2
+≡ƒöä PIVOT: "td" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 2 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "td" (has 4 neighbors)
+    New sets: R size=2, P size=1, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["tc", "td"] (size 2)
+       P size=1, X size=0
+≡ƒöä PIVOT: "wh" (has 4 neighbors)
+   Candidates after pivot: 1 nodes (was 1 before pivot)
+≡ƒôï Will try 1 candidates
+
+  Γ₧£ Trying candidate 1/1: "wh" (has 4 neighbors)
+    New sets: R size=3, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["wh", "tc", "td"] (size 3)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 3: ["wh", "tc", "td"]
+  ΓåÉ Back from recursion. Moving "wh" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "td" from P to X
+Γ£ô Done with this level. P now has 1 nodes, X has 3 nodes
+  ΓåÉ Back from recursion. Moving "tc" from P to X
+
+  Γ₧£ Trying candidate 10/12: "td" (has 4 neighbors)
+    New sets: R size=1, P size=1, X size=3
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["td"] (size 1)
+       P size=1, X size=3
+≡ƒöä PIVOT: "yn" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 1 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 1 nodes, X has 3 nodes
+  ΓåÉ Back from recursion. Moving "td" from P to X
+
+  Γ₧£ Trying candidate 11/12: "wh" (has 4 neighbors)
+    New sets: R size=1, P size=0, X size=4
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["wh"] (size 1)
+       P size=0, X size=4
+≡ƒöä PIVOT: "yn" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 0 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 0 nodes, X has 4 nodes
+  ΓåÉ Back from recursion. Moving "wh" from P to X
+
+  Γ₧£ Trying candidate 12/12: "cg" (has 4 neighbors)
+    New sets: R size=1, P size=2, X size=2
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["cg"] (size 1)
+       P size=2, X size=2
+≡ƒöä PIVOT: "tb" (has 4 neighbors)
+   Candidates after pivot: 2 nodes (was 2 before pivot)
+≡ƒôï Will try 2 candidates
+
+  Γ₧£ Trying candidate 1/2: "tb" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=0
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["cg", "tb"] (size 2)
+       P size=0, X size=0
+≡ƒÄ» BASE CASE! Found maximal clique of size 2: ["cg", "tb"]
+  ΓåÉ Back from recursion. Moving "tb" from P to X
+
+  Γ₧£ Trying candidate 2/2: "aq" (has 4 neighbors)
+    New sets: R size=2, P size=0, X size=1
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ENTER: R=["cg", "aq"] (size 2)
+       P size=0, X size=1
+≡ƒöä PIVOT: "yn" (has 4 neighbors)
+   Candidates after pivot: 0 nodes (was 0 before pivot)
+≡ƒôï Will try 0 candidates
+Γ£ô Done with this level. P now has 0 nodes, X has 1 nodes
+  ΓåÉ Back from recursion. Moving "aq" from P to X
+Γ£ô Done with this level. P now has 0 nodes, X has 4 nodes
+  ΓåÉ Back from recursion. Moving "cg" from P to X
+Γ£ô Done with this level. P now has 4 nodes, X has 12 nodes
+test solver::day23::tests::test_part2_example ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 228 filtered out; finished in 0.00s
+
+     Running unittests src\main.rs (D:\repos\rust_study\target\debug\deps\aoc2024-801271080c3d412a.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

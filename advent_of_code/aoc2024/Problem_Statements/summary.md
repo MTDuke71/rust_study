@@ -2380,6 +2380,260 @@ secret / 32  →  sar rax, 5  // 1 cycle
 
 **Results**: Part 1 = 17,163,502,021, Part 2 = 1,938 bananas
 
+### Day 23: LAN Party
+
+**Title**: LAN Party  
+**Part 1 Type**: Graph Algorithms + Combinatorial  
+**Part 1 Description**: Find all triangles (3-node cliques) in LAN network graph where at least one computer name starts with 't', count unique triangles → 1149  
+**Part 2 Type**: Graph Algorithms + Optimization  
+**Part 2 Description**: Find the largest clique (fully connected subgraph) in the network, return sorted comma-separated password → "as,co,do,kh,km,mc,np,nt,un,uq,wc,wz,yo" (13 nodes)  
+**Key Concepts**: Graph cliques, triangle enumeration, Bron-Kerbosch algorithm, maximum clique problem (NP-complete), pivoting optimization, recursive backtracking, set operations
+
+**🧩 Algorithm Analysis**:
+- **Problem Pattern**: Graph analysis with escalation (triangle detection → maximum clique finding)
+- **Data Structure**: `HashMap<String, HashSet<String>>` for undirected graph adjacency list
+- **Complexity**: 
+  - **Part 1**: O(n³) brute force triangle enumeration (520 nodes, checks all triplets)
+  - **Part 2**: O(3^(n/3)) worst-case Bron-Kerbosch, practical with pivoting optimization
+- **AoC Theme**: "Network connectivity analysis" with classic Part 2 NP-complete challenge (simple enumeration → exponential optimization problem)
+
+**Algorithm Deep Dive**:
+
+**Part 1 - Triangle Detection**:
+
+**Python Approach** (two strategies):
+```python
+# Strategy 1: Brute force with combinations
+count = 0
+for nodes in combinations(G.nodes(), 3):
+    if G.has_edge(nodes[0], nodes[1]) and G.has_edge(nodes[1], nodes[2]) and G.has_edge(nodes[0], nodes[2]):
+        if any(n[0] == "t" for n in nodes):
+            count += 1
+
+# Strategy 2: NetworkX find_cliques (used in actual solution)
+cliques = [c for c in nx.find_cliques(G) if len(c) >= 3 and any(n[0] == "t" for n in c)]
+sets = set()
+for c in cliques:
+    for nodes in combinations(c, 3):
+        if any(n[0] == "t" for n in nodes):
+            sets.add(tuple(sorted(nodes)))
+count = len(sets)
+```
+
+**Rust Approach** (neighbor-based enumeration):
+```rust
+fn find_triangles_with_t(graph: &Graph) -> usize {
+    let mut triangles = HashSet::new();
+    
+    for (node_a, neighbors_a) in graph {
+        for node_b in neighbors_a {
+            if let Some(neighbors_b) = graph.get(node_b) {
+                for node_c in neighbors_b {
+                    // Check if node_c connects back to node_a (completing triangle)
+                    if neighbors_a.contains(node_c) {
+                        if node_a.starts_with('t') || node_b.starts_with('t') || node_c.starts_with('t') {
+                            let mut triangle = vec![node_a.as_str(), node_b.as_str(), node_c.as_str()];
+                            triangle.sort();
+                            triangles.insert((triangle[0], triangle[1], triangle[2]));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    triangles.len()
+}
+```
+
+**Key Difference**: Python uses combinations library or NetworkX, Rust implements explicit neighbor traversal. Both O(n³) but Rust avoids external dependencies.
+
+**Part 2 - Maximum Clique**:
+
+**Python Approach** (NetworkX library):
+```python
+# Leverage NetworkX's optimized clique finding
+cliques = nx.find_cliques(G)
+LAN = sorted(sorted(cliques, key=len, reverse=True)[0])
+return ",".join(LAN)
+```
+
+**Rust Approach** (Bron-Kerbosch implementation):
+```rust
+fn bron_kerbosch(
+    graph: &Graph,
+    r: HashSet<String>,      // Current clique (nodes definitely included)
+    mut p: HashSet<String>,  // Candidate nodes (could extend clique)
+    mut x: HashSet<String>,  // Already processed nodes (avoid duplicates)
+    max_clique: &mut Vec<String>,
+) {
+    // BASE CASE: P and X both empty → R is maximal clique
+    if p.is_empty() && x.is_empty() {
+        if r.len() > max_clique.len() {
+            *max_clique = r.iter().cloned().collect();
+        }
+        return;
+    }
+    
+    // PIVOTING: Choose pivot from P ∪ X to reduce search space
+    let pivot = p.union(&x).next().cloned();
+    let candidates: Vec<String> = if let Some(pivot_node) = pivot {
+        let pivot_neighbors = graph.get(&pivot_node).cloned().unwrap_or_default();
+        p.difference(&pivot_neighbors).cloned().collect()  // P \ N(pivot)
+    } else {
+        p.iter().cloned().collect()
+    };
+    
+    // RECURSIVE CASE: Try adding each candidate to clique
+    for v in candidates {
+        let neighbors = graph.get(&v).cloned().unwrap_or_default();
+        
+        let mut new_r = r.clone();
+        new_r.insert(v.clone());
+        
+        // New P: candidates that are also neighbors of v (clique property)
+        let new_p: HashSet<String> = p.intersection(&neighbors).cloned().collect();
+        let new_x: HashSet<String> = x.intersection(&neighbors).cloned().collect();
+        
+        bron_kerbosch(graph, new_r, new_p, new_x, max_clique);
+        
+        p.remove(&v);  // Move from candidates to processed
+        x.insert(v);
+    }
+}
+```
+
+**🦀 Rust Conversion Highlights**:
+
+**From NetworkX Library** → **Bron-Kerbosch Implementation**
+- Python: 5 lines using `nx.find_cliques()` library call
+- Rust: ~80 lines implementing classical algorithm from scratch
+- **Benefits**: Educational depth, no external dependencies, full algorithmic understanding
+- **Note**: **[`petgraph`](https://docs.rs/petgraph/)** is the Rust equivalent to NetworkX—provides graph data structures and algorithms including maximum clique finding—but manual implementation chosen for educational value
+
+**From Implicit Graph** → **Explicit HashMap Adjacency**
+- Python: NetworkX `Graph()` abstraction with hidden representation
+- Rust: `HashMap<String, HashSet<String>>` visible adjacency list
+- **Benefits**: Clear memory model, explicit neighbor lookups, type safety
+
+**From Simple Deduplication** → **Three-Set Recursive Pattern**
+- Python: Relies on NetworkX's internal clique enumeration
+- Rust: Explicit R/P/X set management with intersection/difference operations
+- **Benefits**: Algorithm transparency, educational value, adaptable to variations
+
+**Algorithm Comparison**:
+
+| Aspect | Python (~30 lines) | Rust (~220 lines with tests) |
+|--------|-------------------|------------------------------|
+| **Part 1 Triangle Detection** | NetworkX `find_cliques()` + filtering | Neighbor-based manual traversal |
+| **Part 2 Maximum Clique** | `nx.find_cliques()` library call | Bron-Kerbosch with pivoting from scratch |
+| **Graph Representation** | NetworkX `Graph()` object | `HashMap<String, HashSet<String>>` |
+| **Set Operations** | Implicit in NetworkX | Explicit `intersection()`, `difference()`, `union()` |
+| **Complexity** | Abstracted by library | Explicitly documented O(3^(n/3)) |
+| **Dependencies** | NetworkX (graph algorithms library) | Zero external dependencies (std only) |
+| **Code Philosophy** | Leverage mature libraries | Educational algorithm implementation |
+
+**Bron-Kerbosch Algorithm Deep Dive**:
+
+**Core Concept**: Systematically build cliques using three sets:
+- **R (Result)**: Nodes definitely in current clique
+- **P (Possibilities)**: Candidate nodes that could extend clique
+- **X (Excluded)**: Already-processed nodes to avoid duplicates
+
+**Base Case**: When P=∅ and X=∅, R is a maximal clique (can't be extended)
+
+**Recursive Case**: For each candidate v in P:
+1. Add v to R (include it in clique)
+2. Filter P and X to only v's neighbors (clique property: all nodes connected)
+3. Recurse with updated sets
+4. Move v from P to X (mark as processed)
+
+**Pivoting Optimization**: 
+- Choose pivot from P ∪ X
+- Only iterate over nodes NOT connected to pivot
+- **Why it works**: If node u is connected to pivot p, any clique containing u could also contain p (no larger clique possible)
+- **Speedup**: Reduces branching factor dramatically
+
+**Execution Trace Example** (small graph):
+
+```
+Initial: R={}, P={A,B,C,D}, X={}
+Choose pivot A, candidates = P \ N(A) = {C,D} (assuming A-B connected)
+
+Branch v=C:
+  R={C}, P={D} ∩ N(C)={D}, X={}  [if C-D connected]
+  Branch v=D:
+    R={C,D}, P={} ∩ N(D)={}, X={}
+    BASE CASE: Found clique {C,D}
+    
+Branch v=D:
+  R={D}, P={...} ∩ N(D), X={C}
+  ... (explore other combinations)
+```
+
+**Real-World Complexity**:
+- **Input Size**: 520 computers, 3,380 edges (density ≈ 0.025)
+- **Maximum Clique**: 13 nodes (surprisingly large for sparse graph!)
+- **Performance**: <100ms with pivoting (would be hours without optimization)
+- **NP-Complete**: Maximum clique is one of Karp's 21 NP-complete problems
+
+**Python vs Rust Trade-offs**:
+
+**Python Strengths**:
+- **Speed to solution**: 30 lines total, leverages NetworkX expertise
+- **Correctness confidence**: Mature library with extensive testing
+- **Simplicity**: No need to understand Bron-Kerbosch internals
+
+**Rust Strengths**:
+- **Educational depth**: Implemented classical algorithm, deep understanding
+- **Zero dependencies**: std library only, no external crates
+- **Explicit complexity**: Algorithm complexity visible and documented
+- **Zettelkasten integration**: Created comprehensive [[bron-kerbosch-algorithm.md]] knowledge note
+- **Type safety**: HashSet operations compile-time verified
+
+**When to Choose Each Approach**:
+- **Python**: Production code, time-constrained competition, leveraging library ecosystems
+- **Rust**: Learning classical algorithms, performance-critical applications, embedded systems without dependencies
+
+**Educational Value**:
+
+**Zettelkasten Note Created**: [[bron-kerbosch-algorithm.md]]
+- ~600 lines comprehensive guide
+- Step-by-step walkthrough with execution trace
+- Mental models: "invitation strategy" for clique building
+- Complexity analysis: O(3^(n/3)) derivation
+- Pivoting optimization rationale
+- Rust implementation patterns
+- Comparison with other clique algorithms
+- Real-world applications (social networks, bioinformatics, scheduling)
+
+**Test Coverage**:
+
+Rust implementation includes 2 tests:
+1. **Part 1 Example**: Validates 7 triangles with 't' node from example graph
+2. **Part 2 Example**: Confirms maximum clique "co,de,ka,ta" (4 nodes)
+
+**Code Organization**:
+
+- **`parse_input()`**: Builds undirected graph from edge list
+- **`find_triangles_with_t()`**: Brute force triangle enumeration with 't' filtering
+- **`find_largest_clique()`**: Wrapper initializing Bron-Kerbosch with full node set
+- **`bron_kerbosch()`**: Recursive clique finder with detailed docstring explaining R/P/X semantics
+
+**Results**: Part 1 = 1,149 triangles, Part 2 = "as,co,do,kh,km,mc,np,nt,un,uq,wc,wz,yo" (13-node password)
+
+**Performance Analysis**:
+- **Triangle Detection**: O(n³) acceptable for 520 nodes (~140M operations)
+- **Bron-Kerbosch**: Exponential worst-case but practical with pivoting
+- **Memory Usage**: O(n²) for adjacency list storage (520 nodes × avg 13 neighbors = ~6.7K edges stored)
+- **Pivoting Impact**: Reduces search tree dramatically (estimated 100x+ speedup vs naive)
+
+**Learning Outcomes**:
+1. **NP-Complete Problems**: Firsthand experience with exponential complexity requiring optimization
+2. **Set Theory**: Practical application of intersection, difference, union operations
+3. **Recursive Backtracking**: Three-set pattern generalizes to other search problems
+4. **Graph Theory**: Cliques, triangles, density, undirected graphs
+5. **Algorithm vs Library Trade-off**: Understanding when to implement vs when to use existing solutions
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -2389,12 +2643,12 @@ secret / 32  →  sar rax, 5  // 1 cycle
 | Advanced Pattern Matching | 0 | 0 |
 | Brute Force | 1 | 1 |
 | Cellular Automaton | 0 | 0 |
-| Combinatorial Optimization | 1 | 1 |
+| Combinatorial Optimization | 2 | 1 |
 | Conditional Logic | 1 | 2 |
 | Cryptographic | 0 | 0 |
 | Data Structures | 2 | 3 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 6 | 6 |
+| Graph Algorithms | 7 | 7 |
 | Greedy Algorithms | 0 | 0 |
 | Mathematical | 12 | 8 |
 | Number Theory | 0 | 0 |
@@ -2495,6 +2749,9 @@ secret / 32  →  sar rax, 5  // 1 cycle
 82. **Assembly Inspection for Verification**: Using cargo-show-asm and benchmarks to empirically verify compiler optimizations rather than assuming (Day 22: 2.21x speedup power-of-2 vs prime modulo, educational prime comparison benchmark demonstrates when optimizations fail)
 83. **Two-Level HashMap Aggregation**: Local per-entity HashMap for deduplication + global HashMap for aggregation pattern prevents double-counting when same key appears multiple times within single entity (Day 22: buyer_sequences tracks first occurrence per buyer, sequence_totals aggregates across all buyers)
 84. **Embarrassingly Parallel Detection**: Identifying independent computations enabling near-linear Rayon speedups vs shared-state problems requiring thread-local patterns (Day 22: Part 1 16.58x speedup with simple par_iter(), Part 2 only 2.17x due to HashMap contention despite thread-local optimization)
+85. **Bron-Kerbosch Maximum Clique Algorithm**: Classical recursive algorithm for finding maximum cliques in undirected graphs using three-set pattern (R=current clique, P=candidates, X=excluded) with pivoting optimization reducing exponential search space (Day 23: O(3^(n/3)) worst-case but practical with pivot selection, finds 13-node maximum clique in 520-node graph)
+86. **Three-Set Recursive Backtracking**: Systematic exploration pattern using three sets to track current solution (R), remaining candidates (P), and already-processed elements (X) preventing duplicate enumeration (Day 23: clique construction via set intersection/difference operations ensuring all nodes fully connected)
+87. **Pivoting Optimization for Exponential Search**: Choosing pivot element to prune search tree by only exploring nodes NOT connected to pivot, dramatically reducing branching factor in recursive algorithms (Day 23: pivot from P∪X enables skipping candidates that can't form larger cliques than one containing pivot itself, transforms infeasible search into <100ms solution)
 
 ### Rust-Specific Considerations
 
@@ -2520,6 +2777,7 @@ secret / 32  →  sar rax, 5  // 1 cycle
 - **Day 20**: Exemplifies **bidirectional distance maps** using dual BFS (from start S and end E) to enable O(1) cheat savings calculation without repeated pathfinding. Showcases **Manhattan distance circle enumeration** for cheat endpoint discovery (all positions within distance N from cheat start). **Mission 6 Integration**: `Grid<char>` with `Coord` type for maze representation, safe indexing with automatic bounds checking. **Algorithm Efficiency**: Precompute distances once (O(P) per BFS where P = path length), test all cheat combinations O(P×M) where M = positions within Manhattan distance—avoids O(P²×pathfinding) naive approach. **Python Comparison**: Python stores full path as list of coordinates, iterates path positions with distance checks; Rust uses HashMap distance maps enabling bidirectional lookup pattern. **Geometric Insight**: Manhattan distance determines cheat length through walls—physical distance (not path distance) enables phasing calculation. **Test Coverage**: 4 comprehensive tests validating parsing, BFS distance calculation (84 steps), Part 1 cheat counting (44 cheats ≥2ps savings), Part 2 extended range (285 cheats ≥50ps savings). **Results**: Part 1 = 1429 cheats ≥100ps, Part 2 = 988931 cheats ≥100ps.
 - **Day 21**: Demonstrates **recursive sequence transformation with exponential memoization** where each recursion level amplifies button sequences geometrically (68 presses → trillions without caching). Showcases **structured Keypad abstraction** with `positions: HashMap<char, (i32, i32)>` and `gap: (i32, i32)` enabling type-safe navigation with explicit gap avoidance validation—intermediate point checking prevents panic-inducing paths. **Memoization Critical**: `HashMap<(String, usize), usize>` cache with `(sequence, depth)` composite keys transforms infeasible O(k^depth) ≈ 10^26 operations (Part 2 depth=26) to practical O(unique_sequences × depth) ≈ few thousand cached entries completing instantly. **Multi-Level Indirection**: Chain-of-command problem where action at level N requires optimal sequence at level N-1—`min_presses()` recursion tries all shortest paths at current level, picks minimum expansion at next level. **Depth Semantics Difference**: Python counts intermediate robots (`depth=2` for Part 1 = you → 2 robots → numeric), Rust counts total levels (`depth=3` = you + 2 robots + numeric)—off-by-one convention difference, identical algorithms. **Gap Avoidance Logic**: Python checks row/col match vs gap line preventing crossing, Rust validates intermediate point `(x2,y1)` and `(x1,y2)` explicitly against gap position—equivalent geometric reasoning, different implementation philosophy. **Python Comparison**: Python's `@cache` decorator automatic memoization (~80 lines total) vs Rust's explicit HashMap management (~320 lines with tests)—Python optimizes for midnight racing brevity with dynamic keypad detection via `code[0].isnumeric()`, Rust structures with `is_numeric` flag for clarity and type safety. **Educational Value**: Explicit memo demonstrates cache mechanics (when to check, when to insert, composite keys for multi-parameter functions) vs hidden decorator magic; shows how sequence expansion problems differ fundamentally from pathfinding (not finding single optimal path but composing movements across recursion levels). **Test Coverage**: 7 comprehensive tests validating keypad construction (positions + gaps), movement generation (simple moves + gap avoidance), Part 1 integration (126384 complexity), individual code validation ("029A" → 1972 = 68×29), memoization cache hits. **Code Organization**: Clean separation with `Keypad` struct + factory methods, `get_move_sequences()` for path generation with gap validation, `min_presses()` core recursive algorithm with memo, `calculate_complexity()` extracting numeric value and computing score. **Performance Analysis**: Cache hit rate very high due to repeated subsequence patterns across different codes; memory negligible (~1000 entries even for Part 2); without memoization Part 2 literally impossible (years of computation). **Results**: Part 1 = 155252 (depth=3), Part 2 = 195664513288128 (depth=26).
 - **Day 22**: Demonstrates **PRNG simulation with power-of-2 compiler optimizations** and **sequence pattern aggregation** across multiple buyers. **XOR Mixing**: Self-inverse bitwise operations (`secret ^ value`) for avalanche effect randomization. **Modulo Optimization**: Compiler transforms `% 16777216` (2^24) into `& 0xFFFFFF` bitwise AND—verified via assembly inspection with cargo-show-asm showing 2.21x speedup vs prime modulo. **Rayon Parallelization**: Achieved 16.58x speedup Part 1 (embarrassingly parallel), 2.17x Part 2 (HashMap contention with thread-local pattern). **Two-Level HashMap**: Per-buyer `buyer_sequences` for first-occurrence deduplication + global `sequence_totals` for aggregation across all buyers—critical algorithm insight preventing double-counting. **Iterator Chains**: Functional pipelines (`.values().max().copied().unwrap_or(0)`) vs imperative loops demonstrating idiomatic Rust patterns. **Assembly Analysis**: Educational benchmarks comparing power-of-2 (shl/sar bit shifts) vs prime (imul/division) operations prove constant choice matters—Day 22's 64/32/2048/2^24 enabled massive optimizations. **Test Coverage**: 12 comprehensive tests covering PRNG correctness (mix/prune operations), secret evolution sequences, price extraction, change calculation, Part 1/Part 2 integration. **Results**: Part 1 = 17163502021, Part 2 = 1938 bananas.
+- **Day 23**: Exemplifies **implementing classical algorithms from scratch** for educational depth vs library usage for production speed. Showcases **Bron-Kerbosch maximum clique algorithm** with three-set recursion (R/P/X pattern) and pivoting optimization transforming O(3^(n/3)) exponential complexity into practical <100ms performance. **Graph Representation**: `HashMap<String, HashSet<String>>` undirected adjacency list enabling O(1) neighbor lookups for clique validation—demonstrates when custom structures outperform graph libraries. **Set Operations Excellence**: Explicit `intersection()`, `difference()`, and `union()` for clique property enforcement (all nodes must be connected to each other), showcasing Rust's zero-cost set abstractions. **Algorithm Transparency**: Detailed docstring comments explaining R (current clique), P (candidate nodes), X (excluded/processed) sets with base case (P=∅ and X=∅ → maximal clique) and recursive case (try adding each candidate, filter to neighbors, recurse). **Educational Infrastructure**: Created comprehensive zettelkasten note (~600 lines) with step-by-step walkthrough, execution trace, mental models, complexity analysis, and real-world applications. **Python Comparison**: Python leverages NetworkX `find_cliques()` library (~5 lines) for midnight racing efficiency; Rust implements full algorithm (~80 lines) for deep algorithmic understanding—demonstrates classic "when to implement vs when to use libraries" decision. **NP-Complete Problem**: Firsthand experience with exponential complexity requiring optimization (pivoting dramatically reduces search tree), understanding why theoretical worst-case doesn't prevent practical solutions. **Zero Dependencies**: std library only (HashMap, HashSet) without external graph crates, proving foundational collections sufficient for complex algorithms. **Test Coverage**: 2 comprehensive tests validating both parts with example data (7 triangles with 't' node, 4-node maximum clique). **Key Learning**: Educational value of implementation > production speed optimization—creating 600-line zettelkasten note transformed "use library" into deep graph theory understanding with three-set recursion, pivoting strategies, and NP-complete problem characteristics. **Results**: Part 1 = 1,149 triangles, Part 2 = "as,co,do,kh,km,mc,np,nt,un,uq,wc,wz,yo" (13-node password).
 
 ---
 
@@ -2682,10 +2940,10 @@ When documenting solutions from previous years (2015-2023):
 
 ---
 
-*Last Updated: December 21, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22*
+*Last Updated: December 22, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
-*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation #binary-search #graph-adapters #pathfinding #integrator-philosophy #bidirectional-search #manhattan-distance #geometric-optimization #recursive-sequence-expansion #memoization #dynamic-programming #multi-level-indirection #gap-avoidance #prng #xor-mixing #power-of-2-optimizations #compiler-analysis #assembly-inspection #iterator-chains #sequence-aggregation*
+*Tags: #aoc #2024 #problem-analysis #patterns #rust-conversion #algorithm-learning #mission6-integration #mission8-integration #foundational-libraries #flood-fill #corner-counting #generic-functions #linear-algebra #cramers-rule #rayon #data-parallelism #dijkstra #state-space-search #virtual-machine #quine #bit-manipulation #binary-search #graph-adapters #pathfinding #integrator-philosophy #bidirectional-search #manhattan-distance #geometric-optimization #recursive-sequence-expansion #memoization #dynamic-programming #multi-level-indirection #gap-avoidance #prng #xor-mixing #power-of-2-optimizations #compiler-analysis #assembly-inspection #iterator-chains #sequence-aggregation #bron-kerbosch #maximum-clique #graph-cliques #np-complete #set-operations #three-set-recursion #pivoting-optimization*
 *Links: [[../../../zettelkasten/AoC Patterns MOC]] | [[../../../zettelkasten/AoC Integration]] | [[../../../zettelkasten/aoc2024-day4-mission6-example]] | [[../../../zettelkasten/missions/mission-6]] | [[../../../zettelkasten/missions/mission-8]] | [[../../../zettelkasten/rayon-parallel-iterators]] | [[../../../zettelkasten/dijkstra-algorithm]] | [[../../../zettelkasten/virtual-machine-patterns]] | [[../../../zettelkasten/recursive-backtracking]] | [[../../../zettelkasten/binary-search-patterns]] | [[../../../zettelkasten/graph-trait-adapters]] | [[../../../zettelkasten/bidirectional-search]] | [[../../../zettelkasten/line-intersection]]*
