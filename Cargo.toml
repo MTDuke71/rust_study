@@ -76,6 +76,7 @@ members = [
     "advanced_examples/weasel_evolution",
     "advent_of_code/aoc_pattern_recognition",
     "advent_of_code/aoc2015",
+    "advent_of_code/aoc2023",
     "advent_of_code/aoc2024",
     "daily_study/rust_learning_week5_notes",
     "rust_book/Ch16/threads",

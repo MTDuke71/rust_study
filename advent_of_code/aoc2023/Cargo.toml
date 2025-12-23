@@ -1,0 +1,21 @@
+[package]
+name = "aoc2023"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+regex = "1.12"
+rayon = "1.10"
+mission5 = { path = "../../missions/Mission5" }
+mission6 = { path = "../../missions/Mission6" }
+mission7 = { path = "../../missions/Mission7" }
+mission8 = { path = "../../missions/Mission8" }
+mission10 = { path = "../../missions/Mission10" }
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "benchmarks"
+harness = false
