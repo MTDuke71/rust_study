@@ -49,18 +49,18 @@ pub fn multiply_2048(secret: i64) -> i64 {
 pub fn evolve_secret_noinline(mut secret: i64) -> i64 {
     // Step 1: Multiply by 64, mix, prune
     let step1 = secret * 64;
-    secret = secret ^ step1;
-    secret = secret % PRUNE_MODULO;
+    secret ^= step1;
+    secret %= PRUNE_MODULO;
     
     // Step 2: Divide by 32, mix, prune
     let step2 = secret / 32;
-    secret = secret ^ step2;
-    secret = secret % PRUNE_MODULO;
+    secret ^= step2;
+    secret %= PRUNE_MODULO;
     
     // Step 3: Multiply by 2048, mix, prune
     let step3 = secret * 2048;
-    secret = secret ^ step3;
-    secret = secret % PRUNE_MODULO;
+    secret ^= step3;
+    secret %= PRUNE_MODULO;
     
     secret
 }
@@ -70,18 +70,18 @@ pub fn evolve_secret_noinline(mut secret: i64) -> i64 {
 pub fn evolve_secret_optimized(mut secret: i64) -> i64 {
     // Step 1: Shift left 6 (multiply by 64), XOR, AND mask
     let step1 = secret << 6;
-    secret = secret ^ step1;
-    secret = secret & 0xFFFFFF;
+    secret ^= step1;
+    secret &= 0xFFFFFF;
     
     // Step 2: Shift right 5 (divide by 32), XOR, AND mask
     let step2 = secret >> 5;
-    secret = secret ^ step2;
-    secret = secret & 0xFFFFFF;
+    secret ^= step2;
+    secret &= 0xFFFFFF;
     
     // Step 3: Shift left 11 (multiply by 2048), XOR, AND mask
     let step3 = secret << 11;
-    secret = secret ^ step3;
-    secret = secret & 0xFFFFFF;
+    secret ^= step3;
+    secret &= 0xFFFFFF;
     
     secret
 }
