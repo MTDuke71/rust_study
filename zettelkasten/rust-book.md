@@ -107,7 +107,7 @@ This MOC provides complete access to both:
 - **📝 Study Notes**: [[rust_book/rust-book-ch10]] - Type system mastery and abstraction
 - **🎯 Key Skills**: Generic programming, trait design, lifetime management
 - **🔗 Integration**: [[zettelkasten/rust_book/rust-book-ch10]] - Complete Chapter 10 summary
-- **🔗 Core Concepts**: [[Lifetime Parameters]] - Comprehensive lifetime theory and patterns
+- **🔗 Core Concepts**: [[lifetime-parameters]] - Comprehensive lifetime theory and patterns
 
 ### **Chapter 11: Writing Automated Tests**
 

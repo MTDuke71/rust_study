@@ -4,7 +4,7 @@
 
 Chapter 1, titled **Foundations**, focuses on establishing a precise understanding of Rust's fundamental concepts regarding memory, ownership, and borrowing to support reasoning about more complex topics later in the book.
 
-**Related Concepts:** [[Memory Management]], [[Ownership and Borrowing]], [[Borrow Checker Fundamentals]], [[Lifetime Parameters]], [[rust-concepts-MOC]]
+**Related Concepts:** [[Memory Management]], [[Ownership and Borrowing]], [[Borrow Checker Fundamentals]], [[lifetime-parameters]], [[rust-concepts-MOC]]
 
 ---
 
@@ -69,7 +69,7 @@ Owners are responsible for cleaning up values (dropping) when execution leaves t
 
 ## 3. Borrowing and Lifetimes
 
-**Related:** [[Ownership and Borrowing]], [[Borrow Checker Fundamentals]], [[Lifetime Parameters]]
+**Related:** [[Ownership and Borrowing]], [[Borrow Checker Fundamentals]], [[lifetime-parameters]]
 
 ### a. Shared References (`&T`)
 Pointers that allow shared access but disallow mutation. The compiler assumes values behind these do not change. See [[Borrow Checker Fundamentals]] for detailed rules.
@@ -82,13 +82,13 @@ Types that allow mutation through shared references (e.g., `Mutex`, `RefCell`) u
 
 ### d. Lifetimes
 
-**Related:** [[Lifetime Parameters]], [[Multiple Lifetimes Deep Dive]]
+**Related:** [[lifetime-parameters]], [[Multiple Lifetimes Deep Dive]]
 
 #### The Borrow Checker
 Checks that references point to valid values by tracing data flows. Lifetimes are regions of code where a reference is valid and do not necessarily need to be contiguous. See [[Borrow Checker Fundamentals]] for mental models and examples.
 
 #### Generic Lifetimes
-Creating types generic over lifetimes to store references. See [[Lifetime Parameters]] and [[Generic Programming]].
+Creating types generic over lifetimes to store references. See [[lifetime-parameters]] and [[Generic Programming]].
 
 #### Variance
 How subtypes interact with generic parameters (Covariance, Invariance, and Contravariance) and how this impacts the borrow checker. See [[variance]] and [[phantom-data-type-safety]].
@@ -101,7 +101,7 @@ How subtypes interact with generic parameters (Covariance, Invariance, and Contr
 - [[Memory Management]] - Comprehensive guide to Rust's memory safety
 - [[Ownership and Borrowing]] - Core Rust concepts
 - [[Borrow Checker Fundamentals]] - Understanding the borrow checker with mental models
-- [[Lifetime Parameters]] - Lifetime annotations and generic lifetimes
+- [[lifetime-parameters]] - Lifetime annotations and generic lifetimes
 - [[interior-mutability]] - Interior mutability patterns with `RefCell`, `Cell`, `Mutex`
 - [[drop-trait]] - Automatic cleanup and RAII patterns
 - [[Smart Pointers MOC]] - Box, Rc, RefCell, and more

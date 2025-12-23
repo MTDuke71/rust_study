@@ -70,7 +70,7 @@ fn rand() -> f64 {
 
 fn main() {
     println!("╔══════════════════════════════════════════════════════════╗");
-    println!("║  Rust for Rustaceans - Chapter 1: Foundations          ║");
+    println!("║  Rust for Rustaceans - Chapter 1: Foundations            ║");
     println!("╚══════════════════════════════════════════════════════════╝\n");
 
     // Listing 1-1: Values, variables, and pointers [6]

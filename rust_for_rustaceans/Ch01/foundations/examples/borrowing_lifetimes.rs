@@ -113,21 +113,24 @@ fn main() {
         
         use std::mem;
         
+        fn modify_through_ref(r: &mut Box<i32>) {
+            // Cannot move out of &mut - would leave borrowed location invalid
+            // let x = *r;  // ❌ ERROR: cannot move out of `*r` which is behind a mutable reference
+            
+            // But can use mem functions to swap/replace values
+            let taken = std::mem::replace(r, Box::new(0));  // Replace with placeholder
+            *r = taken;  // Put it back
+            
+            let mut replacement = Box::new(84);
+            mem::swap(r, &mut replacement);  // Swap in new value
+            // replacement now holds old value and will be dropped
+        }
+        
         let mut s = Box::new(42);
         println!("   Before: {}", s);
-        
-        // Cannot move out of &mut directly
-        // let x = *s;  // ❌ Would leave s empty
-        
-        // But can use mem functions
-        let taken = std::mem::replace(&mut s, Box::new(0));  // Replace with default
-        s = taken;  // Put it back (s is Box, not *s)
-        
-        let mut replacement = Box::new(84);
-        mem::swap(&mut s, &mut replacement);
-        
-        println!("   After swap: {}", s);
-        println!("   ✓ Used mem::take() and mem::swap()\n");
+        modify_through_ref(&mut s);  // Pass &mut reference
+        println!("   After: {}", s);
+        println!("   ✓ mem::replace() and mem::swap() work with &mut\n");
     }
 
     // === LIFETIMES ===
@@ -258,24 +261,30 @@ fn main() {
         println!("📚 MULTIPLE LIFETIME PARAMETERS");
         println!("   ──────────────────────────────────");
         
-        #[allow(dead_code)]
         struct StrSplit<'s, 'p> {
             document: &'s str,
             delimiter: &'p str,
         }
         
-        let doc = "hello,world";
-        let delim = ",";
-        let _splitter = StrSplit { document: doc, delimiter: delim };
+        impl<'s, 'p> StrSplit<'s, 'p> {
+            fn count_parts(&self) -> usize {
+                self.document.split(self.delimiter).count()
+            }
+        }
         
-        println!("   Document and delimiter have independent lifetimes");
-        println!("   ✓ Generic over multiple lifetimes\n");
+        let document = "hello,world,rust";
+        let delimiter = ",";
+        let splitter = StrSplit { document, delimiter };  // Field init shorthand
+        
+        println!("   Document: \"{}\"", document);
+        println!("   Parts: {}", splitter.count_parts());
+        println!("   ✓ Document ('s) and delimiter ('p) have independent lifetimes\n");
     }
 
     println!("╔══════════════════════════════════════════════════════════╗");
     println!("║  Key Takeaways                                           ║");
     println!("╠══════════════════════════════════════════════════════════╣");
-    println!("║  • &T: Multiple immutable borrows allowed               ║");
+    println!("║  • &T: Multiple immutable borrows allowed                ║");
     println!("║  • &mut T: ONE exclusive mutable borrow                  ║");
     println!("║  • Lifetimes: Ensure references always valid             ║");
     println!("║  • Borrow Checker: Prevents memory safety bugs           ║");

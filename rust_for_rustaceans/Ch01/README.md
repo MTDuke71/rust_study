@@ -114,7 +114,7 @@ Related zettelkasten notes:
 - [[Memory Management]] - Comprehensive memory guide
 - [[Ownership and Borrowing]] - Core concepts
 - [[Borrow Checker Fundamentals]] - Mental models
-- [[Lifetime Parameters]] - Generic lifetimes
+- [[lifetime-parameters]] - Generic lifetimes
 - [[interior-mutability]] - Interior mutability patterns
 - [[drop-trait]] - RAII and cleanup
 - [[Smart Pointers MOC]] - Box, Rc, RefCell
