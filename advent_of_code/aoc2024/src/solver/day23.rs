@@ -51,7 +51,7 @@ fn find_triangles_with_t(graph: &Graph) -> usize {
                         // Check if at least one starts with 't'
                         if node_a.starts_with('t') || node_b.starts_with('t') || node_c.starts_with('t') {
                             // Create a sorted tuple to avoid counting the same triangle multiple times
-                            let mut triangle = vec![node_a.as_str(), node_b.as_str(), node_c.as_str()];
+                            let mut triangle = [node_a.as_str(), node_b.as_str(), node_c.as_str()];
                             triangle.sort();
                             triangles.insert((triangle[0], triangle[1], triangle[2]));
                         }
