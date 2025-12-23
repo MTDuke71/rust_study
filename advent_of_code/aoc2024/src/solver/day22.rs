@@ -1,9 +1,9 @@
-/// Day 22: Monkey Market
-/// 
-/// Pseudorandom number generation (PRNG) using mix (XOR) and prune (modulo 2^24).
-/// 
-/// Part 1: Generate 2000th secret number for each buyer, sum all results
-/// Part 2: Find best sequence of 4 price changes to maximize banana sales
+//! Day 22: Monkey Market
+//! 
+//! Pseudorandom number generation (PRNG) using mix (XOR) and prune (modulo 2^24).
+//! 
+//! Part 1: Generate 2000th secret number for each buyer, sum all results
+//! Part 2: Find best sequence of 4 price changes to maximize banana sales
 
 const PRUNE_MODULO: i64 = 16777216; // 2^24
 
