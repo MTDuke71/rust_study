@@ -7,6 +7,7 @@ This document provides a categorized overview of all Advent of Code 2024 problem
 - **Advanced Pattern Matching**: Complex pattern constraints, non-overlapping patterns
 - **Brute Force**: Exhaustive search through solution space
 - **Cellular Automaton**: Conway's Game of Life, state evolution, neighbor counting, grid simulation
+- **Circuit Analysis**: Digital logic simulation, gate evaluation, topology validation, ripple-carry adder structure
 - **Combinatorial Optimization**: Subset sum, container packing, constrained combination enumeration
 - **Conditional Logic**: Property-based filtering, range-based matching, rule-based comparisons
 - **Cryptographic**: Hash functions, encryption, cryptographic puzzles
@@ -2634,6 +2635,95 @@ Rust implementation includes 2 tests:
 4. **Graph Theory**: Cliques, triangles, density, undirected graphs
 5. **Algorithm vs Library Trade-off**: Understanding when to implement vs when to use existing solutions
 
+### Day 24: Crossed Wires
+
+**Title**: Crossed Wires  
+**Part 1 Type**: Simulation + Graph Algorithms  
+**Part 1 Description**: Simulate digital logic circuit with AND/OR/XOR gates, iteratively evaluate gates when inputs available, extract z-wires as binary number (LSB first)  
+**Part 2 Type**: Graph Algorithms + Pattern Matching  
+**Part 2 Description**: Analyze ripple-carry adder circuit structure to find 4 pairs of swapped gate outputs (8 wires total) causing incorrect addition  
+**Key Concepts**: Digital logic simulation, levelized gate evaluation, circuit topology analysis, ripple-carry adder structure, full-adder validation rules, swap pair identification
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Circuit simulation → structural analysis (functional simulation → topological validation)
+- **Data Structure**: HashMap for wire values, Vec for gate definitions, enum for gate types (And/Or/Xor), HashSet for suspicious wire detection
+- **Complexity**: Part 1: O(G) iterative gate evaluation where G = gate count (multiple passes until all gates fire), Part 2: O(G) structural validation with 5 topology rules
+- **AoC Theme**: "Digital logic debugging" with classic Part 2 escalation (simulate circuit → detect structural errors in adder topology)
+
+**🦀 Rust Conversion Highlights**:
+
+- **From string-based gate types** → **Type-safe `GateType` enum** (And, Or, Xor) with pattern matching for operations
+- **From implicit gate evaluation** → **Structured `Gate` struct** with input1, input2, gate_type, output fields
+- **From manual wire tracking** → **HashMap-based levelized evaluation** removing gates when both inputs available
+- **From ad-hoc error detection** → **Systematic 5-rule validation framework** for ripple-carry adder structure:
+  1. Z-wires (except MSB) must be XOR outputs
+  2. XOR gates must have x,y inputs OR output to z-wires
+  3. AND gates (except x00 AND y00) must feed OR gates (carry chain)
+  4. XOR from x,y inputs should NOT go directly to z (except z00)
+  5. XOR from x,y inputs must be consumed by another XOR (sum path)
+- **From manual swap detection** → **Automated swap pair identification** using topology mismatch analysis
+
+**🏗️ Circuit Analysis Framework**:
+
+- **[[../examples/4bit_adder_schematic.txt]]** - ASCII art schematic with Boolean equations and validation rule annotations
+- **Debug Infrastructure**: Comprehensive println! debug output showing which rule caught each swapped wire
+- **Swap Pair Logic**: Automated pairing algorithm matching z-wires from wrong gates with orphaned XORs, AND outputs with XOR consumption errors
+- **Results**: Part 1: 61495910098126 (decimal output from 46-bit addition), Part 2: css,cwt,gdd,jmv,pqt,z05,z09,z37 (4 swap pairs identified)
+- **Educational Value**: Demonstrates how circuit topology constraints can detect hardware faults, connects to real-world digital logic debugging
+
+**Real-World Complexity Handling**:
+
+- **Line Ending Safety**: Normalizes Windows `\r\n` vs Unix `\n` line endings to prevent split failures
+- **Levelized Evaluation**: Handles arbitrary topological ordering of gates, naturally parallelizes levels
+- **Cycle Detection**: Part 2 validation detects structural impossibilities (e.g., carry chain broken)
+- **MSB Special Case**: Final z-wire (z45) exempt from XOR requirement as it's pure carry output
+
+**Python vs Rust Comparison**:
+
+- **Part 1 Algorithm**:
+  - **Python**: Mutation-based approach—initializes all wires to `None`, iteratively evaluates gates removing completed ones from list, builds z-value from sorted wires
+  - **Rust**: Structured simulation—parses into HashMap + Vec, removes evaluated gates, extracts z-value with bit shifting
+  - **Gate Operations**: Python uses arithmetic (`wires[input1] + wires[input2] == 2` for AND), Rust uses bitwise operators (`val1 & val2`)
+  - **Both**: O(G) iterative evaluation with similar levelized convergence strategy
+
+- **Part 2 Algorithm**:
+  - **Python**: Depth-limited recursive tree printing + iterative repair—prints gate expression trees to depth 3, validates expected structure at each depth level, swaps gates when structure validation fails, re-runs Part 1 to verify fix
+  - **Rust**: Structural validation rules—5 explicit topology checks for ripple-carry adder properties, identifies all 8 suspicious wires in single pass, deduces swap pairs from violation patterns
+  - **Validation Philosophy**: 
+    - Python checks depth-based structure (level 0: XOR only, level 1: XOR or OR, level 2: AND gates), uses recursive tree traversal
+    - Rust checks role-based structure (z-wire sources, XOR consumption paths, carry chain integrity), uses forward gate scanning
+  - **Swap Detection**: 
+    - Python finds mismatches bit-by-bit, swaps when structure invalid, iterates until circuit produces correct sum
+    - Rust detects all violations upfront, pairs wires based on expected vs actual roles
+
+- **Implementation Style**:
+  - **Python**: ~160 lines, imperative with mutation, depth-first tree printing for debugging, trial-and-error swap repair
+  - **Rust**: ~400 lines, functional with immutability, comprehensive debug output with rule annotations, deterministic swap identification
+  - **Error Handling**: Python assumes valid input format, Rust validates with `anyhow::Result` and detailed panic messages
+
+- **Educational Approach**:
+  - **Python**: Interactive debugging style—print gate trees, manually identify structural issues, iteratively repair
+  - **Rust**: Systematic validation framework—codify all adder properties as rules, automated violation detection, explicit swap pairing logic
+  - **Code Philosophy**: Python optimizes for problem-solving speed (~160 lines), Rust invests in architectural clarity and educational depth (400+ lines with comprehensive documentation)
+
+**Circuit Analysis Excellence**:
+
+- **Boolean Equations**: Complete adder formulas for all bit positions (half-adder for bit 0, full-adder equations for bits 1-N)
+- **Schematic Documentation**: ASCII art showing carry chain propagation, sum XOR paths, all intermediate signals labeled
+- **Rule Annotations**: Each validation rule linked to specific circuit components (e.g., Rule 3 → carry_gen and carry_prop must feed OR gate)
+- **EE Perspective**: Leverages user's electrical engineering background for intuitive circuit understanding
+
+**Results & Takeaways**:
+
+- Sample Part 1: 2024 (from problem example), Real Part 1: 61495910098126
+- Part 2: css,cwt,gdd,jmv,pqt,z05,z09,z37 (4 pairs: css↔jmv, cwt↔z05, gdd↔z09, pqt↔z37)
+- Demonstrates how structured validation frameworks can solve complex debugging problems
+- Shows Python's pragmatic trial-and-error vs Rust's systematic rule-based approach—both valid, different philosophies
+- Circuit topology analysis applicable to real hardware verification and fault detection
+
+**Mission Integration Benefit**: None (pure algorithmic problem); demonstrates circuit analysis and topology validation without requiring domain-specific foundational libraries.
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -2643,22 +2733,23 @@ Rust implementation includes 2 tests:
 | Advanced Pattern Matching | 0 | 0 |
 | Brute Force | 1 | 1 |
 | Cellular Automaton | 0 | 0 |
+| Circuit Analysis | 1 | 1 |
 | Combinatorial Optimization | 2 | 1 |
 | Conditional Logic | 1 | 2 |
 | Cryptographic | 0 | 0 |
 | Data Structures | 2 | 3 |
 | Encoding | 0 | 0 |
-| Graph Algorithms | 7 | 7 |
+| Graph Algorithms | 8 | 8 |
 | Greedy Algorithms | 0 | 0 |
 | Mathematical | 12 | 8 |
 | Number Theory | 0 | 0 |
 | Optimization | 1 | 12 |
 | Parsing | 0 | 0 |
-| Pattern Matching | 3 | 3 |
+| Pattern Matching | 3 | 4 |
 | Real-time Analysis | 0 | 0 |
 | Search | 0 | 2 |
 | Search/Traversal | 5 | 5 |
-| Simulation | 9 | 5 |
+| Simulation | 10 | 5 |
 | String Processing | 2 | 0 |
 
 ## Implementation Notes
@@ -2752,6 +2843,12 @@ Rust implementation includes 2 tests:
 85. **Bron-Kerbosch Maximum Clique Algorithm**: Classical recursive algorithm for finding maximum cliques in undirected graphs using three-set pattern (R=current clique, P=candidates, X=excluded) with pivoting optimization reducing exponential search space (Day 23: O(3^(n/3)) worst-case but practical with pivot selection, finds 13-node maximum clique in 520-node graph)
 86. **Three-Set Recursive Backtracking**: Systematic exploration pattern using three sets to track current solution (R), remaining candidates (P), and already-processed elements (X) preventing duplicate enumeration (Day 23: clique construction via set intersection/difference operations ensuring all nodes fully connected)
 87. **Pivoting Optimization for Exponential Search**: Choosing pivot element to prune search tree by only exploring nodes NOT connected to pivot, dramatically reducing branching factor in recursive algorithms (Day 23: pivot from P∪X enables skipping candidates that can't form larger cliques than one containing pivot itself, transforms infeasible search into <100ms solution)
+88. **Levelized Gate Evaluation**: Iterative circuit simulation removing gates from pending queue when both inputs available, naturally handling arbitrary topological orderings without explicit dependency sorting (Day 24: O(G) iterative evaluation where G = gate count, eliminates need for topological sort or cycle detection in acyclic circuits)
+89. **Circuit Topology Validation**: Structural rule-based framework for verifying expected circuit patterns, detecting violations through forward scanning rather than functional simulation (Day 24: 5-rule ripple-carry adder validation checking z-wire sources, XOR consumption paths, AND→OR carry chains)
+90. **Type-Safe Gate Representation**: Using enum for gate types (And/Or/Xor) with pattern matching for bitwise operations, preventing invalid gate type errors at compile time vs string-based approaches (Day 24: `GateType` enum ensures exhaustive match coverage, eliminates typos like "AND" vs "And")
+91. **Automated Swap Detection via Structural Analysis**: Identifying circuit faults by comparing expected vs actual topological roles, pairing violations through mismatch patterns (Day 24: matching z-wires from wrong gate types with orphaned XORs, AND outputs with consumption errors—deterministic identification without trial-and-error)
+92. **Line Ending Normalization**: Preprocessing input to handle Windows `\r\n` vs Unix `\n` line endings, preventing split failures on cross-platform data (Day 24: `.replace("\r\n", "\n")` before splitting on blank line ensures consistent parsing regardless of file origin)
+93. **Special Case Handling in Validation Rules**: Exempting edge cases from general patterns when structurally justified (Day 24: MSB z-wire exempt from XOR requirement as final carry output has no sum path, z00 exempt from carry input requirements as half-adder bit)
 
 ### Rust-Specific Considerations
 
@@ -2778,6 +2875,7 @@ Rust implementation includes 2 tests:
 - **Day 21**: Demonstrates **recursive sequence transformation with exponential memoization** where each recursion level amplifies button sequences geometrically (68 presses → trillions without caching). Showcases **structured Keypad abstraction** with `positions: HashMap<char, (i32, i32)>` and `gap: (i32, i32)` enabling type-safe navigation with explicit gap avoidance validation—intermediate point checking prevents panic-inducing paths. **Memoization Critical**: `HashMap<(String, usize), usize>` cache with `(sequence, depth)` composite keys transforms infeasible O(k^depth) ≈ 10^26 operations (Part 2 depth=26) to practical O(unique_sequences × depth) ≈ few thousand cached entries completing instantly. **Multi-Level Indirection**: Chain-of-command problem where action at level N requires optimal sequence at level N-1—`min_presses()` recursion tries all shortest paths at current level, picks minimum expansion at next level. **Depth Semantics Difference**: Python counts intermediate robots (`depth=2` for Part 1 = you → 2 robots → numeric), Rust counts total levels (`depth=3` = you + 2 robots + numeric)—off-by-one convention difference, identical algorithms. **Gap Avoidance Logic**: Python checks row/col match vs gap line preventing crossing, Rust validates intermediate point `(x2,y1)` and `(x1,y2)` explicitly against gap position—equivalent geometric reasoning, different implementation philosophy. **Python Comparison**: Python's `@cache` decorator automatic memoization (~80 lines total) vs Rust's explicit HashMap management (~320 lines with tests)—Python optimizes for midnight racing brevity with dynamic keypad detection via `code[0].isnumeric()`, Rust structures with `is_numeric` flag for clarity and type safety. **Educational Value**: Explicit memo demonstrates cache mechanics (when to check, when to insert, composite keys for multi-parameter functions) vs hidden decorator magic; shows how sequence expansion problems differ fundamentally from pathfinding (not finding single optimal path but composing movements across recursion levels). **Test Coverage**: 7 comprehensive tests validating keypad construction (positions + gaps), movement generation (simple moves + gap avoidance), Part 1 integration (126384 complexity), individual code validation ("029A" → 1972 = 68×29), memoization cache hits. **Code Organization**: Clean separation with `Keypad` struct + factory methods, `get_move_sequences()` for path generation with gap validation, `min_presses()` core recursive algorithm with memo, `calculate_complexity()` extracting numeric value and computing score. **Performance Analysis**: Cache hit rate very high due to repeated subsequence patterns across different codes; memory negligible (~1000 entries even for Part 2); without memoization Part 2 literally impossible (years of computation). **Results**: Part 1 = 155252 (depth=3), Part 2 = 195664513288128 (depth=26).
 - **Day 22**: Demonstrates **PRNG simulation with power-of-2 compiler optimizations** and **sequence pattern aggregation** across multiple buyers. **XOR Mixing**: Self-inverse bitwise operations (`secret ^ value`) for avalanche effect randomization. **Modulo Optimization**: Compiler transforms `% 16777216` (2^24) into `& 0xFFFFFF` bitwise AND—verified via assembly inspection with cargo-show-asm showing 2.21x speedup vs prime modulo. **Rayon Parallelization**: Achieved 16.58x speedup Part 1 (embarrassingly parallel), 2.17x Part 2 (HashMap contention with thread-local pattern). **Two-Level HashMap**: Per-buyer `buyer_sequences` for first-occurrence deduplication + global `sequence_totals` for aggregation across all buyers—critical algorithm insight preventing double-counting. **Iterator Chains**: Functional pipelines (`.values().max().copied().unwrap_or(0)`) vs imperative loops demonstrating idiomatic Rust patterns. **Assembly Analysis**: Educational benchmarks comparing power-of-2 (shl/sar bit shifts) vs prime (imul/division) operations prove constant choice matters—Day 22's 64/32/2048/2^24 enabled massive optimizations. **Test Coverage**: 12 comprehensive tests covering PRNG correctness (mix/prune operations), secret evolution sequences, price extraction, change calculation, Part 1/Part 2 integration. **Results**: Part 1 = 17163502021, Part 2 = 1938 bananas.
 - **Day 23**: Exemplifies **implementing classical algorithms from scratch** for educational depth vs library usage for production speed. Showcases **Bron-Kerbosch maximum clique algorithm** with three-set recursion (R/P/X pattern) and pivoting optimization transforming O(3^(n/3)) exponential complexity into practical <100ms performance. **Graph Representation**: `HashMap<String, HashSet<String>>` undirected adjacency list enabling O(1) neighbor lookups for clique validation—demonstrates when custom structures outperform graph libraries. **Set Operations Excellence**: Explicit `intersection()`, `difference()`, and `union()` for clique property enforcement (all nodes must be connected to each other), showcasing Rust's zero-cost set abstractions. **Algorithm Transparency**: Detailed docstring comments explaining R (current clique), P (candidate nodes), X (excluded/processed) sets with base case (P=∅ and X=∅ → maximal clique) and recursive case (try adding each candidate, filter to neighbors, recurse). **Educational Infrastructure**: Created comprehensive zettelkasten note (~600 lines) with step-by-step walkthrough, execution trace, mental models, complexity analysis, and real-world applications. **Python Comparison**: Python leverages NetworkX `find_cliques()` library (~5 lines) for midnight racing efficiency; Rust implements full algorithm (~80 lines) for deep algorithmic understanding—demonstrates classic "when to implement vs when to use libraries" decision. **NP-Complete Problem**: Firsthand experience with exponential complexity requiring optimization (pivoting dramatically reduces search tree), understanding why theoretical worst-case doesn't prevent practical solutions. **Zero Dependencies**: std library only (HashMap, HashSet) without external graph crates, proving foundational collections sufficient for complex algorithms. **Test Coverage**: 2 comprehensive tests validating both parts with example data (7 triangles with 't' node, 4-node maximum clique). **Key Learning**: Educational value of implementation > production speed optimization—creating 600-line zettelkasten note transformed "use library" into deep graph theory understanding with three-set recursion, pivoting strategies, and NP-complete problem characteristics. **Results**: Part 1 = 1,149 triangles, Part 2 = "as,co,do,kh,km,mc,np,nt,un,uq,wc,wz,yo" (13-node password).
+- **Day 24**: Demonstrates **digital logic circuit simulation** with levelized gate evaluation and **circuit topology validation** using structural rules. Showcases **type-safe GateType enum** (And/Or/Xor) with pattern matching for bitwise operations preventing invalid gate errors. **Part 1 Algorithm**: Iterative gate evaluation removing gates from pending queue when both inputs available—O(G) complexity naturally handling arbitrary topological orderings without explicit dependency sorting. **Part 2 Algorithm**: 5-rule ripple-carry adder validation framework checking z-wire sources, XOR consumption paths, AND→OR carry chains—automated swap pair identification through topology mismatch analysis. **Educational Infrastructure**: Created 4-bit adder schematic (220 lines) with Boolean equations, truth tables, validation rule annotations showing where each rule applies in circuit structure. **Debug Output**: Comprehensive println! statements showing which rule caught each swapped wire (⚠ symbols with detailed error descriptions). **Python Comparison**: Python uses depth-based tree validation with trial-and-error swap repair (~160 lines) vs Rust's role-based structural rules with deterministic swap detection (~400 lines)—Python optimizes for interactive debugging, Rust invests in systematic validation framework. **Line Ending Safety**: Normalizes Windows `\r\n` vs Unix `\n` preventing split failures on cross-platform data. **Special Case Handling**: MSB z-wire exempt from XOR requirement (pure carry output), z00 exempt from carry input (half-adder bit). **Test Coverage**: 4 comprehensive tests covering parsing, small example (output=4), problem example (output=2024), Part 1 real input (61495910098126), Part 2 swap detection (8 wires). **EE Perspective**: Leverages electrical engineering background for intuitive circuit understanding with carry chain propagation, sum XOR paths, intermediate signal labeling. **Results**: Part 1 = 61495910098126 (46-bit addition), Part 2 = css,cwt,gdd,jmv,pqt,z05,z09,z37 (4 swap pairs).
 
 ---
 
@@ -2940,8 +3038,8 @@ When documenting solutions from previous years (2015-2023):
 
 ---
 
-*Last Updated: December 22, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23*
+*Last Updated: December 23, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---

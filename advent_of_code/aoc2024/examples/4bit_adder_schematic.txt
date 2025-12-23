@@ -1,0 +1,307 @@
+================================================================================
+        4-BIT RIPPLE-CARRY ADDER - CIRCUIT ANALYSIS RULES
+================================================================================
+
+This diagram shows the structure of a 4-bit adder (x[3:0] + y[3:0] = z[4:0])
+with annotations showing where each validation rule from Part 2 applies.
+
+Legend:
+  [XOR] = XOR gate
+  [AND] = AND gate
+  [OR]  = OR gate
+  ──>   = Wire/signal path
+  ⚠     = Validation checkpoint (rule application point)
+
+================================================================================
+BIT 0: HALF-ADDER (No carry-in)
+================================================================================
+
+x00 ──┬──────────────────────────────────────┐
+      │                                      │
+      │                                      │
+y00 ──┼────────┐                             │
+      │        │                             │
+      │    ┌───▼───┐                     ┌───▼───┐
+      │    │ [XOR] │ ⚠ Rule 4 Exception  │ [AND] │
+      │    └───┬───┘   (z00 allowed)     └───┬───┘
+      │        │                             │
+      │        └──────> z00                  │
+      │                                      │
+      │                                  carry0
+      │                                      │
+                                             │
+    ⚠ Rule 1: z00 from XOR ✓                │
+    ⚠ Rule 4: x,y XOR can go to z00 ✓       │
+    ⚠ Rule 3: x00 AND y00 exception ✓       │
+                                             │
+                                             ▼
+
+================================================================================
+BIT 1: FULL-ADDER (First full-adder stage)
+================================================================================
+
+x01 ──┬──────────────┬───────────────────────┐
+      │              │                       │
+      │              │                       │
+y01 ──┼────────┐     │                       │
+      │        │     │                       │
+      │    ┌───▼───┐ │                   ┌───▼───┐
+      │    │ [XOR] │ │  ⚠ Rule 4         │ [AND] │
+      │    └───┬───┘ │  (NOT to z!)      └───┬───┘
+      │        │     │                       │
+      │     sum1     │                   carry_gen1
+      │   (partial)  │                       │
+      │        │     │                       │
+      │        ├─────┼─────┐                 │
+      │        │     │     │                 │
+carry0 ────────┼─────┘     │                 │
+      │        │           │                 │
+      │    ┌───▼───┐   ┌───▼───┐             │
+      │    │ [XOR] │   │ [AND] │             │
+      │    └───┬───┘   └───┬───┘             │
+      │        │           │                 │
+      │        │       carry_prop1           │
+      │        │           │                 │
+      │        │           │   ┌─────────────┘
+      │        │           │   │
+      │        │           ▼   ▼
+      │        │         ┌───────┐
+      │        │         │  [OR] │
+      │        │         └───┬───┘
+      │        │             │
+      │        └──────> z01  carry1
+      │                      │
+                             ▼
+
+⚠ VALIDATION CHECKPOINTS FOR BIT 1:
+
+Rule 1: z01 produced by XOR ✓
+        └─> Second XOR (sum1 ⊕ carry0)
+
+Rule 2: sum1 is intermediate (not from x,y, not to z) ✗ WOULD FAIL
+        └─> But sum1 IS from x,y, so passes Rule 2 ✓
+
+Rule 3: AND gates feed OR ✓
+        ├─> carry_gen1 (x01 AND y01) feeds OR
+        └─> carry_prop1 (sum1 AND carry0) feeds OR
+
+Rule 4: x01 XOR y01 does NOT go to z ✓
+        └─> Goes to sum1 (intermediate), not z01
+
+Rule 5: x01 XOR y01 consumed by another XOR ✓
+        └─> sum1 feeds into second XOR to produce z01
+
+================================================================================
+BIT 2: FULL-ADDER (Identical structure to Bit 1)
+================================================================================
+
+x02 ──┬──────────────┬───────────────────────┐
+      │              │                       │
+y02 ──┤          ┌───▼───┐               ┌───▼───┐
+      │          │ [XOR] │               │ [AND] │
+      │          └───┬───┘               └───┬───┘
+      │           sum2                   carry_gen2
+      │              │                       │
+carry1 ─────────┬────┤                       │
+      │         │    │                       │
+      │     ┌───▼───┐│   ┌───────┐           │
+      │     │ [XOR] ││   │ [AND] │           │
+      │     └───┬───┘│   └───┬───┘           │
+      │         │    │   carry_prop2         │
+      │         │    │       │   ┌───────────┘
+      │         │    │       ▼   ▼
+      │         │    │     ┌───────┐
+      │         │    │     │  [OR] │
+      │         │    │     └───┬───┘
+      │         └────┼──> z02  carry2
+      │              │         │
+                               ▼
+
+⚠ Same validation rules as Bit 1 apply here
+
+================================================================================
+BIT 3: FULL-ADDER (Identical structure)
+================================================================================
+
+x03 ──┬──────────────┬───────────────────────┐
+      │              │                       │
+y03 ──┤          ┌───▼───┐               ┌───▼───┐
+      │          │ [XOR] │               │ [AND] │
+      │          └───┬───┘               └───┬───┘
+      │           sum3                   carry_gen3
+      │              │                       │
+carry2 ─────────┬────┤                       │
+      │         │    │                       │
+      │     ┌───▼───┐│   ┌───────┐           │
+      │     │ [XOR] ││   │ [AND] │           │
+      │     └───┬───┘│   └───┬───┘           │
+      │         │    │   carry_prop3         │
+      │         │    │       │   ┌───────────┘
+      │         │    │       ▼   ▼
+      │         │    │     ┌───────┐
+      │         │    │     │  [OR] │
+      │         │    │     └───┬───┘
+      │         └────┼──> z03  carry3
+      │              │         │
+                               │
+                               └──────> z04 (final carry)
+                                        ⚠ Rule 1 Exception
+                                          (z04 can be OR/AND)
+
+================================================================================
+BOOLEAN EQUATIONS FOR ALL GATES
+================================================================================
+
+BIT 0 (Half-Adder):
+───────────────────
+  z00     = x00 ⊕ y00                    (Sum output)
+  carry0  = x00 · y00                    (Carry output)
+
+BIT 1 (Full-Adder):
+───────────────────
+  sum1        = x01 ⊕ y01                (Partial sum - first XOR)
+  z01         = sum1 ⊕ carry0            (Final sum - second XOR)
+  carry_gen1  = x01 · y01                (Generate carry)
+  carry_prop1 = sum1 · carry0            (Propagate carry)
+  carry1      = carry_gen1 + carry_prop1 (Final carry - OR gate)
+
+  Expanded form:
+  z01    = (x01 ⊕ y01) ⊕ carry0
+  carry1 = (x01 · y01) + ((x01 ⊕ y01) · carry0)
+
+BIT 2 (Full-Adder):
+───────────────────
+  sum2        = x02 ⊕ y02
+  z02         = sum2 ⊕ carry1
+  carry_gen2  = x02 · y02
+  carry_prop2 = sum2 · carry1
+  carry2      = carry_gen2 + carry_prop2
+
+  Expanded form:
+  z02    = (x02 ⊕ y02) ⊕ carry1
+  carry2 = (x02 · y02) + ((x02 ⊕ y02) · carry1)
+
+BIT 3 (Full-Adder):
+───────────────────
+  sum3        = x03 ⊕ y03
+  z03         = sum3 ⊕ carry2
+  carry_gen3  = x03 · y03
+  carry_prop3 = sum3 · carry2
+  carry3      = carry_gen3 + carry_prop3
+
+  Expanded form:
+  z03    = (x03 ⊕ y03) ⊕ carry2
+  carry3 = (x03 · y03) + ((x03 ⊕ y03) · carry2)
+
+BIT 4 (Final Carry):
+───────────────────
+  z04 = carry3                           (Overflow/MSB)
+
+GENERAL FULL-ADDER EQUATIONS:
+─────────────────────────────
+For any bit i (where i ≥ 1):
+
+  sum[i]        = x[i] ⊕ y[i]                    ← Rule 5: Must feed XOR
+  z[i]          = sum[i] ⊕ carry[i-1]           ← Rule 1: z from XOR
+  carry_gen[i]  = x[i] · y[i]                    ← Rule 3: Must feed OR
+  carry_prop[i] = sum[i] · carry[i-1]           ← Rule 3: Must feed OR
+  carry[i]      = carry_gen[i] + carry_prop[i]  ← Next stage carry-in
+
+NOTATION:
+─────────
+  ⊕   XOR (exclusive OR)
+  ·   AND (logical AND)
+  +   OR  (logical OR)
+
+TRUTH TABLE FOR FULL-ADDER:
+───────────────────────────
+  x[i]  y[i]  carry[i-1]  |  z[i]  carry[i]
+  ─────────────────────────────────────────
+   0     0        0       |   0       0
+   0     0        1       |   1       0
+   0     1        0       |   1       0
+   0     1        1       |   0       1
+   1     0        0       |   1       0
+   1     0        1       |   0       1
+   1     1        0       |   0       1
+   1     1        1       |   1       1
+
+================================================================================
+SUMMARY OF VALIDATION RULES
+================================================================================
+
+Rule 1: Z-Wire XOR Check
+├─> All z-wires (z00-z03) must come from XOR gates
+├─> Exception: z04 (final carry) can be any gate type
+└─> Detects: Swapped outputs where sum bit comes from AND/OR
+
+Rule 2: Intermediate XOR Check  
+├─> XOR gates must either:
+│   ├─> Take x,y inputs (first level: x[i] XOR y[i])
+│   └─> Output to z wire (second level: partial XOR carry)
+└─> Detects: Orphaned XOR gates with no clear role
+
+Rule 3: AND→OR Carry Chain
+├─> AND gates (except x00 AND y00) must feed OR gates
+├─> carry_gen = x[i] AND y[i]  ──┐
+├─> carry_prop = sum[i] AND c[i] ─┤──> Both feed OR
+└─> Detects: Broken carry propagation paths
+
+Rule 4: No Direct XY-XOR to Z
+├─> First-level XOR (x[i] XOR y[i]) must NOT output to z[i]
+├─> Exception: z00 (no carry-in, so x00 XOR y00 = z00)
+└─> Detects: Missing second XOR stage (forgot carry-in)
+
+Rule 5: XY-XOR Must Feed XOR
+├─> Output of x[i] XOR y[i] must be consumed by another XOR
+├─> This is the sum[i] wire that feeds: sum[i] XOR carry[i-1]
+└─> Detects: First XOR feeding wrong gate type (OR/AND instead of XOR)
+
+================================================================================
+EXAMPLE FAULT SCENARIOS
+================================================================================
+
+Fault 1: z05 comes from OR gate
+├─> Rule 1 violation: z-wire not from XOR
+├─> Likely: z05 swapped with a carry wire
+└─> Fix: Swap z05 output with the correct XOR gate output
+
+Fault 2: jmv (x20 XOR y20) feeds into OR gate
+├─> Rule 5 violation: First-level XOR consumed by OR
+├─> Expected: jmv should feed second XOR to produce z20
+└─> Fix: Swap jmv with the wire that should feed the OR
+
+Fault 3: css (AND gate output) doesn't feed OR
+├─> Rule 3 violation: AND output not consumed by OR
+├─> Carry chain broken
+└─> Fix: Swap css with the correct carry wire
+
+Fault 4: pqt (XOR output) neither from x,y nor to z
+├─> Rule 2 violation: Orphaned intermediate XOR
+├─> Likely: Should be sum[i] wire but swapped
+└─> Fix: Swap pqt with correct intermediate wire
+
+================================================================================
+CIRCUIT ANALYSIS STRATEGY
+================================================================================
+
+For each bit position i:
+
+1. Locate x[i] XOR y[i] → Should produce sum[i] intermediate wire
+2. Locate sum[i] XOR carry[i-1] → Should produce z[i]
+3. Locate x[i] AND y[i] → Should produce carry_gen[i]
+4. Locate sum[i] AND carry[i-1] → Should produce carry_prop[i]  
+5. Locate carry_gen[i] OR carry_prop[i] → Should produce carry[i]
+
+Verify:
+✓ z[i] comes from XOR (Rule 1)
+✓ sum[i] feeds second XOR (Rule 5)
+✓ Both AND outputs feed OR (Rule 3)
+✓ x[i] XOR y[i] does NOT go to z[i] (Rule 4)
+✓ All XOR gates have clear roles (Rule 2)
+
+Any violation → Swapped wire detected!
+
+================================================================================
+END OF SCHEMATIC
+================================================================================
