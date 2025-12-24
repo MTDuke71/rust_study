@@ -2724,6 +2724,181 @@ Rust implementation includes 2 tests:
 
 **Mission Integration Benefit**: None (pure algorithmic problem); demonstrates circuit analysis and topology validation without requiring domain-specific foundational libraries.
 
+### Day 25: Code Chronicle
+
+**Title**: Code Chronicle  
+**Part 1 Type**: Mathematical + Data Structures  
+**Part 1 Description**: Parse lock and key schematics from ASCII art, convert to height arrays, count compatible lock/key pairs where heights don't overlap (sum ≤ 5)  
+**Part 2 Type**: N/A (Free Star)  
+**Part 2 Description**: Merry Christmas! Day 25 Part 2 is traditionally a free star for completing all previous days  
+**Key Concepts**: ASCII art parsing, schematic interpretation, height extraction from patterns, brute force pairing, compatibility checking, line ending normalization
+
+**🧩 Algorithm Analysis**:
+
+- **Problem Pattern**: Geometric pattern conversion + brute force compatibility checking (ASCII schematic → numeric heights → pairwise validation)
+- **Data Structure**:
+  - **Rust**: `Vec<usize>` for lock/key heights, separate `Lock` and `Key` structs with dedicated parsing functions
+  - **Python**: `list[int]` for heights, unified parsing with column transposition using list comprehension
+- **Complexity**:
+  - **Time**: O(S × 7 × 5) parsing where S = schematic count + O(L × K × 5) compatibility checking where L = locks, K = keys
+  - **Space**: O((L + K) × 5) for height storage
+  - **Critical Insight**: Brute force acceptable due to small input size (500 total schematics, ~250 locks × 250 keys = 62,500 comparisons)
+- **AoC Theme**: Final day completion puzzle with straightforward algorithmic requirements—reward for finishing the advent calendar
+
+**Algorithm Comparison: Column Counting vs Direction-Aware Scanning**:
+
+**Python Approach** (Column Transposition with Universal Counting):
+```python
+# Transpose rows to columns, count '#' per column, subtract 1 for top/bottom
+cols = [[row[c] for row in item] for c in range(len(item[0]))]
+heights = [col.count("#") - 1 for col in cols]
+```
+- **Strategy**: Transpose entire schematic to columns, count filled cells, subtract 1 for boundary row (works for both locks and keys)
+- **Trade-offs**: Simple and elegant (1 line for heights), but counts full column then subtracts boundary
+
+**Rust Approach** (Direction-Aware Scanning):
+```rust
+// For locks: scan downward from top until hitting empty space
+for row in 1..lines.len() {
+    if lines[row].chars().nth(col) == Some('#') {
+        height += 1;
+    } else { break; }
+}
+
+// For keys: scan upward from bottom until hitting empty space  
+for row in (0..lines.len()-1).rev() {
+    if lines[row].chars().nth(col) == Some('#') {
+        height += 1;
+    } else { break; }
+}
+```
+- **Strategy**: Early-termination scanning in appropriate direction (locks scan down, keys scan up), stops at first empty cell
+- **Trade-offs**: More explicit code but demonstrates understanding of schematic structure, early exit optimization
+
+**🦀 Rust Conversion Highlights**:
+
+**Pattern 1: Universal Column Counting (Python) → Direction-Aware Scanning (Rust)**:
+```python
+# Python: Single strategy for both locks and keys
+cols = [[row[c] for row in item] for c in range(len(item[0]))]
+heights = [col.count("#") - 1 for col in cols]  # Works for both!
+```
+```rust
+// Rust: Separate parsers with explicit direction logic
+fn parse_lock(lines: Vec<&str>) -> Lock {
+    for row in 1..lines.len() {  // Skip top boundary, scan down
+        if lines[row].chars().nth(col) == Some('#') {
+            height += 1;
+        } else { break; }  // Early exit
+    }
+}
+
+fn parse_key(lines: Vec<&str>) -> Key {
+    for row in (0..lines.len()-1).rev() {  // Skip bottom boundary, scan up
+        // ... similar pattern
+    }
+}
+```
+**Educational Value**: Python's column transposition shows algorithmic elegance (one approach for both types); Rust's direction-aware scanning demonstrates understanding of problem structure (locks extend downward, keys extend upward) with explicit type separation and early-exit optimization.
+
+**Pattern 2: Implicit Line Ending Handling (Python) → Explicit Normalization (Rust)**:
+```python
+# Python: .split("\n\n") works on Unix data, may fail on Windows
+data = "\n".join(data).split("\n\n")
+```
+```rust
+// Rust: Explicitly normalize line endings before splitting
+let normalized = input.replace("\r\n", "\n");
+let schematics: Vec<&str> = normalized.split("\n\n").collect();
+```
+**Educational Value**: Rust's explicit handling of Windows `\r\n` vs Unix `\n` line endings prevents cross-platform parsing failures—demonstrates defensive programming and real-world file format considerations.
+
+**Pattern 3: List Comprehension Filtering (Python) → Iterator Chain with `zip()` (Rust)**:
+```python
+# Python: Generator expression with `all()` for compatibility checking
+count = sum(all(c <= 5 for c in [a + b for a, b in zip(lock, key)]) 
+            for lock in locks for key in keys)
+```
+```rust
+// Rust: Method-based iterator chain with `.all()` combinator
+fn fits_with(&self, key: &Key, max_height: usize) -> bool {
+    self.heights.iter()
+        .zip(key.heights.iter())
+        .all(|(lock_h, key_h)| lock_h + key_h <= max_height)
+}
+
+// Usage in nested loop
+for lock in &locks {
+    for key in &keys {
+        if lock.fits_with(key, max_height) {
+            count += 1;
+        }
+    }
+}
+```
+**Educational Value**: Python's generator expression compresses entire compatibility check into single line; Rust's method-based approach with dedicated `fits_with()` provides better code organization and type safety with explicit lock/key parameters.
+
+**Python vs Rust Philosophy**:
+
+| Aspect | Python | Rust |
+|--------|--------|------|
+| **Parsing Strategy** | Column transposition with universal counting | Direction-aware scanning with early exit |
+| **Type System** | Unified `heights` list for both locks and keys | Separate `Lock` and `Key` structs |
+| **Compatibility Check** | Generator expression with nested comprehension | Dedicated method with iterator chain |
+| **Line Endings** | Assumes Unix format | Explicitly normalizes cross-platform |
+| **Code Length** | ~20 lines total (ultra-concise) | ~210 lines with tests and documentation |
+| **Philosophy** | Minimize code for midnight racing | Maximize clarity for learning |
+
+**Educational Value**:
+
+**Python Strengths**:
+- **Algorithmic Elegance**: Column transposition eliminates need to distinguish lock/key scanning directions
+- **Conciseness**: Single-line height extraction and compatibility checking demonstrate Python's expressiveness
+- **Pragmatism**: Focuses on getting correct answer quickly without over-engineering
+
+**Rust Strengths**:
+- **Type Safety**: Separate `Lock` and `Key` types prevent accidentally treating one as the other
+- **Explicit Semantics**: Direction-aware parsing makes schematic structure transparent in code
+- **Cross-Platform Robustness**: Line ending normalization handles real-world file format variations
+- **Code Organization**: Dedicated parsing functions and compatibility methods improve maintainability
+
+**Performance Characteristics**:
+
+- **Small Input**: Both solutions instant (<1ms) due to small input size (500 schematics)
+- **Parsing**: Python's column transposition allocates full column lists; Rust's early-exit scanning stops at first gap (minor optimization)
+- **Compatibility Checking**: Identical O(L × K × 5) complexity—both use `.all()` or equivalent with short-circuit evaluation
+- **Critical Optimization**: None needed—brute force acceptable for problem constraints
+
+**Key Algorithmic Insight**: 
+
+Converting ASCII art to numeric representations simplifies comparison logic. Instead of checking 7-row schematics character-by-character, extract 5 heights per schematic and perform simple arithmetic (lock_height + key_height ≤ max_height). This transformation reduces:
+- **Spatial comparison** (overlapping 2D grids) → **Numeric comparison** (5 integers per column)
+- **7 rows × 5 columns = 35 cells** → **5 height values** (86% data reduction)
+- **Geometric reasoning** (do patterns overlap?) → **Arithmetic reasoning** (do sums exceed threshold?)
+
+**Test Coverage**:
+
+Rust implementation includes comprehensive tests:
+1. **Parsing Tests**: Lock parsing with expected heights `[0,5,3,4,3]`, key parsing with expected heights `[5,0,2,1,3]`
+2. **Compatibility Logic**: Known compatible/incompatible pairs (lock `[0,5,3,4,3]` + key `[5,0,2,1,3]` fails column 4: 3+3=6>5)
+3. **Integration Test**: Example input producing 3 compatible pairs (2 locks × 3 keys → 3 fits)
+4. **CONST Example Data**: Embedded sample schematic in test module for quick validation
+
+**Code Organization**:
+
+- **Structs**: `Lock { heights: Vec<usize> }` and `Key { heights: Vec<usize> }` with dedicated types
+- **Parsing**: `parse_input()` splits on blank lines, `parse_lock()` / `parse_key()` extract heights
+- **Validation**: `Lock::fits_with(&self, key: &Key, max_height: usize) -> bool` encapsulates compatibility logic
+- **Clean Separation**: Parsing → validation → counting phases with clear data flow
+
+**Mission Integration Opportunities**:
+
+- **None Required**: Pure algorithmic problem without need for grid utilities or graph algorithms
+- **Could Use Mission 6**: Alternative implementation could use `Grid<char>` for schematic representation with column iteration, but manual parsing is simpler for this specific problem
+- **Pattern Recognition**: Height extraction pattern could be generalized for similar ASCII-to-numeric conversions
+
+**Results**: Part 1 = 3508 compatible lock/key pairs, Part 2 = Merry Christmas! 🎄
+
 ---
 
 ## Problem Type Distribution (Available Days)
@@ -2737,11 +2912,11 @@ Rust implementation includes 2 tests:
 | Combinatorial Optimization | 2 | 1 |
 | Conditional Logic | 1 | 2 |
 | Cryptographic | 0 | 0 |
-| Data Structures | 2 | 3 |
+| Data Structures | 3 | 3 |
 | Encoding | 0 | 0 |
 | Graph Algorithms | 8 | 8 |
 | Greedy Algorithms | 0 | 0 |
-| Mathematical | 12 | 8 |
+| Mathematical | 13 | 8 |
 | Number Theory | 0 | 0 |
 | Optimization | 1 | 12 |
 | Parsing | 0 | 0 |
@@ -2849,6 +3024,9 @@ Rust implementation includes 2 tests:
 91. **Automated Swap Detection via Structural Analysis**: Identifying circuit faults by comparing expected vs actual topological roles, pairing violations through mismatch patterns (Day 24: matching z-wires from wrong gate types with orphaned XORs, AND outputs with consumption errors—deterministic identification without trial-and-error)
 92. **Line Ending Normalization**: Preprocessing input to handle Windows `\r\n` vs Unix `\n` line endings, preventing split failures on cross-platform data (Day 24: `.replace("\r\n", "\n")` before splitting on blank line ensures consistent parsing regardless of file origin)
 93. **Special Case Handling in Validation Rules**: Exempting edge cases from general patterns when structurally justified (Day 24: MSB z-wire exempt from XOR requirement as final carry output has no sum path, z00 exempt from carry input requirements as half-adder bit)
+94. **ASCII-to-Numeric Conversion**: Transforming visual patterns into numeric representations for simplified comparison logic (Day 25: 7-row schematics → 5 height values, reduces spatial overlap checking to arithmetic comparison)
+95. **Direction-Aware Scanning**: Early-termination scanning in problem-appropriate direction based on entity type (Day 25: locks scan downward from top row, keys scan upward from bottom row, stopping at first empty cell)
+96. **Column Transposition Pattern**: Converting row-major 2D data to column-major for per-column analysis (Day 25: Python transposes rows to columns for unified height counting regardless of lock/key type)
 
 ### Rust-Specific Considerations
 
@@ -2876,6 +3054,7 @@ Rust implementation includes 2 tests:
 - **Day 22**: Demonstrates **PRNG simulation with power-of-2 compiler optimizations** and **sequence pattern aggregation** across multiple buyers. **XOR Mixing**: Self-inverse bitwise operations (`secret ^ value`) for avalanche effect randomization. **Modulo Optimization**: Compiler transforms `% 16777216` (2^24) into `& 0xFFFFFF` bitwise AND—verified via assembly inspection with cargo-show-asm showing 2.21x speedup vs prime modulo. **Rayon Parallelization**: Achieved 16.58x speedup Part 1 (embarrassingly parallel), 2.17x Part 2 (HashMap contention with thread-local pattern). **Two-Level HashMap**: Per-buyer `buyer_sequences` for first-occurrence deduplication + global `sequence_totals` for aggregation across all buyers—critical algorithm insight preventing double-counting. **Iterator Chains**: Functional pipelines (`.values().max().copied().unwrap_or(0)`) vs imperative loops demonstrating idiomatic Rust patterns. **Assembly Analysis**: Educational benchmarks comparing power-of-2 (shl/sar bit shifts) vs prime (imul/division) operations prove constant choice matters—Day 22's 64/32/2048/2^24 enabled massive optimizations. **Test Coverage**: 12 comprehensive tests covering PRNG correctness (mix/prune operations), secret evolution sequences, price extraction, change calculation, Part 1/Part 2 integration. **Results**: Part 1 = 17163502021, Part 2 = 1938 bananas.
 - **Day 23**: Exemplifies **implementing classical algorithms from scratch** for educational depth vs library usage for production speed. Showcases **Bron-Kerbosch maximum clique algorithm** with three-set recursion (R/P/X pattern) and pivoting optimization transforming O(3^(n/3)) exponential complexity into practical <100ms performance. **Graph Representation**: `HashMap<String, HashSet<String>>` undirected adjacency list enabling O(1) neighbor lookups for clique validation—demonstrates when custom structures outperform graph libraries. **Set Operations Excellence**: Explicit `intersection()`, `difference()`, and `union()` for clique property enforcement (all nodes must be connected to each other), showcasing Rust's zero-cost set abstractions. **Algorithm Transparency**: Detailed docstring comments explaining R (current clique), P (candidate nodes), X (excluded/processed) sets with base case (P=∅ and X=∅ → maximal clique) and recursive case (try adding each candidate, filter to neighbors, recurse). **Educational Infrastructure**: Created comprehensive zettelkasten note (~600 lines) with step-by-step walkthrough, execution trace, mental models, complexity analysis, and real-world applications. **Python Comparison**: Python leverages NetworkX `find_cliques()` library (~5 lines) for midnight racing efficiency; Rust implements full algorithm (~80 lines) for deep algorithmic understanding—demonstrates classic "when to implement vs when to use libraries" decision. **NP-Complete Problem**: Firsthand experience with exponential complexity requiring optimization (pivoting dramatically reduces search tree), understanding why theoretical worst-case doesn't prevent practical solutions. **Zero Dependencies**: std library only (HashMap, HashSet) without external graph crates, proving foundational collections sufficient for complex algorithms. **Test Coverage**: 2 comprehensive tests validating both parts with example data (7 triangles with 't' node, 4-node maximum clique). **Key Learning**: Educational value of implementation > production speed optimization—creating 600-line zettelkasten note transformed "use library" into deep graph theory understanding with three-set recursion, pivoting strategies, and NP-complete problem characteristics. **Results**: Part 1 = 1,149 triangles, Part 2 = "as,co,do,kh,km,mc,np,nt,un,uq,wc,wz,yo" (13-node password).
 - **Day 24**: Demonstrates **digital logic circuit simulation** with levelized gate evaluation and **circuit topology validation** using structural rules. Showcases **type-safe GateType enum** (And/Or/Xor) with pattern matching for bitwise operations preventing invalid gate errors. **Part 1 Algorithm**: Iterative gate evaluation removing gates from pending queue when both inputs available—O(G) complexity naturally handling arbitrary topological orderings without explicit dependency sorting. **Part 2 Algorithm**: 5-rule ripple-carry adder validation framework checking z-wire sources, XOR consumption paths, AND→OR carry chains—automated swap pair identification through topology mismatch analysis. **Educational Infrastructure**: Created 4-bit adder schematic (220 lines) with Boolean equations, truth tables, validation rule annotations showing where each rule applies in circuit structure. **Debug Output**: Comprehensive println! statements showing which rule caught each swapped wire (⚠ symbols with detailed error descriptions). **Python Comparison**: Python uses depth-based tree validation with trial-and-error swap repair (~160 lines) vs Rust's role-based structural rules with deterministic swap detection (~400 lines)—Python optimizes for interactive debugging, Rust invests in systematic validation framework. **Line Ending Safety**: Normalizes Windows `\r\n` vs Unix `\n` preventing split failures on cross-platform data. **Special Case Handling**: MSB z-wire exempt from XOR requirement (pure carry output), z00 exempt from carry input (half-adder bit). **Test Coverage**: 4 comprehensive tests covering parsing, small example (output=4), problem example (output=2024), Part 1 real input (61495910098126), Part 2 swap detection (8 wires). **EE Perspective**: Leverages electrical engineering background for intuitive circuit understanding with carry chain propagation, sum XOR paths, intermediate signal labeling. **Results**: Part 1 = 61495910098126 (46-bit addition), Part 2 = css,cwt,gdd,jmv,pqt,z05,z09,z37 (4 swap pairs).
+- **Day 25**: Demonstrates **ASCII-to-numeric conversion** for lock/key schematic compatibility checking with clean algorithm separation. Showcases **direction-aware parsing** with separate `parse_lock()` scanning downward from top and `parse_key()` scanning upward from bottom, both with early-exit optimization stopping at first empty cell. **Type Safety**: Separate `Lock` and `Key` structs prevent accidentally treating one as the other, dedicated `fits_with()` method encapsulates compatibility logic with iterator chain (`.zip()` pairing heights, `.all()` validating sums ≤ max_height). **Cross-Platform Robustness**: Explicit line ending normalization (`.replace("\r\n", "\n")`) before splitting on blank lines prevents parsing failures on Windows vs Unix data—critical fix that transformed "1 schematic parsed" failure into "500 schematics parsed" success. **Python Comparison**: Python's column transposition with universal counting (~20 lines total, elegant single-line height extraction) vs Rust's direction-aware scanning with type separation (~210 lines with comprehensive tests and documentation)—Python optimizes for midnight racing brevity with algorithmic elegance (one approach for both lock/key types), Rust optimizes for clarity and cross-platform reliability with explicit semantics making schematic structure transparent in code. **Iterator Excellence**: Rust's method-based compatibility check (`heights.iter().zip(...).all(...)`) demonstrates functional programming patterns with zero allocations vs Python's nested generator comprehension—both use short-circuit evaluation for efficiency. **Test Coverage**: 4 comprehensive tests covering lock parsing (heights `[0,5,3,4,3]`), key parsing (heights `[5,0,2,1,3]`), compatibility logic (known compatible/incompatible pairs), and integration (example producing 3 compatible pairs). **Educational Value**: Shows importance of defensive programming (line ending handling), demonstrates when type safety prevents bugs (Lock vs Key confusion), proves simplicity through data transformation (7-row ASCII → 5-integer comparison = 86% data reduction). **Results**: Part 1 = 3,508 compatible pairs, Part 2 = Merry Christmas! 🎄
 
 ---
 
@@ -3038,8 +3217,8 @@ When documenting solutions from previous years (2015-2023):
 
 ---
 
-*Last Updated: December 23, 2025*
-*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24*
+*Last Updated: December 24, 2025*
+*Days Implemented: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 *Days Available: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25*
 
 ---
