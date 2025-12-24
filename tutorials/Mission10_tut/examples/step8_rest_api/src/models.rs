@@ -2,87 +2,101 @@ use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 use uuid::Uuid;
 
-/// Request to create a new Union-Find instance
+/// Request body for creating a new Union-Find instance
 #[derive(Debug, Deserialize, ToSchema)]
 pub struct CreateRequest {
-    /// Number of elements in the set
+    /// Number of elements in the set (must be > 0)
     #[schema(example = 10, minimum = 1)]
     pub size: usize,
 }
 
-/// Response for instance creation
+/// Response after creating a Union-Find instance
 #[derive(Debug, Serialize, ToSchema)]
 pub struct CreateResponse {
     /// Unique identifier for the instance
     pub id: Uuid,
-    /// Number of elements
+    
+    /// Number of elements in the set
     pub size: usize,
 }
 
-/// Request to union two elements
+/// Request body for union operation
 #[derive(Debug, Deserialize, ToSchema)]
 pub struct UnionRequest {
-    /// First element index
+    /// First element to union
+    #[schema(example = 3, minimum = 0)]
     pub element1: usize,
-    /// Second element index
+    
+    /// Second element to union
+    #[schema(example = 7, minimum = 0)]
     pub element2: usize,
 }
 
-/// Response for union operation
+/// Result of union operation
 #[derive(Debug, Serialize, ToSchema)]
 pub struct UnionResponse {
     /// Whether the elements were successfully merged (false if already connected)
     pub merged: bool,
+    
     /// The new root of the set
     pub root: usize,
 }
 
-/// Response for find operation
+/// Result of find operation
 #[derive(Debug, Serialize, ToSchema)]
 pub struct FindResponse {
-    /// The element queried
+    /// The element that was queried
+    #[schema(example = 5)]
     pub element: usize,
-    /// The representative (root) of the set
+    
+    /// Root element of the set
+    #[schema(example = 3)]
     pub root: usize,
 }
 
-/// Request for find operation (query parameters)
+/// Query parameters for find operation
 #[derive(Debug, Deserialize, ToSchema)]
 pub struct FindRequest {
-    /// Element to find root for
+    /// Element to find the root of
+    #[schema(example = 5, minimum = 0)]
     pub element: usize,
 }
 
-/// Response for connectivity check
+/// Result of connected check
 #[derive(Debug, Serialize, ToSchema)]
 pub struct ConnectedResponse {
-    /// Whether the elements are in the same set
+    /// Whether elements are in the same set
     pub connected: bool,
 }
 
-/// Request for connectivity check (query parameters)
+/// Query parameters for connected check
 #[derive(Debug, Deserialize, ToSchema)]
 pub struct ConnectedRequest {
-    /// First element
+    /// First element to check
+    #[schema(example = 3, minimum = 0)]
     pub element1: usize,
-    /// Second element
+    
+    /// Second element to check
+    #[schema(example = 7, minimum = 0)]
     pub element2: usize,
 }
 
-/// Response for statistics endpoint
+/// Statistics about a Union-Find instance
 #[derive(Debug, Serialize, ToSchema)]
 pub struct StatsResponse {
     /// Total number of elements
     pub total_elements: usize,
+    
     /// Number of disjoint sets
     pub num_components: usize,
 }
 
-/// Standard error response
+/// Error response structure
 #[derive(Debug, Serialize, ToSchema)]
 pub struct ErrorResponse {
     /// Error code
     pub code: String,
-    /// Error message
+    
+    /// Human-readable error message
     pub message: String,
 }

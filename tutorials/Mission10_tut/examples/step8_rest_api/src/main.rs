@@ -30,7 +30,7 @@ use openapi::ApiDoc;
 use state::AppState;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialize tracing
     tracing_subscriber::registry()
         .with(tracing_subscriber::EnvFilter::new(
@@ -57,8 +57,9 @@ async fn main() {
     println!("✅ Server listening on http://{}", addr);
     println!("📚 Swagger UI: http://{}/swagger-ui", addr);
     
-    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
-    axum::serve(listener, app).await.unwrap();
+    let listener = tokio::net::TcpListener::bind(addr).await?;
+    axum::serve(listener, app).await?;
+    Ok(())
 }
 
 async fn health_check() -> impl IntoResponse {

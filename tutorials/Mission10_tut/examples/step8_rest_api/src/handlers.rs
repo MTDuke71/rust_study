@@ -38,8 +38,12 @@ fn error_response(code: StatusCode, message: &str) -> Response {
     path = "/api/v1/unionfind",
     request_body = CreateRequest,
     responses(
-        (status = 201, description = "Instance created", body = CreateResponse),
-        (status = 400, description = "Invalid input")
+        (status = 201, description = "Instance created successfully with multiple size options available", body = CreateResponse,
+         example = json!({
+             "id": "550e8400-e29b-41d4-a716-446655440000",
+             "size": 100
+         })),
+        (status = 400, description = "Invalid input - size must be between 1 and 100,000")
     ),
     tag = "Union-Find Management"
 )]

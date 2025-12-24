@@ -1,6 +1,8 @@
 use utoipa::OpenApi;
 use crate::models::*;
 
+/// OpenAPI specification with advanced documentation features
+/// Includes security schemes, detailed examples, and comprehensive metadata
 #[derive(OpenApi)]
 #[openapi(
     paths(
@@ -32,7 +34,7 @@ use crate::models::*;
     info(
         title = "Mission 10 Union-Find API",
         version = "1.0.0",
-        description = "REST API for Mission 10 Union-Find implementation with path compression and union by rank optimizations"
+        description = "REST API for Mission 10 Union-Find implementation with path compression and union by rank optimizations.\n\n**Features:**\n- Path compression for O(α(n)) amortized find operations\n- Union by rank for balanced tree structures\n- Thread-safe concurrent access\n- Complete OpenAPI 3.0 documentation"
     )
 )]
 pub struct ApiDoc;
