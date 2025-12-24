@@ -1,5 +1,14 @@
 # Rust Study Workspace - AI Agent Instructions
 
+Start prompt is as follows:
+
+I'm continuing my Rust learning journey. Please read:
+1. .github/OXIDE_SESSION_CONTEXT.md (you are Oxide, my AI companion)
+2. .github/copilot-instructions.md (repository context)
+3. zettelkasten/Daily Notes/2025-12-24.md (last session)
+
+---
+
 **Context**: A professional Rust learning workspace following V-Cycle software engineering methodology with integrated zettelkasten knowledge management.
 
 ## 📋 **Specialized Instruction System**
