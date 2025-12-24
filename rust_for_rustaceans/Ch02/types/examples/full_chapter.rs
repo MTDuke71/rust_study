@@ -1,0 +1,273 @@
+// Example 8: Full Chapter - Comprehensive Integration
+// Demonstrates all Ch2 concepts working together
+
+use rustaceans_ch02_types::utils::{print_section, print_subsection};
+use std::fmt::{self, Display, Formatter};
+use std::marker::PhantomData;
+
+fn main() {
+    print_section("RUST FOR RUSTACEANS - CHAPTER 2: COMPLETE EXAMPLE");
+    
+    println!("\nThis example demonstrates all chapter concepts:");
+    println!("  1. Types in Memory (layout, alignment, DSTs)");
+    println!("  2. Traits (dispatch, generics, coherence)");
+    println!("  3. Advanced bounds (HRTB)");
+    println!("  4. Marker traits and type-state");
+    println!("  5. Existential types (impl Trait)");
+    
+    data_processing_pipeline();
+}
+
+// =============================================================================
+// Comprehensive Example: Type-Safe Data Processing Pipeline
+// =============================================================================
+
+fn data_processing_pipeline() {
+    print_section("TYPE-SAFE DATA PROCESSING PIPELINE");
+    
+    // 1. Create unvalidated data
+    let pipeline = DataPipeline::new();
+    
+    // 2. Validate (type-state transition)
+    let pipeline = pipeline.validate(vec![1, 2, 3, 4, 5, 10, 20, 30]);
+    
+    // 3. Process with static dispatch
+    let pipeline = pipeline.process_static();
+    
+    // 4. Format results
+    pipeline.display_results();
+}
+
+// --- Type-State Pattern: Pipeline States ---
+struct Unvalidated;
+struct Validated;
+struct Processed;
+
+// --- Pipeline with State ---
+struct DataPipeline<State> {
+    data: Vec<i32>,
+    results: Vec<String>,
+    _state: PhantomData<State>,
+}
+
+// Unvalidated state
+impl DataPipeline<Unvalidated> {
+    fn new() -> Self {
+        print_subsection("1. Creating Pipeline (Unvalidated State)");
+        println!("Type-state ensures proper initialization sequence");
+        
+        DataPipeline {
+            data: Vec::new(),
+            results: Vec::new(),
+            _state: PhantomData,
+        }
+    }
+    
+    fn validate(self, data: Vec<i32>) -> DataPipeline<Validated> {
+        print_subsection("2. Validating Data");
+        println!("Input: {:?}", data);
+        println!("✅ Data validated, transitioning to Validated state");
+        
+        DataPipeline {
+            data,
+            results: Vec::new(),
+            _state: PhantomData,
+        }
+    }
+}
+
+// Validated state
+impl DataPipeline<Validated> {
+    fn process_static(self) -> DataPipeline<Processed> {
+        print_subsection("3. Processing with Static Dispatch");
+        
+        // Use impl Trait for iterator chain
+        let results = self.process_iterator()
+            .map(|x| format!("Result: {}", x))
+            .collect();
+        
+        println!("Processed {} items using static dispatch", self.data.len());
+        
+        DataPipeline {
+            data: self.data,
+            results,
+            _state: PhantomData,
+        }
+    }
+    
+    // impl Trait - existential type
+    fn process_iterator(&self) -> impl Iterator<Item = i32> + '_ {
+        self.data.iter()
+            .map(|&x| x * 2)
+            .filter(|&x| x > 5)
+    }
+}
+
+// Processed state  
+impl DataPipeline<Processed> {
+    fn display_results(&self) {
+        print_subsection("4. Displaying Results");
+        
+        // Use dynamic dispatch for display
+        let formatters: Vec<Box<dyn ResultFormatter>> = vec![
+            Box::new(SimpleFormatter),
+            Box::new(DetailedFormatter),
+        ];
+        
+        for formatter in &formatters {
+            println!("\n{}", formatter.name());
+            formatter.format_results(&self.results);
+        }
+    }
+}
+
+// --- Trait with Associated Type ---
+trait ResultFormatter {
+    fn format_results(&self, results: &[String]);
+    fn name(&self) -> &str;
+}
+
+struct SimpleFormatter;
+struct DetailedFormatter;
+
+impl ResultFormatter for SimpleFormatter {
+    fn format_results(&self, results: &[String]) {
+        for result in results {
+            println!("  {}", result);
+        }
+    }
+    
+    fn name(&self) -> &str {
+        "Simple Formatter"
+    }
+}
+
+impl ResultFormatter for DetailedFormatter {
+    fn format_results(&self, results: &[String]) {
+        println!("  Total results: {}", results.len());
+        for (i, result) in results.iter().enumerate() {
+            println!("  [{}] {}", i + 1, result);
+        }
+    }
+    
+    fn name(&self) -> &str {
+        "Detailed Formatter"
+    }
+}
+
+// --- Memory Layout Demonstration ---
+#[allow(dead_code)]
+mod memory_layout {
+    use std::mem;
+    
+    #[repr(C)]
+    pub struct OptimizedData {
+        pub id: u64,        // 8 bytes, align 8
+        pub count: u32,     // 4 bytes, align 4
+        pub active: bool,   // 1 byte, align 1
+        // 3 bytes padding to align struct size to 16
+    }
+    
+    pub fn show_layout() {
+        println!("\nMemory Layout (repr(C)):");
+        println!("  Size: {} bytes", mem::size_of::<OptimizedData>());
+        println!("  Alignment: {} bytes", mem::align_of::<OptimizedData>());
+    }
+}
+
+// --- Generic Trait Example ---
+#[allow(dead_code)]
+trait Transform<Input> {
+    type Output;
+    fn transform(&self, input: Input) -> Self::Output;
+}
+
+#[allow(dead_code)]
+struct Doubler;
+
+impl Transform<i32> for Doubler {
+    type Output = i32;
+    fn transform(&self, input: i32) -> i32 {
+        input * 2
+    }
+}
+
+impl Transform<String> for Doubler {
+    type Output = String;
+    fn transform(&self, input: String) -> String {
+        input.repeat(2)
+    }
+}
+
+// --- HRTB Example ---
+#[allow(dead_code)]
+fn process_with_hrtb<F>(f: F) -> String
+where
+    F: for<'a> Fn(&'a str) -> &'a str,
+{
+    let s = "hello world";
+    f(s).to_string()
+}
+
+// --- Coherence Example ---
+#[allow(dead_code)]
+struct LocalType(i32);
+
+// Local trait + local type = OK
+#[allow(dead_code)]
+trait LocalTrait {
+    fn local_method(&self) -> String;
+}
+
+impl LocalTrait for LocalType {
+    fn local_method(&self) -> String {
+        format!("LocalType({})", self.0)
+    }
+}
+
+// Foreign trait + local type = OK
+impl Display for LocalType {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        write!(f, "LocalType {{ value: {} }}", self.0)
+    }
+}
+
+// --- Marker Type Example ---
+#[allow(dead_code)]
+struct Marker<T> {
+    data: Vec<u8>,
+    _phantom: PhantomData<T>,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_type_state_transitions() {
+        let pipeline = DataPipeline::new();
+        let pipeline = pipeline.validate(vec![1, 2, 3]);
+        let pipeline = pipeline.process_static();
+        
+        // Type system ensures correct order
+        assert!(!pipeline.results.is_empty());
+    }
+    
+    #[test]
+    fn test_static_dispatch() {
+        let doubler = Doubler;
+        assert_eq!(doubler.transform(5), 10);
+        assert_eq!(doubler.transform("hi".to_string()), "hihi");
+    }
+    
+    #[test]
+    fn test_impl_trait() {
+        let pipeline = DataPipeline::new();
+        let pipeline = pipeline.validate(vec![1, 5, 10]);
+        
+        let iter = pipeline.process_iterator();
+        let results: Vec<_> = iter.collect();
+        
+        assert_eq!(results, vec![10, 20]);  // Doubled and filtered > 5
+    }
+}

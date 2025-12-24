@@ -1,0 +1,38 @@
+[package]
+name = "rustaceans_ch02_types"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[example]]
+name = "types_in_memory"
+path = "examples/types_in_memory.rs"
+
+[[example]]
+name = "dispatch_mechanisms"
+path = "examples/dispatch_mechanisms.rs"
+
+[[example]]
+name = "generic_traits"
+path = "examples/generic_traits.rs"
+
+[[example]]
+name = "coherence_orphan_rule"
+path = "examples/coherence_orphan_rule.rs"
+
+[[example]]
+name = "trait_bounds_hrtb"
+path = "examples/trait_bounds_hrtb.rs"
+
+[[example]]
+name = "marker_traits"
+path = "examples/marker_traits.rs"
+
+[[example]]
+name = "existential_types"
+path = "examples/existential_types.rs"
+
+[[example]]
+name = "full_chapter"
+path = "examples/full_chapter.rs"
