@@ -226,11 +226,11 @@ fn main() {
         println!("╔══════════════════════════════════════════════════════════╗");
         println!("║  Type Comparison                                         ║");
         println!("╠══════════════════════════════════════════════════════════╣");
-        println!("║  Cell<T>      | Copy types only, no borrow tracking     ║");
-        println!("║  RefCell<T>   | Runtime borrow checking, single-thread  ║");
-        println!("║  Mutex<T>     | Thread-safe, locks, blocking            ║");
-        println!("║  RwLock<T>    | Multiple readers OR one writer          ║");
-        println!("║  UnsafeCell<T>| Low-level primitive, unsafe to use      ║");
+        println!("║  Cell<T>      | Copy types only, no borrow tracking      ║");
+        println!("║  RefCell<T>   | Runtime borrow checking, single-thread   ║");
+        println!("║  Mutex<T>     | Thread-safe, locks, blocking             ║");
+        println!("║  RwLock<T>    | Multiple readers OR one writer           ║");
+        println!("║  UnsafeCell<T>| Low-level primitive, unsafe to use       ║");
         println!("╚══════════════════════════════════════════════════════════╝\n");
     }
 
@@ -260,8 +260,8 @@ fn main() {
     println!("╔══════════════════════════════════════════════════════════╗");
     println!("║  Key Takeaway                                            ║");
     println!("╠══════════════════════════════════════════════════════════╣");
-    println!("║  Interior mutability allows mutation through &T         ║");
-    println!("║  Moves borrow checking from compile-time to runtime     ║");
-    println!("║  Built on UnsafeCell, used by Cell/RefCell/Mutex        ║");
+    println!("║  Interior mutability allows mutation through &T          ║");
+    println!("║  Moves borrow checking from compile-time to runtime      ║");
+    println!("║  Built on UnsafeCell, used by Cell/RefCell/Mutex         ║");
     println!("╚══════════════════════════════════════════════════════════╝");
 }

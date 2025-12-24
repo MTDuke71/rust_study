@@ -50,6 +50,7 @@ Fourth mission implementing singly and doubly linked lists with advanced pointer
 - Runtime borrow checking with RefCell
 - Panic on borrow violations
 - **Pattern**: [[../refcell-interior-mutability|RefCell Interior Mutability]]
+- **Deep Dive**: [[../interior-mutability|Interior Mutability Philosophy]] - Cell vs RefCell safety, Rust's "fail fast" principle
 - **Error Handling**: Custom LinkedListError enum
 
 ### **REQ-3: O(1) Operations**
@@ -409,4 +410,4 @@ fn req6_rc_list_weak_references_prevent_cycles() { ... }
 
 *Tags: #mission4 #linked-list #smart-pointers #iterators #dynamic-allocation #interior-mutability #reference-counting #weak-pointers #v-cycle*
 
-*Links: [[../zettel-index|Zettel Index]] | [[mission-3|Mission 3]] | [[mission-5|Mission 5]] | [[../ownership-fundamentals|Ownership Fundamentals]] | [[box-learning-guide|Box]] | [[../Rc Smart Pointer|Rc]] | [[../refcell-interior-mutability|RefCell]] | [[../reference-cycles|Reference Cycles]] | [[../Missions Overview|Missions Overview]]*
+*Links: [[../zettel-index|Zettel Index]] | [[mission-3|Mission 3]] | [[mission-5|Mission 5]] | [[../ownership-fundamentals|Ownership Fundamentals]] | [[box-learning-guide|Box]] | [[../Rc Smart Pointer|Rc]] | [[../refcell-interior-mutability|RefCell]] | [[../interior-mutability|Interior Mutability]] | [[../reference-cycles|Reference Cycles]] | [[../Missions Overview|Missions Overview]]*
