@@ -165,7 +165,7 @@ fn comparison_with_dyn() {
         } else {
             Box::new(vec![10, 20, 30].into_iter())
         };
-        iter.into_iter().map(|x| x)  // Workaround: wrap in another iterator
+        iter.into_iter()  // Workaround: wrap in another iterator
     }
     
     println!("\nWorkaround for different types:");
