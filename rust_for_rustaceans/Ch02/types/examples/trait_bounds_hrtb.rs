@@ -20,6 +20,9 @@ fn arbitrary_bounds() {
     println!("Bounds don't need to reference the generic parameter:\n");
     
     // Bound on String, even though T is the generic parameter
+    // Note: T is intentionally unused to demonstrate arbitrary bounds concept
+    // Clippy warns about this, but it's pedagogically important to show
+    #[allow(clippy::extra_unused_type_parameters)]
     fn example<T>() -> String 
     where
         String: Clone,  // Arbitrary bound - String is always Clone
@@ -44,6 +47,9 @@ fn hrtb_basics() {
     println!("for<'a> means 'for ALL lifetimes':\n");
     
     // Regular lifetime bound
+    // Note: Lifetime 'a is intentionally explicit here to contrast with HRTB below
+    // Clippy suggests eliding it, but keeping it explicit demonstrates the difference
+    #[allow(clippy::needless_lifetimes)]
     fn regular_bound<'a, T>(x: &'a T) -> &'a T 
     where
         T: Debug,

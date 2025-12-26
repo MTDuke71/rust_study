@@ -94,8 +94,12 @@ fn repr_examples() {
         b: u32,
     }
     
+    // Note: Using #[repr(packed)] for demonstration purposes
+    // Clippy warns about missing ABI qualifier, but this is intentional
+    // to show the basic packed representation concept
     #[repr(packed)]
     #[allow(dead_code)]
+    #[allow(clippy::repr_packed_without_abi)]
     struct ReprPacked {
         a: u8,
         b: u32,  // No padding!
@@ -155,14 +159,21 @@ fn wide_pointers() {
     let slice: &[i32] = &data;
     
     // Wide pointer = (data_ptr, length)
-    println!("  Slice &[i32]:");
-    println!("    data pointer: {:p}", slice.as_ptr());
-    println!("    length: {}", slice.len());
-    println!("    total size: {} bytes (2 × usize)", mem::size_of_val(&slice));
+    // Note: Taking size of the reference itself (not slice contents) to show pointer size
+    #[allow(clippy::size_of_ref)]
+    {
+        println!("  Slice &[i32]:");
+        println!("    data pointer: {:p}", slice.as_ptr());
+        println!("    length: {}", slice.len());
+        println!("    total size: {} bytes (2 × usize)", mem::size_of_val(&slice));
+    }
     
     // Trait object = (data_ptr, vtable_ptr)
-    let debug_obj: &dyn std::fmt::Debug = &42u32;
-    println!("\n  Trait object &dyn Debug:");
-    println!("    size: {} bytes (2 × usize)", mem::size_of_val(&debug_obj));
-    println!("    Contains: data pointer + vtable pointer");
+    #[allow(clippy::size_of_ref)]
+    {
+        let debug_obj: &dyn std::fmt::Debug = &42u32;
+        println!("\n  Trait object &dyn Debug:");
+        println!("    size: {} bytes (2 × usize)", mem::size_of_val(&debug_obj));
+        println!("    Contains: data pointer + vtable pointer");
+    }
 }

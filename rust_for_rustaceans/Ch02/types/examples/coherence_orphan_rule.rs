@@ -14,6 +14,7 @@ fn main() {
 
 // --- Local types for demonstrations ---
 struct LocalType;
+#[allow(dead_code)]  // Used in covered_implementations() example
 struct AnotherLocalType;
 
 // Local trait
@@ -29,24 +30,30 @@ fn orphan_rule_basics() {
     println!("  - The trait is local to your crate, OR");
     println!("  - The type is local to your crate\n");
     
-    // ✅ VALID: Local trait + Local type
-    impl LocalTrait for LocalType {
-        fn local_method(&self) {
-            println!("LocalTrait for LocalType");
+    // Note: impl blocks are intentionally placed inside this function for demonstration
+    // While clippy warns about non-local definitions, this is pedagogically important
+    // to show valid trait implementations in a contained example
+    #[allow(non_local_definitions)]
+    {
+        // ✅ VALID: Local trait + Local type
+        impl LocalTrait for LocalType {
+            fn local_method(&self) {
+                println!("LocalTrait for LocalType");
+            }
         }
-    }
-    
-    // ✅ VALID: Local trait + Foreign type (String)
-    impl LocalTrait for String {
-        fn local_method(&self) {
-            println!("LocalTrait for String: {}", self);
+        
+        // ✅ VALID: Local trait + Foreign type (String)
+        impl LocalTrait for String {
+            fn local_method(&self) {
+                println!("LocalTrait for String: {}", self);
+            }
         }
-    }
-    
-    // ✅ VALID: Foreign trait (Display) + Local type
-    impl std::fmt::Display for LocalType {
-        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-            write!(f, "LocalType instance")
+        
+        // ✅ VALID: Foreign trait (Display) + Local type
+        impl std::fmt::Display for LocalType {
+            fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                write!(f, "LocalType instance")
+            }
         }
     }
     
@@ -129,17 +136,21 @@ fn fundamental_types() {
     
     println!("Fundamental types (#[fundamental]) are erased for orphan rule:\n");
     
-    // ✅ VALID: Can implement foreign trait for &LocalType
-    impl std::fmt::Debug for &LocalType {
-        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-            write!(f, "&LocalType")
+    // Note: impl blocks are intentionally placed inside this function for demonstration
+    #[allow(non_local_definitions)]
+    {
+        // ✅ VALID: Can implement foreign trait for &LocalType
+        impl std::fmt::Debug for &LocalType {
+            fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                write!(f, "&LocalType")
+            }
         }
-    }
-    
-    // ✅ VALID: Can implement foreign trait for Box<LocalType>
-    impl std::fmt::Debug for Box<LocalType> {
-        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-            write!(f, "Box<LocalType>")
+        
+        // ✅ VALID: Can implement foreign trait for Box<LocalType>
+        impl std::fmt::Debug for Box<LocalType> {
+            fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                write!(f, "Box<LocalType>")
+            }
         }
     }
     
@@ -162,17 +173,21 @@ fn covered_implementations() {
     
     println!("Can impl foreign trait for foreign type if local type 'covers':\n");
     
-    // ✅ VALID: LocalType appears in Vec's generic parameter
-    impl From<LocalType> for Vec<String> {
-        fn from(_: LocalType) -> Vec<String> {
-            vec!["covered".to_string(), "implementation".to_string()]
+    // Note: impl blocks are intentionally placed inside this function for demonstration
+    #[allow(non_local_definitions)]
+    {
+        // ✅ VALID: LocalType appears in Vec's generic parameter
+        impl From<LocalType> for Vec<String> {
+            fn from(_: LocalType) -> Vec<String> {
+                vec!["covered".to_string(), "implementation".to_string()]
+            }
         }
-    }
-    
-    // ✅ VALID: LocalType appears before foreign type in tuple
-    impl From<(LocalType, String)> for AnotherLocalType {
-        fn from(_: (LocalType, String)) -> AnotherLocalType {
-            AnotherLocalType
+        
+        // ✅ VALID: LocalType appears before foreign type in tuple
+        impl From<(LocalType, String)> for AnotherLocalType {
+            fn from(_: (LocalType, String)) -> AnotherLocalType {
+                AnotherLocalType
+            }
         }
     }
     
