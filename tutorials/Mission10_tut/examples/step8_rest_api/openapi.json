@@ -1,0 +1,822 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Mission 10 Union-Find REST API",
+    "description": "\n# Union-Find Data Structure REST API\n\nThis API provides a RESTful interface to the **Union-Find (Disjoint-Set)** data structure, \na fundamental algorithm for efficiently managing partitions of a set into disjoint subsets.\n\n## Features\n- **Path Compression**: O(α(n)) amortized time for find operations\n- **Union by Rank**: Optimized tree structure for balanced unions\n- **Multi-instance**: Create and manage multiple independent Union-Find instances\n- **Thread-safe**: Concurrent access to different instances\n- **RESTful**: Standard HTTP methods and status codes\n\n## Use Cases\n- Network connectivity analysis\n- Image processing (connected components)\n- Kruskal's minimum spanning tree algorithm\n- Percolation theory simulations\n- Dynamic graph connectivity\n\n## Performance\n- **Find**: O(α(n)) amortized (inverse Ackermann function, effectively constant)\n- **Union**: O(α(n)) amortized\n- **Connected**: O(α(n)) amortized\n- **Space**: O(n) per instance\n\n## Versioning\n\nThis API follows **Semantic Versioning 2.0.0**:\n- **Major version** (v1, v2): Breaking changes\n- **Minor version** (1.1, 1.2): Backward-compatible features\n- **Patch version** (1.0.1): Bug fixes\n\n### Current Version: 1.0.0\n- Initial release with core Union-Find operations\n\n### Deprecation Policy\n- Features marked deprecated will be supported for minimum 6 months\n- Deprecated endpoints return `Deprecated: true` header\n- Migration guides provided in documentation\n\n## Rate Limiting\n- 1000 requests per hour per IP address\n- Burst allowance: 100 requests per minute\n\n## Performance Benchmarks\n\nBased on internal testing (hardware: Intel i7, 16GB RAM):\n\n| Operation | Dataset Size | Avg Response Time | 95th Percentile |\n|-----------|--------------|-------------------|-----------------|\n| Create | 10 elements | 1.2ms | 2.1ms |\n| Create | 1000 elements | 5.4ms | 8.3ms |\n| Create | 10000 elements | 42ms | 65ms |\n| Union | Any size | 0.8ms | 1.5ms |\n| Find | Any size | 0.6ms | 1.2ms |\n| Connected | Any size | 1.1ms | 2.0ms |\n\n**Note**: Response times include HTTP overhead and serialization. Core algorithm performance is O(α(n)).\n\n## Best Practices\n\n1. **Reuse instances**: Creating instances is more expensive than operations\n2. **Batch operations**: Plan to union multiple elements before checking stats\n3. **Cache results**: Find and connected results are deterministic (cache if querying same elements)\n4. **Compression**: Enable gzip compression for large payloads\n\n## Client Timeouts\n\n- **Connection timeout**: 10 seconds\n- **Request timeout**: 30 seconds\n- **Keep-alive**: 60 seconds\n\n## Retry Logic\n\n- **Transient errors (5xx)**: Retry with exponential backoff (start with 1s, max 30s)\n- **Client errors (4xx)**: Do not retry - fix the request parameters\n- **Rate limit (429)**: Wait for duration specified in `Retry-After` header\n        ",
+    "contact": {
+      "name": "Mission 10 Team",
+      "url": "https://github.com/MTDuke71/rust_study",
+      "email": "mission10@rust-study.dev"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local development server"
+    },
+    {
+      "url": "https://api.mission10.dev",
+      "description": "Production server"
+    },
+    {
+      "url": "https://staging.api.mission10.dev",
+      "description": "Staging server"
+    }
+  ],
+  "paths": {
+    "/api/v1/unionfind": {
+      "post": {
+        "tags": [
+          "Union-Find Management"
+        ],
+        "summary": "Create a new Union-Find instance with the specified number of elements. Each element starts in its own separate set.",
+        "description": "Creates an isolated disjoint-set data structure with the specified capacity.",
+        "operationId": "create_instance",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateResponse"
+                },
+                "example": {
+                  "id": "550e8400-e29b-41d4-a716-446655440000",
+                  "size": 10
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "Too large": {
+                    "value": {
+                      "code": "INVALID_SIZE",
+                      "details": {
+                        "maximum": 100000,
+                        "provided": 200000
+                      },
+                      "message": "Size exceeds maximum allowed"
+                    }
+                  },
+                  "Zero size": {
+                    "value": {
+                      "code": "INVALID_SIZE",
+                      "details": {
+                        "minimum": 1,
+                        "provided": 0
+                      },
+                      "message": "Size must be greater than 0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - JSON deserialization failed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Failed to deserialize the JSON body into the target type: size: invalid value: integer `-1`, expected usize at line 2 column 12"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "INTERNAL_ERROR",
+                  "message": "Failed to create instance due to internal error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/unionfind/{id}": {
+      "delete": {
+        "tags": [
+          "Union-Find Management"
+        ],
+        "summary": "Permanently delete a Union-Find instance and free its resources. This operation cannot be undone.",
+        "description": "Removes the instance from memory. All subsequent operations on this ID will fail.",
+        "operationId": "delete_instance",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Instance ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "UNAUTHORIZED",
+                  "message": "Valid API key or bearer token required"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "FORBIDDEN",
+                  "message": "delete:unionfind scope required"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "INSTANCE_NOT_FOUND",
+                  "details": {
+                    "id": "550e8400-e29b-41d4-a716-446655440000"
+                  },
+                  "message": "No Union-Find instance exists with the given ID"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "bearer_auth": []
+          },
+          {
+            "oauth2": [
+              "delete:unionfind"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/unionfind/{id}/connected": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "summary": "Check whether two elements belong to the same connected component. Returns true if they share the same root.",
+        "description": "Determines connectivity by comparing the root representatives of both elements.",
+        "operationId": "check_connected",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Instance ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "element1",
+            "in": "query",
+            "description": "First element",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "element2",
+            "in": "query",
+            "description": "Second element",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Connectivity check successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectedResponse"
+                },
+                "examples": {
+                  "Connected": {
+                    "value": {
+                      "connected": true
+                    }
+                  },
+                  "Not connected": {
+                    "value": {
+                      "connected": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid element indices",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "ELEMENT_OUT_OF_BOUNDS",
+                  "details": {
+                    "element1": 5,
+                    "element2": 100,
+                    "size": 10
+                  },
+                  "message": "One or more element indices exceed instance size"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "INSTANCE_NOT_FOUND",
+                  "message": "No Union-Find instance exists with the given ID"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/unionfind/{id}/find": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "summary": "Find the root representative of the set containing the specified element. Uses path compression for O(α(n)) amortized time complexity.",
+        "description": "Returns the canonical representative of the set, applying path compression to optimize future queries.",
+        "operationId": "find_element",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Instance ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "element",
+            "in": "query",
+            "description": "Element to find root for",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Find operation successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindResponse"
+                },
+                "example": {
+                  "element": 5,
+                  "root": 3
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid element index",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "ELEMENT_OUT_OF_BOUNDS",
+                  "details": {
+                    "element": 100,
+                    "size": 10
+                  },
+                  "message": "Element index exceeds instance size"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "INSTANCE_NOT_FOUND",
+                  "message": "No Union-Find instance exists with the given ID"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/unionfind/{id}/stats": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "summary": "Retrieve statistics including total number of elements and number of disjoint connected components.",
+        "description": "Returns structural information about the current state of the Union-Find instance.",
+        "operationId": "get_stats",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Instance ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatsResponse"
+                },
+                "examples": {
+                  "Fully connected": {
+                    "summary": "All elements in one set",
+                    "description": "All elements unioned into a single connected component",
+                    "value": {
+                      "num_components": 1,
+                      "total_elements": 10
+                    }
+                  },
+                  "Initial state": {
+                    "summary": "Newly created instance",
+                    "description": "All elements are in separate sets immediately after creation",
+                    "value": {
+                      "num_components": 10,
+                      "total_elements": 10
+                    }
+                  },
+                  "Partially connected": {
+                    "summary": "After some union operations",
+                    "description": "Several unions performed, forming 3 connected components",
+                    "value": {
+                      "num_components": 3,
+                      "total_elements": 10
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "INSTANCE_NOT_FOUND",
+                  "message": "No Union-Find instance exists with the given ID"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/unionfind/{id}/union": {
+      "post": {
+        "tags": [
+          "Operations"
+        ],
+        "summary": "Union two elements in the Union-Find instance, merging their sets if they are not already connected.",
+        "description": "Connects two elements by merging their representative sets using union-by-rank optimization.",
+        "operationId": "union_elements",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Instance ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnionRequest"
+              },
+              "examples": {
+                "Connect adjacent pixels": {
+                  "summary": "Image processing: connect adjacent pixels",
+                  "description": "Union adjacent pixels in a 10x10 grid for image segmentation",
+                  "value": {
+                    "element1": 45,
+                    "element2": 46
+                  }
+                },
+                "Graph edge": {
+                  "summary": "Graph: add edge to spanning tree",
+                  "description": "Add edge for Kruskal's minimum spanning tree algorithm",
+                  "value": {
+                    "element1": 0,
+                    "element2": 9
+                  }
+                },
+                "Network connection": {
+                  "summary": "Network: establish router link",
+                  "description": "Create connection between network routers in topology graph",
+                  "value": {
+                    "element1": 3,
+                    "element2": 7
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Union operation successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnionResponse"
+                },
+                "examples": {
+                  "Already connected": {
+                    "value": {
+                      "merged": false,
+                      "root": 3
+                    }
+                  },
+                  "New connection": {
+                    "value": {
+                      "merged": true,
+                      "root": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid element indices",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "Element1 out of bounds": {
+                    "value": {
+                      "code": "ELEMENT_OUT_OF_BOUNDS",
+                      "details": {
+                        "element": 100,
+                        "field": "element1",
+                        "size": 10
+                      },
+                      "message": "element1 index exceeds instance size"
+                    }
+                  },
+                  "Element2 out of bounds": {
+                    "value": {
+                      "code": "ELEMENT_OUT_OF_BOUNDS",
+                      "details": {
+                        "element": 50,
+                        "field": "element2",
+                        "size": 10
+                      },
+                      "message": "element2 index exceeds instance size"
+                    }
+                  },
+                  "Same element": {
+                    "value": {
+                      "code": "INVALID_UNION",
+                      "details": {
+                        "element1": 5,
+                        "element2": 5
+                      },
+                      "message": "Cannot union element with itself"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "code": "INSTANCE_NOT_FOUND",
+                  "details": {
+                    "id": "550e8400-e29b-41d4-a716-446655440000"
+                  },
+                  "message": "No Union-Find instance exists with the given ID"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ConnectedResponse": {
+        "type": "object",
+        "description": "Result of connected check",
+        "required": [
+          "connected"
+        ],
+        "properties": {
+          "connected": {
+            "type": "boolean",
+            "description": "Whether elements are in the same set"
+          }
+        }
+      },
+      "CreateRequest": {
+        "type": "object",
+        "description": "Request body for creating a new Union-Find instance",
+        "required": [
+          "size"
+        ],
+        "properties": {
+          "size": {
+            "type": "integer",
+            "description": "Number of elements in the set (must be > 0)\n\nCommon use cases:\n- 10: Small network\n- 100: Medium network or 10x10 percolation grid\n- 1000: Large network\n- 1920: HD image segments\n\nLarger values may impact performance.",
+            "example": 100,
+            "minimum": 1
+          }
+        }
+      },
+      "CreateResponse": {
+        "type": "object",
+        "description": "Response after creating a Union-Find instance",
+        "required": [
+          "id",
+          "size"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the instance"
+          },
+          "size": {
+            "type": "integer",
+            "description": "Number of elements in the set",
+            "minimum": 0
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Standard error response structure",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Machine-readable error code",
+            "example": "INVALID_SIZE"
+          },
+          "details": {
+            "type": "object",
+            "description": "Optional additional error details",
+            "additionalProperties": {},
+            "nullable": true
+          },
+          "field_errors": {
+            "type": "object",
+            "description": "Optional field-level validation errors",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message",
+            "example": "Size must be greater than 0"
+          }
+        }
+      },
+      "FindResponse": {
+        "type": "object",
+        "description": "Result of find operation",
+        "required": [
+          "element",
+          "root"
+        ],
+        "properties": {
+          "element": {
+            "type": "integer",
+            "description": "The element that was queried",
+            "example": 5,
+            "minimum": 0
+          },
+          "root": {
+            "type": "integer",
+            "description": "Root element of the set",
+            "example": 3,
+            "minimum": 0
+          }
+        }
+      },
+      "StatsResponse": {
+        "type": "object",
+        "description": "Statistics about a Union-Find instance",
+        "required": [
+          "total_elements",
+          "num_components"
+        ],
+        "properties": {
+          "num_components": {
+            "type": "integer",
+            "description": "Number of disjoint sets",
+            "minimum": 0
+          },
+          "total_elements": {
+            "type": "integer",
+            "description": "Total number of elements",
+            "minimum": 0
+          }
+        }
+      },
+      "UnionRequest": {
+        "type": "object",
+        "description": "Request body for union operation",
+        "required": [
+          "element1",
+          "element2"
+        ],
+        "properties": {
+          "element1": {
+            "type": "integer",
+            "description": "First element to union",
+            "example": 3,
+            "minimum": 0
+          },
+          "element2": {
+            "type": "integer",
+            "description": "Second element to union",
+            "example": 7,
+            "minimum": 0
+          }
+        }
+      },
+      "UnionResponse": {
+        "type": "object",
+        "description": "Result of union operation",
+        "required": [
+          "merged",
+          "root"
+        ],
+        "properties": {
+          "merged": {
+            "type": "boolean",
+            "description": "Whether the elements were successfully merged (false if already connected)"
+          },
+          "root": {
+            "type": "integer",
+            "description": "The new root of the set",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      },
+      "bearer_auth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://auth.example.com/oauth/authorize",
+            "tokenUrl": "https://auth.example.com/oauth/token",
+            "scopes": {
+              "delete:unionfind": "Delete instances",
+              "read:unionfind": "Read Union-Find instances",
+              "write:unionfind": "Create and modify instances"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Union-Find Management",
+      "description": "Lifecycle operations for creating and deleting Union-Find instances",
+      "externalDocs": {
+        "url": "https://en.wikipedia.org/wiki/Disjoint-set_data_structure",
+        "description": "Wikipedia article on Disjoint-set data structure"
+      }
+    },
+    {
+      "name": "Operations",
+      "description": "Core Union-Find operations: union, find, and connectivity checks",
+      "externalDocs": {
+        "url": "https://algs4.cs.princeton.edu/15uf/",
+        "description": "Princeton Algorithms course - Union-Find algorithms"
+      }
+    }
+  ]
+}

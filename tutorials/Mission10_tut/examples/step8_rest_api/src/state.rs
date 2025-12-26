@@ -3,7 +3,7 @@ use std::sync::{Arc, Mutex};
 use uuid::Uuid;
 use mission10::UnionFind;
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct AppState {
     // Map of Instance ID -> UnionFind structure
     instances: Arc<Mutex<HashMap<Uuid, UnionFind>>>,
@@ -11,9 +11,7 @@ pub struct AppState {
 
 impl AppState {
     pub fn new() -> Self {
-        Self {
-            instances: Arc::new(Mutex::new(HashMap::new())),
-        }
+        Self::default()
     }
 
     pub fn create_instance(&self, size: usize) -> Uuid {

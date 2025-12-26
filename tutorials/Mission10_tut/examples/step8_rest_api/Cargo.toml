@@ -2,6 +2,7 @@
 name = "step8_rest_api"
 version = "0.1.0"
 edition = "2021"
+default-run = "step8_rest_api"
 
 [workspace]
 

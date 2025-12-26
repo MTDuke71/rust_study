@@ -1,0 +1,16 @@
+{
+  "name": "unionfind-api-client-test",
+  "version": "1.0.0",
+  "description": "Test client for Union-Find REST API",
+  "scripts": {
+    "test": "ts-node test-client.ts"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  }
+}

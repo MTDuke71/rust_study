@@ -47,6 +47,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Build router
     let app = Router::new()
         .route("/health", get(health_check))
+        // SwaggerUi already serves /api-docs/openapi.json automatically
         .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
         .nest("/api/v1", handlers::routes())
         .layer(CorsLayer::permissive())
