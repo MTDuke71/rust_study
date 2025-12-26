@@ -75,6 +75,10 @@ fn parse_lock(lines: Vec<&str>) -> Lock {
     let mut heights = vec![0; width];
     
     // For locks, count down from top until we hit empty space
+    // Note: Using index-based loops here is clearer than iterator approach
+    // because we need to iterate over columns and access chars at that position
+    // across multiple rows
+    #[allow(clippy::needless_range_loop)]
     for col in 0..width {
         let mut height = 0;
         for row in 1..lines.len() {
@@ -95,6 +99,10 @@ fn parse_key(lines: Vec<&str>) -> Key {
     let mut heights = vec![0; width];
     
     // For keys, count up from bottom until we hit empty space
+    // Note: Using index-based loops here is clearer than iterator approach
+    // because we need to iterate over columns and access chars at that position
+    // across multiple rows in reverse order
+    #[allow(clippy::needless_range_loop)]
     for col in 0..width {
         let mut height = 0;
         for row in (0..lines.len()-1).rev() {
