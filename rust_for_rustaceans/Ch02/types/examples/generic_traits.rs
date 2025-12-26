@@ -86,7 +86,7 @@ fn associated_types() {
     
     let mut counter = Counter::new(5);
     print!("Counter yields: ");
-    while let Some(val) = counter.next() {
+    for val in counter {
         print!("{} ", val);
     }
     println!();

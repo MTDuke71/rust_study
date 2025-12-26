@@ -189,10 +189,10 @@ mod tests {
         let key2 = Key { heights: vec![3, 0, 2, 0, 1] };
         
         // First key overlaps in last column (4+3 > 5)
-        assert_eq!(lock.fits_with(&key1, 5), false);
+        assert!(!lock.fits_with(&key1, 5));
         
         // Second key fits
-        assert_eq!(lock.fits_with(&key2, 5), true);
+        assert!(lock.fits_with(&key2, 5));
     }
 
     #[test]
