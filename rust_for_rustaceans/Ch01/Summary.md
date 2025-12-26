@@ -112,7 +112,6 @@ How subtypes interact with generic parameters (Covariance, Invariance, and Contr
 - [[Clone vs Copy]] - When to use Clone vs Copy
 - [[static-lifetime]] - Understanding the 'static lifetime
 - [[memory-address-analysis]] - Low-level memory layout and addressing
-- [[variance]] - Covariance, Invariance, and Contravariance in Rust
 - [[phantom-data-type-safety]] - Using PhantomData for variance and type safety
 
 ### Related to Missions

@@ -1416,6 +1416,7 @@ unsafe {
 - [[mission-10]] - Union-Find data structure
 - [[rust-for-rustaceans-ch1]] - Foundations chapter
 - [[unsafe-rust]] - UnsafeCell primitives
+- [[variance]] - Why Cell and RefCell are invariant over T (type safety)
 - [[aoc2024-retrospective]] - AoC performance patterns using interior mutability
 - [[zettel-index]] - Knowledge graph navigation
 - [[rust-concepts-MOC]] - Related concepts hub

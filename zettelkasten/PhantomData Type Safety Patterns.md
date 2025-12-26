@@ -348,6 +348,7 @@ mod tests {
 - [[daily-study/Day16]] - Complex type system usage
 - [[zero-cost-abstractions]] - Performance characteristics
 - [[Type Safety Patterns]] - Compile-time guarantees
+- [[variance]] - Using PhantomData to control variance in custom types
 
 ## 🎓 Key Takeaways
 

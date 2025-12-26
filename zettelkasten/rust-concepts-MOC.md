@@ -28,6 +28,7 @@
 - [[daily-study/Day17]] - Explicit lifetime syntax
 - [[daily-study/Day20]] - Elision rules and complex relationships
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns and scenarios
+- [[variance]] - **Variance in Type System** - How covariance, invariance, and contravariance affect lifetimes and borrows
 - [[Ownership in Collections]] - Memory management with data structures
 - [[box-pattern-catalog]] - Heap allocation and smart pointer usage
 - [[Deref Coercion and Automatic Dereferencing]] - Smart pointer unwrapping mechanics

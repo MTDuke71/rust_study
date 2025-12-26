@@ -468,4 +468,4 @@ pub struct Node<T> {
 
 *Tags: #borrow-checker #ownership #memory-safety #rust-fundamentals #mental-models #compile-time-safety #RAII*
 
-*Links: [[zettel-index]] | [[Ownership Transfer Patterns]] | [[Borrow Checker Patterns and Troubleshooting]] | [[Memory Safety Guarantees]] | [[Smart Pointers]] | [[Reference Lifetimes]]*
+*Links: [[zettel-index]] | [[Ownership Transfer Patterns]] | [[Borrow Checker Patterns and Troubleshooting]] | [[Memory Safety Guarantees]] | [[Smart Pointers]] | [[Reference Lifetimes]] | [[variance]] | [[lifetime-parameters]]*

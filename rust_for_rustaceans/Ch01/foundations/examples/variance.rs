@@ -120,18 +120,18 @@ fn main() {
     // === VARIANCE TABLE ===
     {
         println!("╔══════════════════════════════════════════════════════════╗");
-        println!("║  Variance Quick Reference                               ║");
+        println!("║  Variance Quick Reference                                ║");
         println!("╠══════════════════════════════════════════════════════════╣");
-        println!("║  Type            | Variance over T  | Variance over 'a  ║");
+        println!("║  Type            | Variance over T  | Variance over 'a   ║");
         println!("╠══════════════════════════════════════════════════════════╣");
-        println!("║  &'a T           | Covariant        | Covariant         ║");
-        println!("║  &'a mut T       | Covariant        | Invariant         ║");
-        println!("║  Box<T>          | Covariant        | N/A               ║");
-        println!("║  Vec<T>          | Covariant        | N/A               ║");
-        println!("║  UnsafeCell<T>   | Invariant        | N/A               ║");
-        println!("║  Cell<T>         | Invariant        | N/A               ║");
-        println!("║  fn(T) -> U      | Contravariant(T) | Covariant(U)      ║");
-        println!("║  PhantomData<T>  | Covariant        | N/A               ║");
+        println!("║  &'a T           | Covariant        | Covariant          ║");
+        println!("║  &'a mut T       | Covariant        | Invariant          ║");
+        println!("║  Box<T>          | Covariant        | N/A                ║");
+        println!("║  Vec<T>          | Covariant        | N/A                ║");
+        println!("║  UnsafeCell<T>   | Invariant        | N/A                ║");
+        println!("║  Cell<T>         | Invariant        | N/A                ║");
+        println!("║  fn(T) -> U      | Contravariant(T) | Covariant(U)       ║");
+        println!("║  PhantomData<T>  | Covariant        | N/A                ║");
         println!("╚══════════════════════════════════════════════════════════╝\n");
     }
 
@@ -207,10 +207,10 @@ fn main() {
     println!("╔══════════════════════════════════════════════════════════╗");
     println!("║  Key Takeaways                                           ║");
     println!("╠══════════════════════════════════════════════════════════╣");
-    println!("║  • Covariant: Longer → Shorter lifetime OK (&T, Box)    ║");
-    println!("║  • Invariant: Must match exactly (&mut T, UnsafeCell)   ║");
-    println!("║  • Contravariant: Rare, function arguments              ║");
+    println!("║  • Covariant: Longer → Shorter lifetime OK (&T, Box)     ║");
+    println!("║  • Invariant: Must match exactly (&mut T, UnsafeCell)    ║");
+    println!("║  • Contravariant: Rare, function arguments               ║");
     println!("║  • Affects borrow checker and lifetime checking          ║");
-    println!("║  • Use PhantomData to control variance in unsafe code   ║");
+    println!("║  • Use PhantomData to control variance in unsafe code    ║");
     println!("╚══════════════════════════════════════════════════════════╝");
 }

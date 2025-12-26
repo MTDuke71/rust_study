@@ -87,3 +87,10 @@ reports/
 # Coverage profiling data
 *.profraw
 *.profdata
+
+# OpenAPI generated files (tutorials)
+tutorials/**/generated-client/node_modules/
+tutorials/**/generated-client/dist/
+tutorials/**/generated-client/.openapi-generator/
+tutorials/**/package-lock.json
+tutorials/**/openapitools.json
