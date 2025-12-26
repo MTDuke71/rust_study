@@ -700,18 +700,18 @@ cargo run --release
 
 ```
 ╔════════════════════════════════════════════════════════════╗
-║              ACHIEVEMENT UNLOCKED                           ║
+║              ACHIEVEMENT UNLOCKED                          ║
 ║                                                            ║
-║           🎯 ERROR HANDLING GRANDMASTER 🎯                 ║
+║           🎯 ERROR HANDLING GRANDMASTER 🎯                ║
 ║                                                            ║
-║  Your API now speaks clearly when things go wrong!        ║
+║  Your API now speaks clearly when things go wrong!         ║
 ║                                                            ║
 ║  Rewards:                                                  ║
-║  • Semantic error codes users can handle                  ║
-║  • Structured details for debugging                       ║
-║  • Tests that verify documentation accuracy               ║
-║  • Runtime that matches promises                          ║
-║  • Professional-grade error responses                     ║
+║  • Semantic error codes users can handle                   ║
+║  • Structured details for debugging                        ║
+║  • Tests that verify documentation accuracy                ║
+║  • Runtime that matches promises                           ║
+║  • Professional-grade error responses                      ║
 ╚════════════════════════════════════════════════════════════╝
 ```
 
