@@ -23,14 +23,6 @@ pub fn routes() -> Router<AppState> {
         .route("/unionfind/:id", delete(delete_instance))
 }
 
-// Generic error for simple cases
-fn error_response(code: StatusCode, message: &str) -> Response {
-    (
-        code,
-        Json(ErrorResponse::new(code.to_string(), message)),
-    ).into_response()
-}
-
 // Semantic error codes with details
 fn error_with_code(
     status: StatusCode,
@@ -495,7 +487,11 @@ pub async fn get_stats(
             StatusCode::OK,
             Json(stats),
         ).into_response(),
-        None => error_response(StatusCode::NOT_FOUND, "Instance not found"),
+        None => error_with_code(
+            StatusCode::NOT_FOUND,
+            error_codes::INSTANCE_NOT_FOUND,
+            "No Union-Find instance exists with the given ID",
+        ),
     }
 }
 

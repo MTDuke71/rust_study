@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  unionfind-api:
+    build:
+      context: ../../../..  # tutorials/Mission10_tut/examples/step8_rest_api -> rust_study
+      dockerfile: tutorials/Mission10_tut/examples/step8_rest_api/Dockerfile
+    container_name: unionfind-rest-api
+    ports:
+      - "8080:8080"
+    environment:
+      - RUST_LOG=info
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  # Optional: Add a lightweight web UI (Swagger UI is already included in the API)
+  # This is just an example if you wanted a separate service
+  
+networks:
+  default:
+    name: unionfind-network

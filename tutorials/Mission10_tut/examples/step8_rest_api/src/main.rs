@@ -8,26 +8,9 @@
 //! - OpenAPI documentation with utoipa
 //! - State management in async Rust
 
-use axum::{
-    routing::get,
-    Router,
-    http::StatusCode,
-    response::IntoResponse,
-};
 use std::net::SocketAddr;
-use utoipa::OpenApi;
-use utoipa_swagger_ui::SwaggerUi;
-use tower_http::cors::CorsLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
-
-// Import models and handlers
-mod models;
-mod handlers;
-mod state;
-mod openapi;
-
-use openapi::ApiDoc;
-use state::AppState;
+use step8_rest_api::create_app;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -41,28 +24,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("🚀 Starting Union-Find REST API...");
 
-    // Initialize state
-    let app_state = AppState::new();
+    // Build router using shared function
+    let app = create_app();
 
-    // Build router
-    let app = Router::new()
-        .route("/health", get(health_check))
-        // SwaggerUi already serves /api-docs/openapi.json automatically
-        .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
-        .nest("/api/v1", handlers::routes())
-        .layer(CorsLayer::permissive())
-        .with_state(app_state);
-
-    // Run server
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
+    // Get host and port from environment or use defaults
+    let host = std::env::var("SERVER_HOST").unwrap_or_else(|_| "127.0.0.1".to_string());
+    let port: u16 = std::env::var("SERVER_PORT")
+        .unwrap_or_else(|_| "8080".to_string())
+        .parse()
+        .unwrap_or(8080);
+    
+    let addr: SocketAddr = format!("{}:{}", host, port).parse()?;
     println!("✅ Server listening on http://{}", addr);
     println!("📚 Swagger UI: http://{}/swagger-ui", addr);
     
     let listener = tokio::net::TcpListener::bind(addr).await?;
     axum::serve(listener, app).await?;
     Ok(())
-}
-
-async fn health_check() -> impl IntoResponse {
-    (StatusCode::OK, "Union-Find API is healthy")
 }

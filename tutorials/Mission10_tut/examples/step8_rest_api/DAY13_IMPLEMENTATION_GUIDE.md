@@ -455,9 +455,11 @@ cargo test --test api_tests
 Start the server and test in Swagger UI:
 
 **Create Instance Tests:**
-- [ ] POST with `size: 0` → Returns `INVALID_SIZE` with details
-- [ ] POST with `size: -1` → Returns `INVALID_SIZE` with field_errors
-- [ ] POST with `size: 200000` → Returns `INVALID_SIZE` with max exceeded
+- [ ] POST with `size: 0` → Returns `400 Bad Request` with `INVALID_SIZE` error code and details
+- [ ] POST with `size: -1` → Returns `422 Unprocessable Entity` (Axum JSON deserialization error - usize cannot be negative)
+  - Expected response: `"Failed to deserialize the JSON body into the target type: size: invalid value: integer `-1`, expected usize at line 2 column 12"`
+  - Note: This error occurs at the framework level before reaching our handler
+- [ ] POST with `size: 200000` → Returns `400 Bad Request` with `INVALID_SIZE` error code (max exceeded)
 
 **Union Tests:**
 - [ ] POST union with invalid UUID → Returns `INSTANCE_NOT_FOUND`

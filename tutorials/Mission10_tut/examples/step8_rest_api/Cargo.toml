@@ -18,9 +18,23 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
 utoipa = { version = "4", features = ["axum_extras", "uuid"] }
 utoipa-swagger-ui = { version = "6", features = ["axum"] }
+dashmap = "6"
 
 # Link to the main mission library for UnionFind implementation
 # Assuming mission10 crate is available in the workspace or we copy the implementation
 # For this tutorial step, we might need to copy the UnionFind struct or rely on the workspace
 # If mission10 is a crate in the workspace:
 mission10 = { path = "../../../../missions/Mission10" }
+
+[dev-dependencies]
+tower = { version = "0.4", features = ["util"] }
+http-body-util = "0.1"
+criterion = "0.5"
+
+[[bench]]
+name = "error_responses"
+harness = false
+
+[[bench]]
+name = "api_benchmarks"
+harness = false
