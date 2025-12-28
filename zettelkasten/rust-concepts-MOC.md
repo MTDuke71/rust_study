@@ -80,7 +80,7 @@
 - [[Generic Programming]] - Type parameterization
 - [[Iterator Traits]] - Custom iteration implementations
 - [[Clone vs Copy]] - Value semantics understanding
-- [[PhantomData Type Safety Patterns]] - Zero-cost type safety with PhantomData
+- [[phantom-data-type-safety]] - Zero-cost type safety with PhantomData
 
 ### **Module System & Organization**
 

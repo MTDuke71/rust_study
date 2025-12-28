@@ -60,4 +60,4 @@ If you still want to see it, you can get your puzzle input.
 
 ---
 
-*Links: [[summary]] | [[../src/solver/day03.rs]]*
+*Links: [[advent_of_code/aoc2025/Problem_Statements/summary]] | [[../src/solver/day03.rs]]*

@@ -224,7 +224,7 @@ mod tests {
 - [[Generic Programming]] - Lifetimes as generic parameters
 - [[mission-3]] - Practical lifetime usage
 - [[Multiple Lifetimes Deep Dive]] - Advanced lifetime patterns
-- [[rust_for_rustaceans/Ch01/Summary]] - Low-level memory model and lifetime foundations
+- [[rfr-ch01-summary]] - Low-level memory model and lifetime foundations
 - [[variance]] - How lifetime subtyping interacts with generic types (covariance, invariance, contravariance)
 
 ## Quick Reference

@@ -60,7 +60,7 @@ You can also [Share] this puzzle.
 - [[../../../zettelkasten/aoc-2015-day09|AoC 2015 Day 9]] - Both use combinatorial search (TSP vs recipe optimization)
 - [[../../../zettelkasten/aoc-2015-day13|AoC 2015 Day 13]] - Similar optimization problem with different constraints
 - [[../../../zettelkasten/aoc-collection-problems|AoC Collection Problems]] - Part of optimization problem category
-- [[summary|Problem Summary]] - Day 15 entry with full analysis
+- [[advent_of_code/aoc2015/Problem_Statements/summary|Problem Summary]] - Day 15 entry with full analysis
 - [[../examples/day15_iterator_usage|Day 15 Iterator Usage Guide]] - Detailed iterator pattern explanations
 
 ### Related Concepts

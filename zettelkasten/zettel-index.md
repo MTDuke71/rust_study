@@ -224,7 +224,7 @@
 - [[Generic Programming]] - Type parameterization techniques
 - [[Trait Objects]] - Dynamic dispatch patterns
 - [[Unsafe Rust - Raw Pointers and Safety Contracts]] - Building safe abstractions from unsafe code
-- [[PhantomData Type Safety Patterns]] - Zero-cost type safety
+- [[phantom-data-type-safety]] - Zero-cost type safety
 - [[rule-30-computational-irreducibility]] - **Rule 30 & Computational Irreducibility** - How simple deterministic rules generate infinite complexity, connecting Mission 10 debugging to fundamental questions about computational reality
 
 **Software Architecture:**

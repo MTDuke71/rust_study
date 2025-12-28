@@ -1,4 +1,4 @@
-← [[summary|AoC 2015 Index]]
+← [[advent_of_code/aoc2015/Problem_Statements/summary|AoC 2015 Index]]
 
 --- Day 4: The Ideal Stocking Stuffer ---
 Santa needs help mining some AdventCoins (very similar to bitcoins) to use as gifts for all the economically forward-thinking little girls and boys.

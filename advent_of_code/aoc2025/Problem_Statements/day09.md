@@ -159,7 +159,7 @@ Both parts of this puzzle are complete! They provide two gold stars: **
 **Key Insight**: Never materialize 9.36B grid - use sparse HashSet boundaries + ray casting point-in-polygon.
 
 ### Related Content
-- **[[summary]]** - Day 9 detailed analysis with 4 failed approaches and memory calculations
+- **[[advent_of_code/aoc2025/Problem_Statements/summary]]** - Day 9 detailed analysis with 4 failed approaches and memory calculations
 - **[[../examples/day09_approaches]]** - Complete journey: dense grid crash → sparse crash → timeout → AABB success
 - **[[../../zettelkasten/AoC Patterns MOC]]** - Computational geometry and sparse representation patterns
 - **[[../../zettelkasten/ray-casting-algorithm]]** - Point-in-polygon algorithm details

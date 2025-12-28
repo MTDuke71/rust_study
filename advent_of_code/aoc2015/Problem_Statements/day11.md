@@ -61,6 +61,6 @@ You can also [Share] this puzzle.
 - [[Week 1 Overview|../../../zettelkasten/Week 1 Overview]] - String fundamentals
 
 **Problem Catalog:**
-- [[summary.md|summary]] - All AoC 2015 problems overview
+- [[advent_of_code/aoc2015/Problem_Statements/summary|summary]] - All AoC 2015 problems overview
 
 *Tags: #aoc2015 #day11 #corporate-policy #password-generation #validation #base26 #string-processing*

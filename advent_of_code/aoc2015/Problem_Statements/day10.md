@@ -56,6 +56,6 @@ You can also [Share] this puzzle.
 - [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common algorithms
 
 **Problem Catalog:**
-- [[summary.md|summary]] - All AoC 2015 problems overview
+- [[advent_of_code/aoc2015/Problem_Statements/summary|summary]] - All AoC 2015 problems overview
 
 *Tags: #aoc2015 #day10 #look-and-say #sequence #string-processing #run-length-encoding*

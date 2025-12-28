@@ -418,7 +418,7 @@ fn test_simulate_step() {
 
 ### Related AoC Problems
 - [[day06]] - Day 6: Grid manipulation with rectangular regions
-- [[summary]] - Problem type distribution and patterns
+- [[advent_of_code/aoc2015/Problem_Statements/summary]] - Problem type distribution and patterns
 
 ### Performance & Algorithms
 - [[../../zettelkasten/Time-Complexity-Analysis]] - Big-O notation for grid algorithms
@@ -433,4 +433,4 @@ fn test_simulate_step() {
 
 *Tags: #aoc2015 #day18 #cellular-automaton #game-of-life #grid-simulation #mission6 #neighbor-counting #8-connected #double-buffering #visualization #pattern-evolution #state-machine #rust-implementation*
 
-*Links: [[summary]] | [[../../missions/Mission6/README]] | [[../../zettelkasten/AoC Patterns MOC]] | [[../README]]*
+*Links: [[advent_of_code/aoc2015/Problem_Statements/summary]] | [[../../missions/Mission6/README]] | [[../../zettelkasten/AoC Patterns MOC]] | [[../README]]*

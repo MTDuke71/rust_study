@@ -1,4 +1,4 @@
-← [[summary|AoC 2015 Index]]
+← [[advent_of_code/aoc2015/Problem_Statements/summary|AoC 2015 Index]]
 
 --- Day 3: Perfectly Spherical Houses in a Vacuum ---
 Santa is delivering presents to an infinite two-dimensional grid of houses.

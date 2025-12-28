@@ -18,7 +18,7 @@ See [[API Design Patterns]] for comprehensive naming guidelines and [[Collection
 - [[Ownership Methods]] - Method ownership patterns (&self, &mut self, self)
 - [[HashMap Implementation]] - Mission5 method design using these patterns
 - [[Iterator Methods]] - Advanced method chaining patterns from Daily Study Week 2
-- [[Memory Address Analysis]] - Understanding method calls and memory layout
+- [[memory-address-analysis]] - Understanding method calls and memory layout
 - [[zettel-index]] - Main learning hub
 
 ## Core Concepts
@@ -49,7 +49,7 @@ let area = rect.area();           // Method with .
 - **Ergonomic API**: `rect.area()` vs `area(&rect)` - see [[API Design Patterns]]
 - **Method Chaining**: `rect.scale(2).rotate(90).draw()` - see [[Iterator Methods]] for advanced patterns
 - **Namespace Organization**: Related functions grouped in `impl` blocks - see [[Collections MOC]] for examples
-- **Automatic Referencing**: `rect.area()` automatically borrows `&rect` - see [[Ownership Methods]] and [[Memory Address Analysis]]
+- **Automatic Referencing**: `rect.area()` automatically borrows `&rect` - see [[Ownership Methods]] and [[memory-address-analysis]]
 
 ## Implementation Patterns
 
@@ -164,7 +164,7 @@ let value = map.get("key");             // Immutable method
 
 ### Method Resolution and Automatic Dereferencing
 
-See [[Ownership Methods]] for detailed borrowing patterns and [[Memory Address Analysis]] for understanding what happens at the memory level.
+See [[Ownership Methods]] for detailed borrowing patterns and [[memory-address-analysis]] for understanding what happens at the memory level.
 
 ```rust
 // Rust automatically handles borrowing in method calls
@@ -242,7 +242,7 @@ impl Collection {
 
 ### Ownership Guidelines
 
-See [[Ownership Methods]] for detailed analysis of these patterns and [[Memory Address Analysis]] for understanding the memory implications.
+See [[Ownership Methods]] for detailed analysis of these patterns and [[memory-address-analysis]] for understanding the memory implications.
 
 ```rust
 impl Data {
@@ -261,7 +261,7 @@ impl Data {
 
 ### Understanding Method Calls at the Memory Level
 
-See [[Memory Address Analysis]] and [[Virtual Memory]] for complete details on how method calls work in memory.
+See [[memory-address-analysis]] and [[Virtual Memory]] for complete details on how method calls work in memory.
 
 ```rust
 let rect = Rectangle::new(30, 50);
@@ -333,13 +333,13 @@ impl OuterStruct {
 - Connects to [[Virtual Memory]] understanding of method calls
 
 **Memory & Performance:**
-- Understanding method call overhead - see [[Memory Address Analysis]]
+- Understanding method call overhead - see [[memory-address-analysis]]
 - Zero-cost abstractions in method calls - see [[Performance Patterns]]
 - Stack vs heap implications for method parameters - see [[Virtual Memory]]
 
 ---
 **Zettelkasten Integration:**
-*Links: [[Collections MOC]] | [[mission-5]] | [[API Design Patterns]] | [[Ownership Methods]] | [[Memory Address Analysis]] | [[zettel-index]]*
+*Links: [[Collections MOC]] | [[mission-5]] | [[API Design Patterns]] | [[Ownership Methods]] | [[memory-address-analysis]] | [[zettel-index]]*
 
 *Tags: #method-syntax #structs #api-design #rust-book #ch5 #mission5 #ergonomic-apis #ownership #memory-analysis #performance*
 

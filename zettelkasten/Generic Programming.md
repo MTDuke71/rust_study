@@ -352,7 +352,7 @@ impl Door<Unlocked> {
 }
 ```
 
-Related: [[PhantomData Type Safety Patterns]]
+Related: [[phantom-data-type-safety]]
 
 ### **Generic Collections**
 
@@ -637,7 +637,7 @@ Related: [[daily-study/Day19]]
 
 ### **Advanced Patterns**
 
-- [[PhantomData Type Safety Patterns]] - Zero-cost type state
+- [[phantom-data-type-safety]] - Zero-cost type state
 - [[Clone vs Copy]] - Value semantics with generics
 - [[zero-cost-abstractions]] - Monomorphization and performance
 - [[box-pattern-catalog]] - Heap allocation with generics
@@ -670,7 +670,7 @@ Related: [[daily-study/Day19]]
 2. **Trait Bounds** → [[daily-study/Day15]]
 3. **Associated Types** → [[daily-study/Day18]]
 4. **Practice** → [[mission-1]], [[mission-5]]
-5. **Advanced** → [[PhantomData Type Safety Patterns]]
+5. **Advanced** → [[phantom-data-type-safety]]
 
 ---
 

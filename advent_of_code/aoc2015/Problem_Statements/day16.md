@@ -179,7 +179,7 @@ pub fn add_property(&mut self, key: String, value: usize) {
 - [[../../../zettelkasten/range-based-matching|Range-Based Matching]] - Greater-than, less-than, equals comparisons
 
 ### Incoming Links (Related Problems)
-- [[summary|Problem Summary]] - Day 16 entry
+- [[advent_of_code/aoc2015/Problem_Statements/summary|Problem Summary]] - Day 16 entry
 - [[../../../zettelkasten/aoc-collection-problems|AoC Collection Problems]]
 - [[../../../zettelkasten/aoc-filtering-problems|AoC Filtering Problems]] - Find item matching criteria
 

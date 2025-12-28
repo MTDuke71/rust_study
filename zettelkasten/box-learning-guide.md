@@ -353,7 +353,7 @@ unsafe {
 ### **Memory Management**
 
 - **[[Ownership and Borrowing]]**: Core ownership principles
-- **[[Memory Address Analysis]]**: Understanding heap vs stack
+- **[[memory-address-analysis]]**: Understanding heap vs stack
 - **[[Unsafe Rust - Raw Pointers and Safety Contracts]]**: Manual memory management
 
 ### **Data Structures**
@@ -366,4 +366,4 @@ unsafe {
 
 *Tags: #box #smart-pointers #heap-allocation #ownership #memory-management #recursive-structures #trait-objects #performance #mission-integration #fundamentals*
 
-*Links: [[zettel-index]] | [[box-pattern-catalog]] | [[Ownership and Borrowing]] | [[Memory Address Analysis]] | [[mission-4]] | [[Collections MOC]] | [[rust-concepts-MOC]]*
+*Links: [[zettel-index]] | [[box-pattern-catalog]] | [[Ownership and Borrowing]] | [[memory-address-analysis]] | [[mission-4]] | [[Collections MOC]] | [[rust-concepts-MOC]]*

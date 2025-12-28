@@ -74,7 +74,7 @@ The Daily Study track provides **structured daily materials** following the 3-Tr
 | [[daily-study/Day18\|Day 18]] | Advanced Traits | Associated types, defaults | [[Rust Trinity - Struct Trait Impl]] |
 | [[daily-study/Day19\|Day 19]] | Trait Objects | Dynamic dispatch with dyn | [[Trait Objects]] |
 | [[daily-study/Day20\|Day 20]] | Advanced Lifetimes | Elision, 'static | [[Multiple Lifetimes Deep Dive]] |
-| [[daily-study/Day21\|Day 21]] | Generics Practice | Building flexible APIs | [[PhantomData Type Safety Patterns]] |
+| [[daily-study/Day21\|Day 21]] | Generics Practice | Building flexible APIs | [[phantom-data-type-safety]] |
 
 **Mission Integration**:
 

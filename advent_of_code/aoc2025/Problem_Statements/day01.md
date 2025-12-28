@@ -98,6 +98,6 @@ If you still want to see it, you can get your puzzle input.
 
 ---
 
-*Links: [[summary]] | [[../examples/day01_debugging_analysis]] | [[../../aoc_pattern_recognition/README]]*
+*Links: [[advent_of_code/aoc2025/Problem_Statements/summary]] | [[../examples/day01_debugging_analysis]] | [[../../aoc_pattern_recognition/README]]*
 
 *Tags: #aoc #2025 #day01 #simulation #modular-arithmetic #circular-buffer*

@@ -84,7 +84,7 @@ You can also [Share] this puzzle.
 **Optimization**: Squared distances eliminate sqrt() for 11% performance improvement.
 
 ### Related Content
-- **[[summary]]** - Day 8 detailed analysis with Mission 10 validation and benchmark results
+- **[[advent_of_code/aoc2025/Problem_Statements/summary]]** - Day 8 detailed analysis with Mission 10 validation and benchmark results
 - **[[../benches/day08_benchmark_results]]** - Performance analysis: sqrt vs squared distances (24.3ms → 21.6ms)
 - **[[../../zettelkasten/AoC Patterns MOC]]** - Union-Find patterns and connectivity problems
 - **[[../../missions/Mission10/README]]** - UnionFind implementation with path compression

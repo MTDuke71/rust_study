@@ -87,7 +87,7 @@ Find all of the paths that lead from svr to out. How many of those paths visit b
 **Performance**: Both parts complete instantly despite massive path counts.
 
 ### Related Content
-- **[[summary]]** - Day 11 detailed analysis with algorithm evolution and learning highlights
+- **[[advent_of_code/aoc2025/Problem_Statements/summary]]** - Day 11 detailed analysis with algorithm evolution and learning highlights
 - **[[../../zettelkasten/state-based-memoization]]** - Deep dive on composite state memoization patterns (Day 7 + Day 11)
 - **[[../../zettelkasten/AoC Patterns MOC]]** - Graph algorithms and DFS/path counting patterns
 - **[[day07]]** - Day 7 used simple position-based memoization (390T timelines)

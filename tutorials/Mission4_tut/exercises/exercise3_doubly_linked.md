@@ -365,7 +365,7 @@ Your implementation should:
 - [[weak-references]] - Weak<T> for breaking reference cycles
 - [[rc-weak-patterns]] - Rc/Weak combination patterns
 - [[reference-cycles]] - Detecting and preventing memory leaks
-- [[PhantomData Type Safety Patterns]] - Advanced type safety
+- [[phantom-data-type-safety]] - Advanced type safety
 
 **Interior Mutability:**
 - [[interior-mutability]] - Comprehensive guide

@@ -1,4 +1,4 @@
-← [[summary|AoC 2015 Index]]
+← [[advent_of_code/aoc2015/Problem_Statements/summary|AoC 2015 Index]]
 
 --- Day 5: Doesn't He Have Intern-Elves For This? ---
 Santa needs help figuring out which strings in his text file are naughty or nice.

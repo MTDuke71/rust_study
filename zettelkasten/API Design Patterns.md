@@ -790,8 +790,8 @@ impl MyString {
 ### **Advanced Topics**
 
 - **[[Unsafe Rust - Raw Pointers and Safety Contracts]]** - Safe abstractions over unsafe code
-- **[[PhantomData Type Safety Patterns]]** - Zero-cost type safety
-- **[[Memory Address Analysis]]** - Understanding memory layout and performance
+- **[[phantom-data-type-safety]]** - Zero-cost type safety
+- **[[memory-address-analysis]]** - Understanding memory layout and performance
 
 ### **Project-Specific Resources**
 
@@ -802,4 +802,4 @@ impl MyString {
 ---
 
 *Tags: #api-design #patterns #rust #public-interface #ergonomics #performance #forward-compatibility #best-practices*
-*Links: [[API Design Principles]] | [[zettel-index]] | [[rust-book-ch9-12-review]] | [[rust-concepts-MOC]] | [[mission-5]] | [[Error Handling Patterns]] | [[Iterator Patterns]] | [[anyhow and thiserror]] | [[Rest Patterns]] | [[Memory Address Analysis]]*
+*Links: [[API Design Principles]] | [[zettel-index]] | [[rust-book-ch9-12-review]] | [[rust-concepts-MOC]] | [[mission-5]] | [[Error Handling Patterns]] | [[Iterator Patterns]] | [[anyhow and thiserror]] | [[Rest Patterns]] | [[memory-address-analysis]]*

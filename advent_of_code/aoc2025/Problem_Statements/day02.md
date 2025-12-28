@@ -65,6 +65,6 @@ Both parts of this puzzle are complete! They provide two gold stars: **
 
 ---
 
-*Links: [[summary]] | [[day01]] | [[../../aoc_pattern_recognition/README]]*
+*Links: [[advent_of_code/aoc2025/Problem_Statements/summary]] | [[day01]] | [[../../aoc_pattern_recognition/README]]*
 
 *Tags: #aoc #2025 #day02 #string-processing #pattern-matching #repetition-detection*

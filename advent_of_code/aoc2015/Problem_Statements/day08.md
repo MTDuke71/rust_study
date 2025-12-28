@@ -1,4 +1,4 @@
-← [[summary|AoC 2015 Index]]
+← [[advent_of_code/aoc2015/Problem_Statements/summary|AoC 2015 Index]]
 
 --- Day 8: Matchsticks ---
 Space on the sleigh is limited this year, and so Santa will be bringing his list as a digital copy. He needs to know how much space it will take up when stored.

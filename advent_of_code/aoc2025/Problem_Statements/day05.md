@@ -59,4 +59,4 @@ Both parts of this puzzle are complete! They provide two gold stars: **
 
 ---
 
-*Links: [[summary]] | [[../src/solver/day05.rs]]*
+*Links: [[advent_of_code/aoc2025/Problem_Statements/summary]] | [[../src/solver/day05.rs]]*

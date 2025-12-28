@@ -1,4 +1,4 @@
-← [[summary|AoC 2015 Index]]
+← [[advent_of_code/aoc2015/Problem_Statements/summary|AoC 2015 Index]]
 
 --- Day 9: All in a Single Night ---
 Every year, Santa manages to deliver all of his presents in a single night.

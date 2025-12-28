@@ -248,7 +248,7 @@ struct InvariantLifetime<'a> {
 - Creating wrapper types with controlled subtyping behavior
 - Ensuring soundness in custom smart pointers or collections
 
-Related: [[PhantomData Type Safety Patterns]]
+Related: [[phantom-data-type-safety]]
 
 ---
 
@@ -316,7 +316,7 @@ fn buggy<'a, 'b>(x: &'a mut &'b str) -> &'a mut &'a str {
 - [[Ownership and Borrowing]] - Shared vs mutable references have different variance
 
 ### **Enables**
-- [[PhantomData Type Safety Patterns]] - Using `PhantomData` to control variance in custom types
+- [[phantom-data-type-safety]] - Using `PhantomData` to control variance in custom types
 - [[interior-mutability]] - Understanding why `Cell`/`RefCell` are invariant over `T`
 - [[Unsafe Rust - Raw Pointers and Safety Contracts]] - Variance is critical for unsafe code soundness
 
@@ -335,4 +335,4 @@ fn buggy<'a, 'b>(x: &'a mut &'b str) -> &'a mut &'a str {
 
 *Tags: #rust-for-rustaceans #variance #type-system #lifetimes #subtyping #covariance #invariance #contravariance #borrow-checker #advanced*
 
-*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[lifetime-parameters]] | [[Borrow Checker Fundamentals]] | [[PhantomData Type Safety Patterns]] | [[interior-mutability]] | [[Generic Programming]]*
+*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[lifetime-parameters]] | [[Borrow Checker Fundamentals]] | [[phantom-data-type-safety]] | [[interior-mutability]] | [[Generic Programming]]*

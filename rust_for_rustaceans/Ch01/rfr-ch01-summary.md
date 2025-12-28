@@ -2,7 +2,7 @@
 
 ## Overview
 
-Chapter 1, titled **Foundations**, focuses on establishing a precise understanding of Rust's fundamental concepts regarding memory, ownership, and borrowing to support reasoning about more complex topics later in the book.
+Chapter 1, titled **Foundations**, focuses on establishing a precise understanding of Rust's fundamental concepts regarding memory, [[ownership]], and borrowing to support reasoning about more complex topics later in the book.
 
 **Related Concepts:** [[Memory Management]], [[Ownership and Borrowing]], [[Borrow Checker Fundamentals]], [[lifetime-parameters]], [[rust-concepts-MOC]]
 
@@ -48,7 +48,7 @@ A scratch space for function calls using stack frames. Variables here live only 
 A pool of memory for values that need to live beyond a specific function call. It requires explicit allocation and deallocation (freeing). See [[box-learning-guide]] for heap allocation patterns.
 
 #### Static Memory
-Contains the program binary and static variables. Values here live for the entire execution of the program (`'static`). Related: [[static-lifetime]].
+Contains the program binary and static variables. Values here live for the entire execution of the program (`'static`). See [[static-lifetime]] for detailed explanation of the `'static` lifetime.
 
 ---
 
@@ -95,18 +95,38 @@ How subtypes interact with generic parameters (Covariance, Invariance, and Contr
 
 ---
 
+## Summary of Key Concepts
+
+**Memory and Ownership:**
+- [[Memory Management]] - Stack, heap, and static memory regions
+- [[ownership-fundamentals]] - Single ownership and move semantics
+- [[Clone vs Copy]] - When to use explicit vs implicit duplication
+- [[copy-trait]] - Bitwise duplication for simple types
+- [[drop-trait]] - Automatic resource cleanup (RAII)
+
+**Borrowing and Lifetimes:**
+- [[Borrow Checker Fundamentals]] - Shared vs exclusive access
+- [[lifetime-parameters]] - Generic lifetimes and annotations
+- [[static-lifetime]] - Understanding the `'static` lifetime
+- [[variance]] - Covariance, invariance, and contravariance
+
+**Advanced Patterns:**
+- [[memory-address-analysis]] - Low-level memory layout and debugging
+- [[phantom-data-type-safety]] - Using PhantomData for variance and type safety
+- [[interior-mutability]] - Mutation through shared references
+
+---
+
 ## Links and References
 
 ### Existing Zettelkasten Notes
-- [[Memory Management]] - Comprehensive guide to Rust's memory safety
+- [[Memory Management]] - Comprehensive guide to Rust's [[memory safety]]
 - [[Ownership and Borrowing]] - Core Rust concepts
 - [[Borrow Checker Fundamentals]] - Understanding the borrow checker with mental models
 - [[lifetime-parameters]] - Lifetime annotations and generic lifetimes
 - [[interior-mutability]] - Interior mutability patterns with `RefCell`, `Cell`, `Mutex`
 - [[drop-trait]] - Automatic cleanup and RAII patterns
 - [[Smart Pointers MOC]] - Box, Rc, RefCell, and more
-
-### Concepts to Create
 - [[move-semantics]] - Detailed move semantics patterns and examples
 - [[copy-trait]] - Copy trait implementation and semantics
 - [[Clone vs Copy]] - When to use Clone vs Copy
