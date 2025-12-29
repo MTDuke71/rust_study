@@ -37,6 +37,7 @@
 ## 🗂️ Workspace Files
 
 - **[[../../rust_for_rustaceans/Ch02/WORKSPACE_CREATED]]** - Chapter 2 workspace setup documentation
+- **[[../../rust_for_rustaceans/Ch02/rfr-ch02-summary]]** - Chapter 2 comprehensive summary
 
 ---
 

@@ -349,6 +349,10 @@ Mission 10 uniquely contributed to professional debugging capabilities:
 - **[[Missions Overview]]** - Complete mission system context with V-Cycle methodology
 - **[[Mission10 Tutorial]]** - Step-by-step educational progression
 - **[[../../missions/Mission10/MISSION10_COMPLETION_REPORT]]** - Final completion report with full traceability
+- **[[../../tutorials/Mission10_tut/examples/step8_rest_api/DAY12_IMPLEMENTATION_GUIDE]]** - Day 12 OpenAPI implementation guide
+- **[[../../tutorials/Mission10_tut/examples/step8_rest_api/DAY13_IMPLEMENTATION_GUIDE]]** - Day 13 integration testing guide
+- **[[../../tutorials/Mission10_tut/examples/step8_rest_api/DOCKER_DEPLOYMENT]]** - Docker containerization guide
+- **[[../../tutorials/Mission10_tut/examples/step8_rest_api/PERFORMANCE]]** - Comprehensive performance analysis
 - **[[../../tutorials/Mission10_tut/examples/step8_rest_api/STEP8_PERFORMANCE_RESULTS]]** - REST API performance benchmarks
 - **[[../../tutorials/Mission10_tut/examples/step8_rest_api/ACTUAL_API_RESPONSES]]** - API response validation
 - **[[../../tutorials/Mission10_tut/examples/step8_rest_api/DAY13_COMPLETION_SUMMARY]]** - Day 13 integration testing summary

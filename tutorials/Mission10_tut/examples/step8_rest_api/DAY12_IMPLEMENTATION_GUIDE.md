@@ -3,7 +3,8 @@
 **Mission 10 - Day 12 Activity**  
 **Goal**: Level up your API docs from "pretty good" to "production masterpiece" 🚀  
 **Time**: 90-120 minutes (grab your favorite beverage ☕)  
-**Prerequisites**: Completed Day 11 (Basic Utoipa annotations and Swagger UI integration)
+**Prerequisites**: Completed Day 11 (Basic Utoipa annotations and Swagger UI integration)  
+**Zettelkasten**: [[mission-10]] - Mission 10 knowledge hub
 
 > **Today's Vibe**: If Day 11 was building a house, Day 12 is interior design, security system, and throwing a housewarming party! 🏠✨
 
