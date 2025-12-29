@@ -1,5 +1,7 @@
 # Mission 11 Tutorial - Creation Summary
 
+**Zettelkasten**: [[mission-11]] - Mission 11 knowledge hub
+
 ## ✅ Tutorial Complete!
 
 All 7 steps of the Mission 11 Dynamic Programming tutorial have been created following the tutorial-instructions.md guidelines.

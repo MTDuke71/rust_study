@@ -1,5 +1,5 @@
 # Mission 11 Tutorial: Practice Exercises
-
+**Zettelkasten**: [[mission-11]] - Mission 11 knowledge hub
 This directory contains 3 comprehensive practice exercises to reinforce dynamic programming concepts from the tutorial steps.
 
 ## 📋 Exercise Overview

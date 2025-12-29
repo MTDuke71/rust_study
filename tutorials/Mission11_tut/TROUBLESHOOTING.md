@@ -1,5 +1,7 @@
 # Troubleshooting Guide - Mission 11 Tutorial
 
+**Zettelkasten**: [[mission-11]] - Mission 11 knowledge hub
+
 Common issues encountered during the tutorial and their solutions.
 
 ---
