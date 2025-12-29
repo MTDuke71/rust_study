@@ -226,6 +226,7 @@
 - [[Unsafe Rust - Raw Pointers and Safety Contracts]] - Building safe abstractions from unsafe code
 - [[phantom-data-type-safety]] - Zero-cost type safety
 - [[rule-30-computational-irreducibility]] - **Rule 30 & Computational Irreducibility** - How simple deterministic rules generate infinite complexity, connecting Mission 10 debugging to fundamental questions about computational reality
+- [[karps-21-np-complete-problems]] - **Karp's 21 NP-Complete Problems** - Historical foundation of computational complexity theory (1972), demonstrating equivalence of fundamental problems across diverse domains
 
 **Software Architecture:**
 
