@@ -69,6 +69,7 @@ members = [
     "tutorials/Mission8_tut",
     "tutorials/Mission9_tut",
     "tutorials/Mission10_tut",
+    "tutorials/Mission11_tut",
     "advanced_examples/Brackets_Basic",
     "advanced_examples/Brackets_Ext", 
     "advanced_examples/competitive_ring_bfs",

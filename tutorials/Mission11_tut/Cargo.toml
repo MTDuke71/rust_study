@@ -1,0 +1,46 @@
+[package]
+name = "mission11_tut"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[example]]
+name = "step1_naive_recursion"
+path = "examples/step1_naive_recursion.rs"
+
+[[example]]
+name = "step2_manual_hashmap"
+path = "examples/step2_manual_hashmap.rs"
+
+[[example]]
+name = "step3_lifetime_safety"
+path = "examples/step3_lifetime_safety.rs"
+
+[[example]]
+name = "step4_generic_cache"
+path = "examples/step4_generic_cache.rs"
+
+[[example]]
+name = "step5_boolean_to_counting"
+path = "examples/step5_boolean_to_counting.rs"
+
+[[example]]
+name = "step6_bottom_up_table"
+path = "examples/step6_bottom_up_table.rs"
+
+[[example]]
+name = "step7_real_aoc_problems"
+path = "examples/step7_real_aoc_problems.rs"
+
+[[example]]
+name = "exercise1_fibonacci"
+path = "exercises/exercise1_fibonacci.rs"
+
+[[example]]
+name = "exercise2_longest_subsequence"
+path = "exercises/exercise2_longest_subsequence.rs"
+
+[[example]]
+name = "exercise3_coin_change"
+path = "exercises/exercise3_coin_change.rs"
