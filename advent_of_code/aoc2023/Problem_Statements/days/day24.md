@@ -1,5 +1,8 @@
 ## --- Day 24: Never Tell Me The Odds ---
 
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+
+
 It seems like something is going wrong with the snow-making process. Instead of forming snow, the water that's been absorbed into the air seems to be forming [hail](https://en.wikipedia.org/wiki/Hail)!
 
 Maybe there's something you can do to break up the hailstones?

@@ -1,5 +1,8 @@
 ## --- Day 22: Sand Slabs ---
 
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+
+
 Enough sand has fallen; it can finally filter water for Snow Island.
 
 Well, *almost*.

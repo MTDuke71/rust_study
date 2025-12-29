@@ -1,5 +1,8 @@
 ## --- Day 13: Point of Incidence ---
 
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+
+
 With your help, the hot springs team locates an appropriate spring which launches you neatly and precisely up to the edge of *Lava Island*.
 
 There's just one problem: you don't see any *lava*.

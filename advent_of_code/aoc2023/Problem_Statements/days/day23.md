@@ -1,5 +1,8 @@
 ## --- Day 23: A Long Walk ---
 
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+
+
 The Elves resume water filtering operations! Clean water starts flowing over the edge of Island Island.
 
 They offer to help *you* go over the edge of Island Island, too! Just hold on tight to one end of this impossibly long rope and they'll lower you down a safe distance from the massive waterfall you just created.

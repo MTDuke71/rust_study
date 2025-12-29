@@ -1,5 +1,8 @@
 ## --- Day 18: Lavaduct Lagoon ---
 
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+
+
 Thanks to your efforts, the machine parts factory is one of the first factories up and running since the lavafall came back. However, to catch up with the large backlog of parts requests, the factory will also need a *large supply of lava* for a while; the Elves have already started creating a large lagoon nearby for this purpose.
 
 However, they aren't sure the lagoon will be big enough; they've asked you to take a look at the *dig plan* (your puzzle input). For example:

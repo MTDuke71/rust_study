@@ -1,5 +1,8 @@
 ## --- Day 25: Snowverload ---
 
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+
+
 *Still* somehow without snow, you go to the last place you haven't checked: the center of Snow Island, directly below the waterfall.
 
 Here, someone has clearly been trying to fix the problem. Scattered everywhere are hundreds of weather machines, almanacs, communication modules, hoof prints, machine parts, mirrors, lenses, and so on.

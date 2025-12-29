@@ -1,5 +1,7 @@
 # Ch02 Workspace - Quick Reference
 
+**Zettelkasten**: [[rust-for-rustaceans]] - Rustaceans book knowledge hub
+
 ## ✅ Successfully Created
 
 A complete Cargo workspace for Chapter 2 with 8 focused examples demonstrating all concepts from "Rust for Rustaceans" Chapter 2: Types.

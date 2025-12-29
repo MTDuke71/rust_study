@@ -1,5 +1,8 @@
 ## --- Day 12: Hot Springs ---
 
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+
+
 You finally reach the hot springs! You can see steam rising from secluded areas attached to the primary, ornate building.
 
 As you turn to enter, the [researcher](11) stops you. "Wait - I thought you were looking for the hot springs, weren't you?" You indicate that this definitely looks like hot springs to you.

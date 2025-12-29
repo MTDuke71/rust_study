@@ -1,5 +1,8 @@
 ## --- Day 7: Camel Cards ---
 
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+
+
 Your all-expenses-paid trip turns out to be a one-way, five-minute ride in an [airship](https://en.wikipedia.org/wiki/Airship). (At least it's a *cool* airship!) It drops you off at the edge of a vast desert and descends back to Island Island.
 
 "Did you bring the parts?"

@@ -1,5 +1,8 @@
 ## --- Day 20: Pulse Propagation ---
 
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+
+
 With your help, the Elves manage to find the right parts and fix all of the machines. Now, they just need to send the command to boot up the machines and get the sand flowing again.
 
 The machines are far apart and wired together with long *cables*. The cables don't connect to the machines directly, but rather to communication *modules* attached to the machines that perform various initialization tasks and also act as communication relays.
