@@ -1,5 +1,7 @@
 # Performance Benchmarks - Union-Find REST API
 
+**Zettelkasten**: [[mission-10]] - Mission 10 knowledge hub
+
 **Test Date**: 2025-12-28  
 **Purpose**: Establish performance baselines for Union-Find REST API operations
 

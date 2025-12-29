@@ -1,5 +1,7 @@
 # Day 13: Implementing Structured Errors & Testing 🧪🔧
 
+**Zettelkasten**: [[mission-10]] - Mission 10 knowledge hub
+
 **Mission 10 - Day 13 Activity**  
 **Goal**: Make runtime errors match the beautiful OpenAPI documentation we created on Day 12! 🎯  
 **Time**: 90-120 minutes (testing is satisfying work! ☕)  

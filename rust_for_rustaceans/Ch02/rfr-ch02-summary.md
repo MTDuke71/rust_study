@@ -1,5 +1,7 @@
 # Chapter 2: Types
 
+**Zettelkasten**: [[rust-for-rustaceans]] - Rustaceans book knowledge hub
+
 This chapter explores how the Rust compiler represents types in memory and how the trait system functions under the hood, covering alignment, layout, dispatch, and coherence rules.
 
 ## 1. Types in Memory

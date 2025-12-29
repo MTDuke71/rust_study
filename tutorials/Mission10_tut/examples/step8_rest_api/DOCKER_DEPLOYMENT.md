@@ -1,5 +1,7 @@
 # Docker Deployment Guide 🐳
 
+**Zettelkasten**: [[mission-10]] - Mission 10 knowledge hub
+
 ## Quick Start
 
 ### Build and Run with Docker Compose (Recommended)
