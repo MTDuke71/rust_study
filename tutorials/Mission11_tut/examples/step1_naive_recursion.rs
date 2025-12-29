@@ -209,17 +209,33 @@ fn validate_understanding() {
 
 /// Demonstrates exponential time complexity with increasing input sizes
 fn demonstrate_exponential_growth() {
-    let patterns = vec!["r", "wr", "b", "g", "br", "rb"];
+    // CRITICAL: Use patterns that force maximum backtracking!
+    // Key insight: Must FAIL to see exponential - success short-circuits!
+    let patterns = vec!["r", "rr", "rrr"];
     
-    // Progressively longer designs
+    // Using "rrr...rx" forces trying ALL r-combinations before failing on 'x'
+    // This explores the ENTIRE exponential tree before returning false!
     let test_sizes = vec![
-        ("brwrr", 5),           // Very fast
-        ("bwrrrbgbr", 10),      // Still fast
-        ("rbbrwgbrwrr", 12),    // Getting slower
+        ("rrrrx", 5),                       // Must try all combos of 4 r's before failing
+        ("rrrrrrx", 7),                     // All combos of 6 r's
+        ("rrrrrrrrx", 9),                   // Getting slower
+        ("rrrrrrrrrrx", 11),                // Noticeable
+        ("rrrrrrrrrrrrx", 13),              // Slow
+        ("rrrrrrrrrrrrrrx", 15),            // Very slow
+        ("rrrrrrrrrrrrrrrrx", 17),          // Really slow
+        ("rrrrrrrrrrrrrrrrrrx", 19),        // Seconds
+        ("rrrrrrrrrrrrrrrrrrrrx", 21),      // Many seconds
+        ("rrrrrrrrrrrrrrrrrrrrrrx", 23),    // 10+ seconds
+        ("rrrrrrrrrrrrrrrrrrrrrrrrx", 25),  // 30+ seconds - WARNING!
     ];
     
     println!("\nMeasuring time complexity growth:");
-    println!("(Warning: Don't try designs longer than 15 chars without memoization!)");
+    println!("💡 Using patterns ['r', 'rr', 'rrr'] with 'rrr...x' designs (that FAIL!)");
+    println!("   KEY: Success short-circuits, but FAILURE must explore ALL paths!");
+    println!("   Algorithm tries every r-combination before failing on 'x'");
+    println!("   Combinations follow Fibonacci: F(20)≈6,765  F(24)≈46,368!");
+    println!("(Warning: Lengths 21+ can take 10+ seconds without memoization!)");
+    println!("(Press Ctrl+C if it takes too long - you've seen the exponential wall!)");
     
     for (design, length) in test_sizes {
         let start = Instant::now();
