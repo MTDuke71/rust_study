@@ -1,6 +1,6 @@
 # Oxide Session Context - AI Learning Companion
 
-**Last Updated**: 2025-12-24 (updated evening)
+**Last Updated**: 2025-12-28 (evening - Mission 11 Day 1 complete)
 **Your Name**: Oxide (Rust Learning AI)
 **Purpose**: Restore context across chat sessions to maintain continuity
 
@@ -39,42 +39,46 @@
 ## 📖 Current Learning State
 
 ### **Active Focus** (Dec 2024 - Jan 2025)
-1. **PRIMARY**: Rust for Rustaceans - Chapter 1 (Foundations) ✅ Rust Book COMPLETE (Ch1-17)
-   - Interior mutability deep dive (UnsafeCell, Cell, RefCell)
-   - Understanding Rust's real guarantees and safety philosophy
-   - Bridging theory to practice (Mission 4 Rc<RefCell<T>> patterns)
-2. **ACTIVE**: Advent of Code problem solving
-   - 2024: Complete (50/50 stars) ✅
-   - 2015: Complete solutions available
-   - **2023 PLANNED**: Starting January 2025 using two-phase workflow
-     - Phase 1: Solve (get stars fast, <45 min)
-     - Phase 2: Polish (performance, visualization, patterns)
-     - See: [[.github/AOC2023_WORKFLOW_GUIDE.md]] for complete methodology
-   - Pattern recognition framework established
-   - 2024: Complete (50/50 stars) ✅
-   - 2015: Complete solutions available
-   - Pattern recognition framework established
+1. **PRIMARY**: Rust for Rustaceans - Chapter 2 (Types) - IN PROGRESS
+   - Ch1 COMPLETE ✅ (Foundations - ownership, lifetimes, variance)
+   - Ch2.1 COMPLETE ✅ (Types in Memory - alignment, layout, repr attributes)
+   - Ch2.2 NEXT: Traits and Trait Bounds
+   - Deep understanding of type system and memory layout
+2. **ACTIVE**: Mission 11 Tutorial (Dynamic Programming)
+   - **Day 1 COMPLETE** ✅: Step 1 - Naive Recursion (experienced exponential pain!)
+   - **Day 2 NEXT**: Step 2 - Manual HashMap memoization (6,800x speedup!)
+   - Following 1 step/day deep learning strategy
+   - 7-step progressive mastery: naive → memoization → lifetimes → generics → counting → bottom-up → AoC
 3. **ACTIVE**: Zettelkasten knowledge consolidation (488+ notes)
-4. **DEFERRED**: Mission work (10 completed, paused for Book mastery)
-5. **ON HOLD**: Daily study format (Week 6 completed, proved disjointed)
+4. **COMPLETED**: Mission 10 - REST API with Union-Find ✅
+   - All 11 REQ-IDs satisfied, 73+ tests passing
+   - Docker deployment, OpenAPI docs, performance benchmarks
+   - Production-ready quality achieved
+5. **COMPLETED**: AoC 2024 (50/50 stars) ✅
+6. **PLANNED**: AoC 2023 (January 2025, two-phase workflow)
+7. **DEFERRED**: Additional missions (paused for Book mastery)
+8. **ON HOLD**: Daily study format (Week 6 completed, proved disjointed)
 
 ### **Learning Flow**
 ```
-Rust Book → AoC application → Zettelkasten integration
+Rust Book (Ch1-17 COMPLETE) ✅
          ↓
-    Consolidate patterns, build knowledge graph
+Rustaceans Ch2 (Types - IN PROGRESS)
          ↓
-    Mission data structures (when resumed)
+Mission 11 Tutorial (1 step/day deep learning)
+         ↓
+    Consolidate patterns in zettelkasten
+         ↓
+    Apply to future missions when resumed
 ```
 
-### **Recent Completions** (2025-12-24)
-- ✅ **Rust Book Ch 01-22: COMPLETE** - All chapters finished, 80+ workspace examples
-- ✅ AoC 2024 Day 25: Code Chronicle (ALL 50 STARS!)
-- ✅ Mission 10 Day 11: OpenAPI/Swagger documentation (utoipa integration)
-- ✅ Zettelkasten enhancement: interior-mutability.md (+380 lines)
-  - Rust for Rustaceans Ch1.4 deep dive
-  - Cell vs RefCell safety philosophy (~180 lines)
-  - Bidirectional links to mission-4
+### **Recent Completions** (2025-12-28)
+- ✅ **Mission 10: REST API COMPLETE** - All 11 REQ-IDs, 73+ tests, Docker deployment
+- ✅ **Rust for Rustaceans Ch1 COMPLETE** - Foundations (ownership, lifetimes, variance)
+- ✅ **Rust for Rustaceans Ch2.1 COMPLETE** - Types in Memory (alignment, layout, repr)
+- ✅ **Mission 11 Tutorial Day 1 COMPLETE** - Experienced exponential complexity (68ms at length 25!)
+- ✅ Zettelkasten pages: [[Clone vs Copy]], [[static-lifetime]], [[alignment-and-layout]]
+- ✅ Renamed zettelkasten files to kebab-case convention
 
 ---
 
@@ -114,7 +118,17 @@ Rust Book → AoC application → Zettelkasten integration
    - Ownership = Component lifecycle management
    - Composition = Integrating Grid + Graph (Mission 6 + 8)
 
-### **Recent Insight** (2025-12-24)
+### **Recent Insight** (2025-12-28)
+**Mission 11 Step 1 - Exponential Complexity Discovery:**
+- Initial test patterns didn't show exponential behavior (fast success paths)
+- Key insight: Success returns on FIRST path → no branching explored
+- Solution: Use patterns `['r', 'rr', 'rrr']` with `'rrr...x'` (fails on 'x')
+- Forces exploring ALL r-combinations before discovering failure
+- Result: Beautiful Fibonacci-style growth (~3.5x every +2 length)
+- Length 25: 68ms (proves exponential pain viscerally!)
+- Setup for tomorrow: Same algorithm with HashMap cache → 6,800x speedup
+
+**Previous Insight** (2025-12-24)
 User realized Mission 4 covered Rc<RefCell<T>> but didn't appreciate details initially:
 - **First pass**: Learn to USE the component
 - **Second pass**: Understand WHY it was designed that way
@@ -198,12 +212,35 @@ cargo run --bin day25
 
 ## 🎓 Key Technical Insights (Recent)
 
+### **Exponential vs Linear Complexity** (2025-12-28)
+- **Success short-circuits**: Finding one solution is O(n) - returns on first successful path
+- **Failure explores everything**: Must try ALL combinations - O(Fibonacci(n))
+- **Practical impact**: Length 25 with patterns ['r','rr','rrr'] + 'rrr...x':
+  - Naive recursion: 68.27ms (explores ~46,000 combinations)
+  - With memoization (tomorrow): Expected ~10µs (6,800x speedup!)
+- **Key lesson**: Memoization = trading space (HashMap cache) for time (avoid recomputation)
+
+### **Memory Layout & Alignment** (2025-12-28)
+- Alignment = address divisibility (u32 at 4-byte boundary, u64 at 8-byte)
+- Padding bytes added for alignment → affects struct size
+- repr(Rust) = default, compiler optimizes field order
+- repr(C) = C-compatible layout, predictable ordering for FFI
+- repr(packed) = minimal size, unaligned access risks
+- repr(transparent) = zero-cost wrapper, same layout as inner type
+
 ### **Interior Mutability** (2025-12-24)
 - Rust's guarantee: "No aliased mutable access" NOT "shared data is immutable"
 - RefCell "safer" in philosophy: Fails loudly (panic) vs Cell's silent races
 - Safety hierarchy: Compile-time > Runtime panic > Runtime silent > Unsafe
 - Type system signals intent: `&Cell<T>` explicitly shows mutation capability
 - Rc<RefCell<T>> pattern: Shared ownership + interior mutability (Mission 4)
+
+### **REST API Production Quality** (2025-12-28)
+- OpenAPI/Swagger with utoipa (automatic spec generation from Rust types)
+- Structured error responses with semantic codes (INVALID_SIZE, INSTANCE_NOT_FOUND)
+- Docker multi-stage builds (rust:latest → debian:bookworm-slim, ~80MB final)
+- Criterion benchmarking proves algorithmic complexity (O(α(n)) verified)
+- Integration tests with tower::ServiceExt::oneshot (no server needed)
 
 ### **AoC Patterns**
 - Always normalize line endings: `.replace("\r\n", "\n")` before `split("\n\n")`
@@ -265,9 +302,12 @@ Then let me know you're ready to continue!
 
 ---
 
-*Last session highlights*:
-- 🎄 Completed AoC 2024 (50/50 stars!)
-- 📚 Enhanced interior-mutability with philosophy (~380 lines)
-- 🔗 Added bidirectional zettelkasten links
-- 💡 Realized "running examples >>> reading books"
-- 🎅 Created Christmas-themed 2025-12-25.md template
+*Last session highlights* (2025-12-28):
+- 🎯 **Mission 10 REST API COMPLETE** (11 REQ-IDs, 73+ tests, Docker, OpenAPI)
+- 📚 **Rust for Rustaceans Ch1 COMPLETE** (ownership, lifetimes, variance)
+- 📚 **Rust for Rustaceans Ch2.1 COMPLETE** (alignment, layout, repr)
+- 💡 **Mission 11 Tutorial Day 1 COMPLETE** (experienced exponential pain!)
+- 🔍 **Key Discovery**: Success short-circuits (fast), failure explores all paths (exponential)
+- 📈 **Performance**: Length 25 = 68ms with patterns ['r','rr','rrr'] + 'rrr...x'
+- 🚀 **Tomorrow**: Step 2 memoization → 6,800x speedup (68ms → 10µs)
+- 🗂️ **Zettelkasten**: Created [[Clone vs Copy]], [[static-lifetime]], [[alignment-and-layout]]
