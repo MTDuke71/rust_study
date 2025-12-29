@@ -382,6 +382,7 @@ perf report
 - [[Performance Benchmarking]] - Measuring abstraction overhead
 - [[interior-mutability]] - When zero-cost breaks down
 - [[monomorphization]] - How generics achieve zero cost
+- [[static-vs-dynamic-dispatch]] - Static dispatch as zero-cost
 - [[Performance Patterns]] - Optimization using abstractions
 - [[ownership]] - Compile-time memory management
 - [[Memory Safety]] - Safety without runtime cost

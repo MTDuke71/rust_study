@@ -57,6 +57,10 @@ fn demonstrate_core_concept() {
         println!("  Speedup: {:.1}x faster!", speedup);
     }
     
+    println!("\n⚠️  Note: At 12 chars, memoization appears SLOWER due to HashMap overhead!");
+    println!("   For small inputs, cache operations cost more than they save.");
+    println!("   Real benefits appear with longer designs (15+ chars) - see validation section below.");
+    
     println!("\nKey Insight: Cache stores results for each unique substring");
     println!("  Before computing: Check if we've seen this substring before");
     println!("  After computing: Store result so we never recompute it");
@@ -149,9 +153,9 @@ fn pattern_2_progressive_difficulty() {
     
     let test_cases = vec![
         "brwrr",              // 5 chars
-        "bwrrrbgbr",          // 10 chars
-        "rbbrwgbrwrrbw",      // 14 chars
-        "bwrrrgbrwrrbwgbr",   // 17 chars (would timeout without memo!)
+        "bwrrrbgbr",          // 9 chars
+        "rbbrwgbrwrrbw",      // 13 chars
+        "bwrrrgbrwrrbwgbr",   // 16 chars (would timeout without memo!)
     ];
     
     for design in test_cases {
@@ -274,6 +278,84 @@ fn validate_understanding() {
     
     println!("\n✅ If you understood cache behavior, you grasp memoization!");
     println!("🔄 If confused, review the demonstrate_core_concept() section.");
+    
+    // Performance demonstration
+    println!("\n--- Performance Reality Check ---");
+    demonstrate_exponential_vs_linear();
+}
+
+/// Demonstrates how memoization transforms exponential → linear complexity
+///
+/// Uses the same test cases from Step 1 that showed exponential growth.
+/// Now watch how memoization makes them trivial!
+fn demonstrate_exponential_vs_linear() {
+    // Same patterns as Step 1: force maximum backtracking on FAILURE
+    let patterns = vec!["r", "rr", "rrr"];
+    
+    println!("\nComparing naive vs memoized with exponential-forcing patterns:");
+    println!("💡 Patterns: ['r', 'rr', 'rrr'] with 'rrr...x' designs (that FAIL!)");
+    println!("   These designs force trying ALL r-combinations before failing on 'x'");
+    println!("   Without memoization: exponential (Fibonacci growth ~6,765 calls at length 20!)");
+    println!("   With memoization: linear (each substring computed only ONCE!)");
+    println!();
+    
+    // Start with smaller sizes that naive can still handle
+    let test_sizes = vec![
+        ("rrrrx", 5),
+        ("rrrrrrx", 7),
+        ("rrrrrrrrx", 9),
+        ("rrrrrrrrrrx", 11),
+        ("rrrrrrrrrrrrx", 13),
+        ("rrrrrrrrrrrrrrx", 15),
+        ("rrrrrrrrrrrrrrrrx", 17),
+        ("rrrrrrrrrrrrrrrrrrx", 19),
+        ("rrrrrrrrrrrrrrrrrrrrx", 21),  // Naive starts to struggle
+    ];
+    
+    println!("Length | Naive Time     | Memo Time      | Speedup  | Cache");
+    println!("-------|----------------|----------------|----------|-------");
+    
+    let mut last_cache_size = 0;
+    for (design, length) in &test_sizes {
+        // Naive version - will get exponentially slower
+        let start_naive = Instant::now();
+        let result_naive = can_make_naive(&patterns, design);
+        let time_naive = start_naive.elapsed();
+        
+        // Memoized version - stays fast!
+        let mut memo = HashMap::new();
+        let start_memo = Instant::now();
+        let result_memo = can_make_memo(&patterns, design, &mut memo);
+        let time_memo = start_memo.elapsed();
+        
+        assert_eq!(result_naive, result_memo);  // Should always match!
+        
+        last_cache_size = memo.len();
+        
+        let speedup = if time_memo.as_nanos() > 0 {
+            time_naive.as_nanos() as f64 / time_memo.as_nanos() as f64
+        } else {
+            1.0
+        };
+        
+        println!("  {:2}   | {:12.1?} | {:12.1?} | {:7.1}x | {} entries",
+                 length, time_naive, time_memo, speedup, memo.len());
+        
+        // Stop if naive is taking too long (> 1 second)
+        if time_naive.as_secs() >= 1 {
+            println!("\n⚠️  Naive version getting too slow - stopping early!");
+            println!("   (Memoized could easily handle length 100+ in microseconds!)");
+            break;
+        }
+    }
+    
+    println!("\n🎯 Key Observations:");
+    println!("   • Naive: Time DOUBLES with each +2 length (exponential!)");
+    println!("   • Memo: Time stays roughly constant (linear in design length!)");
+    println!("   • Speedup: Grows exponentially as problems get harder");
+    println!("   • Cache: Only {} entries needed (one per unique suffix)", last_cache_size);
+    println!("\n💡 This is why DP/memoization is essential for AoC Day 19!");
+    println!("   Real inputs have 60+ character designs - impossible without memoization!");
 }
 
 #[cfg(test)]

@@ -357,7 +357,7 @@ Item: 32
 
 **Core Concepts:**
 - [[alignment-and-layout]] - Memory alignment details
-- [[static-vs-dynamic-dispatch]] - Dispatch trade-offs
+- ✅ [[static-vs-dynamic-dispatch]] - Dispatch trade-offs
 - [[orphan-rule]] - Coherence and orphan rule
 - [[higher-ranked-trait-bounds]] - HRTB deep dive
 - [[impl-trait]] - Existential types

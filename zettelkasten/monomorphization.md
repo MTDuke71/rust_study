@@ -58,9 +58,10 @@ Monomorphization happens during the compilation phase. Heavy use of generics can
 
 - [[Trait Objects]] - The alternative: dynamic dispatch
 - [[performance-patterns]] - Trade-offs between static and dynamic dispatch
+- [[static-vs-dynamic-dispatch]] - Comprehensive comparison of dispatch mechanisms
 
 ---
 
 *Tags: #concept #performance #rust-book #intermediate #compiler #generics*
 
-*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[Trait Objects]] | [[zero-cost-abstractions]]*
+*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[Trait Objects]] | [[zero-cost-abstractions]] | [[static-vs-dynamic-dispatch]]*
