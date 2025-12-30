@@ -22,7 +22,7 @@ fn generic_type_parameters() {
         x: i32,
         y: i32,
     }
-    
+    // Implement From for different types T (tuple, array, single value)
     impl From<(i32, i32)> for Point {
         fn from((x, y): (i32, i32)) -> Self {
             Point { x, y }
@@ -166,16 +166,16 @@ fn comparison_example() {
     println!("┌─────────────────────────────────────────────────────────┐");
     println!("│ Generic Type Parameter (trait Foo<T>)                   │");
     println!("├─────────────────────────────────────────────────────────┤");
-    println!("│ • Need multiple implementations per type               │");
-    println!("│ • Example: From<T>, Add<Rhs>, Into<T>                  │");
-    println!("│ • User may need to specify type                        │");
+    println!("│ • Need multiple implementations per type                │");
+    println!("│ • Example: From<T>, Add<Rhs>, Into<T>                   │");
+    println!("│ • User may need to specify type                         │");
     println!("└─────────────────────────────────────────────────────────┘");
     println!();
     println!("┌─────────────────────────────────────────────────────────┐");
     println!("│ Associated Type (trait Foo {{ type Bar; }})               │");
     println!("├─────────────────────────────────────────────────────────┤");
-    println!("│ • Only one implementation per type                     │");
-    println!("│ • Example: Iterator::Item, Deref::Target               │");
-    println!("│ • Better ergonomics (no type annotation needed)        │");
+    println!("│ • Only one implementation per type                      │");
+    println!("│ • Example: Iterator::Item, Deref::Target                │");
+    println!("│ • Better ergonomics (no type annotation needed)         │");
     println!("└─────────────────────────────────────────────────────────┘");
 }

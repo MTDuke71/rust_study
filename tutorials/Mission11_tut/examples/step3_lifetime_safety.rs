@@ -209,43 +209,63 @@ fn handle_edge_cases() {
 }
 
 fn cache_outlives_function() {
-    println!("\nEdge Case 1: Cache can live longer than function call");
+    println!("\nEdge Case 1: Cache can outlive function calls (with 'static strings)");
     
     let patterns = vec!["r", "wr"];
     let mut memo = HashMap::new();
     
     {
-        let design1 = "wrr";
+        let design1 = "wrr";  // String literal - has 'static lifetime!
         can_make_with_lifetimes(&patterns, design1, &mut memo);
         println!("  After first call: cache has {} entries", memo.len());
     }
-    // design1 is dropped here, but cache still exists
+    // design1 VARIABLE dropped, but "wrr" DATA lives forever ('static)
+    // Cache keys still valid because they point to 'static string literal
     
     {
-        let design2 = "wr";
+        let design2 = "wr";   // Another 'static string literal
         can_make_with_lifetimes(&patterns, design2, &mut memo);
         println!("  After second call: cache has {} entries", memo.len());
     }
+    // design2 VARIABLE dropped, but "wr" DATA still lives ('static)
     
-    println!("  Note: Cache outlives individual function calls");
-    println!("  But: Cache keys must not outlive their source strings!");
+    println!("  ✅ Works because: String literals have 'static lifetime");
+    println!("  ⚠️  Would FAIL with String::from() - data freed when dropped!");
     
-    // This is why we need different designs for each call
-    // Can't reuse memo across different source strings!
+    println!("\n  Example that would NOT compile:");
+    println!("     let mut memo = HashMap::new();");
+    println!("     {{");
+    println!("         let design = String::from(\"wrr\");  // Heap allocated");
+    println!("         solve(&design, &mut memo);");
+    println!("     }}  // ERROR: design freed, but memo has references to it!");
 }
 
 fn multiple_inputs_same_cache() {
-    println!("\nEdge Case 2: Can't share cache across different source strings");
+    println!("\nEdge Case 2: Mixing string literals in same cache (works!)");
     
-    println!("  ❌ This won't compile:");
-    println!("     let design1 = \"abc\";");
-    println!("     let design2 = \"xyz\";");
+    println!("  ✅ This DOES compile (both 'static):");
+    println!("     let design1 = \"abc\";              // 'static");
+    println!("     let design2 = \"xyz\";              // 'static");
     println!("     let mut memo = HashMap::new();");
-    println!("     solve(design1, &mut memo);  // keys from design1");
-    println!("     solve(design2, &mut memo);  // ERROR: keys from design2");
+    println!("     solve(design1, &mut memo);");
+    println!("     solve(design2, &mut memo);  // OK - both 'static");
     
-    println!("\n  Problem: Cache keys from design1 can't mix with keys from design2");
-    println!("  Solution: Use separate caches, or owned String keys");
+    println!("\n  ❌ This won't compile (heap allocated):");
+    println!("     let design1 = String::from(\"abc\");");
+    println!("     let design2 = String::from(\"xyz\");");
+    println!("     let mut memo = HashMap::new();");
+    println!("     solve(&design1, &mut memo);      // memo borrows design1");
+    println!("     solve(&design2, &mut memo);      // ERROR: memo already borrowed!");
+    
+    println!("\n  Problem: Can't have two different lifetimes in same HashMap");
+    println!("  - Keys from design1 have lifetime 'a1");
+    println!("  - Keys from design2 have lifetime 'a2");
+    println!("  - HashMap<&'a str, bool> can only have ONE lifetime 'a");
+    
+    println!("\n  Solutions:");
+    println!("  - Use 'static string literals (both 'a = 'static)");
+    println!("  - Use separate caches for each source string");
+    println!("  - Use owned String keys (allocates, but flexible)");
 }
 
 fn empty_string_lifetime() {
