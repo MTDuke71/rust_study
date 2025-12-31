@@ -78,7 +78,7 @@ impl<K: Hash + Eq, V: Clone> MemoCache<K, V> {
     /// Get value from cache or compute it (convenience method for non-recursive cases)
     fn get_or_compute<F>(&mut self, key: K, compute: F) -> V
     where
-        F: FnOnce() -> V,
+        F: FnOnce() -> V,  // F is the type of 'compute' - FnOnce: called once on cache miss, most flexible
     {
         if let Some(value) = self.cache.get(&key) {
             self.hits += 1;
@@ -124,6 +124,7 @@ struct CacheStats {
 fn demonstrate_pattern_matching_with_cache() {
     println!("\n--- Using Generic Cache for Pattern Matching ---");
     
+    // Example 1: Design with limited backtracking
     let patterns = vec!["r", "wr", "b", "br"];
     let design = "brwrrbrwrr";
     
@@ -132,13 +133,31 @@ fn demonstrate_pattern_matching_with_cache() {
     let result = can_make_with_cache(&patterns, design, &mut cache);
     let stats = cache.stats();
     
-    println!("Design: '{}'", design);
-    println!("Result: {}", result);
-    println!("Statistics:");
+    println!("Example 1: Design with varied patterns");
+    println!("  Design: '{}'", design);
+    println!("  Result: {}", result);
     println!("  Cache hits: {}", stats.hits);
     println!("  Cache misses: {}", stats.misses);
     println!("  Hit rate: {:.1}%", stats.hit_rate * 100.0);
-    println!("  Cache size: {}", stats.size);
+    println!("  → Limited hits (different paths, less overlap)\n");
+    
+    // Example 2: Cache value shown across multiple queries
+    let patterns2 = vec!["ab", "cd"];
+    
+    let mut cache2 = MemoCache::new();
+    
+    println!("Example 2: Cache reuse across multiple queries");
+    
+    let designs = vec!["abcd", "cdab", "abcdabcd"];
+    for design in &designs {
+        let result = can_make_with_cache(&patterns2, design, &mut cache2);
+        let stats = cache2.stats();
+        println!("  '{}' → {} | hits: {}, misses: {}", 
+                 design, result, stats.hits, stats.misses);
+    }
+    
+    println!("  → Later queries reuse cached substrings from earlier queries!");
+    println!("  → 'cd' and 'ab' computed once, then cached for all queries");
 }
 
 /// Pattern matching using generic cache
@@ -261,8 +280,9 @@ fn pattern_3_cache_statistics_analysis() {
                  len, stats.hits, stats.misses, stats.hit_rate * 100.0, stats.size);
     }
     
-    println!("\n  Observation: Hit rate increases with design length");
-    println!("  Why? Longer strings have more repeated substrings");
+    println!("\n  Observation: All queries have 0% hit rate within single run");
+    println!("  Why? Each substring is UNIQUE as string gets shorter (no overlap)");
+    println!("  Cache value: Reusing SAME cache across multiple queries (see Example 2)");
 }
 
 /// Edge case handling
