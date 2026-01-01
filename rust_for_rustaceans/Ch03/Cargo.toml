@@ -1,0 +1,48 @@
+[package]
+name = "rustaceans_ch03_interfaces"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+# Book examples
+[[example]]
+name = "ch03_book"
+path = "Ch03.rs"
+
+# Week 2 Daily Examples
+
+# Day 1 - Sunday: Unsurprising
+[[example]]
+name = "unsurprising"
+path = "examples/unsurprising.rs"
+
+# Day 2 - Monday: Flexible (Generic Args & Object Safety)
+[[example]]
+name = "flexible_generic_args"
+path = "examples/flexible_generic_args.rs"
+
+# Day 3 - Tuesday: Flexible (Ownership & Destructors)
+[[example]]
+name = "flexible_ownership"
+path = "examples/flexible_ownership.rs"
+
+# Day 4 - Wednesday: Obvious
+[[example]]
+name = "obvious"
+path = "examples/obvious.rs"
+
+# Day 5 - Thursday: Constrained (Type Modifications)
+[[example]]
+name = "constrained_types"
+path = "examples/constrained_types.rs"
+
+# Day 6 - Friday: Constrained (Hidden Contracts)
+[[example]]
+name = "constrained_contracts"
+path = "examples/constrained_contracts.rs"
+
+# Day 7 - Saturday: Review
+[[example]]
+name = "review"
+path = "examples/review.rs"
