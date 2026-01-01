@@ -115,6 +115,50 @@ async fn fetch_data() -> Result<String, Error> {
 // No thread overhead or complex runtime
 ```
 
+### 7. **PhantomData and Type-State Pattern**
+
+```rust
+use std::marker::PhantomData;
+
+// State markers - zero-sized types (ZSTs)
+struct Locked;
+struct Unlocked;
+
+// Door with compile-time state tracking
+struct Door<State> {
+    _state: PhantomData<State>,  // 0 bytes at runtime!
+}
+
+impl Door<Locked> {
+    fn unlock(self) -> Door<Unlocked> { Door { _state: PhantomData } }
+}
+
+impl Door<Unlocked> {
+    fn open(&self) { println!("Door opened"); }
+}
+
+// Compile-time enforcement, zero runtime cost
+let door = Door::<Locked> { _state: PhantomData };
+// door.open();  // ❌ Compile error - can't open locked door
+let door = door.unlock();
+door.open();     // ✅ Works
+```
+
+**Why it's zero-cost:**
+- `PhantomData<T>` is literally **0 bytes** - completely erased in compiled output
+- `Door<Locked>` and `Door<Unlocked>` are **identical at runtime**
+- State checking happens **entirely at compile time**
+- No discriminant, no enum tag, no runtime conditionals
+
+```rust
+// Proof: both are the same size
+assert_eq!(std::mem::size_of::<PhantomData<String>>(), 0);
+assert_eq!(std::mem::size_of::<Door<Locked>>(), 0);
+assert_eq!(std::mem::size_of::<Door<Unlocked>>(), 0);
+```
+
+See: [[type-state-pattern]] | [[phantom-data-type-safety]]
+
 ## ⚡ Performance Characteristics
 
 ### Compiler Optimizations
@@ -222,7 +266,7 @@ let filtered: Vec<_> = data
 // Compiles to optimal loops with no abstraction overhead
 ```
 
-### Mission 4: Linked List with Rc<RefCell<T>>
+### Mission 4: Linked List with `Rc<RefCell<T>>`
 
 ```rust
 // Zero-cost when compiler can optimize dispatch

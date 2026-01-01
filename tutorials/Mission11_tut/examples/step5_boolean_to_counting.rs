@@ -151,8 +151,8 @@ fn pattern_1_multiple_solutions() {
     let test_cases = vec![
         "r",      // 1 way: "r"
         "br",     // 2 ways: "b"+"r" OR "br"
-        "brr",    // 3 ways: "b"+"r"+"r", "br"+"r", "b"+"r"+"r" (wait, let's count)
-        "wrr",    // Multiple ways
+        "brr",    // 2 ways: "br"+"r" OR "b"+"r"+"r"
+        "wrr",    // 1 way: "wr"+"r"
     ];
     
     println!("\n  Design | Exists? | Count | Explanation");
@@ -173,6 +173,14 @@ fn pattern_1_multiple_solutions() {
 fn pattern_2_fibonacci_comparison() {
     println!("\nPattern 2: Boolean vs Counting Fibonacci");
     
+    // Why Fibonacci? The recurrence relation is f(n) = f(n-1) + f(n-2)
+    // To reach position n, you can arrive from:
+    //   - Position n-1 with a step of 1 → f(n-1) ways
+    //   - Position n-2 with a step of 2 → f(n-2) ways
+    // Total ways: f(n) = f(n-1) + f(n-2) ← Fibonacci!
+    //
+    // Sequence: f(0)=1, f(1)=1, f(2)=2, f(3)=3, f(4)=5, f(5)=8, f(7)=21...
+    
     println!("\n  Boolean version: Can we reach N with steps of 1 or 2?");
     println!("  Counting version: How many ways to reach N?");
     
@@ -182,6 +190,17 @@ fn pattern_2_fibonacci_comparison() {
         
         println!("  n={:2}: exists={}, ways={:3}", n, exists, count);
     }
+    
+    // Example: For n=5, the 8 ways are:
+    // 1. 1+1+1+1+1
+    // 2. 2+1+1+1
+    // 3. 1+2+1+1
+    // 4. 1+1+2+1
+    // 5. 1+1+1+2
+    // 6. 2+2+1
+    // 7. 2+1+2
+    // 8. 1+2+2
+    // (All unique orderings of steps that sum to 5)
     
     println!("\n  Observation: All N reachable, but exponentially many paths");
 }
@@ -215,29 +234,44 @@ fn pattern_3_performance_comparison() {
     let patterns = vec!["r", "wr", "b", "g", "br", "rb"];
     let design = "bwrrrbgbrbwrr";
     
-    // Boolean version
-    let mut memo_bool = HashMap::new();
-    let start = Instant::now();
-    let exists = can_make_boolean(&patterns, design, &mut memo_bool);
-    let time_bool = start.elapsed();
-    
-    // Counting version  
+    // Counting version (run FIRST to avoid cache warming)
     let mut memo_count = HashMap::new();
     let start = Instant::now();
     let count = count_ways(&patterns, design, &mut memo_count);
     let time_count = start.elapsed();
     
-    println!("  Design: '{}' (length {})", design, design.len());
-    println!("\n  Boolean version:");
-    println!("    Time: {:?}", time_bool);
-    println!("    Result: {}", exists);
-    println!("    Cache size: {}", memo_bool.len());
+    // Boolean version (run SECOND)
+    let mut memo_bool = HashMap::new();
+    let start = Instant::now();
+    let exists = can_make_boolean(&patterns, design, &mut memo_bool);
+    let time_bool = start.elapsed();
     
-    println!("\n  Counting version:");
+    // Counting version 2 (run THIRD to demonstrate cache warming)
+    let mut memo_count2 = HashMap::new();
+    let start = Instant::now();
+    let count2 = count_ways(&patterns, design, &mut memo_count2);
+    let time_count2 = start.elapsed();
+    
+    println!("  Design: '{}' (length {})", design, design.len());
+    println!("\n  Counting version (cold cache - first run):");
     println!("    Time: {:?}", time_count);
     println!("    Result: {} ways", count);
     println!("    Cache size: {}", memo_count.len());
     
+    println!("\n  Boolean version (warm cache - second run):");
+    println!("    Time: {:?}", time_bool);
+    println!("    Result: {}", exists);
+    println!("    Cache size: {}", memo_bool.len());
+    
+    println!("\n  Counting version 2 (warm cache - third run):");
+    println!("    Time: {:?}", time_count2);
+    println!("    Result: {} ways", count2);
+    println!("    Cache size: {}", memo_count2.len());
+    
+    println!("\n  🔍 Cache Warming Effect:");
+    println!("    First algorithm (cold cache) suffers cache misses loading code/data");
+    println!("    Subsequent runs (warm cache) benefit from already-loaded cache lines");
+    println!("    Notice: Counting v1 (cold) vs Counting v2 (warm) shows same algorithm faster!");
     println!("\n  Observation: Similar performance (both visit same subproblems)");
     println!("  But counting does more work per subproblem (sum vs OR)");
 }

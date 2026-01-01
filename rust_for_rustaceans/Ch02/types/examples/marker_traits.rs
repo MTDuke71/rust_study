@@ -97,6 +97,8 @@ fn type_state_pattern() {
             println!("Executing on {}: {}", self.address, command);
         }
         
+        // Takes `self` (not `&self`) - consumes the connection
+        // After this call, SshConnection no longer exists (moved and dropped)
         fn disconnect(self) {
             println!("Disconnecting from {}", self.address);
         }
@@ -255,7 +257,7 @@ fn phantom_data_usage() {
     println!("│ Type-State Pattern                                 │");
     println!("├────────────────────────────────────────────────────┤");
     println!("│ • Enforce valid state transitions                  │");
-    println!("│ • Make invalid states unrepresentable             │");
+    println!("│ • Make invalid states unrepresentable              │");
     println!("│ • Zero runtime cost                                │");
     println!("│ Examples: Authenticated/Unauthenticated, Open/Close│");
     println!("└────────────────────────────────────────────────────┘");

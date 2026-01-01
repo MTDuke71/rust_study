@@ -1,6 +1,7 @@
 use anyhow::Result;
 use aoc2023::prelude::*;
 use std::fs;
+use std::time::Instant;
 
 fn main() -> Result<()> {
     let mut args = std::env::args().skip(1);
@@ -12,10 +13,13 @@ fn main() -> Result<()> {
     // Process remaining arguments
     let mut input_file = None;
     let mut debug = false;
+    let mut bench = false;
 
     for arg in args {
         if arg == "--debug" || arg == "-d" {
             debug = true;
+        } else if arg == "--bench" || arg == "-b" {
+            bench = true;
         } else if input_file.is_none() {
             input_file = Some(arg);
         }
@@ -27,13 +31,49 @@ fn main() -> Result<()> {
     let input = fs::read_to_string(&path)
         .map_err(|e| anyhow::anyhow!("Failed to read file '{}': {}", path, e))?;
 
-    // Run solution for the specified day
-    let (p1, p2) = run_day(day, &input)?;
+    if bench {
+        // Benchmark mode: run multiple iterations and report timing
+        const WARMUP: usize = 10;
+        const ITERATIONS: usize = 100;
+        
+        // Warmup
+        for _ in 0..WARMUP {
+            let _ = run_day(day, &input)?;
+        }
+        
+        // Time Part 1
+        let start = Instant::now();
+        for _ in 0..ITERATIONS {
+            let _ = aoc2023::solver::day01::solve_part1(&input)?;
+        }
+        let p1_time = start.elapsed() / ITERATIONS as u32;
+        
+        // Time Part 2
+        let start = Instant::now();
+        for _ in 0..ITERATIONS {
+            let _ = aoc2023::solver::day01::solve_part2(&input)?;
+        }
+        let p2_time = start.elapsed() / ITERATIONS as u32;
+        
+        let (p1, p2) = run_day(day, &input)?;
+        
+        println!("Day {day} Part 1: {p1} ({:?})", p1_time);
+        println!("Day {day} Part 2: {p2} ({:?})", p2_time);
+        println!("Total: {:?}", p1_time + p2_time);
+    } else {
+        // Normal mode
+        let start = Instant::now();
+        let (p1, p2) = run_day(day, &input)?;
+        let elapsed = start.elapsed();
 
-    if debug {
-        println!("\n📊 Final Results:");
+        if debug {
+            println!("\n📊 Final Results:");
+        }
+        println!("Day {day} Part 1: {p1}");
+        println!("Day {day} Part 2: {p2}");
+        if debug {
+            println!("Time: {:?}", elapsed);
+        }
     }
-    println!("Day {day} Part 1: {p1}");
-    println!("Day {day} Part 2: {p2}");
     Ok(())
 }
