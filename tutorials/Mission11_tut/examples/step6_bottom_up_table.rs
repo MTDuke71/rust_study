@@ -334,20 +334,71 @@ fn space_optimization() {
 fn stack_overflow_risk() {
     println!("\nEdge Case 3: Stack overflow with deep recursion");
     
-    println!("\n  Top-down risk:");
-    println!("    Deep recursion → stack overflow");
-    println!("    Rust default: ~2MB stack");
-    println!("    fib(100000) would overflow");
+    // Demonstrate with safe small example first
+    println!("\n  Stack depth demonstration (safe):");
+    let safe_n = 10;
+    let depth = measure_recursion_depth(safe_n);
+    println!("    fib({}) requires {} recursive calls", safe_n, depth);
     
-    println!("\n  Bottom-up advantage:");
-    println!("    Pure iteration → no stack growth");
-    println!("    Can handle arbitrary n (memory permitting)");
+    // Theoretical calculation
+    println!("\n  Theoretical stack analysis:");
+    println!("    - Each recursive call uses stack frame (~100-200 bytes)");
+    println!("    - Rust default stack: ~2MB (2,097,152 bytes)");
+    println!("    - Max recursion depth: ~10,000-20,000 calls");
+    println!("    - fib(n) recursion depth ≈ n (memoized) or 2^n (unmemoized!)");
     
-    // Example: Large n
-    let large_n = 1000;
-    let result = fib_bottom_up_optimized(large_n);
-    println!("\n  fib({}) computed bottom-up: {} (would overflow top-down)", 
-             large_n, result);
+    println!("\n  Top-down memoization (safe range):");
+    let mut memo = HashMap::new();
+    let medium_n = 50;  // Safe for both computation and u64 range
+    let result_td = fib_top_down(medium_n, &mut memo);
+    println!("    fib({}) = {} ✓ (with memoization)", medium_n, result_td);
+    println!("    Stack depth: ~{} calls (each subproblem computed once)", medium_n);
+    println!("    Memo entries: {}", memo.len());
+    
+    println!("\n  What would happen with very large n (e.g., fib(100000)):");
+    println!("    ❌ Stack depth: ~100,000 recursive calls");
+    println!("    ❌ Stack usage: ~10-20 MB (exceeds default 2MB limit)");
+    println!("    ❌ Result: thread 'main' has overflowed its stack");
+    println!("    (Not actually running to avoid crash)");
+    
+    println!("\n  Bottom-up iterative (can handle larger n):");
+    let large_n = 90;  // Still within u64 range, but safe to compute
+    let result_bu = fib_bottom_up_optimized(large_n);
+    println!("    fib({}) = {} ✓", large_n, result_bu);
+    println!("    Stack depth: 1 (constant - just the function call)");
+    println!("    Memory: O(1) - only two variables (prev1, prev2)");
+    
+    println!("\n  Real-world example - Counting paths:");
+    println!("    Top-down with depth 10,000 → Risk of stack overflow");
+    println!("    Bottom-up with depth 10,000 → No problem, just iteration");
+    
+    println!("\n  Key insight:");
+    println!("    Top-down → Stack depth = O(n) → Can overflow with deep recursion");
+    println!("    Bottom-up → Stack depth = O(1) → No overflow risk, any depth OK");
+}
+
+/// Counts recursive calls to demonstrate stack depth
+fn measure_recursion_depth(n: u64) -> u64 {
+    fn fib_count(n: u64, memo: &mut HashMap<u64, u64>, count: &mut u64) -> u64 {
+        *count += 1;  // Track each call
+        
+        if n <= 1 {
+            return n;
+        }
+        
+        if let Some(&result) = memo.get(&n) {
+            return result;
+        }
+        
+        let result = fib_count(n - 1, memo, count) + fib_count(n - 2, memo, count);
+        memo.insert(n, result);
+        result
+    }
+    
+    let mut memo = HashMap::new();
+    let mut count = 0;
+    fib_count(n, &mut memo, &mut count);
+    count
 }
 
 /// Understanding validation
