@@ -8,7 +8,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 
 | Algorithm | Day(s) | Complexity | Zettelkasten |
 |-----------|--------|------------|--------------|
-| Linear Scan | Day 1 | O(n) | - |
+| Linear Scan | Day 1, Day 2 | O(n) | - |
+| Delimiter Parsing | Day 2 | O(n × m) | - |
+| Running Maximum | Day 2 | O(n) | - |
 
 ---
 
@@ -25,6 +27,45 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 - Pattern set is small and fixed
 
 **Zettelkasten**: None (too simple for deep dive)
+
+### Delimiter-Based Parsing (Day 2)
+**Implementation**: `src/solver/day02.rs`  
+**Complexity**: O(n × m) where n = lines, m = avg delimited segments  
+**Key Concept**: Hierarchical split on multiple delimiters (`:`, `;`, `,`)  
+
+**When to use**: 
+- Input has structured format with consistent separators
+- Need to parse nested data (records → fields → values)
+- Simple regex would be overkill
+
+**Pattern**:
+```rust
+line.split(':')      // Primary structure
+    .split(';')      // Secondary sequences  
+    .split(',')      // Tertiary elements
+    .split_whitespace() // Final values
+```
+
+**Zettelkasten**: None (common parsing pattern)
+
+### Running Maximum Tracking (Day 2)
+**Implementation**: `src/solver/day02.rs::update_max()`  
+**Complexity**: O(n) single pass  
+**Key Concept**: Track maximum value seen so far across stream  
+
+**When to use**:
+- Need minimum resources to satisfy all observations
+- Finding envelope/bounds of variable data
+- One-pass streaming aggregation
+
+**Pattern**:
+```rust
+fn update_max(&mut self, other: &T) {
+    self.field = self.field.max(other.field);
+}
+```
+
+**Zettelkasten**: None (standard accumulation pattern)
 
 ---
 

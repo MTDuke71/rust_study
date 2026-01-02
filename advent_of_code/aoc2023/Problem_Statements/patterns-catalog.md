@@ -9,6 +9,7 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Pattern | Days Used | Location |
 |---------|-----------|----------|
 | Forward/Reverse Search | Day 1 | `day01.rs` |
+| Delimiter-Based Parsing | Day 1, Day 2 | `day01.rs`, `day02.rs` |
 
 ---
 
@@ -33,6 +34,35 @@ fn digit_at_position(s: &str, pos: usize) -> Option<u32> {
 ```
 
 **Note**: Will promote to `src/patterns/parsing.rs` if used 3+ times.
+
+### Pattern: Delimiter-Based Hierarchical Parsing
+**Used**: Day 1 (lines), Day 2 (structured data)  
+**When to use**: Input has nested structure with consistent delimiters  
+**Code**: `src/solver/day02.rs::parse_game()`
+
+```rust
+// Hierarchical split: lines → records → fields → values
+let parts: Vec<&str> = line.split(':').collect();  // "Game 1: data"
+let game_id = parts[0].strip_prefix("Game ")?.parse()?;
+
+for reveal in parts[1].split(';') {  // Multiple reveals per game
+    for cube in reveal.split(',') {   // Multiple cubes per reveal
+        let parts: Vec<&str> = cube.trim().split_whitespace().collect();
+        let count: u32 = parts[0].parse()?;
+        let color = parts[1];
+    }
+}
+```
+
+**Pattern**: 
+1. Split on primary delimiter (`:` for record structure)
+2. Split on secondary delimiter (`;` for sequences)
+3. Split on tertiary delimiter (`,` for elements)
+4. Parse individual values
+
+**Error handling**: Use `?` operator with `anyhow::Result` for clean propagation.
+
+**Note**: Pattern used 2+ times, monitor for extraction.
 
 ### Pattern: Forward/Reverse Search with Early Termination
 **Used**: Day 1  

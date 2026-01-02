@@ -4,16 +4,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 1/25 ⭐⭐ |
-| **Total Runtime** | ~66µs |
+| **Progress** | 2/25 ⭐⭐⭐⭐ |
+| **Total Runtime** | 190.2µs |
 | **Mission Integration** | 0 days |
-| **Patterns Extracted** | 0 |
+| **Patterns Extracted** | 1 (delimiter parsing) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | Day 2 | Day 3 | Day 4 | Day 5 | Day 6 | Day 7 | Day 8 | Day 9 | Day 10 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | Day 3 | Day 4 | Day 5 | Day 6 | Day 7 | Day 8 | Day 9 | Day 10 |
 Day 11 | Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
@@ -65,7 +65,59 @@ fn extract_digits_part2(line: &str) -> Option<(u32, u32)> {
 
 **Zettelkasten**: None (straightforward parsing problem)
 
-**Links**: Day 2 →
+**Links**: ← Day 1 | [Day 2](#day-2-cube-conundrum) →
+
+---
+
+### Day 2: Cube Conundrum
+
+**Part 1**: Determine possible games if bag has 12R/13G/14B cubes → **2505**  
+**Part 2**: Find minimum cubes needed per game, sum powers → **70265**  
+
+**Algorithm**: Linear scan with delimiter parsing and accumulation  
+**Complexity**: O(n × m) where n = games, m = reveals per game  
+**Runtime**: 125.8µs (Part 1: 52.5µs, Part 2: 73.3µs)  
+**Mission**: None  
+
+**Key Insight**: Minimum cubes needed = maximum ever shown of each color across all reveals. Track running max with `update_max()` method.
+
+**Rust Highlights**:
+- `filter_map` combining parse + filter in one iterator step
+- Struct methods: `is_possible()`, `power()`, `update_max()`
+- Delimiter-based parsing: `split(':')`, `split(';')`, `split(',')`
+- Zero allocations - process line by line
+
+**Code Highlight**:
+```rust
+// Part 2: Track maximum of each color
+fn update_max(&mut self, other: &CubeSet) {
+    self.red = self.red.max(other.red);
+    self.green = self.green.max(other.green);
+    self.blue = self.blue.max(other.blue);
+}
+
+// Main logic
+let sum: u32 = input
+    .lines()
+    .filter_map(|line| {
+        parse_game_minimum(line)
+            .ok()
+            .map(|(_, min_set)| min_set.power())
+    })
+    .sum();
+```
+
+**Tests**: 
+- ✅ Part 1 example (8)
+- ✅ Part 2 example (2286)
+- ✅ Cube power calculation
+- ✅ Minimum cubes for Game 1
+- ✅ Parse cube set
+- ✅ Cube set validation
+
+**Zettelkasten**: None (straightforward parsing + accumulation)
+
+**Links**: ← [Day 1](#day-1-trebuchet) | Day 3 →
 
 ---
 
