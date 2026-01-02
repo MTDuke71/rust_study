@@ -51,9 +51,9 @@ fn iterator_chains() {
     }
     
     let numbers = vec![1, 5, 10, 15, 20];
-    let result: Vec<_> = process_numbers(numbers).collect();
+    println!("Input:  {:?}", numbers);
     
-    println!("Input:  [1, 5, 10, 15, 20]");
+    let result: Vec<_> = process_numbers(numbers).collect();
     println!("Output: {:?} (doubled, filtered > 10)", result);
     
     // More complex example
@@ -65,10 +65,11 @@ fn iterator_chains() {
             if a > limit {
                 return None;
             }
+            let current = a;
             let next = a + b;
             a = b;
             b = next;
-            Some(a)
+            Some(current)
         })
     }
     

@@ -390,6 +390,7 @@ cargo bloat --release
 - [[zettelkasten/weekly plans/2026-W01]] - Week 1 learning objectives
 - [[monomorphization]] - Static dispatch mechanism
 - [[zero-cost-abstractions]] - Static dispatch as zero-cost
+- [[impl-trait]] - Zero-cost type erasure using static dispatch
 
 **See Also:**
 - [[trait-objects]] - Dynamic dispatch implementation
