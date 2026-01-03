@@ -1,6 +1,6 @@
 # Dynamic Programming
 
-**Related:** [[Algorithms MOC]], [[Recursion]], [[memoization-comprehensive-guide.md]], [[HashMap]], [[Vec Type]], [[AoC Patterns MOC]]
+**Related:** [[Algorithms MOC]], [[Recursion]], [[memoization-comprehensive-guide]], [[HashMap]], [[Vec Type]], [[AoC Patterns MOC]]
 
 ## Overview
 

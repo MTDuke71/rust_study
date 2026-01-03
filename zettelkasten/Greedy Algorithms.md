@@ -253,4 +253,4 @@ Ties can make or break greedy correctness:
 
 *Tags: #greedy #algorithms #optimization #aoc #competitive-programming #problem-solving*
 
-*Links: [[AoC Patterns MOC]] | [[Dynamic Programming]] | [[Dijkstra Algorithm]] | [[mission-9]] | [[mission-10]] | [[memoization-comprehensive-guide.md]]*
+*Links: [[AoC Patterns MOC]] | [[Dynamic Programming]] | [[Dijkstra Algorithm]] | [[mission-9]] | [[mission-10]] | [[memoization-comprehensive-guide]]*

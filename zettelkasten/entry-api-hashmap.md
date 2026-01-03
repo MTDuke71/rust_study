@@ -567,7 +567,7 @@ fn test_entry_modify_and_insert() {
 
 - [[hashmap-internals]] - Understanding hash computation and bucket chains
 - [[or-insert-pattern]] - Common frequency counting idiom
-- [[memoization-aoc2024-patterns.md]] - Caching with `or_insert_with`
+- [[memoization-aoc2024-patterns]] - Caching with `or_insert_with`
 - [[ownership]] - Entry API ownership of keys
 - [[Borrow Checker Fundamentals]] - Entry holds mutable borrow of map
 - [[zero-cost-abstractions]] - Entry API compiles to optimal code

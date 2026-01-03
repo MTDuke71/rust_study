@@ -358,7 +358,7 @@ String in loop:
 ### **Core Concepts (Zettelkasten)**
 - [[String Manipulation Patterns]] - String processing techniques
 - [[Iteration Patterns]] - Loop vs recursion tradeoffs
-- [[memoization-comprehensive-guide.md]] - When to cache, when not to
+- [[memoization-comprehensive-guide]] - When to cache, when not to
 - [[Performance Patterns]] - Overhead analysis and optimization
 - [[Execution Tracing Techniques]] - Debugging with execution traces
 - [[Algorithm Complexity Analysis]] - Time/space complexity evaluation

@@ -284,7 +284,7 @@ struct Solver {
 
 ## Learning Resources
 
-- [[memoization-comprehensive-guide.md]] - Comprehensive Rust implementation guide (HashMap, Vec, Closure patterns)
+- [[memoization-comprehensive-guide]] - Comprehensive Rust implementation guide (HashMap, Vec, Closure patterns)
 - [[dynamic-programming]] - General DP patterns
 - [[recursion-optimization]] - Tail recursion, memoization, trampolining
 - [[rust-hashmap-performance]] - HashMap vs FxHashMap benchmarks

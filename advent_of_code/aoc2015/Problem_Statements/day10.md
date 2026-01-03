@@ -50,7 +50,7 @@ You can also [Share] this puzzle.
 **Zettelkasten Concepts:**
 - [[String Manipulation|../../../zettelkasten/String Manipulation]] - String processing patterns
 - [[Iteration Patterns|../../../zettelkasten/Iteration Patterns]] - Loop techniques
-- [[memoization-comprehensive-guide.md|../../../zettelkasten/Memoization Patterns]] - Caching strategies
+- [[memoization-comprehensive-guide|../../../zettelkasten/Memoization Patterns]] - Caching strategies
 - [[Performance Patterns|../../../zettelkasten/Performance Patterns]] - Optimization techniques
 - [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - All 2015 problems
 - [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Common algorithms

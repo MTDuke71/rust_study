@@ -449,7 +449,7 @@ Consider memoization when you see:
 
 **Zettelkasten Deep Dives:**
 - [[HashMap Deep Dive|../../../zettelkasten/HashMap Deep Dive]] - Hash table internals
-- [[memoization-comprehensive-guide.md|../../../zettelkasten/Memoization Patterns]] - When and how to cache
+- [[memoization-comprehensive-guide|../../../zettelkasten/Memoization Patterns]] - When and how to cache
 - [[Dynamic Programming|../../../zettelkasten/Dynamic Programming]] - DP vs memoization
 - [[AoC 2015 MOC|../../../zettelkasten/AoC 2015 MOC]] - Navigate all 2015 problems
 - [[AoC Patterns MOC|../../../zettelkasten/AoC Patterns MOC]] - Algorithmic pattern catalog

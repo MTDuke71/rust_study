@@ -15,7 +15,7 @@ Memoization is a fundamental optimization technique that caches expensive functi
 ## Primary Resources
 
 ### 📚 Comprehensive Guides
-- **[[memoization-comprehensive-guide.md]]** - Comprehensive Rust implementation guide
+- **[[memoization-comprehensive-guide]]** - Comprehensive Rust implementation guide
   - HashMap, Vec, and Closure-based patterns
   - Ownership and thread safety considerations
   - Testing strategies and common pitfalls
@@ -23,7 +23,7 @@ Memoization is a fundamental optimization technique that caches expensive functi
   - 709 lines of detailed implementation guidance
 
 ### 🎯 Problem-Solving Patterns
-- **[[memoization-aoc2024-patterns.md]]** - AoC 2024 tactical patterns
+- **[[memoization-aoc2024-patterns]]** - AoC 2024 tactical patterns
   - Count-Only Recursion (Day 11, Day 19)
   - Composite Keys (Day 21)
   - Suffix/Prefix Recursion (Day 19)
@@ -44,11 +44,11 @@ Memoization is a fundamental optimization technique that caches expensive functi
 
 | **Pattern** | **Best For** | **Example** | **Guide** |
 |-------------|-------------|-------------|-----------|
-| **HashMap-Based** | Sparse state spaces, complex keys | Fibonacci, Circuit simulation | [[memoization-comprehensive-guide.md#Pattern 1]] |
-| **Vec-Based** | Sequential state, known bounds | Bottom-up DP | [[memoization-comprehensive-guide.md#Pattern 2]] |
-| **Closure-Based** | Functional style, embedded logic | Simple recursive functions | [[memoization-comprehensive-guide.md#Pattern 3]] |
-| **Count-Only** | Counting solutions, not generating | Stone evolution (Day 11) | [[memoization-aoc2024-patterns.md#Count-Only Recursion]] |
-| **Composite Keys** | Multi-parameter recursion | Keypad sequences (Day 21) | [[memoization-aoc2024-patterns.md#Composite Keys]] |
+| **HashMap-Based** | Sparse state spaces, complex keys | Fibonacci, Circuit simulation | [[memoization-comprehensive-guide#Pattern 1]] |
+| **Vec-Based** | Sequential state, known bounds | Bottom-up DP | [[memoization-comprehensive-guide#Pattern 2]] |
+| **Closure-Based** | Functional style, embedded logic | Simple recursive functions | [[memoization-comprehensive-guide#Pattern 3]] |
+| **Count-Only** | Counting solutions, not generating | Stone evolution (Day 11) | [[memoization-aoc2024-patterns#Count-Only Recursion]] |
+| **Composite Keys** | Multi-parameter recursion | Keypad sequences (Day 21) | [[memoization-aoc2024-patterns#Composite Keys]] |
 
 ### When to Use Memoization
 
@@ -85,7 +85,7 @@ Memoization is a fundamental optimization technique that caches expensive functi
 - **AoC 2015 Day 7** - Circuit Simulation
   - Dependency graph evaluation
   - Wire value caching with cache invalidation
-  - Example: [[memoization-comprehensive-guide.md#AoC 2015 Day 7]]
+  - Example: [[memoization-comprehensive-guide#AoC 2015 Day 7]]
   
 - **AoC 2015 Day 10** - Look-and-Say Sequence
   - **Anti-pattern example**: When memoization doesn't help!
@@ -100,10 +100,10 @@ Memoization is a fundamental optimization technique that caches expensive functi
 
 | **Problem** | **Naive** | **Memoized** | **Speedup** | **Source** |
 |-------------|-----------|--------------|-------------|------------|
-| Fibonacci(30) | O(2^30) = 1B calls | O(30) = 30 calls | 35M× | [[memoization-comprehensive-guide.md#Why Memoization Matters]] |
-| Day 11 (75 blinks) | O(2^75) = 3.8×10^22 | O(1000 states) | 10^19× | [[memoization-aoc2024-patterns.md#Performance Impact]] |
-| Day 19 (length 60) | O(8^60) = 10^54 | O(60 × 8 = 480) | 10^52× | [[memoization-aoc2024-patterns.md#Performance Impact]] |
-| Day 21 (26 layers) | O(4^26) = 4.5×10^15 | O(26 × 25 = 650) | 10^12× | [[memoization-aoc2024-patterns.md#Performance Impact]] |
+| Fibonacci(30) | O(2^30) = 1B calls | O(30) = 30 calls | 35M× | [[memoization-comprehensive-guide#Why Memoization Matters]] |
+| Day 11 (75 blinks) | O(2^75) = 3.8×10^22 | O(1000 states) | 10^19× | [[memoization-aoc2024-patterns#Performance Impact]] |
+| Day 19 (length 60) | O(8^60) = 10^54 | O(60 × 8 = 480) | 10^52× | [[memoization-aoc2024-patterns#Performance Impact]] |
+| Day 21 (26 layers) | O(4^26) = 4.5×10^15 | O(26 × 25 = 650) | 10^12× | [[memoization-aoc2024-patterns#Performance Impact]] |
 
 ### Cache Strategy Selection
 
@@ -125,15 +125,15 @@ let cache: FxHashMap<u64, u64> = FxHashMap::default();
 ## Common Pitfalls & Solutions
 
 ### Pitfall Categories
-1. **Excessive Cloning** - [[memoization-comprehensive-guide.md#Pitfall 1]]
+1. **Excessive Cloning** - [[memoization-comprehensive-guide#Pitfall 1]]
    - Return references when possible
    - Use `Rc`/`Arc` for shared ownership
 
-2. **Unbounded Cache Growth** - [[memoization-comprehensive-guide.md#Pitfall 2]]
+2. **Unbounded Cache Growth** - [[memoization-comprehensive-guide#Pitfall 2]]
    - Use LRU cache for bounded memory
    - Clear cache periodically
 
-3. **Forgetting Cache Check** - [[memoization-comprehensive-guide.md#Pitfall 3]]
+3. **Forgetting Cache Check** - [[memoization-comprehensive-guide#Pitfall 3]]
    - Always check before computing
    - Use pattern templates
 
@@ -201,17 +201,17 @@ let cache: FxHashMap<u64, u64> = FxHashMap::default();
 ## Learning Progression
 
 ### Beginner (Understanding the Concept)
-1. Read: [[memoization-comprehensive-guide.md#What is Memoization?]]
+1. Read: [[memoization-comprehensive-guide#What is Memoization?]]
 2. Study: Fibonacci example (with/without memo)
 3. Practice: Implement simple HashMap-based cache
 
 ### Intermediate (Problem-Solving Patterns)
-1. Read: [[memoization-aoc2024-patterns.md#Common Patterns]]
+1. Read: [[memoization-aoc2024-patterns#Common Patterns]]
 2. Study: AoC 2024 examples (Day 11, 19, 21)
 3. Practice: Identify when memo applies to AoC problems
 
 ### Advanced (Optimization & Edge Cases)
-1. Read: [[memoization-comprehensive-guide.md#Performance Considerations]]
+1. Read: [[memoization-comprehensive-guide#Performance Considerations]]
 2. Study: Cache invalidation, thread safety patterns
 3. Practice: Benchmark memo vs non-memo implementations
 
