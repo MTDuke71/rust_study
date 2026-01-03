@@ -1,0 +1,11 @@
+[package]
+name = "bench_day03"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mission6 = { path = "../missions/Mission6" }
+
+[[bin]]
+name = "bench_day03"
+path = "src/main.rs"
