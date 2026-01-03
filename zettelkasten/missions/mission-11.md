@@ -85,7 +85,10 @@ Length 25: 68.2721ms  (~3.4x)  ← PAIN!
 - **[[../../tutorials/Mission11_tut/TUTORIAL_SUMMARY]]** - Tutorial creation documentation
 - **[[../../tutorials/Mission11_tut/exercises/README]]** - Practice exercises (Fibonacci, LCS, Coin Change)
 
-### **Related Concepts** (to be created as tutorial progresses)
+### **Related Concepts**
+- **[[Memoization MOC]]** - Complete memoization knowledge map (primary navigation hub)
+- **[[memoization-comprehensive-guide]]** - Rust implementation patterns (HashMap, Vec, Closure)
+- **[[memoization-aoc2024-patterns]]** - AoC 2024 problem-solving patterns
 - **Dynamic Programming** - Core algorithmic paradigm
 - **Memoization** - Caching for performance
 - **Fibonacci Sequence** - Classic DP example
