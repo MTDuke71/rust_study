@@ -59,7 +59,7 @@ fn parse_cube_set(s: &str) -> Result<CubeSet> {
     let mut set = CubeSet::new();
     
     for cube_str in s.split(',') {
-        let parts: Vec<&str> = cube_str.trim().split_whitespace().collect();
+        let parts: Vec<&str> = cube_str.split_whitespace().collect();
         if parts.len() != 2 {
             anyhow::bail!("Invalid cube format: {}", cube_str);
         }
