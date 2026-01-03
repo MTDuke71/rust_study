@@ -140,10 +140,36 @@ pub fn solve_part1(input: &str) -> Result<String> {
     Ok(sum.to_string())
 }
 
-pub fn solve_part2(_input: &str) -> Result<String> {
-    // Part 2: Placeholder - problem statement not yet available
-    // Will implement gear ratios (* symbols adjacent to exactly two numbers)
-    Ok("0".to_string())
+pub fn solve_part2(input: &str) -> Result<String> {
+    let grid = parse_grid(input);
+    let numbers = extract_numbers(&grid);
+    
+    let mut gear_ratio_sum = 0;
+    
+    // Find all * symbols and check if they're gears (adjacent to exactly 2 numbers)
+    for y in 0..grid.height() {
+        for x in 0..grid.width() {
+            let coord = Coord::new(x, y);
+            if grid[coord] == '*' {
+                // Find all numbers adjacent to this * symbol
+                let adjacent_numbers: Vec<&GridNumber> = numbers
+                    .iter()
+                    .filter(|num| {
+                        // Check if this number is adjacent to the current * coordinate
+                        num.adjacent_coords(&grid).contains(&coord)
+                    })
+                    .collect();
+                
+                // A gear is a * adjacent to exactly 2 numbers
+                if adjacent_numbers.len() == 2 {
+                    let gear_ratio = adjacent_numbers[0].value * adjacent_numbers[1].value;
+                    gear_ratio_sum += gear_ratio;
+                }
+            }
+        }
+    }
+    
+    Ok(gear_ratio_sum.to_string())
 }
 
 #[cfg(test)]
@@ -166,6 +192,15 @@ mod tests {
     fn test_part1_example() {
         let result = solve_part1(EXAMPLE).unwrap();
         assert_eq!(result, "4361");
+    }
+
+    #[test]
+    fn test_part2_example() {
+        let result = solve_part2(EXAMPLE).unwrap();
+        // * at (3,1) adjacent to 467 and 35 -> 467*35 = 16345
+        // * at (5,8) adjacent to 755 and 598 -> 755*598 = 451490
+        // Total: 467835
+        assert_eq!(result, "467835");
     }
 
     #[test]
