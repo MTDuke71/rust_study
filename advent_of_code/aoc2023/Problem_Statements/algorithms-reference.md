@@ -11,6 +11,8 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Linear Scan | Day 1, Day 2 | O(n) | - |
 | Delimiter Parsing | Day 2 | O(n × m) | - |
 | Running Maximum | Day 2 | O(n) | - |
+| Spatial Indexing | Day 3 | O(n) build, O(1) lookup | [[spatial-hash]] |
+| Grid Scanning | Day 3 | O(w × h) | - |
 
 ---
 
@@ -130,7 +132,60 @@ fn update_max(&mut self, other: &T) {
 
 ## 📐 Geometric Algorithms
 
-*To be populated as geometry problems are solved.*
+### Grid Scanning with Adjacency Checks (Day 3)
+**Implementation**: `src/solver/day03.rs`  
+**Complexity**: O(w × h) for grid scan, O(8) for neighbor checks  
+**Key Concept**: Scan grid for patterns, check 8-directional neighbors  
+**Mission**: Mission 6 (Grid, Coord)
+
+**When to use**: 
+- 2D grid problems with adjacency requirements
+- Symbol/pattern detection in grids
+- Local neighborhood analysis
+
+**Pattern**:
+```rust
+for y in 0..grid.height() {
+    for x in 0..grid.width() {
+        let coord = Coord::new(x, y);
+        for neighbor in coord.neighbors_8() {
+            // Check adjacent cells
+        }
+    }
+}
+```
+
+**Zettelkasten**: None (standard grid traversal)
+
+### Spatial Indexing for Grid Lookups (Day 3 Optimization)
+**Implementation**: `src/solver/day03.rs::solve_part2()`  
+**Complexity**: O(n × d) to build index, O(1) per lookup  
+**Key Concept**: HashMap mapping coordinates to entities for instant lookups  
+
+**When to use**: 
+- Need to find "what's at this coordinate" repeatedly
+- Reverse lookups (coordinate → entity instead of entity → coordinates)
+- O(1) spatial queries instead of O(n) linear search
+
+**Pattern**:
+```rust
+// Build spatial index: coord → entity_id
+let mut coord_to_entity: HashMap<Coord, usize> = HashMap::new();
+for (id, entity) in entities.iter().enumerate() {
+    for coord in entity.occupied_coords() {
+        coord_to_entity.insert(coord, id);
+    }
+}
+
+// O(1) lookup instead of O(n) linear search
+if let Some(&entity_id) = coord_to_entity.get(&target_coord) {
+    // Found entity at coordinate
+}
+```
+
+**Optimization Impact**: Day 3 Part 2 speedup: ~100x (millions of ops → 160K ops)
+
+**Zettelkasten**: [[spatial-hash]] (if pattern repeats)
 
 ### Flood Fill
 **Day(s)**: TBD  
@@ -147,12 +202,7 @@ fn update_max(&mut self, other: &T) {
 | Mission | Algorithms | Days Used |
 |---------|------------|-----------|
 | Mission 3 (Binary Search) | Binary search variants | TBD |
-| Mission 6 (Grid) | Grid traversal, flood fill | TBD |
-| Mission 8 (Graph) | BFS, DFS, Dijkstra, A* | TBD |
-| Mission 10 (Union-Find) | Connected components | TBD |
-
----
-
+| Mission 6 (Grid) | Grid traversal, 8-directional neighbors, spatial indexing | Day 3 |
 ## 📝 Notes
 
 - Algorithm entries are created when first encountered

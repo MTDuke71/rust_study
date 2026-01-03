@@ -10,6 +10,7 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 |---------|-----------|----------|
 | Forward/Reverse Search | Day 1 | `day01.rs` |
 | Delimiter-Based Parsing | Day 1, Day 2 | `day01.rs`, `day02.rs` |
+| Spatial Indexing | Day 3 | `day03.rs` |
 
 ---
 
@@ -85,7 +86,49 @@ let last = (0..line.len()).rev().find_map(|pos| check_at_position(line, pos))?;
 
 ## 🗺️ Grid Processing Patterns
 
-*Patterns to be extracted as grid problems are solved.*
+### Pattern: Spatial Index for Reverse Lookups
+**Used**: Day 3  
+**When to use**: Need to repeatedly find "what entity is at this coordinate"  
+**Code**: `src/solver/day03.rs::solve_part2()`
+
+```rust
+// Build spatial index: HashMap<Coord, EntityId>
+let mut coord_to_entity: HashMap<Coord, usize> = HashMap::new();
+for (id, entity) in entities.iter().enumerate() {
+    for coord in entity.occupied_coords() {
+        coord_to_entity.insert(coord, id);
+    }
+}
+
+// O(1) lookup instead of iterating all entities
+for target_coord in points_of_interest {
+    if let Some(&entity_id) = coord_to_entity.get(&target_coord) {
+        // Process entity at this coordinate
+    }
+}
+```
+
+**Performance**: Converts O(grid_size × entity_count) → O(grid_size + entities × coords_per_entity)
+
+**Key insight**: Reverse the search - instead of "which coordinates does this entity touch", ask "which entity is at this coordinate".
+
+**Note**: Pattern used once, monitor for extraction if used 3+ times.
+
+### Pattern: 8-Directional Grid Neighbor Iteration
+**Used**: Day 3  
+**When to use**: Need to check all adjacent cells including diagonals  
+**Code**: Mission 6 `Coord::neighbors_8()`
+
+```rust
+// Mission 6 provides this iterator
+for neighbor in coord.neighbors_8() {
+    if grid.in_bounds(neighbor) {
+        // Process adjacent cell
+    }
+}
+```
+
+**Mission Integration**: Use Mission 6's built-in iterator rather than manual offset calculation.
 
 ### Pattern: BFS Neighbor Exploration
 **Used**: TBD  

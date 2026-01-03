@@ -8,11 +8,11 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 2/25 |
-| **Total Runtime** | 190.2µs |
-| **Average per Day** | 95.1µs |
+| **Days Completed** | 3/25 |
+| **Total Runtime** | 716.9µs |
+| **Average per Day** | 239.0µs |
 | **Fastest Day** | Day 1 (64.9µs) |
-| **Slowest Day** | Day 2 (125.3µs) |
+| **Slowest Day** | Day 3 (526.7µs) |
 
 ---
 
@@ -22,6 +22,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 |-----|--------|--------|-------|------------|
 | 1 | 27.3µs | 37.6µs | 64.9µs | Yes |
 | 2 | 52.5µs | 73.3µs | 125.8µs | No* |
+| 3 | 50.0µs | 476.7µs | 526.7µs | Yes |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)
 | ... | - | - | - | - |
@@ -31,6 +32,36 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 ## 🚀 Optimization Wins
 
 *Documented when significant optimizations are made (>2x speedup).*
+
+### Day 3: Spatial Indexing for Gear Detection
+**Before**: O(gears × numbers × adjacency_calc) = ~millions of operations  
+**After**: O(numbers × digits + gears × 8) = ~160K operations  
+**Speedup**: ~100x (estimated from complexity reduction)  
+**Technique**: Reverse the search direction with HashMap spatial index  
+**Learning**: For grid problems with lookups, build a coordinate→entity index instead of iterating all entities  
+**Code**: 
+```rust
+// Before: For each gear, iterate ALL numbers
+for gear_coord in gears {
+    let adjacent = numbers.iter()
+        .filter(|num| num.adjacent_coords().contains(&gear_coord))
+        .collect();
+}
+
+// After: Build index once, O(1) lookup per gear neighbor
+let coord_to_number: HashMap<Coord, usize> = /* build index */;
+for gear_coord in gears {
+    for neighbor in gear_coord.neighbors_8() {
+        if let Some(&num_id) = coord_to_number.get(&neighbor) {
+            // O(1) lookup instead of O(n) iteration
+        }
+    }
+}
+```
+
+**Additional Optimizations**:
+- Changed `Vec` to `HashSet` for adjacency deduplication: O(n) → O(1) contains check
+- Added `digit_coords()` helper for clarity and reuse
 
 ### Template for Future Optimizations
 
