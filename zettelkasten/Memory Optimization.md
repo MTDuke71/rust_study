@@ -393,7 +393,7 @@ fn measure_vec_allocations() {
 
 - [[BFS Patterns]] - Memory-efficient visited tracking
 - [[DFS Patterns]] - Stack-based traversal optimization
-- [[Memoization Patterns]] - Cache sizing and eviction
+- [[memoization-comprehensive-guide.md]] - Cache sizing and eviction
 - [[Grid Data Structures]] - Flat storage implementations
 
 ### **Mission Applications**

@@ -13,7 +13,7 @@ This document provides a categorized technical summary of the [[aoc2024-overview
 
 Each entry evaluates the problem's complexity and highlights the architectural differences between **Python pragmatic scripts** and **Rust production-quality solutions**. The overview emphasizes the use of [[missions-overview|foundational libraries]] ([[mission-6|Mission 6]], [[mission-8|Mission 8]]) and [[test-driven-development|test-driven development]] to manage escalating difficulty, such as transitioning from simple searches to [[np-complete-problems|NP-complete optimizations]].
 
-Furthermore, the text explores performance metrics, demonstrating how [[memoization-patterns|memoization]], [[rayon-parallel-iterators|parallel processing]], and [[bit-manipulation|bit manipulation]] solve exponential growth constraints. Ultimately, these sources serve as an educational roadmap for mastering computational logic and software engineering through competitive programming.
+Furthermore, the text explores performance metrics, demonstrating how [[memoization-aoc2024-patterns.md|memoization]], [[rayon-parallel-iterators|parallel processing]], and [[bit-manipulation|bit manipulation]] solve exponential growth constraints. Ultimately, these sources serve as an educational roadmap for mastering computational logic and software engineering through competitive programming.
 
 ---
 
@@ -28,7 +28,7 @@ The most pervasive pattern in the document is the shift in complexity between **
 #### Scale Escalation
 Problems often shift from manageable inputs to exponential or massive scales that require optimization:
 
-- **[[aoc2024/day11|Day 11]] (Plutonian Pebbles)**: Moves from naive simulation (25 blinks) to [[dynamic-programming|dynamic programming]]/[[memoization-patterns|memoization]] (75 blinks) to handle exponential growth
+- **[[aoc2024/day11|Day 11]] (Plutonian Pebbles)**: Moves from naive simulation (25 blinks) to [[dynamic-programming|dynamic programming]]/[[memoization-aoc2024-patterns.md|memoization]] (75 blinks) to handle exponential growth
 - **[[aoc2024/day13|Day 13]]**: Forces a move from brute force to [[linear-algebra|linear algebra]] ([[cramers-rule|Cramer's rule]]) by adding a 10-trillion offset to coordinates
 
 #### Constraint Relaxation/Tightening
@@ -68,7 +68,7 @@ Essential for handling combinatorial explosions:
 
 - **[[aoc2024/day19|Day 19]] (Linen Layout)**: [[lifetime-parametric-recursion|Lifetime-parametric recursion]] with string slice memoization
 - **[[aoc2024/day21|Day 21]] (Keypad Conundrum)**: [[recursive-sequence-transformation|Recursive sequence transformation]] with exponential memoization turning O(k^depth) ≈ 10^26 operations into practical O(unique_sequences × depth)
-- **[[aoc2024/day11|Day 11]]**: [[memoization-patterns|HashMap caching]] with composite state keys `(stone_value, blinks_remaining) → count`
+- **[[aoc2024/day11|Day 11]]**: [[memoization-aoc2024-patterns.md|HashMap caching]] with composite state keys `(stone_value, blinks_remaining) → count`
 
 #### Geometric & Math Optimizations
 
@@ -114,7 +114,7 @@ The document highlights distinct philosophical differences in how problems were 
 
 #### Explicit vs. Implicit
 - **Python**: Relied on implicit state or library magic (like `@cache`)
-- **Rust**: Used explicit `HashMap` management and [[lifetime-parametric-recursion|lifetime tracking]] to demonstrate the underlying mechanics of [[memoization-patterns|memoization]]
+- **Rust**: Used explicit `HashMap` management and [[lifetime-parametric-recursion|lifetime tracking]] to demonstrate the underlying mechanics of [[memoization-aoc2024-patterns.md|memoization]]
 
 ---
 
@@ -161,7 +161,7 @@ Instead of chronological order, this approach groups problems by the fundamental
 - **[[maximum-clique-problems|Clique Finding]]**: [[aoc2024/day23|Day 23]] (LAN party networking, [[bron-kerbosch-algorithm|Bron-Kerbosch algorithm]])
 
 #### Dynamic Programming & Caching
-- **[[memoization-patterns|Memoization]]**:
+- **[[memoization-aoc2024-patterns.md|Memoization]]**:
   - [[aoc2024/day11|Day 11]] (Pebble multiplication)
   - [[aoc2024/day19|Day 19]] (Towel patterns)
   - [[aoc2024/day21|Day 21]] (Keypad robots)
@@ -284,7 +284,7 @@ You can organize this document like a **Department Store**:
 - [[integrator-philosophy|Integrator Philosophy]]
 - [[test-driven-development|Test-Driven Development]]
 - [[rayon-parallel-iterators|Rayon Parallel Iterators]]
-- [[memoization-patterns|Memoization Patterns]]
+- [[memoization-aoc2024-patterns.md|Memoization Patterns]]
 - [[graph-trait-adapters|Graph Trait Adapters]]
 
 ### Mission Libraries
@@ -421,7 +421,7 @@ AoC 2024 demonstrated clear **escalation in difficulty**:
 - Geometric reasoning ([[aoc2024/day8|Day 8]])
 - Disk simulation ([[aoc2024/day9|Day 9]])
 - Mission composition ([[aoc2024/day10|Day 10]])
-- [[memoization-patterns|Memoization]] becomes essential ([[aoc2024/day11|Day 11]])
+- [[memoization-aoc2024-patterns.md|Memoization]] becomes essential ([[aoc2024/day11|Day 11]])
 - Mathematical optimization ([[aoc2024/day13|Day 13]])
 - [[rayon-parallel-iterators|Parallel processing]] introduced ([[aoc2024/day14|Day 14]])
 
@@ -506,7 +506,7 @@ The **[[integrator-philosophy|Integrator Philosophy]]** proved transformative:
 - [[integrator-philosophy|Integrator Philosophy]]
 - [[test-driven-development|Test-Driven Development]]
 - [[rayon-parallel-iterators|Rayon Parallel Iterators]]
-- [[memoization-patterns|Memoization Patterns]]
+- [[memoization-aoc2024-patterns.md|Memoization Patterns]]
 - [[graph-trait-adapters|Graph Trait Adapters]]
 - [[interior-mutability|Interior Mutability]] - Used in caching and state management
 

@@ -60,7 +60,7 @@
 
 ### **Dynamic Programming**
 
-- **[[Memoization Patterns]]** - Top-down DP with HashMap caching
+- **[[memoization-comprehensive-guide.md]]** - Top-down DP with HashMap caching
 - **[[state-based-memoization]]** - Composite state representation for path counting with constraints
   - **AoC 2025 Day 7** - Simple position-based memoization (390T timelines)
   - **AoC 2025 Day 11** - Composite state with bitmask (549T paths, timeout → instant)

@@ -43,6 +43,7 @@ Advent of Code problems often have naive solutions that work for examples but ti
 |--------------|-------|-----------|
 | Search | O(n) linear scan | O(log n) binary search |
 | Lookup | O(n) list search | O(1) HashMap |
+| Grid spatial queries | O(n×m) iterate all entities | O(1) spatial index |
 | Shortest path | BFS all paths | Dijkstra / A* |
 | Combinations | Generate all | Dynamic programming |
 | Repeated work | Recalculate | Memoization |
@@ -458,6 +459,7 @@ Before optimizing, ask:
 ### Collections
 - [[hashmap-fundamentals]] - O(1) key-value lookups
 - [[Collections MOC]] - All Rust collection types
+- [[spatial-indexing-pattern]] - Coordinate-to-entity lookup (246.8x speedup on Day 3)
 
 ### AoC Specific
 - [[AoC Pattern Library]] - Reusable solution patterns
