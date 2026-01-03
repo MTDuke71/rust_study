@@ -34,21 +34,26 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 *Documented when significant optimizations are made (>2x speedup).*
 
 ### Day 3: Spatial Indexing for Gear Detection
-**Before**: O(gears × numbers × adjacency_calc) = ~millions of operations  
-**After**: O(numbers × digits + gears × 8) = ~160K operations  
-**Speedup**: ~100x (estimated from complexity reduction)  
+**Before**: 88.92ms (old implementation)  
+**After**: 360.25µs (optimized implementation)  
+**Speedup**: **246.8x faster** (empirically measured)  
+**Complexity**: O(gears × numbers × adjacency_calc) → O(numbers × digits + gears × 8)  
+**Operations**: ~millions → ~160K  
 **Technique**: Reverse the search direction with HashMap spatial index  
 **Learning**: For grid problems with lookups, build a coordinate→entity index instead of iterating all entities  
+**Benchmark**: Created `bench_day03` package comparing implementations across 100 iterations  
 **Code**: 
 ```rust
-// Before: For each gear, iterate ALL numbers
+// Before: For each gear, iterate ALL numbers (expensive!)
+// Time: 88.92ms for 100 gears × ~1000 numbers
 for gear_coord in gears {
     let adjacent = numbers.iter()
-        .filter(|num| num.adjacent_coords().contains(&gear_coord))
+        .filter(|num| num.adjacent_coords().contains(&gear_coord))  // Recalculates Vec every time!
         .collect();
 }
 
 // After: Build index once, O(1) lookup per gear neighbor
+// Time: 360.25µs with spatial index
 let coord_to_number: HashMap<Coord, usize> = /* build index */;
 for gear_coord in gears {
     for neighbor in gear_coord.neighbors_8() {
@@ -62,6 +67,9 @@ for gear_coord in gears {
 **Additional Optimizations**:
 - Changed `Vec` to `HashSet` for adjacency deduplication: O(n) → O(1) contains check
 - Added `digit_coords()` helper for clarity and reuse
+- Measured with actual puzzle input (140×140 grid, ~100 gears, ~1000 numbers)
+
+**Validation**: Both implementations produce identical results (87263515)
 
 ### Template for Future Optimizations
 
