@@ -18,11 +18,61 @@ use std::collections::HashMap;
 fn main() {
     println!("=== Exercise 1: Fibonacci Variants ===\n");
     
+    // Test your implementations
+    test_implementations();
+    
+    // Show recursive limits
+    demonstrate_recursive_limits();
+    
+    // Performance comparison
     compare_approaches();
+    
+    // Large number handling
     test_large_numbers();
+    
+    // Correctness verification
     verify_correctness();
     
     println!("\n✅ Exercise 1 completed!");
+}
+
+fn test_implementations() {
+    println!("--- Testing Your Implementations ---\n");
+    
+    let test_values = vec![
+        (0, 0),
+        (1, 1),
+        (5, 5),
+        (10, 55),
+        (15, 610),
+    ];
+    
+    for (n, expected) in &test_values {
+        let naive = if *n <= 20 { Some(fibonacci_naive(*n)) } else { None };
+        let memoized = fibonacci_memoized(*n);
+        let bottom_up = fibonacci_bottom_up(*n);
+        let optimized = fibonacci_optimized(*n);
+        
+        println!("F({:2}) = {}", n, expected);
+        
+        if let Some(result) = naive {
+            let status = if result == *expected { "✓" } else { "✗" };
+            println!("  {} Naive:      {}", status, result);
+        } else {
+            println!("    Naive:      <skipped - too slow>");
+        }
+        
+        let status = if memoized == *expected { "✓" } else { "✗" };
+        println!("  {} Memoized:   {}", status, memoized);
+        
+        let status = if bottom_up == *expected { "✓" } else { "✗" };
+        println!("  {} Bottom-up:  {}", status, bottom_up);
+        
+        let status = if optimized == *expected { "✓" } else { "✗" };
+        println!("  {} Optimized:  {}", status, optimized);
+        
+        println!();
+    }
 }
 
 // ============================================================================
@@ -33,12 +83,15 @@ fn main() {
 /// 
 /// Try this with n=5, n=10, n=20, n=40
 /// Notice how it becomes unusably slow very quickly!
-#[allow(dead_code, unused_variables)]
+
 fn fibonacci_naive(n: u64) -> u64 {
     // TODO: Implement naive recursion
     // Base case: F(0) = 0, F(1) = 1
     // Recursive case: F(n) = F(n-1) + F(n-2)
-    todo!("Implement fibonacci_naive");
+    if n <= 1 {
+        return n;
+    }
+    fibonacci_naive(n - 1) + fibonacci_naive(n - 2)
 }
 
 /// Approach 2: Top-Down with Memoization (FAST - linear)
@@ -49,38 +102,67 @@ fn fibonacci_memoized(n: u64) -> u64 {
     fibonacci_memo_helper(n, &mut memo)
 }
 
-#[allow(dead_code, unused_variables)]
 fn fibonacci_memo_helper(n: u64, memo: &mut HashMap<u64, u64>) -> u64 {
-    // TODO: Implement memoized recursion
-    // 1. Check base cases
-    // 2. Check memo cache
-    // 3. Compute recursively if not cached
-    // 4. Store in memo before returning
-    todo!("Implement fibonacci_memo_helper");
+    // Base cases: F(0) = 0, F(1) = 1
+    if n <= 1 {
+        return n;
+    }
+
+    // Check if already computed and cached
+    if let Some(&cached) = memo.get(&n) {
+        return cached;
+    }
+
+    // Compute recursively and cache the result
+    let result = fibonacci_memo_helper(n - 1, memo) + fibonacci_memo_helper(n - 2, memo);
+    memo.insert(n, result);
+    result
 }
 
 /// Approach 3: Bottom-Up with Table (FAST - linear, no recursion)
 ///
 /// Build table from F(0) up to F(n)
-#[allow(dead_code, unused_variables)]
 fn fibonacci_bottom_up(n: u64) -> u64 {
-    // TODO: Implement bottom-up DP
-    // 1. Create Vec to store all values from 0 to n
-    // 2. Initialize F(0) = 0, F(1) = 1
-    // 3. Fill table: dp[i] = dp[i-1] + dp[i-2]
-    // 4. Return dp[n]
-    todo!("Implement fibonacci_bottom_up");
+    // Base cases: F(0) = 0, F(1) = 1
+    if n <= 1 {
+        return n;
+    }
+    
+    // Create Vec to store all values from 0 to n
+    let n_usize = n as usize;
+    let mut dp = vec![0u64; n_usize + 1];
+    
+    // Initialize F(1) = 1 (F(0) = 0 already from vec initialization)
+    dp[1] = 1;
+    
+    // Fill table: dp[i] = dp[i-1] + dp[i-2]
+    for i in 2..=n_usize {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    
+    // Return dp[n]
+    dp[n_usize]
 }
 
 /// Approach 4: Space-Optimized O(1) (FASTEST - no extra space)
 ///
 /// Only need last two values, not entire table
-#[allow(dead_code, unused_variables)]
+
 fn fibonacci_optimized(n: u64) -> u64 {
-    // TODO: Implement space-optimized version
-    // Only track prev and curr, update in rolling fashion
-    // Hint: Use tuple destructuring (prev, curr) = (curr, prev + curr)
-    todo!("Implement fibonacci_optimized");
+    if n <= 1 {
+        return n;
+    }
+
+    let mut prev = 0u64;
+    let mut curr = 1u64;
+
+    for _ in 2..=n {
+        let next = prev + curr;
+        prev = curr;
+        curr = next;
+    }
+
+    curr
 }
 
 // ============================================================================
@@ -90,16 +172,92 @@ fn fibonacci_optimized(n: u64) -> u64 {
 const MOD: u64 = 1_000_000_007;
 
 /// Compute F(n) mod 1_000_000_007 to avoid overflow
-#[allow(dead_code, unused_variables)]
 fn fibonacci_modular(n: u64) -> u64 {
-    // TODO: Modify fibonacci_optimized to use modular arithmetic
-    // Use (a + b) % MOD to keep numbers bounded
-    todo!("Implement fibonacci_modular");
+    if n <= 1 {
+        return n;
+    }
+
+    let mut prev = 0u64;
+    let mut curr = 1u64;
+
+    for _ in 2..=n {
+        // Use modulo to prevent potential overflow when prev + curr exceeds u64::MAX
+        let next = (prev + curr) % MOD;
+        prev = curr;
+        curr = next;
+    }
+
+    curr
 }
 
 // ============================================================================
 // Tests and Demonstrations
 // ============================================================================
+
+fn demonstrate_recursive_limits() {
+    println!("\n--- Recursive Approach Limitations ---\n");
+    println!("Testing naive recursion with increasing values...");
+    println!("(Will stop before stack overflow or when too slow)\n");
+    
+    // NOTE: Times include ~10ms thread spawning overhead
+    // For small n (10-30), thread overhead dominates actual computation time
+    // For larger n (35+), exponential growth becomes visible
+    // See "Performance Comparison" section for actual computation times without thread overhead
+    let test_values = vec![10, 20, 30, 35, 40, 45];
+    let timeout = std::time::Duration::from_secs(2);
+    
+    for n in test_values {
+        let start = std::time::Instant::now();
+        
+        // Use a thread with limited stack to catch potential overflow
+        let handle = std::thread::Builder::new()
+            .stack_size(2 * 1024 * 1024) // 2MB stack (default is usually 2-8MB)
+            .spawn(move || fibonacci_naive(n))
+            .expect("Failed to spawn thread");
+        
+        // Wait for result with timeout
+        let mut elapsed = std::time::Duration::ZERO;
+        let mut result = None;
+        
+        while elapsed < timeout {
+            if handle.is_finished() {
+                result = Some(handle.join());
+                break;
+            }
+            std::thread::sleep(std::time::Duration::from_millis(10));
+            elapsed = start.elapsed();
+        }
+        
+        match result {
+            Some(Ok(value)) => {
+                let duration = start.elapsed();
+                if duration > std::time::Duration::from_millis(500) {
+                    println!("F({:2}): {} (took {:>8.1?}) ⚠️  Getting slow!", 
+                             n, value, duration);
+                } else {
+                    println!("F({:2}): {} (took {:>8.1?})", n, value, duration);
+                }
+            }
+            Some(Err(_)) => {
+                println!("F({:2}): ❌ STACK OVERFLOW! Recursion depth too large.", n);
+                println!("      Naive recursion makes 2^n function calls.");
+                println!("      For n={}, that's ~{} million calls!", n, 1 << (n - 20));
+                break;
+            }
+            None => {
+                println!("F({:2}): ⏱️  TIMEOUT! Taking longer than {:?}", n, timeout);
+                println!("      Naive recursion is O(2^n) - exponential time.");
+                println!("      Each increase by 1 roughly DOUBLES the runtime!");
+                break;
+            }
+        }
+    }
+    
+    println!("\n💡 Key Insight:");
+    println!("   - Naive recursion: Unusable for n > 40 (exponential time + stack risk)");
+    println!("   - Memoization: Can handle n=10,000+ easily (linear time, stack limited)");
+    println!("   - Bottom-up/Optimized: Can handle n=100,000+ (linear time, no recursion)\n");
+}
 
 fn compare_approaches() {
     println!("--- Performance Comparison ---\n");
@@ -110,7 +268,7 @@ fn compare_approaches() {
         println!("F({}):", n);
         
         // Naive (only for small n)
-        if n <= 20 {
+        if n <= 30 {
             let start = std::time::Instant::now();
             let result = fibonacci_naive(n);
             let duration = start.elapsed();

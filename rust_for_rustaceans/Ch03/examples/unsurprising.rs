@@ -12,6 +12,7 @@ fn main() {
     common_traits();
     ergonomic_implementations();
     wrapper_types();
+    static_methods_pattern();
 }
 
 /// Naming Practices: Use familiar names from std
@@ -82,6 +83,29 @@ fn print_number<T: AsRef<i32>>(value: &T) {
     println!("  Number via AsRef: {}", value.as_ref());
 }
 
+/// Static Methods Pattern: Avoid ambiguity with Deref
+fn static_methods_pattern() {
+    println!("--- Static Methods Pattern for Wrappers ---");
+    
+    let tracked = TrackedString::new("hello");
+    
+    // Static methods for wrapper-specific operations
+    println!("  Access count: {}", TrackedString::accesses(&tracked));
+    
+    // Instance methods via Deref - unambiguous!
+    println!("  Length: {}", tracked.len());           // String::len
+    println!("  Uppercase: {}", tracked.to_uppercase()); // String::to_uppercase
+    
+    // More deref usage increments counter
+    let _ = tracked.chars();
+    println!("  Access count after chars: {}", TrackedString::accesses(&tracked));
+    
+    // Unwrap with static method
+    let inner = TrackedString::into_inner(tracked);
+    println!("  Extracted: {}", inner);
+    println!();
+}
+
 // === Helper Types ===
 
 struct CustomCollection {
@@ -137,3 +161,54 @@ impl AsRef<i32> for Wrapper {
         &self.0
     }
 }
+
+// Wrapper with static methods pattern (RECOMMENDED)
+use std::cell::Cell;
+
+struct TrackedString {
+    inner: String,
+    access_count: Cell<usize>,
+}
+
+impl TrackedString {
+    // ✅ Static method for construction
+    fn new(s: &str) -> Self {
+        Self {
+            inner: s.to_string(),
+            access_count: Cell::new(0),
+        }
+    }
+    
+    // ✅ Static method for wrapper-specific data
+    // Takes &TrackedString explicitly - no ambiguity
+    fn accesses(wrapper: &TrackedString) -> usize {
+        wrapper.access_count.get()
+    }
+    
+    // ✅ Static method to unwrap
+    // Takes TrackedString by value - clear intent
+    fn into_inner(wrapper: TrackedString) -> String {
+        wrapper.inner
+    }
+}
+
+impl Deref for TrackedString {
+    type Target = String;
+    
+    fn deref(&self) -> &String {
+        // Track each deref access
+        self.access_count.set(self.access_count.get() + 1);
+        &self.inner
+    }
+}
+
+// Compare with BAD pattern (commented out):
+// 
+// impl TrackedString {
+//     // ❌ BAD: Instance method creates ambiguity
+//     fn accesses(&self) -> usize {
+//         self.access_count.get()
+//     }
+//     // Now what if String had an accesses() method?
+//     // Which one would wrapper.accesses() call?
+// }
