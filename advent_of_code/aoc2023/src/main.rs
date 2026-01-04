@@ -41,25 +41,18 @@ fn main() -> Result<()> {
             let _ = run_day(day, &input)?;
         }
         
-        // Time Part 1
+        // Time both parts by running the full solver multiple times
         let start = Instant::now();
         for _ in 0..ITERATIONS {
-            let _ = aoc2023::solver::day01::solve_part1(&input)?;
+            let _ = run_day(day, &input)?;
         }
-        let p1_time = start.elapsed() / ITERATIONS as u32;
-        
-        // Time Part 2
-        let start = Instant::now();
-        for _ in 0..ITERATIONS {
-            let _ = aoc2023::solver::day01::solve_part2(&input)?;
-        }
-        let p2_time = start.elapsed() / ITERATIONS as u32;
+        let total_time = start.elapsed() / ITERATIONS as u32;
         
         let (p1, p2) = run_day(day, &input)?;
         
-        println!("Day {day} Part 1: {p1} ({:?})", p1_time);
-        println!("Day {day} Part 2: {p2} ({:?})", p2_time);
-        println!("Total: {:?}", p1_time + p2_time);
+        println!("Day {day} Part 1: {p1}");
+        println!("Day {day} Part 2: {p2}");
+        println!("Total: {:?}", total_time);
     } else {
         // Normal mode
         let start = Instant::now();

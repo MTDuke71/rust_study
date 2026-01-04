@@ -4,16 +4,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 3/25 ⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 716.9µs |
-| **Mission Integration** | 1 day (Day 3: Mission 6) |
-| **Patterns Extracted** | 2 (delimiter parsing, spatial indexing) |
+| **Progress** | 4/25 ⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 1.080ms |
+| **Mission Integration** | 2 days (Day 3: Mission 6, Day 4: Mission 5) |
+| **Patterns Extracted** | 4 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | Day 4 | Day 5 | Day 6 | Day 7 | Day 8 | Day 9 | Day 10 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | Day 5 | Day 6 | Day 7 | Day 8 | Day 9 | Day 10 |
 Day 11 | Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
@@ -172,7 +172,92 @@ for neighbor in gear_coord.neighbors_8() {
 
 **Zettelkasten**: [[spatial-hash]] (if pattern repeats)
 
-**Links**: ← [Day 2](#day-2-cube-conundrum) | Day 4 →
+**Links**: ← [Day 2](#day-2-cube-conundrum) | [Day 4](#day-4-scratchcards) →
+
+---
+
+### Day 4: Scratchcards
+
+**Part 1**: Sum points from matching numbers (first match = 1 pt, doubles each match) → **32001**  
+**Part 2**: Count total cards after cascading copies (matches win copies of next N cards) → **5037841**  
+
+**Algorithm**: HashSet membership testing + forward-propagation DP  
+**Complexity**: O(n × m) where n = cards, m = numbers per card  
+**Runtime**: 362.9µs (Part 1: 176.6µs, Part 2: 186.3µs, Criterion benchmarks)  
+**Mission**: Mission 5 (HashSet concepts)  
+
+**Key Insight**: Part 1 uses HashSet for O(1) membership testing (3× faster than nested loops). Part 2 is forward-propagation DP - each card affects future cards, creating cascading multiplier effect.
+
+**Rust Highlights**:
+- `HashSet::contains()` for O(1) membership testing vs O(n) linear search
+- Iterator chain: `.iter().filter().count()` - zero allocations
+- Bit shifting for powers of 2: `1 << (n-1)` instead of `2.pow(n-1)`
+- Forward-propagation DP with single `Vec` pass
+- Integrator philosophy: Use Mission 5 HashSet instead of custom solutions
+
+**Code Highlight**:
+```rust
+// Part 1: HashSet for O(1) lookups
+let winning: HashSet<u32> = winning_part
+    .split_whitespace()
+    .filter_map(|s| s.parse().ok())
+    .collect();
+
+// O(n) iteration with O(1) lookups = O(n) total
+let matches = our_numbers
+    .iter()
+    .filter(|n| winning.contains(n))
+    .count();
+
+// Part 2: Forward-propagation DP
+let mut card_counts = vec![1u32; num_cards];
+for (i, line) in lines.iter().enumerate() {
+    let matches = count_matches(line);
+    let current_count = card_counts[i];
+    
+    // Propagate forward: each copy wins more cards
+    for j in 1..=matches {
+        if i + j < num_cards {
+            card_counts[i + j] += current_count;
+        }
+    }
+}
+```
+
+**Complexity Analysis**:
+- **Part 1**: O(n × m) where n = cards, m = avg numbers per card
+  - Parse: O(m) per card
+  - HashSet build: O(m)
+  - Membership tests: O(m) with O(1) per test
+- **Part 2**: O(n × k) where k = avg matches per card
+  - Single pass through cards: O(n)
+  - Forward propagation: O(k) per card
+  - In practice: O(n) since k is small
+
+**Algorithm Alternatives**:
+```rust
+// ❌ Nested loops: O(n × m × k) - 3× slower
+our.iter().filter(|n| winning.iter().any(|w| w == n))
+
+// ⚠️ Sort + binary: O(m log m + n log m) - 2× slower  
+let mut sorted = winning; sorted.sort();
+our.iter().filter(|n| sorted.binary_search(n).is_ok())
+
+// ✅ HashSet: O(m + n) - optimal!
+let set: HashSet<_> = winning.collect();
+our.iter().filter(|n| set.contains(n))
+```
+
+**Tests**: 
+- ✅ Part 1 example (13)
+- ✅ Part 2 example (30)
+- ✅ Count matches (4, 2, 0)
+- ✅ Calculate points (0→0, 1→1, 2→2, 3→4, 4→8)
+- ✅ Full cascade simulation
+
+**Zettelkasten**: [[entry-api-hashmap]], [[memoization-comprehensive-guide]], [[Dynamic Programming]]
+
+**Links**: ← [Day 3](#day-3-gear-ratios) | Day 5 →
 
 ---
 

@@ -8,9 +8,9 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 3/25 |
-| **Total Runtime** | 716.9µs |
-| **Average per Day** | 239.0µs |
+| **Days Completed** | 4/25 |
+| **Total Runtime** | 1.080ms |
+| **Average per Day** | 270.0µs |
 | **Fastest Day** | Day 1 (64.9µs) |
 | **Slowest Day** | Day 3 (526.7µs) |
 
@@ -23,8 +23,9 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 1 | 27.3µs | 37.6µs | 64.9µs | Yes |
 | 2 | 52.5µs | 73.3µs | 125.8µs | No* |
 | 3 | 50.0µs | 476.7µs | 526.7µs | Yes |
+| 4 | 176.6µs | 186.3µs | 362.9µs | Yes |
 
-*Day 2: Initial implementation, room for optimization (parsing can be improved)
+*Day 2: Initial implementation, room for optimization (parsing can be improved)  
 | ... | - | - | - | - |
 
 ---

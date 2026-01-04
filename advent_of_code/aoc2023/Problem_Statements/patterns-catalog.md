@@ -9,8 +9,10 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Pattern | Days Used | Location |
 |---------|-----------|----------|
 | Forward/Reverse Search | Day 1 | `day01.rs` |
-| Delimiter-Based Parsing | Day 1, Day 2 | `day01.rs`, `day02.rs` |
+| Delimiter-Based Parsing | Day 1, Day 2, Day 4 | `day01.rs`, `day02.rs`, `day04.rs` |
 | Spatial Indexing | Day 3 | `day03.rs` |
+| HashSet Membership | Day 4 | `day04.rs` |
+| Forward-Propagation DP | Day 4 | `day04.rs` |
 
 ---
 
@@ -63,7 +65,54 @@ for reveal in parts[1].split(';') {  // Multiple reveals per game
 
 **Error handling**: Use `?` operator with `anyhow::Result` for clean propagation.
 
-**Note**: Pattern used 2+ times, monitor for extraction.
+**Note**: Pattern used 3+ times, extracted to common pattern.
+
+### Pattern: HashSet for O(1) Membership Testing
+**Used**: Day 4  
+**When to use**: Need to check if elements exist in a collection repeatedly  
+**Code**: `src/solver/day04.rs::count_matches()`
+
+```rust
+// Build HashSet once from source data
+let collection: HashSet<T> = source
+    .split_whitespace()
+    .filter_map(|s| s.parse().ok())
+    .collect();
+
+// O(1) membership tests instead of O(n) linear search
+let matches = items
+    .iter()
+    .filter(|item| collection.contains(item))
+    .count();
+```
+
+**Complexity**: 
+- Build HashSet: O(m) where m = collection size
+- Each lookup: O(1) average case
+- Total for n lookups: O(m + n)
+
+**Alternatives comparison**:
+```rust
+// ❌ Nested loops: O(n × m)
+items.iter().filter(|item| 
+    collection.iter().any(|c| c == item)
+).count()
+
+// ⚠️ Sort + binary search: O(m log m + n log m)
+let mut sorted = collection.to_vec();
+sorted.sort();
+items.iter().filter(|item|
+    sorted.binary_search(item).is_ok()
+).count()
+
+// ✅ HashSet: O(m + n) - optimal!
+let set: HashSet<_> = collection.collect();
+items.iter().filter(|item| set.contains(item)).count()
+```
+
+**Mission Integration**: Mission 5 HashSet concepts
+
+**Note**: Pattern used once, monitor for extraction if used 3+ times.
 
 ### Pattern: Forward/Reverse Search with Early Termination
 **Used**: Day 1  
@@ -133,6 +182,68 @@ for neighbor in coord.neighbors_8() {
 ### Pattern: BFS Neighbor Exploration
 **Used**: TBD  
 **Code**: `src/patterns/grid_search.rs` (when created)
+
+---
+
+## 🧩 Dynamic Programming Patterns
+
+### Pattern: Forward-Propagation State Accumulation
+**Used**: Day 4  
+**When to use**: Items affect future items, no backwards dependencies  
+**Code**: `src/solver/day04.rs::solve_part2()`
+
+```rust
+// Initialize state vector (e.g., counts, values, etc.)
+let mut state = vec![initial_value; n];
+
+// Process each item in sequence
+for (i, item) in items.iter().enumerate() {
+    let current_value = state[i];
+    let propagation_range = compute_effect(item);
+    
+    // Current state affects future positions
+    for offset in 1..=propagation_range {
+        if i + offset < n {
+            state[i + offset] += current_value;
+        }
+    }
+}
+
+// Final answer: aggregate accumulated state
+let result: T = state.iter().sum();
+```
+
+**Key characteristics**:
+- **One-pass**: Process items left-to-right, no recursion needed
+- **Forward-only**: Position i only affects positions > i
+- **Accumulation**: Future values are sum/product of influences
+- **No memoization**: Don't revisit positions
+
+**Day 4 Example**: Scratchcard cascading
+```rust
+let mut card_counts = vec![1u32; num_cards];  // 1 original each
+
+for (i, card) in cards.iter().enumerate() {
+    let matches = count_matches(card);
+    let copies = card_counts[i];  // How many of THIS card
+    
+    // Each copy wins more cards forward
+    for j in 1..=matches {
+        if i + j < num_cards {
+            card_counts[i + j] += copies;  // Cascade!
+        }
+    }
+}
+```
+
+**Complexity**: O(n × m) where n = items, m = avg propagation width
+
+**When NOT to use**: 
+- Need to look backwards (use full DP table)
+- Recursive subproblems (use memoization)
+- Need to track intermediate states (use different DP pattern)
+
+**Note**: Pattern used once, monitor for extraction if used 3+ times.
 
 ---
 

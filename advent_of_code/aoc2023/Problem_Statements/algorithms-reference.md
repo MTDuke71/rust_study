@@ -9,14 +9,54 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Algorithm | Day(s) | Complexity | Zettelkasten |
 |-----------|--------|------------|--------------|
 | Linear Scan | Day 1, Day 2 | O(n) | - |
-| Delimiter Parsing | Day 2 | O(n × m) | - |
+| Delimiter Parsing | Day 2, Day 4 | O(n × m) | - |
 | Running Maximum | Day 2 | O(n) | - |
-| Spatial Indexing | Day 3 | O(n) build, O(1) lookup | [[spatial-hash]] |
+| Spatial Indexing | Day 3 | O(n) build, O(1) lookup | [[spatial-indexing-pattern]] |
 | Grid Scanning | Day 3 | O(w × h) | - |
+| HashSet Membership | Day 4 | O(1) per lookup | - |
+| Forward-Propagation DP | Day 4 | O(n × m) | [[memoization-comprehensive-guide]] |
 
 ---
 
-## 🔤 String Algorithms
+## � Set Operations
+
+### HashSet Membership Testing (Day 4)
+**Implementation**: `src/solver/day04.rs::count_matches()`  
+**Complexity**: O(m) to build set, O(1) per lookup, O(n) total for n lookups  
+**Key Concept**: Use HashSet for O(1) membership testing instead of O(n) linear search  
+
+**When to use**: 
+- Need to check "is this element in the collection" repeatedly
+- Membership testing is more important than order
+- Collection won't change after initial build
+
+**Pattern**:
+```rust
+// Build HashSet once: O(m)
+let winning: HashSet<u32> = winning_numbers
+    .split_whitespace()
+    .filter_map(|s| s.parse().ok())
+    .collect();
+
+// O(1) lookups instead of O(m) linear search
+let matches = our_numbers
+    .iter()
+    .filter(|n| winning.contains(n))  // O(1) per lookup
+    .count();
+```
+
+**Alternatives**:
+- Nested loops: O(n × m) - avoid for large datasets
+- Sort + binary search: O(m log m + n log m) - good but HashSet is simpler
+- HashSet: O(m + n) - optimal!
+
+**Mission**: Mission 5 (HashSet concepts)
+
+**Zettelkasten**: [[entry-api-hashmap]] (HashSet is similar data structure)
+
+---
+
+## �🔤 String Algorithms
 
 ### Position-Based Pattern Matching (Day 1)
 **Implementation**: `src/solver/day01.rs`  
@@ -107,11 +147,48 @@ fn update_max(&mut self, other: &T) {
 
 ## 🧩 Dynamic Programming
 
-*To be populated as DP problems are solved.*
+### Forward-Propagation DP (Day 4)
+**Implementation**: `src/solver/day04.rs::solve_part2()`  
+**Complexity**: O(n × m) where n = items, m = average propagation width  
+**Key Concept**: Process items sequentially, each affecting future items based on current state  
+
+**When to use**: 
+- State changes propagate forward (no backwards dependencies)
+- Future values depend on accumulated state from earlier items
+- One-pass solution possible (no recursion needed)
+- Cascading effects (copies winning more copies)
+
+**Pattern**:
+```rust
+// Initialize state array
+let mut state = vec![initial_value; n];
+
+// Process each item, updating future items
+for (i, item) in items.iter().enumerate() {
+    let current_state = state[i];
+    let effect_range = calculate_effect(item);
+    
+    // Propagate current state forward
+    for j in 1..=effect_range {
+        if i + j < n {
+            state[i + j] += current_state;  // Accumulate
+        }
+    }
+}
+
+let result: u32 = state.iter().sum();
+```
+
+**Day 4 Application**: Scratchcard copies cascade forward
+- Each card with N matches wins copies of next N cards
+- Copies also win more copies (multiplier effect)
+- Track count per card, propagate forward
+
+**Zettelkasten**: [[memoization-comprehensive-guide]], [[Dynamic Programming]]
 
 ### Memoization Patterns
 **Day(s)**: TBD  
-**Zettelkasten**: [[dynamic-programming-patterns]]
+**Zettelkasten**: [[memoization-aoc2024-patterns]]
 
 ---
 
@@ -201,8 +278,7 @@ if let Some(&entity_id) = coord_to_entity.get(&target_coord) {
 
 | Mission | Algorithms | Days Used |
 |---------|------------|-----------|
-| Mission 3 (Binary Search) | Binary search variants | TBD |
-| Mission 6 (Grid) | Grid traversal, 8-directional neighbors, spatial indexing | Day 3 |
+| Mission 3 (Binary Search) | Binary search variants | TBD || Mission 5 (HashMap) | HashSet membership testing, O(1) lookups | Day 4 || Mission 6 (Grid) | Grid traversal, 8-directional neighbors, spatial indexing | Day 3 |
 ## 📝 Notes
 
 - Algorithm entries are created when first encountered
