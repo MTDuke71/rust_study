@@ -22,6 +22,18 @@
 //! - Use HashSet for O(1) lookup of winning numbers
 //! - Count matches and calculate points using bit shifting (2^n = 1 << n)
 //!
+//! ## Mathematical Foundation
+//!
+//! Uses **set theory** for efficient membership testing:
+//! - Build set W (winning numbers): O(m) time
+//! - Test membership for each number: O(1) per test (hash-based)
+//! - Total complexity: O(m + n) vs O(m × n) for nested loops
+//!
+//! See `zettelkasten/math-foundations/set-theory-fundamentals.md` for:
+//! - Set operations (union, intersection, membership)
+//! - Mathematical properties and theorems
+//! - Performance analysis: HashSet 3× faster than linear search
+//!
 //! ## Optimizations
 //! - Mission integration: HashSet from Mission 5 concepts
 //! - Rust-specific: Iterator combinators, bit shifting for powers of 2
