@@ -60,7 +60,7 @@ This is a **LEARNING WORKSPACE**, not a production application. It contains:
 - Zettelkasten knowledge management system with 488+ interconnected notes
 
 ### Current Learning Phase
-- **Primary Focus**: Rust Book deep dive (Ch17 async/await completed) + AoC problem solving + Mathematics integration + Zettelkasten knowledge consolidation
+- **Primary Focus**: Rust for Rustaceans (Ch3 Designing Interfaces) + AoC problem solving + Mathematics integration + Zettelkasten knowledge consolidation
 - **Mathematics Integration**: NEW - Active track documenting mathematical foundations
   - Math zettelkasten layer alongside AoC work (1/20 notes created, target 20 by Jan 25)
   - Project Euler transition planned (starts Jan 26)
@@ -70,7 +70,7 @@ This is a **LEARNING WORKSPACE**, not a production application. It contains:
   - Advanced curriculum topics in archive still valuable - will integrate into Book chapters and AoC problems as relevant
 - **Mission Status**: 10 missions completed, deferred until Rust Book mastery achieved
 - **AoC Integration**: Active problem solving with pattern recognition framework + complete 2015 solutions
-- **Learning Strategy**: "Double Helix" - Rust mastery (Book/AoC/Missions) + Mathematical foundations (zettelkasten/Project Euler) intertwined
+- **Learning Strategy**: "Double Helix" - Rust mastery (RfR/AoC/Missions) + Mathematical foundations (zettelkasten/Project Euler) intertwined
 
 ### Learner Background - The Integrator Perspective
 
