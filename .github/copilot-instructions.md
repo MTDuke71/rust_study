@@ -60,12 +60,17 @@ This is a **LEARNING WORKSPACE**, not a production application. It contains:
 - Zettelkasten knowledge management system with 488+ interconnected notes
 
 ### Current Learning Phase
-- **Primary Focus**: Rust Book deep dive (Ch17 async/await completed) + AoC problem solving + Zettelkasten knowledge consolidation
+- **Primary Focus**: Rust Book deep dive (Ch17 async/await completed) + AoC problem solving + Mathematics integration + Zettelkasten knowledge consolidation
+- **Mathematics Integration**: NEW - Active track documenting mathematical foundations
+  - Math zettelkasten layer alongside AoC work (1/20 notes created, target 20 by Jan 25)
+  - Project Euler transition planned (starts Jan 26)
+  - Bidirectional linking: math theory ↔ code implementations
+  - See `.github/MATH_INTEGRATION_PLAN.md` for complete roadmap
 - **Daily Study**: On hold after Week 6 completion (proved disjointed from core learning)
   - Advanced curriculum topics in archive still valuable - will integrate into Book chapters and AoC problems as relevant
 - **Mission Status**: 10 missions completed, deferred until Rust Book mastery achieved
 - **AoC Integration**: Active problem solving with pattern recognition framework + complete 2015 solutions
-- **Learning Strategy**: Focused on Book → AoC application → Zettelkasten integration cycle
+- **Learning Strategy**: "Double Helix" - Rust mastery (Book/AoC/Missions) + Mathematical foundations (zettelkasten/Project Euler) intertwined
 
 ### Learner Background - The Integrator Perspective
 
@@ -138,6 +143,10 @@ This is NOT a typical Rust project - it's a **comprehensive learning system** wi
   - **`Ch17/`** - Async programming (futures, async/await, tokio, streams, select/join patterns)
 - **`advent_of_code/`** - **ACTIVE**: AoC problem solving with pattern recognition framework + complete 2015 solutions
 - **`zettelkasten/`** - **ACTIVE**: Bidirectional knowledge graph with 488+ interconnected notes
+  - **`math-foundations/`** - **NEW**: Mathematical concepts layer (set theory, graph theory, complexity analysis)
+    - 1/20 notes created (Jan 4), target 20 by Jan 25
+    - Bidirectional links: math theory ↔ implementations (AoC, missions)
+    - See `zettelkasten/math-foundations/README.md` for structure
 - **`missions/MissionX/`** - **DEFERRED**: V-Cycle data structure implementations (10 completed, paused for Book focus)
 - **`tutorials/MissionX_tut/`** - Step-by-step learning progressions (aligned with missions)
 - **`advanced_examples/`** - Real-world applications demonstrating mission concepts
@@ -260,12 +269,22 @@ cargo run --example join_futures
 cargo test
 
 # Apply concepts to AoC problems
-cd advent_of_code/aoc2024
-cargo test day01
-cargo run --bin day01
+cd advent_of_code/aoc2023  # Currently working through 2023
+cargo test day04
+cargo run --bin day04
+
+# Identify mathematical concepts used
+# - Notice HashSet = set theory membership testing
+# - Notice DP pattern = optimal substructure
+
+# Document mathematics in zettelkasten
+# Create/update math-foundations notes:
+# - zettelkasten/math-foundations/set-theory-fundamentals.md
+# - Link from math note → implementations (AoC, missions)
+# - Link from implementation → math note (doc comments)
 
 # Consolidate learning in zettelkasten
-# Create/update concept notes linking Book chapters to AoC patterns
+# Create/update concept notes linking Book chapters to AoC patterns to math theory
 ```
 
 ## 🎯 Mission-Specific Patterns
@@ -399,9 +418,11 @@ enum DemoError { ... }
 
 ### Active Learning Flow
 - **Rust Book → AoC**: Apply chapter concepts immediately to problem solving
+- **AoC → Math Foundations**: Identify mathematical concepts in solutions, create zettelkasten notes
+- **Math → Code**: Link mathematical theory back to implementations (bidirectional)
 - **AoC → Zettelkasten**: Document patterns and connections between problems and Book concepts
 - **Zettelkasten → Book**: Cross-reference concepts, build knowledge graph of Rust fundamentals
-- **Future**: Mission data structures will be used in AoC when work resumes
+- **Future**: Mission data structures will be used in AoC when work resumes; Project Euler starts Jan 26
 
 ### External Dependencies
 - **tokio** - Async runtime (Ch17, future AoC I/O-bound problems)
@@ -411,12 +432,17 @@ enum DemoError { ... }
 
 ## 🎓 Learning Philosophy
 
-This workspace uses a **focused, sequential mastery approach**:
-- **Current Phase**: Deep Rust Book study with immediate AoC application
+This workspace uses a **"Double Helix" learning approach**:
+- **Strand 1**: Rust mastery (Rust Book, AoC, Missions)
+- **Strand 2**: Mathematical foundations (zettelkasten math-foundations, Project Euler)
+- **Integration**: Each strand reinforces the other through bidirectional linking
+
+**Current Phase**: Deep Rust Book study with immediate AoC application + Mathematics layer
 - **Why**: Daily study proved disjointed from core Book/AoC learning
-- **Strategy**: Master Book chapters → Apply to AoC problems → Consolidate in zettelkasten
+- **Strategy**: Master Book chapters → Apply to AoC problems → Identify math concepts → Document in zettelkasten
+- **Math Integration**: Making implicit mathematical knowledge explicit (see `.github/MATH_INTEGRATION_PLAN.md`)
 - **Advanced Topics**: Concepts from daily study archive will be integrated as they become relevant to Book chapters or AoC problems
-- **Future**: Return to V-Cycle mission work after solid Book foundation
+- **Future**: Return to V-Cycle mission work after solid Book foundation; Project Euler starts Jan 26
 
 **For Mission Work** (when resumed):
 - Requirements before implementation (V-Cycle)
@@ -427,6 +453,8 @@ This workspace uses a **focused, sequential mastery approach**:
 **For Book/AoC Work** (current focus):
 - Work through Book examples hands-on
 - Solve AoC problems using newly learned concepts
+- Identify mathematical concepts used (set theory, graph algorithms, DP, etc.)
+- Create/update math-foundations zettelkasten notes
 - Document patterns and connections in zettelkasten
 - Build conceptual understanding before implementation rigor
 - Pull in advanced topics from archive when contextually relevant
@@ -593,9 +621,27 @@ fn solve_aoc_wrong(input: &str) -> usize {
 1. Read problem, identify relevant Book concepts
 2. Implement solution using patterns from recent chapters
 3. Test with sample data, then real input
-4. Document pattern in zettelkasten (e.g., `[[aoc-parsing-patterns]]`)
-5. Link to relevant Book chapters and concepts
-6. Consider mission data structures for future use
+4. **Identify mathematical concepts** used in the solution
+5. **Create/update math-foundations note** if new concept discovered
+6. **Add bidirectional links**: code → math note (doc comment), math note → code (implementation section)
+7. Document pattern in zettelkasten (e.g., `[[aoc-parsing-patterns]]`)
+8. Link to relevant Book chapters and concepts
+9. Consider mission data structures for future use
+
+**Mathematics Integration Workflow**:
+- After solving AoC problem, ask: "What mathematical concepts did I use?"
+  - Set theory? Graph algorithms? Dynamic programming? Number theory?
+- Check if `zettelkasten/math-foundations/[concept].md` exists
+  - If not: Create using template from `math-foundations/README.md`
+  - If yes: Add this problem to "Rust Implementations" section
+- Add doc comment to solution linking to math note:
+  ```rust
+  /// # Mathematical Foundation
+  /// 
+  /// Uses **set theory** for efficient membership testing.
+  /// See `zettelkasten/math-foundations/set-theory-fundamentals.md` for theory.
+  ```
+- Update daily note with mathematical insights gained
 
 ### When Creating New Missions (DEFERRED)
 *Work on missions is paused pending Book mastery. When resumed:*
@@ -626,12 +672,15 @@ fn solve_aoc_wrong(input: &str) -> usize {
 - **`.github/README.md`** - Comprehensive workspace overview
 - **`.github/CONTRIBUTING.md`** - Contribution guidelines
 - **`.github/CLIPPY_AUTOMATION.md`** - Clippy workflow details
+- **`.github/MATH_INTEGRATION_PLAN.md`** - Mathematics integration roadmap (NEW)
 - **`MONTHLY_CALENDAR.md`** - Learning schedule and activities
 - **`zettelkasten/zettel-index.md`** - Knowledge graph navigation
+- **`zettelkasten/math-foundations/README.md`** - Math layer structure and workflow (NEW)
 
 ### External References
 - [Rust Book](https://doc.rust-lang.org/book/) - Referenced in `rust_book/` exercises
 - [Advent of Code](https://adventofcode.com/) - Problem sets in `advent_of_code/`
+- [Project Euler](https://projecteuler.net/) - Mathematical problems (starts Jan 26)
 - [V-Cycle Methodology](https://en.wikipedia.org/wiki/V-Model_(software_development)) - Software engineering approach
 
 ---
@@ -662,10 +711,13 @@ This file is optimized for GitHub Copilot Coding Agent. Key points:
 - **Process Rust Book chapter**: Use `rust-book-instructions.md` for systematic integration (PRIMARY)
 - **Solve AoC problem**: Apply Book concepts, document patterns in zettelkasten (ACTIVE)
 - **Create zettelkasten page**: Use `zettelkasten-instructions.md` for linking Book/AoC concepts (ACTIVE)
+- **Document math concept**: Create/update `math-foundations/` notes with bidirectional links (NEW - ACTIVE)
 - **Implement mission**: Use `mission-instructions.md` - DEFERRED until Book mastery
 - **Write daily study**: Use `daily-study-instructions.md` - ON HOLD (proved disjointed)
 - **Build tutorial**: Use `tutorial-instructions.md` - DEFERRED (aligned with missions)
 - **Run tests**: `cargo test -p <package>` or `cargo test --workspace`
 - **Check quality**: `cargo clippy --workspace -- -D warnings`
+
+**Repository Philosophy**: Professional engineering standards applied to learning - every feature traced to requirements, every requirement tested, zero tolerance for warnings, with specialized workflows optimized for each content type.
 
 **Repository Philosophy**: Professional engineering standards applied to learning - every feature traced to requirements, every requirement tested, zero tolerance for warnings, with specialized workflows optimized for each content type.
