@@ -621,12 +621,18 @@ fn solve_aoc_wrong(input: &str) -> usize {
 1. Read problem, identify relevant Book concepts
 2. Implement solution using patterns from recent chapters
 3. Test with sample data, then real input
-4. **Identify mathematical concepts** used in the solution
-5. **Create/update math-foundations note** if new concept discovered
-6. **Add bidirectional links**: code → math note (doc comment), math note → code (implementation section)
-7. Document pattern in zettelkasten (e.g., `[[aoc-parsing-patterns]]`)
-8. Link to relevant Book chapters and concepts
-9. Consider mission data structures for future use
+4. **Add to benchmarks**: Update `advent_of_code/aoc20XX/benches/benchmarks.rs`:
+   - Add `dayXX` to imports: `use aoc20XX::solver::{..., dayXX};`
+   - Add benchmark function following existing pattern
+   - Add to `criterion_group!` macro
+   - Run: `cargo bench --bench benchmarks dayXX`
+   - Update performance docs with exact timings
+5. **Identify mathematical concepts** used in the solution
+6. **Create/update math-foundations note** if new concept discovered
+7. **Add bidirectional links**: code → math note (doc comment), math note → code (implementation section)
+8. Document pattern in zettelkasten (e.g., `[[aoc-parsing-patterns]]`)
+9. Link to relevant Book chapters and concepts
+10. **Update summary documents** with solution details and benchmark results
 
 **Mathematics Integration Workflow**:
 - After solving AoC problem, ask: "What mathematical concepts did I use?"

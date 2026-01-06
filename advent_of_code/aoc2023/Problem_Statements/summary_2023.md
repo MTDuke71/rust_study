@@ -4,16 +4,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 4/25 ⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 1.080ms |
+| **Progress** | 5/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 1.899ms |
 | **Mission Integration** | 2 days (Day 3: Mission 6, Day 4: Mission 5) |
-| **Patterns Extracted** | 4 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP) |
+| **Patterns Extracted** | 5 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | Day 5 | Day 6 | Day 7 | Day 8 | Day 9 | Day 10 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | Day 6 | Day 7 | Day 8 | Day 9 | Day 10 |
 Day 11 | Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
@@ -257,7 +257,141 @@ our.iter().filter(|n| set.contains(n))
 
 **Zettelkasten**: [[entry-api-hashmap]], [[memoization-comprehensive-guide]], [[Dynamic Programming]]
 
-**Links**: ← [Day 3](#day-3-gear-ratios) | Day 5 →
+**Links**: ← [Day 3](#day-3-gear-ratios) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) →
+
+---
+
+### Day 5: If You Give A Seed A Fertilizer
+
+**Part 1**: Map seeds through transformation pipeline (seed→soil→...→location), find min → **379811651**  
+**Part 2**: Seeds are range pairs (650M values), efficiently map ranges → **27992443**  
+
+**Algorithm**: Range intersection and splitting for interval mapping  
+**Complexity**: O(ranges × rules × stages) - ranges stay small despite splitting  
+**Runtime**: 818.4µs (Part 1: 34.6µs, Part 2: 783.8µs, Criterion benchmarks)  
+**Mission**: None (interval algorithms not in missions)  
+
+**Key Insight**: Part 2 explodes to 650 million seeds, but treating numbers as ranges allows processing in the same time as Part 1. Range intersection splits one range into mapped/unmapped parts; unmapped parts propagate through remaining rules.
+
+**Rust Highlights**:
+- Range splitting: `(Option<Range>, Vec<Range>)` return type for mapped/unmapped parts
+- Cascading transformations: 7 stages, each potentially splitting ranges
+- `.max()`/`.min()` for intersection boundaries
+- No Mission integration (interval algorithms not covered)
+- Efficiency: 10 input ranges → 141 final ranges vs 650M individual values
+
+**Code Highlight**:
+```rust
+// Part 1: Map individual numbers through transformation pipeline
+for seed in seeds {
+    let mut current = seed;
+    for map_rules in &all_maps {
+        current = map_through_ranges(current, map_rules);
+    }
+    min_location = min_location.min(current);
+}
+
+// Part 2: Map ranges through pipeline - same complexity!
+let mut current_ranges = parse_seed_ranges(input)?;  // 10 ranges
+for map_rules in &all_maps {  // 7 stages
+    let mut next_ranges = Vec::new();
+    for range in current_ranges {
+        // Range splits into mapped/unmapped parts
+        let mapped = map_range_through_rules(range, map_rules);
+        next_ranges.extend(mapped);
+    }
+    current_ranges = next_ranges;  // ~10-50 ranges per stage
+}
+let min = current_ranges.iter().map(|r| r.start).min().unwrap();
+```
+
+**Range Splitting Logic**:
+```rust
+fn map_range_through_single_rule(range: Range, rule: &RangeMap) 
+    -> (Option<Range>, Vec<Range>) 
+{
+    // Find intersection between range and rule
+    let intersection_start = range.start.max(rule.source_start);
+    let intersection_end = range.end().min(rule.source_end());
+    
+    // No overlap → return entire range unmapped
+    if intersection_start >= intersection_end {
+        return (None, vec![range]);
+    }
+    
+    // Map intersection, collect before/after unmapped parts
+    let mapped = Range { /* transformed intersection */ };
+    let unmapped = vec![/* before */, /* after */];
+    
+    (Some(mapped), unmapped)
+}
+```
+
+**Visual Example**:
+```
+Range [50..70) through rule [55..65) → [100..110):
+
+[50...................70)
+     [55.......65)  ← rule source
+      ▼         ▼
+    [100......110)  ← rule dest
+
+Splits into:
+  [50..55)   - unmapped before
+  [100..110) - mapped intersection  
+  [65..70)   - unmapped after
+```
+
+**Complexity Analysis - Theoretical vs Actual**:
+```
+Theoretical worst case: Each range can split 3-way per rule
+- Stage 1: 1 range → 3^M possible (M = rules per stage)
+- Across 7 stages: Could compound exponentially
+
+Actual observed growth (real puzzle input):
+Stage | Ranges | Growth Factor | Notes
+------|--------|---------------|-------
+  0   |   10   |     -         | Input seed ranges
+  1   |   40   |   4.00×       | Initial split (high)
+  2   |   63   |   1.58×       | Growth slowing
+  3   |   85   |   1.35×       | Stabilizing
+  4   |  101   |   1.19×       | Linear growth
+  5   |  115   |   1.14×       | Sub-linear
+  6   |  125   |   1.09×       | Flattening
+  7   |  141   |   1.13×       | Final (14.1× total)
+
+Theoretical max: 3^7 × 10 = 21,870 ranges
+Actual result: 141 ranges (155× better than worst case!)
+
+Why the discrepancy?
+- Most ranges don't intersect most rules
+- Many intersections consume entire range (no fragmentation)
+- Real data has favorable distribution
+```
+
+**Performance**:
+- **Part 1**: 20 seeds × 7 stages = 140 transformations → **34.6µs**
+- **Part 2**: 650M seeds compressed to 10 ranges → **141 ranges** after 7 stages → **783.8µs**
+- **Range Growth Analysis** (actual data from real input):
+  - Seeds: 10 ranges
+  - After stage 1: 40 ranges (4× initial split)
+  - After stage 2-7: 63→85→101→115→125→141 (growth factor decreases: 1.58×→1.35×→1.19×→1.14×→1.09×→1.13×)
+  - **Theoretical worst case**: 3^7 = 2,187 ranges per input range
+  - **Actual**: 14.1× total growth (much better than exponential!)
+- **Why Part 2 is slower**: Range splitting/tracking overhead + 14× more ranges to process
+- **Still efficient**: 783µs to handle 650M values (would take hours to iterate individually)
+
+**Tests**: 
+- ✅ Part 1 example (35)
+- ✅ Part 2 example (46)
+- ✅ Range intersection logic
+- ✅ Range splitting (1 range → up to 3 parts)
+- ✅ Seed range parsing (pairs)
+- ✅ Individual range mapping
+
+**Zettelkasten**: [[interval-algorithms]] (if pattern repeats)
+
+**Links**: ← [Day 4](#day-4-scratchcards) | Day 6 →
 
 ---
 

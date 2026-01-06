@@ -9,10 +9,11 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Pattern | Days Used | Location |
 |---------|-----------|----------|
 | Forward/Reverse Search | Day 1 | `day01.rs` |
-| Delimiter-Based Parsing | Day 1, Day 2, Day 4 | `day01.rs`, `day02.rs`, `day04.rs` |
+| Delimiter-Based Parsing | Day 1, Day 2, Day 4, Day 5 | `day01.rs`, `day02.rs`, `day04.rs`, `day05.rs` |
 | Spatial Indexing | Day 3 | `day03.rs` |
 | HashSet Membership | Day 4 | `day04.rs` |
 | Forward-Propagation DP | Day 4 | `day04.rs` |
+| Range Intersection/Splitting | Day 5 | `day05.rs` |
 
 ---
 

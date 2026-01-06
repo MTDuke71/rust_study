@@ -9,12 +9,14 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Algorithm | Day(s) | Complexity | Zettelkasten |
 |-----------|--------|------------|--------------|
 | Linear Scan | Day 1, Day 2 | O(n) | - |
-| Delimiter Parsing | Day 2, Day 4 | O(n × m) | - |
+| Delimiter Parsing | Day 2, Day 4, Day 5 | O(n × m) | - |
 | Running Maximum | Day 2 | O(n) | - |
 | Spatial Indexing | Day 3 | O(n) build, O(1) lookup | [[spatial-indexing-pattern]] |
 | Grid Scanning | Day 3 | O(w × h) | - |
 | HashSet Membership | Day 4 | O(1) per lookup | - |
 | Forward-Propagation DP | Day 4 | O(n × m) | [[memoization-comprehensive-guide]] |
+| Range Intersection | Day 5 | O(n × m) | [[interval-algorithms]] |
+| Range Mapping | Day 5 | O(ranges × rules × stages) | - |
 
 ---
 
@@ -189,6 +191,105 @@ let result: u32 = state.iter().sum();
 ### Memoization Patterns
 **Day(s)**: TBD  
 **Zettelkasten**: [[memoization-aoc2024-patterns]]
+
+---
+
+## 🔢 Interval/Range Algorithms
+
+### Range Intersection and Splitting (Day 5)
+**Implementation**: `src/solver/day05.rs::map_range_through_single_rule()`  
+**Complexity**: O(1) per range-rule pair, O(n × m) for n ranges through m rules  
+**Key Concept**: Split input ranges into mapped and unmapped portions based on intersection with mapping rules  
+
+**When to use**: 
+- Need to transform large ranges of values without iterating individual elements
+- Interval mapping problems (coordinates, time ranges, value transformations)
+- Dataset too large to process element-by-element (billions of values)
+- Transformations can be expressed as range-to-range mappings
+
+**Pattern**:
+```rust
+fn map_range_through_rule(range: Range, rule: &RangeMap) 
+    -> (Option<Range>, Vec<Range>) 
+{
+    // Check for intersection
+    let intersection_start = range.start.max(rule.source_start);
+    let intersection_end = range.end().min(rule.source_end());
+    
+    if intersection_start >= intersection_end {
+        return (None, vec![range]);  // No overlap
+    }
+    
+    // Map the intersection
+    let offset = intersection_start - rule.source_start;
+    let mapped = Range {
+        start: rule.dest_start + offset,
+        length: intersection_end - intersection_start,
+    };
+    
+    // Collect unmapped parts (before/after intersection)
+    let mut unmapped = Vec::new();
+    if range.start < intersection_start {
+        unmapped.push(Range {
+            start: range.start,
+            length: intersection_start - range.start,
+        });
+    }
+    if range.end() > intersection_end {
+        unmapped.push(Range {
+            start: intersection_end,
+            length: range.end() - intersection_end,
+        });
+    }
+    
+    (Some(mapped), unmapped)
+}
+```
+
+**Visual Example**:
+```
+Input range:  [50...................70)
+Rule source:       [55.......65)
+Rule dest:        [100......110)
+
+Result:
+  Before:     [50..55)           ← unmapped
+  Intersection:    [55..65) → [100..110) ← mapped
+  After:               [65..70)  ← unmapped
+```
+
+**Day 5 Application**: Seed range transformations
+- Part 1: 20 individual seeds → 34.6µs
+- Part 2: 650 million seeds as 10 ranges → 783.8µs
+- **Complexity paradox**:
+  - Theoretical worst case: O(3^M) per range where M = rules per stage
+  - Could compound to exponential growth across 7 stages
+  - Actual observed: 10 → 40 → 63 → 85 → 101 → 115 → 125 → 141 ranges
+  - Growth factor: 4× initial, then decreases to ~1.1-1.2× per stage
+  - Total: 14.1× growth (not 2,187× theoretical maximum)
+- **Why it works**: Real data is well-behaved (most ranges don't intersect most rules)
+- **Performance**: O(ranges × rules × stages) with low constant factors
+
+**Alternatives**:
+```rust
+// ❌ Iterate all values: O(n) where n = billions
+for value in range.start..range.end() {
+    let mapped = apply_transformation(value);
+}
+
+// ✅ Range splitting: O(k) where k = number of ranges (dozens)
+let output_ranges = apply_range_transformation(input_range, rules);
+```
+
+**Key Insights**:
+- **Range compression**: Handle billions of values as dozens of ranges
+- **Cascading splits**: Ranges fragment through multiple stages but remain manageable
+- **Unmapped passthrough**: Values not covered by rules map to themselves
+- **Order matters**: Process rules sequentially to avoid double-mapping
+
+**Mission**: None (interval algorithms not in current missions)
+
+**Zettelkasten**: [[interval-algorithms]] (if pattern repeats)
 
 ---
 
