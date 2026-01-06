@@ -168,9 +168,6 @@ fn map_range_through_rules(range: Range, rules: &[RangeMap]) -> Vec<Range> {
     let mut to_process = vec![range];
     let mut mapped = Vec::new();
     
-    #[cfg(debug_assertions)]
-    let initial_count = to_process.len();
-    
     // Process rules sequentially - each range is checked against each rule ONCE
     for rule in rules {
         let mut next_to_process = Vec::new();
@@ -277,7 +274,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
     eprintln!("  Stage 0 (seeds): {} ranges", current_ranges.len());
     
     // Apply each transformation to all ranges
-    for (stage_num, map_rules) in all_maps.iter().enumerate() {
+    for (_stage_num, map_rules) in all_maps.iter().enumerate() {
         let mut next_ranges = Vec::new();
         
         for range in current_ranges {
