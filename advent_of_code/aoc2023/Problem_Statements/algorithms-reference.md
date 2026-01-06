@@ -17,6 +17,7 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Forward-Propagation DP | Day 4 | O(n × m) | [[memoization-comprehensive-guide]] |
 | Range Intersection | Day 5 | O(n × m) | [[interval-algorithms]] |
 | Range Mapping | Day 5 | O(ranges × rules × stages) | - |
+| Quadratic Formula | Day 6 | O(1) per equation | - |
 
 ---
 
@@ -135,7 +136,118 @@ fn update_max(&mut self, other: &T) {
 
 ## 🔢 Mathematical Algorithms
 
-*To be populated as math problems are solved.*
+### Quadratic Formula (Day 6)
+**Implementation**: `src/solver/day06.rs::count_ways_quadratic()`  
+**Complexity**: O(1) per equation  
+**Key Concept**: Solve quadratic inequalities to find integer solutions without iteration  
+
+**When to use**: 
+- Need to find range of values satisfying quadratic inequality
+- Brute force iteration would be too slow (millions of values)
+- Equation has form ax² + bx + c > 0 (or < 0)
+- Precision matters - need exact boundaries
+
+**Pattern**:
+```rust
+// Problem: Find how many integers h satisfy: h × (T - h) > R
+// Rearrange: -h² + T×h - R > 0  or  h² - T×h + R < 0
+// Solve h² - T×h + R = 0 using quadratic formula
+
+fn count_ways_quadratic(time: u64, record: u64) -> u64 {
+    let t = time as f64;
+    let r = record as f64;
+    
+    // Discriminant: b² - 4ac where a=1, b=-T, c=R
+    let discriminant = t * t - 4.0 * r;
+    if discriminant < 0.0 { return 0; }  // No real solutions
+    
+    let sqrt_disc = discriminant.sqrt();
+    
+    // Two roots: h = (T ± √(T² - 4R)) / 2
+    let root1 = (t - sqrt_disc) / 2.0;  // Lower bound
+    let root2 = (t + sqrt_disc) / 2.0;  // Upper bound
+    
+    // Need STRICTLY between roots (> record, not >= record)
+    // Handle edge case: if root is exact integer equal to record
+    let min_hold = if root1.fract() == 0.0 && 
+                      (root1 as u64 * (time - root1 as u64) == record) {
+        (root1 as u64) + 1  // Exact match, exclude it
+    } else {
+        root1.ceil() as u64  // Round up to next integer
+    };
+    
+    let max_hold = if root2.fract() == 0.0 && 
+                      (root2 as u64 * (time - root2 as u64) == record) {
+        (root2 as u64) - 1  // Exact match, exclude it
+    } else {
+        root2.floor() as u64  // Round down to prev integer
+    };
+    
+    if max_hold >= min_hold {
+        max_hold - min_hold + 1  // Count of integers in range
+    } else {
+        0
+    }
+}
+```
+
+**Day 6 Application**: Boat race mechanics
+- Hold button for h milliseconds → speed = h mm/ms
+- Remaining time = (T - h) ms
+- Distance = h × (T - h) mm
+- Need: distance > record
+- Part 1: 4 races with T ≤ 95 → brute force O(T) works
+- Part 2: Single race with T = 48,938,595 → quadratic formula O(1) required
+
+**Visual Example**:
+```
+Time T=7, Record R=9
+Distance function: d(h) = h × (7 - h) = -h² + 7h
+
+Parabola (upside-down):
+    12 •       
+       |   •  •    
+    10 | •      •  ← Need d(h) > 9
+     9 |----------  ← Record line
+       •           •
+     0 •••••••••••••
+       0 1 2 3 4 5 6 7
+       
+Roots of -h² + 7h - 9 = 0:
+  h = (7 ± √(49-36)) / 2 = (7 ± √13) / 2
+  h ≈ 1.697 or 5.303
+  
+Integers in (1.697, 5.303): {2, 3, 4, 5} → 4 ways
+```
+
+**Alternatives**:
+```rust
+// ❌ Brute force: O(T) - too slow for T=48M
+for hold in 0..=time {
+    if hold * (time - hold) > record {
+        count += 1;
+    }
+}
+
+// ✅ Quadratic formula: O(1) - instant!
+let (min, max) = solve_quadratic_bounds(time, record);
+let count = max - min + 1;
+```
+
+**Performance Impact**: Day 6 Part 2
+- Brute force: ~50 million iterations (unacceptable)
+- Quadratic formula: 2 square roots + boundary adjustment (< 1µs)
+- Speedup: >50 million × faster
+
+**Key Insights**:
+- **Boundary precision**: Must handle case where root equals integer exactly
+- **Strict inequality**: Need `> record`, not `>= record` (exclude exact ties)
+- **Integer conversion**: `ceil()`/`floor()` for boundaries, adjust for exact roots
+- **Discriminant check**: Negative discriminant means no solutions
+
+**Mission**: None (quadratic equations not in current missions)
+
+**Zettelkasten**: [[quadratic-equations]], [[number-theory-basics]]
 
 ### Greatest Common Divisor (GCD) / Least Common Multiple (LCM)
 **Day(s)**: TBD  

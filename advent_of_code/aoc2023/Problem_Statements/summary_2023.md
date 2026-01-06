@@ -4,8 +4,8 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 5/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 1.899ms |
+| **Progress** | 6/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 1.900ms |
 | **Mission Integration** | 2 days (Day 3: Mission 6, Day 4: Mission 5) |
 | **Patterns Extracted** | 5 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection) |
 
@@ -391,7 +391,74 @@ Why the discrepancy?
 
 **Zettelkasten**: [[interval-algorithms]] (if pattern repeats)
 
-**Links**: ← [Day 4](#day-4-scratchcards) | Day 6 →
+**Links**: ← [Day 4](#day-4-scratchcards) | [Day 6](#day-6-wait-for-it) →
+
+---
+
+### Day 6: Wait For It
+
+**Part 1**: Count ways to beat boat race records (4 races) → **2756160**  
+**Part 2**: Same but single huge race (bad kerning = concatenate numbers) → **34788142**  
+
+**Algorithm**: Quadratic formula for finding integer solutions to distance inequality  
+**Complexity**: O(1) per race using quadratic formula vs O(T) brute force  
+**Runtime**: 0.95µs (Part 1: 0.65µs, Part 2: 0.30µs) - **Part 2 faster than Part 1!**  
+**Mission**: None  
+
+**Key Insight**: Distance = hold_time × (time - hold_time) is a quadratic equation. Part 2 has time=48,938,595 making brute force impractical. Quadratic formula solves in O(1) by finding the two roots of h² - T×h + R = 0, then counting integers strictly between them.
+
+**Rust Highlights**:
+- Quadratic formula: `(T ± √(T² - 4R)) / 2`
+- Edge case handling: exact integer roots that equal record (exclude them)
+- Boundary adjustment: `ceil()` for lower bound, `floor()` for upper bound
+- Part 1 uses brute force O(T) - fast enough for T ≤ 95
+- Part 2 requires quadratic formula - 50M iterations → instant
+
+**Code Highlight**:
+```rust
+// Part 1: Brute force works for small T
+fn count_ways_to_win(time: u64, record: u64) -> u64 {
+    (0..=time)
+        .filter(|&h| h * (time - h) > record)
+        .count() as u64
+}
+
+// Part 2: Quadratic formula for large T (48M iterations → O(1))
+fn count_ways_quadratic(time: u64, record: u64) -> u64 {
+    let t = time as f64;
+    let r = record as f64;
+    let discriminant = t * t - 4.0 * r;
+    let sqrt_disc = discriminant.sqrt();
+    
+    let root1 = (t - sqrt_disc) / 2.0;
+    let root2 = (t + sqrt_disc) / 2.0;
+    
+    // Adjust boundaries for strict inequality (> record)
+    let min_hold = if root1.fract() == 0.0 && /* exact match */ {
+        (root1 as u64) + 1
+    } else {
+        root1.ceil() as u64
+    };
+    
+    let max_hold = if root2.fract() == 0.0 && /* exact match */ {
+        (root2 as u64) - 1
+    } else {
+        root2.floor() as u64
+    };
+    
+    max_hold - min_hold + 1
+}
+```
+
+**Tests**: 
+- ✅ Part 1 example (288)
+- ✅ Part 2 example (71503)
+- ✅ Individual race calculations (4, 8, 9 ways)
+- ✅ Parse concatenated numbers
+
+**Zettelkasten**: [[quadratic-equations]], [[number-theory-basics]]
+
+**Links**: ← [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | Day 7 →
 
 ---
 

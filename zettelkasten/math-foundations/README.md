@@ -28,6 +28,7 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 - `grid-mathematics.md` - Coordinate systems, transformations, rotations
 
 ### **Applied Mathematics**
+- `quadratic-equations.md` - Quadratic formula, parabolas, inequalities ✅
 - `probability-theory.md` - Distributions, expected value, Bayes' theorem
 - `numerical-methods.md` - Root-finding, integration, approximation
 
@@ -158,19 +159,24 @@ Each implementation references mathematical foundations:
 
 ## 🎯 Current Coverage
 
-**Math notes created**: 0  
+**Math notes created**: 2/20  
 **Target by end of January**: 20+  
 **Target by end of Q1**: 100+
 
-### **Priority Concepts** (Create these first)
+### **Completed Notes**
+1. ✅ `set-theory-fundamentals.md` - Sets, membership, operations
+2. ✅ `quadratic-equations.md` - Quadratic formula, parabolas, inequalities
+
+### **Priority Concepts** (Create these next)
 
 Based on current work:
 
-1. **Set Theory** (AoC Day 4 - HashSet operations)
-2. **Graph Theory** (Mission 8, future AoC pathfinding)
-3. **Hash Functions** (Mission 5 HashMap)
-4. **Dynamic Programming** (Fibonacci exercise, future AoC)
-5. **Complexity Analysis** (All missions, performance benchmarks)
+1. ~~**Set Theory**~~ ✅ (AoC Day 4 - HashSet operations)
+2. ~~**Quadratic Equations**~~ ✅ (AoC Day 6 - Boat race optimization)
+3. **Graph Theory** (Mission 8, future AoC pathfinding)
+4. **Hash Functions** (Mission 5 HashMap)
+5. **Dynamic Programming** (Fibonacci exercise, future AoC)
+6. **Complexity Analysis** (All missions, performance benchmarks)
 
 ---
 
