@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use aoc2023::solver::{day01, day02, day04, day05, day06};
+use aoc2023::solver::{day01, day02, day03, day04, day05, day06};
 
 fn benchmark_day01(c: &mut Criterion) {
     let input = include_str!("../inputs/day01.txt");
@@ -22,6 +22,18 @@ fn benchmark_day02(c: &mut Criterion) {
     
     c.bench_function("day02_part2", |b| {
         b.iter(|| day02::solve_part2(black_box(input)))
+    });
+}
+
+fn benchmark_day03(c: &mut Criterion) {
+    let input = include_str!("../inputs/day03.txt");
+    
+    c.bench_function("day03_part1", |b| {
+        b.iter(|| day03::solve_part1(black_box(input)))
+    });
+    
+    c.bench_function("day03_part2", |b| {
+        b.iter(|| day03::solve_part2(black_box(input)))
     });
 }
 
@@ -61,5 +73,5 @@ fn benchmark_day06(c: &mut Criterion) {
     });
 }
 
-criterion_group!(benches, benchmark_day01, benchmark_day02, benchmark_day04, benchmark_day05, benchmark_day06);
+criterion_group!(benches, benchmark_day01, benchmark_day02, benchmark_day03, benchmark_day04, benchmark_day05, benchmark_day06);
 criterion_main!(benches);

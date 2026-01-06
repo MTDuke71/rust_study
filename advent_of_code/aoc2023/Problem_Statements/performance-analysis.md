@@ -9,10 +9,10 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | Metric | Value |
 |--------|-------|
 | **Days Completed** | 6/25 |
-| **Total Runtime** | 1.900ms |
-| **Average per Day** | 316.7µs |
+| **Total Runtime** | 2.305ms |
+| **Average per Day** | 384.2µs |
 | **Fastest Day** | Day 6 (0.95µs) |
-| **Slowest Day** | Day 5 (818.4µs) |
+| **Slowest Day** | Day 3 (926.1µs) |
 
 ---
 
@@ -22,13 +22,14 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 |-----|--------|--------|-------|------------|
 | 1 | 27.3µs | 37.6µs | 64.9µs | Yes |
 | 2 | 52.5µs | 73.3µs | 125.8µs | No* |
-| 3 | 50.0µs | 476.7µs | 526.7µs | Yes |
+| 3 | 622.1µs | 304.0µs | 926.1µs | Yes** |
 | 4 | 176.6µs | 186.3µs | 362.9µs | Yes |
 | 5 | 34.6µs | 783.8µs | 818.4µs | Yes |
-| 6 | 0.65µs | 0.30µs | 0.95µs | Yes |
+| 6 | 0.65µs | 0.30µs | 0.95µs | Yes*** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
-**Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
+**Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
+***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 | ... | - | - | - | - |
 
 ---

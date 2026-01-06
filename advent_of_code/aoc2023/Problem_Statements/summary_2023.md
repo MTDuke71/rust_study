@@ -3,9 +3,8 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|
-| **Progress** | 6/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 1.900ms |
+|--------|-------|\n| **Progress** | 6/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 2.305ms |
 | **Mission Integration** | 2 days (Day 3: Mission 6, Day 4: Mission 5) |
 | **Patterns Extracted** | 5 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection) |
 
@@ -128,7 +127,7 @@ let sum: u32 = input
 
 **Algorithm**: Grid scanning with 8-directional adjacency + spatial indexing  
 **Complexity**: O(w×h) grid scan, O(n×d) index build, O(1) lookups  
-**Runtime**: 526.7µs (Part 1: 50.0µs, Part 2: 476.7µs)  
+**Runtime**: 926.1µs (Part 1: 622.1µs, Part 2: 304.0µs)  
 **Mission**: Mission 6 (Grid<char>, Coord::neighbors_8())  
 
 **Key Insight**: Reverse the search! Instead of "for each *, find all adjacent numbers" (expensive), build a spatial index and ask "which number is at each neighbor of *" (fast).
