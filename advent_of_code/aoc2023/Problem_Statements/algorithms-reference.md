@@ -18,6 +18,8 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Range Intersection | Day 5 | O(n × m) | [[interval-algorithms]] |
 | Range Mapping | Day 5 | O(ranges × rules × stages) | - |
 | Quadratic Formula | Day 6 | O(1) per equation | - |
+| Frequency Counting | Day 7 | O(n) | [[entry-api-hashmap]] |
+| Custom Ord Multi-Level Sort | Day 7 | O(n log n) | [[custom-ord-pattern]] |
 
 ---
 
@@ -248,6 +250,148 @@ let count = max - min + 1;
 **Mission**: None (quadratic equations not in current missions)
 
 **Zettelkasten**: [[quadratic-equations]], [[number-theory-basics]]
+
+### Frequency Counting with HashMap (Day 7)
+**Implementation**: `src/solver/day07.rs::determine_type()`  
+**Complexity**: O(n) to build, O(1) per lookup  
+**Key Concept**: Count occurrences of elements to determine patterns  
+
+**When to use**: 
+- Need to know "how many times does X appear"
+- Determining patterns from frequency distribution
+- Grouping elements by count
+- Finding duplicates or unique elements
+
+**Pattern**:
+```rust
+// Build frequency map
+let mut counts: HashMap<T, usize> = HashMap::new();
+for &item in items {
+    *counts.entry(item).or_insert(0) += 1;
+}
+
+// Extract frequency distribution
+let mut frequencies: Vec<usize> = counts.values().copied().collect();
+frequencies.sort_by(|a, b| b.cmp(a));  // Descending
+
+// Pattern matching on frequencies
+match frequencies.as_slice() {
+    [5] => "All same",
+    [4, 1] => "Four of one, one different",
+    [3, 2] => "Three and two",
+    // ...
+}
+```
+
+**Day 7 Application**: Poker hand classification
+- Count how many of each card appears
+- Pattern [5] = five of a kind, [4,1] = four of a kind, [3,2] = full house, etc.
+- Frequencies array provides canonical representation of hand type
+
+**Entry API Pattern**:
+```rust
+// ❌ Multiple HashMap lookups
+if let Some(count) = map.get_mut(&key) {
+    *count += 1;
+} else {
+    map.insert(key, 1);
+}
+
+// ✅ Single lookup with Entry API
+*map.entry(key).or_insert(0) += 1;
+```
+
+**Alternatives**:
+```rust
+// ❌ Manual counting: O(n²)
+for item in items {
+    let count = items.iter().filter(|&x| x == item).count();
+}
+
+// ✅ HashMap: O(n)
+let counts: HashMap<_, _> = items.iter()
+    .fold(HashMap::new(), |mut acc, &item| {
+        *acc.entry(item).or_insert(0) += 1;
+        acc
+    });
+```
+
+**Mission**: Mission 5 (HashMap entry API)
+
+**Zettelkasten**: [[entry-api-hashmap]]
+
+### Custom Ord for Multi-Level Sorting (Day 7)
+**Implementation**: `src/solver/day07.rs::impl Ord for Hand`  
+**Complexity**: O(n log n) for sort, O(k) per comparison where k = comparison levels  
+**Key Concept**: Define custom ordering with multiple comparison criteria  
+
+**When to use**: 
+- Need to sort complex types with multiple fields
+- Primary/secondary/tertiary sorting criteria
+- Natural ordering doesn't match default derive
+- Want to use `.sort()` instead of `.sort_by()`
+
+**Pattern**:
+```rust
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
+enum Priority {
+    Low = 1,
+    Medium = 2,
+    High = 3,
+}
+
+impl Ord for ComplexType {
+    fn cmp(&self, other: &Self) -> Ordering {
+        // Primary comparison
+        match self.priority.cmp(&other.priority) {
+            Ordering::Equal => {
+                // Secondary comparison (tiebreaker)
+                match self.name.cmp(&other.name) {
+                    Ordering::Equal => {
+                        // Tertiary comparison
+                        self.id.cmp(&other.id)
+                    }
+                    other => other,
+                }
+            }
+            other => other,
+        }
+    }
+}
+
+impl PartialOrd for ComplexType {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+```
+
+**Day 7 Application**: Poker hand ranking
+- Primary: Hand type (five of a kind > four of a kind > ... > high card)
+- Secondary: Card-by-card comparison left-to-right (A > K > Q > ...)
+- Enables `hands.sort()` for automatic multi-level sorting
+
+**Simplified Pattern** (for iterator comparisons):
+```rust
+// Compare element-by-element with early termination
+for i in 0..n {
+    match self.items[i].cmp(&other.items[i]) {
+        Ordering::Equal => continue,  // Try next item
+        other => return other,         // Found difference
+    }
+}
+Ordering::Equal  // All items equal
+```
+
+**Benefits**:
+- Type-safe comparison
+- Automatic `.sort()` integration
+- No need for custom comparator closures
+- Self-documenting ordering logic
+
+**Mission**: None (Ord trait is standard library)
+
+**Zettelkasten**: [[custom-ord-pattern]] (if pattern repeats in future days)
 
 ### Greatest Common Divisor (GCD) / Least Common Multiple (LCM)
 **Day(s)**: TBD  

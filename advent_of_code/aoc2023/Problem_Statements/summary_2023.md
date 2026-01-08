@@ -12,7 +12,7 @@
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | Day 6 | Day 7 | Day 8 | Day 9 | Day 10 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | Day 8 | Day 9 | Day 10 |
 Day 11 | Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
@@ -457,7 +457,89 @@ fn count_ways_quadratic(time: u64, record: u64) -> u64 {
 
 **Zettelkasten**: [[quadratic-equations]], [[number-theory-basics]]
 
-**Links**: ← [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | Day 7 →
+**Links**: ← [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 7](#day-7-camel-cards) →
+
+---
+
+### Day 7: Camel Cards
+
+**Part 1**: Rank poker-style hands, calculate winnings → **248217452**  
+**Part 2**: J cards become Jokers (wildcards), recalculate → **245576185**  
+
+**Algorithm**: Frequency counting + custom Ord for multi-level sorting  
+**Complexity**: O(n log n) for sorting, O(n) for hand type detection  
+**Runtime**: 725.3µs (Part 1: 290.0µs, Part 2: 435.3µs)  
+**Mission**: Mission 5 (HashMap for frequency counting)  
+
+**Key Insight**: Part 1 uses HashMap to count card frequencies, determining hand type from frequency pattern. Part 2 adds Joker logic: J becomes weakest card for tie-breaking but acts as wildcard for hand type (add joker count to most frequent non-joker card).
+
+**Rust Highlights**:
+- Custom `Ord` implementation for multi-level comparison
+- Enum with numeric values for natural ordering
+- HashMap frequency counting (Mission 5 concept)
+- Separate types (`Hand` vs `Hand2`) for clean Part 1/Part 2 separation
+- No trait objects - static dispatch
+
+**Code Highlight**:
+```rust
+// Determine hand type by frequency counting
+let mut counts: HashMap<Card, usize> = HashMap::new();
+for &card in cards {
+    *counts.entry(card).or_insert(0) += 1;
+}
+let mut frequencies: Vec<usize> = counts.values().copied().collect();
+frequencies.sort_by(|a, b| b.cmp(a));
+
+match frequencies.as_slice() {
+    [5] => HandType::FiveOfAKind,
+    [4, 1] => HandType::FourOfAKind,
+    [3, 2] => HandType::FullHouse,
+    // ...
+}
+
+// Part 2: Jokers become most frequent card
+let joker_count = cards.iter().filter(|&&c| c == Joker).count();
+frequencies[0] += joker_count;  // Add to most frequent
+
+// Custom Ord enables simple sorting
+impl Ord for Hand {
+    fn cmp(&self, other: &Self) -> Ordering {
+        match self.hand_type.cmp(&other.hand_type) {
+            Ordering::Equal => {
+                // Tiebreaker: compare cards left-to-right
+                for i in 0..5 {
+                    match self.cards[i].cmp(&other.cards[i]) {
+                        Ordering::Equal => continue,
+                        other => return other,
+                    }
+                }
+                Ordering::Equal
+            }
+            other => other,
+        }
+    }
+}
+
+hands.sort();  // Automatic multi-level sorting!
+```
+
+**Algorithm Details**:
+- **Hand type detection**: O(5) to count + O(5) to sort frequencies = O(1) per hand
+- **Sorting**: O(n log n) where n = number of hands
+- **Comparison**: O(1) type compare + O(5) card compare = O(1)
+- **Part 2 optimization**: Greedy joker assignment (add to most frequent) is provably optimal
+
+**Tests**: 
+- ✅ Part 1 example (6440)
+- ✅ Part 2 example (5905)
+- ✅ Hand type detection (7 types)
+- ✅ Hand ordering (same type, different cards)
+- ✅ Joker hand type (wildcards)
+- ✅ Joker ordering (J weakest for tie-breaking)
+
+**Zettelkasten**: [[entry-api-hashmap]] (frequency counting), [[custom-ord-pattern]] (if pattern repeats)
+
+**Links**: ← [Day 6](#day-6-wait-for-it) | Day 8 →
 
 ---
 

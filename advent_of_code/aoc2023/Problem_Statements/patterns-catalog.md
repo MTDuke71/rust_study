@@ -9,11 +9,12 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Pattern | Days Used | Location |
 |---------|-----------|----------|
 | Forward/Reverse Search | Day 1 | `day01.rs` |
-| Delimiter-Based Parsing | Day 1, Day 2, Day 4, Day 5 | `day01.rs`, `day02.rs`, `day04.rs`, `day05.rs` |
+| Delimiter-Based Parsing | Day 1, Day 2, Day 4, Day 5, Day 7 | `day01.rs`, `day02.rs`, `day04.rs`, `day05.rs`, `day07.rs` |
 | Spatial Indexing | Day 3 | `day03.rs` |
 | HashSet Membership | Day 4 | `day04.rs` |
 | Forward-Propagation DP | Day 4 | `day04.rs` |
 | Range Intersection/Splitting | Day 5 | `day05.rs` |
+| Custom Ord for Sorting | Day 7 | `day07.rs` |
 
 ---
 
@@ -243,6 +244,60 @@ for (i, card) in cards.iter().enumerate() {
 - Need to look backwards (use full DP table)
 - Recursive subproblems (use memoization)
 - Need to track intermediate states (use different DP pattern)
+
+**Note**: Pattern used once, monitor for extraction if used 3+ times.
+
+### Pattern: Custom Ord for Multi-Criteria Sorting
+**Used**: Day 7  
+**When to use**: Need to sort complex types with multiple comparison levels  
+**Code**: `src/solver/day07.rs::impl Ord for Hand`
+
+```rust
+// Define natural ordering for enums
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
+enum HandType {
+    HighCard = 1,
+    OnePair = 2,
+    // ... ordered from weakest to strongest
+    FiveOfAKind = 7,
+}
+
+// Custom Ord for multi-level comparison
+impl Ord for Hand {
+    fn cmp(&self, other: &Self) -> Ordering {
+        match self.hand_type.cmp(&other.hand_type) {
+            Ordering::Equal => {
+                // Tiebreaker: compare element by element
+                for i in 0..5 {
+                    match self.cards[i].cmp(&other.cards[i]) {
+                        Ordering::Equal => continue,
+                        other => return other,
+                    }
+                }
+                Ordering::Equal
+            }
+            other => other,
+        }
+    }
+}
+```
+
+**Pattern**: 
+1. Primary comparison (hand type)
+2. If equal, secondary comparison (card-by-card)
+3. Chain comparisons with early return
+4. Use derived `PartialOrd` to get `partial_cmp` automatically
+
+**Day 7 Application**: Poker hand ranking
+- First compare hand type (five of a kind > four of a kind, etc.)
+- If same type, compare cards left-to-right
+- Enables simple `.sort()` call on `Vec<Hand>`
+
+**Rust Benefits**:
+- Automatic sorting with `.sort()`
+- Type-safe comparison (can't compare incompatible types)
+- No need for custom comparator functions
+- Derived traits reduce boilerplate
 
 **Note**: Pattern used once, monitor for extraction if used 3+ times.
 

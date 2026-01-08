@@ -8,9 +8,9 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 6/25 |
-| **Total Runtime** | 2.305ms |
-| **Average per Day** | 384.2µs |
+| **Days Completed** | 7/25 |
+| **Total Runtime** | 3.030ms |
+| **Average per Day** | 432.9µs |
 | **Fastest Day** | Day 6 (0.95µs) |
 | **Slowest Day** | Day 3 (926.1µs) |
 
@@ -26,6 +26,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 4 | 176.6µs | 186.3µs | 362.9µs | Yes |
 | 5 | 34.6µs | 783.8µs | 818.4µs | Yes |
 | 6 | 0.65µs | 0.30µs | 0.95µs | Yes*** |
+| 7 | 290.0µs | 435.3µs | 725.3µs | Yes |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
