@@ -8,11 +8,11 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 7/25 |
-| **Total Runtime** | 3.030ms |
-| **Average per Day** | 432.9µs |
+| **Days Completed** | 8/25 |
+| **Total Runtime** | ~11.2ms |
+| **Average per Day** | ~1.4ms |
 | **Fastest Day** | Day 6 (0.95µs) |
-| **Slowest Day** | Day 3 (926.1µs) |
+| **Slowest Day** | Day 8 (8.2ms) |
 
 ---
 
@@ -27,10 +27,12 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 5 | 34.6µs | 783.8µs | 818.4µs | Yes |
 | 6 | 0.65µs | 0.30µs | 0.95µs | Yes*** |
 | 7 | 290.0µs | 435.3µs | 725.3µs | Yes |
+| 8 | 1.5ms | 6.7ms | 8.2ms | Yes**** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
+****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  
 | ... | - | - | - | - |
 
 ---
@@ -76,6 +78,54 @@ for gear_coord in gears {
 - Measured with actual puzzle input (140×140 grid, ~100 gears, ~1000 numbers)
 
 **Validation**: Both implementations produce identical results (87263515)
+
+### Day 8: LCM for Cycle Alignment
+**Before**: Intractable (would require simulating 8,811,050,362,409 steps)  
+**After**: 6.7ms (Part 2)  
+**Speedup**: Infinite (brute force impossible to complete)  
+**Complexity**: O(steps) → O(k × m + k log k) where k = ghosts, m = avg cycle length  
+**Technique**: Cycle detection + Least Common Multiple  
+**Learning**: For simultaneous periodic processes, find cycle lengths and compute LCM instead of simulating  
+**Code**:
+```rust
+// ❌ Brute force: Impossible (8+ trillion steps)
+loop {
+    // Move all ghosts simultaneously
+    for ghost in &mut ghosts {
+        ghost.step();
+    }
+    steps += 1;
+    if ghosts.iter().all(|g| g.at_goal()) {
+        return steps;  // Would never reach in reasonable time
+    }
+}
+
+// ✅ Cycle detection + LCM: ~6.7ms
+let cycle_lengths: Vec<usize> = ghosts
+    .iter()
+    .map(|g| g.find_cycle_length())
+    .collect();
+
+let result = cycle_lengths.iter()
+    .fold(1, |acc, &x| lcm(acc, x));
+```
+
+**Mathematical Foundation**:
+- Each ghost follows repeating pattern with specific period
+- All cycles align at LCM of individual periods
+- Example: cycles of 4 and 6 align at lcm(4,6) = 12
+
+**Algorithm Details**:
+- Find cycle length for each ghost: O(k × m) where k = ghosts, m = avg cycle
+- Compute multi-way LCM: O(k log k) using fold + GCD
+- GCD uses Euclidean algorithm: O(log min(a,b))
+
+**Performance Impact**:
+- Part 1: 1.5ms (19,637 steps - direct simulation)
+- Part 2: 6.7ms (8.8 trillion steps - via LCM)
+- **Key insight**: Problem designed to be unsolvable by brute force
+
+**Zettelkasten**: [[number-theory-basics]], [[graph-theory-fundamentals]]
 
 ### Template for Future Optimizations
 

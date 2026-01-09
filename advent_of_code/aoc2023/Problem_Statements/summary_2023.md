@@ -539,7 +539,99 @@ hands.sort();  // Automatic multi-level sorting!
 
 **Zettelkasten**: [[entry-api-hashmap]] (frequency counting), [[custom-ord-pattern]] (if pattern repeats)
 
-**Links**: ← [Day 6](#day-6-wait-for-it) | Day 8 →
+**Links**: ← [Day 6](#day-6-wait-for-it) | [Day 8](#day-8-haunted-wasteland) →
+
+---
+
+### Day 8: Haunted Wasteland
+
+**Part 1**: Navigate network from AAA to ZZZ following L/R instructions → **19637**  
+**Part 2**: Ghost navigation - start at all **A nodes, find when all reach **Z simultaneously → **8811050362409**  
+
+**Algorithm**: Part 1: Graph traversal with cyclic instructions; Part 2: Cycle detection + LCM optimization  
+**Complexity**: O(n) for Part 1 where n = steps; O(k × m + k log k) for Part 2 where k = ghosts, m = avg cycle length  
+**Runtime**: ~8.2ms (Part 1: 1.5ms, Part 2: 6.7ms, Criterion benchmarks)  
+**Mission**: Mission 5 (HashMap for O(1) node lookups)  
+
+**Key Insight**: Part 2 cannot be brute-forced (8+ trillion steps). Solution: Each ghost follows a cyclic pattern. Find cycle length for each ghost, then calculate LCM to determine when all cycles align. This reduces impossible simulation to millisecond calculation.
+
+**Rust Highlights**:
+- HashMap for O(1) graph node lookups (Mission 5)
+- Euclidean algorithm for GCD (O(log min(a,b)))
+- LCM formula: `lcm(a,b) = (a × b) / gcd(a,b)`
+- Modular arithmetic for instruction wrapping: `idx = (idx + 1) % len`
+- Iterator fold for multi-way LCM: `.fold(1, |acc, x| lcm(acc, x))`
+
+**Code Highlight**:
+```rust
+/// Greatest Common Divisor using Euclidean algorithm
+fn gcd(mut a: usize, mut b: usize) -> usize {
+    while b != 0 {
+        let temp = b;
+        b = a % b;  // Key: gcd(a,b) = gcd(b, a mod b)
+        a = temp;
+    }
+    a
+}
+
+/// Least Common Multiple - finds cycle alignment
+fn lcm(a: usize, b: usize) -> usize {
+    if a == 0 || b == 0 {
+        0
+    } else {
+        (a * b) / gcd(a, b)
+    }
+}
+
+/// Part 2: Find cycle length for each ghost, compute LCM
+fn navigate_ghosts(&self) -> Result<usize> {
+    let start_nodes = self.find_nodes_ending_with('A');
+    
+    // Find cycle length for each starting node
+    let mut cycle_lengths = Vec::new();
+    for start in &start_nodes {
+        let steps = self.navigate_until_suffix(start, 'Z')?;
+        cycle_lengths.push(steps);
+    }
+    
+    // LCM of all cycle lengths = when all align
+    let result = cycle_lengths.iter().fold(1, |acc, &x| lcm(acc, x));
+    Ok(result)
+}
+```
+
+**Mathematical Foundation**:
+- **Graph Theory**: Network as directed graph with labeled edges
+  - Each node has exactly 2 outgoing edges (L/R)
+  - Path following with deterministic edge selection
+- **Number Theory**: 
+  - GCD via Euclidean algorithm (3000+ year old!)
+  - LCM for cycle synchronization
+  - Modular arithmetic for instruction wrapping
+- **See**: `zettelkasten/math-foundations/graph-theory-fundamentals.md`
+- **See**: `zettelkasten/math-foundations/number-theory-basics.md`
+
+**Algorithm Details**:
+- **Part 1**: Simple path following - O(n) where n = number of steps until ZZZ
+- **Part 2**: 
+  - Find all start nodes: O(V) where V = vertices
+  - For each ghost, find cycle: O(k × m) where k = ghosts, m = avg cycle
+  - Compute LCM: O(k log k) for k numbers
+  - **Optimization**: 8,811,050,362,409 steps computed in ~6.7ms instead of years
+
+**Tests**: 
+- ✅ Part 1 example 1 (2 steps)
+- ✅ Part 1 example 2 (6 steps)
+- ✅ Part 2 ghost example (6 steps with 2 ghosts)
+- ✅ GCD algorithm (48, 18 → 6)
+- ✅ LCM calculation (4, 6 → 12)
+- ✅ Network parsing
+
+**Zettelkasten**: 
+- [[graph-theory-fundamentals]] - Network representation, path traversal
+- [[number-theory-basics]] - GCD, LCM, modular arithmetic, cycle alignment
+
+**Links**: ← [Day 7](#day-7-camel-cards) | Day 9 →
 
 ---
 

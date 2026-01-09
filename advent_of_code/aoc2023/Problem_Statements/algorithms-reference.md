@@ -20,6 +20,10 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Quadratic Formula | Day 6 | O(1) per equation | - |
 | Frequency Counting | Day 7 | O(n) | [[entry-api-hashmap]] |
 | Custom Ord Multi-Level Sort | Day 7 | O(n log n) | [[custom-ord-pattern]] |
+| Graph Traversal (Directed) | Day 8 | O(n) | [[graph-theory-fundamentals]] |
+| GCD (Euclidean Algorithm) | Day 8 | O(log min(a,b)) | [[number-theory-basics]] |
+| LCM (Cycle Alignment) | Day 8 | O(1) | [[number-theory-basics]] |
+| Modular Arithmetic | Day 8 | O(1) | [[number-theory-basics]] |
 
 ---
 
@@ -118,7 +122,48 @@ fn update_max(&mut self, other: &T) {
 
 ## 🗺️ Graph Algorithms
 
-*To be populated as graph problems are solved.*
+### Directed Graph Traversal (Day 8)
+**Implementation**: `src/solver/day08.rs::Network::navigate()`  
+**Complexity**: O(n) where n = number of steps until destination  
+**Key Concept**: Follow edges deterministically through directed graph  
+
+**When to use**: 
+- Graph has deterministic edge selection (not search-based)
+- Following a path with specific navigation rules
+- Directed graph with labeled edges
+- Cycle detection needed
+
+**Pattern**:
+```rust
+struct Network {
+    nodes: HashMap<String, (String, String)>,  // node -> (left, right)
+}
+
+fn navigate(&self, start: &str, end: &str) -> Result<usize> {
+    let mut current = start.to_string();
+    let mut steps = 0;
+    
+    while current != end {
+        let (left, right) = self.nodes.get(&current)?;
+        current = match instruction {
+            'L' => left.clone(),
+            'R' => right.clone(),
+        };
+        steps += 1;
+    }
+    Ok(steps)
+}
+```
+
+**Day 8 Application**: Network navigation with L/R instructions
+- Each node has exactly 2 outgoing edges (left, right)
+- Instructions repeat cyclically
+- Part 1: Simple path AAA → ZZZ (19,637 steps)
+- Part 2: Multiple paths with cycle detection (8.8 trillion steps via LCM)
+
+**Mission**: Mission 5 (HashMap for O(1) node lookups)
+
+**Zettelkasten**: [[graph-theory-fundamentals]]
 
 ### Breadth-First Search (BFS)
 **Day(s)**: TBD  
@@ -250,6 +295,125 @@ let count = max - min + 1;
 **Mission**: None (quadratic equations not in current missions)
 
 **Zettelkasten**: [[quadratic-equations]], [[number-theory-basics]]
+
+### Greatest Common Divisor - Euclidean Algorithm (Day 8)
+**Implementation**: `src/solver/day08.rs::gcd()`  
+**Complexity**: O(log min(a, b))  
+**Key Concept**: Recursive division to find largest common divisor  
+
+**When to use**: 
+- Need GCD for LCM calculation
+- Simplifying fractions
+- Finding cycle periods
+- Number theory problems
+
+**Pattern**:
+```rust
+fn gcd(mut a: usize, mut b: usize) -> usize {
+    while b != 0 {
+        let temp = b;
+        b = a % b;  // Key: gcd(a,b) = gcd(b, a mod b)
+        a = temp;
+    }
+    a
+}
+```
+
+**Mathematical Foundation**:
+- **Euclidean algorithm**: 3000+ year old algorithm
+- **Key insight**: gcd(a, b) = gcd(b, a mod b)
+- **Termination**: When b = 0, gcd = a
+- **Efficiency**: Each iteration reduces problem size logarithmically
+
+**Day 8 Application**: Required for LCM calculation in Part 2
+
+**Zettelkasten**: [[number-theory-basics]]
+
+### Least Common Multiple - Cycle Alignment (Day 8)
+**Implementation**: `src/solver/day08.rs::lcm()`  
+**Complexity**: O(1) given GCD  
+**Key Concept**: Find smallest number divisible by both inputs  
+
+**When to use**: 
+- Multiple cycles that need to align
+- Finding when periodic events synchronize
+- Combining frequencies
+- Ghost/parallel path problems
+
+**Pattern**:
+```rust
+fn lcm(a: usize, b: usize) -> usize {
+    if a == 0 || b == 0 {
+        0
+    } else {
+        (a * b) / gcd(a, b)
+    }
+}
+
+// Multi-way LCM using fold
+let result = values.iter().fold(1, |acc, &x| lcm(acc, x));
+```
+
+**Mathematical Foundation**:
+- **Formula**: lcm(a, b) = (a × b) / gcd(a, b)
+- **Relationship**: a × b = gcd(a, b) × lcm(a, b)
+- **Properties**: 
+  - lcm(a, b) ≥ max(a, b)
+  - lcm(a, b) ≤ a × b
+  - lcm(a, b) = a × b only when gcd(a, b) = 1 (coprime)
+
+**Day 8 Application**: Ghost navigation synchronization
+- Each ghost has cycle length (time to reach **Z)
+- Find when ALL cycles align simultaneously
+- Alternative would require simulating 8+ trillion steps
+- LCM reduces to millisecond calculation
+
+**Example**:
+```rust
+// Ghost 1: reaches goal every 4 steps
+// Ghost 2: reaches goal every 6 steps
+// When do both reach goal together?
+lcm(4, 6) = 24 / gcd(4,6) = 24 / 2 = 12 steps
+```
+
+**Performance Impact**: 
+- Brute force: Would need to simulate 8,811,050,362,409 steps (impossible)
+- LCM approach: ~6.7ms total for Part 2
+- **Optimization**: Infinite speedup (brute force intractable)
+
+**Zettelkasten**: [[number-theory-basics]]
+
+### Modular Arithmetic - Cyclic Wrapping (Day 8)
+**Implementation**: Used throughout `src/solver/day08.rs`  
+**Complexity**: O(1) per operation  
+**Key Concept**: Wrap indices/values cyclically using modulo  
+
+**When to use**: 
+- Repeating sequences (instructions, patterns)
+- Circular buffers
+- Cyclic iteration
+- Clock arithmetic
+
+**Pattern**:
+```rust
+// Wrap index to array bounds
+let idx = (idx + 1) % array.len();
+
+// Repeating instruction sequence
+let instruction = instructions[step_count % instructions.len()];
+```
+
+**Day 8 Application**: Instruction wrapping
+- Instructions "LLR" repeat: L, L, R, L, L, R, L, L, R, ...
+- After reaching end, wrap to beginning
+- `instruction_idx = (instruction_idx + 1) % instructions.len()`
+
+**Mathematical Properties**:
+- `(a + b) mod n = ((a mod n) + (b mod n)) mod n`
+- `(a × b) mod n = ((a mod n) × (b mod n)) mod n`
+- `a mod n` gives remainder in range [0, n-1]
+
+**Zettelkasten**: [[number-theory-basics]]
 
 ### Frequency Counting with HashMap (Day 7)
 **Implementation**: `src/solver/day07.rs::determine_type()`  

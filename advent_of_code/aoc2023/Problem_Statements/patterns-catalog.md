@@ -15,6 +15,8 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Forward-Propagation DP | Day 4 | `day04.rs` |
 | Range Intersection/Splitting | Day 5 | `day05.rs` |
 | Custom Ord for Sorting | Day 7 | `day07.rs` |
+| Modular Arithmetic (Cyclic Wrapping) | Day 8 | `day08.rs` |
+| HashMap for Graph Adjacency | Day 8 | `day08.rs` |
 
 ---
 
@@ -305,17 +307,135 @@ impl Ord for Hand {
 
 ## 🔢 Mathematical Patterns
 
-*Patterns to be extracted as math-heavy problems are solved.*
+### Pattern: Modular Arithmetic for Cyclic Wrapping
+**Used**: Day 8  
+**When to use**: Repeating sequences, circular buffers, cyclic iteration  
+**Code**: `src/solver/day08.rs`
 
-### Pattern: GCD/LCM for Cycle Detection
-**Used**: TBD  
-**Code**: `src/patterns/number_theory.rs` (when created)
+```rust
+// Wrap index to stay within array bounds
+let idx = (idx + 1) % array.len();
+
+// Access repeating sequence
+let instruction = instructions[step_count % instructions.len()];
+```
+
+**Day 8 Application**: 
+- Instructions "LLR" repeat indefinitely
+- After index 2, wrap back to 0
+- `instruction_idx = (instruction_idx + 1) % instructions.len()`
+
+**Alternatives**:
+```rust
+// ❌ Manual wrapping with conditional
+idx += 1;
+if idx >= array.len() {
+    idx = 0;
+}
+
+// ✅ Modular arithmetic - cleaner and more efficient
+idx = (idx + 1) % array.len();
+```
+
+**Zettelkasten**: [[number-theory-basics]]
+
+### Pattern: GCD/LCM for Cycle Alignment
+**Used**: Day 8  
+**When to use**: Multiple cycles that need to synchronize  
+**Code**: `src/solver/day08.rs::gcd()`, `src/solver/day08.rs::lcm()`
+
+```rust
+/// Euclidean algorithm for GCD
+fn gcd(mut a: usize, mut b: usize) -> usize {
+    while b != 0 {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+    a
+}
+
+/// LCM using GCD
+fn lcm(a: usize, b: usize) -> usize {
+    if a == 0 || b == 0 {
+        0
+    } else {
+        (a * b) / gcd(a, b)
+    }
+}
+
+// Multi-way LCM
+let result = cycle_lengths.iter().fold(1, |acc, &x| lcm(acc, x));
+```
+
+**Day 8 Application**: Ghost synchronization
+- Each ghost has different cycle length to reach goal
+- Find when ALL cycles align: LCM of all cycle lengths
+- Avoids simulating 8+ trillion individual steps
+
+**Performance**: 
+- Brute force: Intractable (trillions of steps)
+- LCM: ~6.7ms (instant calculation)
+
+**Zettelkasten**: [[number-theory-basics]]
 
 ---
 
 ## 🌐 Graph Patterns
 
-*Patterns to be extracted as graph problems are solved.*
+### Pattern: HashMap for Graph Adjacency Lists
+**Used**: Day 8  
+**When to use**: Sparse graphs, string-based node IDs, O(1) neighbor lookup  
+**Code**: `src/solver/day08.rs::Network`
+
+```rust
+struct Network {
+    nodes: HashMap<String, (String, String)>,  // node -> (left, right)
+}
+
+impl Network {
+    fn navigate(&self, start: &str, end: &str) -> Result<usize> {
+        let mut current = start.to_string();
+        let mut steps = 0;
+        
+        while current != end {
+            let (left, right) = self.nodes
+                .get(&current)
+                .context(format!("Node {} not found", current))?;
+            
+            current = match instruction {
+                'L' => left.clone(),
+                'R' => right.clone(),
+            };
+            steps += 1;
+        }
+        Ok(steps)
+    }
+}
+```
+
+**Day 8 Application**: Directed graph with labeled edges
+- Each node has exactly 2 outgoing edges (left/right)
+- HashMap allows O(1) node lookup by string ID
+- Better than Vec for sparse graphs or non-integer node IDs
+
+**Alternatives**:
+```rust
+// ❌ Vec<Vec<usize>> - only works for dense graphs with integer IDs
+let adjacency: Vec<Vec<usize>> = vec![vec![]; num_nodes];
+
+// ❌ Vec of structs - O(n) search to find node
+let nodes: Vec<Node> = vec![...];
+let node = nodes.iter().find(|n| n.id == "AAA")?;  // Slow!
+
+// ✅ HashMap - O(1) lookup with any key type
+let nodes: HashMap<String, Neighbors> = HashMap::new();
+let neighbors = nodes.get("AAA")?;  // Fast!
+```
+
+**Mission Integration**: Mission 5 (HashMap), Mission 8 (Graph trait for algorithms)
+
+**Zettelkasten**: [[graph-theory-fundamentals]]
 
 ### Pattern: Dijkstra with Priority Queue
 **Used**: TBD  
