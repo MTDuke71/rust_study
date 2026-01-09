@@ -274,7 +274,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
     eprintln!("  Stage 0 (seeds): {} ranges", current_ranges.len());
     
     // Apply each transformation to all ranges
-    for (_stage_num, map_rules) in all_maps.iter().enumerate() {
+    for map_rules in all_maps.iter() {
         let mut next_ranges = Vec::new();
         
         for range in current_ranges {
