@@ -18,8 +18,19 @@ This guide provides a detailed explanation of every type, function, and implemen
 ## Overview
 
 ### Problem Summary
-**Part 1**: Navigate from node `AAA` to `ZZZ` following L/R instructions  
-**Part 2**: Start at all nodes ending with 'A', find when all simultaneously reach nodes ending with 'Z'
+**Part 1**: Navigate from node `AAA` to `ZZZ` following L/R instructions (single ghost path)  
+**Part 2**: Start at all nodes ending with 'A', find when all simultaneously reach nodes ending with 'Z' (multi-ghost synchronization)
+
+**The Relationship**: Part 2 is essentially "solve Part 1 for 6 ghosts simultaneously"
+- Part 1: AAA → ZZZ period = 19,637 steps
+- Part 2: LCM of 6 A→Z periods (AAA→ZZZ + 5 other ghosts)
+  - AAA → ZZZ: 19,637 steps
+  - GSA → SPZ: 12,643 steps
+  - QGA → GHZ: 14,257 steps
+  - LHA → HVZ: 15,871 steps
+  - LBA → NPZ: 11,567 steps
+  - XCA → NNZ: 19,099 steps
+  - **LCM(all 6) = 8,811,050,362,409 steps**
 
 ### Key Insights
 - **Part 1**: Simple graph traversal - O(n) where n = steps to destination
@@ -1041,12 +1052,23 @@ Runtime: ~6.7ms
 Breakdown:
   1. Find all start nodes: O(n)  where n = total nodes
   2. Find each cycle: O(k × m)
-     - 6 ghosts × ~17K steps each ≈ 100K lookups
+     - 6 ghosts × average ~15.5K steps ≈ 93K lookups total
+     - NOT 6 × 19,637 because cycles vary in length!
   3. Compute LCM: O(k × log M)
      - 6 numbers, each GCD is O(log M)
      - Total: 6 × log(8.8 trillion) ≈ 6 × 44 = 264 ops
   
-Total: O(100K) dominated by cycle detection
+Total: O(93K) dominated by cycle detection
+
+**Why Part 2 is ~4.5x slower than Part 1 (not 6x)?**
+- Part 1: Single path AAA→ZZZ = 19,637 steps
+- Part 2: 6 paths with varying lengths:
+  - Longest: AAA→ZZZ (19,637) and XCA→NNZ (19,099)
+  - Shortest: LBA→NPZ (11,567)
+  - Average: ~15,512 steps
+  - Total work: 93,074 steps
+- Ratio: 93,074 / 19,637 ≈ 4.74x (matches benchmark: 6.7ms / 1.5ms ≈ 4.5x)
+- **Key insight**: Shorter cycles take less time to discover!
 ```
 
 **GCD: Euclidean Algorithm**
