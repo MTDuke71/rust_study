@@ -125,12 +125,14 @@ impl Network {
     }
     
     /// Navigate from start node until reaching any node ending with suffix
-    fn navigate_until_suffix(&self, start: &str, suffix: char) -> Result<usize> {
+    /// Returns (steps, end_node)
+    fn navigate_until_suffix(&self, start: &str, suffix: char) -> Result<(usize, String)> {
         let mut current = start.to_string();
         let mut steps = 0;
         let mut instruction_idx = 0;
         
-        while !current.ends_with(suffix) {
+        // Take at least one step (important when start already ends with suffix)
+        loop {
             let (left, right) = self.nodes
                 .get(&current)
                 .context(format!("Node {} not found", current))?;
@@ -144,9 +146,14 @@ impl Network {
             
             steps += 1;
             instruction_idx = (instruction_idx + 1) % self.instructions.len();
+            
+            // Check if we reached the target
+            if current.ends_with(suffix) {
+                break;
+            }
         }
         
-        Ok(steps)
+        Ok((steps, current))
     }
     
     /// Find all nodes ending with a specific character
@@ -167,15 +174,38 @@ impl Network {
             anyhow::bail!("No starting nodes found (nodes ending with 'A')");
         }
         
+        println!("\n=== Ghost Path Analysis ===");
+        println!("Total ghosts: {}", start_nodes.len());
+        println!();
+        
         // For each starting node, find cycle length to reach node ending with 'Z'
         let mut cycle_lengths = Vec::new();
         for start in &start_nodes {
-            let steps = self.navigate_until_suffix(start, 'Z')?;
-            cycle_lengths.push(steps);
+            let (first_steps, first_z_node) = self.navigate_until_suffix(start, 'Z')?;
+            
+            // Verify cycle: continue from first **Z to next **Z
+            let (cycle_steps, second_z_node) = self.navigate_until_suffix(&first_z_node, 'Z')?;
+            
+            println!("Ghost starting at {}:", start);
+            println!("  {} → {} in {} steps (initial)", start, first_z_node, first_steps);
+            println!("  {} → {} in {} steps (cycle)", first_z_node, second_z_node, cycle_steps);
+            
+            if first_steps == cycle_steps && first_z_node == second_z_node {
+                println!("  ✓ Perfect cycle: period = {} steps", cycle_steps);
+            } else {
+                println!("  ⚠ Different periods! Initial: {}, Cycle: {}", first_steps, cycle_steps);
+            }
+            println!();
+            
+            // Use the cycle period (not initial period) for LCM
+            cycle_lengths.push(cycle_steps);
         }
         
         // Find LCM of all cycle lengths
         let result = cycle_lengths.iter().fold(1, |acc, &x| lcm(acc, x));
+        
+        println!("LCM of all cycle lengths: {}", result);
+        println!("===========================\n");
         
         Ok(result)
     }
