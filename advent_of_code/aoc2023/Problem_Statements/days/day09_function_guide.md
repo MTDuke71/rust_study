@@ -348,6 +348,40 @@ fn extrapolate_prev(sequence: &[i64]) -> i64 {
 | Access point | `.last()` | `.first()` |
 | Operation | `+` | `-` |
 
+**🎯 Clever Alternative - The Reverse Hack**:
+
+Instead of implementing `extrapolate_prev` separately, you can reuse `extrapolate_next` by reversing the input!
+
+```rust
+// Part 2 - The elegant way:
+pub fn solve_part2(input: &str) -> Result<String> {
+    let sum: i64 = input.lines()
+        .filter(|line| !line.trim().is_empty())
+        .map(|line| {
+            let mut sequence = parse_sequence(line)?;
+            sequence.reverse();  // ✨ The hack!
+            Ok(extrapolate_next(&sequence))  // Reuse forward extrapolation!
+        })
+        .collect::<Result<Vec<i64>>>()?
+        .iter()
+        .sum();
+    Ok(sum.to_string())
+}
+```
+
+**Why it works**:
+```
+Original: [0, 3, 6, 9, 12, 15]
+  Backward extrapolation → -3 (what comes before 0?)
+
+Reversed: [15, 12, 9, 6, 3, 0]
+  Forward extrapolation → -3 (what comes after 0?)
+```
+
+The difference pyramid is structurally identical, just mirrored! This eliminates an entire function and is a beautiful example of DRY (Don't Repeat Yourself).
+
+**Trade-off**: Current implementation is more explicit about intent (forward vs backward), but the reverse hack is more elegant and reduces code duplication.
+
 **Why subtraction**?
 ```
 Difference pyramid (backward view):
