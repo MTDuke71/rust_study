@@ -95,17 +95,17 @@ pub fn solve_part2(input: &str) -> Result<String> {
         .lines()
         .filter(|line| !line.trim().is_empty())
         .collect();
-    
+
     let num_cards = lines.len();
-    
+
     // Track how many of each card we have (start with 1 original of each)
     let mut card_counts = vec![1u32; num_cards];
-    
+
     // Process each card
     for (i, line) in lines.iter().enumerate() {
         let matches = count_matches(line);
         let current_count = card_counts[i];
-        
+
         // This card wins copies of the next 'matches' cards
         // Add current_count copies to each of those cards
         for j in 1..=matches {
@@ -114,7 +114,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
             }
         }
     }
-    
+
     // Sum up total cards
     let total: u32 = card_counts.iter().sum();
     Ok(total.to_string())
@@ -135,9 +135,18 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
 
     #[test]
     fn test_count_matches() {
-        assert_eq!(count_matches("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53"), 4);
-        assert_eq!(count_matches("Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19"), 2);
-        assert_eq!(count_matches("Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36"), 0);
+        assert_eq!(
+            count_matches("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53"),
+            4
+        );
+        assert_eq!(
+            count_matches("Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19"),
+            2
+        );
+        assert_eq!(
+            count_matches("Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36"),
+            0
+        );
     }
 
     #[test]

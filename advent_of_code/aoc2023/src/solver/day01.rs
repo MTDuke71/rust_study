@@ -23,27 +23,33 @@ fn extract_digits_part1(line: &str) -> Option<(u32, u32)> {
 
 /// Word-to-digit mapping for Part 2
 const DIGIT_WORDS: [(&str, u32); 9] = [
-    ("one", 1), ("two", 2), ("three", 3),
-    ("four", 4), ("five", 5), ("six", 6),
-    ("seven", 7), ("eight", 8), ("nine", 9),
+    ("one", 1),
+    ("two", 2),
+    ("three", 3),
+    ("four", 4),
+    ("five", 5),
+    ("six", 6),
+    ("seven", 7),
+    ("eight", 8),
+    ("nine", 9),
 ];
 
 /// Extract digit at position - handles both numeric chars and spelled-out words
 fn digit_at_position(s: &str, pos: usize) -> Option<u32> {
     let remainder = &s[pos..];
-    
+
     // Check for numeric digit first
     if let Some(digit) = remainder.chars().next()?.to_digit(10) {
         return Some(digit);
     }
-    
+
     // Check for spelled-out digits
     for (word, value) in DIGIT_WORDS {
         if remainder.starts_with(word) {
             return Some(value);
         }
     }
-    
+
     None
 }
 
@@ -51,14 +57,13 @@ fn digit_at_position(s: &str, pos: usize) -> Option<u32> {
 /// Forward search for first, backward search for last - with early termination
 fn extract_digits_part2(line: &str) -> Option<(u32, u32)> {
     // Forward: find first position with a digit
-    let first = (0..line.len())
-        .find_map(|pos| digit_at_position(line, pos))?;
-    
+    let first = (0..line.len()).find_map(|pos| digit_at_position(line, pos))?;
+
     // Backward: find last position with a digit (iterate positions in reverse)
     let last = (0..line.len())
         .rev()
         .find_map(|pos| digit_at_position(line, pos))?;
-    
+
     Some((first, last))
 }
 
@@ -70,7 +75,7 @@ pub fn solve_part1(input: &str) -> Result<String> {
             Some(first * 10 + last)
         })
         .sum();
-    
+
     Ok(sum.to_string())
 }
 
@@ -82,7 +87,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
             Some(first * 10 + last)
         })
         .sum();
-    
+
     Ok(sum.to_string())
 }
 

@@ -18,7 +18,7 @@
 //! - Complexity: O(n) for parsing, O(log n) for LCM calculation
 //!
 //! ## Mathematical Foundation
-//! 
+//!
 //! **Graph Theory**: Network represented as directed graph with labeled edges.
 //! See `zettelkasten/math-foundations/graph-theory-fundamentals.md` for theory.
 //!
@@ -56,106 +56,111 @@ impl Network {
     /// ```
     fn parse(input: &str) -> Result<Self> {
         let mut lines = input.lines();
-        
+
         // Parse instructions (first line)
         let instructions: Vec<char> = lines
             .next()
             .context("Missing instructions line")?
             .chars()
             .collect();
-        
+
         // Skip empty line
         lines.next();
-        
+
         // Parse node mappings
         let mut nodes = HashMap::new();
         for line in lines {
             if line.trim().is_empty() {
                 continue;
             }
-            
+
             // Format: "AAA = (BBB, CCC)"
             let parts: Vec<&str> = line.split(" = ").collect();
             if parts.len() != 2 {
                 anyhow::bail!("Invalid line format: {}", line);
             }
-            
+
             let node = parts[0].to_string();
-            
+
             // Parse (left, right)
             let lr = parts[1]
                 .trim_start_matches('(')
                 .trim_end_matches(')')
                 .split(", ")
                 .collect::<Vec<_>>();
-            
+
             if lr.len() != 2 {
                 anyhow::bail!("Invalid node pair: {}", parts[1]);
             }
-            
+
             nodes.insert(node, (lr[0].to_string(), lr[1].to_string()));
         }
-        
-        Ok(Network { instructions, nodes })
+
+        Ok(Network {
+            instructions,
+            nodes,
+        })
     }
-    
+
     /// Navigate from start to end node following instructions
     fn navigate(&self, start: &str, end: &str) -> Result<usize> {
         let mut current = start.to_string();
         let mut steps = 0;
         let mut instruction_idx = 0;
-        
+
         while current != end {
-            let (left, right) = self.nodes
+            let (left, right) = self
+                .nodes
                 .get(&current)
                 .context(format!("Node {} not found", current))?;
-            
+
             let instruction = self.instructions[instruction_idx];
             current = match instruction {
                 'L' => left.clone(),
                 'R' => right.clone(),
                 _ => anyhow::bail!("Invalid instruction: {}", instruction),
             };
-            
+
             steps += 1;
             instruction_idx = (instruction_idx + 1) % self.instructions.len();
         }
-        
+
         Ok(steps)
     }
-    
+
     /// Navigate from start node until reaching any node ending with suffix
     /// Returns (steps, end_node)
     fn navigate_until_suffix(&self, start: &str, suffix: char) -> Result<(usize, String)> {
         let mut current = start.to_string();
         let mut steps = 0;
         let mut instruction_idx = 0;
-        
+
         // Take at least one step (important when start already ends with suffix)
         loop {
-            let (left, right) = self.nodes
+            let (left, right) = self
+                .nodes
                 .get(&current)
                 .context(format!("Node {} not found", current))?;
-            
+
             let instruction = self.instructions[instruction_idx];
             current = match instruction {
                 'L' => left.clone(),
                 'R' => right.clone(),
                 _ => anyhow::bail!("Invalid instruction: {}", instruction),
             };
-            
+
             steps += 1;
             instruction_idx = (instruction_idx + 1) % self.instructions.len();
-            
+
             // Check if we reached the target
             if current.ends_with(suffix) {
                 break;
             }
         }
-        
+
         Ok((steps, current))
     }
-    
+
     /// Find all nodes ending with a specific character
     fn find_nodes_ending_with(&self, suffix: char) -> Vec<String> {
         self.nodes
@@ -164,49 +169,58 @@ impl Network {
             .cloned()
             .collect()
     }
-    
+
     /// Navigate all ghost paths simultaneously (using LCM optimization)
     fn navigate_ghosts(&self) -> Result<usize> {
         // Find all starting nodes (ending with 'A')
         let start_nodes = self.find_nodes_ending_with('A');
-        
+
         if start_nodes.is_empty() {
             anyhow::bail!("No starting nodes found (nodes ending with 'A')");
         }
-        
+
         println!("\n=== Ghost Path Analysis ===");
         println!("Total ghosts: {}", start_nodes.len());
         println!();
-        
+
         // For each starting node, find cycle length to reach node ending with 'Z'
         let mut cycle_lengths = Vec::new();
         for start in &start_nodes {
             let (first_steps, first_z_node) = self.navigate_until_suffix(start, 'Z')?;
-            
+
             // Verify cycle: continue from first **Z to next **Z
             let (cycle_steps, second_z_node) = self.navigate_until_suffix(&first_z_node, 'Z')?;
-            
+
             println!("Ghost starting at {}:", start);
-            println!("  {} → {} in {} steps (initial)", start, first_z_node, first_steps);
-            println!("  {} → {} in {} steps (cycle)", first_z_node, second_z_node, cycle_steps);
-            
+            println!(
+                "  {} → {} in {} steps (initial)",
+                start, first_z_node, first_steps
+            );
+            println!(
+                "  {} → {} in {} steps (cycle)",
+                first_z_node, second_z_node, cycle_steps
+            );
+
             if first_steps == cycle_steps && first_z_node == second_z_node {
                 println!("  ✓ Perfect cycle: period = {} steps", cycle_steps);
             } else {
-                println!("  ⚠ Different periods! Initial: {}, Cycle: {}", first_steps, cycle_steps);
+                println!(
+                    "  ⚠ Different periods! Initial: {}, Cycle: {}",
+                    first_steps, cycle_steps
+                );
             }
             println!();
-            
+
             // Use the cycle period (not initial period) for LCM
             cycle_lengths.push(cycle_steps);
         }
-        
+
         // Find LCM of all cycle lengths
         let result = cycle_lengths.iter().fold(1, |acc, &x| lcm(acc, x));
-        
+
         println!("LCM of all cycle lengths: {}", result);
         println!("===========================\n");
-        
+
         Ok(result)
     }
 }
@@ -281,7 +295,10 @@ XXX = (XXX, XXX)";
         let network = Network::parse(EXAMPLE1).unwrap();
         assert_eq!(network.instructions, vec!['R', 'L']);
         assert_eq!(network.nodes.len(), 7);
-        assert_eq!(network.nodes.get("AAA"), Some(&("BBB".to_string(), "CCC".to_string())));
+        assert_eq!(
+            network.nodes.get("AAA"),
+            Some(&("BBB".to_string(), "CCC".to_string()))
+        );
     }
 
     #[test]

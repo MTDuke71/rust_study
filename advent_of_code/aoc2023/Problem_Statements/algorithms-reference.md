@@ -24,6 +24,8 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | GCD (Euclidean Algorithm) | Day 8 | O(log min(a,b)) | [[number-theory-basics]] |
 | LCM (Cycle Alignment) | Day 8 | O(1) | [[number-theory-basics]] |
 | Modular Arithmetic | Day 8 | O(1) | [[number-theory-basics]] |
+| Finite Differences (Polynomial Extrapolation) | Day 9 | O(n²) per sequence | [[finite-differences]] |
+| Recursive Difference Pyramid | Day 9 | O(depth × width) | - |
 
 ---
 
@@ -414,6 +416,144 @@ let instruction = instructions[step_count % instructions.len()];
 - `a mod n` gives remainder in range [0, n-1]
 
 **Zettelkasten**: [[number-theory-basics]]
+
+### Finite Differences - Polynomial Extrapolation (Day 9)
+**Implementation**: `src/solver/day09.rs::extrapolate_next()`, `extrapolate_prev()`  
+**Complexity**: O(n²) per sequence where n = sequence length  
+**Key Concept**: Build difference pyramid recursively until all zeros, then extrapolate by working bottom-up  
+
+**When to use**: 
+- Detecting polynomial patterns in numeric sequences
+- Extrapolating future/past values from observations
+- Finding hidden relationships in data
+- Polynomial interpolation problems
+- Sequence prediction
+
+**Mathematical Foundation**:
+- **Finite Differences**: Method from numerical analysis for polynomial interpolation
+- **Key Theorem**: Polynomial of degree n has constant nth differences
+  - Degree 0 (constant): values constant → 0th differences constant
+  - Degree 1 (linear): values like 3,6,9,12 → 1st differences constant (3,3,3)
+  - Degree 2 (quadratic): values like 1,4,9,16 → 2nd differences constant (2,2,2)
+  - Degree 3 (cubic): 3rd differences constant, etc.
+- **Recursive Structure**: Each difference level reduces polynomial degree by 1
+
+**Pattern**:
+```rust
+/// Compute differences between consecutive elements
+fn compute_differences(sequence: &[i64]) -> Vec<i64> {
+    sequence
+        .windows(2)
+        .map(|pair| pair[1] - pair[0])
+        .collect()
+}
+
+/// Check if all elements are zero (base case)
+fn all_zeros(sequence: &[i64]) -> bool {
+    sequence.iter().all(|&x| x == 0)
+}
+
+/// Extrapolate next value recursively
+fn extrapolate_next(sequence: &[i64]) -> i64 {
+    // Base case: zeros extrapolate to zero
+    if all_zeros(sequence) {
+        return 0;
+    }
+    
+    // Recursive case: compute differences and extrapolate
+    let differences = compute_differences(sequence);
+    let diff_next = extrapolate_next(&differences);
+    
+    // Build up: next = last + extrapolated_difference
+    sequence.last().unwrap() + diff_next
+}
+
+/// Extrapolate previous value (backward)
+fn extrapolate_prev(sequence: &[i64]) -> i64 {
+    if all_zeros(sequence) {
+        return 0;
+    }
+    let differences = compute_differences(sequence);
+    let diff_prev = extrapolate_prev(&differences);
+    
+    // Build up backward: prev = first - extrapolated_difference
+    sequence.first().unwrap() - diff_prev
+}
+```
+
+**Visual Example - Forward Extrapolation**:
+```
+Sequence: 0 3 6 9 12 15  (linear, degree 1)
+Difference pyramid:
+  Level 0:  0   3   6   9  12  15    ← extrapolate: 15 + 3 = 18
+  Level 1:    3   3   3   3   3      ← extrapolate: 3 + 0 = 3
+  Level 2:      0   0   0   0        ← all zeros, return 0
+
+Sequence: 1 3 6 10 15 21  (quadratic, degree 2)
+  Level 0:  1   3   6  10  15  21    ← extrapolate: 21 + 7 = 28
+  Level 1:    2   3   4   5   6      ← extrapolate: 6 + 1 = 7
+  Level 2:      1   1   1   1        ← extrapolate: 1 + 0 = 1
+  Level 3:        0   0   0          ← all zeros, return 0
+
+Sequence: 10 13 16 21 30 45  (cubic, degree 3)
+  Level 0: 10  13  16  21  30  45    ← extrapolate: 45 + 23 = 68
+  Level 1:    3   3   5   9  15      ← extrapolate: 15 + 8 = 23
+  Level 2:      0   2   4   6        ← extrapolate: 6 + 2 = 8
+  Level 3:        2   2   2          ← extrapolate: 2 + 0 = 2
+  Level 4:          0   0            ← all zeros, return 0
+```
+
+**Visual Example - Backward Extrapolation**:
+```
+Sequence: 0 3 6 9 12 15
+  Level 0: -3   0   3   6   9  12  15    ← extrapolate: 0 - 3 = -3
+  Level 1:      3   3   3   3   3   3    ← extrapolate: 3 - 0 = 3
+  Level 2:        0   0   0   0   0      ← all zeros, return 0
+```
+
+**Day 9 Application**: OASIS sensor readings
+- 200 sequences, average length ~21 values
+- Part 1: Extrapolate forward (next value)
+- Part 2: Extrapolate backward (previous value)
+- Most sequences are low-degree polynomials (1-3 levels deep)
+
+**Complexity Analysis**:
+- **Recursion depth**: O(d) where d = polynomial degree (≤ sequence length)
+- **Work per level**: O(n - level) to compute differences
+- **Total per sequence**: O(d × n) ≈ O(n²) worst case
+- **For 200 sequences**: ~323µs total (132µs + 191µs)
+
+**Why it works**:
+1. **Polynomial detection**: Constant nth differences prove polynomial of degree n
+2. **Extrapolation validity**: If pattern is polynomial, next/prev values follow same rule
+3. **Recursive elegance**: Each level solves smaller subproblem (degree - 1)
+4. **Base case guarantee**: Finite differences always reach zeros for polynomials
+
+**Alternatives**:
+```rust
+// ❌ Polynomial fitting: More complex, requires matrix operations
+let coeffs = fit_polynomial(sequence);
+let next = evaluate_polynomial(coeffs, sequence.len());
+
+// ✅ Finite differences: Simple recursion, O(n²) but very clean
+let next = extrapolate_next(sequence);
+```
+
+**Rust Highlights**:
+- **`.windows(2)`**: Iterator pattern for pairwise operations
+- **Recursion**: Natural fit for pyramid structure
+- **Base + recursive case**: Clean termination condition
+- **Symmetry**: Forward vs backward extrapolation differ only in sign
+
+**Key Insights**:
+- **Pattern recognition**: Finite differences reveal polynomial structure
+- **Automatic degree detection**: Recursion finds degree without explicit calculation
+- **Bidirectional**: Same algorithm works forward and backward
+- **Numerical analysis**: 200+ year old method still elegant today
+
+**Mission**: None (finite differences not in current missions)
+
+**Zettelkasten**: [[finite-differences]]
 
 ### Frequency Counting with HashMap (Day 7)
 **Implementation**: `src/solver/day07.rs::determine_type()`  

@@ -17,6 +17,8 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Custom Ord for Sorting | Day 7 | `day07.rs` |
 | Modular Arithmetic (Cyclic Wrapping) | Day 8 | `day08.rs` |
 | HashMap for Graph Adjacency | Day 8 | `day08.rs` |
+| Recursive Difference Computation | Day 9 | `day09.rs` |
+| windows(2) for Pairwise Operations | Day 9 | `day09.rs` |
 
 ---
 
@@ -426,6 +428,106 @@ let adjacency: Vec<Vec<usize>> = vec![vec![]; num_nodes];
 
 // ❌ Vec of structs - O(n) search to find node
 let nodes: Vec<Node> = vec![...];
+
+// ✅ HashMap - O(1) lookup, flexible node IDs
+let nodes: HashMap<String, (String, String)> = HashMap::new();
+```
+
+**Mission Integration**: Mission 5 HashMap concepts
+
+**Zettelkasten**: [[graph-theory-fundamentals]]
+
+---
+
+## 🔁 Recursive Patterns
+
+### Pattern: Recursive Difference Computation with Base Case
+**Used**: Day 9  
+**When to use**: Building difference pyramids, detecting polynomial patterns, recursive extrapolation  
+**Code**: `src/solver/day09.rs`
+
+```rust
+/// Compute pairwise differences using windows(2)
+fn compute_differences(sequence: &[i64]) -> Vec<i64> {
+    sequence
+        .windows(2)
+        .map(|pair| pair[1] - pair[0])
+        .collect()
+}
+
+/// Recursive extrapolation with base case
+fn extrapolate_next(sequence: &[i64]) -> i64 {
+    // Base case: all zeros
+    if sequence.iter().all(|&x| x == 0) {
+        return 0;
+    }
+    
+    // Recursive case: compute differences and recurse
+    let differences = compute_differences(sequence);
+    let diff_extrapolated = extrapolate_next(&differences);
+    
+    // Build up answer from recursion result
+    sequence.last().unwrap() + diff_extrapolated
+}
+```
+
+**Key Pattern Elements**:
+1. **Base case**: Termination condition (all zeros)
+2. **Recursive transformation**: Create smaller subproblem (differences)
+3. **Recursive call**: Solve subproblem
+4. **Build up**: Combine subproblem solution with current level
+
+**Day 9 Application**: Polynomial extrapolation
+- Build difference pyramid recursively
+- Base case: All zeros → return 0
+- Recursive case: Next value = last + extrapolated_difference
+- Backward version: Previous value = first - extrapolated_difference
+
+**Complexity**: O(n²) where n = sequence length (depth × width of pyramid)
+
+**windows(2) Pattern**:
+```rust
+// Process consecutive pairs efficiently
+let differences: Vec<_> = sequence
+    .windows(2)
+    .map(|pair| pair[1] - pair[0])  // next - current
+    .collect();
+
+// Alternative to manual iteration:
+// ❌ Manual indexing
+for i in 0..sequence.len()-1 {
+    let diff = sequence[i+1] - sequence[i];
+}
+
+// ✅ windows(2) - cleaner and safer
+for pair in sequence.windows(2) {
+    let diff = pair[1] - pair[0];
+}
+```
+
+**Rust Highlights**:
+- `.windows(2)` for pairwise operations
+- `.all()` for base case check  
+- Recursion for pyramid structure
+- Symmetry: forward/backward differ only in sign
+
+**Mathematical Foundation**: Finite differences from numerical analysis
+- Polynomial of degree n has constant nth differences
+- Recursion automatically detects degree
+- Works bidirectionally (forward/backward extrapolation)
+
+**Note**: Pattern used once, monitor for extraction if used 3+ times.
+
+---
+
+## 📝 Notes
+
+- Patterns are added when first used, promoted to reusable modules if used 3+ times
+- Focus on Rust-idiomatic approaches (iterators, Option/Result, traits)
+- Cross-reference to Mission implementations when applicable
+- Link to zettelkasten for deep mathematical foundations
+
+
 let node = nodes.iter().find(|n| n.id == "AAA")?;  // Slow!
 
 // ✅ HashMap - O(1) lookup with any key type

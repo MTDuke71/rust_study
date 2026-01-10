@@ -29,6 +29,7 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 
 ### **Applied Mathematics**
 - `quadratic-equations.md` - Quadratic formula, parabolas, inequalities ✅
+- `finite-differences.md` - Polynomial extrapolation, difference pyramids ✅
 - `probability-theory.md` - Distributions, expected value, Bayes' theorem
 - `numerical-methods.md` - Root-finding, integration, approximation
 

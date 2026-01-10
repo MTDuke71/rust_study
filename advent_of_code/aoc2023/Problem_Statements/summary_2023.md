@@ -3,16 +3,16 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 6/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 2.305ms |
+|--------|-------|\n| **Progress** | 9/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 2.628ms |
 | **Mission Integration** | 2 days (Day 3: Mission 6, Day 4: Mission 5) |
-| **Patterns Extracted** | 5 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection) |
+| **Patterns Extracted** | 6 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | Day 8 | Day 9 | Day 10 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | Day 10 |
 Day 11 | Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
@@ -631,7 +631,101 @@ fn navigate_ghosts(&self) -> Result<usize> {
 - [[graph-theory-fundamentals]] - Network representation, path traversal
 - [[number-theory-basics]] - GCD, LCM, modular arithmetic, cycle alignment
 
-**Links**: ← [Day 7](#day-7-camel-cards) | Day 9 →
+**Links**: ← [Day 7](#day-7-camel-cards) | [Day 9](#day-9-mirage-maintenance) →
+
+---
+
+### Day 9: Mirage Maintenance
+
+**Part 1**: Extrapolate next value for each OASIS sequence by computing finite differences → **1887980197**  
+**Part 2**: Extrapolate previous (backward) value for each sequence → **990**  
+
+**Algorithm**: Recursive finite differences - build difference pyramid until all zeros, then extrapolate bottom-up  
+**Complexity**: O(k × m²) where k = sequences, m = avg sequence length (depth × width)  
+**Runtime**: ~323µs (Part 1: 132µs, Part 2: 191µs)  
+**Mission**: None  
+
+**Key Insight**: Polynomial sequences have constant nth differences. Build a pyramid of differences recursively - when you hit all zeros, you can extrapolate. Forward extrapolation: `next = last + diff_next`. Backward extrapolation: `prev = first - diff_prev`. The algorithm works because polynomials of degree n have constant nth differences.
+
+**Rust Highlights**:
+- `windows(2)` iterator for pairwise differences: `sequence.windows(2).map(|pair| pair[1] - pair[0])`
+- Recursive algorithm with base case: `if all_zeros(seq) { return 0; }`
+- `last()` and `first()` for accessing endpoints
+- Pattern matching in different directions: forward vs backward with same structure
+- Zero allocations in core algorithm - Vec only for difference sequences
+
+**Code Highlight**:
+```rust
+/// Compute differences: each element is next - current
+fn compute_differences(sequence: &[i64]) -> Vec<i64> {
+    sequence
+        .windows(2)
+        .map(|pair| pair[1] - pair[0])
+        .collect()
+}
+
+/// Extrapolate next value recursively
+fn extrapolate_next(sequence: &[i64]) -> i64 {
+    if all_zeros(sequence) {
+        return 0;  // Base case: zeros extrapolate to zero
+    }
+    let differences = compute_differences(sequence);
+    let diff_extrapolated = extrapolate_next(&differences);  // Recurse
+    sequence.last().unwrap() + diff_extrapolated  // Build up from bottom
+}
+
+/// Extrapolate previous value (Part 2 - same structure, different direction)
+fn extrapolate_prev(sequence: &[i64]) -> i64 {
+    if all_zeros(sequence) {
+        return 0;
+    }
+    let differences = compute_differences(sequence);
+    let diff_extrapolated = extrapolate_prev(&differences);
+    sequence.first().unwrap() - diff_extrapolated  // Subtract instead of add
+}
+```
+
+**Example Walkthrough**:
+```
+Sequence: 0 3 6 9 12 15
+Differences pyramid:
+  0   3   6   9  12  15    ← extrapolate 18 (15 + 3)
+    3   3   3   3   3      ← extrapolate 3 (3 + 0)
+      0   0   0   0        ← all zeros, return 0
+
+Backward extrapolation:
+ -3   0   3   6   9  12  15    ← extrapolate -3 (0 - 3)
+    3   3   3   3   3   3      ← extrapolate 3 (3 - 0)
+      0   0   0   0   0        ← all zeros, return 0
+```
+
+**Mathematical Foundation**:
+- **Finite Differences**: Method of polynomial interpolation/extrapolation from numerical analysis
+  - Polynomial of degree n has constant nth differences
+  - Sequence `0 3 6 9...` is degree 1 (linear) → 1st differences constant
+  - Sequence `1 3 6 10...` is degree 2 (quadratic) → 2nd differences constant
+  - Works by detecting polynomial patterns in data
+- **Recursive Structure**: Each level reduces degree by 1 until reaching degree 0 (constants)
+- **See**: `zettelkasten/math-foundations/finite-differences.md`
+
+**Algorithm Complexity**:
+- Depth of recursion: O(m) where m = polynomial degree (≤ sequence length)
+- Work per level: O(n - level) to compute differences
+- Total: O(m²) per sequence
+- For 200 sequences of length ~21: ~323µs total
+
+**Tests**: 
+- ✅ Part 1 example (114 total)
+- ✅ Part 2 example (2 total)
+- ✅ Individual sequence extrapolations (18, 28, 68)
+- ✅ Backward extrapolations (-3, 0, 5)
+- ✅ Parse, differences, zero detection
+
+**Zettelkasten**: 
+- [[finite-differences]] - Polynomial extrapolation theory
+- [[recursive-algorithms]] - Base case + recursive case pattern
+
+**Links**: ← [Day 8](#day-8-haunted-wasteland) | Day 10 →
 
 ---
 

@@ -57,17 +57,16 @@ impl CubeSet {
 /// Parse a single cube reveal like "3 blue, 4 red"
 fn parse_cube_set(s: &str) -> Result<CubeSet> {
     let mut set = CubeSet::new();
-    
+
     for cube_str in s.split(',') {
         let parts: Vec<&str> = cube_str.split_whitespace().collect();
         if parts.len() != 2 {
             anyhow::bail!("Invalid cube format: {}", cube_str);
         }
-        
-        let count: u32 = parts[0].parse()
-            .context("Failed to parse cube count")?;
+
+        let count: u32 = parts[0].parse().context("Failed to parse cube count")?;
         let color = parts[1];
-        
+
         match color {
             "red" => set.red += count,
             "green" => set.green += count,
@@ -75,7 +74,7 @@ fn parse_cube_set(s: &str) -> Result<CubeSet> {
             _ => anyhow::bail!("Unknown color: {}", color),
         }
     }
-    
+
     Ok(set)
 }
 
@@ -87,7 +86,7 @@ fn parse_game(line: &str, max_red: u32, max_green: u32, max_blue: u32) -> Result
     if parts.len() != 2 {
         anyhow::bail!("Invalid game format: {}", line);
     }
-    
+
     // Extract game ID from "Game X"
     let game_id: u32 = parts[0]
         .trim()
@@ -95,11 +94,11 @@ fn parse_game(line: &str, max_red: u32, max_green: u32, max_blue: u32) -> Result
         .context("Missing 'Game ' prefix")?
         .parse()
         .context("Failed to parse game ID")?;
-    
+
     // Parse each reveal separated by semicolons
     let reveals = parts[1].split(';');
     let mut is_possible = true;
-    
+
     for reveal in reveals {
         let cube_set = parse_cube_set(reveal)?;
         if !cube_set.is_possible(max_red, max_green, max_blue) {
@@ -107,7 +106,7 @@ fn parse_game(line: &str, max_red: u32, max_green: u32, max_blue: u32) -> Result
             break;
         }
     }
-    
+
     Ok((game_id, is_possible))
 }
 
@@ -115,18 +114,18 @@ pub fn solve_part1(input: &str) -> Result<String> {
     const MAX_RED: u32 = 12;
     const MAX_GREEN: u32 = 13;
     const MAX_BLUE: u32 = 14;
-    
+
     let sum: u32 = input
         .lines()
         .filter(|line| !line.trim().is_empty())
-        .filter_map(|line| {
-            match parse_game(line, MAX_RED, MAX_GREEN, MAX_BLUE) {
+        .filter_map(
+            |line| match parse_game(line, MAX_RED, MAX_GREEN, MAX_BLUE) {
                 Ok((id, is_possible)) if is_possible => Some(id),
                 _ => None,
-            }
-        })
+            },
+        )
         .sum();
-    
+
     Ok(sum.to_string())
 }
 
@@ -138,7 +137,7 @@ fn parse_game_minimum(line: &str) -> Result<(u32, CubeSet)> {
     if parts.len() != 2 {
         anyhow::bail!("Invalid game format: {}", line);
     }
-    
+
     // Extract game ID from "Game X"
     let game_id: u32 = parts[0]
         .trim()
@@ -146,15 +145,15 @@ fn parse_game_minimum(line: &str) -> Result<(u32, CubeSet)> {
         .context("Missing 'Game ' prefix")?
         .parse()
         .context("Failed to parse game ID")?;
-    
+
     // Find the minimum cubes needed by tracking max of each color
     let mut min_cubes = CubeSet::new();
-    
+
     for reveal in parts[1].split(';') {
         let cube_set = parse_cube_set(reveal)?;
         min_cubes.update_max(&cube_set);
     }
-    
+
     Ok((game_id, min_cubes))
 }
 
@@ -163,10 +162,12 @@ pub fn solve_part2(input: &str) -> Result<String> {
         .lines()
         .filter(|line| !line.trim().is_empty())
         .filter_map(|line| {
-            parse_game_minimum(line).ok().map(|(_, min_set)| min_set.power())
+            parse_game_minimum(line)
+                .ok()
+                .map(|(_, min_set)| min_set.power())
         })
         .sum();
-    
+
     Ok(sum.to_string())
 }
 
@@ -196,7 +197,11 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 
     #[test]
     fn test_cube_power() {
-        let set = CubeSet { red: 4, green: 2, blue: 6 };
+        let set = CubeSet {
+            red: 4,
+            green: 2,
+            blue: 6,
+        };
         assert_eq!(set.power(), 48); // 4 * 2 * 6 = 48
     }
 
@@ -210,7 +215,6 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
         assert_eq!(min_set.power(), 48);
     }
 
-
     #[test]
     fn test_parse_cube_set() {
         let set = parse_cube_set("3 blue, 4 red").unwrap();
@@ -221,10 +225,18 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 
     #[test]
     fn test_cube_set_possible() {
-        let set = CubeSet { red: 12, green: 13, blue: 14 };
+        let set = CubeSet {
+            red: 12,
+            green: 13,
+            blue: 14,
+        };
         assert!(set.is_possible(12, 13, 14));
-        
-        let set = CubeSet { red: 20, green: 6, blue: 8 };
+
+        let set = CubeSet {
+            red: 20,
+            green: 6,
+            blue: 8,
+        };
         assert!(!set.is_possible(12, 13, 14));
     }
 }

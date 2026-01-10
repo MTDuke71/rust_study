@@ -8,9 +8,9 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 8/25 |
-| **Total Runtime** | ~11.2ms |
-| **Average per Day** | ~1.4ms |
+| **Days Completed** | 9/25 |
+| **Total Runtime** | ~11.5ms |
+| **Average per Day** | ~1.3ms |
 | **Fastest Day** | Day 6 (0.95µs) |
 | **Slowest Day** | Day 8 (8.2ms) |
 
@@ -28,11 +28,13 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 6 | 0.65µs | 0.30µs | 0.95µs | Yes*** |
 | 7 | 290.0µs | 435.3µs | 725.3µs | Yes |
 | 8 | 1.5ms | 6.7ms | 8.2ms | Yes**** |
+| 9 | 132.0µs | 191.0µs | 323.0µs | No* |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  
+*Day 9: Initial clean implementation, already fast (~323µs total), recursion depth typically low  
 | ... | - | - | - | - |
 
 ---
@@ -126,6 +128,65 @@ let result = cycle_lengths.iter()
 - **Key insight**: Problem designed to be unsolvable by brute force
 
 **Zettelkasten**: [[number-theory-basics]], [[graph-theory-fundamentals]]
+
+### Day 9: Recursive Finite Differences - Naturally Efficient
+**Complexity**: O(n²) per sequence, but practical performance excellent  
+**Runtime**: Part 1: 132µs, Part 2: 191µs, Total: 323µs  
+**Technique**: Recursive difference pyramid with early termination  
+**Status**: No optimization needed - already fast  
+
+**Why It's Fast**:
+```rust
+// Polynomial sequences reach all-zeros quickly
+// Most sequences in Day 9 are low-degree (1-3 levels deep)
+
+// Example: Linear sequence (degree 1) - only 2 levels
+0   3   6   9  12  15    ← Level 0
+  3   3   3   3   3      ← Level 1
+    0   0   0   0        ← All zeros, return
+
+// Recursion depth typically 2-4 levels, not sequence length
+```
+
+**Complexity Analysis**:
+- **Theoretical**: O(d × n) where d = polynomial degree, n = sequence length
+- **Worst case**: O(n²) if d = n (rare in practice)
+- **Typical case**: O(2n) to O(4n) since most sequences are low-degree polynomials
+- **For Day 9**: 200 sequences, ~21 values each, depth ~2-3 levels
+
+**Performance Breakdown** (from benchmarks):
+- Parsing: Minimal (split + parse integers)
+- Difference computation: `.windows(2).map()` is efficient
+- Recursion overhead: Low due to small depth
+- Memory: Allocates Vec per level, but levels are small
+
+**Code Characteristics**:
+```rust
+// ✅ Efficient patterns used:
+sequence.windows(2)           // Iterator, no allocation
+    .map(|pair| pair[1] - pair[0])  // Simple arithmetic
+    .collect()                // Single allocation per level
+
+sequence.iter().all(|&x| x == 0)  // Early termination
+sequence.last().unwrap()      // O(1) slice operation
+```
+
+**Why No Optimization Needed**:
+1. **Natural efficiency**: Recursion depth bounded by polynomial degree (typically 2-4)
+2. **Simple operations**: Integer arithmetic, no complex data structures
+3. **Iterator usage**: Modern, zero-cost abstractions
+4. **Early termination**: Base case stops as soon as all zeros reached
+5. **Sub-millisecond already**: 323µs for 200 sequences is excellent
+
+**Potential Optimizations (not worth it)**:
+- ❌ **Iterative instead of recursive**: Would complicate code for minimal gain
+- ❌ **Memoization**: No overlapping subproblems (each level computed once)
+- ❌ **Pre-allocated buffers**: Memory allocation not bottleneck
+- ❌ **Parallelization**: Each sequence independent but overhead > benefit
+
+**Learning**: Sometimes the straightforward recursive solution is already optimal. Don't over-optimize clean code that runs in microseconds.
+
+**Zettelkasten**: [[finite-differences]]
 
 ### Template for Future Optimizations
 

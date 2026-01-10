@@ -69,7 +69,7 @@ impl Card {
 /// Card values for Part 2 where Jacks are Jokers (weakest card)
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 enum Card2 {
-    Joker = 1,  // J is now weakest
+    Joker = 1, // J is now weakest
     Two = 2,
     Three = 3,
     Four = 4,
