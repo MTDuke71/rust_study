@@ -22,6 +22,9 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | BFS with HashMap Distance Tracking | Day 10 | `day10.rs` |
 | Ray Casting State Machine | Day 10 | `day10.rs` |
 | Direction Enum with Offsets | Day 10 | `day10.rs` |
+| flat_map for Position Extraction | Day 11 | `day11.rs` |
+| HashSet Complement for Empty Detection | Day 11 | `day11.rs` |
+| Nested Loop for All Pairs | Day 11 | `day11.rs` |
 
 ---
 

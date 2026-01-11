@@ -3,8 +3,8 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 10/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 9.472ms |
+|--------|-------|\n| **Progress** | 11/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 10.928ms |
 | **Mission Integration** | 3 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8) |
 | **Patterns Extracted** | 8 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon) |
 
@@ -12,7 +12,7 @@
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) |
 Day 11 | Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
@@ -848,7 +848,126 @@ Corner handling:
 - [[computational-geometry-basics]] - Point-in-polygon, ray casting
 - [[aoc-grid-patterns]] - Common AoC grid problem patterns
 
-**Links**: ← [Day 9](#day-9-mirage-maintenance) | Day 11 →
+**Links**: ← [Day 9](#day-9-mirage-maintenance) | [Day 11](#day-11-cosmic-expansion) →
+
+---
+
+### Day 11: Cosmic Expansion
+
+**Part 1**: Sum shortest paths between all galaxy pairs after 2x expansion → **10276166**  
+**Part 2**: Same but with 1,000,000x expansion factor → **598693078798**  
+
+**Algorithm**: Parse galaxies, track empty rows/columns, calculate Manhattan distances with expansion offset  
+**Complexity**: O(n×m + g²) where n×m is grid size, g is galaxy count (9 galaxies → 36 pairs)  
+**Runtime**: ~728µs (Part 1: ~728µs, Part 2: ~728µs)  
+**Mission**: None (simple Vec<Position> suffices)  
+
+**Key Insight**: Don't expand the grid physically - just **track which rows/columns are empty** and add extra distance when calculating paths. For expansion factor `k`, each empty row/column crossed adds `k-1` extra units. This makes Part 1 (k=2) and Part 2 (k=1,000,000) identical code - just different expansion factors. The problem is essentially Manhattan distance on a non-uniform grid.
+
+**Rust Highlights**:
+- `flat_map` to find all galaxy positions in one pass: `(row, col)` tuples
+- `HashSet` to identify occupied rows/columns: O(1) complement → empty rows
+- Filtering ranges: `(0..=max_row).filter(|r| !occupied.contains(r))`
+- Counting empty rows/columns between two points: `filter(|&&r| r > min && r < max).count()`
+- Distance formula: `base_manhattan + (empty_count × (expansion - 1))`
+- Nested loops for all pairs: `for i in 0..n { for j in (i+1)..n }` avoids duplicates
+- Shared solver function for both parts with different expansion factors
+
+**Code Highlight**:
+```rust
+fn parse_galaxies(input: &str) -> Vec<Position> {
+    input
+        .lines()
+        .enumerate()
+        .flat_map(|(row, line)| {
+            line.chars()
+                .enumerate()
+                .filter(|(_, ch)| *ch == '#')
+                .map(move |(col, _)| (row, col))
+        })
+        .collect()
+}
+
+fn calculate_distance_with_expansion(
+    pos1: Position,
+    pos2: Position,
+    empty_rows: &[usize],
+    empty_cols: &[usize],
+    expansion_factor: usize,
+) -> usize {
+    let (r1, c1) = pos1;
+    let (r2, c2) = pos2;
+    
+    let min_row = r1.min(r2);
+    let max_row = r1.max(r2);
+    let min_col = c1.min(c2);
+    let max_col = c1.max(c2);
+    
+    // Count empty rows/cols between galaxies
+    let empty_rows_between = empty_rows.iter()
+        .filter(|&&r| r > min_row && r < max_row)
+        .count();
+    let empty_cols_between = empty_cols.iter()
+        .filter(|&&c| c > min_col && c < max_col)
+        .count();
+    
+    // Base Manhattan + expansion offset
+    let base = (max_row - min_row) + (max_col - min_col);
+    base + (empty_rows_between + empty_cols_between) * (expansion_factor - 1)
+}
+```
+
+**Example Walkthrough**:
+```
+Original grid (10x10), 9 galaxies:
+...#......
+.......#..
+#.........
+..........  ← Empty row at index 3
+......#...
+.#........
+.........#
+..........  ← Empty row at index 7
+.......#..
+#...#.....
+   ^^^  Empty columns at 2, 5, 8
+
+Galaxy 5 at (5,1) to Galaxy 9 at (9,4):
+- Base Manhattan: |9-5| + |4-1| = 4 + 3 = 7
+- Empty rows crossed: row 7 is between 5 and 9 → count = 1
+- Empty cols crossed: col 2 is between 1 and 4 → count = 1
+- Part 1 (expansion=2): 7 + (1+1)×(2-1) = 7 + 2 = 9 ✓
+- Part 2 (expansion=1M): 7 + (1+1)×(999,999) = 7 + 1,999,998 = 2,000,005
+```
+
+**Mathematical Foundation**:
+- **Graph Theory**: Complete graph with g galaxies → g×(g-1)/2 edges (all pairs)
+- **Metric Spaces**: Manhattan distance on non-uniform grid (variable edge weights)
+- **Combinatorics**: All pairs counting - C(g, 2) = g!/(2!×(g-2)!) = 36 for g=9
+- **See**: `zettelkasten/math-foundations/graph-theory-fundamentals.md`, `zettelkasten/math-foundations/combinatorics-basics.md`
+
+**Algorithm Details**:
+- **Parse**: O(n×m) to scan grid for '#' characters
+- **Find empty rows/cols**: O(g) to build HashSet, O(n) and O(m) to filter ranges
+- **Distance calculation**: O(empty_rows + empty_cols) per pair ≈ O(n+m) worst case
+- **All pairs**: g²/2 pairs, each O(n+m) distance calc → O(g² × (n+m))
+- **Total**: O(n×m + g² × (n+m))
+- For typical AoC grids: 140×140 grid, ~450 galaxies → ~19,600×140×2 ≈ 5.5M operations (still fast)
+
+**Tests**: 
+- ✅ Part 1 example (374)
+- ✅ Part 2 expansion 10x (1030)
+- ✅ Part 2 expansion 100x (8410)
+- ✅ Galaxy parsing (9 galaxies found)
+- ✅ Empty row detection (rows 3, 7)
+- ✅ Empty column detection (cols 2, 5, 8)
+
+**Zettelkasten**: 
+- [[manhattan-distance]] - Distance metrics on grids
+- [[graph-theory-fundamentals]] - Complete graphs, all pairs
+- [[combinatorics-basics]] - Combination counting
+
+**Links**: ← [Day 10](#day-10-pipe-maze) | Day 12 →
 
 ---
 

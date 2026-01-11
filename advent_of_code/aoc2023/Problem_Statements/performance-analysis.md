@@ -30,6 +30,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 8 | 1.5ms | 6.7ms | 8.2ms | Yes**** |
 | 9 | 132.0µs | 191.0µs | 323.0µs | No* |
 | 10 | 3.07ms | 0.3ms† | 3.37ms | Yes***** |
+| 11 | 728.3µs | 728.2µs | 1.456ms | Yes****** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
@@ -38,7 +39,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 *Day 9: Initial clean implementation, already fast (~323µs total), recursion depth typically low  
 ***** Day 10: `solve_both_parts` optimization - shares grid parsing + BFS (47% faster than separate calls)  
 †Part 2 incremental cost when sharing Part 1's BFS results (standalone: 3.35ms includes duplicate work)  
-| ... | - | - | - | - |
+****** Day 11: Parts have identical runtime - shared solver with only expansion factor difference (no grid creation!) | ... | - | - | - | - |
 
 ---
 

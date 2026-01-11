@@ -29,6 +29,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | BFS Loop Traversal | Day 10 | O(V + E) | [[graph-theory-fundamentals]] |
 | Ray Casting (Point-in-Polygon) | Day 10 | O(w × h) | [[computational-geometry-basics]] |
 | Scanline Algorithm | Day 10 | O(w × h) | - |
+| Manhattan Distance (Non-Uniform Grid) | Day 11 | O(1) per pair | [[manhattan-distance]] |
+| All Pairs Generation | Day 11 | O(g²) for g galaxies | [[combinatorics-basics]] |
+| Empty Row/Column Detection | Day 11 | O(g) HashSet + O(n+m) filter | - |
 
 ---
 
