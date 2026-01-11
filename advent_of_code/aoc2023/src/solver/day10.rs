@@ -235,8 +235,9 @@ pub fn solve_part1(input: &str) -> Result<String> {
     let distances = find_loop_distances(&grid, start);
 
     // The farthest point in a circular loop is exactly halfway around
-    // Mathematical property: max distance = loop_length / 2
-    let max_distance = distances.len() / 2;
+    // For even-length loops: n/2, for odd-length: (n+1)/2 (ceiling division)
+    // This works for any loop length without scanning for max
+    let max_distance = (distances.len() + 1) / 2;
 
     Ok(max_distance.to_string())
 }
