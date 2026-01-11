@@ -24,6 +24,156 @@
 
 ---
 
+## AoC Design Philosophy: The Part 1 → Part 2 Trap
+
+**The Teaching Pattern**: AoC problems are designed so you **cannot see Part 2 until you've solved Part 1**. This creates a deliberate learning moment.
+
+### The Naive Approach (Part 1 Only)
+
+Your first instinct for Part 1 is probably:
+
+```rust
+// ❌ Naive solution - physically expand the grid
+fn solve_part1_naive(input: &str) -> usize {
+    let mut grid = parse_grid(input);
+    
+    // Find empty rows
+    let empty_rows: Vec<_> = (0..grid.len())
+        .filter(|&r| grid[r].iter().all(|&c| c == '.'))
+        .collect();
+    
+    // Insert duplicate rows for each empty row
+    for (offset, &row_idx) in empty_rows.iter().enumerate() {
+        grid.insert(row_idx + offset + 1, grid[row_idx + offset].clone());
+    }
+    
+    // Similar logic for columns...
+    
+    // Calculate distances on expanded grid
+    let galaxies = find_galaxies(&grid);
+    sum_all_distances(&galaxies)
+}
+
+// Part 1: 140×140 → ~160×160 grid ✓ Works! (~25KB memory)
+```
+
+**Why This Works for Part 1**:
+- 2x expansion: 140 rows → ~160 rows (manageable)
+- Grid size: 160×160 = 25,600 cells × 1 byte = ~25KB
+- Fast enough: Parse, expand, calculate distances
+- **You submit Part 1, get the star** ⭐
+
+---
+
+### The Rude Awakening (Part 2 Revealed)
+
+**Now you unlock Part 2**: "Same problem but expansion factor is 1,000,000x"
+
+```rust
+// ❌ Naive approach for Part 2 - IMPOSSIBLE
+fn solve_part2_naive(input: &str) -> usize {
+    // Try to expand by 1,000,000x...
+    
+    // 140×140 → 140,000,000×140,000,000 grid
+    // = 19.6 TRILLION cells
+    // × 1 byte per cell
+    // = 19.6 TERABYTES of memory 💥
+    
+    // Your computer: 💀
+}
+```
+
+**Memory Calculation**:
+```
+Original grid:    140 rows × 140 cols = 19,600 cells
+After 2x expand:  ~160 × ~160 = ~25,600 cells (×1.3)
+After 1M expand:  ~140M × ~140M = ~19.6 trillion cells (×1 million squared!)
+
+Memory required:
+- Part 1: 25KB ✓
+- Part 2: 19.6TB ✗ (Most computers have 16-32GB RAM)
+
+Time to allocate:
+- Even if you had the memory, initializing 19.6 trillion cells
+  at 1 billion/sec would take ~5.4 hours
+- Then you still need to find galaxies and calculate distances!
+```
+
+---
+
+### The Insight: Abstraction Over Implementation
+
+**Realization**: You don't need to create the expanded grid - you need to **calculate distances as if it were expanded**.
+
+**Elegant Solution**:
+```rust
+// ✓ Works for BOTH Part 1 and Part 2
+fn calculate_distance_with_expansion(
+    pos1: Position,
+    pos2: Position,
+    empty_rows: &[usize],
+    empty_cols: &[usize],
+    expansion_factor: usize,  // 2 or 1,000,000
+) -> usize {
+    let base_manhattan = manhattan_distance(pos1, pos2);
+    let empty_count = count_empty_between(pos1, pos2, empty_rows, empty_cols);
+    
+    // Key insight: Empty spaces add (k-1) extra distance
+    base_manhattan + empty_count * (expansion_factor - 1)
+}
+
+// Part 1: expansion_factor = 2
+//   Empty row adds 2-1 = 1 extra distance ✓
+// Part 2: expansion_factor = 1,000,000
+//   Empty row adds 999,999 extra distance ✓
+
+// Memory: O(g + n + m) - just galaxy positions and empty indices
+// Time: Same for both parts - no grid creation!
+```
+
+**Space Comparison**:
+```
+Naive approach:
+- Part 1: ~25KB (grid storage)
+- Part 2: ~19.6TB (impossible)
+
+Smart approach:
+- Part 1: ~12KB (450 galaxies × 16 bytes + 100 empty indices × 8 bytes)
+- Part 2: ~12KB (same data structure!)
+```
+
+---
+
+### The Lesson: Think Beyond the Obvious
+
+**What AoC Teaches**:
+
+1. **Naive solutions have their place** - Part 1 doesn't punish brute force
+2. **Requirements change** - Part 2 simulates evolving requirements
+3. **Abstraction wins** - Conceptual models beat physical implementation
+4. **Scalability matters** - What works for 2x may not work for 1,000,000x
+5. **Refactor ruthlessly** - If Part 1 solution won't scale, throw it away
+
+**Real-World Parallel**:
+```
+Part 1 = Prototype/MVP:
+  "Just make it work for the demo"
+  → Naive grid expansion is fine
+
+Part 2 = Production at Scale:
+  "Now we have 1 million users"
+  → Need to rethink architecture entirely
+```
+
+**The Growth Mindset**: 
+- ❌ Bad: "I should have known this from the start"
+- ✓ Good: "I learned to recognize when to abstract vs. implement"
+- ✓ Better: "Next time I see 'expansion', I'll think about scalability first"
+
+**AoC's Brilliance**: You cannot game the system by looking ahead - Part 2 is hidden until you solve Part 1. This forces genuine problem-solving evolution, just like real software development.
+
+---
+
 ## Type Definitions
 
 ### `Position`
