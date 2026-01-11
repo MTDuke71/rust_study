@@ -237,7 +237,7 @@ pub fn solve_part1(input: &str) -> Result<String> {
     // The farthest point in a circular loop is exactly halfway around
     // For even-length loops: n/2, for odd-length: (n+1)/2 (ceiling division)
     // This works for any loop length without scanning for max
-    let max_distance = (distances.len() + 1) / 2;
+    let max_distance = distances.len().div_ceil(2);
 
     Ok(max_distance.to_string())
 }
@@ -343,112 +343,6 @@ pub fn solve_part2(input: &str) -> Result<String> {
     }
 
     Ok(enclosed_count.to_string())
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    const EXAMPLE1: &str = "\
-.....
-.S-7.
-.|.|.
-.L-J.
-.....";
-
-    const EXAMPLE2: &str = "\
-..F7.
-.FJ|.
-SJ.L7
-|F--J
-LJ...";
-
-    const EXAMPLE3: &str = "\
-...........
-.S-------7.
-.|F-----7|.
-.||.....||.
-.||.....||.
-.|L-7.F-J|.
-.|..|.|..|.
-.L--J.L--J.
-...........";
-
-    const EXAMPLE4: &str = "\
-.F----7F7F7F7F-7....
-.|F--7||||||||FJ....
-.||.FJ||||||||L7....
-FJL7L7LJLJ||LJ.L-7..
-L--J.L7...LJS7F-7L7.
-....F-J..F7FJ|L7L7L7
-....L7.F7||L7|.L7L7|
-.....|FJLJ|FJ|F7|.LJ
-....FJL-7.||.||||...
-....L---J.LJ.LJLJ...";
-
-    const EXAMPLE5: &str = "\
-FF7FSF7F7F7F7F7F---7
-L|LJ||||||||||||F--J
-FL-7LJLJ||||||LJL-77
-F--JF--7||LJLJ7F7FJ-
-L---JF-JLJ.||-FJLJJ7
-|F|F-JF---7F7-L7L|7|
-|FFJF7L7F-JF7|JL---7
-7-L-JL7||F7|L7F-7F7|
-L.L7LFJ|||||FJL7||LJ
-L7JLJL-JLJLJL--JLJ.L";
-
-    #[test]
-    fn test_part1_example1() {
-        let result = solve_part1(EXAMPLE1).unwrap();
-        assert_eq!(result, "4");
-    }
-
-    #[test]
-    fn test_part1_example2() {
-        let result = solve_part1(EXAMPLE2).unwrap();
-        assert_eq!(result, "8");
-    }
-
-    #[test]
-    fn test_pipe_connections() {
-        assert_eq!(pipe_connections('|'), vec![Dir::North, Dir::South]);
-        assert_eq!(pipe_connections('-'), vec![Dir::East, Dir::West]);
-        assert_eq!(pipe_connections('L'), vec![Dir::North, Dir::East]);
-        assert_eq!(pipe_connections('J'), vec![Dir::North, Dir::West]);
-        assert_eq!(pipe_connections('7'), vec![Dir::South, Dir::West]);
-        assert_eq!(pipe_connections('F'), vec![Dir::South, Dir::East]);
-        assert_eq!(pipe_connections('.'), vec![]);
-    }
-
-    #[test]
-    fn test_part2_example3() {
-        let result = solve_part2(EXAMPLE3).unwrap();
-        assert_eq!(result, "4");
-    }
-
-    #[test]
-    fn test_part2_example4() {
-        let result = solve_part2(EXAMPLE4).unwrap();
-        assert_eq!(result, "8");
-    }
-
-    #[test]
-    fn test_part2_example5() {
-        let result = solve_part2(EXAMPLE5).unwrap();
-        assert_eq!(result, "10");
-    }
-
-    #[test]
-    fn test_solve_both_parts() {
-        let (part1, part2) = solve_both_parts(EXAMPLE1).unwrap();
-        assert_eq!(part1, "4");
-        assert_eq!(part2, "1");
-
-        let (part1, part2) = solve_both_parts(EXAMPLE3).unwrap();
-        assert_eq!(part1, "23");
-        assert_eq!(part2, "4");
-    }
 }
 
 // ============================================================================
@@ -813,5 +707,111 @@ pub fn export_visualization_html(input: &str, output_path: &str) -> std::io::Res
     file.write_all(html.as_bytes())?;
     
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const EXAMPLE1: &str = "\
+.....
+.S-7.
+.|.|.
+.L-J.
+.....";
+
+    const EXAMPLE2: &str = "\
+..F7.
+.FJ|.
+SJ.L7
+|F--J
+LJ...";
+
+    const EXAMPLE3: &str = "\
+...........
+.S-------7.
+.|F-----7|.
+.||.....||.
+.||.....||.
+.|L-7.F-J|.
+.|..|.|..|.
+.L--J.L--J.
+...........";
+
+    const EXAMPLE4: &str = "\
+.F----7F7F7F7F-7....
+.|F--7||||||||FJ....
+.||.FJ||||||||L7....
+FJL7L7LJLJ||LJ.L-7..
+L--J.L7...LJS7F-7L7.
+....F-J..F7FJ|L7L7L7
+....L7.F7||L7|.L7L7|
+.....|FJLJ|FJ|F7|.LJ
+....FJL-7.||.||||...
+....L---J.LJ.LJLJ...";
+
+    const EXAMPLE5: &str = "\
+FF7FSF7F7F7F7F7F---7
+L|LJ||||||||||||F--J
+FL-7LJLJ||||||LJL-77
+F--JF--7||LJLJ7F7FJ-
+L---JF-JLJ.||-FJLJJ7
+|F|F-JF---7F7-L7L|7|
+|FFJF7L7F-JF7|JL---7
+7-L-JL7||F7|L7F-7F7|
+L.L7LFJ|||||FJL7||LJ
+L7JLJL-JLJLJL--JLJ.L";
+
+    #[test]
+    fn test_part1_example1() {
+        let result = solve_part1(EXAMPLE1).unwrap();
+        assert_eq!(result, "4");
+    }
+
+    #[test]
+    fn test_part1_example2() {
+        let result = solve_part1(EXAMPLE2).unwrap();
+        assert_eq!(result, "8");
+    }
+
+    #[test]
+    fn test_pipe_connections() {
+        assert_eq!(pipe_connections('|'), vec![Dir::North, Dir::South]);
+        assert_eq!(pipe_connections('-'), vec![Dir::East, Dir::West]);
+        assert_eq!(pipe_connections('L'), vec![Dir::North, Dir::East]);
+        assert_eq!(pipe_connections('J'), vec![Dir::North, Dir::West]);
+        assert_eq!(pipe_connections('7'), vec![Dir::South, Dir::West]);
+        assert_eq!(pipe_connections('F'), vec![Dir::South, Dir::East]);
+        assert_eq!(pipe_connections('.'), vec![]);
+    }
+
+    #[test]
+    fn test_part2_example3() {
+        let result = solve_part2(EXAMPLE3).unwrap();
+        assert_eq!(result, "4");
+    }
+
+    #[test]
+    fn test_part2_example4() {
+        let result = solve_part2(EXAMPLE4).unwrap();
+        assert_eq!(result, "8");
+    }
+
+    #[test]
+    fn test_part2_example5() {
+        let result = solve_part2(EXAMPLE5).unwrap();
+        assert_eq!(result, "10");
+    }
+
+    #[test]
+    fn test_solve_both_parts() {
+        let (part1, part2) = solve_both_parts(EXAMPLE1).unwrap();
+        assert_eq!(part1, "4");
+        assert_eq!(part2, "1");
+
+        let (part1, part2) = solve_both_parts(EXAMPLE3).unwrap();
+        assert_eq!(part1, "23");
+        assert_eq!(part2, "4");
+    }
 }
 
