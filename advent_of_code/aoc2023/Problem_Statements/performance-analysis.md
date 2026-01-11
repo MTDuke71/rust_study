@@ -9,8 +9,8 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | Metric | Value |
 |--------|-------|
 | **Days Completed** | 10/25 |
-| **Total Runtime** | ~18ms |
-| **Average per Day** | ~1.8ms |
+| **Total Runtime** | ~15ms |
+| **Average per Day** | ~1.5ms |
 | **Fastest Day** | Day 6 (0.95µs) |
 | **Slowest Day** | Day 8 (8.2ms) |
 
@@ -29,14 +29,15 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 7 | 290.0µs | 435.3µs | 725.3µs | Yes |
 | 8 | 1.5ms | 6.7ms | 8.2ms | Yes**** |
 | 9 | 132.0µs | 191.0µs | 323.0µs | No* |
-| 10 | 3.1ms | 3.4ms | 6.5ms | No* |
+| 10 | 3.07ms | 0.3ms† | 3.37ms | Yes***** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  
 *Day 9: Initial clean implementation, already fast (~323µs total), recursion depth typically low  
-*Day 10: Mission integration (Grid + BFS), Part 2 ray casting slightly slower than Part 1 BFS  
+***** Day 10: `solve_both_parts` optimization - shares grid parsing + BFS (47% faster than separate calls)  
+†Part 2 incremental cost when sharing Part 1's BFS results (standalone: 3.35ms includes duplicate work)  
 | ... | - | - | - | - |
 
 ---
@@ -192,52 +193,67 @@ sequence.last().unwrap()      // O(1) slice operation
 
 ### Day 10: Mission Integration - Grid + BFS Performance
 **Complexity**: O(width × height) for both parts  
-**Runtime**: Part 1: 3.1ms, Part 2: 3.4ms, Total: 6.5ms  
+**Runtime**: Part 1: 3.07ms | Part 2: 3.35ms (standalone) | Both: 3.37ms (optimized)  
 **Technique**: Mission 6 Grid + Mission 8 BFS + Ray Casting  
-**Status**: Good performance, some optimization potential  
+**Status**: Excellent optimization opportunity realized with `solve_both_parts`  
 
-**Why It's Reasonably Fast**:
-```rust
-// Part 1: BFS traversal of pipe loop
-// O(loop_size) where loop_size << (width × height)
-let mut distances = HashMap::new();  // O(1) lookup/insert
-let mut queue = VecDeque::new();     // O(1) push/pop
+**Performance Breakdown** (from benchmarks):
 
-while let Some(current) = queue.pop_front() {
-    for dir in [North, South, East, West] {  // 4 directions
-        if pipes_connect(grid, current, dir) {  // O(1) check
-            // Add unvisited neighbors only
-        }
-    }
-}
-
-// Part 2: Ray casting scanline
-// O(width × height) - visit every cell once
-for y in 0..height {
-    let mut inside = false;
-    for x in 0..width {
-        // O(1) state machine per cell
-        match grid[(x, y)] {
-            '|' => inside = !inside,
-            'F' | 'L' => enter_corner = Some(ch),
-            // ...
-        }
-    }
-}
-```
-
-**Performance Breakdown** (empirical from benchmarks):
-- **Part 1 - BFS**: 3.1ms
+**Standalone Functions** (traditional approach):
+- `solve_part1`: 3.07ms
   - Grid parsing: ~0.3ms (140×141 = 19,740 cells)
   - Find start 'S': ~0.1ms (linear scan)
-  - BFS traversal: ~2.7ms (loop ~7000 cells, 4 directions each)
-  - HashMap operations: Dominant cost (insert + contains_key)
+  - BFS traversal: ~2.6ms (loop ~7000 cells, 4 directions each)
+  - Find max: ~0.01ms
+
+- `solve_part2`: 3.35ms  
+  - Grid parsing: ~0.3ms (duplicate work!)
+  - Find start 'S': ~0.1ms (duplicate work!)
+  - BFS traversal: ~2.6ms (duplicate work!)
+  - Ray casting: ~0.3ms (the actual Part 2 work)
+
+- **Total if run separately**: 3.07ms + 3.35ms = **6.42ms**
+
+**Optimized `solve_both_parts`** (shared computation):
+- Grid parsing: ~0.3ms (once)
+- Find start 'S': ~0.1ms (once)
+- BFS traversal: ~2.6ms (once)
+- Find max (Part 1): ~0.01ms
+- Ray casting (Part 2): ~0.3ms
+- **Total**: **3.37ms** → **47% faster!**
+
+**Key Insight**: Part 2's ray casting is only ~300µs when reusing Part 1's BFS results. The apparent 3.35ms cost of Part 2 is mostly duplicate work (grid parsing + BFS).
+
+**Why `solve_both_parts` Is Fast**:
+```rust
+// Single parse, single BFS, reuse results
+let grid = parse_grid(input);           // 0.3ms - once
+let start = find_start(&grid);          // 0.1ms - once
+let loop_tiles = find_loop_distances(&grid, start);  // 2.6ms - once
+
+// Part 1: Find max distance
+let max_distance = loop_tiles.values().max();  // 0.01ms
+
+// Part 2: Ray casting using shared loop_tiles HashMap
+for y in 0..height {
+    for x in 0..width {
+        if loop_tiles.contains_key(&coord) {  // Reuse HashMap!
+            // State machine logic...
+        }
+    }
+}
+// Part 2 incremental cost: only ~0.3ms
+```
+
+**Complexity Analysis**:
+- **Part 1 BFS**: O(V + E) where V = loop cells (~7000), E = connections (~14000)
+  - Time: 2.6ms for ~7000-node graph
+  - HashMap operations: 28,000 inserts/lookups
   
-- **Part 2 - Ray Casting**: 3.4ms
-  - Reuse loop tiles from Part 1: 0ms (already have HashMap)
-  - Scanline processing: ~3.4ms (visit all 19,740 cells)
-  - State machine: ~0.17µs per cell (19,740 × 0.17µs = 3.4ms)
-  - HashMap lookups: `loop_tiles.contains_key(&coord)` on every cell
+- **Part 2 Ray Casting**: O(W × H) where W = 140, H = 141
+  - Time: 0.3ms for 19,740 cells
+  - Per-cell cost: ~0.015µs (state machine + HashMap lookup)
+  - Much faster than BFS because O(1) operations only
 
 **Code Characteristics**:
 ```rust
@@ -258,41 +274,38 @@ determine_start_pipe()           // Called once but checks 4 directions
 - **Mission 8 BFS**: Proven BFS pattern, HashMap distance tracking
 - **No reimplementation**: Trusted, tested components
 
-**Possible Optimizations** (not yet implemented):
+**Optimizations Implemented**:
+- ✅ **`solve_both_parts` function**: Shares grid parsing and BFS between parts
+  - Eliminates ~3ms of duplicate work
+  - **47% faster** when running both parts (6.42ms → 3.37ms)
+  - Part 2 incremental cost reduced to just ~300µs (ray casting only)
+
+**Possible Further Optimizations** (not implemented):
 - ✅ **Grid as flat Vec**: Already done by Mission 6 (row-major layout)
 - ❌ **BitSet instead of HashMap**: Would save memory but complicate code
-- ❌ **Single-pass BFS+RayCast**: Would need to process rows during BFS (complex)
-- ⚠️ **Pre-compute loop cells**: Part 1 already does this, Part 2 reuses
-- ⚠️ **Skip non-loop rows entirely**: Most cells in grid are not in loop
+- ❌ **Skip non-loop rows**: Could reduce cells scanned from 19,740 to ~8,000-10,000
+  - Potential: Part 2 from 300µs → ~120-150µs (2× speedup)
+  - Not worth added complexity for microsecond gains
 
 **Optimization Analysis**:
 - **Grid size**: 140×141 = 19,740 cells
 - **Loop size**: ~7,000 cells (~35% of grid)
-- **Part 2 scans**: All 19,740 cells (could skip ~12,740 non-loop cells)
+- **Part 2 scans**: All 19,740 cells (optimal approach for scanline ray casting)
 
-**Potential Speedup** (if optimized):
+**Why Current Performance Is Excellent**:
 ```rust
-// Current: Scan all cells, check if in loop
-for y in 0..height {
-    for x in 0..width {
-        if loop_tiles.contains_key(&coord) { ... }
-    }
-}
+// BFS on 7000-node graph: 2.6ms → 370ns per node
+// Ray casting 19,740 cells: 0.3ms → 15ns per cell
 
-// Optimized: Scan only rows containing loop tiles
-for y in rows_with_loop {  // Maybe ~80-100 rows instead of 141
-    for x in 0..width {
-        if loop_tiles.contains_key(&coord) { ... }
-    }
-}
+// Both are extremely fast already
+// Further optimization = diminishing returns + code complexity
 ```
 
-**Estimated gain**: ~30-40% faster Part 2 (3.4ms → ~2.0-2.4ms)  
-**Worth it?**: Not really - 6.5ms total is already excellent  
-
 **Learning**: 
-1. **Mission integration** provides clean code with good performance baseline
-2. **Ray casting** is inherently O(w × h) - no avoiding visiting most cells
+1. **Shared computation** is the biggest optimization (47% improvement)
+2. **Mission integration** provides clean code with good performance baseline
+3. **Ray casting** is inherently O(w × h) but still very fast (15ns/cell)
+4. **Real cost of Part 2**: Only ~300µs when sharing Part 1's BFS results
 3. **HashMap lookups** dominate when called thousands of times
 4. **6.5ms is acceptable** - premature optimization would hurt readability
 

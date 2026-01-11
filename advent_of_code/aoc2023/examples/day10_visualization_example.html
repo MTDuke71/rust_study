@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AoC 2023 Day 10: Pipe Maze Visualization</title>
+    <style>
+        body {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            padding: 20px;
+            line-height: 1.2;
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4ec9b0;
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #569cd6;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #569cd6;
+            padding-bottom: 5px;
+        }
+        .visualization {
+            background: #252526;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            white-space: pre;
+            font-size: 14px;
+        }
+        .loop-char { color: #4ec9b0; font-weight: bold; }
+        .inside-char { color: #f48771; font-weight: bold; }
+        .legend {
+            background: #2d2d30;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .legend-item {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 5px;
+        }
+        .stats {
+            background: #2d2d30;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .stat-item {
+            background: #252526;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        .stat-value {
+            color: #4ec9b0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .stat-label {
+            color: #808080;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎄 Advent of Code 2023 - Day 10: Pipe Maze 🎄</h1>
+        
+        <div class="stats">
+            <h2>📊 Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Grid Size</div>
+                    <div class="stat-value">9 × 11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Loop Length</div>
+                    <div class="stat-value">46</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Farthest Point</div>
+                    <div class="stat-value">23</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Inside Tiles</div>
+                    <div class="stat-value">4</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>🔄 Loop Structure</h2>
+        <div class="legend">
+            <div class="legend-item"><span class="loop-char">●</span> = Loop tile</div>
+            <div class="legend-item"><span style="color: #d4d4d4;">·</span> = Non-loop tile</div>
+        </div>
+        <div class="visualization">Pipe Maze - Loop Highlighted:
+─────────────
+│···········│
+│·<span class="loop-char">●</span>───────┐·│
+│·│┌─────┐│·│
+│·││·····││·│
+│·││·····││·│
+│·│└─┐·┌─┘│·│
+│·│··│·│··│·│
+│·└──┘·└──┘·│
+│···········│
+─────────────
+</div>
+        
+        <h2>📏 Distance Map</h2>
+        <div class="legend">
+            <div class="legend-item">Shows BFS distances from start position</div>
+            <div class="legend-item"><span class="loop-char">Numbers</span> = Steps from start</div>
+        </div>
+        <div class="visualization">Distance Map (max distance: <span class="loop-char">23</span>):
+───────────────────────────────────
+│ ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  · │
+│ ·  <span class="loop-char">0</span>  <span class="loop-char">1</span>  <span class="loop-char">2</span>  <span class="loop-char">3</span>  <span class="loop-char">4</span>  <span class="loop-char">5</span>  <span class="loop-char">6</span>  <span class="loop-char">7</span>  <span class="loop-char">8</span>  · │
+│ ·  <span class="loop-char">1</span> <span class="loop-char">16</span> <span class="loop-char">17</span> <span class="loop-char">18</span> <span class="loop-char">19</span> <span class="loop-char">20</span> <span class="loop-char">21</span> <span class="loop-char">22</span>  <span class="loop-char">9</span>  · │
+│ ·  <span class="loop-char">2</span> <span class="loop-char">15</span>  ·  ·  ·  ·  · <span class="loop-char">23</span> <span class="loop-char">10</span>  · │
+│ ·  <span class="loop-char">3</span> <span class="loop-char">14</span>  ·  ·  ·  ·  · <span class="loop-char">22</span> <span class="loop-char">11</span>  · │
+│ ·  <span class="loop-char">4</span> <span class="loop-char">13</span> <span class="loop-char">12</span> <span class="loop-char">11</span>  · <span class="loop-char">19</span> <span class="loop-char">20</span> <span class="loop-char">21</span> <span class="loop-char">12</span>  · │
+│ ·  <span class="loop-char">5</span>  ·  · <span class="loop-char">10</span>  · <span class="loop-char">18</span>  ·  · <span class="loop-char">13</span>  · │
+│ ·  <span class="loop-char">6</span>  <span class="loop-char">7</span>  <span class="loop-char">8</span>  <span class="loop-char">9</span>  · <span class="loop-char">17</span> <span class="loop-char">16</span> <span class="loop-char">15</span> <span class="loop-char">14</span>  · │
+│ ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  · │
+───────────────────────────────────
+</div>
+        
+        <h2>🎯 Inside/Outside Map</h2>
+        <div class="legend">
+            <div class="legend-item"><span class="loop-char">●</span> = Loop tile</div>
+            <div class="legend-item"><span class="inside-char">█</span> = Inside loop</div>
+            <div class="legend-item"><span style="color: #d4d4d4;">·</span> = Outside loop</div>
+        </div>
+        <div class="visualization">Inside/Outside Map:
+  <span class="loop-char">●</span> = Loop tile
+  <span class="inside-char">█</span> = Inside loop
+  · = Outside loop
+─────────────
+│···········│
+│·<span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span>·│
+│·<span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span>·│
+│·<span class="loop-char">●</span><span class="loop-char">●</span>·····<span class="loop-char">●</span><span class="loop-char">●</span>·│
+│·<span class="loop-char">●</span><span class="loop-char">●</span>·····<span class="loop-char">●</span><span class="loop-char">●</span>·│
+│·<span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span>·<span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span>·│
+│·<span class="loop-char">●</span><span class="inside-char">█</span><span class="inside-char">█</span><span class="loop-char">●</span>·<span class="loop-char">●</span><span class="inside-char">█</span><span class="inside-char">█</span><span class="loop-char">●</span>·│
+│·<span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span>·<span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span><span class="loop-char">●</span>·│
+│···········│
+─────────────
+</div>
+    </div>
+</body>
+</html>

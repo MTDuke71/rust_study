@@ -119,6 +119,10 @@ fn benchmark_day10(c: &mut Criterion) {
     c.bench_function("day10_part2", |b| {
         b.iter(|| day10::solve_part2(black_box(input)))
     });
+
+    c.bench_function("day10_both_parts", |b| {
+        b.iter(|| day10::solve_both_parts(black_box(input)))
+    });
 }
 
 criterion_group!(

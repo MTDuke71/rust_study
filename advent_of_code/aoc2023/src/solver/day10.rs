@@ -169,6 +169,62 @@ fn parse_grid(input: &str) -> Grid<char> {
     grid
 }
 
+/// Solve both parts efficiently by sharing grid parsing and loop distance calculation
+pub fn solve_both_parts(input: &str) -> Result<(String, String)> {
+    let grid = parse_grid(input);
+    let start = find_start(&grid).expect("Should find starting position 'S'");
+    let loop_tiles = find_loop_distances(&grid, start);
+    let start_pipe = determine_start_pipe(&grid, start);
+
+    // Part 1: Find maximum distance
+    let max_distance = loop_tiles.values().max().unwrap_or(&0);
+    let part1 = max_distance.to_string();
+
+    // Part 2: Count enclosed tiles using ray casting
+    let mut enclosed_count = 0;
+
+    for y in 0..grid.height() {
+        let mut inside = false;
+        let mut enter_corner: Option<char> = None;
+
+        for x in 0..grid.width() {
+            let coord = Coord::new(x, y);
+            let mut ch = grid[coord];
+
+            if ch == 'S' {
+                ch = start_pipe;
+            }
+
+            if loop_tiles.contains_key(&coord) {
+                match ch {
+                    '|' => inside = !inside,
+                    'F' | 'L' => enter_corner = Some(ch),
+                    '7' => {
+                        if enter_corner == Some('L') {
+                            inside = !inside;
+                        }
+                        enter_corner = None;
+                    }
+                    'J' => {
+                        if enter_corner == Some('F') {
+                            inside = !inside;
+                        }
+                        enter_corner = None;
+                    }
+                    '-' => {}
+                    _ => {}
+                }
+            } else if inside {
+                enclosed_count += 1;
+            }
+        }
+    }
+
+    let part2 = enclosed_count.to_string();
+
+    Ok((part1, part2))
+}
+
 /// **Day 10: Pipe Maze**
 ///
 /// Find the farthest point in the pipe loop from the starting position.
@@ -370,4 +426,369 @@ L7JLJL-JLJLJL--JLJ.L";
         let result = solve_part2(EXAMPLE5).unwrap();
         assert_eq!(result, "10");
     }
+
+    #[test]
+    fn test_solve_both_parts() {
+        let (part1, part2) = solve_both_parts(EXAMPLE1).unwrap();
+        assert_eq!(part1, "4");
+        assert_eq!(part2, "1");
+
+        let (part1, part2) = solve_both_parts(EXAMPLE3).unwrap();
+        assert_eq!(part1, "23");
+        assert_eq!(part2, "4");
+    }
 }
+
+// ============================================================================
+// Visualization Functions
+// ============================================================================
+
+/// Visualize the pipe maze with loop highlighting
+pub fn visualize_loop(input: &str) -> String {
+    let grid = parse_grid(input);
+    let start = find_start(&grid).expect("Should find starting position 'S'");
+    let loop_tiles = find_loop_distances(&grid, start);
+    
+    let mut output = String::new();
+    output.push_str("Pipe Maze - Loop Highlighted:\n");
+    output.push_str(&"─".repeat(grid.width() + 2));
+    output.push('\n');
+    
+    for y in 0..grid.height() {
+        output.push('│');
+        for x in 0..grid.width() {
+            let coord = Coord::new(x, y);
+            let ch = grid[coord];
+            
+            if loop_tiles.contains_key(&coord) {
+                // Highlight loop tiles with colored Unicode box drawing
+                let display = match ch {
+                    '|' => '│',
+                    '-' => '─',
+                    'L' => '└',
+                    'J' => '┘',
+                    '7' => '┐',
+                    'F' => '┌',
+                    'S' => '●',
+                    _ => ch,
+                };
+                output.push(display);
+            } else {
+                output.push('·');  // Non-loop tiles
+            }
+        }
+        output.push('│');
+        output.push('\n');
+    }
+    
+    output.push_str(&"─".repeat(grid.width() + 2));
+    output.push('\n');
+    output
+}
+
+/// Visualize distances from start
+pub fn visualize_distances(input: &str) -> String {
+    let grid = parse_grid(input);
+    let start = find_start(&grid).expect("Should find starting position 'S'");
+    let loop_tiles = find_loop_distances(&grid, start);
+    let max_dist = loop_tiles.values().max().unwrap_or(&0);
+    
+    let mut output = String::new();
+    output.push_str(&format!("Distance Map (max distance: {}):\n", max_dist));
+    output.push_str(&"─".repeat(grid.width() * 3 + 2));
+    output.push('\n');
+    
+    for y in 0..grid.height() {
+        output.push('│');
+        for x in 0..grid.width() {
+            let coord = Coord::new(x, y);
+            
+            if let Some(&dist) = loop_tiles.get(&coord) {
+                output.push_str(&format!("{:2} ", dist));
+            } else {
+                output.push_str(" · ");
+            }
+        }
+        output.push('│');
+        output.push('\n');
+    }
+    
+    output.push_str(&"─".repeat(grid.width() * 3 + 2));
+    output.push('\n');
+    output
+}
+
+/// Visualize inside/outside tiles (Part 2)
+pub fn visualize_inside_outside(input: &str) -> String {
+    let grid = parse_grid(input);
+    let start = find_start(&grid).expect("Should find starting position 'S'");
+    let loop_tiles = find_loop_distances(&grid, start);
+    let start_pipe = determine_start_pipe(&grid, start);
+    
+    let mut output = String::new();
+    output.push_str("Inside/Outside Map:\n");
+    output.push_str("  ● = Loop tile\n");
+    output.push_str("  █ = Inside loop\n");
+    output.push_str("  · = Outside loop\n");
+    output.push_str(&"─".repeat(grid.width() + 2));
+    output.push('\n');
+    
+    for y in 0..grid.height() {
+        output.push('│');
+        let mut inside = false;
+        let mut enter_corner: Option<char> = None;
+        
+        for x in 0..grid.width() {
+            let coord = Coord::new(x, y);
+            let mut ch = grid[coord];
+            
+            if ch == 'S' {
+                ch = start_pipe;
+            }
+            
+            if loop_tiles.contains_key(&coord) {
+                output.push('●');  // Loop tile
+                
+                // Update inside/outside state
+                match ch {
+                    '|' => inside = !inside,
+                    'F' | 'L' => enter_corner = Some(ch),
+                    '7' => {
+                        if enter_corner == Some('L') {
+                            inside = !inside;
+                        }
+                        enter_corner = None;
+                    }
+                    'J' => {
+                        if enter_corner == Some('F') {
+                            inside = !inside;
+                        }
+                        enter_corner = None;
+                    }
+                    _ => {}
+                }
+            } else if inside {
+                output.push('█');  // Inside
+            } else {
+                output.push('·');  // Outside
+            }
+        }
+        output.push('│');
+        output.push('\n');
+    }
+    
+    output.push_str(&"─".repeat(grid.width() + 2));
+    output.push('\n');
+    output
+}
+
+/// Comprehensive visualization showing all three views
+pub fn visualize_all(input: &str) -> String {
+    let mut output = String::new();
+    output.push_str("═".repeat(60).as_str());
+    output.push_str("\n DAY 10: PIPE MAZE VISUALIZATION\n");
+    output.push_str("═".repeat(60).as_str());
+    output.push_str("\n\n");
+    
+    output.push_str(&visualize_loop(input));
+    output.push('\n');
+    output.push_str(&visualize_distances(input));
+    output.push('\n');
+    output.push_str(&visualize_inside_outside(input));
+    
+    output
+}
+
+/// Export visualization to HTML file with proper Unicode support
+/// 
+/// Creates a beautiful HTML visualization with:
+/// - UTF-8 encoding for proper Unicode box-drawing characters
+/// - Color-coded sections (loop in blue, inside tiles in red)
+/// - Responsive layout that works in any browser
+/// - All three visualization modes in one page
+pub fn export_visualization_html(input: &str, output_path: &str) -> std::io::Result<()> {
+    use std::fs::File;
+    use std::io::Write;
+    
+    let html = format!(
+        r#"<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AoC 2023 Day 10: Pipe Maze Visualization</title>
+    <style>
+        body {{
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            padding: 20px;
+            line-height: 1.2;
+        }}
+        .container {{
+            max-width: 100%;
+            margin: 0 auto;
+        }}
+        h1 {{
+            color: #4ec9b0;
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }}
+        h2 {{
+            color: #569cd6;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #569cd6;
+            padding-bottom: 5px;
+        }}
+        .visualization {{
+            background: #252526;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            white-space: pre;
+            font-size: 14px;
+        }}
+        .loop-char {{ color: #4ec9b0; font-weight: bold; }}
+        .inside-char {{ color: #f48771; font-weight: bold; }}
+        .legend {{
+            background: #2d2d30;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }}
+        .legend-item {{
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 5px;
+        }}
+        .stats {{
+            background: #2d2d30;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }}
+        .stats-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }}
+        .stat-item {{
+            background: #252526;
+            padding: 10px;
+            border-radius: 3px;
+        }}
+        .stat-value {{
+            color: #4ec9b0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }}
+        .stat-label {{
+            color: #808080;
+            font-size: 0.9em;
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎄 Advent of Code 2023 - Day 10: Pipe Maze 🎄</h1>
+        
+        <div class="stats">
+            <h2>📊 Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Grid Size</div>
+                    <div class="stat-value">{grid_size}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Loop Length</div>
+                    <div class="stat-value">{loop_length}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Farthest Point</div>
+                    <div class="stat-value">{max_distance}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Inside Tiles</div>
+                    <div class="stat-value">{inside_count}</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>🔄 Loop Structure</h2>
+        <div class="legend">
+            <div class="legend-item"><span class="loop-char">●</span> = Loop tile</div>
+            <div class="legend-item"><span style="color: #d4d4d4;">·</span> = Non-loop tile</div>
+        </div>
+        <div class="visualization">{loop_viz}</div>
+        
+        <h2>📏 Distance Map</h2>
+        <div class="legend">
+            <div class="legend-item">Shows BFS distances from start position</div>
+            <div class="legend-item"><span class="loop-char">Numbers</span> = Steps from start</div>
+        </div>
+        <div class="visualization">{distance_viz}</div>
+        
+        <h2>🎯 Inside/Outside Map</h2>
+        <div class="legend">
+            <div class="legend-item"><span class="loop-char">●</span> = Loop tile</div>
+            <div class="legend-item"><span class="inside-char">█</span> = Inside loop</div>
+            <div class="legend-item"><span style="color: #d4d4d4;">·</span> = Outside loop</div>
+        </div>
+        <div class="visualization">{inside_viz}</div>
+    </div>
+</body>
+</html>"#,
+        grid_size = {
+            let lines: Vec<&str> = input.lines().collect();
+            format!("{} × {}", lines.len(), lines.first().map_or(0, |l| l.len()))
+        },
+        loop_length = {
+            let (part1, _) = solve_both_parts(input).expect("Valid input");
+            part1.parse::<usize>().unwrap() * 2
+        },
+        max_distance = solve_part1(input).expect("Valid input").parse::<usize>().unwrap(),
+        inside_count = solve_part2(input).expect("Valid input"),
+        loop_viz = visualize_loop(input).replace("●", "<span class=\"loop-char\">●</span>"),
+        distance_viz = {
+            let dist_viz = visualize_distances(input);
+            // Color the numbers
+            let mut result = String::new();
+            for line in dist_viz.lines() {
+                let mut colored_line = String::new();
+                let mut i = 0;
+                let chars: Vec<char> = line.chars().collect();
+                while i < chars.len() {
+                    if chars[i].is_ascii_digit() {
+                        colored_line.push_str("<span class=\"loop-char\">");
+                        while i < chars.len() && (chars[i].is_ascii_digit() || chars[i] == ' ') {
+                            colored_line.push(chars[i]);
+                            i += 1;
+                            if i < chars.len() && !chars[i].is_ascii_digit() {
+                                break;
+                            }
+                        }
+                        colored_line.push_str("</span>");
+                    } else {
+                        colored_line.push(chars[i]);
+                        i += 1;
+                    }
+                }
+                result.push_str(&colored_line);
+                result.push('\n');
+            }
+            result
+        },
+        inside_viz = visualize_inside_outside(input)
+            .replace("●", "<span class=\"loop-char\">●</span>")
+            .replace("█", "<span class=\"inside-char\">█</span>"),
+    );
+    
+    let mut file = File::create(output_path)?;
+    file.write_all(html.as_bytes())?;
+    
+    Ok(())
+}
+
