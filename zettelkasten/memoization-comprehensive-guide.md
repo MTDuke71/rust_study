@@ -686,7 +686,7 @@ mod tests {
 ## Related Concepts
 
 - **[[memoization-aoc2024-patterns]]** - AoC 2024 problem-solving patterns (Day 11, 19, 21)
-- **[[Tabulation Patterns]]** - Bottom-up DP alternative
+- **[[tabulation-patterns]]** - Bottom-up DP alternative
 - **[[Dynamic Programming Patterns]]** - General DP strategies
 - **[[state-based-memoization]]** - Composite state representation for path counting with constraints (Day 7 + Day 11 examples)
 - **[[HashMap Deep Dive]]** - Cache implementation details
