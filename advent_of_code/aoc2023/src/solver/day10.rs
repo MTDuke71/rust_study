@@ -234,8 +234,9 @@ pub fn solve_part1(input: &str) -> Result<String> {
 
     let distances = find_loop_distances(&grid, start);
 
-    // The farthest point is the maximum distance
-    let max_distance = distances.values().max().unwrap_or(&0);
+    // The farthest point in a circular loop is exactly halfway around
+    // Mathematical property: max distance = loop_length / 2
+    let max_distance = distances.len() / 2;
 
     Ok(max_distance.to_string())
 }
