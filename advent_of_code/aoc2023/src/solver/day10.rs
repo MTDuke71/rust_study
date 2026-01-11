@@ -260,8 +260,18 @@ fn determine_start_pipe(grid: &Grid<char>, start: Coord) -> char {
 
 /// Count how many tiles are enclosed by the loop
 ///
-/// Uses ray casting algorithm: for each non-loop tile, count crossings
-/// of the loop boundary. Odd crossings = inside, even = outside.
+/// # Algorithm: Jordan Curve Theorem (Horizontal Ray Casting)
+/// 
+/// Scans each row left-to-right, counting how many loop boundaries are crossed.
+/// Odd crossings = inside, even crossings = outside.
+/// 
+/// # Related Problems
+/// - **AoC 2025 Day 9**: Same algorithm for continuous polygon (see `aoc2025/examples/animate_ray_casting.py`)
+/// - **Pattern**: Works for both discrete grids (this) and continuous spaces (Day 9)
+/// 
+/// # Complexity
+/// - Time: O(width × height) - single pass through grid
+/// - Space: O(loop_size) - store loop tile positions
 pub fn solve_part2(input: &str) -> Result<String> {
     let grid = parse_grid(input);
     let start = find_start(&grid).expect("Should find starting position 'S'");
@@ -519,6 +529,13 @@ pub fn visualize_distances(input: &str) -> String {
 }
 
 /// Visualize inside/outside tiles (Part 2)
+/// 
+/// Uses ray casting to show which tiles are inside vs outside the loop.
+/// 
+/// # See Also
+/// - `solve_part2()`: Uses same algorithm to count inside tiles
+/// - AoC 2025 Day 9: Same ray casting pattern for continuous polygons
+///   (`aoc2025/examples/animate_ray_casting.py` shows animated version)
 pub fn visualize_inside_outside(input: &str) -> String {
     let grid = parse_grid(input);
     let start = find_start(&grid).expect("Should find starting position 'S'");
@@ -606,6 +623,10 @@ pub fn visualize_all(input: &str) -> String {
 /// - Color-coded sections (loop in blue, inside tiles in red)
 /// - Responsive layout that works in any browser
 /// - All three visualization modes in one page
+/// 
+/// # See Also
+/// - `aoc2025/examples/animate_ray_casting.py`: Animated visualization of same algorithm for polygon
+/// - `aoc2025/examples/ray_casting_animation.gif`: Shows odd/even crossing pattern
 pub fn export_visualization_html(input: &str, output_path: &str) -> std::io::Result<()> {
     use std::fs::File;
     use std::io::Write;
