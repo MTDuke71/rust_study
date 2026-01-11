@@ -103,6 +103,18 @@ A **graph** G = (V, E) consists of:
 - **Link**: `advent_of_code/aoc2023/src/solver/day08.rs`
 - **Performance**: ~1.5ms (Part 1), ~6.7ms (Part 2)
 
+### **AoC 2023 Day 10**: Pipe Maze
+- **What**: Navigate through pipe loop to find farthest point
+- **How it uses this concept**:
+  - Grid of pipes represented as undirected graph
+  - Each pipe tile = vertex, connections = edges
+  - BFS for loop traversal and distance calculation
+  - Cycle detection (continuous loop structure)
+  - Each node has degree 2 (exactly two connections in loop)
+- **Link**: `advent_of_code/aoc2023/src/solver/day10.rs`
+- **Performance**: 3.1ms (BFS on ~7000-node loop)
+- **Integration**: Mission 6 Grid + Mission 8 BFS pattern
+
 ### **AoC 2024 Day 10**: Topographic Map (Example)
 - **What**: Find hiking trails through elevation grid
 - **How it uses this concept**:

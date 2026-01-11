@@ -3,16 +3,16 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 9/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 2.628ms |
-| **Mission Integration** | 2 days (Day 3: Mission 6, Day 4: Mission 5) |
-| **Patterns Extracted** | 6 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences) |
+|--------|-------|\n| **Progress** | 10/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 9.472ms |
+| **Mission Integration** | 3 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8) |
+| **Patterns Extracted** | 8 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | Day 10 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) |
 Day 11 | Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
@@ -725,7 +725,130 @@ Backward extrapolation:
 - [[finite-differences]] - Polynomial extrapolation theory
 - [[recursive-algorithms]] - Base case + recursive case pattern
 
-**Links**: ← [Day 8](#day-8-haunted-wasteland) | Day 10 →
+**Links**: ← [Day 8](#day-8-haunted-wasteland) | [Day 10](#day-10-pipe-maze) →
+
+---
+
+### Day 10: Pipe Maze
+
+**Part 1**: Find the farthest point in the pipe loop from start 'S' → **6733**  
+**Part 2**: Count tiles enclosed within the loop → **435**  
+
+**Algorithm**: BFS for loop traversal + ray casting for point-in-polygon  
+**Complexity**: O(width × height) for both parts  
+**Runtime**: ~6.5ms (Part 1: 3.1ms, Part 2: 3.4ms)  
+**Mission**: Mission 6 (Grid<char>), Mission 8 (BFS pattern)  
+
+**Key Insight**: Part 1 uses BFS to find the continuous pipe loop starting from 'S' - the farthest point is simply the maximum distance in the loop. Part 2 uses **ray casting** (computational geometry) - for each non-loop tile, cast a horizontal ray and count boundary crossings. Odd crossings = inside, even = outside. The tricky part is handling corner pieces correctly: `F---J` and `L---7` are real crossings (flip inside/outside), while `F---7` and `L---J` are not (stay same side).
+
+**Rust Highlights**:
+- **Mission Integration**: `Grid<char>` from Mission 6 for 2D maze storage, BFS pattern from Mission 8 for loop traversal
+- `HashMap<Coord, usize>` for tracking loop tiles and distances
+- Direction enum with `offset()` and `opposite()` methods for pipe navigation
+- `pipe_connections(char) -> Vec<Dir>` mapping characters to connection points
+- `determine_start_pipe()` to figure out what 'S' actually represents based on neighbors
+- Scanline algorithm with state machine for ray casting
+- Pattern matching on corner sequences for crossing detection
+
+**Code Highlight**:
+```rust
+/// Map pipe characters to their connection directions
+fn pipe_connections(ch: char) -> Vec<Dir> {
+    match ch {
+        '|' => vec![Dir::North, Dir::South],
+        '-' => vec![Dir::East, Dir::West],
+        'L' => vec![Dir::North, Dir::East],
+        'J' => vec![Dir::North, Dir::West],
+        '7' => vec![Dir::South, Dir::West],
+        'F' => vec![Dir::South, Dir::East],
+        _ => vec![],
+    }
+}
+
+/// Ray casting for point-in-polygon (Part 2)
+for x in 0..grid.width() {
+    if loop_tiles.contains_key(&coord) {
+        match ch {
+            '|' => inside = !inside,  // Vertical crossing
+            'F' | 'L' => enter_corner = Some(ch),  // Start corner
+            '7' => {
+                if enter_corner == Some('L') { inside = !inside; }  // L-7 crosses
+                // F-7 doesn't cross
+                enter_corner = None;
+            }
+            'J' => {
+                if enter_corner == Some('F') { inside = !inside; }  // F-J crosses
+                // L-J doesn't cross
+                enter_corner = None;
+            }
+            '-' => {}  // Horizontal segment - no state change
+            _ => {}
+        }
+    } else if inside {
+        enclosed_count += 1;  // Non-loop tile inside the loop
+    }
+}
+```
+
+**Example Walkthrough (Part 2 - Ray Casting)**:
+```
+Row: .|..|.|..|.
+     ^ loop tile '|' → flip inside (true)
+       ^^ non-loop, inside → COUNT (2)
+         ^ loop '|' → flip inside (false)
+           ^ non-loop, outside → skip
+             ^ loop '|' → flip inside (true)
+               ^^ non-loop, inside → COUNT (2 more)
+                 ^ loop '|' → flip inside (false)
+
+Corner handling:
+|F---7|  → Enter F, exit 7 (same side, no crossing)
+|F---J|  → Enter F, exit J (opposite sides, CROSSING)
+|L---7|  → Enter L, exit 7 (opposite sides, CROSSING)
+|L---J|  → Enter L, exit J (same side, no crossing)
+```
+
+**Mathematical Foundation**:
+- **Graph Theory**: 
+  - Cycle detection in undirected graph (finding the continuous loop)
+  - BFS for unweighted shortest paths (distances from start)
+  - Connected components (loop vs disconnected pipes)
+- **Computational Geometry**:
+  - Point-in-polygon problem via **ray casting algorithm**
+  - Scanline processing (row-by-row traversal)
+  - Boundary crossing counting (odd = inside, even = outside)
+  - Corner case handling for non-convex polygons
+- **See**: `zettelkasten/math-foundations/graph-theory-fundamentals.md`, `zettelkasten/math-foundations/computational-geometry-basics.md`
+
+**Algorithm Details**:
+- **Part 1 - BFS Loop Traversal**:
+  - Find 'S' by scanning grid: O(w × h)
+  - BFS from 'S' following pipe connections: O(loop_size) ≤ O(w × h)
+  - Track distances in HashMap: O(1) lookup/insert
+  - Return max distance: O(loop_size)
+- **Part 2 - Ray Casting**:
+  - Reuse loop tiles from Part 1: O(1) membership check
+  - Scanline: Visit every cell once: O(w × h)
+  - State machine: O(1) per cell
+  - Total: O(w × h)
+
+**Tests**: 
+- ✅ Part 1 simple loop (answer: 4)
+- ✅ Part 1 complex loop (answer: 8)
+- ✅ Part 2 small enclosure (answer: 4)
+- ✅ Part 2 medium enclosure (answer: 8)
+- ✅ Part 2 large with junk pipes (answer: 10)
+- ✅ Pipe connection validation
+- ✅ Grid parsing and coordinate navigation
+
+**Zettelkasten**: 
+- [[mission-6]] - Grid<T> 2D spatial data structures
+- [[mission-8]] - BFS/DFS graph traversal patterns
+- [[graph-theory-fundamentals]] - Cycle detection, BFS distances
+- [[computational-geometry-basics]] - Point-in-polygon, ray casting
+- [[aoc-grid-patterns]] - Common AoC grid problem patterns
+
+**Links**: ← [Day 9](#day-9-mirage-maintenance) | Day 11 →
 
 ---
 

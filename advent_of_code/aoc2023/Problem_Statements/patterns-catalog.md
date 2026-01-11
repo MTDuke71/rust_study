@@ -19,6 +19,9 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | HashMap for Graph Adjacency | Day 8 | `day08.rs` |
 | Recursive Difference Computation | Day 9 | `day09.rs` |
 | windows(2) for Pairwise Operations | Day 9 | `day09.rs` |
+| BFS with HashMap Distance Tracking | Day 10 | `day10.rs` |
+| Ray Casting State Machine | Day 10 | `day10.rs` |
+| Direction Enum with Offsets | Day 10 | `day10.rs` |
 
 ---
 
@@ -538,6 +541,136 @@ let neighbors = nodes.get("AAA")?;  // Fast!
 **Mission Integration**: Mission 5 (HashMap), Mission 8 (Graph trait for algorithms)
 
 **Zettelkasten**: [[graph-theory-fundamentals]]
+
+### Pattern: BFS with HashMap Distance Tracking
+**Used**: Day 10  
+**When to use**: Need to track distances/costs from a starting point in a graph  
+**Code**: `src/solver/day10.rs::find_loop_distances()`
+
+```rust
+fn find_distances(start: Node) -> HashMap<Node, usize> {
+    let mut distances = HashMap::new();
+    let mut queue = VecDeque::new();
+    
+    distances.insert(start, 0);
+    queue.push_back(start);
+    
+    while let Some(current) = queue.pop_front() {
+        let current_dist = distances[&current];
+        
+        for neighbor in get_neighbors(current) {
+            if !distances.contains_key(&neighbor) {
+                distances.insert(neighbor, current_dist + 1);
+                queue.push_back(neighbor);
+            }
+        }
+    }
+    
+    distances
+}
+```
+
+**Key Points**:
+- HashMap serves dual purpose: visited set + distance storage
+- `contains_key` prevents revisiting nodes
+- VecDeque for FIFO queue (BFS guarantee)
+- Returns all reachable nodes with their distances
+
+**Complexity**: O(V + E) where V = vertices, E = edges
+
+**Mission Integration**: Mission 8 (BFS pattern)
+
+### Pattern: Ray Casting with State Machine (Day 10)
+**Used**: Day 10 (point-in-polygon)  
+**When to use**: Determining if points are inside/outside a boundary  
+**Code**: `src/solver/day10.rs::solve_part2()`
+
+```rust
+// Scanline with state machine for boundary crossings
+let mut inside = false;
+let mut enter_corner: Option<char> = None;
+
+for cell in row {
+    if is_boundary(cell) {
+        match cell {
+            '|' => inside = !inside,  // Simple crossing
+            'F' | 'L' => enter_corner = Some(cell),  // Enter corner
+            '7' => {
+                if enter_corner == Some('L') { inside = !inside; }
+                enter_corner = None;
+            }
+            'J' => {
+                if enter_corner == Some('F') { inside = !inside; }
+                enter_corner = None;
+            }
+            '-' => {}  // Continuation - no state change
+            _ => {}
+        }
+    } else if inside {
+        count_inside += 1;
+    }
+}
+```
+
+**Corner Logic**:
+- Vertical boundaries (`|`) always flip inside/outside
+- Horizontal segments (`-`) continue the boundary
+- Corners require pairing: `F-J` or `L-7` flip, `F-7` or `L-J` don't
+
+**Zettelkasten**: [[computational-geometry-basics]], [[ray-casting-algorithm]]
+
+### Pattern: Direction Enum with Offsets (Day 10)
+**Used**: Day 10 (grid navigation)  
+**When to use**: Grid-based problems needing directional movement  
+**Code**: `src/solver/day10.rs::Dir`
+
+```rust
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Dir {
+    North, South, East, West,
+}
+
+impl Dir {
+    fn offset(&self) -> (i32, i32) {
+        match self {
+            Dir::North => (0, -1),
+            Dir::South => (0, 1),
+            Dir::East => (1, 0),
+            Dir::West => (-1, 0),
+        }
+    }
+    
+    fn opposite(&self) -> Dir {
+        match self {
+            Dir::North => Dir::South,
+            Dir::South => Dir::North,
+            Dir::East => Dir::West,
+            Dir::West => Dir::East,
+        }
+    }
+}
+
+// Usage
+fn move_in_direction(coord: (usize, usize), dir: Dir) -> Option<(usize, usize)> {
+    let (dx, dy) = dir.offset();
+    let new_x = coord.0 as i32 + dx;
+    let new_y = coord.1 as i32 + dy;
+    
+    if new_x >= 0 && new_y >= 0 {
+        Some((new_x as usize, new_y as usize))
+    } else {
+        None
+    }
+}
+```
+
+**Benefits**:
+- Type-safe directions (can't mix up x/y)
+- Easy to add diagonal directions
+- Clean opposite() for connection checking
+- Integrates with Mission 6 Grid `Coord` type
+
+**Mission Integration**: Mission 6 (Grid, Direction enum)
 
 ### Pattern: Dijkstra with Priority Queue
 **Used**: TBD  

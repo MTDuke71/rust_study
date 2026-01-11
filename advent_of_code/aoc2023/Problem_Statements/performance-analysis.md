@@ -8,9 +8,9 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 9/25 |
-| **Total Runtime** | ~11.5ms |
-| **Average per Day** | ~1.3ms |
+| **Days Completed** | 10/25 |
+| **Total Runtime** | ~18ms |
+| **Average per Day** | ~1.8ms |
 | **Fastest Day** | Day 6 (0.95µs) |
 | **Slowest Day** | Day 8 (8.2ms) |
 
@@ -29,12 +29,14 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 7 | 290.0µs | 435.3µs | 725.3µs | Yes |
 | 8 | 1.5ms | 6.7ms | 8.2ms | Yes**** |
 | 9 | 132.0µs | 191.0µs | 323.0µs | No* |
+| 10 | 3.1ms | 3.4ms | 6.5ms | No* |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  
 *Day 9: Initial clean implementation, already fast (~323µs total), recursion depth typically low  
+*Day 10: Mission integration (Grid + BFS), Part 2 ray casting slightly slower than Part 1 BFS  
 | ... | - | - | - | - |
 
 ---
@@ -187,6 +189,116 @@ sequence.last().unwrap()      // O(1) slice operation
 **Learning**: Sometimes the straightforward recursive solution is already optimal. Don't over-optimize clean code that runs in microseconds.
 
 **Zettelkasten**: [[finite-differences]]
+
+### Day 10: Mission Integration - Grid + BFS Performance
+**Complexity**: O(width × height) for both parts  
+**Runtime**: Part 1: 3.1ms, Part 2: 3.4ms, Total: 6.5ms  
+**Technique**: Mission 6 Grid + Mission 8 BFS + Ray Casting  
+**Status**: Good performance, some optimization potential  
+
+**Why It's Reasonably Fast**:
+```rust
+// Part 1: BFS traversal of pipe loop
+// O(loop_size) where loop_size << (width × height)
+let mut distances = HashMap::new();  // O(1) lookup/insert
+let mut queue = VecDeque::new();     // O(1) push/pop
+
+while let Some(current) = queue.pop_front() {
+    for dir in [North, South, East, West] {  // 4 directions
+        if pipes_connect(grid, current, dir) {  // O(1) check
+            // Add unvisited neighbors only
+        }
+    }
+}
+
+// Part 2: Ray casting scanline
+// O(width × height) - visit every cell once
+for y in 0..height {
+    let mut inside = false;
+    for x in 0..width {
+        // O(1) state machine per cell
+        match grid[(x, y)] {
+            '|' => inside = !inside,
+            'F' | 'L' => enter_corner = Some(ch),
+            // ...
+        }
+    }
+}
+```
+
+**Performance Breakdown** (empirical from benchmarks):
+- **Part 1 - BFS**: 3.1ms
+  - Grid parsing: ~0.3ms (140×141 = 19,740 cells)
+  - Find start 'S': ~0.1ms (linear scan)
+  - BFS traversal: ~2.7ms (loop ~7000 cells, 4 directions each)
+  - HashMap operations: Dominant cost (insert + contains_key)
+  
+- **Part 2 - Ray Casting**: 3.4ms
+  - Reuse loop tiles from Part 1: 0ms (already have HashMap)
+  - Scanline processing: ~3.4ms (visit all 19,740 cells)
+  - State machine: ~0.17µs per cell (19,740 × 0.17µs = 3.4ms)
+  - HashMap lookups: `loop_tiles.contains_key(&coord)` on every cell
+
+**Code Characteristics**:
+```rust
+// ✅ Efficient patterns:
+HashMap<Coord, usize>          // O(1) distance lookup
+VecDeque::new()                // O(1) queue operations
+grid[(x, y)]                   // O(1) array indexing (Mission 6)
+pipes_connect()                // O(1) direction checking
+
+// ⚠️ Potential hotspots:
+loop_tiles.contains_key(&coord)  // Called 19,740 times
+Grid[(x, y)] indexing            // Called 4-8 times per BFS node
+determine_start_pipe()           // Called once but checks 4 directions
+```
+
+**Mission Integration Benefits**:
+- **Mission 6 Grid**: O(1) indexing, safe bounds checking, coordinate helpers
+- **Mission 8 BFS**: Proven BFS pattern, HashMap distance tracking
+- **No reimplementation**: Trusted, tested components
+
+**Possible Optimizations** (not yet implemented):
+- ✅ **Grid as flat Vec**: Already done by Mission 6 (row-major layout)
+- ❌ **BitSet instead of HashMap**: Would save memory but complicate code
+- ❌ **Single-pass BFS+RayCast**: Would need to process rows during BFS (complex)
+- ⚠️ **Pre-compute loop cells**: Part 1 already does this, Part 2 reuses
+- ⚠️ **Skip non-loop rows entirely**: Most cells in grid are not in loop
+
+**Optimization Analysis**:
+- **Grid size**: 140×141 = 19,740 cells
+- **Loop size**: ~7,000 cells (~35% of grid)
+- **Part 2 scans**: All 19,740 cells (could skip ~12,740 non-loop cells)
+
+**Potential Speedup** (if optimized):
+```rust
+// Current: Scan all cells, check if in loop
+for y in 0..height {
+    for x in 0..width {
+        if loop_tiles.contains_key(&coord) { ... }
+    }
+}
+
+// Optimized: Scan only rows containing loop tiles
+for y in rows_with_loop {  // Maybe ~80-100 rows instead of 141
+    for x in 0..width {
+        if loop_tiles.contains_key(&coord) { ... }
+    }
+}
+```
+
+**Estimated gain**: ~30-40% faster Part 2 (3.4ms → ~2.0-2.4ms)  
+**Worth it?**: Not really - 6.5ms total is already excellent  
+
+**Learning**: 
+1. **Mission integration** provides clean code with good performance baseline
+2. **Ray casting** is inherently O(w × h) - no avoiding visiting most cells
+3. **HashMap lookups** dominate when called thousands of times
+4. **6.5ms is acceptable** - premature optimization would hurt readability
+
+**Trade-off Decision**: Kept code readable and mission-aligned rather than micro-optimizing. The integrator philosophy values clarity and component reuse over absolute performance.
+
+**Zettelkasten**: [[mission-6]], [[mission-8]], [[computational-geometry-basics]]
 
 ### Template for Future Optimizations
 

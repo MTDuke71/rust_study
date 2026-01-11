@@ -26,6 +26,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Modular Arithmetic | Day 8 | O(1) | [[number-theory-basics]] |
 | Finite Differences (Polynomial Extrapolation) | Day 9 | O(n²) per sequence | [[finite-differences]] |
 | Recursive Difference Pyramid | Day 9 | O(depth × width) | - |
+| BFS Loop Traversal | Day 10 | O(V + E) | [[graph-theory-fundamentals]] |
+| Ray Casting (Point-in-Polygon) | Day 10 | O(w × h) | [[computational-geometry-basics]] |
+| Scanline Algorithm | Day 10 | O(w × h) | - |
 
 ---
 
@@ -929,6 +932,88 @@ if let Some(&entity_id) = coord_to_entity.get(&target_coord) {
 **Day(s)**: TBD  
 **Mission**: Mission 6 (Grid) + Mission 8 (Graph)
 
+### BFS Loop Traversal (Day 10)
+**Implementation**: `src/solver/day10.rs::find_loop_distances()`  
+**Complexity**: O(V + E) where V = vertices (grid cells), E = edges (pipe connections)  
+**Key Concept**: BFS finds shortest distances in unweighted graphs - perfect for finding all cells in a continuous loop  
+
+**When to use**: 
+- Finding shortest paths in unweighted graphs/grids
+- Measuring distances from a starting point
+- Identifying connected components
+- Traversing graph levels/layers
+
+**Pattern**:
+```rust
+fn find_loop_distances(grid: &Grid<char>, start: Coord) -> HashMap<Coord, usize> {
+    let mut distances = HashMap::new();
+    let mut queue = VecDeque::new();
+    
+    distances.insert(start, 0);
+    queue.push_back(start);
+    
+    while let Some(current) = queue.pop_front() {
+        let current_dist = distances[&current];
+        
+        for neighbor in get_connected_neighbors(grid, current) {
+            if !distances.contains_key(&neighbor) {
+                distances.insert(neighbor, current_dist + 1);
+                queue.push_back(neighbor);
+            }
+        }
+    }
+    
+    distances
+}
+```
+
+**Mission Integration**: Mission 8 BFS pattern applied to pipe maze grid  
+**Zettelkasten**: [[graph-theory-fundamentals]], [[mission-8]]
+
+### Ray Casting (Point-in-Polygon) (Day 10)
+**Implementation**: `src/solver/day10.rs::solve_part2()`  
+**Complexity**: O(w × h) where w = grid width, h = grid height  
+**Key Concept**: Cast horizontal ray from point, count boundary crossings. Odd = inside, even = outside  
+
+**When to use**: 
+- Determining if a point is inside a polygon
+- Finding enclosed regions in a 2D space
+- Area calculations with irregular boundaries
+
+**Tricky Part - Corner Handling**:
+```rust
+// Scanline with state machine
+let mut inside = false;
+let mut enter_corner: Option<char> = None;
+
+match ch {
+    '|' => inside = !inside,  // Vertical crossing always flips
+    'F' | 'L' => enter_corner = Some(ch),  // Enter corner sequence
+    '7' => {
+        // Exit corner - check if we crossed
+        if enter_corner == Some('L') { 
+            inside = !inside;  // L-7 is a crossing (top to bottom)
+        }
+        // F-7 is NOT a crossing (stay on bottom)
+    }
+    'J' => {
+        if enter_corner == Some('F') {
+            inside = !inside;  // F-J is a crossing (bottom to top)
+        }
+        // L-J is NOT a crossing (stay on top)
+    }
+    '-' => {}  // Horizontal segment - no effect
+}
+```
+
+**Corner Logic**:
+- `|` always crosses (north-south)
+- `-` never crosses (horizontal)
+- `F---J` or `L---7`: Enter from one side, exit opposite side → **CROSSING**
+- `F---7` or `L---J`: Enter and exit same side → **NOT a crossing**
+
+**Zettelkasten**: [[computational-geometry-basics]], [[ray-casting-algorithm]]
+
 ### Shoelace Formula / Pick's Theorem
 **Day(s)**: TBD  
 **Zettelkasten**: [[computational-geometry]]
@@ -939,7 +1024,11 @@ if let Some(&entity_id) = coord_to_entity.get(&target_coord) {
 
 | Mission | Algorithms | Days Used |
 |---------|------------|-----------|
-| Mission 3 (Binary Search) | Binary search variants | TBD || Mission 5 (HashMap) | HashSet membership testing, O(1) lookups | Day 4 || Mission 6 (Grid) | Grid traversal, 8-directional neighbors, spatial indexing | Day 3 |
+| Mission 3 (Binary Search) | Binary search variants | TBD |
+| Mission 5 (HashMap) | HashSet membership testing, O(1) lookups | Day 4 |
+| Mission 6 (Grid) | Grid traversal, 8-directional neighbors, spatial indexing | Day 3, Day 10 |
+| Mission 8 (Graph/BFS) | BFS loop traversal, shortest path finding | Day 10 |
+
 ## 📝 Notes
 
 - Algorithm entries are created when first encountered
