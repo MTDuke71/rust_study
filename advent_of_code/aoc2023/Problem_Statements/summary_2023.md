@@ -3,17 +3,17 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 11/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 10.928ms |
+|--------|-------|\n| **Progress** | 12/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 55.113ms |
 | **Mission Integration** | 3 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8) |
-| **Patterns Extracted** | 8 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon) |
+| **Patterns Extracted** | 9 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) |
-Day 11 | Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) |
+Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
@@ -967,7 +967,139 @@ Galaxy 5 at (5,1) to Galaxy 9 at (9,4):
 - [[graph-theory-fundamentals]] - Complete graphs, all pairs
 - [[combinatorics-basics]] - Combination counting
 
-**Links**: ← [Day 10](#day-10-pipe-maze) | Day 12 →
+**Links**: ← [Day 10](#day-10-pipe-maze) | [Day 12](#day-12-hot-springs) →
+
+---
+
+### Day 12: Hot Springs
+
+**Part 1**: Count valid arrangements of operational/damaged springs matching contiguous group constraints → **7251**  
+**Part 2**: Unfold each row 5x (springs joined with `?`, groups repeated) → **2128386729962**  
+
+**Algorithm**: Dynamic programming with memoization (recursive constraint satisfaction)  
+**Complexity**: O(n × g × max_run) where n = spring length, g = group count, max_run = largest group size  
+**Runtime**: 44.185ms (Part 1: 2.94ms, Part 2: 41.26ms)  
+**Mission**: None (classic DP problem, memoization taught in Mission 11)  
+
+**Key Insight**: Part 2's 5x unfolding creates exponential search space (trillions of combinations) but recursive DP with memoization prunes redundant paths. The state space is 3D: `(position, group_index, current_run_length)` - each unique state is computed once and cached.
+
+**Rust Highlights**:
+- **Three-parameter recursion**: `count_arrangements(pos, group_idx, current_run)` tracks state
+- **HashMap memoization**: `(usize, usize, usize) → usize` caches subproblem results
+- **`?` wildcard handling**: Try both `.` and `#`, recursively explore valid branches
+- **Early validation**: Base case checks if all groups placed AND no incomplete runs
+- **Shared solver**: Single function for both parts, only differs by input transformation
+
+**Code Highlight**:
+```rust
+fn count_arrangements(
+    springs: &[u8],
+    groups: &[usize],
+    pos: usize,
+    group_idx: usize,
+    current_run: usize,
+    memo: &mut Memo,
+) -> usize {
+    // Base case: reached end of springs
+    if pos == springs.len() {
+        if group_idx == groups.len() && current_run == 0 {
+            return 1; // All groups placed, no incomplete run
+        }
+        if group_idx == groups.len() - 1 && current_run == groups[group_idx] {
+            return 1; // Last group completed exactly
+        }
+        return 0;
+    }
+
+    // Check memoization cache
+    let key = (pos, group_idx, current_run);
+    if let Some(&cached) = memo.get(&key) {
+        return cached;
+    }
+
+    let mut count = 0;
+    let ch = springs[pos];
+
+    // Try placing '.' (operational)
+    if ch == b'.' || ch == b'?' {
+        if current_run == 0 {
+            count += count_arrangements(springs, groups, pos + 1, group_idx, 0, memo);
+        } else if group_idx < groups.len() && current_run == groups[group_idx] {
+            count += count_arrangements(springs, groups, pos + 1, group_idx + 1, 0, memo);
+        }
+    }
+
+    // Try placing '#' (damaged)
+    if (ch == b'#' || ch == b'?') && group_idx < groups.len() && current_run < groups[group_idx] {
+        count += count_arrangements(springs, groups, pos + 1, group_idx, current_run + 1, memo);
+    }
+
+    memo.insert(key, count);
+    count
+}
+```
+
+**Example Walkthrough** (`.??..??...?##. 1,1,3`):
+
+1. **Input**: springs = `.??..??...?##.`, groups = `[1,1,3]`
+2. **Valid arrangements** (4 total):
+   - `#.#..#.#...###.` - First `??` = `#.`, second `??` = `#.`
+   - `#.#..#..#..###.` - First `??` = `#.`, second `??` = `.#`
+   - `#..#.#.#...###.` - First `??` = `.#`, second `??` = `#.`
+   - `#..#.#..#..###.` - First `??` = `.#`, second `??` = `.#`
+3. **Why 4?** Last `?##.` must be `###` (only way to form group of 3). Each `??` can be `#.` or `.#` (exactly 1 damaged) → 2×2 = 4
+4. **DP pruning**: Without memoization, would explore exponentially many invalid paths. Memoization remembers "from position 4 with group_idx=1, there are 2 ways" - computed once, reused.
+
+**Mathematical Foundations**:
+
+**Constraint Satisfaction Problem (CSP)**:
+- Variables: Each `?` position → assignment to `.` or `#`
+- Constraints: 
+  1. Damaged groups must match sizes in `groups` array exactly
+  2. Groups separated by ≥1 operational spring
+  3. No partial groups (each # must belong to a complete group)
+- Solution count: Number of valid assignments
+
+**Dynamic Programming State Space**:
+- **State**: `(pos, group_idx, current_run)` - 3D table
+  - `pos`: Current position in springs (0..n)
+  - `group_idx`: Which damaged group we're placing (0..g)
+  - `current_run`: Length of current contiguous '#' run (0..max_run)
+- **Transitions**:
+  - Place `.`: Complete current group (if size matches) or continue if no active run
+  - Place `#`: Extend current run if within group size limit
+- **Memoization**: Cache `state → count` to avoid recomputing overlapping subproblems
+
+**Complexity Analysis**:
+- **Without memoization**: O(2^q) where q = number of `?` wildcards (exponential)
+- **With memoization**: O(n × g × max_run) - each unique state computed once
+  - States: n positions × g groups × max_run lengths ≈ 100 × 10 × 20 = 20,000 states
+  - Per state: O(1) HashMap lookup + O(1) recursion calls
+  - Part 2: 5x longer input → 5n × 5g × max_run ≈ 500,000 states (explains 14x slower runtime)
+
+**Part 1 vs Part 2 Scaling**:
+- Part 1: ~100 chars, ~6 groups → ~10,000 states
+- Part 2: ~500 chars, ~30 groups → ~300,000 states (30x more)
+- Runtime: Part 2 is 14x slower (41ms vs 2.9ms) - sublinear due to memoization efficiency!
+
+**Tests**: 
+- ✅ Part 1 example (21 total arrangements)
+- ✅ Individual lines:
+  - `???.### 1,1,3` → 1 arrangement
+  - `.??..??...?##. 1,1,3` → 4 arrangements
+  - `?#?#?#?#?#?#?#? 1,3,1,6` → 1 arrangement (fully constrained)
+  - `????.#...#... 4,1,1` → 1 arrangement
+  - `????.######..#####. 1,6,5` → 4 arrangements
+  - `?###???????? 3,2,1` → 10 arrangements
+- ✅ Part 2 first line (1 arrangement after 5x unfold)
+- ✅ Unfold correctness: `.#` → `.#?.#?.#?.#?.#`, `[1]` → `[1,1,1,1,1]`
+
+**Zettelkasten**: 
+- [[memoization-comprehensive-guide]] - Top-down DP with caching
+- [[tabulation-patterns]] - Bottom-up DP (alternative approach)
+- [[constraint-satisfaction]] - CSP formulation and solving
+
+**Links**: ← [Day 11](#day-11-cosmic-expansion) | Day 13 →
 
 ---
 

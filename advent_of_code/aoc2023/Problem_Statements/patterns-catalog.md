@@ -25,6 +25,9 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | flat_map for Position Extraction | Day 11 | `day11.rs` |
 | HashSet Complement for Empty Detection | Day 11 | `day11.rs` |
 | Nested Loop for All Pairs | Day 11 | `day11.rs` |
+| Recursive DP with Memoization | Day 12 | `day12.rs` |
+| Three-Dimensional State Tuple | Day 12 | `day12.rs` |
+| Branching Recursion with Constraints | Day 12 | `day12.rs` |
 
 ---
 
@@ -678,6 +681,178 @@ fn move_in_direction(coord: (usize, usize), dir: Dir) -> Option<(usize, usize)> 
 ### Pattern: Dijkstra with Priority Queue
 **Used**: TBD  
 **Code**: `src/patterns/pathfinding.rs` (when created)
+
+---
+
+## 🧠 Dynamic Programming Patterns
+
+### Pattern: Recursive DP with Memoization
+**Used**: Day 12  
+**When to use**: Recursive problem with overlapping subproblems and multi-dimensional state  
+**Code**: `src/solver/day12.rs::count_arrangements()`
+
+```rust
+use std::collections::HashMap;
+
+type Memo = HashMap<(usize, usize, usize), usize>;
+
+fn count_arrangements(
+    input: &[u8],
+    constraints: &[usize],
+    pos: usize,
+    state1: usize,
+    state2: usize,
+    memo: &mut Memo,
+) -> usize {
+    // 1. Base case: validate final state
+    if pos == input.len() {
+        return if all_constraints_satisfied(state1, state2, constraints) {
+            1
+        } else {
+            0
+        };
+    }
+
+    // 2. Check memoization cache
+    let key = (pos, state1, state2);
+    if let Some(&cached) = memo.get(&key) {
+        return cached;
+    }
+
+    // 3. Recursive exploration with pruning
+    let mut count = 0;
+    for choice in possible_choices(input[pos]) {
+        let (new_state1, new_state2) = apply_choice(choice, state1, state2);
+        
+        // Early pruning: skip invalid branches
+        if is_valid_state(new_state1, new_state2, constraints) {
+            count += count_arrangements(
+                input,
+                constraints,
+                pos + 1,
+                new_state1,
+                new_state2,
+                memo,
+            );
+        }
+    }
+
+    // 4. Cache and return
+    memo.insert(key, count);
+    count
+}
+
+// Wrapper function to initialize memo
+fn solve(input: &[u8], constraints: &[usize]) -> usize {
+    let mut memo = HashMap::new();
+    count_arrangements(input, constraints, 0, 0, 0, &mut memo)
+}
+```
+
+**Key Elements**:
+1. **State tuple**: `(pos, state1, state2, ...)` captures all information needed for subproblems
+2. **Base case**: When recursion bottoms out, validate if solution is complete
+3. **Memoization**: `HashMap<State, Result>` caches computed subproblems
+4. **Branching**: Try multiple choices at each step, sum valid paths
+5. **Early pruning**: Skip invalid branches before recursing (constraint propagation)
+
+**Day 12 Application**:
+- **State**: `(position, group_index, current_run_length)`
+- **Branches**: For `?` wildcard, try both `.` and `#`
+- **Pruning**: Skip if `current_run > groups[group_index]` (run too long)
+- **Result**: Sum of valid arrangements from all branches
+
+**Benefits**:
+- Naturally models recursive problem structure
+- Automatic pruning via memoization (don't recompute same state)
+- Reduces exponential to polynomial complexity
+- Clean code compared to bottom-up DP table
+
+**When NOT to use**:
+- Bottom-up order is obvious and simple (use tabulation instead)
+- State space is very sparse (memoization overhead > savings)
+- Need to reconstruct solution path (tabulation easier)
+
+**Zettelkasten**: [[memoization-comprehensive-guide]], [[tabulation-patterns]]
+
+### Pattern: Three-Dimensional State Space
+**Used**: Day 12  
+**When to use**: Need to track multiple independent state variables in DP  
+**Code**: `src/solver/day12.rs`
+
+```rust
+type Memo = HashMap<(usize, usize, usize), usize>;
+//                   │      │      │
+//                   │      │      └─ State dimension 3
+//                   │      └─────── State dimension 2
+//                   └───────────── State dimension 1
+
+// Day 12 specific:
+// (position, group_index, current_run_length)
+let state = (pos, group_idx, current_run);
+```
+
+**When to add dimensions**:
+- Need to track progress through input: Add `position` dimension
+- Need to track which subproblem: Add `index` dimension (e.g., group_index, item_index)
+- Need to track current state: Add `accumulator` dimension (e.g., current_run, current_weight)
+
+**Examples**:
+- **1D**: Fibonacci - `memo[n]` (only depends on n)
+- **2D**: Coin Change - `memo[(amount, coin_index)]` (unbounded knapsack)
+- **3D**: Day 12 - `memo[(pos, group_idx, current_run)]` (constraint satisfaction)
+- **4D**: Complex knapsack with multiple constraints
+
+**Trade-offs**:
+- More dimensions = larger state space = more memory
+- But: Prunes exponential search to polynomial
+- Day 12: 3D state (500×30×20) = 300K states vs 2^500 brute force!
+
+**Zettelkasten**: [[multidimensional-dp]]
+
+### Pattern: Branching Recursion with Constraint Validation
+**Used**: Day 12  
+**When to use**: Multiple choices per step, need to validate constraints before recursing  
+**Code**: `src/solver/day12.rs::count_arrangements()`
+
+```rust
+let mut count = 0;
+let ch = input[pos];
+
+// Branch 1: Try placing '.'
+if ch == b'.' || ch == b'?' {
+    if constraint_allows_dot(state1, state2) {
+        count += recurse_with_dot(pos + 1, new_state1, new_state2, memo);
+    }
+}
+
+// Branch 2: Try placing '#'
+if ch == b'#' || ch == b'?' {
+    if constraint_allows_hash(state1, state2) {
+        count += recurse_with_hash(pos + 1, new_state1, new_state2, memo);
+    }
+}
+
+count  // Sum of all valid branches
+```
+
+**Key Pattern**:
+1. **Enumerate choices**: What are possible actions at this step?
+2. **Validate constraints**: Is this choice legal given current state?
+3. **Update state**: How does choice change state for next step?
+4. **Recurse**: Explore subtree with updated state
+5. **Aggregate**: Sum/max/combine results from all branches
+
+**Day 12 Constraints**:
+- Placing `.`: Can only end a group if `current_run == groups[group_idx]`
+- Placing `#`: Can only extend if `current_run < groups[group_idx]`
+
+**Benefits**:
+- Clear separation of choice enumeration vs validation
+- Easy to add more constraints (just add validation checks)
+- Natural pruning (don't recurse on invalid branches)
+
+**Zettelkasten**: [[backtracking-patterns]], [[constraint-satisfaction]]
 
 ---
 

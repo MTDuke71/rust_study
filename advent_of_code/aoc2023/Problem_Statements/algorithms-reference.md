@@ -32,6 +32,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Manhattan Distance (Non-Uniform Grid) | Day 11 | O(1) per pair | [[manhattan-distance]] |
 | All Pairs Generation | Day 11 | O(g²) for g galaxies | [[combinatorics-basics]] |
 | Empty Row/Column Detection | Day 11 | O(g) HashSet + O(n+m) filter | - |
+| Recursive DP with Memoization | Day 12 | O(n × g × max_run) | [[memoization-comprehensive-guide]] |
+| Constraint Satisfaction (CSP) | Day 12 | Exponential without pruning | - |
+| Three-Dimensional State Space | Day 12 | O(states) memoization | [[tabulation-patterns]] |
 
 ---
 
@@ -1020,6 +1023,86 @@ match ch {
 ### Shoelace Formula / Pick's Theorem
 **Day(s)**: TBD  
 **Zettelkasten**: [[computational-geometry]]
+
+---
+
+## 🧠 Dynamic Programming
+
+### Recursive DP with Memoization (Day 12)
+**Implementation**: `src/solver/day12.rs::count_arrangements()`  
+**Complexity**: O(n × g × max_run) where n = input length, g = groups, max_run = largest group  
+**Key Concept**: Top-down DP with HashMap caching to avoid recomputing overlapping subproblems  
+
+**When to use**: 
+- Recursive problem structure with overlapping subproblems
+- State space is multi-dimensional (3D in Day 12: position, group, run)
+- Exponential brute force but polynomial unique states
+- Need to prune redundant computation
+
+**Pattern**:
+```rust
+type Memo = HashMap<(usize, usize, usize), usize>;
+
+fn solve(input: &[u8], constraints: &[usize], pos: usize, state1: usize, state2: usize, memo: &mut Memo) -> usize {
+    // Base case
+    if pos == input.len() {
+        return if constraints_satisfied() { 1 } else { 0 };
+    }
+    
+    // Check cache
+    let key = (pos, state1, state2);
+    if let Some(&cached) = memo.get(&key) {
+        return cached;
+    }
+    
+    // Recursive exploration
+    let mut result = 0;
+    for choice in possible_choices() {
+        if valid(choice) {
+            result += solve(input, constraints, pos + 1, new_state1, new_state2, memo);
+        }
+    }
+    
+    // Cache and return
+    memo.insert(key, result);
+    result
+}
+```
+
+**Day 12 Application**:
+- **Problem**: Count valid arrangements where `?` wildcards can be `.` or `#`
+- **State**: `(pos, group_idx, current_run)` - position in springs, which group placing, current # run length
+- **Transitions**: Try placing `.` (end run or continue) and `#` (extend run if valid)
+- **Pruning**: Without memoization = O(2^q) exponential, with = O(n × g × max_run) polynomial
+
+**Contrast with Forward DP (Day 4)**:
+- Forward DP (tabulation): Build table bottom-up, fill in order, no recursion
+- Recursive DP (memoization): Explore top-down, cache on demand, natural for branching problems
+
+**Zettelkasten**: [[memoization-comprehensive-guide]], [[tabulation-patterns]]
+
+### Constraint Satisfaction Problem (CSP)
+**Day(s)**: Day 12  
+**Implementation**: `day12.rs::count_arrangements()` - recursive backtracking with constraints  
+**Complexity**: Exponential without pruning, polynomial with memoization  
+**Key Concept**: Assign values to variables subject to constraints, count/find valid assignments  
+
+**CSP Formulation (Day 12)**:
+- **Variables**: Each `?` position → must assign `.` or `#`
+- **Domain**: {`.`, `#`} for each variable
+- **Constraints**:
+  1. Damaged groups must match `groups` array exactly
+  2. Groups separated by ≥1 operational spring (`.`)
+  3. No partial groups at end
+- **Goal**: Count all valid complete assignments
+
+**Solving Techniques**:
+- **Backtracking**: Try each value, recurse, backtrack if invalid
+- **Constraint propagation**: When placing `#`, current_run must be ≤ group size
+- **Early termination**: Prune branches that violate constraints immediately
+- **Memoization**: Cache `(partial_assignment_state) → count` to avoid redundant work
+
+**Zettelkasten**: [[constraint-satisfaction]], [[backtracking-patterns]]
 
 ---
 
