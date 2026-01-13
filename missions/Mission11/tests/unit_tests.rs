@@ -193,7 +193,7 @@ fn req2_fibonacci_memoization_pattern() {
     
     let mut memo = HashMap::new();
     assert_eq!(fib(10, &mut memo), 55);
-    assert!(memo.len() > 0); // Should cache intermediate results
+    assert!(!memo.is_empty()); // Should cache intermediate results
 }
 
 #[test]
@@ -257,7 +257,7 @@ fn test_aoc_day12_pattern_integration() {
     let result = count_arrangements((0, 0, 0), 5, &mut memo);
     
     assert!(result > 0);
-    assert!(memo.len() > 0); // Should have cached states
+    assert!(!memo.is_empty()); // Should have cached states
 }
 
 #[test]
