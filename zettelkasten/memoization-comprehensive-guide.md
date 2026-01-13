@@ -235,6 +235,185 @@ let fib = memoized_closure(|n: u32, cache: &mut HashMap<u32, u64>| -> u64 {
 
 ---
 
+### Pattern 4: Generic MemoCache Wrapper (Mission 11 Pattern)
+
+**Best for:** Reusable memoization, production code, cache statistics, API abstraction
+
+**Context:** Developed in [[missions/mission-11|Mission 11]] and validated by AoC 2023 Day 12 (Hot Springs).
+
+```rust
+use std::collections::HashMap;
+use std::hash::Hash;
+
+/// Generic memoization cache with statistics tracking
+/// 
+/// # Examples
+/// ```
+/// use std::collections::HashMap;
+/// 
+/// let mut cache = MemoCache::<(usize, usize), u64>::new();
+/// 
+/// // First call computes
+/// let result = cache.memoize((5, 3), || expensive_computation(5, 3));
+/// 
+/// // Second call uses cache (instant)
+/// let result2 = cache.memoize((5, 3), || panic!("Should not compute!"));
+/// ```
+pub struct MemoCache<K, V> 
+where
+    K: Hash + Eq,
+    V: Clone,
+{
+    cache: HashMap<K, V>,
+    hits: usize,
+    misses: usize,
+}
+
+impl<K, V> MemoCache<K, V>
+where
+    K: Hash + Eq,
+    V: Clone,
+{
+    pub fn new() -> Self {
+        Self {
+            cache: HashMap::new(),
+            hits: 0,
+            misses: 0,
+        }
+    }
+
+    /// Retrieves or computes a memoized value
+    pub fn memoize<F>(&mut self, key: K, compute: F) -> V
+    where
+        F: FnOnce() -> V,
+    {
+        if let Some(cached) = self.cache.get(&key) {
+            self.hits += 1;
+            return cached.clone();
+        }
+
+        self.misses += 1;
+        let value = compute();
+        self.cache.insert(key, value.clone());
+        value
+    }
+
+    /// Returns cache hit ratio (0.0 to 1.0)
+    pub fn hit_ratio(&self) -> f64 {
+        let total = self.hits + self.misses;
+        if total == 0 {
+            0.0
+        } else {
+            self.hits as f64 / total as f64
+        }
+    }
+
+    pub fn size(&self) -> usize {
+        self.cache.len()
+    }
+}
+
+// Example: AoC 2023 Day 12 Pattern (3D State Tuple)
+fn count_arrangements(
+    springs: &[u8],
+    groups: &[usize],
+    pos: usize,
+    group_idx: usize,
+    current_run: usize,
+    memo: &mut HashMap<(usize, usize, usize), usize>,
+) -> usize {
+    // Base case
+    if pos == springs.len() {
+        if group_idx == groups.len() && current_run == 0 {
+            return 1; // Valid arrangement
+        }
+        return 0; // Invalid
+    }
+
+    // Memoization check
+    let key = (pos, group_idx, current_run);
+    if let Some(&cached) = memo.get(&key) {
+        return cached;
+    }
+
+    let mut count = 0;
+    let ch = springs[pos];
+
+    // Try placing '.' (operational spring)
+    if ch == b'.' || ch == b'?' {
+        if current_run == 0 {
+            count += count_arrangements(springs, groups, pos + 1, group_idx, 0, memo);
+        } else if group_idx < groups.len() && current_run == groups[group_idx] {
+            count += count_arrangements(springs, groups, pos + 1, group_idx + 1, 0, memo);
+        }
+    }
+
+    // Try placing '#' (damaged spring)
+    if (ch == b'#' || ch == b'?') && group_idx < groups.len() && current_run < groups[group_idx] {
+        count += count_arrangements(springs, groups, pos + 1, group_idx, current_run + 1, memo);
+    }
+
+    memo.insert(key, count);
+    count
+}
+```
+
+**Key Features:**
+
+- **Generic over state types:** Works with tuples, structs, any `K: Hash + Eq`
+- **Statistics tracking:** Hit ratio reveals memoization effectiveness
+  - AoC 2023 Day 12 Part 2: 95% hit rate (massive overlap!)
+  - Low hit ratio suggests memoization may not be beneficial
+- **API abstraction:** `memoize(key, compute)` pattern cleaner than manual cache management
+- **Type safety:** Compile-time guarantees on key/value types
+
+**Composite State Keys:**
+
+For complex DP problems, use tuple keys to represent multi-dimensional state:
+
+```rust
+// 3D State: (position, group_index, current_run_length)
+type State3D = (usize, usize, usize);
+let mut memo: HashMap<State3D, usize> = HashMap::new();
+
+// 4D State: (position, value, count, depth)  
+type State4D = (usize, u64, usize, usize);
+let mut memo: HashMap<State4D, u64> = HashMap::new();
+```
+
+**Advantages:**
+
+- Production-ready pattern with statistics
+- Reusable across different problems
+- Clear separation of caching logic from algorithm
+- Performance metrics guide optimization decisions
+- Generic design supports any state type
+
+**Disadvantages:**
+
+- Slight overhead from wrapper abstraction
+- Clone requirement for values (usually negligible)
+
+**When to Use:**
+
+✅ Production code requiring maintainability  
+✅ Need cache statistics for analysis  
+✅ Multiple problems with similar memoization needs  
+✅ API abstraction over raw HashMap  
+
+❌ Simple one-off scripts (raw HashMap is fine)  
+❌ Performance-critical inner loops (measure first!)
+
+**Real-World Impact:**
+
+- **AoC 2023 Day 12**: 2.94ms (Part 1), 41.26ms (Part 2) with 300K cached states
+- **Fibonacci n=30**: 262x speedup over naive recursion
+- **State space analysis**: Cache size reveals problem complexity
+
+See [[missions/mission-11|Mission 11]] for complete implementation with tests, benchmarks, and production-quality documentation.
+
+---
+
 ## Real-World Applications
 
 ### AoC 2015 Day 10: Look-and-Say Sequence
