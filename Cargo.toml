@@ -59,6 +59,7 @@ members = [
     "missions/Mission8",
     "missions/Mission9",
     "missions/Mission10",
+    "missions/Mission11",
     "tutorials/Mission1_tut",
     "tutorials/Mission2_tut",
     "tutorials/Mission3_tut",

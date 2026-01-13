@@ -1648,6 +1648,13 @@ name = "mission10_tut"
 version = "0.1.0"
 
 [[package]]
+name = "mission11"
+version = "0.1.0"
+dependencies = [
+ "criterion 0.5.1",
+]
+
+[[package]]
 name = "mission11_tut"
 version = "0.1.0"
 
