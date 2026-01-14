@@ -354,9 +354,10 @@ See **[tutorials/Mission11_tut/](../../tutorials/Mission11_tut/)** for step-by-s
 - **AoC 2015 Day 7** - Circuit Simulation (DAG with memoization)
 
 ### Zettelkasten Links
-- [[dynamic-programming-memoization]] - Core DP concepts and patterns
-- [[lifetime-parametric-recursion]] - Rust-specific recursion patterns
-- [[zero-copy-string-operations]] - String slice optimization
+- [[Dynamic Programming]] - Core DP concepts and overview
+- [[top-down-dp-pattern]] - Canonical 4-step recursive DP template
+- [[zero-copy-string-slicing]] - Zero-allocation string slice optimization
+- [[memoization-comprehensive-guide]] - Memoization theory and patterns
 - [[aoc-dp-patterns]] - AoC problem classification
 
 ### External Resources

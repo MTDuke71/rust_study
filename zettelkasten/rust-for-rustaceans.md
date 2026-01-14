@@ -32,6 +32,17 @@
 - **2.2: Traits and Trait Bounds** ⏭️ NEXT
 - **Additional sections**: TBD
 
+### **Chapter 3: Designing Interfaces** 🔄 IN PROGRESS
+- **3.1: Borrowed vs Owned** ✅ COMPLETE
+  - Only require ownership when necessary
+  - Use `&T` for read-only access
+  - **Zettelkasten**: [[cow-borrowed-vs-owned]]
+- **3.2: Fallible/Blocking Destructors** ✅ COMPLETE
+  - Drop cannot return Result
+  - Explicit close() methods
+  - **Zettelkasten**: [[fallible-destructors]]
+- **Additional sections**: TBD
+
 ---
 
 ## 🗂️ Workspace Files
@@ -57,6 +68,8 @@
 - **[[static-lifetime]]** - Created from Ch1.2
 - **[[interior-mutability]]** - Deep dive from Ch1.4
 - **[[alignment-and-layout]]** - Memory layout from Ch2.1
+- **[[cow-borrowed-vs-owned]]** - Conditional ownership from Ch3.1
+- **[[fallible-destructors]]** - Resource cleanup patterns from Ch3.2
 
 ---
 

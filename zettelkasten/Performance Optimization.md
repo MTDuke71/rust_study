@@ -626,4 +626,4 @@ fn measure_performance() {
 
 *Tags: #performance #optimization #benchmarking #profiling #memory-optimization #cpu-optimization #algorithm-complexity #collections #zero-cost-abstractions*
 
-*Links: [[zettel-index]] | [[zero-cost-abstractions]] | [[Generic Programming]] | [[Collections MOC]] | [[Bounds Checking Performance]] | [[Deduplication]] | [[mission-1]] | [[mission-3]] | [[mission-6]]*
+*Links: [[zettel-index]] | [[zero-cost-abstractions]] | [[Generic Programming]] | [[Collections MOC]] | [[Bounds Checking Performance]] | [[Deduplication]] | [[zero-copy-string-slicing]] | [[mission-1]] | [[mission-3]] | [[mission-6]] | [[mission-11]]*

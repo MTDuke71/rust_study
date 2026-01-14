@@ -880,9 +880,12 @@ mod tests {
 - *See [[AoC Patterns MOC]] for integration with other patterns*
 - *[[Performance Optimization Guide]] covers cost-benefit analysis*
 - *[[Rust Collections MOC]] for HashMap performance characteristics*
+- *[[top-down-dp-pattern]] - Canonical 4-step recursive DP template*
+- *[[zero-copy-string-slicing]] - Zero-allocation string optimization*
+- *[[mission-11]] - Mission 11 implementation with memoization patterns*
 
 ---
 
 *Tags: #dynamic-programming #memoization #caching #optimization #algorithms #rust #performance #aoc*
 
-*Related MOCs: [[Memoization MOC]] | [[AoC Patterns MOC]] | [[Algorithm Analysis]] | [[Algorithms MOC]] | [[Performance Optimization Guide]]*
+*Related MOCs: [[Memoization MOC]] | [[AoC Patterns MOC]] | [[Algorithm Analysis]] | [[Algorithms MOC]] | [[Performance Optimization Guide]] | [[top-down-dp-pattern]] | [[mission-11]]*

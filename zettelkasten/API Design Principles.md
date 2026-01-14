@@ -712,4 +712,4 @@ impl<T> Vec<T> {
 
 *Tags: #api-design #principles #rust-patterns #solid #best-practices #design-philosophy #idiomatic-rust #type-safety*
 
-*Links: [[API Design Patterns]] | [[rust-concepts-MOC]] | [[Error Handling Patterns]] | [[Ownership and Borrowing]] | [[Generic Programming]] | [[Traits]] | [[Iterator Patterns]] | [[zettel-index]]*
+*Links: [[API Design Patterns]] | [[rust-concepts-MOC]] | [[Error Handling Patterns]] | [[Ownership and Borrowing]] | [[Generic Programming]] | [[Traits]] | [[Iterator Patterns]] | [[cow-borrowed-vs-owned]] | [[fallible-destructors]] | [[zettel-index]]*

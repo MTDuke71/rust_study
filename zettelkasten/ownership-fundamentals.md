@@ -516,6 +516,6 @@ let r2 = &mut s;     // OK: r1 no longer active
 
 ---
 
-*Navigation: [[zettel-index]] | [[rust-concepts-MOC]] | [[Memory Management]] | [[Smart Pointers MOC]]*
+*Navigation: [[zettel-index]] | [[rust-concepts-MOC]] | [[Memory Management]] | [[Smart Pointers MOC]] | [[cow-borrowed-vs-owned]]*
 
 *Tags: #ownership #fundamentals #memory-safety #borrowing #move-semantics #rust-core-concepts*

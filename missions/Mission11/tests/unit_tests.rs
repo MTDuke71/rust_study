@@ -5,6 +5,7 @@
 //! - Each requirement should have multiple test cases
 
 use mission11::MemoCache;
+use mission11::string_dp::{can_construct, count_constructions, can_construct_multi};
 use std::collections::HashMap;
 
 // ============================================================================
@@ -283,4 +284,295 @@ fn test_cache_clear() {
 fn test_default_trait() {
     let cache: MemoCache<i32, i32> = MemoCache::default();
     assert_eq!(cache.size(), 0);
+}
+
+// ============================================================================
+// REQ-2: Top-Down DP Pattern Template (String-based)
+// ============================================================================
+
+#[test]
+fn req2_pattern_structure_base_case() {
+    // Verify base case returns immediately without caching
+    let patterns = vec!["a"];
+    let mut memo = HashMap::new();
+    
+    // Empty string is base case
+    assert!(can_construct("", &patterns, &mut memo));
+    assert_eq!(memo.len(), 0); // Base case shouldn't add to cache
+}
+
+#[test]
+fn req2_pattern_structure_cache_check() {
+    // Verify cache is checked before recursive computation
+    let patterns = vec!["a", "b"];
+    let mut memo = HashMap::new();
+    
+    // First call - cache miss
+    can_construct("ab", &patterns, &mut memo);
+    let initial_size = memo.len();
+    
+    // Second call - should use cache
+    can_construct("ab", &patterns, &mut memo);
+    assert_eq!(memo.len(), initial_size); // No new entries
+}
+
+#[test]
+fn req2_pattern_structure_result_caching() {
+    // Verify results are cached before returning
+    let patterns = vec!["x"];
+    let mut memo = HashMap::new();
+    
+    can_construct("xyz", &patterns, &mut memo);
+    
+    // All attempted substrings should be cached
+    // (including failed attempts)
+    assert!(memo.contains_key("xyz"));
+}
+
+#[test]
+fn req2_recursive_decomposition() {
+    // Verify recursive computation explores subproblems
+    let patterns = vec!["a", "b", "c"];
+    let mut memo = HashMap::new();
+    
+    assert!(can_construct("abc", &patterns, &mut memo));
+    
+    // Should have cached: "abc", "bc", "c"
+    assert!(memo.len() >= 3);
+    assert!(memo.contains_key("abc"));
+    assert!(memo.contains_key("bc"));
+    assert!(memo.contains_key("c"));
+}
+
+// ============================================================================
+// REQ-3: Zero-Copy String Slice Caching
+// ============================================================================
+
+#[test]
+fn req3_string_slice_keys() {
+    // Verify HashMap uses &str keys (compile-time validated)
+    let patterns = vec!["test"];
+    let target = "testing";
+    let mut memo: HashMap<&str, bool> = HashMap::new();
+    
+    can_construct(target, &patterns, &mut memo);
+    
+    // Keys are string slices, not owned Strings
+    for key in memo.keys() {
+        // This compiles because keys are &str
+        assert!(target.contains(*key) || key.is_empty());
+    }
+}
+
+#[test]
+fn req3_strip_prefix_zero_copy() {
+    // Verify strip_prefix is used (zero allocation)
+    let patterns = vec!["hello", "world"];
+    let mut memo = HashMap::new();
+    
+    assert!(can_construct("helloworld", &patterns, &mut memo));
+    
+    // Cache should contain substrings created by strip_prefix
+    assert!(memo.contains_key("world") || memo.contains_key("helloworld"));
+}
+
+#[test]
+fn req3_lifetime_safety() {
+    // This test compiles = lifetimes are correct
+    // If lifetime 'a wasn't properly propagated, this wouldn't compile
+    fn helper<'a>(
+        s: &'a str,
+        patterns: &[&str],
+    ) -> HashMap<&'a str, bool> {
+        let mut memo = HashMap::new();
+        can_construct(s, patterns, &mut memo);
+        memo // Can return memo because lifetime 'a ties it to input 's'
+    }
+    
+    let target = "test";
+    let patterns = vec!["te", "st"];
+    let result = helper(target, &patterns);
+    
+    assert!(result.len() > 0);
+}
+
+#[test]
+fn req3_no_to_string_in_hot_path() {
+    // Performance test: verify no String allocations
+    let patterns = vec!["a"];
+    let mut memo = HashMap::new();
+    
+    // Build long string to amplify allocation cost if present
+    let target = "aaaaaaaaaa"; // 10 'a's
+    
+    assert!(can_construct(target, &patterns, &mut memo));
+    
+    // All cache keys should be slices of original target
+    for key in memo.keys() {
+        // Verify key is a slice (not allocated String)
+        assert!(
+            std::ptr::eq(target.as_ptr(), key.as_ptr()) 
+            || key.is_empty()
+            || target.contains(*key)
+        );
+    }
+}
+
+// ============================================================================
+// REQ-4: Boolean → Counting DP Transformation
+// ============================================================================
+
+#[test]
+fn req4_identical_structure() {
+    // Verify boolean and counting versions have same structure
+    let patterns = vec!["a", "b"];
+    
+    let mut bool_memo = HashMap::new();
+    let mut count_memo = HashMap::new();
+    
+    let exists = can_construct("ab", &patterns, &mut bool_memo);
+    let count = count_constructions("ab", &patterns, &mut count_memo);
+    
+    // If exists, count should be > 0
+    assert_eq!(exists, count > 0);
+    
+    // Cache structure should be similar (same keys explored)
+    assert_eq!(bool_memo.len(), count_memo.len());
+}
+
+#[test]
+fn req4_base_case_transformation() {
+    // Boolean base: true, Counting base: 1
+    let patterns = vec!["x"];
+    
+    let mut bool_memo = HashMap::new();
+    let mut count_memo = HashMap::new();
+    
+    // Empty string base case
+    assert!(can_construct("", &patterns, &mut bool_memo));
+    assert_eq!(count_constructions("", &patterns, &mut count_memo), 1);
+}
+
+#[test]
+fn req4_reduction_operator_change() {
+    // Boolean: early-exit OR
+    // Counting: accumulative SUM
+    let patterns = vec!["a", "aa"];
+    
+    let mut count_memo = HashMap::new();
+    let count = count_constructions("aa", &patterns, &mut count_memo);
+    
+    // "aa" can be built as: "a"+"a" OR "aa" = 2 ways
+    assert_eq!(count, 2);
+}
+
+#[test]
+fn req4_multiple_paths_counting() {
+    // Verify counting accumulates ALL paths, not just first
+    let patterns = vec!["r", "wr", "b", "rb"];
+    let mut memo = HashMap::new();
+    
+    // "wrb" = "wr"+"b" OR "w"+"r"+"b" (if "w" existed)
+    // With current patterns: "wr"+"b" = 1 way
+    let count = count_constructions("wrb", &patterns, &mut memo);
+    assert!(count >= 1);
+}
+
+// ============================================================================
+// REQ-5: State Space Design Patterns
+// ============================================================================
+
+#[test]
+fn req5_string_suffix_state() {
+    // Pattern: remaining string as state
+    let patterns = vec!["test"];
+    let mut memo = HashMap::new();
+    
+    can_construct("testing", &patterns, &mut memo);
+    
+    // State progression: "testing" → "ing" → ...
+    // Verify suffix-based state representation
+    assert!(memo.contains_key("testing") || memo.contains_key("ing"));
+}
+
+#[test]
+fn req5_composite_state_multi_source() {
+    // Pattern: (string, index) composite state
+    let pattern_groups = vec![
+        vec!["a", "ab"],
+        vec!["c", "cd"],
+    ];
+    let mut memo = HashMap::new();
+    
+    assert!(can_construct_multi("abc", &pattern_groups, 0, &mut memo));
+    
+    // Composite state (str, usize) should be cached
+    assert!(memo.len() > 0);
+}
+
+// ============================================================================
+// Performance and Integration Tests
+// ============================================================================
+
+#[test]
+fn test_aoc_day19_pattern() {
+    // Simulate AoC 2024 Day 19 (Linen Layout)
+    let towel_patterns = vec!["r", "wr", "b", "g", "bwu", "rb", "gb", "br"];
+    
+    let designs = vec![
+        "brwrr",   // Can be made
+        "bggr",    // Can be made
+        "gbbr",    // Can be made
+        "rrbgbr",  // Can be made
+        "ubwu",    // Cannot be made (no 'u' pattern)
+        "bwurrg",  // Cannot be made
+        "brgr",    // Can be made
+        "bbrgwb",  // Cannot be made
+    ];
+    
+    let mut possible_count = 0;
+    
+    for design in &designs {
+        let mut memo = HashMap::new();
+        if can_construct(design, &towel_patterns, &mut memo) {
+            possible_count += 1;
+        }
+    }
+    
+    // Based on AoC Day 19 example: 6 designs possible
+    assert_eq!(possible_count, 6);
+}
+
+#[test]
+fn test_memoization_exponential_to_linear() {
+    // Demonstrate memoization transforms exponential to linear
+    let patterns = vec!["a", "aa", "aaa"];
+    let target = "aaaaaaaaaa"; // 10 'a's
+    
+    let mut memo = HashMap::new();
+    let result = can_construct(target, &patterns, &mut memo);
+    
+    assert!(result); // Can be constructed
+    
+    // Without memo: O(3^10) = 59,049 operations
+    // With memo: O(3 * 10) = 30 operations (roughly)
+    // Cache size should be ~10 (one per suffix length)
+    assert!(memo.len() <= 15); // Linear in target length
+}
+
+#[test]
+fn test_counting_large_state_space() {
+    // Verify counting works for exponentially large solution spaces
+    let patterns = vec!["a", "aa", "b", "bb"];
+    let mut memo = HashMap::new();
+    
+    // "aabb" can be built many ways:
+    // - a, a, b, b
+    // - aa, b, b
+    // - a, a, bb
+    // - aa, bb
+    let count = count_constructions("aabb", &patterns, &mut memo);
+    
+    // Should find 4 different arrangements
+    assert_eq!(count, 4);
 }

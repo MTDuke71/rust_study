@@ -362,6 +362,6 @@ From **Rust for Rustaceans Ch1**:
 
 ---
 
-*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[copy-trait]] | [[move-semantics]] | [[ownership-fundamentals]] | [[Ownership and Borrowing]] | [[rc-shared-ownership]] | [[drop-trait]]*
+*Links: [[zettel-index]] | [[rust-concepts-MOC]] | [[copy-trait]] | [[move-semantics]] | [[ownership-fundamentals]] | [[Ownership and Borrowing]] | [[rc-shared-ownership]] | [[drop-trait]] | [[cow-borrowed-vs-owned]]*
 
 *Tags: #clone #copy #traits #value-semantics #ownership #rust-for-rustaceans-ch1 #performance #heap #stack*

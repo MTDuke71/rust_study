@@ -685,7 +685,7 @@ unsafe impl Sync for ThreadSafeResource {}
 ---
 
 **Core Concepts:** [[raii-pattern]] | [[resource-management]] | [[deterministic-cleanup]] | [[scope-based-cleanup]]  
-**Applications:** [[file-management]] | [[database-connections]] | [[performance-monitoring]] | [[temporary-resources]] | [[graceful-shutdown-patterns]]  
+**Applications:** [[file-management]] | [[database-connections]] | [[performance-monitoring]] | [[temporary-resources]] | [[graceful-shutdown-patterns]] | [[fallible-destructors]]  
 **Integration:** [[deref-trait]] | [[smart-pointers]] | [[ownership]] | [[mission-4]] | [[thread-pool-pattern]]
 
-*Links: [[automatic-cleanup]] | [[drop-order]] | [[early-drop]] | [[resource-safety]] | [[zero-cost-cleanup]] | [[graceful-shutdown-patterns]]*
+*Links: [[automatic-cleanup]] | [[drop-order]] | [[early-drop]] | [[resource-safety]] | [[zero-cost-cleanup]] | [[graceful-shutdown-patterns]] | [[fallible-destructors]]*

@@ -710,4 +710,4 @@ fn main() -> std::io::Result<()> {
 
 *Tags: #traits #asref #ergonomics #api-design #rust-for-rustaceans #conversions #zero-cost-abstractions #flexibility*
 
-*Links: [[zettel-index]] | [[Traits]] | [[common-traits-pattern]] | [[deref-trait]] | [[ergonomic-apis]] | [[rust-for-rustaceans-ch3]]*
+*Links: [[zettel-index]] | [[Traits]] | [[common-traits-pattern]] | [[deref-trait]] | [[ergonomic-apis]] | [[cow-borrowed-vs-owned]] | [[rust-for-rustaceans-ch3]]*

@@ -28,6 +28,9 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Recursive DP with Memoization | Day 12 | `day12.rs` |
 | Three-Dimensional State Tuple | Day 12 | `day12.rs` |
 | Branching Recursion with Constraints | Day 12 | `day12.rs` |
+| Iterator zip() for Element-wise Comparison | Day 13 | `day13.rs` |
+| Hamming Distance for Pattern Matching | Day 13 | `day13.rs` |
+| Target-Value Generalization | Day 13 | `day13.rs` |
 
 ---
 
@@ -853,6 +856,103 @@ count  // Sum of all valid branches
 - Natural pruning (don't recurse on invalid branches)
 
 **Zettelkasten**: [[backtracking-patterns]], [[constraint-satisfaction]]
+
+---
+
+## 🎯 Pattern Matching & Comparison
+
+### Pattern: Target-Value Generalization
+**Used**: Day 13  
+**When to use**: Multiple problem parts differ only in a target value/threshold  
+**Code**: `src/solver/day13.rs::find_reflection()`
+
+```rust
+// Generalized function with target parameter
+fn find_reflection(pattern: &[Vec<char>], target_mismatches: usize) -> Option<usize> {
+    for candidate_line in reflection_lines {
+        if count_mismatches(pattern, candidate_line) == target_mismatches {
+            return Some(candidate_line);
+        }
+    }
+    None
+}
+
+// Part 1: Perfect match (0 mismatches)
+find_reflection(pattern, 0)
+
+// Part 2: Exactly 1 mismatch
+find_reflection(pattern, 1)
+```
+
+**Key Pattern**:
+1. **Identify varying parameter**: What changes between parts? (threshold, target, mode)
+2. **Generalize function signature**: Add parameter for varying value
+3. **Single implementation**: Same logic handles all cases
+4. **Caller specialization**: Pass specific value for each part
+
+**Benefits**:
+- Zero code duplication
+- Easy to extend (Part 3 with target=2 would be trivial)
+- Clear separation: Algorithm vs configuration
+
+**Day 13 Application**: Boolean "exact match" → Integer "mismatch count" generalization
+
+**Zettelkasten**: [[parametric-polymorphism]], [[code-reuse-patterns]]
+
+### Pattern: Iterator zip() for Element-wise Comparison
+**Used**: Day 13  
+**When to use**: Need to compare two sequences element-by-element  
+**Code**: `src/solver/day13.rs::count_horizontal_mismatches()`
+
+```rust
+// Count mismatches using zip + filter + count
+fn hamming_distance(a: &[char], b: &[char]) -> usize {
+    a.iter()
+        .zip(b.iter())
+        .filter(|(x, y)| x != y)
+        .count()
+}
+
+// More explicit version with for loop
+fn hamming_distance_explicit(a: &[char], b: &[char]) -> usize {
+    let mut count = 0;
+    for (x, y) in a.iter().zip(b.iter()) {
+        if x != y {
+            count += 1;
+        }
+    }
+    count
+}
+```
+
+**Key Pattern**:
+1. **Pair elements**: `.zip()` creates iterator of tuples
+2. **Compare elements**: Filter or count based on predicate
+3. **Aggregate result**: `.count()`, `.sum()`, `.all()`, etc.
+
+**Benefits**:
+- Concise and idiomatic Rust
+- Automatically handles length mismatches (stops at shorter sequence)
+- Composable with other iterator adapters
+
+**Common Variations**:
+```rust
+// Check if all pairs equal
+a.iter().zip(b.iter()).all(|(x, y)| x == y)
+
+// Check if any pair equal
+a.iter().zip(b.iter()).any(|(x, y)| x == y)
+
+// Find first mismatch position
+a.iter().zip(b.iter()).position(|(x, y)| x != y)
+
+// Collect differences
+a.iter().zip(b.iter())
+    .filter_map(|(x, y)| if x != y { Some((x, y)) } else { None })
+    .collect()
+```
+
+**Zettelkasten**: [[iterator-patterns]], [[zip-iterator]]
 
 ---
 

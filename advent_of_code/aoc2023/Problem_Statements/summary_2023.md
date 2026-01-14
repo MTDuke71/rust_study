@@ -3,17 +3,17 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 12/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 55.113ms |
+|--------|-------|\n| **Progress** | 13/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 55.467ms |
 | **Mission Integration** | 3 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8) |
-| **Patterns Extracted** | 9 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization) |
+| **Patterns Extracted** | 10 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) |
-Day 12 | Day 13 | Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) |
+Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
@@ -1099,7 +1099,132 @@ fn count_arrangements(
 - [[tabulation-patterns]] - Bottom-up DP (alternative approach)
 - [[constraint-satisfaction]] - CSP formulation and solving
 
-**Links**: ← [Day 11](#day-11-cosmic-expansion) | Day 13 →
+**Links**: ← [Day 11](#day-11-cosmic-expansion) | [Day 13](#day-13-point-of-incidence) →
+
+---
+
+### Day 13: Point of Incidence
+
+**Part 1**: Find mirror reflection lines with perfect symmetry in 2D ash/rock patterns → **33780**  
+**Part 2**: Find reflection lines with exactly 1 "smudge" (character mismatch) → **23479**  
+
+**Algorithm**: Hamming distance (discrete metric) for mismatch counting  
+**Complexity**: O(r × c × n) where r×c = pattern dimensions, n = number of patterns  
+**Runtime**: 354µs (Part 1: 169µs, Part 2: 187µs)  
+**Mission**: None (Grid-like 2D analysis, could leverage Mission 6 for storage)  
+
+**Key Insight**: Generalize from boolean "exact match" to integer "mismatch count". Part 1 requires Hamming distance = 0 (perfect reflection), Part 2 requires Hamming distance = 1 (exactly one smudge). **Same algorithm, different target value.**
+
+**Rust Highlights**:
+- **Unified algorithm**: `find_reflection(pattern, target_mismatches: usize)` handles both parts
+- **Iterator zip for comparison**: `.iter().zip()` for element-wise mismatch counting
+- **Expand-and-validate pattern**: Test each candidate reflection line, expand outward comparing pairs
+- **Early termination**: No need to check remaining lines once reflection found (unique per problem)
+- **Zero allocations**: Pattern stored as `Vec<Vec<char>>`, slices for row/column access
+
+**Code Highlight**:
+```rust
+/// Count Hamming distance (total mismatches) across all reflected pairs
+fn count_horizontal_mismatches(pattern: &[Vec<char>], above_idx: usize) -> usize {
+    let mut mismatches = 0;
+    let mut distance = 0;
+    
+    loop {
+        let upper = above_idx.checked_sub(distance);
+        let lower = above_idx + 1 + distance;
+        
+        // Out of bounds = all pairs validated
+        if upper.is_none() || lower >= pattern.len() {
+            return mismatches;
+        }
+        
+        // Count mismatches between reflected rows (Hamming distance)
+        let upper_row = upper.unwrap();
+        for (a, b) in pattern[upper_row].iter().zip(pattern[lower].iter()) {
+            if a != b {
+                mismatches += 1;
+            }
+        }
+        
+        distance += 1;
+    }
+}
+
+// Find reflection line with exact mismatch count
+fn find_horizontal_reflection(pattern: &[Vec<char>], target_smudges: usize) -> Option<usize> {
+    for i in 0..pattern.len() - 1 {
+        if count_horizontal_mismatches(pattern, i) == target_smudges {
+            return Some(i + 1); // Rows above reflection line
+        }
+    }
+    None
+}
+```
+
+**Example Walkthrough** (Part 2, first pattern):
+
+```
+Original:              After fixing smudge:
+#.##..##.             ..##..##.  ← Top-left # → .
+..#.##.#.             ..#.##.#.
+##......#             ##......#  ← Reflects with row 4
+##......#             ##......#  ← Reflects with row 3
+..#.##.#.             ..#.##.#.
+..##..##.             ..##..##.
+#.#.##.#.             #.#.##.#.
+```
+
+1. **Part 1**: Vertical reflection between columns 5-6 (Hamming distance = 0)
+2. **Part 2**: Horizontal reflection between rows 3-4 (Hamming distance = 1)
+   - Scanning all candidate lines, rows 3-4 have exactly 1 mismatch (top-left character)
+   - This is the "smudge" - fixing it creates new reflection line
+   - Score: 3 rows above × 100 = 300
+
+**Mathematical Foundations**:
+
+**Hamming Distance** (see `zettelkasten/math-foundations/hamming-distance-discrete-metrics.md`):
+
+$$d_H(s, t) = \sum_{i=1}^{n} \mathbb{1}_{s_i \neq t_i}$$
+
+Count of positions where corresponding symbols differ.
+
+**Reflection Symmetry**:
+- Pattern mirrors across line L iff all pairs equidistant from L are identical
+- For horizontal line between rows r and r+1:
+  - Pair (r-k, r+1+k) must match for all valid k
+  - Valid k: both rows in bounds
+- **Generalized**: Pair matches iff Hamming distance = 0
+
+**Part 1 vs Part 2**:
+- **Part 1**: Total Hamming distance across all pairs = 0 (perfect symmetry)
+- **Part 2**: Total Hamming distance across all pairs = 1 (one smudge)
+- **Key**: Accumulate mismatches across ALL pairs, not just individual pair checks
+
+**Complexity Analysis**:
+- **Per pattern**: O(r × c)
+  - Try r-1 horizontal lines: O(r)
+  - Per line: Compare all pairs, each pair is O(c) characters → O(r × c)
+  - Try c-1 vertical lines: Similarly O(r × c)
+  - Total: O(r × c)
+- **All patterns**: O(n × r × c) where n ≈ 100 patterns
+- **Actual**: ~169µs for Part 1, ~187µs for Part 2 (Part 2 slightly slower due to continued search after finding target=0)
+
+**Why Part 2 is Faster Than Expected**:
+Part 2 doesn't try all reflection lines - it stops at first line with Hamming distance = 1. Most patterns find smudge reflection quickly.
+
+**Tests**: 
+- ✅ Part 1 example: First pattern vertical (5 cols), second horizontal (4 rows) → 405
+- ✅ Part 2 example: First pattern horizontal (3 rows), second horizontal (1 row) → 400
+- ✅ Parsing: 2 patterns, correct dimensions
+- ✅ Individual reflection detection
+- ✅ Smudge reflection detection
+
+**Zettelkasten**: 
+- [[hamming-distance-discrete-metrics]] - Mathematical foundation
+- [[reflection-symmetry]] - Geometric concept (TODO)
+- [[pattern-matching-techniques]] - Mismatch counting pattern
+
+**Links**: ← [Day 12](#day-12-hot-springs) | Day 14 →
 
 ---
 

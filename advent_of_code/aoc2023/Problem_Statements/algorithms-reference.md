@@ -35,6 +35,8 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Recursive DP with Memoization | Day 12 | O(n × g × max_run) | [[memoization-comprehensive-guide]] |
 | Constraint Satisfaction (CSP) | Day 12 | Exponential without pruning | - |
 | Three-Dimensional State Space | Day 12 | O(states) memoization | [[tabulation-patterns]] |
+| Hamming Distance (Mismatch Counting) | Day 13 | O(n) per comparison | [[hamming-distance-discrete-metrics]] |
+| Reflection Symmetry Detection | Day 13 | O(r × c) per pattern | - |
 
 ---
 
@@ -131,7 +133,63 @@ fn update_max(&mut self, other: &T) {
 
 ---
 
-## 🗺️ Graph Algorithms
+## � Distance Metrics & Pattern Matching
+
+### Hamming Distance (Mismatch Counting) (Day 13)
+**Implementation**: `src/solver/day13.rs::count_horizontal_mismatches()`  
+**Complexity**: O(n) for strings of length n  
+**Key Concept**: Count positions where corresponding symbols differ - a discrete metric  
+
+**Mathematical Definition**:
+$$d_H(s, t) = \sum_{i=1}^{n} \mathbb{1}_{s_i \neq t_i}$$
+
+**When to use**:
+- Error detection (exactly k errors allowed)
+- Fuzzy pattern matching (near-matches)
+- Reflection/symmetry detection with tolerance
+- Comparing equal-length sequences
+
+**Rust Pattern**:
+```rust
+// Iterator-based counting
+fn hamming_distance(s: &[char], t: &[char]) -> usize {
+    s.iter()
+        .zip(t.iter())
+        .filter(|(a, b)| a != b)
+        .count()
+}
+
+// Accumulative across multiple pairs
+fn total_mismatches(pairs: &[(&[char], &[char])]) -> usize {
+    pairs.iter()
+        .map(|(a, b)| hamming_distance(a, b))
+        .sum()
+}
+```
+
+**Day 13 Application**: Reflection symmetry with smudge tolerance
+- Part 1: Total Hamming distance = 0 (perfect reflection)
+- Part 2: Total Hamming distance = 1 (exactly one smudge)
+- **Key**: Accumulate mismatches across ALL reflected pairs, not just individual checks
+
+**Properties** (Metric Space):
+- Non-negativity: $d_H(s, t) \geq 0$
+- Identity: $d_H(s, t) = 0 \iff s = t$
+- Symmetry: $d_H(s, t) = d_H(t, s)$
+- Triangle inequality: $d_H(s, u) \leq d_H(s, t) + d_H(t, u)$
+
+**Binary Optimization**: For binary strings, $d_H(s, t) = \text{popcount}(s \oplus t)$
+
+**Zettelkasten**: [[hamming-distance-discrete-metrics]] - Deep mathematical treatment
+
+**Related Concepts**:
+- Edit distance (Levenshtein) - allows insertions/deletions
+- Euclidean distance - continuous metric
+- Cosine similarity - angle-based metric
+
+---
+
+## �🗺️ Graph Algorithms
 
 ### Directed Graph Traversal (Day 8)
 **Implementation**: `src/solver/day08.rs::Network::navigate()`  
