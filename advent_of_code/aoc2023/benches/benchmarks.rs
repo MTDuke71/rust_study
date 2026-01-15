@@ -164,12 +164,20 @@ fn benchmark_day13(c: &mut Criterion) {
 fn benchmark_day14(c: &mut Criterion) {
     let input = include_str!("../inputs/day14.txt");
 
-    c.bench_function("day14_part1", |b| {
+    c.bench_function("day14_part1_simulation", |b| {
         b.iter(|| day14::solve_part1(black_box(input)).unwrap())
     });
 
-    c.bench_function("day14_part2", |b| {
+    c.bench_function("day14_part2_simulation", |b| {
         b.iter(|| day14::solve_part2(black_box(input)).unwrap())
+    });
+    
+    c.bench_function("day14_part2_sorted", |b| {
+        b.iter(|| day14::solve_part2_sorted(black_box(input)).unwrap())
+    });
+    
+    c.bench_function("day14_part2_reconstruction", |b| {
+        b.iter(|| day14::solve_part2_reconstruction(black_box(input)).unwrap())
     });
 }
 

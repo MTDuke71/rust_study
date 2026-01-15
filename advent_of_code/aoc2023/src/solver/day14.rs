@@ -23,11 +23,11 @@ use anyhow::Result;
 use mission6::{Grid, Coord};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 enum Tile {
-    Empty,       // .
-    RoundRock,   // O
-    CubeRock,    // #
+    RoundRock,   // O - sorts first (moves toward beginning)
+    Empty,       // . - sorts after RoundRock
+    CubeRock,    // # - immovable barrier
 }
 
 impl From<char> for Tile {
@@ -238,6 +238,22 @@ fn grid_to_string(grid: &Grid<Tile>) -> String {
     s
 }
 
+/// Convert string back to grid (inverse of grid_to_string)
+fn string_to_grid(s: &str, width: usize, height: usize) -> Grid<Tile> {
+    let mut data = vec![vec![Tile::Empty; width]; height];
+    let chars: Vec<char> = s.chars().collect();
+    
+    #[allow(clippy::needless_range_loop)] // Direct indexing clearest for 2D reconstruction
+    for row in 0..height {
+        for col in 0..width {
+            let idx = row * width + col;
+            data[row][col] = Tile::from(chars[idx]);
+        }
+    }
+    
+    Grid::from_vec2d(data)
+}
+
 pub fn solve_part1(input: &str) -> Result<String> {
     let mut grid = parse_input(input)?;
     tilt_north(&mut grid);
@@ -276,6 +292,42 @@ pub fn solve_part2(input: &str) -> Result<String> {
     }
     
     // No cycle detected (unlikely with billion iterations)
+    Ok(calculate_load(&grid).to_string())
+}
+
+/// Part 2 using reconstruction approach - stores full grid history for direct lookup
+pub fn solve_part2_reconstruction(input: &str) -> Result<String> {
+    let mut grid = parse_input(input)?;
+    let width = grid.width();
+    let height = grid.height();
+    
+    // Store complete grid history as strings
+    let mut history: Vec<String> = Vec::new();
+    let mut seen: HashMap<String, usize> = HashMap::new();
+    let target_cycles = 1_000_000_000;
+    
+    for cycle in 0..target_cycles {
+        let state = grid_to_string(&grid);
+        
+        if let Some(&first_seen) = seen.get(&state) {
+            // Found a cycle!
+            let cycle_length = cycle - first_seen;
+            
+            // Calculate which grid in the cycle we need
+            let remaining = target_cycles - first_seen;
+            let offset_in_cycle = remaining % cycle_length;
+            let target_index = first_seen + offset_in_cycle;
+            
+            // Reconstruct grid directly from history
+            let final_grid = string_to_grid(&history[target_index], width, height);
+            return Ok(calculate_load(&final_grid).to_string());
+        }
+        
+        seen.insert(state.clone(), cycle);
+        history.push(state);
+        spin_cycle(&mut grid);
+    }
+    
     Ok(calculate_load(&grid).to_string())
 }
 
@@ -340,5 +392,251 @@ O.#..O.#.#
         
         // Grid should change after spin cycle
         assert_ne!(initial, after_one);
+    }
+}
+
+// ============================================================================
+// ALTERNATIVE IMPLEMENTATION: Sorting-based approach (inspired by Python golf)
+// ============================================================================
+
+/// Transpose a grid (swap rows and columns)
+fn transpose(grid: &Grid<Tile>) -> Grid<Tile> {
+    let new_width = grid.height();
+    let new_height = grid.width();
+    let mut data = vec![vec![Tile::Empty; new_width]; new_height];
+    
+    #[allow(clippy::needless_range_loop)] // x,y indexing is clearest here
+    for y in 0..grid.height() {
+        for x in 0..grid.width() {
+            data[x][y] = *grid.get(Coord { x, y }).unwrap();
+        }
+    }
+    
+    Grid::from_vec2d(data)
+}
+
+/// Tilt north using sorting approach
+fn tilt_north_sorted(grid: &mut Grid<Tile>) {
+    // Transpose so columns become rows
+    let mut transposed = transpose(grid);
+    
+    // Sort each row (was column) - Empty sorts before RoundRock
+    for y in 0..transposed.height() {
+        let row: Vec<Tile> = (0..transposed.width())
+            .map(|x| *transposed.get(Coord { x, y }).unwrap())
+            .collect();
+        
+        // Split by cube rocks, sort each segment
+        let mut result = Vec::new();
+        let mut segment = Vec::new();
+        
+        for &tile in &row {
+            if tile == Tile::CubeRock {
+                segment.sort_unstable(); // Empty < RoundRock
+                result.append(&mut segment);
+                result.push(Tile::CubeRock);
+            } else {
+                segment.push(tile);
+            }
+        }
+        segment.sort_unstable();
+        result.append(&mut segment);
+        
+        // Write back
+        for (x, &tile) in result.iter().enumerate() {
+            *transposed.get_mut(Coord { x, y }).unwrap() = tile;
+        }
+    }
+    
+    // Transpose back
+    *grid = transpose(&transposed);
+}
+
+/// Tilt west using sorting approach (no transpose needed)
+fn tilt_west_sorted(grid: &mut Grid<Tile>) {
+    for y in 0..grid.height() {
+        let row: Vec<Tile> = (0..grid.width())
+            .map(|x| *grid.get(Coord { x, y }).unwrap())
+            .collect();
+        
+        let mut result = Vec::new();
+        let mut segment = Vec::new();
+        
+        for &tile in &row {
+            if tile == Tile::CubeRock {
+                segment.sort_unstable();
+                result.append(&mut segment);
+                result.push(Tile::CubeRock);
+            } else {
+                segment.push(tile);
+            }
+        }
+        segment.sort_unstable();
+        result.append(&mut segment);
+        
+        for (x, &tile) in result.iter().enumerate() {
+            *grid.get_mut(Coord { x, y }).unwrap() = tile;
+        }
+    }
+}
+
+/// Tilt south using sorting approach (transpose + reverse sort)
+fn tilt_south_sorted(grid: &mut Grid<Tile>) {
+    let mut transposed = transpose(grid);
+    
+    for y in 0..transposed.height() {
+        let row: Vec<Tile> = (0..transposed.width())
+            .map(|x| *transposed.get(Coord { x, y }).unwrap())
+            .collect();
+        
+        let mut result = Vec::new();
+        let mut segment = Vec::new();
+        
+        for &tile in &row {
+            if tile == Tile::CubeRock {
+                segment.sort_unstable();
+                segment.reverse(); // Reverse to put RoundRock first (south = bottom)
+                result.append(&mut segment);
+                result.push(Tile::CubeRock);
+            } else {
+                segment.push(tile);
+            }
+        }
+        segment.sort_unstable();
+        segment.reverse();
+        result.append(&mut segment);
+        
+        for (x, &tile) in result.iter().enumerate() {
+            *transposed.get_mut(Coord { x, y }).unwrap() = tile;
+        }
+    }
+    
+    *grid = transpose(&transposed);
+}
+
+/// Tilt east using sorting approach (reverse sort)
+fn tilt_east_sorted(grid: &mut Grid<Tile>) {
+    for y in 0..grid.height() {
+        let row: Vec<Tile> = (0..grid.width())
+            .map(|x| *grid.get(Coord { x, y }).unwrap())
+            .collect();
+        
+        let mut result = Vec::new();
+        let mut segment = Vec::new();
+        
+        for &tile in &row {
+            if tile == Tile::CubeRock {
+                segment.sort_unstable();
+                segment.reverse();
+                result.append(&mut segment);
+                result.push(Tile::CubeRock);
+            } else {
+                segment.push(tile);
+            }
+        }
+        segment.sort_unstable();
+        segment.reverse();
+        result.append(&mut segment);
+        
+        for (x, &tile) in result.iter().enumerate() {
+            *grid.get_mut(Coord { x, y }).unwrap() = tile;
+        }
+    }
+}
+
+/// One spin cycle using sorting approach
+fn spin_cycle_sorted(grid: &mut Grid<Tile>) {
+    tilt_north_sorted(grid);
+    tilt_west_sorted(grid);
+    tilt_south_sorted(grid);
+    tilt_east_sorted(grid);
+}
+
+/// Part 2 using sorting-based approach
+pub fn solve_part2_sorted(input: &str) -> Result<String> {
+    let mut grid = parse_input(input)?;
+    let mut seen: HashMap<String, usize> = HashMap::new();
+    let target_cycles = 1_000_000_000;
+    
+    for cycle in 0..target_cycles {
+        let state = grid_to_string(&grid);
+        
+        if let Some(&first_seen) = seen.get(&state) {
+            let cycle_length = cycle - first_seen;
+            let remaining = target_cycles - cycle;
+            let final_offset = remaining % cycle_length;
+            
+            for _ in 0..final_offset {
+                spin_cycle_sorted(&mut grid);
+            }
+            
+            return Ok(calculate_load(&grid).to_string());
+        }
+        
+        seen.insert(state, cycle);
+        spin_cycle_sorted(&mut grid);
+    }
+    
+    Ok(calculate_load(&grid).to_string())
+}
+
+#[cfg(test)]
+mod sorted_tests {
+    use super::*;
+    
+    const EXAMPLE: &str = "O....#....
+O.OO#....#
+.....##...
+OO.#O....O
+.O.....O#.
+O.#..O.#.#
+..O..#O..O
+.......O..
+#....###..
+#OO..#....";
+
+    #[test]
+    fn test_sorted_approach_part1() {
+        let mut grid = parse_input(EXAMPLE).unwrap();
+        tilt_north_sorted(&mut grid);
+        let load = calculate_load(&grid);
+        assert_eq!(load, 136);
+    }
+    
+    #[test]
+    fn test_sorted_approach_part2() {
+        let result = solve_part2_sorted(EXAMPLE).unwrap();
+        assert_eq!(result, "64");
+    }
+}
+
+#[cfg(test)]
+mod reconstruction_tests {
+    use super::*;
+    
+    const EXAMPLE: &str = "O....#....
+O.OO#....#
+.....##...
+OO.#O....O
+.O.....O#.
+O.#..O.#.#
+..O..#O..O
+.......O..
+#....###..
+#OO..#....";
+
+    #[test]
+    fn test_reconstruction_approach() {
+        let result = solve_part2_reconstruction(EXAMPLE).unwrap();
+        assert_eq!(result, "64");
+    }
+    
+    #[test]
+    fn test_string_to_grid_roundtrip() {
+        let grid = parse_input(EXAMPLE).unwrap();
+        let state = grid_to_string(&grid);
+        let reconstructed = string_to_grid(&state, grid.width(), grid.height());
+        let state2 = grid_to_string(&reconstructed);
+        assert_eq!(state, state2);
     }
 }

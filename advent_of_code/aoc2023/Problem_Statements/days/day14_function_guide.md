@@ -20,6 +20,56 @@ This solution simulates rolling rocks on a tilting platform. Part 1 requires a s
 
 ---
 
+## ⚖️ Algorithm Comparison: Three Approaches to Cycle Detection
+
+Three approaches were tested for Part 2:
+
+### 1. Simulation with Re-execution (Primary Implementation)
+**Performance**: 12.0 ms
+- Stores only cycle iteration indices (`HashMap<String, usize>`)
+- Re-runs final `final_offset` cycles (typically < 20) after detection
+- Minimal memory: ~100 strings + indices
+- Best balance of speed and memory
+
+### 2. Reconstruction with Full History
+**Performance**: 11.9 ms (fastest by 0.1 ms!)
+- Stores complete grid history as strings (`Vec<String>`)
+- Direct lookup of target grid state, no re-execution
+- Higher memory: ~100 full grid strings stored
+- Demonstrates state reconstruction pattern
+
+### 3. Sorting Approach (Alternative Algorithm)
+**Performance**: 49.8 ms (~4× slower than simulation)
+- Inspired by Python golf solution ([video](https://www.youtube.com/watch?v=WCVOBKUNc38))
+- Transposes grid, sorts segments split by '#', untransposes
+- Heavy allocation overhead (new Grid per transpose)
+- Multiple Vec allocations per row/column
+
+**Performance Analysis**:
+
+| Approach | Time | Memory | Re-execution | Use Case |
+|----------|------|--------|--------------|----------|
+| Simulation | 12.0 ms | Low | Yes (~10-20 cycles) | **Recommended** - best balance |
+| Reconstruction | 11.9 ms | Medium | No | When memory is cheap, avoids re-computation |
+| Sorting | 49.8 ms | Low | Yes (~10-20 cycles) | Educational - demonstrates functional approach |
+
+**Key Insights**:
+1. **Reconstruction barely wins because cycle is small**: With cycle length ~11, skipping 10 iterations saves almost nothing
+   - Grid reconstruction overhead (~0.1 ms) nearly cancels the benefit
+   - **If cycle length were 50-100**: Reconstruction would show clear advantage (skip 50-100 iterations >> reconstruction cost)
+   - **Trade-off sweet spot**: Reconstruction valuable when `final_offset > ~30` iterations
+2. **Re-execution cost is problem-dependent**: This problem has tiny `final_offset % cycle_length` (~10 cycles)
+3. **Python golf ≠ performance**: Sorting's elegance (transpose + sort = gravity) doesn't translate to speed in Rust
+4. **Rust's strength**: Explicit simulation + in-place mutations outperform clever functional patterns here
+
+**Recommendation by scenario**:
+- **Small cycle length (< 30)**: Use simulation - re-execution is trivial
+- **Large cycle length (> 50)**: Use reconstruction - skip significant work
+- **Memory constrained**: Use simulation - only stores cycle indices
+- **This problem (cycle ~11)**: Either approach fine; simulation slightly simpler
+
+---
+
 ## 🎯 Type Definitions
 
 ```rust
