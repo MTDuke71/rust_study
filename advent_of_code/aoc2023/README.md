@@ -83,6 +83,17 @@ Reuse validated mission components:
 | 01  | ⬜     | ⬜     | ⬜       |       |
 | 02  | ⬜     | ⬜     | ⬜       |       |
 | 03  | ⬜     | ⬜     | ⬜       |       |
+| 04  | ✅     | ✅     | ✅       | Set intersections |
+| 05  | ✅     | ✅     | ✅       | Range mapping |
+| 06  | ✅     | ✅     | ✅       | Quadratic formula |
+| 07  | ✅     | ✅     | ✅       | Poker hands |
+| 08  | ✅     | ✅     | ✅       | LCM cycle detection |
+| 09  | ✅     | ✅     | ✅       | Polynomial sequences |
+| 10  | ✅     | ✅     | ✅       | Grid BFS + Mission 6/8 |
+| 11  | ✅     | ✅     | ✅       | Manhattan distance |
+| 12  | ✅     | ✅     | ✅       | DP pattern matching |
+| 13  | ✅     | ✅     | ✅       | Hamming distance, reflection |
+| 14  | ✅     | ✅     | ⬜       | Platform tilt, cycle detection |
 | ... | ⬜     | ⬜     | ⬜       |       |
 | 25  | ⬜     | ⬜     | ⬜       |       |
 
