@@ -3,17 +3,17 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 13/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 55.467ms |
-| **Mission Integration** | 3 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8) |
-| **Patterns Extracted** | 10 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching) |
+|--------|-------|\n| **Progress** | 14/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 68.667ms |
+| **Mission Integration** | 4 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6) |
+| **Patterns Extracted** | 12 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) |
-Day 14 | Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) |
+Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
@@ -1224,7 +1224,186 @@ Part 2 doesn't try all reflection lines - it stops at first line with Hamming di
 - [[reflection-symmetry]] - Geometric concept (TODO)
 - [[pattern-matching-techniques]] - Mismatch counting pattern
 
-**Links**: ← [Day 12](#day-12-hot-springs) | Day 14 →
+**Links**: ← [Day 12](#day-12-hot-springs) | [Day 14](#day-14-parabolic-reflector-dish) →
+
+---
+
+### Day 14: Parabolic Reflector Dish
+
+**Part 1**: Tilt platform north, rocks roll to edges, calculate total load → **109596**  
+**Part 2**: Perform 1 billion spin cycles (north-west-south-east), calculate load → **96105**  
+
+**Algorithm**: Grid simulation with cycle detection via state hashing + modulo fast-forward  
+**Complexity**: O(states) where states ≈ 100-200 for typical input (cycle detection avoids billion iterations)  
+**Runtime**: 13.2ms (Part 1: 42.3µs, Part 2: 12.7ms)  
+**Mission**: Mission 6 (Grid<T> for 2D platform)  
+
+**Key Insight**: Part 2's 1 billion iterations are intractable by simulation, but **Pigeonhole Principle** guarantees the finite state space must cycle. Detect cycle with HashMap state tracking, then fast-forward using modulo arithmetic: `final_state = states[(1B - cycle_start) % cycle_length]`. This reduces billion iterations to ~100-200 actual simulations.
+
+**Rust Highlights**:
+- **Mission 6 Grid<T>**: Reused for platform storage, bounds checking, and coordinate navigation
+- **State serialization**: Convert `Grid<char>` to `String` for HashMap keys
+- **Cycle detection**: HashMap<String, usize> tracks `state → first_occurrence_index`
+- **Four directional tilts**: Separate functions for north/west/south/east (different iteration orders)
+- **Spin cycle**: `north() → west() → south() → east()` composition
+- **Modulo fast-forward**: `(target - cycle_start) % cycle_length` to find equivalent state
+
+**Code Highlight**:
+```rust
+/// Tilt platform north - rocks roll upward
+fn tilt_north(grid: &mut Grid<char>) {
+    for x in 0..grid.width() {
+        for y in 0..grid.height() {
+            if grid.get(x, y) == Some(&'O') {
+                // Find landing position
+                let mut new_y = y;
+                while new_y > 0 && grid.get(x, new_y - 1) == Some(&'.') {
+                    new_y -= 1;
+                }
+                // Move rock to landing position
+                if new_y != y {
+                    *grid.get_mut(x, new_y).unwrap() = 'O';
+                    *grid.get_mut(x, y).unwrap() = '.';
+                }
+            }
+        }
+    }
+}
+
+/// Solve Part 2 using cycle detection
+pub fn solve_part2(input: &str) -> Result<String> {
+    let mut grid = parse_input(input)?;
+    let mut seen: HashMap<String, usize> = HashMap::new();
+    let target_cycles = 1_000_000_000;
+    
+    for cycle in 0..target_cycles {
+        let state = grid_to_string(&grid);
+        
+        if let Some(&first_seen) = seen.get(&state) {
+            // Cycle detected! Fast-forward using modulo
+            let cycle_length = cycle - first_seen;
+            let remaining = target_cycles - cycle;
+            let final_offset = remaining % cycle_length;
+            
+            // Simulate only the remaining offset
+            for _ in 0..final_offset {
+                spin_cycle(&mut grid);
+            }
+            
+            return Ok(calculate_load(&grid).to_string());
+        }
+        
+        seen.insert(state, cycle);
+        spin_cycle(&mut grid);
+    }
+    
+    Ok(calculate_load(&grid).to_string())
+}
+
+/// One spin cycle: North → West → South → East
+fn spin_cycle(grid: &mut Grid<char>) {
+    tilt_north(grid);
+    tilt_west(grid);
+    tilt_south(grid);
+    tilt_east(grid);
+}
+```
+
+**Example Walkthrough** (Part 2 cycle detection):
+
+```
+Input grid state at iteration 0:
+O....#....
+O.OO#....#
+.....##...
+OO.#O....O
+...
+
+Simulate cycles, tracking states in HashMap:
+Cycle   0: state_0 → see n.insert(state_0, 0)
+Cycle   1: state_1 → seen.insert(state_1, 1)
+...
+Cycle   3: state_3 → seen.insert(state_3, 3)
+Cycle   4: state_4 → seen.insert(state_4, 4)
+...
+Cycle  10: state_3 → MATCH! state_3 was first seen at cycle 3
+
+Cycle detected:
+- Cycle starts at index 3
+- Cycle length = 10 - 3 = 7
+- States repeat every 7 cycles: [3,4,5,6,7,8,9] → [10,11,12,...]
+
+Fast-forward to 1,000,000,000:
+- Remaining from cycle 10: 1B - 10 = 999,999,990
+- Position in cycle: 999,999,990 % 7 = 5
+- Final state = state at index (3 + 5) = state_8
+
+Instead of 1 billion simulations, run only:
+- Initial 10 cycles to detect pattern
+- Final 5 cycles to reach exact state
+- Total: 15 simulations vs 1,000,000,000!
+```
+
+**Mathematical Foundations**:
+
+**Pigeonhole Principle** (see `zettelkasten/math-foundations/pigeonhole-principle-cycle-detection.md`):
+
+> If $n$ items are placed into $m$ containers where $n > m$, then at least one container must contain more than one item.
+
+Applied to this problem:
+- **Items**: Iteration indices (0, 1, 2, ..., 1,000,000,000)
+- **Containers**: Possible grid configurations (finite set)
+- **Grid constraints**: 100×100 grid, each cell one of {'.', 'O', '#'} → at most $3^{10,000}$ states
+- **Deterministic process**: Same state always transitions to same next state
+- **Conclusion**: Within $3^{10,000}$ iterations, a state **must** repeat (actually happens within ~100-200)
+
+**Cycle Detection Algorithm**:
+1. **Tracking**: HashMap<State, FirstOccurrence> - O(1) lookup/insert
+2. **Detection**: When `seen.contains_key(current_state)`, cycle found
+3. **Parameters**: 
+   - $\mu$ = cycle start index (rho-length)
+   - $\lambda$ = cycle length
+4. **Fast-forward**: Use modulo to find equivalent position within cycle
+
+**Modular Arithmetic Fast-Forward**:
+$$\text{final\_state} = \text{states}[(\text{target} - \mu) \mod \lambda + \mu]$$
+
+Where:
+- target = 1,000,000,000 (desired iteration)
+- $\mu$ = first occurrence of repeated state
+- $\lambda$ = cycle length
+
+**Complexity Analysis**:
+- **Without cycle detection**: O(1B × grid_size) - completely intractable
+- **With cycle detection**:
+  - Expected cycle length: ~√(state_space) by Birthday Paradox
+  - Actual observed: 100-200 iterations to cycle detection
+  - Fast-forward: O(offset) where offset < cycle_length
+  - Total: O(states) ≈ **99.99999% reduction** in work
+
+**Part 1 vs Part 2 Performance**:
+- **Part 1**: Single north tilt, 100×100 grid → 42.3µs
+- **Part 2**: ~150 spin cycles (4 tilts each) + HashMap ops → 12.7ms
+  - Actual work: 150 cycles × 4 tilts × 10,000 cells = ~6M cell checks
+  - HashMap overhead: ~150 insertions/lookups of 10KB strings
+  - **300× slower** than Part 1, but still instant vs impossible brute force
+
+**Tests**:
+- ✅ Part 1 example (136)
+- ✅ Part 2 example after 1 cycle
+- ✅ Part 2 example after 2 cycles
+- ✅ Part 2 example after 3 cycles
+- ✅ Part 2 example after 1 billion cycles (64)
+- ✅ Tilt north correctness
+- ✅ Spin cycle sequencing (N→W→S→E)
+
+**Zettelkasten**:
+- [[mission-6]] - Grid<T> 2D spatial data structures
+- [[pigeonhole-principle-cycle-detection]] - Mathematical foundation
+- [[state-hashing-pattern]] - Serialization for cycle detection
+- [[modulo-fast-forward]] - Arithmetic optimization technique
+
+**Links**: ← [Day 13](#day-13-point-of-incidence) | Day 15 →
 
 ---
 

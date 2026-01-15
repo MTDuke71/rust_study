@@ -37,6 +37,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Three-Dimensional State Space | Day 12 | O(states) memoization | [[tabulation-patterns]] |
 | Hamming Distance (Mismatch Counting) | Day 13 | O(n) per comparison | [[hamming-distance-discrete-metrics]] |
 | Reflection Symmetry Detection | Day 13 | O(r × c) per pattern | - |
+| Cycle Detection (HashMap State Tracking) | Day 14 | O(states) expected | [[pigeonhole-principle-cycle-detection]] |
+| State Serialization for Hashing | Day 14 | O(grid_size) | - |
+| Modulo Fast-Forward (Cycle Arithmetic) | Day 14 | O(1) | [[modular-arithmetic]] |
 
 ---
 
@@ -233,6 +236,117 @@ fn navigate(&self, start: &str, end: &str) -> Result<usize> {
 **Mission**: Mission 5 (HashMap for O(1) node lookups)
 
 **Zettelkasten**: [[graph-theory-fundamentals]]
+
+### Cycle Detection via State Hashing (Day 14)
+**Implementation**: `src/solver/day14.rs::solve_part2()`  
+**Complexity**: O(states) expected, where states ≈ 100-200 for typical puzzle input  
+**Key Concept**: HashMap tracks seen states to detect when finite deterministic process repeats  
+
+**When to use**: 
+- Finite state space (grid, graph, configuration)
+- Deterministic state transitions (same state always leads to same next state)
+- Large number of iterations required (makes brute force intractable)
+- Need exact cycle parameters (start index, cycle length)
+
+**Mathematical Foundation**:
+**Pigeonhole Principle**: If you generate more states than possible unique configurations, at least one state **must** repeat.
+
+For grid with `m` possible states, after generating `m+1` states, repetition is guaranteed.
+
+**Pattern**:
+```rust
+// HashMap-based cycle detection (single pass)
+let mut seen: HashMap<StateType, usize> = HashMap::new();
+let mut state = initial_state();
+let mut iteration = 0;
+
+loop {
+    // Check if we've seen this state before
+    if let Some(&first_occurrence) = seen.get(&state) {
+        // Cycle detected!
+        let cycle_start = first_occurrence;
+        let cycle_length = iteration - first_occurrence;
+        
+        // Fast-forward using modulo arithmetic
+        let remaining = target_iterations - iteration;
+        let offset_in_cycle = remaining % cycle_length;
+        
+        // Simulate only offset_in_cycle more times instead of remaining
+        for _ in 0..offset_in_cycle {
+            state = next_state(state);
+        }
+        
+        return final_answer(state);
+    }
+    
+    // Track this state's first occurrence
+    seen.insert(state.clone(), iteration);
+    
+    // Advance to next state
+    state = next_state(state);
+    iteration += 1;
+    
+    // Safety: exit if no cycle found (shouldn't happen for finite state space)
+    if iteration >= max_iterations {
+        break;
+    }
+}
+```
+
+**Day 14 Application**: Platform tilting simulation
+- **Problem**: Simulate 1 billion spin cycles on rock platform
+- **Brute force**: Impossible (would take days/weeks)
+- **Solution**: Detect cycle at iteration ~100-200, fast-forward to 1 billionth state
+- **State**: Grid<char> serialized to String for HashMap key
+- **Transitions**: Deterministic spin cycle (north → west → south → east tilts)
+- **Performance**: 12.7ms instead of years of computation
+
+**Modulo Fast-Forward**:
+```rust
+// After detecting cycle:
+let final_state_index = cycle_start + ((target - cycle_start) % cycle_length);
+
+// Equivalent state:
+// - state[100] == state[107] (cycle detected, length=7)
+// - state[1,000,000,000] = state[100 + ((1B - 100) % 7)]
+// - state[1,000,000,000] = state[105]
+```
+
+**Alternatives**:
+- **Floyd's Cycle Detection** (Tortoise and Hare):
+  - **Pros**: O(1) space (no HashMap)
+  - **Cons**: Three passes, more complex, doesn't return cycle parameters immediately
+  - **When**: Memory constrained, state not easily hashable
+- **HashMap State Tracking** (used in Day 14):
+  - **Pros**: Single pass, immediate cycle parameters, simpler implementation
+  - **Cons**: O(m) space for state storage
+  - **When**: State is hashable, memory available, need exact cycle params
+
+**Complexity Analysis**:
+- **Space**: O(unique_states) for HashMap storage
+- **Time**: O(µ + λ) where µ = cycle start, λ = cycle length
+- **Expected cycle length** (Birthday Paradox): ~√(state_space)
+  - Grid with 10⁶ possible states → expect cycle ~1,000 iterations
+  - Much better than brute force!
+
+**State Serialization**:
+```rust
+// Convert grid to hashable string
+fn grid_to_string(grid: &Grid<char>) -> String {
+    (0..grid.height())
+        .map(|y| {
+            (0..grid.width())
+                .map(|x| grid.get(x, y).unwrap())
+                .collect::<String>()
+        })
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+```
+
+**Mission**: Mission 6 (Grid<T> for state storage)
+
+**Zettelkasten**: [[pigeonhole-principle-cycle-detection]], [[modular-arithmetic]]
 
 ### Breadth-First Search (BFS)
 **Day(s)**: TBD  

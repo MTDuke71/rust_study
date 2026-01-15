@@ -31,6 +31,9 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Iterator zip() for Element-wise Comparison | Day 13 | `day13.rs` |
 | Hamming Distance for Pattern Matching | Day 13 | `day13.rs` |
 | Target-Value Generalization | Day 13 | `day13.rs` |
+| HashMap State Hashing for Cycle Detection | Day 14 | `day14.rs` |
+| Modulo Fast-Forward Optimization | Day 14 | `day14.rs` |
+| Grid State Serialization | Day 14 | `day14.rs` |
 
 ---
 
@@ -448,6 +451,163 @@ let nodes: HashMap<String, (String, String)> = HashMap::new();
 **Mission Integration**: Mission 5 HashMap concepts
 
 **Zettelkasten**: [[graph-theory-fundamentals]]
+
+### Pattern: Cycle Detection via State Hashing
+**Used**: Day 14  
+**When to use**: Finite state space, deterministic transitions, large iteration count, need to detect repeating patterns  
+**Code**: `src/solver/day14.rs::solve_part2()`
+
+```rust
+/// Detect cycles in deterministic state space using HashMap
+fn detect_cycle_and_fast_forward<State: Hash + Eq + Clone>(
+    initial_state: State,
+    next_state: impl Fn(&State) -> State,
+    target_iterations: usize,
+) -> State {
+    let mut seen: HashMap<State, usize> = HashMap::new();
+    let mut state = initial_state;
+    let mut iteration = 0;
+    
+    while iteration < target_iterations {
+        // Check if we've seen this state before
+        if let Some(&first_occurrence) = seen.get(&state) {
+            // Cycle detected!
+            let cycle_length = iteration - first_occurrence;
+            
+            // Fast-forward using modulo arithmetic
+            let remaining = target_iterations - iteration;
+            let offset_in_cycle = remaining % cycle_length;
+            
+            // Simulate only the offset instead of all remaining iterations
+            for _ in 0..offset_in_cycle {
+                state = next_state(&state);
+            }
+            
+            return state;
+        }
+        
+        // Track state's first occurrence
+        seen.insert(state.clone(), iteration);
+        
+        // Advance to next state
+        state = next_state(&state);
+        iteration += 1;
+    }
+    
+    state
+}
+```
+
+**Day 14 Application**: 1 billion spin cycles on rock platform
+- **State**: Grid<char> serialized to String for HashMap key
+- **Transition**: spin_cycle (deterministic N→W→S→E tilts)
+- **Cycle detection**: At iteration ~100-200, grid state repeats
+- **Fast-forward**: `(1B - 100) % cycle_length` gives final state position
+- **Performance**: 12.7ms instead of impossible brute force
+
+**Pattern Breakdown**:
+
+1. **State Tracking**: HashMap<State, usize> maps state → first occurrence index
+2. **Cycle Detection**: When `seen.contains_key(current_state)`, cycle found
+3. **Cycle Parameters**:
+   - `cycle_start = seen[state]` - where cycle begins
+   - `cycle_length = current_iteration - cycle_start`
+4. **Modulo Fast-Forward**:
+   ```rust
+   let final_position = cycle_start + ((target - cycle_start) % cycle_length);
+   ```
+5. **Simulate Offset**: Run only `offset_in_cycle` more iterations
+
+**Mathematical Foundation** (Pigeonhole Principle):
+- Finite state space (m possible states)
+- Deterministic process (same state → same next state)
+- After m+1 iterations, **must** repeat (pigeonhole principle)
+- Expected cycle length: ~√m (birthday paradox)
+
+**State Serialization Pattern**:
+```rust
+// Convert complex state to hashable representation
+fn grid_to_string(grid: &Grid<char>) -> String {
+    (0..grid.height())
+        .map(|y| {
+            (0..grid.width())
+                .map(|x| grid.get(x, y).unwrap())
+                .collect::<String>()
+        })
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+```
+
+**Complexity**:
+- **Space**: O(unique_states) for HashMap
+- **Time**: O(μ + λ) where μ = cycle start, λ = cycle length
+- **Expected**: μ + λ ≈ √(state_space) << target_iterations
+
+**Alternatives**:
+```rust
+// ❌ Brute force - intractable for large iterations
+for _ in 0..1_000_000_000 {
+    state = next_state(state);
+}
+
+// ❌ Floyd's Tortoise-Hare - O(1) space but more complex
+let (mu, lambda) = floyd_detect_cycle(initial, next_state);
+
+// ✅ HashMap state tracking - simple, single-pass, exact parameters
+let final = detect_cycle_and_fast_forward(initial, next_state, 1_000_000_000);
+```
+
+**Usage Summary**:
+- ✅ Grid simulations with large iteration counts
+- ✅ Graph cycles (Day 8 ghost paths)
+- ✅ State machines with finite configurations
+- ✅ Any deterministic process on finite state space
+
+**Mission Integration**: Mission 6 (Grid<T> for state storage)
+
+**Zettelkasten**: [[pigeonhole-principle-cycle-detection]], [[modular-arithmetic]]
+
+### Pattern: Modulo Fast-Forward After Cycle Detection
+**Used**: Day 14  
+**When to use**: After detecting cycle, need to find state at very large iteration number  
+**Code**: `src/solver/day14.rs::solve_part2()`
+
+```rust
+// After detecting cycle at iteration `cycle_start` with length `cycle_length`:
+let remaining = target_iterations - current_iteration;
+let offset_in_cycle = remaining % cycle_length;
+
+// Simulate only `offset` more iterations instead of `remaining`
+for _ in 0..offset_in_cycle {
+    state = next_state(state);
+}
+```
+
+**Mathematical Justification**:
+If state repeats every `cycle_length` iterations starting from `cycle_start`:
+- `state[cycle_start]` = `state[cycle_start + cycle_length]` = `state[cycle_start + 2×cycle_length]` = ...
+- `state[n]` = `state[cycle_start + ((n - cycle_start) % cycle_length)]` for all n ≥ cycle_start
+
+**Example**:
+```rust
+// Cycle detected: state[100] == state[107] (cycle_length = 7)
+// Want: state[1,000,000,000]
+// Equivalent: state[100 + ((1B - 100) % 7)]
+//           = state[100 + (999,999,900 % 7)]
+//           = state[100 + 5]
+//           = state[105]
+// 
+// Instead of 999,999,900 iterations, run only 5!
+```
+
+**Day 14 Numbers**:
+- Cycle detected at iteration ~100-200 (varies by input)
+- Cycle length ~7-20 (varies by input)
+- Target: 1,000,000,000 iterations
+- **Reduction**: ~99.99999% fewer iterations needed
+
+**Zettelkasten**: [[modular-arithmetic]]
 
 ---
 
