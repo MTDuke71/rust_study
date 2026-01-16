@@ -16,7 +16,65 @@ The **Typestate Pattern** uses Rust's type system to encode object state as type
 
 ## Basic Pattern
 
-### Simple State Transition
+### Simple State Transition - Door Example
+
+The classic introductory example uses a door that can be locked or unlocked:
+
+```rust
+use std::marker::PhantomData;
+
+// States are empty structs (zero-sized types)
+struct Locked;
+struct Unlocked;
+
+// Door is generic over its state
+struct Door<State> {
+    _state: PhantomData<State>,
+}
+
+impl Door<Locked> {
+    fn new() -> Self {
+        Door { _state: PhantomData }
+    }
+    
+    fn unlock(self) -> Door<Unlocked> {
+        println!("Door unlocked");
+        Door { _state: PhantomData }
+    }
+}
+
+impl Door<Unlocked> {
+    fn lock(self) -> Door<Locked> {
+        println!("Door locked");
+        Door { _state: PhantomData }
+    }
+    
+    fn open(&self) {
+        println!("Door opened");
+    }
+}
+```
+
+**Usage and Compile-Time Safety**:
+
+```rust
+let door = Door::<Locked>::new();
+
+// ❌ COMPILE ERROR - method not found
+// door.open();
+
+// ✅ Must unlock first
+let door = door.unlock();
+door.open();     // Now allowed
+
+// ✅ Can lock again
+let door = door.lock();
+// door.open();  // ❌ Error again
+```
+
+**Key Insight**: Errors happen at **compile time** (method not found), not runtime (panic/Result).
+
+### More Complex Example - Authentication State
 
 ```rust
 use std::marker::PhantomData;
@@ -66,7 +124,7 @@ impl Connection<Authenticated> {
 }
 ```
 
-**Usage and Compile-Time Safety**:
+**Usage**:
 
 ```rust
 let conn = Connection::new("api.example.com".into());
@@ -82,8 +140,6 @@ auth_conn.make_request("/data");  // Now allowed
 let logged_out = auth_conn.logout();
 // logged_out.make_request("/data");  // ❌ Error again
 ```
-
-**Key Insight**: Errors happen at **compile time** (method not found), not runtime (panic/Result).
 
 ---
 

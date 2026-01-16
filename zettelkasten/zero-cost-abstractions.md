@@ -157,7 +157,7 @@ assert_eq!(std::mem::size_of::<Door<Locked>>(), 0);
 assert_eq!(std::mem::size_of::<Door<Unlocked>>(), 0);
 ```
 
-See: [[type-state-pattern]] | [[phantom-data-type-safety]]
+See: [[typestate-pattern]] | [[phantom-data-type-safety]]
 
 ## ⚡ Performance Characteristics
 

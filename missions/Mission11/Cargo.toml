@@ -19,6 +19,14 @@ path = "examples/demo_fibonacci.rs"
 name = "demo_aoc_day12"
 path = "examples/demo_aoc_day12.rs"
 
+[[example]]
+name = "demo_counting_paths"
+path = "examples/demo_counting_paths.rs"
+
+[[example]]
+name = "demo_string_matching"
+path = "examples/demo_string_matching.rs"
+
 [dependencies]
 # No external dependencies for core implementation
 
