@@ -188,3 +188,7 @@ pc: 4 (box 3) * 3 (third slot) * 6 (focal length) = 72
 So, the above example ends up with a total focusing power of 145.
 
 With the help of an over-enthusiastic reindeer in a hard hat, follow the initialization sequence. What is the focusing power of the resulting lens configuration?
+
+Your puzzle answer was 267372.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
