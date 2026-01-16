@@ -40,6 +40,8 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Cycle Detection (HashMap State Tracking) | Day 14 | O(states) expected | [[pigeonhole-principle-cycle-detection]] |
 | State Serialization for Hashing | Day 14 | O(grid_size) | - |
 | Modulo Fast-Forward (Cycle Arithmetic) | Day 14 | O(1) | [[modular-arithmetic]] |
+| Custom Hash Function (Modular Arithmetic) | Day 15 | O(m) per string | [[hash-functions-fundamentals]] |
+| HashMap Simulation (Labeled Data) | Day 15 | O(n × avg_box_size) | - |
 
 ---
 
@@ -1278,7 +1280,119 @@ fn solve(input: &[u8], constraints: &[usize], pos: usize, state1: usize, state2:
 
 ---
 
-## 🔗 Mission Integration Map
+## �️ Hash Functions
+
+### Custom Hash Function (HASH Algorithm)
+**Day(s)**: Day 15  
+**Implementation**: `day15.rs::hash()` - ASCII-based hash with modular arithmetic  
+**Complexity**: O(m) where m = string length  
+**Key Concept**: Map strings uniformly to integers 0-255 using simple multiplicative hash  
+
+**HASH Algorithm Steps**:
+```rust
+fn hash(s: &str) -> usize {
+    let mut value = 0;
+    for ch in s.chars() {
+        value += ch as usize;  // 1. Add ASCII code
+        value *= 17;           // 2. Multiply by prime
+        value %= 256;          // 3. Modulo to keep in range
+    }
+    value
+}
+```
+
+**Design Properties**:
+- **Deterministic**: Same input always produces same output
+- **Bounded**: Result always in [0, 255]
+- **Simple**: Three operations per character (add, multiply, mod)
+- **Non-cryptographic**: Fast but not collision-resistant or secure
+
+**Why multiply by 17?**
+- **Prime number**: Reduces collision patterns compared to even multipliers
+- **Avalanche effect**: Small input changes → different outputs (usually)
+- **Small enough**: Won't overflow before modulo (max intermediate: 255 + 255 = 510, then 510 × 17 = 8670)
+- **Not power of 2**: Avoids patterns when combined with power-of-2 modulus (256 = 2^8)
+
+**Hash Function Categories**:
+```
+Non-cryptographic (Fast, simple):
+├─ Division method: value % prime_table_size
+├─ Multiplication (HASH): (value × constant) % range
+├─ FNV-1a: XOR-based byte folding
+└─ MurmurHash: Fast general-purpose (used in many hash tables)
+
+Cryptographic (Secure, slow):
+├─ SHA-256: Collision-resistant, one-way
+├─ SipHash (Rust default): DoS-resistant for hash tables
+└─ Blake3: Modern fast cryptographic hash
+```
+
+**When to use**:
+- **This HASH algorithm**: AoC-style problems, deterministic uniform distribution over small range
+- **std::HashMap**: General-purpose hash tables (uses SipHash by default for security)
+- **FNV/MurmurHash**: Custom hash tables when DoS protection not needed (faster)
+- **Cryptographic**: Password storage, digital signatures, data integrity
+
+**Alternatives for Day 15**:
+```rust
+// Simple sum (worse distribution)
+fn hash_sum(s: &str) -> usize {
+    s.chars().map(|c| c as usize).sum::<usize>() % 256
+}
+// Problem: "abc" and "bac" have same hash (collision)
+
+// Rolling hash (polynomial)
+fn hash_poly(s: &str) -> usize {
+    let mut h = 0;
+    for ch in s.chars() {
+        h = (h * 31 + ch as usize) % 256;  // 31 is common prime
+    }
+    h
+}
+// Better distribution than sum, similar to HASH but different prime
+
+// FNV-1a (industry standard for non-crypto hashing)
+fn hash_fnv1a(s: &str) -> usize {
+    let mut h = 0xcbf29ce484222325u64;
+    for &byte in s.as_bytes() {
+        h ^= byte as u64;
+        h = h.wrapping_mul(0x100000001b3);
+    }
+    (h % 256) as usize
+}
+// Better avalanche, more complex
+```
+
+**HashMap Simulation (Day 15 Part 2)**:
+Day 15 Part 2 simulates a simplified HashMap with:
+- **Fixed bucket count**: 256 boxes (no dynamic resizing)
+- **Collision handling**: Chaining via Vec (multiple lenses per box)
+- **Ordered within bucket**: Vec maintains insertion order (unlike std::HashMap)
+- **Labeled data**: Lenses have string labels + numeric values
+- **Operations**: Add (insert), Replace (update), Remove (delete)
+
+**Complexity**:
+- Hash computation: O(m) for label of length m
+- Box lookup: O(1) array index
+- Find existing lens: O(k) linear search in box with k lenses (typically k < 10)
+- Add/replace/remove: O(1) or O(k) depending on operation
+- Total per step: O(m + k) ≈ O(1) for small labels and few collisions
+
+**Real HashMap vs Day 15 HASHMAP**:
+| Aspect | std::HashMap | Day 15 HASHMAP |
+|--------|--------------|----------------|
+| **Hash function** | SipHash (cryptographic) | HASH (simple modular) |
+| **Bucket count** | Dynamic (grows 2× when load > 0.75) | Fixed (always 256) |
+| **Collision** | Open addressing or chaining | Chaining with Vec |
+| **Ordering** | Unordered (random iteration) | Ordered within box (Vec preserves) |
+| **Resize** | Yes (expensive but amortized O(1)) | No (fixed capacity) |
+| **Use case** | General-purpose | Simulation/problem-specific |
+
+**Zettelkasten**: [[hash-functions-fundamentals]] (TODO), [[modular-arithmetic]]
+
+---
+
+## �🔗 Mission Integration Map
 
 | Mission | Algorithms | Days Used |
 |---------|------------|-----------|

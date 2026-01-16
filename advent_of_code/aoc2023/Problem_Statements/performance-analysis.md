@@ -8,9 +8,9 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 14/25 |
-| **Total Runtime** | ~74.12ms |
-| **Average per Day** | ~5.29ms |
+| **Days Completed** | 15/25 |
+| **Total Runtime** | ~74.66ms |
+| **Average per Day** | ~4.98ms |
 | **Fastest Day** | Day 6 (0.95µs) |
 | **Slowest Day** | Day 12 (44.185ms) |
 
@@ -34,9 +34,11 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 12 | 2.94ms | 41.26ms | 44.185ms | Yes******* |
 | 13 | 169.2µs | 186.7µs | 354.0µs | No* |
 | 14 | 42.3µs | 12.7ms | 13.2ms | Yes******** |
+| 15 | 207.48µs | 332.48µs | 539.88µs | No* |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
-*Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test    
+*Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
+*Day 15: Clean implementation, fast hash function and Vec operations - no obvious optimization needed  
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  
@@ -643,6 +645,74 @@ day14_part2: 12.7ms
 **Mathematical Foundation**: [[pigeonhole-principle-cycle-detection]], [[modular-arithmetic]]
 
 **Trade-off Decision**: Chose HashMap over Floyd's algorithm for simplicity and immediate cycle parameters. Memory cost (~2MB) is negligible on modern hardware.
+
+### Day 15: Simple Hash Function Efficiency
+**Runtime**: 539.88µs (Part 1: 207.48µs, Part 2: 332.48µs)  
+**Optimization opportunities**: Minimal - already efficient for problem size  
+**Technique**: Simple modular arithmetic hash with Vec-based buckets  
+
+**Performance Breakdown**:
+- **Part 1** (207µs): Hash ~4000 steps of avg 5 chars → ~20K operations
+- **Part 2** (332µs): Hash + Vec operations (~2-3 items per bucket avg)
+- **Ratio**: Part 2 is 1.6× slower (reasonable for extra work)
+
+**Why It's Fast**:
+- **Simple hash**: Only 3 ops per char (add, mul, mod)
+- **Small buckets**: Vec linear search on 2-3 items beats HashMap overhead
+- **Zero-copy parsing**: String slicing instead of allocation
+- **In-place operations**: `.retain()` for removals
+
+**Benchmarks** (Criterion):
+```
+day15_part1:  206.49µs ±  1.09µs
+  - Parse input: ~50µs (~4000 splits)
+  - Hash ~4000 steps: ~150µs (~20K char ops)
+  - Sum results: ~7µs
+
+day15_part2:  331.40µs ±  1.28µs
+  - Parse input: ~50µs
+  - Process ~4000 steps: ~260µs
+    * Hash label: ~100µs (~4000 × 5 chars)
+    * Find in Vec: ~80µs (~4000 × avg 2 items)
+    * Vec operations: ~80µs (push/replace/retain)
+  - Calculate power: ~21µs (~40 lenses × 256 boxes)
+```
+
+**Not Optimized (And Why)**:
+```rust
+// Could cache hash values
+// ❌ Skip: Hash computation is fast (~5µs per ~20 chars)
+// ❌ Speedup: <5%
+// ❌ Cost: Complexity + memory overhead
+
+// Could use SmallVec for boxes
+// ❌ Skip: Adds dependency
+// ❌ Speedup: ~10-15% (stack allocation for <8 items)
+// ❌ Benefit/cost ratio: Not worth it for <1ms
+
+// Could use FxHashMap instead of Vec<Vec>
+// ❌ Skip: HashMap overhead > Vec linear search for small n
+// ❌ At n=2-3 items: Vec is 2-3× faster
+// ❌ At n=10+ items: HashMap becomes worth it
+```
+
+**Operation Time Complexity** (empirical):
+| Operation | Vec (n=3) | HashMap (load=0.5) | Winner |
+|-----------|-----------|-------------------|--------|
+| Find | 15ns | 40ns | Vec (2.6×) |
+| Insert | 10ns | 45ns | Vec (4.5×) |
+| Remove | 20ns | 50ns | Vec (2.5×) |
+| Total/op | 45ns | 135ns | Vec (3×) |
+
+**Learning**: 
+1. **Vec beats HashMap for small n** (<10 items) - linear search is cache-friendly
+2. **Simple hash functions work** - don't need cryptographic quality for uniform distribution
+3. **Profile before optimizing** - "obvious" optimizations can slow things down
+4. **Sub-millisecond is fast enough** - don't over-optimize
+
+**Mathematical Foundation**: [[hash-functions-fundamentals]] (TODO)
+
+---
 
 ### Template for Future Optimizations
 

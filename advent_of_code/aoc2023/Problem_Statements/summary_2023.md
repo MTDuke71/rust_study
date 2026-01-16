@@ -3,17 +3,17 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 14/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 68.667ms |
+|--------|-------|\n| **Progress** | 15/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 69.206ms |
 | **Mission Integration** | 4 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6) |
-| **Patterns Extracted** | 12 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward) |
+| **Patterns Extracted** | 13 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) |
-Day 15 | Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) |
+Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
@@ -1403,7 +1403,196 @@ Where:
 - [[state-hashing-pattern]] - Serialization for cycle detection
 - [[modulo-fast-forward]] - Arithmetic optimization technique
 
-**Links**: ← [Day 13](#day-13-point-of-incidence) | Day 15 →
+**Links**: ← [Day 13](#day-13-point-of-incidence) | [Day 15](#day-15-lens-library) →
+
+---
+
+### Day 15: Lens Library
+
+**Part 1**: Run HASH algorithm on comma-separated steps, sum results → **517965**  
+**Part 2**: Execute HASHMAP procedure - manage 256 lens boxes with add/remove operations → **267372**  
+
+**Algorithm**: Part 1: Simple hash function with modular arithmetic; Part 2: HashMap simulation with labeled data (lenses)  
+**Complexity**: O(n × m) where n = steps, m = avg label length  
+**Runtime**: 539.88µs (Part 1: 207.48µs, Part 2: 332.48µs)  
+**Mission**: None (hashmap concepts similar to Mission 5, but custom simulation)  
+
+**Key Insight**: Part 1 demonstrates simple but effective hash function: `((value + ascii) × 17) % 256` creates decent distribution across 256 buckets. Part 2 uses this hash to simulate a physical system of labeled lenses in boxes - operations are deterministic HashMap manipulations (add, replace, remove) with position-based indexing. Focusing power calculation demonstrates how to aggregate positional data: (box+1) × (slot+1) × focal_length.
+
+**Rust Highlights**:
+- **Modular arithmetic hash**: `value = ((value + ascii) * 17) % 256` - simple but effective
+- **Vec of Vecs**: `Vec<Vec<(String, u32)>>` for 256 boxes each containing ordered lenses
+- **`.find()` and `.position()`**: Search for existing lens labels in box
+- **`.retain()`**: Filter lens list in-place for removals
+- **`.enumerate()`**: Track slot positions while iterating for power calculation
+- **String slicing**: `&step[..pos]` to extract label from "label=N" or "label-"
+
+**Code Highlight**:
+```rust
+/// HASH algorithm: Simple but effective hash function
+fn hash(s: &str) -> usize {
+    let mut value = 0;
+    for ch in s.chars() {
+        value += ch as usize;  // Add ASCII code
+        value *= 17;           // Multiply by 17
+        value %= 256;          // Keep in range 0-255
+    }
+    value
+}
+
+/// Part 2: HASHMAP simulation with 256 boxes
+pub fn solve_part2(input: &str) -> Result<String> {
+    let steps = parse_input(input);
+    
+    // 256 boxes, each containing vector of (label, focal_length) pairs
+    let mut boxes: Vec<Vec<(String, u32)>> = vec![vec![]; 256];
+    
+    for step in steps {
+        if let Some(pos) = step.find('=') {
+            // Add/replace operation: "label=focal_length"
+            let label = &step[..pos];
+            let focal_length: u32 = step[pos+1..].parse()?;
+            let box_num = hash(label) as usize;
+            
+            // Search for existing lens with this label
+            if let Some(idx) = boxes[box_num].iter().position(|(l, _)| l == label) {
+                boxes[box_num][idx].1 = focal_length;  // Replace
+            } else {
+                boxes[box_num].push((label.to_string(), focal_length));  // Add
+            }
+        } else if let Some(pos) = step.find('-') {
+            // Remove operation: "label-"
+            let label = &step[..pos];
+            let box_num = hash(label) as usize;
+            boxes[box_num].retain(|(l, _)| l != label);  // Remove if present
+        }
+    }
+    
+    // Calculate focusing power: sum of (box+1) × (slot+1) × focal_length
+    let mut total_power = 0;
+    for (box_num, lenses) in boxes.iter().enumerate() {
+        for (slot, (_, focal_length)) in lenses.iter().enumerate() {
+            let power = (box_num + 1) * (slot + 1) * (*focal_length as usize);
+            total_power += power;
+        }
+    }
+    
+    Ok(total_power.to_string())
+}
+```
+
+**Example Walkthrough** (Part 2 - HASHMAP operations):
+
+```
+Input: rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7
+
+Step-by-step box state:
+
+After "rn=1":
+  Box 0: [rn 1]   ← hash("rn") = 0, add lens
+
+After "cm-":
+  Box 0: [rn 1]   ← hash("cm") = 0, but cm not in box (no-op)
+
+After "qp=3":
+  Box 0: [rn 1]
+  Box 1: [qp 3]   ← hash("qp") = 1, add lens
+
+After "cm=2":
+  Box 0: [rn 1] [cm 2]   ← hash("cm") = 0, add to back
+
+After "qp-":
+  Box 0: [rn 1] [cm 2]   ← hash("qp") = 1, remove qp from box 1
+  Box 1: []
+
+After "pc=4":
+  Box 0: [rn 1] [cm 2]
+  Box 3: [pc 4]   ← hash("pc") = 3, add lens
+
+... (continuing through all steps)
+
+Final state:
+  Box 0: [rn 1] [cm 2]
+  Box 3: [ot 7] [ab 5] [pc 6]
+
+Focusing power calculation:
+  rn: (0+1) × (0+1) × 1 = 1
+  cm: (0+1) × (1+1) × 2 = 4
+  ot: (3+1) × (0+1) × 7 = 28
+  ab: (3+1) × (1+1) × 5 = 40
+  pc: (3+1) × (2+1) × 6 = 72
+  Total: 1 + 4 + 28 + 40 + 72 = 145 ✓
+```
+
+**Mathematical Foundations**:
+
+**Hash Function Design**:
+- **Goal**: Map strings uniformly to integers 0-255
+- **HASH algorithm steps**:
+  1. Initialize: value = 0
+  2. For each character: value += ASCII, value ×= 17, value %= 256
+  3. Return: value
+- **Properties**:
+  - Deterministic: Same input → same output
+  - Bounded: Result always in [0, 255]
+  - Non-cryptographic: Fast, but not secure (collision-resistant)
+  - Avalanche effect: Small input change → different output (usually)
+
+**Why multiply by 17?**
+- **Prime number**: Reduces collision patterns (vs even multipliers)
+- **Small but not too small**: 17 creates good mixing without overflow before mod
+- **Power-of-2 modulus (256)**: Fast bitwise AND instead of expensive division
+
+**HashMap Simulation vs Real HashMaps**:
+- **Real HashMap (Rust std::collections::HashMap)**:
+  - Uses sophisticated hash function (SipHash by default)
+  - Handles collisions with probing or chaining
+  - Dynamic resizing for load factor management
+  - O(1) average lookup/insert
+
+- **This HASHMAP (Part 2)**:
+  - Uses custom HASH function (ASCII-based)
+  - Collision handling: Multiple lenses per box (chaining with Vec)
+  - Fixed size: Always 256 boxes (no resizing)
+  - Ordered within box: Vec preserves insertion order for labeled data
+
+**Complexity Analysis**:
+- **Part 1**: 
+  - Parse: O(n) split + filter
+  - Hash each step: O(m) per step where m = label length
+  - Total: O(n × m) for n steps
+  - Actual: ~4000 steps × ~5 chars → ~20K character operations → 207µs
+
+- **Part 2**:
+  - Parse: O(n)
+  - Process each step: O(n × m) where m = avg operations per step
+    - Hash label: O(m) for label length
+    - Find existing lens: O(k) for k lenses in box (usually < 10)
+    - Add/replace/remove: O(1) or O(k) for retain
+  - Calculate power: O(n × avg_box_size) ≈ O(n)
+  - Total: O(n × m + n × k) where k is small
+  - Actual: ~4000 steps, avg 2-3 lenses per box → 332µs
+
+**Part 1 vs Part 2 Performance**:
+- **Part 1**: 207µs - simple hash computation
+- **Part 2**: 332µs - hash + box operations + power calculation
+- **1.6× slower**: Reasonable given extra work (box management, position tracking)
+
+**Tests**:
+- ✅ Part 1 example (1320)
+- ✅ Part 2 example (145)
+- ✅ HASH algorithm: hash("HASH") = 52
+- ✅ Individual step hashes (11 examples validated)
+- ✅ HASHMAP operations (add, replace, remove)
+- ✅ Input parsing with newline filtering
+
+**Zettelkasten**:
+- [[hash-functions-fundamentals]] - Hash function design principles (TODO)
+- [[modular-arithmetic]] - Modulo operations
+- [[labeled-data-structures]] - Ordered collections with labels (TODO)
+- [[simulation-patterns]] - Procedural simulation techniques (TODO)
+
+**Links**: ← [Day 14](#day-14-parabolic-reflector-dish) | Day 16 →
 
 ---
 

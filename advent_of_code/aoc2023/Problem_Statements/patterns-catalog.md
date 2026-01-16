@@ -34,6 +34,9 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | HashMap State Hashing for Cycle Detection | Day 14 | `day14.rs` |
 | Modulo Fast-Forward Optimization | Day 14 | `day14.rs` |
 | Grid State Serialization | Day 14 | `day14.rs` |
+| String Slicing for Label Extraction | Day 15 | `day15.rs` |
+| Vec of Vecs for Fixed Buckets | Day 15 | `day15.rs` |
+| .retain() for In-Place Filtering | Day 15 | `day15.rs` |
 
 ---
 
@@ -1116,7 +1119,201 @@ a.iter().zip(b.iter())
 
 ---
 
-## 📝 Pattern Extraction Criteria
+## � Data Structure Patterns
+
+### Pattern: String Slicing for Label Extraction
+**Used**: Day 15  
+**When to use**: Parsing strings with known delimiters to extract substrings  
+**Code**: `src/solver/day15.rs`
+
+```rust
+// Extract label from "label=value" or "label-"
+if let Some(pos) = step.find('=') {
+    let label = &step[..pos];        // Substring before '='
+    let value = &step[pos+1..];      // Substring after '='
+    let focal_length: u32 = value.parse()?;
+}
+
+if let Some(pos) = step.find('-') {
+    let label = &step[..pos];        // Substring before '-'
+    // No value part for removal operation
+}
+```
+
+**Key Concepts**:
+- **String slicing**: `&str[start..end]` creates view without allocation
+- **Exclusive end**: `[..pos]` excludes character at `pos`
+- **Inclusive start**: `[pos+1..]` starts after delimiter
+- **Zero-copy**: No String allocation, just borrows from original
+
+**Pattern Structure**:
+1. Find delimiter position with `.find()`
+2. Slice before delimiter: `&str[..pos]`
+3. Slice after delimiter: `&str[pos+1..]`
+4. Parse as needed
+
+**Alternatives**:
+```rust
+// Less efficient: split creates iterator and allocates
+let parts: Vec<&str> = step.split('=').collect();
+let label = parts[0];
+let value = parts.get(1).unwrap_or("");
+
+// More complex: split_once returns Option<(&str, &str)>
+if let Some((label, value)) = step.split_once('=') {
+    // Use label and value
+}
+```
+
+**Benefits of slicing**:
+- No allocations (just borrows)
+- O(1) operation (just pointer arithmetic)
+- Direct access without intermediate collections
+- Clear intent when position is already known
+
+### Pattern: Vec of Vecs for Fixed Buckets
+**Used**: Day 15  
+**When to use**: HashMap-like structure with known bucket count and ordering requirements  
+**Code**: `src/solver/day15.rs::solve_part2()`
+
+```rust
+// Create 256 empty buckets
+let mut boxes: Vec<Vec<(String, u32)>> = vec![vec![]; 256];
+
+// Hash determines bucket
+let box_num = hash(label) as usize;
+
+// Operations on bucket
+if let Some(idx) = boxes[box_num].iter().position(|(l, _)| l == label) {
+    boxes[box_num][idx].1 = new_value;     // Replace
+} else {
+    boxes[box_num].push((label, value));   // Add to end
+}
+
+boxes[box_num].retain(|(l, _)| l != label);  // Remove
+```
+
+**Structure**:
+```
+Vec<Vec<T>>:
+  Index 0: [item1, item2, item3]     ← Box 0
+  Index 1: []                          ← Box 1 (empty)
+  Index 2: [item4]                     ← Box 2
+  ...
+  Index 255: [item5, item6]            ← Box 255
+```
+
+**When to use**:
+- **Fixed bucket count**: Outer Vec size known upfront (e.g., 256 boxes)
+- **Variable items per bucket**: Inner Vecs can grow/shrink independently
+- **Ordered within bucket**: Vec maintains insertion order (unlike HashMap)
+- **Direct indexing**: Bucket number is integer (not arbitrary hash)
+
+**Trade-offs**:
+```
+Vec<Vec<T>> vs HashMap<usize, Vec<T>>:
+
+Vec<Vec<T>>:
+✅ Faster indexing: O(1) array access vs O(1) hash lookup
+✅ Simpler: No hash function overhead
+✅ Predictable memory: Contiguous outer vec
+✅ Works when bucket count is fixed and small
+❌ Wastes space if many buckets empty
+❌ Not suitable if bucket indices are sparse (e.g., 0, 1000000, 2000000)
+
+HashMap<usize, Vec<T>>:
+✅ Sparse-friendly: Only allocates used buckets
+✅ Dynamic keys: Can use any hashable type
+❌ Slower: Hash computation + potential collision resolution
+❌ More complex: Requires hasher, load factor, resizing
+```
+
+**Day 15 Rationale**:
+- 256 buckets = small enough to allocate all upfront
+- Dense keys: All buckets 0-255 potentially used
+- Fast access: Direct array indexing critical for Part 2 performance
+- Ordering matters: Lens positions within box determine focusing power
+
+### Pattern: .retain() for In-Place Filtering
+**Used**: Day 15  
+**When to use**: Removing elements from Vec matching a predicate without allocation  
+**Code**: `src/solver/day15.rs::solve_part2()`
+
+```rust
+// Remove all lenses with specific label
+boxes[box_num].retain(|(l, _)| l != label);
+```
+
+**Key Concepts**:
+- **In-place modification**: Mutates Vec without creating new one
+- **Predicate**: Keep elements where predicate returns true
+- **Efficient**: O(n) single pass, no allocations
+- **Preserves order**: Remaining elements keep relative positions
+
+**Pattern Structure**:
+```rust
+vec.retain(|item| predicate(item));  // Keep if predicate true
+
+// Equivalent manual loop (more verbose):
+let mut i = 0;
+while i < vec.len() {
+    if !predicate(&vec[i]) {
+        vec.remove(i);  // Shift all following elements
+    } else {
+        i += 1;
+    }
+}
+```
+
+**Common Use Cases**:
+```rust
+// Remove all zeros
+numbers.retain(|&x| x != 0);
+
+// Keep only even numbers
+numbers.retain(|&x| x % 2 == 0);
+
+// Remove items matching complex criteria
+items.retain(|item| item.is_valid() && item.score > threshold);
+
+// Day 15: Remove lens by label
+lenses.retain(|(label, _)| label != "cm");
+```
+
+**Alternatives**:
+```rust
+// ❌ Creating new Vec (allocates, not in-place)
+let filtered: Vec<_> = vec.iter()
+    .filter(|item| predicate(item))
+    .cloned()
+    .collect();
+
+// ❌ Manual loop with remove() (O(n²) due to shifts)
+for i in (0..vec.len()).rev() {  // Reverse to avoid index issues
+    if !predicate(&vec[i]) {
+        vec.remove(i);  // O(n) shift per removal
+    }
+}
+
+// ✅ .retain() (O(n) single pass, in-place)
+vec.retain(|item| predicate(item));
+```
+
+**Performance**:
+- **Time**: O(n) single pass through vec
+- **Space**: O(1) no allocations (modifies in-place)
+- **Mechanism**: Compacts array by moving kept items forward, then truncates
+
+**When NOT to use**:
+- Need both kept and removed elements → use `.partition()` instead
+- Vec is immutable → use `.iter().filter().collect()` to create new vec
+- Removing by index not predicate → use `.remove(idx)` or `.drain(range)`
+
+**Zettelkasten**: [[vec-operations]], [[in-place-algorithms]]
+
+---
+
+## �📝 Pattern Extraction Criteria
 
 A pattern is extracted to `src/patterns/` when:
 1. Used in **3+ different days**
