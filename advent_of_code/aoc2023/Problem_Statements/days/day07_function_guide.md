@@ -706,3 +706,14 @@ As you read the code, consider:
 ---
 
 **Next Steps**: Try implementing 7-card poker or adding new hand types (straight, flush) to see how the frequency analysis pattern extends!
+
+---
+
+## Related
+
+- [[day07]] - Day 7 problem statement (Camel Cards)
+- [[../../../README]] - AoC 2023 repository overview
+- [[../../../../zettelkasten/aoc2023]] - AoC 2023 zettelkasten notes
+- [[../../../../missions/Mission5/README]] - HashMap for card counting patterns
+- **Pattern**: Custom sorting, hand classification, frequency analysis
+- **Concepts**: Enum variants for hand types, custom Ord implementation, HashMap counting
