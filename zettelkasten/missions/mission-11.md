@@ -84,6 +84,7 @@ Length 25: 68.2721ms  (~3.4x)  ← PAIN!
 - **[[../../tutorials/Mission11_tut/TROUBLESHOOTING]]** - Troubleshooting guide for common issues
 - **[[../../tutorials/Mission11_tut/TUTORIAL_SUMMARY]]** - Tutorial creation documentation
 - **[[../../tutorials/Mission11_tut/exercises/README]]** - Practice exercises (Fibonacci, LCS, Coin Change)
+- **[[../../tutorials/Mission11_tut/LCS_Complete_Guide]]** - Longest Common Subsequence complete algorithm guide
 
 ### **Related Concepts**
 - **[[Memoization MOC]]** - Complete memoization knowledge map (primary navigation hub)

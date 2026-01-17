@@ -24,6 +24,7 @@
 
 - [[PROJECT_ORIGIN]] - **The Genesis** - How this learning system was born (founding conversation, philosophy, "The Pact")
 - [[Obsidian Demo Guide]] - **Getting Started** - Interactive walkthrough of knowledge graph navigation
+- [[../CLAUDE]] - **Oxide Session Context** - AI companion context file for session continuity
 
 ---
 
@@ -228,6 +229,10 @@
 - [[phantom-data-type-safety]] - Zero-cost type safety
 - [[rule-30-computational-irreducibility]] - **Rule 30 & Computational Irreducibility** - How simple deterministic rules generate infinite complexity, connecting Mission 10 debugging to fundamental questions about computational reality
 - [[karps-21-np-complete-problems]] - **Karp's 21 NP-Complete Problems** - Historical foundation of computational complexity theory (1972), demonstrating equivalence of fundamental problems across diverse domains
+
+**Mathematics Foundations:**
+
+- [[math-foundations/README]] - **Math Foundations Index** - Mathematical concepts underlying algorithm implementations
 
 **Software Architecture:**
 

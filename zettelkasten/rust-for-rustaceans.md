@@ -50,6 +50,7 @@
 - **[[../../rust_for_rustaceans/Ch02/README]]** - Chapter 2 workspace overview and examples
 - **[[../../rust_for_rustaceans/Ch02/WORKSPACE_CREATED]]** - Chapter 2 workspace setup documentation
 - **[[../../rust_for_rustaceans/Ch02/rfr-ch02-summary]]** - Chapter 2 comprehensive summary
+- **[[../../rust_for_rustaceans/Ch03/rfr-ch03-summary]]** - Chapter 3 comprehensive summary (Designing Interfaces)
 
 ---
 

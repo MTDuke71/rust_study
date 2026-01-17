@@ -199,6 +199,11 @@
 - ✅ 50+ concept notes linked to missions and AoC
 - ✅ Ready for advanced mission work with expert patterns
 
+### **Weekly Plan Archives:**
+- [[weekly plans/2026-W01]] - Week 1: RfR Ch1-2, AoC 2023 Days 1-3, Mission 11 Tutorial Start
+- [[weekly plans/2026-W02]] - Week 2: RfR Ch3, AoC 2023 Days 4-10, Mission 11 Tutorial Exercises
+- [[weekly plans/2026-W03]] - Week 3: RfR Ch3.3-3.4, AoC 2023 Days 11-17, Mission 11 REQ-8
+
 ---
 
 ## 🎄 Advent of Code Completion Plan
