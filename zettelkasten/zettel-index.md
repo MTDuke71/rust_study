@@ -49,6 +49,7 @@
 - [[V-Cycle Methodology]] - Formal engineering methodology for mission implementations
 - [[Tutorial Engineering]] - Tutorial creation methodology and best practices
 - [[Zettelkasten System]] - Knowledge management system architecture and usage
+- [[claude-code-obsidian-workflow]] - AI-assisted knowledge management with Claude Code
 - [[Learning Plateau Solutions]] - Strategies for overcoming learning challenges
 - [[Motivation Maintenance]] - Techniques for sustained engagement and progress
 - [[Hands-On Learning]] - Active learning philosophy and practices

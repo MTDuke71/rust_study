@@ -739,6 +739,7 @@ As workspace grows:
 - [[Daily Study MOC]] - Primary MOC for daily learning
 - [[3-Track Integration]] - How tracks coordinate
 - [[V-Cycle Integration]] - Quality methodology
+- [[claude-code-obsidian-workflow]] - AI-assisted knowledge management with Claude Code
 
 *Tags: #zettelkasten #knowledge-management #pkm #learning-system #methodology #obsidian #networked-thinking #bidirectional-linking*
 

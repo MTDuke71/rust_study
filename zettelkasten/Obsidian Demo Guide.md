@@ -111,3 +111,11 @@ Each time you:
 6. **Add 2-3 links** to today's work → Experience the connection-building process
 
 The system will grow naturally as you study. Each link you add creates more pathways for future discovery and learning reinforcement! 🚀
+
+---
+
+## Related Resources
+
+- [[Zettelkasten System]] - Core methodology
+- [[claude-code-obsidian-workflow]] - AI-assisted knowledge management with Claude Code
+- [[Daily Workflow]] - Daily note-taking patterns
