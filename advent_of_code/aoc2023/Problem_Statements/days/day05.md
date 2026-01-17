@@ -112,3 +112,12 @@ Consider all of the initial seed numbers listed in the ranges on the first line 
 Your puzzle answer was 27992443.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
+
+---
+
+## Related
+
+- [[../../../README]] - AoC 2023 overview
+- [[../../../../zettelkasten/aoc2023]] - AoC 2023 zettelkasten notes
+- **Pattern**: Range mapping, interval transformations
+- **Concepts**: Parsing multi-section input, processing pipelines

@@ -66,3 +66,14 @@ Simultaneously start on every node that ends with A. How many steps does it take
 Your puzzle answer was 8811050362409.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
+
+---
+
+## Related
+
+- [[../../../README]] - AoC 2023 overview
+- [[../../../../zettelkasten/aoc2023]] - AoC 2023 zettelkasten notes
+- [[../../../../zettelkasten/math-foundations/number-theory-basics]] - LCM for Part 2
+- [[../../../../missions/Mission7/README]] - Graph traversal patterns
+- **Pattern**: Graph traversal, cycle detection, LCM
+- **Concepts**: HashMap for graph representation, modular arithmetic

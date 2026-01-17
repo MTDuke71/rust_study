@@ -565,3 +565,13 @@ The DP table **encodes all the decisions**:
 - Method 4 (space-optimized) if memory is critical
 - Method 5 (reconstruct) for diff tools, alignment, etc.
 
+---
+
+## Related
+
+- [[README]] - Mission 11 Tutorial overview
+- [[../../zettelkasten/missions/mission-11]] - Mission 11 zettelkasten note
+- [[../../zettelkasten/memoization-comprehensive-guide]] - Memoization patterns in Rust
+- [[../../zettelkasten/Memoization MOC]] - Memoization knowledge map
+- **Concepts**: Dynamic programming, memoization, space optimization, backtracking
+- **Applications**: DNA sequence alignment, diff tools, version control

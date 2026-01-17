@@ -60,3 +60,13 @@ How many ways can you beat the record in this one much longer race?
 Your puzzle answer was 34788142.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
+
+---
+
+## Related
+
+- [[../../../README]] - AoC 2023 overview
+- [[../../../../zettelkasten/aoc2023]] - AoC 2023 zettelkasten notes
+- [[../../../../zettelkasten/math-foundations/quadratic-equations]] - Quadratic formula solution
+- **Pattern**: Mathematical optimization, quadratic equations
+- **Concepts**: Binary search for bounds, brute force vs closed-form

@@ -76,3 +76,13 @@ Using the new joker rule, find the rank of every hand in your set. What are the 
 Your puzzle answer was 245576185.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
+
+---
+
+## Related
+
+- [[../../../README]] - AoC 2023 overview
+- [[../../../../zettelkasten/aoc2023]] - AoC 2023 zettelkasten notes
+- [[../../../../missions/Mission5/README]] - HashMap for card counting
+- **Pattern**: Custom sorting, hand classification
+- **Concepts**: Enum variants for hand types, custom Ord implementation
