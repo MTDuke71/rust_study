@@ -8,6 +8,8 @@ fn main() {
     non_exhaustive_demo();
     sealed_traits_demo();
     blanket_implementations();
+    handle_status(&Status::Active);
+    handle_status(&Status::Inactive);
 }
 
 /// non_exhaustive: Allow adding fields/variants without breaking changes
@@ -142,7 +144,6 @@ impl Status {
 }
 
 // Downstream code must use wildcard
-#[allow(dead_code)]  // Demonstration function
 #[allow(unreachable_patterns)]  // Pattern demonstrates non_exhaustive requirement
 fn handle_status(status: &Status) {
     match status {
