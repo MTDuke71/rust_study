@@ -3,17 +3,17 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 15/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 69.206ms |
+|--------|-------|\n| **Progress** | 16/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 97.73ms |
 | **Mission Integration** | 4 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6) |
-| **Patterns Extracted** | 13 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data) |
+| **Patterns Extracted** | 14 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) |
-Day 16 | Day 17 | Day 18 | Day 19 | Day 20 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) |
+Day 17 | Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
@@ -1592,7 +1592,222 @@ Focusing power calculation:
 - [[labeled-data-structures]] - Ordered collections with labels (TODO)
 - [[simulation-patterns]] - Procedural simulation techniques (TODO)
 
-**Links**: ← [Day 14](#day-14-parabolic-reflector-dish) | Day 16 →
+**Links**: ← [Day 14](#day-14-parabolic-reflector-dish) | [Day 16](#day-16-the-floor-will-be-lava) →
+
+---
+
+### Day 16: The Floor Will Be Lava
+
+**Part 1**: Trace light beam through grid of mirrors/splitters from top-left moving right, count energized tiles → **7434**  
+**Part 2**: Find optimal starting position (any edge, any direction) that maximizes energized tiles → **8183**  
+
+**Algorithm**: State-space BFS beam tracing with cycle detection using HashSet<(position, direction)>  
+**Complexity**: O(rows × cols × 4) for state space (4 directions per cell)  
+**Runtime**: 23.08ms (Part 1: 1.00ms, Part 2: 22.08ms) - **Parallelized with Rayon (11.67× speedup)**  
+**Mission**: None (could use Mission 6 Grid, but custom Tile enum more semantic)  
+
+**Key Insight**: Light beams split when hitting perpendicular splitters (| or -), creating multiple simultaneous beams. State tracking must include BOTH position AND direction to detect cycles - position-only tracking fails because a cell can be visited from different directions with different results. Part 2 tests all edge positions (2×rows + 2×cols = 444 starting configurations). **Optimization**: Parallelized with Rayon's `.par_iter()` - each trace is independent, achieving 11.67× speedup (257ms → 22ms) on multi-core CPU.
+
+**Rust Highlights**:
+- **State tuple**: `HashSet<(Coord, Direction)>` for cycle detection (position alone insufficient!)
+- **Direction enum**: Pattern matching with `offset()` method for coordinate deltas
+- **Tile enum**: Semantic types over char grid - `Tile::MirrorForward` vs `'/'`
+- **Match exhaustiveness**: Compiler ensures all mirror/splitter combinations handled
+- **Rayon parallelization**: `.par_iter()` for embarrassingly parallel problem (444 independent traces)
+- **Dual HashSets**: `seen_states` (position+direction) vs `energized` (position only)
+- **Vec as stack**: `beams.pop()` for DFS-style exploration (BFS would work too)
+
+**Code Highlight**:
+```rust
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+enum Direction {
+    Up, Down, Left, Right,
+}
+
+impl Direction {
+    fn offset(&self) -> Coord {
+        match self {
+            Direction::Up => (-1, 0),
+            Direction::Down => (1, 0),
+            Direction::Left => (0, -1),
+            Direction::Right => (0, 1),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Tile {
+    Empty,           // '.'
+    MirrorForward,   // '/'
+    MirrorBackward,  // '\\'
+    SplitterVert,    // '|'
+    SplitterHoriz,   // '-'
+}
+
+fn trace_beam(&self, start_pos: Coord, start_dir: Direction) -> usize {
+    let mut seen_states = HashSet::new();  // (position, direction) for cycles
+    let mut energized = HashSet::new();    // position only for counting
+    let mut beams = vec![(start_pos, start_dir)];
+
+    while let Some((pos, dir)) = beams.pop() {
+        // Cycle detection: Have we been here moving this direction before?
+        if !seen_states.insert((pos, dir)) {
+            continue;  // Already processed this state
+        }
+
+        let (row, col) = pos;
+        if row < 0 || row >= self.rows || col < 0 || col >= self.cols {
+            continue;  // Out of bounds
+        }
+
+        energized.insert(pos);  // Mark tile as energized
+
+        // Determine next direction(s) based on tile and current direction
+        let next_dirs = match (self.get(row, col).unwrap(), dir) {
+            // Forward mirror '/' - reflects 90 degrees
+            (Tile::MirrorForward, Direction::Up) => vec![Direction::Right],
+            (Tile::MirrorForward, Direction::Right) => vec![Direction::Up],
+            (Tile::MirrorForward, Direction::Down) => vec![Direction::Left],
+            (Tile::MirrorForward, Direction::Left) => vec![Direction::Down],
+
+            // Backward mirror '\\' - reflects 90 degrees
+            (Tile::MirrorBackward, Direction::Up) => vec![Direction::Left],
+            (Tile::MirrorBackward, Direction::Left) => vec![Direction::Up],
+            (Tile::MirrorBackward, Direction::Down) => vec![Direction::Right],
+            (Tile::MirrorBackward, Direction::Right) => vec![Direction::Down],
+
+            // Vertical splitter '|' - splits horizontal beams
+            (Tile::SplitterVert, Direction::Up | Direction::Down) => vec![dir],
+            (Tile::SplitterVert, Direction::Left | Direction::Right) => {
+                vec![Direction::Up, Direction::Down]  // SPLIT!
+            }
+
+            // Horizontal splitter '-' - splits vertical beams
+            (Tile::SplitterHoriz, Direction::Left | Direction::Right) => vec![dir],
+            (Tile::SplitterHoriz, Direction::Up | Direction::Down) => {
+                vec![Direction::Left, Direction::Right]  // SPLIT!
+            }
+
+            // Empty tile - beam continues straight
+            (Tile::Empty, _) => vec![dir],
+        };
+
+        // Add new beam(s) to process
+        for next_dir in next_dirs {
+            let (dr, dc) = next_dir.offset();
+            let next_pos = (row + dr, col + dc);
+            beams.push((next_pos, next_dir));
+        }
+    }
+
+    energized.len()
+}
+```
+
+**Example Walkthrough** (simplified 4×4 grid):
+
+```
+Grid:
+  ./\.
+  |.-.
+  ..|.
+  .../
+
+Beam starts top-left (0,0) moving Right:
+
+Step 1: (0,0) Right → Empty '.' → Continue Right
+  energized: {(0,0)}
+  beams: [(0,1) Right]
+
+Step 2: (0,1) Right → Mirror '/' → Reflect to Up (exits top)
+  energized: {(0,0), (0,1)}
+  beams: [(-1,1) Up] → Out of bounds, done this branch
+
+Step 3: (0,2) wasn't reached yet, let's trace backwards...
+
+[Actual tracing would show beam splitting at splitters,
+ multiple beams active simultaneously, and cycle detection
+ preventing infinite loops when beam returns to same position
+ with same direction]
+
+Final energized count for this grid would be calculated by
+complete traversal of all beam paths until all terminate
+(exit grid or hit cycle).
+```
+
+**Why State = (Position, Direction)?**
+
+Consider this scenario:
+```
+  .→→.
+  ↓  ↓
+  .←←.
+```
+
+A cell can be visited from multiple directions:
+- Entering from left: Beam continues right
+- Entering from above: Beam continues down
+
+If we only tracked position, we'd think we've "seen" the cell after first visit and skip the second beam direction. This breaks the simulation!
+
+**State tracking must be**: `HashSet<(Coord, Direction)>`  
+**NOT**: `HashSet<Coord>` ← This would incorrectly stop beams!
+
+**Mathematical Foundations**:
+
+**State Space Exploration**:
+- **State**: Tuple (position, direction)
+- **State space size**: rows × cols × 4 directions
+- **For 111×110 grid**: 111 × 110 × 4 = 48,840 possible states
+- **Actual states visited**: Typically 5,000-15,000 per trace (cycles prune search)
+
+**Graph Theory View**:
+- **Vertices**: Each (cell, direction) pair is a node
+- **Edges**: Tile determines transitions (empty→1 edge, splitter→2 edges)
+- **Traversal**: DFS with visited set (could also use BFS)
+- **Cycle detection**: HashSet tracks visited nodes to prevent infinite loops
+
+**Reflection Geometry**:
+- **Forward mirror '/'**: Maps (dx,dy) → (-dy, -dx)
+  - Up(-1,0) → Right(0,1) ✓
+  - Right(0,1) → Up(-1,0) ✓
+  - Down(1,0) → Left(0,-1) ✓
+  - Left(0,-1) → Down(1,0) ✓
+- **Backward mirror '\\'**: Maps (dx,dy) → (dy, dx)
+  - Up(-1,0) → Left(0,-1) ✓
+  - Left(0,-1) → Up(-1,0) ✓
+
+**Part 2 Optimization Insights**:
+- **Brute force**: Test all edge positions (2×111 + 2×110 = 442 positions × 1 direction each + 4 corners × 2 directions = 444 total)
+- **Each trace**: ~0.58ms average (257ms ÷ 444)
+- **No memoization needed**: State spaces don't overlap between different starting positions
+- **Potential optimization**: Parallel execution (444 independent traces) - could achieve ~5-10x speedup
+
+**Complexity Analysis**:
+- **Part 1**:
+  - Single beam trace: O(states) where states ≤ rows × cols × 4
+  - Actual: ~1ms for 111×110 grid
+- **Part 2**:
+  - Edge positions: 2 × (rows + cols) ≈ 444
+  - Each trace: O(states) as above
+  - Total: O(edges × states) ≈ O(rows × cols × max_states_per_trace)
+  - Actual: 444 traces × 0.58ms avg = 257ms
+
+**Tests**:
+- ✅ Part 1 example (46)
+- ✅ Part 2 example (51)
+- ✅ Mirror reflection logic (all 8 combinations)
+- ✅ Splitter logic (4 pass-through + 4 split cases)
+- ✅ Cycle detection (beam returns to same state)
+- ✅ Bounds checking (beams exit grid properly)
+
+**Zettelkasten**:
+- [[graph-theory-fundamentals]] - State space as graph, DFS traversal
+- [[set-theory-fundamentals]] - HashSet for membership testing (cycle detection)
+- [[computational-geometry-basics]] - Reflection transformations, coordinate systems
+- [[state-space-search]] - (TODO) State-based exploration patterns
+
+**Links**: ← [Day 15](#day-15-lens-library) | Day 17 →
 
 ---
 

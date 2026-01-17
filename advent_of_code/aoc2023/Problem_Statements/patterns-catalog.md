@@ -37,6 +37,10 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | String Slicing for Label Extraction | Day 15 | `day15.rs` |
 | Vec of Vecs for Fixed Buckets | Day 15 | `day15.rs` |
 | .retain() for In-Place Filtering | Day 15 | `day15.rs` |
+| State Tuple (Position, Direction) | Day 16 | `day16.rs` |
+| Direction Enum with offset() Method | Day 16 | `day16.rs` |
+| Dual HashSets (State vs Result) | Day 16 | `day16.rs` |
+| Match Exhaustiveness for Tile Logic | Day 16 | `day16.rs` |
 
 ---
 

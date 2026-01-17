@@ -42,6 +42,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Modulo Fast-Forward (Cycle Arithmetic) | Day 14 | O(1) | [[modular-arithmetic]] |
 | Custom Hash Function (Modular Arithmetic) | Day 15 | O(m) per string | [[hash-functions-fundamentals]] |
 | HashMap Simulation (Labeled Data) | Day 15 | O(n × avg_box_size) | - |
+| State-Space Search with Cycle Detection | Day 16 | O(rows × cols × directions) | [[graph-theory-fundamentals]] |
+| Reflection Transformations (Mirrors) | Day 16 | O(1) per reflection | [[computational-geometry-basics]] |
+| Beam Splitting (Multiple Simultaneous Paths) | Day 16 | O(splits) state expansion | - |
 
 ---
 
