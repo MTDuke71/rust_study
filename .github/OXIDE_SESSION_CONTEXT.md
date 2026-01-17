@@ -9,6 +9,10 @@
 
 ## 👤 Learner Profile
 
+### **Identity**
+- **Name**: Matt
+- **GitHub**: MTDuke71
+
 ### **Background & Learning Style**
 - **Role**: Integrator (not traditional developer) - composes validated components rather than implementing from scratch
 - **Professional Context**: AUTOSAR background (automotive software architecture)
