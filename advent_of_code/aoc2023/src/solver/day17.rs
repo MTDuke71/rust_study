@@ -10,52 +10,18 @@
 //! ## Algorithm
 //! - Dijkstra's algorithm with extended state space
 //! - State: (position, direction, consecutive_steps)
-//! - Mission 6: Grid<u8> for map representation
+//! - **Mission 6 Integration**: 
+//!   - `Grid<u8>` for heat loss map (~40 lines saved)
+//!   - `Direction` enum with rotation methods (turn_left/turn_right)
+//!   - `Coord` for position tracking
 //!
 //! ## Complexity
 //! - Time: O((V * 4 * 3) * log(V)) where V = grid cells
 //! - Space: O(V * 4 * 3) for state space
 
 use anyhow::Result;
-use mission6::{Coord, Grid};
+use mission6::{Coord, Direction, Grid};
 use std::collections::{BinaryHeap, HashMap};
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-enum Direction {
-    North,
-    East,
-    South,
-    West,
-}
-
-impl Direction {
-    fn offset(&self) -> (isize, isize) {
-        match self {
-            Direction::North => (0, -1),
-            Direction::East => (1, 0),
-            Direction::South => (0, 1),
-            Direction::West => (-1, 0),
-        }
-    }
-
-    fn turn_left(&self) -> Direction {
-        match self {
-            Direction::North => Direction::West,
-            Direction::West => Direction::South,
-            Direction::South => Direction::East,
-            Direction::East => Direction::North,
-        }
-    }
-
-    fn turn_right(&self) -> Direction {
-        match self {
-            Direction::North => Direction::East,
-            Direction::East => Direction::South,
-            Direction::South => Direction::West,
-            Direction::West => Direction::North,
-        }
-    }
-}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 struct State {
@@ -138,12 +104,12 @@ fn find_min_heat_loss(grid: &Grid<u8>, min_straight: u8, max_straight: u8) -> us
         
         // Can turn left or right only if moved at least min_straight blocks
         if state.consecutive >= min_straight {
-            next_dirs.push((state.dir.turn_left(), 1));
-            next_dirs.push((state.dir.turn_right(), 1));
+            next_dirs.push((state.dir.rotate_90_counterclockwise(), 1));
+            next_dirs.push((state.dir.rotate_90_clockwise(), 1));
         }
         
         for (next_dir, next_consecutive) in next_dirs {
-            let (dx, dy) = next_dir.offset();
+            let (dx, dy) = next_dir.delta();
             let nx = state.pos.x as isize + dx;
             let ny = state.pos.y as isize + dy;
             
