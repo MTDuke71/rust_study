@@ -36,6 +36,8 @@ struct Node {
     state: State,
 }
 
+// Ord is reversed (other.cmp(self) instead of self.cmp(other)) to create min-heap behavior.
+// BinaryHeap is a max-heap by default, but Dijkstra needs to process lowest-cost nodes first.
 impl Ord for Node {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         other.cost.cmp(&self.cost)
