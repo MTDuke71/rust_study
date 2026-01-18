@@ -83,6 +83,34 @@ A **graph** G = (V, E) consists of:
 
 ---
 
+## 🛤️ Shortest Path Algorithms
+
+### **Dijkstra's Algorithm**
+- **Strategy**: Find shortest path in weighted graph with non-negative edge weights
+- **Data structure**: Priority queue (min-heap)
+- **Complexity**: O((V + E) log V) with binary heap
+- **Key idea**: 
+  - Greedily explore nodes by increasing distance from source
+  - Once a node is processed, its shortest distance is final
+  - Only works with non-negative weights
+- **Applications**:
+  - GPS routing
+  - Network packet routing
+  - Pathfinding in games with cost constraints
+
+### **State-Space Dijkstra**
+- **Extension**: When simple vertex tracking insufficient
+- **State**: Tuple of (position, additional_constraints)
+- **Key insight**: Same location can be visited multiple times with different states
+- **Example states**:
+  - (position, direction, consecutive_moves) - movement constraints
+  - (position, keys_collected) - dependency tracking
+  - (position, remaining_fuel) - resource constraints
+- **Complexity**: O((V × S) log(V × S)) where S = state space size
+- **Trade-off**: Exponentially larger state space, but handles constraints exactly
+
+---
+
 ## 💻 Rust Implementations
 
 ### **Mission 8**: Graph Trait and Algorithms
@@ -122,6 +150,20 @@ A **graph** G = (V, E) consists of:
   - BFS for pathfinding from trailheads
   - Connected component analysis
 - **Integration**: Demonstrates mission composition (Grid + Graph)
+
+### **AoC 2023 Day 17**: Clumsy Crucible
+- **What**: Minimum heat loss pathfinding with movement constraints
+- **How it uses this concept**:
+  - State-space Dijkstra: state = (position, direction, consecutive_moves)
+  - Weighted graph where edges = grid cells with heat loss values
+  - Movement constraints: max 3 consecutive (Part 1), min 4/max 10 (Part 2)
+  - Cannot reverse direction, must respect straight-line limits
+- **Link**: `advent_of_code/aoc2023/src/solver/day17.rs`
+- **Performance**: 64.3ms (Part 1), 182.4ms (Part 2)
+- **Complexity**: O(V × D × C × log(V × D × C)) where V=cells, D=4 directions, C=max_consecutive
+- **State space**: Part 1 ~239k states, Part 2 ~795k states (explains 2.8× slowdown)
+- **Integration**: Mission 6 Grid for heat loss map representation
+- **Key learning**: When position-only tracking insufficient, extend to full state tuples
 
 ---
 

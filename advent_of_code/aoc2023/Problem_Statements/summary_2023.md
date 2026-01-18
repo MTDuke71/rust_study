@@ -3,17 +3,17 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 16/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 97.73ms |
-| **Mission Integration** | 4 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6) |
+|--------|-------|\n| **Progress** | 17/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 344.4ms |
+| **Mission Integration** | 5 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6, Day 17: Mission 6) |
 | **Patterns Extracted** | 14 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) |
-Day 17 | Day 18 | Day 19 | Day 20 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) |
+Day 18 | Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
@@ -1807,7 +1807,166 @@ If we only tracked position, we'd think we've "seen" the cell after first visit 
 - [[computational-geometry-basics]] - Reflection transformations, coordinate systems
 - [[state-space-search]] - (TODO) State-based exploration patterns
 
-**Links**: ← [Day 15](#day-15-lens-library) | Day 17 →
+**Links**: ← [Day 15](#day-15-lens-library) | [Day 17](#day-17-clumsy-crucible) →
+
+---
+
+### Day 17: Clumsy Crucible
+
+**Part 1**: Find minimum heat loss path from top-left to bottom-right, max 3 consecutive blocks same direction → **1023**  
+**Part 2**: Ultra crucible requires min 4, max 10 consecutive blocks same direction → **1165**  
+
+**Algorithm**: Dijkstra's shortest path with extended state space (position + direction + consecutive_count)  
+**Complexity**: O(V × D × C × log(V × D × C)) where V=cells, D=4 directions, C=max_consecutive  
+**Runtime**: 246.7ms (Part 1: 64.3ms, Part 2: 182.4ms)  
+**Mission**: Mission 6 (Grid<T> for heat loss map, Coord for type-safe positions)  
+
+**Key Insight**: Standard Dijkstra works on cells, but movement constraints require **state-based Dijkstra** where state = (position, direction, consecutive_steps). Can't turn around, must respect min/max consecutive block limits. The state space explosion from O(V) to O(V × D × C) causes slower runtime vs traditional pathfinding.
+
+**Rust Highlights**:
+- **Extended state**: `State { pos: Coord, dir: Direction, consecutive: u8 }` for constraint tracking
+- **BinaryHeap priority queue**: Standard Dijkstra pattern with `Reverse<Node>` for min-heap
+- **Mission 6 integration**: `Grid<u8>` eliminates ~40 lines of manual 2D array handling
+- **Direction enum**: Pattern matching for move validation (can't reverse, turn-only logic)
+- **HashMap visited**: `visited: HashMap<State, usize>` tracks best cost per state
+- **Constraint parameterization**: Single `find_min_heat_loss(grid, min_straight, max_straight)` handles both parts
+
+**Code Highlight**:
+```rust
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+struct State {
+    pos: Coord,
+    dir: Direction,
+    consecutive: u8,  // How many blocks moved in current direction
+}
+
+fn find_min_heat_loss(grid: &Grid<u8>, min_straight: u8, max_straight: u8) -> usize {
+    let start = Coord::new(0, 0);
+    let goal = Coord::new(grid.height() - 1, grid.width() - 1);
+    
+    let mut heap = BinaryHeap::new();
+    let mut visited = HashMap::new();
+    
+    // Start exploring both right and down (can't go straight from start)
+    heap.push(Node {
+        cost: 0,
+        state: State { pos: start, dir: Direction::Right, consecutive: 0 },
+    });
+    heap.push(Node {
+        cost: 0,
+        state: State { pos: start, dir: Direction::Down, consecutive: 0 },
+    });
+    
+    while let Some(Node { cost, state }) = heap.pop() {
+        // Reached goal? Check if we met minimum straight requirement
+        if state.pos == goal && state.consecutive >= min_straight {
+            return cost;
+        }
+        
+        // Skip if already visited with lower cost
+        if let Some(&prev_cost) = visited.get(&state) {
+            if prev_cost <= cost {
+                continue;
+            }
+        }
+        visited.insert(state, cost);
+        
+        // Generate next moves
+        let next_dirs = if state.consecutive < min_straight {
+            // Haven't met minimum - MUST continue straight
+            vec![(state.dir, state.consecutive + 1)]
+        } else if state.consecutive >= max_straight {
+            // Hit maximum - MUST turn (can't continue straight)
+            vec![
+                (state.dir.turn_left(), 1),
+                (state.dir.turn_right(), 1),
+            ]
+        } else {
+            // Can either continue straight or turn
+            vec![
+                (state.dir, state.consecutive + 1),
+                (state.dir.turn_left(), 1),
+                (state.dir.turn_right(), 1),
+            ]
+        };
+        
+        // Explore neighbors
+        for (next_dir, next_consecutive) in next_dirs {
+            if let Some(next_pos) = move_in_direction(state.pos, next_dir, grid) {
+                let heat_loss = *grid.get(next_pos).unwrap() as usize;
+                let next_cost = cost + heat_loss;
+                
+                heap.push(Node {
+                    cost: next_cost,
+                    state: State {
+                        pos: next_pos,
+                        dir: next_dir,
+                        consecutive: next_consecutive,
+                    },
+                });
+            }
+        }
+    }
+    
+    unreachable!("No path found to goal")
+}
+```
+
+**Why State-Based Dijkstra?**
+
+Standard Dijkstra tracks `visited: HashSet<Coord>` - once a cell is visited, it's marked done. This breaks when movement constraints exist:
+
+**Problem scenario**:
+```
+Reaching cell (5,5) moving Right with 2 consecutive blocks is DIFFERENT from
+reaching (5,5) moving Down with 1 consecutive block.
+```
+
+First state might be stuck (already at max consecutive), while second state has flexibility to continue or turn. **Solution**: Visited set must track **full state** `(position, direction, consecutive)`, not just position.
+
+**State Space Comparison**:
+- **Standard Dijkstra**: O(V) states where V = cells (here: 141×141 = 19,881)
+- **Part 1 (max 3)**: O(V × 4 × 3) = ~238,572 possible states
+- **Part 2 (max 10)**: O(V × 4 × 10) = ~795,240 possible states
+
+This explains why Part 2 is ~2.8× slower despite same grid size.
+
+**Mathematical Foundations**:
+
+**Graph Theory**:
+- **Vertices**: Each state (position, direction, consecutive_count)
+- **Edges**: Valid moves respecting constraints (no reverse, min/max straight limits)
+- **Edge weights**: Heat loss values from grid cells
+- **Shortest path**: Dijkstra's algorithm with priority queue
+
+**Algorithmic Complexity**:
+- **Dijkstra**: O(E + V log V) with binary heap
+- **Our E (edges)**: Each state has ≤3 outgoing edges (straight, left, right)
+- **Our V (vertices)**: V_cells × 4 directions × max_consecutive
+- **Actual**: O((V × D × C) × log(V × D × C)) where V=cells, D=4, C=max_consecutive
+- **Part 1**: C=3 → ~238k states
+- **Part 2**: C=10 → ~795k states (explains 2.8× slowdown)
+
+**Optimization Opportunities** (not implemented - prioritizing clarity):
+1. **3D visited array**: `bool[141][141][4]` with bitflags for consecutive counts (vs HashMap)
+2. **A* heuristic**: Manhattan distance to goal for early pruning
+3. **Bidirectional search**: Meet in the middle from start/goal
+
+**Tests**:
+- ✅ Part 1 example (102)
+- ✅ Part 2 example (94)
+- ✅ Part 2 simple grid (71) - forces long straight segments
+- ✅ Grid parsing (dimensions, corner values)
+- ✅ Minimal 2×2 grid (10)
+- ✅ Single path test (30)
+- ✅ All zeros edge case (0)
+
+**Zettelkasten**:
+- [[dijkstra-algorithm]] - Shortest path with priority queue
+- [[graph-theory-fundamentals]] - State-space graphs, weighted edges
+- [[state-space-search]] - Extended states for constraint satisfaction
+
+**Links**: ← [Day 16](#day-16-the-floor-will-be-lava) | Day 18 →
 
 ---
 
