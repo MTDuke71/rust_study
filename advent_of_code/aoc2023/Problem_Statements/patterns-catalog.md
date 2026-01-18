@@ -41,6 +41,10 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Direction Enum with offset() Method | Day 16 | `day16.rs` |
 | Dual HashSets (State vs Result) | Day 16 | `day16.rs` |
 | Match Exhaustiveness for Tile Logic | Day 16 | `day16.rs` |
+| State Tuple (Pos + Direction + Counter) | Day 17 | `day17.rs` |
+| BinaryHeap Priority Queue (Min-Heap) | Day 17 | `day17.rs` |
+| HashMap for Visited State Tracking | Day 17 | `day17.rs` |
+| Constraint-Based Move Generation | Day 17 | `day17.rs` |
 
 ---
 
@@ -615,6 +619,216 @@ If state repeats every `cycle_length` iterations starting from `cycle_start`:
 - **Reduction**: ~99.99999% fewer iterations needed
 
 **Zettelkasten**: [[modular-arithmetic]]
+
+### Pattern: State-Space Extension for Constrained Pathfinding (Day 17)
+**Used**: Day 17  
+**When to use**: Dijkstra/BFS with movement constraints beyond position (direction, momentum, resources, keys)  
+**Code**: `src/solver/day17.rs::find_min_heat_loss()`
+
+```rust
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+struct State {
+    pos: Coord,           // Position in grid
+    dir: Direction,       // Current direction of movement
+    consecutive: u8,      // Constraint tracker (e.g., consecutive moves)
+}
+
+/// Extended state Dijkstra pattern
+fn find_shortest_path(grid: &Grid<u8>, constraints: Constraints) -> usize {
+    let mut heap = BinaryHeap::new();  // Priority queue
+    let mut visited: HashMap<State, usize> = HashMap::new();  // Best cost per STATE
+    
+    // Start with initial states
+    heap.push(Node {
+        cost: 0,
+        state: State { pos: start, dir: initial_dir, consecutive: 0 },
+    });
+    
+    while let Some(Node { cost, state }) = heap.pop() {
+        // Goal check with constraint validation
+        if state.pos == goal && meets_constraints(&state) {
+            return cost;
+        }
+        
+        // Skip if we've seen this STATE with lower/equal cost
+        if let Some(&prev_cost) = visited.get(&state) {
+            if prev_cost <= cost {
+                continue;
+            }
+        }
+        visited.insert(state, cost);
+        
+        // Generate next moves based on constraints
+        for next_state in generate_valid_moves(&state, &constraints) {
+            if is_valid_position(next_state.pos, grid) {
+                let edge_cost = get_edge_cost(state.pos, next_state.pos, grid);
+                heap.push(Node {
+                    cost: cost + edge_cost,
+                    state: next_state,
+                });
+            }
+        }
+    }
+    
+    unreachable!("No path found")
+}
+```
+
+**Day 17 Application**: Crucible pathfinding with straight-line limits
+- **State**: `(position, direction, consecutive_blocks)`
+- **Constraints**:
+  - Part 1: Max 3 consecutive blocks same direction
+  - Part 2: Min 4, max 10 consecutive blocks
+  - Cannot reverse (180° turns forbidden)
+- **State space**: cells × 4 directions × max_consecutive
+- **Performance**: Part 1 ~239k states (64ms), Part 2 ~795k states (182ms)
+
+**Key Insight - Why Position-Only Fails**:
+```rust
+// ❌ WRONG - Only tracks position
+visited: HashSet<Coord>
+
+// Problem: Reaching (5,5) moving Right with 3 consecutive is DIFFERENT 
+// from (5,5) moving Down with 1 consecutive!
+// First state can't go straight (constraint), second can.
+
+// ✅ CORRECT - Tracks full state
+visited: HashMap<State, usize>  // State = (pos, dir, consecutive)
+```
+
+**Constraint-Based Move Generation Pattern**:
+```rust
+fn generate_valid_moves(state: &State, constraints: &Constraints) -> Vec<State> {
+    if state.consecutive < constraints.min_straight {
+        // MUST continue straight (haven't met minimum)
+        vec![State {
+            pos: state.pos.move_dir(state.dir),
+            dir: state.dir,
+            consecutive: state.consecutive + 1,
+        }]
+    } else if state.consecutive >= constraints.max_straight {
+        // MUST turn (hit maximum)
+        vec![
+            State { pos: turn_left(...), dir: state.dir.turn_left(), consecutive: 1 },
+            State { pos: turn_right(...), dir: state.dir.turn_right(), consecutive: 1 },
+        ]
+    } else {
+        // Flexible - can continue or turn
+        vec![
+            continue_straight(...),
+            turn_left(...),
+            turn_right(...),
+        ]
+    }
+}
+```
+
+**State Space Complexity**:
+- **Standard Dijkstra**: O(V) states where V = positions
+- **Extended Dijkstra**: O(V × D × C) states where:
+  - V = positions (grid cells)
+  - D = directions (typically 4)
+  - C = constraint values (consecutive count, keys collected, etc.)
+- **Example**: 141×141 grid × 4 dir × 10 max_consecutive = ~795,000 states
+
+**Applications**:
+- Movement constraints (max turns, straight limits, momentum)
+- Resource tracking (fuel, inventory, keys)
+- Direction-dependent costs (wind, slopes)
+- Multi-agent coordination (position + which agent)
+
+**Alternatives**:
+```rust
+// ❌ Position-only Dijkstra - breaks with constraints
+let visited: HashSet<Coord> = HashSet::new();
+
+// ✅ State-space Dijkstra - handles constraints exactly
+let visited: HashMap<State, usize> = HashMap::new();
+
+// ⚠️ A* with heuristic - faster but needs admissible heuristic
+let heuristic = manhattan_distance(pos, goal);  // Must not overestimate!
+```
+
+**Mission Integration**: Mission 6 (Grid<T> for maps)
+
+**Zettelkasten**: [[graph-theory-fundamentals]], [[dijkstra-algorithm]], [[state-space-search]]
+
+### Pattern: BinaryHeap Priority Queue for Dijkstra (Day 17)
+**Used**: Day 17  
+**When to use**: Need min-heap for greedy algorithms (Dijkstra, A*, Prim's MST)  
+**Code**: `src/solver/day17.rs`
+
+```rust
+use std::cmp::Reverse;
+use std::collections::BinaryHeap;
+
+#[derive(PartialEq, Eq)]
+struct Node {
+    cost: usize,   // Priority field
+    state: State,  // Payload
+}
+
+// Manual Ord implementation for min-heap behavior
+impl Ord for Node {
+    fn cmp(&self, other: &Self) -> Ordering {
+        // Reverse comparison for min-heap (BinaryHeap is max-heap by default)
+        other.cost.cmp(&self.cost)
+            .then_with(|| self.state.cmp(&other.state))  // Tiebreaker
+    }
+}
+
+impl PartialOrd for Node {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+fn dijkstra() {
+    let mut heap: BinaryHeap<Node> = BinaryHeap::new();
+    
+    heap.push(Node { cost: 0, state: initial_state });
+    
+    while let Some(Node { cost, state }) = heap.pop() {
+        // Always gets MINIMUM cost node (due to reversed Ord)
+        // ...
+    }
+}
+```
+
+**Alternative - Using Reverse wrapper**:
+```rust
+use std::cmp::Reverse;
+
+// Simpler but requires wrapping/unwrapping
+let mut heap: BinaryHeap<Reverse<(usize, State)>> = BinaryHeap::new();
+
+heap.push(Reverse((0, initial_state)));
+
+while let Some(Reverse((cost, state))) = heap.pop() {
+    // Unwrap Reverse to get values
+}
+```
+
+**Day 17 Application**:
+- Priority queue for Dijkstra's algorithm
+- Always process lowest-cost state next (greedy choice)
+- O(log n) push/pop operations
+- Crucial for optimal pathfinding
+
+**Pattern Comparison**:
+
+| Approach | Pros | Cons |
+|----------|------|------|
+| Custom Ord | Clean pop(), clear semantics | More boilerplate |
+| Reverse wrapper | Less code | Constant wrapping/unwrapping |
+| External library (priority-queue) | Feature-rich | External dependency |
+
+**Complexity**:
+- **push**: O(log n)
+- **pop**: O(log n)
+- **peek**: O(1)
+
+**Zettelkasten**: [[binary-heap-patterns]]
 
 ---
 

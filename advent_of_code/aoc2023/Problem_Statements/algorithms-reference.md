@@ -45,6 +45,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | State-Space Search with Cycle Detection | Day 16 | O(rows × cols × directions) | [[graph-theory-fundamentals]] |
 | Reflection Transformations (Mirrors) | Day 16 | O(1) per reflection | [[computational-geometry-basics]] |
 | Beam Splitting (Multiple Simultaneous Paths) | Day 16 | O(splits) state expansion | - |
+| Dijkstra's Algorithm (State-Space) | Day 17 | O((V×D×C) log(V×D×C)) | [[graph-theory-fundamentals]] |
+| Priority Queue (BinaryHeap) | Day 17 | O(log n) push/pop | - |
+| Extended State Tracking | Day 17 | O(state_space) | [[state-space-search]] |
 
 ---
 
@@ -358,10 +361,175 @@ fn grid_to_string(grid: &Grid<char>) -> String {
 **Zettelkasten**: [[bfs-patterns]]  
 **Mission**: Mission 8 (Graph)
 
-### Dijkstra's Algorithm
-**Day(s)**: TBD  
-**Zettelkasten**: [[dijkstra-algorithm]]  
-**Mission**: Mission 8 (Graph)
+### Dijkstra's Algorithm with State-Space Extension (Day 17)
+**Implementation**: `src/solver/day17.rs::find_min_heat_loss()`  
+**Complexity**: O((V × D × C) log(V × D × C)) where V=cells, D=4 directions, C=max_consecutive  
+**Key Concept**: Shortest path in weighted graph, extended to handle movement constraints via state tuples  
+
+**When to use**:
+- Shortest path needed in weighted graph (non-negative weights only!)
+- Movement has constraints beyond simple position (direction, momentum, resources)
+- Need guaranteed optimal solution (vs heuristic approaches)
+- State space manageable (not exponential)
+
+**Standard Dijkstra Pattern**:
+```rust
+// Simple position-only tracking
+let mut heap = BinaryHeap::new();  // Priority queue (min-heap)
+let mut visited = HashMap::new();  // Best cost per position
+
+heap.push(Node { cost: 0, pos: start });
+
+while let Some(Node { cost, pos }) = heap.pop() {
+    if pos == goal {
+        return cost;  // Found optimal path!
+    }
+    
+    if visited.contains_key(&pos) {
+        continue;  // Already processed
+    }
+    visited.insert(pos, cost);
+    
+    for neighbor in get_neighbors(pos) {
+        let next_cost = cost + edge_weight(pos, neighbor);
+        heap.push(Node { cost: next_cost, pos: neighbor });
+    }
+}
+```
+
+**State-Space Extension** (Day 17 Pattern):
+```rust
+#[derive(PartialEq, Eq, Hash)]
+struct State {
+    pos: Coord,           // Position in grid
+    dir: Direction,       // Current direction of movement
+    consecutive: u8,      // How many blocks moved in this direction
+}
+
+// Extended state tracking - CRITICAL for constraints!
+let mut visited: HashMap<State, usize> = HashMap::new();
+
+// Priority queue holds (cost, state) pairs
+heap.push(Node {
+    cost: 0,
+    state: State { pos: start, dir: initial_dir, consecutive: 0 },
+});
+
+while let Some(Node { cost, state }) = heap.pop() {
+    // Goal check now includes constraint validation
+    if state.pos == goal && state.consecutive >= min_straight {
+        return cost;
+    }
+    
+    // Skip if seen this STATE before (not just position!)
+    if let Some(&prev_cost) = visited.get(&state) {
+        if prev_cost <= cost {
+            continue;
+        }
+    }
+    visited.insert(state, cost);
+    
+    // Generate next moves respecting constraints
+    let next_moves = if state.consecutive < min_straight {
+        // MUST continue straight (haven't met minimum)
+        vec![(state.dir, state.consecutive + 1)]
+    } else if state.consecutive >= max_straight {
+        // MUST turn (hit maximum straight)
+        vec![(state.dir.turn_left(), 1), (state.dir.turn_right(), 1)]
+    } else {
+        // Can either continue or turn
+        vec![
+            (state.dir, state.consecutive + 1),      // Straight
+            (state.dir.turn_left(), 1),              // Turn left
+            (state.dir.turn_right(), 1),             // Turn right
+        ]
+    };
+    
+    for (next_dir, next_consecutive) in next_moves {
+        if let Some(next_pos) = move_in_direction(state.pos, next_dir) {
+            let heat_loss = grid.get(next_pos).unwrap();
+            heap.push(Node {
+                cost: cost + heat_loss as usize,
+                state: State {
+                    pos: next_pos,
+                    dir: next_dir,
+                    consecutive: next_consecutive,
+                },
+            });
+        }
+    }
+}
+```
+
+**Day 17 Application**: Clumsy Crucible pathfinding
+- **Problem**: Minimum heat loss path with straight-line movement limits
+- **Constraints**:
+  - Part 1: Max 3 consecutive blocks in same direction
+  - Part 2: Min 4, max 10 consecutive blocks (ultra crucible)
+  - Cannot reverse direction (180° turns forbidden)
+- **State space**:
+  - Part 1: 141×141 grid × 4 directions × 3 consecutive = ~239k states
+  - Part 2: 141×141 grid × 4 directions × 10 consecutive = ~795k states
+- **Performance**: 64.3ms (Part 1), 182.4ms (Part 2)
+
+**Why State Extension Necessary?**
+
+❌ **Position-only tracking fails**:
+```rust
+// WRONG: Only tracks position
+visited: HashSet<Coord>
+
+// Problem: Reaching (5,5) moving Right with 3 consecutive blocks is
+// DIFFERENT from reaching (5,5) moving Down with 1 consecutive block.
+// First state is stuck (can't continue straight), second has flexibility!
+```
+
+✅ **Full state tracking succeeds**:
+```rust
+// CORRECT: Tracks position + constraints
+visited: HashMap<State, usize>  // State = (pos, dir, consecutive)
+
+// Now we can distinguish:
+// - (5,5, Right, 3) vs (5,5, Down, 1)
+// - These are different states with different valid moves!
+```
+
+**Mathematical Foundation**:
+
+**Graph Theory View**:
+- **Vertices**: Each state tuple (position, direction, consecutive_count)
+- **Edges**: Valid moves respecting constraints
+- **Edge weights**: Heat loss values
+- **Path**: Sequence of states from start to goal
+
+**Complexity Analysis**:
+- **Vertices V**: cells × directions × max_consecutive
+- **Edges E**: Each state has ≤3 outgoing edges (straight, left, right)
+- **Dijkstra**: O((E + V) log V) with binary heap
+- **Actual**: O((V × D × C) log(V × D × C))
+- **Part 1**: ~239k states → ~64ms
+- **Part 2**: ~795k states → ~182ms (2.8× slower for 3.3× more states)
+
+**Optimization Opportunities** (not implemented - prioritizing clarity):
+1. **3D visited array**: `bool[141][141][4]` with bitflags for consecutive counts (vs HashMap)
+   - **Benefit**: O(1) lookup vs O(log n) HashMap
+   - **Trade-off**: More complex indexing, fixed grid size
+2. **A* heuristic**: Manhattan distance to goal for early pruning
+   - **Benefit**: Explores fewer states
+   - **Trade-off**: Need admissible heuristic (complex with constraints)
+3. **Bidirectional search**: Meet in the middle from start/goal
+   - **Benefit**: √(states) instead of states explored
+   - **Trade-off**: More complex termination conditions
+
+**Alternatives**:
+- **BFS**: Only works for unweighted graphs (all edges cost 1)
+- **DFS**: No guarantee of shortest path
+- **A* Search**: Better with good heuristic, but Dijkstra simpler for this problem
+- **Bellman-Ford**: Handles negative weights, but slower O(V × E)
+
+**Mission**: Mission 6 (Grid<T> for heat loss map, Coord for positions)
+
+**Zettelkasten**: [[graph-theory-fundamentals]], [[dijkstra-algorithm]], [[state-space-search]]
 
 ### A* Search
 **Day(s)**: TBD  
