@@ -41,6 +41,11 @@
   - Drop cannot return Result
   - Explicit close() methods
   - **Zettelkasten**: [[fallible-destructors]]
+- **3.3: Constrained Interfaces (Hidden Contracts)** ✅ COMPLETE
+  - Re-export hazards and wrapping foreign types
+  - Auto-traits (Send/Sync) as hidden contracts
+  - SemVer trick for dependency migration
+  - **Zettelkasten**: [[auto-traits-send-sync]], [[semver-trick]]
 - **Additional sections**: TBD
 
 ---
@@ -71,6 +76,8 @@
 - **[[alignment-and-layout]]** - Memory layout from Ch2.1
 - **[[cow-borrowed-vs-owned]]** - Conditional ownership from Ch3.1
 - **[[fallible-destructors]]** - Resource cleanup patterns from Ch3.2
+- **[[auto-traits-send-sync]]** - Auto-traits and thread safety from Ch3.3
+- **[[semver-trick]]** - Dependency version migration from Ch3.3
 
 ---
 

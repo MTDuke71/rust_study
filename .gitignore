@@ -59,6 +59,9 @@ desktop.ini
 .claude/settings.local.json
 nul
 
+# Oxide's private learning journal (local only)
+.github/OXIDE_LEARNING_JOURNAL.md
+
 # Generated output files
 broken links output.md
 initial-clippy.json

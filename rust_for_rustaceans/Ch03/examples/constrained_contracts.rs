@@ -76,6 +76,8 @@ struct SafeType {
 }
 
 /// Unsafe marker to prevent Send
+/// *const () is a raw pointer - raw pointers do NOT implement Send
+/// because they can't be safely sent across thread boundaries
 #[allow(dead_code)]  // Demonstration struct
 struct NotSend {
     _marker: PhantomData<*const ()>,

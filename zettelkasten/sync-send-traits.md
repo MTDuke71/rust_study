@@ -96,4 +96,4 @@ Manual `unsafe impl Send/Sync for MyType {}` should be rare and justified. Befor
 
 *Tags: #concurrency #thread-safety #pattern #rust-book #intermediate*
 
-*Links: [[zettel-index]] | [[rust-threading-basics]] | [[shared-state-concurrency]] | [[message-passing-channels]] | [[Send and Sync Deep Dive]] | [[deterministic-debugging]] | [[future-trait-deep-dive]]*
+*Links: [[zettel-index]] | [[rust-threading-basics]] | [[shared-state-concurrency]] | [[message-passing-channels]] | [[Send and Sync Deep Dive]] | [[deterministic-debugging]] | [[future-trait-deep-dive]] | [[auto-traits-send-sync]]*
