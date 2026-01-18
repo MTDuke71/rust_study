@@ -65,6 +65,36 @@ fn parse_grid(input: &str) -> Grid<u8> {
     Grid::from_vec2d(vec2d)
 }
 
+/// Find minimum heat loss path using Dijkstra's algorithm with movement constraints.
+///
+/// # Why Dijkstra's Algorithm Works (The Fundamental Truth)
+///
+/// Dijkstra works because **min-heap ordering + greedy exploration creates a mathematical
+/// guarantee**: the first time you reach the goal, no cheaper path can possibly exist,
+/// because you've already explored (or will never need to explore) all alternatives.
+///
+/// ## The Chain of Reasoning:
+///
+/// 1. **Min-heap ensures cheapest-first exploration**: You always explore the lowest-cost
+///    path from the frontier.
+///
+/// 2. **Greedy optimality**: Once you've explored all cheaper paths and none reached the
+///    goal, the current path MUST be optimal.
+///
+/// 3. **Proof by exhaustion**: If a cheaper path to the goal existed, you would have already
+///    explored it (since the heap pops lowest cost first).
+///
+/// 4. **Heap transitivity**: If path A costs less than path B, you pop A first. Any path
+///    discovered from A will be compared against B before B gets popped.
+///
+/// 5. **The invariant**: When you pop a state from the heap, you've already explored all
+///    cheaper ways to reach ANY state.
+///
+/// 6. **Heap property guarantee**: Parent ≤ children means you cannot pop a node with
+///    cost X until all nodes with cost < X have been popped first.
+///
+/// **It's not about being "smart"—it's about mathematical impossibility of finding a cheaper
+/// path once you've exhausted all lower-cost options.**
 fn find_min_heat_loss(grid: &Grid<u8>, min_straight: u8, max_straight: u8) -> usize {
     let start = Coord::new(0, 0);
     let goal = Coord::new(grid.width() - 1, grid.height() - 1);
