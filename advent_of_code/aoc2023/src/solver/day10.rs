@@ -114,7 +114,7 @@ fn pipes_connect(grid: &Grid<char>, from: Coord, dir: Dir) -> bool {
 }
 
 /// Find the starting position 'S' in the grid
-fn find_start(grid: &Grid<char>) -> Option<Coord> {
+pub fn find_start(grid: &Grid<char>) -> Option<Coord> {
     for (coord, &ch) in grid.enumerate() {
         if ch == 'S' {
             return Some(coord);
@@ -153,7 +153,7 @@ fn find_loop_distances(grid: &Grid<char>, start: Coord) -> HashMap<Coord, usize>
 }
 
 /// Parse the input into a Grid<char>
-fn parse_grid(input: &str) -> Grid<char> {
+pub fn parse_grid(input: &str) -> Grid<char> {
     let lines: Vec<&str> = input.lines().collect();
     let height = lines.len();
     let width = lines[0].len();
@@ -258,6 +258,72 @@ fn determine_start_pipe(grid: &Grid<char>, start: Coord) -> char {
         (false, true, true, false) => 'F',
         _ => 'S', // Shouldn't happen in valid input
     }
+}
+
+/// Trace the loop and return ordered vertices as (x, y) coordinates
+///
+/// This converts the pipe loop into a polygon for use with Shoelace formula.
+/// Starting from 'S', follows the pipes in order to build the vertex list.
+pub fn find_loop_vertices(grid: &Grid<char>, start: Coord) -> Vec<(i64, i64)> {
+    let mut vertices = Vec::new();
+    let mut visited = std::collections::HashSet::new();
+    let mut current = start;
+    
+    // Add starting vertex
+    vertices.push((start.x as i64, start.y as i64));
+    visited.insert(start);
+    
+    // Find first connected neighbor
+    let mut prev_dir = None;
+    for dir in [Dir::North, Dir::South, Dir::East, Dir::West] {
+        if pipes_connect(grid, current, dir) {
+            if let Some(next) = move_coord(grid, current, dir) {
+                current = next;
+                prev_dir = Some(dir);
+                vertices.push((current.x as i64, current.y as i64));
+                visited.insert(current);
+                break;
+            }
+        }
+    }
+    
+    // Follow the loop until we return to start
+    while current != start {
+        let mut found_next = false;
+        
+        // Try all directions except where we came from
+        for dir in [Dir::North, Dir::South, Dir::East, Dir::West] {
+            // Don't go back the way we came
+            if Some(dir.opposite()) == prev_dir {
+                continue;
+            }
+            
+            if pipes_connect(grid, current, dir) {
+                if let Some(next) = move_coord(grid, current, dir) {
+                    if next == start {
+                        // Completed the loop
+                        return vertices;
+                    }
+                    
+                    if !visited.contains(&next) {
+                        current = next;
+                        prev_dir = Some(dir);
+                        vertices.push((current.x as i64, current.y as i64));
+                        visited.insert(current);
+                        found_next = true;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        if !found_next {
+            // Shouldn't happen with valid input
+            break;
+        }
+    }
+    
+    vertices
 }
 
 /// Count how many tiles are enclosed by the loop
