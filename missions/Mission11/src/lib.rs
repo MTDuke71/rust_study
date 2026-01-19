@@ -80,12 +80,46 @@
 //! }
 //! ```
 //! 
+//! # State Space Design Patterns (REQ-5)
+//! 
+//! Five canonical patterns for representing DP state in Rust:
+//! 
+//! ```rust
+//! use mission11::state_patterns::*;
+//! use std::collections::HashMap;
+//! 
+//! // Pattern 1: String Suffixes (&'a str)
+//! let patterns = vec!["ab", "cd"];
+//! let mut memo1 = HashMap::new();
+//! string_suffix_pattern("abcd", &patterns, &mut memo1);
+//! 
+//! // Pattern 2: Index Positions (usize)
+//! let arr = vec![1, 2, 3];
+//! let mut memo2 = HashMap::new();
+//! index_position_pattern(0, &arr, &mut memo2);
+//! 
+//! // Pattern 3: Coordinate Pairs ((x, y))
+//! let grid = vec![vec![1, 2], vec![3, 4]];
+//! let mut memo3 = HashMap::new();
+//! coordinate_pair_pattern((0, 0), (1, 1), &grid, &mut memo3);
+//! 
+//! // Pattern 4: Composite State (u64, usize)
+//! let mut memo4 = HashMap::new();
+//! composite_state_pattern((125, 3), &mut memo4);
+//! 
+//! // Pattern 5: Custom Structs
+//! let mut memo5 = HashMap::new();
+//! let state = GameState { player_hp: 50, boss_hp: 100, turn: 0, mana: 500 };
+//! custom_struct_pattern(state, &mut memo5);
+//! ```
+//! 
 //! # Integration Points
 //! - [[AoC 2023 Day 12]]: Hot Springs constraint satisfaction
 //! - [[AoC 2024 Day 19]]: Linen Layout string pattern matching
 //! - [[AoC 2024 Day 11]]: Stone Multiplication numeric state caching
 
 pub mod memo_cache;
+pub mod state_patterns;
 pub mod string_dp;
 
 // Re-export core types

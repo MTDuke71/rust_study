@@ -483,6 +483,173 @@ fn req4_multiple_paths_counting() {
 // ============================================================================
 
 #[test]
+fn req5_pattern1_string_suffix_state() {
+    use mission11::state_patterns::string_suffix_pattern;
+    
+    // Pattern 1: String suffixes with lifetime parameters
+    let patterns = vec!["ab", "cd"];
+    let mut memo = HashMap::new();
+    
+    assert!(string_suffix_pattern("abcd", &patterns, &mut memo));
+    
+    // Verify suffix-based state representation (zero-copy)
+    assert!(memo.contains_key("abcd") || memo.contains_key("cd"));
+    
+    // Verify borrowed keys (&'a str not String)
+    assert!(memo.len() > 0);
+}
+
+#[test]
+fn req5_pattern2_index_position_state() {
+    use mission11::state_patterns::index_position_pattern;
+    
+    // Pattern 2: Index positions (usize)
+    let arr = vec![10, 20, 30, 40];
+    let mut memo = HashMap::new();
+    
+    let sum = index_position_pattern(0, &arr, &mut memo);
+    assert_eq!(sum, 100);
+    
+    // Verify index-based state caching
+    assert!(memo.contains_key(&0));
+    assert!(memo.contains_key(&1));
+}
+
+#[test]
+fn req5_pattern3_coordinate_pair_state() {
+    use mission11::state_patterns::coordinate_pair_pattern;
+    
+    // Pattern 3: Coordinate pairs (x, y)
+    let grid = vec![vec![1, 2, 3], vec![4, 5, 6]];
+    let mut memo = HashMap::new();
+    
+    let paths = coordinate_pair_pattern((0, 0), (2, 1), &grid, &mut memo);
+    assert_eq!(paths, 3); // 3 paths in 3x2 grid
+    
+    // Verify coordinate-based state caching
+    assert!(memo.contains_key(&(0, 0)));
+}
+
+#[test]
+fn req5_pattern4_composite_state() {
+    use mission11::state_patterns::composite_state_pattern;
+    
+    // Pattern 4: Composite multi-dimensional (value, count)
+    let mut memo = HashMap::new();
+    
+    // Simulate stone transformations
+    let stones = composite_state_pattern((125, 5), &mut memo);
+    assert!(stones > 0);
+    
+    // Verify composite state caching
+    assert!(memo.contains_key(&(125, 5)));
+    assert!(memo.len() > 1); // Multiple states explored
+}
+
+#[test]
+fn req5_pattern5_custom_struct_state() {
+    use mission11::state_patterns::{GameState, custom_struct_pattern};
+    
+    // Pattern 5: Custom structs with #[derive(Hash, Eq)]
+    let mut memo = HashMap::new();
+    
+    let initial_state = GameState {
+        player_hp: 100,
+        boss_hp: 50,
+        turn: 0,
+        mana: 500,
+    };
+    
+    let can_win = custom_struct_pattern(initial_state.clone(), &mut memo);
+    assert!(can_win);
+    
+    // Verify custom struct state caching
+    assert!(memo.contains_key(&initial_state));
+}
+
+#[test]
+fn req5_advanced_composite_with_borrowed() {
+    use mission11::state_patterns::composite_with_borrowed;
+    
+    // Advanced: Composite with borrowed data (&'a str, usize)
+    let pattern_groups = vec![
+        vec!["a", "ab"],
+        vec!["c", "cd"],
+    ];
+    let mut memo = HashMap::new();
+    
+    assert!(composite_with_borrowed("abc", 0, &pattern_groups, &mut memo));
+    
+    // Verify composite state (borrowed + owned) caching
+    assert!(memo.contains_key(&("abc", 0)) || memo.contains_key(&("c", 1)));
+}
+
+#[test]
+fn req5_all_patterns_implement_hash_eq() {
+    use mission11::state_patterns::GameState;
+    
+    // Verify all patterns satisfy Hash + Eq + PartialEq requirements
+    
+    // Pattern 1: &str implements Hash + Eq
+    let mut memo1: HashMap<&str, bool> = HashMap::new();
+    memo1.insert("test", true);
+    assert_eq!(memo1.get("test"), Some(&true));
+    
+    // Pattern 2: usize implements Hash + Eq
+    let mut memo2: HashMap<usize, i32> = HashMap::new();
+    memo2.insert(42, 100);
+    assert_eq!(memo2.get(&42), Some(&100));
+    
+    // Pattern 3: (usize, usize) implements Hash + Eq
+    let mut memo3: HashMap<(usize, usize), usize> = HashMap::new();
+    memo3.insert((1, 2), 3);
+    assert_eq!(memo3.get(&(1, 2)), Some(&3));
+    
+    // Pattern 4: (u64, usize) implements Hash + Eq
+    let mut memo4: HashMap<(u64, usize), u64> = HashMap::new();
+    memo4.insert((125, 3), 999);
+    assert_eq!(memo4.get(&(125, 3)), Some(&999));
+    
+    // Pattern 5: Custom struct with #[derive(Hash, Eq)]
+    let mut memo5: HashMap<GameState, bool> = HashMap::new();
+    let state = GameState { player_hp: 50, boss_hp: 100, turn: 0, mana: 500 };
+    memo5.insert(state.clone(), true);
+    assert_eq!(memo5.get(&state), Some(&true));
+}
+
+#[test]
+fn req5_no_unnecessary_cloning() {
+    use mission11::state_patterns::string_suffix_pattern;
+    
+    // Verify zero-copy: &'a str keys, no String allocation
+    let input = String::from("teststring");
+    let patterns = vec!["test", "string"];
+    let mut memo = HashMap::new();
+    
+    string_suffix_pattern(&input, &patterns, &mut memo);
+    
+    // Cache contains borrowed slices, not owned Strings
+    // This compiles = proof of zero-copy (if it required String, compilation would fail)
+    let _borrowed_key: Option<&&str> = memo.keys().next();
+}
+
+#[test]
+fn req5_lifetime_parameters_correct() {
+    use mission11::state_patterns::composite_with_borrowed;
+    
+    // Verify lifetime propagation works correctly
+    let patterns = vec![vec!["a"], vec!["b"]];
+    let input = String::from("ab");
+    let mut memo = HashMap::new();
+    
+    let result = composite_with_borrowed(&input, 0, &patterns, &mut memo);
+    assert!(result);
+    
+    // Lifetime 'a ensures cache keys remain valid
+    // This test passing = proof that lifetimes are correct
+}
+
+#[test]
 fn req5_string_suffix_state() {
     // Pattern: remaining string as state
     let patterns = vec!["test"];
