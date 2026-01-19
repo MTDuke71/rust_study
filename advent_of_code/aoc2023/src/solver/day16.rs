@@ -17,10 +17,10 @@ enum Direction {
 impl Direction {
     fn offset(&self) -> (isize, isize) {
         match self {
-            Direction::Up => (0, -1),    // y decreases
-            Direction::Down => (0, 1),   // y increases
-            Direction::Left => (-1, 0),  // x decreases
-            Direction::Right => (1, 0),  // x increases
+            Direction::Up => (0, -1),   // y decreases
+            Direction::Down => (0, 1),  // y increases
+            Direction::Left => (-1, 0), // x decreases
+            Direction::Right => (1, 0), // x increases
         }
     }
 }
@@ -112,7 +112,7 @@ fn trace_beam(grid: &Grid<Tile>, start_pos: Coord, start_dir: Direction) -> usiz
             // Mission 6 Coord uses usize, so we need to handle signed arithmetic carefully
             let next_x = pos.x as isize + dx;
             let next_y = pos.y as isize + dy;
-            
+
             if next_x >= 0 && next_y >= 0 {
                 let next_pos = Coord::new(next_x as usize, next_y as usize);
                 beams.push((next_pos, next_dir));
@@ -139,14 +139,14 @@ pub fn solve_part2(input: &str) -> usize {
 
     // Top and bottom edges
     for x in 0..width {
-        starts.push((Coord::new(x, 0), Direction::Down));           // Top edge going down
-        starts.push((Coord::new(x, height - 1), Direction::Up));    // Bottom edge going up
+        starts.push((Coord::new(x, 0), Direction::Down)); // Top edge going down
+        starts.push((Coord::new(x, height - 1), Direction::Up)); // Bottom edge going up
     }
 
     // Left and right edges
     for y in 0..height {
-        starts.push((Coord::new(0, y), Direction::Right));          // Left edge going right
-        starts.push((Coord::new(width - 1, y), Direction::Left));   // Right edge going left
+        starts.push((Coord::new(0, y), Direction::Right)); // Left edge going right
+        starts.push((Coord::new(width - 1, y), Direction::Left)); // Right edge going left
     }
 
     // Use Rayon to parallelize the traces - 11.67× speedup!

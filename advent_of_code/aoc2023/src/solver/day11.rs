@@ -37,12 +37,16 @@ fn parse_galaxies(input: &str) -> Vec<Position> {
 
 fn find_empty_rows(galaxies: &[Position], max_row: usize) -> Vec<usize> {
     let occupied_rows: std::collections::HashSet<_> = galaxies.iter().map(|(r, _)| *r).collect();
-    (0..=max_row).filter(|r| !occupied_rows.contains(r)).collect()
+    (0..=max_row)
+        .filter(|r| !occupied_rows.contains(r))
+        .collect()
 }
 
 fn find_empty_cols(galaxies: &[Position], max_col: usize) -> Vec<usize> {
     let occupied_cols: std::collections::HashSet<_> = galaxies.iter().map(|(_, c)| *c).collect();
-    (0..=max_col).filter(|c| !occupied_cols.contains(c)).collect()
+    (0..=max_col)
+        .filter(|c| !occupied_cols.contains(c))
+        .collect()
 }
 
 fn calculate_distance_with_expansion(
@@ -54,43 +58,45 @@ fn calculate_distance_with_expansion(
 ) -> usize {
     let (r1, c1) = pos1;
     let (r2, c2) = pos2;
-    
+
     let min_row = r1.min(r2);
     let max_row = r1.max(r2);
     let min_col = c1.min(c2);
     let max_col = c1.max(c2);
-    
+
     // Count empty rows between the two galaxies
-    let empty_rows_between = empty_rows.iter()
+    let empty_rows_between = empty_rows
+        .iter()
         .filter(|&&r| r > min_row && r < max_row)
         .count();
-    
+
     // Count empty columns between the two galaxies
-    let empty_cols_between = empty_cols.iter()
+    let empty_cols_between = empty_cols
+        .iter()
         .filter(|&&c| c > min_col && c < max_col)
         .count();
-    
+
     // Base Manhattan distance
     let base_distance = (max_row - min_row) + (max_col - min_col);
-    
+
     // Each empty row/col expands by (expansion_factor - 1) additional units
     // For Part 1: expansion_factor = 2 (doubles), so adds 1 extra per empty row/col
     // For Part 2: expansion_factor = 1_000_000, so adds 999_999 extra per empty row/col
-    let expansion_offset = empty_rows_between * (expansion_factor - 1)
-                         + empty_cols_between * (expansion_factor - 1);
-    
+    let expansion_offset =
+        empty_rows_between * (expansion_factor - 1) + empty_cols_between * (expansion_factor - 1);
+
     base_distance + expansion_offset
 }
 
 fn solve_with_expansion(input: &str, expansion_factor: usize) -> Result<String> {
     let galaxies = parse_galaxies(input);
-    
+
     let max_row = input.lines().count() - 1;
     let max_col = input.lines().next().unwrap_or("").len() - 1;
-    
+
     let empty_rows = find_empty_rows(&galaxies, max_row);
     let empty_cols = find_empty_cols(&galaxies, max_col);
-    
+
     // Calculate sum of all pairwise distances
     let mut total = 0;
     for i in 0..galaxies.len() {
@@ -105,7 +111,7 @@ fn solve_with_expansion(input: &str, expansion_factor: usize) -> Result<String> 
             total += dist;
         }
     }
-    
+
     Ok(total.to_string())
 }
 

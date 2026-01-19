@@ -3,17 +3,18 @@
 ## 📊 Stats Dashboard
 
 | Metric | Value |
-|--------|-------|\n| **Progress** | 17/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 344.4ms |
+|--------|-------|
+| **Progress** | 18/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 344.6ms |
 | **Mission Integration** | 5 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6, Day 17: Mission 6) |
-| **Patterns Extracted** | 14 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection) |
+| **Patterns Extracted** | 15 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection, mathematical polygon area calculation) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) |
-Day 18 | Day 19 | Day 20 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) | [Day 18](#day-18-lavaduct-lagoon) |
+Day 19 | Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
@@ -1966,7 +1967,196 @@ This explains why Part 2 is ~2.8× slower despite same grid size.
 - [[graph-theory-fundamentals]] - State-space graphs, weighted edges
 - [[state-space-search]] - Extended states for constraint satisfaction
 
-**Links**: ← [Day 16](#day-16-the-floor-will-be-lava) | Day 18 →
+**Links**: ← [Day 16](#day-16-the-floor-will-be-lava) | [Day 18](#day-18-lavaduct-lagoon) →
+
+---
+
+### Day 18: Lavaduct Lagoon
+
+**Part 1**: Calculate volume of lagoon traced by dig instructions (direction, distance, color) → **47527**  
+**Part 2**: Decode hex colors into real instructions (first 5 digits = distance, last digit = direction) → **52240187443190**  
+
+**Algorithm**: Shoelace Formula (polygon area) + Pick's Theorem (lattice points)  
+**Complexity**: O(n) where n = number of instructions  
+**Runtime**: 194.1µs (Part 1: 86.6µs, Part 2: 107.5µs)  
+**Mission**: None (pure mathematical approach - no grid needed!)  
+
+**Key Insight**: Part 2 scales coordinates to TRILLIONS of cells (52 trillion lagoon capacity). Grid-based brute force would be impossible. **Mathematical approach wins**: Shoelace computes area from vertices only (O(n) time, O(n) space), Pick's Theorem relates area to lattice points. Combined formula: `Total = Shoelace_Area + Perimeter/2 + 1`. This scales to ANY coordinate size because we only process vertices (715 instructions), never individual cells.
+
+**Rust Highlights**:
+- **Vertex tracing**: Follow instructions to build polygon corner points only (not every grid cell)
+- **Cross-product accumulation**: Shoelace formula as running sum of `x_i * y_{i+1} - x_{i+1} * y_i`
+- **Hex decoding**: `i64::from_str_radix(&color[0..5], 16)` for 5-digit distance, match last digit for direction
+- **Integer arithmetic**: All i64 operations, no floating point needed
+- **Zero grid storage**: Only `Vec<(i64, i64)>` for vertices (~715 points) vs theoretical 52 trillion cells
+
+**Code Highlight**:
+```rust
+/// Calculate polygon area using Shoelace formula
+/// Formula: Area = 1/2 * |Σ(x_i * y_{i+1} - x_{i+1} * y_i)|
+fn shoelace_area(vertices: &[(i64, i64)]) -> i64 {
+    let n = vertices.len();
+    let mut sum = 0i64;
+    
+    for i in 0..n - 1 {
+        let (x1, y1) = vertices[i];
+        let (x2, y2) = vertices[i + 1];
+        sum += x1 * y2 - x2 * y1;  // Cross product
+    }
+    
+    // Close the polygon (last vertex to first)
+    let (x1, y1) = vertices[n - 1];
+    let (x2, y2) = vertices[0];
+    sum += x1 * y2 - x2 * y1;
+    
+    sum.abs() / 2
+}
+
+/// Trace polygon vertices by following dig instructions
+fn trace_polygon(instructions: &[Instruction]) -> (Vec<(i64, i64)>, i64) {
+    let mut vertices = vec![(0, 0)];
+    let mut current = (0i64, 0i64);
+    let mut perimeter = 0;
+    
+    for instr in instructions {
+        // Move current position based on direction
+        current = match instr.direction {
+            'U' => (current.0, current.1 - instr.distance),
+            'D' => (current.0, current.1 + instr.distance),
+            'L' => (current.0 - instr.distance, current.1),
+            'R' => (current.0 + instr.distance, current.1),
+            _ => current,
+        };
+        
+        vertices.push(current);
+        perimeter += instr.distance;
+    }
+    
+    (vertices, perimeter)
+}
+
+pub fn solve_part1(input: &str) -> Result<String> {
+    let instructions = parse_input(input)?;
+    let (vertices, perimeter) = trace_polygon(&instructions);
+    let shoelace = shoelace_area(&vertices);
+    
+    // Apply Pick's theorem rearranged: Total = Area + Perimeter/2 + 1
+    // Derivation:
+    //   Pick's: A = I + B/2 - 1  (A=area, I=interior, B=boundary)
+    //   Rearrange: I = A - B/2 + 1
+    //   Total cells = I + B = (A - B/2 + 1) + B = A + B/2 + 1
+    let total_area = shoelace + perimeter / 2 + 1;
+    
+    Ok(total_area.to_string())
+}
+
+pub fn solve_part2(input: &str) -> Result<String> {
+    let instructions = parse_input(input)?;
+    
+    // Decode hex colors into real instructions
+    let decoded: Vec<Instruction> = instructions
+        .iter()
+        .map(|instr| instr.decode_from_hex())
+        .collect::<Result<Vec<_>>>()?;
+    
+    // Same algorithm works! Still O(n) regardless of coordinate scale
+    let (vertices, perimeter) = trace_polygon(&decoded);
+    let shoelace = shoelace_area(&vertices);
+    let total_area = shoelace + perimeter / 2 + 1;
+    
+    Ok(total_area.to_string())
+}
+```
+
+**Why Mathematical Approach?**
+
+**Part 1 considerations**:
+- Grid-based flood fill: Create 2D array, trace boundary, flood interior
+- Works for small grids but requires O(W × H) space and time
+- Example: 10×10 grid = 100 cells (feasible)
+
+**Part 2 reality check**:
+- Hex-decoded distances: 461937, 863240, 577262, 829975... (hundreds of thousands per instruction)
+- Total polygon spans ~7 million × 9 million coordinate space
+- **Grid approach would need 63 TRILLION cells** - completely impossible
+- **Mathematical approach needs 715 vertices** - trivial!
+
+**Shoelace Formula** (Gauss's Area Formula):
+
+For polygon with vertices $(x_0, y_0), ..., (x_{n-1}, y_{n-1})$:
+
+$$\text{Area} = \frac{1}{2} \left| \sum_{i=0}^{n-1} (x_i \cdot y_{i+1} - x_{i+1} \cdot y_i) \right|$$
+
+**Intuition**: 
+- Each term $(x_i \cdot y_{i+1} - x_{i+1} \cdot y_i)$ is **signed area** of trapezoid under edge $(i, i+1)$
+- Summing all trapezoids gives total signed area
+- Works regardless of coordinate magnitude - only vertex count matters!
+
+**Pick's Theorem** (1899):
+
+For simple lattice polygon:
+
+$$A = I + \frac{B}{2} - 1$$
+
+Where A=area, I=interior lattice points, B=boundary lattice points
+
+**Rearranged for AoC** (we want total cells I + B):
+
+$$I + B = A + \frac{B}{2} + 1$$
+
+**Why this works**:
+- Shoelace gives us geometric area A
+- Perimeter sum gives us boundary points B
+- Pick's formula connects them to count actual grid cells
+- All integer arithmetic, exact results!
+
+**Hex Decoding Details**:
+
+Format: `#XXXXXD` where:
+- `XXXXX` = 5-digit hexadecimal distance (e.g., `70c71` = 461937)
+- `D` = direction digit (0=R, 1=D, 2=L, 3=U)
+
+Example: `#70c710` → R 461937
+
+```rust
+fn decode_from_hex(&self) -> Result<Instruction> {
+    let distance_hex = &self.color[0..5];
+    let distance = i64::from_str_radix(distance_hex, 16)?;
+    
+    let direction = match &self.color[5..6] {
+        "0" => 'R', "1" => 'D', "2" => 'L', "3" => 'U',
+        _ => bail!("Invalid direction"),
+    };
+    
+    Ok(Instruction { direction, distance, color: self.color.clone() })
+}
+```
+
+**Performance Analysis**:
+
+| Part | Vertices | Perimeter | Area | Runtime | Cells |
+|------|----------|-----------|------|---------|-------|
+| Part 1 | 715 | ~30k | ~24k | 86.6µs | 47,527 |
+| Part 2 | 715 | ~62M | ~52T | 107.5µs | 52,240,187,443,190 |
+
+**Key observation**: Part 2 is only 24% slower despite 1 trillion× more cells! This is because:
+- Algorithm complexity: O(n) where n = instructions (same: 715)
+- Larger numbers: i64 arithmetic slightly slower on larger values
+- No grid traversal: Never touch individual cells
+
+**Tests**:
+- ✅ Part 1 example (62 cubic meters)
+- ✅ Part 2 example (952,408,144,115 cubic meters)
+- ✅ Instruction parsing (direction, distance, color)
+- ✅ Hex decoding (all 4 directions, large distances)
+- ✅ Polygon tracing (vertices + perimeter calculation)
+
+**Zettelkasten**:
+- [[computational-geometry-basics]] - Shoelace Formula, Pick's Theorem proofs
+- [[number-theory-basics]] - Lattice points, integer coordinates
+- [[hexadecimal-encoding]] - Base-16 number systems
+
+**Links**: ← [Day 17](#day-17-clumsy-crucible) | Day 19 →
 
 ---
 

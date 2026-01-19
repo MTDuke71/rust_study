@@ -48,6 +48,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Dijkstra's Algorithm (State-Space) | Day 17 | O((V×D×C) log(V×D×C)) | [[graph-theory-fundamentals]] |
 | Priority Queue (BinaryHeap) | Day 17 | O(log n) push/pop | - |
 | Extended State Tracking | Day 17 | O(state_space) | [[state-space-search]] |
+| Shoelace Formula (Polygon Area) | Day 18 | O(n) | [[computational-geometry-basics]] |
+| Pick's Theorem (Lattice Points) | Day 18 | O(1) | [[computational-geometry-basics]] |
+| Hexadecimal Decoding | Day 18 | O(1) per instruction | [[number-theory-basics]] |
 
 ---
 
@@ -1571,6 +1574,39 @@ Day 15 Part 2 simulates a simplified HashMap with:
 | Mission 5 (HashMap) | HashSet membership testing, O(1) lookups | Day 4 |
 | Mission 6 (Grid) | Grid traversal, 8-directional neighbors, spatial indexing | Day 3, Day 10 |
 | Mission 8 (Graph/BFS) | BFS loop traversal, shortest path finding | Day 10 |
+
+---
+
+### Shoelace Formula + Pick's Theorem (Day 18)
+
+**Problem**: Calculate area of polygon traced by dig instructions (Part 2 scales to trillions of cells).
+
+**Algorithms**:
+1. **Shoelace Formula** (Gauss's Area Formula) - Compute polygon area from vertices
+2. **Pick's Theorem** - Relate area to lattice points (interior + boundary)
+
+**Mathematical Foundation**:
+
+**Shoelace Formula**:
+$$\text{Area} = \frac{1}{2} \left| \sum_{i=0}^{n-1} (x_i \cdot y_{i+1} - x_{i+1} \cdot y_i) \right|$$
+
+**Pick's Theorem**:
+$$A = I + \frac{B}{2} - 1$$
+
+Where A=area, I=interior lattice points, B=boundary lattice points.
+
+**Rearranged** (for total cells):
+$$I + B = A + \frac{B}{2} + 1$$
+
+**Why This Matters**: Part 2 has 52,240,187,443,190 cells but only 715 vertices - mathematical approach scales to ANY coordinate size! Grid-based brute force would be impossible.
+
+**Complexity**: O(n) where n = vertices (not cells!)
+
+**Runtime**: 86.6µs Part 1, 107.5µs Part 2 (only 24% slower despite trillion× more cells)
+
+**Zettelkasten**: [[computational-geometry-basics]], [[number-theory-basics]]
+
+---
 
 ## 📝 Notes
 

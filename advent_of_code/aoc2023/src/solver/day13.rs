@@ -69,7 +69,7 @@ fn parse_patterns(input: &str) -> Result<Vec<Vec<Vec<char>>>> {
 
 /// Find the reflection score for a single pattern with specified target Hamming distance
 /// Returns columns_left + (100 × rows_above)
-/// 
+///
 /// # Parameters
 /// - `target_distance`: 0 for perfect reflection, 1 for smudge reflection
 ///
@@ -90,7 +90,10 @@ fn find_reflection_score(pattern: &[Vec<char>], target_distance: usize) -> usize
     }
 
     // Should always find a reflection per problem statement
-    panic!("No reflection found in pattern with Hamming distance {}", target_distance);
+    panic!(
+        "No reflection found in pattern with Hamming distance {}",
+        target_distance
+    );
 }
 
 /// Find horizontal reflection line (returns rows ABOVE the reflection line)

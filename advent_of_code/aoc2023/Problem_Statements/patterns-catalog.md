@@ -45,6 +45,10 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | BinaryHeap Priority Queue (Min-Heap) | Day 17 | `day17.rs` |
 | HashMap for Visited State Tracking | Day 17 | `day17.rs` |
 | Constraint-Based Move Generation | Day 17 | `day17.rs` |
+| Vertex-Only Polygon Tracing | Day 18 | `day18.rs` |
+| Cross-Product Accumulation (Shoelace) | Day 18 | `day18.rs` |
+| Mathematical Formula Composition | Day 18 | `day18.rs` |
+| Hex String Parsing with Radix | Day 18 | `day18.rs` |
 
 ---
 

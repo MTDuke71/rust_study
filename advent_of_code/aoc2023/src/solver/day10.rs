@@ -263,14 +263,14 @@ fn determine_start_pipe(grid: &Grid<char>, start: Coord) -> char {
 /// Count how many tiles are enclosed by the loop
 ///
 /// # Algorithm: Jordan Curve Theorem (Horizontal Ray Casting)
-/// 
+///
 /// Scans each row left-to-right, counting how many loop boundaries are crossed.
 /// Odd crossings = inside, even crossings = outside.
-/// 
+///
 /// # Related Problems
 /// - **AoC 2025 Day 9**: Same algorithm for continuous polygon (see `aoc2025/examples/animate_ray_casting.py`)
 /// - **Pattern**: Works for both discrete grids (this) and continuous spaces (Day 9)
-/// 
+///
 /// # Complexity
 /// - Time: O(width × height) - single pass through grid
 /// - Space: O(loop_size) - store loop tile positions
@@ -460,18 +460,18 @@ pub fn visualize_loop(input: &str) -> String {
     let grid = parse_grid(input);
     let start = find_start(&grid).expect("Should find starting position 'S'");
     let loop_tiles = find_loop_distances(&grid, start);
-    
+
     let mut output = String::new();
     output.push_str("Pipe Maze - Loop Highlighted:\n");
     output.push_str(&"─".repeat(grid.width() + 2));
     output.push('\n');
-    
+
     for y in 0..grid.height() {
         output.push('│');
         for x in 0..grid.width() {
             let coord = Coord::new(x, y);
             let ch = grid[coord];
-            
+
             if loop_tiles.contains_key(&coord) {
                 // Highlight loop tiles with colored Unicode box drawing
                 let display = match ch {
@@ -486,13 +486,13 @@ pub fn visualize_loop(input: &str) -> String {
                 };
                 output.push(display);
             } else {
-                output.push('·');  // Non-loop tiles
+                output.push('·'); // Non-loop tiles
             }
         }
         output.push('│');
         output.push('\n');
     }
-    
+
     output.push_str(&"─".repeat(grid.width() + 2));
     output.push('\n');
     output
@@ -504,17 +504,17 @@ pub fn visualize_distances(input: &str) -> String {
     let start = find_start(&grid).expect("Should find starting position 'S'");
     let loop_tiles = find_loop_distances(&grid, start);
     let max_dist = loop_tiles.values().max().unwrap_or(&0);
-    
+
     let mut output = String::new();
     output.push_str(&format!("Distance Map (max distance: {}):\n", max_dist));
     output.push_str(&"─".repeat(grid.width() * 3 + 2));
     output.push('\n');
-    
+
     for y in 0..grid.height() {
         output.push('│');
         for x in 0..grid.width() {
             let coord = Coord::new(x, y);
-            
+
             if let Some(&dist) = loop_tiles.get(&coord) {
                 output.push_str(&format!("{:2} ", dist));
             } else {
@@ -524,16 +524,16 @@ pub fn visualize_distances(input: &str) -> String {
         output.push('│');
         output.push('\n');
     }
-    
+
     output.push_str(&"─".repeat(grid.width() * 3 + 2));
     output.push('\n');
     output
 }
 
 /// Visualize inside/outside tiles (Part 2)
-/// 
+///
 /// Uses ray casting to show which tiles are inside vs outside the loop.
-/// 
+///
 /// # See Also
 /// - `solve_part2()`: Uses same algorithm to count inside tiles
 /// - AoC 2025 Day 9: Same ray casting pattern for continuous polygons
@@ -543,7 +543,7 @@ pub fn visualize_inside_outside(input: &str) -> String {
     let start = find_start(&grid).expect("Should find starting position 'S'");
     let loop_tiles = find_loop_distances(&grid, start);
     let start_pipe = determine_start_pipe(&grid, start);
-    
+
     let mut output = String::new();
     output.push_str("Inside/Outside Map:\n");
     output.push_str("  ● = Loop tile\n");
@@ -551,23 +551,23 @@ pub fn visualize_inside_outside(input: &str) -> String {
     output.push_str("  · = Outside loop\n");
     output.push_str(&"─".repeat(grid.width() + 2));
     output.push('\n');
-    
+
     for y in 0..grid.height() {
         output.push('│');
         let mut inside = false;
         let mut enter_corner: Option<char> = None;
-        
+
         for x in 0..grid.width() {
             let coord = Coord::new(x, y);
             let mut ch = grid[coord];
-            
+
             if ch == 'S' {
                 ch = start_pipe;
             }
-            
+
             if loop_tiles.contains_key(&coord) {
-                output.push('●');  // Loop tile
-                
+                output.push('●'); // Loop tile
+
                 // Update inside/outside state
                 match ch {
                     '|' => inside = !inside,
@@ -587,15 +587,15 @@ pub fn visualize_inside_outside(input: &str) -> String {
                     _ => {}
                 }
             } else if inside {
-                output.push('█');  // Inside
+                output.push('█'); // Inside
             } else {
-                output.push('·');  // Outside
+                output.push('·'); // Outside
             }
         }
         output.push('│');
         output.push('\n');
     }
-    
+
     output.push_str(&"─".repeat(grid.width() + 2));
     output.push('\n');
     output
@@ -608,31 +608,31 @@ pub fn visualize_all(input: &str) -> String {
     output.push_str("\n DAY 10: PIPE MAZE VISUALIZATION\n");
     output.push_str("═".repeat(60).as_str());
     output.push_str("\n\n");
-    
+
     output.push_str(&visualize_loop(input));
     output.push('\n');
     output.push_str(&visualize_distances(input));
     output.push('\n');
     output.push_str(&visualize_inside_outside(input));
-    
+
     output
 }
 
 /// Export visualization to HTML file with proper Unicode support
-/// 
+///
 /// Creates a beautiful HTML visualization with:
 /// - UTF-8 encoding for proper Unicode box-drawing characters
 /// - Color-coded sections (loop in blue, inside tiles in red)
 /// - Responsive layout that works in any browser
 /// - All three visualization modes in one page
-/// 
+///
 /// # See Also
 /// - `aoc2025/examples/animate_ray_casting.py`: Animated visualization of same algorithm for polygon
 /// - `aoc2025/examples/ray_casting_animation.gif`: Shows odd/even crossing pattern
 pub fn export_visualization_html(input: &str, output_path: &str) -> std::io::Result<()> {
     use std::fs::File;
     use std::io::Write;
-    
+
     let html = format!(
         r#"<!DOCTYPE html>
 <html lang="en">
@@ -772,7 +772,10 @@ pub fn export_visualization_html(input: &str, output_path: &str) -> std::io::Res
             let (part1, _) = solve_both_parts(input).expect("Valid input");
             part1.parse::<usize>().unwrap() * 2
         },
-        max_distance = solve_part1(input).expect("Valid input").parse::<usize>().unwrap(),
+        max_distance = solve_part1(input)
+            .expect("Valid input")
+            .parse::<usize>()
+            .unwrap(),
         inside_count = solve_part2(input).expect("Valid input"),
         loop_viz = visualize_loop(input).replace("●", "<span class=\"loop-char\">●</span>"),
         distance_viz = {
@@ -808,10 +811,9 @@ pub fn export_visualization_html(input: &str, output_path: &str) -> std::io::Res
             .replace("●", "<span class=\"loop-char\">●</span>")
             .replace("█", "<span class=\"inside-char\">█</span>"),
     );
-    
+
     let mut file = File::create(output_path)?;
     file.write_all(html.as_bytes())?;
-    
+
     Ok(())
 }
-

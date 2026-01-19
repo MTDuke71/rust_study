@@ -8,11 +8,11 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 17/25 |
-| **Total Runtime** | ~344.4ms |
-| **Average per Day** | ~20.26ms |
+| **Days Completed** | 18/25 |
+| **Total Runtime** | ~344.6ms |
+| **Average per Day** | ~19.14ms |
 | **Fastest Day** | Day 6 (0.95µs) |
-| **Slowest Day** | Day 12 (44.185ms) |
+| **Slowest Day** | Day 17 (246.7ms) |
 
 ---
 
@@ -37,12 +37,14 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 15 | 207.48µs | 332.48µs | 539.88µs | No* |
 | 16 | 1.00ms | 22.08ms | 23.08ms | Yes********* |
 | 17 | 64.3ms | 182.4ms | 246.7ms | No********** |
+| 18 | 86.6µs | 107.5µs | 194.1µs | Yes*********** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 *Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
 *Day 15: Clean implementation, fast hash function and Vec operations - no obvious optimization needed  
 *********Day 16: Parallelized with Rayon - 11.67× speedup on Part 2 (257ms → 22ms), total 23ms  
 **********Day 17: State-space Dijkstra - no optimization applied (prioritizing clarity), Part 2 2.8× slower due to 3.3× larger state space (239k → 795k states)
+***********Day 18: Mathematical approach (Shoelace + Pick's) - Part 2 only 24% slower despite 1 trillion× more cells (O(n) on vertices not cells, scales to 52.2 trillion cells in 107µs)
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  

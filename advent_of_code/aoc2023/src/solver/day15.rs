@@ -19,10 +19,10 @@ pub fn solve_part1(input: &str) -> Result<String> {
 
 pub fn solve_part2(input: &str) -> Result<String> {
     let steps = parse_input(input);
-    
+
     // Create 256 boxes, each containing a vector of (label, focal_length) pairs
     let mut boxes: Vec<Vec<(String, u32)>> = vec![vec![]; 256];
-    
+
     // Process each step
     for step in steps {
         if step.contains('=') {
@@ -31,7 +31,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
             process_remove_operation(&mut boxes, &step);
         }
     }
-    
+
     let total_power = calculate_focusing_power(&boxes);
     Ok(total_power.to_string())
 }
@@ -40,7 +40,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
 fn parse_input(input: &str) -> Vec<String> {
     input
         .chars()
-        .filter(|c| *c != '\n')  // Ignore newlines
+        .filter(|c| *c != '\n') // Ignore newlines
         .collect::<String>()
         .split(',')
         .map(|s| s.to_string())
@@ -54,9 +54,9 @@ fn parse_input(input: &str) -> Vec<String> {
 fn process_add_operation(boxes: &mut [Vec<(String, u32)>], step: &str) -> Result<()> {
     let pos = step.find('=').expect("Add operation must contain '='");
     let label = &step[..pos];
-    let focal_length: u32 = step[pos+1..].parse()?;
+    let focal_length: u32 = step[pos + 1..].parse()?;
     let box_num = hash(label) as usize;
-    
+
     // Check if lens with this label already exists in the box
     if let Some(existing_idx) = boxes[box_num].iter().position(|(l, _)| l == label) {
         // Replace existing lens
@@ -65,7 +65,7 @@ fn process_add_operation(boxes: &mut [Vec<(String, u32)>], step: &str) -> Result
         // Add new lens to the back
         boxes[box_num].push((label.to_string(), focal_length));
     }
-    
+
     Ok(())
 }
 
@@ -76,7 +76,7 @@ fn process_remove_operation(boxes: &mut [Vec<(String, u32)>], step: &str) {
     let pos = step.find('-').expect("Remove operation must contain '-'");
     let label = &step[..pos];
     let box_num = hash(label) as usize;
-    
+
     // Remove lens with this label if present
     boxes[box_num].retain(|(l, _)| l != label);
 }

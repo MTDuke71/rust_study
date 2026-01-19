@@ -11,7 +11,7 @@ fn parse_line(line: &str) -> (&str, Vec<usize>) {
 }
 
 /// Count valid arrangements using dynamic programming with memoization
-/// 
+///
 /// Parameters:
 /// - springs: byte slice of the spring pattern
 /// - groups: slice of damaged group sizes
@@ -86,7 +86,7 @@ pub fn solve_part1(input: &str) -> usize {
 }
 
 /// Unfold the springs pattern and groups for Part 2
-/// 
+///
 /// Example: `???.### 1,1,3` becomes `???.###????.###????.###????.###????.### 1,1,3,1,1,3,1,1,3,1,1,3,1,1,3`
 fn unfold(springs: &str, groups: &[usize]) -> (String, Vec<usize>) {
     let unfolded_springs = [springs; 5].join("?");
@@ -103,7 +103,14 @@ pub fn solve_part2(input: &str) -> usize {
             let (springs, groups) = parse_line(line);
             let (unfolded_springs, unfolded_groups) = unfold(springs, &groups);
             let mut memo = HashMap::new();
-            count_arrangements(unfolded_springs.as_bytes(), &unfolded_groups, 0, 0, 0, &mut memo)
+            count_arrangements(
+                unfolded_springs.as_bytes(),
+                &unfolded_groups,
+                0,
+                0,
+                0,
+                &mut memo,
+            )
         })
         .sum()
 }

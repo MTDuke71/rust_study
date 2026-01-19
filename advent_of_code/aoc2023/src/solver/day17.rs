@@ -10,7 +10,7 @@
 //! ## Algorithm
 //! - Dijkstra's algorithm with extended state space
 //! - State: (position, direction, consecutive_steps)
-//! - **Mission 6 Integration**: 
+//! - **Mission 6 Integration**:
 //!   - `Grid<u8>` for heat loss map (~40 lines saved)
 //!   - `Direction` enum with rotation methods (turn_left/turn_right)
 //!   - `Coord` for position tracking
@@ -54,14 +54,14 @@ fn parse_grid(input: &str) -> Grid<u8> {
     let lines: Vec<&str> = input.lines().collect();
     let height = lines.len();
     let width = lines[0].len();
-    
+
     let mut vec2d = vec![vec![0u8; width]; height];
     for (y, line) in lines.iter().enumerate() {
         for (x, ch) in line.chars().enumerate() {
             vec2d[y][x] = ch.to_digit(10).unwrap() as u8;
         }
     }
-    
+
     Grid::from_vec2d(vec2d)
 }
 
@@ -98,10 +98,10 @@ fn parse_grid(input: &str) -> Grid<u8> {
 fn find_min_heat_loss(grid: &Grid<u8>, min_straight: u8, max_straight: u8) -> usize {
     let start = Coord::new(0, 0);
     let goal = Coord::new(grid.width() - 1, grid.height() - 1);
-    
+
     let mut heap = BinaryHeap::new();
     let mut visited: HashMap<State, usize> = HashMap::new();
-    
+
     // Start facing east or south (can't go backwards from start)
     for dir in [Direction::East, Direction::South] {
         let state = State {
@@ -111,13 +111,13 @@ fn find_min_heat_loss(grid: &Grid<u8>, min_straight: u8, max_straight: u8) -> us
         };
         heap.push(Node { cost: 0, state });
     }
-    
+
     while let Some(Node { cost, state }) = heap.pop() {
         // Reached goal - but must have moved at least min_straight blocks
         if state.pos == goal && state.consecutive >= min_straight {
             return cost;
         }
-        
+
         // Already visited with lower cost
         if let Some(&prev_cost) = visited.get(&state) {
             if cost >= prev_cost {
@@ -125,42 +125,43 @@ fn find_min_heat_loss(grid: &Grid<u8>, min_straight: u8, max_straight: u8) -> us
             }
         }
         visited.insert(state, cost);
-        
+
         // Generate next states
         let mut next_dirs = Vec::new();
-        
+
         // Can continue straight if < max_straight consecutive
         if state.consecutive < max_straight {
             next_dirs.push((state.dir, state.consecutive + 1));
         }
-        
+
         // Can turn left or right only if moved at least min_straight blocks
         if state.consecutive >= min_straight {
             next_dirs.push((state.dir.rotate_90_counterclockwise(), 1));
             next_dirs.push((state.dir.rotate_90_clockwise(), 1));
         }
-        
+
         for (next_dir, next_consecutive) in next_dirs {
             let (dx, dy) = next_dir.delta();
             let nx = state.pos.x as isize + dx;
             let ny = state.pos.y as isize + dy;
-            
+
             if nx >= 0 && ny >= 0 {
                 let next_pos = Coord::new(nx as usize, ny as usize);
-                
+
                 if grid.in_bounds(next_pos) {
                     let next_state = State {
                         pos: next_pos,
                         dir: next_dir,
                         consecutive: next_consecutive,
                     };
-                    
+
                     let heat_loss = grid.get(next_pos).unwrap();
                     let next_cost = cost + *heat_loss as usize;
-                    
+
                     // Only add if not visited or found cheaper path
-                    if !visited.contains_key(&next_state) 
-                        || visited.get(&next_state).unwrap() > &next_cost {
+                    if !visited.contains_key(&next_state)
+                        || visited.get(&next_state).unwrap() > &next_cost
+                    {
                         heap.push(Node {
                             cost: next_cost,
                             state: next_state,
@@ -170,7 +171,7 @@ fn find_min_heat_loss(grid: &Grid<u8>, min_straight: u8, max_straight: u8) -> us
             }
         }
     }
-    
+
     unreachable!("No path found to goal")
 }
 

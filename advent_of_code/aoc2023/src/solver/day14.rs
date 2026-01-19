@@ -20,14 +20,14 @@
 //! Without cycle detection, Part 2 would require ~16.7 hours of computation.
 
 use anyhow::Result;
-use mission6::{Grid, Coord};
+use mission6::{Coord, Grid};
 use std::collections::HashMap;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 enum Tile {
-    RoundRock,   // O - sorts first (moves toward beginning)
-    Empty,       // . - sorts after RoundRock
-    CubeRock,    // # - immovable barrier
+    RoundRock, // O - sorts first (moves toward beginning)
+    Empty,     // . - sorts after RoundRock
+    CubeRock,  // # - immovable barrier
 }
 
 impl From<char> for Tile {
@@ -69,7 +69,7 @@ fn tilt_north(grid: &mut Grid<Tile>) {
     for col in 0..grid.width() {
         // Track where the next round rock can settle
         let mut next_empty_row = 0;
-        
+
         for row in 0..grid.height() {
             let coord = Coord::new(col, row);
             if let Some(&tile) = grid.get(coord) {
@@ -106,7 +106,7 @@ fn tilt_north(grid: &mut Grid<Tile>) {
 fn tilt_south(grid: &mut Grid<Tile>) {
     for col in 0..grid.width() {
         let mut next_empty_row = grid.height() as i32 - 1;
-        
+
         for row in (0..grid.height()).rev() {
             let coord = Coord::new(col, row);
             if let Some(&tile) = grid.get(coord) {
@@ -138,7 +138,7 @@ fn tilt_south(grid: &mut Grid<Tile>) {
 fn tilt_west(grid: &mut Grid<Tile>) {
     for row in 0..grid.height() {
         let mut next_empty_col = 0;
-        
+
         for col in 0..grid.width() {
             let coord = Coord::new(col, row);
             if let Some(&tile) = grid.get(coord) {
@@ -169,7 +169,7 @@ fn tilt_west(grid: &mut Grid<Tile>) {
 fn tilt_east(grid: &mut Grid<Tile>) {
     for row in 0..grid.height() {
         let mut next_empty_col = grid.width() as i32 - 1;
-        
+
         for col in (0..grid.width()).rev() {
             let coord = Coord::new(col, row);
             if let Some(&tile) = grid.get(coord) {
@@ -210,7 +210,7 @@ fn spin_cycle(grid: &mut Grid<Tile>) {
 fn calculate_load(grid: &Grid<Tile>) -> usize {
     let mut total_load = 0;
     let height = grid.height();
-    
+
     for row in 0..height {
         for col in 0..grid.width() {
             let coord = Coord::new(col, row);
@@ -220,7 +220,7 @@ fn calculate_load(grid: &Grid<Tile>) -> usize {
             }
         }
     }
-    
+
     total_load
 }
 
@@ -242,7 +242,7 @@ fn grid_to_string(grid: &Grid<Tile>) -> String {
 fn string_to_grid(s: &str, width: usize, height: usize) -> Grid<Tile> {
     let mut data = vec![vec![Tile::Empty; width]; height];
     let chars: Vec<char> = s.chars().collect();
-    
+
     #[allow(clippy::needless_range_loop)] // Direct indexing clearest for 2D reconstruction
     for row in 0..height {
         for col in 0..width {
@@ -250,7 +250,7 @@ fn string_to_grid(s: &str, width: usize, height: usize) -> Grid<Tile> {
             data[row][col] = Tile::from(chars[idx]);
         }
     }
-    
+
     Grid::from_vec2d(data)
 }
 
@@ -263,34 +263,34 @@ pub fn solve_part1(input: &str) -> Result<String> {
 
 pub fn solve_part2(input: &str) -> Result<String> {
     let mut grid = parse_input(input)?;
-    
+
     // Cycle detection: track grid states and when they first appeared
     let mut seen: HashMap<String, usize> = HashMap::new();
     let target_cycles = 1_000_000_000;
-    
+
     for cycle in 0..target_cycles {
         let state = grid_to_string(&grid);
-        
+
         if let Some(&first_seen) = seen.get(&state) {
             // Found a cycle!
             let cycle_length = cycle - first_seen;
-            
+
             // Fast-forward: how many cycles remain after accounting for the loop?
             let remaining = target_cycles - cycle;
             let final_offset = remaining % cycle_length;
-            
+
             // Run the remaining cycles
             for _ in 0..final_offset {
                 spin_cycle(&mut grid);
             }
-            
+
             return Ok(calculate_load(&grid).to_string());
         }
-        
+
         seen.insert(state, cycle);
         spin_cycle(&mut grid);
     }
-    
+
     // No cycle detected (unlikely with billion iterations)
     Ok(calculate_load(&grid).to_string())
 }
@@ -300,34 +300,34 @@ pub fn solve_part2_reconstruction(input: &str) -> Result<String> {
     let mut grid = parse_input(input)?;
     let width = grid.width();
     let height = grid.height();
-    
+
     // Store complete grid history as strings
     let mut history: Vec<String> = Vec::new();
     let mut seen: HashMap<String, usize> = HashMap::new();
     let target_cycles = 1_000_000_000;
-    
+
     for cycle in 0..target_cycles {
         let state = grid_to_string(&grid);
-        
+
         if let Some(&first_seen) = seen.get(&state) {
             // Found a cycle!
             let cycle_length = cycle - first_seen;
-            
+
             // Calculate which grid in the cycle we need
             let remaining = target_cycles - first_seen;
             let offset_in_cycle = remaining % cycle_length;
             let target_index = first_seen + offset_in_cycle;
-            
+
             // Reconstruct grid directly from history
             let final_grid = string_to_grid(&history[target_index], width, height);
             return Ok(calculate_load(&final_grid).to_string());
         }
-        
+
         seen.insert(state.clone(), cycle);
         history.push(state);
         spin_cycle(&mut grid);
     }
-    
+
     Ok(calculate_load(&grid).to_string())
 }
 
@@ -363,7 +363,7 @@ O.#..O.#.#
     fn test_tilt_north() {
         let mut grid = parse_input(EXAMPLE).unwrap();
         tilt_north(&mut grid);
-        
+
         // Check that first row has 4 round rocks
         let mut count = 0;
         for col in 0..grid.width() {
@@ -386,10 +386,10 @@ O.#..O.#.#
     fn test_spin_cycle() {
         let mut grid = parse_input(EXAMPLE).unwrap();
         let initial = grid_to_string(&grid);
-        
+
         spin_cycle(&mut grid);
         let after_one = grid_to_string(&grid);
-        
+
         // Grid should change after spin cycle
         assert_ne!(initial, after_one);
     }
@@ -404,14 +404,14 @@ fn transpose(grid: &Grid<Tile>) -> Grid<Tile> {
     let new_width = grid.height();
     let new_height = grid.width();
     let mut data = vec![vec![Tile::Empty; new_width]; new_height];
-    
+
     #[allow(clippy::needless_range_loop)] // x,y indexing is clearest here
     for y in 0..grid.height() {
         for x in 0..grid.width() {
             data[x][y] = *grid.get(Coord { x, y }).unwrap();
         }
     }
-    
+
     Grid::from_vec2d(data)
 }
 
@@ -419,17 +419,17 @@ fn transpose(grid: &Grid<Tile>) -> Grid<Tile> {
 fn tilt_north_sorted(grid: &mut Grid<Tile>) {
     // Transpose so columns become rows
     let mut transposed = transpose(grid);
-    
+
     // Sort each row (was column) - Empty sorts before RoundRock
     for y in 0..transposed.height() {
         let row: Vec<Tile> = (0..transposed.width())
             .map(|x| *transposed.get(Coord { x, y }).unwrap())
             .collect();
-        
+
         // Split by cube rocks, sort each segment
         let mut result = Vec::new();
         let mut segment = Vec::new();
-        
+
         for &tile in &row {
             if tile == Tile::CubeRock {
                 segment.sort_unstable(); // Empty < RoundRock
@@ -441,13 +441,13 @@ fn tilt_north_sorted(grid: &mut Grid<Tile>) {
         }
         segment.sort_unstable();
         result.append(&mut segment);
-        
+
         // Write back
         for (x, &tile) in result.iter().enumerate() {
             *transposed.get_mut(Coord { x, y }).unwrap() = tile;
         }
     }
-    
+
     // Transpose back
     *grid = transpose(&transposed);
 }
@@ -458,10 +458,10 @@ fn tilt_west_sorted(grid: &mut Grid<Tile>) {
         let row: Vec<Tile> = (0..grid.width())
             .map(|x| *grid.get(Coord { x, y }).unwrap())
             .collect();
-        
+
         let mut result = Vec::new();
         let mut segment = Vec::new();
-        
+
         for &tile in &row {
             if tile == Tile::CubeRock {
                 segment.sort_unstable();
@@ -473,7 +473,7 @@ fn tilt_west_sorted(grid: &mut Grid<Tile>) {
         }
         segment.sort_unstable();
         result.append(&mut segment);
-        
+
         for (x, &tile) in result.iter().enumerate() {
             *grid.get_mut(Coord { x, y }).unwrap() = tile;
         }
@@ -483,15 +483,15 @@ fn tilt_west_sorted(grid: &mut Grid<Tile>) {
 /// Tilt south using sorting approach (transpose + reverse sort)
 fn tilt_south_sorted(grid: &mut Grid<Tile>) {
     let mut transposed = transpose(grid);
-    
+
     for y in 0..transposed.height() {
         let row: Vec<Tile> = (0..transposed.width())
             .map(|x| *transposed.get(Coord { x, y }).unwrap())
             .collect();
-        
+
         let mut result = Vec::new();
         let mut segment = Vec::new();
-        
+
         for &tile in &row {
             if tile == Tile::CubeRock {
                 segment.sort_unstable();
@@ -505,12 +505,12 @@ fn tilt_south_sorted(grid: &mut Grid<Tile>) {
         segment.sort_unstable();
         segment.reverse();
         result.append(&mut segment);
-        
+
         for (x, &tile) in result.iter().enumerate() {
             *transposed.get_mut(Coord { x, y }).unwrap() = tile;
         }
     }
-    
+
     *grid = transpose(&transposed);
 }
 
@@ -520,10 +520,10 @@ fn tilt_east_sorted(grid: &mut Grid<Tile>) {
         let row: Vec<Tile> = (0..grid.width())
             .map(|x| *grid.get(Coord { x, y }).unwrap())
             .collect();
-        
+
         let mut result = Vec::new();
         let mut segment = Vec::new();
-        
+
         for &tile in &row {
             if tile == Tile::CubeRock {
                 segment.sort_unstable();
@@ -537,7 +537,7 @@ fn tilt_east_sorted(grid: &mut Grid<Tile>) {
         segment.sort_unstable();
         segment.reverse();
         result.append(&mut segment);
-        
+
         for (x, &tile) in result.iter().enumerate() {
             *grid.get_mut(Coord { x, y }).unwrap() = tile;
         }
@@ -557,33 +557,33 @@ pub fn solve_part2_sorted(input: &str) -> Result<String> {
     let mut grid = parse_input(input)?;
     let mut seen: HashMap<String, usize> = HashMap::new();
     let target_cycles = 1_000_000_000;
-    
+
     for cycle in 0..target_cycles {
         let state = grid_to_string(&grid);
-        
+
         if let Some(&first_seen) = seen.get(&state) {
             let cycle_length = cycle - first_seen;
             let remaining = target_cycles - cycle;
             let final_offset = remaining % cycle_length;
-            
+
             for _ in 0..final_offset {
                 spin_cycle_sorted(&mut grid);
             }
-            
+
             return Ok(calculate_load(&grid).to_string());
         }
-        
+
         seen.insert(state, cycle);
         spin_cycle_sorted(&mut grid);
     }
-    
+
     Ok(calculate_load(&grid).to_string())
 }
 
 #[cfg(test)]
 mod sorted_tests {
     use super::*;
-    
+
     const EXAMPLE: &str = "O....#....
 O.OO#....#
 .....##...
@@ -602,7 +602,7 @@ O.#..O.#.#
         let load = calculate_load(&grid);
         assert_eq!(load, 136);
     }
-    
+
     #[test]
     fn test_sorted_approach_part2() {
         let result = solve_part2_sorted(EXAMPLE).unwrap();
@@ -613,7 +613,7 @@ O.#..O.#.#
 #[cfg(test)]
 mod reconstruction_tests {
     use super::*;
-    
+
     const EXAMPLE: &str = "O....#....
 O.OO#....#
 .....##...
@@ -630,7 +630,7 @@ O.#..O.#.#
         let result = solve_part2_reconstruction(EXAMPLE).unwrap();
         assert_eq!(result, "64");
     }
-    
+
     #[test]
     fn test_string_to_grid_roundtrip() {
         let grid = parse_input(EXAMPLE).unwrap();
