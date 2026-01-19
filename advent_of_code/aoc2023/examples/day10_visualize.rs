@@ -14,7 +14,7 @@ fn main() {
 
     // Show all visualizations
     println!("{}", day10::visualize_all(example));
-    
+
     // Individual parts can also be accessed:
     // println!("{}", day10::visualize_loop(example));
     // println!("{}", day10::visualize_distances(example));

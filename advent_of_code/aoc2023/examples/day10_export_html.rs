@@ -3,7 +3,7 @@ use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    
+
     let (input, output_file) = if args.len() > 1 && args[1] == "--real" {
         let input = include_str!("../inputs/day10.txt");
         let output = "day10_visualization_real.html";
@@ -26,7 +26,7 @@ fn main() {
         println!("   Grid size: 9 × 11 cells");
         (input, output)
     };
-    
+
     match day10::export_visualization_html(input, output_file) {
         Ok(()) => {
             println!("✅ Successfully exported to: {}", output_file);

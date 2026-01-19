@@ -23,12 +23,12 @@ pub fn solve_part1(input: &str) -> Result<String> {
 
 pub fn solve_part2(input: &str) -> Result<String> {
     let steps = parse_input(input);
-    
+
     println!("DEBUG: Total steps to process: {}", steps.len());
-    
+
     // Create 256 boxes, each containing a vector of (label, focal_length) pairs
     let mut boxes: Vec<Vec<(String, u32)>> = vec![vec![]; 256];
-    
+
     // Process each step
     for step in steps {
         if step.contains('=') {
@@ -37,34 +37,49 @@ pub fn solve_part2(input: &str) -> Result<String> {
             process_remove_operation(&mut boxes, &step);
         }
     }
-    
+
     // Debug: Show distribution of lenses per box
     println!("\nDEBUG: Lens distribution after all operations:");
     let mut non_empty_boxes = 0;
     let mut total_lenses = 0;
     let mut histogram: std::collections::HashMap<usize, usize> = std::collections::HashMap::new();
-    
+
     for (box_num, lenses) in boxes.iter().enumerate() {
         let count = lenses.len();
         *histogram.entry(count).or_insert(0) += 1;
-        
+
         if !lenses.is_empty() {
             non_empty_boxes += 1;
             total_lenses += lenses.len();
-            println!("  Box {}: {} lenses {:?}", box_num, lenses.len(), 
-                     lenses.iter().map(|(label, focal)| format!("[{} {}]", label, focal)).collect::<Vec<_>>());
+            println!(
+                "  Box {}: {} lenses {:?}",
+                box_num,
+                lenses.len(),
+                lenses
+                    .iter()
+                    .map(|(label, focal)| format!("[{} {}]", label, focal))
+                    .collect::<Vec<_>>()
+            );
         }
     }
-    
+
     println!("\nDEBUG: Summary Statistics:");
-    println!("  Non-empty boxes: {}/256 ({:.1}%)", 
-             non_empty_boxes, (non_empty_boxes as f64 / 256.0) * 100.0);
+    println!(
+        "  Non-empty boxes: {}/256 ({:.1}%)",
+        non_empty_boxes,
+        (non_empty_boxes as f64 / 256.0) * 100.0
+    );
     println!("  Total lenses: {}", total_lenses);
-    println!("  Average lenses per non-empty box: {:.2}", 
-             total_lenses as f64 / non_empty_boxes as f64);
-    println!("  Load factor: {:.2}% ({} lenses / 256 boxes)", 
-             (total_lenses as f64 / 256.0) * 100.0, total_lenses);
-    
+    println!(
+        "  Average lenses per non-empty box: {:.2}",
+        total_lenses as f64 / non_empty_boxes as f64
+    );
+    println!(
+        "  Load factor: {:.2}% ({} lenses / 256 boxes)",
+        (total_lenses as f64 / 256.0) * 100.0,
+        total_lenses
+    );
+
     // Histogram
     println!("\nDEBUG: Histogram (lenses per box frequency):");
     let mut keys: Vec<_> = histogram.keys().copied().collect();
@@ -73,10 +88,12 @@ pub fn solve_part2(input: &str) -> Result<String> {
         let freq = histogram[&count];
         let percent = (freq as f64 / 256.0) * 100.0;
         let bar = "█".repeat((freq as f64 / 10.0).ceil() as usize);
-        println!("  {} lenses: {:3} boxes ({:5.1}%) {}", 
-                 count, freq, percent, bar);
+        println!(
+            "  {} lenses: {:3} boxes ({:5.1}%) {}",
+            count, freq, percent, bar
+        );
     }
-    
+
     let total_power = calculate_focusing_power(&boxes);
     Ok(total_power.to_string())
 }
@@ -85,7 +102,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
 fn parse_input(input: &str) -> Vec<String> {
     input
         .chars()
-        .filter(|c| *c != '\n')  // Ignore newlines
+        .filter(|c| *c != '\n') // Ignore newlines
         .collect::<String>()
         .split(',')
         .map(|s| s.to_string())
@@ -99,9 +116,9 @@ fn parse_input(input: &str) -> Vec<String> {
 fn process_add_operation(boxes: &mut [Vec<(String, u32)>], step: &str) -> Result<()> {
     let pos = step.find('=').expect("Add operation must contain '='");
     let label = &step[..pos];
-    let focal_length: u32 = step[pos+1..].parse()?;
+    let focal_length: u32 = step[pos + 1..].parse()?;
     let box_num = hash(label) as usize;
-    
+
     // Check if lens with this label already exists in the box
     if let Some(existing_idx) = boxes[box_num].iter().position(|(l, _)| l == label) {
         // Replace existing lens
@@ -110,7 +127,7 @@ fn process_add_operation(boxes: &mut [Vec<(String, u32)>], step: &str) -> Result
         // Add new lens to the back
         boxes[box_num].push((label.to_string(), focal_length));
     }
-    
+
     Ok(())
 }
 
@@ -121,7 +138,7 @@ fn process_remove_operation(boxes: &mut [Vec<(String, u32)>], step: &str) {
     let pos = step.find('-').expect("Remove operation must contain '-'");
     let label = &step[..pos];
     let box_num = hash(label) as usize;
-    
+
     // Remove lens with this label if present
     boxes[box_num].retain(|(l, _)| l != label);
 }
@@ -158,15 +175,15 @@ fn hash(s: &str) -> u8 {
 
 fn main() -> Result<()> {
     let input = include_str!("../inputs/day15.txt");
-    
+
     println!("=== AoC 2023 Day 15: Lens Library ===\n");
-    
+
     let part1 = solve_part1(input)?;
     println!("\nDay 15 Part 1: {}", part1);
-    
+
     let part2 = solve_part2(input)?;
     println!("Day 15 Part 2: {}", part2);
-    
+
     Ok(())
 }
 
