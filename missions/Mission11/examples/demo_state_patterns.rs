@@ -70,8 +70,18 @@ fn demo_pattern2_index_position() {
     let mut memo = HashMap::new();
 
     for start_pos in 0..arr.len() {
+        let cache_before = memo.len();
         let sum = index_position_pattern(start_pos, &arr, &mut memo);
-        println!("  Sum from position {}: {}", start_pos, sum);
+        let cache_after = memo.len();
+        
+        if cache_before == cache_after {
+            // No new entries added = cache hit
+            println!("  Sum from position {}: {} [CACHE HIT]", start_pos, sum);
+        } else {
+            // New entries added = computed recursively
+            println!("  Sum from position {}: {} [computed, cached {} new states]", 
+                     start_pos, sum, cache_after - cache_before);
+        }
     }
 
     println!("  Cache size: {} positions", memo.len());
@@ -100,6 +110,8 @@ fn demo_pattern3_coordinate_pairs() {
         ((0, 0), (1, 1), "2x2 corner"),
         ((0, 0), (3, 2), "Full grid"),
         ((1, 0), (2, 1), "Subgrid"),
+        ((1, 1), (1, 1), "Same point (edge case)"),
+        ((2, 2), (0, 0), "Reversed points (edge case)"),
     ];
 
     for (start, end, desc) in test_cases {

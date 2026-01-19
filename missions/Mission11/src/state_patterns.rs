@@ -144,9 +144,32 @@ pub fn index_position_pattern(
 ///
 /// State: `(x, y): (usize, usize)` - 2D grid position
 ///
+/// # Connection to Pathfinding Algorithms
+///
+/// **This is a simplified Dijkstra-style state-space search!**
+///
+/// ## Core Similarities with Dijkstra (e.g., AoC 2023 Day 17):
+/// - **State space**: Coordinates defining current position
+/// - **Goal checking**: Base case when reaching target
+/// - **State exploration**: Try valid moves (right/down here, all directions in Dijkstra)
+/// - **Visited tracking**: Memoization cache (HashMap here, HashSet + BinaryHeap in Dijkstra)
+///
+/// ## Simplifications (Why This Pattern is Easier to Learn):
+/// - ❌ **No priority queue** - Counting paths, not finding optimal cost
+/// - ❌ **No distance tracking** - All paths have equal "weight"
+/// - ❌ **Simpler state** - Just `(x, y)`, no direction/consecutive move constraints
+/// - ✅ **Pure memoization** - HashMap instead of Heap + Set
+/// - ✅ **Counting problem** - "How many ways?" vs "What's the shortest path?"
+///
+/// ## Progression to Full Dijkstra:
+/// 1. **This pattern**: Count paths with memoization
+/// 2. **Add costs**: Track minimum distance to each state
+/// 3. **Add priority queue**: Process lowest-cost states first (BinaryHeap)
+/// 4. **Add constraints**: Direction limits, consecutive moves (Day 17 crucible)
+///
 /// # Use Cases
-/// - Grid pathfinding
-/// - 2D dynamic programming (edit distance)
+/// - Grid pathfinding (unweighted)
+/// - 2D dynamic programming (edit distance, path counting)
 /// - Image processing problems
 ///
 /// # Rust Considerations
