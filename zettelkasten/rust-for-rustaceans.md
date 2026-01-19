@@ -14,39 +14,46 @@
 ## 📖 Chapter Progress
 
 ### **Chapter 1: Foundations** ✅ COMPLETE
-- Memory regions (stack, heap, static)
-- Ownership and move semantics
-- Borrowing and lifetimes
-- Interior mutability (Cell, RefCell, UnsafeCell)
-- **Zettelkasten**: 
-  - [[Clone vs Copy]] - Explicit vs implicit duplication
-  - [[static-lifetime]] - 'static lifetime and bounds
-  - [[interior-mutability]] - Philosophy of safe mutation
+  - Memory regions (stack, heap, static)
+  - Ownership and move semantics
+  - Borrowing and lifetimes
+  - Interior mutability (Cell, RefCell, UnsafeCell)
+  - **Zettelkasten**: 
+    - [[Clone vs Copy]] - Explicit vs implicit duplication
+    - [[static-lifetime]] - 'static lifetime and bounds
+    - [[interior-mutability]] - Philosophy of safe mutation
 
-### **Chapter 2: Types** 🔄 IN PROGRESS
-- **2.1: Types in Memory** ✅ COMPLETE
-  - Alignment and layout
-  - repr attributes (Rust, C, packed, transparent)
-  - DSTs and wide pointers
-  - **Zettelkasten**: [[alignment-and-layout]]
-- **2.2: Traits and Trait Bounds** ⏭️ NEXT
-- **Additional sections**: TBD
+### **Chapter 2: Types** ✅ COMPLETE
+  - **2.1: Types in Memory** ✅ COMPLETE
+    - Alignment and layout
+    - repr attributes (Rust, C, packed, transparent)
+    - DSTs and wide pointers
+    - **Zettelkasten**: [[alignment-and-layout]]
+  - **2.2: Traits and Trait Bounds** ⏭️ NEXT
+  - **Additional sections**: TBD
 
-### **Chapter 3: Designing Interfaces** 🔄 IN PROGRESS
-- **3.1: Borrowed vs Owned** ✅ COMPLETE
-  - Only require ownership when necessary
-  - Use `&T` for read-only access
-  - **Zettelkasten**: [[cow-borrowed-vs-owned]]
-- **3.2: Fallible/Blocking Destructors** ✅ COMPLETE
-  - Drop cannot return Result
-  - Explicit close() methods
-  - **Zettelkasten**: [[fallible-destructors]]
-- **3.3: Constrained Interfaces (Hidden Contracts)** ✅ COMPLETE
-  - Re-export hazards and wrapping foreign types
-  - Auto-traits (Send/Sync) as hidden contracts
-  - SemVer trick for dependency migration
-  - **Zettelkasten**: [[auto-traits-send-sync]], [[semver-trick]]
-- **Additional sections**: TBD
+### **Chapter 3: Designing Interfaces** ✅ COMPLETE
+  - **3.1: Borrowed vs Owned** ✅ COMPLETE
+    - Only require ownership when necessary
+    - Use `&T` for read-only access
+    - **Zettelkasten**: [[cow-borrowed-vs-owned]]
+  - **3.2: Fallible/Blocking Destructors** ✅ COMPLETE
+    - Drop cannot return Result
+    - Explicit close() methods
+    - **Zettelkasten**: [[fallible-destructors]]
+  - **3.3: Constrained Interfaces (Hidden Contracts)** ✅ COMPLETE
+    - Re-export hazards and wrapping foreign types
+    - Auto-traits (Send/Sync) as hidden contracts
+    - SemVer trick for dependency migration
+    - **Zettelkasten**: [[auto-traits-send-sync]], [[semver-trick]]
+  - **Additional sections**: TBD
+
+### **Chapter 4: Error Handling** 🔄 IN PROGRESS
+  - Error representation: enums for domain errors, opaque types for API simplicity
+  - Propagation: `?` operator, `From` trait conversions, try blocks (unstable)
+  - Best practices: implement `Error`, derive `Display`/`Debug`, prefer explicit error types, avoid panics in libraries
+  - Zettelkasten: [[fallible-destructors]], [[error-handling-patterns]]
+  - Workspace: [[../../rust_for_rustaceans/Ch04/rfr-ch04-summary]]
 
 ---
 
@@ -69,6 +76,7 @@
 - **[[mission-4]]** - LinkedList using Rc<RefCell<T>> (Ch1.4 interior mutability applied)
 - **[[mission-10]]** - REST API demonstrating production Rust patterns
 
+
 ### **Concept Pages**
 - **[[Clone vs Copy]]** - Created from Ch1.3
 - **[[static-lifetime]]** - Created from Ch1.2
@@ -78,6 +86,7 @@
 - **[[fallible-destructors]]** - Resource cleanup patterns from Ch3.2
 - **[[auto-traits-send-sync]]** - Auto-traits and thread safety from Ch3.3
 - **[[semver-trick]]** - Dependency version migration from Ch3.3
+- **[[error-handling-patterns]]** - Error handling patterns and best practices (Ch4)
 
 ---
 
