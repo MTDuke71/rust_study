@@ -34,6 +34,12 @@ There are several different types of modules:
 
 *Conjunction* modules (prefix `&`) *remember* the type of the most recent pulse received from *each* of their connected input modules; they initially default to remembering a *low pulse* for each input. When a pulse is received, the conjunction module first updates its memory for that input. Then, if it remembers *high pulses* for all inputs, it sends a *low pulse*; otherwise, it sends a *high pulse*.
 
+**Digital Logic Equivalent**: Conjunction modules behave like **NAND gates** (NOT-AND) with memory:
+- NAND truth table: Output = NOT (A AND B AND C...)
+- When ALL inputs are HIGH → output LOW
+- When ANY input is LOW → output HIGH
+- The "memory" aspect means it remembers the last pulse from each input rather than requiring simultaneous signals
+
 There is a single *broadcast module* (named `broadcaster`). When it receives a pulse, it sends the same pulse to all of its destination modules.
 
 Here at Desert Machine Headquarters, there is a module with a single button on it called, aptly, the *button module*. When you push the button, a single *low pulse* is sent directly to the `broadcaster` module.

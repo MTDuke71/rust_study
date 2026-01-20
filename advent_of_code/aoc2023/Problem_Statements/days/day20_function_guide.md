@@ -75,7 +75,7 @@ pub enum Module {
 
 **State Representation**:
 - **FlipFlop**: `on: bool` - Toggle state (off → on → off)
-- **Conjunction**: `memory: HashMap<String, Pulse>` - Tracks last pulse from each input
+- **Conjunction**: `memory: HashMap<String, Pulse>` - Tracks last pulse from each input (NAND gate with memory)
 - **Broadcaster**: Stateless relay
 
 **Module Behavior Diagrams**:
@@ -100,7 +100,8 @@ pub enum Module {
 
 ┌─────────────────────────────────────────────────────────────────┐
 │ CONJUNCTION (&con)                                               │
-│ Logic AND gate: Remembers last pulse from EACH input            │
+│ Digital Logic: NAND gate with memory                             │
+│ (NOT-AND: outputs LOW only when ALL inputs HIGH)                 │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                   │
 │  Memory: { a: LOW, b: LOW, c: HIGH }                             │
@@ -115,7 +116,16 @@ pub enum Module {
 │                                                                   │
 │  Rule: Outputs LOW when ALL inputs remembered as HIGH            │
 │        Otherwise outputs HIGH                                    │
-│  (Inverted NAND behavior!)                                       │
+│                                                                   │
+│  NAND Truth Table (3 inputs):                                    │
+│    A=H, B=H, C=H  →  Output=L  ✓ (only case for LOW)            │
+│    A=H, B=H, C=L  →  Output=H                                    │
+│    A=H, B=L, C=x  →  Output=H                                    │
+│    A=L, B=x, C=x  →  Output=H                                    │
+│                                                                   │
+│  Memory vs. Gates: Unlike real NAND gates that require           │
+│  simultaneous inputs, conjunctions remember last pulse from      │
+│  each input, allowing asynchronous signal processing.            │
 │                                                                   │
 └─────────────────────────────────────────────────────────────────┘
 
