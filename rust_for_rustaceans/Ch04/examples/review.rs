@@ -205,7 +205,7 @@ fn process_file(path: &str) -> Result<Vec<i32>, ProcessError> {
     
     // Validate - String -> ProcessError
     validate_numbers(&numbers)
-        .map_err(|e| ProcessError::Validation(e))?;
+        .map_err(ProcessError::Validation)?;
     
     Ok(numbers)
 }
