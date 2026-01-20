@@ -38,6 +38,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 16 | 1.00ms | 22.08ms | 23.08ms | Yes********* |
 | 17 | 64.3ms | 182.4ms | 246.7ms | No********** |
 | 18 | 86.6µs | 107.5µs | 194.1µs | Yes*********** |
+| 19 | 202.7µs | 189.4µs | 392.1µs | Yes************ |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 *Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
@@ -45,6 +46,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 *********Day 16: Parallelized with Rayon - 11.67× speedup on Part 2 (257ms → 22ms), total 23ms  
 **********Day 17: State-space Dijkstra - no optimization applied (prioritizing clarity), Part 2 2.8× slower due to 3.3× larger state space (239k → 795k states)
 ***********Day 18: Mathematical approach (Shoelace + Pick's) - Part 2 only 24% slower despite 1 trillion× more cells (O(n) on vertices not cells, scales to 52.2 trillion cells in 107µs)
+************Day 19: Range propagation - Part 2 FASTER than Part 1! Mathematical counting (256 trillion combinations) faster than simulating 200 parts. Parsing dominates both (~85%), actual calculation only ~30µs each
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  
@@ -959,6 +961,43 @@ cargo asm aoc2023::solver::dayXX::hot_function
 | Approach | Simulate each part | Propagate ranges, count mathematically |
 
 **Key Optimization**: Part 2 complexity depends on **graph structure** (workflows × rules), NOT **input space size** (4000^4)!
+
+### Parsing vs Calculation Breakdown
+
+**Granular benchmarks** reveal that parsing dominates runtime:
+
+**Part 1 Total: 202.7µs**
+- **Parsing**: 174.1µs (86% of time)
+  - Parse 30 workflows → HashMap
+  - Parse 200 parts → Vec<Part>
+  - String processing, allocations
+- **Calculation**: ~28.6µs (14%)
+  - Process 200 parts through workflows
+  - HashMap lookups, rule evaluation
+  - Actual algorithmic work!
+
+**Part 2 Total: 189.4µs**
+- **Parsing**: 159.0µs (84% of time)
+  - Parse 30 workflows only
+  - No parts needed!
+  - Saves ~15µs vs Part 1
+- **Calculation**: ~30.4µs (16%)
+  - DFS with range splitting
+  - ~180 range operations
+  - Count 256 trillion combinations!
+
+**Key Insights**:
+1. **Text processing is the real bottleneck** - both parts spend 85%+ on parsing
+2. **Pure calculation is blazingly fast** - both ~30µs despite vastly different problem sizes:
+   - Part 1: Enumerate 200 parts (~29µs)
+   - Part 2: Count 256 trillion mathematically (~30µs)
+   - **Only 1µs difference!** Mathematical counting scales perfectly.
+3. **Part 2 total is faster** because it skips parsing 200 parts (saves ~15µs)
+4. **Calculation efficiency**: 
+   - Part 1: ~143 nanoseconds per part processed
+   - Part 2: ~169 picoseconds per trillion combinations counted!
+
+**The Real Performance Story**: Both algorithms are algorithmically optimal. The bottleneck isn't the clever algorithm - it's turning text into data structures. The ~30µs calculation time for BOTH parts proves that mathematical counting transforms an intractable problem (256 trillion iterations) into the same complexity as a simple simulation (200 iterations)! 🚀
 
 ### Performance Insights
 

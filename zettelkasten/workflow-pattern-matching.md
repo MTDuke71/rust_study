@@ -399,7 +399,8 @@ When implementing workflow pattern matching:
 - [[anyhow and thiserror]] - Production error handling
 
 **Advanced Topics**:
-- [[constraint-propagation]] - Range-based analysis techniques
+- [[math-foundations/constraint-propagation]] - Range splitting, interval arithmetic, forward propagation
+- [[math-foundations/combinatorics-fundamentals]] - Product rule for counting without enumeration
 - [[dfs-patterns]] - Depth-first search with constraints
 
 ---

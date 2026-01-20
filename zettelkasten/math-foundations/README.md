@@ -9,13 +9,14 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 ## 🎯 Structure
 
 ### **Discrete Mathematics** (Most relevant to algorithms)
-- `set-theory-fundamentals.md` - Sets, operations, relations, functions
+- `set-theory-fundamentals.md` - Sets, operations, relations, functions ✅
+- `combinatorics-fundamentals.md` - Product rule, permutations, combinations, counting without enumeration ✅
 - `graph-theory-fundamentals.md` - Vertices, edges, paths, cycles, trees
-- `combinatorics-basics.md` - Permutations, combinations, counting principles
 - `number-theory-basics.md` - Primes, divisibility, GCD, modular arithmetic
 
 ### **Computational Theory**
 - `complexity-theory.md` - Big-O notation, time/space analysis, complexity classes
+- `constraint-propagation.md` - Range splitting, interval arithmetic, CSP techniques ✅
 - `dynamic-programming-theory.md` - Optimal substructure, overlapping subproblems
 - `algorithm-correctness.md` - Loop invariants, proofs of correctness, termination
 
@@ -160,13 +161,21 @@ Each implementation references mathematical foundations:
 
 ## 🎯 Current Coverage
 
-**Math notes created**: 2/20  
+**Math notes created**: 10/20  
 **Target by end of January**: 20+  
 **Target by end of Q1**: 100+
 
 ### **Completed Notes**
-1. ✅ `set-theory-fundamentals.md` - Sets, membership, operations
-2. ✅ `quadratic-equations.md` - Quadratic formula, parabolas, inequalities
+1. ✅ `set-theory-fundamentals.md` - Sets, membership, operations (AoC Day 4)
+2. ✅ `quadratic-equations.md` - Quadratic formula, parabolas, inequalities (AoC Day 6)
+3. ✅ `combinatorics-fundamentals.md` - Product rule, counting without enumeration (AoC Day 19)
+4. ✅ `constraint-propagation.md` - Range splitting, interval arithmetic, CSP (AoC Day 19)
+5. ✅ `finite-differences.md` - Polynomial extrapolation, difference pyramids
+6. ✅ `hamming-distance-discrete-metrics.md` - Discrete metric spaces
+7. ✅ `pigeonhole-principle-cycle-detection.md` - Cycle detection algorithms
+8. ✅ `number-theory-basics.md` - Primes, divisibility, GCD, modular arithmetic
+9. ✅ `graph-theory-fundamentals.md` - Vertices, edges, paths, cycles, trees
+10. ✅ `computational-geometry-basics.md` - Geometric algorithms
 
 ### **Priority Concepts** (Create these next)
 
@@ -174,10 +183,12 @@ Based on current work:
 
 1. ~~**Set Theory**~~ ✅ (AoC Day 4 - HashSet operations)
 2. ~~**Quadratic Equations**~~ ✅ (AoC Day 6 - Boat race optimization)
-3. **Graph Theory** (Mission 8, future AoC pathfinding)
-4. **Hash Functions** (Mission 5 HashMap)
-5. **Dynamic Programming** (Fibonacci exercise, future AoC)
-6. **Complexity Analysis** (All missions, performance benchmarks)
+3. ~~**Combinatorics**~~ ✅ (AoC Day 19 - Product rule for counting)
+4. ~~**Constraint Propagation**~~ ✅ (AoC Day 19 - Range splitting)
+5. **Graph Theory** (Mission 8, future AoC pathfinding)
+6. **Hash Functions** (Mission 5 HashMap)
+7. **Dynamic Programming** (Fibonacci exercise, future AoC)
+8. **Complexity Analysis** (All missions, performance benchmarks)
 
 ---
 

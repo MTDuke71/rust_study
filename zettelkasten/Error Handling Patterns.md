@@ -2,9 +2,18 @@
 
 **Comprehensive guide to error handling strategies, patterns, and best practices in Rust**
 
+*See also: [[rust-for-rustaceans-ch4]] - Deep dive into error representation patterns (enumeration, opaque, special cases)*
+
 ## 🎯 Overview
 
 Error handling patterns in Rust revolve around the fundamental choice between **recoverable errors** (`Result<T, E>`) and **unrecoverable errors** (panic). This guide covers when to use each approach, common patterns, and best practices for robust error management.
+
+**Error Representation Strategies** (from Rust for Rustaceans Ch4):
+1. **Enumeration Errors**: Domain-specific types with detailed variants (use when callers need type information)
+2. **Opaque Errors**: Type-erased `Box<dyn Error>` (use for flexibility across error types)
+3. **Special Cases**: Unit errors, never type, marker types (use for specific situations)
+
+*See `rust_for_rustaceans/Ch04/examples/` for comprehensive implementations of each pattern.*
 
 ## 🔄 Core Patterns
 
@@ -59,7 +68,11 @@ fn read_config_file(path: &str) -> Result<Config, ConfigError> {
 
 ### **3. Custom Error Types**
 
-#### **Enum-Based Error Types**
+#### **Enumeration Errors** (Detailed Type Information)
+
+*See: `rust_for_rustaceans/Ch04/examples/enumeration_errors.rs` for comprehensive examples*
+
+**When to use**: Callers need to match on specific error variants, domain-specific error handling, library APIs
 
 ```rust
 #[derive(Debug)]
@@ -90,6 +103,40 @@ impl std::fmt::Display for ProcessingError {
 }
 
 impl std::error::Error for ProcessingError {}
+```
+
+**Examples from RfR Ch4**:
+- `CopyError` - File copy operations with specific failure modes
+- `ConfigError` - Configuration loading with detailed context
+- `HttpError` - HTTP operations with status codes and messages
+- `DbError` - Database operations with connection/query/constraint errors
+
+#### **Opaque Errors** (Type-Erased Flexibility)
+
+*See: `rust_for_rustaceans/Ch04/examples/opaque_errors.rs` for comprehensive examples*
+
+**When to use**: Application code, don't need to match on variants, error type may change, propagating diverse errors
+
+```rust
+// Type-erased error - works with any error type
+pub type AppResult<T> = Result<T, Box<dyn std::error::Error + Send + Sync>>;
+
+fn process_data(input: &str) -> AppResult<Data> {
+    let file = std::fs::read_to_string(input)?;  // io::Error
+    let parsed = serde_json::from_str(&file)?;   // serde_json::Error
+    Ok(parsed)
+}
+```
+
+**Benefits**:
+- ✅ Flexibility: Can return any error type
+- ✅ Composition: Easy to combine different error sources
+- ✅ Ergonomics: Works with ? operator without From implementations
+
+**Tradeoffs**:
+- ❌ No pattern matching: Callers can't match on specific variants
+- ❌ Runtime overhead: Heap allocation and dynamic dispatch
+- ❌ Loss of type information: Must downcast to recover concrete type
 ```
 
 ### **4. Error Recovery Patterns**
@@ -129,7 +176,38 @@ fn fetch_with_retry(url: &str, max_retries: usize) -> Result<String, NetworkErro
 
 ### **5. Error Context Patterns**
 
+#### **Error Source Chains**
+
+*See: `rust_for_rustaceans/Ch04/examples/enumeration_errors.rs::print_error_chain()` for implementation*
+
+**Pattern**: Traverse error source chain to display full context
+
+```rust
+fn print_error_chain(mut err: &dyn std::error::Error) {
+    eprintln!("Error: {}", err);
+    while let Some(source) = err.source() {
+        eprintln!("  Caused by: {}", source);
+        err = source;
+    }
+}
+
+// Usage with CopyError from RfR Ch4 examples
+match copy_file_with_context(src, dst) {
+    Ok(_) => println!("Success!"),
+    Err(e) => print_error_chain(&e),
+}
+```
+
+**Output example**:
+```
+Error: Failed to copy file 'input.txt' to 'output.txt'
+  Caused by: Failed to read input file 'input.txt'
+  Caused by: No such file or directory (os error 2)
+```
+
 #### **Error Chaining with `anyhow`**
+
+*See: `rust_for_rustaceans/Ch04/examples/thiserror_anyhow.rs` for comprehensive examples*
 
 ```rust
 use anyhow::{Context, Result};
@@ -146,6 +224,8 @@ fn process_user_data(user_id: u32, data: &str) -> Result<ProcessedData> {
 ```
 
 #### **Error Context with `thiserror`**
+
+*See: `rust_for_rustaceans/Ch04/examples/thiserror_anyhow.rs` for production-ready examples*
 
 ```rust
 use thiserror::Error;
@@ -169,6 +249,33 @@ fn process_user_data(user_id: u32, data: &str) -> Result<ProcessedData, AppError
     Ok(ProcessedData::new(user, parsed))
 }
 ```
+
+**RfR Ch4 Guidance**:
+- **Libraries**: Use `thiserror` for precise error types with derive macros
+- **Applications**: Use `anyhow` for ergonomic error handling with context
+- **Both**: Combine - libraries use `thiserror`, applications use `anyhow` to handle library errors
+
+## 🎯 Error Representation Decision Tree
+
+*From Rust for Rustaceans Ch4*
+
+```
+Do callers need to match on error variants?
+├─ YES → Use Enumeration Errors (thiserror)
+│   ├─ Library API? → Precise enum with #[derive(Error)]
+│   └─ Internal code? → Custom enum with Display + Error traits
+│
+└─ NO → Use Opaque Errors
+    ├─ Application code? → Use anyhow::Error with .context()
+    └─ Propagating diverse errors? → Box<dyn Error + Send + Sync>
+
+Special cases:
+├─ Never fails? → Use never type (!)
+├─ Only one error mode? → Use unit error (struct MyError;)
+└─ Marker for state? → Zero-sized type
+```
+
+*See: `rust_for_rustaceans/Ch04/examples/special_cases.rs` for unit errors and never type examples*
 
 ## 🎯 Pattern Selection Guide
 
@@ -273,6 +380,17 @@ fn safe_division(a: i32, b: i32) -> Result<f64, DivisionError> {
 
 ## 📚 Related Concepts
 
+### **Rust for Rustaceans Integration**
+
+- **[[rust-for-rustaceans-ch4]]** - Chapter 4: Error Handling (main reference)
+  - **Enumeration errors**: `rust_for_rustaceans/Ch04/examples/enumeration_errors.rs`
+  - **Opaque errors**: `rust_for_rustaceans/Ch04/examples/opaque_errors.rs`
+  - **Special cases**: `rust_for_rustaceans/Ch04/examples/special_cases.rs`
+  - **Error propagation**: `rust_for_rustaceans/Ch04/examples/error_propagation.rs`
+  - **Custom errors**: `rust_for_rustaceans/Ch04/examples/custom_errors.rs`
+  - **thiserror/anyhow**: `rust_for_rustaceans/Ch04/examples/thiserror_anyhow.rs`
+  - **Comprehensive review**: `rust_for_rustaceans/Ch04/examples/review.rs`
+
 ### **Daily Study Integration**
 
 - **[[daily-study/Day05]]** - Basic error handling with Option and Result
@@ -296,6 +414,13 @@ fn safe_division(a: i32, b: i32) -> Result<f64, DivisionError> {
 - **Chapter 9.1**: Unrecoverable Errors with panic!
 - **Chapter 9.2**: Recoverable Errors with Result
 - **Chapter 9.3**: To panic! or Not to panic!
+
+### **Real-World Applications**
+
+- **[[workflow-pattern-matching]]** - State machine errors with enum destinations (AoC 2023 Day 19)
+  - Demonstrates enumeration pattern for Destination enum (Accept/Reject/Workflow)
+  - Type-safe state transitions prevent invalid states
+  - Similar philosophy to error enumeration
 
 ## 🎯 Best Practices
 

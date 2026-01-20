@@ -111,8 +111,8 @@ impl Rule {
 
 /// A workflow with a name and list of rules
 #[derive(Debug, Clone)]
-struct Workflow {
-    name: String,
+pub struct Workflow {
+    pub name: String,
     rules: Vec<Rule>,
 }
 
@@ -129,7 +129,7 @@ impl Workflow {
 }
 
 /// Parse a part from input like "{x=787,m=2655,a=1222,s=2876}"
-fn parse_part(line: &str) -> Part {
+pub fn parse_part(line: &str) -> Part {
     let line = line.trim_matches(|c| c == '{' || c == '}');
     let mut x = 0;
     let mut m = 0;
@@ -179,7 +179,7 @@ fn parse_rule(text: &str) -> Rule {
 }
 
 /// Parse a workflow from input like "px{a<2006:qkq,m>2090:A,rfg}"
-fn parse_workflow(line: &str) -> Workflow {
+pub fn parse_workflow(line: &str) -> Workflow {
     let (name, rules_text) = line.split_once('{').unwrap();
     let rules_text = rules_text.trim_end_matches('}');
 
@@ -347,6 +347,7 @@ fn count_accepted(
     workflow_name: &str,
     mut ranges: PartRange,
     workflows: &HashMap<String, Workflow>,
+    visited: &mut std::collections::HashSet<String>,
 ) -> u64 {
     if ranges.is_empty() {
         return 0;
@@ -359,6 +360,9 @@ fn count_accepted(
     if workflow_name == "R" {
         return 0;
     }
+
+    // Track this workflow as visited (don't count terminal "A"/"R")
+    visited.insert(workflow_name.to_string());
 
     let workflow = workflows.get(workflow_name).expect("Workflow not found");
     let mut total = 0;
@@ -385,7 +389,7 @@ fn count_accepted(
                         Destination::Workflow(name) => name.as_str(),
                     };
 
-                    total += count_accepted(dest_name, matching_ranges, workflows);
+                    total += count_accepted(dest_name, matching_ranges, workflows, visited);
                 }
 
                 // Continue with non-matching range to next rule
@@ -402,7 +406,7 @@ fn count_accepted(
                     Destination::Workflow(name) => name.as_str(),
                 };
 
-                total += count_accepted(dest_name, ranges, workflows);
+                total += count_accepted(dest_name, ranges, workflows, visited);
                 break;
             }
         }
@@ -422,9 +426,35 @@ pub fn solve_part2(input: &str) -> String {
         workflows.insert(workflow.name.clone(), workflow);
     }
 
+    // Track visited workflows
+    let mut visited = std::collections::HashSet::new();
+
     // Start with full ranges [1, 4000] for all attributes
     let initial_ranges = PartRange::new();
-    let count = count_accepted("in", initial_ranges, &workflows);
+    let count = count_accepted("in", initial_ranges, &workflows, &mut visited);
+
+    // Diagnostic output: workflow reachability analysis
+    let total_workflows = workflows.len();
+    let visited_count = visited.len();
+    let unreachable_count = total_workflows - visited_count;
+
+    println!("\n=== Workflow Reachability Analysis ===");
+    println!("Total workflows defined: {}", total_workflows);
+    println!("Workflows visited from 'in': {}", visited_count);
+    println!("Unreachable workflows: {}", unreachable_count);
+
+    if unreachable_count > 0 {
+        println!("\nUnreachable workflow names:");
+        let mut unreachable: Vec<_> = workflows
+            .keys()
+            .filter(|name| !visited.contains(*name))
+            .collect();
+        unreachable.sort();
+        for name in unreachable {
+            println!("  - {}", name);
+        }
+    }
+    println!("======================================\n");
 
     count.to_string()
 }
