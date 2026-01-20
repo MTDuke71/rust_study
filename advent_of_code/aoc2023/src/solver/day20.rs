@@ -15,6 +15,7 @@
 //!    - FlipFlop: Boolean state (on/off), transitions on low pulse
 //!    - Conjunction: Map state (memory of inputs), transitions on any pulse
 //!    - Broadcaster: Stateless relay
+//!
 //!    See `zettelkasten/math-foundations/state-machines.md` for theory
 //! 
 //! 2. **Cycle Detection** - By Pigeonhole Principle, deterministic state machines on finite
@@ -154,7 +155,7 @@ fn parse_input(input: &str) -> HashMap<String, Module> {
         for dest in module.destinations() {
             inputs
                 .entry(dest.clone())
-                .or_insert_with(Vec::new)
+                .or_default()
                 .push(name.clone());
         }
     }
