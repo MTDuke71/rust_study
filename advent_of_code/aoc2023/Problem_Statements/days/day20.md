@@ -174,6 +174,75 @@ Reset all modules to their default states. Waiting for all pulses to be fully ha
 
 **Critical**: FIFO queue processing ensures correct event ordering (problem explicitly requires this!)
 
+**FIFO Queue Processing Example**:
+```
+Initial Circuit:
+  button → broadcaster → %a, %b (both off initially)
+                         %a → &c
+                         %b → &c
+                         &c → output
+
+Button Press (Step-by-Step Queue Processing):
+═══════════════════════════════════════════════════
+
+Queue State:                   Low  High  Module States
+─────────────────────────────────────────────────────────
+Initial: []                     0    0    %a:off %b:off &c:{a:L,b:L}
+
+Step 1: Push button
+Queue: [(button, broadcaster, L)]
+Process: broadcaster receives L
+  → Sends L to %a, %b          +1   +0
+Queue: [(button, %a, L),
+        (button, %b, L)]        1    0
+
+Step 2: Process (button→%a, L) [FIFO: pop front!]
+  %a receives L (currently off)
+  → Toggles on, sends H
+Queue: [(button, %b, L),
+        (%a, &c, H)]            +0   +1
+                                1    1    %a:ON &c:{a:H,b:L}
+
+Step 3: Process (button→%b, L)
+  %b receives L (currently off)
+  → Toggles on, sends H
+Queue: [(%a, &c, H),
+        (%b, &c, H)]            +0   +1
+                                1    2    %b:ON &c:{a:H,b:L}
+
+Step 4: Process (%a→&c, H)
+  &c receives H from %a
+  → memory[a]=H, not all H → sends H
+Queue: [(%b, &c, H),
+        (&c, output, H)]        +0   +1
+                                1    3    &c:{a:H,b:L}
+
+Step 5: Process (%b→&c, H)
+  &c receives H from %b
+  → memory[b]=H, ALL H! → sends L
+Queue: [(&c, output, H),
+        (&c, output, L)]        +1   +0
+                                2    3    &c:{a:H,b:H}
+
+Step 6: Process (&c→output, H)
+  output receives H (no state change)
+Queue: [(&c, output, L)]        +0   +0
+                                2    3
+
+Step 7: Process (&c→output, L)
+  output receives L
+Queue: []                       +0   +0
+                                2    3
+
+Final: 2 LOW pulses, 3 HIGH pulses for this button press
+
+WHY FIFO MATTERS:
+  - If we processed depth-first (DFS), we'd process all descendants
+    of %a before %b, giving WRONG conjunction state
+  - FIFO ensures pulses propagate in the order they were sent
+  - Digital circuits process signals in temporal order!
+```
+
 ### Part 2: Cycle Detection + LCM
 **Circuit Analysis**: `rx` receives from conjunction `vr`. Four independent counters feed `vr`:
 ```

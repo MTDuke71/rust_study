@@ -78,6 +78,84 @@ pub enum Module {
 - **Conjunction**: `memory: HashMap<String, Pulse>` - Tracks last pulse from each input
 - **Broadcaster**: Stateless relay
 
+**Module Behavior Diagrams**:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ FLIP-FLOP (%ff)                                                  │
+│ Digital toggle: Two-state memory (on/off)                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  State: on = false          │  State: on = true                  │
+│                             │                                    │
+│  Input: HIGH ───→ [X] (ignore)  │  Input: HIGH ───→ [X] (ignore) │
+│                             │                                    │
+│  Input: LOW  ───→ [!] ──→ HIGH  │  Input: LOW  ───→ [!] ──→ LOW  │
+│                  toggle on      │                  toggle off    │
+│                             │                                    │
+│  Rule: HIGH pulses ignored  │  Rule: LOW pulse flips state       │
+│        LOW pulses toggle    │                                    │
+│                             │                                    │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ CONJUNCTION (&con)                                               │
+│ Logic AND gate: Remembers last pulse from EACH input            │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  Memory: { a: LOW, b: LOW, c: HIGH }                             │
+│                                                                   │
+│  Input from 'a': HIGH  ───→ memory[a] = HIGH                     │
+│                        └──→ Check: all HIGH? NO → send HIGH      │
+│                                                                   │
+│  Memory: { a: HIGH, b: LOW, c: HIGH }                            │
+│                                                                   │
+│  Input from 'b': HIGH  ───→ memory[b] = HIGH                     │
+│                        └──→ Check: all HIGH? YES → send LOW ✓    │
+│                                                                   │
+│  Rule: Outputs LOW when ALL inputs remembered as HIGH            │
+│        Otherwise outputs HIGH                                    │
+│  (Inverted NAND behavior!)                                       │
+│                                                                   │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ BROADCASTER (broadcast)                                          │
+│ Simple relay: No state, just forwards pulse                      │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  Input: HIGH ───→ Relay ───→ HIGH (to all destinations)          │
+│  Input: LOW  ───→ Relay ───→ LOW  (to all destinations)          │
+│                                                                   │
+│  Rule: Always forwards received pulse unchanged                  │
+│                                                                   │
+└─────────────────────────────────────────────────────────────────┘
+
+Example Circuit Execution:
+────────────────────────────
+button ─[LOW]→ broadcaster ─[LOW]→ %a ─[HIGH]→ &inv ─[HIGH]→ output
+                             ↓                    ↑
+                            %a                   %b
+                           (off)               (off)
+                             │                    │
+                           Toggle                 │
+                             │                    │
+                            %a                  [LOW]
+                           (on)                   
+                             
+Step 1: broadcaster sends LOW to %a and %b
+  - %a: off→on, outputs HIGH
+  - %b: off→on, outputs HIGH
+  
+Step 2: &inv receives HIGH from %a
+  - memory[a] = HIGH, memory[b] still LOW
+  - Not all HIGH → outputs HIGH
+
+Step 3: &inv receives HIGH from %b
+  - memory[a] = HIGH, memory[b] = HIGH
+  - All HIGH → outputs LOW ✓
+```
+
 **Why Enum?**: 
 - Compiler ensures all cases handled in `process()` method
 - Each type has different state - struct wouldn't work
@@ -337,10 +415,54 @@ pub fn part2(input: &str) -> u64 {
 
 **Circuit Structure** (from puzzle input):
 ```
-&pq → vr → rx
-&fg → vr
-&dk → vr
-&fm → vr
+Legend:
+  %name  = Flip-flop module
+  &name  = Conjunction module
+  name   = Broadcaster module
+  →      = Pulse direction
+  [H/L]  = High/Low pulse state
+
+Part 2 Circuit Architecture:
+┌──────────────────────────────────────────────────────────────┐
+│                    Binary Counter Network                      │
+└──────────────────────────────────────────────────────────────┘
+
+  button ─[L]→ broadcaster ─[L]→ (splits to multiple paths)
+                                   ↓
+                     ┌─────────────┼─────────────┐
+                     ↓             ↓             ↓
+              (Counter Chain 1)  (Chain 2)  (Chain 3) (Chain 4)
+                     ↓             ↓             ↓
+                 %ff ─→ %ff ─→ &pq ──┐
+                                      │
+                 %ff ─→ %ff ─→ &fg ──┤
+                                      ├─→ &vr ─[L when ALL H]─→ rx ✓
+                 %ff ─→ %ff ─→ &dk ──┤
+                                      │
+                 %ff ─→ %ff ─→ &fm ──┘
+
+Each counter chain:
+  - Series of flip-flops creating binary counter
+  - Terminal conjunction (&pq, &fg, &dk, &fm) sends HIGH periodically
+  - Period determined by counter length (2^n cycles)
+
+&vr (Final Conjunction):
+  - Receives from 4 independent counters
+  - Sends LOW to rx ONLY when ALL 4 inputs are HIGH
+  - Synchronization point = LCM of 4 periods
+
+Timing Example (simplified):
+  Press    pq    fg    dk    fm    vr→rx
+  ────────────────────────────────────────
+  4000     H     L     L     L     → H
+  3800     L     H     L     L     → H
+  4100     L     L     H     L     → H
+  3900     L     L     L     H     → H
+  ...
+  LCM      H     H     H     H     → L ✓ (Answer!)
+
+Actual periods from puzzle input: ~3800-4100 button presses each
+LCM = 238,920,142,622,879 (238 trillion!)
 ```
 
 **Strategy**: Each input to `vr` is an independent counter circuit with period P. They align at LCM(P1, P2, P3, P4).

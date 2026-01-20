@@ -2532,14 +2532,58 @@ pub fn part2(input: &str) -> u64 {
 
 **Circuit Structure**:
 ```
-Binary counter circuits (4 independent):
-  pq → (cycle period ~4000)  ↘
-  fg → (cycle period ~3800)   → vr (conjunction) → rx
-  dk → (cycle period ~4100)  ↗
-  fm → (cycle period ~3900)  ↗
+Part 2: Binary Counter Synchronization Problem
+═══════════════════════════════════════════════
 
-For vr to send LOW to rx: ALL 4 inputs must be HIGH simultaneously
-Answer = LCM(4000, 3800, 4100, 3900) = 238,920,142,622,879
+                    button (always sends LOW)
+                      │
+                      ↓
+                 broadcaster
+                      │
+        ┌─────────────┼─────────────┬─────────────┐
+        ↓             ↓             ↓             ↓
+   (Counter 1)   (Counter 2)   (Counter 3)   (Counter 4)
+        │             │             │             │
+   %ff→%ff→%ff   %ff→%ff→%ff   %ff→%ff→%ff   %ff→%ff→%ff
+        │             │             │             │
+        ↓             ↓             ↓             ↓
+       &pq           &fg           &dk           &fm
+        │             │             │             │
+        └─────────────┴─────────────┴─────────────┘
+                      │
+                      ↓
+                     &vr ─→ sends LOW when ALL inputs HIGH
+                      │
+                      ↓
+                     rx ✓ TARGET!
+
+Counter Behavior:
+  - Each chain: Flip-flops create binary counter (period ≈ 2^n)
+  - Terminal conjunctions (&pq, &fg, &dk, &fm) send HIGH periodically
+  - Periods from puzzle: ~3800-4100 button presses each
+  
+Final Conjunction &vr Logic:
+  - Receives 4 inputs (one from each counter terminal)
+  - Sends LOW to rx ONLY when ALL 4 are HIGH simultaneously
+  - This happens at LCM of the 4 periods
+
+Timing Example (actual periods vary):
+  Button Press    pq    fg    dk    fm    →  vr output
+  ─────────────────────────────────────────────────────
+       3800        L     H     L     L       HIGH
+       4000        H     L     L     L       HIGH
+       3900        L     L     L     H       HIGH
+       4100        L     L     H     L       HIGH
+        ...
+       LCM         H     H     H     H       LOW ✓
+
+Answer = LCM(period_pq, period_fg, period_dk, period_fm)
+       = 238,920,142,622,879 (238 trillion button presses!)
+
+Pattern Recognition: IDENTICAL to Day 8 ghost synchronization!
+  - Day 8: 6 ghost paths with different cycle periods → LCM
+  - Day 20: 4 counter circuits with different periods → LCM
+  - Both solve "when do independent cycles align?" mathematically
 ```
 
 **Tests**: 
