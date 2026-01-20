@@ -213,6 +213,156 @@ pub fn part1(input: &str) -> u64 {
 
 // GCD/LCM functions imported from crate::math_utils for reuse
 
+/// Debug function: Visualize circuit topology from broadcaster to rx
+/// Shows module types, connections, and hierarchical structure
+#[allow(dead_code)]
+pub fn visualize_circuit(input: &str) {
+    let modules = parse_input(input);
+    
+    println!("\n╔═══════════════════════════════════════════════════════════════════╗");
+    println!("║          Day 20 Circuit Topology Visualization                    ║");
+    println!("║          Total Modules: {}                                        ║", modules.len());
+    println!("╚═══════════════════════════════════════════════════════════════════╝\n");
+    
+    // Build reverse mapping for easier traversal
+    let mut inputs: HashMap<String, Vec<String>> = HashMap::new();
+    for (name, module) in &modules {
+        for dest in module.destinations() {
+            inputs.entry(dest.clone()).or_default().push(name.clone());
+        }
+    }
+    
+    // Helper to get module type symbol
+    let get_type_symbol = |name: &str| -> (&str, &str) {
+        if let Some(module) = modules.get(name) {
+            match module {
+                Module::FlipFlop { .. } => ("%", "FlipFlop"),
+                Module::Conjunction { .. } => ("&", "Conjunction"),
+                Module::Broadcaster { .. } => (" ", "Broadcaster"),
+            }
+        } else {
+            (" ", "Output")
+        }
+    };
+    
+    // BFS traversal from broadcaster
+    let mut visited = std::collections::HashSet::new();
+    let mut queue: VecDeque<(String, usize)> = VecDeque::new();
+    queue.push_back(("broadcaster".to_string(), 0));
+    visited.insert("broadcaster".to_string());
+    
+    let mut level_groups: HashMap<usize, Vec<String>> = HashMap::new();
+    
+    while let Some((name, level)) = queue.pop_front() {
+        level_groups.entry(level).or_default().push(name.clone());
+        
+        if let Some(module) = modules.get(&name) {
+            for dest in module.destinations() {
+                if !visited.contains(dest) {
+                    visited.insert(dest.clone());
+                    queue.push_back((dest.clone(), level + 1));
+                }
+            }
+        }
+    }
+    
+    // Print by levels
+    let max_level = *level_groups.keys().max().unwrap_or(&0);
+    
+    for level in 0..=max_level {
+        if let Some(nodes) = level_groups.get(&level) {
+            println!("Level {}: {} modules", level, nodes.len());
+            println!("─────────────────────────────────────────────────────────────────");
+            
+            for node_name in nodes {
+                let (symbol, type_name) = get_type_symbol(node_name);
+                let module_inputs = inputs.get(node_name).cloned().unwrap_or_default();
+                
+                print!("  {}{:<15} ({:<12})", symbol, node_name, type_name);
+                
+                if let Some(module) = modules.get(node_name) {
+                    let dests = module.destinations();
+                    if !dests.is_empty() {
+                        print!(" → [");
+                        for (i, dest) in dests.iter().enumerate() {
+                            if i > 0 { print!(", "); }
+                            let (dest_symbol, _) = get_type_symbol(dest);
+                            print!("{}{}", dest_symbol, dest);
+                        }
+                        print!("]");
+                    }
+                } else {
+                    print!(" [OUTPUT]");
+                }
+                
+                if !module_inputs.is_empty() {
+                    print!("  ← [");
+                    for (i, input) in module_inputs.iter().enumerate() {
+                        if i > 0 { print!(", "); }
+                        let (input_symbol, _) = get_type_symbol(input);
+                        print!("{}{}", input_symbol, input);
+                    }
+                    print!("]");
+                }
+                
+                println!();
+            }
+            println!();
+        }
+    }
+    
+    // Find and highlight the path to rx
+    println!("═══════════════════════════════════════════════════════════════════");
+    println!("Critical Path to 'rx' (Part 2 Analysis):");
+    println!("═══════════════════════════════════════════════════════════════════\n");
+    
+    if let Some(rx_inputs) = inputs.get("rx") {
+        for rx_feeder in rx_inputs {
+            let (symbol, type_name) = get_type_symbol(rx_feeder);
+            println!("rx ← {}{} ({})", symbol, rx_feeder, type_name);
+            
+            if let Some(feeder_inputs) = inputs.get(rx_feeder) {
+                println!("\n{}{} has {} inputs (must ALL be HIGH to send LOW to rx):", 
+                         symbol, rx_feeder, feeder_inputs.len());
+                for (i, input) in feeder_inputs.iter().enumerate() {
+                    let (input_symbol, input_type) = get_type_symbol(input);
+                    println!("  {}. {}{:<15} ({:<12})", i + 1, input_symbol, input, input_type);
+                    
+                    // Show what feeds into each counter
+                    if let Some(counter_inputs) = inputs.get(input) {
+                        println!("     ↑ Fed by {} modules: {:?}", 
+                                 counter_inputs.len(), counter_inputs);
+                    }
+                }
+            }
+        }
+    } else {
+        println!("No module feeds 'rx' (check for 'rx' in destinations)");
+    }
+    
+    println!("\n═══════════════════════════════════════════════════════════════════");
+    println!("Module Type Summary:");
+    println!("═══════════════════════════════════════════════════════════════════");
+    
+    let mut flip_flops = 0;
+    let mut conjunctions = 0;
+    let mut broadcasters = 0;
+    
+    for (_, module) in &modules {
+        match module {
+            Module::FlipFlop { .. } => flip_flops += 1,
+            Module::Conjunction { .. } => conjunctions += 1,
+            Module::Broadcaster { .. } => broadcasters += 1,
+        }
+    }
+    
+    println!("  Flip-Flops (%)    : {}", flip_flops);
+    println!("  Conjunctions (&)  : {}", conjunctions);
+    println!("  Broadcasters      : {}", broadcasters);
+    println!("  Total             : {}", modules.len());
+    println!("═══════════════════════════════════════════════════════════════════\n");
+}
+
 pub fn part2(input: &str) -> u64 {
     let mut modules = parse_input(input);
     
