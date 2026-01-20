@@ -55,6 +55,10 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Range Splitting by Operator | Day 19 | `day19.rs` |
 | DFS with State-Space Range Propagation | Day 19 | `day19.rs` |
 | Mathematical Combination Counting | Day 19 | `day19.rs` |
+| Enum State Machine with Polymorphic Dispatch | Day 20 | `day20.rs` |
+| FIFO Queue Event Processing | Day 20 | `day20.rs` |
+| Cycle Detection for Synchronization | Day 20 | `day20.rs` |
+| LCM-Based Cycle Alignment | Day 8, Day 20 | `day08.rs`, `day20.rs` |
 
 ---
 

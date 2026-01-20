@@ -8,9 +8,9 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 18/25 |
-| **Total Runtime** | ~344.6ms |
-| **Average per Day** | ~19.14ms |
+| **Days Completed** | 20/25 |
+| **Total Runtime** | ~374.2ms |
+| **Average per Day** | ~18.71ms |
 | **Fastest Day** | Day 6 (0.95µs) |
 | **Slowest Day** | Day 17 (246.7ms) |
 
@@ -39,6 +39,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 17 | 64.3ms | 182.4ms | 246.7ms | No********** |
 | 18 | 86.6µs | 107.5µs | 194.1µs | Yes*********** |
 | 19 | 202.7µs | 189.4µs | 392.1µs | Yes************ |
+| 20 | 5.70ms | 23.54ms | 29.24ms | Yes************* |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 *Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
@@ -47,6 +48,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 **********Day 17: State-space Dijkstra - no optimization applied (prioritizing clarity), Part 2 2.8× slower due to 3.3× larger state space (239k → 795k states)
 ***********Day 18: Mathematical approach (Shoelace + Pick's) - Part 2 only 24% slower despite 1 trillion× more cells (O(n) on vertices not cells, scales to 52.2 trillion cells in 107µs)
 ************Day 19: Range propagation - Part 2 FASTER than Part 1! Mathematical counting (256 trillion combinations) faster than simulating 200 parts. Parsing dominates both (~85%), actual calculation only ~30µs each
+*************Day 20: Cycle detection + LCM - Part 2 requires finding when 4 counters align (238T iterations brute force), cycle detection finds periods in ~4000 iterations, LCM computes answer in 23.54ms
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  

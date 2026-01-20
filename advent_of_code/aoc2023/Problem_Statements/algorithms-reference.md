@@ -22,7 +22,7 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Custom Ord Multi-Level Sort | Day 7 | O(n log n) | [[custom-ord-pattern]] |
 | Graph Traversal (Directed) | Day 8 | O(n) | [[graph-theory-fundamentals]] |
 | GCD (Euclidean Algorithm) | Day 8 | O(log min(a,b)) | [[number-theory-basics]] |
-| LCM (Cycle Alignment) | Day 8 | O(1) | [[number-theory-basics]] |
+| LCM (Cycle Alignment) | Day 8, Day 20 | O(1) | [[number-theory-basics]] |
 | Modular Arithmetic | Day 8 | O(1) | [[number-theory-basics]] |
 | Finite Differences (Polynomial Extrapolation) | Day 9 | O(n²) per sequence | [[finite-differences]] |
 | Recursive Difference Pyramid | Day 9 | O(depth × width) | - |
@@ -55,6 +55,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Constraint Propagation (Range Splitting) | Day 19 | O(workflows × rules) Part 2 | [[constraint-propagation]] |
 | DFS with Range Constraints | Day 19 | O(graph_nodes × splits) | [[dfs-patterns]] |
 | Combinatorial Counting (Range Products) | Day 19 | O(1) per range | [[combinatorics-fundamentals]] |
+| State Machine Simulation (Enum Dispatch) | Day 20 | O(1) per transition | [[state-machine-rust]] |
+| FIFO Queue Processing (Event-Driven) | Day 20 | O(1) per operation | [[mission-2]] |
+| Cycle Detection (Counter Synchronization) | Day 20 | O(iterations) expected | [[cycle-detection-patterns]] |
 
 ---
 
