@@ -34,6 +34,7 @@
 
 use anyhow::{Context, Result};
 use std::collections::HashMap;
+use crate::math_utils::lcm_usize as lcm;
 
 /// Parsed network representation
 #[derive(Debug, Clone)]
@@ -225,24 +226,7 @@ impl Network {
     }
 }
 
-/// Calculate Greatest Common Divisor using Euclidean algorithm
-fn gcd(mut a: usize, mut b: usize) -> usize {
-    while b != 0 {
-        let temp = b;
-        b = a % b;
-        a = temp;
-    }
-    a
-}
-
-/// Calculate Least Common Multiple
-fn lcm(a: usize, b: usize) -> usize {
-    if a == 0 || b == 0 {
-        0
-    } else {
-        (a * b) / gcd(a, b)
-    }
-}
+// GCD/LCM functions moved to crate::math_utils for reuse across days
 
 pub fn solve_part1(input: &str) -> Result<String> {
     let network = Network::parse(input)?;
@@ -313,19 +297,7 @@ XXX = (XXX, XXX)";
         assert_eq!(result, "6");
     }
 
-    #[test]
-    fn test_gcd() {
-        assert_eq!(gcd(48, 18), 6);
-        assert_eq!(gcd(17, 5), 1);
-        assert_eq!(gcd(100, 50), 50);
-    }
-
-    #[test]
-    fn test_lcm() {
-        assert_eq!(lcm(4, 6), 12);
-        assert_eq!(lcm(21, 6), 42);
-        assert_eq!(lcm(12, 18), 36);
-    }
+    // GCD/LCM tests moved to math_utils module
 
     #[test]
     fn test_part2_example() {
