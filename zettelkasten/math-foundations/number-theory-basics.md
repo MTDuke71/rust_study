@@ -53,6 +53,20 @@
 - **Link**: [[advent_of_code/aoc2023/src/solver/day08.rs]]
 - **Performance**: ~6.7ms (Part 2) vs. impossibly long brute force
 
+### **AoC 2023 Day 20**: Pulse Propagation (Counter Synchronization)
+- **What**: Digital logic circuit with flip-flops, conjunctions, and broadcasters
+- **How it uses this concept**:
+  - 4 independent counter modules each have periodic behavior
+  - Need to find when all counters simultaneously output high pulse
+  - Use cycle detection to find each counter's period (4000-5000 iterations)
+  - Compute LCM of periods to find synchronization point
+  - Avoids simulating 238 trillion button presses
+- **Mathematical pattern**: Identical to Day 8 (cycle alignment via LCM)
+- **Link**: [advent_of_code/aoc2023/src/solver/day20.rs](advent_of_code/aoc2023/src/solver/day20.rs)
+- **Shared utilities**: `math_utils.rs` module with `gcd()` and `lcm()` functions
+- **Performance**: ~23.54ms (Part 2) using cycle detection + LCM
+- **See also**: [[state-machines]] for state machine implementation details
+
 ---
 
 ## 📚 Code Examples

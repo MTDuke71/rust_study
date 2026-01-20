@@ -5,20 +5,43 @@
 //!
 //! **Approach**:
 //! - Part 1: State machine simulation with pulse queue (BFS-style processing)
-//! - Parse module types, destinations, and build dependency graph
-//! - Process pulses in queue order (not recursively!)
+//! - Part 2: Cycle detection + LCM for synchronization (identical pattern to Day 8)
+//!
+//! **Mathematical Foundation**:
+//! 
+//! This problem demonstrates three key mathematical concepts:
+//! 
+//! 1. **State Machines** - Each module is a finite state machine with transition rules:
+//!    - FlipFlop: Boolean state (on/off), transitions on low pulse
+//!    - Conjunction: Map state (memory of inputs), transitions on any pulse
+//!    - Broadcaster: Stateless relay
+//!    See `zettelkasten/math-foundations/state-machines.md` for theory
+//! 
+//! 2. **Cycle Detection** - By Pigeonhole Principle, deterministic state machines on finite
+//!    state spaces must eventually cycle. We exploit this to avoid 238 trillion iterations.
+//!    See `zettelkasten/math-foundations/pigeonhole-principle-cycle-detection.md`
+//! 
+//! 3. **Number Theory (LCM)** - When multiple independent cycles must align, the synchronization
+//!    point is the Least Common Multiple of their periods.
+//!    See `zettelkasten/math-foundations/number-theory-basics.md`
 //!
 //! **Key Patterns**:
-//! - State machine with multiple module types
+//! - State machine with multiple module types (enum dispatch)
 //! - FIFO queue processing (Mission 2 pattern)
 //! - HashMap for module lookup (Mission 5 pattern)
+//! - Cycle detection + LCM (same as Day 8 ghost synchronization)
 //!
 //! **Module Types**:
 //! - Flip-flop (`%`): Toggle on low pulse (ignore high), emit opposite state
 //! - Conjunction (`&`): Remember last pulse from each input, emit low only if ALL high
 //! - Broadcaster: Relay pulse to all destinations
 //!
-//! **Zettelkasten Links**: [[state-machine-rust]], [[mission-2]], [[mission-5]]
+//! **Zettelkasten Links**: 
+//! - [[state-machines]] - Finite state machine theory
+//! - [[pigeonhole-principle-cycle-detection]] - Why cycles are guaranteed
+//! - [[number-theory-basics]] - LCM for cycle alignment
+//! - [[mission-2]] - Queue data structure
+//! - [[mission-5]] - HashMap implementation
 
 use std::collections::{HashMap, VecDeque};
 use crate::math_utils::lcm;
