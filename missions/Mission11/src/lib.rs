@@ -121,6 +121,8 @@
 pub mod memo_cache;
 pub mod state_patterns;
 pub mod string_dp;
+pub mod instrumentation;
 
 // Re-export core types
 pub use memo_cache::MemoCache;
+pub use instrumentation::{CacheStats, InstrumentedCache, PerformanceComparison};
