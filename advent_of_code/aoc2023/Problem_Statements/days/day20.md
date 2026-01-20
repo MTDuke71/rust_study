@@ -1,6 +1,25 @@
 ## --- Day 20: Pulse Propagation ---
 
-**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub
+**Zettelkasten**: [[aoc2023]] - AoC 2023 knowledge hub  
+**Solution Guide**: [Function-by-Function Guide](day20_function_guide.md) - Detailed implementation walkthrough
+
+---
+
+## 🎯 Solution Summary
+
+**Part 1**: 712,543,680 (5.70 ms)  
+**Part 2**: 238,920,142,622,879 (23.54 ms)
+
+**Key Patterns**:
+- State machine simulation with FIFO queue processing
+- Cycle detection + LCM (same pattern as Day 8!)
+- Enum-based polymorphism for module types
+
+**Implementation**: See [day20_function_guide.md](day20_function_guide.md) for complete function-by-function breakdown.
+
+---
+
+## 📖 Problem Statement
 
 
 With your help, the Elves manage to find the right parts and fix all of the machines. Now, they just need to send the command to boot up the machines and get the sand flowing again.
@@ -134,3 +153,61 @@ In the first example, the same thing happens every time the button is pushed: `8
 In the second example, after pushing the button `1000` times, `4250` low pulses and `2750` high pulses are sent. Multiplying these together gives `*11687500*`.
 
 Consult your module configuration; determine the number of low pulses and high pulses that would be sent after pushing the button `1000` times, waiting for all pulses to be fully handled after each push of the button. *What do you get if you multiply the total number of low pulses sent by the total number of high pulses sent?*
+
+---
+
+## --- Part Two ---
+
+The final machine responsible for moving the sand down to Island Island has a module attached named `rx`. The machine turns on when a **single low pulse** is sent to `rx`.
+
+Reset all modules to their default states. Waiting for all pulses to be fully handled after each button press, **what is the fewest number of button presses** required to deliver a single low pulse to the module named `rx`?
+
+---
+
+## 💡 Solution Approach
+
+### Part 1: Pulse Counting Simulation
+1. Parse module network (flip-flops, conjunctions, broadcaster)
+2. Initialize conjunction memory with all inputs
+3. Simulate 1000 button presses using FIFO queue
+4. Count high/low pulses, multiply totals
+
+**Critical**: FIFO queue processing ensures correct event ordering (problem explicitly requires this!)
+
+### Part 2: Cycle Detection + LCM
+**Circuit Analysis**: `rx` receives from conjunction `vr`. Four independent counters feed `vr`:
+```
+&pq → vr → rx
+&fg → vr
+&dk → vr  
+&fm → vr
+```
+
+**Key Insight**: For `vr` to send LOW to `rx`, ALL inputs must be HIGH simultaneously. This is a **cycle synchronization problem** (identical to Day 8 ghost paths!).
+
+**Algorithm**:
+1. Detect cycle period for each of the 4 inputs to `vr`
+2. Find when each sends its first HIGH pulse
+3. Compute LCM of all 4 periods
+4. Answer: 238,920,142,622,879 (238 trillion button presses!)
+
+**Pattern Recognition**: Same mathematical pattern as Day 8 - independent cycles synchronizing at their LCM.
+
+**See**: [day20_function_guide.md](day20_function_guide.md) for complete implementation details and code walkthrough.
+
+---
+
+## 📊 Performance
+
+```
+Benchmark Results (Criterion):
+day20_part1: 5.70 ms  (1000 simulations)
+day20_part2: 23.54 ms (cycle detection in ~4000-5000 iterations)
+```
+
+**Mission Integration**:
+- Mission 2: Queue (FIFO pulse processing)
+- Mission 5: HashMap (module lookup)
+- math_utils: GCD/LCM (shared with Day 8)
+
+**Zettelkasten**: [[state-machine-rust]], [[cycle-detection]], [[mission-2]], [[mission-5]]
