@@ -4,17 +4,17 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 18/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 344.6ms |
+| **Progress** | 19/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 345.0ms |
 | **Mission Integration** | 5 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6, Day 17: Mission 6) |
-| **Patterns Extracted** | 15 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection, mathematical polygon area calculation) |
+| **Patterns Extracted** | 16 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection, mathematical polygon area calculation, workflow pattern matching with enum destinations) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) | [Day 18](#day-18-lavaduct-lagoon) |
-Day 19 | Day 20 |
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) | [Day 18](#day-18-lavaduct-lagoon) | [Day 19](#day-19-aplenty) |
+Day 20 |
 Day 21 | Day 22 | Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
@@ -2156,7 +2156,247 @@ fn decode_from_hex(&self) -> Result<Instruction> {
 - [[number-theory-basics]] - Lattice points, integer coordinates
 - [[hexadecimal-encoding]] - Base-16 number systems
 
-**Links**: ← [Day 17](#day-17-clumsy-crucible) | Day 19 →
+**Links**: ← [Day 17](#day-17-clumsy-crucible) | [Day 19](#day-19-aplenty) →
+
+---
+
+### Day 19: Aplenty
+
+**Part 1**: Process machine parts through workflow rules to determine acceptance → **330820**  
+**Part 2**: Count ALL possible accepted combinations (256 trillion possibilities) → **123972546935551**  
+
+**Algorithm**: Part 1: State machine simulation with HashMap workflow lookup; Part 2: DFS with range constraint propagation  
+**Complexity**: Part 1 O(p × r) where p=parts, r=avg rules per workflow; Part 2 O(w × r) where w=workflows, r=rules  
+**Runtime**: 400µs (Part 1: 210µs, Part 2: 190µs)  
+**Mission**: Mission 5 (HashMap for workflow storage)  
+
+**Key Insight**: Part 2 demonstrates **brilliant optimization** - instead of brute-forcing 256 trillion combinations (4000^4 possible parts), we propagate **constraint ranges** through the workflow graph. Each conditional rule splits ranges (e.g., x>1000 divides [1,4000] into [1001,4000] and [1,4000]). We recursively traverse workflows with range constraints, counting combinations mathematically at Accept states (product of range sizes). This reduces O(4000^4) enumeration to O(workflows × rules) graph traversal!
+
+**Rust Highlights**:
+- **Enum-based destinations**: `Destination::Accept | Reject | Workflow(String)` for type-safe state machine
+- **Pattern matching workflows**: Natural fit for Rust's exhaustive match expressions
+- **HashMap workflow storage**: O(1) lookup by workflow name
+- **Range splitting algorithm**: Split [min,max] based on conditional operators (<, >)
+- **DFS with state propagation**: Recursive function carrying PartRange through workflow graph
+- **Mathematical counting**: Multiply range sizes instead of enumerating individual parts
+- **Zero enumeration**: Never create or iterate Part instances in Part 2
+
+**Code Highlight**:
+```rust
+/// Split range based on conditional rule
+/// Returns (matching_range, non_matching_range)
+fn split_range(range: Range, op: Op, value: u64) -> (Range, Range) {
+    match op {
+        Op::LessThan => {
+            // Matching: values < threshold
+            let matching = Range {
+                min: range.min,
+                max: range.max.min(value - 1),  // Cap at value-1
+            };
+            // Non-matching: values >= threshold
+            let non_matching = Range {
+                min: range.min.max(value),  // Start at value
+                max: range.max,
+            };
+            (matching, non_matching)
+        }
+        Op::GreaterThan => {
+            // Matching: values > threshold
+            let matching = Range {
+                min: range.min.max(value + 1),  // Start at value+1
+                max: range.max,
+            };
+            // Non-matching: values <= threshold
+            let non_matching = Range {
+                min: range.min,
+                max: range.max.min(value),  // Cap at value
+            };
+            (matching, non_matching)
+        }
+    }
+}
+
+/// DFS through workflow graph with range constraints
+/// Returns count of accepted combinations within the ranges
+fn count_accepted(
+    workflow_name: &str,
+    mut ranges: PartRange,
+    workflows: &HashMap<String, Workflow>,
+) -> u64 {
+    // Terminal cases
+    if workflow_name == "A" {
+        return ranges.combinations();  // Product: (x_max-x_min+1) * ... * (s_max-s_min+1)
+    }
+    if workflow_name == "R" {
+        return 0;  // Rejected - no combinations count
+    }
+    
+    let workflow = workflows.get(workflow_name).unwrap();
+    let mut total = 0;
+    
+    for rule in &workflow.rules {
+        match rule {
+            Rule::Conditional { attr, op, value, dest } => {
+                let (matching, non_matching) = 
+                    split_range(ranges.get(*attr), *op, *value as u64);
+                
+                // Process matching range → destination workflow
+                if !matching.is_empty() {
+                    let mut matching_ranges = ranges;
+                    matching_ranges.set(*attr, matching);
+                    total += count_accepted(dest_name, matching_ranges, workflows);
+                }
+                
+                // Continue with non-matching → next rule
+                // (This is the KEY insight - we narrow ranges as we go!)
+                ranges.set(*attr, non_matching);
+                
+                // Early exit if range becomes empty
+                if ranges.is_empty() {
+                    break;
+                }
+            }
+            Rule::Unconditional { dest } => {
+                // Remaining range goes to fallback destination
+                total += count_accepted(dest_name, ranges, workflows);
+                break;
+            }
+        }
+    }
+    
+    total
+}
+
+/// Calculate combinations within PartRange
+impl PartRange {
+    fn combinations(&self) -> u64 {
+        self.x.size() * self.m.size() * self.a.size() * self.s.size()
+    }
+    
+    fn is_empty(&self) -> bool {
+        self.x.is_empty() || self.m.is_empty() || 
+        self.a.is_empty() || self.s.is_empty()
+    }
+}
+
+impl Range {
+    fn size(&self) -> u64 {
+        if self.max >= self.min {
+            self.max - self.min + 1
+        } else {
+            0
+        }
+    }
+    
+    fn is_empty(&self) -> bool {
+        self.max < self.min
+    }
+}
+```
+
+**Workflow Structure**:
+
+Example workflow: `px{a<2006:qkq,m>2090:A,rfg}`
+
+**Translation**:
+1. If `a < 2006` → go to workflow `qkq`
+2. Else if `m > 2090` → Accept
+3. Else → go to workflow `rfg`
+
+**Parsing**:
+```rust
+fn parse_workflow(line: &str) -> Workflow {
+    // px{a<2006:qkq,m>2090:A,rfg}
+    let (name, rules_str) = line.split_once('{').unwrap();
+    let rules_str = rules_str.strip_suffix('}').unwrap();
+    
+    let rules = rules_str
+        .split(',')
+        .map(|rule_text| parse_rule(rule_text))
+        .collect();
+    
+    Workflow {
+        name: name.to_string(),
+        rules,
+    }
+}
+
+fn parse_rule(text: &str) -> Rule {
+    if let Some((condition, dest_str)) = text.split_once(':') {
+        // Conditional: "a<2006:qkq"
+        let attr = condition.chars().next().unwrap();  // 'a'
+        let op = if condition.contains('<') {
+            Op::LessThan
+        } else {
+            Op::GreaterThan
+        };
+        let value: u32 = condition[2..].parse().unwrap();  // 2006
+        let dest = Destination::from_str(dest_str);  // Workflow("qkq")
+        
+        Rule::Conditional { attr, op, value, dest }
+    } else {
+        // Unconditional: "rfg" or "A"
+        Rule::Unconditional {
+            dest: Destination::from_str(text),
+        }
+    }
+}
+```
+
+**Part 1 vs Part 2 Comparison**:
+
+| Aspect | Part 1 | Part 2 |
+|--------|--------|--------|
+| **Input** | 200 specific parts | All 256 trillion possible parts |
+| **Approach** | Simulate each part through workflows | Propagate ranges through workflow graph |
+| **Data** | `Part{x, m, a, s}` structs | `PartRange{x: Range, m: Range, a: Range, s: Range}` |
+| **Traversal** | Loop until Accept/Reject per part | DFS exploring all workflow paths |
+| **Counting** | Count individual accepted parts | Multiply range sizes at Accept nodes |
+| **Complexity** | O(200 × avg_path_length) | O(workflows × rules × splits) |
+| **Runtime** | 210µs | 190µs (faster despite massive problem size!) |
+
+**Why Part 2 is Faster**:
+- Part 1: 200 parts × ~5 workflows per part = 1,000 workflow evaluations
+- Part 2: ~30 workflows × ~3 rules × ~2 DFS calls = ~180 workflow traversals
+- Range arithmetic is simple u64 operations
+- Never enumerate individual parts!
+
+**Range Propagation Example**:
+
+Initial: `x[1,4000], m[1,4000], a[1,4000], s[1,4000]` (256 trillion combinations)
+
+Workflow `in{s<1351:px,qqz}`:
+- Rule 1: `s<1351` → splits to:
+  - Matching: `s[1,1350]` → go to `px` (1350 × 4000^3 combinations)
+  - Non-matching: `s[1351,4000]` → next rule
+- Rule 2 (unconditional): `s[1351,4000]` → go to `qqz` (2650 × 4000^3 combinations)
+
+**DFS explores both branches**, recursively splitting ranges at each conditional until reaching Accept/Reject.
+
+**Performance Analysis**:
+
+Part 2 scales with workflow graph size, NOT input space size:
+- 256 trillion input space = 4000^4
+- ~30 workflows × ~3 rules = 90 graph nodes
+- DFS with memoization could further optimize (not needed here - already 190µs!)
+
+**Tests**:
+- ✅ Part 1 example (19114 total ratings accepted)
+- ✅ Part 2 example (167409079868000 combinations)
+- ✅ Workflow parsing (conditionals, unconditionals, destinations)
+- ✅ Part parsing (x, m, a, s attributes)
+- ✅ Range splitting (LessThan/GreaterThan operators)
+- ✅ Range combinations (product of sizes)
+- ✅ DFS traversal (Accept/Reject terminals)
+
+**Zettelkasten**:
+- [[workflow-pattern-matching]] - State machines with enum destinations (just created!)
+- [[constraint-propagation]] - Range splitting algorithms
+- [[combinatorics-fundamentals]] - Counting without enumeration (math-foundations)
+- [[dfs-patterns]] - Depth-first graph exploration
+- [[Error Handling Patterns]] - Enum-based error types parallel to Destination enum
+
+**Links**: ← [Day 18](#day-18-lavaduct-lagoon) | Day 20 →
 
 ---
 

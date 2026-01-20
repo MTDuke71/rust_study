@@ -45,38 +45,38 @@
 //! - More elegant mathematically
 //! - Same algorithm as Day 18!
 
-use aoc2023::solver::day10::{find_loop_vertices, parse_grid, find_start};
 use anyhow::Result;
+use aoc2023::solver::day10::{find_loop_vertices, find_start, parse_grid};
 
 fn main() -> Result<()> {
     // Load the actual puzzle input
     let input = include_str!("../inputs/day10.txt");
-    
+
     println!("Day 10 Part 2: Shoelace Formula + Pick's Theorem");
     println!("{}", "=".repeat(60));
     println!();
-    
+
     // Parse grid and find the loop
     let grid = parse_grid(input);
     let start = find_start(&grid).expect("Should find 'S'");
     let vertices = find_loop_vertices(&grid, start);
-    
+
     println!("Loop Statistics:");
     println!("  Total vertices: {}", vertices.len());
     println!("  Perimeter (B):  {} cells", vertices.len());
     println!();
-    
+
     // Apply Shoelace formula to get interior area
     let area = shoelace_area(&vertices);
     println!("Shoelace Formula:");
     println!("  Interior area:  {:.1} square units", area);
     println!();
-    
+
     // Apply Pick's theorem: A = I + B/2 - 1
     // Rearranged: I = A - B/2 + 1
     let perimeter = vertices.len() as f64;
     let interior_points = area - perimeter / 2.0 + 1.0;
-    
+
     println!("Pick's Theorem (A = I + B/2 - 1):");
     println!("  A = {:.1}", area);
     println!("  B = {}", perimeter as i64);
@@ -85,9 +85,12 @@ fn main() -> Result<()> {
     println!("  I = {:.1} - {:.1} + 1", area, perimeter / 2.0);
     println!("  I = {}", interior_points as i64);
     println!();
-    
-    println!("✅ Interior points enclosed by loop: {}", interior_points as i64);
-    
+
+    println!(
+        "✅ Interior points enclosed by loop: {}",
+        interior_points as i64
+    );
+
     Ok(())
 }
 
@@ -99,20 +102,20 @@ fn main() -> Result<()> {
 fn shoelace_area(vertices: &[(i64, i64)]) -> f64 {
     let n = vertices.len();
     let mut sum = 0i64;
-    
+
     for i in 0..n {
         let (x1, y1) = vertices[i];
         let (x2, y2) = vertices[(i + 1) % n];
         sum += x1 * y2 - x2 * y1;
     }
-    
+
     (sum.abs() as f64) / 2.0
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     const EXAMPLE1: &str = "\
 .....
 .S-7.
@@ -168,10 +171,10 @@ L7JLJL-JLJLJL--JLJ.L";
         let grid = parse_grid(EXAMPLE1);
         let start = find_start(&grid).unwrap();
         let vertices = find_loop_vertices(&grid, start);
-        
+
         let area = shoelace_area(&vertices);
         let interior = area - (vertices.len() as f64) / 2.0 + 1.0;
-        
+
         assert_eq!(interior as i64, 1);
     }
 
@@ -180,10 +183,10 @@ L7JLJL-JLJLJL--JLJ.L";
         let grid = parse_grid(EXAMPLE2);
         let start = find_start(&grid).unwrap();
         let vertices = find_loop_vertices(&grid, start);
-        
+
         let area = shoelace_area(&vertices);
         let interior = area - (vertices.len() as f64) / 2.0 + 1.0;
-        
+
         assert_eq!(interior as i64, 1);
     }
 
@@ -193,10 +196,10 @@ L7JLJL-JLJLJL--JLJ.L";
         let grid = parse_grid(EXAMPLE3);
         let start = find_start(&grid).unwrap();
         let vertices = find_loop_vertices(&grid, start);
-        
+
         let area = shoelace_area(&vertices);
         let interior = area - (vertices.len() as f64) / 2.0 + 1.0;
-        
+
         assert_eq!(interior as i64, 4);
     }
 
@@ -206,10 +209,10 @@ L7JLJL-JLJLJL--JLJ.L";
         let grid = parse_grid(EXAMPLE4);
         let start = find_start(&grid).unwrap();
         let vertices = find_loop_vertices(&grid, start);
-        
+
         let area = shoelace_area(&vertices);
         let interior = area - (vertices.len() as f64) / 2.0 + 1.0;
-        
+
         assert_eq!(interior as i64, 8);
     }
 
@@ -219,10 +222,10 @@ L7JLJL-JLJLJL--JLJ.L";
         let grid = parse_grid(EXAMPLE5);
         let start = find_start(&grid).unwrap();
         let vertices = find_loop_vertices(&grid, start);
-        
+
         let area = shoelace_area(&vertices);
         let interior = area - (vertices.len() as f64) / 2.0 + 1.0;
-        
+
         assert_eq!(interior as i64, 10);
     }
 }

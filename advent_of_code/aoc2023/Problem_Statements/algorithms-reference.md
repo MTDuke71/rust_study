@@ -51,6 +51,10 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Shoelace Formula (Polygon Area) | Day 18 | O(n) | [[computational-geometry-basics]] |
 | Pick's Theorem (Lattice Points) | Day 18 | O(1) | [[computational-geometry-basics]] |
 | Hexadecimal Decoding | Day 18 | O(1) per instruction | [[number-theory-basics]] |
+| Workflow State Machine | Day 19 | O(parts × avg_rules) Part 1 | [[workflow-pattern-matching]] |
+| Constraint Propagation (Range Splitting) | Day 19 | O(workflows × rules) Part 2 | [[constraint-propagation]] |
+| DFS with Range Constraints | Day 19 | O(graph_nodes × splits) | [[dfs-patterns]] |
+| Combinatorial Counting (Range Products) | Day 19 | O(1) per range | [[combinatorics-fundamentals]] |
 
 ---
 
@@ -1614,3 +1618,22 @@ $$I + B = A + \frac{B}{2} + 1$$
 - Deep dives go to zettelkasten (linked from here)
 - Implementation details stay in solver files
 - This file serves as navigation hub
+## 🔄 Workflow State Machines (Day 19)
+
+### Pattern Matching with Enum Destinations
+- **Complexity**: O(parts × avg_rules)
+- **Use**: State machines, rule-based routing, workflow orchestration
+- **Key**: Type-safe Destination enum (Accept/Reject/Workflow), HashMap O(1) lookup
+- **Runtime**: 210µs for 200 parts
+- **Zettelkasten**: [[workflow-pattern-matching]]
+
+## 🎯 Constraint Propagation (Day 19 Part 2)
+
+### Range Splitting with DFS
+- **Complexity**: O(workflows × rules × splits)
+- **Problem**: Count 256 trillion (4000^4) combinations - brute force impossible!
+- **Solution**: Propagate ranges not values, split at conditionals, count mathematically
+- **Pattern**: Range{min,max}.size(), split_range(), DFS with range constraints
+- **Performance**: 190µs (~180 graph operations) vs impossible enumeration
+- **Key Insight**: Complexity depends on graph structure, NOT input space size!
+- **Zettelkasten**: [[constraint-propagation]], [[combinatorics-fundamentals]], [[dfs-patterns]]

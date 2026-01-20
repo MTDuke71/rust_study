@@ -12,40 +12,40 @@ use std::fs;
 fn main() -> Result<()> {
     // Load the actual puzzle input
     let input = include_str!("../inputs/day18.txt");
-    
+
     println!("{}", "=".repeat(80));
     println!("Day 18: Lavaduct Lagoon - Polygon Visualization");
     println!("{}", "=".repeat(80));
     println!();
-    
+
     // Parse and get vertices
     let instructions = parse_input(input)?;
     let (vertices, perimeter) = trace_polygon(&instructions);
-    
+
     println!("📊 Polygon Statistics:");
     println!("  Vertices: {}", vertices.len());
     println!("  Perimeter: {} units", perimeter);
     println!();
-    
+
     // Display vertices
     println!("📍 Polygon Vertices:");
     for (i, (x, y)) in vertices.iter().enumerate() {
         println!("  {:2}. ({:3}, {:3})", i, x, y);
     }
     println!();
-    
+
     // Create ASCII visualization
     println!("🎨 ASCII Visualization:");
     visualize_polygon(&vertices);
     println!();
-    
+
     // Create data for external plotting
     create_plot_data(&vertices)?;
-    
+
     println!("✅ Visualization complete!");
     println!("📁 Created: day18_vertices.csv");
     println!("   Use with Python/gnuplot/Excel for detailed plotting");
-    
+
     Ok(())
 }
 
@@ -117,16 +117,16 @@ fn visualize_polygon(vertices: &[(i64, i64)]) {
     let max_x = vertices.iter().map(|(x, _)| *x).max().unwrap();
     let min_y = vertices.iter().map(|(_, y)| *y).min().unwrap();
     let max_y = vertices.iter().map(|(_, y)| *y).max().unwrap();
-    
+
     let width = (max_x - min_x + 1) as usize;
     let height = (max_y - min_y + 1) as usize;
-    
+
     // Build edge set
     let mut edges = HashSet::new();
     for i in 0..vertices.len() - 1 {
         let (x1, y1) = vertices[i];
         let (x2, y2) = vertices[i + 1];
-        
+
         // Draw line from (x1, y1) to (x2, y2)
         if x1 == x2 {
             // Vertical line
@@ -144,7 +144,7 @@ fn visualize_polygon(vertices: &[(i64, i64)]) {
             }
         }
     }
-    
+
     // Print grid
     println!("  ┌{}┐", "─".repeat(width));
     for y in min_y..=max_y {
@@ -159,23 +159,23 @@ fn visualize_polygon(vertices: &[(i64, i64)]) {
         println!("│");
     }
     println!("  └{}┘", "─".repeat(width));
-    
+
     println!("\n  Dimensions: {}×{} units", width, height);
 }
 
 /// Create CSV file for external plotting
 fn create_plot_data(vertices: &[(i64, i64)]) -> Result<()> {
     let mut csv = String::from("x,y\n");
-    
+
     for (x, y) in vertices {
         csv.push_str(&format!("{},{}\n", x, y));
     }
-    
+
     // Close the polygon
     csv.push_str(&format!("{},{}\n", vertices[0].0, vertices[0].1));
-    
+
     fs::write("day18_vertices.csv", csv)?;
-    
+
     // Also create Python plotting script
     let python_script = r#"#!/usr/bin/env python3
 """
@@ -217,11 +217,11 @@ plt.savefig('day18_polygon.png', dpi=150)
 print("✅ Plot saved to day18_polygon.png")
 plt.show()
 "#;
-    
+
     fs::write("day18_plot.py", python_script)?;
-    
+
     println!("📊 Created Python plotting script: day18_plot.py");
     println!("   Run with: python day18_plot.py");
-    
+
     Ok(())
 }

@@ -49,6 +49,12 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Cross-Product Accumulation (Shoelace) | Day 18 | `day18.rs` |
 | Mathematical Formula Composition | Day 18 | `day18.rs` |
 | Hex String Parsing with Radix | Day 18 | `day18.rs` |
+| Enum-Based State Machine Destinations | Day 19 | `day19.rs` |
+| HashMap Workflow Lookup | Day 19 | `day19.rs` |
+| Conditional Rule Evaluation (First Match Wins) | Day 19 | `day19.rs` |
+| Range Splitting by Operator | Day 19 | `day19.rs` |
+| DFS with State-Space Range Propagation | Day 19 | `day19.rs` |
+| Mathematical Combination Counting | Day 19 | `day19.rs` |
 
 ---
 
@@ -1551,3 +1557,175 @@ A pattern is extracted to `src/patterns/` when:
 - [Performance Analysis](performance-analysis.md) - Optimization techniques
 - [[aoc-parsing-patterns]] - Zettelkasten note on parsing
 - [[iterator-patterns]] - Zettelkasten note on iterators
+## 🔄 Workflow State Machines (Day 19)
+
+### Pattern: Enum-Based Destination Type Safety
+**Used**: Day 19  
+**When to use**: State machines with terminal states and transitions
+**Code**: `src/solver/day19.rs::Destination`
+
+```rust
+enum Destination {
+    Accept,           // Terminal success
+    Reject,           // Terminal failure
+    Workflow(String), // Transition to named workflow
+}
+
+// Exhaustive matching enforced by compiler
+match destination {
+    Destination::Accept => return true,
+    Destination::Reject => return false,
+    Destination::Workflow(name) => current = name,
+}
+```
+
+**Benefits**: Compiler prevents missing cases, self-documenting code, impossible invalid states
+
+### Pattern: HashMap Workflow Storage
+**Used**: Day 19  
+**When to use**: Need O(1) workflow lookup by name
+**Code**: `src/solver/day19.rs::parse_workflows()`
+
+```rust
+let workflows: HashMap<String, Workflow> = input
+    .lines()
+    .take_while(|line| !line.is_empty())
+    .map(parse_workflow)
+    .map(|w| (w.name.clone(), w))
+    .collect();
+
+// O(1) lookup
+let workflow = workflows.get(current).unwrap();
+```
+
+### Pattern: First-Match-Wins Rule Evaluation
+**Used**: Day 19  
+**When to use**: Priority-based decision trees, conditional chains
+**Code**: `src/solver/day19.rs::Workflow::process()`
+
+```rust
+for rule in &self.rules {
+    if rule.matches(part) {
+        return rule.destination();  // First match wins!
+    }
+}
+```
+
+**Note**: Order matters! Subsequent rules only checked if prior ones don't match.
+
+## 🎯 Range Propagation (Day 19 Part 2)
+
+### Pattern: Range Splitting by Conditional Operator
+**Used**: Day 19 Part 2  
+**When to use**: Partition search space by constraints, constraint propagation
+**Code**: `src/solver/day19.rs::split_range()`
+
+```rust
+fn split_range(range: Range, op: Op, value: u64) -> (Range, Range) {
+    match op {
+        Op::LessThan => {
+            let matching = Range {
+                min: range.min,
+                max: range.max.min(value - 1),  // Cap at value-1
+            };
+            let non_matching = Range {
+                min: range.min.max(value),      // Start at value
+                max: range.max,
+            };
+            (matching, non_matching)
+        }
+        Op::GreaterThan => {
+            let matching = Range {
+                min: range.min.max(value + 1),  // Start at value+1
+                max: range.max,
+            };
+            let non_matching = Range {
+                min: range.min,
+                max: range.max.min(value),      // Cap at value
+            };
+            (matching, non_matching)
+        }
+    }
+}
+```
+
+**Key Insight**: Split returns BOTH matching and non-matching ranges - matching goes to destination, non-matching continues to next rule!
+
+### Pattern: DFS with State-Space Range Constraints
+**Used**: Day 19 Part 2  
+**When to use**: Exponential enumeration impossible, constraints form ranges
+**Code**: `src/solver/day19.rs::count_accepted()`
+
+```rust
+fn count_accepted(
+    workflow_name: &str,
+    mut ranges: PartRange,
+    workflows: &HashMap<String, Workflow>,
+) -> u64 {
+    // Terminal cases
+    if workflow_name == "A" {
+        return ranges.combinations();  // Mathematical counting!
+    }
+    if workflow_name == "R" {
+        return 0;
+    }
+    
+    let workflow = workflows.get(workflow_name).unwrap();
+    let mut total = 0;
+    
+    for rule in &workflow.rules {
+        match rule {
+            Rule::Conditional { attr, op, value, dest } => {
+                let (matching, non_matching) = split_range(ranges.get(*attr), *op, *value);
+                
+                // Recurse with matching range
+                if !matching.is_empty() {
+                    let mut matching_ranges = ranges;
+                    matching_ranges.set(*attr, matching);
+                    total += count_accepted(dest_name, matching_ranges, workflows);
+                }
+                
+                // Continue with non-matching (KEY: progressive narrowing!)
+                ranges.set(*attr, non_matching);
+                
+                if ranges.is_empty() {
+                    break;
+                }
+            }
+            Rule::Unconditional { dest } => {
+                total += count_accepted(dest_name, ranges, workflows);
+                break;
+            }
+        }
+    }
+    
+    total
+}
+```
+
+**Brilliant Optimization**: Avoids 4000^4 = 256 trillion enumeration! Instead propagates ranges through ~30 workflows.
+
+### Pattern: Mathematical Combination Counting
+**Used**: Day 19 Part 2  
+**When to use**: Count without enumeration
+**Code**: `src/solver/day19.rs::PartRange::combinations()`
+
+```rust
+impl PartRange {
+    fn combinations(&self) -> u64 {
+        self.x.size() * self.m.size() * self.a.size() * self.s.size()
+    }
+}
+
+impl Range {
+    fn size(&self) -> u64 {
+        if self.max >= self.min {
+            self.max - self.min + 1
+        } else {
+            0  // Empty range
+        }
+    }
+}
+```
+
+**Result**: Count 123,972,546,935,551 combinations in 190µs without creating a single Part instance!

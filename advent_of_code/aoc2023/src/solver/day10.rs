@@ -268,11 +268,11 @@ pub fn find_loop_vertices(grid: &Grid<char>, start: Coord) -> Vec<(i64, i64)> {
     let mut vertices = Vec::new();
     let mut visited = std::collections::HashSet::new();
     let mut current = start;
-    
+
     // Add starting vertex
     vertices.push((start.x as i64, start.y as i64));
     visited.insert(start);
-    
+
     // Find first connected neighbor
     let mut prev_dir = None;
     for dir in [Dir::North, Dir::South, Dir::East, Dir::West] {
@@ -286,25 +286,25 @@ pub fn find_loop_vertices(grid: &Grid<char>, start: Coord) -> Vec<(i64, i64)> {
             }
         }
     }
-    
+
     // Follow the loop until we return to start
     while current != start {
         let mut found_next = false;
-        
+
         // Try all directions except where we came from
         for dir in [Dir::North, Dir::South, Dir::East, Dir::West] {
             // Don't go back the way we came
             if Some(dir.opposite()) == prev_dir {
                 continue;
             }
-            
+
             if pipes_connect(grid, current, dir) {
                 if let Some(next) = move_coord(grid, current, dir) {
                     if next == start {
                         // Completed the loop
                         return vertices;
                     }
-                    
+
                     if !visited.contains(&next) {
                         current = next;
                         prev_dir = Some(dir);
@@ -316,13 +316,13 @@ pub fn find_loop_vertices(grid: &Grid<char>, start: Coord) -> Vec<(i64, i64)> {
                 }
             }
         }
-        
+
         if !found_next {
             // Shouldn't happen with valid input
             break;
         }
     }
-    
+
     vertices
 }
 
