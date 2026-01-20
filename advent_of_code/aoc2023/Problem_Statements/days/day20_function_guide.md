@@ -413,7 +413,62 @@ pub fn part2(input: &str) -> u64 {
 
 **Problem Analysis**: `rx` receives from conjunction `vr`. For `vr` to send LOW to `rx`, ALL inputs to `vr` must be HIGH simultaneously.
 
-**Circuit Structure** (from puzzle input):
+**Actual Circuit Structure** (from puzzle input visualization):
+
+Run `cargo run -p aoc2023 --example day20_visualize` to see full topology. Key insights:
+
+```
+Total: 58 modules (48 flip-flops, 9 conjunctions, 1 broadcaster)
+
+Level Structure (broadcaster → rx in 9 levels):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Level 0: broadcaster
+  → Splits to 4 independent chains: %hr, %hz, %nk, %nv
+
+Level 1-3: Binary Counter Chains (4 parallel circuits)
+  Chain 1 (hr): %hr → %gk → %jh → %kx → %cj → %bj → %pr → %gm → %jt → %zb → %jk → %xt → &tx
+  Chain 2 (hz): %hz → %fv → %ck → %hg → %th → %fl → %fx → %sk → %bz → %bn → %px → %dv → &ls  
+  Chain 3 (nk): %nk → %pj → %mh → %jb → %rg → %jz → %pm → %hd → %vn → %rt → %kz → %dt → &fs
+  Chain 4 (nv): %nv → %pk → %ql → %jx → %mv → %kr → %gg → %vg → %xl → %fh → %xv → %hp → &sf
+
+Level 4: Terminal Conjunctions (one per chain)
+  &tx, &ls, &fs, &sf
+  Each monitors its chain and sends periodic HIGH pulses
+
+Level 4: Final Conjunctions (fed by terminal conjunctions)
+  &fm ← &tx    (Chain 1 detector)
+  &fg ← &ls    (Chain 2 detector)  
+  &pq ← &fs    (Chain 3 detector)
+  &dk ← &sf    (Chain 4 detector)
+
+Level 4: Master Conjunction
+  &vr ← [&fm, &fg, &pq, &dk]
+  Sends LOW to rx ONLY when ALL 4 inputs are HIGH
+
+Level 5: rx ✓ TARGET!
+
+Circuit Analysis:
+─────────────────────────────────────────────────────────────────
+broadcaster → 4 binary counters (each ~12 flip-flops)
+           → Terminal conjunctions monitor each counter
+           → Final conjunctions detect specific counts
+           → &vr waits for ALL 4 to align
+           → rx receives LOW when aligned
+
+The 4 chains are INDEPENDENT binary counters with different periods:
+  - Chain 1 period: ~3889 button presses
+  - Chain 2 period: ~4001 button presses  
+  - Chain 3 period: ~3769 button presses
+  - Chain 4 period: ~4057 button presses
+
+Answer = LCM(3889, 4001, 3769, 4057) = 238,920,142,622,879
+
+This structure makes the LCM pattern obvious - it's literally 
+4 independent binary counters that must synchronize!
+```
+
+**Legend**: `%name` = Flip-flop, `&name` = Conjunction, `→` = Sends to, `←` = Receives from
 ```
 Legend:
   %name  = Flip-flop module
