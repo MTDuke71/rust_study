@@ -442,6 +442,51 @@ Level 1-3: Binary Counter Chains (4 parallel circuits)
   Chain 3 (nk): %nk → %pj → %mh → %jb → %rg → %jz → %pm → %hd → %vn → %rt → %kz → %dt → &fs
   Chain 4 (nv): %nv → %pk → %ql → %jx → %mv → %kr → %gg → %vg → %xl → %fh → %xv → %hp → &sf
 
+CRITICAL: These are NOT simple linear counters!
+They are Linear Feedback Shift Registers (LFSRs) with feedback loops:
+  
+  &tx sends to: [%hr, &fm, ...]  ← %hr is FEEDBACK (loop back to chain start!)
+  &ls sends to: [&fg, %ck, %fv, %sk, %fl, %hz]  ← %hz is FEEDBACK!
+  &fs sends to: [%pm, %rg, &pq, %pj, %nk, ...]  ← %nk is FEEDBACK!
+  &sf sends to: [%pk, %jx, %nv, ...]  ← %nv is FEEDBACK!
+
+LFSR Structure (Linear Feedback Shift Register):
+──────────────────────────────────────────────────────────────────
+  Simple counter (period = 2^n):
+    FF₀ → FF₁ → FF₂ → ... → FF₁₁ → output
+  
+  LFSR with feedback (period depends on feedback polynomial):
+    FF₀ → FF₁ → FF₂ → ... → FF₁₁ → &conjunction
+     ↑                               |
+     └───────────────────────────────┘ feedback tap!
+     
+  Different feedback taps = different periods (even with same # of bits)!
+
+Why Periods Differ (12 flip-flops each, but different periods):
+  - Chain 1: Feedback polynomial P₁ → period ~3889
+  - Chain 2: Feedback polynomial P₂ → period ~4001
+  - Chain 3: Feedback polynomial P₃ → period ~3769
+  - Chain 4: Feedback polynomial P₄ → period ~4057
+  
+  Maximum LFSR period: 2^n - 1 (for primitive polynomials)
+  Actual periods: Depend on feedback structure (tap positions)
+
+Could We Calculate Periods Theoretically?
+──────────────────────────────────────────────────────────────────
+YES, but it's complex:
+
+1. Map circuit to feedback polynomial over GF(2) (Galois Field)
+2. Factor the polynomial
+3. Calculate period from polynomial order
+4. Requires: Polynomial arithmetic, primitive polynomial testing
+
+For this problem:
+✗ Theory: Complex polynomial analysis, may need computer algebra
+✓ Simulation: ~4000-5000 iterations per chain, simple and fast!
+
+The puzzle designer chose simulation-friendly periods intentionally.
+Mathematical analysis would be overkill for these small cycles.
+
 Level 4: Terminal Conjunctions (one per chain)
   &tx, &ls, &fs, &sf
   Each monitors its chain and sends periodic HIGH pulses
