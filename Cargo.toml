@@ -97,6 +97,7 @@ members = [
     "rust_book/Ch21",
     "rust_for_rustaceans/Ch01/foundations",
     "rust_for_rustaceans/Ch02/types",
-    "rust_for_rustaceans/Ch03"]
+    "rust_for_rustaceans/Ch03",
+    "rust_for_rustaceans/Ch04"]
 
 resolver = "3"

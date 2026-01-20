@@ -1,0 +1,52 @@
+[package]
+name = "rustaceans_ch04_error_handling"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+thiserror = "2.0"
+anyhow = "1.0"
+
+# Book examples
+[[example]]
+name = "ch04_book"
+path = "Ch04.rs"
+
+# Week 4 Daily Examples
+
+# Day 1 - Monday (1/19): Enumeration Errors
+[[example]]
+name = "enumeration_errors"
+path = "examples/enumeration_errors.rs"
+
+# Day 2 - Tuesday (1/20): Opaque Errors  
+[[example]]
+name = "opaque_errors"
+path = "examples/opaque_errors.rs"
+
+# Day 3 - Wednesday (1/21): Special Error Cases
+[[example]]
+name = "special_cases"
+path = "examples/special_cases.rs"
+
+# Day 4 - Thursday (1/22): Error Propagation
+[[example]]
+name = "error_propagation"
+path = "examples/error_propagation.rs"
+
+# Day 5 - Friday (1/23): Custom Error Types
+[[example]]
+name = "custom_errors"
+path = "examples/custom_errors.rs"
+
+# Supplemental Examples
+
+# Using thiserror and anyhow crates
+[[example]]
+name = "thiserror_anyhow"
+path = "examples/thiserror_anyhow.rs"
+
+# Comprehensive review
+[[example]]
+name = "review"
+path = "examples/review.rs"
