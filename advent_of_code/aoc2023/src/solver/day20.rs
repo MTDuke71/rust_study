@@ -389,9 +389,24 @@ pub fn part2(input: &str) -> u64 {
     let mut cycle_lengths: HashMap<String, u64> = HashMap::new();
     let mut button_presses = 0u64;
 
+    // Safety limit: prevent infinite loop if problem is invalid
+    // Expected cycles are ~4000, so 10M iterations should be more than enough
+    const MAX_ITERATIONS: u64 = 10_000_000;
+
     // Keep pressing button until we find all cycles
     while cycle_lengths.len() < rx_feeder_inputs.len() {
         button_presses += 1;
+        
+        // Safety check: prevent infinite loop on invalid input
+        if button_presses > MAX_ITERATIONS {
+            panic!(
+                "Exceeded {} iterations without finding all cycles. Found {}/{} cycles: {:?}",
+                MAX_ITERATIONS,
+                cycle_lengths.len(),
+                rx_feeder_inputs.len(),
+                cycle_lengths
+            );
+        }
         
         let mut queue: VecDeque<(String, String, Pulse)> = VecDeque::new();
         queue.push_back(("button".to_string(), "broadcaster".to_string(), Pulse::Low));
