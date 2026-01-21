@@ -255,6 +255,23 @@ fn main() {
 
     // Comparison
     println!("7. Comparison: Specific vs Opaque:");
-    println!("   Specific error type: more verbose, exhaustive matching");
-    println!("   Opaque error type: simpler, flexible, but less specific");
+    
+    // Demonstrate specific error handling
+    print!("   Specific error: ");
+    match with_specific_error() {
+        Ok(n) => println!("Success: {}", n),
+        Err(SpecificError::Io(e)) => println!("IO Error: {}", e),
+        Err(SpecificError::Parse(e)) => println!("Parse Error: {}", e),
+        Err(SpecificError::Validation(s)) => println!("Validation Error: {}", s),
+    }
+    
+    // Demonstrate opaque error handling
+    print!("   Opaque error: ");
+    match with_opaque_error() {
+        Ok(n) => println!("Success: {}", n),
+        Err(e) => println!("Error: {}", e),
+    }
+    
+    println!("\n   Specific: verbose, exhaustive matching, caller knows all error types");
+    println!("   Opaque: simpler, flexible, but caller can't match on specific types");
 }

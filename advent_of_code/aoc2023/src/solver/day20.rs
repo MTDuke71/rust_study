@@ -390,8 +390,8 @@ pub fn part2(input: &str) -> u64 {
     let mut button_presses = 0u64;
 
     // Safety limit: prevent infinite loop if problem is invalid
-    // Set to 4000 to demonstrate safety escape (actual cycles are ~3769-4057)
-    const MAX_ITERATIONS: u64 = 4_000;
+    // Set to 4000 to demonstrate safety escape (actual cycles are 3793-4007)
+    const MAX_ITERATIONS: u64 = 5_000;
 
     // Keep pressing button until we find all cycles
     while cycle_lengths.len() < rx_feeder_inputs.len() {
@@ -414,6 +414,7 @@ pub fn part2(input: &str) -> u64 {
         while let Some((from, to, pulse)) = queue.pop_front() {
             // Check if this is one of the inputs to rx_feeder sending HIGH
             if to == rx_input && pulse == Pulse::High && !cycle_lengths.contains_key(&from) {
+                println!("  Found cycle for '{}' at iteration {}", from, button_presses);
                 cycle_lengths.insert(from.clone(), button_presses);
             }
 
