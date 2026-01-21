@@ -407,4 +407,4 @@ For random mapping on $n$ states:
 
 *Mathematical Foundation for*: AoC 2023 Day 14, AoC 2023 Day 8, AoC 2023 Day 20  
 *Tags*: #discrete-math #combinatorics #algorithms #cycle-detection #pigeonhole-principle  
-*Related*: [[graph-theory-fundamentals]], [[modular-arithmetic]], [[state-machines]], [[number-theory-basics]], [[Dynamic Programming]]
+*Related*: [[linear-feedback-shift-registers]], [[graph-theory-fundamentals]], [[modular-arithmetic]], [[state-machines]], [[number-theory-basics]], [[Dynamic Programming]]

@@ -342,6 +342,7 @@ impl Module {
 *Tags: #state-machines #automata-theory #finite-state-machine #fsm #rust-enums #event-driven #computational-theory #math-foundations*
 
 **Related Zettelkasten Links**:
+- [[linear-feedback-shift-registers]] - LFSRs are FSMs with feedback (AoC Day 20 circuit structure)
 - [[set-theory-fundamentals]] - States as sets
 - [[graph-theory-fundamentals]] - Transition graphs
 - [[number-theory-basics]] - Cycle synchronization

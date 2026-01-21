@@ -145,5 +145,6 @@ instruction_idx = (instruction_idx + 1) % instructions.len();
 *Tags: #number-theory #gcd #lcm #modular-arithmetic #euclidean-algorithm #math-foundations*
 
 **Related Zettelkasten Links**:
+- [[linear-feedback-shift-registers]] - GF(2) polynomials and primitive polynomials for LFSR periods
 - [[set-theory-fundamentals]] - Foundational discrete math
 - [[quadratic-equations]] - Another applied math foundation
