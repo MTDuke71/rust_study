@@ -9,7 +9,7 @@
 //!
 //! **Mathematical Foundation**:
 //! 
-//! This problem demonstrates three key mathematical concepts:
+//! This problem demonstrates four key mathematical concepts:
 //! 
 //! 1. **State Machines** - Each module is a finite state machine with transition rules:
 //!    - FlipFlop: Boolean state (on/off), transitions on low pulse
@@ -18,11 +18,15 @@
 //!
 //!    See `zettelkasten/math-foundations/state-machines.md` for theory
 //! 
-//! 2. **Cycle Detection** - By Pigeonhole Principle, deterministic state machines on finite
+//! 2. **Linear Feedback Shift Registers (LFSRs)** - The 4 chains are LFSRs with feedback loops.
+//!    Different feedback polynomials → different periods despite same length!
+//!    See `zettelkasten/math-foundations/linear-feedback-shift-registers.md`
+//! 
+//! 3. **Cycle Detection** - By Pigeonhole Principle, deterministic state machines on finite
 //!    state spaces must eventually cycle. We exploit this to avoid 238 trillion iterations.
 //!    See `zettelkasten/math-foundations/pigeonhole-principle-cycle-detection.md`
 //! 
-//! 3. **Number Theory (LCM)** - When multiple independent cycles must align, the synchronization
+//! 4. **Number Theory (LCM)** - When multiple independent cycles must align, the synchronization
 //!    point is the Least Common Multiple of their periods.
 //!    See `zettelkasten/math-foundations/number-theory-basics.md`
 //!

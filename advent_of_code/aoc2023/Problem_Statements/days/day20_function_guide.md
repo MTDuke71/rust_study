@@ -470,6 +470,8 @@ Why Periods Differ (12 flip-flops each, but different periods):
   
   Maximum LFSR period: 2^n - 1 (for primitive polynomials)
   Actual periods: Depend on feedback structure (tap positions)
+  
+  **See**: `zettelkasten/math-foundations/linear-feedback-shift-registers.md` for complete LFSR theory
 
 Could We Calculate Periods Theoretically?
 ──────────────────────────────────────────────────────────────────
