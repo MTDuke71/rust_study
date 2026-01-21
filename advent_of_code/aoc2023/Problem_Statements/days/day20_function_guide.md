@@ -463,11 +463,15 @@ LFSR Structure (Linear Feedback Shift Register):
   Different feedback taps = different periods (even with same # of bits)!
 
 Why Periods Differ (12 flip-flops each, but different periods):
-  - Chain 1: Feedback polynomial P₁ → period ~3889
-  - Chain 2: Feedback polynomial P₂ → period ~4001
-  - Chain 3: Feedback polynomial P₃ → period ~3769
-  - Chain 4: Feedback polynomial P₄ → period ~4057
+  - Chain 1 (dk): Feedback polynomial P₁ → period 3793 (PRIME!)
+  - Chain 2 (fg): Feedback polynomial P₂ → period 3929 (PRIME!)
+  - Chain 3 (pq): Feedback polynomial P₃ → period 4001 (PRIME!)
+  - Chain 4 (fm): Feedback polynomial P₄ → period 4007 (PRIME!)
   
+  **All periods are PRIME numbers!** This is why LCM is so large:
+  LCM(3793, 3929, 4001, 4007) = 3793 × 3929 × 4001 × 4007 = 238,920,142,622,879
+  
+  Prime numbers share no common factors, so their LCM is simply their product.
   Maximum LFSR period: 2^n - 1 (for primitive polynomials)
   Actual periods: Depend on feedback structure (tap positions)
   
@@ -513,13 +517,16 @@ broadcaster → 4 binary counters (each ~12 flip-flops)
            → &vr waits for ALL 4 to align
            → rx receives LOW when aligned
 
-The 4 chains are INDEPENDENT binary counters with different periods:
-  - Chain 1 period: ~3889 button presses
-  - Chain 2 period: ~4001 button presses  
-  - Chain 3 period: ~3769 button presses
-  - Chain 4 period: ~4057 button presses
+The 4 chains are INDEPENDENT LFSRs with PRIME periods:
+  - Chain 1 (dk) period: 3793 button presses (PRIME)
+  - Chain 2 (fg) period: 3929 button presses (PRIME)
+  - Chain 3 (pq) period: 4001 button presses (PRIME)
+  - Chain 4 (fm) period: 4007 button presses (PRIME)
 
-Answer = LCM(3889, 4001, 3769, 4057) = 238,920,142,622,879
+**All prime!** This makes brute-force impossible (238 trillion iterations)
+but the mathematical solution elegant:
+
+Answer = LCM(3793, 3929, 4001, 4007) = 3793 × 3929 × 4001 × 4007 = 238,920,142,622,879
 
 This structure makes the LCM pattern obvious - it's literally 
 4 independent binary counters that must synchronize!
