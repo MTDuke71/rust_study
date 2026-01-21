@@ -390,8 +390,8 @@ pub fn part2(input: &str) -> u64 {
     let mut button_presses = 0u64;
 
     // Safety limit: prevent infinite loop if problem is invalid
-    // Expected cycles are ~4000, so 10M iterations should be more than enough
-    const MAX_ITERATIONS: u64 = 10_000_000;
+    // Set to 4000 to demonstrate safety escape (actual cycles are ~3769-4057)
+    const MAX_ITERATIONS: u64 = 4_000;
 
     // Keep pressing button until we find all cycles
     while cycle_lengths.len() < rx_feeder_inputs.len() {
