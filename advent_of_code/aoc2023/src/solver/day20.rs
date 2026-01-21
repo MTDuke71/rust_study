@@ -352,7 +352,7 @@ pub fn visualize_circuit(input: &str) {
     let mut conjunctions = 0;
     let mut broadcasters = 0;
     
-    for (_, module) in &modules {
+    for module in modules.values() {
         match module {
             Module::FlipFlop { .. } => flip_flops += 1,
             Module::Conjunction { .. } => conjunctions += 1,
