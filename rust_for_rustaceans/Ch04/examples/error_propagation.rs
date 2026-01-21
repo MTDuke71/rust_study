@@ -22,10 +22,7 @@ use std::num::ParseIntError;
 
 /// Manual error propagation (verbose)
 fn read_number_manual(path: &str) -> Result<i32, io::Error> {
-    let content = match fs::read_to_string(path) {
-        Ok(c) => c,
-        Err(e) => return Err(e),
-    };
+    let content = fs::read_to_string(path)?;
     
     match content.trim().parse() {
         Ok(n) => Ok(n),
