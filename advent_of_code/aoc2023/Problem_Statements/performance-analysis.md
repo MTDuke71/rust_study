@@ -12,7 +12,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | **Total Runtime** | ~2.27s |
 | **Average per Day** | ~108ms |
 | **Fastest Day** | Day 6 (0.95µs) |
-| **Slowest Day** | Day 21 Part 2 (1.89s) |
+| **Slowest Day** | Day 21 Part 2 Extrapolation (1.91s) |
 
 ---
 
@@ -40,7 +40,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 18 | 86.6µs | 107.5µs | 194.1µs | Yes*********** |
 | 19 | 202.7µs | 189.4µs | 392.1µs | Yes************ |
 | 20 | 5.70ms | 23.54ms | 29.24ms | Yes************* |
-| 21 | 7.34ms | 1.89s | 1.9s | Yes************** |
+| 21 | 7.26ms | 1.91s (655ms†) | 1.9s | Yes************** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 *Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
@@ -50,7 +50,8 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 ***********Day 18: Mathematical approach (Shoelace + Pick's) - Part 2 only 24% slower despite 1 trillion× more cells (O(n) on vertices not cells, scales to 52.2 trillion cells in 107µs)
 ************Day 19: Range propagation - Part 2 FASTER than Part 1! Mathematical counting (256 trillion combinations) faster than simulating 200 parts. Parsing dominates both (~85%), actual calculation only ~30µs each
 *************Day 20: Cycle detection + LCM - Part 2 requires finding when 4 counters align (238T iterations brute force), cycle detection finds periods in ~4000 iterations, LCM computes answer in 23.54ms
-**************Day 21: Quadratic extrapolation - Part 2 slow due to 3 BFS runs (65, 196, 327 steps) but still 800,000× faster than brute-forcing 26M steps! Pattern sampling avoids impossible computation.
+**************Day 21: TWO Part 2 implementations - (A) Quadratic extrapolation: 1.91s via 3 BFS runs at 65/196/327 steps, samples growth pattern; (B) Geometric counting: 655ms via 13 targeted BFS runs exploiting grid symmetry (empty cardinal cross + borders), 2.92× speedup. Both 800,000× faster than brute-forcing 26M steps!
+†Geometric optimization only works for symmetric grids (empty start row/col + borders), extrapolation is general-purpose
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  
@@ -1040,5 +1041,131 @@ cargo asm aoc2023::solver::dayXX::hot_function
 - **Automated Testing**: Input space partitioning for test case generation
 
 **Key Lesson**: When faced with exponential enumeration, check if problem structure allows **abstract interpretation** (ranges vs values)!
+
+---
+### Day 21: Geometric Counting Optimization
+**Before**: 1.9096s ± 0.007s (quadratic extrapolation)  
+**After**: 654.76ms ± 1.69ms (geometric counting)  
+**Speedup**: **2.92× faster** (Criterion verified)  
+**Technique**: Exploit grid symmetry for direct tile counting  
+
+**Performance Analysis**:
+
+**Input Properties** (grid symmetry enables optimization):
+- Grid: 131×131 with start at center (65, 65)
+- Empty cardinal cross: Row 66 and Column 66 completely clear
+- Empty borders: All four edges clear
+- Step count: 26,501,365 = 65 + 131×202,300 = **65 + 131×(2023×100)** 🎄
+
+**Algorithm Comparison**:
+
+| **Method** | **Strategy** | **BFS Runs** | **Runtime** | **Works For** |
+|------------|--------------|--------------|-------------|---------------|
+| **Extrapolation** | Sample 3 points, fit quadratic | 3 full runs (65, 196, 327 steps) | 1.9096s | Any input |
+| **Geometric** | Count diamond tiles directly | 13 targeted runs | 654.76ms | Symmetric grids only |
+
+**Why Geometric Is Faster**:
+
+```rust
+// Extrapolation: 3 complete BFS runs with large step counts
+fn part2(input: &str) -> usize {
+    // BFS #1: 65 steps → ~3,797 cells
+    // BFS #2: 196 steps → ~33,590 cells  
+    // BFS #3: 327 steps → ~92,729 cells
+    // Total cells explored: ~130,116 cells
+    // Time: 1.9096s (636ms per run average)
+}
+
+// Geometric: 13 strategic BFS runs with specific constraints
+fn part2_optimized(input: &str) -> usize {
+    // 2 full saturation runs (odd/even parity)
+    // 4 corner tiles (N, S, E, W edges)
+    // 4 small edge tiles (limited steps)
+    // 4 large edge tiles (more steps)
+    // Average cells per run: ~5,000-7,500
+    // Total cells explored: ~80,000 cells (40% less!)
+    // Time: 654.76ms (50ms per run average)
+}
+```
+
+**The Critical Bug** (fixed in commit cac6512):
+
+Initial implementation produced wrong answer (off by 6 billion):
+```rust
+// ❌ WRONG: Conceptual error
+let grid_width = (steps - edge_dist) / n;  // 202,300
+let odd_tiles = (grid_width + 1).pow(2);   // 202,301²
+// Result: 616,589,548,972,935 (ERROR!)
+
+// ✓ CORRECT: grid_width is diamond RADIUS from center
+let grid_width = steps / n - 1;                    // 202,299
+let odd_tiles = (grid_width / 2 * 2 + 1).pow(2);  // 202,299²
+// Result: 616,583,483,179,597 (CORRECT!)
+```
+
+**Error Impact**:
+- Extra tiles: 202,301² - 202,299² = **806,200 tiles**
+- Points per tile: 7,496 (full saturation)
+- Total error: 806,200 × 7,496 ≈ **6.04 billion** ✓
+
+**Key Insight**: `grid_width` represents the **diamond radius** from center tile (which itself has width 0), NOT the number of grid transitions. The formula `steps / n - 1` directly computes the radius, while `(steps - edge_dist) / n` counts transitions after reaching the edge.
+
+**Easter Egg**: The puzzle designer embedded **2023 × 100** in the step count:
+```rust
+steps / n = 26_501_365 / 131 = 202,300 = 2023 × 100 🎄
+```
+
+This is the number of complete grid periods after leaving the starting grid!
+
+**Diamond Tile Classification**:
+
+```
+        ┌─────┐
+       /   N   \         Corner tiles: 4 (N, S, E, W)
+      ┌─────┬─────┐     Small edges: 202,300 each × 4 directions
+     / NW  │  NE  \     Large edges: 202,299 each × 4 directions
+    ┌─────┼─────┼─────┐  Odd tiles: 202,299² = 40,924,888,401
+   /  W   │  C  │  E   \ Even tiles: 202,300² = 40,925,290,000
+  └─────┼─────┼─────┘
+    \  SW  │  SE  /
+     └─────┴─────┘
+       \   S   /
+        └─────┘
+```
+
+**When To Use Each Method**:
+
+- **Extrapolation (default)**:
+  - ✅ General-purpose (works for ANY input)
+  - ✅ Simpler logic (easier to understand/maintain)
+  - ✅ Mathematically elegant (pattern recognition)
+  - ✗ Slower (~1.91s)
+  - ✗ Requires larger step counts to sample
+
+- **Geometric (optimization)**:
+  - ✅ Much faster (~655ms, 2.92× speedup)
+  - ✅ Exact integer arithmetic (no floating point)
+  - ✅ Elegant tile classification
+  - ✗ Only works for symmetric grids
+  - ✗ More complex implementation
+  - ✗ Requires input validation
+
+**Performance Benchmark** (Criterion):
+```
+day21_part1                time: [7.2550 ms]
+day21_part2_extrapolation  time: [1.9096 s]  ← General method
+day21_part2_geometric      time: [654.76 ms] ← Optimized (2.92× faster)
+```
+
+**Comparison Tool**: `cargo run --release --example day21_comparison`
+
+**Learning**:
+1. **Grid symmetry** can enable algorithmic shortcuts (extrapolation → direct counting)
+2. **Off-by-one errors** in large multipliers cause huge absolute errors (radius vs transitions)
+3. **Problem constraints** reveal optimization opportunities (empty cross + borders)
+4. **Multiple valid approaches** can coexist (general vs optimized)
+5. **Easter eggs** in puzzle design (2023 × 100 step count)
+
+**Zettelkasten**: [[polynomial-interpolation-lagrange]], [[modular-arithmetic]], [[graph-theory-fundamentals]]
 
 ---
