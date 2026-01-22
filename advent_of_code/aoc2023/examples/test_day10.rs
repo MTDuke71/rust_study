@@ -1,5 +1,3 @@
-use mission6::{Coord, Grid};
-use std::collections::HashMap;
 
 const EXAMPLE3: &str = "\
 ...........
