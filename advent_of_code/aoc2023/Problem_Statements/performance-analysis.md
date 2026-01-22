@@ -12,7 +12,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | **Total Runtime** | ~1.01s (geometric), ~2.27s (extrapolation) |
 | **Average per Day** | ~48ms (geometric), ~108ms (extrapolation) |
 | **Fastest Day** | Day 6 (0.95µs) |
-| **Slowest Day** | Day 17 Part 2 (182.4ms) |
+| **Slowest Day** | Day 21 (662ms total with geometric) |
 
 ---
 
@@ -913,7 +913,7 @@ Reasons to skip optimization for Day 17:
 |----------|--------|--------|
 | Total (all 25 days) | <2 seconds | ✅ (1.01s with geometric) |
 | Average per day | <50ms | ✅ (48ms with geometric) |
-| No day exceeds | 200ms | ✅ (Day 17: 182.4ms) |
+| No day exceeds | 200ms | ❌ (Day 21: 662ms with geometric) |
 
 ---
 
