@@ -302,8 +302,12 @@ fn benchmark_day21(c: &mut Criterion) {
         b.iter(|| day21::part1(black_box(input)))
     });
 
-    c.bench_function("day21_part2", |b| {
+    c.bench_function("day21_part2_extrapolation", |b| {
         b.iter(|| day21::part2(black_box(input)))
+    });
+
+    c.bench_function("day21_part2_geometric", |b| {
+        b.iter(|| day21::part2_optimized(black_box(input)))
     });
 }
 
