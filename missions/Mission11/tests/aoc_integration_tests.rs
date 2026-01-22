@@ -89,7 +89,7 @@ fn req8_memoization_effectiveness() {
     assert!(result);
     
     // Memo should have multiple entries (one per suffix)
-    assert!(memo.len() > 0);
+    assert!(!memo.is_empty());
     assert!(memo.len() <= design.len());
 }
 
@@ -119,8 +119,8 @@ fn req8_boolean_to_counting_transformation() {
     assert_eq!(ways, 7);
     
     // Both should use same cache structure (just different return types)
-    assert!(bool_memo.len() > 0);
-    assert!(count_memo.len() > 0);
+    assert!(!bool_memo.is_empty());
+    assert!(!count_memo.is_empty());
 }
 
 /// Test zero-copy string slice caching (REQ-3 applied to REQ-8)
