@@ -9,10 +9,10 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | Metric | Value |
 |--------|-------|
 | **Days Completed** | 21/25 |
-| **Total Runtime** | ~2.27s |
-| **Average per Day** | ~108ms |
+| **Total Runtime** | ~1.01s (geometric), ~2.27s (extrapolation) |
+| **Average per Day** | ~48ms (geometric), ~108ms (extrapolation) |
 | **Fastest Day** | Day 6 (0.95µs) |
-| **Slowest Day** | Day 21 Part 2 Extrapolation (1.91s) |
+| **Slowest Day** | Day 17 Part 2 (182.4ms) |
 
 ---
 
@@ -40,7 +40,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 18 | 86.6µs | 107.5µs | 194.1µs | Yes*********** |
 | 19 | 202.7µs | 189.4µs | 392.1µs | Yes************ |
 | 20 | 5.70ms | 23.54ms | 29.24ms | Yes************* |
-| 21 | 7.26ms | 1.91s (655ms†) | 1.9s | Yes************** |
+| 21 | 7.26ms | 655ms (1.91s‡) | 662ms | Yes************** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 *Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
@@ -50,8 +50,8 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 ***********Day 18: Mathematical approach (Shoelace + Pick's) - Part 2 only 24% slower despite 1 trillion× more cells (O(n) on vertices not cells, scales to 52.2 trillion cells in 107µs)
 ************Day 19: Range propagation - Part 2 FASTER than Part 1! Mathematical counting (256 trillion combinations) faster than simulating 200 parts. Parsing dominates both (~85%), actual calculation only ~30µs each
 *************Day 20: Cycle detection + LCM - Part 2 requires finding when 4 counters align (238T iterations brute force), cycle detection finds periods in ~4000 iterations, LCM computes answer in 23.54ms
-**************Day 21: TWO Part 2 implementations - (A) Quadratic extrapolation: 1.91s via 3 BFS runs at 65/196/327 steps, samples growth pattern; (B) Geometric counting: 655ms via 13 targeted BFS runs exploiting grid symmetry (empty cardinal cross + borders), 2.92× speedup. Both 800,000× faster than brute-forcing 26M steps!
-†Geometric optimization only works for symmetric grids (empty start row/col + borders), extrapolation is general-purpose
+**************Day 21: TWO Part 2 implementations - (DEFAULT) Geometric counting: 655ms via 13 targeted BFS runs exploiting grid symmetry (empty cardinal cross + borders), 2.92× speedup over extrapolation; (FALLBACK) Quadratic extrapolation: 1.91s via 3 BFS runs at 65/196/327 steps. Both 800,000× faster than brute-forcing 26M steps!
+‡Geometric counting requires symmetric grids (empty start row/col + borders); extrapolation is general-purpose but 2.92× slower
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  
@@ -911,9 +911,9 @@ Reasons to skip optimization for Day 17:
 
 | Category | Target | Status |
 |----------|--------|--------|
-| Total (all 25 days) | <2 seconds | On track |
-| Average per day | <50ms | ✅ |
-| No day exceeds | 200ms | ✅ |
+| Total (all 25 days) | <2 seconds | ✅ (1.01s with geometric) |
+| Average per day | <50ms | ✅ (48ms with geometric) |
+| No day exceeds | 200ms | ✅ (Day 17: 182.4ms) |
 
 ---
 
