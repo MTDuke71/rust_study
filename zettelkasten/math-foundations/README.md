@@ -161,7 +161,7 @@ Each implementation references mathematical foundations:
 
 ## 🎯 Current Coverage
 
-**Math notes created**: 10/20  
+**Math notes created**: 13/20  
 **Target by end of January**: 20+  
 **Target by end of Q1**: 100+
 
@@ -176,6 +176,9 @@ Each implementation references mathematical foundations:
 8. ✅ `number-theory-basics.md` - Primes, divisibility, GCD, modular arithmetic
 9. ✅ `graph-theory-fundamentals.md` - Vertices, edges, paths, cycles, trees
 10. ✅ `computational-geometry-basics.md` - Geometric algorithms
+11. ✅ `arithmetic-series.md` - Sum formulas, triangular numbers (Project Euler P1)
+12. ✅ `inclusion-exclusion.md` - Set counting, overlaps (Project Euler P1)
+13. ✅ `project-euler-p001.md` - Multiples of 3 or 5 (arithmetic series + inclusion-exclusion)
 
 ### **Priority Concepts** (Create these next)
 
