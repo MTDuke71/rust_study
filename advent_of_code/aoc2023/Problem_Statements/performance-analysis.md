@@ -9,8 +9,8 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | Metric | Value |
 |--------|-------|
 | **Days Completed** | 22/25 |
-| **Total Runtime** | ~2.90s (all days) |
-| **Average per Day** | ~132ms |
+| **Total Runtime** | ~1.04s (1,038ms with Day 21 geometric) |
+| **Average per Day** | ~47ms |
 | **Fastest Day** | Day 6 (0.95µs) |
 | **Slowest Day** | Day 21 (662ms with geometric) |
 
