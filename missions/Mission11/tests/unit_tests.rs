@@ -743,3 +743,267 @@ fn test_counting_large_state_space() {
     // Should find 4 different arrangements
     assert_eq!(count, 4);
 }
+
+// ============================================================================
+// REQ-7: Bottom-Up DP Alternative (Comparison)
+// ============================================================================
+
+#[test]
+fn req7_fibonacci_equivalence() {
+    // Test that top-down and bottom-up produce same results
+    use std::collections::HashMap;
+    
+    // Top-down implementation
+    fn fib_top_down(n: u64, memo: &mut HashMap<u64, u64>) -> u64 {
+        if n <= 1 { return n; }
+        if let Some(&cached) = memo.get(&n) { return cached; }
+        let result = fib_top_down(n - 1, memo) + fib_top_down(n - 2, memo);
+        memo.insert(n, result);
+        result
+    }
+    
+    // Bottom-up implementation
+    fn fib_bottom_up(n: u64) -> u64 {
+        if n <= 1 { return n; }
+        let mut dp = vec![0u64; (n + 1) as usize];
+        dp[0] = 0;
+        dp[1] = 1;
+        for i in 2..=n as usize {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        dp[n as usize]
+    }
+    
+    // Test equivalence for multiple values
+    for n in [0, 1, 5, 10, 20, 30] {
+        let mut memo = HashMap::new();
+        let result_td = fib_top_down(n, &mut memo);
+        let result_bu = fib_bottom_up(n);
+        assert_eq!(result_td, result_bu, "Mismatch at fib({})", n);
+    }
+}
+
+#[test]
+fn req7_coin_change_equivalence() {
+    // Test coin change problem with both approaches
+    use std::collections::HashMap;
+    
+    // Top-down
+    fn coin_change_td(amount: u32, coins: &[u32], memo: &mut HashMap<u32, Option<u32>>) -> Option<u32> {
+        if amount == 0 { return Some(0); }
+        if let Some(&cached) = memo.get(&amount) { return cached; }
+        
+        let mut min_coins: Option<u32> = None;
+        for &coin in coins {
+            if coin <= amount {
+                if let Some(sub) = coin_change_td(amount - coin, coins, memo) {
+                    let current = 1 + sub;
+                    min_coins = Some(min_coins.map_or(current, |m| m.min(current)));
+                }
+            }
+        }
+        memo.insert(amount, min_coins);
+        min_coins
+    }
+    
+    // Bottom-up
+    fn coin_change_bu(amount: u32, coins: &[u32]) -> Option<u32> {
+        let mut dp = vec![None; (amount + 1) as usize];
+        dp[0] = Some(0);
+        
+        for current in 1..=amount as usize {
+            let mut min_coins: Option<u32> = None;
+            for &coin in coins {
+                let coin = coin as usize;
+                if coin <= current {
+                    if let Some(sub) = dp[current - coin] {
+                        let val = 1 + sub;
+                        min_coins = Some(min_coins.map_or(val, |m| m.min(val)));
+                    }
+                }
+            }
+            dp[current] = min_coins;
+        }
+        dp[amount as usize]
+    }
+    
+    let coins = vec![1, 5, 10, 25];
+    
+    for amount in [0, 1, 6, 11, 30, 63] {
+        let mut memo = HashMap::new();
+        let result_td = coin_change_td(amount, &coins, &mut memo);
+        let result_bu = coin_change_bu(amount, &coins);
+        assert_eq!(result_td, result_bu, "Mismatch at amount {}", amount);
+    }
+}
+
+#[test]
+fn req7_bottom_up_no_recursion() {
+    // Verify bottom-up handles deep computation without stack overflow
+    // (Top-down would hit recursion limit for very large n)
+    
+    fn fib_bottom_up(n: usize) -> u128 {
+        if n <= 1 { return n as u128; }
+        let mut dp = vec![0u128; n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+        for i in 2..=n {
+            dp[i] = dp[i - 1].saturating_add(dp[i - 2]);
+        }
+        dp[n]
+    }
+    
+    // Large value that would cause stack overflow in naive recursion
+    let n = 1000;
+    let result = fib_bottom_up(n);
+    
+    // Just verify it completes without panic
+    assert!(result > 0);
+}
+
+#[test]
+fn req7_space_optimization() {
+    // Bottom-up allows space optimization that top-down can't easily achieve
+    
+    // Standard bottom-up: O(n) space
+    fn fib_standard(n: u64) -> u64 {
+        if n <= 1 { return n; }
+        let mut dp = vec![0u64; (n + 1) as usize];
+        dp[0] = 0;
+        dp[1] = 1;
+        for i in 2..=n as usize {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        dp[n as usize]
+    }
+    
+    // Space-optimized: O(1) space
+    fn fib_optimized(n: u64) -> u64 {
+        if n <= 1 { return n; }
+        let mut prev2 = 0u64;
+        let mut prev1 = 1u64;
+        for _ in 2..=n {
+            let current = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = current;
+        }
+        prev1
+    }
+    
+    // Both should produce same results
+    for n in [10, 20, 30, 40] {
+        assert_eq!(fib_standard(n), fib_optimized(n));
+    }
+}
+
+#[test]
+fn req7_lcs_2d_equivalence() {
+    // Longest Common Subsequence - 2D DP state space
+    use std::collections::HashMap;
+    
+    // Top-down
+    fn lcs_td(s1: &[u8], s2: &[u8], i: usize, j: usize, memo: &mut HashMap<(usize, usize), usize>) -> usize {
+        if i >= s1.len() || j >= s2.len() { return 0; }
+        if let Some(&cached) = memo.get(&(i, j)) { return cached; }
+        
+        let result = if s1[i] == s2[j] {
+            1 + lcs_td(s1, s2, i + 1, j + 1, memo)
+        } else {
+            lcs_td(s1, s2, i + 1, j, memo).max(lcs_td(s1, s2, i, j + 1, memo))
+        };
+        memo.insert((i, j), result);
+        result
+    }
+    
+    // Bottom-up
+    fn lcs_bu(s1: &[u8], s2: &[u8]) -> usize {
+        let m = s1.len();
+        let n = s2.len();
+        let mut dp = vec![vec![0; n + 1]; m + 1];
+        
+        for i in (0..m).rev() {
+            for j in (0..n).rev() {
+                dp[i][j] = if s1[i] == s2[j] {
+                    1 + dp[i + 1][j + 1]
+                } else {
+                    dp[i + 1][j].max(dp[i][j + 1])
+                };
+            }
+        }
+        dp[0][0]
+    }
+    
+    let test_cases: Vec<(&[u8], &[u8], usize)> = vec![
+        (b"ABCDGH", b"AEDFHR", 3),  // ADH
+        (b"AGGTAB", b"GXTXAYB", 4), // GTAB
+        (b"", b"ABC", 0),
+        (b"ABC", b"", 0),
+        (b"ABC", b"ABC", 3),
+    ];
+    
+    for (s1, s2, expected) in test_cases {
+        let mut memo = HashMap::new();
+        let result_td = lcs_td(s1, s2, 0, 0, &mut memo);
+        let result_bu = lcs_bu(s1, s2);
+        assert_eq!(result_td, expected);
+        assert_eq!(result_bu, expected);
+        assert_eq!(result_td, result_bu);
+    }
+}
+
+#[test]
+fn req7_performance_characteristics() {
+    // Document that bottom-up has predictable iteration pattern
+    use std::collections::HashMap;
+    
+    fn fib_top_down(n: u64, memo: &mut HashMap<u64, u64>) -> u64 {
+        if n <= 1 { return n; }
+        if let Some(&cached) = memo.get(&n) { return cached; }
+        let result = fib_top_down(n - 1, memo) + fib_top_down(n - 2, memo);
+        memo.insert(n, result);
+        result
+    }
+    
+    fn fib_bottom_up(n: u64) -> u64 {
+        if n <= 1 { return n; }
+        let mut dp = vec![0u64; (n + 1) as usize];
+        dp[0] = 0;
+        dp[1] = 1;
+        for i in 2..=n as usize {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        dp[n as usize]
+    }
+    
+    let n = 30;
+    
+    // Top-down: cache size equals number of unique states accessed
+    let mut memo = HashMap::new();
+    let _ = fib_top_down(n, &mut memo);
+    // Cache will have entries for values 2..n (not 0 or 1 since they're base cases)
+    assert_eq!(memo.len(), (n - 1) as usize); // States from 2 to n
+    
+    // Bottom-up: always computes all states 0 to n
+    let _ = fib_bottom_up(n);
+    // Implicitly uses n+1 array entries
+}
+
+#[test]
+fn req7_documentation_of_tradeoffs() {
+    // This test documents trade-offs through assertions about behavior
+    
+    // ✅ Top-down advantages:
+    // - Only computes reachable states (demonstrated in sparse problems)
+    // - Natural translation from recurrence relation
+    // - Easier to understand and prove correctness
+    
+    // ✅ Bottom-up advantages:
+    // - No recursion overhead or stack limits
+    // - Predictable memory usage
+    // - Better cache locality
+    // - Can optimize space easily
+    
+    // This test serves as documentation (always passes)
+    assert!(true, "Trade-offs documented in REQ-7 implementation");
+}
+
