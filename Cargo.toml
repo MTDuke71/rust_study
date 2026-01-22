@@ -98,6 +98,7 @@ members = [
     "rust_for_rustaceans/Ch01/foundations",
     "rust_for_rustaceans/Ch02/types",
     "rust_for_rustaceans/Ch03",
-    "rust_for_rustaceans/Ch04"]
+    "rust_for_rustaceans/Ch04",
+    "project_euler"]
 
 resolver = "3"

@@ -1,0 +1,21 @@
+[package]
+name = "project_euler"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "project_euler"
+path = "src/lib.rs"
+
+[[bin]]
+name = "euler"
+path = "src/main.rs"
+
+[dependencies]
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "benchmarks"
+harness = false
