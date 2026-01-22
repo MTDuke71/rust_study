@@ -8,11 +8,11 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 20/25 |
-| **Total Runtime** | ~374.2ms |
-| **Average per Day** | ~18.71ms |
+| **Days Completed** | 21/25 |
+| **Total Runtime** | ~2.27s |
+| **Average per Day** | ~108ms |
 | **Fastest Day** | Day 6 (0.95µs) |
-| **Slowest Day** | Day 17 (246.7ms) |
+| **Slowest Day** | Day 21 Part 2 (1.89s) |
 
 ---
 
@@ -40,6 +40,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 18 | 86.6µs | 107.5µs | 194.1µs | Yes*********** |
 | 19 | 202.7µs | 189.4µs | 392.1µs | Yes************ |
 | 20 | 5.70ms | 23.54ms | 29.24ms | Yes************* |
+| 21 | 7.34ms | 1.89s | 1.9s | Yes************** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 *Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
@@ -49,6 +50,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 ***********Day 18: Mathematical approach (Shoelace + Pick's) - Part 2 only 24% slower despite 1 trillion× more cells (O(n) on vertices not cells, scales to 52.2 trillion cells in 107µs)
 ************Day 19: Range propagation - Part 2 FASTER than Part 1! Mathematical counting (256 trillion combinations) faster than simulating 200 parts. Parsing dominates both (~85%), actual calculation only ~30µs each
 *************Day 20: Cycle detection + LCM - Part 2 requires finding when 4 counters align (238T iterations brute force), cycle detection finds periods in ~4000 iterations, LCM computes answer in 23.54ms
+**************Day 21: Quadratic extrapolation - Part 2 slow due to 3 BFS runs (65, 196, 327 steps) but still 800,000× faster than brute-forcing 26M steps! Pattern sampling avoids impossible computation.
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  

@@ -58,6 +58,10 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | State Machine Simulation (Enum Dispatch) | Day 20 | O(1) per transition | [[state-machine-rust]] |
 | FIFO Queue Processing (Event-Driven) | Day 20 | O(1) per operation | [[mission-2]] |
 | Cycle Detection (Counter Synchronization) | Day 20 | O(iterations) expected | [[cycle-detection-patterns]] |
+| BFS with Step Counting | Day 21 | O(R×C×S) | [[graph-theory-fundamentals]] |
+| Euclidean Modulo (Infinite Grid Wrapping) | Day 21 | O(1) | [[modular-arithmetic]] |
+| Lagrange Polynomial Interpolation | Day 21 | O(n²) for n points | [[polynomial-interpolation-lagrange]] |
+| Quadratic Extrapolation (Pattern Sampling) | Day 21 | O(sample_points) | [[polynomial-interpolation-lagrange]] |
 
 ---
 
@@ -367,9 +371,137 @@ fn grid_to_string(grid: &Grid<char>) -> String {
 **Zettelkasten**: [[pigeonhole-principle-cycle-detection]], [[modular-arithmetic]]
 
 ### Breadth-First Search (BFS)
-**Day(s)**: TBD  
-**Zettelkasten**: [[bfs-patterns]]  
+
+#### BFS with Step Counting (Day 21)
+**Implementation**: `src/solver/day21.rs::count_reachable()`  
+**Complexity**: O(R×C×S) where R=rows, C=cols, S=steps  
+**Key Concept**: Track (position, step_count) as state to handle "exactly N steps" problems  
+
+**When to use**:
+- Need to find positions reachable in **exactly** N steps (not "at most")
+- Same position can be visited at different steps via different paths
+- Parity matters (odd/even step counts reach different positions)
+
+**Pattern**:
+```rust
+// State includes both position AND step count
+let mut queue: VecDeque<(usize, usize, usize)> = VecDeque::new();
+let mut visited: HashSet<(usize, usize, usize)> = HashSet::new();
+
+queue.push_back((start_row, start_col, 0));
+visited.insert((start_row, start_col, 0));
+
+while let Some((row, col, step)) = queue.pop_front() {
+    if step == target_steps {
+        reachable_at_target.insert((row, col));  // Track position at target
+        continue;  // Don't explore further
+    }
+    
+    // Explore 4 neighbors
+    for (dr, dc) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
+        let new_state = (new_row, new_col, step + 1);
+        if !visited.contains(&new_state) {
+            visited.insert(new_state);
+            queue.push_back(new_state);
+        }
+    }
+}
+```
+
+**Day 21 Application**: Garden plot reachability
+- Part 1: 3,716 plots in exactly 64 steps (7.34ms)
+- State tracking prevents premature termination
+- Parity: Can return to start position in even steps
+
+**Zettelkasten**: [[bfs-patterns]], [[graph-theory-fundamentals]]  
 **Mission**: Mission 8 (Graph)
+
+### Euclidean Modulo for Infinite Grid Wrapping (Day 21)
+**Implementation**: `src/solver/day21.rs::count_reachable_infinite()`  
+**Complexity**: O(1) per operation  
+**Key Concept**: Use `rem_euclid()` not `%` for negative coordinate wrapping  
+
+**Problem**: Standard modulo `%` gives negative results for negative inputs:
+```rust
+-3 % 11 = -3  // ❌ Can't use as array index!
+```
+
+**Solution**: Euclidean modulo guarantees 0 ≤ r < n:
+```rust
+-3_isize.rem_euclid(11) = 8  // ✓ Valid array index
+```
+
+**Pattern**:
+```rust
+fn map_infinite_to_grid(infinite_coord: isize, grid_size: isize) -> usize {
+    infinite_coord.rem_euclid(grid_size) as usize
+}
+
+// Infinite grid wrapping
+let grid_row = infinite_row.rem_euclid(rows as isize) as usize;
+let grid_col = infinite_col.rem_euclid(cols as isize) as usize;
+
+// Now can index safely: grid[grid_row][grid_col]
+```
+
+**Day 21 Application**: Infinite repeating grid (Part 2)
+- Grid tiles repeat infinitely in all directions
+- Position (-3, 5) maps to (8, 5) on 11×11 tile
+- Essential for 26M step simulation
+
+**Zettelkasten**: [[modular-arithmetic]]
+
+### Lagrange Polynomial Interpolation (Day 21)
+**Implementation**: `src/solver/day21.rs::part2()`  
+**Complexity**: O(n²) for n points, O(1) evaluation  
+**Key Concept**: Fit polynomial through sampled points, extrapolate to target  
+
+**When to use**:
+- Know data follows polynomial pattern (quadratic, cubic, etc.)
+- Cannot brute-force full computation
+- Can sample a few representative points
+- Need exact answer (not approximation)
+
+**Quadratic Fitting** (3 evenly-spaced points at x=0,1,2):
+```rust
+// Given 3 data points
+let y0 = sample_at(base_step);              // f(0)
+let y1 = sample_at(base_step + period);     // f(1)
+let y2 = sample_at(base_step + 2*period);   // f(2)
+
+// Fit quadratic f(n) = an² + bn + c
+let y0 = y0 as i64;  // Use signed for intermediate calculations
+let y1 = y1 as i64;
+let y2 = y2 as i64;
+
+let a = (y0 - 2*y1 + y2) / 2;       // Second-order coefficient
+let b = (-3*y0 + 4*y1 - y2) / 2;    // First-order coefficient  
+let c = y0;                          // Constant term
+
+// Extrapolate to target
+let target_n = ...; // Convert target to n value
+let result = (a * target_n * target_n + b * target_n + c) as usize;
+```
+
+**Day 21 Application**: Quadratic extrapolation on infinite grid
+- **Problem**: Count plots after 26,501,365 steps (impossible to simulate)
+- **Insight**: 26,501,365 = 65 + 131×202,300 (puzzle design!)
+- **Sample**: f(0)=3,797@65 steps, f(1)=34,009@196, f(2)=94,353@327
+- **Fit**: f(n) = 15,066n² + 15,146n + 3,797
+- **Extrapolate**: f(202,300) = 616,583,483,179,597 plots
+- **Speedup**: 800,000× faster than brute force!
+
+**Mathematical Validation** (finite differences):
+```
+Δ₀ = f(1) - f(0) = 30,212
+Δ₁ = f(2) - f(1) = 60,344
+Δ²₀ = Δ₁ - Δ₀ = 30,132 = 2a
+a = 15,066 ✓
+```
+
+**Type Safety**: Use `i64` for coefficients (can be negative), cast to `usize` for final result.
+
+**Zettelkasten**: [[polynomial-interpolation-lagrange]], [[finite-differences]]
 
 ### Dijkstra's Algorithm with State-Space Extension (Day 17)
 **Implementation**: `src/solver/day17.rs::find_min_heat_loss()`  
