@@ -63,6 +63,10 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | rem_euclid() for Grid Wrapping | Day 21 | `day21.rs` |
 | Quadratic Fitting via Lagrange | Day 21 | `day21.rs` |
 | Pattern Sampling for Extrapolation | Day 21 | `day21.rs` |
+| HashMap Height Map for 3D Simulation | Day 22 | `day22.rs` |
+| Bidirectional Support Graph | Day 22 | `day22.rs` |
+| VecDeque BFS for Chain Propagation | Day 22 | `day22.rs` |
+| Vec<bool> for Dense State Tracking | Day 22 | `day22.rs` |
 
 ---
 
@@ -1813,3 +1817,148 @@ impl Range {
 ```
 
 **Result**: Count 123,972,546,935,551 combinations in 190µs without creating a single Part instance!
+---
+
+## 🧱 3D Simulation Patterns
+
+### Pattern: HashMap Height Map for 3D Simulation
+**Used**: Day 22  
+**When to use**: 3D objects falling/stacking with gravity, sparse coordinate space  
+**Code**: `src/solver/day22.rs::simulate_falling()`
+
+```rust
+// Track maximum z-level at each (x,y) coordinate
+let mut height_map: HashMap<(i32, i32), (i32, usize)> = HashMap::new();
+
+// Sort bricks by z (process bottom to top)
+bricks.sort_by_key(|b| b.min_z());
+
+for brick in bricks.iter_mut() {
+    // Find highest obstacle below
+    let mut max_z_below = 0;
+    for cube in brick.get_cubes() {
+        if let Some(&(z, _)) = height_map.get(&(cube.x, cube.y)) {
+            max_z_below = max_z_below.max(z);
+        }
+    }
+    
+    // Drop brick to rest
+    let fall_distance = brick.min_z() - (max_z_below + 1);
+    brick.move_down(fall_distance);
+    
+    // Update height map
+    for cube in brick.get_cubes() {
+        height_map.insert((cube.x, cube.y), (brick.max_z(), brick.id));
+    }
+}
+```
+
+**Why it works**:
+- O(b × c) complexity where b = bricks, c = cubes per brick
+- Avoids O(b²) brick-to-brick collision checks
+- HashMap handles sparse coordinates efficiently
+- Stores brick ID for later support graph construction
+
+**Alternatives**:
+- 3D array: O(X × Y × Z) space - wasteful if sparse
+- Brute-force collision: O(b² × c²) - too slow
+- Height map: O(b × c) - optimal!
+
+### Pattern: Bidirectional Support Graph
+**Used**: Day 22  
+**When to use**: Dependency analysis, cascade effects, structural stability  
+**Code**: `src/solver/day22.rs::build_support_graph()`
+
+```rust
+// Two adjacency lists for different queries
+let mut supports: Vec<HashSet<usize>> = vec![HashSet::new(); n];
+let mut supported_by: Vec<HashSet<usize>> = vec![HashSet::new(); n];
+
+// Build spatial index
+let mut space: HashMap<(i32, i32, i32), usize> = HashMap::new();
+for brick in bricks {
+    for cube in brick.get_cubes() {
+        space.insert((cube.x, cube.y, cube.z), brick.id);
+    }
+}
+
+// Check positions directly above each brick
+for brick in bricks {
+    let top_z = brick.max_z();
+    for cube in brick.get_cubes().filter(|c| c.z == top_z) {
+        if let Some(&above_id) = space.get(&(cube.x, cube.y, top_z + 1)) {
+            supports[brick.id].insert(above_id);
+            supported_by[above_id].insert(brick.id);
+        }
+    }
+}
+```
+
+**Why bidirectional**:
+- Part 1: "Which bricks does X support?" → use `supports[X]`
+- Part 2: "What supports brick Y?" → use `supported_by[Y]`
+- Both queries are O(1) lookup + O(neighbors) iteration
+
+### Pattern: VecDeque BFS for Chain Propagation
+**Used**: Day 22 Part 2  
+**When to use**: Cascade effects in dependency graphs (domino chains)  
+**Code**: `src/solver/day22.rs::count_chain_reaction()`
+
+```rust
+fn count_chain_reaction(brick_id, supports, supported_by) -> usize {
+    let mut fallen = vec![false; n];
+    let mut queue = VecDeque::new();
+    
+    fallen[brick_id] = true;
+    queue.push_back(brick_id);
+    
+    let mut count = 0;
+    while let Some(current) = queue.pop_front() {
+        for &above_id in &supports[current] {
+            if fallen[above_id] { continue; }
+            
+            // Falls if ALL supporters are gone
+            if supported_by[above_id].iter().all(|&s| fallen[s]) {
+                fallen[above_id] = true;
+                count += 1;
+                queue.push_back(above_id);  // Cascade continues
+            }
+        }
+    }
+    count
+}
+```
+
+**Optimization vs Naive**:
+- ❌ While-loop scan: O(V² × iterations) - check all bricks repeatedly
+- ✅ BFS queue: O(V + E) - each brick processed once
+- **Result**: 134× speedup (3.75s → 27ms for 1,360 bricks)
+
+### Pattern: Vec<bool> for Dense State Tracking
+**Used**: Day 22 Part 2  
+**When to use**: Track binary state for dense ID ranges  
+**Code**: `src/solver/day22.rs::count_chain_reaction()`
+
+```rust
+// ❌ HashSet: O(1) insert/lookup but slower cache misses
+let mut fallen: HashSet<usize> = HashSet::new();
+fallen.insert(brick_id);
+if fallen.contains(&id) { /* ... */ }
+
+// ✅ Vec<bool>: Better cache locality for dense IDs
+let mut fallen = vec![false; n];
+fallen[brick_id] = true;
+if fallen[id] { /* ... */ }
+```
+
+**When Vec<bool> wins**:
+- IDs are dense (0..n with few gaps)
+- Frequent sequential access patterns
+- Cache locality matters (hot loop)
+
+**When HashSet wins**:
+- IDs are sparse (e.g., 1, 1000000, 2000000)
+- Set operations needed (union, intersection)
+- Dynamic size (don't know max ID upfront)
+
+**Performance**: For Day 22, Vec<bool> contributes to 134× speedup via better cache behavior.

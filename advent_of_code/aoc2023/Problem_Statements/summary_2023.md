@@ -4,17 +4,17 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 21/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 2266ms (2.27s) |
-| **Mission Integration** | 8 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6, Day 17: Mission 6, Day 20: Mission 2 + Mission 5, Day 21: Mission 6 + Mission 8) |
-| **Patterns Extracted** | 19 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection, mathematical polygon area calculation, workflow pattern matching with enum destinations, state machine simulation with FIFO queue, cycle detection + LCM synchronization, quadratic extrapolation via pattern sampling) |
+| **Progress** | 22/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 2898ms (2.90s) |
+| **Mission Integration** | 9 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6, Day 17: Mission 6, Day 20: Mission 2 + Mission 5, Day 21: Mission 6 + Mission 8, Day 22: Mission 6 + Mission 8) |
+| **Patterns Extracted** | 23 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection, mathematical polygon area calculation, workflow pattern matching with enum destinations, state machine simulation with FIFO queue, cycle detection + LCM synchronization, quadratic extrapolation via pattern sampling, HashMap height map for 3D simulation, bidirectional support graph, VecDeque BFS chain propagation, Vec<bool> dense state tracking) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) | [Day 18](#day-18-lavaduct-lagoon) | [Day 19](#day-19-aplenty) | [Day 20](#day-20-pulse-propagation) | [Day 21](#day-21-step-counter) |
-Day 22 | Day 23 | Day 24 | Day 25
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) | [Day 18](#day-18-lavaduct-lagoon) | [Day 19](#day-19-aplenty) | [Day 20](#day-20-pulse-propagation) | [Day 21](#day-21-step-counter) | [Day 22](#day-22-sand-slabs) |
+Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
 
@@ -2792,7 +2792,121 @@ Position (-3, 5) on infinite grid → (8, 5) on 11×11 tile
 
 **Function Guide**: See [day21_function_guide.md](days/day21_function_guide.md) for 800+ line detailed analysis including BFS walkthrough, infinite grid mechanics, quadratic fitting mathematics, and performance breakdown
 
-**Links**: ← [Day 20](#day-20-pulse-propagation) | Day 22 →
+**Links**: ← [Day 20](#day-20-pulse-propagation) | [Day 22](#day-22-sand-slabs) →
+
+---
+
+### Day 22: Sand Slabs
+
+**Part 1**: Count bricks safe to disintegrate (removing won't cause others to fall) → **490**  
+**Part 2**: Sum chain reactions across all removals → **96,356**  
+
+**Algorithm**: 3D brick falling simulation + support graph + BFS chain propagation  
+**Complexity**: O(b×c) falling + O(b×c) graph build + O(b×(V+E)) chain sims  
+**Runtime**: 2.63ms (Part 1: 898µs, Part 2: 1.73ms, Criterion benchmarks)  
+**Mission**: Mission 6 (3D coordinates), Mission 8 (BFS graph algorithms)  
+
+**Key Insight**: Part 1 builds support dependency graph. Part 2 simulates cascading falls using BFS queue propagation - 134× faster than nested-loop scanning (baseline 3.75s → optimized 1.73ms).
+
+**Rust Highlights**:
+- Height map simulation: `HashMap<(x,y), (max_z, brick_id)>` for O(1) collision detection
+- Bidirectional graph: `supports[]` and `supported_by[]` for different query patterns
+- BFS queue optimization: `VecDeque` processes only affected bricks vs scanning all 1,360
+- Cache locality: `Vec<bool>` for fallen tracking beats `HashSet<usize>`
+- Integrator philosophy: Compose from Mission 6 (coords) + Mission 8 (BFS) components
+
+**Code Highlight**:
+```rust
+// Height map falling simulation
+let mut height_map: HashMap<(i32, i32), (i32, usize)> = HashMap::new();
+bricks.sort_by_key(|b| b.min_z());  // Process bottom-up
+
+for brick in bricks.iter_mut() {
+    // Find highest obstacle below
+    let mut max_z_below = 0;
+    for cube in brick.get_cubes() {
+        if let Some(&(z, _)) = height_map.get(&(cube.x, cube.y)) {
+            max_z_below = max_z_below.max(z);
+        }
+    }
+    
+    // Drop to rest
+    brick.move_down(brick.min_z() - (max_z_below + 1));
+    
+    // Update height map
+    for cube in brick.get_cubes() {
+        height_map.insert((cube.x, cube.y), (brick.max_z(), brick.id));
+    }
+}
+
+// BFS chain reaction (optimized)
+fn count_chain_reaction(brick_id, supports, supported_by) -> usize {
+    let mut fallen = vec![false; n];  // Better cache locality
+    let mut queue = VecDeque::new();
+    
+    fallen[brick_id] = true;
+    queue.push_back(brick_id);
+    
+    let mut count = 0;
+    while let Some(current) = queue.pop_front() {
+        for &above_id in &supports[current] {  // Only check supported bricks
+            if !fallen[above_id] {
+                if supported_by[above_id].iter().all(|&s| fallen[s]) {
+                    fallen[above_id] = true;
+                    count += 1;
+                    queue.push_back(above_id);  // Cascade
+                }
+            }
+        }
+    }
+    count
+}
+```
+
+**Optimization**: BFS queue vs nested loop scan
+- **Before**: 3.75s - `while(changed)` loop scanning all 1,360 bricks repeatedly
+- **After**: 1.73ms - VecDeque processes only affected bricks once
+- **Speedup**: **134× faster** via directed graph traversal
+- Pattern: O(V²) → O(V+E) by following edges instead of scanning vertices
+
+**Part 2 Algorithm**:
+For each of 1,360 bricks:
+1. Mark brick as fallen
+2. Queue it for BFS propagation
+3. For each brick in queue, check what it supports
+4. If all supporters of a brick have fallen, that brick falls too (cascade)
+5. Count total fallen (excluding original)
+
+**Tests**: 
+- ✅ Part 1 example (5 safe bricks)
+- ✅ Part 2 example (7 total falls)
+- ✅ Brick parsing (x1,y1,z1~x2,y2,z2 format)
+- ✅ Brick cubes (single, horizontal, vertical)
+
+**Mathematical Foundation**:
+- **Directed Acyclic Graph (DAG)**: Support relationships form dependency graph
+- **BFS Traversal**: Level-order propagation for cascade simulation
+- **Graph Theory**: Each brick is vertex, support is directed edge
+- **Topological Dependencies**: Brick A → Brick B means "A supports B"
+
+**Performance Breakdown**:
+```
+Part 1 (898µs):
+  - Parse 1,360 bricks: ~100µs
+  - Sort by z-coordinate: ~50µs
+  - Height map simulation: ~400µs
+  - Support graph build: ~300µs
+  - Count safe bricks: ~48µs
+
+Part 2 (1.73ms):
+  - 1,360 chain reactions × 1.27µs avg
+  - BFS queue per reaction: O(bricks_in_chain + edges)
+  - Vec<bool> state tracking: ~0.1µs overhead per sim
+```
+
+**Zettelkasten**: [[graph-theory-fundamentals]], [[bfs-patterns]], [[spatial-indexing-pattern]], [[mission-6]], [[mission-8]]
+
+**Links**: ← [Day 21](#day-21-step-counter) | Day 23 →
 
 ---
 

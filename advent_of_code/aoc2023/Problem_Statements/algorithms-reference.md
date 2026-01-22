@@ -62,6 +62,10 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Euclidean Modulo (Infinite Grid Wrapping) | Day 21 | O(1) | [[modular-arithmetic]] |
 | Lagrange Polynomial Interpolation | Day 21 | O(n²) for n points | [[polynomial-interpolation-lagrange]] |
 | Quadratic Extrapolation (Pattern Sampling) | Day 21 | O(sample_points) | [[polynomial-interpolation-lagrange]] |
+| 3D Coordinate Parsing | Day 22 | O(n) | - |
+| Height Map Simulation (Falling Bricks) | Day 22 | O(bricks × cubes) | [[spatial-indexing-pattern]] |
+| Directed Graph (Support Relationships) | Day 22 | O(bricks × neighbors) | [[graph-theory-fundamentals]] |
+| BFS Chain Propagation | Day 22 | O(bricks + edges) | [[graph-theory-fundamentals]] |
 
 ---
 
@@ -211,6 +215,158 @@ fn total_mismatches(pairs: &[(&[char], &[char])]) -> usize {
 - Edit distance (Levenshtein) - allows insertions/deletions
 - Euclidean distance - continuous metric
 - Cosine similarity - angle-based metric
+
+---
+
+## 🧱 3D Simulation & Spatial Algorithms
+
+### 3D Brick Falling Simulation (Day 22)
+**Implementation**: `src/solver/day22.rs::simulate_falling()`  
+**Complexity**: O(b × c) where b = bricks, c = cubes per brick  
+**Key Concept**: Height map tracks maximum z-level at each (x,y) coordinate for efficient collision detection  
+
+**Mathematical Definition**:
+For brick $B_i$ with cubes at positions $(x, y, z)$:
+$$\text{fall\_distance}(B_i) = z_{\min}(B_i) - \left(1 + \max_{(x,y) \in B_i} h[x, y]\right)$$
+where $h[x, y]$ is the highest occupied z-level at coordinate $(x, y)$.
+
+**When to use**:
+- 3D physics simulation (gravity, stacking, collisions)
+- Object placement with constraints
+- Tetris-like block games
+- Layer-by-layer construction
+
+**Pattern**:
+```rust
+// Track max z-level at each (x,y) coordinate
+let mut height_map: HashMap<(i32, i32), (i32, usize)> = HashMap::new();
+
+// Sort bricks by z (lowest falls first)
+bricks.sort_by_key(|b| b.min_z());
+
+for brick in bricks.iter_mut() {
+    // Find highest obstacle below this brick
+    let mut max_z_below = 0;
+    for cube in brick.get_cubes() {
+        if let Some(&(z, _)) = height_map.get(&(cube.x, cube.y)) {
+            max_z_below = max_z_below.max(z);
+        }
+    }
+    
+    // Drop brick to rest position
+    let fall_distance = brick.min_z() - (max_z_below + 1);
+    brick.move_down(fall_distance);
+    
+    // Update height map
+    for cube in brick.get_cubes() {
+        height_map.insert((cube.x, cube.y), (brick.max_z(), brick.id));
+    }
+}
+```
+
+**Optimization**: 
+- Use HashMap for sparse 3D space (better than 3D array for large coordinates)
+- Sort by z-coordinate to process bottom-up (guarantees correct resting positions)
+- Store brick ID in height map for support graph construction
+
+**Alternatives**:
+- Brute-force collision: O(b² × c²) - check every brick pair
+- 3D grid array: O(X × Y × Z) - wastes space if sparse
+- Height map: O(b × c) - optimal for layer-by-layer falling
+
+**Mission**: Mission 6 (3D grid concepts, coordinate systems)
+
+**Zettelkasten**: [[spatial-indexing-pattern]]
+
+### Support Graph Construction (Day 22)
+**Implementation**: `src/solver/day22.rs::build_support_graph()`  
+**Complexity**: O(b × c) where b = bricks, c = cubes per brick  
+**Key Concept**: Directed graph where edges represent "brick A supports brick B" relationships  
+
+**Graph Structure**:
+```rust
+// Bidirectional adjacency lists
+supports: Vec<HashSet<usize>>      // supports[i] = bricks that i supports
+supported_by: Vec<HashSet<usize>>  // supported_by[i] = bricks supporting i
+```
+
+**When to use**:
+- Dependency analysis (which elements depend on which)
+- Structural stability checking (can element be removed safely)
+- Cascade effect simulation (domino chains)
+- Topological sorting problems
+
+**Pattern**:
+```rust
+// Build spatial lookup: position -> brick
+let mut space: HashMap<(i32, i32, i32), usize> = HashMap::new();
+for brick in bricks {
+    for cube in brick.get_cubes() {
+        space.insert((cube.x, cube.y, cube.z), brick.id);
+    }
+}
+
+// For each brick, check positions directly above
+for brick in bricks {
+    let top_z = brick.max_z();
+    for cube in brick.get_cubes().filter(|c| c.z == top_z) {
+        if let Some(&above_id) = space.get(&(cube.x, cube.y, top_z + 1)) {
+            supports[brick.id].insert(above_id);
+            supported_by[above_id].insert(brick.id);
+        }
+    }
+}
+```
+
+**Mission**: Mission 8 (Graph trait, adjacency lists)
+
+**Zettelkasten**: [[graph-theory-fundamentals]]
+
+### BFS Chain Propagation (Day 22)
+**Implementation**: `src/solver/day22.rs::count_chain_reaction()`  
+**Complexity**: O(V + E) where V = bricks, E = support edges  
+**Key Concept**: Queue-based BFS to propagate cascading effects through dependency graph  
+
+**Algorithm**:
+```rust
+fn count_chain_reaction(brick_id, supports, supported_by) -> usize {
+    let mut fallen = vec![false; n];
+    let mut queue = VecDeque::new();
+    
+    fallen[brick_id] = true;
+    queue.push_back(brick_id);
+    
+    let mut count = 0;
+    while let Some(current) = queue.pop_front() {
+        // Check all bricks this one supports
+        for &above_id in &supports[current] {
+            if fallen[above_id] { continue; }
+            
+            // Falls if ALL supporters have fallen
+            if supported_by[above_id].iter().all(|&s| fallen[s]) {
+                fallen[above_id] = true;
+                count += 1;
+                queue.push_back(above_id);  // Cascade continues
+            }
+        }
+    }
+    count
+}
+```
+
+**Optimization vs Naive Approach**:
+- **Naive**: While-loop scanning all bricks repeatedly - O(V² × E)
+- **BFS Queue**: Only process affected bricks once - O(V + E)
+- **Speedup**: 134× faster (3.75s → 27ms for 1,360 bricks)
+
+**Key Insights**:
+1. **Vec<bool> vs HashSet**: Better cache locality for dense graphs
+2. **Queue prevents redundant checks**: Each brick examined once
+3. **Early termination**: Stop when queue empty (no more cascades)
+
+**Mission**: Mission 8 (BFS implementation)
+
+**Zettelkasten**: [[graph-theory-fundamentals]], [[bfs-patterns]]
 
 ---
 
