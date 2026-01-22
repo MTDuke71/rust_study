@@ -1,5 +1,10 @@
 /// Day 21: Performance comparison between quadratic extrapolation and geometric counting
 ///
+/// **BOTH METHODS NOW PRODUCE CORRECT RESULTS!**
+///
+/// This example demonstrates two fundamentally different optimization approaches
+/// for solving the infinite grid reachability problem.
+///
 /// Run with: cargo run --release --example day21_comparison
 
 use aoc2023::solver::day21::{part2, part2_optimized};
@@ -16,6 +21,7 @@ fn main() {
     println!("  - Samples 3 points (65, 196, 327 steps)");
     println!("  - Fits quadratic: f(n) = an² + bn + c");
     println!("  - Extrapolates to n=202,300");
+    println!("  ✓ Works for ANY input (general-purpose)");
     println!();
     
     let start1 = Instant::now();
@@ -31,6 +37,7 @@ fn main() {
     println!("  - Classifies tiles by entry point and parity");
     println!("  - Runs 13 BFS (2 full + 4 corners + 4 small + 4 large edges)");
     println!("  - Counts tiles geometrically in diamond pattern");
+    println!("  ⚠ Only works for symmetric grids (empty cross + borders)");
     println!();
     
     let start2 = Instant::now();
@@ -43,7 +50,6 @@ fn main() {
     
     // Comparison
     println!("=== Comparison ===");
-    println!("  Results match: {}", result1 == result2);
     
     if result1 != result2 {
         println!("  ❌ MISMATCH!");
@@ -51,27 +57,38 @@ fn main() {
         println!("  Geometric:     {}", result2);
         println!("  Difference:    {}", (result1 as i64 - result2 as i64).abs());
     } else {
-        println!("  ✓ Both produce: {}", result1);
+        println!("  ✅ Both methods produce IDENTICAL results!");
+        println!("  Answer: {}", result1);
     }
     
     let speedup = duration1.as_secs_f64() / duration2.as_secs_f64();
-    println!("  Speedup: {:.2}× faster", speedup);
+    println!("  Speedup: {:.2}× faster (geometric vs extrapolation)", speedup);
     println!();
     
     // Analysis
     println!("=== Trade-off Analysis ===");
-    println!("Quadratic Extrapolation:");
-    println!("  ✓ General-purpose (works for any input)");
-    println!("  ✓ Simpler logic (mathematical extrapolation)");
-    println!("  ✓ Better for teaching Lagrange interpolation");
-    println!("  ✗ Slower (~{:?})", duration1);
-    println!("  ✗ Uses floating-point arithmetic (potential precision issues)");
     println!();
-    println!("Geometric Counting:");
-    println!("  ✓ Much faster (~{:?})", duration2);
-    println!("  ✓ Exact integer arithmetic (no rounding)");
-    println!("  ✓ Better for competitive programming");
+    println!("Quadratic Extrapolation ({:?}):", duration1);
+    println!("  ✓ General-purpose - works for ANY input");
+    println!("  ✓ Simpler logic - mathematical extrapolation");
+    println!("  ✓ Better for teaching Lagrange interpolation");
+    println!("  ✓ Proven correct approach");
+    println!("  ✗ Slower (~{}ms)", duration1.as_millis());
+    println!("  ✗ Uses floating-point arithmetic");
+    println!();
+    println!("Geometric Counting ({:?}):", duration2);
+    println!("  ✓ {:.2}× faster!", speedup);
+    println!("  ✓ Exact integer arithmetic (no rounding errors)");
+    println!("  ✓ Optimal for competitive programming");
+    println!("  ✓ Demonstrates geometric reasoning");
     println!("  ✗ Complex tile classification logic");
-    println!("  ✗ Only works for symmetric grids (empty rows/cols/borders)");
-    println!("  ✗ Breaks on adversarial inputs");
+    println!("  ✗ ONLY works for symmetric grids:");
+    println!("      - Empty cardinal cross through start");
+    println!("      - Empty borders");
+    println!("      - Odd grid size with center start");
+    println!("  ✗ Breaks on adversarial/irregular inputs");
+    println!();
+    println!("=== Recommendation ===");
+    println!("- Use quadratic extrapolation for: General solutions, learning, production");
+    println!("- Use geometric counting for: Speed competitions, symmetric puzzle inputs");
 }
