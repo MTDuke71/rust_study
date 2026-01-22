@@ -60,42 +60,47 @@ fn parse_input(input: &str) -> (Vec<Vec<char>>, (usize, usize)) {
 
 /// Count reachable garden plots in exactly `steps` steps on finite grid
 ///
-/// **Algorithm**: BFS flood-fill tracking (row, col, step) states.
+/// **Algorithm**: BFS with countdown and parity check (inspired by HyperNeutrino's solution).
 ///
-/// **Why track step in state?** Same position can be visited at different steps
-/// via different paths. Each leads to different future exploration:
-/// - (5,5) at step 0 ≠ (5,5) at step 2
-/// - Both are valid states to explore from
+/// **Key Optimization**: Count DOWN from target steps to 0, collecting positions
+/// with matching parity. Only track visited positions, not (position, step) tuples.
 ///
-/// **Parity Property**: Can only reach position with matching parity:
-/// - Distance 5, target step 7: reachable (both odd, can waste 2 steps back-forth)
-/// - Distance 5, target step 8: NOT reachable (different parity)
+/// **Parity Property**: A position is reachable in exactly N steps if:
+/// - Shortest path ≤ N steps
+/// - (N - shortest_path) is **even** (can waste steps going back-and-forth)
 ///
-/// **Complexity**: O(R×C×S) where R=rows, C=cols, S=steps
-/// - Worst case: explore every position at every step ≤ target
-/// - Actual: pruned by rocks and visited tracking
+/// By counting down and checking `s % 2 == 0`, we automatically collect all
+/// positions reachable with even parity (matching our target step count parity).
 ///
-/// **See**: `day21_function_guide.md` for detailed walkthrough
+/// **Complexity**: O(R×C) space for visited set (not O(R×C×S)!)
+/// - Each position visited at most once in the BFS
+/// - Parity check filters reachable positions during traversal
+///
+/// **Memory Improvement**: Previous implementation tracked (row, col, step) tuples.
+/// This version only tracks (row, col), reducing HashSet size dramatically.
+///
+/// **See**: HyperNeutrino's AoC 2023 Day 21 solution for original Python implementation
 fn count_reachable(grid: &[Vec<char>], start: (usize, usize), steps: usize) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
     
-    // BFS to find all positions reachable within `steps` steps
-    // Track (row, col, step_count)
+    // BFS counting DOWN from target steps to 0
     let mut queue: VecDeque<(usize, usize, usize)> = VecDeque::new();
-    let mut visited: HashSet<(usize, usize, usize)> = HashSet::new();
+    let mut visited: HashSet<(usize, usize)> = HashSet::new(); // Only track position!
+    let mut reachable = HashSet::new();
     
-    queue.push_back((start.0, start.1, 0));
-    visited.insert((start.0, start.1, 0));
+    queue.push_back((start.0, start.1, steps));
+    visited.insert((start.0, start.1));
     
-    // Track positions at target step count
-    let mut reachable_at_target = HashSet::new();
-    
-    while let Some((row, col, step)) = queue.pop_front() {
-        // If we've reached target steps, mark this position
-        if step == steps {
-            reachable_at_target.insert((row, col));
-            continue; // Don't explore further from here
+    while let Some((row, col, s)) = queue.pop_front() {
+        // Collect positions with matching parity (even steps remaining)
+        if s % 2 == 0 {
+            reachable.insert((row, col));
+        }
+        
+        // Stop exploring when no steps remain
+        if s == 0 {
+            continue;
         }
         
         // Explore neighbors (up, down, left, right)
@@ -111,21 +116,17 @@ fn count_reachable(grid: &[Vec<char>], start: (usize, usize), steps: usize) -> u
             let new_row = new_row as usize;
             let new_col = new_col as usize;
             
-            // Check if it's a valid garden plot
-            if grid[new_row][new_col] == '#' {
+            // Check if it's a valid garden plot and not yet visited
+            if grid[new_row][new_col] == '#' || visited.contains(&(new_row, new_col)) {
                 continue;
             }
             
-            let new_state = (new_row, new_col, step + 1);
-            
-            if !visited.contains(&new_state) {
-                visited.insert(new_state);
-                queue.push_back(new_state);
-            }
+            visited.insert((new_row, new_col));
+            queue.push_back((new_row, new_col, s - 1)); // Count DOWN
         }
     }
     
-    reachable_at_target.len()
+    reachable.len()
 }
 
 pub fn part1(input: &str) -> usize {
@@ -134,6 +135,8 @@ pub fn part1(input: &str) -> usize {
 }
 
 /// Count reachable plots on INFINITE repeating grid
+///
+/// **Algorithm**: BFS with countdown and parity check on infinite wrapping grid.
 ///
 /// **Grid Wrapping**: The grid tiles repeat infinitely in all directions.
 /// Coordinates can be negative or exceed grid bounds.
@@ -145,29 +148,35 @@ pub fn part1(input: &str) -> usize {
 ///
 /// **Position (-3, 5) on infinite grid → (8, 5) on 11×11 tile**
 ///
+/// **Memory Efficiency**: Tracks only (row, col) in visited, not (row, col, step).
+/// Same O(R×C) space optimization as finite grid version.
+///
 /// **Type Change**: Uses `isize` for coordinates (can be negative)
 /// vs `usize` in finite grid version.
 ///
 /// **Mathematical Foundation**: See `zettelkasten/math-foundations/modular-arithmetic.md`
 ///
-/// **Complexity**: Same as finite version O(R×C×S), but S can be much larger
-/// before pattern stabilizes.
+/// **Complexity**: O(R×C) space (huge improvement over previous O(R×C×S)!)
 fn count_reachable_infinite(grid: &[Vec<char>], start: (isize, isize), steps: usize) -> usize {
     let rows = grid.len() as isize;
     let cols = grid[0].len() as isize;
     
-    // BFS on infinite grid - use (row, col) as infinite coordinates
+    // BFS on infinite grid counting DOWN from target steps
     let mut queue: VecDeque<(isize, isize, usize)> = VecDeque::new();
-    let mut visited: HashSet<(isize, isize, usize)> = HashSet::new();
+    let mut visited: HashSet<(isize, isize)> = HashSet::new(); // Only track position!
+    let mut reachable = HashSet::new();
     
-    queue.push_back((start.0, start.1, 0));
-    visited.insert((start.0, start.1, 0));
+    queue.push_back((start.0, start.1, steps));
+    visited.insert((start.0, start.1));
     
-    let mut reachable_at_target = HashSet::new();
-    
-    while let Some((row, col, step)) = queue.pop_front() {
-        if step == steps {
-            reachable_at_target.insert((row, col));
+    while let Some((row, col, s)) = queue.pop_front() {
+        // Collect positions with matching parity
+        if s % 2 == 0 {
+            reachable.insert((row, col));
+        }
+        
+        // Stop exploring when no steps remain
+        if s == 0 {
             continue;
         }
         
@@ -175,25 +184,21 @@ fn count_reachable_infinite(grid: &[Vec<char>], start: (isize, isize), steps: us
             let new_row = row + dr;
             let new_col = col + dc;
             
-            // Map to grid using modulo (handle negative with Euclidean mod)
+            // Map to grid using Euclidean modulo (handle negative coordinates)
             let grid_row = new_row.rem_euclid(rows) as usize;
             let grid_col = new_col.rem_euclid(cols) as usize;
             
-            // Check if it's a valid garden plot
-            if grid[grid_row][grid_col] == '#' {
+            // Check if it's a valid garden plot and not yet visited
+            if grid[grid_row][grid_col] == '#' || visited.contains(&(new_row, new_col)) {
                 continue;
             }
             
-            let new_state = (new_row, new_col, step + 1);
-            
-            if !visited.contains(&new_state) {
-                visited.insert(new_state);
-                queue.push_back(new_state);
-            }
+            visited.insert((new_row, new_col));
+            queue.push_back((new_row, new_col, s - 1)); // Count DOWN
         }
     }
     
-    reachable_at_target.len()
+    reachable.len()
 }
 
 /// BFS from a specific starting position for exact step count on finite grid
