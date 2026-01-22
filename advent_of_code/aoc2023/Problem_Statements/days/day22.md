@@ -152,3 +152,108 @@ In this example, the bricks can be disintegrated as follows:
 So, in this example, `*5*` bricks can be safely disintegrated.
 
 Figure how the blocks will settle based on the snapshot. Once they've settled, consider disintegrating a single brick; *how many bricks could be safely chosen as the one to get disintegrated?*
+
+## --- Part Two ---
+
+Disintegrating bricks one at a time isn't going to be fast enough. While it might sound dangerous, what you really need is a *chain reaction*.
+
+You'll need to figure out the best brick to disintegrate. For each brick, determine how many *other bricks would fall* if that brick were disintegrated.
+
+Using the same example as above:
+
+- Disintegrating brick `A` would cause all `6` other bricks to fall.
+- Disintegrating brick `F` would cause only `1` other brick, `G`, to fall.
+- Disintegrating any other brick would cause `0` other bricks to fall.
+
+So, in this example, the sum of *the number of other bricks that would fall* as a result of disintegrating each brick is `*7*`.
+
+For each brick, determine how many other bricks would fall if that brick were disintegrated. *What is the sum of the number of other bricks that would fall?*
+
+---
+
+## 🦀 Solution Summary
+
+**Part 1**: 490 ✓  
+**Part 2**: 96,356 ✓  
+**Performance**: 27.28ms (optimized)
+
+### Key Algorithms
+
+1. **Brick Parsing** - Parse `x1,y1,z1~x2,y2,z2` format into 3D coordinates
+2. **Gravity Simulation** - Height map tracking `(x,y) -> max_z` for efficient falling
+3. **Support Graph** - Build directed graph of brick dependencies
+4. **Chain Reaction** - BFS propagation to count cascading falls
+
+### Implementation Highlights
+
+**Height Map Simulation**:
+```rust
+// Track max z-level at each (x,y) coordinate
+let mut height_map: HashMap<(i32, i32), (i32, usize)> = HashMap::new();
+
+// Find highest point brick would rest on
+for cube in brick.get_cubes() {
+    if let Some(&(z, _)) = height_map.get(&(cube.x, cube.y)) {
+        max_z_below = max_z_below.max(z);
+    }
+}
+```
+
+**Support Graph Construction**:
+```rust
+// Check positions one level above each brick
+for cube in brick.get_cubes() {
+    if cube.z == top_z {
+        if let Some(&above_id) = space.get(&(cube.x, cube.y, top_z + 1)) {
+            supports[brick_id].insert(above_id);
+            supported_by[above_id].insert(brick_id);
+        }
+    }
+}
+```
+
+**BFS Chain Reaction** (Optimized):
+```rust
+let mut queue = VecDeque::new();
+queue.push_back(brick_id);
+
+while let Some(current) = queue.pop_front() {
+    for &above_id in &supports[current] {
+        if supported_by[above_id].iter().all(|&s| fallen[s]) {
+            fallen[above_id] = true;
+            queue.push_back(above_id);
+        }
+    }
+}
+```
+
+### Performance Optimization
+
+**Baseline** (nested loop scan): 3.75s  
+**Optimized** (BFS queue): 27.28ms  
+**Speedup**: **134x faster** ⚡
+
+**Key Changes**:
+1. Replaced `while(changed)` loop with `VecDeque` BFS
+2. `Vec<bool>` instead of `HashSet<usize>` for better cache locality
+3. Only process bricks affected by chain (not all 1,360 every iteration)
+
+### Patterns & Insights
+
+**Graph Pattern**: Directed acyclic graph (DAG) of support relationships  
+**Simulation Pattern**: Layer-by-layer processing (sort by z-coordinate)  
+**Optimization Pattern**: Queue-based propagation beats repeated scans
+
+**Mathematical Concepts** (see zettelkasten):
+- **Graph Theory**: Directed graph, topological dependencies
+- **BFS**: Queue-based level-order traversal
+- **Set Theory**: Support relationships as set membership
+
+**Related Problems**:
+- AoC 2018 Day 23 (3D spatial optimization)
+- AoC 2022 Day 14 (falling simulation)
+- Mission 8 (Graph algorithms - BFS implementation)
+
+---
+
+*See implementation: `advent_of_code/aoc2023/src/solver/day22.rs`*
