@@ -4,17 +4,17 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 20/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | 374.2ms |
-| **Mission Integration** | 6 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6, Day 17: Mission 6, Day 20: Mission 2 + Mission 5) |
-| **Patterns Extracted** | 18 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection, mathematical polygon area calculation, workflow pattern matching with enum destinations, state machine simulation with FIFO queue, cycle detection + LCM synchronization) |
+| **Progress** | 21/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | 2266ms (2.27s) |
+| **Mission Integration** | 8 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6, Day 17: Mission 6, Day 20: Mission 2 + Mission 5, Day 21: Mission 6 + Mission 8) |
+| **Patterns Extracted** | 19 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection, mathematical polygon area calculation, workflow pattern matching with enum destinations, state machine simulation with FIFO queue, cycle detection + LCM synchronization, quadratic extrapolation via pattern sampling) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) | [Day 18](#day-18-lavaduct-lagoon) | [Day 19](#day-19-aplenty) | [Day 20](#day-20-pulse-propagation) |
-Day 21 | Day 22 | Day 23 | Day 24 | Day 25
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) | [Day 18](#day-18-lavaduct-lagoon) | [Day 19](#day-19-aplenty) | [Day 20](#day-20-pulse-propagation) | [Day 21](#day-21-step-counter) |
+Day 22 | Day 23 | Day 24 | Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
 
@@ -2602,7 +2602,197 @@ Pattern Recognition: IDENTICAL to Day 8 ghost synchronization!
 
 **Function Guide**: See [day20_function_guide.md](days/day20_function_guide.md) for detailed implementation walkthrough
 
-**Links**: ← [Day 19](#day-19-aplenty) | Day 21 →
+**Links**: ← [Day 19](#day-19-aplenty) | [Day 21](#day-21-step-counter) →
+
+---
+
+### Day 21: Step Counter
+
+**Part 1**: Count garden plots reachable in exactly 64 steps (Manhattan distance) → **3716**  
+**Part 2**: Count plots reachable in 26,501,365 steps on INFINITE repeating grid → **616583483179597**  
+
+**Algorithm**: Part 1: BFS with step counting; Part 2: Quadratic pattern detection via Lagrange interpolation  
+**Complexity**: Part 1 O(R×C×S) ≈ O(131²×64); Part 2 O(grid_size × max_sample_steps) ≈ O(131²×327) - avoids brute-forcing 26M steps!  
+**Runtime**: 1.9s (Part 1: 7.34ms, Part 2: 1.89s)  
+**Mission**: Mission 6 (Grid<char>), Mission 8 (BFS - conceptually similar to Part 1)  
+
+**Key Insight**: Part 2's step count (26,501,365) is NOT arbitrary - it equals **65 + 131×202,300**, where 65 = distance to grid edge, 131 = grid size. This puzzle design reveals the pattern! On an infinite 2D grid, reachable area grows **quadratically**. Sample 3 points (f(0)=3797@65 steps, f(1)=34009@196 steps, f(2)=94353@327 steps), fit quadratic f(n)=15066n²+15146n+3797, extrapolate to n=202,300. **Speedup: 800,000× faster** than brute force!
+
+**Rust Highlights**:
+- **BFS state tracking**: `(row, col, step_count)` allows revisiting positions at different steps
+- **Infinite grid wrapping**: `rem_euclid()` handles negative coordinates (not `%` operator!)
+- **Lagrange interpolation**: Fit quadratic from 3 points using finite differences
+- **Type safety**: i64 for quadratic coefficients (prevents overflow), usize for counts
+- **Mission integration**: Grid<char> representation (could integrate Mission 8 BFS, but implemented custom for learning)
+
+**Code Highlight**:
+```rust
+/// Part 1: BFS with step counting (finite grid)
+fn count_reachable(grid: &[Vec<char>], start: (usize, usize), steps: usize) -> usize {
+    let mut queue: VecDeque<(usize, usize, usize)> = VecDeque::new();
+    let mut visited: HashSet<(usize, usize, usize)> = HashSet::new();
+    let mut reachable_at_target = HashSet::new();
+    
+    queue.push_back((start.0, start.1, 0));
+    visited.insert((start.0, start.1, 0));
+    
+    while let Some((row, col, step)) = queue.pop_front() {
+        if step == steps {
+            reachable_at_target.insert((row, col));  // Track position at target step
+            continue;  // Don't explore further
+        }
+        
+        // Explore 4 neighbors with bounds checking
+        for (dr, dc) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
+            // ... bounds check, rock check, visited check ...
+            let new_state = (new_row, new_col, step + 1);
+            if !visited.contains(&new_state) {
+                visited.insert(new_state);
+                queue.push_back(new_state);
+            }
+        }
+    }
+    
+    reachable_at_target.len()  // Count unique positions
+}
+
+/// Part 2: Infinite grid with quadratic extrapolation
+fn count_reachable_infinite(
+    grid: &[Vec<char>], 
+    start: (isize, isize),  // ← Can be negative!
+    steps: usize
+) -> usize {
+    let rows = grid.len() as isize;
+    let cols = grid[0].len() as isize;
+    
+    // Same BFS but with infinite coordinates
+    while let Some((row, col, step)) = queue.pop_front() {
+        if step == steps { /* ... */ }
+        
+        for (dr, dc) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
+            let new_row = row + dr;  // No bounds check!
+            let new_col = col + dc;
+            
+            // Map infinite coords to grid using Euclidean modulo
+            let grid_row = new_row.rem_euclid(rows) as usize;
+            let grid_col = new_col.rem_euclid(cols) as usize;
+            
+            if grid[grid_row][grid_col] == '#' { continue; }
+            
+            // Track infinite coordinates, not grid-wrapped ones
+            let new_state = (new_row, new_col, step + 1);
+            // ... visited check and queue push ...
+        }
+    }
+}
+
+pub fn part2(input: &str) -> usize {
+    let (grid, start) = parse_input(input);
+    let grid_size = grid.len();  // 131 for real input
+    let start_infinite = (start.0 as isize, start.1 as isize);
+    
+    // Sample 3 points for quadratic fitting
+    let edge_dist = grid_size / 2;  // 65 for 131×131
+    
+    let n0 = count_reachable_infinite(&grid, start_infinite, edge_dist);           // 65 steps
+    let n1 = count_reachable_infinite(&grid, start_infinite, edge_dist + grid_size);  // 196 steps
+    let n2 = count_reachable_infinite(&grid, start_infinite, edge_dist + 2*grid_size); // 327 steps
+    
+    // Fit quadratic: f(n) = an² + bn + c
+    let n0 = n0 as i64;
+    let n1 = n1 as i64;
+    let n2 = n2 as i64;
+    
+    // Lagrange interpolation for x=0,1,2
+    let a = (n0 - 2*n1 + n2) / 2;       // Second-order finite difference
+    let b = (-3*n0 + 4*n1 - n2) / 2;    // First-order coefficient
+    let c = n0;                          // Constant term
+    
+    // Extrapolate to n = (26501365 - 65) / 131 = 202,300
+    let target_n = ((26501365 - edge_dist) / grid_size) as i64;
+    (a * target_n * target_n + b * target_n + c) as usize
+}
+```
+
+**Mathematical Foundation**:
+```
+Quadratic Growth on Infinite 2D Grid
+═════════════════════════════════
+
+After 1 step (radius 1):     After 2 steps:         After 3 steps:
+      O                          O                        O
+     OSO                        OOO                      OOO
+      O                        OOOOO                    OOOOO
+                                OOO                    OOOOOOO
+                                 O                      OOOOO
+    Area = 5                Area = 13                   OOO
+                                                          O
+                                                     Area = 25
+
+Pattern: Reachable area ≈ 2r² (diamond shape)
+General: f(n) = an² + bn + c (quadratic)
+
+Puzzle Design (intentional pattern):
+═══════════════════════════════════
+26,501,365 = 65 + (131 × 202,300)
+             ↑     ↑      ↑
+        edge_dist  grid   periods
+                   size
+
+Grid: 131×131 (square)
+Start: (65, 65) (exact center!)
+Edge: 65 steps to reach any boundary
+After 65: Pattern repeats every 131 steps
+
+Lagrange Interpolation (3 points → quadratic):
+═════════════════════════════════════════════
+Sample:
+  f(0) = 3,797 plots at 65 steps
+  f(1) = 34,009 plots at 196 steps (65 + 131)
+  f(2) = 94,353 plots at 327 steps (65 + 262)
+
+Fit:
+  a = (y₀ - 2y₁ + y₂) / 2 = (3797 - 68018 + 94353) / 2 = 15,066
+  b = (-3y₀ + 4y₁ - y₂) / 2 = (-11391 + 136036 - 94353) / 2 = 15,146
+  c = y₀ = 3,797
+
+Formula: f(n) = 15,066n² + 15,146n + 3,797
+
+Extrapolate:
+  n = 202,300 (number of 131-step periods)
+  f(202,300) = 15,066×(202,300)² + 15,146×202,300 + 3,797
+             = 616,583,483,179,597 plots (616 trillion!)
+
+Validation (finite differences):
+  Δ₀ = 34,009 - 3,797 = 30,212
+  Δ₁ = 94,353 - 34,009 = 60,344
+  Δ²₀ = 60,344 - 30,212 = 30,132 = 2a
+  a = 15,066 ✓
+
+Modulo Arithmetic (infinite grid wrapping):
+═══════════════════════════════════════════
+Standard modulo:   -3 % 11 = -3   ❌ Wrong!
+Euclidean modulo:  -3.rem_euclid(11) = 8   ✓ Correct!
+
+Position (-3, 5) on infinite grid → (8, 5) on 11×11 tile
+```
+
+**Tests**: 
+- ✅ Part 1 example: 16 plots in 6 steps
+- ✅ Part 2 infinite examples: 16(6 steps), 50(10), 1594(50), 6536(100)
+- ✅ Quadratic fitting validates all 3 sample points
+
+**Pattern Recognition**: This is AoC 2023's **third mathematical optimization problem**:
+- **Day 8**: Cycle detection + LCM for ghost synchronization
+- **Day 20**: Cycle detection + LCM for counter synchronization  
+- **Day 21**: Pattern sampling + polynomial fitting for quadratic extrapolation
+- Common theme: Recognize problem structure, avoid brute force via mathematics
+
+**Zettelkasten**: [[bfs-flood-fill]], [[mission-6]], [[mission-8]], [[math-foundations/polynomial-interpolation-lagrange]], [[math-foundations/graph-theory-fundamentals]], [[math-foundations/modular-arithmetic]]
+
+**Function Guide**: See [day21_function_guide.md](days/day21_function_guide.md) for 800+ line detailed analysis including BFS walkthrough, infinite grid mechanics, quadratic fitting mathematics, and performance breakdown
+
+**Links**: ← [Day 20](#day-20-pulse-propagation) | Day 22 →
 
 ---
 
