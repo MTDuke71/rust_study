@@ -66,10 +66,11 @@ pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
             day21::part1(input).to_string(),
             day21::part2(input).to_string(),
         )),
-        22 => Ok((
-            day22::solve_part1(input).to_string(),
-            day22::solve_part2(input).to_string(),
-        )),
+        22 => {
+            // NEW PATTERN: Use combined solver for efficiency
+            let (p1, p2) = day22::solve(input);
+            Ok((p1.to_string(), p2.to_string()))
+        },
         // 23 => Ok((day23::solve_part1(input)?, day23::solve_part2(input)?)),
         // 24 => Ok((day24::solve_part1(input)?, day24::solve_part2(input)?)),
         // 25 => Ok((day25::solve_part1(input)?, day25::solve_part2(input)?)),

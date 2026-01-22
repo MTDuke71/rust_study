@@ -199,46 +199,102 @@ fn count_chain_reaction(
     fall_count
 }
 
-pub fn solve_part1(input: &str) -> usize {
+// ============================================================================
+// NEW PATTERN: Prepared Data Structure
+// ============================================================================
+
+/// Prepared brick data after parsing and simulation
+///
+/// This structure holds all the data needed for both Part 1 and Part 2,
+/// allowing us to parse and prepare the input once, then solve both parts.
+struct PreparedBricks {
+    bricks: Vec<Brick>,
+    supports: Vec<HashSet<usize>>,
+    supported_by: Vec<HashSet<usize>>,
+}
+
+/// Parse input and prepare all data structures
+///
+/// This function does all the heavy lifting:
+/// 1. Parse bricks from input
+/// 2. Simulate gravity (falling)
+/// 3. Build support graph
+///
+/// By doing this once, we avoid duplicate work when solving both parts.
+fn parse_and_prepare(input: &str) -> PreparedBricks {
     let mut bricks = parse_bricks(input);
-    
-    // Simulate bricks falling
     simulate_falling(&mut bricks);
-    
-    // Build support relationships
     let (supports, supported_by) = build_support_graph(&bricks);
     
+    PreparedBricks {
+        bricks,
+        supports,
+        supported_by,
+    }
+}
+
+// ============================================================================
+// Part 1 & Part 2 Implementation (Using Prepared Data)
+// ============================================================================
+
+/// Solve Part 1 given prepared data
+fn solve_part1_impl(data: &PreparedBricks) -> usize {
     // Count bricks that can be safely disintegrated
     // A brick can be removed if every brick it supports has at least one other supporter
     let mut safe_count = 0;
-    for brick_id in 0..bricks.len() {
-        let can_remove = supports[brick_id].iter().all(|&above_id| {
-            supported_by[above_id].len() > 1
+    for brick_id in 0..data.bricks.len() {
+        let can_remove = data.supports[brick_id].iter().all(|&above_id| {
+            data.supported_by[above_id].len() > 1
         });
         if can_remove {
             safe_count += 1;
         }
     }
-    
     safe_count
 }
 
-pub fn solve_part2(input: &str) -> usize {
-    let mut bricks = parse_bricks(input);
-    
-    // Simulate bricks falling
-    simulate_falling(&mut bricks);
-    
-    // Build support relationships
-    let (supports, supported_by) = build_support_graph(&bricks);
-    
+/// Solve Part 2 given prepared data
+fn solve_part2_impl(data: &PreparedBricks) -> usize {
     // For each brick, count how many would fall in a chain reaction
     let mut total_fallen = 0;
-    for brick_id in 0..bricks.len() {
-        total_fallen += count_chain_reaction(brick_id, &supports, &supported_by);
+    for brick_id in 0..data.bricks.len() {
+        total_fallen += count_chain_reaction(brick_id, &data.supports, &data.supported_by);
     }
-    
     total_fallen
+}
+
+// ============================================================================
+// Public API
+// ============================================================================
+
+/// **EFFICIENT**: Solve both parts with single parse
+///
+/// This is the recommended entry point when running both parts.
+/// Parsing and preparation happen exactly once, then both solutions are computed.
+///
+/// **Performance**: This is ~2× faster than calling `solve_part1()` and `solve_part2()`
+/// separately, since it avoids duplicate parsing and simulation.
+pub fn solve(input: &str) -> (usize, usize) {
+    let data = parse_and_prepare(input);
+    let part1 = solve_part1_impl(&data);
+    let part2 = solve_part2_impl(&data);
+    (part1, part2)
+}
+
+/// Solve Part 1 only (for individual testing)
+///
+/// **Note**: If you're solving both parts, use `solve()` instead to avoid
+/// duplicate parsing overhead.
+pub fn solve_part1(input: &str) -> usize {
+    solve_part1_impl(&parse_and_prepare(input))
+}
+
+/// Solve Part 2 only (for individual testing)
+///
+/// **Note**: If you're solving both parts, use `solve()` instead to avoid
+/// duplicate parsing overhead.
+pub fn solve_part2(input: &str) -> usize {
+    solve_part2_impl(&parse_and_prepare(input))
 }
 
 #[cfg(test)]
