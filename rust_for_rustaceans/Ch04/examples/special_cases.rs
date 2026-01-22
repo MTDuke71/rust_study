@@ -1,3 +1,5 @@
+// Uncomment for nightly Rust:
+// #![feature(never_type)]
 //! # Special Error Cases
 //!
 //! **Date**: Wednesday (1/21) - Week 4 Day 3
@@ -124,11 +126,13 @@ fn spawn_thread_example() {
 // ============================================================================
 
 // Note: This requires #![feature(never_type)]
-// Uncommenting requires running with `cargo +nightly`
+// Uncomment below and run with `cargo +nightly`
+// Output Observed:
+// 5. Never Type (Nightly Feature):
+// Got: 42
+// Infallible result: 42
 
 /*
-#![feature(never_type)]
-
 /// Infallible operation - always succeeds
 fn always_succeeds() -> Result<i32, !> {
     Ok(42)
@@ -229,6 +233,10 @@ fn main() {
         Ok(n) => println!("   Valid: {}", n),
         Err(()) => println!("   Invalid (negative)"),
     }
+    match in_range(50, 0, 100) {
+        Ok(n) => println!("   In range: {}", n),
+        Err(()) => println!("   Out of range"),
+    }
     println!();
 
     // Example 2: Option vs Result
@@ -249,12 +257,30 @@ fn main() {
     println!();
 
     // Example 3: Password validation
-    println!("3. Boolean vs Result:");
+    println!("3. Boolean vs Result (Invalid Password):");
     let password = "pass123";
     println!("   Boolean approach: {}", is_valid_password_bool(password));
     match validate_password(password) {
         Ok(()) => println!("   Result approach: valid"),
         Err(()) => println!("   Result approach: invalid"),
+    }
+    match validate_password_return(password.to_string()) {
+        Ok(validated) => println!("   Validated password: {}", validated),
+        Err(()) => println!("   Invalid password"),
+    }
+    println!();
+
+    // Example 3a: Password validation with valid password
+    println!("3a. Boolean vs Result (Valid Password):");
+    let valid_password = "password123";
+    println!("   Boolean approach: {}", is_valid_password_bool(valid_password));
+    match validate_password(valid_password) {
+        Ok(()) => println!("   Result approach: valid"),
+        Err(()) => println!("   Result approach: invalid"),
+    }
+    match validate_password_return(valid_password.to_string()) {
+        Ok(validated) => println!("   Validated password: {}", validated),
+        Err(()) => println!("   Invalid password"),
     }
     println!();
 
@@ -262,6 +288,21 @@ fn main() {
     println!("4. Thread Panic Results:");
     spawn_thread_example();
     println!();
+
+    // Example 5: Never type (infallible operations)
+    // Output
+    // 5. Never Type (Nightly Feature):
+    // Got: 42
+    // Infallible result: 42
+    // Uncomment below and run with `cargo +nightly`
+    
+    // println!("5. Never Type (Nightly Feature):");
+    // use_infallible();
+    // match always_succeeds() {
+    //    Ok(n) => println!("   Infallible result: {}", n),
+    // Compiler knows Err is impossible - no need for Err arm!
+    // }
+    // println!();
 
     // Example 6: Chained validations
     println!("6. Chained Validations:");
@@ -276,6 +317,31 @@ fn main() {
     match validate_user_input("user@123") {
         Ok(validated) => println!("   Valid input: {}", validated),
         Err(()) => println!("   Invalid input (not alphanumeric)"),
+    }
+    println!();
+
+    // Example 7: Using different pattern functions
+    println!("7. Different Pattern Usage:");
+    let numbers = [1, 2, 3, 4, 5];
+    match first_element(&numbers) {
+        Some(&n) => println!("   First element: {}", n),
+        None => println!("   Empty slice"),
+    }
+    match parse_binary("1010") {
+        Ok(n) => println!("   Binary parsed: {}", n),
+        Err(()) => println!("   Failed to parse binary"),
+    }
+    match parse_with_error("123") {
+        Ok(n) => println!("   Parsed with error type: {}", n),
+        Err(e) => println!("   Parse error: {}", e),
+    }
+    match parse_with_error("not_a_number") {
+        Ok(n) => println!("   Parsed: {}", n),
+        Err(e) => println!("   Parse error with details: {}", e),
+    }
+    match write_log("Example log message") {
+        Ok(()) => println!("   Log written successfully"),
+        Err(e) => println!("   Failed to write log: {}", e),
     }
     println!();
 
