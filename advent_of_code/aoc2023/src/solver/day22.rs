@@ -12,17 +12,17 @@
 use std::collections::{HashMap, HashSet, VecDeque};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-struct Point3D {
-    x: i32,
-    y: i32,
-    z: i32,
+pub struct Point3D {
+    pub x: i32,
+    pub y: i32,
+    pub z: i32,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-struct Brick {
-    id: usize,
-    start: Point3D,
-    end: Point3D,
+pub struct Brick {
+    pub id: usize,
+    pub start: Point3D,
+    pub end: Point3D,
 }
 
 impl Brick {
@@ -207,10 +207,10 @@ fn count_chain_reaction(
 ///
 /// This structure holds all the data needed for both Part 1 and Part 2,
 /// allowing us to parse and prepare the input once, then solve both parts.
-struct PreparedBricks {
-    bricks: Vec<Brick>,
-    supports: Vec<HashSet<usize>>,
-    supported_by: Vec<HashSet<usize>>,
+pub struct PreparedBricks {
+    pub bricks: Vec<Brick>,
+    pub supports: Vec<HashSet<usize>>,
+    pub supported_by: Vec<HashSet<usize>>,
 }
 
 /// Parse input and prepare all data structures
@@ -221,7 +221,7 @@ struct PreparedBricks {
 /// 3. Build support graph
 ///
 /// By doing this once, we avoid duplicate work when solving both parts.
-fn parse_and_prepare(input: &str) -> PreparedBricks {
+pub fn parse_and_prepare(input: &str) -> PreparedBricks {
     let mut bricks = parse_bricks(input);
     simulate_falling(&mut bricks);
     let (supports, supported_by) = build_support_graph(&bricks);
@@ -238,7 +238,7 @@ fn parse_and_prepare(input: &str) -> PreparedBricks {
 // ============================================================================
 
 /// Solve Part 1 given prepared data
-fn solve_part1_impl(data: &PreparedBricks) -> usize {
+pub fn solve_part1_impl(data: &PreparedBricks) -> usize {
     // Count bricks that can be safely disintegrated
     // A brick can be removed if every brick it supports has at least one other supporter
     let mut safe_count = 0;
@@ -254,7 +254,7 @@ fn solve_part1_impl(data: &PreparedBricks) -> usize {
 }
 
 /// Solve Part 2 given prepared data
-fn solve_part2_impl(data: &PreparedBricks) -> usize {
+pub fn solve_part2_impl(data: &PreparedBricks) -> usize {
     // For each brick, count how many would fall in a chain reaction
     let mut total_fallen = 0;
     for brick_id in 0..data.bricks.len() {

@@ -314,12 +314,33 @@ fn benchmark_day21(c: &mut Criterion) {
 fn benchmark_day22(c: &mut Criterion) {
     let input = include_str!("../inputs/day22.txt");
 
-    c.bench_function("day22_part1", |b| {
+    // 1. COMBINED: Most realistic - parse once, solve both (what users actually run)
+    c.bench_function("Day 22 Combined", |b| {
+        b.iter(|| day22::solve(black_box(input)))
+    });
+
+    // 2. PART 1: Includes parsing overhead (useful for per-part comparison)
+    c.bench_function("Day 22 Part 1", |b| {
         b.iter(|| day22::solve_part1(black_box(input)))
     });
 
-    c.bench_function("day22_part2", |b| {
+    // 3. PART 2: Includes parsing overhead (useful for per-part comparison)
+    c.bench_function("Day 22 Part 2", |b| {
         b.iter(|| day22::solve_part2(black_box(input)))
+    });
+
+    // 4. BREAKDOWN: Individual phases to identify bottlenecks
+    c.bench_function("Day 22 Parse & Prepare", |b| {
+        b.iter(|| day22::parse_and_prepare(black_box(input)))
+    });
+
+    let prepared = day22::parse_and_prepare(input);
+    c.bench_function("Day 22 Part 1 Logic Only", |b| {
+        b.iter(|| day22::solve_part1_impl(black_box(&prepared)))
+    });
+
+    c.bench_function("Day 22 Part 2 Logic Only", |b| {
+        b.iter(|| day22::solve_part2_impl(black_box(&prepared)))
     });
 }
 
