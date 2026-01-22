@@ -11,18 +11,14 @@ impl ProblemSolver {
     /// Returns `Some(answer)` if problem is implemented, `None` otherwise.
     pub fn solve(problem_num: usize) -> Option<u64> {
         match problem_num {
-            // Problems will be added here as implemented
-            // 1 => Some(super::p001::solve()),
-            // 2 => Some(super::p002::solve()),
+            1 => Some(super::p001::solve()),
             _ => None,
         }
     }
     
     /// Get list of implemented problems
     pub fn implemented() -> Vec<usize> {
-        vec![
-            // Will populate as problems are added
-        ]
+        vec![1]
     }
     
     /// Check if a problem is implemented
