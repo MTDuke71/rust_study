@@ -196,7 +196,14 @@ fn count_reachable_infinite(grid: &[Vec<char>], start: (isize, isize), steps: us
     reachable_at_target.len()
 }
 
-/// Part 2: Quadratic extrapolation for infinite grid
+/// BFS from a specific starting position for exact step count on finite grid
+///
+/// Used by optimized Part 2 to count reachable positions from edge/corner entry points.
+fn count_from_position(grid: &[Vec<char>], start: (usize, usize), steps: usize) -> usize {
+    count_reachable(grid, start, steps)
+}
+
+/// Part 2: Quadratic extrapolation for infinite grid (GENERAL SOLUTION)
 ///
 /// **The Challenge**: Cannot brute-force 26,501,365 steps!
 ///
@@ -238,6 +245,9 @@ fn count_reachable_infinite(grid: &[Vec<char>], start: (isize, isize), steps: us
 /// **Performance**: 3 BFS runs (~1.89s) vs 26M iterations (days/weeks)
 /// - **Speedup**: ~800,000× faster!
 ///
+/// **Trade-off**: General solution, works for any input (even adversarial grids).
+/// See `part2_optimized()` for faster approach exploiting puzzle-specific properties.
+///
 /// **Type Safety**: Uses `i64` for coefficients (can be negative during calculation),
 /// casts to `usize` for final result (counts can't be negative).
 ///
@@ -275,6 +285,181 @@ pub fn part2(input: &str) -> usize {
     
     // Evaluate quadratic at target_n
     (a * target_n * target_n + b * target_n + c) as usize
+}
+
+/// Part 2 Optimized: Direct geometric counting exploiting grid symmetry
+///
+/// **STATUS**: ⚠️ **WORK IN PROGRESS** - Currently produces incorrect result (off by ~6B)
+/// 
+/// The geometric counting approach is theoretically faster but requires precise tile
+/// classification. The `part2()` quadratic extrapolation method is **proven correct**
+/// and should be used for actual solutions.
+///
+/// **Known Issue**: Tile parity calculation appears incorrect - produces 616,589,548,972,935
+/// vs correct answer 616,583,483,179,597 (difference: ~6,065,793,338).
+///
+/// **TODO**: Debug tile counting formula - likely issue with odd/even tile classification
+/// or edge tile step counts. The conceptual approach is sound (used by top AoC solvers),
+/// but implementation details need refinement.
+///
+/// **Puzzle-Specific Properties** (verified by grid analysis):
+/// 1. ✅ Grid is 131×131 (odd square)
+/// 2. ✅ Start at center (65, 65)
+/// 3. ✅ Start row is completely empty (no rocks)
+/// 4. ✅ Start column is completely empty (no rocks)
+/// 5. ✅ Entire border is empty (no rocks)
+/// 6. ✅ Distance to any edge: exactly 65 steps (straight line)
+///
+/// **Why This Matters**:
+/// - Clear path from start to any edge → predictable tile entry points
+/// - Diamond expansion is **perfectly symmetric** (no irregular blocking)
+/// - Can classify tiles into discrete categories and count geometrically
+///
+/// **Diamond Tile Classification**:
+/// ```
+///        T                    T = Top corner (1 tile)
+///       t t                   t = Top edge (n+1 small triangles)
+///      T T T                  T = Top edge (n large triangles)
+///     l L F R r               l/r = Left/right small
+///      L L L                  L/R = Left/right large
+///       b b                   F = Fully filled tiles
+///        B                    B = Bottom corner (1 tile)
+/// ```
+///
+/// **Tile Types** (based on entry point and steps available):
+/// 1. **Odd/Even full tiles**: Completely filled with alternating parity
+/// 2. **4 Cardinal corners**: Top/Bottom/Left/Right tips (130 steps each)
+/// 3. **4 Small diagonal edges**: NE/NW/SE/SW (64 steps = just entering)
+/// 4. **4 Large diagonal edges**: NE/NW/SE/SW (195 steps = mostly filled)
+///
+/// **Geometric Counting Formula**:
+/// ```
+/// 26,501,365 = 65 + 131×202,300
+/// n = 202,300 tiles out from center
+///
+/// Odd full tiles:  (n+1)² = 202,301²
+/// Even full tiles: n² = 202,300²
+/// Small edges: (n+1) × 4 corners = 202,301 × 4
+/// Large edges: n × 4 corners = 202,300 × 4
+/// Cardinal tips: 4 (top, bottom, left, right)
+///
+/// Total = odd_full×odd_count + even_full×even_count
+///         + small_edges×4 + large_edges×4 + tips×4
+/// ```
+///
+/// **Algorithm**:
+/// 1. Run BFS once for each tile type (13 total):
+///    - 1× odd full (infinite steps to saturation)
+///    - 1× even full
+///    - 4× cardinal corners (130 steps from edge)
+///    - 4× small diagonal edges (64 steps from corner)
+///    - 4× large diagonal edges (195 steps from corner)
+///
+/// 2. Multiply by geometric tile counts in diamond pattern
+///
+/// 3. Sum all categories
+///
+/// **Performance**: ~13 BFS runs on 131×131 grid (~10-50ms estimated)
+/// - vs `part2()`: 3 BFS runs on infinite grid (~1.89s)
+/// - **Speedup**: ~38-190× faster
+///
+/// **Trade-off**:
+/// - ✅ Much faster (milliseconds vs seconds)
+/// - ✅ Exact answer (no floating-point interpolation)
+/// - ❌ More complex code (geometric reasoning)
+/// - ❌ Only works for grids with these specific properties
+/// - ❌ Breaks if input has different structure
+///
+/// **When to use**:
+/// - Leaderboard competition (need fastest possible)
+/// - Learning geometric counting patterns
+/// - Input is known to have symmetry properties
+///
+/// **When NOT to use**:
+/// - General-purpose solver (use `part2()` instead)
+/// - Adversarial inputs without empty rows/borders
+/// - Teaching Lagrange interpolation concepts
+///
+/// **See**: HyperNeutrino's AoC 2023 Day 21 video for visual diamond explanation
+#[allow(dead_code)]
+pub fn part2_optimized(input: &str) -> usize {
+    let (grid, start) = parse_input(input);
+    let n = grid.len(); // 131
+    let steps = 26_501_365;
+    
+    assert_eq!(n, 131, "Optimized solution assumes 131×131 grid");
+    assert_eq!(start, (65, 65), "Optimized solution assumes center start");
+    
+    // Calculate how many full tile widths we travel
+    let edge_dist = n / 2; // 65
+    let full_grids = (steps - edge_dist) / n; // 202,300
+    
+    // Count reachable plots for each tile type:
+    
+    // 1. Fully saturated tiles (odd/even parity)
+    // The parity alternates based on Manhattan distance from start tile
+    // For 26,501,365 steps (odd), tiles at even Manhattan distance have odd internal parity
+    let odd_full = count_from_position(&grid, start, n * 2 + 1); // 263 steps (odd)
+    let even_full = count_from_position(&grid, start, n * 2);    // 262 steps (even)
+    
+    // 2. Cardinal corner tiles (4 directions: N, S, E, W)
+    // Enter from edge, have (n-1) steps = 130 steps
+    let corner_top = count_from_position(&grid, (n - 1, edge_dist), n - 1);
+    let corner_bottom = count_from_position(&grid, (0, edge_dist), n - 1);
+    let corner_left = count_from_position(&grid, (edge_dist, n - 1), n - 1);
+    let corner_right = count_from_position(&grid, (edge_dist, 0), n - 1);
+    
+    // 3. Small diagonal edge tiles (4 corners: NE, NW, SE, SW)
+    // Just entering, have (n/2 - 1) steps = 64 steps
+    let small_ne = count_from_position(&grid, (n - 1, 0), n / 2 - 1);
+    let small_nw = count_from_position(&grid, (n - 1, n - 1), n / 2 - 1);
+    let small_se = count_from_position(&grid, (0, 0), n / 2 - 1);
+    let small_sw = count_from_position(&grid, (0, n - 1), n / 2 - 1);
+    
+    // 4. Large diagonal edge tiles (4 corners: NE, NW, SE, SW)
+    // Mostly filled, have (3*n/2 - 1) steps = 195 steps
+    let large_ne = count_from_position(&grid, (n - 1, 0), 3 * n / 2 - 1);
+    let large_nw = count_from_position(&grid, (n - 1, n - 1), 3 * n / 2 - 1);
+    let large_se = count_from_position(&grid, (0, 0), 3 * n / 2 - 1);
+    let large_sw = count_from_position(&grid, (0, n - 1), 3 * n / 2 - 1);
+    
+    // Geometric counting of tiles in diamond pattern:
+    
+    // Debug: print individual counts
+    if false {
+        println!("n = {} (full grids out)", full_grids);
+        println!("Odd full: {}", odd_full);
+        println!("Even full: {}", even_full);
+        println!("Corners: T={} B={} L={} R={}", corner_top, corner_bottom, corner_left, corner_right);
+        println!("Small: NE={} NW={} SE={} SW={}", small_ne, small_nw, small_se, small_sw);
+        println!("Large: NE={} NW={} SE={} SW={}", large_ne, large_nw, large_se, large_sw);
+    }
+    
+    // Full tiles form a checkerboard - odd tiles slightly more numerous
+    let odd_tiles = (full_grids + 1).pow(2);
+    let even_tiles = full_grids.pow(2);
+    
+    // Edge counts: small edges increase by 1 each ring, large stay constant
+    let small_edge_count = full_grids + 1; // One more small triangle per ring
+    let large_edge_count = full_grids;     // Large triangles fill the gaps
+    
+    // Sum all tile categories:
+    let result = odd_tiles * odd_full
+        + even_tiles * even_full
+        + (corner_top + corner_bottom + corner_left + corner_right)
+        + small_edge_count * (small_ne + small_nw + small_se + small_sw)
+        + large_edge_count * (large_ne + large_nw + large_se + large_sw);
+    
+    if false {
+        println!("Odd tiles: {} × {} = {}", odd_tiles, odd_full, odd_tiles * odd_full);
+        println!("Even tiles: {} × {} = {}", even_tiles, even_full, even_tiles * even_full);
+        println!("Cardinal corners: {}", corner_top + corner_bottom + corner_left + corner_right);
+        println!("Small edges: {} × {} = {}", small_edge_count, small_ne + small_nw + small_se + small_sw, small_edge_count * (small_ne + small_nw + small_se + small_sw));
+        println!("Large edges: {} × {} = {}", large_edge_count, large_ne + large_nw + large_se + large_sw, large_edge_count * (large_ne + large_nw + large_se + large_sw));
+        println!("Total: {}", result);
+    }
+    
+    result
 }
 
 #[cfg(test)]
