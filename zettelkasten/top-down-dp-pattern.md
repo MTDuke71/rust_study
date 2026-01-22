@@ -343,8 +343,25 @@ type State = (usize, usize, bool);  // Automatically Hash + Eq
 | **Implementation** | Matches problem decomposition | Requires dependency ordering |
 | **Debugging** | Harder (recursion traces) | Easier (step-through loops) |
 | **Space Optimization** | Difficult | Easy (rolling arrays) |
+| **Performance** | Slower (HashMap + recursion overhead) | Faster (array indexing + iteration) |
+
+**Performance Data** (from Mission 11 REQ-7 benchmarks):
+
+| Problem | Top-Down | Bottom-Up | Speedup |
+|---------|----------|-----------|---------|
+| **Fibonacci(40)** | 35.2µs | 4.5µs | 7.8x faster |
+| **Coin Change(63)** | 51µs | 5.2µs | 9.8x faster |
+| **LCS("ABCDGH", "AEDFHR")** | 14.8µs | 3.7µs | 4.0x faster |
+
+**Why Bottom-Up is Faster**:
+1. **No recursion overhead** - Iterative loop vs function call stack
+2. **Better cache locality** - Sequential array access vs HashMap lookups
+3. **Array indexing** - O(1) direct access vs O(1) hash computation + collision handling
+4. **Predictable memory** - Pre-allocated array vs dynamic HashMap growth
 
 **Rule of Thumb:** Start with top-down (easier), optimize to bottom-up if needed.
+
+**See Also**: `missions/Mission11/examples/demo_bottom_up.rs` for side-by-side implementations
 
 ---
 

@@ -9,7 +9,7 @@
 //! - Build support graph (which bricks support which)
 //! - Part 1: Count safely disintegratable bricks (removing won't cause chain reaction)
 
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap, HashSet, VecDeque};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 struct Point3D {
@@ -164,33 +164,39 @@ fn build_support_graph(bricks: &[Brick]) -> (Vec<HashSet<usize>>, Vec<HashSet<us
 }
 
 /// Simulate removing a brick and count how many other bricks would fall
+/// Optimized version using BFS queue instead of repeated full scans
 fn count_chain_reaction(
     brick_id: usize,
     supports: &[HashSet<usize>],
     supported_by: &[HashSet<usize>],
 ) -> usize {
-    let mut fallen = HashSet::new();
-    fallen.insert(brick_id);
-
-    // Keep checking for bricks that would fall
-    let mut changed = true;
-    while changed {
-        changed = false;
-        for id in 0..supports.len() {
-            if fallen.contains(&id) {
-                continue; // Already fallen
+    let mut fallen = vec![false; supports.len()];
+    fallen[brick_id] = true;
+    
+    let mut queue = VecDeque::new();
+    queue.push_back(brick_id);
+    
+    let mut fall_count = 0;
+    
+    while let Some(current) = queue.pop_front() {
+        // Check all bricks that this brick supports
+        for &above_id in &supports[current] {
+            if fallen[above_id] {
+                continue; // Already processed
             }
-            // Check if all supporters of this brick have fallen
-            if !supported_by[id].is_empty() && supported_by[id].iter().all(|&s| fallen.contains(&s))
-            {
-                fallen.insert(id);
-                changed = true;
+            
+            // Check if all supporters of above_id have fallen
+            let all_supports_fallen = supported_by[above_id].iter().all(|&s| fallen[s]);
+            
+            if all_supports_fallen {
+                fallen[above_id] = true;
+                fall_count += 1;
+                queue.push_back(above_id);
             }
         }
     }
-
-    // Return count of fallen bricks (excluding the original brick we removed)
-    fallen.len() - 1
+    
+    fall_count
 }
 
 pub fn solve_part1(input: &str) -> usize {
