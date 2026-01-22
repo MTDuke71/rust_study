@@ -911,9 +911,9 @@ Reasons to skip optimization for Day 17:
 
 | Category | Target | Status |
 |----------|--------|--------|
-| Total (all 25 days) | <2 seconds | ✅ (1.01s with geometric) |
-| Average per day | <50ms | ✅ (48ms with geometric) |
-| No day exceeds | 200ms | ❌ (Day 21: 662ms with geometric) |
+| Total (all 25 days) | <2 seconds | ✅ (~600ms with Phase 3 geometric) |
+| Average per day | <50ms | ✅ (~28ms with Phase 3 geometric) |
+| No day exceeds | 200ms | ✅ (All days <200ms after Day 21 Phase 3 refactor) |
 
 ---
 
@@ -1043,11 +1043,11 @@ cargo asm aoc2023::solver::dayXX::hot_function
 **Key Lesson**: When faced with exponential enumeration, check if problem structure allows **abstract interpretation** (ranges vs values)!
 
 ---
-### Day 21: Geometric Counting Optimization
-**Before**: 1.9096s ± 0.007s (quadratic extrapolation)  
-**After**: 654.76ms ± 1.69ms (geometric counting)  
-**Speedup**: **2.92× faster** (Criterion verified)  
-**Technique**: Exploit grid symmetry for direct tile counting  
+### Day 21: Three-Phase Optimization Journey
+**Phase 1 → Phase 2**: 1.9096s → 654.76ms (geometric counting, 2.92× faster)  
+**Phase 2 → Phase 3**: 654.76ms → 11.06ms (HyperNeutrino refactor, 59.2× faster)  
+**Overall**: **172× total speedup** from extrapolation to optimized countdown BFS  
+**Techniques**: Grid symmetry exploitation + elegant countdown BFS with parity filtering  
 
 **Performance Analysis**:
 
@@ -1061,31 +1061,64 @@ cargo asm aoc2023::solver::dayXX::hot_function
 
 | **Method** | **Strategy** | **BFS Runs** | **Runtime** | **Works For** |
 |------------|--------------|--------------|-------------|---------------|
-| **Extrapolation** | Sample 3 points, fit quadratic | 3 full runs (65, 196, 327 steps) | 1.9096s | Any input |
-| **Geometric** | Count diamond tiles directly | 13 targeted runs | 654.76ms | Symmetric grids only |
+| **Phase 1: Extrapolation** | Sample 3 points, fit quadratic | 3 full runs (65, 196, 327 steps) | 1.9096s | Any input |
+| **Phase 2: Geometric** | Count diamond tiles directly | 13 targeted runs | 654.76ms | Symmetric grids only |
+| **Phase 3: Geometric + Countdown BFS** | Direct counting + parity filtering | 13 targeted runs (optimized) | **11.06ms** | Symmetric grids only |
 
-**Why Geometric Is Faster**:
+**Performance Evolution Across Three Phases**:
 
 ```rust
-// Extrapolation: 3 complete BFS runs with large step counts
+// Phase 1: Extrapolation - 3 complete BFS runs
 fn part2(input: &str) -> usize {
     // BFS #1: 65 steps → ~3,797 cells
     // BFS #2: 196 steps → ~33,590 cells  
     // BFS #3: 327 steps → ~92,729 cells
     // Total cells explored: ~130,116 cells
-    // Time: 1.9096s (636ms per run average)
+    // BFS: Count UP from 0, track (row,col,step) in visited
+    // Time: 1.9096s
 }
 
-// Geometric: 13 strategic BFS runs with specific constraints
+// Phase 2: Geometric - 13 strategic BFS runs
 fn part2_optimized(input: &str) -> usize {
-    // 2 full saturation runs (odd/even parity)
-    // 4 corner tiles (N, S, E, W edges)
-    // 4 small edge tiles (limited steps)
-    // 4 large edge tiles (more steps)
+    // 13 targeted runs (corners, edges, saturation)
     // Average cells per run: ~5,000-7,500
     // Total cells explored: ~80,000 cells (40% less!)
-    // Time: 654.76ms (50ms per run average)
+    // BFS: Still counting UP, track (row,col,step)
+    // Time: 654.76ms (2.92× faster)
 }
+
+// Phase 3: Countdown BFS Refactor (HyperNeutrino pattern) 🚀
+fn count_reachable(grid, start, steps) -> usize {
+    queue.push_back((start.0, start.1, steps)); // Start with TARGET
+    visited: HashSet<(usize, usize)>; // Position only!
+    
+    while let Some((row, col, s)) = queue.pop_front() {
+        if s % 2 == 0 {  // Parity check during traversal
+            reachable.insert((row, col));
+        }
+        if s == 0 { continue; }  // Done
+        // Explore neighbors with s-1
+    }
+    // Time: Part 1: 713µs (10.2× faster than Phase 2)
+    //       Part 2 Geometric: 11.06ms (59.2× faster than Phase 2)
+}
+```
+
+**Why Phase 3 Is Dramatically Faster**:
+
+| **Aspect** | **Phase 1/2 (Count UP)** | **Phase 3 (Countdown)** | **Impact** |
+|------------|--------------------------|-------------------------|------------|
+| **Visited Set** | `HashSet<(row,col,step)>` | `HashSet<(row,col)>` | 66% smaller keys → faster hashing |
+| **Memory** | O(R×C×S) space | O(R×C) space | Massive reduction, better cache locality |
+| **Hash Operations** | Hash 3-tuple every visit | Hash 2-tuple once per position | ~60% fewer hash operations |
+| **Parity Check** | After traversal (separate pass) | During traversal (inline) | Zero overhead |
+| **Early Termination** | Must track step count separately | Natural with countdown (s == 0) | Cleaner logic |
+
+**Performance Improvements** (Criterion verified):
+```
+Part 1:          7.26ms → 713µs    (10.2× faster, -90.1%)
+Extrapolation:   1.91s  → 28.7ms   (66.5× faster, -98.5%)
+Geometric:       655ms  → 11.06ms  (59.2× faster, -98.3%)
 ```
 
 **The Critical Bug** (fixed in commit cac6512):
@@ -1135,37 +1168,79 @@ This is the number of complete grid periods after leaving the starting grid!
 
 **When To Use Each Method**:
 
-- **Extrapolation (default)**:
-  - ✅ General-purpose (works for ANY input)
-  - ✅ Simpler logic (easier to understand/maintain)
-  - ✅ Mathematically elegant (pattern recognition)
-  - ✗ Slower (~1.91s)
-  - ✗ Requires larger step counts to sample
+- **Phase 1: Extrapolation** (general-purpose):
+  - ✅ Works for ANY input (no symmetry required)
+  - ✅ Simpler logic (easier to understand)
+  - ✅ Mathematically elegant (Lagrange interpolation)
+  - ✗ Slowest (~1.91s with old BFS, ~29ms with countdown BFS)
 
-- **Geometric (optimization)**:
-  - ✅ Much faster (~655ms, 2.92× speedup)
+- **Phase 2: Geometric** (symmetric grids only):
+  - ✅ Direct counting (no extrapolation needed)
   - ✅ Exact integer arithmetic (no floating point)
   - ✅ Elegant tile classification
   - ✗ Only works for symmetric grids
   - ✗ More complex implementation
-  - ✗ Requires input validation
+  - Runtime: ~655ms (Phase 2 BFS) → **11.06ms (Phase 3 BFS)** ✨
 
-**Performance Benchmark** (Criterion):
+- **Phase 3: Countdown BFS** (algorithmic improvement):
+  - ✅ **Applies to ALL methods** (extrapolation AND geometric)
+  - ✅ O(R×C) space instead of O(R×C×S)
+  - ✅ Faster hashing (2-tuple vs 3-tuple keys)
+  - ✅ Better cache locality
+  - ✅ Cleaner code (parity check inline)
+  - ✅ **10-66× speedup across the board!**
+
+**Performance Benchmarks** (Criterion - All Three Phases):
+
 ```
-day21_part1                time: [7.2550 ms]
-day21_part2_extrapolation  time: [1.9096 s]  ← General method
-day21_part2_geometric      time: [654.76 ms] ← Optimized (2.92× faster)
+# Phase 1: Original Implementation
+day21_part1                time: [7.26 ms]
+day21_part2_extrapolation  time: [1.9096 s]
+day21_part2_geometric      time: [N/A - not yet implemented]
+
+# Phase 2: Geometric Counting Added
+day21_part1                time: [7.26 ms]     (unchanged)
+day21_part2_extrapolation  time: [1.9096 s]    (unchanged)
+day21_part2_geometric      time: [654.76 ms]   ← NEW: 2.92× faster
+
+# Phase 3: HyperNeutrino Countdown BFS Refactor 🚀
+day21_part1                time: [713 µs]      ← 10.2× faster!
+day21_part2_extrapolation  time: [28.7 ms]     ← 66.5× faster!
+day21_part2_geometric      time: [11.06 ms]    ← 59.2× faster!
 ```
 
 **Comparison Tool**: `cargo run --release --example day21_comparison`
 
-**Learning**:
-1. **Grid symmetry** can enable algorithmic shortcuts (extrapolation → direct counting)
+**Key Learnings**:
+
+**Phase 1 → Phase 2** (Geometric Counting):
+1. **Grid symmetry** enables algorithmic shortcuts (extrapolation → direct tile counting)
 2. **Off-by-one errors** in large multipliers cause huge absolute errors (radius vs transitions)
 3. **Problem constraints** reveal optimization opportunities (empty cross + borders)
-4. **Multiple valid approaches** can coexist (general vs optimized)
-5. **Easter eggs** in puzzle design (2023 × 100 step count)
+4. **Easter eggs** in puzzle design (2023 × 100 step count)
 
-**Zettelkasten**: [[polynomial-interpolation-lagrange]], [[modular-arithmetic]], [[graph-theory-fundamentals]]
+**Phase 2 → Phase 3** (HyperNeutrino Refactor):
+5. **Countdown > Count-up** for step-limited problems - parity check becomes trivial
+6. **Data structure size matters** - O(R×C) vs O(R×C×S) has massive performance impact
+7. **Hash key size** directly affects performance - smaller tuples = faster hashing
+8. **Algorithmic elegance** correlates with performance - simpler code is often faster
+9. **Community solutions** (HyperNeutrino) can inspire game-changing improvements
+10. **Space complexity** affects time complexity via cache locality and hash operations
+
+**The Big Picture**:
+- **Phase 1**: Correct, general-purpose solution (works for any input)
+- **Phase 2**: Problem-specific optimization (exploits grid symmetry)
+- **Phase 3**: Fundamental algorithmic improvement (applies universally)
+
+**Day 21 Performance Journey**:
+```
+Phase 1 Extrapolation: 1,909.6ms
+Phase 2 Geometric:       654.8ms  (2.9×  faster, still exceeded 200ms target)
+Phase 3 Geometric:        11.1ms  (172×  faster, crushes all targets!) 🎉
+```
+
+**Achievement Unlocked**: Day 21 transformed from **slowest day** (662ms) to one of the **fastest** (~12ms total)!
+
+**Zettelkasten**: [[polynomial-interpolation-lagrange]], [[modular-arithmetic]], [[graph-theory-fundamentals]], [[bfs-countdown-pattern]]
 
 ---
