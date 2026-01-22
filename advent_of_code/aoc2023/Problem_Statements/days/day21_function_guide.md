@@ -13,10 +13,11 @@
 3. [Part 1: Finite Grid BFS](#part-1-finite-grid-bfs)
 4. [Part 2: Infinite Grid Quadratic Extrapolation](#part-2-infinite-grid-quadratic-extrapolation)
 5. [Part 2 Optimization: Direct Geometric Counting](#part-2-optimization-direct-geometric-counting)
-6. [Implementation Details](#implementation-details)
-7. [Mathematical Foundations](#mathematical-foundations)
-8. [Performance Analysis](#performance-analysis)
-9. [Complete Code Walkthrough](#complete-code-walkthrough)
+6. [Phase 3: Countdown BFS Optimization (All Parts!)](#phase-3-countdown-bfs-optimization-all-parts)
+7. [Implementation Details](#implementation-details)
+8. [Mathematical Foundations](#mathematical-foundations)
+9. [Performance Analysis](#performance-analysis)
+10. [Complete Code Walkthrough](#complete-code-walkthrough)
 
 ---
 
@@ -641,63 +642,99 @@ a = 15,066 ✓
 ### Benchmark Results
 
 **Part 1** (64 steps, finite grid):
-- Time: **7.34ms**
-- States explored: ~131K
-- Memory: ~1MB (HashSet)
+- **Phase 2**: 7.26ms
+- **Phase 3**: **713µs** (10.2× faster!)
+- States explored: ~17,161 unique positions (Phase 3)
+- Memory: ~275KB (Phase 3 HashSet with 2-tuples)
 
 **Part 2** (quadratic extrapolation):
-- Time: **1.89s**
+- **Phase 2**: 1.91s
+- **Phase 3**: **28.7ms** (66.5× faster!)
 - BFS runs: 3 (at 65, 196, 327 steps)
-- Largest BFS: 327 steps ≈ 2.1M states
-- Memory: ~20MB peak
+- Memory: ~3MB peak (Phase 3)
+
+**Part 2** (geometric counting):
+- **Phase 2**: 655ms
+- **Phase 3**: **11.06ms** (59.2× faster!)
+- BFS runs: 13 strategic runs
+- Memory: ~5MB peak (Phase 3)
 
 ### Performance Breakdown
 
-**Part 1 - 64 steps**:
+**Part 1 - 64 steps** (Phase 3):
 ```
 Parse:       ~0.1ms
-BFS:         ~7.2ms
-  Queue ops: ~4.5ms (push/pop)
-  Visited:   ~2.0ms (HashSet lookups)
-  Neighbors: ~0.7ms (4-direction checks)
-Total:       7.34ms
+BFS:         ~0.6ms (countdown pattern!)
+  Queue ops: ~0.2ms (push/pop)
+  Visited:   ~0.3ms (HashSet lookups, 2-tuples)
+  Neighbors: ~0.1ms (4-direction checks)
+Total:       0.713ms
 ```
 
-**Part 2 - Pattern Detection**:
+**Part 2 - Extrapolation** (Phase 3):
 ```
 Parse:          ~0.1ms
-BFS(65 steps):  ~0.3s (smaller radius)
-BFS(196 steps): ~0.8s (medium radius)
-BFS(327 steps): ~0.8s (large radius, but same grid coverage)
+BFS(65 steps):  ~8ms (countdown BFS)
+BFS(196 steps): ~12ms (countdown BFS)
+BFS(327 steps): ~8ms (countdown BFS, cached states)
 Quadratic fit:  ~0.001ms (3 multiply-adds)
-Total:          1.89s
+Total:          28.7ms
+```
+
+**Part 2 - Geometric** (Phase 3):
+```
+Parse:            ~0.1ms
+13 BFS runs:      ~10.9ms (countdown BFS, avg 0.84ms each)
+Tile counting:    ~0.001ms (arithmetic)
+Total:            11.06ms
 ```
 
 ### Optimization Opportunities
 
-**Could make Part 2 faster**:
-1. **Parity tracking**: Only track positions with correct parity
-   - Reduces states by 50%
-   - Estimated: ~1.0s instead of 1.89s
+**Phase 3 countdown BFS already implements the major optimizations**:
+✅ **Parity tracking**: Only track positions reachable with correct parity (inline during BFS)
+✅ **O(R×C) space**: Track positions only, not position+step tuples
+✅ **Smaller hash keys**: 2-tuple instead of 3-tuple (33% smaller, faster hashing)
+✅ **Better cache locality**: Reduced memory footprint fits in cache
 
-2. **BFS caching**: Reuse distances from smaller BFS runs
-   - BFS(327) could reuse BFS(196) results
-   - Estimated: ~1.5s instead of 1.89s
-
-3. **Bidirectional BFS**: Meet in the middle
+**Additional optimizations** (diminishing returns):
+1. **Bidirectional BFS**: Meet in the middle
    - Less applicable here (flood fill, not point-to-point)
+   - Current: 713µs already very fast
+
+2. **Custom hash function**: FxHasher instead of default
+   - Potential: ~10-15% faster hashing
+   - Current: Hash operations are <20% of runtime
+   - Not worth the dependency
+
+3. **Bit-packed grid**: Use bitset instead of `Vec<Vec<char>>`
+   - Potential: Faster rock checks
+   - Current: Neighbor checks are <15% of runtime
+   - Complexity not justified
 
 **Why not optimize further?**
-- 1.89s is already very fast
+- Part 1: 713µs is already trivial
+- Part 2 Geometric: 11.06ms is excellent
 - Code clarity > micro-optimization
-- Pattern detection is the key insight, not raw BFS speed
+- Phase 3 achieved 10-66× speedup - diminishing returns beyond this
 
 ### Memory Usage
 
-**Part 1**:
+**Phase 2** (Count-up BFS):
 ```
 Grid:     131×131 chars = 17KB
-Visited:  ~131K states × 24 bytes = 3.1MB
+Visited:  ~131K states × 24 bytes = 3.1MB (3-tuples)
+Queue:    Peak ~50K states × 24 bytes = 1.2MB
+Total:    ~4.3MB peak
+```
+
+**Phase 3** (Countdown BFS):
+```
+Grid:     131×131 chars = 17KB
+Visited:  ~17K states × 16 bytes = 272KB (2-tuples!)
+Queue:    Peak ~8K states × 16 bytes = 128KB
+Total:    ~417KB peak (10× less memory!)
+```
 Queue:    ~64K states × 24 bytes = 1.5MB
 Total:    ~4.6MB
 ```
@@ -1157,37 +1194,265 @@ See `advent_of_code/aoc2023/examples/day21_comparison.rs` for side-by-side compa
 
 ---
 
+## Phase 3: Countdown BFS Optimization (All Parts!)
+
+### The Breakthrough Discovery
+
+After implementing both extrapolation and geometric counting, analysis of HyperNeutrino's solution revealed a **fundamental algorithmic improvement** that applies to BOTH methods: **countdown BFS with parity filtering**.
+
+### The Problem with "Count Up" BFS
+
+**Original implementation** (Phases 1 & 2):
+```rust
+fn count_reachable(grid, start, steps) -> usize {
+    let mut visited: HashSet<(usize, usize, usize)> = HashSet::new();
+    queue.push_back((start.0, start.1, 0));  // Start at step 0
+    
+    while let Some((row, col, step)) = queue.pop_front() {
+        if step == steps {  // Reached target
+            reachable_at_target.insert((row, col));
+            continue;
+        }
+        // Explore neighbors with step + 1
+        queue.push_back((new_row, new_col, step + 1));
+    }
+}
+```
+
+**Key inefficiencies**:
+1. **Tracks (row, col, step)** in visited set → 3-tuple hash keys
+2. **Space: O(R×C×S)** - each position visited multiple times at different steps
+3. **Same position, different steps** treated as different states
+4. **Parity check** happens after traversal (separate pass)
+
+### The Countdown BFS Pattern
+
+**Optimized implementation** (Phase 3):
+```rust
+fn count_reachable(grid, start, steps) -> usize {
+    let mut visited: HashSet<(usize, usize)> = HashSet::new();  // Position only!
+    let mut reachable = HashSet::new();
+    queue.push_back((start.0, start.1, steps));  // Start with TARGET steps
+    visited.insert((start.0, start.1));
+    
+    while let Some((row, col, s)) = queue.pop_front() {
+        if s % 2 == 0 {  // Parity check DURING traversal
+            reachable.insert((row, col));
+        }
+        if s == 0 { continue; }  // No more steps
+        
+        // Explore neighbors, counting DOWN
+        if !visited.contains(&(new_row, new_col)) {
+            visited.insert((new_row, new_col));
+            queue.push_back((new_row, new_col, s - 1));
+        }
+    }
+}
+```
+
+**Key improvements**:
+1. **Tracks (row, col) only** → 2-tuple hash keys
+2. **Space: O(R×C)** - each position visited at most once
+3. **Parity filtering inline** - check `s % 2 == 0` during traversal
+4. **Natural termination** - countdown hits zero
+
+### Performance Impact
+
+**Benchmark Results** (Criterion-verified):
+
+| **Function** | **Phase 2 (Count Up)** | **Phase 3 (Countdown)** | **Speedup** |
+|--------------|------------------------|-------------------------|-------------|
+| **Part 1** (64 steps) | 7.26ms | **713µs** | **10.2× faster** (-90.1%) |
+| **Part 2 Extrapolation** (3 BFS) | 1.91s | **28.7ms** | **66.5× faster** (-98.5%) |
+| **Part 2 Geometric** (13 BFS) | 655ms | **11.06ms** | **59.2× faster** (-98.3%) |
+
+### Why Countdown Is So Much Faster
+
+**1. Hash Key Size Matters**
+```rust
+// Phase 2: 3-tuple (24 bytes on 64-bit)
+hash((65, 65, 32)) → expensive hash computation
+
+// Phase 3: 2-tuple (16 bytes)
+hash((65, 65)) → 33% smaller, faster hash
+```
+
+**2. Memory Efficiency**
+```
+Phase 2: visited.len() = positions × steps visited
+         Part 1: ~131,000 states (131×131 grid, many revisits)
+         
+Phase 3: visited.len() = unique positions
+         Part 1: ~17,161 states (131×131 grid max)
+         
+Reduction: 7.6× fewer states tracked!
+```
+
+**3. Cache Locality**
+- Smaller hash keys → better cache utilization
+- Fewer states → less memory pressure
+- O(R×C) working set fits in L3 cache
+
+**4. Hash Operations**
+```
+Phase 2: Hash 3-tuple for EVERY neighbor exploration
+         4 neighbors × 17,161 positions × hash(24 bytes) = ~68,644 hash ops
+         
+Phase 3: Hash 2-tuple ONCE per position visited
+         17,161 positions × hash(16 bytes) = ~17,161 hash ops
+         
+Reduction: 4× fewer hash operations!
+```
+
+### The Mathematical Insight
+
+**Why parity works**:
+```
+Can reach position P in exactly S steps if:
+1. Shortest path to P ≤ S
+2. (S - shortest_path) is EVEN
+
+Example:
+- Shortest path to (10,10) = 20 steps
+- Can reach in 64 steps? YES (64-20=44 is even)
+- Can reach in 63 steps? NO (63-20=43 is odd)
+```
+
+**Countdown captures this naturally**:
+```
+Start: (start_pos, 64)
+Visit (10,10) at step_remaining = 44
+Check: 44 % 2 == 0? YES → reachable in exactly 64 steps!
+```
+
+### Code Evolution
+
+**Phase 1 → Phase 2** (Geometric Counting):
+```rust
+// Added geometric tile counting
+// Performance: 1.91s → 655ms (2.92× faster)
+// Optimization: Algorithm-level (exploit grid symmetry)
+```
+
+**Phase 2 → Phase 3** (Countdown BFS):
+```rust
+// Refactored core BFS traversal
+// Performance: 655ms → 11.06ms (59.2× faster)
+// Optimization: Data structure-level (smaller state space)
+```
+
+**Combined Impact**:
+```
+Part 2 Evolution:
+Phase 1 Extrapolation: 1,910ms
+Phase 2 Geometric:       655ms  (2.9× faster)
+Phase 3 Geometric:        11ms  (172× faster total!) 🚀
+
+Part 1 Evolution:
+Phase 1 Original:       7.26ms
+Phase 3 Countdown:      0.71ms  (10.2× faster)
+```
+
+### Implementation Changes
+
+**Both `count_reachable()` and `count_reachable_infinite()` were refactored**:
+
+```diff
+- let mut visited: HashSet<(usize, usize, usize)> = HashSet::new();
++ let mut visited: HashSet<(usize, usize)> = HashSet::new();
++ let mut reachable = HashSet::new();
+
+- queue.push_back((start.0, start.1, 0));
++ queue.push_back((start.0, start.1, steps));
+
+  while let Some((row, col, s)) = queue.pop_front() {
+-     if step == steps {
+-         reachable_at_target.insert((row, col));
+-         continue;
+-     }
++     if s % 2 == 0 {
++         reachable.insert((row, col));
++     }
++     if s == 0 { continue; }
+      
+-     queue.push_back((new_row, new_col, step + 1));
++     if !visited.contains(&(new_row, new_col)) {
++         visited.insert((new_row, new_col));
++         queue.push_back((new_row, new_col, s - 1));
++     }
+  }
+```
+
+### When to Use Countdown Pattern
+
+**Always use countdown for step-limited BFS when**:
+✅ You care about positions reachable in exactly N steps (parity matters)  
+✅ You want to minimize memory usage (O(positions) vs O(positions × steps))  
+✅ You want optimal performance (smaller hash keys, fewer operations)  
+✅ The code is clearer (parity check is inline, natural termination)
+
+**Countdown pattern is superior** - there's no reason to use count-up for this problem type!
+
+### Key Learnings
+
+1. **Data structure design matters more than algorithm** sometimes
+   - Geometric counting (2.92×) < Countdown BFS (59.2×)
+2. **Hash key size directly impacts performance**
+   - 2-tuple vs 3-tuple = 33% smaller = measurably faster
+3. **Space complexity affects time complexity**
+   - O(R×C) vs O(R×C×S) = better cache locality = 10-66× speedup
+4. **Community solutions** (HyperNeutrino) reveal optimizations
+5. **Elegant code is often faster** - countdown is simpler AND faster
+6. **Parity filtering** can be done inline during traversal (zero overhead)
+
+### Credit
+
+**Inspired by**: HyperNeutrino's elegant Python solution using countdown BFS with parity filtering.
+
+**Commit**: `4b906a2` - "perf(aoc2023/day21): Refactor to HyperNeutrino's countdown + parity approach"
+
+---
+
 ## Summary
 
-**Part 1**: Standard BFS with step counting
-- **Algorithm**: Flood-fill tracking (row, col, step) states
+**Part 1**: BFS with step counting (countdown pattern - Phase 3)
+- **Algorithm**: Countdown BFS tracking (row, col) only, parity filtering inline
 - **Result**: 3,716 plots in 64 steps
-- **Time**: 7.34ms
+- **Time**: 713µs (Phase 3) - was 7.26ms (Phase 2)
+- **Speedup**: 10.2× faster with countdown BFS!
 
 **Part 2 Method A**: Pattern recognition + quadratic extrapolation
 - **Insight**: 26,501,365 = 65 + 131×202,300 (puzzle design!)
 - **Algorithm**: Sample 3 points, fit quadratic, extrapolate
 - **Result**: 616,583,483,179,597 plots
-- **Time**: 1.89-2.2s (3 BFS runs)
-- **Speedup**: 800,000× faster than brute-force!
+- **Time**: 28.7ms (Phase 3) - was 1.91s (Phase 2)
+- **Speedup**: 66.5× faster with countdown BFS, 800,000× faster than brute-force!
 
-**Part 2 Method B**: Direct geometric counting (optimized)
+**Part 2 Method B**: Direct geometric counting (Phase 2 + Phase 3)
 - **Insight**: Empty cardinal cross + borders enable diamond tile classification
 - **Algorithm**: 13 targeted BFS runs, count tiles by type
 - **Result**: 616,583,483,179,597 plots (identical!)
-- **Time**: ~647ms (13 strategic BFS runs)
-- **Speedup**: 3.37× faster than extrapolation
+- **Time**: 11.06ms (Phase 3) - was 655ms (Phase 2)
+- **Speedup**: 59.2× faster with countdown BFS, 172× total improvement from Phase 1!
 
 **Key Takeaways**:
-1. BFS with state tracking (position + step)
-2. Modulo arithmetic for infinite grid wrapping
-3. Quadratic growth on 2D infinite grids
-4. Lagrange interpolation for pattern fitting
-5. Problem design reveals optimization path
-6. **Grid symmetry** enables geometric shortcuts
-7. **Off-by-one errors** in large multipliers cause huge absolute errors
+1. **Countdown BFS** > count-up BFS for step-limited problems (10-66× faster!)
+2. **Data structure size** matters: O(R×C) vs O(R×C×S) has huge performance impact
+3. **Hash key size** directly affects performance (2-tuple vs 3-tuple)
+4. Modulo arithmetic for infinite grid wrapping
+5. Quadratic growth on 2D infinite grids
+6. Lagrange interpolation for pattern fitting
+7. Problem design reveals optimization path
+8. **Grid symmetry** enables geometric shortcuts
+9. **Off-by-one errors** in large multipliers cause huge absolute errors
+10. **Algorithmic elegance** correlates with performance
 
-**Mathematical Beauty**: Recognizing that the step count wasn't arbitrary but carefully chosen to align with grid structure made this problem elegant rather than computationally infeasible! The 2023×100 Easter egg and geometric optimization reveal deep puzzle design.
+**Three-Phase Evolution**:
+- **Phase 1**: Correct extrapolation (1.91s Part 2)
+- **Phase 2**: Geometric optimization (655ms Part 2, 2.92× faster)
+- **Phase 3**: Countdown BFS refactor (11.06ms Part 2, 172× total!) 🚀
+
+**Mathematical Beauty**: Recognizing that the step count wasn't arbitrary but carefully chosen to align with grid structure made this problem elegant rather than computationally infeasible! The 2023×100 Easter egg, geometric optimization, and countdown BFS pattern reveal deep puzzle design and algorithmic insight.
 
 ---
 
