@@ -2,7 +2,6 @@
 /// 
 /// This example runs both implementations on the actual puzzle input
 /// and verifies they produce identical results.
-
 use aoc2025::solver::{day10, day10_alt};
 use std::fs;
 

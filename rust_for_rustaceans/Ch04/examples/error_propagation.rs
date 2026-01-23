@@ -21,6 +21,11 @@ use std::num::ParseIntError;
 // ============================================================================
 
 /// Manual error propagation (verbose)
+///
+/// **Educational Note**: Demonstrates verbose manual error propagation pattern
+/// for comparison with `?` operator. Not called in examples but illustrates
+/// the pattern that `?` operator replaces.
+#[allow(dead_code)] // Educational example - shows manual propagation pattern
 fn read_number_manual(path: &str) -> Result<i32, io::Error> {
     let content = fs::read_to_string(path)?;
     

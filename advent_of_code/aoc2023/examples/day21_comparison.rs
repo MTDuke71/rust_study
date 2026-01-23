@@ -6,7 +6,6 @@
 /// for solving the infinite grid reachability problem.
 ///
 /// Run with: cargo run --release --example day21_comparison
-
 use aoc2023::solver::day21::{part2, part2_optimized};
 use std::time::Instant;
 
