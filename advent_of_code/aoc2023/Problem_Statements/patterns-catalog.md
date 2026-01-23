@@ -67,6 +67,9 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Bidirectional Support Graph | Day 22 | `day22.rs` |
 | VecDeque BFS for Chain Propagation | Day 22 | `day22.rs` |
 | Vec<bool> for Dense State Tracking | Day 22 | `day22.rs` |
+| DFS with Backtracking (Visited HashSet) | Day 23 | `day23.rs` |
+| Graph Contraction for Optimization | Day 23 | `day23.rs` |
+| Coord with Cardinal Neighbor Iterator | Day 23 | `day23.rs` |
 
 ---
 
@@ -1962,3 +1965,216 @@ if fallen[id] { /* ... */ }
 - Dynamic size (don't know max ID upfront)
 
 **Performance**: For Day 22, Vec<bool> contributes to 134× speedup via better cache behavior.
+
+### Pattern: DFS with Backtracking and Visited Set
+**Used**: Day 23  
+**When to use**: Need to explore all possible paths while preventing cycles  
+**Code**: `src/solver/day23.rs::dfs()`
+
+```rust
+fn dfs(&self, current: Coord, visited: &mut HashSet<Coord>) -> usize {
+    // Base case: reached goal
+    if current == self.goal {
+        return 0;
+    }
+    
+    let mut max_length = 0;
+    
+    // Try all neighbors
+    for (next, direction) in current.neighbors() {
+        // Skip if already visited or invalid move
+        if visited.contains(&next) || !self.can_move(current, next, direction) {
+            continue;
+        }
+        
+        // Make choice: mark as visited
+        visited.insert(next);
+        
+        // Recurse: explore this path
+        let length = self.dfs(next, visited);
+        
+        // Track maximum
+        if length > 0 || next == self.goal {
+            max_length = max_length.max(length + 1);
+        }
+        
+        // Backtrack: unmark for other paths
+        visited.remove(&next);
+    }
+    
+    max_length
+}
+```
+
+**Pattern**:
+1. Base case check (goal reached)
+2. Iterate through choices (neighbors)
+3. Skip invalid choices (visited or blocked)
+4. Make choice (insert into visited)
+5. Recurse with new state
+6. Update result (track maximum/minimum)
+7. Undo choice (remove from visited) - **CRITICAL**
+
+**Why HashSet for Visited**:
+- O(1) insertion/removal/lookup
+- No need for ordered traversal
+- Memory efficient for sparse visits
+
+**Day 23 Application**:
+- Finding longest path from start to goal
+- "Never step on same tile twice" requirement
+- Visited set prevents cycles
+- Backtracking explores all possible paths
+
+**Complexity**: O(b^d) where b = branching factor, d = depth
+- Day 23 Part 1: b ≈ 2-3 (slopes constrain), d ≈ 2200
+- Day 23 Part 2: b ≈ 3-4 (no slopes), d ≈ 7000 → stack overflow!
+
+**Alternative: Iterative with Stack**:
+```rust
+let mut stack = vec![(start, HashSet::from([start]))];
+while let Some((current, visited)) = stack.pop() {
+    for next in neighbors {
+        if !visited.contains(&next) {
+            let mut new_visited = visited.clone();
+            new_visited.insert(next);
+            stack.push((next, new_visited));
+        }
+    }
+}
+```
+
+**Caveat**: Cloning visited set expensive - recursive is often better.
+
+**Mission Integration**: Concept from Mission 8 (DFS traversal), applied to grid from Mission 6.
+
+### Pattern: Graph Contraction for State Space Reduction
+**Used**: Day 23  
+**When to use**: Graph has many degree-2 vertices (corridors) causing stack overflow or performance issues  
+**Code**: `src/solver/day23.rs::build_graph()`
+
+```rust
+fn build_graph(&self) -> HashMap<Coord, Vec<(Coord, usize)>> {
+    let mut graph = HashMap::new();
+    
+    // Phase 1: Identify junctions (degree > 2 vertices)
+    let mut junctions = HashSet::new();
+    junctions.insert(self.start);
+    junctions.insert(self.goal);
+    
+    for row in 0..self.rows {
+        for col in 0..self.cols {
+            let coord = Coord::new(row, col);
+            if self.get(coord) == Tile::Forest { continue; }
+            
+            // Count accessible neighbors
+            let neighbor_count = coord.neighbors(self.rows, self.cols)
+                .into_iter()
+                .filter(|(next, dir)| self.can_move(coord, *next, *dir, true))
+                .count();
+            
+            if neighbor_count > 2 {
+                junctions.insert(coord);
+            }
+        }
+    }
+    
+    // Phase 2: Trace corridors between junctions
+    for &junction in &junctions {
+        let mut edges = Vec::new();
+        
+        for (start_neighbor, start_dir) in junction.neighbors(self.rows, self.cols) {
+            if !self.can_move(junction, start_neighbor, start_dir, true) {
+                continue;
+            }
+            
+            // Follow corridor until hitting another junction
+            let mut visited = HashSet::new();
+            visited.insert(junction);
+            visited.insert(start_neighbor);
+            
+            let mut current = start_neighbor;
+            let mut distance = 1;
+            
+            loop {
+                if junctions.contains(&current) {
+                    edges.push((current, distance));
+                    break;
+                }
+                
+                // Continue along corridor
+                let next_coords: Vec<_> = current.neighbors(self.rows, self.cols)
+                    .into_iter()
+                    .filter(|(next, dir)| {
+                        !visited.contains(next) && 
+                        self.can_move(current, *next, *dir, true)
+                    })
+                    .collect();
+                
+                if next_coords.is_empty() {
+                    break; // Dead end
+                } else if next_coords.len() == 1 {
+                    let (next, _) = next_coords[0];
+                    visited.insert(next);
+                    current = next;
+                    distance += 1;
+                } else {
+                    break; // Should be a junction
+                }
+            }
+        }
+        
+        graph.insert(junction, edges);
+    }
+    
+    graph
+}
+```
+
+**Pattern**:
+1. **Identify junctions**: Vertices with degree ≠ 2 (including start/goal)
+2. **Trace corridors**: From each junction, follow degree-2 vertices to next junction
+3. **Record edges**: (junction_a, junction_b, corridor_length)
+4. **Build contracted graph**: HashMap<Junction, Vec<(Junction, Distance)>>
+
+**Why This Works**:
+- Corridors have no choices (degree-2 vertices)
+- Path through corridor is deterministic
+- Distance is fixed (sum of corridor edges)
+- Collapsing corridor preserves all path lengths
+
+**Day 23 Application**:
+- Original: 141×141 grid = ~20,000 tiles
+- Contracted: ~35 junctions
+- Reduction: 570× fewer vertices
+- Result: Recursion depth 7000 → 35 (no stack overflow)
+
+**Performance Impact**:
+```
+Before Contraction (Part 2):
+- DFS on 20,000 tiles
+- Stack depth: ~7,000
+- Result: STACK OVERFLOW ✗
+
+After Contraction (Part 2):
+- DFS on 35 junctions
+- Stack depth: ~35
+- Runtime: 2.38s ✓
+```
+
+**Complexity**:
+- Identify junctions: O(r × c)
+- Trace corridors: O(r × c) total (each tile visited once)
+- DFS on contracted graph: O(4^j) where j = junctions
+
+**Limitations**:
+- Works best for undirected graphs
+- Directed graphs (Day 23 Part 1 with slopes) need directional edges
+- Loses some structural information
+
+**When NOT to use**:
+- Graph already small (< 100 vertices)
+- Most vertices are junctions (no corridors to collapse)
+- Need to preserve exact graph structure
+
+**Mission Integration**: Concepts from Mission 6 (Grid), Mission 8 (Graph traversal)

@@ -8,11 +8,11 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 22/25 |
-| **Total Runtime** | ~1.04s (1,038ms with Day 21 geometric) |
-| **Average per Day** | ~47ms |
+| **Days Completed** | 23/25 |
+| **Total Runtime** | ~3.44s (3,438ms with Day 21 geometric + Day 23) |
+| **Average per Day** | ~150ms |
 | **Fastest Day** | Day 6 (0.95µs) |
-| **Slowest Day** | Day 21 (662ms with geometric) |
+| **Slowest Day** | Day 23 (2.40s) |
 
 ---
 
@@ -42,6 +42,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 20 | 5.70ms | 23.54ms | 29.24ms | Yes************* |
 | 21 | 7.26ms | 655ms (1.91s‡) | 662ms | Yes************** |
 | 22 | 898.4µs | 1.73ms | 2.63ms | Yes*************** |
+| 23 | 22.9ms | 2.38s | 2.40s | Yes**************** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 *Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
@@ -54,6 +55,7 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 ************** Day 21: TWO Part 2 implementations - (DEFAULT) Geometric counting: 655ms via 13 targeted BFS runs exploiting grid symmetry (empty cardinal cross + borders), 2.92× speedup over extrapolation; (FALLBACK) Quadratic extrapolation: 1.91s via 3 BFS runs at 65/196/327 steps. Both 800,000× faster than brute-forcing 26M steps!
 ‡Geometric counting requires symmetric grids (empty start row/col + borders); extrapolation is general-purpose but 2.92× slower
 *************** Day 22: BFS queue optimization - Part 2 requires 1,360 chain reaction simulations, VecDeque propagation (O(V+E)) replaces nested-loop scanning (O(V²)), Vec<bool> beats HashSet for cache locality, 134× speedup (baseline 3.75s → optimized 1.73ms)
+**************** Day 23: Graph contraction optimization - Part 2 treats slopes as paths creating exponentially larger search space. Naive DFS causes stack overflow (7,000 depth). Graph contraction reduces 20,000 tiles to 35 junctions (570× reduction), enabling solution in 2.38s with only 35 recursion depth. Part 1 uses simple DFS (22.9ms, slopes naturally prune search space)
 **Day 3: Part 2 faster than Part 1! Spatial indexing beats brute force adjacency checks  
 ***Day 6: Part 2 faster than Part 1! Quadratic formula O(1) beats brute force O(T)**  
 ****Day 8: Part 2 uses LCM optimization - brute force would be intractable (8+ trillion steps)**  
@@ -214,6 +216,127 @@ sequence.last().unwrap()      // O(1) slice operation
 **Learning**: Sometimes the straightforward recursive solution is already optimal. Don't over-optimize clean code that runs in microseconds.
 
 **Zettelkasten**: [[finite-differences]]
+
+### Day 23: Graph Contraction Saves the Day
+**Before**: Stack overflow (crashed)  
+**After**: 2.378 seconds (Part 2)  
+**Speedup**: Infinite (impossible → working solution)  
+**Complexity**: O(4^20000) → O(4^35) via state space reduction  
+**Technique**: Graph contraction - collapse corridors into weighted edges  
+
+**The Problem**:
+```rust
+// Part 2: Treat slopes as normal paths
+// Naive DFS on 141×141 grid
+fn dfs(&self, current: Coord, visited: &mut HashSet<Coord>) -> usize {
+    // Base case
+    if current == self.goal { return 0; }
+    
+    // Try all neighbors
+    for (next, _) in current.neighbors() {
+        visited.insert(next);
+        let length = self.dfs(next, visited);  // ← Stack overflow!
+        visited.remove(&next);
+    }
+}
+
+// Result: Stack overflow at ~7,000 recursion depth
+```
+
+**The Solution - Graph Contraction**:
+```rust
+// Step 1: Identify junctions (vertices with >2 neighbors)
+let junctions = grid.coords()
+    .filter(|&coord| neighbor_count(coord) > 2)
+    .collect();
+// Result: ~35 junctions vs 20,000 tiles
+
+// Step 2: Trace corridors between junctions
+let mut graph: HashMap<Coord, Vec<(Coord, usize)>> = HashMap::new();
+for &junction in &junctions {
+    let edges = trace_corridors_to_next_junctions(junction);
+    graph.insert(junction, edges);
+}
+
+// Step 3: DFS on contracted graph
+fn dfs_graph(&self, current: Coord, visited: &mut HashSet<Coord>,
+             graph: &HashMap<Coord, Vec<(Coord, usize)>>) -> usize {
+    if current == self.goal { return 0; }
+    
+    for &(next_junction, corridor_distance) in &graph[&current] {
+        visited.insert(next_junction);
+        let length = self.dfs_graph(next_junction, visited, graph);
+        max_length = max_length.max(length + corridor_distance);
+        visited.remove(&next_junction);
+    }
+    max_length
+}
+// Result: 35 recursion depth, 2.378s runtime ✓
+```
+
+**Performance Breakdown**:
+| Metric | Naive DFS | Graph Contraction |
+|--------|-----------|-------------------|
+| Vertices | ~20,000 | 35 |
+| Max recursion depth | ~7,000 | 35 |
+| Stack usage | **OVERFLOW** | 3.5KB |
+| Runtime | N/A (crash) | 2.378s |
+| Reduction factor | - | 570× |
+
+**Why Graph Contraction Works**:
+1. **Corridors have no choices**: Degree-2 vertices can only go forward/back
+2. **Fixed distance**: Path through corridor is deterministic
+3. **Preservation**: Collapsing corridor into weighted edge preserves all path lengths
+4. **State space reduction**: 20,000 → 35 vertices = 570× fewer states to explore
+
+**Algorithm Complexity**:
+- Identify junctions: O(r × c) grid scan
+- Trace corridors: O(r × c) total (each tile visited once)
+- DFS on contracted graph: O(4^j) where j = junctions (35 vs 20,000)
+
+**Mathematical Insight**:
+For longest path problem (NP-hard):
+- Brute force: O(b^d) where b = branching, d = depth
+- Original: O(4^20000) - impossible
+- Contracted: O(4^35) - 2.38 seconds
+
+**Code Optimization Details**:
+```rust
+// Corridor tracing (follows degree-2 vertices)
+let mut current = start_neighbor;
+let mut distance = 1;
+loop {
+    if junctions.contains(&current) {
+        return distance;  // Found next junction
+    }
+    
+    let unvisited_neighbors: Vec<_> = current.neighbors()
+        .filter(|n| !visited.contains(n))
+        .collect();
+    
+    match unvisited_neighbors.len() {
+        0 => break,           // Dead end
+        1 => {                // Corridor continues
+            current = unvisited_neighbors[0];
+            distance += 1;
+        }
+        _ => break,           // Should be junction
+    }
+}
+```
+
+**Part 1 vs Part 2**:
+- **Part 1** (22.9ms): Slopes create directed edges, naturally prune search space, simple DFS works
+- **Part 2** (2.378s): No slopes = bidirectional edges, exponential explosion, requires graph contraction
+
+**Learning**: When backtracking causes stack overflow, reduce the state space before searching. Graph contraction is a powerful preprocessing technique for grid/maze problems with corridors.
+
+**Mission Integration**: 
+- Mission 6: Grid navigation, Coord system
+- Mission 8: DFS traversal concepts
+- New technique: Graph contraction optimization
+
+**Zettelkasten**: [[graph-contraction-optimization]], [[longest-path-np-hard]], [[state-space-reduction]]
 
 ### Day 10: Mission Integration - Grid + BFS Performance
 **Complexity**: O(width × height) for both parts  

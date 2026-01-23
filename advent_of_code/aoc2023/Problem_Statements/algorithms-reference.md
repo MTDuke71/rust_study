@@ -66,6 +66,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Height Map Simulation (Falling Bricks) | Day 22 | O(bricks × cubes) | [[spatial-indexing-pattern]] |
 | Directed Graph (Support Relationships) | Day 22 | O(bricks × neighbors) | [[graph-theory-fundamentals]] |
 | BFS Chain Propagation | Day 22 | O(bricks + edges) | [[graph-theory-fundamentals]] |
+| DFS with Backtracking (Longest Path) | Day 23 | O(4^n) worst case | [[graph-theory-fundamentals]] |
+| Graph Contraction (Path Compression) | Day 23 | O(r × c) preprocessing | [[graph-contraction-optimization]] |
+| Backtracking with Visited Set | Day 23 | O(n) space | [[backtracking-patterns]] |
 
 ---
 
@@ -104,6 +107,159 @@ let matches = our_numbers
 **Mission**: Mission 5 (HashSet concepts)
 
 **Zettelkasten**: [[entry-api-hashmap]] (HashSet is similar data structure)
+
+---
+
+## 🌲 Graph Algorithms - Advanced
+
+### Longest Path Problem (Day 23)
+**Implementation**: `src/solver/day23.rs::dfs()`  
+**Complexity**: O(4^n) worst case where n = path length  
+**Key Concept**: NP-Hard problem requiring exponential backtracking - no polynomial-time solution exists  
+
+**Mathematical Definition**:
+Given graph G = (V, E), find path P from start s to goal g that maximizes |P| (number of vertices visited) or total edge weight.
+
+**Why NP-Hard**:
+- No optimal substructure (unlike shortest path)
+- Reduction from Hamiltonian Path Problem
+- Cannot use greedy or dynamic programming
+- Requires exploring exponentially many paths
+
+**Contrast with Shortest Path**:
+| Property | Shortest Path | Longest Path |
+|----------|---------------|---------------|
+| Optimal Substructure | YES ✓ | NO ✗ |
+| DP Solution | YES (Dijkstra) | NO |
+| Polynomial Time | YES (O(V+E)) | NO (NP-Hard) |
+| Greedy Works | Sometimes | Never |
+
+**When to use**:
+- Finding maximum coverage paths (hiking trails, touring)
+- Resource exhaustion problems
+- Game tree exploration (maximize score)
+
+**Solution Approaches**:
+1. **Backtracking DFS** (Day 23 Part 1) - works for constrained graphs
+2. **Graph contraction** (Day 23 Part 2) - reduce state space first
+3. **Branch and bound** - prune impossible branches
+4. **Approximation algorithms** - for very large graphs
+
+**Day 23 Application**: 
+- Part 1: Slopes constrain paths → natural pruning → O(4^2200) manageable
+- Part 2: No slopes → massive search space → graph contraction reduces 20K nodes to 35 junctions
+
+**Rust Pattern**:
+```rust
+fn dfs(&self, current: Coord, visited: &mut HashSet<Coord>) -> usize {
+    if current == goal { return 0; }
+    
+    let mut max_length = 0;
+    for (next, _) in current.neighbors() {
+        if visited.contains(&next) { continue; }
+        
+        visited.insert(next);              // Make choice
+        let length = self.dfs(next, visited);  // Recurse
+        max_length = max_length.max(length + 1);
+        visited.remove(&next);             // Backtrack
+    }
+    max_length
+}
+```
+
+**Zettelkasten**: [[graph-theory-fundamentals]], [[np-hard-problems]]
+
+### Graph Contraction (Day 23)
+**Implementation**: `src/solver/day23.rs::build_graph()`  
+**Complexity**: O(r × c) to identify junctions and trace corridors  
+**Key Concept**: Simplify graph by collapsing degree-2 vertices (corridors) into weighted edges between junctions  
+
+**Formal Definition**:
+Given graph G = (V, E), a **path contraction** produces G' = (V', E') where:
+- V' = {v ∈ V | degree(v) ≠ 2} ∪ {start, goal} (junctions only)
+- E' = {(u, v, w) | ∃ path u→v of length w in G with only degree-2 vertices}
+
+**When to use**:
+- Grid graphs with long corridors (mazes, pathfinding)
+- Graph has many degree-2 vertices (bottlenecks)
+- Need to reduce state space for search algorithms
+- Preprocessing for repeated queries
+
+**Algorithm**:
+```
+1. Identify Junctions:
+   - Count neighbors for each vertex
+   - Mark vertices with degree ≠ 2 as junctions
+   - Always include start and goal
+
+2. Trace Corridors:
+   - For each junction:
+     - BFS/DFS along each outgoing edge
+     - Follow degree-2 vertices until next junction
+     - Record: (junction_a, junction_b, distance)
+
+3. Build Contracted Graph:
+   - Vertices: junctions only
+   - Edges: corridors with distances
+```
+
+**Correctness Proof**:
+*Claim*: Any path in G has same length in G'.
+
+*Proof*:
+- Corridor has no branches (degree-2 vertices only)
+- Only one way to traverse from junction A to junction B
+- Distance is sum of corridor edges (fixed)
+- Replacing corridor with weighted edge preserves path lengths
+- ∴ Optimal solution preserved. QED □
+
+**Day 23 Application**:
+- Original grid: 141 × 141 = ~20,000 walkable tiles
+- Contracted: ~35 junctions
+- Reduction: 570× fewer vertices
+- Result: Avoids stack overflow (7000 → 35 recursion depth)
+
+**Performance Impact**:
+```
+Naive DFS:
+- State space: 20,000 nodes
+- Max depth: 7,000
+- Stack: OVERFLOW ✗
+
+Graph Contraction + DFS:
+- State space: 35 nodes  
+- Max depth: 35
+- Stack: 3.5KB ✓
+- Time: 2.38s ✓
+```
+
+**Rust Pattern**:
+```rust
+fn build_graph(&self) -> HashMap<Coord, Vec<(Coord, usize)>> {
+    // 1. Find junctions (degree ≠ 2)
+    let mut junctions = HashSet::new();
+    for coord in grid.coords() {
+        if neighbor_count(coord) > 2 {
+            junctions.insert(coord);
+        }
+    }
+    
+    // 2. Trace corridors from each junction
+    let mut graph = HashMap::new();
+    for &junction in &junctions {
+        let edges = trace_corridors(junction, &junctions);
+        graph.insert(junction, edges);
+    }
+    graph
+}
+```
+
+**Limitations**:
+- Only works for undirected graphs (Day 23 Part 2)
+- Directed graphs need more complex contraction
+- Loses some structural information
+
+**Zettelkasten**: [[graph-contraction-optimization]], [[state-space-reduction]]
 
 ---
 
