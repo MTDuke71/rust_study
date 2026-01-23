@@ -65,8 +65,11 @@ struct ParseError {
     kind: ParseErrorKind,
 }
 
+/// **Educational Note**: Demonstrates different parse error kinds including
+/// nested errors (InvalidNumber wraps ParseIntError) and descriptive errors.
+/// Shows enum variant design patterns for error categorization.
 #[derive(Debug)]
-#[allow(dead_code)]
+#[allow(dead_code)] // Educational example - demonstrates error kind enumeration
 enum ParseErrorKind {
     InvalidNumber(ParseIntError),
     InvalidFormat(String),
