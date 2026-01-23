@@ -96,6 +96,7 @@ fn load_user_data(user_id: &str) -> Result<String> {
 }
 
 /// Demonstrates with_context for lazy evaluation
+#[allow(dead_code)]
 fn process_request(request_id: &str) -> Result<()> {
     let data = std::fs::read_to_string("request.json")
         .with_context(|| format!("failed to read request {}", request_id))?;

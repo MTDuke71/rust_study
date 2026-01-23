@@ -21,6 +21,7 @@ use std::io;
 /// This demonstrates the enumeration pattern where callers need to
 /// distinguish between different error cases.
 #[derive(Debug)]
+#[allow(dead_code)]
 enum CopyError {
     /// Error occurred while reading input file
     Input(io::Error),
@@ -151,6 +152,7 @@ fn parse_config_file(path: &str) -> Result<Vec<i32>, ParseError> {
 /// - Provides `source()` for error chain traversal
 /// - Is `Send + Sync + 'static` for thread safety and downcasting
 #[derive(Debug)]
+#[allow(dead_code)]
 enum DatabaseError {
     Connection(String),
     Query(String),

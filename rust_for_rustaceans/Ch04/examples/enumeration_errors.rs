@@ -53,6 +53,7 @@ fn copy_file(src: &str, dst: &str) -> Result<u64, CopyError> {
 // ============================================================================
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum ConfigError {
     Io(io::Error),
     Parse { line: usize, msg: String },
@@ -97,6 +98,7 @@ impl From<io::Error> for ConfigError {
 // ============================================================================
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum HttpError {
     Network(String),
     Timeout,
@@ -128,6 +130,7 @@ impl Error for HttpError {}
 // ============================================================================
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum DbError {
     Connection { host: String, port: u16, source: io::Error },
     Query { sql: String, reason: String },

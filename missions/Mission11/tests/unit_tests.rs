@@ -86,8 +86,8 @@ fn req1_zero_copy_string_slice_keys() {
         }
         
         // Simulate recursive computation with substring
-        let result = if pattern.starts_with('#') {
-            count_arrangements(&pattern[1..], memo)
+        let result = if let Some(rest) = pattern.strip_prefix('#') {
+            count_arrangements(rest, memo)
         } else {
             1
         };
@@ -1003,7 +1003,6 @@ fn req7_documentation_of_tradeoffs() {
     // - Better cache locality
     // - Can optimize space easily
     
-    // This test serves as documentation (always passes)
-    assert!(true, "Trade-offs documented in REQ-7 implementation");
+    // This test serves as documentation of trade-offs documented in REQ-7 implementation
 }
 

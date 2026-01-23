@@ -21,6 +21,7 @@ use std::num::ParseIntError;
 // ============================================================================
 
 /// Manual error propagation (verbose)
+#[allow(dead_code)]
 fn read_number_manual(path: &str) -> Result<i32, io::Error> {
     let content = fs::read_to_string(path)?;
     

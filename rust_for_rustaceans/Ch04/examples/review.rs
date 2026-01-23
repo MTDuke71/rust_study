@@ -66,6 +66,7 @@ struct ParseError {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum ParseErrorKind {
     InvalidNumber(ParseIntError),
     InvalidFormat(String),

@@ -62,6 +62,7 @@ fn parse_input(input: &str) -> Result<Vec<Instruction>> {
 struct Instruction {
     direction: char,
     distance: i64,
+    #[allow(dead_code)]
     color: String,
 }
 
