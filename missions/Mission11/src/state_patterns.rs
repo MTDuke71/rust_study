@@ -477,7 +477,6 @@ pub fn composite_with_borrowed<'a>(
 /// - ❌ Forgetting `Hash` or `Eq` on custom structs
 /// - ❌ Mixing owned and borrowed without lifetimes
 /// - ❌ Using large structs as keys (hash cost scales with size)
-
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -52,7 +52,11 @@ fn copy_file(src: &str, dst: &str) -> Result<u64, CopyError> {
 // EXAMPLE 2: Configuration Parser Error
 // ============================================================================
 
+/// **Educational Note**: Demonstrates domain-specific configuration error type
+/// with multiple variant patterns (tuple, struct, unit). Shows complete error
+/// API design even though not all variants are constructed in examples.
 #[derive(Debug)]
+#[allow(dead_code)] // Educational example - demonstrates complete error type design
 enum ConfigError {
     Io(io::Error),
     Parse { line: usize, msg: String },
@@ -96,7 +100,11 @@ impl From<io::Error> for ConfigError {
 // EXAMPLE 3: HTTP Client Error
 // ============================================================================
 
+/// **Educational Note**: Demonstrates HTTP client error patterns including
+/// timeout (unit variant), request errors (struct variants), and parsing errors.
+/// Shows variety of error variant designs for different failure modes.
 #[derive(Debug)]
+#[allow(dead_code)] // Educational example - demonstrates HTTP error patterns
 enum HttpError {
     Network(String),
     Timeout,
@@ -127,7 +135,11 @@ impl Error for HttpError {}
 // EXAMPLE 4: Database Error with Nested Errors
 // ============================================================================
 
+/// **Educational Note**: Demonstrates error nesting with `source` field to
+/// preserve underlying error chains. Shows struct variants with named fields
+/// for rich error context.
 #[derive(Debug)]
+#[allow(dead_code)] // Educational example - demonstrates error chaining patterns
 enum DbError {
     Connection { host: String, port: u16, source: io::Error },
     Query { sql: String, reason: String },

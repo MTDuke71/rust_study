@@ -20,7 +20,12 @@ use std::io;
 ///
 /// This demonstrates the enumeration pattern where callers need to
 /// distinguish between different error cases.
+///
+/// **Educational Note**: This enum demonstrates error pattern design from
+/// "Rust for Rustaceans" Ch4. Variants may not all be constructed in examples,
+/// but illustrate complete error type design patterns.
 #[derive(Debug)]
+#[allow(dead_code)] // Educational example - demonstrates error pattern design
 enum CopyError {
     /// Error occurred while reading input file
     Input(io::Error),
@@ -150,7 +155,12 @@ fn parse_config_file(path: &str) -> Result<Vec<i32>, ParseError> {
 /// - Implements `Error`, `Display`, and `Debug`
 /// - Provides `source()` for error chain traversal
 /// - Is `Send + Sync + 'static` for thread safety and downcasting
+///
+/// **Educational Note**: Demonstrates comprehensive error type design with
+/// multiple variant patterns. Not all variants constructed in examples, but
+/// shows complete real-world error API design.
 #[derive(Debug)]
+#[allow(dead_code)] // Educational example - shows complete error type design
 enum DatabaseError {
     Connection(String),
     Query(String),

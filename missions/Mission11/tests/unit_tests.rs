@@ -86,8 +86,8 @@ fn req1_zero_copy_string_slice_keys() {
         }
         
         // Simulate recursive computation with substring
-        let result = if pattern.starts_with('#') {
-            count_arrangements(&pattern[1..], memo)
+        let result = if let Some(rest) = pattern.strip_prefix('#') {
+            count_arrangements(rest, memo)
         } else {
             1
         };
@@ -194,7 +194,7 @@ fn req2_fibonacci_memoization_pattern() {
     
     let mut memo = HashMap::new();
     assert_eq!(fib(10, &mut memo), 55);
-    assert!(memo.len() > 0); // Should cache intermediate results
+    assert!(!memo.is_empty()); // Should cache intermediate results
 }
 
 #[test]
@@ -258,7 +258,7 @@ fn test_aoc_day12_pattern_integration() {
     let result = count_arrangements((0, 0, 0), 5, &mut memo);
     
     assert!(result > 0);
-    assert!(memo.len() > 0); // Should have cached states
+    assert!(!memo.is_empty()); // Should have cached states
 }
 
 #[test]
@@ -393,7 +393,7 @@ fn req3_lifetime_safety() {
     let patterns = vec!["te", "st"];
     let result = helper(target, &patterns);
     
-    assert!(result.len() > 0);
+    assert!(!result.is_empty());
 }
 
 #[test]
@@ -496,7 +496,7 @@ fn req5_pattern1_string_suffix_state() {
     assert!(memo.contains_key("abcd") || memo.contains_key("cd"));
     
     // Verify borrowed keys (&'a str not String)
-    assert!(memo.len() > 0);
+    assert!(!memo.is_empty());
 }
 
 #[test]
@@ -674,7 +674,7 @@ fn req5_composite_state_multi_source() {
     assert!(can_construct_multi("abc", &pattern_groups, 0, &mut memo));
     
     // Composite state (str, usize) should be cached
-    assert!(memo.len() > 0);
+    assert!(!memo.is_empty());
 }
 
 // ============================================================================
@@ -1003,7 +1003,6 @@ fn req7_documentation_of_tradeoffs() {
     // - Better cache locality
     // - Can optimize space easily
     
-    // This test serves as documentation (always passes)
-    assert!(true, "Trade-offs documented in REQ-7 implementation");
+    // This test serves as documentation of trade-offs documented in REQ-7 implementation
 }
 

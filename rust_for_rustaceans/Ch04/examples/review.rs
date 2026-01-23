@@ -65,7 +65,11 @@ struct ParseError {
     kind: ParseErrorKind,
 }
 
+/// **Educational Note**: Demonstrates different parse error kinds including
+/// nested errors (InvalidNumber wraps ParseIntError) and descriptive errors.
+/// Shows enum variant design patterns for error categorization.
 #[derive(Debug)]
+#[allow(dead_code)] // Educational example - demonstrates error kind enumeration
 enum ParseErrorKind {
     InvalidNumber(ParseIntError),
     InvalidFormat(String),
@@ -205,7 +209,7 @@ fn process_file(path: &str) -> Result<Vec<i32>, ProcessError> {
     
     // Validate - String -> ProcessError
     validate_numbers(&numbers)
-        .map_err(|e| ProcessError::Validation(e))?;
+        .map_err(ProcessError::Validation)?;
     
     Ok(numbers)
 }

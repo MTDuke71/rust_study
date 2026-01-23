@@ -96,6 +96,11 @@ fn load_user_data(user_id: &str) -> Result<String> {
 }
 
 /// Demonstrates with_context for lazy evaluation
+///
+/// **Educational Note**: Shows anyhow's `with_context` for lazy error message
+/// generation. Not called in examples but demonstrates the pattern for adding
+/// context to errors during propagation.
+#[allow(dead_code)] // Educational example - demonstrates context addition pattern
 fn process_request(request_id: &str) -> Result<()> {
     let data = std::fs::read_to_string("request.json")
         .with_context(|| format!("failed to read request {}", request_id))?;

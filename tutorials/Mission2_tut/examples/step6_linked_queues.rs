@@ -140,9 +140,9 @@ fn demonstrate_simple_linked_queue() {
 
             if self.head.is_none() {
                 self.head = Some(new_node);
-            } else {
+            } else if let Some(ref mut head) = self.head {
                 // Find the last node - this is O(n)!
-                let mut current = self.head.as_mut().unwrap();
+                let mut current = head;
                 while current.next.is_some() {
                     current = current.next.as_mut().unwrap();
                 }
