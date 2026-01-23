@@ -1,4 +1,4 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
 // use project_euler::problems::*;
 
 fn benchmark_problems(_c: &mut Criterion) {

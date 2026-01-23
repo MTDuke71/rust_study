@@ -26,7 +26,7 @@ pub fn divisors(n: u64) -> Vec<u64> {
     let limit = (n as f64).sqrt() as u64;
     
     for i in 1..=limit {
-        if n % i == 0 {
+        if n.is_multiple_of(i) {
             divs.push(i);
             if i != n / i {
                 divs.push(n / i);
@@ -48,7 +48,7 @@ pub fn prime_factors(mut n: u64) -> Vec<u64> {
     let mut factors = Vec::new();
     
     // Check for 2s
-    while n % 2 == 0 {
+    while n.is_multiple_of(2) {
         factors.push(2);
         n /= 2;
     }
@@ -56,7 +56,7 @@ pub fn prime_factors(mut n: u64) -> Vec<u64> {
     // Check odd factors
     let mut i = 3;
     while i * i <= n {
-        while n % i == 0 {
+        while n.is_multiple_of(i) {
             factors.push(i);
             n /= i;
         }
