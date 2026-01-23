@@ -4,3 +4,10 @@
 # Solutions for problems 101 and beyond should be kept private.
 
 /src/problems/private/
+
+# Official Project Euler writeups (PRIVATE - COPYRIGHTED)
+#
+# Official solution PDFs from Project Euler are copyrighted material.
+# Keep them local only, do not commit to public repository.
+
+/Official_Writeups/

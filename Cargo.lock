@@ -2239,6 +2239,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "project_euler"
+version = "0.1.0"
+dependencies = [
+ "criterion 0.5.1",
+]
+
+[[package]]
 name = "publishing-example"
 version = "0.1.0"
 
