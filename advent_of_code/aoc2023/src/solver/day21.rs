@@ -455,7 +455,7 @@ pub fn part2_optimized(input: &str) -> usize {
     //   = (202300 // 2 * 2)²
     //   = (101150 * 2)²
     //   = 202300²
-    let even_tiles = ((grid_width + 1) / 2 * 2).pow(2);
+    let even_tiles = (grid_width.div_ceil(2) * 2).pow(2);
     
     // Edge counts: 
     // - Small edges at outer boundary: grid_width + 1
