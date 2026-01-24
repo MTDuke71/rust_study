@@ -215,6 +215,8 @@ impl HikingMap {
             }
         }
         
+        println!("Found {} junctions", junctions.len());
+        
         // For each junction, find paths to other junctions
         for &junction in &junctions {
             let mut edges = Vec::new();
@@ -302,6 +304,8 @@ impl HikingMap {
 pub fn solve_part1(input: &str) -> Result<String> {
     let map = HikingMap::parse(input)?;
     // Part 1: Simple DFS works fine with slope restrictions
+    let graph = map.build_graph(false); // Respect slopes
+    println!("Part 1: {} junctions (with slope constraints)", graph.len());
     let longest = map.find_longest_path(false); // Respect slopes
     Ok(longest.to_string())
 }
@@ -311,6 +315,7 @@ pub fn solve_part2(input: &str) -> Result<String> {
     // Part 2: Use graph contraction to avoid stack overflow
     // (ignoring slopes creates many more paths)
     let graph = map.build_graph(true); // Ignore slopes
+    println!("Part 2: {} junctions (ignoring slopes)", graph.len());
     let mut visited = HashSet::new();
     visited.insert(map.start);
     let longest = map.dfs_graph(map.start, &mut visited, &graph);

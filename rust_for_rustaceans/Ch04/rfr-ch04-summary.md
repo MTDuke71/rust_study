@@ -64,6 +64,36 @@ fn parse_file() -> Result<i32, MyError> {
 }
 ```
 
+#### 📝 Side Note: From and Into Traits
+
+**Why Both Exist:**
+- **Historical**: Before Rust 1.41.0, coherence rules made it difficult to implement both directions. Legacy code and stability guarantees keep both traits.
+- **Ergonomics**: Each serves distinct API design roles:
+  - `Into` is superior for **trait bounds**: `fn foo(arg: impl Into<Bar>)` 
+  - `From` is superior for **explicit calls**: `Ident::from("foo")`
+
+**The Golden Rule:**
+> **Implement `From`, use `Into`**
+
+```rust
+// ✅ Good: Implement From
+impl From<&str> for MyType {
+    fn from(s: &str) -> Self { /* ... */ }
+}
+
+// ✅ Good: Accept Into in function bounds
+fn process(value: impl Into<MyType>) { /* ... */ }
+
+// Automatic: Standard library provides Into via blanket impl
+// impl<T, U> Into<U> for T where U: From<T>
+```
+
+**The `?` Operator Exception:**
+- `?` currently uses `From`, **not** `Into`
+- Error types from older libraries implementing only `Into` won't work with `?`
+- Compiler handles trait resolution better with `From` in this context
+- May eventually upgrade to `Into` as compiler improves
+
 ### 2. The `Try` Trait (Unstable)
 - Powers the `?` operator
 - Abstracts "happy path" vs. "early return" logic

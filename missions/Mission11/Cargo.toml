@@ -33,10 +33,9 @@ path = "examples/demo_string_matching.rs"
 [dev-dependencies]
 criterion = "0.5"
 
-# Benchmark will be added after REQ-1 implementation complete
-# [[bench]]
-# name = "memoization"
-# harness = false
+[[bench]]
+name = "memoization"
+harness = false
 
 [package.metadata.docs.rs]
 all-features = true

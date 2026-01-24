@@ -341,9 +341,22 @@ fn main() {
     }
     println!();
 
+    // Example 7: Traversing error chains
+    println!("7. Traversing Error Chains:");
+    // Create a nested error to demonstrate traversal
+    match initialize_server() {
+        Ok(port) => println!("   Server initialized on port: {}", port),
+        Err(e) => {
+            println!("   Error chain:");
+            print_error_chain(&e);
+        }
+    }
+    println!();
+
     println!("Summary:");
     println!("  - Use `?` for concise error propagation");
     println!("  - Implement `From` for automatic error conversion");
     println!("  - Use `map_err` to add context to errors");
     println!("  - Preserve error chains with `source()` method");
+    println!("  - Traverse error chains to diagnose root causes");
 }
