@@ -132,6 +132,16 @@ fn try_cut(graph: &Graph, cut_edges: &[Edge]) -> Option<(usize, usize)> {
         if !visited.contains(node) {
             let size = component_bfs(&modified_graph, node, &mut visited);
             component_sizes.push(size);
+            
+            // Early exits for performance
+            if component_sizes.len() == 2 {
+                // Found exactly 2 components - valid cut, stop searching
+                break;
+            }
+            if component_sizes.len() > 2 {
+                // Too many components - invalid cut, fail fast
+                return None;
+            }
         }
     }
     
