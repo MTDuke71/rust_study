@@ -25,7 +25,7 @@ pub mod day21;
 pub mod day22;
 pub mod day23;
 pub mod day24;
-// ... etc
+pub mod day25;
 
 pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
     match day {
@@ -75,7 +75,7 @@ pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
         },
         23 => Ok((day23::solve_part1(input)?, day23::solve_part2(input)?)),
         24 => Ok((day24::solve_part1(input)?, day24::solve_part2(input)?)),
-        // 25 => Ok((day25::solve_part1(input)?, day25::solve_part2(input)?)),
+        25 => Ok((day25::solve_part1(input).to_string(), day25::solve_part2(input).to_string())),
 
         _ => bail!("Day {day} not implemented yet (valid range: 1-25). To implement day {day}, create src/solver/day{day:02}.rs and uncomment the corresponding lines in mod.rs"),
     }
