@@ -213,6 +213,34 @@ This crate defines several features to demonstrate Chapter 5 concepts:
 **Optional Dependencies**:
 - `serde` - Automatically creates `serde` feature
 
+### 🔑 Key Feature Patterns
+
+**Meta-Features** (Feature Bundles):
+```toml
+advanced = ["networking", "compression"]
+```
+Enabling `advanced` automatically enables both `networking` and `compression`. These are equivalent:
+- `--features advanced`
+- `--features advanced,networking,compression`
+
+**Weak Dependencies** (`?` syntax):
+```toml
+std = ["serde?/std"]
+```
+- `serde?/std` = "IF serde is enabled, THEN enable serde's std feature"
+- Without `?`, would force serde to always compile when std is enabled
+- Allows no_std compatibility: `--no-default-features --features serde` compiles serde WITHOUT its std feature
+
+**Cross-Crate Feature Control** (`dependency/feature`):
+```toml
+std = ["serde?/std"]
+      ^^^^^^^^^^^^^^
+      └─┬─┘  └─┬──┘
+        │      └── serde crate's "std" feature (different from this crate's std)
+        └───────── serde dependency name
+```
+The `/` syntax lets you control your dependencies' features from your Cargo.toml.
+
 ---
 
 ## 🎓 Learning Objectives

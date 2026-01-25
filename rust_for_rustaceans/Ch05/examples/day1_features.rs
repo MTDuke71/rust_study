@@ -1,4 +1,4 @@
-//! Day 1: Features - Conditional Compilation with Feature Flags
+ //! Day 1: Features - Conditional Compilation with Feature Flags
 //! 
 //! This example demonstrates:
 //! - Defining and using features
@@ -78,6 +78,12 @@ pub fn check_features() {
         println!("✓ experimental feature enabled");
     } else {
         println!("✗ experimental feature disabled");
+    }
+    
+    if cfg!(feature = "serde") {
+        println!("✓ serde feature enabled");
+    } else {
+        println!("✗ serde feature disabled");
     }
 }
 
