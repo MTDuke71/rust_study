@@ -106,6 +106,13 @@ fn find_candidate_edges(graph: &Graph, top_n: usize) -> Vec<Edge> {
     let mut edges: Vec<_> = edge_counts.into_iter().collect();
     edges.sort_by_key(|(_, count)| std::cmp::Reverse(*count));
     
+    // Debug: Print top N edge betweenness values
+    println!("\n=== Top {} Edge Betweenness ===", top_n);
+    for (i, (edge, count)) in edges.iter().take(top_n).enumerate() {
+        println!("{:2}. {:?} → {} paths", i + 1, edge, count);
+    }
+    println!();
+    
     // Return top N edges
     edges.into_iter().take(top_n).map(|(edge, _)| edge).collect()
 }
