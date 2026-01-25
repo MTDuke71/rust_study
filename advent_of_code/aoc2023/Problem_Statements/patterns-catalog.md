@@ -75,6 +75,10 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | Cross-Product Variable Elimination | Day 24 | `day24.rs` |
 | Gaussian Elimination with Partial Pivoting | Day 24 | `day24.rs` |
 | Local Search Neighborhood Exploration | Day 24 | `day24.rs` |
+| HashMap Undirected Graph Adjacency | Day 25 | `day25.rs` |
+| Edge Normalization for Undirected Graphs | Day 25 | `day25.rs` |
+| Triple Nested Loop Combination Generation | Day 25 | `day25.rs` |
+| Option Return for Validation Functions | Day 25 | `day25.rs` |
 
 ---
 

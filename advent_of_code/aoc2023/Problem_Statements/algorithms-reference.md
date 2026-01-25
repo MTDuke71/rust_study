@@ -73,6 +73,9 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | Cross-Product Elimination | Day 24 | O(n) setup | [[vector-algebra]] |
 | Gaussian Elimination with Partial Pivoting | Day 24 | O(n³) | [[linear-systems-solving]] |
 | Local Search (Neighborhood Exploration) | Day 24 | O(k³) for k-cube | [[optimization-algorithms]] |
+| Edge Betweenness (BFS Tree Counting) | Day 25 | O(V² × E) | [[graph-theory-fundamentals]] |
+| Graph Minimum Cut (Combination Testing) | Day 25 | O(V² + C(k,3) × V) | [[graph-minimum-cut]] |
+| Connected Components (BFS) | Day 25 | O(V + E) per component | [[graph-theory-fundamentals]] |
 
 ---
 

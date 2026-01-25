@@ -8,10 +8,10 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 
 | Metric | Value |
 |--------|-------|
-| **Days Completed** | 23/25 |
-| **Total Runtime** | ~3.44s (3,438ms with Day 21 geometric + Day 23) |
-| **Average per Day** | ~150ms |
-| **Fastest Day** | Day 6 (0.95µs) |
+| **Days Completed** | 25/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ **COMPLETE!** 🎄 |
+| **Total Runtime** | ~4.51s (4,511ms with Day 21 geometric + Day 23 + Day 25) |
+| **Average per Day** | ~180ms |
+| **Fastest Day** | Day 6 (0.95µs) / Day 25 Part 2 (584ps literal!) |
 | **Slowest Day** | Day 23 (2.40s) |
 
 ---
@@ -44,12 +44,14 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 22 | 898.4µs | 1.73ms | 2.63ms | Yes*************** |
 | 23 | 22.9ms | 2.38s | 2.40s | Yes**************** |
 | 24 | 315.11µs | 64.24µs | 379.35µs | No***************** |
+| 25 | 689.67ms | 584ps | 690ms | Yes****************** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 *Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
 *Day 15: Clean implementation, fast hash function and Vec operations - no obvious optimization needed  
 *********Day 16: Parallelized with Rayon - 11.67× speedup on Part 2 (257ms → 22ms), total 23ms  
 *****************Day 24: Part 2 faster than Part 1 (O(1) linear system vs O(n²) pairs) - already optimal  
+****************** Day 25: Edge betweenness + combination testing - BFS from all V nodes to count edge usage (O(V²×E)), then test C(20,3)=1140 combinations of top candidates (O(k³×V)). Part 2 is literal string return (584 picoseconds = pure function call overhead!). Total 690ms dominated by betweenness calculation
 **********Day 17: State-space Dijkstra - no optimization applied (prioritizing clarity), Part 2 2.8× slower due to 3.3× larger state space (239k → 795k states)
 ***********Day 18: Mathematical approach (Shoelace + Pick's) - Part 2 only 24% slower despite 1 trillion× more cells (O(n) on vertices not cells, scales to 52.2 trillion cells in 107µs)
 ************Day 19: Range propagation - Part 2 FASTER than Part 1! Mathematical counting (256 trillion combinations) faster than simulating 200 parts. Parsing dominates both (~85%), actual calculation only ~30µs each
