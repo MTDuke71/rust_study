@@ -125,6 +125,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "criterion 0.5.1",
+ "good_lp",
  "mission10",
  "mission5",
  "mission6",
@@ -1771,6 +1772,10 @@ dependencies = [
 
 [[package]]
 name = "mission11_tut"
+version = "0.1.0"
+
+[[package]]
+name = "mission12_tut"
 version = "0.1.0"
 
 [[package]]

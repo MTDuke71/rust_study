@@ -69,6 +69,10 @@ Links to zettelkasten deep dives and implementation details for complex algorith
 | DFS with Backtracking (Longest Path) | Day 23 | O(4^n) worst case | [[graph-theory-fundamentals]] |
 | Graph Contraction (Path Compression) | Day 23 | O(r × c) preprocessing | [[graph-contraction-optimization]] |
 | Backtracking with Visited Set | Day 23 | O(n) space | [[backtracking-patterns]] |
+| Cramer's Rule (2D Line Intersection) | Day 24 | O(1) | [[linear-algebra-fundamentals]] |
+| Cross-Product Elimination | Day 24 | O(n) setup | [[vector-algebra]] |
+| Gaussian Elimination with Partial Pivoting | Day 24 | O(n³) | [[linear-systems-solving]] |
+| Local Search (Neighborhood Exploration) | Day 24 | O(k³) for k-cube | [[optimization-algorithms]] |
 
 ---
 

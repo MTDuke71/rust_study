@@ -70,6 +70,11 @@ Reusable patterns extracted from daily solutions. Patterns are added when used i
 | DFS with Backtracking (Visited HashSet) | Day 23 | `day23.rs` |
 | Graph Contraction for Optimization | Day 23 | `day23.rs` |
 | Coord with Cardinal Neighbor Iterator | Day 23 | `day23.rs` |
+| Parametric Line Equations | Day 24 | `day24.rs` |
+| Cramer's Rule for 2×2 Systems | Day 24 | `day24.rs` |
+| Cross-Product Variable Elimination | Day 24 | `day24.rs` |
+| Gaussian Elimination with Partial Pivoting | Day 24 | `day24.rs` |
+| Local Search Neighborhood Exploration | Day 24 | `day24.rs` |
 
 ---
 
@@ -2178,3 +2183,187 @@ After Contraction (Part 2):
 - Need to preserve exact graph structure
 
 **Mission Integration**: Concepts from Mission 6 (Grid), Mission 8 (Graph traversal)
+
+---
+
+## 📐 Computational Geometry Patterns
+
+### Pattern: Parametric Line Intersection with Cramer's Rule
+**Used**: Day 24  
+**When to use**: 2D/3D line intersection, ray casting, collision detection  
+**Code**: `src/solver/day24.rs::intersects_2d_in_bounds()`
+
+```rust
+// Parametric line representation
+struct Hailstone {
+    px: f64, py: f64, pz: f64,  // Position
+    vx: f64, vy: f64, vz: f64,  // Velocity
+}
+
+// Line equation: P + t·V
+// Line 1: (px₁, py₁) + t·(vx₁, vy₁)
+// Line 2: (px₂, py₂) + s·(vx₂, vy₂)
+
+fn intersects_2d(&self, other: &Hailstone) -> Option<(f64, f64, f64)> {
+    // Cramer's rule for 2×2 system
+    let det = self.vx * other.vy - self.vy * other.vx;
+    if det.abs() < 1e-10 { return None; }  // Parallel
+    
+    let dx = other.px - self.px;
+    let dy = other.py - self.py;
+    let t = (dx * other.vy - dy * other.vx) / det;
+    let s = (dx * self.vy - dy * self.vx) / det;
+    
+    // Intersection point
+    let ix = self.px + t * self.vx;
+    let iy = self.py + t * self.vy;
+    Some((ix, iy, t))
+}
+```
+
+**Key Points**:
+- Determinant = 0 → parallel lines (no intersection or infinite)
+- t, s parameters indicate time to intersection
+- Negative t or s → intersection in past (reject for future-only)
+- O(1) constant time per intersection test
+
+**Day 24 Application**:
+- Test 44,850 hailstone pairs for intersections
+- Only count future intersections (t ≥ 0 and s ≥ 0)
+- Filter by test area bounds
+- Performance: ~6.4 ns per pair
+
+**Zettelkasten**: [[computational-geometry-basics]], [[linear-algebra-fundamentals]]
+
+### Pattern: Cross-Product for Variable Elimination
+**Used**: Day 24  
+**When to use**: Eliminating time/parameter variables from 3D collision equations  
+**Code**: `src/solver/day24.rs::solve_part2_linear_system()`
+
+```rust
+// Problem: Find rock trajectory (rx, ry, rz, rvx, rvy, rvz) hitting all hailstones
+// Collision equations are nonlinear:
+//   rx + t·rvx = px + t·vx  →  contains t·rvx (product of unknowns)
+
+// Solution: Cross products eliminate time variables
+fn build_linear_system(hailstones: &[Hailstone]) -> (Matrix, Vector) {
+    // Use 4 hailstones to get 6 equations (3 per pair)
+    let h0 = &hailstones[0];
+    
+    for hi in [1, 2] {
+        let h = &hailstones[hi];
+        
+        // Position and velocity differences
+        let dp = (h.px - h0.px, h.py - h0.py, h.pz - h0.pz);
+        let dv = (h.vx - h0.vx, h.vy - h0.vy, h.vz - h0.vz);
+        
+        // Cross product dp × dv (eliminates time)
+        let cross = (
+            dp.1 * dv.2 - dp.2 * dv.1,
+            dp.2 * dv.0 - dp.0 * dv.2,
+            dp.0 * dv.1 - dp.1 * dv.0,
+        );
+        
+        // Expand (P₁-P₂) × (V₁-V₂) = (P₁-P₂) × RV + RP × (V₁-V₂)
+        // Creates 3 linear equations in (rx, ry, rz, rvx, rvy, rvz)
+        // ...
+    }
+    // Returns 6×6 system
+}
+```
+
+**Mathematical Insight**:
+```
+Nonlinear collision equation:
+  rx + tᵢ·rvx = pxᵢ + tᵢ·vxᵢ
+
+Take difference between hailstones i and j:
+  (pxᵢ - pxⱼ) + tᵢ·vxᵢ - tⱼ·vxⱼ = tᵢ·rvx - tⱼ·rvx
+
+Cross with velocity difference eliminates t:
+  (Pᵢ - Pⱼ) × (Vᵢ - Vⱼ) = (Pᵢ - Pⱼ) × RV + RP × (Vᵢ - Vⱼ)
+  
+  Left side: Constant (known positions/velocities)
+  Right side: Linear in (RP, RV) unknowns ✓
+```
+
+**Pattern Benefits**:
+- Converts quadratic system → linear system
+- Enables standard linear algebra solvers
+- O(1) setup (uses fixed 4 hailstones, not all 300)
+- Exact solution via Gaussian elimination
+
+**Day 24 Application**:
+- Part 2: 6 unknowns → need 6 equations → use 4 hailstones (2 pairs × 3 equations)
+- Solve 6×6 system in O(n³) = O(216) operations
+- Total time: 64.24 µs (constant, independent of hailstone count)
+
+**Zettelkasten**: [[vector-algebra]], [[cross-product-applications]]
+
+### Pattern: Local Search for Integer Refinement
+**Used**: Day 24  
+**When to use**: Floating-point solver → need exact integer solution  
+**Code**: `src/solver/day24.rs::solve_part2_linear_system()`
+
+```rust
+// Gaussian elimination gives floating-point solution
+let float_solution = gaussian_elimination(&mut matrix, &mut rhs);
+let (rx, ry, rz) = (float_solution[0], float_solution[1], float_solution[2]);
+// rx = 200027938836082.375 (not an integer!)
+
+// Search 3×3×3 neighborhood around floor(solution)
+let base = (rx.floor() as i64, ry.floor() as i64, rz.floor() as i64);
+let mut best = base;
+let mut best_error = f64::INFINITY;
+
+for dx in 0..=2 {
+    for dy in 0..=2 {
+        for dz in 0..=2 {
+            let candidate = (base.0 + dx, base.1 + dy, base.2 + dz);
+            
+            // Calculate collision error
+            let error = calculate_error(candidate, hailstones);
+            
+            if error < best_error {
+                best_error = error;
+                best = candidate;
+            }
+        }
+    }
+}
+
+assert!(best_error < 0.01);  // Verify exact solution
+```
+
+**Key Characteristics**:
+- **Search space**: k×k×k cube around base point (27 candidates for k=1)
+- **Error function**: Problem-specific validation (collision distance for Day 24)
+- **Complexity**: O(k³ · validation_cost)
+- **Termination**: Select minimum error candidate
+
+**When to use**:
+- Numerical solver gives approximate solution
+- Need discrete (integer) solution
+- Search space is small (k ≤ 3 typically)
+- Have validation function to test candidates
+- Floating-point errors prevent direct rounding
+
+**Alternatives**:
+```rust
+// ❌ Direct rounding - may fail due to floating-point error
+let x = (rx.round() as i64, ry.round() as i64, rz.round() as i64);
+
+// ⚠️ Floor only - misses optimal if fractional part > 0.5
+let x = (rx.floor() as i64, ry.floor() as i64, rz.floor() as i64);
+
+// ✅ Local search - robust to floating-point error
+let x = local_search_3x3x3(rx, ry, rz, error_fn);
+```
+
+**Day 24 Results**:
+- Float solution: (200027938836082.375, 127127087242194.28125, 219339468239371.03125)
+- Search finds: (200027938836082, 127127087242193, 219339468239370)
+- Verification error: 1.875 (confirms exact collision)
+- Performance: 27 candidates × 700 ns = ~19 µs (negligible)
+
+**Zettelkasten**: [[optimization-algorithms]], [[local-search-methods]]

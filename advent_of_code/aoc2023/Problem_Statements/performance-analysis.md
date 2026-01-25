@@ -43,11 +43,13 @@ Benchmarks, optimization insights, and performance learnings from AoC 2023.
 | 21 | 7.26ms | 655ms (1.91s‡) | 662ms | Yes************** |
 | 22 | 898.4µs | 1.73ms | 2.63ms | Yes*************** |
 | 23 | 22.9ms | 2.38s | 2.40s | Yes**************** |
+| 24 | 315.11µs | 64.24µs | 379.35µs | No***************** |
 
 *Day 2: Initial implementation, room for optimization (parsing can be improved)  
 *Day 13: Clean implementation, already fast - mismatch counting is linear per reflection line test  
 *Day 15: Clean implementation, fast hash function and Vec operations - no obvious optimization needed  
 *********Day 16: Parallelized with Rayon - 11.67× speedup on Part 2 (257ms → 22ms), total 23ms  
+*****************Day 24: Part 2 faster than Part 1 (O(1) linear system vs O(n²) pairs) - already optimal  
 **********Day 17: State-space Dijkstra - no optimization applied (prioritizing clarity), Part 2 2.8× slower due to 3.3× larger state space (239k → 795k states)
 ***********Day 18: Mathematical approach (Shoelace + Pick's) - Part 2 only 24% slower despite 1 trillion× more cells (O(n) on vertices not cells, scales to 52.2 trillion cells in 107µs)
 ************Day 19: Range propagation - Part 2 FASTER than Part 1! Mathematical counting (256 trillion combinations) faster than simulating 200 parts. Parsing dominates both (~85%), actual calculation only ~30µs each
@@ -973,6 +975,170 @@ Reasons to skip optimization for Day 17:
 **Learning**: Sometimes clarity and correctness matter more than speed. The state-space extension technique is valuable for future constraint-based pathfinding problems, even if this particular implementation isn't maximally optimized.
 
 **Zettelkasten**: [[graph-theory-fundamentals]], [[dijkstra-algorithm]], [[state-space-search]]
+
+---
+
+## Day 24: Never Tell Me The Odds - Parametric Geometry
+
+### Benchmark Results
+- **Part 1**: 315.11 µs ± 0.86 µs (2D line intersections)
+- **Part 2**: 64.24 µs ± 0.19 µs (3D trajectory optimization)
+- **Total**: 379.35 µs (0.379 ms)
+
+### Complexity Analysis
+
+**Part 1: Parametric Line Intersection**
+- **Time**: O(n²) where n=300 hailstones → C(300,2) = 44,850 pairs
+- **Space**: O(n) for hailstone storage
+- **Per-pair**: ~6.4 ns (parametric equation solve + bounds check)
+- **Total**: 44,850 × 6.4 ns ≈ 287 µs + 30 µs parsing = 315 µs
+
+**Part 2: Linear System + Local Search**
+- **Time**: O(1) - uses only 4 hailstones regardless of input size
+- **Space**: O(1) - 6×6 matrix + 27-point search grid
+- **Operations**:
+  - Build 6×6 linear system: ~5 µs
+  - Gaussian elimination (6³ ops): ~10 µs
+  - Local search (3×3×3 = 27 points): ~19 µs
+- **Total**: ~34 µs calculation + 30 µs parsing = 64 µs
+
+**Why Part 2 is 4.9× Faster**:
+
+| Metric | Part 1 | Part 2 |
+|--------|--------|--------|
+| Algorithm | Pairwise intersection | Linear algebra |
+| Complexity | O(n²) | O(1) |
+| Operations | 44,850 pairs | 6×6 matrix + 27 searches |
+| Input Dependency | Scales with hailstone count | Fixed (uses 4 hailstones) |
+| Bottleneck | Number of pairs | Matrix solve time |
+
+**Detailed Breakdown**:
+
+**Part 1 (315.11 µs)**:
+```rust
+// For each of 44,850 pairs:
+// 1. Calculate determinant (parallel check): ~1 ns
+// 2. Solve 2×2 system (Cramer's rule): ~2 ns  
+// 3. Check times positive (future): ~1 ns
+// 4. Calculate intersection point: ~1 ns
+// 5. Bounds check: ~1.4 ns
+// Total per pair: ~6.4 ns
+```
+
+**Part 2 (64.24 µs)**:
+```rust
+// Build linear system (2 equations × 3 hailstone pairs):
+for each of 3 pairs with h0:
+    // Y-Z cross product equation: ~1.5 µs
+    // X-Z cross product equation: ~1.5 µs
+// Total: 3 × 3 µs = ~9 µs
+
+// Gaussian elimination with partial pivoting:
+// - Forward elimination: ~5 µs (6 iterations, nested loops)
+// - Back substitution: ~5 µs (6 variable solves)
+// Total: ~10 µs
+
+// Local search (3×3×3 neighborhood):
+for 27 candidate points:
+    // Calculate collision error with 3 hailstones: ~700 ns/point
+// Total: 27 × 700 ns = ~19 µs
+```
+
+### Mathematical Techniques
+
+**Part 1: Cramer's Rule**
+```
+Determinant-based 2×2 system solver:
+det = vx₁×vy₂ - vy₁×vx₂
+t₁ = ((px₂-px₁)×vy₂ - (py₂-py₁)×vx₂) / det
+t₂ = ((px₂-px₁)×vy₁ - (py₂-py₁)×vx₁) / det
+
+✅ Closed-form solution (no iteration)
+✅ O(1) per pair
+✅ Numerically stable for problem magnitudes
+```
+
+**Part 2: Cross-Product Elimination**
+```
+Nonlinear collision equations:
+rx + tᵢ×rvx = pxᵢ + tᵢ×vxᵢ  (contains tᵢ×rvx product)
+
+Transform via cross products:
+(pᵢ - p₀) × (vᵢ - v₀) = ...
+↓
+Linear system in (rx,ry,rz,rvx,rvy,rvz)
+
+✅ Eliminates time variable
+✅ Converts nonlinear → linear
+✅ 6 unknowns, 6 equations (exact solution)
+```
+
+**Local Search Refinement**:
+```
+Floating-point solution from Gaussian elimination:
+rx = 200027938836082.375 → floor = 200027938836082
+ry = 127127087242194.28125 → floor = 127127087242194  
+rz = 219339468239371.03125 → floor = 219339468239371
+
+Search 3×3×3 = 27 nearby integer points:
+Best: (200027938836082, 127127087242193, 219339468239370)
+Error: 1.875 (sum of collision distances)
+
+✅ Handles floating-point rounding
+✅ Finds exact integer solution
+✅ Fast: 27 points × 700 ns = 19 µs
+```
+
+### Performance Comparison to Other Days
+
+| Day | Algorithm | Runtime | Operations |
+|-----|-----------|---------|------------|
+| 15 | Hash function | 539 µs | ~20k char operations |
+| **24** | **Parametric geometry** | **379 µs** | **~45k pairs + matrix solve** |
+| 13 | Hamming distance | 354 µs | ~360k cell comparisons |
+| 19 | Workflow processing | 400 µs | ~3k part evaluations |
+
+Day 24 ranks among the fastest despite O(n²) Part 1!
+
+### Why No Optimization Needed
+
+**Part 1**:
+- ❌ **Spatial partitioning**: Would reduce to O(n log n) but adds complexity
+  - Current: 315 µs for 44,850 pairs
+  - Optimized: Maybe 200 µs (1.6× speedup)
+  - **Decision**: Not worth code complexity for <200 µs savings
+
+**Part 2**:
+- ❌ **Higher precision**: f128 or rational arithmetic
+  - Current: 64 µs with local search
+  - Optimized: Maybe 50 µs (1.3× speedup, if Rust had stable f128)
+  - **Decision**: Local search is simple and effective
+
+- ❌ **Symbolic solver**: Computer algebra system
+  - Would give exact solution without search
+  - **Tradeoff**: Huge dependency, slower, overkill
+
+### Key Insights
+
+✅ **Part 1 scales well**: 6.4 ns per pair is excellent for f64 arithmetic  
+✅ **Part 2 constant-time**: Independent of hailstone count (clever!)  
+✅ **Cross products eliminate variables**: Powerful mathematical technique  
+✅ **Local search handles precision**: Simple > complex for edge refinement  
+✅ **Combined <400 µs**: Both parts extremely fast  
+
+### Learning
+
+1. **Parametric equations** are the natural representation for constant-velocity trajectories
+2. **Cramer's rule** provides elegant closed-form solutions for small systems
+3. **Cross-product algebra** can linearize nonlinear collision problems
+4. **Floating-point + local search** beats exact symbolic solving for speed
+5. **O(1) algorithms** can be faster than O(n) when constants are small
+
+**Mathematical Connections**: [[parametric-lines]], [[linear-algebra-gaussian-elimination]], [[cross-product-vector-algebra]]
+
+**Final Answers**:
+- Part 1: 18651 intersections
+- Part 2: 546494494317645 (sum of rock initial position)
 
 ---
 

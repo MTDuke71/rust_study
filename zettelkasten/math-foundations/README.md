@@ -25,8 +25,25 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 - `category-theory-patterns.md` - Functors, monads, applicatives in Rust
 
 ### **Linear Algebra** (Grid problems)
-- `vectors-matrices.md` - Vector operations, matrix multiplication
+- `linear-algebra-fundamentals.md` - Systems of equations, Cramer's rule, Gaussian elimination ✅
+- `parametric-equations.md` - Parametric lines, line intersection, ray tracing ✅
+- `cross-products-vector-algebra.md` - Cross products, variable elimination, 3D geometry ✅
 - `grid-mathematics.md` - Coordinate systems, transformations, rotations
+
+---
+
+## 🎯 Progress Tracker
+
+**Target**: 20 mathematical concepts documented by **January 25, 2026**
+
+**Current**: 20/20 notes ✅ 🎉 **GOAL ACHIEVED!**
+
+**Latest additions** (January 24, 2026):
+- `linear-algebra-fundamentals.md` - Cramer's rule, Gaussian elimination (AoC Day 24)
+- `parametric-equations.md` - Parametric line intersection (AoC Day 24)
+- `cross-products-vector-algebra.md` - Variable elimination technique (AoC Day 24)
+
+---
 
 ### **Applied Mathematics**
 - `quadratic-equations.md` - Quadratic formula, parabolas, inequalities ✅

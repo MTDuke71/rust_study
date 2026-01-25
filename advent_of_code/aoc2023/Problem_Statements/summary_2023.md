@@ -4,17 +4,17 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 23/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
-| **Total Runtime** | ~3.44s (3,441ms, using Day 21 geometric + Day 23) |
+| **Progress** | 24/25 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ |
+| **Total Runtime** | ~3.82s (3,821ms, using Day 21 geometric + Day 23 + Day 24) |
 | **Mission Integration** | 10 days (Day 3: Mission 6, Day 4: Mission 5, Day 10: Mission 6 + Mission 8, Day 14: Mission 6, Day 17: Mission 6, Day 20: Mission 2 + Mission 5, Day 21: Mission 6 + Mission 8, Day 22: Mission 6 + Mission 8, Day 23: Mission 6 + Mission 8) |
-| **Patterns Extracted** | 23 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection, mathematical polygon area calculation, workflow pattern matching with enum destinations, state machine simulation with FIFO queue, cycle detection + LCM synchronization, quadratic extrapolation via pattern sampling, HashMap height map for 3D simulation, bidirectional support graph, VecDeque BFS chain propagation, Vec<bool> dense state tracking) |
+| **Patterns Extracted** | 28 (delimiter parsing, spatial indexing, HashSet membership, forward-propagation DP, range intersection, recursive differences, BFS loop traversal, ray casting point-in-polygon, recursive DP with memoization, Hamming distance pattern matching, state hashing for cycle detection, modulo fast-forward, hashmap simulation with labeled data, state-space beam tracing with cycle detection, mathematical polygon area calculation, workflow pattern matching with enum destinations, state machine simulation with FIFO queue, cycle detection + LCM synchronization, quadratic extrapolation via pattern sampling, HashMap height map for 3D simulation, bidirectional support graph, VecDeque BFS chain propagation, Vec<bool> dense state tracking, parametric line equations, Cramer's rule, cross-product elimination, Gaussian elimination, local search) |
 
 ---
 
 ## 🔍 Quick Navigation
 
-[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) | [Day 18](#day-18-lavaduct-lagoon) | [Day 19](#day-19-aplenty) | [Day 20](#day-20-pulse-propagation) | [Day 21](#day-21-step-counter) | [Day 22](#day-22-sand-slabs) | [Day 23](#day-23-a-long-walk) |
-Day 24 | Day 25
+[Day 1](#day-1-trebuchet) | [Day 2](#day-2-cube-conundrum) | [Day 3](#day-3-gear-ratios) | [Day 4](#day-4-scratchcards) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) | [Day 6](#day-6-wait-for-it) | [Day 7](#day-7-camel-cards) | [Day 8](#day-8-haunted-wasteland) | [Day 9](#day-9-mirage-maintenance) | [Day 10](#day-10-pipe-maze) | [Day 11](#day-11-cosmic-expansion) | [Day 12](#day-12-hot-springs) | [Day 13](#day-13-point-of-incidence) | [Day 14](#day-14-parabolic-reflector-dish) | [Day 15](#day-15-lens-library) | [Day 16](#day-16-the-floor-will-be-lava) | [Day 17](#day-17-clumsy-crucible) | [Day 18](#day-18-lavaduct-lagoon) | [Day 19](#day-19-aplenty) | [Day 20](#day-20-pulse-propagation) | [Day 21](#day-21-step-counter) | [Day 22](#day-22-sand-slabs) | [Day 23](#day-23-a-long-walk) | [Day 24](#day-24-never-tell-me-the-odds) |
+Day 25
 
 **Reference**: [Patterns Catalog](patterns-catalog.md) | [Algorithms Reference](algorithms-reference.md) | [Performance Analysis](performance-analysis.md)
 
@@ -257,6 +257,161 @@ our.iter().filter(|n| set.contains(n))
 **Zettelkasten**: [[entry-api-hashmap]], [[memoization-comprehensive-guide]], [[Dynamic Programming]]
 
 **Links**: ← [Day 3](#day-3-gear-ratios) | [Day 5](#day-5-if-you-give-a-seed-a-fertilizer) →
+
+---
+
+### Day 24: Never Tell Me The Odds
+
+**Part 1**: Find 2D intersections of hailstone trajectories within test area → **18651**  
+**Part 2**: Find rock trajectory that collides with all hailstones → **546494494317645**  
+
+**Algorithm**: Parametric line intersection (Cramer's rule) + cross-product elimination + Gaussian elimination + local search  
+**Complexity**: O(n²) for Part 1 (all pairs), O(1) for Part 2 (uses 4 hailstones)  
+**Runtime**: 379.35µs (Part 1: 315.11µs, Part 2: 64.24µs)  
+**Mission**: None (custom linear algebra implementations)  
+
+**Key Insight**: Part 1 uses Cramer's rule to solve 2×2 parametric line systems in O(1) per pair. Part 2 uses cross products to eliminate time variables from 3D collision equations, converting nonlinear system → 6×6 linear system. Gaussian elimination gives floating-point solution; 3×3×3 local search finds exact integer coordinates.
+
+**Rust Highlights**:
+- Parametric line equations: `P + t·V` representation
+- Cramer's rule for determinant-based 2×2 solving
+- Cross-product algebra eliminates quadratic terms
+- Gaussian elimination with partial pivoting for numerical stability
+- Local search (27 candidates) refines floating-point → integer
+- Zero mission dependencies (pure mathematical implementation)
+
+**Code Highlight**:
+```rust
+// Part 1: Cramer's rule for 2D intersection
+fn intersects_2d_in_bounds(&self, other: &Hailstone, bounds: (f64, f64)) -> bool {
+    let det = self.vx * other.vy - self.vy * other.vx;
+    if det.abs() < 1e-10 { return false; }  // Parallel
+    
+    let dx = other.px - self.px;
+    let dy = other.py - self.py;
+    let t = (dx * other.vy - dy * other.vx) / det;
+    let s = (dx * self.vy - dy * self.vx) / det;
+    
+    if t < 0.0 || s < 0.0 { return false; }  // Past collision
+    
+    let ix = self.px + t * self.vx;
+    let iy = self.py + t * self.vy;
+    ix >= bounds.0 && ix <= bounds.1 && iy >= bounds.0 && iy <= bounds.1
+}
+
+// Part 2: Cross-product builds linear system, Gaussian elimination solves
+let (mut matrix, mut rhs) = build_linear_system_from_hailstones(&hailstones);
+let solution = gaussian_elimination(&mut matrix, &mut rhs);
+
+// Local search finds exact integer solution
+let base = (solution[0].floor() as i64, solution[1].floor() as i64, solution[2].floor() as i64);
+for dx in 0..=2 {
+    for dy in 0..=2 {
+        for dz in 0..=2 {
+            let candidate = (base.0 + dx, base.1 + dy, base.2 + dz);
+            let error = calculate_collision_error(candidate, &hailstones[0..3]);
+            if error < best_error {
+                best_error = error;
+                best_solution = candidate;
+            }
+        }
+    }
+}
+```
+
+**Mathematical Techniques**:
+1. **Cramer's Rule** - Solve 2×2 system using determinants:
+   ```
+   det = vx₁·vy₂ - vy₁·vx₂
+   t = (Δx·vy₂ - Δy·vx₂) / det
+   s = (Δx·vy₁ - Δy·vx₁) / det
+   ```
+
+2. **Cross-Product Elimination** - Remove time variables:
+   ```
+   Collision: rx + t·rvx = px + t·vx (nonlinear!)
+   Take difference: (P₁-P₂) + t₁·V₁ - t₂·V₂ = t₁·RV - t₂·RV
+   Cross with (V₁-V₂): (P₁-P₂)×(V₁-V₂) = (P₁-P₂)×RV + RP×(V₁-V₂) (linear!)
+   ```
+
+3. **Gaussian Elimination** - Solve 6×6 system:
+   - Forward elimination: O(n³) = O(216) operations
+   - Partial pivoting for numerical stability
+   - Back substitution: O(n²) = O(36) operations
+
+4. **Local Search** - 3×3×3 neighborhood:
+   - 27 integer candidates around floor(floating-point solution)
+   - Minimize collision error with first 3 hailstones
+   - Verification: error < 0.01 confirms exact solution
+
+**Performance Analysis**:
+- **Part 1**: 300 hailstones → 44,850 pairs
+  - Per-pair: ~6.4 ns (determinant calc + bounds check)
+  - Total: 315.11 µs ± 0.86 µs
+  - Complexity: O(n²) where n = hailstones
+
+- **Part 2**: Uses only 4 hailstones (constant)
+  - Build 6×6 system: ~20 µs
+  - Gaussian elimination: ~25 µs
+  - Local search (27 candidates): ~19 µs
+  - Total: 64.24 µs ± 0.19 µs
+  - Complexity: O(1) - independent of hailstone count!
+
+- **Surprising**: Part 2 is 4.9× faster than Part 1
+  - Part 1: O(n²) scales with input size
+  - Part 2: O(1) uses fixed number of hailstones
+
+**Algorithm Alternatives Considered**:
+```
+1. Brute Force Velocity Search ❌
+   - Search 3D velocity space for rock
+   - O(range³ × hailstones) - too slow
+   
+2. Integer Linear Programming (ILP) ❌
+   - Tried good_lp crate
+   - FAILED: Cannot multiply Variable × Variable
+   - Collision equations rx + t·rvx = px + t·vx are quadratic
+   - ILP can only handle linear constraints
+   
+3. Linear System + Local Search ✅
+   - Cross products eliminate quadratic terms
+   - Gaussian elimination: O(n³) for n=6
+   - Local search handles floating-point rounding
+   - Fast and correct!
+```
+
+**Why ILP Failed** (important lesson):
+```rust
+// Collision equation (nonlinear):
+rx + t * rvx = px + t * vx
+
+// In good_lp, t and rvx are both Variables
+// Product t * rvx creates quadratic term
+// ILP can only handle: c₁·x₁ + c₂·x₂ + ... (linear)
+// Cannot handle: x₁·x₂ (quadratic)
+
+// Compiler error:
+error[E0277]: trait bound `f64: From<Variable>` is not satisfied
+  --> src/solver/day24.rs:226
+   |
+   | let constraint = (rx + t * rvx).eq(px + t * vx);
+   |                       ^^^^^^^ product of unknowns not allowed
+```
+
+**Tests**: 
+- ✅ Part 1 example (2)
+- ✅ Part 2 example (47)
+- ✅ Parse hailstone (position + velocity)
+- ✅ 2D intersection detection
+- ✅ Parallel lines (no intersection)
+- ✅ Past collisions (reject negative t)
+- ✅ Gaussian elimination (6×6 system)
+- ✅ Local search finds exact integer
+- ✅ Full actual input (both parts)
+
+**Zettelkasten**: [[linear-algebra-fundamentals]], [[computational-geometry-basics]], [[gaussian-elimination]], [[cross-product-applications]], [[local-search-methods]]
+
+**Links**: ← [Day 23](#day-23-a-long-walk) | Day 25 →
 
 ---
 
