@@ -2520,6 +2520,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "rfr-ch05-project-structure"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "ring"
 version = "0.17.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
