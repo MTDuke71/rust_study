@@ -1,0 +1,54 @@
+[package]
+name = "rfr-ch05-project-structure"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+
+[features]
+default = ["std"]
+std = ["serde?/std"]
+advanced = ["networking", "compression"]
+networking = []
+compression = []
+experimental = []
+
+[dependencies]
+serde = { version = "1.0", optional = true, default-features = false }
+
+[target.'cfg(windows)'.dependencies]
+# Windows-specific dependencies would go here
+
+[target.'cfg(unix)'.dependencies]
+# Unix-specific dependencies would go here
+
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+
+[[example]]
+name = "day1_features"
+path = "examples/day1_features.rs"
+
+[[example]]
+name = "day2_workspaces"
+path = "examples/day2_workspaces.rs"
+
+[[example]]
+name = "day3_configuration"
+path = "examples/day3_configuration.rs"
+
+[[example]]
+name = "day4_conditional"
+path = "examples/day4_conditional.rs"
+
+[[example]]
+name = "day5_versioning"
+path = "examples/day5_versioning.rs"
+
+[[example]]
+name = "day6_integration"
+path = "examples/day6_integration.rs"
