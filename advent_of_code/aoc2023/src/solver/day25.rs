@@ -21,13 +21,27 @@ use std::collections::{HashMap, HashSet, VecDeque};
 pub fn solve_part1(input: &str) -> usize {
     let graph = parse_input(input);
     
-    // Find the 3 edges to cut using edge betweenness
-    let cut_edges = find_min_cut(&graph);
+    // Find candidate edges with high betweenness
+    let candidates = find_candidate_edges(&graph, 20);
     
-    // Remove the cut edges and count components
-    let (size1, size2) = count_components_after_cut(&graph, &cut_edges);
+    // Try combinations of 3 edges from candidates
+    for i in 0..candidates.len() {
+        for j in (i + 1)..candidates.len() {
+            for k in (j + 1)..candidates.len() {
+                let cut_edges = vec![
+                    candidates[i].clone(),
+                    candidates[j].clone(),
+                    candidates[k].clone(),
+                ];
+                
+                if let Some((size1, size2)) = try_cut(&graph, &cut_edges) {
+                    return size1 * size2;
+                }
+            }
+        }
+    }
     
-    size1 * size2
+    panic!("No valid 3-cut found");
 }
 
 pub fn solve_part2(_input: &str) -> &'static str {
@@ -66,17 +80,15 @@ fn parse_input(input: &str) -> Graph {
     graph
 }
 
-/// Find edges with highest betweenness (used in many shortest paths)
-fn find_min_cut(graph: &Graph) -> Vec<Edge> {
+/// Find candidate edges with high betweenness
+fn find_candidate_edges(graph: &Graph, top_n: usize) -> Vec<Edge> {
     let mut edge_counts: HashMap<Edge, usize> = HashMap::new();
     
-    // Sample BFS from multiple nodes to find frequently-used edges
-    let nodes: Vec<_> = graph.keys().collect();
-    let sample_size = nodes.len().min(50); // Sample to avoid O(n²) complexity
+    // Do BFS from ALL nodes to get betweenness
+    let nodes: Vec<_> = graph.keys().cloned().collect();
     
-    for i in 0..sample_size {
-        let start = nodes[i].clone();
-        let paths = bfs_count_paths(graph, &start);
+    for start in &nodes {
+        let paths = bfs_count_paths(graph, start);
         
         // Track which edges are used in paths from this start node
         for (edge, count) in paths {
@@ -88,8 +100,40 @@ fn find_min_cut(graph: &Graph) -> Vec<Edge> {
     let mut edges: Vec<_> = edge_counts.into_iter().collect();
     edges.sort_by_key(|(_, count)| std::cmp::Reverse(*count));
     
-    // Return top 3 edges
-    edges.into_iter().take(3).map(|(edge, _)| edge).collect()
+    // Return top N edges
+    edges.into_iter().take(top_n).map(|(edge, _)| edge).collect()
+}
+
+/// Try removing these edges and check if we get exactly 2 components
+fn try_cut(graph: &Graph, cut_edges: &[Edge]) -> Option<(usize, usize)> {
+    // Build graph without cut edges
+    let mut modified_graph: Graph = graph.clone();
+    
+    for (a, b) in cut_edges {
+        if let Some(neighbors) = modified_graph.get_mut(a) {
+            neighbors.remove(b);
+        }
+        if let Some(neighbors) = modified_graph.get_mut(b) {
+            neighbors.remove(a);
+        }
+    }
+    
+    // Find connected components
+    let mut visited: HashSet<String> = HashSet::new();
+    let mut component_sizes: Vec<usize> = Vec::new();
+    
+    for node in modified_graph.keys() {
+        if !visited.contains(node) {
+            let size = component_bfs(&modified_graph, node, &mut visited);
+            component_sizes.push(size);
+        }
+    }
+    
+    if component_sizes.len() == 2 {
+        Some((component_sizes[0], component_sizes[1]))
+    } else {
+        None
+    }
 }
 
 /// BFS that counts how many times each edge is used in shortest paths
@@ -127,35 +171,6 @@ fn normalize_edge(edge: Edge) -> Edge {
     } else {
         (b, a)
     }
-}
-
-/// Count component sizes after removing cut edges
-fn count_components_after_cut(graph: &Graph, cut_edges: &[Edge]) -> (usize, usize) {
-    // Build graph without cut edges
-    let mut modified_graph: Graph = graph.clone();
-    
-    for (a, b) in cut_edges {
-        if let Some(neighbors) = modified_graph.get_mut(a) {
-            neighbors.remove(b);
-        }
-        if let Some(neighbors) = modified_graph.get_mut(b) {
-            neighbors.remove(a);
-        }
-    }
-    
-    // Find connected components
-    let mut visited: HashSet<String> = HashSet::new();
-    let mut component_sizes: Vec<usize> = Vec::new();
-    
-    for node in modified_graph.keys() {
-        if !visited.contains(node) {
-            let size = component_bfs(&modified_graph, node, &mut visited);
-            component_sizes.push(size);
-        }
-    }
-    
-    assert_eq!(component_sizes.len(), 2, "Should have exactly 2 components");
-    (component_sizes[0], component_sizes[1])
 }
 
 /// BFS to find all nodes in a component

@@ -1,6 +1,6 @@
 use aoc2023::solver::{
     day01, day02, day03, day04, day05, day06, day07, day08, day09, day10, day11, day12, day13,
-    day14, day15, day16, day17, day18, day19, day20, day21, day22, day23, day24,
+    day14, day15, day16, day17, day18, day19, day20, day21, day22, day23, day24, day25,
 };
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
@@ -368,6 +368,18 @@ fn benchmark_day24(c: &mut Criterion) {
     });
 }
 
+fn benchmark_day25(c: &mut Criterion) {
+    let input = include_str!("../inputs/day25.txt");
+
+    c.bench_function("day25_part1", |b| {
+        b.iter(|| day25::solve_part1(black_box(input)))
+    });
+
+    c.bench_function("day25_part2", |b| {
+        b.iter(|| day25::solve_part2(black_box(input)))
+    });
+}
+
 criterion_group!(
     benches,
     benchmark_day01,
@@ -393,6 +405,7 @@ criterion_group!(
     benchmark_day20,
     benchmark_day21,
     benchmark_day22,
-    benchmark_day24
+    benchmark_day24,
+    benchmark_day25
 );
 criterion_main!(benches);
