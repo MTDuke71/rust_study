@@ -17,6 +17,12 @@ use std::collections::{HashMap, HashSet, VecDeque};
 /// 
 /// For each edge, count how many shortest paths use it. The 3 edges with highest
 /// betweenness are likely the cut edges.
+/// 
+/// # Mathematical Foundation
+/// 
+/// Uses **graph minimum cut** algorithms (edge betweenness heuristic).
+/// See `zettelkasten/math-foundations/graph-minimum-cut.md` for theoretical background,
+/// alternative algorithms (max-flow, Karger's, Stoer-Wagner), and applications.
 
 pub fn solve_part1(input: &str) -> usize {
     let graph = parse_input(input);

@@ -36,12 +36,10 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 
 **Target**: 20 mathematical concepts documented by **January 25, 2026**
 
-**Current**: 20/20 notes ✅ 🎉 **GOAL ACHIEVED!**
+**Current**: 21/20 notes ✅ 🎉 **GOAL EXCEEDED!**
 
-**Latest additions** (January 24, 2026):
-- `linear-algebra-fundamentals.md` - Cramer's rule, Gaussian elimination (AoC Day 24)
-- `parametric-equations.md` - Parametric line intersection (AoC Day 24)
-- `cross-products-vector-algebra.md` - Variable elimination technique (AoC Day 24)
+**Latest additions** (January 25, 2026):
+- `graph-minimum-cut.md` - Min-cut algorithms, edge betweenness, network analysis (AoC 2023 Day 25)
 
 ---
 
@@ -196,6 +194,10 @@ Each implementation references mathematical foundations:
 11. ✅ `arithmetic-series.md` - Sum formulas, triangular numbers (Project Euler P1)
 12. ✅ `inclusion-exclusion.md` - Set counting, overlaps (Project Euler P1)
 13. ✅ `project-euler-p001.md` - Multiples of 3 or 5 (arithmetic series + inclusion-exclusion)
+14. ✅ `linear-algebra-fundamentals.md` - Cramer's rule, Gaussian elimination (AoC Day 24)
+15. ✅ `parametric-equations.md` - Parametric line intersection (AoC Day 24)
+16. ✅ `cross-products-vector-algebra.md` - Variable elimination technique (AoC Day 24)
+17. ✅ `graph-minimum-cut.md` - Min-cut algorithms, edge betweenness, network analysis (AoC Day 25)
 
 ### **Priority Concepts** (Create these next)
 
