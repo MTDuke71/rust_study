@@ -21,14 +21,6 @@ serde = { version = "1.0", optional = true, default-features = false }
 [target.'cfg(unix)'.dependencies]
 # Unix-specific dependencies would go here
 
-[profile.dev]
-opt-level = 0
-
-[profile.release]
-opt-level = 3
-lto = true
-codegen-units = 1
-
 [[example]]
 name = "day1_features"
 path = "examples/day1_features.rs"

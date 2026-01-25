@@ -10,6 +10,3 @@ colored = "2.1"
 [[bin]]
 name = "weasel"
 path = "src/main.rs"
-
-[profile.release]
-opt-level = 3
