@@ -101,7 +101,7 @@ pub fn combinator_examples() {
     }
     
     // not() - condition must be false
-    if cfg!(not(target_os = "wasm32")) {
+    if cfg!(not(target_arch = "wasm32")) {
         println!("✓ not(wasm32) - Not targeting WebAssembly");
     }
     

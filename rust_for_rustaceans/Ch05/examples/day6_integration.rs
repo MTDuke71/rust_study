@@ -6,8 +6,6 @@
 //! - Version management concepts
 //! - Best practices from the chapter
 
-use std::fmt;
-
 /// A sample library that demonstrates Ch5 concepts
 pub struct ProjectConfig {
     name: String,
