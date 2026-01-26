@@ -1,6 +1,6 @@
 # Oxide Session Context - AI Learning Companion
 
-**Last Updated**: 2026-01-23 (Mission 11 COMPLETE + Day 23 Junction Analysis + RfR Ch4 Error Handling Mastery)
+**Last Updated**: 2026-01-25 (AoC 2023 COMPLETE 50/50 ⭐ + Mission 12-15 Tutorial READMEs + 2026 Plan Updated)
 **Your Name**: Oxide (Rust Learning AI)
 **Name Origin**: Oxide = Iron oxide (Fe₂O₃), the chemical compound known as "rust" - a fitting name for a Rust learning companion! 🦀
 **Purpose**: Restore context across chat sessions to maintain continuity
@@ -28,9 +28,10 @@
 - ✅ **Pair programming style**: Explain each step, wait for confirmation, allow understanding
 - ✅ **Mission reuse**: Scan existing missions for reusable components before implementing
 - ✅ **Multiple exposures**: Concepts need several passes at different depths
+- ✅ **Step-based tutorials**: Removed arbitrary 7-day constraint, expanded to comprehensive step counts
 - ❌ **Avoid**: Dumping complete solutions, abstract theory without examples
 
-### **Key Insight** (2025-12-24)
+### **Key Insight**
 > "Running examples and looking at what happens is >>> than reading 4 paragraphs in a book"
 >
 > This explains why the learning system works:
@@ -41,445 +42,221 @@
 
 ---
 
-## 📖 Current Learning State
+## 📖 Current Learning State (January 2026)
 
-### **Active Focus** (Jan 2026)
-1. **PRIMARY**: Rust for Rustaceans - Chapter 4 (Error Handling) - IN PROGRESS
-   - Ch1 COMPLETE ✅ (Foundations - ownership, lifetimes, variance)
-   - Ch2 COMPLETE ✅ (Types - alignment, layout, traits, existential types)
-   - Ch3 COMPLETE ✅ (Designing Interfaces - traits, SemVer, API design)
-   - **Ch4 IN PROGRESS**: Error Handling
-     - **From/Into golden rule**: "Implement From, use Into" (? uses From!)
-     - **7 error propagation patterns**: Complete examples demonstrating each approach
-     - **Rust vs Python philosophy**: Errors as values, not exceptions - robust by design
-     - **Try trait**: Still unstable (not like Python try/except!)
-   - Ch5 NEXT: Project Structure
-   - Focus: Production error handling, propagation patterns, error chains
-2. **ACTIVE**: Mathematics Integration - "Double Helix" Track
-   - **Math zettelkasten layer**: 1/20 notes created (set-theory-fundamentals)
-   - **Bidirectional linking**: Math theory ↔ code implementations
-   - **Integration plan**: `.github/MATH_INTEGRATION_PLAN.md` (complete roadmap)
-   - **Target**: 20 math notes by Jan 25, Project Euler starts Jan 26
+### **Active Focus** - "Double Helix" Learning Approach
+
+**PRIMARY TRACK: Rust Mastery**
+1. **Rust for Rustaceans - Chapter 5 (Project Structure)**
+   - Ch1-4 COMPLETE ✅ (Foundations, Types, Interfaces, Error Handling)
+   - **Ch5 Day 1 COMPLETE**: Features (cargo feature flags, weak deps, cross-crate control)
+   - Focus: Feature patterns, meta-features, weak dependencies (?), serde integration
+   - Created: [[cargo-feature-patterns]] - 8 design patterns documented
+
+2. **AoC 2023 COMPLETE** ✅ **50/50 STARS** 🎄
+   - **All 25 days solved** (Jan 1-25, 2026)
+   - **Day 25 FINAL**: Snowverload (graph minimum cut, edge betweenness)
+     - Answer: 558376 (product of component sizes)
+     - Performance: 689.67ms → 680.26ms optimized
+     - Visualization: NetworkX + Plotly interactive graphs
+   - **Next**: AoC 2024 backlog problems (continuing through year)
+
+3. **Project Euler - STARTS JAN 26** 🎯
+   - **Schedule**: Monday/Wednesday/Friday (2-3 problems per week)
+   - **Purpose**: Explicit mathematical learning (problems designed to teach)
+   - **Integration**: Each problem → identify math concepts → update zettelkasten
+   - **Target**: 100 problems by Dec 2026
+
+**SECONDARY TRACK: Mathematics Integration**
+4. **Math-Foundations Zettelkasten Layer** (NEW)
+   - **Status**: 1/20 notes created (set-theory-fundamentals)
+   - **Target**: 20 notes by Jan 25 (TODAY), 100+ by Dec 2026
+   - **Coverage**: Discrete math, graph theory, number theory, complexity, type theory
    - **Philosophy**: Making implicit mathematical knowledge explicit
-3. **ACTIVE**: AoC 2023 Problem Solving - 23/25 ⭐
-   - **Day 23 COMPLETE** ✅: A Long Walk (longest path in DAG)
-   - Part 1: 2,170 steps (22.9ms) | Part 2: 6,502 steps (2.38s)
-   - **Graph contraction**: Part 1 = 2 junctions, Part 2 = 36 junctions
-   - **Key insight**: Turns allowed in corridors, but no branching choices = degree-2 vertices
-   - **Performance**: 100× difference explained by junction count (1 path vs exponential paths)
-   - Day 24 NEXT: "Never Tell Me The Odds" (geometry, linear algebra)
-4. **COMPLETED**: Mission 11 - Dynamic Programming with Memoization ✅ **[PRODUCTION READY]**
-   - **Status**: Changed from "Planned" to "✅ COMPLETE" (Jan 23, 2026)
-   - **Benchmarks**: Created comprehensive Criterion suite (5 groups, 19 benchmarks)
-     - Fibonacci: 19.4× speedup (n=20: 0.00055ms → 0.000028ms)
-     - Grid path counting: 61.5× speedup (10×10: 0.0073ms → 0.00012ms)
-     - Zero-copy string slices: 1.35× faster than allocation
-     - Cache operations: 6.4ns average lookup, 32ns insert
-   - **Test coverage**: 94 tests passing (22 lib + 7 integration + 47 unit + 18 doctests)
-   - **Quality**: Zero clippy warnings, complete traceability matrix
-   - **Documentation**: Full README with performance results, REQ-IDs mapped
-5. **ACTIVE**: Zettelkasten knowledge consolidation (492+ notes)
-   - **NEW**: [[sealed-traits]] (comprehensive sealed trait pattern guide)
-   - **NEW**: [[non-exhaustive-pattern]] (complete #[non_exhaustive] reference)
-   - Created: [[common-traits-pattern]], [[asref-trait-ergonomics]]
-   - Created: [[set-theory-fundamentals]] (first math foundations note)
-   - RfR Ch3 deep dive: API design, breaking changes, SemVer survival
-6. **COMPLETED**: Mission 10 - REST API with Union-Find ✅
-7. **COMPLETED**: AoC 2024 (50/50 stars) ✅
-8. **COMPLETED**: AoC 2015 (50/50 stars) ✅
-9. **COMPLETED**: Mission 11 Tutorial Exercise 1 (Fibonacci variants) ✅
-10. **DEFERRED**: Additional missions (paused for RfR mastery)
-11. **ON HOLD**: Daily study format (Week 6 completed, proved disjointed)
+   - **Bidirectional linking**: Math theory ↔ code implementations
+   - **Complete Plan**: `.github/MATH_INTEGRATION_PLAN.md`
 
-### **Learning Flow** ("Double Helix" Approach)
-```
-Rust Book (Ch1-17 COMPLETE) ✅
-         ↓
-Rustaceans Ch3 (Designing Interfaces - IN PROGRESS)
-         ↓
-AoC 2023 (Active problem solving)
-         ↓
-Identify mathematical concepts (set theory, DP, etc.)
-         ↓
-Create/update math-foundations/ zettelkasten notes
-         ↓
-Bidirectional linking: math ↔ code
-         ↓
-    Consolidate patterns in zettelkasten
-         ↓
-    Apply to future missions when resumed
-    (Project Euler starts Jan 26)
-```
+**MISSION TRACK: Production Components**
+5. **Mission 11 - Dynamic Programming** ✅ **PRODUCTION READY**
+   - Complete with benchmarks, traceability, comprehensive tests
+   - Ready for AoC memoization problems
 
-### **Recent Completions** (2026-01-16)
-- ✅ **AoC 2023 Day 16 COMPLETE** - The Floor Will Be Lava (beam tracing simulation)
-  - **Mission 6 Integration**: Refactored from custom grid to mission6::Grid<Tile>
-  - **Performance**: Rayon parallelization → 11.67× speedup (257ms → 22ms on Part 2)
-  - **Code Quality**: 42 lines eliminated, type-safe Coord coordinates
-  - **Integrator Philosophy**: Composed validated components vs custom implementation
-- ✅ **Mission 11 REQ-8 COMPLETE** - AoC Integration Testing & Validation
-  - **Integration Tests**: 7 comprehensive tests validating AoC 2024 Day 19 patterns
-  - **Test Coverage**: 59/59 passing (10 lib + 7 integration + 31 unit + 11 doctests)
-  - **Patterns Validated**: Boolean→counting transformation, zero-copy slicing, memoization
-  - **Phase 5**: Marked complete with success metrics and traceability updates
-- ✅ **Rust for Rustaceans Ch3.3 COMPLETE** - Constrained (Type Modifications & Trait Implementations)
-  - **Topics**: Breaking changes in type modifications, sealed traits, #[non_exhaustive]
-  - **Zettelkasten**: Created [[sealed-traits]] (400+ lines), [[non-exhaustive-pattern]] (450+ lines)
-  - **Key Insights**: SemVer survival guide, defensive API design, eternal maintenance mindset
-  - **Documentation**: ~850 lines of comprehensive reference material
-- ✅ **Zettelkasten Expansion**: 490 → 492+ notes (2 new comprehensive API design references)
-- ✅ **Session Stats**: 4 commits, triple accomplishments (AoC + Mission + RfR study)
-- ✅ **Quality Maintained**: Zero clippy warnings across all work, all tests passing
+6. **Mission 12-15 Tutorial READMEs CREATED** (Jan 25)
+   - **Mission 12**: Binary Search Trees (10 steps) - Tutorial roadmap complete
+     - Step 2 enhanced: BST with visualization (print_tree() method)
+     - Tree patterns: Option<Box<Node<T>>>, deletion cases, validation
+   - **Mission 13**: Heaps & Priority Queues (10 steps)
+     - Binary heap, min-max heap, d-ary variants, Fibonacci heap, external heaps
+   - **Mission 14**: Concurrent Data Structures (10 steps)
+     - Mutex/RwLock/Arc, atomics, lock-free algorithms, epoch reclamation
+   - **Mission 15**: String Algorithms & Pattern Matching (10 steps)
+     - Trie, KMP, Boyer-Moore, Aho-Corasick, Huffman compression
+   - **Format**: Changed from "7 Days" to "Step N" (no arbitrary time limits)
+
+**KNOWLEDGE TRACK: Zettelkasten**
+7. **Zettelkasten Growth** (492+ notes → 1,500+ target)
+   - **NEW**: [[rust-box-recursive-structures]] - Comprehensive Box<T> pattern guide
+   - **NEW**: [[cargo-feature-patterns]] - 8 feature design patterns
+   - **Active layer**: math-foundations/ (1/20 notes, target 20 by EOD)
+   - **Integration**: Rustaceans ↔ AoC ↔ Math ↔ Missions
 
 ---
 
-## 🎯 Integrator Philosophy in Practice
+## 🎯 Key Accomplishments (January 2026)
 
-### **CRITICAL Patterns to Remember**
+### **Week 4 (Jan 22-25) - Triple Crown** 🏆
+- ✅ **AoC 2023 COMPLETE**: 50/50 stars, all 25 days solved
+- ✅ **Mission 12-15 Tutorial READMEs**: Created comprehensive 10-step roadmaps
+- ✅ **2026 Learning Plan Updated**: Added math integration, corrected mission topics
+- ✅ **RfR Ch5 Day 1**: Features exploration, cargo patterns documented
+- ✅ **BST Tutorial Step 2**: Enhanced with tree visualization
+- ✅ **Zettelkasten**: 2 major notes created (Box patterns, Cargo features)
 
-1. **Mission Reuse Before Implementation**
-   - ALWAYS scan `missions/` directory before coding AoC solutions
-   - Grid problems → Mission 6 `Grid<T>`
-   - Graph traversal → Mission 8 `Graph` trait + BFS/DFS
-   - Union-Find → Mission 10 `UnionFind`
-   - HashMap needs → Mission 5
-
-2. **Incremental Development**
-   - Parse input → Test → Verify
-   - Implement core logic → Test → Verify
-   - Solve Part 1 → Confirm → Optimize if needed
-   - Extend to Part 2 → Implement incrementally
-   - User wants to be PART OF THE PROCESS
-
-3. **AoC 2023 Two-Phase Workflow** (Starting Jan 2025)
-   - **Phase 1 (Solve)**: Get both stars fast (<45 min)
-     - Example test first → implement → verify → submit
-     - Quick commit, basic error handling
-   - **Phase 2 (Polish)**: Production quality (<1 hour)
-     - Mission integration → comprehensive tests → benchmark
-     - Visualization (if complex) → optimize (if >10ms)
-     - Summary.md entry (100-150 lines) → zettelkasten (if novel)
-   - **Weekly Review**: Pattern extraction, mission candidates
-   - See: `.github/AOC2023_WORKFLOW_GUIDE.md` for complete methodology
-
-4. **Analogies That Work**
-   - Missions = Validated component libraries (like AUTOSAR SWCs)
-   - Traits = Interface contracts (like AUTOSAR ports)
-   - async/await = Orchestrating I/O (like RTE scheduling runnables)
-   - Ownership = Component lifecycle management
-   - Composition = Integrating Grid + Graph (Mission 6 + 8)
-
-### **Recent Insight** (2026-01-16)
-**Day 16 Performance Optimization - Recognizing Embarrassingly Parallel Work:**
-- Initial implementation: Sequential traces, 258.4ms total
-- Key question: "Is it time to check in parallel?"
-- Pattern recognition: 442 independent starting positions → no shared state
-- Solution: Rayon `.par_iter()` → trivial parallelization
-- Result: 11.67× speedup on Part 2 (257ms → 22ms)
-- Lesson: Always check for isolated work items before optimizing algorithms
-- Integrator insight: Rayon is like AUTOSAR RTE parallel runnable scheduling
-
-**Recent Insight** (2026-01-16)
-**Mission 6 Refactoring - Integrator Philosophy in Action:**
-- User asked: "Any reason we did not use Mission 6 grid system?"
-- Recognition: Custom Grid reinvented Mission 6's validated component
-- Refactoring: (isize, isize) → Coord, Vec<Vec<Tile>> → Grid<Tile>
-- Result: 42 lines eliminated, type-safe coordinates, consistent with other days
-- Key insight: Even when custom code works, mission integration improves architecture
-- This is EXACTLY the integrator approach: compose validated components
-
-**Previous Insight** (2025-12-28)
-**Mission 11 Step 1 - Exponential Complexity Discovery:**
-- Initial test patterns didn't show exponential behavior (fast success paths)
-- Key insight: Success returns on FIRST path → no branching explored
-- Solution: Use patterns `['r', 'rr', 'rrr']` with `'rrr...x'` (fails on 'x')
-- Forces exploring ALL r-combinations before discovering failure
-- Result: Beautiful Fibonacci-style growth (~3.5x every +2 length)
-- Length 25: 68ms (proves exponential pain viscerally!)
-- Setup for tomorrow: Same algorithm with HashMap cache → 6,800x speedup
-
-**Previous Insight** (2025-12-24)
-User realized Mission 4 covered Rc<RefCell<T>> but didn't appreciate details initially:
-- **First pass**: Learn to USE the component
-- **Second pass**: Understand WHY it was designed that way
-- **Future**: Recognize when to APPLY this pattern
-- This validates the zettelkasten approach: multiple exposures deepen understanding
+### **Month 1 Summary (Jan 1-25)**
+- **AoC 2023**: 50/50 stars (COMPLETE)
+- **RfR Progress**: Ch1-4 complete, Ch5 started
+- **Mission 11**: Production ready with benchmarks
+- **Mission 12**: Tutorial Step 2 complete
+- **Missions 13-15**: Tutorial roadmaps created
+- **Math Integration**: Framework established, Project Euler prep complete
+- **Zettelkasten**: 492+ notes (+14 comprehensive notes this month)
 
 ---
 
-## 📋 Repository Context
+## 🔑 Recent Technical Insights
 
-### **Structure**
-- **Type**: LEARNING WORKSPACE (not production app)
-- **Members**: 80+ independent crate members in `Cargo.toml`
-- **Tracks**: Rust Book exercises, AoC solutions, Missions, Tutorials, Daily Study, Zettelkasten
-- **Methodology**: V-Cycle for missions (REQ-IDs, traceability, TDD)
+### **BST Patterns** (Jan 25)
+- **Recursive structures**: Option<Box<Node<T>>> pattern (prevents infinite size)
+- **Bottom-up construction**: Ownership transfer through Box, unwrap for values
+- **Deletion cases**: Leaf (simple), one child (bypass), two children (in-order successor)
+- **Validation**: Recursive bounds checking (min/max propagation)
+- **Duplicates**: Left-bias convention, or wrap in Vec<T> for multi-sets
+- **find()**: Returns Option<&T> (immutable), not Option<&mut T> (breaks BST invariant)
+- **Visualization**: print_tree() with rotated 90° display (right child at top)
+- **Graph connection**: BST traversal = DFS variants (in-order, pre-order, post-order)
 
-### **Key Commands**
-```bash
-# Build/test
-cargo build --workspace
-cargo test -p mission5
-cargo clippy --workspace -- -D warnings  # Zero warnings policy
+### **Cargo Feature Patterns** (Jan 25)
+- **Meta-features**: `advanced = ["networking", "compression"]` (groups)
+- **Weak dependencies**: `serde?/std` syntax (only if serde enabled)
+- **Cross-crate control**: `dependency/feature` activates feature in dependency
+- **Additive principle**: Features only add, never remove functionality
+- **std feature pattern**: `default = ["std"]`, allow no_std builds
+- **Detection**: `#[cfg(feature = "...")]` for conditional compilation
+- **serde pattern**: `std = ["serde?/std"]` weak dep propagates std feature
 
-# Run examples
-cargo run -p mission5 --example demo
-cd rust_book/Ch17/async_concurrency && cargo run --example join_futures
+### **Graph Theory Connections** (Jan 25)
+- **BST ∈ Trees ∈ Graphs**: BST is specialized tree (ordered), tree is acyclic graph
+- **Traversals**: In-order/pre-order/post-order = DFS with different visit timing
+- **Day 25 minimum cut**: Edge betweenness heuristic + exhaustive search
+- **Performance factors**: Edge count (sparse vs dense), branching factor (junctions)
 
-# AoC workflow
-cd advent_of_code/aoc2024
-cargo test day25
-cargo run --bin day25
-
-# Quality checks
-.\scripts\quality-pipeline.ps1
-```
-
-### **File Locations**
-- **Specialized Instructions**: `.github/instructions/*.md` (zettelkasten, mission, daily-study, etc.)
-- **Mathematics Integration**: `.github/MATH_INTEGRATION_PLAN.md` - Complete roadmap (Phase 1/2)
-- **Daily Notes**: `zettelkasten/Daily Notes/YYYY-MM-DD.md`
-- **Zettelkasten**: `zettelkasten/*.md` (490+ interconnected notes)
-- **Math Foundations**: `zettelkasten/math-foundations/*.md` (NEW - 1/20 notes, target 20 by Jan 25)
-- **AoC 2024**: `advent_of_code/aoc2024/src/solver/dayXX.rs`
-- **AoC 2023**: `advent_of_code/aoc2023/src/solver/dayXX.rs` (active)
-- **Missions**: `missions/MissionX/` (V-Cycle with REQ-IDs)
+### **Box<T> for Recursive Types** (Jan 25)
+- **Problem**: `struct Node<T> { left: Node<T>, right: Node<T> }` = infinite size
+- **Solution**: `struct Node<T> { left: Option<Box<Node<T>>>, right: Option<Box<Node<T>>> }`
+- **Why Box?**: Fixed size (pointer), heap allocation, ownership transfer
+- **Option**: Represents null/leaf nodes
+- **Pattern**: Used in Mission 4 (LinkedList), Mission 8 (Graph), Mission 12 (BST)
 
 ---
 
-## 🔗 Zettelkasten Conventions
+## 🗓️ What's Next (Jan 26+)
 
-### **Link Naming** (CRITICAL - prevents collisions)
-- Daily study: `[[daily-study/Day24]]` NOT `[[Day24]]`
-- Missions: `[[mission-5]]` NOT `[[Mission5]]`
-- Rust Book: `[[rust_book/rust-book-ch8]]` NOT `[[Ch8]]`
-- Concepts: `[[find-all-components]]` (lowercase-with-dashes)
+### **Immediate (Jan 26)**
+- **Morning**: First Project Euler problem (P1: Multiples of 3 and 5)
+- **Identify math concept**: Number theory, divisibility, arithmetic series
+- **Create math note**: If new concept discovered
+- **Zettelkasten**: Link Project Euler → math note → existing implementations
 
-### **Bidirectional Links**
-- Add outgoing links in new file
-- Update related files with incoming links
-- Update `zettel-index.md` for MOCs
-- Example: interior-mutability ↔ mission-4 linkage (added 2025-12-24)
+### **This Week (Jan 27-31)**
+- **Daily**: Project Euler (M/W/F), AoC 2024 backlog (T/Th)
+- **RfR**: Ch5 Days 2-7 (modules, visibility, workspaces)
+- **Math layer**: Reach 20 math-foundations notes target
+- **Weekend**: Mission 12 Tutorial Step 3 planning
 
----
-
-## 💬 Communication Style Preferences
-
-### **What Works**
-- ✅ **Brief confirmations**: "Done! ✅" or just the answer
-- ✅ **Direct responses**: Answer the question, skip preamble
-- ✅ **Concrete examples**: Show the code, run the output
-- ✅ **Incremental explanations**: One step, verify understanding, next step
-- ✅ **Tool usage without announcement**: Just use the tool, don't say "I'll use X tool"
-
-### **What to Avoid**
-- ❌ Long introductions ("Here's the answer:", "I will now...")
-- ❌ Unnecessary framing or conclusions
-- ❌ Complete solutions dumped at once
-- ❌ Abstract theory without runnable examples
-- ❌ Mentioning tool names to user
+### **February Goals**
+- **RfR**: Ch6-8 (Testing, Macros, Async)
+- **Project Euler**: 15+ problems (reach 30 total by month-end)
+- **Math notes**: 30 total (10 new in February)
+- **AoC**: Continue 2024 backlog, start 2016 year
+- **Mission 12**: Step 3 implementation (Tree Traversal Algorithms)
 
 ---
 
-## 🎓 Key Technical Insights (Recent)
+## 📚 Repository Structure Quick Reference
 
-### **Mission 6 Integration Pattern - Integrator Philosophy Applied** (2026-01-16)
-- **Problem**: AoC Day 16 initially used custom 2D grid implementation
-- **Anti-pattern**: Reinventing Grid when Mission 6 provides validated component
-- **Solution**: Refactored to use mission6::Grid<Tile> and Coord
-- **Benefits**:
-  - 42 lines eliminated (209 → 167 lines)
-  - Type-safe coordinates (Coord{x, y} vs error-prone (isize, isize))
-  - Consistent with other AoC days using Mission 6
-  - Proven correct through Mission 6's comprehensive test suite
-- **Integrator Mindset**: Compose validated components vs custom implementation
-- **Performance**: No regression, benchmarks within measurement noise
-- **Key Insight**: Even when custom code "works", mission integration improves maintainability
+### **Critical Files**
+- **`.github/copilot-instructions.md`** - Complete repository guide
+- **`.github/MATH_INTEGRATION_PLAN.md`** - Mathematics learning roadmap
+- **`zettelkasten/2026_LEARNING_PLAN.md`** - Five Pillars, schedules, milestones
+- **`MONTHLY_CALENDAR.md`** - Daily activities (archived after Week 6)
 
-### **Rayon Parallelization for Embarrassingly Parallel Problems** (2026-01-16)
-- **Pattern Recognition**: 442 independent starting positions in Day 16 Part 2
-- **Embarrassingly Parallel**: No shared state, no dependencies between traces
-- **Implementation**: `.par_iter().map(|start| trace_beam(start)).max()`
-- **Results**: 11.67× speedup (257.34ms → 22.05ms) on Part 2
-- **Overall**: 11.21× total speedup (258.4ms → 23.08ms)
-- **Key Lesson**: Always check for independent computations → trivial parallelization with Rayon
-- **When to use**: Large iteration space with isolated work per item
-- **Dependencies**: Add `rayon = "1.10"` to Cargo.toml, `use rayon::prelude::*`
+### **Specialized Instructions**
+- **Zettelkasten**: `.github/instructions/zettelkasten-instructions.md`
+- **Missions**: `.github/instructions/mission-instructions.md`
+- **Tutorials**: `.github/instructions/tutorial-instructions.md`
+- **Rust Book**: `.github/instructions/rust-book-instructions.md`
 
-### **Sealed Trait Pattern - Controlled Trait Evolution** (2026-01-16)
-- **Problem**: Adding trait implementation is breaking change (coherence rules)
-- **Scenario**: Crate A has trait + blanket impl, Crate B implements trait for foreign type
-  - If Crate A adds same impl later → conflict breaks Crate B compilation
-- **Solution**: Private supertrait prevents external implementations
-  ```rust
-  mod sealed { pub trait Sealed {} }
-  pub trait MyTrait: sealed::Sealed { /* ... */ }
-  impl sealed::Sealed for MyType {}
-  impl MyTrait for MyType { /* ... */ }
-  ```
-- **Effect**: Only crate owning trait can add implementations
-- **Trade-off**: Future-proof evolution vs reduced extensibility
-- **Use when**: Need to add implementations in future minor versions
-- **Examples**: std::error::Error, type-level boolean traits, closed type families
-
-### **#[non_exhaustive] for Non-Breaking Field Addition** (2026-01-16)
-- **Problem**: Adding field to public struct/enum is breaking change
-- **Constructor breakage**: `MyStruct { field1, field2 }` fails when field3 added
-- **Pattern breakage**: `let MyStruct { field1, field2 } = s;` fails when field3 added
-- **Solution**: `#[non_exhaustive]` attribute on struct/variant
-  ```rust
-  #[non_exhaustive]
-  pub struct Config { pub timeout: u64 }
-  // External crates CANNOT use struct literal syntax
-  // MUST use constructor function: Config::new(timeout)
-  ```
-- **Pattern Requirement**: External crates MUST use wildcard in patterns
-  ```rust
-  let Config { timeout, .. } = config; // .. required for #[non_exhaustive]
-  ```
-- **Trade-off**: Future flexibility vs current ergonomics
-- **Best Practice**: Combine with builder pattern or provide constructor
-- **CRITICAL**: Adding #[non_exhaustive] itself is breaking! Use from v1.0.0 if needed
-- **Use when**: Config/options structs, error enums that may grow
-
-### **Mission 11 Integration Testing - Real AoC Validation** (2026-01-16)
-- **REQ-8**: Validate Mission 11 patterns with actual AoC problems
-- **Test Suite**: 7 integration tests using AoC 2024 Day 19 (towel patterns)
-- **Key Tests**:
-  - `req8_aoc_part1_boolean_existence`: Validates memoization with boolean return
-  - `req8_aoc_part2_counting_transformation`: Proves boolean→counting transformation
-  - `req8_aoc_memoization_cache_effectiveness`: Verifies cache prevents recomputation
-  - `req8_aoc_zero_copy_string_slicing`: Validates `&'a str` lifetime patterns
-- **Coverage**: REQ-2 (HashMap), REQ-3 (lifetimes), REQ-4 (memoization), REQ-6 (transformation)
-- **Result**: 59/59 tests passing (10 lib + 7 integration + 31 unit + 11 doctests)
-- **Lesson**: Real-world validation proves mission patterns work beyond toy examples
-
-### **Mathematics in Code - Making Implicit Explicit** (2026-01-04)
-- **Philosophy**: You already use math daily (HashSet = set theory, DP = optimal substructure)
-- **Goal**: Make implicit mathematical knowledge explicit through zettelkasten
-- **Bidirectional linking**: Math theory ↔ implementations (AoC, missions)
-- **Set Theory Example (AoC Day 4)**:
-  - Membership testing: $x \in W$ ↔ `winning.contains(n)`
-  - Intersection: $P \cap W$ ↔ `.filter(|n| winning.contains(n))`
-  - Cardinality: $|S|$ ↔ `.count()`
-  - Performance: O(1) avg hash-based vs O(n) linear → 3× speedup
-- **"Double Helix" Learning**: Rust mastery + Math foundations intertwined
-
-### **Trait Patterns - Common Traits & AsRef** (2026-01-04)
-- **Common Traits Pattern**: Systematic trait selection based on type purpose
-  - Value types: Debug, Clone, PartialEq, Eq, Hash, Default
-  - Collections: IntoIterator, FromIterator, Index, Deref
-  - Newtypes: Deref, AsRef, Display
-  - Marker traits: Send, Sync (auto-derived unless raw pointers)
-- **AsRef Ergonomics**: Flexible APIs accepting anything convertible
-  - Pattern: `fn process<P: AsRef<Path>>(path: P)` accepts &Path, PathBuf, &str, String
-  - Zero-cost abstraction: Compiles to same code as `&T`
-  - Use when: Want flexibility without runtime cost
-  - Don't use when: Only one type accepted (prefer `&T` directly)
-- **Deref Method Resolution** ("Bubble" behavior):
-  1. Check inherent methods on wrapper type T
-  2. If not found, deref to target type U
-  3. Check methods on U (repeats if U also derefs)
-  - Static methods pattern: `fn into_inner(this: Self)` avoids ambiguity
-  - Direct field access bypasses Deref (privileged access for efficiency)
-
-### **Forward-Propagation DP Pattern** (2026-01-04)
-- **When to use**: Items affect future items only (no backwards dependencies)
-- **Pattern**: State accumulates forward, one-pass solution
-- **AoC Day 4 Example**: Scratchcard copies cascade forward
-  - Each card with N matches wins copies of next N cards
-  - Copies also win more copies (multiplier effect)
-  - Result: Exponential growth (1 → 2 → 4 → 8 → 14 copies)
-- **Implementation**: `for (i, item) in enumerate() { state[i+offset] += current }`
-- **Complexity**: O(n × m) where m = average effect range
-
-### **HashSet vs Alternatives for Membership Testing** (2026-01-04)
-- **Nested loops**: O(n × m) - iterate through set for each test (~500µs)
-- **Sort + binary search**: O(m log m + n log m) - sort once, search each (~350µs)
-- **HashSet**: O(m + n) - build set once, O(1) lookups (176.6µs measured)
-- **Lesson**: Data structure choice matters more than algorithm cleverness
-- **Mission connection**: Mission 5 taught HashSet, AoC Day 4 proved why essential
-### **Exponential vs Linear Complexity** (2025-12-28)
-- **Success short-circuits**: Finding one solution is O(n) - returns on first successful path
-- **Failure explores everything**: Must try ALL combinations - O(Fibonacci(n))
-- **Practical impact**: Length 25 with patterns ['r','rr','rrr'] + 'rrr...x':
-  - Naive recursion: 68.27ms (explores ~46,000 combinations)
-  - With memoization (tomorrow): Expected ~10µs (6,800x speedup!)
-- **Key lesson**: Memoization = trading space (HashMap cache) for time (avoid recomputation)
-
-### **Memory Layout & Alignment** (2025-12-28)
-- Alignment = address divisibility (u32 at 4-byte boundary, u64 at 8-byte)
-- Padding bytes added for alignment → affects struct size
-- repr(Rust) = default, compiler optimizes field order
-- repr(C) = C-compatible layout, predictable ordering for FFI
-- repr(packed) = minimal size, unaligned access risks
-- repr(transparent) = zero-cost wrapper, same layout as inner type
-
-### **Interior Mutability** (2025-12-24)
-- Rust's guarantee: "No aliased mutable access" NOT "shared data is immutable"
-- RefCell "safer" in philosophy: Fails loudly (panic) vs Cell's silent races
-- Safety hierarchy: Compile-time > Runtime panic > Runtime silent > Unsafe
-- Type system signals intent: `&Cell<T>` explicitly shows mutation capability
-- Rc<RefCell<T>> pattern: Shared ownership + interior mutability (Mission 4)
-
-### **REST API Production Quality** (2025-12-28)
-- OpenAPI/Swagger with utoipa (automatic spec generation from Rust types)
-- Structured error responses with semantic codes (INVALID_SIZE, INSTANCE_NOT_FOUND)
-- Docker multi-stage builds (rust:latest → debian:bookworm-slim, ~80MB final)
-- Criterion benchmarking proves algorithmic complexity (O(α(n)) verified)
-- Integration tests with tower::ServiceExt::oneshot (no server needed)
-
-### **AoC Patterns**
-- Always normalize line endings: `.replace("\r\n", "\n")` before `split("\n\n")`
-- Direction-aware scanning beats universal counting (Day 25 locks/keys)
-- Iterator chains for validation: `zip()` + `all()` with short-circuit
-- Zero-allocation functional approaches preferred
-
-### **Async/Await** (Ch17)
-- Tokio as primary runtime
-- `tokio::join!` for concurrent execution
-- `tokio::select!` for racing futures
-- Streams for async iteration
-- Understanding: Runtime = AUTOSAR RTE, Tasks = Runnables
+### **Active Work Areas**
+- **`rust_for_rustaceans/Ch05/`** - Current chapter work
+- **`advent_of_code/aoc2023/`** - COMPLETE (50/50 stars)
+- **`advent_of_code/aoc2024/`** - Backlog problems
+- **`project_euler/`** - NEW (starts Jan 26)
+- **`tutorials/Mission12_tut/`** - BST learning progression
+- **`zettelkasten/math-foundations/`** - Mathematics layer
 
 ---
 
 ## 🚀 Restore Instructions for New Chat
-
-**If starting fresh chat, have the AI read in this order:**
-
-1. **This file** (`OXIDE_SESSION_CONTEXT.md`) - Overview and current state
-2. **`.github/copilot-instructions.md`** - Repository structure, workflows, conventions
-3. **Specialized instruction** for task type:
-   - Zettelkasten: `.github/instructions/zettelkasten-instructions.md`
-   - Missions: `.github/instructions/mission-instructions.md`
-   - Daily Study: `.github/instructions/daily-study-instructions.md`
-   - Rust Book: `.github/instructions/rust-book-instructions.md`
-4. **Most recent Daily Note** - What happened in last session
-5. **Zettelkasten index** - `zettelkasten/zettel-index.md` for navigation
 
 **Quick Restore Prompt**:
 ```
 I'm continuing my Rust learning journey. Please read:
 1. .github/OXIDE_SESSION_CONTEXT.md (you are Oxide, my AI companion)
 2. .github/copilot-instructions.md (repository context)
-3. zettelkasten/Daily Notes/YYYY-MM-DD.md (last session)
+3. zettelkasten/Daily Notes/2026-01-25.md (last session - if exists)
 
 Then let me know you're ready to continue!
 ```
 
+**If starting specific task, also read:**
+- Zettelkasten work → `.github/instructions/zettelkasten-instructions.md`
+- Mission implementation → `.github/instructions/mission-instructions.md`
+- Tutorial creation → `.github/instructions/tutorial-instructions.md`
+- Math integration → `.github/MATH_INTEGRATION_PLAN.md`
+
 ---
 
-## 📝 Update Protocol
+## 📝 Session Update Protocol
 
 **Update this file when:**
-- ✅ Major learning milestones (completing chapters, missions, AoC years)
-- ✅ Significant insights about learning style or preferences
-- ✅ Changes to active focus or learning strategy
-- ✅ New patterns discovered (technical or workflow)
-- ✅ End of major sessions (weekly or after substantial work)
+- ✅ Major milestones (completing AoC years, chapters, missions)
+- ✅ Significant insights about learning style or technical concepts
+- ✅ Changes to active focus or strategy
+- ✅ New patterns discovered (workflow or code)
+- ✅ End of week or after substantial work
 
-**Update Location**: Section-specific (Learner Profile, Current Learning State, Technical Insights, etc.)
+**Archive old version when:**
+- File exceeds ~500 lines
+- Major phase transition (e.g., completing RfR book)
+- Monthly reviews (keep last 2 months active)
+
+---
+
+## 🎓 Learning Philosophy Reminders
+
+### **For AI Assistants (Oxide)**
+- **Incremental**: Build step-by-step, explain each stage
+- **Evidence-based**: Show running examples, not just theory
+- **Integrator mindset**: Suggest mission reuse before custom implementation
+- **AUTOSAR analogies**: Use when explaining Rust concurrency/async patterns
+- **Mathematical connections**: Identify and document concepts explicitly
+
+### **For Matt**
+- **Month 1 COMPLETE**: AoC 2023 done, Mission 11 ready, tutorials planned
+- **Month 2 STARTS**: Project Euler launches, math layer grows, RfR continues
+- **The journey**: Building expertise AI can't replicate (deep pattern recognition + mathematical rigor)
+- **The advantage**: By Dec 2026, you'll have wisdom (experience + understanding) not just knowledge
+- **The best is yet to come**: 300 AoC + 100 Project Euler + 15 missions + 1,500 zettelkasten notes = systematic mastery
 
 ---
 
@@ -489,29 +266,5 @@ Then let me know you're ready to continue!
 
 ---
 
-*Last session highlights* (2026-01-16):
-- 🎯 **Triple Accomplishments**: AoC optimization + Mission validation + RfR study
-- 🚀 **Day 16 Complete**: 11.67× speedup with Rayon, Mission 6 integration (42 lines eliminated)
-- ✅ **Mission 11 REQ-8 Complete**: 7 integration tests, validates AoC 2024 Day 19 patterns
-- 📚 **RfR Ch3.3 Complete**: Sealed traits + #[non_exhaustive] patterns documented
-- 🗂️ **Zettelkasten**: 2 comprehensive API design notes (~850 lines total)
-- 💡 **Key Insight**: Integrator philosophy applied - Mission 6 refactoring vs custom grid
-- 🔧 **Performance**: Embarrassingly parallel work → trivial Rayon parallelization
-- 📊 **Quality**: 4 commits, 59/59 tests passing, zero clippy warnings
-- 🎓 **Learning Pattern**: Recognize problems (slow code, reinvented wheel) → Apply known solutions (Rayon, missions)
-- 🚀 **Next Steps**: RfR Ch3.4 (Flexible - trait objects, generics), AoC Day 17, Mission 12 planning
-
----
-
-*Previous session highlights* (2026-01-04):
-- 🎯 **Mathematics Integration Framework COMPLETE** - "Double Helix" learning approach established
-- 📚 **MATH_INTEGRATION_PLAN.md** - Comprehensive roadmap: zettelkasten layer (Jan 4-25) + Project Euler (Jan 26+)
-- 🔬 **set-theory-fundamentals.md** - First math note (600+ lines) with formal definitions, Rust examples, complexity analysis
-- 🔗 **Bidirectional linking**: AoC Day 4 ↔ set-theory-fundamentals ↔ Mission 5 ↔ Daily Note
-- 🎮 **AoC 2023 Day 4 COMPLETE** - Scratchcards: HashSet 3× faster than nested loops (362.9µs total)
-- 📖 **Rust for Rustaceans Ch3.1-3.2 COMPLETE** - Common traits pattern, AsRef ergonomics, Deref semantics
-- 💡 **Key Insight**: Mathematics already present in code (HashSet = set theory), now making it explicit
-- 🧩 **TrackedString Example**: Static methods pattern, Deref method resolution, privileged field access
-- 📊 **Performance Analysis**: O(1) hash membership vs O(n) linear → real-world 3× speedup measured
-- 🗂️ **Zettelkasten Growth**: 490+ notes total, new math-foundations/ layer (1/20 created, target 20 by Jan 25)
-- 🚀 **Next Steps**: RfR Ch3.3 (Flexible), AoC Day 5, create 2nd math note (DP or graph theory)
+*Previous archive*: `.github/OXIDE_SESSION_CONTEXT_ARCHIVE_2026-01-25.md`
+*Created*: 2026-01-25 (Fresh start for Month 2)
