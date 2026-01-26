@@ -348,53 +348,69 @@
 
 ---
 
-**Q2 2026: Mission 12 - Parser Combinators / Custom Parsing**
-
-**Trigger:** After solving 20+ 2018/2019 problems, identify parsing pain points
+**Q2 2026: Mission 12 - Binary Search Trees**
 
 **April: Requirements & Design**
-- REQ-1: String tokenization utilities
-- REQ-2: Number parsing with error handling
-- REQ-3: Grid/table parsing helpers
-- REQ-4: Iterator-based parsing patterns
-- Design: Small, focused utilities, not full parser framework
+- REQ-1: Generic BST `BinarySearchTree<T: Ord>`
+- REQ-2: Insert, search, delete with O(log n) average complexity
+- REQ-3: Tree balancing (AVL or Red-Black variant)
+- REQ-4: Tree traversal (in-order, pre-order, post-order, level-order)
+- REQ-5: Tree validation and visualization
+- Design: `Option<Box<Node<T>>>` pattern for recursive structure
 
 **May: Implementation & Testing**
-- Apply Rustaceans Ch5-8 concepts
-- Comprehensive error handling (Ch4)
-- Benchmark parsing performance
-- Validate with AoC parsing-heavy problems
+- Apply Rustaceans Ch5-8 concepts (ownership, smart pointers)
+- Implement all three deletion cases (leaf, one child, two children)
+- Comprehensive tree validation tests
+- Tutorial with step-by-step BST learning progression
 
 **June: Tutorial & Documentation**
-- Examples from actual AoC problems
+- 7+ step tutorial (basics → deletion → balancing → traversal)
+- Tree visualization with print_tree()
+- Examples from AoC graph/tree problems
 - Before/after comparisons
+- Integration guide
+
+*Original Q2 Idea (Deferred to 2027): Parser Combinators / Custom Parsing utilities*
 - Integration guide
 
 **Mission 12 Complete:** End of Q2
 
 ---
 
-**Q3 2026: Mission 13-14 (Demand-Driven)**
+**Q3 2026: Mission 13-14**
 
-**Candidates Based on AoC Patterns:**
-- **Mission 13:** Combinatorics toolkit (permutations, combinations, if frequent)
-- **Mission 14:** Iterator chains & functional patterns (if AoC shows need)
-- **Alternative:** Backtracking framework (subset sum, k-partition)
-- **Alternative:** Modular arithmetic utilities (if number theory problems common)
+**Actual Missions (Based on Learning Progression):**
+- **Mission 13:** Heaps & Priority Queues (binary heap, min-max heap, Fibonacci heap, external heaps)
+- **Mission 14:** Concurrent Data Structures (Mutex, RwLock, atomics, lock-free, epoch reclamation)
+
+**Original Candidates (Deferred to 2027):**
+- ~~Combinatorics toolkit~~ → 2027 Mission candidate
+- ~~Iterator chains & functional patterns~~ → 2027 Mission candidate
+- ~~Backtracking framework~~ → 2027 Mission candidate
+- ~~Modular arithmetic utilities~~ → 2027 Mission candidate
 
 **Strategy:**
-- July: Identify need from June AoC problem patterns
-- August: Design + implement one mission
-- September: Second mission OR deep refactor of M1-M10
+- July: Mission 13 (Heaps & Priority Queues) - Design + implement
+  - Binary heap, min-max heap, d-ary variants
+  - Priority queue applications (Dijkstra's algorithm)
+  - Fibonacci heap for O(1) decrease-key
+  - External memory heaps for large datasets
+- August: Mission 14 (Concurrent Data Structures) - Design + implement
+  - Thread safety with Mutex, RwLock, Arc
+  - Atomic operations and memory ordering
+  - Lock-free stack and queue (Michael-Scott algorithm)
+  - Concurrent skip list and epoch-based reclamation
+- September: Tutorial completion and integration testing
 
-**Q3 Complete:** 2 new missions OR 1 mission + major refactoring
+**Q3 Complete:** 2 new missions (M13-14) with comprehensive 10-step tutorials
 
 ---
 
-**Q4 2026: Polish & Review**
+**Q4 2026: Mission 15 & Polish**
 
 **October-November:**
-- Final mission if clear need emerges from 2023 problems
+- **Mission 15:** String Algorithms & Pattern Matching (Trie, KMP, Boyer-Moore, Aho-Corasick, compression)
 - Deep refactor M1-M10 with full year's Rustacean knowledge
 - Apply advanced patterns from Ch9-13
 - Comprehensive documentation updates
@@ -406,7 +422,7 @@
 - Document which missions get used most
 - Plan 2027 missions based on usage data
 
-**2026 End State:** 13-15 production-quality missions
+**2026 End State:** 15 production-quality missions
 
 ---
 
@@ -566,8 +582,10 @@ Create `PROGRESS_2026.md` with:
 - [x] Mission 2: Queue
 ...
 - [ ] Mission 11: Dynamic Programming (Q1 2026)
-- [ ] Mission 12: Parser Utilities (Q2 2026)
-- [ ] Mission 13: TBD (Q3 2026)
+- [ ] Mission 12: Binary Search Trees (Q2 2026)
+- [ ] Mission 13: Heaps & Priority Queues (Q3 2026)
+- [ ] Mission 14: Concurrent Data Structures (Q3 2026)
+- [ ] Mission 15: String Algorithms & Pattern Matching (Q4 2026)
 
 ## Zettelkasten: 488 → 1,500+
 - **Q1 Target:** 600 notes
@@ -632,7 +650,10 @@ Create `PROGRESS_2026.md` with:
 
 ### **By July 1, 2026 (Q2 Complete):**
 - ✅ 170 AoC problems solved (62% complete)
-- ✅ Mission 12 complete (Parser utilities)
+- ✅ Mission 12 complete (Binary Search Trees)
+- ✅ Mission 13 complete (Heaps & Priority Queues)
+- ✅ Mission 14 complete (Concurrent Data Structures)
+- ✅ Mission 15 complete (String Algorithms & Pattern Matching)
 - ✅ 900+ zettelkasten notes
 - ✅ Applied advanced Rustacean patterns to missions
 
@@ -906,7 +927,9 @@ Create `PROGRESS_2026.md` with:
 - Select 3-5 best missions for detailed case studies:
   - Mission 6: Grid data structure (used in 40+ AoC problems)
   - Mission 8: Graph algorithms (BFS/DFS/pathfinding)
-  - Mission 11: Memoization library (DP optimization)
+  - Mission 11: Dynamic Programming (memoization, tabulation, optimization)
+  - Mission 14: Concurrent Data Structures (lock-free algorithms, epoch reclamation)
+  - Mission 15: String Algorithms (Trie, pattern matching, compression)
   - Zero to Production backend service
   - Embedded Rust project (if completed)
 - Write detailed READMEs for each:
@@ -1181,6 +1204,57 @@ trait system and ownership model."
 ✅ Production mindset (you'll have from Zero to Production)  
 ✅ Problem-solving skills (you'll have from 300 AoC)  
 ✅ Code quality focus (you'll have from V-Cycle missions)  
+
+---
+
+## 2027 Mission Ideas (Deferred from 2026 Plan)
+
+**Originally Planned for 2026 Q2-Q3, Now Candidates for 2027:**
+
+### **Mission 16+: Parser Combinators & Utilities**
+- String tokenization utilities
+- Number parsing with comprehensive error handling
+- Grid/table parsing helpers  
+- Iterator-based parsing patterns
+- Integration with AoC input processing
+- *Rationale for deferral*: BST provided more foundational learning value
+
+### **Mission 17+: Combinatorics Toolkit**
+- Permutations generator (with/without repetition)
+- Combinations generator (n choose k)
+- Cartesian product utilities
+- Subset enumeration
+- Integration with AoC combinatorial problems
+- *Rationale for deferral*: Not as frequently needed as heap/concurrent structures
+
+### **Mission 18+: Iterator Chains & Functional Patterns**
+- Custom iterator implementations
+- Functional composition utilities
+- Lazy evaluation patterns
+- Iterator adapter library
+- *Rationale for deferral*: Well-covered by Rust standard library
+
+### **Mission 19+: Backtracking Framework**
+- Generic backtracking solver
+- Subset sum, k-partition problems
+- Constraint satisfaction patterns
+- Pruning heuristics
+- *Rationale for deferral*: Advanced topic, build after mastering M11-15
+
+### **Mission 20+: Modular Arithmetic Utilities**
+- Modular exponentiation
+- Chinese Remainder Theorem
+- Prime number utilities
+- Number theory helpers
+- *Rationale for deferral*: Niche AoC applications
+
+**Selection Criteria for 2027:**
+- Frequency of use in AoC 2026 problems (data-driven)
+- Alignment with Rust for Rustaceans advanced concepts
+- Production applicability beyond AoC
+- Gaps not covered by existing M1-15 library
+
+*These ideas represent valuable future work deferred to make room for the actual Mission 12-15 implementations (BST, Heaps, Concurrency, String Algorithms) which provided better learning progression and foundational coverage.*
 ✅ Passion for Rust (demonstrated by your 2026 journey)  
 
 ---
