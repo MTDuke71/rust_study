@@ -9,7 +9,7 @@
 
 ---
 
-## 📚 The Four Pillars
+## 📚 The Five Pillars
 
 ### 1. **Rust for Rustaceans** (Deep Theory)
 - **Book:** "Rust for Rustaceans: Idiomatic Programming for Experienced Developers" by Jon Gjengset
@@ -23,13 +23,20 @@
 - **Timeline:** January - November 2026
 - **Current:** 45/275 complete (2015 ✓, 2024 ~50%, 2025 28%)
 
-### 3. **Zettelkasten Growth** (Knowledge Integration)
+### 3. **Mathematics Integration** (Foundational Layer)
+- **Zettelkasten Math Layer:** Document mathematical concepts from AoC/missions
+- **Project Euler:** 2-3 problems per week (starts Jan 26)
+- **Goal:** Make implicit mathematical knowledge explicit
+- **Target:** 20 math-foundations notes by Jan 25, 100+ by year-end
+- **Topics:** Set theory, graph theory, number theory, complexity analysis, type theory
+
+### 4. **Zettelkasten Growth** (Knowledge Integration)
 - **Goal:** Build comprehensive, interconnected knowledge graph
 - **Current:** 488 notes
-- **Target:** 1,500+ notes by year-end
-- **Focus:** Connect Rustaceans concepts ↔ AoC patterns ↔ Mission implementations
+- **Target:** 1,500+ notes by year-end (including math-foundations layer)
+- **Focus:** Connect Rustaceans concepts ↔ AoC patterns ↔ Mission implementations ↔ Math foundations
 
-### 4. **Mission Build-Up** (Production Components)
+### 5. **Mission Build-Up** (Production Components)
 - **Goal:** Expand mission library with demand-driven implementations
 - **Pace:** Weekend deep work (2-4 hours)
 - **Target:** 3-5 new missions (total: 13-15 by Dec 2026)
@@ -52,10 +59,13 @@
   - Links to missions/AoC problems
 - Highlight for weekend AI elaboration
 
-**7:00 - 7:30 PM: Advent of Code Problem (30-45 min)**
-- Solve 1 problem from backlog (2016-2023) or live (2025)
+**7:00 - 7:30 PM: Problem Solving (30-45 min)**
+- **Jan 1-25**: Advent of Code 2023 Days 1-25 (completing 2023)
+- **Jan 26+**: Project Euler problems (2-3 per week, Monday/Wednesday/Friday)
+- **Throughout**: AoC backlog (2016-2024) on alternate days
 - Use AI assistance for initial solution
 - Quick review to understand approach
+- **Identify mathematical concepts** used in solution
 - Commit solution with brief notes
 - Light zettelkasten update if novel pattern
 
@@ -93,9 +103,11 @@
 - Run clippy and ensure zero warnings
 
 **Part 2: Zettelkasten Integration (30-60 min)**
+- **Mathematical concepts**: Create/update math-foundations notes for concepts used this week
+- **Bidirectional linking**: Code → math note (doc comments), math note → code (implementation section)
 - Create/update mission-related notes
 - Link Rustaceans concepts to mission implementation
-- Connect AoC patterns to relevant concepts
+- Connect AoC/Project Euler patterns to relevant concepts
 - Update MOC (Map of Content) files
 - Review week's learning and connections
 
@@ -463,7 +475,32 @@
 
 ## 🧠 Zettelkasten Growth Strategy
 
-### **Current Status:** 488 notes
+### **Current Status:** 488 notes (including 1 math-foundations note)
+### **Target:** 1,500+ notes by year-end
+
+### **Knowledge Layers**:
+
+**1. Rust Concepts Layer** (existing)
+- Rust Book chapters, Rustaceans concepts
+- Language features, patterns, idioms
+- ~200 notes currently
+
+**2. Implementation Layer** (existing)
+- Mission implementations, AoC solutions
+- Algorithms, data structures
+- ~150 notes currently
+
+**3. Mathematics Layer** (NEW - Jan 2026)
+- `zettelkasten/math-foundations/`
+- Discrete math, graph theory, number theory, complexity analysis
+- **Target**: 20 notes by Jan 25, 100+ by Dec 2026
+- **Strategy**: Document concepts as they appear in AoC/Project Euler
+- **Integration**: Bidirectional links (math ↔ code)
+
+**4. Integration Layer** (existing)
+- Connections between concepts
+- Pattern recognition, MOC files
+- ~138 notes currently
 
 ### **2026 Goal:** 1,500+ interconnected notes
 
@@ -484,6 +521,14 @@
 - 230 problem solution notes (brief)
 - 20+ deep dive notes (complex/novel problems)
 - 30+ pattern notes (parsing strategies, DP patterns, graph techniques)
+
+**Mathematics Notes (100+ new notes):**
+- **Discrete Math:** Set theory, graph theory, combinatorics, number theory
+- **Computational:** Complexity analysis, DP theory, algorithm correctness
+- **Type Theory:** Algebraic data types, category theory patterns in Rust
+- **Applied:** Linear algebra (grids), probability, numerical methods
+- **Project Euler specific:** Prime algorithms, modular arithmetic, sequences
+- **Integration:** Bidirectional links from math concepts to code implementations
 
 **Mission Notes (30+ new notes):**
 - 3-5 new mission overview notes
@@ -526,13 +571,14 @@
 - `zettelkasten/rustaceans-index.md` - Chapter navigation (NEW)
 - `zettelkasten/aoc-patterns-index.md` - Problem pattern catalog (NEW)
 - `zettelkasten/rust-concepts-index.md` - Concept hierarchy (NEW)
+- `zettelkasten/math-foundations/README.md` - Math layer navigation (NEW)
 
 ### **Bidirectional Link Strategy:**
 
 **Every new note includes:**
 - `*Related:*` section with outgoing [[links]]
 - Update linked notes with incoming references
-- Tags: `*Tags: #rustaceans #mission #aoc #pattern*`
+- Tags: `*Tags: #rustaceans #mission #aoc #mathematics #pattern*`
 - Date created and last updated
 
 **Example:**
@@ -540,7 +586,8 @@
 # Dynamic Programming with Memoization
 
 *Related:* [[rustaceans-ch4]], [[mission-11]], [[aoc-day07-2025]], [[hash-maps]]
-*Tags:* #algorithm #optimization #rustaceans #mission
+*Mathematics:* [[dynamic-programming-theory]], [[complexity-theory]]
+*Tags:* #algorithm #optimization #rustaceans #mission #mathematics
 
 [Content...]
 
@@ -550,7 +597,109 @@
 - [[mission-11]] - Implementation uses this pattern
 - [[aoc-day07-2025]] - Part 2 deep dive example
 - [[recursion-patterns]] - Optimization technique
+- [[dynamic-programming-theory]] - Mathematical foundation
 ```
+
+---
+
+## 🧮 Mathematics Integration Strategy
+
+**Reference:** See `.github/MATH_INTEGRATION_PLAN.md` for complete details
+
+### **Goal:** Make implicit mathematical knowledge explicit
+
+### **Two-Track Approach:**
+
+**Track 1: Math-Foundations Zettelkasten Layer**
+- **Purpose**: Document mathematical concepts as they appear in your work
+- **Location**: `zettelkasten/math-foundations/`
+- **Workflow**: Notice concept → Create/update note → Link bidirectionally
+- **Coverage**: Discrete math, graph theory, number theory, complexity, type theory
+
+**Track 2: Project Euler Problem Solving**
+- **Start Date**: January 26, 2026
+- **Pace**: 2-3 problems per week (Monday/Wednesday/Friday)
+- **Purpose**: Explicit mathematical learning (problems designed to teach)
+- **Integration**: Each problem identifies concepts → Updates zettelkasten
+
+### **Mathematics Documentation Workflow:**
+
+**When solving AoC or Project Euler:**
+1. **Solve the problem** (code first)
+2. **Identify mathematical concepts** used in solution:
+   - Data structures = set/graph theory
+   - Algorithms = complexity theory, dynamic programming
+   - Optimization = number theory, modular arithmetic
+3. **Check if concept note exists** in `zettelkasten/math-foundations/`
+4. **Create or update** the concept note:
+   - Mathematical definition and properties
+   - Link to code implementations (missions, AoC, Project Euler)
+   - Code examples demonstrating the concept
+5. **Add bidirectional links**:
+   - From code (doc comment): `/// See [[set-theory-fundamentals]]`
+   - From math note: \"Rust Implementations: [[aoc-2023-day04]]\"
+6. **Document in daily note**: What mathematical insight did you gain?
+
+### **Math-Foundations Note Structure:**
+
+```markdown
+# [Mathematical Concept]
+
+**Field**: [Discrete Math / Graph Theory / Number Theory / etc.]
+
+**Definition**: [Formal mathematical definition]
+
+**Key Theorems/Properties**:
+- Theorem 1: ...
+- Property 1: ...
+
+**Rust Implementations**:
+- [[Mission X]]: [How it uses this concept]
+- [[AoC Day Y]]: [Application in puzzle]
+- [[Project Euler PZ]]: [Mathematical technique]
+
+**Code Examples**:
+```rust
+// Illustrative implementation
+```
+
+**Related Concepts**:
+- [[prerequisite-concept]]
+- [[related-concept]]
+- [[advanced-application]]
+
+**Resources**:
+- [External links to learn more]
+
+---
+
+*Tags: #mathematics #[field] #[specific-area]*
+```
+
+### **2026 Mathematics Milestones:**
+
+- **Jan 25**: 20 math-foundations notes (set theory, graph basics, complexity)
+- **Mar 31**: 30 notes + 30 Project Euler problems
+- **Jun 30**: 40 notes + 50 Project Euler problems
+- **Sep 30**: 70 notes + 70 Project Euler problems
+- **Dec 31**: 100+ notes + 100+ Project Euler problems
+
+### **Why This Matters:**
+
+**For Learning:**
+- Mathematical rigor strengthens algorithmic thinking
+- Formal foundations prevent \"just memorizing solutions\"
+- Connects disparate problems through shared mathematical structures
+
+**For Career:**
+- Demonstrates theoretical depth, not just practical coding
+- Strong mathematical background = competitive advantage
+- Can explain *why* algorithms work, not just *how*
+
+**For Portfolio:**
+- Math-foundations zettelkasten shows systematic learning
+- Project Euler completion demonstrates mathematical sophistication
+- Bidirectional linking shows integration ability
 
 ---
 
@@ -588,18 +737,19 @@ Create `PROGRESS_2026.md` with:
 - [ ] Mission 15: String Algorithms & Pattern Matching (Q4 2026)
 
 ## Zettelkasten: 488 → 1,500+
-- **Q1 Target:** 600 notes
-- **Q2 Target:** 900 notes
-- **Q3 Target:** 1,200 notes
-- **Q4 Target:** 1,500+ notes
+- **Q1 Target:** 600 notes (including 20 math-foundations)
+- **Q2 Target:** 900 notes (including 40 math-foundations)
+- **Q3 Target:** 1,200 notes (including 70 math-foundations)
+- **Q4 Target:** 1,500+ notes (including 100+ math-foundations)
 
 ## Key Milestones
-- [ ] Jan 31: Rustaceans Ch 1-4 complete, M11 design phase
-- [ ] Mar 31: Rustaceans complete, M11 complete, 110 AoC done
-- [ ] Jun 30: M12 complete, 170 AoC done
-- [ ] Sep 30: M13-14 complete, 245 AoC done
-- [ ] Nov 30: All historical AoC complete (275/275)
-- [ ] Dec 31: AoC 2026 complete (300/300), 13-15 missions
+- [ ] Jan 25: AoC 2023 complete (50/50 stars), 20 math-foundations notes
+- [ ] Jan 31: Rustaceans Ch 1-4 complete, M11 design phase, Project Euler started
+- [ ] Mar 31: Rustaceans complete, M11 complete, 110 AoC done, 30 Project Euler
+- [ ] Jun 30: M12 complete, 170 AoC done, 50 Project Euler, 40 math notes
+- [ ] Sep 30: M13-14 complete, 245 AoC done, 70 Project Euler, 70 math notes
+- [ ] Nov 30: All historical AoC complete (275/275), 100 Project Euler
+- [ ] Dec 31: AoC 2026 complete (300/300), 13-15 missions, 100+ math notes
 ```
 
 ### **Weekly Review (Sunday Evening - 15 min):**
@@ -610,20 +760,25 @@ Create `PROGRESS_2026.md` with:
 
 **Completed:**
 - ✅ AoC problems: 5 (2016 Days 1-5)
+- ✅ Project Euler: 2 problems (P1-P2)
 - ✅ Rustaceans: Ch 3 reading complete
 - ✅ Mission 11: Requirements defined
 - ✅ Zettelkasten: Ch 3 AI-elaborated note added
+- ✅ Math-foundations: Created [[number-theory-basics]] note
 
 **Insights:**
 - Trait object vs generic pattern now clear
 - Found 3 AoC problems needing memoization → validates M11
 - Rustaceans variance section clicked with examples
+- **Mathematical**: Project Euler P2 revealed Fibonacci optimizations
 
 **Next Week:**
 - AoC 2016 Days 6-10
+- Project Euler P3-P5 (primes, number theory)
 - Rustaceans Ch 4 (Error Handling)
 - Mission 11: Start implementation
 - Create error pattern zettel notes
+- Document prime number algorithms in math-foundations
 ```
 
 ### **Monthly Review (Last Sunday - 30 min):**
