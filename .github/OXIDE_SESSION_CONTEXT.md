@@ -209,6 +209,8 @@
 
 ## 🚀 Restore Instructions for New Chat
 
+### **For GitHub Copilot (VS Code)**
+
 **Quick Restore Prompt**:
 ```
 I'm continuing my Rust learning journey. Please read:
@@ -224,6 +226,92 @@ Then let me know you're ready to continue!
 - Mission implementation → `.github/instructions/mission-instructions.md`
 - Tutorial creation → `.github/instructions/tutorial-instructions.md`
 - Math integration → `.github/MATH_INTEGRATION_PLAN.md`
+
+### **For Direct Claude (claude.ai or API)**
+
+**Quick Start** - Paste this context file and use this prompt:
+
+```
+You are Oxide, my Rust learning AI companion. I've attached my session context file.
+
+Key repository info:
+- Location: rust_study (local: d:\repos\rust_study, GitHub: MTDuke71/rust_study)
+- Structure: Cargo workspace with 80+ members (missions, tutorials, AoC years, Rust Book chapters)
+- Quality: Zero clippy warnings policy, V-Cycle methodology for missions
+- Conventions: Mission tests named req{N}_*, zettelkasten links use [[path/file]] format
+
+Current focus: [Tell me what you want to work on]
+
+Ready to continue!
+```
+
+**When Claude Needs More Context:**
+
+If working on specific areas, paste these summaries when requested:
+
+**Repository Structure (Embedded Quick Reference)**:
+```
+rust_study/
+├── missions/Mission{1-11}/           # 11 production-quality data structures (V-Cycle)
+├── tutorials/Mission{11-15}_tut/     # Step-by-step learning progressions
+├── advent_of_code/
+│   ├── aoc2015/                      # 50/50 ⭐ COMPLETE
+│   ├── aoc2023/                      # 50/50 ⭐ COMPLETE (Jan 2026)
+│   ├── aoc2024/                      # Backlog
+│   └── aoc2022/                      # Next (Feb 2026)
+├── project_euler/                    # NEW - Starts Jan 26 (2/day final week)
+├── rust_book/Ch{1-17}/              # Rust Book exercises (80+ workspace members)
+├── rust_for_rustaceans/Ch{1-5}/     # Current: Ch5 (Ch1-4 COMPLETE)
+├── zettelkasten/
+│   ├── Daily Notes/                  # Daily learning logs
+│   ├── math-foundations/             # NEW - Math concepts layer (1/20 notes)
+│   └── [490+ interconnected notes]
+└── .github/
+    ├── copilot-instructions.md       # Complete repo guide (Copilot-specific)
+    └── MATH_INTEGRATION_PLAN.md     # Mathematics roadmap
+```
+
+**Mission Status Quick Reference**:
+- ✅ Mission 1-10: COMPLETE (Stack, Queue, BinarySearch, LinkedList, HashMap, Grid, GraphRep, GraphAlgo, Dijkstra, UnionFind)
+- ✅ Mission 11: COMPLETE (Dynamic Programming with memoization, benchmarks, 94 tests)
+- 🔄 Mission 12: Tutorial Step 2 complete (BST with visualization)
+- 📋 Mission 13-15: Tutorial roadmaps created (Heaps, Concurrency, String Algorithms)
+
+**Learning Style (Critical for AI assistance)**:
+- **Integrator background**: Compose validated components, not implement from scratch
+- **Evidence-based**: "Running examples >>> reading 4 paragraphs"
+- **Incremental**: Step-by-step implementation, explain each stage
+- **Mission reuse**: Scan existing missions before custom implementation
+- **AUTOSAR analogies**: Use for concurrency/async explanations
+
+**Common Workflows**:
+
+*Solving AoC Problem*:
+1. Check existing missions for reusable components (Grid, Graph, UnionFind, etc.)
+2. Implement incrementally (parse → core logic → Part 1 → optimize → Part 2)
+3. Identify mathematical concepts used
+4. Update zettelkasten if novel pattern
+
+*Creating Zettelkasten Note*:
+- Use `[[path/file]]` format: `[[mission-5]]`, `[[daily-study/Day24]]`, `[[math-foundations/set-theory]]`
+- Add bidirectional links (update related files with incoming references)
+- Include `*Related:*` and `*Tags:*` sections
+
+*Mission Work* (V-Cycle methodology):
+- REQ-IDs in README.md (REQ-1, REQ-2, etc.)
+- Tests named `req{N}_*` (e.g., `req1_generic_support`)
+- Zero clippy warnings: `cargo clippy --workspace -- -D warnings`
+- Traceability matrix: REQ-ID → Implementation → Tests
+
+**No Need to Attach** (I can work without these):
+- Full instruction files (just tell me the task, I know the patterns)
+- Entire daily notes (summarize key points)
+- Complete file listings (describe what you need)
+
+**What TO Attach/Paste** (if needed):
+- Specific code files you want me to review/modify
+- Error messages or test failures
+- Benchmark results for analysis
 
 ---
 
