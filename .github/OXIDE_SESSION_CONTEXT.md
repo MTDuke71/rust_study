@@ -59,13 +59,14 @@
      - Answer: 558376 (product of component sizes)
      - Performance: 689.67ms → 680.26ms optimized
      - Visualization: NetworkX + Plotly interactive graphs
-   - **Next**: AoC 2024 backlog problems (continuing through year)
+   - **Next**: Working backwards - one year per month (Feb = 2022, Mar = 2021, etc.)
 
 3. **Project Euler - STARTS JAN 26** 🎯
-   - **Schedule**: Monday/Wednesday/Friday (2-3 problems per week)
+   - **Schedule**: 2 problems per day from day 26 to end of month (Jan 26-31 = 12 problems)
    - **Purpose**: Explicit mathematical learning (problems designed to teach)
    - **Integration**: Each problem → identify math concepts → update zettelkasten
-   - **Target**: 100 problems by Dec 2026
+   - **Expansion**: May increase based on time taken per problem
+   - **Target**: 100+ problems by Dec 2026
 
 **SECONDARY TRACK: Mathematics Integration**
 4. **Math-Foundations Zettelkasten Layer** (NEW)
@@ -161,23 +162,23 @@
 
 ## 🗓️ What's Next (Jan 26+)
 
-### **Immediate (Jan 26)**
-- **Morning**: First Project Euler problem (P1: Multiples of 3 and 5)
-- **Identify math concept**: Number theory, divisibility, arithmetic series
-- **Create math note**: If new concept discovered
-- **Zettelkasten**: Link Project Euler → math note → existing implementations
+### **Immediate (Jan 26-31)** - Final Week of Month 1
+- **Project Euler**: 2 problems per day (P1-P12 by Jan 31)
+- **Daily workflow**: Solve 2 problems → identify math concepts → update zettelkasten
+- **Math layer**: Continue building toward 20 notes target
+- **RfR**: Ch5 Days 2-7 (modules, visibility, workspaces)
 
 ### **This Week (Jan 27-31)**
-- **Daily**: Project Euler (M/W/F), AoC 2024 backlog (T/Th)
+- **Daily**: Project Euler (2 problems/day = 10 more problems)
 - **RfR**: Ch5 Days 2-7 (modules, visibility, workspaces)
 - **Math layer**: Reach 20 math-foundations notes target
-- **Weekend**: Mission 12 Tutorial Step 3 planning
+- **Total by Jan 31**: 12 Project Euler problems complete
 
 ### **February Goals**
+- **AoC 2022**: Complete all 25 days (working backwards strategy)
+- **Project Euler**: 2/day Feb 26-28 = 6 problems (total: 18 by Feb 28)
 - **RfR**: Ch6-8 (Testing, Macros, Async)
-- **Project Euler**: 15+ problems (reach 30 total by month-end)
 - **Math notes**: 30 total (10 new in February)
-- **AoC**: Continue 2024 backlog, start 2016 year
 - **Mission 12**: Step 3 implementation (Tree Traversal Algorithms)
 
 ---
