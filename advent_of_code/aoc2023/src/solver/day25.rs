@@ -74,11 +74,11 @@ fn parse_input(input: &str) -> Graph {
             
             // Add bidirectional edge
             graph.entry(from.clone())
-                .or_insert_with(HashSet::new)
+                .or_default()
                 .insert(to.clone());
             
             graph.entry(to.clone())
-                .or_insert_with(HashSet::new)
+                .or_default()
                 .insert(from.clone());
         }
     }
