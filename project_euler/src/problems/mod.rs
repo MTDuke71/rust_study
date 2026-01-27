@@ -4,5 +4,7 @@
 //! and excluded from version control per Project Euler guidelines.
 
 pub mod p001;
+pub mod p002;
+pub mod p003;
 
 pub mod registry;

@@ -12,13 +12,15 @@ impl ProblemSolver {
     pub fn solve(problem_num: usize) -> Option<u64> {
         match problem_num {
             1 => Some(super::p001::solve()),
+            2 => Some(super::p002::solve()),
+            3 => Some(super::p003::solve()),
             _ => None,
         }
     }
     
     /// Get list of implemented problems
     pub fn implemented() -> Vec<usize> {
-        vec![1]
+        vec![1, 2, 3]
     }
     
     /// Check if a problem is implemented
