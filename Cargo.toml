@@ -104,3 +104,27 @@ members = [
     "project_euler"]
 
 resolver = "3"
+
+# Workspace-wide metadata inherited by all member crates
+[workspace.package]
+authors = ["MTDuke71"]
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/MTDuke71/rust_study"
+rust-version = "1.82"
+
+# Shared dependencies with consistent versions across workspace
+[workspace.dependencies]
+tokio = { version = "1", features = ["full"] }
+anyhow = "1.0"
+thiserror = "1.0"
+criterion = "0.5"
+
+# Workspace-wide lint configuration for consistent code quality
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+all = "warn"
+pedantic = "warn"

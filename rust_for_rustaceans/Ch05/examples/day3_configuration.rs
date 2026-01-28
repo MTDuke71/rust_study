@@ -6,6 +6,7 @@
 //! - Performance implications
 //! - Dependency patching concepts
 
+use std::hint::black_box;
 use std::time::Instant;
 
 /// Demonstrates the impact of optimization levels
@@ -14,10 +15,23 @@ fn optimization_demo() {
     
     let iterations = 1_000_000;
     
+    // NOTE: Without black_box, the compiler performs constant folding!
+    // In release mode, LLVM recognizes the arithmetic series pattern
+    // and replaces the entire loop with: sum = n*(n-1)/2 = 499,999,500,000
+    // This results in a single `mov` instruction instead of a loop.
+    // See assembly: `cargo rustc --example day3_configuration --release -- --emit asm`
+    // Line: `movabsq $499999500000, %rax`
+    //
+    // Using black_box prevents this optimization, forcing actual iteration.
+    //
+    // Performance comparison (1M iterations):
+    // - Debug mode (opt-level = 0):   ~3.6 ms  (no optimizations)
+    // - Release mode (opt-level = 3): ~202 µs  (18x faster with optimizations)
+    // - Without black_box (release):  ~100 ns  (constant folding - not measuring loop!)
     let start = Instant::now();
     let mut sum = 0u64;
-    for i in 0..iterations {
-        sum += i;
+    for i in 0..black_box(iterations) {
+        sum += black_box(i);
     }
     let duration = start.elapsed();
     
