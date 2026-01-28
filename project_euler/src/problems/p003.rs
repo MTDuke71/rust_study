@@ -29,7 +29,7 @@ pub fn largest_prime_factor(mut n: u64) -> u64 {
     let mut last_factor = 1u64;
 
     // Remove factor 2
-    while n % 2 == 0 {
+    while n.is_multiple_of(2) {
         last_factor = 2;
         n /= 2;
     }
@@ -37,9 +37,9 @@ pub fn largest_prime_factor(mut n: u64) -> u64 {
     // Check odd factors
     let mut f = 3u64;
     while f * f <= n {
-        if n % f == 0 {
+        if n.is_multiple_of(f) {
             last_factor = f;
-            while n % f == 0 {
+            while n.is_multiple_of(f) {
                 n /= f;
             }
         }
