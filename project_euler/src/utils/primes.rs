@@ -34,23 +34,31 @@ pub fn sieve(n: usize) -> Vec<usize> {
         .collect()
 }
 
-/// Check if n is prime
+/// Check if n is prime using trial division with 6k±1 optimization
+///
+/// All primes > 3 are of the form 6k±1. This reduces trial division
+/// candidates by ~33% compared to testing all odd numbers.
 pub fn is_prime(n: u64) -> bool {
     if n < 2 {
         return false;
     }
-    if n == 2 {
+    if n == 2 || n == 3 {
         return true;
     }
-    if n.is_multiple_of(2) {
+    if n.is_multiple_of(2) || n.is_multiple_of(3) {
         return false;
     }
     
+    // All primes > 3 are of form 6k±1
+    // Test divisors: 5, 7, 11, 13, 17, 19, 23, 25, 29, 31, ...
+    // Pattern: 6k-1, 6k+1, 6k+5, 6k+7, ... = 6k-1, 6k+1 repeating
     let limit = (n as f64).sqrt() as u64;
-    for i in (3..=limit).step_by(2) {
-        if n.is_multiple_of(i) {
+    let mut i = 5;
+    while i <= limit {
+        if n.is_multiple_of(i) || n.is_multiple_of(i + 2) {
             return false;
         }
+        i += 6;  // Next candidates: 6k-1 and 6k+1
     }
     true
 }

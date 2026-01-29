@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::p001;
+use project_euler::problems::{p001, p006, p007, p008, p009};
 
 #[test]
 fn test_problem_001() {
@@ -16,3 +16,51 @@ fn test_problem_001_example() {
     assert_eq!(result, 23);
 }
 
+#[test]
+fn test_problem_006() {
+    assert_eq!(p006::solve(), 25164150);
+}
+
+#[test]
+fn test_problem_006_example() {
+    // Example from problem statement: first 10 natural numbers
+    assert_eq!(p006::sum_square_difference(10), 2640);
+}
+
+#[test]
+fn test_problem_007() {
+    assert_eq!(p007::solve(), 104743);
+}
+
+#[test]
+fn test_problem_007_example() {
+    // Example from problem statement: 6th prime is 13
+    assert_eq!(p007::nth_prime(6), 13);
+}
+
+#[test]
+fn test_problem_008() {
+    assert_eq!(p008::solve(), 23514624000);
+}
+
+#[test]
+fn test_problem_008_example() {
+    // Example from problem statement: 4 adjacent digits = 9 × 9 × 8 × 9 = 5832
+    // Testing with a simple string containing 9989 which has product 9 × 9 × 8 × 9 = 5832
+    assert_eq!(p008::largest_product_in_series("9989", 4), 5832);
+}
+
+#[test]
+fn test_problem_009() {
+    assert_eq!(p009::solve(), 31875000);
+}
+
+#[test]
+fn test_problem_009_example() {
+    // Example from problem statement: 3 + 4 + 5 = 12
+    let triplet = p009::find_pythagorean_triplet(12).unwrap();
+    assert_eq!(triplet.a, 3);
+    assert_eq!(triplet.b, 4);
+    assert_eq!(triplet.c, 5);
+    assert_eq!(triplet.product(), 60);
+}
