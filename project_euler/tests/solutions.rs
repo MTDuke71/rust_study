@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010};
 
 #[test]
 fn test_problem_001() {
@@ -63,4 +63,15 @@ fn test_problem_009_example() {
     assert_eq!(triplet.b, 4);
     assert_eq!(triplet.c, 5);
     assert_eq!(triplet.product(), 60);
+}
+
+#[test]
+fn test_problem_010() {
+    assert_eq!(p010::solve(), 142913828922);
+}
+
+#[test]
+fn test_problem_010_example() {
+    // Example from problem statement: primes below 10 sum to 17
+    assert_eq!(p010::sum_primes_below(10), 17);
 }

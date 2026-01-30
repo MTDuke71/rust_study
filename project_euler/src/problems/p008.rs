@@ -72,7 +72,7 @@ const NUMBER: &str = "\
 ///
 /// let number = "123456789";
 /// let product = largest_product_in_series(number, 4);
-/// assert_eq!(product, 5040); // 5 × 6 × 7 × 8
+/// assert_eq!(product, 3024); // 6 × 7 × 8 × 9
 /// ```
 pub fn largest_product_in_series(number: &str, window_size: usize) -> u64 {
     // Convert string to digit array
