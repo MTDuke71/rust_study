@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011};
 
 #[test]
 fn test_problem_001() {
@@ -74,4 +74,21 @@ fn test_problem_010() {
 fn test_problem_010_example() {
     // Example from problem statement: primes below 10 sum to 17
     assert_eq!(p010::sum_primes_below(10), 17);
+}
+
+#[test]
+fn test_problem_011() {
+    assert_eq!(p011::solve(), 70600674);
+}
+
+#[test]
+fn test_problem_011_small_grid() {
+    // Test with a small 4x4 grid
+    let grid = vec![
+        vec![1, 2, 3, 4],
+        vec![5, 6, 7, 8],
+        vec![9, 10, 11, 12],
+        vec![13, 14, 15, 16],
+    ];
+    assert_eq!(p011::largest_product_in_grid(&grid), 43680);
 }
