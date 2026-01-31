@@ -309,6 +309,7 @@ pub fn prime_factors_6k_optimized(mut n: u64) -> Vec<u64> {
 
 ## Related Concepts
 
+- **[[prime-number-theory]]** - Prime distribution and density (complementary focus)
 - **[[trial-division]]** - Primary factorization algorithm
 - **[[divisibility]]** - Fundamental property used in factorization
 - **[[sqrt-bound-theorem]]** - Key optimization
