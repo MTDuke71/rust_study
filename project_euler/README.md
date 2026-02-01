@@ -31,7 +31,7 @@ project_euler/
 │   │   ├── p001.rs              # Problem 1 (Multiples of 3 or 5)
 │   │   ├── p002.rs              # Problem 2 (Even Fibonacci)
 │   │   └── ...                  # Up to p100.rs (public)
-│   │   └── private/             # 101+ solutions (.gitignored)
+│   │   └── private/             # 101+ solutions (.gitignored) - See [README](src/problems/private/README.md)
 │   └── utils/
 │       ├── mod.rs               # Common utilities
 │       ├── primes.rs            # Prime number utilities

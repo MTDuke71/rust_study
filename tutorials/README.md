@@ -57,6 +57,10 @@ Tutorials integrate with the workspace's 3-track learning system:
 | **[Mission4_tut](Mission4_tut/README.md)** | [missions/Mission4](../missions/Mission4/) | Week 3 ownership patterns | Ch4 ownership + Ch15 smart pointers |
 | **[Mission5_tut](Mission5_tut/README.md)** | [missions/Mission5](../missions/Mission5/) | Week 2 collections | Ch8 collections + Ch13 iterators |
 | **[Mission6_tut](Mission6_tut/README.md)** | [missions/Mission6](../missions/Mission6/) | Week 4 algorithms | Ch7 packages + Ch11 testing |
+| **[Mission12_tut](Mission12_tut/README.md)** | [missions/Mission12](../missions/Mission12/) | Advanced parsing | Ch8 strings + Ch13 iterators |
+| **[Mission13_tut](Mission13_tut/README.md)** | [missions/Mission13](../missions/Mission13/) | DAG evaluation | Ch15 smart pointers + Ch16 concurrency |
+| **[Mission14_tut](Mission14_tut/README.md)** | [missions/Mission14](../missions/Mission14/) | Combinatorics | Ch13 iterators + Ch10 generics |
+| **[Mission15_tut](Mission15_tut/README.md)** | [missions/Mission15](../missions/Mission15/) | Backtracking | Ch10 generics + Ch13 iterators |
 
 ### **Alignment Requirements**
 Each tutorial step corresponds to:

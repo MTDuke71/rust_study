@@ -50,6 +50,10 @@
 - [[3-Track Integration]] - How missions, daily study, and Rust Book work together
 - [[V-Cycle Methodology]] - Formal engineering methodology for mission implementations
 - [[Tutorial Engineering]] - Tutorial creation methodology and best practices
+- [[rust-for-rustaceans]] - Advanced Rust patterns and idioms
+  - [[rust-for-rustaceans-ch4]] - Chapter 4: Error Handling
+  - [[../rust_for_rustaceans/Ch04/README|Ch04 Notes]] - Detailed error handling patterns
+  - [[../rust_for_rustaceans/Ch05/README|Ch05 Notes]] - Project structure and testing
 - [[Zettelkasten System]] - Knowledge management system architecture and usage
 - [[claude-code-obsidian-workflow]] - AI-assisted knowledge management with Claude Code
 - [[Learning Plateau Solutions]] - Strategies for overcoming learning challenges
@@ -70,6 +74,8 @@
 
 - **Current Day**: See [[learning-plan]] Day activities
 - **Daily Notes**: [[Daily Notes/README|Daily Notes Index]] - Complete timeline of daily learning activities
+  - Recent: [[Daily Notes/2026-01-29]] - Project Euler Problems 8 & 9
+- **Weekly Plans**: [[weekly plans/2026-W04]] - Weekly planning and retrospectives
 - **Latest Study Notes**: [[Daily Study MOC]] → Current Week
 - **Recent Work**: Check most recently modified files
 - **Daily Workflow**: [[Daily Workflow]] - Systematic learning routine setup
