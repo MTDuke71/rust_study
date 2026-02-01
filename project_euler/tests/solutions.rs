@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013};
 
 #[test]
 fn test_problem_001() {
@@ -102,4 +102,16 @@ fn test_problem_012() {
 fn test_problem_012_example() {
     // Example from problem statement: first triangle with > 5 divisors is 28
     assert_eq!(p012::first_triangle_with_divisors(5), 28);
+}
+
+#[test]
+fn test_problem_013() {
+    assert_eq!(p013::solve(), 5537376230);
+}
+
+#[test]
+fn test_problem_013_string() {
+    let result = p013::first_ten_digits_of_sum();
+    assert_eq!(result, "5537376230");
+    assert_eq!(result.len(), 10);
 }
