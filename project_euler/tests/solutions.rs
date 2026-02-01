@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012};
 
 #[test]
 fn test_problem_001() {
@@ -91,4 +91,15 @@ fn test_problem_011_small_grid() {
         vec![13, 14, 15, 16],
     ];
     assert_eq!(p011::largest_product_in_grid(&grid), 43680);
+}
+
+#[test]
+fn test_problem_012() {
+    assert_eq!(p012::solve(), 76576500);
+}
+
+#[test]
+fn test_problem_012_example() {
+    // Example from problem statement: first triangle with > 5 divisors is 28
+    assert_eq!(p012::first_triangle_with_divisors(5), 28);
 }
