@@ -2,6 +2,8 @@
 
 Advent of Code 2022 solutions with comprehensive documentation.
 
+**Quick Links**: [← AoC Main](../README.md) | [Summary](Problem_Statements/summary_2022.md) | [Day 1 Guide](Problem_Statements/days/day01_function_guide.md) | [Solver Template](../AOC_SOLVER_TEMPLATE.md) | [Quick Start](../AOC_2022_QUICKSTART.md)
+
 ---
 
 ## 📁 Structure

@@ -1,5 +1,9 @@
 # AoC 2022 Quick Start - New Pattern
 
+**Quick Links**: [← AoC Main](README.md) | [AoC 2022 README](aoc2022/README.md) | [Full Solver Template](AOC_SOLVER_TEMPLATE.md) | [Summary Dashboard](aoc2022/Problem_Statements/summary_2022.md)
+
+---
+
 When you start AoC 2022, **copy this template for each day**:
 
 ## Day Template (Copy/Paste for Each Day)

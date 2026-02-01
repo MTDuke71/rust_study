@@ -53,6 +53,8 @@ This template guides creating mathematical write-ups for Project Euler solutions
 
 See [[project_euler/src/problems/pXXX.rs]] for complete code.
 
+**Note**: For problems 101+, see [[../src/problems/private/README|Private Solutions]] (not publicly shared).
+
 ### Key Code Patterns
 ```rust
 // Example of key mathematical pattern used
