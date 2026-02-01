@@ -11,3 +11,12 @@
 # Keep them local only, do not commit to public repository.
 
 /Official_Writeups/
+
+# Account credentials and recovery keys (PRIVATE - SENSITIVE)
+#
+# Project Euler account recovery keys and other sensitive credentials.
+# Keep local only for account recovery purposes.
+
+.env
+.secrets
+account_recovery.txt
