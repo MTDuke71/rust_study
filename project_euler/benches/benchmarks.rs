@@ -13,7 +13,8 @@ fn benchmark_problems(c: &mut Criterion) {
     c.bench_function("Problem 11", |b| b.iter(|| p011::solve()));
     c.bench_function("Problem 12", |b| b.iter(|| p012::solve()));
     c.bench_function("Problem 13", |b| b.iter(|| p013::solve()));
-    c.bench_function("Problem 13 (u128)", |b| b.iter(|| p013::first_ten_digits_of_sum()));
+    c.bench_function("Problem 13 (u128 15-digit)", |b| b.iter(|| p013::first_ten_digits_of_sum()));
+    c.bench_function("Problem 13 (u128 12-digit)", |b| b.iter(|| p013::first_ten_digits_of_sum_12()));
     c.bench_function("Problem 13 (f64)", |b| b.iter(|| p013::first_ten_digits_of_sum_f64()));
 }
 

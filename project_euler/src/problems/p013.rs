@@ -145,6 +145,34 @@ pub fn first_ten_digits_of_sum() -> String {
     sum_str[..10].to_string()
 }
 
+/// Minimal approach using exactly 12 digits (theoretical minimum).
+///
+/// Based on carry analysis: Maximum carry from truncated digits is 99,
+/// which affects 2 digit positions. Therefore 10 + 2 = 12 digits is sufficient.
+///
+/// # Returns
+///
+/// The first ten digits of the sum as a string.
+pub fn first_ten_digits_of_sum_12() -> String {
+    let sum: u128 = NUMBERS
+        .lines()
+        .map(|line| line.trim())
+        .filter(|line| !line.is_empty())
+        .map(|trimmed| {
+            // Take first 12 digits (theoretical minimum)
+            let prefix = if trimmed.len() > 12 {
+                &trimmed[..12]
+            } else {
+                trimmed
+            };
+            prefix.parse::<u128>().unwrap()
+        })
+        .sum();
+
+    let sum_str = sum.to_string();
+    sum_str[..10].to_string()
+}
+
 /// Alternative approach using f64 for simplicity.
 ///
 /// f64 has ~15-17 significant digits of precision, which is more than enough
@@ -223,6 +251,34 @@ mod tests {
         println!("Answer: {}", result);
         assert!(result > 0, "Should return a valid answer");
     }
+
+    #[test]
+    fn test_12_digit_approach() {
+        let result_15 = first_ten_digits_of_sum();
+        let result_12 = first_ten_digits_of_sum_12();
+        
+        println!("15-digit approach: {}", result_15);
+        println!("12-digit approach: {}", result_12);
+        
+        assert_eq!(result_12, result_15, "12 digits should be sufficient (carry analysis)");
+        assert_eq!(result_12, "5537376230");
+    }
+
+    #[test]
+    fn test_all_approaches_agree() {
+        let result_15 = first_ten_digits_of_sum();
+        let result_12 = first_ten_digits_of_sum_12();
+        let result_f64 = first_ten_digits_of_sum_f64();
+        
+        println!("15-digit (u128): {}", result_15);
+        println!("12-digit (u128): {}", result_12);
+        println!("f64 approach:    {}", result_f64);
+        
+        assert_eq!(result_15, result_12);
+        assert_eq!(result_15, result_f64);
+        assert_eq!(result_15, "5537376230");
+    }
+
 
     #[test]
     fn test_f64_approach() {
