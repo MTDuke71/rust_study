@@ -35,3 +35,7 @@ In the above diagram, the symbols indicate whether the path exits each square mo
 This path reaches the goal in `*31*` steps, the fewest possible.
 
 *What is the fewest steps required to move from your current position to the location that should get the best signal?*
+
+---
+
+**Navigation**: [← Day 11](day11.md) | [All Days](README.md) | [Function Guide](day12_function_guide.md) | [Day 13 →](day13.md)

@@ -1,13 +1,16 @@
 use anyhow::{bail, Result};
 
 // Import implemented days - uncomment as you implement them
-// pub mod day01;
+pub mod day01;
 // pub mod day02;
 // ... etc
 
 pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
     match day {
-        // 1 => Ok((day01::solve_part1(input)?, day01::solve_part2(input)?)),
+        1 => {
+            let (p1, p2) = day01::solve(input);
+            Ok((p1.to_string(), p2.to_string()))
+        },
         // 2 => Ok((day02::solve_part1(input)?, day02::solve_part2(input)?)),
         // ... etc
         

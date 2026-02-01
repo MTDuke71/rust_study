@@ -235,3 +235,7 @@ Monkey 2 inspected items 7 times.
 In this example, the two most active monkeys inspected items 101 and 105 times. The level of *monkey business* in this situation can be found by multiplying these together: `*10605*`.
 
 Figure out which monkeys to chase by counting how many items they inspect over 20 rounds. *What is the level of monkey business after 20 rounds of stuff-slinging simian shenanigans?*
+
+---
+
+**Navigation**: [← Day 10](day10.md) | [All Days](README.md) | [Function Guide](day11_function_guide.md) | [Day 12 →](day12.md)

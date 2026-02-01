@@ -48,3 +48,7 @@ Then, monkey `sjmn` has one of its numbers (`30`, from monkey `drzm`), and alrea
 This process continues until `root` yells a number: `*152*`.
 
 However, your actual situation involves considerably more monkeys. *What number will the monkey named `root` yell?*
+
+---
+
+**Navigation**: [← Day 20](day20.md) | [All Days](README.md) | [Function Guide](day21_function_guide.md) | [Day 22 →](day22.md)

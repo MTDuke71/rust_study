@@ -32,3 +32,7 @@ Here's a larger example:
 In the above example, after counting up all the sides that aren't connected to another cube, the total surface area is `*64*`.
 
 *What is the surface area of your scanned lava droplet?*
+
+---
+
+**Navigation**: [← Day 17](day17.md) | [All Days](README.md) | [Function Guide](day18_function_guide.md) | [Day 19 →](day19.md)

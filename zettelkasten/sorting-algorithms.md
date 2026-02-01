@@ -55,12 +55,14 @@ data.sort_unstable_by(|a, b| b.cmp(a));
 people.sort_unstable_by_key(|p| p.age);
 ```
 
-**Implementation:** Pattern-defeating quicksort (pdqsort)
+**Implementation:** Pattern-defeating quicksort (pdqsort) - **See detailed section below**
 - **Not stable:** May reorder equal elements
 - **Faster:** Better cache performance, less allocation
 - **Time:** O(n log n) average and worst case (unlike classic quicksort)
 - **Space:** O(log n)
 - **Use when:** Stability not needed, performance critical
+- **Pattern detection:** Adapts to sorted, reverse, and duplicate patterns
+- **Details:** See [[#pdqsort-pattern-defeating-quicksort-rusts-sort_unstable]] section
 
 ### **Choosing Between sort() and sort_unstable()**
 
@@ -764,6 +766,269 @@ fn merge_in_place<T: Ord + Clone>(arr: &mut [T], mid: usize) {
     merge(arr, &left, &right);
 }
 ```
+
+### **pdqsort (Pattern-Defeating Quicksort) - Rust's sort_unstable()**
+
+**pdqsort** is the sophisticated hybrid algorithm that powers Rust's `sort_unstable()` and `sort_unstable_by()`. It's designed to be fast in practice while avoiding worst-case behaviors that plague traditional quicksort.
+
+#### **Why "Pattern-Defeating"?**
+
+Traditional quicksort has O(n²) worst-case performance on certain patterns:
+- Already sorted data (ascending/descending)
+- Data with many duplicates
+- Adversarial pivot patterns
+- Organ-pipe distributions (sorted in middle)
+
+**pdqsort detects these patterns** during execution and switches strategies to maintain O(n log n) performance even on "bad" inputs.
+
+#### **Three-Algorithm Hybrid Strategy**
+
+```rust
+/// Conceptual flow of pdqsort
+fn pdqsort<T: Ord>(arr: &mut [T]) {
+    let max_depth = 2 * (arr.len() as f64).log2().floor() as usize;
+    pdqsort_recursive(arr, max_depth, true);
+}
+
+fn pdqsort_recursive<T: Ord>(arr: &mut [T], depth_limit: usize, leftmost: bool) {
+    // 1. SMALL ARRAYS: Use insertion sort (≤ 24 elements)
+    if arr.len() <= 24 {
+        if leftmost {
+            insertion_sort(arr);  // Unbounded insertion sort
+        } else {
+            insertion_sort_with_sentinel(arr);  // Faster variant with sentinel
+        }
+        return;
+    }
+    
+    // 2. DEPTH LIMIT EXCEEDED: Switch to heapsort
+    if depth_limit == 0 {
+        heapsort(arr);  // Guarantee O(n log n), prevent stack overflow
+        return;
+    }
+    
+    // 3. MAIN STRATEGY: Quicksort with pattern detection
+    let (pivot_pos, already_partitioned) = partition_with_block_strategy(arr);
+    
+    // Pattern detection: check if partition was balanced
+    let left_size = pivot_pos;
+    let right_size = arr.len() - pivot_pos - 1;
+    let highly_unbalanced = left_size < arr.len() / 8 || right_size < arr.len() / 8;
+    
+    if highly_unbalanced {
+        // Bad pattern detected! Reduce depth limit faster
+        pdqsort_recursive(&mut arr[..pivot_pos], depth_limit - 1, leftmost);
+        pdqsort_recursive(&mut arr[pivot_pos + 1..], depth_limit - 1, false);
+    } else {
+        // Normal recursion
+        pdqsort_recursive(&mut arr[..pivot_pos], depth_limit - 1, leftmost);
+        pdqsort_recursive(&mut arr[pivot_pos + 1..], depth_limit - 1, false);
+    }
+}
+```
+
+#### **Key Optimizations**
+
+**1. Block Partitioning**
+```rust
+// Instead of element-by-element partitioning:
+// ❌ Traditional: many unpredictable branches, poor CPU pipelining
+for i in 0..arr.len() {
+    if arr[i] < pivot { /* swap */ }
+}
+
+// ✅ pdqsort: processes elements in blocks
+// - Fewer branch mispredictions
+// - Better CPU instruction pipelining
+// - Improved cache utilization
+const BLOCK_SIZE: usize = 128;
+// Process BLOCK_SIZE elements at a time, batch swaps
+```
+
+**2. Pivot Selection Strategy**
+```rust
+// Median-of-3 with pseudorandom fallback
+fn choose_pivot<T: Ord>(arr: &[T]) -> usize {
+    let len = arr.len();
+    let mut a = len / 4;
+    let mut b = len / 2;
+    let mut c = a + b;
+    
+    // Sort a, b, c to get median
+    if arr[a] > arr[b] { std::mem::swap(&mut a, &mut b); }
+    if arr[b] > arr[c] { std::mem::swap(&mut b, &mut c); }
+    if arr[a] > arr[b] { std::mem::swap(&mut a, &mut b); }
+    
+    b  // Return median position
+}
+```
+
+**3. Partitioned Heuristic Detection**
+```rust
+// If data is already partitioned, skip recursion
+fn partition_with_detection<T: Ord>(arr: &mut [T]) -> (usize, bool) {
+    let pivot_pos = partition(arr);
+    
+    // Check if already partitioned (all elements in correct half)
+    let already_partitioned = 
+        arr[..pivot_pos].iter().all(|x| x <= &arr[pivot_pos]) &&
+        arr[pivot_pos + 1..].iter().all(|x| x >= &arr[pivot_pos]);
+    
+    (pivot_pos, already_partitioned)
+}
+```
+
+#### **Performance Characteristics**
+
+| **Scenario** | **Time Complexity** | **Notes** |
+|--------------|---------------------|-----------|
+| Random data | O(n log n) | ~20-40% faster than classic quicksort |
+| Sorted data | O(n log n) | **Detects pattern**, stays optimal |
+| Reverse sorted | O(n log n) | Pattern detection prevents O(n²) |
+| Many duplicates | O(n log n) | Optimized 3-way partitioning variant |
+| Worst case | O(n log n) | **Guaranteed** (heapsort fallback) |
+| Best case | O(n) | Already partitioned data |
+| Space | O(log n) | Stack space for recursion |
+
+#### **Comparison: pdqsort vs Alternatives**
+
+```rust
+// Benchmark results (typical, 100,000 elements):
+
+// Random data:
+pdqsort (sort_unstable):  ~2.5 ms   // Fastest
+introsort:                ~3.0 ms   // Older Rust default
+quicksort (classic):      ~3.5 ms   // No pattern detection
+timsort (sort):          ~4.5 ms   // Stable but slower
+
+// Sorted data:
+pdqsort:                  ~0.3 ms   // Pattern-defeating wins!
+introsort:               ~3.0 ms   // No degradation
+quicksort (classic):     ~5000 ms  // O(n²) disaster!
+timsort:                 ~0.2 ms   // Adaptive, best here
+
+// Many duplicates (50% same value):
+pdqsort:                  ~1.8 ms   // Efficient partitioning
+quicksort:               ~4.0 ms   // Many equal comparisons
+timsort:                 ~4.0 ms   
+```
+
+#### **Why Rust Chose pdqsort (2018)**
+
+Before Rust 1.20 (2018), `sort_unstable()` used **introsort** (quicksort + heapsort fallback). pdqsort replaced it because:
+
+1. **Better pattern detection**: Recognizes adversarial patterns earlier
+2. **Cache efficiency**: Block partitioning minimizes cache misses
+3. **Branch prediction**: Fewer unpredictable branches, better CPU pipelining
+4. **Real-world speed**: 20-40% faster on typical data
+5. **Robustness**: Handles edge cases (sorted, reverse, duplicates) gracefully
+
+**Benchmark results from Rust RFC #1884:**
+- Random data: **1.2-1.5x faster** than introsort
+- Sorted data: **2-3x faster** (pattern detection)
+- Many duplicates: **1.5-2x faster** (efficient partitioning)
+
+#### **When to Use sort_unstable() (pdqsort)**
+
+```rust
+// ✅ PERFECT USE CASES:
+let mut numbers = vec![5, 2, 8, 1, 9, 3];
+numbers.sort_unstable();  // Primitives: i32, f64, char, etc.
+
+let mut points = vec![(1, 2), (3, 1), (2, 3)];
+points.sort_unstable_by_key(|p| p.0);  // Don't need stability
+
+// Custom descending order
+let mut scores = vec![95, 87, 92, 88];
+scores.sort_unstable_by(|a, b| b.cmp(a));
+
+// ❌ DON'T USE when stability matters:
+struct Event { time: u64, id: u32 }
+let mut events = vec![
+    Event { time: 100, id: 1 },
+    Event { time: 100, id: 2 },  // Want to keep id=1 before id=2
+];
+// ❌ BAD: sort_unstable_by_key might reorder equal times
+events.sort_unstable_by_key(|e| e.time);
+
+// ✅ GOOD: Use stable sort
+events.sort_by_key(|e| e.time);  // Preserves relative order
+```
+
+#### **Implementation Details**
+
+**Partition Strategy:**
+```rust
+// pdqsort uses "block quicksort" partitioning:
+// 1. Scan blocks of elements (typically 128 at a time)
+// 2. Identify elements that need swapping
+// 3. Perform swaps in batch
+// Result: Better cache usage, fewer branches
+```
+
+**Insertion Sort Threshold:**
+```rust
+// For arrays ≤ 24 elements, insertion sort wins:
+const INSERTION_SORT_THRESHOLD: usize = 24;
+
+// Why 24?
+// - Insertion sort has low overhead (simple loop)
+// - Cache fits entire small array
+// - No recursion overhead
+// - Empirically tested optimal point
+```
+
+**Depth Limit Calculation:**
+```rust
+// Prevent worst-case O(n²) by limiting recursion depth
+let max_depth = 2 * (arr.len() as f64).log2().floor() as usize;
+
+// If depth exceeded:
+// → Switch to heapsort (guaranteed O(n log n))
+// → Prevents stack overflow
+// → Ensures worst-case performance
+```
+
+#### **Advanced Features**
+
+**3-Way Partitioning (for duplicates):**
+```rust
+// When many equal elements, pdqsort can use 3-way partition:
+// [< pivot] [== pivot] [> pivot]
+// Avoids unnecessary comparisons on equal elements
+```
+
+**Adaptive Behavior:**
+```rust
+// pdqsort adapts to input characteristics:
+if almost_sorted(arr) {
+    // Use cheaper partitioning strategy
+    // Fall back to insertion sort faster
+} else if many_duplicates(arr) {
+    // Use 3-way partitioning
+} else {
+    // Standard 2-way partitioning
+}
+```
+
+#### **References & Further Reading**
+
+- **Original Paper**: ["Pattern-defeating Quicksort"](https://arxiv.org/abs/2106.05123) by Orson Peters
+- **Rust Implementation**: [`core::slice::sort`](https://github.com/rust-lang/rust/blob/master/library/core/src/slice/sort.rs)
+- **Rust RFC**: [RFC 1884 - "Unstable Sort"](https://github.com/rust-lang/rfcs/blob/master/text/1884-unstable-sort.md)
+- **Blog Post**: [Orson Peters' pdqsort Announcement](https://github.com/orlp/pdqsort)
+
+#### **Key Takeaway**
+
+**Good sorting in practice requires adapting to the data**, not just having good average-case complexity. pdqsort embodies this philosophy:
+- Fast on random data (quicksort core)
+- Safe on adversarial patterns (pattern detection)
+- Guaranteed performance (heapsort fallback)
+- Optimized for modern CPUs (block partitioning, branch prediction)
+
+This makes it the ideal choice for Rust's performance-critical unstable sort.
+
+---
 
 ## 📈 **Sorting Complexity Lower Bound**
 

@@ -32,3 +32,7 @@ This strategy guide predicts and recommends the following:
 In this example, if you were to follow the strategy guide, you would get a total score of `*15*` (8 + 1 + 6).
 
 *What would your total score be if everything goes exactly according to your strategy guide?*
+
+---
+
+**Navigation**: [← Day 1](day01.md) | [All Days](README.md) | [Function Guide](day02_function_guide.md) | [Day 3 →](day03.md)

@@ -33,3 +33,7 @@ Here are a few more examples:
 - `zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw`: first marker after character `*11*`
 
 *How many characters need to be processed before the first start-of-packet marker is detected?*
+
+---
+
+**Navigation**: [← Day 5](day05.md) | [All Days](README.md) | [Function Guide](day06_function_guide.md) | [Day 7 →](day07.md)

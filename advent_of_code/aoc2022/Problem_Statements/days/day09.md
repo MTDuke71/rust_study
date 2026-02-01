@@ -263,3 +263,7 @@ s###..
 So, there are `*13*` positions the tail visited at least once.
 
 Simulate your complete hypothetical series of motions. *How many positions does the tail of the rope visit at least once?*
+
+---
+
+**Navigation**: [← Day 8](day08.md) | [All Days](README.md) | [Function Guide](day09_function_guide.md) | [Day 10 →](day10.md)

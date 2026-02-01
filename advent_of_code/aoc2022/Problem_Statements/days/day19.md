@@ -173,3 +173,7 @@ However, by using blueprint 2 in the example above, you could do even better: th
 Determine the *quality level* of each blueprint by *multiplying that blueprint's ID number* with the largest number of geodes that can be opened in 24 minutes using that blueprint. In this example, the first blueprint has ID 1 and can open 9 geodes, so its quality level is `*9*`. The second blueprint has ID 2 and can open 12 geodes, so its quality level is `*24*`. Finally, if you *add up the quality levels* of all of the blueprints in the list, you get `*33*`.
 
 Determine the quality level of each blueprint using the largest number of geodes it could produce in 24 minutes. *What do you get if you add up the quality level of all of the blueprints in your list?*
+
+---
+
+**Navigation**: [← Day 18](day18.md) | [All Days](README.md) | [Function Guide](day19_function_guide.md) | [Day 20 →](day20.md)

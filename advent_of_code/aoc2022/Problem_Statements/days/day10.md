@@ -208,3 +208,7 @@ The interesting signal strengths can be determined as follows:
 The sum of these signal strengths is `*13140*`.
 
 Find the signal strength during the 20th, 60th, 100th, 140th, 180th, and 220th cycles. *What is the sum of these six signal strengths?*
+
+---
+
+**Navigation**: [← Day 9](day09.md) | [All Days](README.md) | [Function Guide](day10_function_guide.md) | [Day 11 →](day11.md)

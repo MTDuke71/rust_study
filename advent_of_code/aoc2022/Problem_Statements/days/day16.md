@@ -150,3 +150,7 @@ Valves BB, CC, DD, EE, HH, and JJ are open, releasing *81* pressure.
 This approach lets you release the most pressure possible in 30 minutes with this valve layout, `*1651*`.
 
 Work out the steps to release the most pressure in 30 minutes. *What is the most pressure you can release?*
+
+---
+
+**Navigation**: [← Day 15](day15.md) | [All Days](README.md) | [Function Guide](day16_function_guide.md) | [Day 17 →](day17.md)

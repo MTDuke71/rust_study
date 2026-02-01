@@ -110,3 +110,7 @@ So, suppose you have an arrangement of beacons and sensors like in the example a
 In this example, in the row where `y=10`, there are `*26*` positions where a beacon cannot be present.
 
 Consult the report from the sensors you just deployed. *In the row where `y=2000000`, how many positions cannot contain a beacon?*
+
+---
+
+**Navigation**: [← Day 14](day14.md) | [All Days](README.md) | [Function Guide](day15_function_guide.md) | [Day 16 →](day16.md)

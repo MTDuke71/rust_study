@@ -262,3 +262,7 @@ Minute 18, move down:
 ``
 
 *What is the fewest number of minutes required to avoid the blizzards and reach the goal?*
+
+---
+
+**Navigation**: [← Day 23](day23.md) | [All Days](README.md) | [Function Guide](day24_function_guide.md) | [Day 25 →](day25.md)

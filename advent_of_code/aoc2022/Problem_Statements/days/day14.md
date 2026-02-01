@@ -144,3 +144,7 @@ Once all `*24*` units of sand shown above have come to rest, all further sand fl
 ``
 
 Using your scan, simulate the falling sand. *How many units of sand come to rest before sand starts flowing into the abyss below?*
+
+---
+
+**Navigation**: [← Day 13](day13.md) | [All Days](README.md) | [Function Guide](day14_function_guide.md) | [Day 15 →](day15.md)
