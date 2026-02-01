@@ -60,6 +60,9 @@ See [[project_euler/src/problems/pXXX.rs]] for complete code.
 // Example of key mathematical pattern used
 ```
 
+
+**Note**: For problems 101+, see [[../src/problems/private/README|Private Solutions]] (not publicly shared).
+
 ## Related Problems
 
 - **Project Euler**: [[project-euler-pYYY]] - Similar technique
