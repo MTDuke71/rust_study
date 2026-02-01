@@ -44,7 +44,7 @@
 //! ## 🏃‍♂️ **Quick Start**
 //!
 //! ```rust,no_run
-//! use aoc2024::prelude::*;
+//! use aoc2025::prelude::*;
 //!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     // Run any day's solution (returns both parts)

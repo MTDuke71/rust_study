@@ -8,7 +8,7 @@ struct Keypad {
 
 impl Keypad {
     /// Create the numeric keypad layout
-    /// ```
+    /// ```text
     /// +---+---+---+
     /// | 7 | 8 | 9 |
     /// +---+---+---+
@@ -40,7 +40,7 @@ impl Keypad {
     }
 
     /// Create the directional keypad layout
-    /// ```
+    /// ```text
     ///     +---+---+
     ///     | ^ | A |
     /// +---+---+---+

@@ -231,7 +231,7 @@ fn count_from_position(grid: &[Vec<char>], start: (usize, usize), steps: usize) 
 ///    - f(2) at 327 steps (65 + 262, n=2)
 ///
 /// 2. Fit quadratic using Lagrange interpolation:
-///    ```
+///    ```text
 ///    a = (n0 - 2n1 + n2) / 2
 ///    b = (-3n0 + 4n1 - n2) / 2
 ///    c = n0
@@ -323,7 +323,7 @@ pub fn part2(input: &str) -> usize {
 /// - Can classify tiles into discrete categories and count geometrically
 ///
 /// **Diamond Tile Classification**:
-/// ```
+/// ```text
 ///        T                    T = Top corner (1 tile)
 ///       t t                   t = Top edge (n+1 small triangles)
 ///      T T T                  T = Top edge (n large triangles)
