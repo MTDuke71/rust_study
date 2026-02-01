@@ -96,9 +96,9 @@ pub fn count_divisors(mut n: u64) -> u64 {
     let mut divisor_count = 1u64;
 
     // Factor of 2
-    if n % 2 == 0 {
+    if n.is_multiple_of(2) {
         let mut exponent = 0;
-        while n % 2 == 0 {
+        while n.is_multiple_of(2) {
             exponent += 1;
             n /= 2;
         }
@@ -108,9 +108,9 @@ pub fn count_divisors(mut n: u64) -> u64 {
     // Odd factors
     let mut factor = 3u64;
     while factor * factor <= n {
-        if n % factor == 0 {
+        if n.is_multiple_of(factor) {
             let mut exponent = 0;
-            while n % factor == 0 {
+            while n.is_multiple_of(factor) {
                 exponent += 1;
                 n /= factor;
             }
@@ -153,12 +153,12 @@ pub fn first_triangle_with_divisors(min_divisors: u64) -> u64 {
 
     loop {
         // Calculate divisor count using coprimality property
-        let divisor_count = if n % 2 == 0 {
+        let divisor_count = if n.is_multiple_of(2) {
             // n is even: T(n) = (n/2) × (n+1)
             count_divisors(n / 2) * count_divisors(n + 1)
         } else {
             // n is odd: T(n) = n × ((n+1)/2)
-            count_divisors(n) * count_divisors((n + 1) / 2)
+            count_divisors(n) * count_divisors(n.div_ceil(2))
         };
 
         if divisor_count > min_divisors {
