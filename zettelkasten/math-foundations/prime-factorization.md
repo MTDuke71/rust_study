@@ -388,8 +388,8 @@ Factorization has been studied for millennia:
 ---
 
 *Links:*
-- **Applications**: [[project-euler-p003]], [[gcd-lcm]]
+- **Applications**: [[project-euler-p003]], [[project-euler-p012]], [[gcd-lcm]], [[divisor-function]]
 - **Algorithms**: [[trial-division]], [[sieve-of-eratosthenes]]
-- **Theory**: [[sqrt-bound-theorem]], [[divisibility]], [[primality-testing]]
-- **Code**: `project_euler/src/problems/p003.rs`
+- **Theory**: [[sqrt-bound-theorem]], [[divisibility]], [[primality-testing]], [[prime-number-theory]]
+- **Code**: `project_euler/src/problems/p003.rs`, `project_euler/src/problems/p012.rs`
 - **Tags**: #prime-numbers #factorization #number-theory #algorithms #cryptography
