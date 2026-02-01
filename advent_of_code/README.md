@@ -8,6 +8,10 @@ This directory contains specialized tools, patterns, and complete solutions desi
 
 ## 📂 **Project Structure**
 
+### **Templates & Guides**
+- **[AOC_SOLVER_TEMPLATE.md](AOC_SOLVER_TEMPLATE.md)** - Efficient solver pattern (parse once, solve twice)
+- **[AOC_2022_QUICKSTART.md](AOC_2022_QUICKSTART.md)** - Quick setup guide for new AoC days
+
 ### **Pattern Recognition & Framework**
 - **[aoc_pattern_recognition/](aoc_pattern_recognition/README.md)** - Algorithm pattern trainer and competitive programming utilities
   - Grid traversal patterns (BFS, DFS, pathfinding)

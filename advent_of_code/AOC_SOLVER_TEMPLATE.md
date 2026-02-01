@@ -1,5 +1,9 @@
 # AoC Solver Template - Efficient Pattern
 
+**Quick Links**: [← AoC Main](README.md) | [AoC 2022 Quickstart](AOC_2022_QUICKSTART.md) | [AoC 2022 README](aoc2022/README.md) | [Pattern Recognition](aoc_pattern_recognition/README.md)
+
+---
+
 **Problem Identified in AoC 2023**: Parsing and data preparation duplicated in `solve_part1()` and `solve_part2()`, causing:
 - 2× parsing overhead when running both parts
 - Code duplication across functions
@@ -354,3 +358,11 @@ When implementing a new day:
 ---
 
 **Bottom Line**: Parse once, solve twice. Your future self (and your CPU) will thank you! 🚀
+
+---
+
+**Navigation**: [← AoC Main](README.md) | [AoC 2022 Quickstart](AOC_2022_QUICKSTART.md) | [AoC 2022 README](aoc2022/README.md)
+
+**See Also**:
+- [AoC 2022 Day 1](aoc2022/src/solver/day01.rs) - Reference implementation using this pattern
+- [Pattern Recognition Framework](aoc_pattern_recognition/README.md) - Algorithm pattern library
