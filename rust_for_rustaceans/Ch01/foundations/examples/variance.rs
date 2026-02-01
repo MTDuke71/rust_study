@@ -1,5 +1,5 @@
 //! Variance Examples
-//! 
+//!
 //! Demonstrates covariance, invariance, and contravariance in Rust's type system
 //! Advanced topic from Chapter 1
 
@@ -34,19 +34,19 @@ fn main() {
         println!("   ─────────────────────────────────");
         println!("   If A is subtype of B, then Type<A> is subtype of Type<B>");
         println!("   Examples: &'a T, Box<T>, Vec<T>");
-        
+
         // Lifetime example
         fn covariant_example() {
             let static_str: &'static str = "hello";
-            
+
             fn takes_short_lifetime(s: &str) {
                 println!("   Received: {}", s);
             }
-            
+
             // 'static (longer) can be used where shorter lifetime expected
             takes_short_lifetime(static_str);
         }
-        
+
         covariant_example();
         println!("   ✓ &'static str → &'a str (covariant over lifetime)\n");
     }
@@ -54,15 +54,15 @@ fn main() {
     {
         println!("📚 COVARIANCE: Shared References");
         println!("   ──────────────────────────────");
-        
+
         fn print_slice(slice: &[i32]) {
             println!("   Slice: {:?}", slice);
         }
-        
+
         let vec = vec![1, 2, 3];
-        let slice: &[i32] = &vec;  // 'vec lifetime
-        print_slice(slice);  // Works with shorter lifetime 'a
-        
+        let slice: &[i32] = &vec; // 'vec lifetime
+        print_slice(slice); // Works with shorter lifetime 'a
+
         println!("   ✓ &'long [T] can be used as &'short [T]\n");
     }
 
@@ -81,7 +81,7 @@ fn main() {
         println!("   &mut 'a T is INVARIANT over 'a");
         println!("   Cannot substitute longer for shorter lifetime");
         println!("   Reason: Prevents lifetime shrinking bugs");
-        
+
         // This demonstrates why invariance is necessary
         fn invariant_example() {
             println!("\n   Why invariance matters:");
@@ -92,7 +92,7 @@ fn main() {
             println!("   4. Original reference now points to freed memory!");
             println!("   ✓ Invariance prevents this bug\n");
         }
-        
+
         invariant_example();
     }
 
@@ -108,10 +108,10 @@ fn main() {
     {
         println!("📚 CONTRAVARIANCE: Function Pointers");
         println!("   ───────────────────────────────────");
-        
+
         // fn(&'a str) is contravariant over 'a
         // Shorter lifetime function can substitute for longer
-        
+
         // Demonstrating contravariance concept
         println!("   fn(&'short) can be used where fn(&'long) expected");
         println!("   ✓ Contravariant over argument lifetimes\n");
@@ -139,7 +139,7 @@ fn main() {
     {
         println!("📚 PHANTOMDATA: Controlling Variance");
         println!("   ───────────────────────────────────");
-        
+
         println!("   PhantomData<T> marks T as owned");
         println!("   Makes MyType<T> covariant over T");
         println!("   Without it, variance would be ambiguous");
@@ -149,7 +149,7 @@ fn main() {
     {
         println!("📚 PHANTOMDATA: Invariance Example");
         println!("   ─────────────────────────────────");
-        
+
         println!("   PhantomData<&'a mut T> forces invariance");
         println!("   Even when we only hold &'a T");
         println!("   ✓ Useful for soundness in custom types\n");
@@ -170,26 +170,26 @@ fn main() {
     {
         println!("📚 COMMON SCENARIOS");
         println!("   ─────────────────");
-        
+
         // Covariant: Can use longer lifetime
         {
             fn accepts_any(s: &str) {
                 println!("   Covariant: {}", s);
             }
             let static_s: &'static str = "hello";
-            accepts_any(static_s);  // ✓ Works
+            accepts_any(static_s); // ✓ Works
         }
-        
+
         // Invariant: Must match exactly
         {
             fn needs_exact(r: &mut &str) {
                 println!("   Invariant: {}", r);
             }
             let mut s = "world";
-            needs_exact(&mut s);  // ✓ Works with exact lifetime
-            // Cannot pass longer or shorter lifetime
+            needs_exact(&mut s); // ✓ Works with exact lifetime
+                                 // Cannot pass longer or shorter lifetime
         }
-        
+
         println!("   ✓ Variance affects what lifetimes work\n");
     }
 

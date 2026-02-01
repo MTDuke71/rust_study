@@ -28,7 +28,7 @@ use std::num::ParseIntError;
 #[allow(dead_code)] // Educational example - shows manual propagation pattern
 fn read_number_manual(path: &str) -> Result<i32, io::Error> {
     let content = fs::read_to_string(path)?;
-    
+
     match content.trim().parse() {
         Ok(n) => Ok(n),
         Err(e) => Err(io::Error::new(io::ErrorKind::InvalidData, e)),
@@ -38,7 +38,9 @@ fn read_number_manual(path: &str) -> Result<i32, io::Error> {
 /// Using `?` operator (concise)
 fn read_number_with_try(path: &str) -> Result<i32, io::Error> {
     let content = fs::read_to_string(path)?;
-    content.trim().parse()
+    content
+        .trim()
+        .parse()
         .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))
 }
 
@@ -91,15 +93,17 @@ impl From<ParseIntError> for AppError {
 fn process_file(path: &str) -> Result<i32, AppError> {
     // io::Error automatically converted to AppError::Io
     let content = fs::read_to_string(path)?;
-    
+
     // ParseIntError automatically converted to AppError::Parse
     let number: i32 = content.trim().parse()?;
-    
+
     // Manual error creation for validation
     if number < 0 {
-        return Err(AppError::Validation("number must be non-negative".to_string()));
+        return Err(AppError::Validation(
+            "number must be non-negative".to_string(),
+        ));
     }
-    
+
     Ok(number)
 }
 
@@ -121,7 +125,9 @@ impl fmt::Display for ConfigError {
 
 impl Error for ConfigError {
     fn source(&self) -> Option<&(dyn Error + 'static)> {
-        self.source.as_ref().map(|e| e.as_ref() as &(dyn Error + 'static))
+        self.source
+            .as_ref()
+            .map(|e| e.as_ref() as &(dyn Error + 'static))
     }
 }
 
@@ -132,7 +138,7 @@ impl ConfigError {
             source: None,
         }
     }
-    
+
     fn with_source(context: impl Into<String>, source: impl Error + Send + Sync + 'static) -> Self {
         ConfigError {
             context: context.into(),
@@ -147,18 +153,20 @@ fn load_config() -> Result<String, ConfigError> {
 }
 
 fn parse_config(content: &str) -> Result<i32, ConfigError> {
-    content.trim().parse()
+    content
+        .trim()
+        .parse()
         .map_err(|e| ConfigError::with_source("failed to parse port number", e))
 }
 
 fn initialize_server() -> Result<i32, ConfigError> {
     let content = load_config()?;
     let port = parse_config(&content)?;
-    
+
     if port < 1024 {
         return Err(ConfigError::new("port must be >= 1024"));
     }
-    
+
     Ok(port)
 }
 
@@ -167,13 +175,11 @@ fn initialize_server() -> Result<i32, ConfigError> {
 // ============================================================================
 
 fn read_config_file(path: &str) -> Result<String, String> {
-    fs::read_to_string(path)
-        .map_err(|e| format!("failed to read {}: {}", path, e))
+    fs::read_to_string(path).map_err(|e| format!("failed to read {}: {}", path, e))
 }
 
 fn parse_port(s: &str) -> Result<u16, String> {
-    s.parse()
-        .map_err(|e| format!("invalid port number: {}", e))
+    s.parse().map_err(|e| format!("invalid port number: {}", e))
 }
 
 fn setup_server(config_path: &str) -> Result<u16, String> {
@@ -194,26 +200,23 @@ struct DataProcessor {
 impl DataProcessor {
     fn load(path: &str) -> Result<Self, Box<dyn Error>> {
         let content = fs::read_to_string(path)?;
-        let data: Result<Vec<i32>, _> = content
-            .lines()
-            .map(|line| line.trim().parse())
-            .collect();
-        
+        let data: Result<Vec<i32>, _> = content.lines().map(|line| line.trim().parse()).collect();
+
         Ok(DataProcessor { data: data? })
     }
-    
+
     fn validate(&self) -> Result<(), Box<dyn Error>> {
         if self.data.is_empty() {
             return Err("data cannot be empty".into());
         }
-        
+
         if self.data.iter().any(|&n| n < 0) {
             return Err("all numbers must be non-negative".into());
         }
-        
+
         Ok(())
     }
-    
+
     fn process(&self) -> Result<i32, Box<dyn Error>> {
         self.validate()?;
         Ok(self.data.iter().sum())
@@ -229,7 +232,7 @@ trait ResultExt<T, E> {
     fn context(self, context: &str) -> Result<T, String>
     where
         E: fmt::Display;
-    
+
     /// Transform error with a function
     fn map_err_ctx<F>(self, f: F) -> Result<T, String>
     where
@@ -244,7 +247,7 @@ impl<T, E> ResultExt<T, E> for Result<T, E> {
     {
         self.map_err(|e| format!("{}: {}", context, e))
     }
-    
+
     fn map_err_ctx<F>(self, f: F) -> Result<T, String>
     where
         E: fmt::Display,
@@ -255,12 +258,13 @@ impl<T, E> ResultExt<T, E> for Result<T, E> {
 }
 
 fn use_result_ext() -> Result<i32, String> {
-    let content = fs::read_to_string("data.txt")
-        .context("failed to read data file")?;
-    
-    let number: i32 = content.trim().parse()
+    let content = fs::read_to_string("data.txt").context("failed to read data file")?;
+
+    let number: i32 = content
+        .trim()
+        .parse()
         .map_err_ctx(|e| format!("invalid number format: {}", e))?;
-    
+
     Ok(number)
 }
 
@@ -270,10 +274,10 @@ fn use_result_ext() -> Result<i32, String> {
 
 fn print_error_chain(err: &dyn Error) {
     eprintln!("Error: {}", err);
-    
+
     let mut current = err.source();
     let mut depth = 1;
-    
+
     while let Some(source) = current {
         eprintln!("  {}: Caused by: {}", depth, source);
         current = source.source();

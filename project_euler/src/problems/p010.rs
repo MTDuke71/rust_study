@@ -36,48 +36,48 @@ pub fn sum_primes_below(limit: usize) -> u64 {
     if limit <= 2 {
         return 0;
     }
-    
+
     // Start with 2 (the only even prime)
     let mut sum = 2u64;
-    
+
     if limit <= 3 {
         return sum; // Only prime below 3 is 2
     }
-    
+
     // Create sieve for odd numbers only: represents 3, 5, 7, 9, 11, ...
     // Index i represents number (2*i + 3)
     // We want numbers from 3 up to but not including limit
     let sieve_size = (limit - 1 - 3) / 2 + 1;
     let mut is_prime = vec![true; sieve_size];
-    
+
     // Sieve of Eratosthenes for odd numbers
     let sqrt_limit = (limit as f64).sqrt() as usize;
-    
+
     for i in 0..sieve_size {
         if is_prime[i] {
             let prime = 2 * i + 3; // Convert index to actual number
-            
+
             if prime > sqrt_limit {
                 break; // No need to mark composites beyond √limit
             }
-            
+
             // Mark multiples of this prime as composite
             // Start from prime² (earlier multiples already marked)
             let start = (prime * prime - 3) / 2;
-            
+
             for j in (start..sieve_size).step_by(prime) {
                 is_prime[j] = false;
             }
         }
     }
-    
+
     // Sum all primes
     for (i, &is_p) in is_prime.iter().enumerate().take(sieve_size) {
         if is_p {
             sum += (2 * i + 3) as u64;
         }
     }
-    
+
     sum
 }
 

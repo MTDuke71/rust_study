@@ -1,5 +1,5 @@
 /// ThreadPool implementation for concurrent request handling
-/// 
+///
 /// This is the core abstraction used in Chapter 21 to manage worker threads
 /// and distribute work across them using message passing.
 use std::{
@@ -8,14 +8,14 @@ use std::{
 };
 
 /// A thread pool that maintains a fixed number of worker threads
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// use rust_book_ch21::ThreadPool;
-/// 
+///
 /// let pool = ThreadPool::new(4);
-/// 
+///
 /// pool.execute(|| {
 ///     println!("Job executed by worker thread");
 /// });
@@ -47,7 +47,7 @@ impl ThreadPool {
         assert!(size > 0);
 
         let (sender, receiver) = mpsc::channel();
-        
+
         // Wrap receiver in Arc<Mutex<>> for shared ownership across threads
         let receiver = Arc::new(Mutex::new(receiver));
 
@@ -64,24 +64,24 @@ impl ThreadPool {
     }
 
     /// Execute a closure on a worker thread
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `f` - A closure that takes no arguments and returns nothing
-    /// 
+    ///
     /// # Type Bounds
-    /// 
+    ///
     /// * `FnOnce()` - Closure called once
     /// * `Send` - Can be sent across thread boundaries
     /// * `'static` - No borrowed references (lives for entire program)
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use rust_book_ch21::ThreadPool;
-    /// 
+    ///
     /// let pool = ThreadPool::new(2);
-    /// 
+    ///
     /// pool.execute(|| {
     ///     println!("Executing job");
     /// });
@@ -101,7 +101,7 @@ impl ThreadPool {
 }
 
 /// Drop implementation for graceful shutdown
-/// 
+///
 /// Sends Terminate message to all workers and waits for them to finish
 impl Drop for ThreadPool {
     fn drop(&mut self) {
@@ -129,14 +129,14 @@ struct Worker {
 
 impl Worker {
     /// Create a new worker thread
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `id` - Unique identifier for this worker
     /// * `receiver` - Shared receiver wrapped in Arc<Mutex<>>
-    /// 
+    ///
     /// # Design Notes
-    /// 
+    ///
     /// - Uses `Arc` for shared ownership across threads
     /// - Uses `Mutex` for exclusive access to receiver
     /// - Loops continuously waiting for jobs
@@ -192,7 +192,7 @@ mod tests {
     fn test_execute_job() {
         let pool = ThreadPool::new(2);
         let counter = Arc::new(AtomicUsize::new(0));
-        
+
         let counter_clone = Arc::clone(&counter);
         pool.execute(move || {
             counter_clone.fetch_add(1, Ordering::SeqCst);
@@ -200,7 +200,7 @@ mod tests {
 
         // Wait for job to complete
         thread::sleep(Duration::from_millis(100));
-        
+
         assert_eq!(counter.load(Ordering::SeqCst), 1);
     }
 
@@ -225,14 +225,14 @@ mod tests {
     #[test]
     fn test_graceful_shutdown() {
         let pool = ThreadPool::new(2);
-        
+
         pool.execute(|| {
             thread::sleep(Duration::from_millis(50));
         });
-        
+
         // Drop happens here - should wait for job to finish
         drop(pool);
-        
+
         // If we reach here, shutdown was successful (no panic = test passes)
     }
 }

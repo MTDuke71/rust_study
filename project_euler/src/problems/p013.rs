@@ -256,11 +256,14 @@ mod tests {
     fn test_12_digit_approach() {
         let result_15 = first_ten_digits_of_sum();
         let result_12 = first_ten_digits_of_sum_12();
-        
+
         println!("15-digit approach: {}", result_15);
         println!("12-digit approach: {}", result_12);
-        
-        assert_eq!(result_12, result_15, "12 digits should be sufficient (carry analysis)");
+
+        assert_eq!(
+            result_12, result_15,
+            "12 digits should be sufficient (carry analysis)"
+        );
         assert_eq!(result_12, "5537376230");
     }
 
@@ -269,26 +272,28 @@ mod tests {
         let result_15 = first_ten_digits_of_sum();
         let result_12 = first_ten_digits_of_sum_12();
         let result_f64 = first_ten_digits_of_sum_f64();
-        
+
         println!("15-digit (u128): {}", result_15);
         println!("12-digit (u128): {}", result_12);
         println!("f64 approach:    {}", result_f64);
-        
+
         assert_eq!(result_15, result_12);
         assert_eq!(result_15, result_f64);
         assert_eq!(result_15, "5537376230");
     }
 
-
     #[test]
     fn test_f64_approach() {
         let result_u128 = first_ten_digits_of_sum();
         let result_f64 = first_ten_digits_of_sum_f64();
-        
+
         println!("u128 approach: {}", result_u128);
         println!("f64 approach:  {}", result_f64);
-        
-        assert_eq!(result_u128, result_f64, "Both approaches should give same answer");
+
+        assert_eq!(
+            result_u128, result_f64,
+            "Both approaches should give same answer"
+        );
         assert_eq!(result_f64, "5537376230");
     }
 
@@ -297,7 +302,7 @@ mod tests {
         // Verify f64 has enough precision for our needs
         let test_num = "37107287533902102798797998220837590246510135740250";
         let as_f64: f64 = test_num.parse().unwrap();
-        
+
         // First 15 significant digits should be preserved
         let formatted = format!("{:.0}", as_f64);
         assert!(formatted.starts_with("37107287533902"));

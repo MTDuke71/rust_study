@@ -38,7 +38,7 @@ pub fn sum_square_difference(n: u64) -> u64 {
     let sum = sum_of_naturals(n);
     let square_of_sum = sum * sum;
     let sum_of_sq = sum_of_squares(n);
-    
+
     square_of_sum - sum_of_sq
 }
 

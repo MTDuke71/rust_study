@@ -1,34 +1,34 @@
 use std::collections::{HashMap, HashSet, VecDeque};
 
 /// Day 25: Snowverload
-/// 
+///
 /// Find the three edges that, when removed, split the graph into two components.
 /// This is a minimum cut problem - we need to find 3 edges whose removal maximally
 /// disconnects the graph.
 ///
 /// # Approach
-/// 
+///
 /// 1. Build an undirected graph from the input
 /// 2. Use BFS to find "bridge" edges that carry lots of flow between components
 /// 3. Try removing combinations of high-flow edges
 /// 4. Check if removal creates exactly 2 components
-/// 
+///
 /// # Algorithm: Edge Betweenness
-/// 
+///
 /// For each edge, count how many shortest paths use it. The 3 edges with highest
 /// betweenness are likely the cut edges.
-/// 
+///
 /// # Mathematical Foundation
-/// 
+///
 /// Uses **graph minimum cut** algorithms (edge betweenness heuristic).
 /// See `zettelkasten/math-foundations/graph-minimum-cut.md` for theoretical background,
 /// alternative algorithms (max-flow, Karger's, Stoer-Wagner), and applications.
 pub fn solve_part1(input: &str) -> usize {
     let graph = parse_input(input);
-    
+
     // Find candidate edges with high betweenness
     let candidates = find_candidate_edges(&graph, 20);
-    
+
     // Try combinations of 3 edges from candidates
     for i in 0..candidates.len() {
         for j in (i + 1)..candidates.len() {
@@ -38,14 +38,14 @@ pub fn solve_part1(input: &str) -> usize {
                     candidates[j].clone(),
                     candidates[k].clone(),
                 ];
-                
+
                 if let Some((size1, size2)) = try_cut(&graph, &cut_edges) {
                     return size1 * size2;
                 }
             }
         }
     }
-    
+
     panic!("No valid 3-cut found");
 }
 
@@ -58,69 +58,69 @@ type Edge = (String, String);
 
 fn parse_input(input: &str) -> Graph {
     let mut graph: Graph = HashMap::new();
-    
+
     for line in input.lines() {
         let line = line.trim();
         if line.is_empty() {
             continue;
         }
-        
+
         let (from, to_list) = line.split_once(": ").unwrap();
         let from = from.to_string();
-        
+
         for to in to_list.split_whitespace() {
             let to = to.to_string();
-            
+
             // Add bidirectional edge
-            graph.entry(from.clone())
-                .or_default()
-                .insert(to.clone());
-            
-            graph.entry(to.clone())
-                .or_default()
-                .insert(from.clone());
+            graph.entry(from.clone()).or_default().insert(to.clone());
+
+            graph.entry(to.clone()).or_default().insert(from.clone());
         }
     }
-    
+
     graph
 }
 
 /// Find candidate edges with high betweenness
 fn find_candidate_edges(graph: &Graph, top_n: usize) -> Vec<Edge> {
     let mut edge_counts: HashMap<Edge, usize> = HashMap::new();
-    
+
     // Do BFS from ALL nodes to get betweenness
     let nodes: Vec<_> = graph.keys().cloned().collect();
-    
+
     for start in &nodes {
         let paths = bfs_count_paths(graph, start);
-        
+
         // Track which edges are used in paths from this start node
         for (edge, count) in paths {
             *edge_counts.entry(normalize_edge(edge)).or_insert(0) += count;
         }
     }
-    
+
     // Sort edges by usage count
     let mut edges: Vec<_> = edge_counts.into_iter().collect();
     edges.sort_by_key(|(_, count)| std::cmp::Reverse(*count));
-    
+
     // Debug: Print top N edge betweenness values
     println!("\n=== Top {} Edge Betweenness ===", top_n);
     for (i, (edge, count)) in edges.iter().take(top_n).enumerate() {
         println!("{:2}. {:?} → {} paths", i + 1, edge, count);
     }
     println!();
-    
+
     // Return top N edges
-    edges.into_iter().take(top_n).map(|(edge, _)| edge).collect()
+    edges
+        .into_iter()
+        .take(top_n)
+        .map(|(edge, _)| edge)
+        .collect()
 }
 
 /// Try removing these edges and check if we get exactly 2 components
 fn try_cut(graph: &Graph, cut_edges: &[Edge]) -> Option<(usize, usize)> {
     // Build graph without cut edges
     let mut modified_graph: Graph = graph.clone();
-    
+
     for (a, b) in cut_edges {
         if let Some(neighbors) = modified_graph.get_mut(a) {
             neighbors.remove(b);
@@ -129,16 +129,16 @@ fn try_cut(graph: &Graph, cut_edges: &[Edge]) -> Option<(usize, usize)> {
             neighbors.remove(a);
         }
     }
-    
+
     // Find connected components
     let mut visited: HashSet<String> = HashSet::new();
     let mut component_sizes: Vec<usize> = Vec::new();
-    
+
     for node in modified_graph.keys() {
         if !visited.contains(node) {
             let size = component_bfs(&modified_graph, node, &mut visited);
             component_sizes.push(size);
-            
+
             // Early exits for performance
             if component_sizes.len() == 2 {
                 // Found exactly 2 components - valid cut, stop searching
@@ -150,7 +150,7 @@ fn try_cut(graph: &Graph, cut_edges: &[Edge]) -> Option<(usize, usize)> {
             }
         }
     }
-    
+
     if component_sizes.len() == 2 {
         Some((component_sizes[0], component_sizes[1]))
     } else {
@@ -163,17 +163,17 @@ fn bfs_count_paths(graph: &Graph, start: &str) -> HashMap<Edge, usize> {
     let mut edge_usage: HashMap<Edge, usize> = HashMap::new();
     let mut visited: HashSet<String> = HashSet::new();
     let mut queue: VecDeque<String> = VecDeque::new();
-    
+
     visited.insert(start.to_string());
     queue.push_back(start.to_string());
-    
+
     while let Some(current) = queue.pop_front() {
         if let Some(neighbors) = graph.get(&current) {
             for next in neighbors {
                 if !visited.contains(next) {
                     visited.insert(next.clone());
                     queue.push_back(next.clone());
-                    
+
                     // Count this edge usage
                     let edge = (current.clone(), next.clone());
                     *edge_usage.entry(edge).or_insert(0) += 1;
@@ -181,7 +181,7 @@ fn bfs_count_paths(graph: &Graph, start: &str) -> HashMap<Edge, usize> {
             }
         }
     }
-    
+
     edge_usage
 }
 
@@ -199,11 +199,11 @@ fn normalize_edge(edge: Edge) -> Edge {
 fn component_bfs(graph: &Graph, start: &str, visited: &mut HashSet<String>) -> usize {
     let mut queue: VecDeque<String> = VecDeque::new();
     let mut size = 0;
-    
+
     visited.insert(start.to_string());
     queue.push_back(start.to_string());
     size += 1;
-    
+
     while let Some(current) = queue.pop_front() {
         if let Some(neighbors) = graph.get(&current) {
             for next in neighbors {
@@ -215,7 +215,7 @@ fn component_bfs(graph: &Graph, start: &str, visited: &mut HashSet<String>) -> u
             }
         }
     }
-    
+
     size
 }
 
@@ -240,11 +240,11 @@ frs: qnr lhk lsr";
     #[test]
     fn test_parse_input() {
         let graph = parse_input(EXAMPLE);
-        
+
         // Check bidirectional edges
         assert!(graph.get("jqt").unwrap().contains("rhn"));
         assert!(graph.get("rhn").unwrap().contains("jqt"));
-        
+
         // Check all nodes are present
         assert!(graph.contains_key("jqt"));
         assert!(graph.contains_key("cmg"));

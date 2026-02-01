@@ -5,31 +5,31 @@ use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    
+
     if args.len() < 2 {
         print_usage();
         return;
     }
-    
+
     let arg = &args[1];
-    
+
     // Handle special commands
     if arg == "list" || arg == "--list" || arg == "-l" {
         list_implemented();
         return;
     }
-    
+
     if arg == "all" || arg == "--all" {
         solve_all();
         return;
     }
-    
+
     // Parse and solve single problem
     let problem_num: usize = arg.parse().unwrap_or_else(|_| {
         eprintln!("Error: Invalid problem number '{}'", arg);
         std::process::exit(1);
     });
-    
+
     match ProblemSolver::solve(problem_num) {
         Some(answer) => println!("Problem {}: {}", problem_num, answer),
         None => {
@@ -62,7 +62,7 @@ fn list_implemented() {
 fn solve_all() {
     let problems = ProblemSolver::implemented();
     println!("Solving {} problems...\n", problems.len());
-    
+
     for &num in &problems {
         if let Some(answer) = ProblemSolver::solve(num) {
             println!("Problem {:3}: {}", num, answer);

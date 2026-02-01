@@ -8,10 +8,10 @@
 //! - When to use each crate
 //! - Integration patterns
 
+use anyhow::{anyhow, bail, Context, Result};
 use std::io;
 use std::num::ParseIntError;
 use thiserror::Error;
-use anyhow::{Context, Result, anyhow, bail};
 
 // ============================================================================
 // PART 1: thiserror for Library Errors
@@ -31,20 +31,20 @@ pub enum DataStoreError {
         #[source]
         source: io::Error,
     },
-    
+
     #[error("failed to write data to {path}")]
     Write {
         path: String,
         #[source]
         source: io::Error,
     },
-    
+
     #[error("invalid data format: {0}")]
     InvalidFormat(String),
-    
+
     #[error("record not found: {0}")]
     NotFound(String),
-    
+
     #[error(transparent)]
     Other(#[from] anyhow::Error),
 }
@@ -54,16 +54,16 @@ pub enum DataStoreError {
 pub enum ConfigError {
     #[error("configuration file not found at {path}")]
     NotFound { path: String },
-    
+
     #[error("failed to parse configuration")]
     Parse {
         #[from]
         source: ParseIntError,
     },
-    
+
     #[error("invalid value for {field}: {value}")]
     InvalidValue { field: String, value: String },
-    
+
     #[error("missing required field: {0}")]
     MissingField(String),
 }
@@ -78,20 +78,19 @@ pub enum ConfigError {
 /// which can hold any error type.
 fn load_user_data(user_id: &str) -> Result<String> {
     let path = format!("users/{}.json", user_id);
-    
+
     // Context adds information to errors
     let data = std::fs::read_to_string(&path)
         .context(format!("failed to read user data from {}", path))?;
-    
+
     // Validate user ID
-    let id: i32 = user_id.parse()
-        .context("user ID must be a valid number")?;
-    
+    let id: i32 = user_id.parse().context("user ID must be a valid number")?;
+
     if id < 0 {
         // bail! macro for early return with error
         bail!("user ID must be non-negative");
     }
-    
+
     Ok(data)
 }
 
@@ -104,12 +103,12 @@ fn load_user_data(user_id: &str) -> Result<String> {
 fn process_request(request_id: &str) -> Result<()> {
     let data = std::fs::read_to_string("request.json")
         .with_context(|| format!("failed to read request {}", request_id))?;
-    
+
     if data.is_empty() {
         // anyhow! macro creates ad-hoc errors
         return Err(anyhow!("empty request data for {}", request_id));
     }
-    
+
     Ok(())
 }
 
@@ -131,9 +130,8 @@ pub fn library_function(value: i32) -> Result<i32, ConfigError> {
 /// Application function uses anyhow::Result
 fn application_function(value: i32) -> Result<i32> {
     // Library error automatically converted to anyhow::Error
-    let result = library_function(value)
-        .context("failed to process value in library")?;
-    
+    let result = library_function(value).context("failed to process value in library")?;
+
     Ok(result)
 }
 
@@ -150,13 +148,13 @@ pub enum ApiError {
         #[source]
         source: Option<reqwest::Error>,
     },
-    
+
     #[error("timeout after {duration_ms}ms")]
     Timeout { duration_ms: u64 },
-    
+
     #[error("rate limited (retry after {retry_after}s)")]
     RateLimit { retry_after: u64 },
-    
+
     // Transparent variant forwards Display and Error implementations
     #[error(transparent)]
     Io(#[from] io::Error),
@@ -168,7 +166,7 @@ pub enum ApiError {
 
 fn demonstrate_downcasting() -> Result<()> {
     let result: Result<()> = Err(ConfigError::MissingField("port".to_string()).into());
-    
+
     match result {
         Ok(()) => println!("Success"),
         Err(e) => {
@@ -180,7 +178,7 @@ fn demonstrate_downcasting() -> Result<()> {
             }
         }
     }
-    
+
     Ok(())
 }
 
@@ -189,26 +187,25 @@ fn demonstrate_downcasting() -> Result<()> {
 // ============================================================================
 
 fn read_config_file() -> Result<String> {
-    std::fs::read_to_string("config.toml")
-        .context("failed to read config file")
+    std::fs::read_to_string("config.toml").context("failed to read config file")
 }
 
 fn parse_port(content: &str) -> Result<u16> {
-    content.trim().parse()
+    content
+        .trim()
+        .parse()
         .context("failed to parse port number")
 }
 
 fn initialize_app() -> Result<u16> {
-    let content = read_config_file()
-        .context("initialization failed")?;
-    
-    let port = parse_port(&content)
-        .context("configuration parsing failed")?;
-    
+    let content = read_config_file().context("initialization failed")?;
+
+    let port = parse_port(&content).context("configuration parsing failed")?;
+
     if port < 1024 {
         bail!("port must be >= 1024, got {}", port);
     }
-    
+
     Ok(port)
 }
 

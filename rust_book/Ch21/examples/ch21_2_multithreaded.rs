@@ -1,5 +1,5 @@
 /// Chapter 21.2: Multithreaded Server with Thread Pool
-/// 
+///
 /// This example demonstrates:
 /// - ThreadPool abstraction for managing worker threads
 /// - Concurrent request handling
@@ -17,7 +17,7 @@ use std::{
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878")
         .expect("❌ Port 7878 already in use! Kill existing server or use different port.");
-    
+
     // Create thread pool with 4 worker threads
     let pool = ThreadPool::new(4);
 
@@ -42,7 +42,7 @@ fn main() {
 
 fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&mut stream);
-    
+
     // Handle empty connections (browser pre-connections, early disconnects)
     let request_line = match buf_reader.lines().next() {
         Some(Ok(line)) => line,
@@ -74,15 +74,13 @@ fn handle_connection(mut stream: TcpStream) {
     let contents = fs::read_to_string(filename).unwrap();
     let length = contents.len();
 
-    let response = format!(
-        "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
-    );
+    let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
     stream.write_all(response.as_bytes()).unwrap();
     println!("✅ Worker {:?} sent response: {}\n", thread_id, status_line);
 }
 
-/* 
+/*
 === Key Learning Points ===
 
 1. Thread Pool Pattern:
@@ -115,7 +113,7 @@ fn handle_connection(mut stream: TcpStream) {
    - Total: ~5 seconds for 2 requests (concurrent!)
 
 5. Architecture:
-   
+
    ┌──────────────┐
    │ TcpListener  │
    └──────┬───────┘
@@ -185,15 +183,15 @@ impl ThreadPool {
     pub fn new(size: usize) -> ThreadPool {
         let (sender, receiver) = mpsc::channel();
         let receiver = Arc::new(Mutex::new(receiver));
-        
+
         let mut workers = Vec::with_capacity(size);
         for id in 0..size {
             workers.push(Worker::new(id, Arc::clone(&receiver)));
         }
-        
+
         ThreadPool { workers, sender: Some(sender) }
     }
-    
+
     pub fn execute<F>(&self, f: F)
     where
         F: FnOnce() + Send + 'static,

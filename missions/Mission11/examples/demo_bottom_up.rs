@@ -42,19 +42,19 @@ fn fib_bottom_up(n: u64) -> u64 {
     if n <= 1 {
         return n;
     }
-    
+
     // Pre-allocate table for all states [0..n]
     let mut dp = vec![0u64; (n + 1) as usize];
-    
+
     // Base cases
     dp[0] = 0;
     dp[1] = 1;
-    
+
     // Fill table in dependency order (bottom-up)
     for i in 2..=n as usize {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
-    
+
     dp[n as usize]
 }
 
@@ -66,16 +66,16 @@ fn fib_bottom_up_optimized(n: u64) -> u64 {
     if n <= 1 {
         return n;
     }
-    
+
     let mut prev2 = 0u64;
     let mut prev1 = 1u64;
-    
+
     for _ in 2..=n {
         let current = prev1 + prev2;
         prev2 = prev1;
         prev1 = current;
     }
-    
+
     prev1
 }
 
@@ -99,12 +99,12 @@ fn coin_change_top_down(
     if amount == 0 {
         return Some(0);
     }
-    
+
     // Memoization check
     if let Some(&cached) = memo.get(&amount) {
         return cached;
     }
-    
+
     // Try each coin and find minimum
     let mut min_coins: Option<u32> = None;
     for &coin in coins {
@@ -115,7 +115,7 @@ fn coin_change_top_down(
             }
         }
     }
-    
+
     // Cache and return
     memo.insert(amount, min_coins);
     min_coins
@@ -130,14 +130,14 @@ fn coin_change_top_down(
 fn coin_change_bottom_up(amount: u32, coins: &[u32]) -> Option<u32> {
     // Pre-allocate table: dp[i] = min coins to make amount i
     let mut dp = vec![None; (amount + 1) as usize];
-    
+
     // Base case: 0 amount requires 0 coins
     dp[0] = Some(0);
-    
+
     // Fill table in dependency order
     for current_amount in 1..=amount as usize {
         let mut min_coins: Option<u32> = None;
-        
+
         // Try each coin
         for &coin in coins {
             let coin = coin as usize;
@@ -148,10 +148,10 @@ fn coin_change_bottom_up(amount: u32, coins: &[u32]) -> Option<u32> {
                 }
             }
         }
-        
+
         dp[current_amount] = min_coins;
     }
-    
+
     dp[amount as usize]
 }
 
@@ -178,12 +178,12 @@ fn lcs_top_down(
     if i >= s1.len() || j >= s2.len() {
         return 0;
     }
-    
+
     // Memoization check
     if let Some(&cached) = memo.get(&(i, j)) {
         return cached;
     }
-    
+
     // Recursive computation
     let result = if s1[i] == s2[j] {
         // Characters match - include in LCS
@@ -194,7 +194,7 @@ fn lcs_top_down(
         let skip_s2 = lcs_top_down(s1, s2, i, j + 1, memo);
         skip_s1.max(skip_s2)
     };
-    
+
     // Cache and return
     memo.insert((i, j), result);
     result
@@ -210,13 +210,13 @@ fn lcs_top_down(
 fn lcs_bottom_up(s1: &[u8], s2: &[u8]) -> usize {
     let m = s1.len();
     let n = s2.len();
-    
+
     // Pre-allocate 2D table: dp[i][j] = LCS length of s1[i..] and s2[j..]
     // We build from end to start, so index 0 is the answer
     let mut dp = vec![vec![0; n + 1]; m + 1];
-    
+
     // Base cases: dp[m][*] = 0 and dp[*][n] = 0 (already initialized)
-    
+
     // Fill table in reverse order (bottom-up from end of strings)
     for i in (0..m).rev() {
         for j in (0..n).rev() {
@@ -227,7 +227,7 @@ fn lcs_bottom_up(s1: &[u8], s2: &[u8]) -> usize {
             };
         }
     }
-    
+
     dp[0][0]
 }
 
@@ -238,95 +238,128 @@ fn lcs_bottom_up(s1: &[u8], s2: &[u8]) -> usize {
 fn main() {
     println!("=== Bottom-Up vs Top-Down DP Comparison ===");
     println!("REQ-7 Validation\n");
-    
+
     // ========================================================================
     // Example 1: Fibonacci
     // ========================================================================
     println!("━━━ Example 1: Fibonacci ━━━");
     let n = 40u64;
-    
+
     let mut memo = HashMap::new();
     let start = Instant::now();
     let result_td = fib_top_down(n, &mut memo);
     let time_td = start.elapsed();
-    
+
     let start = Instant::now();
     let result_bu = fib_bottom_up(n);
     let time_bu = start.elapsed();
-    
+
     let start = Instant::now();
     let result_opt = fib_bottom_up_optimized(n);
     let time_opt = start.elapsed();
-    
+
     println!("fib({}) = {}", n, result_td);
-    println!("  Top-down (memoization):     {:?} | Cache entries: {}", time_td, memo.len());
-    println!("  Bottom-up (tabulation):     {:?} | Table size: {}", time_bu, n + 1);
-    println!("  Bottom-up (space optimized): {:?} | Space: O(1)", time_opt);
+    println!(
+        "  Top-down (memoization):     {:?} | Cache entries: {}",
+        time_td,
+        memo.len()
+    );
+    println!(
+        "  Bottom-up (tabulation):     {:?} | Table size: {}",
+        time_bu,
+        n + 1
+    );
+    println!(
+        "  Bottom-up (space optimized): {:?} | Space: O(1)",
+        time_opt
+    );
     assert_eq!(result_td, result_bu);
     assert_eq!(result_td, result_opt);
-    
+
     println!("\n📊 Trade-offs:");
     println!("  • Top-down: Only computes reachable states (cache size = n)");
     println!("  • Bottom-up: Computes all states 0..n (table size = n+1)");
     println!("  • Optimized: Uses constant space (only need last 2 values)");
-    
+
     // ========================================================================
     // Example 2: Coin Change
     // ========================================================================
     println!("\n━━━ Example 2: Coin Change ━━━");
     let amount = 63;
     let coins = vec![1, 5, 10, 21, 25];
-    
+
     let mut memo = HashMap::new();
     let start = Instant::now();
     let result_td = coin_change_top_down(amount, &coins, &mut memo);
     let time_td = start.elapsed();
-    
+
     let start = Instant::now();
     let result_bu = coin_change_bottom_up(amount, &coins);
     let time_bu = start.elapsed();
-    
+
     println!("Minimum coins for amount {} with coins {:?}", amount, coins);
-    println!("  Top-down:  {:?} coins ({:?}) | Cache entries: {}", 
-             result_td.unwrap(), time_td, memo.len());
-    println!("  Bottom-up: {:?} coins ({:?}) | Table size: {}", 
-             result_bu.unwrap(), time_bu, amount + 1);
+    println!(
+        "  Top-down:  {:?} coins ({:?}) | Cache entries: {}",
+        result_td.unwrap(),
+        time_td,
+        memo.len()
+    );
+    println!(
+        "  Bottom-up: {:?} coins ({:?}) | Table size: {}",
+        result_bu.unwrap(),
+        time_bu,
+        amount + 1
+    );
     assert_eq!(result_td, result_bu);
-    
+
     println!("\n📊 Trade-offs:");
     println!("  • Top-down: May skip unreachable amounts (cache size <= amount)");
     println!("  • Bottom-up: Always computes all amounts 0..amount");
     println!("  • Both have same time complexity: O(amount × coins)");
-    
+
     // ========================================================================
     // Example 3: Longest Common Subsequence
     // ========================================================================
     println!("\n━━━ Example 3: Longest Common Subsequence ━━━");
     let s1 = b"ABCDGH";
     let s2 = b"AEDFHR";
-    
+
     let mut memo = HashMap::new();
     let start = Instant::now();
     let result_td = lcs_top_down(s1, s2, 0, 0, &mut memo);
     let time_td = start.elapsed();
-    
+
     let start = Instant::now();
     let result_bu = lcs_bottom_up(s1, s2);
     let time_bu = start.elapsed();
-    
-    println!("LCS of {:?} and {:?}", 
-             String::from_utf8_lossy(s1), String::from_utf8_lossy(s2));
-    println!("  Top-down:  {} ({:?}) | Cache entries: {}", result_td, time_td, memo.len());
-    println!("  Bottom-up: {} ({:?}) | Table size: {} ({}×{})", 
-             result_bu, time_bu, (s1.len() + 1) * (s2.len() + 1), s1.len() + 1, s2.len() + 1);
+
+    println!(
+        "LCS of {:?} and {:?}",
+        String::from_utf8_lossy(s1),
+        String::from_utf8_lossy(s2)
+    );
+    println!(
+        "  Top-down:  {} ({:?}) | Cache entries: {}",
+        result_td,
+        time_td,
+        memo.len()
+    );
+    println!(
+        "  Bottom-up: {} ({:?}) | Table size: {} ({}×{})",
+        result_bu,
+        time_bu,
+        (s1.len() + 1) * (s2.len() + 1),
+        s1.len() + 1,
+        s2.len() + 1
+    );
     assert_eq!(result_td, result_bu);
-    
+
     println!("\n📊 Trade-offs:");
     println!("  • Top-down: Only fills reachable (i,j) states (may be sparse)");
     println!("  • Bottom-up: Fills entire m×n table (dense, predictable)");
     println!("  • Bottom-up better for: Reconstructing solution, avoiding recursion");
     println!("  • Top-down better for: Sparse state spaces, easier to reason about");
-    
+
     // ========================================================================
     // Summary
     // ========================================================================
@@ -337,7 +370,7 @@ fn main() {
     println!("  ✅ Easier to understand and prove correctness");
     println!("  ❌ Recursion overhead (stack depth limits)");
     println!("  ❌ HashMap overhead for cache (vs array indexing)");
-    
+
     println!("\n📊 Bottom-Up (Tabulation):");
     println!("  ✅ No recursion (handles deep problems, predictable performance)");
     println!("  ✅ Better cache locality (sequential array access)");
@@ -345,7 +378,7 @@ fn main() {
     println!("  ✅ Easier to optimize space (rolling arrays, etc.)");
     println!("  ❌ Must determine correct iteration order (not always obvious)");
     println!("  ❌ May compute unreachable states");
-    
+
     println!("\n💡 Best Practices:");
     println!("  • Start with top-down if problem naturally recursive");
     println!("  • Convert to bottom-up if recursion depth is an issue");

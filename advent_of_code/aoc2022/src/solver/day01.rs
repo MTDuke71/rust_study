@@ -1,7 +1,7 @@
 //! Day 1: Calorie Counting
 //!
 //! **Problem**: Elves carrying food inventories. Find the elf with the most calories.
-//! 
+//!
 //! **Approach**: Parse groups separated by blank lines, sum each group, find max.
 
 // ============================================================================
@@ -20,7 +20,7 @@ pub struct ElfInventories {
 
 pub fn parse_input(input: &str) -> ElfInventories {
     let totals = input
-        .split("\n\n")  // Split by blank lines
+        .split("\n\n") // Split by blank lines
         .map(|group| {
             group
                 .lines()
@@ -28,7 +28,7 @@ pub fn parse_input(input: &str) -> ElfInventories {
                 .sum()
         })
         .collect();
-    
+
     ElfInventories { totals }
 }
 
@@ -48,7 +48,7 @@ fn solve_part1_impl(data: &ElfInventories) -> usize {
 fn solve_part2_impl(data: &ElfInventories) -> usize {
     // Find the sum of the top 3 elves' calories
     let mut sorted = data.totals.clone();
-    sorted.sort_unstable_by(|a, b| b.cmp(a));  // Sort descending
+    sorted.sort_unstable_by(|a, b| b.cmp(a)); // Sort descending
     sorted.iter().take(3).sum()
 }
 
@@ -101,11 +101,11 @@ mod tests {
     fn test_parse() {
         let data = parse_input(EXAMPLE);
         assert_eq!(data.totals.len(), 5);
-        assert_eq!(data.totals[0], 6000);   // First elf
-        assert_eq!(data.totals[1], 4000);   // Second elf
-        assert_eq!(data.totals[2], 11000);  // Third elf
-        assert_eq!(data.totals[3], 24000);  // Fourth elf
-        assert_eq!(data.totals[4], 10000);  // Fifth elf
+        assert_eq!(data.totals[0], 6000); // First elf
+        assert_eq!(data.totals[1], 4000); // Second elf
+        assert_eq!(data.totals[2], 11000); // Third elf
+        assert_eq!(data.totals[3], 24000); // Fourth elf
+        assert_eq!(data.totals[4], 10000); // Fifth elf
     }
 
     #[test]

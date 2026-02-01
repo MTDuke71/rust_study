@@ -1,15 +1,15 @@
 /// AoC 2024 Day 16: Reindeer Maze
-/// 
+///
 /// Grid-based pathfinding with rotation costs using Mission composition:
 /// - Mission 6: Grid<T> for maze representation
 /// - Mission 8: Dijkstra's algorithm for shortest path with (position, direction) state
-/// 
+///
 /// Problem: Find minimum cost path where:
 /// - Moving forward costs 1 point
 /// - Rotating 90° costs 1000 points
 use mission6::Grid;
-use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 
 /// Cardinal directions for maze navigation
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -84,11 +84,11 @@ fn parse_maze(input: &str) -> (Grid<char>, (usize, usize), (usize, usize)) {
     let lines: Vec<&str> = input.lines().collect();
     let rows = lines.len();
     let cols = lines[0].len();
-    
+
     let mut grid = Grid::new(rows, cols, '#');
     let mut start = (0, 0);
     let mut end = (0, 0);
-    
+
     for (r, line) in lines.iter().enumerate() {
         for (c, ch) in line.chars().enumerate() {
             grid[(r, c)] = ch;
@@ -99,32 +99,50 @@ fn parse_maze(input: &str) -> (Grid<char>, (usize, usize), (usize, usize)) {
             }
         }
     }
-    
+
     (grid, start, end)
 }
 
 /// Get valid neighbors from a state (move forward or rotate)
 fn get_neighbors(grid: &Grid<char>, state: State) -> Vec<(State, usize)> {
     let mut neighbors = Vec::new();
-    
+
     // Option 1: Move forward in current direction (cost: 1)
     let (dr, dc) = state.dir.delta();
     let new_row = state.pos.0 as isize + dr;
     let new_col = state.pos.1 as isize + dc;
-    
+
     if new_row >= 0 && new_col >= 0 {
         let new_pos = (new_row as usize, new_col as usize);
         if grid.in_bounds(new_pos.into()) && grid[new_pos] != '#' {
-            neighbors.push((State { pos: new_pos, dir: state.dir }, 1));
+            neighbors.push((
+                State {
+                    pos: new_pos,
+                    dir: state.dir,
+                },
+                1,
+            ));
         }
     }
-    
+
     // Option 2: Rotate clockwise (cost: 1000)
-    neighbors.push((State { pos: state.pos, dir: state.dir.rotate_cw() }, 1000));
-    
+    neighbors.push((
+        State {
+            pos: state.pos,
+            dir: state.dir.rotate_cw(),
+        },
+        1000,
+    ));
+
     // Option 3: Rotate counter-clockwise (cost: 1000)
-    neighbors.push((State { pos: state.pos, dir: state.dir.rotate_ccw() }, 1000));
-    
+    neighbors.push((
+        State {
+            pos: state.pos,
+            dir: state.dir.rotate_ccw(),
+        },
+        1000,
+    ));
+
     neighbors
 }
 
@@ -137,21 +155,21 @@ fn dijkstra(
 ) -> (usize, HashMap<State, usize>) {
     let mut heap = BinaryHeap::new();
     let mut distances = HashMap::new();
-    
+
     // Start facing East with cost 0
     let start_state = State {
         pos: start,
         dir: Direction::East,
     };
-    
+
     heap.push(Node {
         cost: 0,
         state: start_state,
     });
     distances.insert(start_state, 0);
-    
+
     let mut min_end_cost = usize::MAX;
-    
+
     while let Some(Node { cost, state }) = heap.pop() {
         // Skip if we've already found a better path to this state
         if let Some(&best) = distances.get(&state) {
@@ -159,21 +177,21 @@ fn dijkstra(
                 continue;
             }
         }
-        
+
         // Check if we reached the end
         if state.pos == end {
             min_end_cost = min_end_cost.min(cost);
             continue; // Continue to explore all paths to end
         }
-        
+
         // Explore neighbors
         for (next_state, edge_cost) in get_neighbors(grid, state) {
             let next_cost = cost + edge_cost;
-            
+
             let is_better = distances
                 .get(&next_state)
                 .is_none_or(|&current| next_cost < current);
-            
+
             if is_better {
                 distances.insert(next_state, next_cost);
                 heap.push(Node {
@@ -183,7 +201,7 @@ fn dijkstra(
             }
         }
     }
-    
+
     (min_end_cost, distances)
 }
 
@@ -195,12 +213,12 @@ pub fn part1(input: &str) -> usize {
 }
 
 /// Part 2: Count all tiles that are part of any optimal path
-/// 
+///
 /// Strategy: Backtrack from all end states with minimum cost
 pub fn part2(input: &str) -> usize {
     let (grid, start, end) = parse_maze(input);
     let (min_cost, distances) = dijkstra(&grid, start, end);
-    
+
     // Find all end states with minimum cost
     let end_states: Vec<State> = [
         Direction::North,
@@ -212,27 +230,27 @@ pub fn part2(input: &str) -> usize {
     .map(|&dir| State { pos: end, dir })
     .filter(|state| distances.get(state) == Some(&min_cost))
     .collect();
-    
+
     // Backtrack from end states to find all nodes on optimal paths
     let mut on_best_path = HashSet::new();
     let mut queue: Vec<State> = end_states.clone();
     let mut visited = HashSet::new();
-    
+
     while let Some(state) = queue.pop() {
         if !visited.insert(state) {
             continue;
         }
-        
+
         on_best_path.insert(state.pos);
-        
+
         let current_cost = distances.get(&state).copied().unwrap_or(usize::MAX);
-        
+
         // Check all possible predecessors
         // 1. Moved forward from previous position
         let (dr, dc) = state.dir.delta();
         let prev_row = state.pos.0 as isize - dr;
         let prev_col = state.pos.1 as isize - dc;
-        
+
         if prev_row >= 0 && prev_col >= 0 {
             let prev_pos = (prev_row as usize, prev_col as usize);
             if grid.in_bounds(prev_pos.into()) {
@@ -247,7 +265,7 @@ pub fn part2(input: &str) -> usize {
                 }
             }
         }
-        
+
         // 2. Rotated clockwise from same position
         let prev_state = State {
             pos: state.pos,
@@ -258,7 +276,7 @@ pub fn part2(input: &str) -> usize {
                 queue.push(prev_state);
             }
         }
-        
+
         // 3. Rotated counter-clockwise from same position
         let prev_state = State {
             pos: state.pos,
@@ -270,7 +288,7 @@ pub fn part2(input: &str) -> usize {
             }
         }
     }
-    
+
     on_best_path.len()
 }
 

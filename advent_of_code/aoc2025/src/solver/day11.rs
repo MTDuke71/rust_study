@@ -30,13 +30,10 @@ fn parse_input(input: &str) -> HashMap<String, Vec<String>> {
             if line.is_empty() {
                 return None;
             }
-            
+
             let (source, targets) = line.split_once(": ")?;
-            let neighbors: Vec<String> = targets
-                .split_whitespace()
-                .map(String::from)
-                .collect();
-            
+            let neighbors: Vec<String> = targets.split_whitespace().map(String::from).collect();
+
             Some((source.to_string(), neighbors))
         })
         .collect()
@@ -62,12 +59,12 @@ fn count_paths(
     if current == target {
         return 1;
     }
-    
+
     // Check memo cache
     if let Some(&cached) = memo.get(current) {
         return cached;
     }
-    
+
     // Recursive case: sum paths through all neighbors
     let count: usize = graph
         .get(current)
@@ -78,7 +75,7 @@ fn count_paths(
                 .sum()
         })
         .unwrap_or(0);
-    
+
     // Cache result
     memo.insert(current.to_string(), count);
     count
@@ -86,18 +83,18 @@ fn count_paths(
 
 pub fn solve_part1(input: &str) -> Result<String> {
     let graph = parse_input(input);
-    
+
     // Verify graph contains start node
     let start = "you";
     let end = "out";
-    
+
     if !graph.contains_key(start) {
         anyhow::bail!("Graph doesn't contain start node 'you'");
     }
-    
+
     let mut memo = HashMap::new();
     let count = count_paths(&graph, start, end, &mut memo);
-    
+
     Ok(count.to_string())
 }
 
@@ -119,7 +116,7 @@ fn count_paths_with_requirements_memo(
     current: &str,
     target: &str,
     required: &[&str],
-    visited_mask: usize,  // Bitmask: which required nodes visited
+    visited_mask: usize, // Bitmask: which required nodes visited
     memo: &mut HashMap<(String, usize), usize>,
 ) -> usize {
     // Base case: reached target
@@ -128,13 +125,13 @@ fn count_paths_with_requirements_memo(
         let all_visited = (1 << required.len()) - 1;
         return if visited_mask == all_visited { 1 } else { 0 };
     }
-    
+
     // Check memo cache
     let state = (current.to_string(), visited_mask);
     if let Some(&cached) = memo.get(&state) {
         return cached;
     }
-    
+
     // Update visited mask if current node is required
     let mut new_mask = visited_mask;
     for (i, &req) in required.iter().enumerate() {
@@ -142,7 +139,7 @@ fn count_paths_with_requirements_memo(
             new_mask |= 1 << i;
         }
     }
-    
+
     // Recursive case: explore all neighbors
     let count: usize = graph
         .get(current)
@@ -150,12 +147,14 @@ fn count_paths_with_requirements_memo(
             neighbors
                 .iter()
                 .map(|next| {
-                    count_paths_with_requirements_memo(graph, next, target, required, new_mask, memo)
+                    count_paths_with_requirements_memo(
+                        graph, next, target, required, new_mask, memo,
+                    )
                 })
                 .sum()
         })
         .unwrap_or(0);
-    
+
     // Cache result
     memo.insert(state, count);
     count
@@ -163,19 +162,19 @@ fn count_paths_with_requirements_memo(
 
 pub fn solve_part2(input: &str) -> Result<String> {
     let graph = parse_input(input);
-    
+
     // Part 2: count paths from "svr" to "out" that visit both "dac" and "fft"
     let start = "svr";
     let end = "out";
     let required = vec!["dac", "fft"];
-    
+
     if !graph.contains_key(start) {
         anyhow::bail!("Graph doesn't contain start node 'svr'");
     }
-    
+
     let mut memo = HashMap::new();
     let count = count_paths_with_requirements_memo(&graph, start, end, &required, 0, &mut memo);
-    
+
     Ok(count.to_string())
 }
 
@@ -197,14 +196,14 @@ iii: out"#;
     #[test]
     fn test_parse_input() {
         let graph = parse_input(EXAMPLE);
-        
+
         // Check "you" node
         assert!(graph.contains_key("you"));
         let you_neighbors = graph.get("you").unwrap();
         assert_eq!(you_neighbors.len(), 2);
         assert!(you_neighbors.contains(&"bbb".to_string()));
         assert!(you_neighbors.contains(&"ccc".to_string()));
-        
+
         // Check "ccc" node has 3 neighbors
         let ccc_neighbors = graph.get("ccc").unwrap();
         assert_eq!(ccc_neighbors.len(), 3);
@@ -256,9 +255,12 @@ dac: fff
 fff: ggg hhh
 ggg: out
 hhh: out"#;
-        
+
         let result = solve_part2(example).unwrap();
-        assert_eq!(result, "2", "Part 2 example should have 2 paths visiting both dac and fft");
+        assert_eq!(
+            result, "2",
+            "Part 2 example should have 2 paths visiting both dac and fft"
+        );
     }
 
     #[test]
@@ -268,7 +270,8 @@ hhh: out"#;
         let input = "A: B\nB: C\nC: D\nD: out";
         let graph = parse_input(input);
         let mut memo = HashMap::new();
-        let count = count_paths_with_requirements_memo(&graph, "A", "out", &["B", "D"], 0, &mut memo);
+        let count =
+            count_paths_with_requirements_memo(&graph, "A", "out", &["B", "D"], 0, &mut memo);
         assert_eq!(count, 1, "Should have 1 path visiting both B and D");
     }
 }

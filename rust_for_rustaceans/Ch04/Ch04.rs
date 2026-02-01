@@ -129,7 +129,7 @@ impl From<std::num::ParseIntError> for ParseError {
 fn parse_config_file(path: &str) -> Result<Vec<i32>, ParseError> {
     // `?` converts io::Error to ParseError via From trait
     let content = std::fs::read_to_string(path)?;
-    
+
     let mut numbers = Vec::new();
     for (line_num, line) in content.lines().enumerate() {
         // `?` converts ParseIntError to ParseError via From trait
@@ -143,7 +143,7 @@ fn parse_config_file(path: &str) -> Result<Vec<i32>, ParseError> {
             }
         }
     }
-    
+
     Ok(numbers)
 }
 

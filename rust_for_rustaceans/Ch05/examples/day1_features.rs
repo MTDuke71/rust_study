@@ -1,5 +1,5 @@
- //! Day 1: Features - Conditional Compilation with Feature Flags
-//! 
+//! Day 1: Features - Conditional Compilation with Feature Flags
+//!
 //! This example demonstrates:
 //! - Defining and using features
 //! - Optional dependencies
@@ -49,37 +49,37 @@ pub fn experimental_operation() {
 /// Example using cfg! macro for runtime checks
 pub fn check_features() {
     println!("\n=== Feature Detection ===");
-    
+
     if cfg!(feature = "std") {
         println!("✓ std feature enabled");
     } else {
         println!("✗ std feature disabled");
     }
-    
+
     if cfg!(feature = "advanced") {
         println!("✓ advanced feature enabled");
     } else {
         println!("✗ advanced feature disabled");
     }
-    
+
     if cfg!(feature = "networking") {
         println!("✓ networking feature enabled");
     } else {
         println!("✗ networking feature disabled");
     }
-    
+
     if cfg!(feature = "compression") {
         println!("✓ compression feature enabled");
     } else {
         println!("✗ compression feature disabled");
     }
-    
+
     if cfg!(feature = "experimental") {
         println!("✓ experimental feature enabled");
     } else {
         println!("✗ experimental feature disabled");
     }
-    
+
     if cfg!(feature = "serde") {
         println!("✓ serde feature enabled");
     } else {
@@ -95,10 +95,10 @@ pub fn serde_operation() {
 
 fn main() {
     println!("🎯 Day 1: Features Example\n");
-    
+
     // Core operations always available
     core_operation(5);
-    
+
     // Standard library features
     #[cfg(feature = "std")]
     {
@@ -106,30 +106,30 @@ fn main() {
         let doubled = std_operation(numbers);
         println!("Doubled: {:?}", doubled);
     }
-    
+
     // Advanced features
     #[cfg(feature = "advanced")]
     {
         advanced_operation(7);
-        
+
         #[cfg(feature = "networking")]
         network_operation();
-        
+
         #[cfg(feature = "compression")]
         compression_operation();
     }
-    
+
     // Experimental features
     #[cfg(feature = "experimental")]
     experimental_operation();
-    
+
     // Optional dependency
     #[cfg(feature = "serde")]
     serde_operation();
-    
+
     // Feature detection
     check_features();
-    
+
     println!("\n📝 Try running with different features:");
     println!("  cargo run --example day1_features");
     println!("  cargo run --example day1_features --no-default-features");

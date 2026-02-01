@@ -65,13 +65,13 @@ fn demonstrate_default_type_parameters() {
         x: i32,
         y: i32,
     }
-    
+
     impl Point {
         fn new(x: i32, y: i32) -> Self {
             Point { x, y }
         }
     }
-    
+
     impl fmt::Display for Point {
         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
             write!(f, "({}, {})", self.x, self.y)
@@ -80,7 +80,7 @@ fn demonstrate_default_type_parameters() {
 
     #[derive(Debug)]
     struct Millimeters(u32);
-    
+
     #[derive(Debug)]
     struct Meters(u32);
 
@@ -131,7 +131,10 @@ fn demonstrate_method_disambiguation() {
 
     // Fully qualified syntax for associated functions
     println!("  Dog::baby_name() = {}", Dog::baby_name());
-    println!("  <Dog as Animal>::baby_name() = {}", <Dog as Animal>::baby_name());
+    println!(
+        "  <Dog as Animal>::baby_name() = {}",
+        <Dog as Animal>::baby_name()
+    );
 
     println!("💡 Disambiguation: specify which trait's method to call");
     println!();
@@ -147,13 +150,13 @@ fn demonstrate_supertraits() {
         x: i32,
         y: i32,
     }
-    
+
     impl Point {
         fn new(x: i32, y: i32) -> Self {
             Point { x, y }
         }
     }
-    
+
     impl fmt::Display for Point {
         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
             write!(f, "({}, {})", self.x, self.y)

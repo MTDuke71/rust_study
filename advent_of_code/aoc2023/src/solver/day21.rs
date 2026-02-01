@@ -39,20 +39,13 @@ use std::collections::{HashSet, VecDeque};
 
 /// Parse input into grid and find starting position
 fn parse_input(input: &str) -> (Vec<Vec<char>>, (usize, usize)) {
-    let grid: Vec<Vec<char>> = input
-        .lines()
-        .map(|line| line.chars().collect())
-        .collect();
+    let grid: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
 
     // Find starting position 'S'
     let start = grid
         .iter()
         .enumerate()
-        .find_map(|(row, line)| {
-            line.iter()
-                .position(|&c| c == 'S')
-                .map(|col| (row, col))
-        })
+        .find_map(|(row, line)| line.iter().position(|&c| c == 'S').map(|col| (row, col)))
         .expect("Starting position 'S' not found");
 
     (grid, start)
@@ -83,49 +76,49 @@ fn parse_input(input: &str) -> (Vec<Vec<char>>, (usize, usize)) {
 fn count_reachable(grid: &[Vec<char>], start: (usize, usize), steps: usize) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
-    
+
     // BFS counting DOWN from target steps to 0
     let mut queue: VecDeque<(usize, usize, usize)> = VecDeque::new();
     let mut visited: HashSet<(usize, usize)> = HashSet::new(); // Only track position!
     let mut reachable = HashSet::new();
-    
+
     queue.push_back((start.0, start.1, steps));
     visited.insert((start.0, start.1));
-    
+
     while let Some((row, col, s)) = queue.pop_front() {
         // Collect positions with matching parity (even steps remaining)
         if s % 2 == 0 {
             reachable.insert((row, col));
         }
-        
+
         // Stop exploring when no steps remain
         if s == 0 {
             continue;
         }
-        
+
         // Explore neighbors (up, down, left, right)
         for (dr, dc) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
             let new_row = row as isize + dr;
             let new_col = col as isize + dc;
-            
+
             // Bounds check
             if new_row < 0 || new_row >= rows as isize || new_col < 0 || new_col >= cols as isize {
                 continue;
             }
-            
+
             let new_row = new_row as usize;
             let new_col = new_col as usize;
-            
+
             // Check if it's a valid garden plot and not yet visited
             if grid[new_row][new_col] == '#' || visited.contains(&(new_row, new_col)) {
                 continue;
             }
-            
+
             visited.insert((new_row, new_col));
             queue.push_back((new_row, new_col, s - 1)); // Count DOWN
         }
     }
-    
+
     reachable.len()
 }
 
@@ -160,44 +153,44 @@ pub fn part1(input: &str) -> usize {
 fn count_reachable_infinite(grid: &[Vec<char>], start: (isize, isize), steps: usize) -> usize {
     let rows = grid.len() as isize;
     let cols = grid[0].len() as isize;
-    
+
     // BFS on infinite grid counting DOWN from target steps
     let mut queue: VecDeque<(isize, isize, usize)> = VecDeque::new();
     let mut visited: HashSet<(isize, isize)> = HashSet::new(); // Only track position!
     let mut reachable = HashSet::new();
-    
+
     queue.push_back((start.0, start.1, steps));
     visited.insert((start.0, start.1));
-    
+
     while let Some((row, col, s)) = queue.pop_front() {
         // Collect positions with matching parity
         if s % 2 == 0 {
             reachable.insert((row, col));
         }
-        
+
         // Stop exploring when no steps remain
         if s == 0 {
             continue;
         }
-        
+
         for (dr, dc) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
             let new_row = row + dr;
             let new_col = col + dc;
-            
+
             // Map to grid using Euclidean modulo (handle negative coordinates)
             let grid_row = new_row.rem_euclid(rows) as usize;
             let grid_col = new_col.rem_euclid(cols) as usize;
-            
+
             // Check if it's a valid garden plot and not yet visited
             if grid[grid_row][grid_col] == '#' || visited.contains(&(new_row, new_col)) {
                 continue;
             }
-            
+
             visited.insert((new_row, new_col));
             queue.push_back((new_row, new_col, s - 1)); // Count DOWN
         }
     }
-    
+
     reachable.len()
 }
 
@@ -261,33 +254,33 @@ pub fn part2(input: &str) -> usize {
     let (grid, start) = parse_input(input);
     let grid_size = grid.len(); // Assuming square grid
     let start_infinite = (start.0 as isize, start.1 as isize);
-    
+
     // Key insight: 26501365 = 65 + 131*202300
     // Where 65 is distance to edge, 131 is grid size
     // This means we can find a quadratic pattern!
-    
+
     // Calculate for 3 data points: 65, 65+131, 65+262
     let edge_dist = grid_size / 2; // 65 for 131x131 grid
-    
+
     let n0 = count_reachable_infinite(&grid, start_infinite, edge_dist);
     let n1 = count_reachable_infinite(&grid, start_infinite, edge_dist + grid_size);
     let n2 = count_reachable_infinite(&grid, start_infinite, edge_dist + 2 * grid_size);
-    
+
     // Fit quadratic: f(x) = ax² + bx + c
     // We have f(0)=n0, f(1)=n1, f(2)=n2
     // Using Lagrange interpolation / finite differences
-    
+
     let n0 = n0 as i64;
     let n1 = n1 as i64;
     let n2 = n2 as i64;
-    
+
     let a = (n0 - 2 * n1 + n2) / 2;
     let b = (-3 * n0 + 4 * n1 - n2) / 2;
     let c = n0;
-    
+
     // Target: (26501365 - 65) / 131 = 202300
     let target_n = ((26501365 - edge_dist) / grid_size) as i64;
-    
+
     // Evaluate quadratic at target_n
     (a * target_n * target_n + b * target_n + c) as usize
 }
@@ -295,7 +288,7 @@ pub fn part2(input: &str) -> usize {
 /// Part 2 Optimized: Direct geometric counting exploiting grid symmetry
 ///
 /// **STATUS**: ✅ **FIXED** - Now produces correct result matching quadratic extrapolation!
-/// 
+///
 /// **Bug Fix Summary**: Off-by-one errors in grid width calculation and tile counting formulas.
 /// - Root cause: Conceptual error in diamond radius vs grid transitions
 /// - Fixed: `grid_width = steps / n - 1` (not `(steps - edge_dist) / n`)
@@ -393,92 +386,124 @@ pub fn part2_optimized(input: &str) -> usize {
     let (grid, start) = parse_input(input);
     let n = grid.len(); // 131
     let steps = 26_501_365;
-    
+
     assert_eq!(n, 131, "Optimized solution assumes 131×131 grid");
     assert_eq!(start, (65, 65), "Optimized solution assumes center start");
-    
+
     // CRITICAL: grid_width is the diamond RADIUS in grid units
     // It's one less than steps/size because we're measuring from center (width 0)
     let grid_width = steps / n - 1; // 26501365 / 131 - 1 = 202299
     let edge_dist = n / 2; // 65
-    
+
     // Count reachable plots for each tile type:
-    
+
     // 1. Fully saturated tiles (odd/even parity)
     // The parity alternates based on Manhattan distance from start tile
     // For 26,501,365 steps (odd), tiles at even Manhattan distance have odd internal parity
     let odd_full = count_from_position(&grid, start, n * 2 + 1); // 263 steps (odd)
-    let even_full = count_from_position(&grid, start, n * 2);    // 262 steps (even)
-    
+    let even_full = count_from_position(&grid, start, n * 2); // 262 steps (even)
+
     // 2. Cardinal corner tiles (4 directions: N, S, E, W)
     // Enter from edge, have (n-1) steps = 130 steps
     let corner_top = count_from_position(&grid, (n - 1, edge_dist), n - 1);
     let corner_bottom = count_from_position(&grid, (0, edge_dist), n - 1);
     let corner_left = count_from_position(&grid, (edge_dist, n - 1), n - 1);
     let corner_right = count_from_position(&grid, (edge_dist, 0), n - 1);
-    
+
     // 3. Small diagonal edge tiles (4 corners: NE, NW, SE, SW)
     // Just entering, have (n/2 - 1) steps = 64 steps
     let small_ne = count_from_position(&grid, (n - 1, 0), n / 2 - 1);
     let small_nw = count_from_position(&grid, (n - 1, n - 1), n / 2 - 1);
     let small_se = count_from_position(&grid, (0, 0), n / 2 - 1);
     let small_sw = count_from_position(&grid, (0, n - 1), n / 2 - 1);
-    
+
     // 4. Large diagonal edge tiles (4 corners: NE, NW, SE, SW)
     // Mostly filled, have (3*n/2 - 1) steps = 195 steps
     let large_ne = count_from_position(&grid, (n - 1, 0), 3 * n / 2 - 1);
     let large_nw = count_from_position(&grid, (n - 1, n - 1), 3 * n / 2 - 1);
     let large_se = count_from_position(&grid, (0, 0), 3 * n / 2 - 1);
     let large_sw = count_from_position(&grid, (0, n - 1), 3 * n / 2 - 1);
-    
+
     // Geometric counting of tiles in diamond pattern:
-    
+
     // Debug: print individual counts
     if false {
         println!("grid_width = {} (diamond radius in grids)", grid_width);
         println!("Odd full: {}", odd_full);
         println!("Even full: {}", even_full);
-        println!("Corners: T={} B={} L={} R={}", corner_top, corner_bottom, corner_left, corner_right);
-        println!("Small: NE={} NW={} SE={} SW={}", small_ne, small_nw, small_se, small_sw);
-        println!("Large: NE={} NW={} SE={} SW={}", large_ne, large_nw, large_se, large_sw);
+        println!(
+            "Corners: T={} B={} L={} R={}",
+            corner_top, corner_bottom, corner_left, corner_right
+        );
+        println!(
+            "Small: NE={} NW={} SE={} SW={}",
+            small_ne, small_nw, small_se, small_sw
+        );
+        println!(
+            "Large: NE={} NW={} SE={} SW={}",
+            large_ne, large_nw, large_se, large_sw
+        );
     }
-    
+
     // Correct tile counting formulas (verified against reference Python solution):
-    // 
+    //
     // Odd tiles: (grid_width // 2 * 2 + 1)²
-    //   = (202299 // 2 * 2 + 1)²  
+    //   = (202299 // 2 * 2 + 1)²
     //   = (101149 * 2 + 1)²
     //   = 202299²
     let odd_tiles = (grid_width / 2 * 2 + 1).pow(2);
-    
+
     // Even tiles: ((grid_width + 1) // 2 * 2)²
     //   = (202300 // 2 * 2)²
     //   = (101150 * 2)²
     //   = 202300²
     let even_tiles = (grid_width.div_ceil(2) * 2).pow(2);
-    
-    // Edge counts: 
+
+    // Edge counts:
     // - Small edges at outer boundary: grid_width + 1
     // - Large edges filling gaps: grid_width
     let small_edge_count = grid_width + 1; // 202300
-    let large_edge_count = grid_width;     // 202299
-    
+    let large_edge_count = grid_width; // 202299
+
     // Sum all tile categories:
     let result = odd_tiles * odd_full
         + even_tiles * even_full
         + (corner_top + corner_bottom + corner_left + corner_right)
         + small_edge_count * (small_ne + small_nw + small_se + small_sw)
         + large_edge_count * (large_ne + large_nw + large_se + large_sw);
-    
+
     if false {
-        println!("Odd tiles: {} × {} = {}", odd_tiles, odd_full, odd_tiles * odd_full);
-        println!("Even tiles: {} × {} = {}", even_tiles, even_full, even_tiles * even_full);
-        println!("Cardinal corners: {}", corner_top + corner_bottom + corner_left + corner_right);
-        println!("Small edges: {} × {} = {}", small_edge_count, small_ne + small_nw + small_se + small_sw, small_edge_count * (small_ne + small_nw + small_se + small_sw));
-        println!("Large edges: {} × {} = {}", large_edge_count, large_ne + large_nw + large_se + large_sw, large_edge_count * (large_ne + large_nw + large_se + large_sw));
+        println!(
+            "Odd tiles: {} × {} = {}",
+            odd_tiles,
+            odd_full,
+            odd_tiles * odd_full
+        );
+        println!(
+            "Even tiles: {} × {} = {}",
+            even_tiles,
+            even_full,
+            even_tiles * even_full
+        );
+        println!(
+            "Cardinal corners: {}",
+            corner_top + corner_bottom + corner_left + corner_right
+        );
+        println!(
+            "Small edges: {} × {} = {}",
+            small_edge_count,
+            small_ne + small_nw + small_se + small_sw,
+            small_edge_count * (small_ne + small_nw + small_se + small_sw)
+        );
+        println!(
+            "Large edges: {} × {} = {}",
+            large_edge_count,
+            large_ne + large_nw + large_se + large_sw,
+            large_edge_count * (large_ne + large_nw + large_se + large_sw)
+        );
         println!("Total: {}", result);
     }
-    
+
     result
 }
 
@@ -504,12 +529,12 @@ mod tests {
         let (grid, start) = parse_input(EXAMPLE);
         assert_eq!(count_reachable(&grid, start, 6), 16);
     }
-    
+
     #[test]
     fn test_infinite_grid_example() {
         let (grid, start) = parse_input(EXAMPLE);
         let start_inf = (start.0 as isize, start.1 as isize);
-        
+
         // Test example data points
         assert_eq!(count_reachable_infinite(&grid, start_inf, 6), 16);
         assert_eq!(count_reachable_infinite(&grid, start_inf, 10), 50);

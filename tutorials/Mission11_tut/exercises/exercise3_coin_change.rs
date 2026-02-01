@@ -487,7 +487,7 @@ fn compare_approaches() {
     }
 
     println!("=== Bounded Coin Change (with limited quantities) ===\n");
-    
+
     // Test 1: Small quantities - O(n*log(k)) should be fast
     let coins_small = vec![(1, 5), (5, 3), (10, 2), (25, 1)];
     let amount = 41;
@@ -515,17 +515,23 @@ fn compare_approaches() {
     let coins_vec = vec![1, 5, 10, 25];
     let amount = 100;
     println!("Bounded vs Unbounded comparison for amount {}:", amount);
-    
+
     let start = std::time::Instant::now();
     let result_bounded = min_coins_bounded(&coins_unlimited, amount);
     let duration_bounded = start.elapsed();
-    println!("  Bounded:    {:?} (took {:?}) - O(n × Σlog(k))", result_bounded, duration_bounded);
-    
+    println!(
+        "  Bounded:    {:?} (took {:?}) - O(n × Σlog(k))",
+        result_bounded, duration_bounded
+    );
+
     let start = std::time::Instant::now();
     let result_unbounded = min_coins_bottom_up(&coins_vec, amount);
     let duration_unbounded = start.elapsed();
-    println!("  Unbounded:  {:?} (took {:?}) - O(m × n)", result_unbounded, duration_unbounded);
-    
+    println!(
+        "  Unbounded:  {:?} (took {:?}) - O(m × n)",
+        result_unbounded, duration_unbounded
+    );
+
     println!("  Note: Unbounded is faster when quantities don't matter");
     println!("        Bounded is necessary when enforcing quantity limits");
     println!();

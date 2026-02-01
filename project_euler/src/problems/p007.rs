@@ -34,7 +34,7 @@ pub fn nth_prime(n: usize) -> u64 {
     if n == 0 {
         panic!("Prime indexing is 1-based");
     }
-    
+
     // Estimate upper bound using Prime Number Theorem
     // p_n ≈ n * ln(n) * 1.3 for n > 6
     let estimate = if n < 6 {
@@ -43,9 +43,9 @@ pub fn nth_prime(n: usize) -> u64 {
         let n_f64 = n as f64;
         (n_f64 * n_f64.ln() * 1.3) as usize
     };
-    
+
     let primes = sieve(estimate);
-    
+
     if primes.len() >= n {
         primes[n - 1] as u64
     } else {

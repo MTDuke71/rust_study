@@ -21,7 +21,6 @@ fn main() {
     demonstrate_function_parameters();
     demonstrate_integration();
 
-
     println!("\n✅ All pattern locations demonstrated!");
 }
 

@@ -1,5 +1,5 @@
 /// Chapter 21.1: Building a Single-Threaded Web Server
-/// 
+///
 /// This example demonstrates:
 /// - TCP listener basics
 /// - HTTP request/response format
@@ -35,7 +35,7 @@ fn main() {
 fn handle_connection(mut stream: TcpStream) {
     // Create buffered reader for efficiency
     let buf_reader = BufReader::new(&mut stream);
-    
+
     // Read HTTP request line (first line)
     let request_line = buf_reader.lines().next().unwrap().unwrap();
 
@@ -58,17 +58,15 @@ fn handle_connection(mut stream: TcpStream) {
     let length = contents.len();
 
     // Construct HTTP response
-    let response = format!(
-        "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
-    );
+    let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
     // Send response
     stream.write_all(response.as_bytes()).unwrap();
-    
+
     println!("✅ Response sent: {}\n", status_line);
 }
 
-/* 
+/*
 === Key Learning Points ===
 
 1. TCP Listener:

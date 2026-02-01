@@ -214,26 +214,29 @@ impl PerformanceComparison {
     /// Pretty-print comparison.
     pub fn report(&self) -> String {
         let mut result = String::new();
-        
+
         if let Some(naive) = self.naive_time_ns {
-            result.push_str(&format!("Naive execution: {:.2}ms\n", naive as f64 / 1_000_000.0));
+            result.push_str(&format!(
+                "Naive execution: {:.2}ms\n",
+                naive as f64 / 1_000_000.0
+            ));
         } else {
             result.push_str("Naive execution: TIMEOUT (infeasible)\n");
         }
-        
+
         result.push_str(&format!(
             "Memoized execution: {:.2}ms\n",
             self.memoized_time_ns as f64 / 1_000_000.0
         ));
-        
+
         if let Some(speedup) = self.speedup {
             result.push_str(&format!("Speedup: {:.2}x\n\n", speedup));
         } else {
             result.push_str("Speedup: ∞ (exponential → linear)\n\n");
         }
-        
+
         result.push_str(&self.cache_stats.report());
-        
+
         result
     }
 }
@@ -245,14 +248,14 @@ mod tests {
     #[test]
     fn test_cache_stats_tracking() {
         let mut stats = CacheStats::new();
-        
+
         // Record some hits and misses
         stats.record_miss();
         stats.record_miss();
         stats.record_hit();
         stats.record_hit();
         stats.record_hit();
-        
+
         assert_eq!(stats.lookups, 5);
         assert_eq!(stats.hits, 3);
         assert_eq!(stats.misses, 2);
@@ -262,38 +265,38 @@ mod tests {
     #[test]
     fn test_instrumented_cache() {
         let mut cache = InstrumentedCache::new();
-        
+
         // First access - miss
         assert!(cache.get(&"key1").is_none());
         assert_eq!(cache.stats().misses, 1);
-        
+
         // Insert
         cache.insert("key1", 42);
-        
+
         // Second access - hit
         assert_eq!(cache.get(&"key1"), Some(&42));
         assert_eq!(cache.stats().hits, 1);
-        
+
         // Different key - miss
         assert!(cache.get(&"key2").is_none());
         assert_eq!(cache.stats().misses, 2);
-        
+
         assert_eq!(cache.len(), 1);
     }
 
     #[test]
     fn test_recursion_depth_tracking() {
         let mut stats = CacheStats::new();
-        
+
         stats.enter_recursion();
         stats.enter_recursion();
         stats.enter_recursion();
         assert_eq!(stats.max_depth, 3);
-        
+
         stats.exit_recursion();
         stats.enter_recursion();
         assert_eq!(stats.max_depth, 3); // Max stays 3
-        
+
         stats.exit_recursion();
         stats.exit_recursion();
         stats.exit_recursion();
@@ -303,18 +306,18 @@ mod tests {
     #[test]
     fn test_memoization_benefit_detection() {
         let mut stats = CacheStats::new();
-        
+
         // Low hit ratio - need misses to establish baseline
         stats.record_miss();
         stats.record_miss();
         stats.record_miss();
         stats.record_hit();
-        stats.update_size(3);  // 3 unique entries, 4 total lookups
-        
+        stats.update_size(3); // 3 unique entries, 4 total lookups
+
         // Hit ratio = 1/4 = 0.25 < 0.3, cache reuse check:
         // misses (3) > max_size (3) * 2? No, so not beneficial yet
         assert!(!stats.is_memoization_beneficial());
-        
+
         // Add more hits - high hit ratio, beneficial
         for _ in 0..10 {
             stats.record_hit();
@@ -326,11 +329,11 @@ mod tests {
     #[test]
     fn test_cache_size_tracking() {
         let mut cache = InstrumentedCache::new();
-        
+
         cache.insert("a", 1);
         cache.insert("b", 2);
         cache.insert("c", 3);
-        
+
         assert_eq!(cache.stats().max_size, 3);
         assert_eq!(cache.len(), 3);
     }

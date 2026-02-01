@@ -35,7 +35,7 @@ impl FreshRange {
 /// Parse the input into ranges and ingredient IDs
 fn parse_input(input: &str) -> (Vec<FreshRange>, Vec<u64>) {
     let mut sections = input.trim().split("\n\n");
-    
+
     // Parse ranges section
     let ranges: Vec<FreshRange> = sections
         .next()
@@ -48,7 +48,7 @@ fn parse_input(input: &str) -> (Vec<FreshRange>, Vec<u64>) {
             Some(FreshRange { start, end })
         })
         .collect();
-    
+
     // Parse ingredients section
     let ingredients: Vec<u64> = sections
         .next()
@@ -56,7 +56,7 @@ fn parse_input(input: &str) -> (Vec<FreshRange>, Vec<u64>) {
         .lines()
         .filter_map(|line| line.trim().parse().ok())
         .collect();
-    
+
     (ranges, ingredients)
 }
 
@@ -67,7 +67,10 @@ fn is_fresh(id: u64, ranges: &[FreshRange]) -> bool {
 
 /// Count how many ingredients are fresh
 fn count_fresh(ranges: &[FreshRange], ingredients: &[u64]) -> usize {
-    ingredients.iter().filter(|&&id| is_fresh(id, ranges)).count()
+    ingredients
+        .iter()
+        .filter(|&&id| is_fresh(id, ranges))
+        .count()
 }
 
 pub fn solve_part1(input: &str) -> Result<String> {
@@ -78,11 +81,11 @@ pub fn solve_part1(input: &str) -> Result<String> {
 
 pub fn solve_part2(input: &str) -> Result<String> {
     let (ranges, _ingredients) = parse_input(input);
-    
+
     // Convert to (start, end) tuples and sort by start
     let mut intervals: Vec<(u64, u64)> = ranges.iter().map(|r| (r.start, r.end)).collect();
     intervals.sort_by_key(|&(start, _)| start);
-    
+
     // Merge overlapping ranges
     let mut merged: Vec<(u64, u64)> = Vec::new();
     for (start, end) in intervals {
@@ -100,10 +103,10 @@ pub fn solve_part2(input: &str) -> Result<String> {
             merged.push((start, end));
         }
     }
-    
+
     // Sum the lengths of all merged ranges (inclusive, so end - start + 1)
     let total: u64 = merged.iter().map(|(start, end)| end - start + 1).sum();
-    
+
     Ok(total.to_string())
 }
 
@@ -127,13 +130,13 @@ mod tests {
     #[test]
     fn test_parse_input() {
         let (ranges, ingredients) = parse_input(EXAMPLE);
-        
+
         assert_eq!(ranges.len(), 4);
         assert_eq!(ranges[0].start, 3);
         assert_eq!(ranges[0].end, 5);
         assert_eq!(ranges[3].start, 12);
         assert_eq!(ranges[3].end, 18);
-        
+
         assert_eq!(ingredients, vec![1, 5, 8, 11, 17, 32]);
     }
 
@@ -150,12 +153,12 @@ mod tests {
     #[test]
     fn test_is_fresh() {
         let (ranges, _) = parse_input(EXAMPLE);
-        
-        assert!(!is_fresh(1, &ranges));  // spoiled - no range
-        assert!(is_fresh(5, &ranges));   // fresh - in 3-5
-        assert!(!is_fresh(8, &ranges));  // spoiled
-        assert!(is_fresh(11, &ranges));  // fresh - in 10-14
-        assert!(is_fresh(17, &ranges));  // fresh - in 16-20 AND 12-18
+
+        assert!(!is_fresh(1, &ranges)); // spoiled - no range
+        assert!(is_fresh(5, &ranges)); // fresh - in 3-5
+        assert!(!is_fresh(8, &ranges)); // spoiled
+        assert!(is_fresh(11, &ranges)); // fresh - in 10-14
+        assert!(is_fresh(17, &ranges)); // fresh - in 16-20 AND 12-18
         assert!(!is_fresh(32, &ranges)); // spoiled
     }
 

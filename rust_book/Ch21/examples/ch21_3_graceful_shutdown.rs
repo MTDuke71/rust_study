@@ -1,5 +1,5 @@
 /// Chapter 21.3: Graceful Shutdown and Cleanup
-/// 
+///
 /// This example demonstrates:
 /// - Drop trait for RAII (Resource Acquisition Is Initialization)
 /// - Graceful shutdown by sending Terminate messages
@@ -38,7 +38,7 @@ fn main() {
 
     println!("\n🛑 Server shutting down...");
     println!("   (ThreadPool Drop will be called)\n");
-    
+
     // When pool goes out of scope here, Drop::drop is called
     // This triggers graceful shutdown
 }
@@ -64,15 +64,13 @@ fn handle_connection(mut stream: TcpStream) {
     let contents = fs::read_to_string(filename).unwrap();
     let length = contents.len();
 
-    let response = format!(
-        "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
-    );
+    let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
     stream.write_all(response.as_bytes()).unwrap();
     println!("✅ Worker {:?} sent response: {}\n", thread_id, status_line);
 }
 
-/* 
+/*
 === Key Learning Points ===
 
 1. The Drop Trait:
@@ -80,7 +78,7 @@ fn handle_connection(mut stream: TcpStream) {
    impl Drop for ThreadPool {
        fn drop(&mut self) {
            println!("Shutting down all workers.");
-           
+
            for worker in &mut self.workers {
                if let Some(thread) = worker.thread.take() {
                    thread.join().unwrap();
@@ -120,7 +118,7 @@ fn handle_connection(mut stream: TcpStream) {
    - Prevents double-join errors
 
 4. Message Passing for Shutdown:
-   
+
    Before shutdown:
    ThreadPool      Workers
    ─────────      ───────
@@ -137,7 +135,7 @@ fn handle_connection(mut stream: TcpStream) {
    5. main calls thread.join()
 
 5. RAII Pattern:
-   
+
    Without RAII (manual cleanup):
    ```rust
    let pool = ThreadPool::new(4);
@@ -188,9 +186,9 @@ Clean exit! All workers finished gracefully.
    ```
    {
        let pool = ThreadPool::new(4);  // Create pool
-       
+
        // Handle 4 requests...
-       
+
    } // pool goes out of scope → Drop::drop() called
    ```
 
@@ -198,7 +196,7 @@ Clean exit! All workers finished gracefully.
    ```
    fn drop(&mut self) {
        drop(self.sender.take());  // Close channel
-       
+
        for worker in &mut self.workers {
            // Wait for each worker to finish
            worker.thread.take().unwrap().join().unwrap();
@@ -223,9 +221,9 @@ Clean exit! All workers finished gracefully.
    In production, you'd want:
    ```rust
    use signal_hook::{consts::SIGINT, iterator::Signals};
-   
+
    let mut signals = Signals::new(&[SIGINT]).unwrap();
-   
+
    thread::spawn(move || {
        for sig in signals.forever() {
            println!("Received signal {:?}", sig);
@@ -237,7 +235,7 @@ Clean exit! All workers finished gracefully.
 2. Timeout for Shutdown:
    ```rust
    use std::time::Duration;
-   
+
    for worker in &mut self.workers {
        if let Some(thread) = worker.thread.take() {
            // Give worker 5 seconds to finish

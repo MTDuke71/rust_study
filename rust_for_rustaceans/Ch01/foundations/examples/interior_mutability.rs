@@ -1,5 +1,5 @@
 //! Interior Mutability Examples
-//! 
+//!
 //! Demonstrates Cell, RefCell, Mutex, and UnsafeCell patterns
 //! for mutating through shared references
 
@@ -25,44 +25,47 @@ fn main() {
     {
         println!("📚 CELL<T>: Copy Types Only");
         println!("   ──────────────────────────");
-        
+
         let x = Cell::new(42);
-        let y = &x;  // Shared reference!
-        
+        let y = &x; // Shared reference!
+
         println!("   Initial: {}", x.get());
-        y.set(84);  // Mutate through shared reference!
+        y.set(84); // Mutate through shared reference!
         println!("   After set: {}", x.get());
-        
+
         // Multiple shared references can mutate
         let z = &x;
         z.set(100);
         println!("   After another set: {}", x.get());
-        
+
         println!("   ✓ No borrow checking, only Copy types\n");
     }
 
     {
         println!("📚 CELL<T>: Use Cases");
         println!("   ───────────────────");
-        
+
         struct Counter {
             count: Cell<i32>,
         }
-        
+
         impl Counter {
             fn new() -> Self {
-                Counter { count: Cell::new(0) }
+                Counter {
+                    count: Cell::new(0),
+                }
             }
-            
-            fn increment(&self) {  // Takes &self, not &mut self!
+
+            fn increment(&self) {
+                // Takes &self, not &mut self!
                 self.count.set(self.count.get() + 1);
             }
-            
+
             fn get(&self) -> i32 {
                 self.count.get()
             }
         }
-        
+
         let counter = Counter::new();
         counter.increment();
         counter.increment();
@@ -75,37 +78,37 @@ fn main() {
     {
         println!("📚 REFCELL<T>: Runtime Borrow Checking");
         println!("   ─────────────────────────────────────");
-        
+
         let data = RefCell::new(vec![1, 2, 3]);
-        
+
         // Immutable borrow
         {
             let borrowed = data.borrow();
             println!("   Borrowed: {:?}", *borrowed);
-        }  // Borrow ends
-        
+        } // Borrow ends
+
         // Mutable borrow
         {
             let mut borrowed_mut = data.borrow_mut();
             borrowed_mut.push(4);
             println!("   Modified: {:?}", *borrowed_mut);
-        }  // Mutable borrow ends
-        
+        } // Mutable borrow ends
+
         println!("   ✓ Borrow rules enforced at runtime\n");
     }
 
     {
         println!("📚 REFCELL<T>: Panics on Violation");
         println!("   ─────────────────────────────────");
-        
+
         let data = RefCell::new(5);
-        
-        let _r1 = data.borrow();  // Immutable borrow
-        let _r2 = data.borrow();  // Another immutable borrow - OK
-        
+
+        let _r1 = data.borrow(); // Immutable borrow
+        let _r2 = data.borrow(); // Another immutable borrow - OK
+
         // This would panic at runtime:
         // let _r3 = data.borrow_mut();  // ❌ PANIC: already borrowed
-        
+
         println!("   Multiple immutable borrows: ✓");
         println!("   Would panic on simultaneous mutable borrow\n");
     }
@@ -113,26 +116,29 @@ fn main() {
     {
         println!("📚 REFCELL<T>: Interior Mutability Pattern");
         println!("   ─────────────────────────────────────────");
-        
+
         #[derive(Debug)]
         struct Config {
             cache: RefCell<Vec<String>>,
         }
-        
+
         impl Config {
             fn new() -> Self {
-                Config { cache: RefCell::new(Vec::new()) }
+                Config {
+                    cache: RefCell::new(Vec::new()),
+                }
             }
-            
-            fn add_entry(&self, entry: String) {  // &self!
+
+            fn add_entry(&self, entry: String) {
+                // &self!
                 self.cache.borrow_mut().push(entry);
             }
-            
+
             fn get_cache(&self) -> Vec<String> {
                 self.cache.borrow().clone()
             }
         }
-        
+
         let config = Config::new();
         config.add_entry("item1".to_string());
         config.add_entry("item2".to_string());
@@ -144,15 +150,15 @@ fn main() {
     {
         println!("📚 RC<REFCELL<T>>: Shared Ownership + Mutability");
         println!("   ───────────────────────────────────────────────");
-        
+
         let data = Rc::new(RefCell::new(vec![1, 2, 3]));
-        
+
         let owner1 = Rc::clone(&data);
         let owner2 = Rc::clone(&data);
-        
+
         owner1.borrow_mut().push(4);
         owner2.borrow_mut().push(5);
-        
+
         println!("   owner1 sees: {:?}", *data.borrow());
         println!("   ✓ Multiple owners can mutate shared data\n");
     }
@@ -160,14 +166,14 @@ fn main() {
     {
         println!("📚 RC<REFCELL<T>>: Graph Example");
         println!("   ──────────────────────────────");
-        
+
         type NodeRef = Rc<RefCell<Node>>;
-        
+
         struct Node {
             value: i32,
             children: Vec<NodeRef>,
         }
-        
+
         impl Node {
             fn new(value: i32) -> NodeRef {
                 Rc::new(RefCell::new(Node {
@@ -175,19 +181,19 @@ fn main() {
                     children: Vec::new(),
                 }))
             }
-            
+
             fn add_child(&mut self, child: NodeRef) {
                 self.children.push(child);
             }
         }
-        
+
         let root = Node::new(1);
         let child1 = Node::new(2);
         let child2 = Node::new(3);
-        
+
         root.borrow_mut().add_child(child1);
         root.borrow_mut().add_child(child2);
-        
+
         println!("   Root: {}", root.borrow().value);
         println!("   Children: {}", root.borrow().children.len());
         println!("   ✓ Graph structures with shared ownership\n");
@@ -207,16 +213,16 @@ fn main() {
     {
         println!("📚 THREAD-SAFE: MUTEX<T> / RWLOCK<T>");
         println!("   ────────────────────────────────────");
-        
+
         use std::sync::Mutex;
-        
+
         let counter = Mutex::new(0);
-        
+
         {
             let mut num = counter.lock().unwrap();
             *num += 1;
-        }  // Lock released
-        
+        } // Lock released
+
         println!("   Mutex counter: {}", *counter.lock().unwrap());
         println!("   ✓ Thread-safe interior mutability\n");
     }

@@ -41,7 +41,10 @@ pub fn solve_part1(input: &str) -> Result<String> {
     }
 
     // Split each row by whitespace
-    let tokens: Vec<Vec<&str>> = lines.iter().map(|l| l.split_whitespace().collect()).collect();
+    let tokens: Vec<Vec<&str>> = lines
+        .iter()
+        .map(|l| l.split_whitespace().collect())
+        .collect();
 
     // Last row contains operators, all others contain numbers
     let op_row = tokens.last().unwrap();
@@ -118,7 +121,7 @@ fn get_problem_ranges_from_operators(op_line: &str, width: usize) -> Vec<(usize,
         .map(|(i, &start)| {
             let end = op_positions
                 .get(i + 1)
-                .map(|&next| next - 1)  // Stop before separator
+                .map(|&next| next - 1) // Stop before separator
                 .unwrap_or(width);
             (start, end)
         })

@@ -41,7 +41,10 @@ fn demonstrate_function_pointers() {
     }
 
     let statuses: Vec<Status> = (0u32..5).map(Status::Value).collect();
-    println!("  Created {} Status values with enum initializer", statuses.len());
+    println!(
+        "  Created {} Status values with enum initializer",
+        statuses.len()
+    );
 
     println!("💡 Function pointers: simple, efficient, no captures");
     println!();

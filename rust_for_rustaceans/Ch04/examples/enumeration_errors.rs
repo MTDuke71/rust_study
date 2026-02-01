@@ -141,10 +141,23 @@ impl Error for HttpError {}
 #[derive(Debug)]
 #[allow(dead_code)] // Educational example - demonstrates error chaining patterns
 enum DbError {
-    Connection { host: String, port: u16, source: io::Error },
-    Query { sql: String, reason: String },
-    NotFound { table: String, id: i64 },
-    Constraint { constraint: String, value: String },
+    Connection {
+        host: String,
+        port: u16,
+        source: io::Error,
+    },
+    Query {
+        sql: String,
+        reason: String,
+    },
+    NotFound {
+        table: String,
+        id: i64,
+    },
+    Constraint {
+        constraint: String,
+        value: String,
+    },
 }
 
 impl fmt::Display for DbError {
@@ -160,7 +173,11 @@ impl fmt::Display for DbError {
                 write!(f, "record {} not found in table {}", id, table)
             }
             DbError::Constraint { constraint, value } => {
-                write!(f, "constraint '{}' violated by value '{}'", constraint, value)
+                write!(
+                    f,
+                    "constraint '{}' violated by value '{}'",
+                    constraint, value
+                )
             }
         }
     }
@@ -181,10 +198,10 @@ impl Error for DbError {
 
 fn print_error_chain(e: &dyn Error) {
     println!("Error: {}", e);
-    
+
     let mut current = e.source();
     let mut level = 1;
-    
+
     while let Some(source) = current {
         println!("  {}. Caused by: {}", level, source);
         current = source.source();
@@ -240,11 +257,8 @@ fn main() {
 
     // Example 5: Pattern Matching on Error Types
     println!("5. Pattern Matching on Errors:");
-    let errors: Vec<Box<dyn Error>> = vec![
-        Box::new(cfg_err),
-        Box::new(http_err),
-    ];
-    
+    let errors: Vec<Box<dyn Error>> = vec![Box::new(cfg_err), Box::new(http_err)];
+
     for (i, err) in errors.iter().enumerate() {
         println!("   Error {}: {}", i + 1, err);
     }

@@ -110,7 +110,7 @@ fn spawn_thread_example() {
     // Join returns Result<T, Box<dyn Any + Send>>
     println!("Thread 1 result: {:?}", handle1.join());
     println!("Thread 2 result: {:?}", handle2.join());
-    
+
     match handle3.join() {
         Ok(result) => println!("Thread 3 result: {}", result),
         Err(e) => {
@@ -157,7 +157,7 @@ fn validate_user_input(input: &str) -> Result<String, ()> {
     validate_not_empty(input)?;
     validate_length(input, 3, 20)?;
     validate_alphanumeric(input)?;
-    
+
     Ok(input.to_string())
 }
 
@@ -273,7 +273,10 @@ fn main() {
     // Example 3a: Password validation with valid password
     println!("3a. Boolean vs Result (Valid Password):");
     let valid_password = "password123";
-    println!("   Boolean approach: {}", is_valid_password_bool(valid_password));
+    println!(
+        "   Boolean approach: {}",
+        is_valid_password_bool(valid_password)
+    );
     match validate_password(valid_password) {
         Ok(()) => println!("   Result approach: valid"),
         Err(()) => println!("   Result approach: invalid"),
@@ -295,7 +298,7 @@ fn main() {
     // Got: 42
     // Infallible result: 42
     // Uncomment below and run with `cargo +nightly`
-    
+
     // println!("5. Never Type (Nightly Feature):");
     // use_infallible();
     // match always_succeeds() {

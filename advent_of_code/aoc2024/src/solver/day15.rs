@@ -5,7 +5,7 @@
 //! Part 2: Double-width boxes (everything except robot is 2x wide)
 
 use anyhow::Result;
-use mission6::{Grid, Coord};
+use mission6::{Coord, Grid};
 use std::collections::HashSet;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -14,8 +14,8 @@ enum Tile {
     Box,
     Robot,
     Empty,
-    BoxLeft,   // For Part 2: [ 
-    BoxRight,  // For Part 2: ]
+    BoxLeft,  // For Part 2: [
+    BoxRight, // For Part 2: ]
 }
 
 impl From<char> for Tile {
@@ -76,10 +76,9 @@ fn parse_input(input: &str) -> Result<(Grid<Tile>, Vec<Direction>, Coord)> {
 }
 
 fn parse_parts(parts: &[&str]) -> Result<(Grid<Tile>, Vec<Direction>, Coord)> {
-
     // Parse grid
     let lines: Vec<&str> = parts[0].lines().collect();
-    
+
     let mut grid_data = Vec::new();
     let mut robot_pos = Coord::new(0, 0);
 
@@ -98,27 +97,24 @@ fn parse_parts(parts: &[&str]) -> Result<(Grid<Tile>, Vec<Direction>, Coord)> {
     let grid = Grid::from_vec2d(grid_data);
 
     // Parse moves
-    let moves: Vec<Direction> = parts[1]
-        .chars()
-        .filter_map(Direction::from_char)
-        .collect();
+    let moves: Vec<Direction> = parts[1].chars().filter_map(Direction::from_char).collect();
 
     Ok((grid, moves, robot_pos))
 }
 
 fn try_move(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Coord> {
     let (dr, dc) = dir.delta();
-    
+
     // Calculate new position (handle potential underflow)
     let new_y = pos.y as i32 + dr;
     let new_x = pos.x as i32 + dc;
-    
+
     if new_x < 0 || new_y < 0 {
         return None;
     }
-    
+
     let new_pos = Coord::new(new_x as usize, new_y as usize);
-    
+
     // Check bounds
     if !grid.in_bounds(new_pos) {
         return None;
@@ -127,38 +123,38 @@ fn try_move(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Coord> 
     let target = *grid.get(new_pos)?;
 
     match target {
-        Tile::Wall => None, // Can't move into wall
+        Tile::Wall => None,           // Can't move into wall
         Tile::Empty => Some(new_pos), // Can move into empty space
         Tile::Box => {
             // Scan forward until we find empty space or hit a wall
             let mut check_pos = new_pos;
-            
+
             loop {
                 let next_y = check_pos.y as i32 + dr;
                 let next_x = check_pos.x as i32 + dc;
-                
+
                 if next_x < 0 || next_y < 0 {
                     return None;
                 }
-                
+
                 let next_pos = Coord::new(next_x as usize, next_y as usize);
-                
+
                 if !grid.in_bounds(next_pos) {
                     return None;
                 }
-                
+
                 match grid.get(next_pos) {
                     Some(&Tile::Empty) => {
                         // Found empty space - place box at empty space
                         if let Some(cell) = grid.get_mut(next_pos) {
                             *cell = Tile::Box;
                         }
-                        
+
                         // Clear first box position (robot will move here)
                         if let Some(cell) = grid.get_mut(new_pos) {
                             *cell = Tile::Empty;
                         }
-                        
+
                         return Some(new_pos);
                     }
                     Some(&Tile::Box) => {
@@ -279,13 +275,13 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
     let (dr, dc) = dir.delta();
     let new_y = pos.y as i32 + dr;
     let new_x = pos.x as i32 + dc;
-    
+
     if new_x < 0 || new_y < 0 {
         return None;
     }
-    
+
     let new_pos = Coord::new(new_x as usize, new_y as usize);
-    
+
     if !grid.in_bounds(new_pos) {
         return None;
     }
@@ -302,7 +298,7 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
                     // Horizontal: need to find the far edge of the box and push from there
                     // For pushing right: [...][...] -> if we hit [, we need to check past ]
                     // For pushing left: [...][...] -> if we hit ], we need to check past [
-                    
+
                     // First, find where this box ends in our direction
                     let box_far_edge = if dir.delta().1 > 0 {
                         // Pushing right - if we hit [, far edge is at x+1 (the ])
@@ -321,7 +317,7 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
                             new_pos
                         }
                     };
-                    
+
                     // Try to push from the far edge
                     if try_move_wide(grid, box_far_edge, dir).is_some() {
                         // Move the entire box: shift both cells in direction
@@ -330,12 +326,12 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
                         } else {
                             (new_pos.x - 1, new_pos.x)
                         };
-                        
+
                         let left_pos = Coord::new(box_left_x, new_pos.y);
                         let right_pos = Coord::new(box_right_x, new_pos.y);
                         let new_left = Coord::new((box_left_x as i32 + dc) as usize, new_pos.y);
                         let new_right = Coord::new((box_right_x as i32 + dc) as usize, new_pos.y);
-                        
+
                         // Clear old positions
                         if let Some(cell) = grid.get_mut(left_pos) {
                             *cell = Tile::Empty;
@@ -365,7 +361,7 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
                     };
 
                     let left_pos = Coord::new(box_left_x, new_pos.y);
-                    
+
                     // Collect all box left-positions that need to move
                     let mut boxes_to_move: HashSet<Coord> = HashSet::new();
                     if collect_boxes_vertical(grid, left_pos, dir, &mut boxes_to_move) {
@@ -378,12 +374,14 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
                         } else {
                             boxes_vec.sort_by_key(|c| std::cmp::Reverse(c.y));
                         }
-                        
+
                         for box_left in boxes_vec {
                             let box_right = Coord::new(box_left.x + 1, box_left.y);
-                            let new_left = Coord::new(box_left.x, (box_left.y as i32 + dr) as usize);
-                            let new_right = Coord::new(box_right.x, (box_right.y as i32 + dr) as usize);
-                            
+                            let new_left =
+                                Coord::new(box_left.x, (box_left.y as i32 + dr) as usize);
+                            let new_right =
+                                Coord::new(box_right.x, (box_right.y as i32 + dr) as usize);
+
                             // Clear old positions
                             if let Some(cell) = grid.get_mut(box_left) {
                                 *cell = Tile::Empty;
@@ -413,25 +411,25 @@ fn try_move_wide(grid: &mut Grid<Tile>, pos: Coord, dir: Direction) -> Option<Co
 /// Collect all boxes that need to move vertically starting from a box's left position
 /// Returns true if the move is possible, false if blocked by wall
 fn collect_boxes_vertical(
-    grid: &Grid<Tile>, 
-    box_left: Coord, 
-    dir: Direction, 
-    boxes: &mut HashSet<Coord>
+    grid: &Grid<Tile>,
+    box_left: Coord,
+    dir: Direction,
+    boxes: &mut HashSet<Coord>,
 ) -> bool {
     // Already visited this box
     if boxes.contains(&box_left) {
         return true;
     }
-    
+
     boxes.insert(box_left);
-    
+
     let (dr, _) = dir.delta();
     let box_right = Coord::new(box_left.x + 1, box_left.y);
-    
+
     // Check both positions above/below this box
     let next_left = Coord::new(box_left.x, (box_left.y as i32 + dr) as usize);
     let next_right = Coord::new(box_right.x, (box_right.y as i32 + dr) as usize);
-    
+
     // Check left side
     if let Some(&tile) = grid.get(next_left) {
         match tile {
@@ -453,7 +451,7 @@ fn collect_boxes_vertical(
             _ => {}
         }
     }
-    
+
     // Check right side
     if let Some(&tile) = grid.get(next_right) {
         match tile {
@@ -476,11 +474,15 @@ fn collect_boxes_vertical(
             _ => {}
         }
     }
-    
+
     true
 }
 
-fn simulate_robot_wide(mut grid: Grid<Tile>, moves: Vec<Direction>, mut robot_pos: Coord) -> Grid<Tile> {
+fn simulate_robot_wide(
+    mut grid: Grid<Tile>,
+    moves: Vec<Direction>,
+    mut robot_pos: Coord,
+) -> Grid<Tile> {
     for mov in moves {
         if let Some(cell) = grid.get_mut(robot_pos) {
             *cell = Tile::Empty;

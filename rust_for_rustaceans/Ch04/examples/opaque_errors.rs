@@ -35,15 +35,15 @@ fn read_number_from_file(path: &str) -> Result<i32, Box<dyn Error>> {
 fn process_user_data(user_id: &str) -> Result<String, Box<dyn Error + Send + Sync>> {
     // IO error
     let data = fs::read_to_string(format!("users/{}.json", user_id))?;
-    
+
     // Parse error (simulated)
     let id: i32 = user_id.parse()?;
-    
+
     // Custom validation error
     if id < 0 {
         return Err("user ID must be non-negative".into());
     }
-    
+
     Ok(format!("User {}: {}", id, data))
 }
 
@@ -78,8 +78,10 @@ fn handle_error_with_downcast() {
         Err(e) => {
             // Attempt to downcast to specific error type
             if let Some(custom) = e.downcast_ref::<CustomError>() {
-                println!("CustomError caught! Code: {}, Message: {}", 
-                         custom.code, custom.message);
+                println!(
+                    "CustomError caught! Code: {}, Message: {}",
+                    custom.code, custom.message
+                );
             } else if let Some(io_err) = e.downcast_ref::<io::Error>() {
                 println!("IO Error: {}", io_err);
             } else {
@@ -127,9 +129,8 @@ fn read_config() -> Result<String, Box<dyn Error>> {
 }
 
 fn parse_config() -> Result<(), Box<dyn Error>> {
-    let content = read_config()
-        .map_err(|e| format!("configuration error: {}", e))?;
-    
+    let content = read_config().map_err(|e| format!("configuration error: {}", e))?;
+
     // More processing...
     println!("Config: {}", content);
     Ok(())
@@ -151,7 +152,7 @@ fn spawn_worker() -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
         result?;
         Ok(())
     });
-    
+
     handle.join().unwrap()
 }
 
@@ -180,26 +181,26 @@ impl fmt::Display for SpecificError {
 impl Error for SpecificError {}
 
 fn with_specific_error() -> Result<i32, SpecificError> {
-    let data = fs::read_to_string("data.txt")
-        .map_err(SpecificError::Io)?;
-    let num = data.trim().parse()
-        .map_err(SpecificError::Parse)?;
-    
+    let data = fs::read_to_string("data.txt").map_err(SpecificError::Io)?;
+    let num = data.trim().parse().map_err(SpecificError::Parse)?;
+
     if num < 0 {
-        return Err(SpecificError::Validation("must be non-negative".to_string()));
+        return Err(SpecificError::Validation(
+            "must be non-negative".to_string(),
+        ));
     }
-    
+
     Ok(num)
 }
 
 fn with_opaque_error() -> Result<i32, Box<dyn Error>> {
     let data = fs::read_to_string("data.txt")?;
     let num: i32 = data.trim().parse()?;
-    
+
     if num < 0 {
         return Err("must be non-negative".into());
     }
-    
+
     Ok(num)
 }
 
@@ -255,7 +256,7 @@ fn main() {
 
     // Comparison
     println!("7. Comparison: Specific vs Opaque:");
-    
+
     // Demonstrate specific error handling
     print!("   Specific error: ");
     match with_specific_error() {
@@ -264,14 +265,14 @@ fn main() {
         Err(SpecificError::Parse(e)) => println!("Parse Error: {}", e),
         Err(SpecificError::Validation(s)) => println!("Validation Error: {}", s),
     }
-    
+
     // Demonstrate opaque error handling
     print!("   Opaque error: ");
     match with_opaque_error() {
         Ok(n) => println!("Success: {}", n),
         Err(e) => println!("Error: {}", e),
     }
-    
+
     println!("\n   Specific: verbose, exhaustive matching, caller knows all error types");
     println!("   Opaque: simpler, flexible, but caller can't match on specific types");
 }

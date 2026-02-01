@@ -158,7 +158,10 @@ impl<T> BinaryTree<T> {
     fn count_recursive(node: Option<&Node<T>>) -> usize {
         match node {
             None => 0,
-            Some(n) => 1 + Self::count_recursive(n.left.as_deref()) + Self::count_recursive(n.right.as_deref()),
+            Some(n) => {
+                1 + Self::count_recursive(n.left.as_deref())
+                    + Self::count_recursive(n.right.as_deref())
+            }
         }
     }
 
@@ -480,15 +483,7 @@ fn main() {
 
     // Demo 8: Build from level-order array
     println!("--- Demo 8: Build from Level-Order Array ---");
-    let values = vec![
-        Some(1),
-        Some(2),
-        Some(3),
-        None,
-        Some(4),
-        Some(5),
-        None,
-    ];
+    let values = vec![Some(1), Some(2), Some(3), None, Some(4), Some(5), None];
     println!("Input: [Some(1), Some(2), Some(3), None, Some(4), Some(5), None]");
     let from_array = build_from_level_order(&values);
     println!("Tree structure:");

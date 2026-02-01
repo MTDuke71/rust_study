@@ -1,5 +1,5 @@
 //! Chapter 1: Full Chapter Examples
-//! 
+//!
 //! All listings from Chapter 1 of "Rust for Rustaceans" demonstrating
 //! foundations of memory, ownership, and borrowing.
 
@@ -25,12 +25,12 @@ fn noalias(input: &i32, output: &mut i32) {
 fn replace_with_84(s: &mut Box<i32>) {
     // this is not okay, as *s would be empty:
     // let was = *s;
-    
+
     // but this is:
     let was = std::mem::take(s); // [3]
-    // so is this:
+                                 // so is this:
     *s = was; // [3]
-    
+
     // we can exchange values behind &mut:
     let mut r = Box::new(84);
     std::mem::swap(s, &mut r); // [3]
@@ -46,21 +46,25 @@ struct StrSplit<'s, 'p> {
 
 impl<'s, 'p> Iterator for StrSplit<'s, 'p> {
     type Item = &'s str;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         // Source uses todo!(), returning None here to make the example runnable.
-        None 
+        None
     }
 }
 
 // Listing 1-10 Helper function [4]
 fn str_before(s: &str, c: char) -> Option<&str> {
-    StrSplit { document: s, delimiter: &c.to_string() }.next()
+    StrSplit {
+        document: s,
+        delimiter: &c.to_string(),
+    }
+    .next()
 }
 
 // Listing 1-11: A type that needs to be generic over multiple lifetimes. [5]
 struct MutStr<'a, 'b> {
-    s: &'a mut &'b str
+    s: &'a mut &'b str,
 }
 
 // Mock function for Listing 1-8 to simulate randomness
@@ -81,7 +85,10 @@ fn main() {
         let y = 43;
         let var1 = &x;
         let mut var2 = &x;
-        println!("   x: {}, y: {}, var1: {}, var2 (before): {}", x, y, var1, var2);
+        println!(
+            "   x: {}, y: {}, var1: {}, var2 (before): {}",
+            x, y, var1, var2
+        );
         var2 = &y;
         println!("   var2 (after reassignment): {}", var2);
         println!("   ✓ Variables hold values, pointers hold addresses\n");
@@ -116,7 +123,7 @@ fn main() {
     {
         println!("📌 Low-Level Model: Uninitialized Memory");
         println!("   ───────────────────────────────────────");
-        
+
         let x: usize = 6;
         println!("   x value slot initialized to: {}", x);
         println!("   ✓ Variable is invalid until assignment\n");
@@ -128,11 +135,11 @@ fn main() {
         println!("   ────────────────────────────────────");
         let x1 = 42;
         let y1 = Box::new(84);
-        { 
-            let z = (x1, y1); 
+        {
+            let z = (x1, y1);
             println!("   Inside scope, z: {:?}", z);
         } // z dropped here
-        
+
         let x2 = x1; // x1 is Copy
         println!("   x1 still valid (Copy trait): {}", x2);
         // let y2 = y1; // ❌ Would fail - y1 was moved
@@ -191,7 +198,7 @@ fn main() {
         println!("   ─────────────────────────────────────");
         let mut x = Box::new(42);
         let r = &x; // lifetime 'a starts
-        
+
         if rand() > 0.5 {
             *x = 84;
         } else {
@@ -206,7 +213,7 @@ fn main() {
         println!("   ──────────────────────────────────");
         let mut x = Box::new(42);
         let mut z = &x; // lifetime 'a
-        
+
         for i in 0..5 {
             println!("   Iteration {}: z = {}", i, z);
             *x = i;

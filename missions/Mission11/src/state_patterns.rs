@@ -114,11 +114,7 @@ pub fn string_suffix_pattern<'a>(
 /// let result = index_position_pattern(0, &arr, &mut memo);
 /// assert_eq!(result, 15); // Sum of array
 /// ```
-pub fn index_position_pattern(
-    pos: usize,
-    arr: &[i32],
-    memo: &mut HashMap<usize, i32>,
-) -> i32 {
+pub fn index_position_pattern(pos: usize, arr: &[i32], memo: &mut HashMap<usize, i32>) -> i32 {
     // Base case: reached end
     if pos >= arr.len() {
         return 0;
@@ -253,10 +249,7 @@ pub fn coordinate_pair_pattern(
 /// let stones = composite_state_pattern((125, 6), &mut memo);
 /// assert!(stones > 0);
 /// ```
-pub fn composite_state_pattern(
-    state: (u64, usize),
-    memo: &mut HashMap<(u64, usize), u64>,
-) -> u64 {
+pub fn composite_state_pattern(state: (u64, usize), memo: &mut HashMap<(u64, usize), u64>) -> u64 {
     let (stone_value, blinks_remaining) = state;
 
     // Base case: no more blinks
@@ -331,10 +324,7 @@ pub struct GameState {
     pub mana: i32,
 }
 
-pub fn custom_struct_pattern(
-    state: GameState,
-    memo: &mut HashMap<GameState, bool>,
-) -> bool {
+pub fn custom_struct_pattern(state: GameState, memo: &mut HashMap<GameState, bool>) -> bool {
     // Base case: player wins
     if state.boss_hp <= 0 {
         return true;
@@ -540,9 +530,9 @@ mod tests {
         let input = String::from("test");
         let patterns = vec!["te", "st"];
         let mut memo = HashMap::new();
-        
+
         assert!(string_suffix_pattern(&input, &patterns, &mut memo));
-        
+
         // Cache should contain borrowed slices
         assert!(memo.contains_key("test") || memo.contains_key("st"));
     }

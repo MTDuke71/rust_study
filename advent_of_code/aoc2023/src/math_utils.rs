@@ -8,14 +8,14 @@
 //! - Day 8: Ghost navigation - find when multiple paths synchronize
 //! - Day 20: Pulse propagation - find when multiple counters align
 //!
-//! **Mathematical Foundation**: 
+//! **Mathematical Foundation**:
 //! - LCM(a, b) = (a × b) / GCD(a, b)
 //! - GCD uses Euclidean algorithm: O(log min(a, b))
 //!
 //! **Zettelkasten Links**: \[\[number-theory\]\], \[\[cycle-detection\]\]
 
 /// Calculate Greatest Common Divisor using Euclidean algorithm
-/// 
+///
 /// # Examples
 /// ```
 /// use aoc2023::math_utils::gcd;
@@ -32,7 +32,7 @@ pub fn gcd(mut a: u64, mut b: u64) -> u64 {
 }
 
 /// Calculate Least Common Multiple
-/// 
+///
 /// # Examples
 /// ```
 /// use aoc2023::math_utils::lcm;

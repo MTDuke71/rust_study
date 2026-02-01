@@ -192,9 +192,9 @@ mod tests {
 
     #[test]
     fn test_count_divisors_triangle_numbers() {
-        assert_eq!(count_divisors(1), 1);  // T(1)
-        assert_eq!(count_divisors(3), 2);  // T(2)
-        assert_eq!(count_divisors(6), 4);  // T(3)
+        assert_eq!(count_divisors(1), 1); // T(1)
+        assert_eq!(count_divisors(3), 2); // T(2)
+        assert_eq!(count_divisors(6), 4); // T(3)
         assert_eq!(count_divisors(10), 4); // T(4)
         assert_eq!(count_divisors(15), 4); // T(5)
         assert_eq!(count_divisors(21), 4); // T(6)
@@ -203,11 +203,11 @@ mod tests {
 
     #[test]
     fn test_count_divisors_powers_of_two() {
-        assert_eq!(count_divisors(2), 2);   // 2^1: (1+1) = 2
-        assert_eq!(count_divisors(4), 3);   // 2^2: (2+1) = 3
-        assert_eq!(count_divisors(8), 4);   // 2^3: (3+1) = 4
-        assert_eq!(count_divisors(16), 5);  // 2^4: (4+1) = 5
-        assert_eq!(count_divisors(32), 6);  // 2^5: (5+1) = 6
+        assert_eq!(count_divisors(2), 2); // 2^1: (1+1) = 2
+        assert_eq!(count_divisors(4), 3); // 2^2: (2+1) = 3
+        assert_eq!(count_divisors(8), 4); // 2^3: (3+1) = 4
+        assert_eq!(count_divisors(16), 5); // 2^4: (4+1) = 5
+        assert_eq!(count_divisors(32), 6); // 2^5: (5+1) = 6
     }
 
     #[test]
@@ -224,10 +224,10 @@ mod tests {
     fn test_count_divisors_composite() {
         // 12 = 2^2 × 3^1 → (2+1)(1+1) = 6
         assert_eq!(count_divisors(12), 6);
-        
+
         // 20 = 2^2 × 5^1 → (2+1)(1+1) = 6
         assert_eq!(count_divisors(20), 6);
-        
+
         // 24 = 2^3 × 3^1 → (3+1)(1+1) = 8
         assert_eq!(count_divisors(24), 8);
     }
@@ -249,7 +249,7 @@ mod tests {
     fn test_triangle_number_properties() {
         // Verify T(n) = n(n+1)/2
         let t = |n: u64| n * (n + 1) / 2;
-        
+
         assert_eq!(t(1), 1);
         assert_eq!(t(2), 3);
         assert_eq!(t(3), 6);
@@ -262,7 +262,7 @@ mod tests {
         // For T(7) = 28 = 7 × 8 / 2 = 7 × 4
         // τ(28) = τ(7) × τ(4) = 2 × 3 = 6
         assert_eq!(count_divisors(7) * count_divisors(4), count_divisors(28));
-        
+
         // For T(8) = 36 = 8 × 9 / 2 = 4 × 9
         // τ(36) = τ(4) × τ(9) = 3 × 3 = 9
         assert_eq!(count_divisors(4) * count_divisors(9), count_divisors(36));

@@ -56,10 +56,7 @@ impl Organism {
             })
             .collect();
 
-        Self {
-            fitness: 0,
-            genome,
-        }
+        Self { fitness: 0, genome }
     }
 
     /// Create organism from existing genome
@@ -168,14 +165,26 @@ impl WeaselSimulation {
 
     /// Run the simulation until target is reached
     fn run(&mut self, verbose: bool) {
-        println!("\n{}", "🧬 Dawkins' Weasel Program - Evolutionary Simulation".cyan().bold());
+        println!(
+            "\n{}",
+            "🧬 Dawkins' Weasel Program - Evolutionary Simulation"
+                .cyan()
+                .bold()
+        );
         println!("{}", "=".repeat(60).cyan());
         println!("Target:          {}", self.params.target.yellow().bold());
         println!("Mutation Rate:   {:.1}%", self.params.mutation_rate * 100.0);
         println!("Population Size: {}", self.params.population_size);
         println!("{}", "=".repeat(60).cyan());
-        println!("\nGeneration 0:    {}", self.current_best.display_colored(&self.params.target));
-        println!("                 Fitness: {}/{}\n", self.current_best.fitness, self.params.target.len());
+        println!(
+            "\nGeneration 0:    {}",
+            self.current_best.display_colored(&self.params.target)
+        );
+        println!(
+            "                 Fitness: {}/{}\n",
+            self.current_best.fitness,
+            self.params.target.len()
+        );
 
         loop {
             let found = self.evolve_generation();
@@ -196,7 +205,10 @@ impl WeaselSimulation {
             if found {
                 println!("\n{}", "🎉 Evolution Complete!".green().bold());
                 println!("{}", "=".repeat(60).green());
-                println!("Final:           {}", self.current_best.genome.green().bold());
+                println!(
+                    "Final:           {}",
+                    self.current_best.genome.green().bold()
+                );
                 println!("Generations:     {}", self.generation);
                 println!("{}", "=".repeat(60).green());
                 break;
@@ -229,7 +241,10 @@ impl WeaselSimulation {
                 let found = sim.evolve_generation();
                 if found {
                     generations_needed.push(sim.generation);
-                    println!("Trial {:3}: Converged in {:4} generations", trial, sim.generation);
+                    println!(
+                        "Trial {:3}: Converged in {:4} generations",
+                        trial, sim.generation
+                    );
                     break;
                 }
 
@@ -251,7 +266,11 @@ impl WeaselSimulation {
             println!("  Average generations: {:.1}", avg);
             println!("  Minimum generations: {}", min);
             println!("  Maximum generations: {}", max);
-            println!("  Success rate:        {}/{}", generations_needed.len(), num_trials);
+            println!(
+                "  Success rate:        {}/{}",
+                generations_needed.len(),
+                num_trials
+            );
         }
     }
 }
@@ -264,7 +283,10 @@ fn main() {
     sim.run(false); // verbose = false (show every 10th generation)
 
     // Example 2: Run with higher mutation rate
-    println!("\n\n{}", "Example 2: Higher Mutation Rate (10%)".bright_blue().bold());
+    println!(
+        "\n\n{}",
+        "Example 2: Higher Mutation Rate (10%)".bright_blue().bold()
+    );
     let params_high_mutation = EvolutionParams {
         mutation_rate: 0.10,
         ..Default::default()
@@ -273,7 +295,10 @@ fn main() {
     sim2.run(false);
 
     // Example 3: Run with lower mutation rate
-    println!("\n\n{}", "Example 3: Lower Mutation Rate (2%)".bright_blue().bold());
+    println!(
+        "\n\n{}",
+        "Example 3: Lower Mutation Rate (2%)".bright_blue().bold()
+    );
     let params_low_mutation = EvolutionParams {
         mutation_rate: 0.02,
         ..Default::default()
@@ -282,7 +307,10 @@ fn main() {
     sim3.run(false);
 
     // Example 4: Statistical analysis across multiple trials
-    println!("\n\n{}", "Example 4: Statistical Analysis".bright_blue().bold());
+    println!(
+        "\n\n{}",
+        "Example 4: Statistical Analysis".bright_blue().bold()
+    );
     let params_trials = EvolutionParams::default();
     WeaselSimulation::run_trials(params_trials, 20);
 

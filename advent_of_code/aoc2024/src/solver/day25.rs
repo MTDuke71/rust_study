@@ -1,5 +1,5 @@
 /// Day 25: Code Chronicle - Lock and Key Matching
-/// 
+///
 /// Parse lock and key schematics and find compatible pairs
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -14,7 +14,8 @@ struct Key {
 
 impl Lock {
     fn fits_with(&self, key: &Key, max_height: usize) -> bool {
-        self.heights.iter()
+        self.heights
+            .iter()
             .zip(key.heights.iter())
             .all(|(lock_h, key_h)| lock_h + key_h <= max_height)
     }
@@ -22,10 +23,10 @@ impl Lock {
 
 pub fn solve_part1(input: &str) -> i64 {
     let (locks, keys) = parse_input(input);
-    
+
     // Available space is 5 (0-5 inclusive in a 7-row schematic)
     let max_height = 5;
-    
+
     let mut count = 0;
     for lock in &locks {
         for key in &keys {
@@ -34,7 +35,7 @@ pub fn solve_part1(input: &str) -> i64 {
             }
         }
     }
-    
+
     count
 }
 
@@ -47,33 +48,33 @@ fn parse_input(input: &str) -> (Vec<Lock>, Vec<Key>) {
     // Normalize line endings and split on double newline
     let normalized = input.replace("\r\n", "\n");
     let schematics: Vec<&str> = normalized.split("\n\n").collect();
-    
+
     let mut locks = Vec::new();
     let mut keys = Vec::new();
-    
+
     for schematic in schematics {
         let lines: Vec<&str> = schematic.lines().collect();
         if lines.is_empty() {
             continue;
         }
-        
+
         // Check if it's a lock (top row all #) or key (bottom row all #)
         let is_lock = lines[0].chars().all(|c| c == '#');
-        
+
         if is_lock {
             locks.push(parse_lock(lines));
         } else {
             keys.push(parse_key(lines));
         }
     }
-    
+
     (locks, keys)
 }
 
 fn parse_lock(lines: Vec<&str>) -> Lock {
     let width = lines[0].len();
     let mut heights = vec![0; width];
-    
+
     // For locks, count down from top until we hit empty space
     // Note: Using index-based loops here is clearer than iterator approach
     // because we need to iterate over columns and access chars at that position
@@ -90,14 +91,14 @@ fn parse_lock(lines: Vec<&str>) -> Lock {
         }
         heights[col] = height;
     }
-    
+
     Lock { heights }
 }
 
 fn parse_key(lines: Vec<&str>) -> Key {
     let width = lines[0].len();
     let mut heights = vec![0; width];
-    
+
     // For keys, count up from bottom until we hit empty space
     // Note: Using index-based loops here is clearer than iterator approach
     // because we need to iterate over columns and access chars at that position
@@ -105,7 +106,7 @@ fn parse_key(lines: Vec<&str>) -> Key {
     #[allow(clippy::needless_range_loop)]
     for col in 0..width {
         let mut height = 0;
-        for row in (0..lines.len()-1).rev() {
+        for row in (0..lines.len() - 1).rev() {
             if lines[row].chars().nth(col) == Some('#') {
                 height += 1;
             } else {
@@ -114,7 +115,7 @@ fn parse_key(lines: Vec<&str>) -> Key {
         }
         heights[col] = height;
     }
-    
+
     Key { heights }
 }
 
@@ -192,13 +193,19 @@ mod tests {
 
     #[test]
     fn test_lock_key_fit() {
-        let lock = Lock { heights: vec![0, 5, 3, 4, 3] };
-        let key1 = Key { heights: vec![5, 0, 2, 1, 3] };
-        let key2 = Key { heights: vec![3, 0, 2, 0, 1] };
-        
+        let lock = Lock {
+            heights: vec![0, 5, 3, 4, 3],
+        };
+        let key1 = Key {
+            heights: vec![5, 0, 2, 1, 3],
+        };
+        let key2 = Key {
+            heights: vec![3, 0, 2, 0, 1],
+        };
+
         // First key overlaps in last column (4+3 > 5)
         assert!(!lock.fits_with(&key1, 5));
-        
+
         // Second key fits
         assert!(lock.fits_with(&key2, 5));
     }

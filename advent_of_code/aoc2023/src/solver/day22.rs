@@ -98,7 +98,7 @@ fn simulate_falling(bricks: &mut [Brick]) {
     for brick in bricks.iter_mut() {
         // Find the highest point this brick would rest on
         let mut max_z_below = 0; // Ground is at z=0
-        
+
         // Check all (x, y) positions this brick occupies
         for cube in brick.get_cubes() {
             if let Some(&(z, _)) = height_map.get(&(cube.x, cube.y)) {
@@ -172,22 +172,22 @@ fn count_chain_reaction(
 ) -> usize {
     let mut fallen = vec![false; supports.len()];
     fallen[brick_id] = true;
-    
+
     let mut queue = VecDeque::new();
     queue.push_back(brick_id);
-    
+
     let mut fall_count = 0;
-    
+
     while let Some(current) = queue.pop_front() {
         // Check all bricks that this brick supports
         for &above_id in &supports[current] {
             if fallen[above_id] {
                 continue; // Already processed
             }
-            
+
             // Check if all supporters of above_id have fallen
             let all_supports_fallen = supported_by[above_id].iter().all(|&s| fallen[s]);
-            
+
             if all_supports_fallen {
                 fallen[above_id] = true;
                 fall_count += 1;
@@ -195,7 +195,7 @@ fn count_chain_reaction(
             }
         }
     }
-    
+
     fall_count
 }
 
@@ -225,7 +225,7 @@ pub fn parse_and_prepare(input: &str) -> PreparedBricks {
     let mut bricks = parse_bricks(input);
     simulate_falling(&mut bricks);
     let (supports, supported_by) = build_support_graph(&bricks);
-    
+
     PreparedBricks {
         bricks,
         supports,
@@ -243,9 +243,9 @@ pub fn solve_part1_impl(data: &PreparedBricks) -> usize {
     // A brick can be removed if every brick it supports has at least one other supporter
     let mut safe_count = 0;
     for brick_id in 0..data.bricks.len() {
-        let can_remove = data.supports[brick_id].iter().all(|&above_id| {
-            data.supported_by[above_id].len() > 1
-        });
+        let can_remove = data.supports[brick_id]
+            .iter()
+            .all(|&above_id| data.supported_by[above_id].len() > 1);
         if can_remove {
             safe_count += 1;
         }

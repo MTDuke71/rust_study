@@ -37,7 +37,7 @@ fn is_accessible(grid: &Grid<char>, coord: Coord) -> bool {
 /// A roll is accessible if it has fewer than 4 adjacent rolls (8-connected).
 pub fn solve_part1(input: &str) -> Result<String> {
     let grid = AocGridParser::parse_char_grid(input);
-    
+
     if grid.is_empty() {
         return Ok("0".to_string());
     }
@@ -112,7 +112,7 @@ mod tests {
     #[test]
     fn test_count_adjacent_rolls() {
         let grid = AocGridParser::parse_char_grid(EXAMPLE);
-        
+
         // Position (2, 0) is '@' - let's check its neighbors
         // Row 0: ..@@.@@@@.
         // Row 1: @@@.@.@.@@
@@ -126,12 +126,12 @@ mod tests {
     #[test]
     fn test_corner_accessible() {
         let grid = AocGridParser::parse_char_grid(EXAMPLE);
-        
+
         // (0, 1) is '@' in a corner-ish position
         // Should have few neighbors since it's at the edge
         let coord = Coord::new(0, 1);
         assert_eq!(grid[coord], '@');
-        
+
         let adjacent = count_adjacent_rolls(&grid, coord);
         println!("Position (0,1) has {} adjacent rolls", adjacent);
     }
@@ -146,16 +146,22 @@ mod tests {
     #[test]
     fn test_accessible_positions() {
         let grid = AocGridParser::parse_char_grid(EXAMPLE);
-        
+
         // From the problem statement, these positions should be accessible (marked x):
         // Row 0: positions 2, 3, 5, 6, 8 -> (2,0), (3,0), (5,0), (6,0), (8,0)
         // Let's verify a few
-        
+
         // (2, 0) should be accessible
-        assert!(is_accessible(&grid, Coord::new(2, 0)), "(2,0) should be accessible");
-        
-        // (3, 0) should be accessible  
-        assert!(is_accessible(&grid, Coord::new(3, 0)), "(3,0) should be accessible");
+        assert!(
+            is_accessible(&grid, Coord::new(2, 0)),
+            "(2,0) should be accessible"
+        );
+
+        // (3, 0) should be accessible
+        assert!(
+            is_accessible(&grid, Coord::new(3, 0)),
+            "(3,0) should be accessible"
+        );
     }
 
     #[test]
@@ -164,22 +170,24 @@ mod tests {
         // Position (4, 5) in example: .@@@@@@@.@
         // That's row index 5, position 4 = '@'
         let grid = AocGridParser::parse_char_grid(EXAMPLE);
-        
+
         // (4, 5) is surrounded by many @s
         let coord = Coord::new(4, 5);
         if grid[coord] == '@' {
             let adjacent = count_adjacent_rolls(&grid, coord);
             println!("Position (4,5) has {} adjacent rolls", adjacent);
             // Should have 4+ neighbors, so not accessible
-            assert!(!is_accessible(&grid, coord) || adjacent < 4, 
-                    "Center positions should generally not be accessible");
+            assert!(
+                !is_accessible(&grid, coord) || adjacent < 4,
+                "Center positions should generally not be accessible"
+            );
         }
     }
 
     #[test]
     fn test_empty_cell_not_counted() {
         let grid = AocGridParser::parse_char_grid(EXAMPLE);
-        
+
         // Empty cells (.) should never be accessible
         let empty_coord = Coord::new(0, 0);
         assert_eq!(grid[empty_coord], '.');
@@ -191,7 +199,7 @@ mod tests {
         // A single isolated roll should be accessible (0 neighbors < 4)
         let input = "...\n.@.\n...";
         let grid = AocGridParser::parse_char_grid(input);
-        
+
         let center = Coord::new(1, 1);
         assert_eq!(grid[center], '@');
         assert_eq!(count_adjacent_rolls(&grid, center), 0);
@@ -203,7 +211,7 @@ mod tests {
         // A roll surrounded by 8 rolls should NOT be accessible
         let input = "@@@\n@@@\n@@@";
         let grid = AocGridParser::parse_char_grid(input);
-        
+
         let center = Coord::new(1, 1);
         assert_eq!(grid[center], '@');
         assert_eq!(count_adjacent_rolls(&grid, center), 8);
@@ -215,12 +223,12 @@ mod tests {
         // A roll on the edge has fewer potential neighbors
         let input = "@@@\n@@@\n@@@";
         let grid = AocGridParser::parse_char_grid(input);
-        
+
         // Corner (0, 0) has only 3 neighbors, all @
         let corner = Coord::new(0, 0);
         assert_eq!(count_adjacent_rolls(&grid, corner), 3);
         assert!(is_accessible(&grid, corner)); // 3 < 4, so accessible
-        
+
         // Edge (1, 0) has 5 neighbors, all @
         let edge = Coord::new(1, 0);
         assert_eq!(count_adjacent_rolls(&grid, edge), 5);
@@ -233,7 +241,7 @@ mod tests {
         // Need exactly 4 adjacent @ cells
         let input = ".@.\n@@@\n.@.";
         let grid = AocGridParser::parse_char_grid(input);
-        
+
         let center = Coord::new(1, 1);
         assert_eq!(grid[center], '@');
         // Neighbors: (0,0)=., (1,0)=@, (2,0)=., (0,1)=@, (2,1)=@, (0,2)=., (1,2)=@, (2,2)=.
@@ -247,7 +255,7 @@ mod tests {
         // Test boundary: exactly 3 neighbors SHOULD be accessible
         let input = ".@.\n@@.\n...";
         let grid = AocGridParser::parse_char_grid(input);
-        
+
         let coord = Coord::new(1, 1);
         assert_eq!(grid[coord], '@');
         // Neighbors: (0,0)=., (1,0)=@, (2,0)=., (0,1)=@, (2,1)=., (0,2)=., (1,2)=., (2,2)=.
@@ -299,7 +307,11 @@ mod tests {
         // Only corners (3 neighbors) can be removed, then erosion continues
         // but center remains stuck - verify it's > 0 and reasonable
         let count: usize = result.parse().unwrap();
-        assert!(count >= 4, "At least corners should be removable, got {}", count);
+        assert!(
+            count >= 4,
+            "At least corners should be removable, got {}",
+            count
+        );
         // After corners: edge-midpoints have 5 neighbors minus 1-2 corners = 3-4
         // The erosion should continue until blocked
     }

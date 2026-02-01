@@ -419,7 +419,7 @@ impl<T: Ord> BinarySearchTree<T> {
     // =========================================================================
 
     /// Print tree structure (rotated 90° - read from left to right as top to bottom)
-    /// 
+    ///
     /// Example output:
     /// ```text
     ///         14
@@ -450,10 +450,10 @@ impl<T: Ord> BinarySearchTree<T> {
             Some(current) => {
                 // Print right subtree first (appears at top when rotated)
                 Self::print_tree_recursive(&current.right, depth + 1, "R");
-                
+
                 // Print current node
                 println!("{}{}: {}", "    ".repeat(depth), prefix, current.value);
-                
+
                 // Print left subtree (appears at bottom when rotated)
                 Self::print_tree_recursive(&current.left, depth + 1, "L");
             }
@@ -518,21 +518,30 @@ fn main() {
     // Delete leaf node
     println!("Delete 4 (leaf node):");
     bst.delete(&4);
-    println!("  Sorted: {:?}", bst.in_order().iter().map(|&&v| v).collect::<Vec<_>>());
+    println!(
+        "  Sorted: {:?}",
+        bst.in_order().iter().map(|&&v| v).collect::<Vec<_>>()
+    );
     println!("\n  Tree after deleting 4:");
     bst.print_tree();
 
     // Delete node with one child
     println!("\nDelete 14 (one child):");
     bst.delete(&14);
-    println!("  Sorted: {:?}", bst.in_order().iter().map(|&&v| v).collect::<Vec<_>>());
+    println!(
+        "  Sorted: {:?}",
+        bst.in_order().iter().map(|&&v| v).collect::<Vec<_>>()
+    );
     println!("\n  Tree after deleting 14:");
     bst.print_tree();
 
     // Delete node with two children
     println!("\nDelete 3 (two children):");
     bst.delete(&3);
-    println!("  Sorted: {:?}", bst.in_order().iter().map(|&&v| v).collect::<Vec<_>>());
+    println!(
+        "  Sorted: {:?}",
+        bst.in_order().iter().map(|&&v| v).collect::<Vec<_>>()
+    );
     println!("\n  Tree after deleting 3:");
     bst.print_tree();
     println!("\n  Tree is still valid BST: {}", bst.is_valid_bst());
@@ -549,10 +558,10 @@ fn main() {
     println!("  This creates a linked list (worst case!)");
     println!("  Size: {}", degenerate.len());
     println!("  Height would be O(n) instead of O(log n)");
-    
+
     println!("\nDegenerate tree structure (all right children!):");
     degenerate.print_tree();
-    
+
     println!("\n  Solution: Use balanced trees (AVL, Red-Black) → Step 4");
 
     // Example 4: Building from Array
@@ -566,8 +575,10 @@ fn main() {
         bst.insert(value);
     }
     bst.print_tree();
-    println!("Sorted sequence: {:?}", 
-             bst.in_order().iter().map(|&&v| v).collect::<Vec<_>>());
+    println!(
+        "Sorted sequence: {:?}",
+        bst.in_order().iter().map(|&&v| v).collect::<Vec<_>>()
+    );
 
     // Key Takeaways
     println!("\n=== Key Takeaways ===\n");
@@ -601,7 +612,7 @@ mod tests {
     #[test]
     fn test_insert_and_search() {
         let mut bst = BinarySearchTree::new();
-        
+
         bst.insert(5);
         bst.insert(3);
         bst.insert(7);
@@ -620,7 +631,7 @@ mod tests {
     #[test]
     fn test_min_max() {
         let mut bst = BinarySearchTree::new();
-        
+
         bst.insert(8);
         bst.insert(3);
         bst.insert(10);
@@ -634,7 +645,7 @@ mod tests {
     #[test]
     fn test_in_order_traversal() {
         let mut bst = BinarySearchTree::new();
-        
+
         let values = vec![8, 3, 10, 1, 6, 14, 4, 7, 13];
         for value in values {
             bst.insert(value);
@@ -647,7 +658,7 @@ mod tests {
     #[test]
     fn test_delete_leaf() {
         let mut bst = BinarySearchTree::new();
-        
+
         bst.insert(5);
         bst.insert(3);
         bst.insert(7);
@@ -661,7 +672,7 @@ mod tests {
     #[test]
     fn test_delete_one_child() {
         let mut bst = BinarySearchTree::new();
-        
+
         bst.insert(5);
         bst.insert(3);
         bst.insert(7);
@@ -676,7 +687,7 @@ mod tests {
     #[test]
     fn test_delete_two_children() {
         let mut bst = BinarySearchTree::new();
-        
+
         let values = vec![8, 3, 10, 1, 6, 14, 4, 7, 13];
         for value in values {
             bst.insert(value);
@@ -685,7 +696,7 @@ mod tests {
         assert!(bst.delete(&3)); // Has two children
         assert!(!bst.contains(&3));
         assert!(bst.is_valid_bst());
-        
+
         let sorted: Vec<i32> = bst.in_order().iter().map(|&&v| v).collect();
         assert_eq!(sorted, vec![1, 4, 6, 7, 8, 10, 13, 14]);
     }
@@ -693,7 +704,7 @@ mod tests {
     #[test]
     fn test_delete_root() {
         let mut bst = BinarySearchTree::new();
-        
+
         bst.insert(5);
         bst.insert(3);
         bst.insert(7);
@@ -706,7 +717,7 @@ mod tests {
     #[test]
     fn test_delete_nonexistent() {
         let mut bst = BinarySearchTree::new();
-        
+
         bst.insert(5);
         bst.insert(3);
 
@@ -717,7 +728,7 @@ mod tests {
     #[test]
     fn test_is_valid_bst() {
         let mut bst = BinarySearchTree::new();
-        
+
         let values = vec![8, 3, 10, 1, 6, 14, 4, 7, 13];
         for value in values {
             bst.insert(value);
@@ -729,7 +740,7 @@ mod tests {
     #[test]
     fn test_duplicate_insert() {
         let mut bst = BinarySearchTree::new();
-        
+
         bst.insert(5);
         bst.insert(5); // Duplicate
 
@@ -740,7 +751,7 @@ mod tests {
     #[test]
     fn test_find() {
         let mut bst = BinarySearchTree::new();
-        
+
         bst.insert(5);
         bst.insert(3);
         bst.insert(7);

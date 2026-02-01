@@ -148,21 +148,20 @@ impl From<io::Error> for ProcessError {
 
 /// Step 1: Read file (can fail with FileError)
 fn read_file(path: &str) -> Result<String, FileError> {
-    fs::read_to_string(path)
-        .map_err(|e| match e.kind() {
-            io::ErrorKind::NotFound => FileError::NotFound(path.to_string()),
-            io::ErrorKind::PermissionDenied => FileError::PermissionDenied(path.to_string()),
-            _ => FileError::Io(e),
-        })
+    fs::read_to_string(path).map_err(|e| match e.kind() {
+        io::ErrorKind::NotFound => FileError::NotFound(path.to_string()),
+        io::ErrorKind::PermissionDenied => FileError::PermissionDenied(path.to_string()),
+        _ => FileError::Io(e),
+    })
 }
 
 /// Step 2: Parse lines (can fail with ParseError)
 fn parse_numbers(content: &str) -> Result<Vec<i32>, ParseError> {
     let mut numbers = Vec::new();
-    
+
     for (line_idx, line) in content.lines().enumerate() {
         let trimmed = line.trim();
-        
+
         if trimmed.is_empty() {
             return Err(ParseError {
                 line: line_idx + 1,
@@ -170,7 +169,7 @@ fn parse_numbers(content: &str) -> Result<Vec<i32>, ParseError> {
                 kind: ParseErrorKind::EmptyLine,
             });
         }
-        
+
         match trimmed.parse::<i32>() {
             Ok(n) => numbers.push(n),
             Err(e) => {
@@ -182,7 +181,7 @@ fn parse_numbers(content: &str) -> Result<Vec<i32>, ParseError> {
             }
         }
     }
-    
+
     Ok(numbers)
 }
 
@@ -191,11 +190,11 @@ fn validate_numbers(numbers: &[i32]) -> Result<(), String> {
     if numbers.is_empty() {
         return Err("no numbers found".to_string());
     }
-    
+
     if numbers.iter().any(|&n| n < 0) {
         return Err("negative numbers not allowed".to_string());
     }
-    
+
     Ok(())
 }
 
@@ -203,14 +202,13 @@ fn validate_numbers(numbers: &[i32]) -> Result<(), String> {
 fn process_file(path: &str) -> Result<Vec<i32>, ProcessError> {
     // Read file - io::Error -> FileError -> ProcessError
     let content = read_file(path)?;
-    
+
     // Parse content - ParseError -> ProcessError
     let numbers = parse_numbers(&content)?;
-    
+
     // Validate - String -> ProcessError
-    validate_numbers(&numbers)
-        .map_err(ProcessError::Validation)?;
-    
+    validate_numbers(&numbers).map_err(ProcessError::Validation)?;
+
     Ok(numbers)
 }
 
@@ -225,13 +223,13 @@ fn process_file_opaque(path: &str) -> Result<Vec<i32>, Box<dyn Error>> {
         .filter(|line| !line.trim().is_empty())
         .map(|line| line.trim().parse())
         .collect();
-    
+
     let numbers = numbers?;
-    
+
     if numbers.is_empty() {
         return Err("no numbers found".into());
     }
-    
+
     Ok(numbers)
 }
 
@@ -259,10 +257,10 @@ fn log_result(numbers: &[i32]) -> Result<(), io::Error> {
 
 fn print_error_chain(err: &dyn Error) {
     eprintln!("Error: {}", err);
-    
+
     let mut current = err.source();
     let mut level = 1;
-    
+
     while let Some(source) = current {
         eprintln!("  {}: Caused by: {}", level, source);
         current = source.source();

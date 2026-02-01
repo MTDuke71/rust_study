@@ -14,11 +14,11 @@ pub fn sieve(n: usize) -> Vec<usize> {
     if n < 2 {
         return vec![];
     }
-    
+
     let mut is_prime = vec![true; n + 1];
     is_prime[0] = false;
     is_prime[1] = false;
-    
+
     for i in 2..=((n as f64).sqrt() as usize) {
         if is_prime[i] {
             for j in (i * i..=n).step_by(i) {
@@ -26,7 +26,7 @@ pub fn sieve(n: usize) -> Vec<usize> {
             }
         }
     }
-    
+
     is_prime
         .iter()
         .enumerate()
@@ -48,7 +48,7 @@ pub fn is_prime(n: u64) -> bool {
     if n.is_multiple_of(2) || n.is_multiple_of(3) {
         return false;
     }
-    
+
     // All primes > 3 are of form 6k±1
     // Test divisors: 5, 7, 11, 13, 17, 19, 23, 25, 29, 31, ...
     // Pattern: 6k-1, 6k+1, 6k+5, 6k+7, ... = 6k-1, 6k+1 repeating
@@ -58,7 +58,7 @@ pub fn is_prime(n: u64) -> bool {
         if n.is_multiple_of(i) || n.is_multiple_of(i + 2) {
             return false;
         }
-        i += 6;  // Next candidates: 6k-1 and 6k+1
+        i += 6; // Next candidates: 6k-1 and 6k+1
     }
     true
 }

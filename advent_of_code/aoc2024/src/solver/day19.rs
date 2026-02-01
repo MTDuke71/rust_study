@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 pub fn solve_part1(input: &str) -> usize {
     let (patterns, designs) = parse_input(input);
-    
+
     designs
         .iter()
         .filter(|design| can_make_design(&patterns, design))
@@ -11,7 +11,7 @@ pub fn solve_part1(input: &str) -> usize {
 
 pub fn solve_part2(input: &str) -> u64 {
     let (patterns, designs) = parse_input(input);
-    
+
     designs
         .iter()
         .map(|design| count_ways_to_make(&patterns, design))
@@ -20,7 +20,7 @@ pub fn solve_part2(input: &str) -> u64 {
 
 fn parse_input(input: &str) -> (Vec<&str>, Vec<&str>) {
     let parts: Vec<&str> = input.split("\n\n").collect();
-    
+
     // If there's only one part, try splitting by single newline
     let (patterns_str, designs_str) = if parts.len() == 1 {
         // Find first newline and split there
@@ -32,18 +32,15 @@ fn parse_input(input: &str) -> (Vec<&str>, Vec<&str>) {
     } else {
         (parts[0], parts[1])
     };
-    
-    let patterns: Vec<&str> = patterns_str
-        .split(", ")
-        .map(|s| s.trim())
-        .collect();
-    
+
+    let patterns: Vec<&str> = patterns_str.split(", ").map(|s| s.trim()).collect();
+
     let designs: Vec<&str> = designs_str
         .lines()
         .map(|s| s.trim())
         .filter(|s| !s.is_empty())
         .collect();
-    
+
     (patterns, designs)
 }
 
@@ -62,12 +59,12 @@ fn can_make_recursive<'a>(
     if remaining.is_empty() {
         return true;
     }
-    
+
     // Check memo
     if let Some(&result) = memo.get(remaining) {
         return result;
     }
-    
+
     // Try each pattern
     for pattern in patterns {
         if let Some(rest) = remaining.strip_prefix(pattern) {
@@ -77,7 +74,7 @@ fn can_make_recursive<'a>(
             }
         }
     }
-    
+
     memo.insert(remaining, false);
     false
 }
@@ -97,21 +94,21 @@ fn count_ways_recursive<'a>(
     if remaining.is_empty() {
         return 1;
     }
-    
+
     // Check memo
     if let Some(&count) = memo.get(remaining) {
         return count;
     }
-    
+
     let mut total_ways = 0;
-    
+
     // Try each pattern
     for pattern in patterns {
         if let Some(rest) = remaining.strip_prefix(pattern) {
             total_ways += count_ways_recursive(patterns, rest, memo);
         }
     }
-    
+
     memo.insert(remaining, total_ways);
     total_ways
 }
@@ -145,7 +142,7 @@ bbrgwb";
     #[test]
     fn test_can_make_design() {
         let (patterns, _designs) = parse_input(EXAMPLE);
-        
+
         // Test known possible designs
         assert!(can_make_design(&patterns, "brwrr"));
         assert!(can_make_design(&patterns, "bggr"));
@@ -153,7 +150,7 @@ bbrgwb";
         assert!(can_make_design(&patterns, "rrbgbr"));
         assert!(can_make_design(&patterns, "bwurrg"));
         assert!(can_make_design(&patterns, "brgr"));
-        
+
         // Test known impossible designs
         assert!(!can_make_design(&patterns, "ubwu"));
         assert!(!can_make_design(&patterns, "bbrgwb"));
@@ -167,25 +164,25 @@ bbrgwb";
     #[test]
     fn test_count_ways() {
         let (patterns, _) = parse_input(EXAMPLE);
-        
+
         // brwrr can be made in 2 ways: b,r,wr,r or br,wr,r
         assert_eq!(count_ways_to_make(&patterns, "brwrr"), 2);
-        
+
         // bggr can only be made with b,g,g,r
         assert_eq!(count_ways_to_make(&patterns, "bggr"), 1);
-        
+
         // gbbr can be made in 4 ways
         assert_eq!(count_ways_to_make(&patterns, "gbbr"), 4);
-        
+
         // rrbgbr can be made in 6 ways
         assert_eq!(count_ways_to_make(&patterns, "rrbgbr"), 6);
-        
+
         // bwurrg can only be made with bwu,r,r,g
         assert_eq!(count_ways_to_make(&patterns, "bwurrg"), 1);
-        
+
         // brgr can be made in 2 ways: b,r,g,r or br,g,r
         assert_eq!(count_ways_to_make(&patterns, "brgr"), 2);
-        
+
         // impossible designs have 0 ways
         assert_eq!(count_ways_to_make(&patterns, "ubwu"), 0);
         assert_eq!(count_ways_to_make(&patterns, "bbrgwb"), 0);

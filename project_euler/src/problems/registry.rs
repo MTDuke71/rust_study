@@ -27,12 +27,12 @@ impl ProblemSolver {
             _ => None,
         }
     }
-    
+
     /// Get list of implemented problems
     pub fn implemented() -> Vec<usize> {
         vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     }
-    
+
     /// Check if a problem is implemented
     pub fn is_implemented(problem_num: usize) -> bool {
         Self::implemented().contains(&problem_num)

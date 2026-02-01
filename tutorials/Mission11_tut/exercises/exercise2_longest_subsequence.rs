@@ -244,18 +244,18 @@ fn lcs_reconstruct(s1: &str, s2: &str) -> String {
 /// Step-by-step demonstration of naive recursion with short strings
 fn demonstrate_naive_step_by_step() {
     println!("--- Approach 1: Naive Recursion Step-by-Step ---\n");
-    
+
     let s1 = "ABC";
     let s2 = "AC";
-    
+
     println!("Finding LCS of '{}' and '{}'", s1, s2);
     println!("Expected: 'AC' (length 2)\n");
-    
+
     let result = lcs_naive_traced(s1, s2);
-    
+
     println!("\n✓ Final Result: LCS length = {}", result);
     println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
-    
+
     // Now show how to RECONSTRUCT the actual subsequence
     demonstrate_reconstruction(s1, s2);
 }
@@ -267,45 +267,53 @@ fn lcs_naive_traced(s1: &str, s2: &str) -> usize {
 
 fn lcs_naive_traced_helper(s1: &[u8], s2: &[u8], i: usize, j: usize, depth: usize) -> usize {
     let indent = "  ".repeat(depth);
-    
+
     // Show current call
-    let s1_char = if i < s1.len() { 
-        format!("'{}'", s1[i] as char) 
-    } else { 
-        "END".to_string() 
+    let s1_char = if i < s1.len() {
+        format!("'{}'", s1[i] as char)
+    } else {
+        "END".to_string()
     };
-    let s2_char = if j < s2.len() { 
-        format!("'{}'", s2[j] as char) 
-    } else { 
-        "END".to_string() 
+    let s2_char = if j < s2.len() {
+        format!("'{}'", s2[j] as char)
+    } else {
+        "END".to_string()
     };
-    
-    println!("{}lcs(i={}, j={}) → s1[{}]={}, s2[{}]={}", 
-             indent, i, j, i, s1_char, j, s2_char);
-    
+
+    println!(
+        "{}lcs(i={}, j={}) → s1[{}]={}, s2[{}]={}",
+        indent, i, j, i, s1_char, j, s2_char
+    );
+
     // Base case
     if i >= s1.len() || j >= s2.len() {
         println!("{}  → BASE CASE: return 0", indent);
         return 0;
     }
-    
+
     // Characters match
     if s1[i] == s2[j] {
-        println!("{}  ✓ MATCH! '{}' == '{}'", indent, s1[i] as char, s2[j] as char);
-        println!("{}  → Computing: 1 + lcs({}, {})", indent, i+1, j+1);
+        println!(
+            "{}  ✓ MATCH! '{}' == '{}'",
+            indent, s1[i] as char, s2[j] as char
+        );
+        println!("{}  → Computing: 1 + lcs({}, {})", indent, i + 1, j + 1);
         let result = 1 + lcs_naive_traced_helper(s1, s2, i + 1, j + 1, depth + 1);
         println!("{}  ← Returns: {}", indent, result);
         result
     } else {
-        println!("{}  ✗ NO MATCH: '{}' != '{}'", indent, s1[i] as char, s2[j] as char);
+        println!(
+            "{}  ✗ NO MATCH: '{}' != '{}'",
+            indent, s1[i] as char, s2[j] as char
+        );
         println!("{}  → Try BOTH paths:", indent);
-        
+
         println!("{}    Path A: Skip s1[{}] (advance i)", indent, i);
         let skip_s1 = lcs_naive_traced_helper(s1, s2, i + 1, j, depth + 1);
-        
+
         println!("{}    Path B: Skip s2[{}] (advance j)", indent, j);
         let skip_s2 = lcs_naive_traced_helper(s1, s2, i, j + 1, depth + 1);
-        
+
         let result = skip_s1.max(skip_s2);
         println!("{}  ← Max({}, {}) = {}", indent, skip_s1, skip_s2, result);
         result
@@ -316,16 +324,16 @@ fn lcs_naive_traced_helper(s1: &[u8], s2: &[u8], i: usize, j: usize, depth: usiz
 fn demonstrate_reconstruction(s1: &str, s2: &str) {
     println!("--- Reconstructing the Actual Subsequence ---\n");
     println!("Strings: '{}' and '{}'", s1, s2);
-    
+
     let s1_bytes = s1.as_bytes();
     let s2_bytes = s2.as_bytes();
     let m = s1_bytes.len();
     let n = s2_bytes.len();
-    
+
     // Step 1: Build the DP table
     println!("\nStep 1: Build DP table (same as bottom-up approach)");
     let mut dp = vec![vec![0; n + 1]; m + 1];
-    
+
     for i in (0..m).rev() {
         for j in (0..n).rev() {
             if s1_bytes[i] == s2_bytes[j] {
@@ -335,7 +343,7 @@ fn demonstrate_reconstruction(s1: &str, s2: &str) {
             }
         }
     }
-    
+
     // Print the DP table
     println!("\nDP Table (dp[i][j] = LCS length from position i,j onwards):");
     print!("     ");
@@ -347,7 +355,7 @@ fn demonstrate_reconstruction(s1: &str, s2: &str) {
         }
     }
     println!();
-    
+
     for i in 0..=m {
         if i < m {
             print!("{:2}:  ", s1_bytes[i] as char);
@@ -359,43 +367,73 @@ fn demonstrate_reconstruction(s1: &str, s2: &str) {
         }
         println!();
     }
-    
+
     // Step 2: Backtrack through the table
     println!("\nStep 2: Backtrack to reconstruct the subsequence");
     let mut result = String::new();
     let mut i = 0;
     let mut j = 0;
-    
+
     while i < m && j < n {
         let s1_char = s1_bytes[i] as char;
         let s2_char = s2_bytes[j] as char;
-        
+
         if s1_bytes[i] == s2_bytes[j] {
-            println!("  At ({},{}): '{}' == '{}' → INCLUDE in LCS", 
-                     i, j, s1_char, s2_char);
-            println!("             Moving diagonally to ({},{})", i+1, j+1);
+            println!(
+                "  At ({},{}): '{}' == '{}' → INCLUDE in LCS",
+                i, j, s1_char, s2_char
+            );
+            println!("             Moving diagonally to ({},{})", i + 1, j + 1);
             result.push(s1_bytes[i] as char);
             i += 1;
             j += 1;
         } else if dp[i + 1][j] > dp[i][j + 1] {
-            println!("  At ({},{}): '{}' != '{}' → dp[{}][{}]={} > dp[{}][{}]={}", 
-                     i, j, s1_char, s2_char, 
-                     i+1, j, dp[i+1][j], 
-                     i, j+1, dp[i][j+1]);
-            println!("             Skip s1[{}]='{}', move down to ({},{})", 
-                     i, s1_char, i+1, j);
+            println!(
+                "  At ({},{}): '{}' != '{}' → dp[{}][{}]={} > dp[{}][{}]={}",
+                i,
+                j,
+                s1_char,
+                s2_char,
+                i + 1,
+                j,
+                dp[i + 1][j],
+                i,
+                j + 1,
+                dp[i][j + 1]
+            );
+            println!(
+                "             Skip s1[{}]='{}', move down to ({},{})",
+                i,
+                s1_char,
+                i + 1,
+                j
+            );
             i += 1;
         } else {
-            println!("  At ({},{}): '{}' != '{}' → dp[{}][{}]={} >= dp[{}][{}]={}", 
-                     i, j, s1_char, s2_char,
-                     i, j+1, dp[i][j+1],
-                     i+1, j, dp[i+1][j]);
-            println!("             Skip s2[{}]='{}', move right to ({},{})", 
-                     j, s2_char, i, j+1);
+            println!(
+                "  At ({},{}): '{}' != '{}' → dp[{}][{}]={} >= dp[{}][{}]={}",
+                i,
+                j,
+                s1_char,
+                s2_char,
+                i,
+                j + 1,
+                dp[i][j + 1],
+                i + 1,
+                j,
+                dp[i + 1][j]
+            );
+            println!(
+                "             Skip s2[{}]='{}', move right to ({},{})",
+                j,
+                s2_char,
+                i,
+                j + 1
+            );
             j += 1;
         }
     }
-    
+
     println!("\n✓ Reconstructed LCS: \"{}\"", result);
     println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 }

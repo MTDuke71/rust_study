@@ -24,7 +24,7 @@ pub fn lcm(a: u64, b: u64) -> u64 {
 pub fn divisors(n: u64) -> Vec<u64> {
     let mut divs = Vec::new();
     let limit = (n as f64).sqrt() as u64;
-    
+
     for i in 1..=limit {
         if n.is_multiple_of(i) {
             divs.push(i);
@@ -33,7 +33,7 @@ pub fn divisors(n: u64) -> Vec<u64> {
             }
         }
     }
-    
+
     divs.sort_unstable();
     divs
 }
@@ -46,13 +46,13 @@ pub fn sum_of_proper_divisors(n: u64) -> u64 {
 /// Prime factorization
 pub fn prime_factors(mut n: u64) -> Vec<u64> {
     let mut factors = Vec::new();
-    
+
     // Check for 2s
     while n.is_multiple_of(2) {
         factors.push(2);
         n /= 2;
     }
-    
+
     // Check odd factors
     let mut i = 3;
     while i * i <= n {
@@ -62,11 +62,11 @@ pub fn prime_factors(mut n: u64) -> Vec<u64> {
         }
         i += 2;
     }
-    
+
     if n > 2 {
         factors.push(n);
     }
-    
+
     factors
 }
 

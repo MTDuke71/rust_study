@@ -1,5 +1,5 @@
 //! AoC 2023 Day 12 pattern demonstration
-//! 
+//!
 //! Shows how the Hot Springs problem uses generic memoization
 //! with 3D state tuples (pos, group_idx, current_run).
 
@@ -8,7 +8,7 @@ use std::collections::HashMap;
 type Memo = HashMap<(usize, usize, usize), usize>;
 
 /// Simplified version of AoC 2023 Day 12 memoization pattern
-/// 
+///
 /// # Requirements Satisfied
 /// - REQ-1: Generic HashMap with tuple keys
 /// - REQ-2: Top-down DP pattern
@@ -63,35 +63,43 @@ fn count_arrangements(
 
 fn main() {
     println!("=== AoC 2023 Day 12 Memoization Pattern ===\n");
-    
+
     // Example input
     let springs = "???.###".as_bytes();
     let groups = vec![1, 1, 3];
-    
-    println!("Input: {} {:?}", std::str::from_utf8(springs).unwrap(), groups);
-    
+
+    println!(
+        "Input: {} {:?}",
+        std::str::from_utf8(springs).unwrap(),
+        groups
+    );
+
     let mut memo = HashMap::new();
     let result = count_arrangements(springs, &groups, 0, 0, 0, &mut memo);
-    
+
     println!("\nResults:");
     println!("  Arrangements: {}", result);
     println!("  Cache size:   {} states", memo.len());
     println!("  State space:  (pos × groups × max_run)");
-    
+
     // Show cache effectiveness with more complex example
     println!("\n--- Complex Example ---");
     let springs2 = ".??..??...?##.".as_bytes();
     let groups2 = vec![1, 1, 3];
-    
-    println!("Input: {} {:?}", std::str::from_utf8(springs2).unwrap(), groups2);
-    
+
+    println!(
+        "Input: {} {:?}",
+        std::str::from_utf8(springs2).unwrap(),
+        groups2
+    );
+
     let mut memo2 = HashMap::new();
     let result2 = count_arrangements(springs2, &groups2, 0, 0, 0, &mut memo2);
-    
+
     println!("\nResults:");
     println!("  Arrangements: {}", result2);
     println!("  Cache size:   {} states", memo2.len());
-    
+
     println!("\n=== Key Pattern Elements ===");
     println!("✓ 3D State Tuple: (position, group_index, current_run)");
     println!("✓ Base Case Check: Early return for completion/failure");

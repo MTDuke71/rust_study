@@ -32,9 +32,9 @@
 //! - Part 1: ~1.5ms (19,637 steps)
 //! - Part 2: ~6.7ms (8,811,050,362,409 steps via LCM - brute force impossible)
 
+use crate::math_utils::lcm_usize as lcm;
 use anyhow::{Context, Result};
 use std::collections::HashMap;
-use crate::math_utils::lcm_usize as lcm;
 
 /// Parsed network representation
 #[derive(Debug, Clone)]

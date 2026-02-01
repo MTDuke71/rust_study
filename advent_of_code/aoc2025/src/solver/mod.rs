@@ -12,14 +12,17 @@ pub mod day07;
 pub mod day08;
 pub mod day09;
 pub mod day10;
-pub mod day10_alt;  // Alternative Z3-based implementation
+pub mod day10_alt; // Alternative Z3-based implementation
 pub mod day11;
 pub mod day12;
 
 pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
     match day {
         1 => Ok((day01::solve_part1(input)?, day01::solve_part2(input)?)),
-        2 => Ok((day02::solve_part1(input)?.to_string(), day02::solve_part2(input)?.to_string())),
+        2 => Ok((
+            day02::solve_part1(input)?.to_string(),
+            day02::solve_part2(input)?.to_string(),
+        )),
         3 => Ok((day03::solve_part1(input)?, day03::solve_part2(input)?)),
         4 => Ok((day04::solve_part1(input)?, day04::solve_part2(input)?)),
         5 => Ok((day05::solve_part1(input)?, day05::solve_part2(input)?)),
@@ -30,14 +33,13 @@ pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
         10 => Ok((day10::solve_part1(input)?, day10::solve_part2(input)?)),
         11 => Ok((day11::solve_part1(input)?, day11::solve_part2(input)?)),
         12 => Ok((day12::solve_part1(input)?, day12::solve_part2(input)?)),
-        
 
         _ => bail!("Day {day} not implemented yet (valid range: 1-12)."),
     }
 }
 
 /// Run a day's solution with timeout protection for each part
-/// 
+///
 /// This prevents suboptimal implementations from hanging indefinitely.
 /// Each part gets its own timeout window.
 pub async fn run_day_with_timeout(
@@ -46,28 +48,40 @@ pub async fn run_day_with_timeout(
     timeout: Duration,
 ) -> Result<(String, String)> {
     let input_owned = input.to_string();
-    
+
     // Run Part 1 with timeout
     let input_clone = input_owned.clone();
-    let part1 = match tokio::time::timeout(timeout, tokio::task::spawn_blocking(move || {
-        run_single_part(day, &input_clone, 1)
-    })).await {
+    let part1 = match tokio::time::timeout(
+        timeout,
+        tokio::task::spawn_blocking(move || run_single_part(day, &input_clone, 1)),
+    )
+    .await
+    {
         Ok(Ok(result)) => result?,
         Ok(Err(e)) => bail!("Part 1 panicked: {}", e),
-        Err(_) => bail!("⏱️  Part 1 exceeded {} second timeout - implementation may be suboptimal", timeout.as_secs()),
+        Err(_) => bail!(
+            "⏱️  Part 1 exceeded {} second timeout - implementation may be suboptimal",
+            timeout.as_secs()
+        ),
     };
-    
+
     println!("✅ Part 1 completed: {}", part1);
-    
+
     // Run Part 2 with timeout
-    let part2 = match tokio::time::timeout(timeout, tokio::task::spawn_blocking(move || {
-        run_single_part(day, &input_owned, 2)
-    })).await {
+    let part2 = match tokio::time::timeout(
+        timeout,
+        tokio::task::spawn_blocking(move || run_single_part(day, &input_owned, 2)),
+    )
+    .await
+    {
         Ok(Ok(result)) => result?,
         Ok(Err(e)) => bail!("Part 2 panicked: {}", e),
-        Err(_) => bail!("⏱️  Part 2 exceeded {} second timeout - implementation may be suboptimal", timeout.as_secs()),
+        Err(_) => bail!(
+            "⏱️  Part 2 exceeded {} second timeout - implementation may be suboptimal",
+            timeout.as_secs()
+        ),
     };
-    
+
     Ok((part1, part2))
 }
 

@@ -73,10 +73,9 @@ impl Graph for MemorySpace {
         ];
 
         for (dx, dy) in directions {
-            if let (Some(new_x), Some(new_y)) = (
-                node.x.checked_add_signed(dx),
-                node.y.checked_add_signed(dy),
-            ) {
+            if let (Some(new_x), Some(new_y)) =
+                (node.x.checked_add_signed(dx), node.y.checked_add_signed(dy))
+            {
                 let new_coord = Coord::new(new_x, new_y);
                 if self.is_safe(new_coord) {
                     neighbors.push(new_coord);
@@ -113,9 +112,11 @@ fn parse_bytes(input: &str) -> Result<Vec<Coord>> {
             if parts.len() != 2 {
                 anyhow::bail!("Invalid coordinate format: {}", line);
             }
-            let x = parts[0].parse::<usize>()
+            let x = parts[0]
+                .parse::<usize>()
                 .with_context(|| format!("Invalid X coordinate: {}", parts[0]))?;
-            let y = parts[1].parse::<usize>()
+            let y = parts[1]
+                .parse::<usize>()
                 .with_context(|| format!("Invalid Y coordinate: {}", parts[1]))?;
             Ok(Coord::new(x, y))
         })
@@ -125,7 +126,7 @@ fn parse_bytes(input: &str) -> Result<Vec<Coord>> {
 /// Part 1: Find shortest path after first N bytes have fallen
 pub fn part1(input: &str) -> Result<String> {
     let bytes = parse_bytes(input)?;
-    
+
     // For the real input, grid is 71x71 (0-70), simulate first 1024 bytes
     let (width, height, num_bytes) = if bytes.len() < 30 {
         // Example: 7x7 grid (0-6), 12 bytes
@@ -158,13 +159,9 @@ pub fn part1(input: &str) -> Result<String> {
 /// Part 2: Find first byte that blocks the path
 pub fn part2(input: &str) -> Result<String> {
     let bytes = parse_bytes(input)?;
-    
+
     // Determine grid size
-    let (width, height) = if bytes.len() < 30 {
-        (7, 7)
-    } else {
-        (71, 71)
-    };
+    let (width, height) = if bytes.len() < 30 { (7, 7) } else { (71, 71) };
 
     let start = Coord::new(0, 0);
     let goal = Coord::new(width - 1, height - 1);

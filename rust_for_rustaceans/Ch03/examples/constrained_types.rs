@@ -1,10 +1,10 @@
 //! Chapter 3: Constrained Interfaces - Type Modifications
-//! 
+//!
 //! Topics: Type Modifications, Trait Implementations, Sealed Traits
 
 fn main() {
     println!("=== Constrained Interfaces: Type Modifications ===\n");
-    
+
     non_exhaustive_demo();
     sealed_traits_demo();
     blanket_implementations();
@@ -15,35 +15,33 @@ fn main() {
 /// non_exhaustive: Allow adding fields/variants without breaking changes
 fn non_exhaustive_demo() {
     println!("--- #[non_exhaustive] ---");
-    
+
     // ✅ Can construct with builder pattern
-    let config = Config::builder()
-        .timeout(30)
-        .build();
-    
+    let config = Config::builder().timeout(30).build();
+
     println!("  Timeout: {}", config.timeout());
-    
+
     // ❌ COMPILER ERROR: Cannot construct directly
     // let config = Config { timeout: 30 };
-    
+
     // ❌ COMPILER ERROR: Cannot match exhaustively
     // match config {
     //     Config { timeout } => {}  // Error: non-exhaustive
     // }
-    
+
     println!("  Future-proof: Can add fields without breaking API\n");
 }
 
 /// Sealed Traits: Prevent downstream implementations
 fn sealed_traits_demo() {
     println!("--- Sealed Traits ---");
-    
+
     let circle = Circle;
     let rect = Rectangle;
-    
+
     println!("  Circle area: {}", circle.area());
     println!("  Rectangle area: {}", rect.area());
-    
+
     println!("\n  Sealed trait prevents downstream users from implementing");
     println!("  Allows adding methods without breaking changes\n");
 }
@@ -51,7 +49,7 @@ fn sealed_traits_demo() {
 /// Blanket Implementations: Be careful with coherence
 fn blanket_implementations() {
     println!("--- Blanket Implementations ---");
-    
+
     println!("  ⚠️  Adding blanket impls is a BREAKING CHANGE");
     println!("  Example: impl<T> Display for Vec<T>");
     println!("  Violates coherence if downstream already implemented it");
@@ -72,7 +70,7 @@ impl Config {
     pub fn builder() -> ConfigBuilder {
         ConfigBuilder::default()
     }
-    
+
     pub fn timeout(&self) -> u32 {
         self.timeout
     }
@@ -88,7 +86,7 @@ impl ConfigBuilder {
         self.timeout = Some(timeout);
         self
     }
-    
+
     pub fn build(self) -> Config {
         Config {
             timeout: self.timeout.unwrap_or(60),
@@ -106,7 +104,7 @@ mod sealed {
 /// Public trait that cannot be implemented downstream
 pub trait Shape: sealed::Sealed {
     fn area(&self) -> f64;
-    
+
     // Can add methods here without breaking changes
     // fn perimeter(&self) -> f64 { 0.0 }
 }
@@ -144,11 +142,11 @@ impl Status {
 }
 
 // Downstream code must use wildcard
-#[allow(unreachable_patterns)]  // Pattern demonstrates non_exhaustive requirement
+#[allow(unreachable_patterns)] // Pattern demonstrates non_exhaustive requirement
 fn handle_status(status: &Status) {
     match status {
         Status::Active => println!("Active"),
         Status::Inactive => println!("Inactive"),
-        _ => println!("Other"),  // Required for non_exhaustive (currently unreachable, but would catch future variants)
+        _ => println!("Other"), // Required for non_exhaustive (currently unreachable, but would catch future variants)
     }
 }

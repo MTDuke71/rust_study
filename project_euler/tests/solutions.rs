@@ -12,7 +12,8 @@ fn test_problem_001() {
 #[test]
 fn test_problem_001_example() {
     // Example from problem statement: below 10
-    let result = p001::sum_multiples(3, 10) + p001::sum_multiples(5, 10) - p001::sum_multiples(15, 10);
+    let result =
+        p001::sum_multiples(3, 10) + p001::sum_multiples(5, 10) - p001::sum_multiples(15, 10);
     assert_eq!(result, 23);
 }
 

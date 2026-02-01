@@ -39,14 +39,14 @@ pub fn xor_op(a: i64, b: i64) -> i64 {
 fn main() {
     // Use black_box to prevent constant folding
     let input = black_box(123i64);
-    
+
     println!("Runtime value: {}", input);
     println!("prune_modulo: {}", prune_modulo(black_box(100000000)));
     println!("prune_and: {}", prune_and(black_box(100000000)));
     println!("mul_64: {}", mul_64(input));
     println!("div_32: {}", div_32(input));
     println!("xor_op: {}", xor_op(input, black_box(456)));
-    
+
     println!("\n🔍 View assembly with:");
     println!("cargo asm -p aoc2024 --example day22_asm_runtime --release prune_modulo");
     println!("cargo asm -p aoc2024 --example day22_asm_runtime --release prune_and");

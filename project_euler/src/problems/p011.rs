@@ -74,7 +74,7 @@ fn parse_grid(data: &str) -> Vec<Vec<u32>> {
 fn product_at(grid: &[Vec<u32>], row: usize, col: usize, dir: Direction) -> Option<u64> {
     let rows = grid.len();
     let cols = grid[0].len();
-    
+
     // Check bounds for all 4 positions
     match dir {
         Direction::Horizontal => {
@@ -83,7 +83,7 @@ fn product_at(grid: &[Vec<u32>], row: usize, col: usize, dir: Direction) -> Opti
                     grid[row][col] as u64
                         * grid[row][col + 1] as u64
                         * grid[row][col + 2] as u64
-                        * grid[row][col + 3] as u64
+                        * grid[row][col + 3] as u64,
                 )
             } else {
                 None
@@ -95,7 +95,7 @@ fn product_at(grid: &[Vec<u32>], row: usize, col: usize, dir: Direction) -> Opti
                     grid[row][col] as u64
                         * grid[row + 1][col] as u64
                         * grid[row + 2][col] as u64
-                        * grid[row + 3][col] as u64
+                        * grid[row + 3][col] as u64,
                 )
             } else {
                 None
@@ -107,7 +107,7 @@ fn product_at(grid: &[Vec<u32>], row: usize, col: usize, dir: Direction) -> Opti
                     grid[row][col] as u64
                         * grid[row + 1][col + 1] as u64
                         * grid[row + 2][col + 2] as u64
-                        * grid[row + 3][col + 3] as u64
+                        * grid[row + 3][col + 3] as u64,
                 )
             } else {
                 None
@@ -119,7 +119,7 @@ fn product_at(grid: &[Vec<u32>], row: usize, col: usize, dir: Direction) -> Opti
                     grid[row][col] as u64
                         * grid[row + 1][col - 1] as u64
                         * grid[row + 2][col - 2] as u64
-                        * grid[row + 3][col - 3] as u64
+                        * grid[row + 3][col - 3] as u64,
                 )
             } else {
                 None
@@ -141,14 +141,14 @@ enum Direction {
 /// # Examples
 /// ```
 /// use project_euler::problems::p011::largest_product_in_grid;
-/// 
+///
 /// let grid = vec![
 ///     vec![1, 2, 3, 4],
 ///     vec![5, 6, 7, 8],
 ///     vec![9, 10, 11, 12],
 ///     vec![13, 14, 15, 16],
 /// ];
-/// 
+///
 /// let product = largest_product_in_grid(&grid);
 /// // Horizontal from (3,0): 13*14*15*16 = 43,680
 /// assert_eq!(product, 43680);
@@ -157,14 +157,14 @@ pub fn largest_product_in_grid(grid: &[Vec<u32>]) -> u64 {
     let rows = grid.len();
     let cols = grid[0].len();
     let mut max_product = 0u64;
-    
+
     let directions = [
         Direction::Horizontal,
         Direction::Vertical,
         Direction::DiagonalDownRight,
         Direction::DiagonalDownLeft,
     ];
-    
+
     for row in 0..rows {
         for col in 0..cols {
             for &dir in &directions {
@@ -174,7 +174,7 @@ pub fn largest_product_in_grid(grid: &[Vec<u32>]) -> u64 {
             }
         }
     }
-    
+
     max_product
 }
 
@@ -199,16 +199,13 @@ mod tests {
 
     #[test]
     fn test_horizontal_product() {
-        let grid = vec![
-            vec![1, 2, 3, 4, 5],
-            vec![6, 7, 8, 9, 10],
-        ];
+        let grid = vec![vec![1, 2, 3, 4, 5], vec![6, 7, 8, 9, 10]];
         let product = product_at(&grid, 0, 0, Direction::Horizontal);
         assert_eq!(product, Some(1 * 2 * 3 * 4));
-        
+
         let product = product_at(&grid, 0, 1, Direction::Horizontal);
         assert_eq!(product, Some(2 * 3 * 4 * 5));
-        
+
         // Out of bounds
         let product = product_at(&grid, 0, 2, Direction::Horizontal);
         assert_eq!(product, None);
@@ -216,15 +213,10 @@ mod tests {
 
     #[test]
     fn test_vertical_product() {
-        let grid = vec![
-            vec![1, 2],
-            vec![3, 4],
-            vec![5, 6],
-            vec![7, 8],
-        ];
+        let grid = vec![vec![1, 2], vec![3, 4], vec![5, 6], vec![7, 8]];
         let product = product_at(&grid, 0, 0, Direction::Vertical);
         assert_eq!(product, Some(1 * 3 * 5 * 7));
-        
+
         // Out of bounds
         let product = product_at(&grid, 1, 0, Direction::Vertical);
         assert_eq!(product, None);

@@ -106,7 +106,10 @@ fn test_named_variables() {
 #[test]
 fn test_multiple_patterns() {
     fn is_primary_color(c: Color) -> bool {
-        matches!(c, Color::Rgb(255, 0, 0) | Color::Rgb(0, 255, 0) | Color::Rgb(0, 0, 255))
+        matches!(
+            c,
+            Color::Rgb(255, 0, 0) | Color::Rgb(0, 255, 0) | Color::Rgb(0, 0, 255)
+        )
     }
 
     assert!(is_primary_color(Color::Rgb(255, 0, 0)));

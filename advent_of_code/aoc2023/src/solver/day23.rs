@@ -51,7 +51,7 @@ impl Coord {
     /// Get neighbors in cardinal directions (N, E, S, W)
     fn neighbors(&self, rows: usize, cols: usize) -> Vec<(Coord, Direction)> {
         let mut result = Vec::new();
-        
+
         // North
         if self.row > 0 {
             result.push((Coord::new(self.row - 1, self.col), Direction::North));
@@ -68,7 +68,7 @@ impl Coord {
         if self.col < cols - 1 {
             result.push((Coord::new(self.row, self.col + 1), Direction::East));
         }
-        
+
         result
     }
 }
@@ -94,32 +94,39 @@ impl HikingMap {
         let lines: Vec<&str> = input.lines().collect();
         let rows = lines.len();
         let cols = lines[0].len();
-        
+
         let mut grid = Vec::with_capacity(rows);
-        
+
         for line in lines {
-            let row: Vec<Tile> = line.chars().map(|c| match c {
-                '.' => Tile::Path,
-                '#' => Tile::Forest,
-                '^' => Tile::SlopeNorth,
-                '>' => Tile::SlopeEast,
-                'v' => Tile::SlopeSouth,
-                '<' => Tile::SlopeWest,
-                _ => panic!("Unknown tile: {}", c),
-            }).collect();
+            let row: Vec<Tile> = line
+                .chars()
+                .map(|c| match c {
+                    '.' => Tile::Path,
+                    '#' => Tile::Forest,
+                    '^' => Tile::SlopeNorth,
+                    '>' => Tile::SlopeEast,
+                    'v' => Tile::SlopeSouth,
+                    '<' => Tile::SlopeWest,
+                    _ => panic!("Unknown tile: {}", c),
+                })
+                .collect();
             grid.push(row);
         }
-        
+
         // Find start (top row)
-        let start_col = grid[0].iter().position(|&t| t == Tile::Path)
+        let start_col = grid[0]
+            .iter()
+            .position(|&t| t == Tile::Path)
             .expect("No start found");
         let start = Coord::new(0, start_col);
-        
+
         // Find goal (bottom row)
-        let goal_col = grid[rows - 1].iter().position(|&t| t == Tile::Path)
+        let goal_col = grid[rows - 1]
+            .iter()
+            .position(|&t| t == Tile::Path)
             .expect("No goal found");
         let goal = Coord::new(rows - 1, goal_col);
-        
+
         Ok(HikingMap {
             grid,
             rows,
@@ -128,16 +135,22 @@ impl HikingMap {
             goal,
         })
     }
-    
+
     fn get(&self, coord: Coord) -> Tile {
         self.grid[coord.row][coord.col]
     }
-    
+
     /// Check if we can move from current position to next position
     /// considering slope restrictions (if enabled)
-    fn can_move(&self, _current: Coord, next: Coord, direction: Direction, ignore_slopes: bool) -> bool {
+    fn can_move(
+        &self,
+        _current: Coord,
+        next: Coord,
+        direction: Direction,
+        ignore_slopes: bool,
+    ) -> bool {
         let tile = self.get(next);
-        
+
         match tile {
             Tile::Forest => false,
             Tile::Path => true,
@@ -148,108 +161,110 @@ impl HikingMap {
             Tile::SlopeWest => ignore_slopes || direction == Direction::West,
         }
     }
-    
+
     /// DFS to find longest path
     fn find_longest_path(&self, ignore_slopes: bool) -> usize {
         let mut visited = HashSet::new();
         visited.insert(self.start);
         self.dfs(self.start, &mut visited, ignore_slopes)
     }
-    
+
     fn dfs(&self, current: Coord, visited: &mut HashSet<Coord>, ignore_slopes: bool) -> usize {
         // Base case: reached goal
         if current == self.goal {
             return 0;
         }
-        
+
         let mut max_length = 0;
-        
+
         // Try all neighbors
         for (next, direction) in current.neighbors(self.rows, self.cols) {
             // Skip if already visited or can't move there
             if visited.contains(&next) || !self.can_move(current, next, direction, ignore_slopes) {
                 continue;
             }
-            
+
             // Recursively explore this path
             visited.insert(next);
             let length = self.dfs(next, visited, ignore_slopes);
-            
+
             // Only count valid paths (those that reach the goal)
             if length > 0 || next == self.goal {
                 max_length = max_length.max(length + 1);
             }
-            
+
             visited.remove(&next);
         }
-        
+
         max_length
     }
-    
+
     /// Build a contracted graph of junctions and corridors
     /// This reduces the search space by collapsing long hallways
     fn build_graph(&self, ignore_slopes: bool) -> HashMap<Coord, Vec<(Coord, usize)>> {
         let mut graph: HashMap<Coord, Vec<(Coord, usize)>> = HashMap::new();
-        
+
         // Find all junctions (points with > 2 neighbors) plus start and goal
         let mut junctions = HashSet::new();
         junctions.insert(self.start);
         junctions.insert(self.goal);
-        
+
         for row in 0..self.rows {
             for col in 0..self.cols {
                 let coord = Coord::new(row, col);
                 if self.get(coord) == Tile::Forest {
                     continue;
                 }
-                
+
                 // Count accessible neighbors
-                let neighbor_count = coord.neighbors(self.rows, self.cols)
+                let neighbor_count = coord
+                    .neighbors(self.rows, self.cols)
                     .into_iter()
                     .filter(|(next, dir)| self.can_move(coord, *next, *dir, ignore_slopes))
                     .count();
-                
+
                 if neighbor_count > 2 {
                     junctions.insert(coord);
                 }
             }
         }
-        
+
         println!("Found {} junctions", junctions.len());
-        
+
         // For each junction, find paths to other junctions
         for &junction in &junctions {
             let mut edges = Vec::new();
-            
+
             // BFS from this junction to find other junctions
             for (start_neighbor, start_dir) in junction.neighbors(self.rows, self.cols) {
                 if !self.can_move(junction, start_neighbor, start_dir, ignore_slopes) {
                     continue;
                 }
-                
+
                 let mut visited = HashSet::new();
                 visited.insert(junction);
                 visited.insert(start_neighbor);
-                
+
                 let mut current = start_neighbor;
                 let mut distance = 1;
-                
+
                 // Follow the corridor until we hit another junction
                 loop {
                     if junctions.contains(&current) {
                         edges.push((current, distance));
                         break;
                     }
-                    
+
                     // Find the next unvisited neighbor
-                    let next_coords: Vec<_> = current.neighbors(self.rows, self.cols)
+                    let next_coords: Vec<_> = current
+                        .neighbors(self.rows, self.cols)
                         .into_iter()
                         .filter(|(next, dir)| {
-                            !visited.contains(next) && 
-                            self.can_move(current, *next, *dir, ignore_slopes)
+                            !visited.contains(next)
+                                && self.can_move(current, *next, *dir, ignore_slopes)
                         })
                         .collect();
-                    
+
                     if next_coords.is_empty() {
                         // Dead end
                         break;
@@ -265,38 +280,43 @@ impl HikingMap {
                     }
                 }
             }
-            
+
             graph.insert(junction, edges);
         }
-        
+
         graph
     }
-    
+
     /// DFS on contracted graph
-    fn dfs_graph(&self, current: Coord, visited: &mut HashSet<Coord>, graph: &HashMap<Coord, Vec<(Coord, usize)>>) -> usize {
+    fn dfs_graph(
+        &self,
+        current: Coord,
+        visited: &mut HashSet<Coord>,
+        graph: &HashMap<Coord, Vec<(Coord, usize)>>,
+    ) -> usize {
         if current == self.goal {
             return 0;
         }
-        
+
         let mut max_length = 0;
-        
+
         if let Some(neighbors) = graph.get(&current) {
             for &(next, distance) in neighbors {
                 if visited.contains(&next) {
                     continue;
                 }
-                
+
                 visited.insert(next);
                 let length = self.dfs_graph(next, visited, graph);
-                
+
                 if length > 0 || next == self.goal {
                     max_length = max_length.max(length + distance);
                 }
-                
+
                 visited.remove(&next);
             }
         }
-        
+
         max_length
     }
 }

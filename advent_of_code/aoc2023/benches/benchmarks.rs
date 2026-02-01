@@ -250,17 +250,20 @@ fn benchmark_day19(c: &mut Criterion) {
             let sections: Vec<&str> = input.split("\n\n").collect();
             let workflows_text = sections[0];
             let parts_text = sections[1];
-            
+
             // Parse workflows
             let mut workflows = HashMap::new();
             for line in workflows_text.lines() {
                 let workflow = day19::parse_workflow(black_box(line));
                 workflows.insert(workflow.name.clone(), workflow);
             }
-            
+
             // Parse parts
-            let parts: Vec<_> = parts_text.lines().map(|l| day19::parse_part(black_box(l))).collect();
-            
+            let parts: Vec<_> = parts_text
+                .lines()
+                .map(|l| day19::parse_part(black_box(l)))
+                .collect();
+
             black_box((workflows, parts))
         })
     });
@@ -270,14 +273,14 @@ fn benchmark_day19(c: &mut Criterion) {
             use std::collections::HashMap;
             let sections: Vec<&str> = input.split("\n\n").collect();
             let workflows_text = sections[0];
-            
+
             // Parse workflows only (Part 2 doesn't need parts)
             let mut workflows = HashMap::new();
             for line in workflows_text.lines() {
                 let workflow = day19::parse_workflow(black_box(line));
                 workflows.insert(workflow.name.clone(), workflow);
             }
-            
+
             black_box(workflows)
         })
     });
@@ -286,21 +289,15 @@ fn benchmark_day19(c: &mut Criterion) {
 fn benchmark_day20(c: &mut Criterion) {
     let input = include_str!("../inputs/day20.txt");
 
-    c.bench_function("day20_part1", |b| {
-        b.iter(|| day20::part1(black_box(input)))
-    });
+    c.bench_function("day20_part1", |b| b.iter(|| day20::part1(black_box(input))));
 
-    c.bench_function("day20_part2", |b| {
-        b.iter(|| day20::part2(black_box(input)))
-    });
+    c.bench_function("day20_part2", |b| b.iter(|| day20::part2(black_box(input))));
 }
 
 fn benchmark_day21(c: &mut Criterion) {
     let input = include_str!("../inputs/day21.txt");
 
-    c.bench_function("day21_part1", |b| {
-        b.iter(|| day21::part1(black_box(input)))
-    });
+    c.bench_function("day21_part1", |b| b.iter(|| day21::part1(black_box(input))));
 
     c.bench_function("day21_part2_extrapolation", |b| {
         b.iter(|| day21::part2(black_box(input)))

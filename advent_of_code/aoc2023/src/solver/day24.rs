@@ -78,12 +78,7 @@ impl Hailstone {
     /// - Paths intersect (not parallel)
     /// - Intersection happens in future for both (t > 0)
     /// - Intersection point within test area bounds
-    fn intersects_2d_in_bounds(
-        &self,
-        other: &Hailstone,
-        min: f64,
-        max: f64,
-    ) -> bool {
+    fn intersects_2d_in_bounds(&self, other: &Hailstone, min: f64, max: f64) -> bool {
         // Parametric line equations (ignoring Z):
         // Stone A (self): (x, y) = (px_a, py_a) + t_a * (vx_a, vy_a)
         // Stone B (other): (x, y) = (px_b, py_b) + t_b * (vx_b, vy_b)
@@ -198,7 +193,7 @@ pub fn solve_part2(_input: &str) -> Result<String> {
 ///
 /// **Answer**: 546494494317645 (sum of rock's initial position coordinates)
 fn solve_part2_linear_system(input: &str) -> Result<String> {
-    // Parse all hailstones  
+    // Parse all hailstones
     let hailstones: Vec<Hailstone> = input
         .lines()
         .filter(|line| !line.trim().is_empty())
@@ -209,7 +204,7 @@ fn solve_part2_linear_system(input: &str) -> Result<String> {
 
     // Use multiple hailstone combinations and try to find exact integer solution
     // We'll try different sets of 4 hailstones to see if we get consistent results
-    
+
     // The key equation: For stones A and B both hit by rock R:
     // (pB - pA) × (vB - vA) = (pB - pA) × (vR - vA) + (vB - vA) × (pR - pA)
     //
@@ -245,7 +240,7 @@ fn solve_part2_linear_system(input: &str) -> Result<String> {
         matrix.push(vec![a1, a2, a3, a4, a5, a6]);
         constants.push(b1);
 
-        // Equation 2: From X-Z components  
+        // Equation 2: From X-Z components
         let a1 = h.vz - h0.vz;
         let a2 = 0.0;
         let a3 = h0.vx - h.vx;
@@ -270,7 +265,7 @@ fn solve_part2_linear_system(input: &str) -> Result<String> {
 
     // The solution from Gaussian elimination might have floating-point errors
     // Try rounding each component and check which gives the best fit
-    
+
     // The Gaussian elimination solution has floating-point rounding errors
     // Use floor as starting point for local search
     let rx_int = rx.floor() as i64;
@@ -278,10 +273,10 @@ fn solve_part2_linear_system(input: &str) -> Result<String> {
     let rz_int = rz.floor() as i64;
     // Search a 3x3x3 neighborhood around the floor solution to find
     // the integer coordinates that minimize collision error
-    
+
     let mut best_answer = rx_int + ry_int + rz_int;
     let mut best_error = f64::MAX;
-    
+
     // Search small neighborhood around the floating-point solution
     for dx in [-1i64, 0, 1] {
         for dy in [-1, 0, 1] {
@@ -289,11 +284,11 @@ fn solve_part2_linear_system(input: &str) -> Result<String> {
                 let test_rx = rx_int + dx;
                 let test_ry = ry_int + dy;
                 let test_rz = rz_int + dz;
-                
+
                 // Check collision error with first 3 hailstones
                 let mut total_error = 0.0;
                 let mut valid = true;
-                
+
                 for h in [h0, h1, h2] {
                     if (h.vx - rvx).abs() > 1e-10 {
                         let t = (test_rx as f64 - h.px) / (h.vx - rvx);
@@ -304,10 +299,10 @@ fn solve_part2_linear_system(input: &str) -> Result<String> {
                             let rock_x = test_rx as f64 + t * rvx;
                             let rock_y = test_ry as f64 + t * rvy;
                             let rock_z = test_rz as f64 + t * rvz;
-                            
-                            let err = (stone_x - rock_x).abs() + 
-                                     (stone_y - rock_y).abs() + 
-                                     (stone_z - rock_z).abs();
+
+                            let err = (stone_x - rock_x).abs()
+                                + (stone_y - rock_y).abs()
+                                + (stone_z - rock_z).abs();
                             total_error += err;
                         } else {
                             valid = false;
@@ -315,7 +310,7 @@ fn solve_part2_linear_system(input: &str) -> Result<String> {
                         }
                     }
                 }
-                
+
                 if valid && total_error < best_error {
                     best_error = total_error;
                     best_answer = test_rx + test_ry + test_rz;
@@ -466,7 +461,7 @@ mod tests {
     fn test_parallel_lines() {
         let stone_a = Hailstone::parse("18, 19, 22 @ -1, -1, -2").unwrap();
         let stone_b = Hailstone::parse("20, 25, 34 @ -2, -2, -4").unwrap();
-        
+
         // Parallel lines (velocities are proportional: -1:-1 and -2:-2)
         assert!(!stone_a.intersects_2d_in_bounds(&stone_b, 7.0, 27.0));
     }
@@ -475,7 +470,7 @@ mod tests {
     fn test_past_intersection() {
         let stone_a = Hailstone::parse("19, 13, 30 @ -2, 1, -2").unwrap();
         let stone_b = Hailstone::parse("20, 19, 15 @ 1, -5, -3").unwrap();
-        
+
         // Paths crossed in the past for stone A
         assert!(!stone_a.intersects_2d_in_bounds(&stone_b, 7.0, 27.0));
     }

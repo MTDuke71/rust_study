@@ -47,7 +47,11 @@ pub fn largest_prime_factor(mut n: u64) -> u64 {
     }
 
     // If remainder is >1, it's prime and larger than any tested factor.
-    if n > 1 { n } else { last_factor }
+    if n > 1 {
+        n
+    } else {
+        last_factor
+    }
 }
 
 /// Solve Problem 3 for the canonical input `600851475143`.

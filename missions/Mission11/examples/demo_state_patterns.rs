@@ -37,7 +37,7 @@ fn main() {
 fn demo_pattern1_string_suffix() {
     println!("📝 Pattern 1: String Suffixes (&'a str)");
     println!("{}", "-".repeat(80));
-    
+
     let patterns = vec!["ab", "abc", "bc"];
     let test_cases = vec![
         ("abc", true),
@@ -49,10 +49,13 @@ fn demo_pattern1_string_suffix() {
     for (target, expected) in test_cases {
         let mut memo = HashMap::new();
         let result = string_suffix_pattern(target, &patterns, &mut memo);
-        
+
         println!(
             "  Can construct {:?} from {:?}? {} (cache: {} states)",
-            target, patterns, result, memo.len()
+            target,
+            patterns,
+            result,
+            memo.len()
         );
         assert_eq!(result, expected);
     }
@@ -73,14 +76,18 @@ fn demo_pattern2_index_position() {
         let cache_before = memo.len();
         let sum = index_position_pattern(start_pos, &arr, &mut memo);
         let cache_after = memo.len();
-        
+
         if cache_before == cache_after {
             // No new entries added = cache hit
             println!("  Sum from position {}: {} [CACHE HIT]", start_pos, sum);
         } else {
             // New entries added = computed recursively
-            println!("  Sum from position {}: {} [computed, cached {} new states]", 
-                     start_pos, sum, cache_after - cache_before);
+            println!(
+                "  Sum from position {}: {} [computed, cached {} new states]",
+                start_pos,
+                sum,
+                cache_after - cache_before
+            );
         }
     }
 
@@ -94,11 +101,7 @@ fn demo_pattern3_coordinate_pairs() {
     println!("📍 Pattern 3: Coordinate Pairs ((x, y))");
     println!("{}", "-".repeat(80));
 
-    let grid = vec![
-        vec![1, 2, 3, 4],
-        vec![5, 6, 7, 8],
-        vec![9, 10, 11, 12],
-    ];
+    let grid = vec![vec![1, 2, 3, 4], vec![5, 6, 7, 8], vec![9, 10, 11, 12]];
 
     println!("  Grid:");
     for row in &grid {
@@ -117,10 +120,14 @@ fn demo_pattern3_coordinate_pairs() {
     for (start, end, desc) in test_cases {
         let mut memo = HashMap::new();
         let paths = coordinate_pair_pattern(start, end, &grid, &mut memo);
-        
+
         println!(
             "  {} {:?} → {:?}: {} paths (cache: {} coords)",
-            desc, start, end, paths, memo.len()
+            desc,
+            start,
+            end,
+            paths,
+            memo.len()
         );
     }
 
@@ -144,10 +151,14 @@ fn demo_pattern4_composite_state() {
     for (stone_value, blinks, desc) in test_stones {
         let mut memo = HashMap::new();
         let final_count = composite_state_pattern((stone_value, blinks), &mut memo);
-        
+
         println!(
             "  {}: Stone {} after {} blinks → {} stones (cache: {} states)",
-            desc, stone_value, blinks, final_count, memo.len()
+            desc,
+            stone_value,
+            blinks,
+            final_count,
+            memo.len()
         );
     }
 
@@ -162,17 +173,32 @@ fn demo_pattern5_custom_struct() {
 
     let scenarios = vec![
         (
-            GameState { player_hp: 100, boss_hp: 30, turn: 0, mana: 500 },
+            GameState {
+                player_hp: 100,
+                boss_hp: 30,
+                turn: 0,
+                mana: 500,
+            },
             true,
             "Strong player vs weak boss",
         ),
         (
-            GameState { player_hp: 20, boss_hp: 100, turn: 0, mana: 100 },
+            GameState {
+                player_hp: 20,
+                boss_hp: 100,
+                turn: 0,
+                mana: 100,
+            },
             false,
             "Weak player vs strong boss",
         ),
         (
-            GameState { player_hp: 60, boss_hp: 60, turn: 0, mana: 300 },
+            GameState {
+                player_hp: 60,
+                boss_hp: 60,
+                turn: 0,
+                mana: 300,
+            },
             true,
             "Balanced fight (player advantage)",
         ),
@@ -181,10 +207,15 @@ fn demo_pattern5_custom_struct() {
     for (state, expected, desc) in scenarios {
         let mut memo = HashMap::new();
         let can_win = custom_struct_pattern(state.clone(), &mut memo);
-        
+
         println!(
             "  {}: Player HP={}, Boss HP={}, Mana={} → Can win? {} (cache: {} states)",
-            desc, state.player_hp, state.boss_hp, state.mana, can_win, memo.len()
+            desc,
+            state.player_hp,
+            state.boss_hp,
+            state.mana,
+            can_win,
+            memo.len()
         );
         assert_eq!(can_win, expected);
     }
@@ -199,9 +230,9 @@ fn demo_advanced_composite_with_borrowed() {
     println!("{}", "-".repeat(80));
 
     let pattern_groups = vec![
-        vec!["a", "ab"],      // Group 0: 'a' patterns
-        vec!["c", "cd"],      // Group 1: 'c' patterns
-        vec!["e", "ef"],      // Group 2: 'e' patterns
+        vec!["a", "ab"], // Group 0: 'a' patterns
+        vec!["c", "cd"], // Group 1: 'c' patterns
+        vec!["e", "ef"], // Group 2: 'e' patterns
     ];
 
     let test_cases = vec![
@@ -217,10 +248,13 @@ fn demo_advanced_composite_with_borrowed() {
     for (target, expected, desc) in test_cases {
         let mut memo = HashMap::new();
         let result = composite_with_borrowed(target, 0, &pattern_groups, &mut memo);
-        
+
         println!(
             "  {}: {:?} → {} (cache: {} composite states)",
-            desc, target, result, memo.len()
+            desc,
+            target,
+            result,
+            memo.len()
         );
         assert_eq!(result, expected);
     }

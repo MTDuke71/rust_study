@@ -40,9 +40,9 @@ pub fn sum_multiples(divisor: u64, limit: u64) -> u64 {
     if divisor >= limit {
         return 0;
     }
-    
+
     let n = (limit - 1) / divisor; // How many multiples fit below limit
-    divisor * n * (n + 1) / 2      // Arithmetic series: divisor × (1 + 2 + ... + n)
+    divisor * n * (n + 1) / 2 // Arithmetic series: divisor × (1 + 2 + ... + n)
 }
 
 /// Solve Problem 1: Sum of multiples of 3 or 5 below 1000
@@ -57,11 +57,11 @@ pub fn sum_multiples(divisor: u64, limit: u64) -> u64 {
 /// ```
 pub fn solve() -> u64 {
     const LIMIT: u64 = 1000;
-    
+
     let sum_3 = sum_multiples(3, LIMIT);
     let sum_5 = sum_multiples(5, LIMIT);
     let sum_15 = sum_multiples(15, LIMIT); // LCM(3, 5) = 15
-    
+
     // Inclusion-exclusion: add both sets, subtract overlap
     sum_3 + sum_5 - sum_15
 }
@@ -81,7 +81,7 @@ mod tests {
     #[test]
     fn test_sum_multiples() {
         assert_eq!(sum_multiples(3, 10), 18); // 3 + 6 + 9 = 18
-        assert_eq!(sum_multiples(5, 10), 5);  // 5
+        assert_eq!(sum_multiples(5, 10), 5); // 5
         assert_eq!(sum_multiples(15, 10), 0); // No multiples of 15 below 10
     }
 

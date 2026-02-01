@@ -115,18 +115,13 @@ impl Keypad {
 type Memo = HashMap<(String, usize), usize>;
 
 /// Calculate minimum number of button presses needed at depth levels
-/// 
+///
 /// # Arguments
 /// * `sequence` - The sequence to type at this level
 /// * `depth` - How many levels of robots remain (0 = you typing directly)
 /// * `is_numeric` - Whether this level uses numeric keypad (only true for final robot)
 /// * `memo` - Memoization cache
-fn min_presses(
-    sequence: &str,
-    depth: usize,
-    is_numeric: bool,
-    memo: &mut Memo,
-) -> usize {
+fn min_presses(sequence: &str, depth: usize, is_numeric: bool, memo: &mut Memo) -> usize {
     // Base case: at depth 0, you type the sequence directly
     if depth == 0 {
         return sequence.len();

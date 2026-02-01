@@ -126,17 +126,17 @@ pub fn solve_part2(input: &str) -> Result<String> {
     }
 
     fn find_a(
-        program: &[u8], 
-        target_pos: usize, 
-        current_a: i64, 
-        reg_b: i64, 
+        program: &[u8],
+        target_pos: usize,
+        current_a: i64,
+        reg_b: i64,
         reg_c: i64,
         stats: &mut SearchStats,
         depth: usize,
     ) -> Option<i64> {
         // Track maximum depth reached
         stats.max_depth = stats.max_depth.max(depth);
-        
+
         // If we've matched the entire program, verify and return
         if target_pos > program.len() {
             let output = execute_program(current_a, reg_b, reg_c, program);
@@ -155,13 +155,23 @@ pub fn solve_part2(input: &str) -> Result<String> {
             let output = execute_program(test_a, reg_b, reg_c, program);
 
             // Check if the output matches the last 'target_pos' elements of the program
-            if output.len() >= target_pos && output[output.len() - target_pos..] == program[program.len() - target_pos..] {
+            if output.len() >= target_pos
+                && output[output.len() - target_pos..] == program[program.len() - target_pos..]
+            {
                 tried_any = true;
-                
-                if let Some(result) = find_a(program, target_pos + 1, test_a, reg_b, reg_c, stats, depth + 1) {
+
+                if let Some(result) = find_a(
+                    program,
+                    target_pos + 1,
+                    test_a,
+                    reg_b,
+                    reg_c,
+                    stats,
+                    depth + 1,
+                ) {
                     return Some(result);
                 }
-                
+
                 // If we get here, the recursive call failed - this is a backtrack
                 stats.backtracks += 1;
                 eprintln!("🔙 Backtrack at depth {} (pos {}): tried bits {:03b} (A={}), continuing search", 
@@ -171,18 +181,24 @@ pub fn solve_part2(input: &str) -> Result<String> {
 
         // If we tried at least one valid path but none worked, that's also a backtrack point
         if tried_any {
-            eprintln!("🔙 Backtrack at depth {} (pos {}): exhausted all 8 bit patterns", depth, target_pos);
+            eprintln!(
+                "🔙 Backtrack at depth {} (pos {}): exhausted all 8 bit patterns",
+                depth, target_pos
+            );
         }
 
         None
     }
 
     let mut stats = SearchStats::default();
-    
+
     eprintln!("\n🔍 Starting Part 2 search for quine...");
     eprintln!("Target output: {:?}", program);
-    eprintln!("Search space: {} positions × 8 values/position = {} max attempts\n", 
-        program.len(), program.len() * 8);
+    eprintln!(
+        "Search space: {} positions × 8 values/position = {} max attempts\n",
+        program.len(),
+        program.len() * 8
+    );
 
     // Start building from the last digit
     if let Some(a) = find_a(&program, 1, 0, reg_b, reg_c, &mut stats, 0) {
@@ -192,11 +208,15 @@ pub fn solve_part2(input: &str) -> Result<String> {
         eprintln!("  Backtracks required: {}", stats.backtracks);
         eprintln!("  Successful paths: {}", stats.successful_paths);
         eprintln!("  Maximum depth reached: {}", stats.max_depth);
-        eprintln!("  Efficiency: {:.2}% (successful / total attempts)", 
-            (stats.successful_paths as f64 / stats.total_attempts as f64) * 100.0);
-        eprintln!("  Pruning effectiveness: avoided {} brute force attempts", 
-            8_i64.pow(program.len() as u32) - stats.total_attempts as i64);
-        
+        eprintln!(
+            "  Efficiency: {:.2}% (successful / total attempts)",
+            (stats.successful_paths as f64 / stats.total_attempts as f64) * 100.0
+        );
+        eprintln!(
+            "  Pruning effectiveness: avoided {} brute force attempts",
+            8_i64.pow(program.len() as u32) - stats.total_attempts as i64
+        );
+
         return Ok(a.to_string());
     }
 

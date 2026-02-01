@@ -22,10 +22,7 @@ use std::net::AddrParseError;
 #[derive(Debug)]
 pub enum ServerError {
     /// Failed to bind to address
-    Bind {
-        addr: String,
-        source: io::Error,
-    },
+    Bind { addr: String, source: io::Error },
     /// Configuration file error
     Config {
         path: String,
@@ -43,10 +40,7 @@ pub enum ServerError {
         source: Box<dyn Error + Send + Sync>,
     },
     /// Authentication failure
-    Auth {
-        user: String,
-        reason: AuthError,
-    },
+    Auth { user: String, reason: AuthError },
 }
 
 #[derive(Debug)]
@@ -72,7 +66,11 @@ impl fmt::Display for ServerError {
             ServerError::Config { path, reason } => {
                 write!(f, "config error in {}: {:?}", path, reason)
             }
-            ServerError::Request { method, path, reason } => {
+            ServerError::Request {
+                method,
+                path,
+                reason,
+            } => {
                 write!(f, "{} {} failed: {}", method, path, reason)
             }
             ServerError::Database { operation, .. } => {
@@ -128,7 +126,7 @@ impl fmt::Display for ParseError {
             write!(f, " ")?;
         }
         writeln!(f, "^")?;
-        
+
         match &self.kind {
             ParseErrorKind::UnexpectedToken { expected, found } => {
                 write!(f, "  expected {}, found {}", expected, found)
@@ -166,19 +164,11 @@ pub enum NetworkError {
         source: AddrParseError,
     },
     /// Timeout occurred
-    Timeout {
-        operation: String,
-        duration_ms: u64,
-    },
+    Timeout { operation: String, duration_ms: u64 },
     /// Protocol error
-    Protocol {
-        message: String,
-        received: Vec<u8>,
-    },
+    Protocol { message: String, received: Vec<u8> },
     /// TLS/SSL error
-    Tls {
-        reason: String,
-    },
+    Tls { reason: String },
 }
 
 impl fmt::Display for NetworkError {
@@ -190,11 +180,19 @@ impl fmt::Display for NetworkError {
             NetworkError::InvalidAddress { address, .. } => {
                 write!(f, "invalid address: {}", address)
             }
-            NetworkError::Timeout { operation, duration_ms } => {
+            NetworkError::Timeout {
+                operation,
+                duration_ms,
+            } => {
                 write!(f, "{} timed out after {}ms", operation, duration_ms)
             }
             NetworkError::Protocol { message, received } => {
-                write!(f, "protocol error: {} (received {} bytes)", message, received.len())
+                write!(
+                    f,
+                    "protocol error: {} (received {} bytes)",
+                    message,
+                    received.len()
+                )
             }
             NetworkError::Tls { reason } => {
                 write!(f, "TLS error: {}", reason)
@@ -250,7 +248,7 @@ impl ValidationError {
             violations: Vec::new(),
         }
     }
-    
+
     pub fn add_violation(&mut self, rule: impl Into<String>, message: impl Into<String>) {
         self.violations.push(Violation {
             rule: rule.into(),
@@ -278,15 +276,18 @@ impl ErrorWithTrace {
             source: None,
         }
     }
-    
-    pub fn with_source(message: impl Into<String>, source: impl Error + Send + Sync + 'static) -> Self {
+
+    pub fn with_source(
+        message: impl Into<String>,
+        source: impl Error + Send + Sync + 'static,
+    ) -> Self {
         ErrorWithTrace {
             message: message.into(),
             trace: Vec::new(),
             source: Some(Box::new(source)),
         }
     }
-    
+
     pub fn add_context(mut self, context: impl Into<String>) -> Self {
         self.trace.push(context.into());
         self
@@ -296,21 +297,23 @@ impl ErrorWithTrace {
 impl fmt::Display for ErrorWithTrace {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         writeln!(f, "{}", self.message)?;
-        
+
         if !self.trace.is_empty() {
             writeln!(f, "Trace:")?;
             for (i, ctx) in self.trace.iter().enumerate() {
                 writeln!(f, "  {}: {}", i, ctx)?;
             }
         }
-        
+
         Ok(())
     }
 }
 
 impl Error for ErrorWithTrace {
     fn source(&self) -> Option<&(dyn Error + 'static)> {
-        self.source.as_ref().map(|e| e.as_ref() as &(dyn Error + 'static))
+        self.source
+            .as_ref()
+            .map(|e| e.as_ref() as &(dyn Error + 'static))
     }
 }
 
@@ -337,17 +340,17 @@ impl ApiError {
             source: None,
         }
     }
-    
+
     pub fn with_details(mut self, details: impl Into<String>) -> Self {
         self.details = Some(details.into());
         self
     }
-    
+
     pub fn with_request_id(mut self, request_id: impl Into<String>) -> Self {
         self.request_id = Some(request_id.into());
         self
     }
-    
+
     pub fn with_source(mut self, source: impl Error + Send + Sync + 'static) -> Self {
         self.source = Some(Box::new(source));
         self
@@ -357,22 +360,24 @@ impl ApiError {
 impl fmt::Display for ApiError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "API Error {}: {}", self.status_code, self.message)?;
-        
+
         if let Some(details) = &self.details {
             write!(f, " ({})", details)?;
         }
-        
+
         if let Some(request_id) = &self.request_id {
             write!(f, " [request_id: {}]", request_id)?;
         }
-        
+
         Ok(())
     }
 }
 
 impl Error for ApiError {
     fn source(&self) -> Option<&(dyn Error + 'static)> {
-        self.source.as_ref().map(|e| e.as_ref() as &(dyn Error + 'static))
+        self.source
+            .as_ref()
+            .map(|e| e.as_ref() as &(dyn Error + 'static))
     }
 }
 

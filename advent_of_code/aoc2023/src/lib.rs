@@ -45,13 +45,13 @@
 //! cargo bench -p aoc2023
 //! ```
 
+pub mod math_utils;
 pub mod parser;
 pub mod solver;
-pub mod math_utils;
 
 // Re-export prelude for easy imports
 pub mod prelude {
+    pub use crate::math_utils::{gcd, gcd_usize, lcm, lcm_usize};
     pub use crate::parser::*;
     pub use crate::solver::run_day;
-    pub use crate::math_utils::{gcd, lcm, gcd_usize, lcm_usize};
 }

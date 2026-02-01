@@ -55,11 +55,7 @@ fn max_joltage_from_bank(digits: &[u8]) -> u32 {
         let first_digit = digits[i] as u32;
 
         // Find the maximum digit in remaining positions
-        let max_second = digits[i + 1..]
-            .iter()
-            .map(|&d| d as u32)
-            .max()
-            .unwrap_or(0);
+        let max_second = digits[i + 1..].iter().map(|&d| d as u32).max().unwrap_or(0);
 
         let joltage = first_digit * 10 + max_second;
         max_joltage = max_joltage.max(joltage);
@@ -111,10 +107,7 @@ fn max_k_digit_joltage(digits: &[u8], k: usize) -> u64 {
         let end_idx = n - positions_remaining;
 
         // Find the maximum digit in this range
-        let max_digit = (start_idx..=end_idx)
-            .map(|i| digits[i])
-            .max()
-            .unwrap();
+        let max_digit = (start_idx..=end_idx).map(|i| digits[i]).max().unwrap();
 
         // Find the FIRST index with this max digit (to leave more room for later)
         let best_idx = (start_idx..=end_idx)

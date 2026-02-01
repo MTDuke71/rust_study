@@ -52,7 +52,11 @@ fn demo_pattern_matching() {
         println!("Target: \"{}\"", target);
         println!("  Part 1 (boolean): Can build? {}", exists);
         println!("  Part 2 (counting): How many ways? {}", ways);
-        println!("  Cache sizes: bool={}, count={}", bool_memo.len(), count_memo.len());
+        println!(
+            "  Cache sizes: bool={}, count={}",
+            bool_memo.len(),
+            count_memo.len()
+        );
         println!();
     }
 }
@@ -73,7 +77,10 @@ fn demo_climbing_stairs() {
         let ways = count_ways_to_reach(n, &mut count_memo);
 
         println!("Stairs: {}", n);
-        println!("  Part 1: Can reach? {} (always true for positive n)", can_reach);
+        println!(
+            "  Part 1: Can reach? {} (always true for positive n)",
+            can_reach
+        );
         println!("  Part 2: How many ways? {}", ways);
         println!();
     }
@@ -99,11 +106,22 @@ fn demo_cache_statistics() {
     cache_vec.sort_by_key(|(k, _)| k.len());
 
     for (substring, &count) in cache_vec {
-        println!("  \"{}\" (len {}): {} ways", substring, substring.len(), count);
+        println!(
+            "  \"{}\" (len {}): {} ways",
+            substring,
+            substring.len(),
+            count
+        );
     }
 
-    println!("\nKey insight: Without memoization, this would compute {} paths!", ways);
-    println!("With memoization, we only compute {} unique subproblems.", count_memo.len());
+    println!(
+        "\nKey insight: Without memoization, this would compute {} paths!",
+        ways
+    );
+    println!(
+        "With memoization, we only compute {} unique subproblems.",
+        count_memo.len()
+    );
     println!();
 }
 
@@ -152,11 +170,7 @@ fn demo_performance_comparison() {
 /// 2. Cache check: Return cached result if exists
 /// 3. Recursive computation: Try each pattern, return true if any succeeds
 /// 4. Cache and return: Store false if no pattern works
-fn can_build<'a>(
-    target: &'a str,
-    patterns: &[&str],
-    memo: &mut HashMap<&'a str, bool>,
-) -> bool {
+fn can_build<'a>(target: &'a str, patterns: &[&str], memo: &mut HashMap<&'a str, bool>) -> bool {
     // REQ-2 Step 1: Base case
     if target.is_empty() {
         return true; // ← Base value: true (success)
@@ -205,11 +219,7 @@ fn can_build<'a>(
 /// - Line 2: `HashMap<_, bool>` → `HashMap<_, u64>`
 /// - Line 3: `if success { return true }` → `total += recursive_call()`
 /// - Line 4: `false` → `0` (no ways found)
-fn count_ways<'a>(
-    target: &'a str,
-    patterns: &[&str],
-    memo: &mut HashMap<&'a str, u64>,
-) -> u64 {
+fn count_ways<'a>(target: &'a str, patterns: &[&str], memo: &mut HashMap<&'a str, u64>) -> u64 {
     // REQ-2 Step 1: Base case
     if target.is_empty() {
         return 1; // ← Base value: 1 (one way to complete)

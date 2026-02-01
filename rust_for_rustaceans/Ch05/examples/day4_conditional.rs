@@ -1,5 +1,5 @@
 //! Day 4: Conditional Compilation - Platform-Specific Code
-//! 
+//!
 //! This example demonstrates:
 //! - Platform detection (OS, architecture)
 //! - Feature-based compilation
@@ -16,7 +16,7 @@ pub const PATH_SEPARATOR: char = '/';
 /// Platform-specific functionality
 pub fn platform_info() {
     println!("=== Platform Detection ===\n");
-    
+
     // Operating System
     if cfg!(target_os = "windows") {
         println!("OS: Windows");
@@ -27,7 +27,7 @@ pub fn platform_info() {
     } else {
         println!("OS: Other");
     }
-    
+
     // Architecture
     if cfg!(target_arch = "x86_64") {
         println!("Architecture: x86_64 (64-bit)");
@@ -38,21 +38,21 @@ pub fn platform_info() {
     } else {
         println!("Architecture: {:?}", std::env::consts::ARCH);
     }
-    
+
     // Pointer width
     if cfg!(target_pointer_width = "64") {
         println!("Pointer width: 64-bit");
     } else if cfg!(target_pointer_width = "32") {
         println!("Pointer width: 32-bit");
     }
-    
+
     // Endianness
     if cfg!(target_endian = "little") {
         println!("Endianness: Little-endian");
     } else {
         println!("Endianness: Big-endian");
     }
-    
+
     println!("Path separator: '{}'", PATH_SEPARATOR);
 }
 
@@ -89,22 +89,22 @@ pub fn macos_operation() {
 /// Demonstrates cfg combinators
 pub fn combinator_examples() {
     println!("\n=== cfg! Combinators ===\n");
-    
+
     // all() - all conditions must be true
     if cfg!(all(unix, target_pointer_width = "64")) {
         println!("✓ all(unix, 64-bit) - Both conditions true");
     }
-    
+
     // any() - at least one condition must be true
     if cfg!(any(windows, unix)) {
         println!("✓ any(windows, unix) - At least one true");
     }
-    
+
     // not() - condition must be false
     if cfg!(not(target_arch = "wasm32")) {
         println!("✓ not(wasm32) - Not targeting WebAssembly");
     }
-    
+
     // Complex combinations
     if cfg!(all(
         any(target_os = "linux", target_os = "macos"),
@@ -136,17 +136,17 @@ pub fn debug_checks(value: i32) {
 /// Architecture-specific optimizations
 pub fn arch_specific_code() {
     println!("\n=== Architecture-Specific Code ===\n");
-    
+
     #[cfg(target_arch = "x86_64")]
     {
         println!("x86_64: Can use SIMD instructions (SSE, AVX)");
     }
-    
+
     #[cfg(target_arch = "aarch64")]
     {
         println!("ARM64: Can use NEON SIMD instructions");
     }
-    
+
     #[cfg(target_arch = "wasm32")]
     {
         println!("WebAssembly: Running in browser or WASI");
@@ -155,26 +155,26 @@ pub fn arch_specific_code() {
 
 fn main() {
     println!("🎯 Day 4: Conditional Compilation Example\n");
-    
+
     platform_info();
-    
+
     // Platform-specific operations
     #[cfg(unix)]
     unix_operation();
-    
+
     #[cfg(windows)]
     windows_operation();
-    
+
     #[cfg(target_os = "linux")]
     linux_operation();
-    
+
     #[cfg(target_os = "macos")]
     macos_operation();
-    
+
     combinator_examples();
     debug_checks(42);
     arch_specific_code();
-    
+
     println!("\n=== Conditional Dependency Example ===\n");
     println!("In Cargo.toml:");
     println!("[target.'cfg(windows)'.dependencies]");
@@ -182,30 +182,30 @@ fn main() {
     println!();
     println!("[target.'cfg(unix)'.dependencies]");
     println!("libc = \"0.2\"");
-    
+
     println!("\n=== Common cfg Patterns ===\n");
-    
+
     println!("1. Feature flags:");
     println!("   #[cfg(feature = \"std\")]");
-    
+
     println!("\n2. Platform:");
     println!("   #[cfg(unix)]");
     println!("   #[cfg(windows)]");
     println!("   #[cfg(target_os = \"linux\")]");
-    
+
     println!("\n3. Architecture:");
     println!("   #[cfg(target_arch = \"x86_64\")]");
     println!("   #[cfg(target_arch = \"aarch64\")]");
-    
+
     println!("\n4. Testing:");
     println!("   #[cfg(test)]");
     println!("   #[cfg(debug_assertions)]");
-    
+
     println!("\n5. Combinations:");
     println!("   #[cfg(all(unix, target_pointer_width = \"64\"))]");
     println!("   #[cfg(any(windows, target_os = \"macos\"))]");
     println!("   #[cfg(not(target_env = \"msvc\"))]");
-    
+
     println!("\n📝 This code compiles differently on each platform!");
     println!("   Try: cargo build --target x86_64-pc-windows-msvc");
     println!("   Try: cargo build --target x86_64-unknown-linux-gnu");
@@ -215,7 +215,7 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_platform_detection() {
         // This test only runs when you execute `cargo test`

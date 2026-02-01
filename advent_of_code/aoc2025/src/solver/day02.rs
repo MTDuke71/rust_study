@@ -10,15 +10,15 @@ use anyhow::Result;
 fn is_doubled(n: u64) -> bool {
     let s = n.to_string();
     let len = s.len();
-    
+
     // Must have even length to be doubled
     if !len.is_multiple_of(2) {
         return false;
     }
-    
+
     let half = len / 2;
     let (first, second) = s.split_at(half);
-    
+
     first == second
 }
 
@@ -27,37 +27,35 @@ fn is_doubled(n: u64) -> bool {
 fn is_repeated(n: u64) -> bool {
     let s = n.to_string();
     let len = s.len();
-    
+
     // Try all possible pattern lengths from 1 to len/2
     for pattern_len in 1..=len / 2 {
         // The total length must be divisible by the pattern length
         if !len.is_multiple_of(pattern_len) {
             continue;
         }
-        
+
         let pattern = &s[..pattern_len];
         let repetitions = len / pattern_len;
-        
+
         // Must repeat at least twice
         if repetitions < 2 {
             continue;
         }
-        
+
         // Check if the entire string is just this pattern repeated
         let reconstructed: String = pattern.repeat(repetitions);
         if reconstructed == s {
             return true;
         }
     }
-    
+
     false
 }
 
 /// Find all invalid IDs in a range using Part 2 rules and return their sum
 fn sum_repeated_in_range(start: u64, end: u64) -> u64 {
-    (start..=end)
-        .filter(|&n| is_repeated(n))
-        .sum()
+    (start..=end).filter(|&n| is_repeated(n)).sum()
 }
 
 /// Parse input: "start-end,start-end,..." into Vec<(u64, u64)>
@@ -77,9 +75,7 @@ fn parse_ranges(input: &str) -> Vec<(u64, u64)> {
 
 /// Find all invalid IDs in a range and return their sum
 fn sum_invalid_in_range(start: u64, end: u64) -> u64 {
-    (start..=end)
-        .filter(|&n| is_doubled(n))
-        .sum()
+    (start..=end).filter(|&n| is_doubled(n)).sum()
 }
 
 pub fn solve_part1(input: &str) -> Result<String> {
@@ -143,7 +139,7 @@ mod tests {
         assert!(!is_doubled(1));
         assert!(!is_doubled(123));
         assert!(!is_doubled(12345));
-        
+
         // Not doubled - even length but different halves
         assert!(!is_doubled(12));
         assert!(!is_doubled(1234));
@@ -161,10 +157,10 @@ mod tests {
     fn test_sum_invalid_in_range() {
         // 11-22 has 11 and 22
         assert_eq!(sum_invalid_in_range(11, 22), 11 + 22);
-        
+
         // 95-115 has 99
         assert_eq!(sum_invalid_in_range(95, 115), 99);
-        
+
         // 998-1012 has 1010
         assert_eq!(sum_invalid_in_range(998, 1012), 1010);
     }
@@ -180,32 +176,32 @@ mod tests {
     #[test]
     fn test_is_repeated_simple() {
         // Single digit repeated (at least twice)
-        assert!(is_repeated(11));    // 1 x2
-        assert!(is_repeated(111));   // 1 x3
-        assert!(is_repeated(1111));  // 1 x4
-        assert!(is_repeated(99));    // 9 x2
-        assert!(is_repeated(999));   // 9 x3
+        assert!(is_repeated(11)); // 1 x2
+        assert!(is_repeated(111)); // 1 x3
+        assert!(is_repeated(1111)); // 1 x4
+        assert!(is_repeated(99)); // 9 x2
+        assert!(is_repeated(999)); // 9 x3
     }
 
     #[test]
     fn test_is_repeated_multi_digit() {
         // Two digit patterns
-        assert!(is_repeated(1212));      // 12 x2
-        assert!(is_repeated(121212));    // 12 x3
+        assert!(is_repeated(1212)); // 12 x2
+        assert!(is_repeated(121212)); // 12 x3
         assert!(is_repeated(1212121212)); // 12 x5
-        
+
         // Three digit patterns
-        assert!(is_repeated(123123));    // 123 x2
+        assert!(is_repeated(123123)); // 123 x2
         assert!(is_repeated(123123123)); // 123 x3
     }
 
     #[test]
     fn test_is_repeated_from_example() {
         // From Part 2 example
-        assert!(is_repeated(12341234));    // 1234 x2
-        assert!(is_repeated(123123123));   // 123 x3
-        assert!(is_repeated(1212121212));  // 12 x5
-        assert!(is_repeated(1111111));     // 1 x7
+        assert!(is_repeated(12341234)); // 1234 x2
+        assert!(is_repeated(123123123)); // 123 x3
+        assert!(is_repeated(1212121212)); // 12 x5
+        assert!(is_repeated(1111111)); // 1 x7
     }
 
     #[test]
@@ -213,31 +209,31 @@ mod tests {
         // Single digits can't repeat
         assert!(!is_repeated(1));
         assert!(!is_repeated(9));
-        
+
         // Not a repeating pattern
         assert!(!is_repeated(12));
         assert!(!is_repeated(123));
         assert!(!is_repeated(1234));
         assert!(!is_repeated(12345));
-        
+
         // Almost repeated but not quite
-        assert!(!is_repeated(1213));  // 12, 13 - not same pattern
+        assert!(!is_repeated(1213)); // 12, 13 - not same pattern
     }
 
     #[test]
     fn test_part2_example_ranges() {
         // 95-115 now has 99 and 111
         assert_eq!(sum_repeated_in_range(95, 115), 99 + 111);
-        
+
         // 998-1012 now has 999 and 1010
         assert_eq!(sum_repeated_in_range(998, 1012), 999 + 1010);
-        
+
         // 565653-565659 now has 565656
         assert_eq!(sum_repeated_in_range(565653, 565659), 565656);
-        
+
         // 824824821-824824827 now has 824824824
         assert_eq!(sum_repeated_in_range(824824821, 824824827), 824824824);
-        
+
         // 2121212118-2121212124 now has 2121212121
         assert_eq!(sum_repeated_in_range(2121212118, 2121212124), 2121212121);
     }

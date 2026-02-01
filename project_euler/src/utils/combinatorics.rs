@@ -15,9 +15,9 @@ pub fn binomial(n: u64, k: u64) -> u64 {
     if k == 0 || k == n {
         return 1;
     }
-    
+
     let k = k.min(n - k); // Optimization: C(n,k) = C(n, n-k)
-    
+
     let mut result = 1u64;
     for i in 0..k {
         result = result * (n - i) / (i + 1);
@@ -30,7 +30,7 @@ pub fn permutations(n: u64, k: u64) -> u64 {
     if k > n {
         return 0;
     }
-    
+
     let mut result = 1u64;
     for i in 0..k {
         result *= n - i;

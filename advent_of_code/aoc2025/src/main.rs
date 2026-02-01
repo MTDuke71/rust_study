@@ -31,15 +31,23 @@ async fn main() -> Result<()> {
 
     // Run solution for the specified day with 10-second timeout
     let timeout_duration = Duration::from_secs(10);
-    
-    println!("⏱️  Running with {}-second timeout per part...", timeout_duration.as_secs());
-    
+
+    println!(
+        "⏱️  Running with {}-second timeout per part...",
+        timeout_duration.as_secs()
+    );
+
     let (p1, p2) = match tokio::time::timeout(timeout_duration * 2, async {
         run_day_with_timeout(day, &input, timeout_duration).await
-    }).await {
+    })
+    .await
+    {
         Ok(result) => result?,
         Err(_) => {
-            anyhow::bail!("❌ Total execution exceeded {} seconds", timeout_duration.as_secs() * 2);
+            anyhow::bail!(
+                "❌ Total execution exceeded {} seconds",
+                timeout_duration.as_secs() * 2
+            );
         }
     };
 

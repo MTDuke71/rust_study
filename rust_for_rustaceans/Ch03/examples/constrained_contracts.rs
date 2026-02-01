@@ -1,12 +1,12 @@
 //! Chapter 3: Constrained Interfaces - Hidden Contracts
-//! 
+//!
 //! Topics: Re-exports, SemVer Trick, Auto-Traits (Send/Sync)
 
 use std::marker::PhantomData;
 
 fn main() {
     println!("=== Constrained Interfaces: Hidden Contracts ===\n");
-    
+
     reexport_problem();
     auto_traits_demo();
     semver_trick_explanation();
@@ -15,7 +15,7 @@ fn main() {
 /// Re-exports: Exposing dependency types in public API
 fn reexport_problem() {
     println!("--- Re-export Hazards ---");
-    
+
     println!("  ❌ BAD: pub fn process(data: DependencyType)");
     println!("     Problem: Updating dependency breaks downstream");
     println!();
@@ -30,12 +30,12 @@ fn reexport_problem() {
 /// Auto-Traits: Send and Sync are automatically implemented
 fn auto_traits_demo() {
     println!("--- Auto-Traits (Send/Sync) ---");
-    
+
     let safe = SafeType { value: 42 };
     println!("  SafeType is Send: {}", is_send(&safe));
     println!("  SafeType is Sync: {}", is_sync(&safe));
-    
-    let _unsafe_type = UnsafeType { 
+
+    let _unsafe_type = UnsafeType {
         value: 42,
         _not_send: PhantomData,
     };
@@ -43,7 +43,7 @@ fn auto_traits_demo() {
     // println!("  UnsafeType is Send: {}", is_send(&_unsafe_type));
     println!("  UnsafeType is NOT Send (intentional - contains raw pointer semantics)");
     // println!("  UnsafeType is Sync: {}", is_sync(&unsafe_type));  // Compile error
-    
+
     println!("\n  ⚠️  Removing Send/Sync is a BREAKING CHANGE");
     println!("  Solution: Test that types remain Send/Sync\n");
 }
@@ -51,7 +51,7 @@ fn auto_traits_demo() {
 /// SemVer Trick: Support multiple dependency versions
 fn semver_trick_explanation() {
     println!("--- SemVer Trick ---");
-    
+
     println!("  Problem: Users on old dependency version vs new");
     println!();
     println!("  Solution: Re-export old types from new version");
@@ -63,14 +63,18 @@ fn semver_trick_explanation() {
 
 // === Helper Functions ===
 
-fn is_send<T: Send>(_: &T) -> bool { true }
-fn is_sync<T: Sync>(_: &T) -> bool { true }
+fn is_send<T: Send>(_: &T) -> bool {
+    true
+}
+fn is_sync<T: Sync>(_: &T) -> bool {
+    true
+}
 
 // === Auto-Trait Examples ===
 
 /// Safe type: Automatically implements Send + Sync
 #[derive(Debug)]
-#[allow(dead_code)]  // Demonstration struct
+#[allow(dead_code)] // Demonstration struct
 struct SafeType {
     value: i32,
 }
@@ -78,13 +82,13 @@ struct SafeType {
 /// Unsafe marker to prevent Send
 /// *const () is a raw pointer - raw pointers do NOT implement Send
 /// because they can't be safely sent across thread boundaries
-#[allow(dead_code)]  // Demonstration struct
+#[allow(dead_code)] // Demonstration struct
 struct NotSend {
     _marker: PhantomData<*const ()>,
 }
 
 /// Type that is NOT Send (contains raw pointer semantics)
-#[allow(dead_code)]  // Demonstration struct
+#[allow(dead_code)] // Demonstration struct
 struct UnsafeType {
     value: i32,
     _not_send: PhantomData<*const ()>,
@@ -95,16 +99,16 @@ struct UnsafeType {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn ensure_safe_type_is_send_sync() {
         fn assert_send<T: Send>() {}
         fn assert_sync<T: Sync>() {}
-        
+
         assert_send::<SafeType>();
         assert_sync::<SafeType>();
     }
-    
+
     // This test would fail if we accidentally remove Send
     // #[test]
     // fn ensure_unsafe_type_is_not_send() {
@@ -118,14 +122,14 @@ mod tests {
 /// Instead of: pub fn process(data: foreign_crate::Data)
 /// Use wrapper to control the interface
 pub struct DataWrapper {
-    inner: String,  // Could be foreign type
+    inner: String, // Could be foreign type
 }
 
 impl DataWrapper {
     pub fn new(data: String) -> Self {
         Self { inner: data }
     }
-    
+
     pub fn process(&self) -> String {
         self.inner.clone()
     }

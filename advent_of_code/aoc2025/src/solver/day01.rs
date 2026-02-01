@@ -21,17 +21,27 @@ fn parse_rotation(line: &str) -> Result<Rotation> {
     }
 
     let (direction_char, distance_str) = line.split_at(1);
-    
+
     let direction = match direction_char {
         "L" => Direction::Left,
         "R" => Direction::Right,
-        _ => anyhow::bail!("Invalid direction '{}', expected 'L' or 'R'", direction_char),
+        _ => anyhow::bail!(
+            "Invalid direction '{}', expected 'L' or 'R'",
+            direction_char
+        ),
     };
 
-    let distance = distance_str.parse::<u32>()
-        .with_context(|| format!("Failed to parse distance '{}' in rotation '{}'", distance_str, line))?;
+    let distance = distance_str.parse::<u32>().with_context(|| {
+        format!(
+            "Failed to parse distance '{}' in rotation '{}'",
+            distance_str, line
+        )
+    })?;
 
-    Ok(Rotation { direction, distance })
+    Ok(Rotation {
+        direction,
+        distance,
+    })
 }
 
 /// Parse all rotation instructions from input
@@ -50,18 +60,18 @@ fn parse_rotations(input: &str) -> Result<Vec<Rotation>> {
 /// Apply a rotation to the current dial position (0-99)
 fn apply_rotation(current_position: u32, rotation: Rotation) -> u32 {
     const DIAL_SIZE: u32 = 100; // 0 through 99
-    
+
     match rotation.direction {
         Direction::Left => {
             // Left rotation decreases position (wraps to 99 when going below 0)
             // Use modular arithmetic: (current_position - distance + DIAL_SIZE) % DIAL_SIZE
             // Adding DIAL_SIZE ensures we don't go negative
             (current_position + DIAL_SIZE - (rotation.distance % DIAL_SIZE)) % DIAL_SIZE
-        },
+        }
         Direction::Right => {
             // Right rotation increases position (wraps to 0 when going above 99)
             (current_position + rotation.distance) % DIAL_SIZE
-        },
+        }
     }
 }
 
@@ -70,8 +80,8 @@ fn apply_rotation(current_position: u32, rotation: Rotation) -> u32 {
 /// Follows rotation instructions and counts every time the dial ends up at position 0.
 /// The dial starts at position 50 and has positions 0-99 (wraps around).
 pub fn solve_part1(input: &str) -> Result<String> {
-    let rotations = parse_rotations(input)
-        .context("Failed to parse rotation instructions for Part 1")?;
+    let rotations =
+        parse_rotations(input).context("Failed to parse rotation instructions for Part 1")?;
 
     let mut position = 50u32; // Dial starts at 50
     let mut zero_count = 0u32;
@@ -98,11 +108,11 @@ pub fn solve_part1(input: &str) -> Result<String> {
 fn count_zeros_during_rotation(current_position: u32, rotation: Rotation) -> u32 {
     const DIAL_SIZE: u32 = 100; // 0 through 99
     let distance = rotation.distance;
-    
+
     if distance == 0 {
         return 0;
     }
-    
+
     match rotation.direction {
         Direction::Left => {
             // Moving left (decreasing): check how many times we pass through 0
@@ -124,7 +134,7 @@ fn count_zeros_during_rotation(current_position: u32, rotation: Rotation) -> u32
                     0
                 }
             }
-        },
+        }
         Direction::Right => {
             // Moving right (increasing): check how many times we pass through 0
             if current_position == 0 {
@@ -148,7 +158,7 @@ fn count_zeros_during_rotation(current_position: u32, rotation: Rotation) -> u32
                     0
                 }
             }
-        },
+        }
     }
 }
 
@@ -157,8 +167,8 @@ fn count_zeros_during_rotation(current_position: u32, rotation: Rotation) -> u32
 /// Uses password method 0x434C49434B: count every time the dial points at 0,
 /// whether at the end of a rotation or while passing through during rotation.
 pub fn solve_part2(input: &str) -> Result<String> {
-    let rotations = parse_rotations(input)
-        .context("Failed to parse rotation instructions for Part 2")?;
+    let rotations =
+        parse_rotations(input).context("Failed to parse rotation instructions for Part 2")?;
 
     let mut zero_count = 0i32;
     let mut dial = 50i32; // Dial starts at 50
@@ -168,21 +178,21 @@ pub fn solve_part2(input: &str) -> Result<String> {
         if dial == 0 && rotation.direction == Direction::Left {
             dial = 100;
         }
-        
+
         // Apply the rotation
         dial = match rotation.direction {
             Direction::Left => dial - rotation.distance as i32,
             Direction::Right => dial + rotation.distance as i32,
         };
-        
+
         // Count how many times we cross the 100 boundary (pass through 0)
         zero_count += (dial / 100).abs();
-        
+
         // Special case for going below 1 (wrapping around)
         if dial < 1 {
             zero_count += 1;
         }
-        
+
         // Normalize dial position to 0-99 range
         dial %= 100;
         if dial < 0 {
@@ -212,33 +222,102 @@ L82"#;
     fn test_parse_rotation() {
         assert_eq!(
             parse_rotation("L68").unwrap(),
-            Rotation { direction: Direction::Left, distance: 68 }
+            Rotation {
+                direction: Direction::Left,
+                distance: 68
+            }
         );
         assert_eq!(
             parse_rotation("R30").unwrap(),
-            Rotation { direction: Direction::Right, distance: 30 }
+            Rotation {
+                direction: Direction::Right,
+                distance: 30
+            }
         );
-        
+
         // Test error cases
         assert!(parse_rotation("X10").is_err()); // Invalid direction
-        assert!(parse_rotation("L").is_err());   // No distance
-        assert!(parse_rotation("").is_err());    // Empty line
+        assert!(parse_rotation("L").is_err()); // No distance
+        assert!(parse_rotation("").is_err()); // Empty line
     }
 
     #[test]
     fn test_apply_rotation() {
         // Test basic rotations
-        assert_eq!(apply_rotation(50, Rotation { direction: Direction::Left, distance: 68 }), 82);
-        assert_eq!(apply_rotation(82, Rotation { direction: Direction::Left, distance: 30 }), 52);
-        assert_eq!(apply_rotation(52, Rotation { direction: Direction::Right, distance: 48 }), 0);
-        
+        assert_eq!(
+            apply_rotation(
+                50,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 68
+                }
+            ),
+            82
+        );
+        assert_eq!(
+            apply_rotation(
+                82,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 30
+                }
+            ),
+            52
+        );
+        assert_eq!(
+            apply_rotation(
+                52,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 48
+                }
+            ),
+            0
+        );
+
         // Test wrap-around cases
-        assert_eq!(apply_rotation(5, Rotation { direction: Direction::Left, distance: 10 }), 95);
-        assert_eq!(apply_rotation(95, Rotation { direction: Direction::Right, distance: 10 }), 5);
-        
+        assert_eq!(
+            apply_rotation(
+                5,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 10
+                }
+            ),
+            95
+        );
+        assert_eq!(
+            apply_rotation(
+                95,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 10
+                }
+            ),
+            5
+        );
+
         // Test edge cases
-        assert_eq!(apply_rotation(0, Rotation { direction: Direction::Left, distance: 1 }), 99);
-        assert_eq!(apply_rotation(99, Rotation { direction: Direction::Right, distance: 1 }), 0);
+        assert_eq!(
+            apply_rotation(
+                0,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 1
+                }
+            ),
+            99
+        );
+        assert_eq!(
+            apply_rotation(
+                99,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 1
+                }
+            ),
+            0
+        );
     }
 
     #[test]
@@ -252,27 +331,52 @@ L82"#;
         let rotations = parse_rotations(EXAMPLE_INPUT).unwrap();
         let mut position = 50u32;
         let mut zero_count = 0u32;
-        
+
         let expected_positions = [82, 52, 0, 95, 55, 0, 99, 0, 14, 32];
-        let expected_zeros = [false, false, true, false, false, true, false, true, false, false];
-        
+        let expected_zeros = [
+            false, false, true, false, false, true, false, true, false, false,
+        ];
+
         for (i, rotation) in rotations.iter().enumerate() {
             position = apply_rotation(position, *rotation);
             if position == 0 {
                 zero_count += 1;
             }
             assert_eq!(position, expected_positions[i], "Step {} failed", i + 1);
-            assert_eq!(position == 0, expected_zeros[i], "Zero check failed at step {}", i + 1);
+            assert_eq!(
+                position == 0,
+                expected_zeros[i],
+                "Zero check failed at step {}",
+                i + 1
+            );
         }
-        
+
         assert_eq!(zero_count, 3);
     }
 
     #[test]
     fn test_large_rotations() {
         // Test rotations larger than dial size
-        assert_eq!(apply_rotation(0, Rotation { direction: Direction::Right, distance: 150 }), 50);
-        assert_eq!(apply_rotation(0, Rotation { direction: Direction::Left, distance: 150 }), 50);
+        assert_eq!(
+            apply_rotation(
+                0,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 150
+                }
+            ),
+            50
+        );
+        assert_eq!(
+            apply_rotation(
+                0,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 150
+                }
+            ),
+            50
+        );
     }
 
     #[test]
@@ -292,129 +396,326 @@ L82"#;
     fn test_user_provided_sequence() {
         // Test the sequence provided by user: R50, R50, L50, L50, R75, L50
         // Expected cumulative results: 1, 1, 2, 2, 3, 4
-        
+
         let mut position = 50u32;
         let mut total_zeros = 0u32;
-        
+
         // R50 from 50: 50 + 50 = 100 -> 0 (ends at 0)
-        let zeros_during = count_zeros_during_rotation(position, Rotation { direction: Direction::Right, distance: 50 });
-        position = apply_rotation(position, Rotation { direction: Direction::Right, distance: 50 });
+        let zeros_during = count_zeros_during_rotation(
+            position,
+            Rotation {
+                direction: Direction::Right,
+                distance: 50,
+            },
+        );
+        position = apply_rotation(
+            position,
+            Rotation {
+                direction: Direction::Right,
+                distance: 50,
+            },
+        );
         total_zeros += zeros_during + if position == 0 { 1 } else { 0 };
-        println!("After R50: position = {}, zeros_during = {}, total = {}", position, zeros_during, total_zeros);
+        println!(
+            "After R50: position = {}, zeros_during = {}, total = {}",
+            position, zeros_during, total_zeros
+        );
         assert_eq!(total_zeros, 1);
-        
+
         // R50 from 0: 0 + 50 = 50 (no zeros)
-        let zeros_during = count_zeros_during_rotation(position, Rotation { direction: Direction::Right, distance: 50 });
-        position = apply_rotation(position, Rotation { direction: Direction::Right, distance: 50 });
+        let zeros_during = count_zeros_during_rotation(
+            position,
+            Rotation {
+                direction: Direction::Right,
+                distance: 50,
+            },
+        );
+        position = apply_rotation(
+            position,
+            Rotation {
+                direction: Direction::Right,
+                distance: 50,
+            },
+        );
         total_zeros += zeros_during + if position == 0 { 1 } else { 0 };
-        println!("After R50: position = {}, zeros_during = {}, total = {}", position, zeros_during, total_zeros);
+        println!(
+            "After R50: position = {}, zeros_during = {}, total = {}",
+            position, zeros_during, total_zeros
+        );
         assert_eq!(total_zeros, 1);
-        
+
         // L50 from 50: 50 - 50 = 0 (ends at 0)
-        let zeros_during = count_zeros_during_rotation(position, Rotation { direction: Direction::Left, distance: 50 });
-        position = apply_rotation(position, Rotation { direction: Direction::Left, distance: 50 });
+        let zeros_during = count_zeros_during_rotation(
+            position,
+            Rotation {
+                direction: Direction::Left,
+                distance: 50,
+            },
+        );
+        position = apply_rotation(
+            position,
+            Rotation {
+                direction: Direction::Left,
+                distance: 50,
+            },
+        );
         total_zeros += zeros_during + if position == 0 { 1 } else { 0 };
-        println!("After L50: position = {}, zeros_during = {}, total = {}", position, zeros_during, total_zeros);
+        println!(
+            "After L50: position = {}, zeros_during = {}, total = {}",
+            position, zeros_during, total_zeros
+        );
         assert_eq!(total_zeros, 2);
-        
+
         // L50 from 0: goes around once, should pass through 0 during rotation + end at 0
-        let zeros_during = count_zeros_during_rotation(position, Rotation { direction: Direction::Left, distance: 50 });
-        position = apply_rotation(position, Rotation { direction: Direction::Left, distance: 50 });
+        let zeros_during = count_zeros_during_rotation(
+            position,
+            Rotation {
+                direction: Direction::Left,
+                distance: 50,
+            },
+        );
+        position = apply_rotation(
+            position,
+            Rotation {
+                direction: Direction::Left,
+                distance: 50,
+            },
+        );
         total_zeros += zeros_during + if position == 0 { 1 } else { 0 };
-        println!("After L50: position = {}, zeros_during = {}, total = {}", position, zeros_during, total_zeros);
+        println!(
+            "After L50: position = {}, zeros_during = {}, total = {}",
+            position, zeros_during, total_zeros
+        );
         // This should be 2, but user expects 2, so maybe no change?
-        
+
         // R75 from 50
-        let zeros_during = count_zeros_during_rotation(position, Rotation { direction: Direction::Right, distance: 75 });
-        position = apply_rotation(position, Rotation { direction: Direction::Right, distance: 75 });
+        let zeros_during = count_zeros_during_rotation(
+            position,
+            Rotation {
+                direction: Direction::Right,
+                distance: 75,
+            },
+        );
+        position = apply_rotation(
+            position,
+            Rotation {
+                direction: Direction::Right,
+                distance: 75,
+            },
+        );
         total_zeros += zeros_during + if position == 0 { 1 } else { 0 };
-        println!("After R75: position = {}, zeros_during = {}, total = {}", position, zeros_during, total_zeros);
-        
+        println!(
+            "After R75: position = {}, zeros_during = {}, total = {}",
+            position, zeros_during, total_zeros
+        );
+
         // L50 from current position
-        let zeros_during = count_zeros_during_rotation(position, Rotation { direction: Direction::Left, distance: 50 });
-        position = apply_rotation(position, Rotation { direction: Direction::Left, distance: 50 });
+        let zeros_during = count_zeros_during_rotation(
+            position,
+            Rotation {
+                direction: Direction::Left,
+                distance: 50,
+            },
+        );
+        position = apply_rotation(
+            position,
+            Rotation {
+                direction: Direction::Left,
+                distance: 50,
+            },
+        );
         total_zeros += zeros_during + if position == 0 { 1 } else { 0 };
-        println!("After L50: position = {}, zeros_during = {}, total = {}", position, zeros_during, total_zeros);
+        println!(
+            "After L50: position = {}, zeros_during = {}, total = {}",
+            position, zeros_during, total_zeros
+        );
     }
 
     #[test]
     fn test_count_zeros_during_rotation() {
         // Test cases for counting zeros during rotation
-        
+
         // L68 from position 50: should pass through 0 once (50 -> ... -> 0 -> ... -> 82)
-        assert_eq!(count_zeros_during_rotation(50, Rotation { direction: Direction::Left, distance: 68 }), 1);
-        
+        assert_eq!(
+            count_zeros_during_rotation(
+                50,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 68
+                }
+            ),
+            1
+        );
+
         // R60 from position 95: should pass through 0 once (95 -> 96 -> 97 -> 98 -> 99 -> 0 -> ... -> 55)
-        assert_eq!(count_zeros_during_rotation(95, Rotation { direction: Direction::Right, distance: 60 }), 1);
-        
+        assert_eq!(
+            count_zeros_during_rotation(
+                95,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 60
+                }
+            ),
+            1
+        );
+
         // L82 from position 14: should pass through 0 once
-        assert_eq!(count_zeros_during_rotation(14, Rotation { direction: Direction::Left, distance: 82 }), 1);
-        
+        assert_eq!(
+            count_zeros_during_rotation(
+                14,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 82
+                }
+            ),
+            1
+        );
+
         // No wrap-around cases - should be 0
-        assert_eq!(count_zeros_during_rotation(50, Rotation { direction: Direction::Left, distance: 10 }), 0);
-        assert_eq!(count_zeros_during_rotation(50, Rotation { direction: Direction::Right, distance: 10 }), 0);
-        
+        assert_eq!(
+            count_zeros_during_rotation(
+                50,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 10
+                }
+            ),
+            0
+        );
+        assert_eq!(
+            count_zeros_during_rotation(
+                50,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 10
+                }
+            ),
+            0
+        );
+
         // Large rotation that goes around multiple times
-        assert_eq!(count_zeros_during_rotation(50, Rotation { direction: Direction::Right, distance: 1000 }), 10);
-        
+        assert_eq!(
+            count_zeros_during_rotation(
+                50,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 1000
+                }
+            ),
+            10
+        );
+
         // Large rotation that goes around multiple times
-        assert_eq!(count_zeros_during_rotation(50, Rotation { direction: Direction::Right, distance: 1000 }), 10);
-        
+        assert_eq!(
+            count_zeros_during_rotation(
+                50,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 1000
+                }
+            ),
+            10
+        );
+
         // Test that landing exactly on 0 doesn't count as "during rotation"
-        assert_eq!(count_zeros_during_rotation(50, Rotation { direction: Direction::Right, distance: 50 }), 0);
-        assert_eq!(count_zeros_during_rotation(50, Rotation { direction: Direction::Left, distance: 50 }), 0);
-        assert_eq!(count_zeros_during_rotation(1, Rotation { direction: Direction::Left, distance: 1 }), 0);
-        assert_eq!(count_zeros_during_rotation(1, Rotation { direction: Direction::Right, distance: 99 }), 0);
+        assert_eq!(
+            count_zeros_during_rotation(
+                50,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 50
+                }
+            ),
+            0
+        );
+        assert_eq!(
+            count_zeros_during_rotation(
+                50,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 50
+                }
+            ),
+            0
+        );
+        assert_eq!(
+            count_zeros_during_rotation(
+                1,
+                Rotation {
+                    direction: Direction::Left,
+                    distance: 1
+                }
+            ),
+            0
+        );
+        assert_eq!(
+            count_zeros_during_rotation(
+                1,
+                Rotation {
+                    direction: Direction::Right,
+                    distance: 99
+                }
+            ),
+            0
+        );
     }
 
     /// Regression test demonstrating the bug in `count_zeros_during_rotation`.
-    /// 
+    ///
     /// The old approach used `distance % DIAL_SIZE` which loses full rotation count.
     /// For L819 starting at position 32:
     /// - Old approach: 819 % 100 = 19, calculates 0 zero crossings
     /// - Correct: 819 steps left crosses zero 8 times (full rotations) + 1 more = ~8 crossings
-    /// 
+    ///
     /// This test uses `solve_part2` which uses the CORRECT signed arithmetic approach,
     /// compared against what `count_zeros_during_rotation` would produce.
-    /// 
+    ///
     /// See: examples/day01_failed_approach_analysis.md for full analysis
     #[test]
     fn test_regression_large_rotation_zero_counting() {
         // L819 from position 32 is a real case from the puzzle input
         // This demonstrates the bug where count_zeros_during_rotation fails
-        
-        let rotation = Rotation { direction: Direction::Left, distance: 819 };
+
+        let rotation = Rotation {
+            direction: Direction::Left,
+            distance: 819,
+        };
         let start_pos = 32u32;
-        
+
         // The BUGGY old approach - uses distance % 100, loses full rotations
         let old_approach_zeros = count_zeros_during_rotation(start_pos, rotation);
-        
+
         // What should happen: 819 steps left from 32
         // 32 -> 31 -> ... -> 0 (32 steps, 1st zero) -> 99 -> ... -> 0 (100 steps, 2nd zero) -> ...
         // Total: 819 / 100 = 8 full cycles means 8 zero crossings
         // But we need to account for starting position and whether we land on 0
-        
+
         // Using the correct approach (signed arithmetic from solve_part2):
         // This single rotation from position 32 going left 819 steps
-        
+
         // We can't easily test solve_part2 for a single rotation starting at 32,
         // but we CAN verify the old approach gives wrong answer
-        
+
         // Old approach calculation:
         // effective_distance = 819 % 100 = 19
         // start = 32, going left 19 steps -> 32 - 19 = 13 (no wrap)
         // So it says 0 zero crossings!
-        assert_eq!(old_approach_zeros, 0, "Buggy approach should return 0 (the bug!)");
-        
+        assert_eq!(
+            old_approach_zeros, 0,
+            "Buggy approach should return 0 (the bug!)"
+        );
+
         // The CORRECT count for L819 from position 32:
         // Going left 819 steps: crosses 0 at steps 32, 132, 232, 332, 432, 532, 632, 732
         // That's 8 crossings during rotation (doesn't end on 0)
         // Final position: (32 - 819) mod 100 = -787 mod 100 = 13
         let expected_crossings = 8u32;
-        
+
         // This assertion FAILS with the old approach - that's the bug!
-        assert_ne!(old_approach_zeros, expected_crossings, 
-            "If this passes, the bug still exists: old_approach={}, expected={}", 
-            old_approach_zeros, expected_crossings);
+        assert_ne!(
+            old_approach_zeros, expected_crossings,
+            "If this passes, the bug still exists: old_approach={}, expected={}",
+            old_approach_zeros, expected_crossings
+        );
     }
 }

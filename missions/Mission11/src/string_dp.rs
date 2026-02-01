@@ -1,17 +1,17 @@
 //! String-based dynamic programming patterns with zero-copy caching
-//! 
+//!
 //! # Requirements Satisfied
 //! - REQ-2: Top-down DP pattern template
 //! - REQ-3: Zero-copy string slice caching
 //! - REQ-4: Boolean → Counting DP transformation
-//! 
+//!
 //! This module demonstrates the canonical recursive DP pattern optimized for
 //! string processing problems using lifetime-parametric caching with `&'a str` keys.
-//! 
+//!
 //! # Pattern Structure
-//! 
+//!
 //! The top-down DP pattern follows this template:
-//! 
+//!
 //! ```text
 //! fn solve_recursive<'a>(
 //!     state: &'a State,
@@ -31,41 +31,41 @@
 //!     result
 //! }
 //! ```
-//! 
+//!
 //! # Zero-Copy String Operations
-//! 
+//!
 //! Key performance optimization: Use `&'a str` slices as cache keys instead of `String`.
 //! This avoids heap allocations in the critical path:
-//! 
+//!
 //! - ✅ `&pattern[1..]` - Zero-copy substring slice
 //! - ✅ `pattern.strip_prefix(s)` - Zero-copy prefix removal
 //! - ✅ `HashMap<&'a str, V>` - Borrowed keys, no allocation
 //! - ❌ `pattern.to_string()` - Heap allocation (avoid!)
-//! 
+//!
 //! # Examples
-//! 
+//!
 //! ## Existence Check (Boolean DP)
-//! 
+//!
 //! ```rust
 //! use std::collections::HashMap;
 //! use mission11::string_dp::can_construct;
-//! 
+//!
 //! let patterns = vec!["ab", "cd"];
 //! let target = "abcd";
-//! 
+//!
 //! let mut memo = HashMap::new();
 //! assert!(can_construct(target, &patterns, &mut memo));
 //! ```
-//! 
+//!
 //! ## Counting Arrangements (Numeric DP)
-//! 
+//!
 //! ```rust
 //! use std::collections::HashMap;
 //! use mission11::string_dp::count_constructions;
-//! 
+//!
 //! let patterns = vec!["a", "aa"];
 //! let target = "aa";
-//! 
+//!
 //! let mut memo = HashMap::new();
 //! let count = count_constructions(target, &patterns, &mut memo);
 //! assert_eq!(count, 2); // "a"+"a" and "aa"
@@ -74,39 +74,39 @@
 use std::collections::HashMap;
 
 /// Checks if target string can be constructed from pattern pieces (existence check)
-/// 
+///
 /// # Requirements Satisfied
 /// - REQ-2: Top-down DP pattern with base case, cache check, recursion, insert
 /// - REQ-3: Zero-copy string slice caching with &'a str keys
-/// 
+///
 /// # Pattern: Boolean DP (Early-Exit OR Logic)
-/// 
+///
 /// Returns `true` if **any** combination of patterns can build the target.
 /// Uses early-exit optimization: stops on first successful path found.
-/// 
+///
 /// # Arguments
 /// - `target`: Remaining string to construct (borrowed slice)
 /// - `patterns`: Available pattern pieces
 /// - `memo`: Memoization cache with borrowed string keys
-/// 
+///
 /// # Returns
 /// - `true` if target can be constructed from patterns
 /// - `false` if no valid construction exists
-/// 
+///
 /// # Performance
 /// - **Without memoization**: O(P^L) exponential (P = patterns, L = target length)
 /// - **With memoization**: O(P × L) polynomial
 /// - **Memory**: O(L) unique substrings cached (not L²)
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```rust
 /// use std::collections::HashMap;
 /// use mission11::string_dp::can_construct;
-/// 
+///
 /// let patterns = vec!["r", "wr", "b"];
 /// let mut memo = HashMap::new();
-/// 
+///
 /// assert!(can_construct("wrb", &patterns, &mut memo));
 /// assert!(!can_construct("xyz", &patterns, &mut memo));
 /// ```
@@ -145,48 +145,48 @@ pub fn can_construct<'a>(
 }
 
 /// Counts all possible ways to construct target from patterns (counting DP)
-/// 
+///
 /// # Requirements Satisfied
 /// - REQ-2: Top-down DP pattern (identical structure to can_construct)
 /// - REQ-3: Zero-copy string slice caching
 /// - REQ-4: Boolean → Counting transformation (only reduction operator changes)
-/// 
+///
 /// # Pattern: Counting DP (Accumulative SUM Logic)
-/// 
+///
 /// Returns count of **all** valid combinations that build the target.
 /// Uses accumulation: sums paths from all recursive branches.
-/// 
+///
 /// # Transformation from Boolean DP
-/// 
+///
 /// | Aspect | Boolean (can_construct) | Counting (count_constructions) |
 /// |--------|-------------------------|--------------------------------|
 /// | Base case | `true` | `1` (one way to succeed) |
 /// | Cache type | `bool` | `u64` |
 /// | Reduction | Early-exit OR | Accumulative SUM |
 /// | Return | First success | All paths summed |
-/// 
+///
 /// # Arguments
 /// - `target`: Remaining string to construct
 /// - `patterns`: Available pattern pieces
 /// - `memo`: Memoization cache (now with u64 values)
-/// 
+///
 /// # Returns
 /// Number of distinct ways to construct target from patterns
-/// 
+///
 /// # Performance
 /// Same complexity as `can_construct` but computes all paths:
 /// - **Time**: O(P × L) with memoization
 /// - **Space**: O(L) unique substrings
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```rust
 /// use std::collections::HashMap;
 /// use mission11::string_dp::count_constructions;
-/// 
+///
 /// let patterns = vec!["r", "wr", "b", "rb"];
 /// let mut memo = HashMap::new();
-/// 
+///
 /// // "rb" can be built as: "r"+"b" OR "rb" = 2 ways
 /// assert_eq!(count_constructions("rb", &patterns, &mut memo), 2);
 /// ```
@@ -222,26 +222,26 @@ pub fn count_constructions<'a>(
 }
 
 /// Advanced pattern: Multi-source string matching with alternation
-/// 
+///
 /// # Requirements Satisfied
 /// - REQ-2: Top-down DP pattern
 /// - REQ-3: Zero-copy caching
 /// - REQ-5: State space design (string suffix state)
-/// 
+///
 /// Demonstrates matching multiple alternative pattern sets (like regex `(a|b)(c|d)`).
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```rust
 /// use std::collections::HashMap;
 /// use mission11::string_dp::can_construct_multi;
-/// 
+///
 /// let pattern_groups = vec![
 ///     vec!["a", "ab"],
 ///     vec!["b", "c"],
 /// ];
 /// let mut memo = HashMap::new();
-/// 
+///
 /// // Can build "abc" as: "ab" from group1 + "c" from group2
 /// assert!(can_construct_multi("abc", &pattern_groups, 0, &mut memo));
 /// ```
@@ -268,7 +268,7 @@ pub fn can_construct_multi<'a>(
 
     // REQ-2: Recursive computation
     let current_patterns = &pattern_groups[group_idx];
-    
+
     for pattern in current_patterns {
         // REQ-3: Zero-copy operation
         if let Some(remainder) = target.strip_prefix(pattern) {
