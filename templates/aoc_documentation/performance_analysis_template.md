@@ -1,6 +1,97 @@
-# AoC 2022 - Performance Analysis
+# AoC 20XX - Performance Analysis Template
 
-Benchmarks, optimizations, and runtime analysis across all days.
+**Quick Links**: [← Templates](../README.md) | [AoC Main](../../advent_of_code/README.md) | [Stats Dashboard Template](stats_dashboard_template.md) | [Function Guide Template](function_guide_template.md)
+
+---
+
+**DEPRECATED**: This template described a separate performance analysis file in the old 4-file system.
+
+**Current Approach (2-File System)**: Performance analysis is now integrated into:
+1. **`summary_20XX.md`** - Overall statistics, runtime table, optimization highlights
+2. **`dayXX_function_guide.md`** - Per-day performance details, benchmarks, complexity analysis
+
+**Why Deprecated?**: Separate performance file created duplication with summary and function guides. The 2-file system reduces maintenance burden.
+
+---
+
+## 📝 Migration Guide
+
+If you need performance analysis content, integrate it as follows:
+
+### For Overall Performance Tracking → Use `summary_20XX.md`
+- Runtime table with all days
+- Total runtime progress toward 1-second goal
+- Top fastest/slowest days
+- Optimization highlights
+
+### For Day-Specific Performance → Use `dayXX_function_guide.md`
+- Benchmark results in performance section
+- Before/after optimization comparisons
+- Algorithm complexity analysis
+- Profiling results (if applicable)
+
+---
+
+## 📊 Performance Content Examples
+
+### In `summary_20XX.md` (Stats Dashboard)
+
+**Performance Table**:
+```markdown
+| Day | Part 1 | Part 2 | Total | Algorithm |
+|-----|--------|--------|-------|-----------|
+| 1 | 24.4µs | 25.4µs | 25.6µs | Group parsing + sort |
+```
+
+**Optimization Highlights**:
+```markdown
+## 🚀 Notable Optimizations
+- **Day 5**: HashMap indexing → 100x speedup (10ms → 100µs)
+- **Day 12**: Cycle detection → Infinite speedup (intractable → 5ms)
+```
+
+### In `dayXX_function_guide.md` (Function Guide)
+
+**Performance Section**:
+```markdown
+## Performance
+
+**Benchmarks** (Criterion, 100 iterations):
+- Part 1: 24.4µs ± 0.5µs
+- Part 2: 25.4µs ± 0.6µs
+- Combined: 25.6µs ± 0.4µs (parse once)
+
+**Speedup**: 49% faster than separate parsing (50.8µs → 25.6µs)
+
+**Complexity**:
+- Parsing: O(n) where n = input lines
+- Part 1: O(n) single scan for max
+- Part 2: O(n log n) sort for top-3
+
+**Budget**: 0.003% of 1-second total runtime budget
+```
+
+---
+
+**Navigation**: [← Templates](../README.md) | [POST_IMPLEMENTATION_PLAN](POST_IMPLEMENTATION_PLAN.md) | [AoC Main](../../advent_of_code/README.md)
+
+**See Also**:
+- [POST_IMPLEMENTATION_PLAN.md](POST_IMPLEMENTATION_PLAN.md) - Complete 2-file system workflow
+- [Stats Dashboard Template](stats_dashboard_template.md) - Where overall performance goes
+- [Function Guide Template](function_guide_template.md) - Where per-day performance goes
+- [AoC 2022 Summary](../../advent_of_code/aoc2022/Problem_Statements/summary_2022.md) - Live example
+
+---
+
+**Created**: 2026-01-20  
+**Deprecated**: 2026-02-01 - Use 2-file system instead  
+**Status**: Archived - Reference only
+
+---
+
+## 🗄️ Original Template Content (Archived)
+
+*Below is the original template preserved for reference. Do not use this - integrate content into summary/function guides instead.*
 
 ---
 

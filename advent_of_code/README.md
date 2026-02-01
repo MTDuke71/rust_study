@@ -41,6 +41,7 @@ Problem Analysis → Pattern Classification → Template Application → Optimiz
 | Pattern Category | Implementation | Typical AoC Usage |
 |-----------------|----------------|-------------------|
 | **Grid Traversal** | BFS, DFS, A* | Maze solving, shortest path, flood fill |
+| **BFS Optimization** | Countdown BFS, inline filtering | Fixed budget search, state-space reduction (see [[../zettelkasten/countdown-bfs-optimization-patterns]]) |
 | **String Processing** | Regex, parsing | Input validation, data extraction |
 | **State Management** | FSM, memoization | Complex rule processing, optimization |
 | **Hash-based Counting** | HashMap/HashSet | Frequency analysis, duplicate detection |

@@ -1,6 +1,12 @@
-# AoC 2022 - Post-Implementation Documentation Plan
+# AoC Documentation Plan - Post-Implementation Workflow
 
-Master plan for creating comprehensive documentation after solving all AoC 2022 problems.
+**Quick Links**: [← Templates](../README.md) | [AoC Main](../../advent_of_code/README.md) | [Stats Dashboard Template](stats_dashboard_template.md) | [Function Guide Template](function_guide_template.md)
+
+---
+
+Master plan for creating comprehensive documentation after solving AoC problems.
+
+**Note**: This describes the **2-file documentation system** (summary + function guides) introduced in AoC 2022. The old 4-file system (comprehensive guides + dashboard + patterns + algorithms) proved redundant and is deprecated.
 
 ---
 
@@ -14,27 +20,39 @@ Master plan for creating comprehensive documentation after solving all AoC 2022 
 
 ---
 
-## 📁 Documentation Structure
+## 📁 Documentation Structure (2-File System)
 
 ```
-advent_of_code/aoc2022/Problem_Statements/
-├── stats_dashboard.md              # Quick overview with charts (START HERE)
-├── performance_analysis.md         # Benchmarks + cumulative runtime chart
-├── patterns_catalog.md             # Reusable patterns across days
-├── algorithms_reference.md         # Algorithm index + zettelkasten links
+advent_of_code/aoc20XX/Problem_Statements/
+├── summary_20XX.md                 # Stats dashboard - quick overview (START HERE)
+│                                   # - Progress tracking
+│                                   # - Performance table
+│                                   # - Algorithms used
+│                                   # - Patterns catalog
+│                                   # - Learning highlights
 │
 └── days/
-    ├── day01_comprehensive.md      # Everything for Day 1 in one place
-    ├── day02_comprehensive.md
-    ├── day03_comprehensive.md
+    ├── README.md                   # Navigation index for all days
+    ├── day01.md                    # Problem statement (from AoC website)
+    ├── day01_function_guide.md     # Comprehensive implementation guide
+    ├── day02.md
+    ├── day02_function_guide.md
     ├── ...
-    └── day25_comprehensive.md
+    ├── day25.md
+    └── day25_function_guide.md
 ```
 
+**Why 2 Files?**
+- **summary_20XX.md**: Quick reference, navigation, stats dashboard
+- **dayXX_function_guide.md**: Deep dive into implementation, algorithms, performance
+
+**What Happened to 4-File System?**
+- ❌ **Old**: Separate `patterns_catalog.md`, `algorithms_reference.md`, `performance_analysis.md`
+- ✅ **New**: All integrated into `summary_20XX.md` (less duplication, easier maintenance)
+
 **Templates**: Stored in `templates/aoc_documentation/`
-- `stats_dashboard_template.md`
-- `performance_analysis_template.md`
-- `day_comprehensive_template.md`
+- `stats_dashboard_template.md` → becomes `summary_20XX.md`
+- `function_guide_template.md` → becomes `dayXX_function_guide.md`
 
 ---
 
@@ -48,53 +66,49 @@ advent_of_code/aoc2022/Problem_Statements/
    ```bash
    cargo bench --bench benchmarks dayXX
    ```
-   - Capture Part 1, Part 2, Total runtime
+   - Capture Part 1, Part 2, Combined runtime
    - Note any optimization wins
 
-2. ✅ **Create Day Guide** (from template)
-   - Copy `templates/aoc_documentation/day_comprehensive_template.md`
-   - Rename to `Problem_Statements/days/dayXX_comprehensive.md`
+2. ✅ **Create Function Guide** (from template)
+   - Copy `templates/aoc_documentation/function_guide_template.md`
+   - Rename to `Problem_Statements/days/dayXX_function_guide.md`
    - Fill in sections:
-     - Stats (runtime, complexity)
-     - Problem summary
+     - Performance benchmarks (from step 1)
+     - Problem overview
+     - Type definitions
+     - Core implementation
+     - Algorithm analysis
      - Key insights
-     - Implementation details
-     - Performance analysis
-     - Tests
+     - Tests & validation
+     - Zettelkasten links
 
-3. ✅ **Update Running Documents**
-   - `stats_dashboard.md`: Add day to progress chart, update totals
-   - `performance_analysis.md`: Add day's runtime to cumulative chart
-   - `patterns_catalog.md`: Note if new pattern used (extract later)
-   - `algorithms_reference.md`: Add algorithm if new
+3. ✅ **Update Summary Dashboard**
+   - `summary_20XX.md`: Add day to performance table
+   - Update algorithms used section
+   - Update patterns catalog if new pattern
+   - Update learning highlights
 
 **Time Estimate**: ~30-45 minutes per day (while fresh in mind)
 
 ---
 
-### Phase 2: Pattern Extraction (Every 5 Days)
+### Phase 2: Pattern Updates (As Needed)
 
-**After Days 5, 10, 15, 20, 25**:
+**When you notice a repeated pattern**:
 
-1. ✅ **Review Recent Days** for common patterns
-   - Look for code used 3+ times
-   - Identify reusable techniques
-
-2. ✅ **Extract Patterns**
-   - Add to `patterns_catalog.md`
+1. ✅ **Add to Summary Patterns Section**
+   - Update `summary_20XX.md` patterns catalog
    - Format:
      ```markdown
-     ### Pattern: [Name]
-     **Used**: Day X, Y, Z
-     **When to use**: [Criteria]
-     **Code**: [Example]
+     - **[Pattern Name]**: Used in Day X, Y, Z - [Brief description]
      ```
 
-3. ✅ **Cross-Reference**
-   - Link pattern from day guides
-   - Update pattern usage table
+2. ✅ **Cross-Reference from Function Guides**
+   - Link from dayXX_function_guide.md to summary patterns section
 
-**Time Estimate**: ~1 hour every 5 days
+**No separate phase needed** - integrate into daily workflow.
+
+**Time Estimate**: ~5-10 minutes when pattern identified
 
 ---
 
@@ -102,66 +116,56 @@ advent_of_code/aoc2022/Problem_Statements/
 
 **After completing all 25 days**:
 
-1. ✅ **Finalize Stats Dashboard**
-   - Complete progress chart (should be 25/25)
-   - Calculate final totals
-   - Identify top 5 fastest/slowest
-   - Complete mission integration summary
-   - Write learning highlights
+1. ✅ **Finalize Summary Dashboard**
+   - Complete progress stats (should be 25/25)
+   - Calculate final total runtime
+   - Verify performance table accurate
+   - Complete algorithms used summary
+   - Complete patterns catalog
+   - Write learning highlights section
 
-2. ✅ **Complete Performance Analysis**
-   - Finalize cumulative runtime chart
-   - Document all optimization wins
-   - Write performance learnings section
-   - Create performance by algorithm type table
+2. ✅ **Polish Function Guides**
+   - Ensure all cross-links work
+   - Verify zettelkasten links current
+   - Check code examples accurate
+   - Consistent formatting
 
-3. ✅ **Polish Patterns Catalog**
-   - Ensure all patterns documented
-   - Verify usage counts accurate
-   - Add cross-references
-
-4. ✅ **Update Algorithms Reference**
-   - Link all algorithms to zettelkasten
-   - Add complexity analysis
-   - Create algorithm usage summary table
-
-5. ✅ **Quality Check**
-   - Verify all days documented
-   - Check all links work
+3. ✅ **Quality Check**
+   - Verify all 25 days documented
+   - Check all navigation links work
    - Ensure consistent formatting
    - Run spell check
 
-**Time Estimate**: ~3-4 hours for final polish
+**Time Estimate**: ~2-3 hours for final polish
 
 ---
 
 ## 📊 Documentation Checklist
 
 ### Per-Day Requirements
-- [ ] `dayXX_comprehensive.md` created from template
-- [ ] Stats section complete (runtime, complexity, missions)
-- [ ] Problem summary clear
+- [ ] `dayXX_function_guide.md` created from template
+- [ ] Performance benchmarks section complete
+- [ ] Problem overview clear
+- [ ] Type definitions with rationale
+- [ ] Core implementation documented
+- [ ] Algorithm analysis included (complexity, approach)
 - [ ] Key insights documented
-- [ ] Implementation details explained
-- [ ] Performance analysis included
 - [ ] Tests documented
-- [ ] Links to patterns/algorithms/zettelkasten
-- [ ] Benchmarks run and captured
+- [ ] Links to zettelkasten concepts
+- [ ] Navigation links (to summary, problem, prev/next days)
 
-### Cross-Day Requirements
-- [ ] `stats_dashboard.md` updated with day's data
-- [ ] `performance_analysis.md` cumulative chart updated
-- [ ] New patterns noted in `patterns_catalog.md`
-- [ ] New algorithms noted in `algorithms_reference.md`
+### Summary Dashboard Updates
+- [ ] Day added to performance table
+- [ ] Algorithms used updated
+- [ ] Patterns catalog updated (if new pattern)
+- [ ] Learning highlights updated (if key insight)
 
 ### Final Requirements
-- [ ] All 25 days documented
-- [ ] Stats dashboard complete
-- [ ] Performance analysis complete
-- [ ] Patterns catalog polished
-- [ ] Algorithms reference complete
-- [ ] All links verified
+- [ ] All 25 function guides complete
+- [ ] Summary dashboard complete
+- [ ] All navigation links verified
 - [ ] Consistent formatting throughout
+- [ ] Zettelkasten cross-links validated
 
 ---
 
@@ -229,9 +233,13 @@ cargo bench --bench benchmarks -- --save-baseline baseline_YYYYMMDD
 
 ### Template Usage
 ```bash
-# Copy template for new day
-cp templates/aoc_documentation/day_comprehensive_template.md \
-   advent_of_code/aoc2022/Problem_Statements/days/day05_comprehensive.md
+# Initial setup - copy summary template
+cp templates/aoc_documentation/stats_dashboard_template.md \
+   advent_of_code/aoc20XX/Problem_Statements/summary_20XX.md
+
+# For each day - copy function guide template
+cp templates/aoc_documentation/function_guide_template.md \
+   advent_of_code/aoc20XX/Problem_Statements/days/day05_function_guide.md
 
 # Then fill in sections while solving
 ```
@@ -252,11 +260,13 @@ cp templates/aoc_documentation/day_comprehensive_template.md \
 | Phase | Estimated Time |
 |-------|----------------|
 | Daily docs (25 days × 30min) | 12.5 hours |
-| Pattern extraction (5 checkpoints × 1hr) | 5 hours |
-| Final review | 4 hours |
-| **Total** | **~21.5 hours** |
+| Pattern updates (as needed) | 1 hour |
+| Final review | 2.5 hours |
+| **Total** | **~16 hours** |
 
-**Spread over 25 days**: ~50 minutes per day average
+**Spread over 25 days**: ~40 minutes per day average
+
+**Savings vs Old System**: ~5 hours (no separate patterns/algorithms/performance files)
 
 ---
 
@@ -271,10 +281,11 @@ cp templates/aoc_documentation/day_comprehensive_template.md \
 
 ### Anti-Patterns to Avoid
 - ❌ Waiting until end to document everything (forget details)
-- ❌ Duplicating information across multiple files
+- ❌ **Duplicating information between summary and function guides** (NEW)
 - ❌ Vague performance claims ("pretty fast")
 - ❌ Orphaned patterns (used once, documented as "pattern")
 - ❌ Missing complexity analysis
+- ❌ **Creating separate files for patterns/algorithms** (integrate into summary)
 
 ### Target Audience
 - **Future You**: Reviewing solutions 6 months later
@@ -289,16 +300,14 @@ cp templates/aoc_documentation/day_comprehensive_template.md \
 ```
 1. Read problem → 2. Solve Part 1 → 3. Solve Part 2
                             ↓
-4. Run benchmarks → 5. Write tests → 6. Create day guide (30min)
+4. Run benchmarks → 5. Write tests → 6. Create function guide (30min)
                             ↓
-7. Update stats dashboard → 8. Update performance chart → 9. Commit
+7. Update summary dashboard → 8. Commit
 ```
 
-### Pattern Extraction (Every 5 Days)
+### Summary Updates (Continuous)
 ```
-Review days X-Y → Identify patterns → Extract to catalog
-                            ↓
-Update day guides with pattern links → Commit
+Solve problem → Update performance table → Note patterns/algorithms
 ```
 
 ### Zettelkasten Integration
@@ -312,32 +321,39 @@ Link from day guide → Link from algorithms_reference.md
 
 ## 📝 Next Steps
 
-### Before Starting AoC 2022
+### Before Starting New AoC Year
 1. ✅ Review these templates
 2. ✅ Adjust templates if needed
 3. [ ] Create initial structure:
    ```bash
-   mkdir -p advent_of_code/aoc2022/Problem_Statements/days
+   mkdir -p advent_of_code/aoc20XX/Problem_Statements/days
    cp templates/aoc_documentation/stats_dashboard_template.md \
-      advent_of_code/aoc2022/Problem_Statements/stats_dashboard.md
-   cp templates/aoc_documentation/performance_analysis_template.md \
-      advent_of_code/aoc2022/Problem_Statements/performance_analysis.md
+      advent_of_code/aoc20XX/Problem_Statements/summary_20XX.md
    ```
-4. [ ] Create empty `patterns_catalog.md` and `algorithms_reference.md`
-5. [ ] Test workflow with Day 1
+4. [ ] Test workflow with Day 1
 
-### During AoC 2022
-- Follow daily workflow religiously
-- Pattern extraction at days 5, 10, 15, 20, 25
+### During AoC
+- Follow daily workflow consistently
+- Update summary dashboard after each day
 - Keep zettelkasten updated alongside
 
-### After AoC 2022
+### After AoC
 - Final review and polish
 - Validate all links
 - Celebrate completion! 🎉
 
 ---
 
+**Navigation**: [← Templates](../README.md) | [AoC Main](../../advent_of_code/README.md)
+
+**See Also**:
+- [Stats Dashboard Template](stats_dashboard_template.md) - Summary template
+- [Function Guide Template](function_guide_template.md) - Day guide template
+- [AoC 2022 Summary](../../advent_of_code/aoc2022/Problem_Statements/summary_2022.md) - Live example of 2-file system
+
+---
+
 **Created**: 2026-01-20  
-**For**: AoC 2022 (December 2022 problems)  
-**Status**: Planning phase - templates ready
+**Updated**: 2026-02-01 - Converted to 2-file system  
+**For**: All AoC years (2022+)  
+**Status**: Active - 2-file system validated in AoC 2022

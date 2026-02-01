@@ -1,6 +1,12 @@
-# AoC 2022 - Stats Dashboard
+# AoC 20XX - Stats Dashboard Template
+
+**Quick Links**: [← Templates](../README.md) | [AoC Main](../../advent_of_code/README.md) | [Function Guide Template](function_guide_template.md)
+
+---
 
 Quick overview of progress, performance, and patterns across all days.
+
+**Usage**: Copy to `advent_of_code/aoc20XX/Problem_Statements/summary_20XX.md` and update with actual data.
 
 ---
 
@@ -109,3 +115,13 @@ Quick overview of progress, performance, and patterns across all days.
 
 **Last Updated**: YYYY-MM-DD  
 **Next Update**: After Day X completion
+
+---
+
+**Navigation**: [← Templates](../README.md) | [AoC Main](../../advent_of_code/README.md)
+
+**See Also**:
+- [Function Guide Template](function_guide_template.md) - Detailed day documentation
+- [AoC Solver Template](../../advent_of_code/AOC_SOLVER_TEMPLATE.md) - Code implementation pattern
+- [AoC 2022 Summary](../../advent_of_code/aoc2022/Problem_Statements/summary_2022.md) - Live example
+- [AoC 2023 Summary](../../advent_of_code/aoc2023/Problem_Statements/summary_2023.md) - Live example

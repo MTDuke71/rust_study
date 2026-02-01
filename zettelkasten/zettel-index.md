@@ -40,6 +40,7 @@
 - [[rust-concurrency-moc]] - Comprehensive concurrency patterns and thread safety
 - [[Daily Study MOC]] - Progressive learning track
 - [[AoC Patterns MOC]] - Competitive programming techniques
+- [[countdown-bfs-optimization-patterns]] - Advanced BFS optimization techniques (10-66× speedups)
 - [[AoC 2015 MOC]] - Advent of Code 2015 solutions and learnings
 
 ## 📚 Learning Strategy & Methodology

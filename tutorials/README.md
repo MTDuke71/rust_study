@@ -52,10 +52,11 @@ Tutorials integrate with the workspace's 3-track learning system:
 
 | Tutorial | Mission Connection | Daily Study Alignment | Rust Book Integration |
 |----------|-------------------|----------------------|---------------------|
-| **Mission3_tut** | [missions/Mission3](../missions/Mission3/) | Week 2 traits & iterators | Ch10 generics/traits + Ch13 iterators |
-| **Mission4_tut** | [missions/Mission4](../missions/Mission4/) | Week 3 ownership patterns | Ch4 ownership + Ch15 smart pointers |
-| **Mission5_tut** | [missions/Mission5](../missions/Mission5/) | Week 2 collections | Ch8 collections + Ch13 iterators |
-| **Mission6_tut** | [missions/Mission6](../missions/Mission6/) | Week 4 algorithms | Ch7 packages + Ch11 testing |
+| **[Mission1_tut](Mission1_tut/README.md)** | [missions/Mission1](../missions/Mission1/) | Week 1 stack basics | Ch4 ownership + Ch6 enums/pattern matching |
+| **[Mission3_tut](Mission3_tut/README.md)** | [missions/Mission3](../missions/Mission3/) | Week 2 traits & iterators | Ch10 generics/traits + Ch13 iterators |
+| **[Mission4_tut](Mission4_tut/README.md)** | [missions/Mission4](../missions/Mission4/) | Week 3 ownership patterns | Ch4 ownership + Ch15 smart pointers |
+| **[Mission5_tut](Mission5_tut/README.md)** | [missions/Mission5](../missions/Mission5/) | Week 2 collections | Ch8 collections + Ch13 iterators |
+| **[Mission6_tut](Mission6_tut/README.md)** | [missions/Mission6](../missions/Mission6/) | Week 4 algorithms | Ch7 packages + Ch11 testing |
 
 ### **Alignment Requirements**
 Each tutorial step corresponds to:

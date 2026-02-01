@@ -492,6 +492,7 @@ This repository includes **advanced automated workflows** for continuous code qu
 - **Reference**: Comprehensive rustdoc generated with `cargo doc --open`
 - **Practice**: Examples in each mission demonstrate real-world usage
 - **Validation**: Test suites provide both learning and verification
+- **Templates**: [../templates/](../templates/README.md) - Documentation templates for AoC, daily notes, and weekly planning
 - **Knowledge Management**: [[zettelkasten/]] - Zettelkasten system for interconnected learning navigation
 - **Documentation Standards**: [RUST_DOCUMENTATION_STANDARDS.md](.github/RUST_DOCUMENTATION_STANDARDS.md) and [RUST_TEST_DOCUMENTATION_STANDARDS.md](.github/RUST_TEST_DOCUMENTATION_STANDARDS.md)
 

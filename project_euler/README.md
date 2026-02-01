@@ -51,11 +51,13 @@ project_euler/
 
 **Solutions live here**, **mathematical write-ups live in zettelkasten**:
 
+**Documentation Template**: See [MATH_DOCUMENTATION_TEMPLATE.md](MATH_DOCUMENTATION_TEMPLATE.md) for creating zettelkasten mathematical write-ups.
+
 ### Problem Solving Workflow
 1. **Read problem** → `Problem_Statements/p001.md`
 2. **Identify math concepts** → Set theory, number theory, graph theory, etc.
 3. **Implement solution** → `src/problems/p001.rs`
-4. **Document mathematics** → `zettelkasten/math-foundations/project-euler-p001.md`
+4. **Document mathematics** → `zettelkasten/math-foundations/project-euler-p001.md` (using template)
 5. **Bidirectional linking**:
    - Code → Math note (doc comment with link)
    - Math note → Code (implementation section with link)

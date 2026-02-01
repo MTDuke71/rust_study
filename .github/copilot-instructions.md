@@ -547,6 +547,12 @@ cargo bench -p mission5
 ## 🎯 Agent-Specific Guidance
 
 ### When Solving Advent of Code Problems
+
+**IMPORTANT - Read Documentation First**: Before starting any AoC work, read:
+1. **`templates/aoc_documentation/POST_IMPLEMENTATION_PLAN.md`** - Documentation workflow and 2-file system
+2. **`advent_of_code/AOC_SOLVER_TEMPLATE.md`** - Parse-once pattern for efficient solutions
+3. **`advent_of_code/aoc20XX/Problem_Statements/summary_20XX.md`** - Current year's progress and patterns
+
 **CRITICAL - Mission Reuse Philosophy**: Before implementing any AoC solution, **ALWAYS scan existing missions first** for reusable components. This embodies the integrator approach: compose from validated libraries rather than reimplementing.
 
 **CRITICAL - Incremental Development**: User prefers **step-by-step implementation** rather than complete solutions at once. Break work into logical stages:

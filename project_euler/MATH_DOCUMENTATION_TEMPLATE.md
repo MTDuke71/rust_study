@@ -1,8 +1,12 @@
 # Project Euler Mathematical Documentation Template
 
+**Quick Links**: [← Project Euler Main](README.md) | [Math Foundations](../zettelkasten/math-foundations/README.md) | [Problem Statements](Problem_Statements/README.md)
+
+---
+
 **Location**: `zettelkasten/math-foundations/project-euler-pXXX.md`
 
-This template guides creating mathematical write-ups for Project Euler solutions.
+This template guides creating mathematical write-ups for Project Euler solutions, integrating code implementations with theoretical foundations.
 
 ---
 
@@ -152,4 +156,15 @@ See [[project_euler/src/problems/pXXX.rs]] for complete code.
 
 ---
 
+**Navigation**: [← Project Euler Main](README.md) | [Math Foundations](../zettelkasten/math-foundations/README.md)
+
+**See Also**:
+- [Math Integration Plan](../.github/MATH_INTEGRATION_PLAN.md) - Overall strategy for mathematical documentation
+- [Zettelkasten Math Foundations](../zettelkasten/math-foundations/README.md) - Central math knowledge base
+- [AoC Solver Template](../advent_of_code/AOC_SOLVER_TEMPLATE.md) - Similar pattern for AoC documentation
+
+---
+
+**Created**: 2026-01-20  
+**Updated**: 2026-02-01 - Added navigation links  
 **Ready to start**: January 26, 2026 with Problem 1!
