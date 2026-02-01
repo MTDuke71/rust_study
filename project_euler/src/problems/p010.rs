@@ -72,8 +72,8 @@ pub fn sum_primes_below(limit: usize) -> u64 {
     }
     
     // Sum all primes
-    for i in 0..sieve_size {
-        if is_prime[i] {
+    for (i, &is_p) in is_prime.iter().enumerate().take(sieve_size) {
+        if is_p {
             sum += (2 * i + 3) as u64;
         }
     }

@@ -23,7 +23,6 @@ use std::collections::{HashMap, HashSet, VecDeque};
 /// Uses **graph minimum cut** algorithms (edge betweenness heuristic).
 /// See `zettelkasten/math-foundations/graph-minimum-cut.md` for theoretical background,
 /// alternative algorithms (max-flow, Karger's, Stoer-Wagner), and applications.
-
 pub fn solve_part1(input: &str) -> usize {
     let graph = parse_input(input);
     
@@ -74,11 +73,11 @@ fn parse_input(input: &str) -> Graph {
             
             // Add bidirectional edge
             graph.entry(from.clone())
-                .or_insert_with(HashSet::new)
+                .or_default()
                 .insert(to.clone());
             
             graph.entry(to.clone())
-                .or_insert_with(HashSet::new)
+                .or_default()
                 .insert(from.clone());
         }
     }
