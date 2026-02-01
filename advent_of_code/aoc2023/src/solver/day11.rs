@@ -15,7 +15,7 @@
 //! - Complexity: O(n*m + g²) where n×m is grid size, g is galaxy count
 //!
 //! ## Optimizations
-//! - Mission integration: Could use Mission 6 Grid, but simple Vec<Vec<char>> suffices
+//! - Mission integration: Could use Mission 6 Grid, but simple `Vec<Vec<char>>` suffices
 //! - Rust-specific: Track expansion offset instead of creating expanded grid
 
 use anyhow::Result;

@@ -5,12 +5,12 @@
 //! it takes to get from the starting position to the farthest point.
 //!
 //! ## Algorithm
-//! - Approach: Use Mission 6 Grid<char> for storage + BFS traversal to find loop distances
+//! - Approach: Use Mission 6 `Grid<char>` for storage + BFS traversal to find loop distances
 //! - Parse grid, find 'S', determine pipe connections, BFS to find all distances
 //! - Complexity: O(width × height) for grid operations
 //!
 //! ## Mission Integration
-//! - Mission 6 Grid<char>: 2D pipe maze storage with coordinate navigation
+//! - Mission 6 `Grid<char>`: 2D pipe maze storage with coordinate navigation
 //! - Mission 8 BFS pattern: Traverse the continuous loop, track distances from start
 //!
 //! ## Mathematical Foundation
@@ -152,7 +152,7 @@ fn find_loop_distances(grid: &Grid<char>, start: Coord) -> HashMap<Coord, usize>
     distances
 }
 
-/// Parse the input into a Grid<char>
+/// Parse the input into a `Grid<char>`
 pub fn parse_grid(input: &str) -> Grid<char> {
     let lines: Vec<&str> = input.lines().collect();
     let height = lines.len();

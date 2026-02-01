@@ -10,7 +10,7 @@
 //! the sum of their gear ratios (product of the two adjacent numbers).
 //!
 //! ## Algorithm
-//! - Parse input into Mission 6 Grid<char> (140x140)
+//! - Parse input into Mission 6 `Grid<char>` (140x140)
 //! - Scan grid to find all numbers with their coordinate spans
 //! - For each number, check all adjacent cells (8-directional) for symbols
 //! - Part 1: Sum numbers adjacent to any symbol
@@ -22,7 +22,7 @@
 //! - Cached adjacency: Calculate adjacent coords once, reuse for both parts
 //!
 //! ## Mission Integration
-//! - **Mission 6 Grid<char>**: Validated 2D storage component
+//! - **Mission 6 `Grid<char>`**: Validated 2D storage component
 //! - **Mission 6 Coord**: 8-directional neighbor iteration
 //! - Integrator approach: Compose from proven components
 
@@ -35,7 +35,7 @@ fn is_symbol(c: char) -> bool {
     !c.is_ascii_digit() && c != '.'
 }
 
-/// Parse the input into a Mission 6 Grid<char>
+/// Parse the input into a Mission 6 `Grid<char>`
 fn parse_grid(input: &str) -> Grid<char> {
     let lines: Vec<&str> = input.lines().collect();
     let height = lines.len();

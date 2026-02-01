@@ -1,6 +1,6 @@
 //! Day 14: Parabolic Reflector Dish - Platform tilting simulation
 //!
-//! Uses Mission 6's Grid<T> for platform layout
+//! Uses Mission 6's `Grid<T>` for platform layout
 //! Part 1: Tilt north once and calculate load
 //! Part 2: Spin cycle (N-W-S-E) 1 billion times with cycle detection
 //!

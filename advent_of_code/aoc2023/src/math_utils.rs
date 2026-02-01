@@ -12,7 +12,7 @@
 //! - LCM(a, b) = (a × b) / GCD(a, b)
 //! - GCD uses Euclidean algorithm: O(log min(a, b))
 //!
-//! **Zettelkasten Links**: [[number-theory]], [[cycle-detection]], [[aoc2023]]
+//! **Zettelkasten Links**: \[\[number-theory\]\], \[\[cycle-detection\]\]
 
 /// Calculate Greatest Common Divisor using Euclidean algorithm
 /// 

@@ -6,7 +6,7 @@
 //! - Data flows forward only (DAG - no cycles)
 //!
 //! ## Solution Approach
-//! - Parse input into HashMap<String, Vec<String>> (adjacency list)
+//! - Parse input into `HashMap<String, Vec<String>>` (adjacency list)
 //! - Use memoized DFS to count paths efficiently
 //! - Time: O(V + E) with memoization, Space: O(V)
 //!

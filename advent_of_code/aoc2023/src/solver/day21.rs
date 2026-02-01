@@ -22,7 +22,7 @@
 //! - Standard modulo gives -3 (WRONG), Euclidean modulo gives 8 (CORRECT)
 //!
 //! **Mission Integration**:
-//! - Mission 6: Grid<char> representation (could integrate, chose custom for learning)
+//! - Mission 6: `Grid<char>` representation (could integrate, chose custom for learning)
 //! - Mission 8: BFS patterns (conceptual, Part 1 similar to BFS flood-fill)
 //!
 //! **Mathematical Foundations**:
@@ -213,7 +213,7 @@ fn count_from_position(grid: &[Vec<char>], start: (usize, usize), steps: usize) 
 /// **The Challenge**: Cannot brute-force 26,501,365 steps!
 ///
 /// **Key Insight**: Step count is NOT arbitrary:
-/// ```
+/// ```text
 /// 26,501,365 = 65 + (131 × 202,300)
 ///              ↑     ↑      ↑
 ///         edge_dist  grid   periods
@@ -238,7 +238,7 @@ fn count_from_position(grid: &[Vec<char>], start: (usize, usize), steps: usize) 
 ///    ```
 ///
 /// 3. Extrapolate to target:
-///    ```
+///    ```text
 ///    n = (26,501,365 - 65) / 131 = 202,300
 ///    f(202,300) = a×n² + b×n + c
 ///    ```
@@ -340,7 +340,7 @@ pub fn part2(input: &str) -> usize {
 /// 4. **4 Large diagonal edges**: NE/NW/SE/SW (195 steps = mostly filled)
 ///
 /// **Geometric Counting Formula**:
-/// ```
+/// ```text
 /// 26,501,365 = 65 + 131×202,300
 /// n = 202,300 tiles out from center
 ///

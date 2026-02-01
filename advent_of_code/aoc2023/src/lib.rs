@@ -15,7 +15,7 @@
 //!
 //! ### Core Infrastructure
 //! - [`parser`] - Robust input parsing utilities for AoC formats
-//! - [`grid`] - 2D coordinate systems and spatial algorithms
+//! - grid - 2D coordinate systems and spatial algorithms
 //! - [`solver`] - Day-specific solution implementations
 //!
 //! ## 🔗 **Mission Integration**

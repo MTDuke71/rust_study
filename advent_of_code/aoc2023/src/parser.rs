@@ -4,7 +4,7 @@
 
 use anyhow::{Context, Result};
 
-/// Parse lines into a Vec<T> where T: FromStr
+/// Parse lines into a `Vec<T>` where T: FromStr
 pub fn parse_lines<T>(input: &str) -> Result<Vec<T>>
 where
     T: std::str::FromStr,

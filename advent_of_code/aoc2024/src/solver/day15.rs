@@ -1,6 +1,6 @@
 //! Day 15: Warehouse Woes - Robot box-pushing simulation
 //!
-//! Uses Mission 6's Grid<T> for warehouse layout
+//! Uses Mission 6's `Grid<T>` for warehouse layout
 //! Part 1: Single-width boxes
 //! Part 2: Double-width boxes (everything except robot is 2x wide)
 
