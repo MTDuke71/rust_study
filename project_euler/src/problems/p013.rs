@@ -145,6 +145,28 @@ pub fn first_ten_digits_of_sum() -> String {
     sum_str[..10].to_string()
 }
 
+/// Alternative approach using f64 for simplicity.
+///
+/// f64 has ~15-17 significant digits of precision, which is more than enough
+/// for extracting the first 10 digits of the sum.
+///
+/// # Returns
+///
+/// The first ten digits of the sum as a string.
+pub fn first_ten_digits_of_sum_f64() -> String {
+    let sum: f64 = NUMBERS
+        .lines()
+        .map(|line| line.trim())
+        .filter(|line| !line.is_empty())
+        .map(|trimmed| trimmed.parse::<f64>().unwrap())
+        .sum();
+
+    // Format and extract first 10 digits
+    // The sum is approximately 5.537... × 10^51
+    let sum_str = format!("{:.0}", sum);
+    sum_str.chars().take(10).collect()
+}
+
 /// Solve Problem 13
 ///
 /// Returns the first ten digits as a u64.
@@ -200,5 +222,28 @@ mod tests {
         let result = solve();
         println!("Answer: {}", result);
         assert!(result > 0, "Should return a valid answer");
+    }
+
+    #[test]
+    fn test_f64_approach() {
+        let result_u128 = first_ten_digits_of_sum();
+        let result_f64 = first_ten_digits_of_sum_f64();
+        
+        println!("u128 approach: {}", result_u128);
+        println!("f64 approach:  {}", result_f64);
+        
+        assert_eq!(result_u128, result_f64, "Both approaches should give same answer");
+        assert_eq!(result_f64, "5537376230");
+    }
+
+    #[test]
+    fn test_f64_precision() {
+        // Verify f64 has enough precision for our needs
+        let test_num = "37107287533902102798797998220837590246510135740250";
+        let as_f64: f64 = test_num.parse().unwrap();
+        
+        // First 15 significant digits should be preserved
+        let formatted = format!("{:.0}", as_f64);
+        assert!(formatted.starts_with("37107287533902"));
     }
 }
