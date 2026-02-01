@@ -78,8 +78,8 @@ mod tests {
         assert_eq!(palindrome, 9009);
         assert_eq!(a * b, 9009);
         // Verify factors are 2-digit numbers
-        assert!(a >= 10 && a <= 99);
-        assert!(b >= 10 && b <= 99);
+        assert!((10..=99).contains(&a));
+        assert!((10..=99).contains(&b));
     }
 
     #[test]
@@ -90,8 +90,8 @@ mod tests {
         // Verify factors multiply correctly
         assert_eq!(a * b, palindrome);
         // Verify factors are 3-digit numbers
-        assert!(a >= 100 && a <= 999);
-        assert!(b >= 100 && b <= 999);
+        assert!((100..=999).contains(&a));
+        assert!((100..=999).contains(&b));
         // Solution should be 906609 = 913 × 993
         assert_eq!(palindrome, 906609);
     }
