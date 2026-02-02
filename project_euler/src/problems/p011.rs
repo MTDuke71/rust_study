@@ -201,7 +201,7 @@ mod tests {
     fn test_horizontal_product() {
         let grid = vec![vec![1, 2, 3, 4, 5], vec![6, 7, 8, 9, 10]];
         let product = product_at(&grid, 0, 0, Direction::Horizontal);
-        assert_eq!(product, Some(1 * 2 * 3 * 4));
+        assert_eq!(product, Some(2 * 3 * 4));
 
         let product = product_at(&grid, 0, 1, Direction::Horizontal);
         assert_eq!(product, Some(2 * 3 * 4 * 5));
@@ -215,7 +215,7 @@ mod tests {
     fn test_vertical_product() {
         let grid = vec![vec![1, 2], vec![3, 4], vec![5, 6], vec![7, 8]];
         let product = product_at(&grid, 0, 0, Direction::Vertical);
-        assert_eq!(product, Some(1 * 3 * 5 * 7));
+        assert_eq!(product, Some(3 * 5 * 7));
 
         // Out of bounds
         let product = product_at(&grid, 1, 0, Direction::Vertical);
@@ -231,7 +231,7 @@ mod tests {
             vec![13, 14, 15, 16],
         ];
         let product = product_at(&grid, 0, 0, Direction::DiagonalDownRight);
-        assert_eq!(product, Some(1 * 6 * 11 * 16));
+        assert_eq!(product, Some(6 * 11 * 16));
     }
 
     #[test]

@@ -227,7 +227,7 @@ fn count_with_owned_strings(design: &str, patterns: &[&str]) -> u64 {
     helper(design, patterns, &mut memo)
 }
 
-fn count_with_borrowed_slices<'a>(design: &'a str, patterns: &[&str]) -> u64 {
+fn count_with_borrowed_slices(design: &str, patterns: &[&str]) -> u64 {
     fn helper<'a>(remaining: &'a str, patterns: &[&str], memo: &mut HashMap<&'a str, u64>) -> u64 {
         if remaining.is_empty() {
             return 1;
