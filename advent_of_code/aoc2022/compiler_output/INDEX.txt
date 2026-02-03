@@ -1,0 +1,46 @@
+# Compiler Output - Quick Summary
+
+Generated: 2026-02-03 12:17
+Source: AoC 2022 Day 3 (day03.rs)
+
+## Files Generated
+
+- README.md (START HERE) - Overview and quick start
+- COMPILER_STAGES_GUIDE.md - Comprehensive theory guide
+- EXPLORATION_GUIDE.md - Practical exploration commands
+- SIDE_BY_SIDE.md - Source to assembly transformation
+- aoc2022.mir (66KB) - Mid-level IR
+- aoc2022.ll (686KB) - LLVM IR  
+- aoc2022.s (217KB) - x86-64 Assembly
+- mir_snippet.txt - Extracted MIR for items_to_bitset
+
+## Quick Links
+
+### Beginner Path
+1. Read README.md
+2. Read SIDE_BY_SIDE.md  
+3. Open mir_snippet.txt
+
+### Study the MIR
+Open aoc2022.mir and search for:
+- Line 1330: fn items_to_bitset
+- Line 1350: items_to_bitset::{closure#0}
+
+### Key Finding
+Function is FULLY INLINED in release mode!
+- Source: Iterator chain with fold
+- Assembly: Single 'bts' instruction
+- Result: 15× speedup vs HashSet
+
+## Performance
+HashSet: 359µs (allocations)
+Bitset: 23.8µs (single instruction)
+Speedup: 15.1×
+
+## Tools to Try
+- cargo-asm (view annotated assembly)
+- Compiler Explorer (https://godbolt.org)
+- Compare opt-level 0 vs 3
+
+Generated from: advent_of_code/aoc2022
+

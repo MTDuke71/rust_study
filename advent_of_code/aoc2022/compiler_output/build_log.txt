@@ -1,0 +1,2 @@
+   Compiling aoc2022 v0.1.0 (D:\repos\rust_study\advent_of_code\aoc2022)
+    Finished `release` profile [optimized] target(s) in 1.14s

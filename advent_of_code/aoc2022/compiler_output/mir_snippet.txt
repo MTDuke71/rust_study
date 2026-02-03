@@ -1,0 +1,53 @@
+
+> aoc2022.mir:1330:fn items_to_bitset(_1: &str) -> u128 {
+  aoc2022.mir:1331:    debug s => _1;
+  aoc2022.mir:1332:    let mut _0: u128;
+  aoc2022.mir:1333:    let mut _2: std::str::Bytes<'_>;
+  aoc2022.mir:1334:
+  aoc2022.mir:1335:    bb0: {
+  aoc2022.mir:1336:        StorageLive(_2);
+  aoc2022.mir:1337:        _2 = core::str::<impl str>::bytes(move _1) -> [return: bb1, unwind continue];
+  aoc2022.mir:1338:    }
+  aoc2022.mir:1339:
+  aoc2022.mir:1340:    bb1: {
+  aoc2022.mir:1341:        _0 = <std::str::Bytes<'_> as Iterator>::fold::<u128, {closure@advent_of_code\aoc2022\src\solver\day03.rs:89:27: 89:35}>(move _2, const 0_u128, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day03.rs:89:27: 89:35}) -> [return: bb2, unwind continue];
+  aoc2022.mir:1342:    }
+  aoc2022.mir:1343:
+  aoc2022.mir:1344:    bb2: {
+  aoc2022.mir:1345:        StorageDead(_2);
+  aoc2022.mir:1346:        return;
+  aoc2022.mir:1347:    }
+  aoc2022.mir:1348:}
+  aoc2022.mir:1349:
+> aoc2022.mir:1350:fn items_to_bitset::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day03.rs:89:27: 89:35}, _2: u128, _3: u8) -> u128 {
+  aoc2022.mir:1351:    debug acc => _2;
+  aoc2022.mir:1352:    debug b => _3;
+  aoc2022.mir:1353:    let mut _0: u128;
+  aoc2022.mir:1354:    let mut _4: u128;
+  aoc2022.mir:1355:
+  aoc2022.mir:1356:    bb0: {
+  aoc2022.mir:1357:        StorageLive(_4);
+  aoc2022.mir:1358:        _4 = Shl(const 1_u128, copy _3);
+  aoc2022.mir:1359:        _0 = BitOr(copy _2, move _4);
+  aoc2022.mir:1360:        StorageDead(_4);
+  aoc2022.mir:1361:        return;
+  aoc2022.mir:1362:    }
+  aoc2022.mir:1363:}
+  aoc2022.mir:1364:
+  aoc2022.mir:1365:fn find_common_item_bitset(_1: &str, _2: &str) -> Option<char> {
+  aoc2022.mir:1366:    debug first => _1;
+  aoc2022.mir:1367:    debug second => _2;
+  aoc2022.mir:1368:    let mut _0: std::option::Option<char>;
+  aoc2022.mir:1369:    let _3: u128;
+  aoc2022.mir:1370:    let mut _4: u128;
+  aoc2022.mir:1371:    let mut _5: u128;
+  aoc2022.mir:1372:    let mut _6: bool;
+  aoc2022.mir:1373:    let mut _7: char;
+  aoc2022.mir:1374:    let mut _8: u8;
+  aoc2022.mir:1375:    let mut _9: u32;
+  aoc2022.mir:1376:    scope 1 {
+  aoc2022.mir:1377:        debug intersection => _3;
+  aoc2022.mir:1378:    }
+  aoc2022.mir:1379:
+  aoc2022.mir:1380:    bb0: {
+

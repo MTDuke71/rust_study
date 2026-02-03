@@ -1,0 +1,2321 @@
+// WARNING: This output format is intended for human consumers only
+// and is subject to change without notice. Knock yourself out.
+// HINT: See also -Z dump-mir for MIR at specific points during compilation.
+fn day01::<impl at advent_of_code\aoc2022\src\solver\day01.rs:12:10: 12:15>::fmt(_1: &ElfInventories, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &dyn std::fmt::Debug;
+    let _4: &&std::vec::Vec<usize>;
+    let _5: &std::vec::Vec<usize>;
+
+    bb0: {
+        StorageLive(_3);
+        StorageLive(_5);
+        _5 = &((*_1).0: std::vec::Vec<usize>);
+        _4 = &_5;
+        _3 = copy _4 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _0 = Formatter::<'_>::debug_struct_field1_finish(move _2, const "ElfInventories", const "totals", move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_5);
+        StorageDead(_3);
+        return;
+    }
+}
+
+alloc12 (size: 6, align: 1) {
+    74 6f 74 61 6c 73                               │ totals
+}
+
+alloc11 (size: 14, align: 1) {
+    45 6c 66 49 6e 76 65 6e 74 6f 72 69 65 73       │ ElfInventories
+}
+
+fn day01::<impl at advent_of_code\aoc2022\src\solver\day01.rs:12:17: 12:22>::clone(_1: &ElfInventories) -> ElfInventories {
+    debug self => _1;
+    let mut _0: solver::day01::ElfInventories;
+    let mut _2: std::vec::Vec<usize>;
+    let _3: &std::vec::Vec<usize>;
+
+    bb0: {
+        StorageLive(_2);
+        _3 = &((*_1).0: std::vec::Vec<usize>);
+        _2 = <Vec<usize> as Clone>::clone(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = ElfInventories { totals: move _2 };
+        StorageDead(_2);
+        return;
+    }
+}
+
+fn day01::parse_input(_1: &str) -> ElfInventories {
+    debug input => _1;
+    let mut _0: solver::day01::ElfInventories;
+    let _2: std::vec::Vec<usize>;
+    let mut _3: std::iter::Map<std::str::Split<'_, &str>, {closure@advent_of_code\aoc2022\src\solver\day01.rs:24:14: 24:21}>;
+    let mut _4: std::str::Split<'_, &str>;
+    scope 1 {
+        debug totals => _2;
+    }
+
+    bb0: {
+        StorageLive(_3);
+        StorageLive(_4);
+        _4 = core::str::<impl str>::split::<&str>(move _1, const "\n\n") -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _3 = <std::str::Split<'_, &str> as Iterator>::map::<usize, {closure@advent_of_code\aoc2022\src\solver\day01.rs:24:14: 24:21}>(move _4, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day01.rs:24:14: 24:21}) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        StorageDead(_4);
+        _2 = <Map<std::str::Split<'_, &str>, {closure@advent_of_code\aoc2022\src\solver\day01.rs:24:14: 24:21}> as Iterator>::collect::<Vec<usize>>(move _3) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        _0 = ElfInventories { totals: copy _2 };
+        return;
+    }
+}
+
+alloc13 (size: 2, align: 1) {
+    0a 0a                                           │ ..
+}
+
+fn day01::parse_input::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day01.rs:24:14: 24:21}, _2: &str) -> usize {
+    debug group => _2;
+    let mut _0: usize;
+    let mut _3: std::iter::FilterMap<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day01.rs:27:29: 27:35}>;
+    let mut _4: std::str::Lines<'_>;
+
+    bb0: {
+        StorageLive(_3);
+        StorageLive(_4);
+        _4 = core::str::<impl str>::lines(move _2) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _3 = <std::str::Lines<'_> as Iterator>::filter_map::<usize, {closure@advent_of_code\aoc2022\src\solver\day01.rs:27:29: 27:35}>(move _4, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day01.rs:27:29: 27:35}) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        StorageDead(_4);
+        _0 = <FilterMap<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day01.rs:27:29: 27:35}> as Iterator>::sum::<usize>(move _3) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        return;
+    }
+}
+
+fn day01::parse_input::{closure#0}::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day01.rs:27:29: 27:35}, _2: &str) -> Option<usize> {
+    debug line => _2;
+    let mut _0: std::option::Option<usize>;
+    let mut _3: std::result::Result<usize, std::num::ParseIntError>;
+    let _4: &str;
+
+    bb0: {
+        StorageLive(_3);
+        _4 = core::str::<impl str>::trim(move _2) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _3 = core::str::<impl str>::parse::<usize>(move _4) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _0 = Result::<usize, ParseIntError>::ok(move _3) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        return;
+    }
+}
+
+fn day01::solve_part1_impl(_1: &ElfInventories) -> usize {
+    debug data => _1;
+    let mut _0: usize;
+    let mut _2: &usize;
+    let mut _3: std::option::Option<&usize>;
+    let mut _4: std::slice::Iter<'_, usize>;
+    let _5: &[usize];
+    let mut _6: &std::vec::Vec<usize>;
+
+    bb0: {
+        StorageLive(_2);
+        StorageLive(_3);
+        StorageLive(_4);
+        StorageLive(_6);
+        _6 = &((*_1).0: std::vec::Vec<usize>);
+        _5 = <Vec<usize> as Deref>::deref(move _6) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_6);
+        _4 = core::slice::<impl [usize]>::iter(move _5) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _3 = <std::slice::Iter<'_, usize> as Iterator>::max(move _4) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_4);
+        _2 = Option::<&usize>::unwrap_or(move _3, const solver::day01::solve_part1_impl::promoted[0]) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_3);
+        _0 = copy (*_2);
+        StorageDead(_2);
+        return;
+    }
+}
+
+const day01::solve_part1_impl::promoted[0]: &usize = {
+    let mut _0: &usize;
+    let mut _1: usize;
+
+    bb0: {
+        _1 = const 0_usize;
+        _0 = &_1;
+        return;
+    }
+}
+
+fn day01::solve_part2_impl(_1: &ElfInventories) -> usize {
+    debug data => _1;
+    let mut _0: usize;
+    let mut _2: std::vec::Vec<usize>;
+    let mut _3: &std::vec::Vec<usize>;
+    let _4: ();
+    let mut _5: &mut [usize];
+    let mut _6: &mut std::vec::Vec<usize>;
+    let mut _7: std::iter::Take<std::slice::Iter<'_, usize>>;
+    let mut _8: std::slice::Iter<'_, usize>;
+    let _9: &[usize];
+    let mut _10: &std::vec::Vec<usize>;
+    scope 1 {
+        debug sorted => _2;
+    }
+
+    bb0: {
+        StorageLive(_2);
+        StorageLive(_3);
+        _3 = &((*_1).0: std::vec::Vec<usize>);
+        _2 = <Vec<usize> as Clone>::clone(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_3);
+        StorageLive(_6);
+        _6 = &mut _2;
+        _5 = <Vec<usize> as DerefMut>::deref_mut(move _6) -> [return: bb2, unwind: bb9];
+    }
+
+    bb2: {
+        StorageDead(_6);
+        _4 = core::slice::<impl [usize]>::sort_unstable_by::<{closure@advent_of_code\aoc2022\src\solver\day01.rs:51:29: 51:35}>(move _5, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day01.rs:51:29: 51:35}) -> [return: bb3, unwind: bb9];
+    }
+
+    bb3: {
+        StorageLive(_7);
+        StorageLive(_8);
+        StorageLive(_10);
+        _10 = &_2;
+        _9 = <Vec<usize> as Deref>::deref(move _10) -> [return: bb4, unwind: bb9];
+    }
+
+    bb4: {
+        StorageDead(_10);
+        _8 = core::slice::<impl [usize]>::iter(move _9) -> [return: bb5, unwind: bb9];
+    }
+
+    bb5: {
+        _7 = <std::slice::Iter<'_, usize> as Iterator>::take(move _8, const 3_usize) -> [return: bb6, unwind: bb9];
+    }
+
+    bb6: {
+        StorageDead(_8);
+        _0 = <std::iter::Take<std::slice::Iter<'_, usize>> as Iterator>::sum::<usize>(move _7) -> [return: bb7, unwind: bb9];
+    }
+
+    bb7: {
+        StorageDead(_7);
+        drop(_2) -> [return: bb8, unwind continue];
+    }
+
+    bb8: {
+        StorageDead(_2);
+        return;
+    }
+
+    bb9 (cleanup): {
+        drop(_2) -> [return: bb10, unwind terminate(cleanup)];
+    }
+
+    bb10 (cleanup): {
+        resume;
+    }
+}
+
+fn day01::solve_part2_impl::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day01.rs:51:29: 51:35}, _2: &usize, _3: &usize) -> std::cmp::Ordering {
+    debug a => _2;
+    debug b => _3;
+    let mut _0: std::cmp::Ordering;
+
+    bb0: {
+        _0 = <usize as Ord>::cmp(move _3, move _2) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}
+
+fn day01::solve(_1: &str) -> (usize, usize) {
+    debug input => _1;
+    let mut _0: (usize, usize);
+    let _2: solver::day01::ElfInventories;
+    let mut _3: usize;
+    let _4: &solver::day01::ElfInventories;
+    let mut _5: usize;
+    let _6: &solver::day01::ElfInventories;
+    scope 1 {
+        debug data => _2;
+    }
+
+    bb0: {
+        StorageLive(_2);
+        _2 = day01::parse_input(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageLive(_3);
+        _4 = &_2;
+        _3 = day01::solve_part1_impl(move _4) -> [return: bb2, unwind: bb5];
+    }
+
+    bb2: {
+        StorageLive(_5);
+        _6 = &_2;
+        _5 = day01::solve_part2_impl(move _6) -> [return: bb3, unwind: bb5];
+    }
+
+    bb3: {
+        _0 = (move _3, move _5);
+        StorageDead(_5);
+        StorageDead(_3);
+        drop(_2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+
+    bb5 (cleanup): {
+        drop(_2) -> [return: bb6, unwind terminate(cleanup)];
+    }
+
+    bb6 (cleanup): {
+        resume;
+    }
+}
+
+fn solve_part1(_1: &str) -> usize {
+    debug input => _1;
+    let mut _0: usize;
+    let _2: &solver::day01::ElfInventories;
+    let _3: solver::day01::ElfInventories;
+
+    bb0: {
+        StorageLive(_3);
+        _3 = day01::parse_input(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _2 = &_3;
+        _0 = day01::solve_part1_impl(move _2) -> [return: bb2, unwind: bb4];
+    }
+
+    bb2: {
+        drop(_3) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        return;
+    }
+
+    bb4 (cleanup): {
+        drop(_3) -> [return: bb5, unwind terminate(cleanup)];
+    }
+
+    bb5 (cleanup): {
+        resume;
+    }
+}
+
+fn solve_part2(_1: &str) -> usize {
+    debug input => _1;
+    let mut _0: usize;
+    let _2: &solver::day01::ElfInventories;
+    let _3: solver::day01::ElfInventories;
+
+    bb0: {
+        StorageLive(_3);
+        _3 = day01::parse_input(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _2 = &_3;
+        _0 = day01::solve_part2_impl(move _2) -> [return: bb2, unwind: bb4];
+    }
+
+    bb2: {
+        drop(_3) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        return;
+    }
+
+    bb4 (cleanup): {
+        drop(_3) -> [return: bb5, unwind terminate(cleanup)];
+    }
+
+    bb5 (cleanup): {
+        resume;
+    }
+}
+
+fn day02::<impl at advent_of_code\aoc2022\src\solver\day02.rs:21:10: 21:15>::fmt(_1: &GameRounds, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &dyn std::fmt::Debug;
+    let _4: &&std::vec::Vec<(u8, u8)>;
+    let _5: &std::vec::Vec<(u8, u8)>;
+
+    bb0: {
+        StorageLive(_3);
+        StorageLive(_5);
+        _5 = &((*_1).0: std::vec::Vec<(u8, u8)>);
+        _4 = &_5;
+        _3 = copy _4 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _0 = Formatter::<'_>::debug_struct_field1_finish(move _2, const "GameRounds", const "rounds", move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_5);
+        StorageDead(_3);
+        return;
+    }
+}
+
+alloc17 (size: 6, align: 1) {
+    72 6f 75 6e 64 73                               │ rounds
+}
+
+alloc16 (size: 10, align: 1) {
+    47 61 6d 65 52 6f 75 6e 64 73                   │ GameRounds
+}
+
+fn day02::<impl at advent_of_code\aoc2022\src\solver\day02.rs:21:17: 21:22>::clone(_1: &GameRounds) -> GameRounds {
+    debug self => _1;
+    let mut _0: solver::day02::GameRounds;
+    let mut _2: std::vec::Vec<(u8, u8)>;
+    let _3: &std::vec::Vec<(u8, u8)>;
+
+    bb0: {
+        StorageLive(_2);
+        _3 = &((*_1).0: std::vec::Vec<(u8, u8)>);
+        _2 = <Vec<(u8, u8)> as Clone>::clone(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = GameRounds { rounds: move _2 };
+        StorageDead(_2);
+        return;
+    }
+}
+
+const PART1_SCORES: [[u8; 3]; 3] = {
+    let mut _0: [[u8; 3]; 3];
+    let mut _1: [u8; 3];
+    let mut _2: u8;
+    let mut _3: (u8, bool);
+    let mut _4: u8;
+    let mut _5: (u8, bool);
+    let mut _6: [u8; 3];
+    let mut _7: u8;
+    let mut _8: (u8, bool);
+    let mut _9: u8;
+    let mut _10: (u8, bool);
+    let mut _11: [u8; 3];
+    let mut _12: u8;
+    let mut _13: (u8, bool);
+    let mut _14: u8;
+    let mut _15: (u8, bool);
+
+    bb0: {
+        StorageLive(_1);
+        StorageLive(_2);
+        _3 = AddWithOverflow(const 1_u8, const 3_u8);
+        assert(!move (_3.1: bool), "attempt to compute `{} + {}`, which would overflow", const 1_u8, const 3_u8) -> [success: bb1, unwind continue];
+    }
+
+    bb1: {
+        _2 = move (_3.0: u8);
+        StorageLive(_4);
+        _5 = AddWithOverflow(const 2_u8, const 6_u8);
+        assert(!move (_5.1: bool), "attempt to compute `{} + {}`, which would overflow", const 2_u8, const 6_u8) -> [success: bb2, unwind continue];
+    }
+
+    bb2: {
+        _4 = move (_5.0: u8);
+        _1 = [move _2, move _4, const 3_u8];
+        StorageDead(_4);
+        StorageDead(_2);
+        StorageLive(_6);
+        StorageLive(_7);
+        _8 = AddWithOverflow(const 2_u8, const 3_u8);
+        assert(!move (_8.1: bool), "attempt to compute `{} + {}`, which would overflow", const 2_u8, const 3_u8) -> [success: bb3, unwind continue];
+    }
+
+    bb3: {
+        _7 = move (_8.0: u8);
+        StorageLive(_9);
+        _10 = AddWithOverflow(const 3_u8, const 6_u8);
+        assert(!move (_10.1: bool), "attempt to compute `{} + {}`, which would overflow", const 3_u8, const 6_u8) -> [success: bb4, unwind continue];
+    }
+
+    bb4: {
+        _9 = move (_10.0: u8);
+        _6 = [const 1_u8, move _7, move _9];
+        StorageDead(_9);
+        StorageDead(_7);
+        StorageLive(_11);
+        StorageLive(_12);
+        _13 = AddWithOverflow(const 1_u8, const 6_u8);
+        assert(!move (_13.1: bool), "attempt to compute `{} + {}`, which would overflow", const 1_u8, const 6_u8) -> [success: bb5, unwind continue];
+    }
+
+    bb5: {
+        _12 = move (_13.0: u8);
+        StorageLive(_14);
+        _15 = AddWithOverflow(const 3_u8, const 3_u8);
+        assert(!move (_15.1: bool), "attempt to compute `{} + {}`, which would overflow", const 3_u8, const 3_u8) -> [success: bb6, unwind continue];
+    }
+
+    bb6: {
+        _14 = move (_15.0: u8);
+        _11 = [move _12, const 2_u8, move _14];
+        StorageDead(_14);
+        StorageDead(_12);
+        _0 = [move _1, move _6, move _11];
+        StorageDead(_11);
+        StorageDead(_6);
+        StorageDead(_1);
+        return;
+    }
+}
+
+const PART1_SCORES::{constant#0}: usize = const 3_usize;
+
+const PART1_SCORES::{constant#1}: usize = const 3_usize;
+
+const PART2_SCORES: [[u8; 3]; 3] = {
+    let mut _0: [[u8; 3]; 3];
+    let mut _1: [u8; 3];
+    let mut _2: u8;
+    let mut _3: (u8, bool);
+    let mut _4: u8;
+    let mut _5: (u8, bool);
+    let mut _6: [u8; 3];
+    let mut _7: u8;
+    let mut _8: (u8, bool);
+    let mut _9: u8;
+    let mut _10: (u8, bool);
+    let mut _11: [u8; 3];
+    let mut _12: u8;
+    let mut _13: (u8, bool);
+    let mut _14: u8;
+    let mut _15: (u8, bool);
+
+    bb0: {
+        StorageLive(_1);
+        StorageLive(_2);
+        _3 = AddWithOverflow(const 1_u8, const 3_u8);
+        assert(!move (_3.1: bool), "attempt to compute `{} + {}`, which would overflow", const 1_u8, const 3_u8) -> [success: bb1, unwind continue];
+    }
+
+    bb1: {
+        _2 = move (_3.0: u8);
+        StorageLive(_4);
+        _5 = AddWithOverflow(const 2_u8, const 6_u8);
+        assert(!move (_5.1: bool), "attempt to compute `{} + {}`, which would overflow", const 2_u8, const 6_u8) -> [success: bb2, unwind continue];
+    }
+
+    bb2: {
+        _4 = move (_5.0: u8);
+        _1 = [const 3_u8, move _2, move _4];
+        StorageDead(_4);
+        StorageDead(_2);
+        StorageLive(_6);
+        StorageLive(_7);
+        _8 = AddWithOverflow(const 2_u8, const 3_u8);
+        assert(!move (_8.1: bool), "attempt to compute `{} + {}`, which would overflow", const 2_u8, const 3_u8) -> [success: bb3, unwind continue];
+    }
+
+    bb3: {
+        _7 = move (_8.0: u8);
+        StorageLive(_9);
+        _10 = AddWithOverflow(const 3_u8, const 6_u8);
+        assert(!move (_10.1: bool), "attempt to compute `{} + {}`, which would overflow", const 3_u8, const 6_u8) -> [success: bb4, unwind continue];
+    }
+
+    bb4: {
+        _9 = move (_10.0: u8);
+        _6 = [const 1_u8, move _7, move _9];
+        StorageDead(_9);
+        StorageDead(_7);
+        StorageLive(_11);
+        StorageLive(_12);
+        _13 = AddWithOverflow(const 3_u8, const 3_u8);
+        assert(!move (_13.1: bool), "attempt to compute `{} + {}`, which would overflow", const 3_u8, const 3_u8) -> [success: bb5, unwind continue];
+    }
+
+    bb5: {
+        _12 = move (_13.0: u8);
+        StorageLive(_14);
+        _15 = AddWithOverflow(const 1_u8, const 6_u8);
+        assert(!move (_15.1: bool), "attempt to compute `{} + {}`, which would overflow", const 1_u8, const 6_u8) -> [success: bb6, unwind continue];
+    }
+
+    bb6: {
+        _14 = move (_15.0: u8);
+        _11 = [const 2_u8, move _12, move _14];
+        StorageDead(_14);
+        StorageDead(_12);
+        _0 = [move _1, move _6, move _11];
+        StorageDead(_11);
+        StorageDead(_6);
+        StorageDead(_1);
+        return;
+    }
+}
+
+const PART2_SCORES::{constant#0}: usize = const 3_usize;
+
+const PART2_SCORES::{constant#1}: usize = const 3_usize;
+
+fn day02::parse_input(_1: &str) -> GameRounds {
+    debug input => _1;
+    let mut _0: solver::day02::GameRounds;
+    let _2: std::vec::Vec<(u8, u8)>;
+    let mut _3: std::iter::FilterMap<std::iter::Filter<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:61:17: 61:23}>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:62:21: 62:27}>;
+    let mut _4: std::iter::Filter<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:61:17: 61:23}>;
+    let mut _5: std::str::Lines<'_>;
+    scope 1 {
+        debug rounds => _2;
+    }
+
+    bb0: {
+        StorageLive(_3);
+        StorageLive(_4);
+        StorageLive(_5);
+        _5 = core::str::<impl str>::lines(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _4 = <std::str::Lines<'_> as Iterator>::filter::<{closure@advent_of_code\aoc2022\src\solver\day02.rs:61:17: 61:23}>(move _5, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day02.rs:61:17: 61:23}) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        StorageDead(_5);
+        _3 = <Filter<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:61:17: 61:23}> as Iterator>::filter_map::<(u8, u8), {closure@advent_of_code\aoc2022\src\solver\day02.rs:62:21: 62:27}>(move _4, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day02.rs:62:21: 62:27}) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_4);
+        _2 = <FilterMap<Filter<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:61:17: 61:23}>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:62:21: 62:27}> as Iterator>::collect::<Vec<(u8, u8)>>(move _3) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_3);
+        _0 = GameRounds { rounds: copy _2 };
+        return;
+    }
+}
+
+fn day02::parse_input::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day02.rs:61:17: 61:23}, _2: &&str) -> bool {
+    debug line => _2;
+    let mut _0: bool;
+    let mut _3: bool;
+    let _4: &str;
+    let mut _5: &str;
+
+    bb0: {
+        StorageLive(_3);
+        _5 = copy (*_2);
+        _4 = core::str::<impl str>::trim(move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _3 = core::str::<impl str>::is_empty(move _4) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _0 = Not(move _3);
+        StorageDead(_3);
+        return;
+    }
+}
+
+fn day02::parse_input::{closure#1}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day02.rs:62:21: 62:27}, _2: &str) -> Option<(u8, u8)> {
+    debug line => _2;
+    let mut _0: std::option::Option<(u8, u8)>;
+    let _3: &[u8];
+    let mut _4: bool;
+    let mut _5: usize;
+    let mut _7: u8;
+    let mut _8: bool;
+    let mut _10: u8;
+    let mut _11: bool;
+    let mut _12: (u8, u8);
+    scope 1 {
+        debug bytes => _3;
+        let _6: u8;
+        scope 2 {
+            debug opponent => _6;
+            let _9: u8;
+            scope 3 {
+                debug you => _9;
+            }
+        }
+    }
+
+    bb0: {
+        _3 = core::str::<impl str>::as_bytes(move _2) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageLive(_4);
+        _5 = PtrMetadata(copy _3);
+        _4 = Ge(copy _5, const 3_usize);
+        switchInt(move _4) -> [0: bb7, otherwise: bb2];
+    }
+
+    bb2: {
+        StorageLive(_7);
+        _8 = Lt(const 0_usize, copy _5);
+        assert(move _8, "index out of bounds: the length is {} but the index is {}", copy _5, const 0_usize) -> [success: bb3, unwind continue];
+    }
+
+    bb3: {
+        _7 = copy (*_3)[0 of 1];
+        _6 = core::num::<impl u8>::wrapping_sub(move _7, const 65_u8) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_7);
+        StorageLive(_10);
+        _11 = Lt(const 2_usize, copy _5);
+        assert(move _11, "index out of bounds: the length is {} but the index is {}", copy _5, const 2_usize) -> [success: bb5, unwind continue];
+    }
+
+    bb5: {
+        _10 = copy (*_3)[2 of 3];
+        _9 = core::num::<impl u8>::wrapping_sub(move _10, const 88_u8) -> [return: bb6, unwind continue];
+    }
+
+    bb6: {
+        StorageDead(_10);
+        StorageLive(_12);
+        _12 = (copy _6, copy _9);
+        _0 = Option::<(u8, u8)>::Some(move _12);
+        StorageDead(_12);
+        goto -> bb8;
+    }
+
+    bb7: {
+        _0 = Option::<(u8, u8)>::None;
+        goto -> bb8;
+    }
+
+    bb8: {
+        StorageDead(_4);
+        return;
+    }
+}
+
+fn day02::solve_part1_impl(_1: &GameRounds) -> usize {
+    debug data => _1;
+    let mut _0: usize;
+    let mut _2: std::iter::Map<std::slice::Iter<'_, (u8, u8)>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:85:14: 85:27}>;
+    let mut _3: std::slice::Iter<'_, (u8, u8)>;
+    let _4: &[(u8, u8)];
+    let mut _5: &std::vec::Vec<(u8, u8)>;
+
+    bb0: {
+        StorageLive(_2);
+        StorageLive(_3);
+        StorageLive(_5);
+        _5 = &((*_1).0: std::vec::Vec<(u8, u8)>);
+        _4 = <Vec<(u8, u8)> as Deref>::deref(move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_5);
+        _3 = core::slice::<impl [(u8, u8)]>::iter(move _4) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _2 = <std::slice::Iter<'_, (u8, u8)> as Iterator>::map::<usize, {closure@advent_of_code\aoc2022\src\solver\day02.rs:85:14: 85:27}>(move _3, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day02.rs:85:14: 85:27}) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        _0 = <Map<std::slice::Iter<'_, (u8, u8)>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:85:14: 85:27}> as Iterator>::sum::<usize>(move _2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+}
+
+fn day02::solve_part1_impl::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day02.rs:85:14: 85:27}, _2: &(u8, u8)) -> usize {
+    let mut _0: usize;
+    let _3: u8;
+    let _4: u8;
+    let mut _5: u8;
+    let mut _6: [[u8; 3]; 3];
+    let _7: usize;
+    let mut _8: bool;
+    let _9: usize;
+    let mut _10: bool;
+    scope 1 {
+        debug opp => _3;
+        debug you => _4;
+    }
+
+    bb0: {
+        _3 = copy ((*_2).0: u8);
+        _4 = copy ((*_2).1: u8);
+        StorageLive(_5);
+        StorageLive(_6);
+        _6 = const solver::day02::PART1_SCORES;
+        _7 = copy _3 as usize (IntToInt);
+        _8 = Lt(copy _7, const 3_usize);
+        assert(move _8, "index out of bounds: the length is {} but the index is {}", const 3_usize, copy _7) -> [success: bb1, unwind continue];
+    }
+
+    bb1: {
+        _9 = copy _4 as usize (IntToInt);
+        _10 = Lt(copy _9, const 3_usize);
+        assert(move _10, "index out of bounds: the length is {} but the index is {}", const 3_usize, copy _9) -> [success: bb2, unwind continue];
+    }
+
+    bb2: {
+        _5 = copy _6[_7][_9];
+        _0 = move _5 as usize (IntToInt);
+        StorageDead(_6);
+        StorageDead(_5);
+        return;
+    }
+}
+
+fn day02::solve_part2_impl(_1: &GameRounds) -> usize {
+    debug data => _1;
+    let mut _0: usize;
+    let mut _2: std::iter::Map<std::slice::Iter<'_, (u8, u8)>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:96:14: 96:31}>;
+    let mut _3: std::slice::Iter<'_, (u8, u8)>;
+    let _4: &[(u8, u8)];
+    let mut _5: &std::vec::Vec<(u8, u8)>;
+
+    bb0: {
+        StorageLive(_2);
+        StorageLive(_3);
+        StorageLive(_5);
+        _5 = &((*_1).0: std::vec::Vec<(u8, u8)>);
+        _4 = <Vec<(u8, u8)> as Deref>::deref(move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_5);
+        _3 = core::slice::<impl [(u8, u8)]>::iter(move _4) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _2 = <std::slice::Iter<'_, (u8, u8)> as Iterator>::map::<usize, {closure@advent_of_code\aoc2022\src\solver\day02.rs:96:14: 96:31}>(move _3, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day02.rs:96:14: 96:31}) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        _0 = <Map<std::slice::Iter<'_, (u8, u8)>, {closure@advent_of_code\aoc2022\src\solver\day02.rs:96:14: 96:31}> as Iterator>::sum::<usize>(move _2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+}
+
+fn day02::solve_part2_impl::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day02.rs:96:14: 96:31}, _2: &(u8, u8)) -> usize {
+    let mut _0: usize;
+    let _3: u8;
+    let _4: u8;
+    let mut _5: u8;
+    let mut _6: [[u8; 3]; 3];
+    let _7: usize;
+    let mut _8: bool;
+    let _9: usize;
+    let mut _10: bool;
+    scope 1 {
+        debug opp => _3;
+        debug outcome => _4;
+    }
+
+    bb0: {
+        _3 = copy ((*_2).0: u8);
+        _4 = copy ((*_2).1: u8);
+        StorageLive(_5);
+        StorageLive(_6);
+        _6 = const solver::day02::PART2_SCORES;
+        _7 = copy _3 as usize (IntToInt);
+        _8 = Lt(copy _7, const 3_usize);
+        assert(move _8, "index out of bounds: the length is {} but the index is {}", const 3_usize, copy _7) -> [success: bb1, unwind continue];
+    }
+
+    bb1: {
+        _9 = copy _4 as usize (IntToInt);
+        _10 = Lt(copy _9, const 3_usize);
+        assert(move _10, "index out of bounds: the length is {} but the index is {}", const 3_usize, copy _9) -> [success: bb2, unwind continue];
+    }
+
+    bb2: {
+        _5 = copy _6[_7][_9];
+        _0 = move _5 as usize (IntToInt);
+        StorageDead(_6);
+        StorageDead(_5);
+        return;
+    }
+}
+
+fn day02::solve(_1: &str) -> (usize, usize) {
+    debug input => _1;
+    let mut _0: (usize, usize);
+    let _2: solver::day02::GameRounds;
+    let mut _3: usize;
+    let _4: &solver::day02::GameRounds;
+    let mut _5: usize;
+    let _6: &solver::day02::GameRounds;
+    scope 1 {
+        debug data => _2;
+    }
+
+    bb0: {
+        StorageLive(_2);
+        _2 = day02::parse_input(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageLive(_3);
+        _4 = &_2;
+        _3 = day02::solve_part1_impl(move _4) -> [return: bb2, unwind: bb5];
+    }
+
+    bb2: {
+        StorageLive(_5);
+        _6 = &_2;
+        _5 = day02::solve_part2_impl(move _6) -> [return: bb3, unwind: bb5];
+    }
+
+    bb3: {
+        _0 = (move _3, move _5);
+        StorageDead(_5);
+        StorageDead(_3);
+        drop(_2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+
+    bb5 (cleanup): {
+        drop(_2) -> [return: bb6, unwind terminate(cleanup)];
+    }
+
+    bb6 (cleanup): {
+        resume;
+    }
+}
+
+fn day03::<impl at advent_of_code\aoc2022\src\solver\day03.rs:22:10: 22:15>::fmt(_1: &Rucksacks, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &dyn std::fmt::Debug;
+    let _4: &&std::vec::Vec<std::string::String>;
+    let _5: &std::vec::Vec<std::string::String>;
+
+    bb0: {
+        StorageLive(_3);
+        StorageLive(_5);
+        _5 = &((*_1).0: std::vec::Vec<std::string::String>);
+        _4 = &_5;
+        _3 = copy _4 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _0 = Formatter::<'_>::debug_struct_field1_finish(move _2, const "Rucksacks", const "lines", move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_5);
+        StorageDead(_3);
+        return;
+    }
+}
+
+alloc19 (size: 5, align: 1) {
+    6c 69 6e 65 73                                  │ lines
+}
+
+alloc18 (size: 9, align: 1) {
+    52 75 63 6b 73 61 63 6b 73                      │ Rucksacks
+}
+
+fn day03::<impl at advent_of_code\aoc2022\src\solver\day03.rs:22:17: 22:22>::clone(_1: &Rucksacks) -> Rucksacks {
+    debug self => _1;
+    let mut _0: solver::day03::Rucksacks;
+    let mut _2: std::vec::Vec<std::string::String>;
+    let _3: &std::vec::Vec<std::string::String>;
+
+    bb0: {
+        StorageLive(_2);
+        _3 = &((*_1).0: std::vec::Vec<std::string::String>);
+        _2 = <Vec<String> as Clone>::clone(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = Rucksacks { lines: move _2 };
+        StorageDead(_2);
+        return;
+    }
+}
+
+fn item_priority(_1: char) -> u32 {
+    debug item => _1;
+    let mut _0: u32;
+    let mut _2: bool;
+    let mut _3: bool;
+    let mut _4: bool;
+    let mut _5: bool;
+    let mut _6: u32;
+    let mut _7: u32;
+    let mut _8: u32;
+    let mut _9: u32;
+
+    bb0: {
+        _4 = Le(const 'a', copy _1);
+        switchInt(move _4) -> [0: bb3, otherwise: bb6];
+    }
+
+    bb1: {
+        _0 = const 0_u32;
+        goto -> bb7;
+    }
+
+    bb2: {
+        StorageLive(_6);
+        StorageLive(_7);
+        _7 = copy _1 as u32 (IntToInt);
+        _6 = Sub(move _7, const 97_u32);
+        StorageDead(_7);
+        _0 = Add(move _6, const 1_u32);
+        StorageDead(_6);
+        goto -> bb7;
+    }
+
+    bb3: {
+        _2 = Le(const 'A', copy _1);
+        switchInt(move _2) -> [0: bb1, otherwise: bb5];
+    }
+
+    bb4: {
+        StorageLive(_8);
+        StorageLive(_9);
+        _9 = copy _1 as u32 (IntToInt);
+        _8 = Sub(move _9, const 65_u32);
+        StorageDead(_9);
+        _0 = Add(move _8, const 27_u32);
+        StorageDead(_8);
+        goto -> bb7;
+    }
+
+    bb5: {
+        _3 = Le(copy _1, const 'Z');
+        switchInt(move _3) -> [0: bb1, otherwise: bb4];
+    }
+
+    bb6: {
+        _5 = Le(copy _1, const 'z');
+        switchInt(move _5) -> [0: bb3, otherwise: bb2];
+    }
+
+    bb7: {
+        return;
+    }
+}
+
+fn find_common_item(_1: &str, _2: &str) -> Option<char> {
+    debug first => _1;
+    debug second => _2;
+    let mut _0: std::option::Option<char>;
+    let _3: std::collections::HashSet<char>;
+    let mut _4: std::str::Chars<'_>;
+    let mut _6: std::str::Chars<'_>;
+    let mut _7: std::option::Option<&char>;
+    let mut _8: &mut std::collections::hash_set::Intersection<'_, char, std::hash::RandomState>;
+    let mut _9: std::collections::hash_set::Intersection<'_, char, std::hash::RandomState>;
+    let mut _10: &std::collections::HashSet<char>;
+    let _11: &std::collections::HashSet<char>;
+    scope 1 {
+        debug first_set => _3;
+        let _5: std::collections::HashSet<char>;
+        scope 2 {
+            debug second_set => _5;
+        }
+    }
+
+    bb0: {
+        StorageLive(_3);
+        StorageLive(_4);
+        _4 = core::str::<impl str>::chars(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _3 = <Chars<'_> as Iterator>::collect::<HashSet<char>>(move _4) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        StorageDead(_4);
+        StorageLive(_5);
+        StorageLive(_6);
+        _6 = core::str::<impl str>::chars(move _2) -> [return: bb3, unwind: bb11];
+    }
+
+    bb3: {
+        _5 = <Chars<'_> as Iterator>::collect::<HashSet<char>>(move _6) -> [return: bb4, unwind: bb11];
+    }
+
+    bb4: {
+        StorageDead(_6);
+        StorageLive(_7);
+        StorageLive(_8);
+        StorageLive(_9);
+        StorageLive(_10);
+        _10 = &_3;
+        _11 = &_5;
+        _9 = HashSet::<char>::intersection(move _10, move _11) -> [return: bb5, unwind: bb10];
+    }
+
+    bb5: {
+        _8 = &mut _9;
+        StorageDead(_10);
+        _7 = <std::collections::hash_set::Intersection<'_, char, RandomState> as Iterator>::next(move _8) -> [return: bb6, unwind: bb10];
+    }
+
+    bb6: {
+        StorageDead(_8);
+        _0 = Option::<&char>::copied(move _7) -> [return: bb7, unwind: bb10];
+    }
+
+    bb7: {
+        StorageDead(_7);
+        drop(_5) -> [return: bb8, unwind: bb11];
+    }
+
+    bb8: {
+        StorageDead(_5);
+        drop(_3) -> [return: bb9, unwind continue];
+    }
+
+    bb9: {
+        StorageDead(_3);
+        StorageDead(_9);
+        return;
+    }
+
+    bb10 (cleanup): {
+        drop(_5) -> [return: bb11, unwind terminate(cleanup)];
+    }
+
+    bb11 (cleanup): {
+        drop(_3) -> [return: bb12, unwind terminate(cleanup)];
+    }
+
+    bb12 (cleanup): {
+        resume;
+    }
+}
+
+fn find_badge_item(_1: &str, _2: &str, _3: &str) -> Option<char> {
+    debug first => _1;
+    debug second => _2;
+    debug third => _3;
+    let mut _0: std::option::Option<char>;
+    let _4: std::collections::HashSet<char>;
+    let mut _5: std::str::Chars<'_>;
+    let mut _7: std::str::Chars<'_>;
+    let mut _9: std::str::Chars<'_>;
+    let mut _11: std::iter::Copied<std::collections::hash_set::Intersection<'_, char, std::hash::RandomState>>;
+    let mut _12: std::collections::hash_set::Intersection<'_, char, std::hash::RandomState>;
+    let mut _13: &std::collections::HashSet<char>;
+    let _14: &std::collections::HashSet<char>;
+    let mut _15: std::option::Option<&char>;
+    let mut _16: &mut std::collections::hash_set::Intersection<'_, char, std::hash::RandomState>;
+    let mut _17: std::collections::hash_set::Intersection<'_, char, std::hash::RandomState>;
+    let mut _18: &std::collections::HashSet<char>;
+    let _19: &std::collections::HashSet<char>;
+    scope 1 {
+        debug first_set => _4;
+        let _6: std::collections::HashSet<char>;
+        scope 2 {
+            debug second_set => _6;
+            let _8: std::collections::HashSet<char>;
+            scope 3 {
+                debug third_set => _8;
+                let _10: std::collections::HashSet<char>;
+                scope 4 {
+                    debug first_second => _10;
+                }
+            }
+        }
+    }
+
+    bb0: {
+        StorageLive(_4);
+        StorageLive(_5);
+        _5 = core::str::<impl str>::chars(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _4 = <Chars<'_> as Iterator>::collect::<HashSet<char>>(move _5) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        StorageDead(_5);
+        StorageLive(_6);
+        StorageLive(_7);
+        _7 = core::str::<impl str>::chars(move _2) -> [return: bb3, unwind: bb20];
+    }
+
+    bb3: {
+        _6 = <Chars<'_> as Iterator>::collect::<HashSet<char>>(move _7) -> [return: bb4, unwind: bb20];
+    }
+
+    bb4: {
+        StorageDead(_7);
+        StorageLive(_8);
+        StorageLive(_9);
+        _9 = core::str::<impl str>::chars(move _3) -> [return: bb5, unwind: bb19];
+    }
+
+    bb5: {
+        _8 = <Chars<'_> as Iterator>::collect::<HashSet<char>>(move _9) -> [return: bb6, unwind: bb19];
+    }
+
+    bb6: {
+        StorageDead(_9);
+        StorageLive(_10);
+        StorageLive(_11);
+        StorageLive(_12);
+        StorageLive(_13);
+        _13 = &_4;
+        _14 = &_6;
+        _12 = HashSet::<char>::intersection(move _13, move _14) -> [return: bb7, unwind: bb18];
+    }
+
+    bb7: {
+        StorageDead(_13);
+        _11 = <std::collections::hash_set::Intersection<'_, char, RandomState> as Iterator>::copied::<'_, char>(move _12) -> [return: bb8, unwind: bb18];
+    }
+
+    bb8: {
+        StorageDead(_12);
+        _10 = <Copied<std::collections::hash_set::Intersection<'_, char, RandomState>> as Iterator>::collect::<HashSet<char>>(move _11) -> [return: bb9, unwind: bb18];
+    }
+
+    bb9: {
+        StorageDead(_11);
+        StorageLive(_15);
+        StorageLive(_16);
+        StorageLive(_17);
+        StorageLive(_18);
+        _18 = &_10;
+        _19 = &_8;
+        _17 = HashSet::<char>::intersection(move _18, move _19) -> [return: bb10, unwind: bb17];
+    }
+
+    bb10: {
+        _16 = &mut _17;
+        StorageDead(_18);
+        _15 = <std::collections::hash_set::Intersection<'_, char, RandomState> as Iterator>::next(move _16) -> [return: bb11, unwind: bb17];
+    }
+
+    bb11: {
+        StorageDead(_16);
+        _0 = Option::<&char>::copied(move _15) -> [return: bb12, unwind: bb17];
+    }
+
+    bb12: {
+        StorageDead(_15);
+        drop(_10) -> [return: bb13, unwind: bb18];
+    }
+
+    bb13: {
+        StorageDead(_10);
+        drop(_8) -> [return: bb14, unwind: bb19];
+    }
+
+    bb14: {
+        StorageDead(_8);
+        drop(_6) -> [return: bb15, unwind: bb20];
+    }
+
+    bb15: {
+        StorageDead(_6);
+        drop(_4) -> [return: bb16, unwind continue];
+    }
+
+    bb16: {
+        StorageDead(_4);
+        StorageDead(_17);
+        return;
+    }
+
+    bb17 (cleanup): {
+        drop(_10) -> [return: bb18, unwind terminate(cleanup)];
+    }
+
+    bb18 (cleanup): {
+        drop(_8) -> [return: bb19, unwind terminate(cleanup)];
+    }
+
+    bb19 (cleanup): {
+        drop(_6) -> [return: bb20, unwind terminate(cleanup)];
+    }
+
+    bb20 (cleanup): {
+        drop(_4) -> [return: bb21, unwind terminate(cleanup)];
+    }
+
+    bb21 (cleanup): {
+        resume;
+    }
+}
+
+fn items_to_bitset(_1: &str) -> u128 {
+    debug s => _1;
+    let mut _0: u128;
+    let mut _2: std::str::Bytes<'_>;
+
+    bb0: {
+        StorageLive(_2);
+        _2 = core::str::<impl str>::bytes(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = <std::str::Bytes<'_> as Iterator>::fold::<u128, {closure@advent_of_code\aoc2022\src\solver\day03.rs:89:27: 89:35}>(move _2, const 0_u128, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day03.rs:89:27: 89:35}) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        StorageDead(_2);
+        return;
+    }
+}
+
+fn items_to_bitset::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day03.rs:89:27: 89:35}, _2: u128, _3: u8) -> u128 {
+    debug acc => _2;
+    debug b => _3;
+    let mut _0: u128;
+    let mut _4: u128;
+
+    bb0: {
+        StorageLive(_4);
+        _4 = Shl(const 1_u128, copy _3);
+        _0 = BitOr(copy _2, move _4);
+        StorageDead(_4);
+        return;
+    }
+}
+
+fn find_common_item_bitset(_1: &str, _2: &str) -> Option<char> {
+    debug first => _1;
+    debug second => _2;
+    let mut _0: std::option::Option<char>;
+    let _3: u128;
+    let mut _4: u128;
+    let mut _5: u128;
+    let mut _6: bool;
+    let mut _7: char;
+    let mut _8: u8;
+    let mut _9: u32;
+    scope 1 {
+        debug intersection => _3;
+    }
+
+    bb0: {
+        StorageLive(_4);
+        _4 = items_to_bitset(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageLive(_5);
+        _5 = items_to_bitset(move _2) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _3 = BitAnd(move _4, move _5);
+        StorageDead(_5);
+        StorageDead(_4);
+        StorageLive(_6);
+        _6 = Eq(copy _3, const 0_u128);
+        switchInt(move _6) -> [0: bb4, otherwise: bb3];
+    }
+
+    bb3: {
+        _0 = const Option::<char>::None;
+        goto -> bb6;
+    }
+
+    bb4: {
+        StorageLive(_7);
+        StorageLive(_8);
+        StorageLive(_9);
+        _9 = core::num::<impl u128>::trailing_zeros(move _3) -> [return: bb5, unwind continue];
+    }
+
+    bb5: {
+        _8 = move _9 as u8 (IntToInt);
+        StorageDead(_9);
+        _7 = move _8 as char (IntToInt);
+        StorageDead(_8);
+        _0 = Option::<char>::Some(move _7);
+        StorageDead(_7);
+        goto -> bb6;
+    }
+
+    bb6: {
+        StorageDead(_6);
+        return;
+    }
+}
+
+fn find_badge_item_bitset(_1: &str, _2: &str, _3: &str) -> Option<char> {
+    debug first => _1;
+    debug second => _2;
+    debug third => _3;
+    let mut _0: std::option::Option<char>;
+    let _4: u128;
+    let mut _5: u128;
+    let mut _6: u128;
+    let mut _7: u128;
+    let mut _8: u128;
+    let mut _9: bool;
+    let mut _10: char;
+    let mut _11: u8;
+    let mut _12: u32;
+    scope 1 {
+        debug intersection => _4;
+    }
+
+    bb0: {
+        StorageLive(_5);
+        StorageLive(_6);
+        _6 = items_to_bitset(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageLive(_7);
+        _7 = items_to_bitset(move _2) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _5 = BitAnd(move _6, move _7);
+        StorageDead(_7);
+        StorageDead(_6);
+        StorageLive(_8);
+        _8 = items_to_bitset(move _3) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        _4 = BitAnd(move _5, move _8);
+        StorageDead(_8);
+        StorageDead(_5);
+        StorageLive(_9);
+        _9 = Eq(copy _4, const 0_u128);
+        switchInt(move _9) -> [0: bb5, otherwise: bb4];
+    }
+
+    bb4: {
+        _0 = const Option::<char>::None;
+        goto -> bb7;
+    }
+
+    bb5: {
+        StorageLive(_10);
+        StorageLive(_11);
+        StorageLive(_12);
+        _12 = core::num::<impl u128>::trailing_zeros(move _4) -> [return: bb6, unwind continue];
+    }
+
+    bb6: {
+        _11 = move _12 as u8 (IntToInt);
+        StorageDead(_12);
+        _10 = move _11 as char (IntToInt);
+        StorageDead(_11);
+        _0 = Option::<char>::Some(move _10);
+        StorageDead(_10);
+        goto -> bb7;
+    }
+
+    bb7: {
+        StorageDead(_9);
+        return;
+    }
+}
+
+fn day03::parse_input(_1: &str) -> Rucksacks {
+    debug input => _1;
+    let mut _0: solver::day03::Rucksacks;
+    let _2: std::vec::Vec<std::string::String>;
+    let mut _3: std::iter::Map<std::iter::Filter<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:129:17: 129:23}>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:130:14: 130:20}>;
+    let mut _4: std::iter::Filter<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:129:17: 129:23}>;
+    let mut _5: std::str::Lines<'_>;
+    scope 1 {
+        debug lines => _2;
+    }
+
+    bb0: {
+        StorageLive(_3);
+        StorageLive(_4);
+        StorageLive(_5);
+        _5 = core::str::<impl str>::lines(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _4 = <std::str::Lines<'_> as Iterator>::filter::<{closure@advent_of_code\aoc2022\src\solver\day03.rs:129:17: 129:23}>(move _5, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day03.rs:129:17: 129:23}) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        StorageDead(_5);
+        _3 = <Filter<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:129:17: 129:23}> as Iterator>::map::<String, {closure@advent_of_code\aoc2022\src\solver\day03.rs:130:14: 130:20}>(move _4, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day03.rs:130:14: 130:20}) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_4);
+        _2 = <Map<Filter<std::str::Lines<'_>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:129:17: 129:23}>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:130:14: 130:20}> as Iterator>::collect::<Vec<String>>(move _3) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_3);
+        _0 = Rucksacks { lines: copy _2 };
+        return;
+    }
+}
+
+fn day03::parse_input::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day03.rs:129:17: 129:23}, _2: &&str) -> bool {
+    debug line => _2;
+    let mut _0: bool;
+    let mut _3: bool;
+    let _4: &str;
+    let mut _5: &str;
+
+    bb0: {
+        StorageLive(_3);
+        _5 = copy (*_2);
+        _4 = core::str::<impl str>::trim(move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _3 = core::str::<impl str>::is_empty(move _4) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _0 = Not(move _3);
+        StorageDead(_3);
+        return;
+    }
+}
+
+fn day03::parse_input::{closure#1}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day03.rs:130:14: 130:20}, _2: &str) -> String {
+    debug line => _2;
+    let mut _0: std::string::String;
+
+    bb0: {
+        _0 = <str as ToString>::to_string(move _2) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}
+
+fn day03::solve_part1_impl(_1: &Rucksacks) -> u32 {
+    debug data => _1;
+    let mut _0: u32;
+    let mut _2: std::iter::FilterMap<std::slice::Iter<'_, std::string::String>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:143:21: 143:31}>;
+    let mut _3: std::slice::Iter<'_, std::string::String>;
+    let _4: &[std::string::String];
+    let mut _5: &std::vec::Vec<std::string::String>;
+
+    bb0: {
+        StorageLive(_2);
+        StorageLive(_3);
+        StorageLive(_5);
+        _5 = &((*_1).0: std::vec::Vec<std::string::String>);
+        _4 = <Vec<String> as Deref>::deref(move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_5);
+        _3 = core::slice::<impl [String]>::iter(move _4) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _2 = <std::slice::Iter<'_, String> as Iterator>::filter_map::<u32, {closure@advent_of_code\aoc2022\src\solver\day03.rs:143:21: 143:31}>(move _3, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day03.rs:143:21: 143:31}) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        _0 = <FilterMap<std::slice::Iter<'_, String>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:143:21: 143:31}> as Iterator>::sum::<u32>(move _2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+}
+
+fn day03::solve_part1_impl::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day03.rs:143:21: 143:31}, _2: &String) -> Option<u32> {
+    debug rucksack => _2;
+    let mut _0: std::option::Option<u32>;
+    let _3: usize;
+    let mut _4: usize;
+    let mut _7: (&str, &str);
+    let _8: &str;
+    let mut _9: std::option::Option<char>;
+    scope 1 {
+        debug mid => _3;
+        let _5: &str;
+        let _6: &str;
+        scope 2 {
+            debug first => _5;
+            debug second => _6;
+        }
+    }
+
+    bb0: {
+        StorageLive(_4);
+        _4 = String::len(copy _2) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _3 = Div(move _4, const 2_usize);
+        StorageDead(_4);
+        StorageLive(_7);
+        _8 = <String as Deref>::deref(move _2) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _7 = core::str::<impl str>::split_at(move _8, move _3) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        _5 = copy (_7.0: &str);
+        _6 = copy (_7.1: &str);
+        StorageDead(_7);
+        StorageLive(_9);
+        _9 = find_common_item(move _5, move _6) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        _0 = Option::<char>::map::<u32, fn(char) -> u32 {item_priority}>(move _9, item_priority) -> [return: bb5, unwind continue];
+    }
+
+    bb5: {
+        StorageDead(_9);
+        return;
+    }
+}
+
+fn solve_part1_bitset(_1: &Rucksacks) -> u32 {
+    debug data => _1;
+    let mut _0: u32;
+    let mut _2: std::iter::FilterMap<std::slice::Iter<'_, std::string::String>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:156:21: 156:31}>;
+    let mut _3: std::slice::Iter<'_, std::string::String>;
+    let _4: &[std::string::String];
+    let mut _5: &std::vec::Vec<std::string::String>;
+
+    bb0: {
+        StorageLive(_2);
+        StorageLive(_3);
+        StorageLive(_5);
+        _5 = &((*_1).0: std::vec::Vec<std::string::String>);
+        _4 = <Vec<String> as Deref>::deref(move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_5);
+        _3 = core::slice::<impl [String]>::iter(move _4) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _2 = <std::slice::Iter<'_, String> as Iterator>::filter_map::<u32, {closure@advent_of_code\aoc2022\src\solver\day03.rs:156:21: 156:31}>(move _3, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day03.rs:156:21: 156:31}) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        _0 = <FilterMap<std::slice::Iter<'_, String>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:156:21: 156:31}> as Iterator>::sum::<u32>(move _2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+}
+
+fn solve_part1_bitset::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day03.rs:156:21: 156:31}, _2: &String) -> Option<u32> {
+    debug rucksack => _2;
+    let mut _0: std::option::Option<u32>;
+    let _3: usize;
+    let mut _4: usize;
+    let mut _7: (&str, &str);
+    let _8: &str;
+    let mut _9: std::option::Option<char>;
+    scope 1 {
+        debug mid => _3;
+        let _5: &str;
+        let _6: &str;
+        scope 2 {
+            debug first => _5;
+            debug second => _6;
+        }
+    }
+
+    bb0: {
+        StorageLive(_4);
+        _4 = String::len(copy _2) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _3 = Div(move _4, const 2_usize);
+        StorageDead(_4);
+        StorageLive(_7);
+        _8 = <String as Deref>::deref(move _2) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _7 = core::str::<impl str>::split_at(move _8, move _3) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        _5 = copy (_7.0: &str);
+        _6 = copy (_7.1: &str);
+        StorageDead(_7);
+        StorageLive(_9);
+        _9 = find_common_item_bitset(move _5, move _6) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        _0 = Option::<char>::map::<u32, fn(char) -> u32 {item_priority}>(move _9, item_priority) -> [return: bb5, unwind continue];
+    }
+
+    bb5: {
+        StorageDead(_9);
+        return;
+    }
+}
+
+fn day03::solve_part2_impl(_1: &Rucksacks) -> u32 {
+    debug data => _1;
+    let mut _0: u32;
+    let mut _2: std::iter::FilterMap<std::slice::Chunks<'_, std::string::String>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:172:21: 172:28}>;
+    let mut _3: std::slice::Chunks<'_, std::string::String>;
+    let _4: &[std::string::String];
+    let mut _5: &std::vec::Vec<std::string::String>;
+
+    bb0: {
+        StorageLive(_2);
+        StorageLive(_3);
+        StorageLive(_5);
+        _5 = &((*_1).0: std::vec::Vec<std::string::String>);
+        _4 = <Vec<String> as Deref>::deref(move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_5);
+        _3 = core::slice::<impl [String]>::chunks(move _4, const 3_usize) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _2 = <Chunks<'_, String> as Iterator>::filter_map::<u32, {closure@advent_of_code\aoc2022\src\solver\day03.rs:172:21: 172:28}>(move _3, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day03.rs:172:21: 172:28}) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        _0 = <FilterMap<Chunks<'_, String>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:172:21: 172:28}> as Iterator>::sum::<u32>(move _2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+}
+
+fn day03::solve_part2_impl::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day03.rs:172:21: 172:28}, _2: &[String]) -> Option<u32> {
+    debug group => _2;
+    let mut _0: std::option::Option<u32>;
+    let mut _3: bool;
+    let mut _4: usize;
+    let mut _5: std::option::Option<char>;
+    let _6: &str;
+    let _7: &std::string::String;
+    let mut _8: bool;
+    let _9: &str;
+    let _10: &std::string::String;
+    let mut _11: bool;
+    let _12: &str;
+    let _13: &std::string::String;
+    let mut _14: bool;
+
+    bb0: {
+        StorageLive(_3);
+        _4 = PtrMetadata(copy _2);
+        _3 = Eq(copy _4, const 3_usize);
+        switchInt(move _3) -> [0: bb10, otherwise: bb1];
+    }
+
+    bb1: {
+        StorageLive(_5);
+        _8 = Lt(const 0_usize, copy _4);
+        assert(move _8, "index out of bounds: the length is {} but the index is {}", copy _4, const 0_usize) -> [success: bb2, unwind continue];
+    }
+
+    bb2: {
+        _7 = &(*_2)[0 of 1];
+        _6 = <String as Deref>::deref(move _7) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        _11 = Lt(const 1_usize, copy _4);
+        assert(move _11, "index out of bounds: the length is {} but the index is {}", copy _4, const 1_usize) -> [success: bb4, unwind continue];
+    }
+
+    bb4: {
+        _10 = &(*_2)[1 of 2];
+        _9 = <String as Deref>::deref(move _10) -> [return: bb5, unwind continue];
+    }
+
+    bb5: {
+        _14 = Lt(const 2_usize, copy _4);
+        assert(move _14, "index out of bounds: the length is {} but the index is {}", copy _4, const 2_usize) -> [success: bb6, unwind continue];
+    }
+
+    bb6: {
+        _13 = &(*_2)[2 of 3];
+        _12 = <String as Deref>::deref(move _13) -> [return: bb7, unwind continue];
+    }
+
+    bb7: {
+        _5 = find_badge_item(move _6, move _9, move _12) -> [return: bb8, unwind continue];
+    }
+
+    bb8: {
+        _0 = Option::<char>::map::<u32, fn(char) -> u32 {item_priority}>(move _5, item_priority) -> [return: bb9, unwind continue];
+    }
+
+    bb9: {
+        StorageDead(_5);
+        goto -> bb11;
+    }
+
+    bb10: {
+        _0 = const Option::<u32>::None;
+        goto -> bb11;
+    }
+
+    bb11: {
+        StorageDead(_3);
+        return;
+    }
+}
+
+alloc23 (size: 8, align: 4) {
+    00 00 00 00 __ __ __ __                         │ ....░░░░
+}
+
+fn solve_part2_bitset(_1: &Rucksacks) -> u32 {
+    debug data => _1;
+    let mut _0: u32;
+    let mut _2: std::iter::FilterMap<std::slice::Chunks<'_, std::string::String>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:186:21: 186:28}>;
+    let mut _3: std::slice::Chunks<'_, std::string::String>;
+    let _4: &[std::string::String];
+    let mut _5: &std::vec::Vec<std::string::String>;
+
+    bb0: {
+        StorageLive(_2);
+        StorageLive(_3);
+        StorageLive(_5);
+        _5 = &((*_1).0: std::vec::Vec<std::string::String>);
+        _4 = <Vec<String> as Deref>::deref(move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageDead(_5);
+        _3 = core::slice::<impl [String]>::chunks(move _4, const 3_usize) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _2 = <Chunks<'_, String> as Iterator>::filter_map::<u32, {closure@advent_of_code\aoc2022\src\solver\day03.rs:186:21: 186:28}>(move _3, const ZeroSized: {closure@advent_of_code\aoc2022\src\solver\day03.rs:186:21: 186:28}) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        StorageDead(_3);
+        _0 = <FilterMap<Chunks<'_, String>, {closure@advent_of_code\aoc2022\src\solver\day03.rs:186:21: 186:28}> as Iterator>::sum::<u32>(move _2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+}
+
+fn solve_part2_bitset::{closure#0}(_1: &mut {closure@advent_of_code\aoc2022\src\solver\day03.rs:186:21: 186:28}, _2: &[String]) -> Option<u32> {
+    debug group => _2;
+    let mut _0: std::option::Option<u32>;
+    let mut _3: bool;
+    let mut _4: usize;
+    let mut _5: std::option::Option<char>;
+    let _6: &str;
+    let _7: &std::string::String;
+    let mut _8: bool;
+    let _9: &str;
+    let _10: &std::string::String;
+    let mut _11: bool;
+    let _12: &str;
+    let _13: &std::string::String;
+    let mut _14: bool;
+
+    bb0: {
+        StorageLive(_3);
+        _4 = PtrMetadata(copy _2);
+        _3 = Eq(copy _4, const 3_usize);
+        switchInt(move _3) -> [0: bb10, otherwise: bb1];
+    }
+
+    bb1: {
+        StorageLive(_5);
+        _8 = Lt(const 0_usize, copy _4);
+        assert(move _8, "index out of bounds: the length is {} but the index is {}", copy _4, const 0_usize) -> [success: bb2, unwind continue];
+    }
+
+    bb2: {
+        _7 = &(*_2)[0 of 1];
+        _6 = <String as Deref>::deref(move _7) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        _11 = Lt(const 1_usize, copy _4);
+        assert(move _11, "index out of bounds: the length is {} but the index is {}", copy _4, const 1_usize) -> [success: bb4, unwind continue];
+    }
+
+    bb4: {
+        _10 = &(*_2)[1 of 2];
+        _9 = <String as Deref>::deref(move _10) -> [return: bb5, unwind continue];
+    }
+
+    bb5: {
+        _14 = Lt(const 2_usize, copy _4);
+        assert(move _14, "index out of bounds: the length is {} but the index is {}", copy _4, const 2_usize) -> [success: bb6, unwind continue];
+    }
+
+    bb6: {
+        _13 = &(*_2)[2 of 3];
+        _12 = <String as Deref>::deref(move _13) -> [return: bb7, unwind continue];
+    }
+
+    bb7: {
+        _5 = find_badge_item_bitset(move _6, move _9, move _12) -> [return: bb8, unwind continue];
+    }
+
+    bb8: {
+        _0 = Option::<char>::map::<u32, fn(char) -> u32 {item_priority}>(move _5, item_priority) -> [return: bb9, unwind continue];
+    }
+
+    bb9: {
+        StorageDead(_5);
+        goto -> bb11;
+    }
+
+    bb10: {
+        _0 = const Option::<u32>::None;
+        goto -> bb11;
+    }
+
+    bb11: {
+        StorageDead(_3);
+        return;
+    }
+}
+
+alloc24 (size: 8, align: 4) {
+    00 00 00 00 __ __ __ __                         │ ....░░░░
+}
+
+fn day03::solve(_1: &str) -> (u32, u32) {
+    debug input => _1;
+    let mut _0: (u32, u32);
+    let _2: solver::day03::Rucksacks;
+    let mut _3: u32;
+    let _4: &solver::day03::Rucksacks;
+    let mut _5: u32;
+    let _6: &solver::day03::Rucksacks;
+    scope 1 {
+        debug data => _2;
+    }
+
+    bb0: {
+        StorageLive(_2);
+        _2 = day03::parse_input(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageLive(_3);
+        _4 = &_2;
+        _3 = day03::solve_part1_impl(move _4) -> [return: bb2, unwind: bb5];
+    }
+
+    bb2: {
+        StorageLive(_5);
+        _6 = &_2;
+        _5 = day03::solve_part2_impl(move _6) -> [return: bb3, unwind: bb5];
+    }
+
+    bb3: {
+        _0 = (move _3, move _5);
+        StorageDead(_5);
+        StorageDead(_3);
+        drop(_2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+
+    bb5 (cleanup): {
+        drop(_2) -> [return: bb6, unwind terminate(cleanup)];
+    }
+
+    bb6 (cleanup): {
+        resume;
+    }
+}
+
+fn solve_bitset(_1: &str) -> (u32, u32) {
+    debug input => _1;
+    let mut _0: (u32, u32);
+    let _2: solver::day03::Rucksacks;
+    let mut _3: u32;
+    let _4: &solver::day03::Rucksacks;
+    let mut _5: u32;
+    let _6: &solver::day03::Rucksacks;
+    scope 1 {
+        debug data => _2;
+    }
+
+    bb0: {
+        StorageLive(_2);
+        _2 = day03::parse_input(move _1) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        StorageLive(_3);
+        _4 = &_2;
+        _3 = solve_part1_bitset(move _4) -> [return: bb2, unwind: bb5];
+    }
+
+    bb2: {
+        StorageLive(_5);
+        _6 = &_2;
+        _5 = solve_part2_bitset(move _6) -> [return: bb3, unwind: bb5];
+    }
+
+    bb3: {
+        _0 = (move _3, move _5);
+        StorageDead(_5);
+        StorageDead(_3);
+        drop(_2) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        StorageDead(_2);
+        return;
+    }
+
+    bb5 (cleanup): {
+        drop(_2) -> [return: bb6, unwind terminate(cleanup)];
+    }
+
+    bb6 (cleanup): {
+        resume;
+    }
+}
+
+fn run_day(_1: usize, _2: &str) -> Result<(String, String), anyhow::Error> {
+    debug day => _1;
+    debug input => _2;
+    let mut _0: std::result::Result<(std::string::String, std::string::String), anyhow::Error>;
+    let _3: usize;
+    let _4: usize;
+    let mut _5: (usize, usize);
+    let mut _6: (std::string::String, std::string::String);
+    let mut _7: std::string::String;
+    let mut _8: &usize;
+    let mut _9: std::string::String;
+    let mut _10: &usize;
+    let _11: usize;
+    let _12: usize;
+    let mut _13: (usize, usize);
+    let mut _14: (std::string::String, std::string::String);
+    let mut _15: std::string::String;
+    let mut _16: &usize;
+    let mut _17: std::string::String;
+    let mut _18: &usize;
+    let _19: u32;
+    let _20: u32;
+    let mut _21: (u32, u32);
+    let mut _22: (std::string::String, std::string::String);
+    let mut _23: std::string::String;
+    let mut _24: &u32;
+    let mut _25: std::string::String;
+    let mut _26: &u32;
+    let _27: anyhow::Error;
+    let mut _28: std::fmt::Arguments<'_>;
+    let mut _29: &usize;
+    let mut _31: core::fmt::rt::Argument<'_>;
+    let _32: &[core::fmt::rt::Argument<'_>; 1];
+    scope 1 {
+        debug p1 => _3;
+        debug p2 => _4;
+    }
+    scope 2 {
+        debug p1 => _11;
+        debug p2 => _12;
+    }
+    scope 3 {
+        debug p1 => _19;
+        debug p2 => _20;
+    }
+    scope 4 {
+        debug error => _27;
+    }
+    scope 5 {
+        debug ((args: (&usize,)).0: &usize) => _29;
+        let _30: [core::fmt::rt::Argument<'_>; 1];
+        scope 6 {
+            debug args => _30;
+        }
+    }
+
+    bb0: {
+        switchInt(copy _1) -> [1: bb4, 2: bb3, 3: bb2, otherwise: bb1];
+    }
+
+    bb1: {
+        StorageLive(_28);
+        _29 = &_1;
+        StorageLive(_30);
+        StorageLive(_31);
+        _31 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _29) -> [return: bb14, unwind continue];
+    }
+
+    bb2: {
+        StorageLive(_21);
+        _21 = day03::solve(move _2) -> [return: bb11, unwind continue];
+    }
+
+    bb3: {
+        StorageLive(_13);
+        _13 = day02::solve(move _2) -> [return: bb8, unwind continue];
+    }
+
+    bb4: {
+        StorageLive(_5);
+        _5 = day01::solve(move _2) -> [return: bb5, unwind continue];
+    }
+
+    bb5: {
+        StorageLive(_3);
+        _3 = copy (_5.0: usize);
+        StorageLive(_4);
+        _4 = copy (_5.1: usize);
+        StorageDead(_5);
+        StorageLive(_6);
+        StorageLive(_7);
+        StorageLive(_8);
+        _8 = &_3;
+        _7 = <usize as ToString>::to_string(move _8) -> [return: bb6, unwind continue];
+    }
+
+    bb6: {
+        StorageDead(_8);
+        StorageLive(_9);
+        StorageLive(_10);
+        _10 = &_4;
+        _9 = <usize as ToString>::to_string(move _10) -> [return: bb7, unwind: bb20];
+    }
+
+    bb7: {
+        StorageDead(_10);
+        _6 = (move _7, move _9);
+        StorageDead(_9);
+        StorageDead(_7);
+        _0 = Result::<(String, String), anyhow::Error>::Ok(move _6);
+        StorageDead(_6);
+        StorageDead(_4);
+        StorageDead(_3);
+        goto -> bb17;
+    }
+
+    bb8: {
+        StorageLive(_11);
+        _11 = copy (_13.0: usize);
+        StorageLive(_12);
+        _12 = copy (_13.1: usize);
+        StorageDead(_13);
+        StorageLive(_14);
+        StorageLive(_15);
+        StorageLive(_16);
+        _16 = &_11;
+        _15 = <usize as ToString>::to_string(move _16) -> [return: bb9, unwind continue];
+    }
+
+    bb9: {
+        StorageDead(_16);
+        StorageLive(_17);
+        StorageLive(_18);
+        _18 = &_12;
+        _17 = <usize as ToString>::to_string(move _18) -> [return: bb10, unwind: bb19];
+    }
+
+    bb10: {
+        StorageDead(_18);
+        _14 = (move _15, move _17);
+        StorageDead(_17);
+        StorageDead(_15);
+        _0 = Result::<(String, String), anyhow::Error>::Ok(move _14);
+        StorageDead(_14);
+        StorageDead(_12);
+        StorageDead(_11);
+        goto -> bb17;
+    }
+
+    bb11: {
+        StorageLive(_19);
+        _19 = copy (_21.0: u32);
+        StorageLive(_20);
+        _20 = copy (_21.1: u32);
+        StorageDead(_21);
+        StorageLive(_22);
+        StorageLive(_23);
+        StorageLive(_24);
+        _24 = &_19;
+        _23 = <u32 as ToString>::to_string(move _24) -> [return: bb12, unwind continue];
+    }
+
+    bb12: {
+        StorageDead(_24);
+        StorageLive(_25);
+        StorageLive(_26);
+        _26 = &_20;
+        _25 = <u32 as ToString>::to_string(move _26) -> [return: bb13, unwind: bb18];
+    }
+
+    bb13: {
+        StorageDead(_26);
+        _22 = (move _23, move _25);
+        StorageDead(_25);
+        StorageDead(_23);
+        _0 = Result::<(String, String), anyhow::Error>::Ok(move _22);
+        StorageDead(_22);
+        StorageDead(_20);
+        StorageDead(_19);
+        goto -> bb17;
+    }
+
+    bb14: {
+        _30 = [move _31];
+        StorageDead(_31);
+        _32 = &_30;
+        _28 = Arguments::<'_>::new::<155, 1>(const b"\x04Day \xc0; not implemented yet (valid range: 1-25). To implement day \xc8\x00\x00\x17, create src/solver/day\xcb \x00\x00i\x02\x00\x00\x003.rs and uncomment the corresponding lines in mod.rs\x00", move _32) -> [return: bb15, unwind continue];
+    }
+
+    bb15: {
+        _27 = format_err(move _28) -> [return: bb16, unwind continue];
+    }
+
+    bb16: {
+        StorageDead(_28);
+        StorageDead(_30);
+        _0 = Result::<(String, String), anyhow::Error>::Err(copy _27);
+        goto -> bb17;
+    }
+
+    bb17: {
+        return;
+    }
+
+    bb18 (cleanup): {
+        drop(_23) -> [return: bb21, unwind terminate(cleanup)];
+    }
+
+    bb19 (cleanup): {
+        drop(_15) -> [return: bb21, unwind terminate(cleanup)];
+    }
+
+    bb20 (cleanup): {
+        drop(_7) -> [return: bb21, unwind terminate(cleanup)];
+    }
+
+    bb21 (cleanup): {
+        resume;
+    }
+}
+
+alloc20 (size: 155, align: 1) {
+    0x00 │ 04 44 61 79 20 c0 3b 20 6e 6f 74 20 69 6d 70 6c │ .Day .; not impl
+    0x10 │ 65 6d 65 6e 74 65 64 20 79 65 74 20 28 76 61 6c │ emented yet (val
+    0x20 │ 69 64 20 72 61 6e 67 65 3a 20 31 2d 32 35 29 2e │ id range: 1-25).
+    0x30 │ 20 54 6f 20 69 6d 70 6c 65 6d 65 6e 74 20 64 61 │  To implement da
+    0x40 │ 79 20 c8 00 00 17 2c 20 63 72 65 61 74 65 20 73 │ y ...., create s
+    0x50 │ 72 63 2f 73 6f 6c 76 65 72 2f 64 61 79 cb 20 00 │ rc/solver/day. .
+    0x60 │ 00 69 02 00 00 00 33 2e 72 73 20 61 6e 64 20 75 │ .i....3.rs and u
+    0x70 │ 6e 63 6f 6d 6d 65 6e 74 20 74 68 65 20 63 6f 72 │ ncomment the cor
+    0x80 │ 72 65 73 70 6f 6e 64 69 6e 67 20 6c 69 6e 65 73 │ responding lines
+    0x90 │ 20 69 6e 20 6d 6f 64 2e 72 73 00                │  in mod.rs.
+}
