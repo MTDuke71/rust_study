@@ -598,3 +598,5 @@ fn items_to_bitset_u64(s: &str) -> u64 {
 Generated: 2025-01-04
 Example: AoC 2022 Day 3 bitset optimization
 Purpose: Accurate assembly analysis (correcting speculative documentation)
+
+[[Index]]

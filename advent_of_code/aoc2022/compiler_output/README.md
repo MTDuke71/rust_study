@@ -216,3 +216,4 @@ bts rax, r8    ; Single instruction
 *Generated: February 3, 2026*  
 *Purpose: Learning resource for Rust compilation pipeline*  
 *Example: AoC 2022 Day 3 bitset optimization*
+[[Index]]

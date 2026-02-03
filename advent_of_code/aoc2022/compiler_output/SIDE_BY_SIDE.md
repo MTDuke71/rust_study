@@ -289,3 +289,6 @@ Result: 23.8µs (15× faster than HashSet version)
 - MIR: `aoc2022.mir` line 1330
 - LLVM IR: `aoc2022.ll` (inlined, search for `shl i128`)
 - Assembly: `aoc2022.s` (inlined, search for `bts`)
+
+
+[[Index]]

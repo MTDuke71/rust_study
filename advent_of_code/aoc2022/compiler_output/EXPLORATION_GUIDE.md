@@ -573,3 +573,4 @@ cargo asm --rust --release aoc2022::solver::day03::find_common_item_bitset
 *Generated: February 3, 2026*  
 *Purpose: Practical guide to exploring compiler output*  
 *Files: aoc2022.mir (66KB), aoc2022.ll (686KB), aoc2022.s (217KB)*
+[[Index]]
