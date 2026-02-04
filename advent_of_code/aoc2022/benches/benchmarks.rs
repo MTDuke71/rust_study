@@ -1,7 +1,7 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 // Import solvers as you implement them
-use aoc2022::solver::{day01, day02, day03};
+use aoc2022::solver::{day01, day02, day03, day04};
 
 fn benchmark_day01(c: &mut Criterion) {
     let input = include_str!("../inputs/day01.txt");
@@ -51,11 +51,24 @@ fn benchmark_day03(c: &mut Criterion) {
     });
 }
 
+fn benchmark_day04(c: &mut Criterion) {
+    let input = include_str!("../inputs/day04.txt");
+
+    c.bench_function("day04_parse", |b| {
+        b.iter(|| day04::parse_input(black_box(input)))
+    });
+
+    c.bench_function("day04_combined", |b| {
+        b.iter(|| day04::solve(black_box(input)))
+    });
+}
+
 criterion_group!(
     benches,
     benchmark_day01,
     benchmark_day02,
     benchmark_day03,
+    benchmark_day04,
 );
 
 criterion_main!(benches);

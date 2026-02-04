@@ -240,6 +240,7 @@ if visited.contains(&current) {
 - None (set theory is foundational)
 
 ### **Related Mathematical Concepts**:
+- [[interval-arithmetic]] - Continuous ranges as special sets with containment/overlap algorithms
 - [[number-theory-basics]] - Sets of integers with special properties (primes, etc.)
 - [[graph-theory-fundamentals]] - Graphs use sets of vertices and edges
 - [[combinatorics-basics]] - Counting subsets, permutations of sets
