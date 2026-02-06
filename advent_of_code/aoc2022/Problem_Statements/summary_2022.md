@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (5/25 complete)
+**Status**: 🎯 In Progress (6/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 5/25 |
-| **Total Runtime** | 183.6µs (bitset optimized) |
-| **Average per Day** | 36.7µs |
-| **Fastest Day** | Day 2 (21.5µs) |
+| **Progress** | 6/25 |
+| **Total Runtime** | 195.0µs (bitset optimized) |
+| **Average per Day** | 32.5µs |
+| **Fastest Day** | Day 6 (11.4µs) |
 | **Slowest Day** | Day 5 (85.0µs) |
 | **Mission Integration** | 0 days |
-| **Patterns Extracted** | 6 patterns |
+| **Patterns Extracted** | 8 patterns |
 | **Optimizations Applied** | Day 3 bitset (15× speedup) |
 
-**1-Second Goal**: 🎯 0.184ms / 1000ms (0.018%)
+**1-Second Goal**: 🎯 0.195ms / 1000ms (0.020%)
 
 ---
 
@@ -30,9 +30,10 @@
 | [3](days/day03.md) | - | - | ~~359.2µs~~ **23.8µs** | Bitset intersection | - | **Optimized**: HashSet→Bitset (15× faster) · [Guide →](days/day03_function_guide.md) |
 | [4](days/day04.md) | - | - | 27.7µs | Range overlap | - | Endpoint comparison, O(1) checks · [Guide →](days/day04_function_guide.md) |
 | [5](days/day05.md) | 66.3µs | 78.7µs | 85.0µs | Stack simulation | - | ASCII art parsing, Vec as stack · [Guide →](days/day05_function_guide.md) |
+| [6](days/day06.md) | 1.46µs | 10.06µs | 11.4µs | Sliding window + bitset | - | No parse step, `.windows()` iterator · [Guide →](days/day06_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 183.6µs (0.184ms)  
+**Cumulative Runtime**: 195.0µs (0.195ms)  
 **Optimization Impact**: Day 3 bitset reduced total from 519.0µs → 183.6µs (2.8× improvement)
 
 ---
@@ -45,7 +46,8 @@
 - [Day 3](days/day03.md) - Rucksack Reorganization ✅ | [Function Guide](days/day03_function_guide.md) | [Code](../../aoc2022/src/solver/day03.rs)
 - [Day 4](days/day04.md) - Camp Cleanup ✅ | [Function Guide](days/day04_function_guide.md) | [Code](../../aoc2022/src/solver/day04.rs)
 - [Day 5](days/day05.md) - Supply Stacks ✅ | [Function Guide](days/day05_function_guide.md) | [Code](../../aoc2022/src/solver/day05.rs)
-- Day 6-25: Not yet started
+- [Day 6](days/day06.md) - Tuning Trouble ✅ | [Function Guide](days/day06_function_guide.md) | [Code](../../aoc2022/src/solver/day06.rs)
+- Day 7-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -55,6 +57,7 @@
 - [Day 3 Function Guide](days/day03_function_guide.md) - Set intersection, chunking, ASCII priority mapping
 - [Day 4 Function Guide](days/day04_function_guide.md) - Range containment/overlap, interval arithmetic
 - [Day 5 Function Guide](days/day05_function_guide.md) - Stack simulation, ASCII art parsing, Vec operations
+- [Day 6 Function Guide](days/day06_function_guide.md) - Sliding window, bitset uniqueness, `.windows()` iterator
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -64,13 +67,14 @@
 ## 🎯 Algorithms Used
 
 *Updated as days are completed*
-- **Parsing**: Day 1 (groups), Day 2 (lines), Day 3 (chars), Day 4 (range parsing), Day 5 (ASCII art)
+- **Parsing**: Day 1 (groups), Day 2 (lines), Day 3 (chars), Day 4 (range parsing), Day 5 (ASCII art), Day 6 (none — raw bytes)
 - **Sorting**: Day 1 (top-k)
 - **Lookup Tables**: Day 2 (3×3 precomputed scores)
 - **Set Operations**: Day 3 (bitset intersection - optimized from HashSet)
-- **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations)
+- **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 bitset for uniqueness/popcount)
 - **Range/Interval Operations**: Day 4 (containment, overlap)
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
+- **Sliding Window**: Day 6 (`.windows(n)` iterator for fixed-size window)
 - **Simulation**: Day 5 (crane operations)
 - **Grid**: Day -
 - **Graph**: Day -
@@ -78,9 +82,10 @@
 - **Math**: Day 4 (interval arithmetic, set theory)
 
 ### Complexity Analysis
-- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop)
+- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (popcount per window)
 - **O(log n)**: Day -
 - **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art)
+- **O(n × w)**: Day 6 (sliding window: n positions × w window size)
 - **O(n * m)**: Day 3 HashSet (replaced by O(n) bitset), Day 5 (simulation: moves × crates)
 - **O(n log n)**: Day 1 (sorting for top-3)
 - **O(n²)**: Day -
@@ -100,6 +105,8 @@
 - **Type-driven design** (Day 4): Create domain types (`Range`, `RangePair`) that encapsulate logic and prevent errors
 - **ASCII art parsing** (Day 5): Character position extraction at fixed columns (1, 5, 9, 13...), bottom-to-top processing
 - **Vec as stack** (Day 5): Natural LIFO with push/pop; `split_off` for bulk operations preserving order
+- **Sliding window + bitset** (Day 6): `.windows(n)` with u32 popcount for uniqueness — zero allocations, ~11µs total
+- **Parameterized core** (Day 6): Single `find_marker(input, window_size)` function serves both parts — differ only in a constant
 - **Group splitting pattern** (Day 1, 5): Using `.split("\n\n")` for blank-line delimited sections
 - **Parse-once pattern** (Day 1): Separate parsing from solving, reuse parsed data for both parts (49% speedup)
 
@@ -149,12 +156,16 @@
 - Const arrays for compile-time lookup tables
 - `split_off()` and `extend()` for bulk Vec operations (Day 5)
 - Character position indexing in strings for ASCII art parsing (Day 5)
+- `.windows(n)` for zero-allocation sliding windows (Day 6)
+- `.position()` for short-circuit first-match search (Day 6)
+- `count_ones()` / popcount for hardware-accelerated bit counting (Day 6)
 
 ### Days with Quick Solutions
 - Day 1: 25.6µs - straightforward group parsing and sorting
 - Day 2: 21.5µs - optimal lookup table approach (already near-perfect)
 - Day 3: 23.8µs - after bitset optimization (originally 359µs with HashSet)
 - Day 4: 27.7µs - simple range endpoint comparisons, parsing dominates 95% of runtime
+- Day 6: 11.4µs - fastest day, no parsing needed, sliding window + bitset
 
 ### Days with Comprehensive Function Guides
 - Day 1: Full breakdown of parsing, max/top-k patterns, performance analysis
@@ -162,11 +173,12 @@
 - Day 3: Set intersection, bitset optimization (15× speedup)
 - Day 4: Range operations, interval arithmetic, mathematical foundations
 - Day 5: Stack simulation, ASCII art parsing, Vec operations, Part 1 vs Part 2 differences
+- Day 6: Sliding window, bitset uniqueness, `.windows()` iterator, zero-allocation design
 
 ---
 
-**Last Updated**: 2026-02-05 (Day 5 complete)  
-**Next Update**: After Day 6
+**Last Updated**: 2026-02-06 (Day 6 complete)  
+**Next Update**: After Day 7
 
 ---
 
