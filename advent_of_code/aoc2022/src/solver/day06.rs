@@ -2,12 +2,14 @@
 //!
 //! **Problem**: Find first position where the last N characters are all unique.
 //!
-//! **Approach**: Sliding window with bitset uniqueness check.
+//! **Approach**: Rolling XOR bitset with O(1) per slide.
 //!
 //! **Key Insights**:
 //! - Part 1: Window size 4 (start-of-packet marker)
 //! - Part 2: Window size 14 (start-of-message marker)
-//! - Bitset uniqueness: set bit per char, popcount == window size means all unique
+//! - XOR toggles bits: odd count = ON, even count = OFF
+//! - If popcount == window_size, all chars appear exactly once (unique)
+//! - Rolling XOR: XOR out leaving char, XOR in entering char — O(1) per slide
 
 // ============================================================================
 // Core Algorithm
@@ -15,19 +17,34 @@
 
 /// Find the first position where the last `window_size` characters are all unique.
 /// Returns the 1-based position (number of characters processed).
+///
+/// Uses a rolling XOR bitset: each bit represents a letter (a=0, b=1, ..., z=25).
+/// XOR toggles bits — a character appearing an odd number of times has its bit ON,
+/// even number of times has its bit OFF. If `count_ones() == window_size`, then
+/// `w` distinct bits are ON, meaning `w` distinct characters each appear an odd
+/// number of times. Since we have exactly `w` characters total, each must appear
+/// exactly once — uniqueness confirmed.
+///
+/// Rolling update: XOR out the leaving byte, XOR in the entering byte.
+/// Complexity: O(n) total — two XOR ops + one popcount per slide.
 fn find_marker(input: &[u8], window_size: usize) -> usize {
-    input
-        .windows(window_size)
-        .position(|window| {
-            // Use a u32 bitset - each bit represents a letter (a=0, b=1, ..., z=25)
-            let mut bits: u32 = 0;
-            for &b in window {
-                bits |= 1 << (b - b'a');
-            }
-            bits.count_ones() as usize == window_size
-        })
-        .map(|pos| pos + window_size)
-        .expect("No marker found in input")
+    let mut bits: u32 = 0;
+
+    for (i, &b) in input.iter().enumerate() {
+        // XOR in the entering character (toggles its bit)
+        bits ^= 1 << (b - b'a');
+
+        // XOR out the leaving character (once window is full)
+        if i >= window_size {
+            bits ^= 1 << (input[i - window_size] - b'a');
+        }
+
+        // Check: window is full and all chars are unique
+        if i >= window_size - 1 && bits.count_ones() as usize == window_size {
+            return i + 1;
+        }
+    }
+    panic!("No marker found in input");
 }
 
 // ============================================================================

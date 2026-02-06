@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 6/25 |
-| **Total Runtime** | 195.0µs (bitset optimized) |
-| **Average per Day** | 32.5µs |
-| **Fastest Day** | Day 6 (11.4µs) |
+| **Total Runtime** | 188.4µs (XOR bitset optimized) |
+| **Average per Day** | 31.4µs |
+| **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 5 (85.0µs) |
 | **Mission Integration** | 0 days |
-| **Patterns Extracted** | 8 patterns |
-| **Optimizations Applied** | Day 3 bitset (15× speedup) |
+| **Patterns Extracted** | 10 patterns |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×) |
 
-**1-Second Goal**: 🎯 0.195ms / 1000ms (0.020%)
+**1-Second Goal**: 🎯 0.188ms / 1000ms (0.019%)
 
 ---
 
@@ -30,11 +30,11 @@
 | [3](days/day03.md) | - | - | ~~359.2µs~~ **23.8µs** | Bitset intersection | - | **Optimized**: HashSet→Bitset (15× faster) · [Guide →](days/day03_function_guide.md) |
 | [4](days/day04.md) | - | - | 27.7µs | Range overlap | - | Endpoint comparison, O(1) checks · [Guide →](days/day04_function_guide.md) |
 | [5](days/day05.md) | 66.3µs | 78.7µs | 85.0µs | Stack simulation | - | ASCII art parsing, Vec as stack · [Guide →](days/day05_function_guide.md) |
-| [6](days/day06.md) | 1.46µs | 10.06µs | 11.4µs | Sliding window + bitset | - | No parse step, `.windows()` iterator · [Guide →](days/day06_function_guide.md) |
+| [6](days/day06.md) | ~~1.46µs~~ **1.11µs** | ~~10.06µs~~ **3.69µs** | ~~11.4µs~~ **4.80µs** | Rolling XOR bitset | - | **Optimized**: Rebuild→Rolling XOR (2.4× faster) · [Guide →](days/day06_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 195.0µs (0.195ms)  
-**Optimization Impact**: Day 3 bitset reduced total from 519.0µs → 183.6µs (2.8× improvement)
+**Cumulative Runtime**: 188.4µs (0.188ms)  
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×) — reduced total from 519.0µs → 188.4µs
 
 ---
 
@@ -57,7 +57,7 @@
 - [Day 3 Function Guide](days/day03_function_guide.md) - Set intersection, chunking, ASCII priority mapping
 - [Day 4 Function Guide](days/day04_function_guide.md) - Range containment/overlap, interval arithmetic
 - [Day 5 Function Guide](days/day05_function_guide.md) - Stack simulation, ASCII art parsing, Vec operations
-- [Day 6 Function Guide](days/day06_function_guide.md) - Sliding window, bitset uniqueness, `.windows()` iterator
+- [Day 6 Function Guide](days/day06_function_guide.md) - Rolling XOR bitset, 3-version optimization journey, branchless design
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -71,10 +71,10 @@
 - **Sorting**: Day 1 (top-k)
 - **Lookup Tables**: Day 2 (3×3 precomputed scores)
 - **Set Operations**: Day 3 (bitset intersection - optimized from HashSet)
-- **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 bitset for uniqueness/popcount)
+- **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 XOR bitset for rolling uniqueness)
 - **Range/Interval Operations**: Day 4 (containment, overlap)
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
-- **Sliding Window**: Day 6 (`.windows(n)` iterator for fixed-size window)
+- **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
 - **Simulation**: Day 5 (crane operations)
 - **Grid**: Day -
 - **Graph**: Day -
@@ -82,10 +82,9 @@
 - **Math**: Day 4 (interval arithmetic, set theory)
 
 ### Complexity Analysis
-- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (popcount per window)
+- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide)
 - **O(log n)**: Day -
-- **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art)
-- **O(n × w)**: Day 6 (sliding window: n positions × w window size)
+- **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art), Day 6 (rolling XOR — window-size independent)
 - **O(n * m)**: Day 3 HashSet (replaced by O(n) bitset), Day 5 (simulation: moves × crates)
 - **O(n log n)**: Day 1 (sorting for top-3)
 - **O(n²)**: Day -
@@ -105,8 +104,9 @@
 - **Type-driven design** (Day 4): Create domain types (`Range`, `RangePair`) that encapsulate logic and prevent errors
 - **ASCII art parsing** (Day 5): Character position extraction at fixed columns (1, 5, 9, 13...), bottom-to-top processing
 - **Vec as stack** (Day 5): Natural LIFO with push/pop; `split_off` for bulk operations preserving order
-- **Sliding window + bitset** (Day 6): `.windows(n)` with u32 popcount for uniqueness — zero allocations, ~11µs total
+- **Rolling XOR bitset** (Day 6): XOR toggle + popcount for uniqueness — O(1) per slide, branchless (rebuild→freq→XOR: 11.4µs→6.0µs→4.8µs)
 - **Parameterized core** (Day 6): Single `find_marker(input, window_size)` function serves both parts — differ only in a constant
+- **Iterative optimization** (Day 6): Three-version journey: algorithm improvement (O(n×w)→O(n)), then implementation improvement (branches→branchless)
 - **Group splitting pattern** (Day 1, 5): Using `.split("\n\n")` for blank-line delimited sections
 - **Parse-once pattern** (Day 1): Separate parsing from solving, reuse parsed data for both parts (49% speedup)
 
@@ -130,11 +130,13 @@
 
 *Documented when significant optimizations are made (>2x speedup)*
 
-### Day X: [Optimization Name]
-**Before**: XXX.Xms  
-**After**: XX.Xµs  
-**Speedup**: XXXx faster  
-**Technique**: [Brief description]
+### Day 6: Rebuild Bitset → Rolling XOR Bitset (2.4× speedup)
+- **v1 (Rebuild bitset)**: 11.43µs — OR all `w` bytes per window, O(n×w)
+- **v2 (Freq counter)**: 5.96µs — rolling add/remove, O(n) but 4 branches per slide
+- **v3 (Rolling XOR)**: 4.80µs — XOR toggle + popcount, O(n) branchless
+- **Technique**: XOR is its own inverse (`a ^ b ^ b == a`), so XOR-out leaving char and XOR-in entering char. Popcount == window_size means all unique.
+- **Key Insight (from learner)**: "XOR out the exiting bit, XOR in the new bit" — eliminates both redundant work AND branches
+- **Impact**: Part 2 improved most (10.06µs → 3.69µs = 2.7×) because v1's O(w) inner loop hurt more with w=14
 
 ---
 
@@ -156,16 +158,16 @@
 - Const arrays for compile-time lookup tables
 - `split_off()` and `extend()` for bulk Vec operations (Day 5)
 - Character position indexing in strings for ASCII art parsing (Day 5)
-- `.windows(n)` for zero-allocation sliding windows (Day 6)
-- `.position()` for short-circuit first-match search (Day 6)
-- `count_ones()` / popcount for hardware-accelerated bit counting (Day 6)
+- XOR toggle (`^=`) for branchless rolling window state (Day 6)
+- `count_ones()` / popcount for hardware-accelerated bit counting (Day 3, 6)
+- Direct byte indexing for O(1) sliding window access (Day 6)
 
 ### Days with Quick Solutions
 - Day 1: 25.6µs - straightforward group parsing and sorting
 - Day 2: 21.5µs - optimal lookup table approach (already near-perfect)
 - Day 3: 23.8µs - after bitset optimization (originally 359µs with HashSet)
 - Day 4: 27.7µs - simple range endpoint comparisons, parsing dominates 95% of runtime
-- Day 6: 11.4µs - fastest day, no parsing needed, sliding window + bitset
+- Day 6: 4.80µs - fastest day, no parsing, rolling XOR bitset (optimized from 11.4µs)
 
 ### Days with Comprehensive Function Guides
 - Day 1: Full breakdown of parsing, max/top-k patterns, performance analysis
@@ -173,7 +175,7 @@
 - Day 3: Set intersection, bitset optimization (15× speedup)
 - Day 4: Range operations, interval arithmetic, mathematical foundations
 - Day 5: Stack simulation, ASCII art parsing, Vec operations, Part 1 vs Part 2 differences
-- Day 6: Sliding window, bitset uniqueness, `.windows()` iterator, zero-allocation design
+- Day 6: Three-version optimization journey (rebuild→freq→XOR), rolling XOR bitset, branchless design
 
 ---
 
@@ -191,3 +193,12 @@
 - **Key Insight**: Intersection = single bitwise AND vs HashSet iteration
 - **Trade-off**: Only works for bounded character sets (perfect for a-z, A-Z)
 - **Impact**: Reduced total AoC 2022 runtime from 406.3µs → 70.9µs (5.7× overall improvement)
+
+### Day 6: Rebuild Bitset → Rolling XOR (2.4× speedup)
+- **Before**: 11.43µs (rebuild u32 bitset per window, O(n×w))
+- **v2**: 5.96µs (rolling frequency counter, O(n) but 4 branches per slide)
+- **After**: 4.80µs (rolling XOR bitset, O(n) branchless)
+- **Technique**: XOR toggle + popcount — XOR is self-inverse, so XOR-out leaving / XOR-in entering
+- **Key Insight**: Learner-driven — "XOR out the exiting bit, XOR in the new bit"
+- **Trade-off**: Only works when window size ≤ 32 (u32 bits) and chars map to unique bit positions
+- **Impact**: Part 2 improved most dramatically (10.06µs → 3.69µs) because O(w) inner loop eliminated

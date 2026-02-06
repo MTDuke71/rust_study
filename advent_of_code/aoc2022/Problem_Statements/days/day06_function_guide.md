@@ -9,26 +9,64 @@ Find the first position in a datastream where the last N characters are all uniq
 
 **Answer**: Part 1: `1140` | Part 2: `3495`
 
-## Performance Benchmarks
-- **Part 1**: 1.46µs
-- **Part 2**: 10.06µs
-- **Combined**: 11.43µs
+## Performance Benchmarks (Final — Rolling XOR Bitset)
+- **Part 1**: 1.11µs
+- **Part 2**: 3.69µs
+- **Combined**: 4.80µs
 - **Parse**: N/A (no parsing step — works directly on raw bytes)
 
-**Note**: This is the fastest day so far and the simplest solution (~90 lines). No separate parse step means zero overhead from data transformation.
+**Note**: Fastest day by far. No parse step, single `u32` of state, branchless rolling updates.
 
-## Core Algorithm: Sliding Window + Bitset Uniqueness
+## Optimization Journey
 
-Slide a fixed-size window across the input bytes. For each window position, build a u32 bitset where each bit represents a letter (a=0, b=1, ..., z=25). If `popcount == window_size`, all characters are unique — we found the marker.
+This solution went through three iterations, each building on insights from the previous:
+
+| Version | Technique | Part 1 | Part 2 | Combined | Key Change |
+|---------|-----------|--------|--------|----------|------------|
+| **v1** | Rebuild bitset per window | 1.46µs | 10.06µs | 11.43µs | Baseline |
+| **v2** | Rolling frequency counter | 1.48µs | 4.48µs | 5.96µs | O(1) per slide |
+| **v3** | Rolling XOR bitset | **1.11µs** | **3.69µs** | **4.80µs** | Branchless |
+
+**Total speedup**: 2.4× (11.43µs → 4.80µs)
+
+### v1 → v2: Eliminate redundant work (O(n×w) → O(n))
+**Problem identified**: Every window position rebuilt the entire bitset by OR-ing all `w` bytes. The overlapping bytes between adjacent windows were reprocessed.
+
+**Solution**: Rolling frequency counter — add entering character, remove leaving character. Track unique count incrementally with branch logic (freq goes 0→1: unique++, 1→2: unique--, 2→1: unique++, 1→0: unique--).
+
+**Result**: Part 1 unchanged (w=4 too small to matter), Part 2 cut from 10.06µs → 4.48µs (2.25×). The O(n×w) → O(n) complexity reduction pays off when `w` grows.
+
+### v2 → v3: Eliminate branches (frequency array → XOR bitset)
+**Problem identified**: The frequency counter needed 4 conditional branches per slide (two for entering char, two for leaving char), plus array read/write operations.
+
+**Insight from user**: *"What about XOR out the exiting bit and XOR in the new bit?"* — XOR toggles bits, giving odd-count = ON, even-count = OFF. With exactly `w` characters in the window, `popcount == w` means `w` distinct bits are ON, so each character appears an odd number of times. Since we have only `w` total characters, each must appear exactly once.
+
+**Solution**: Replace 26-byte frequency array + 4 branches with single `u32` + 2 XOR ops + 1 popcount. Completely branchless per-slide update.
+
+**Result**: Part 1 improved 1.48µs → 1.11µs (25%), Part 2 improved 4.48µs → 3.69µs (18%). The branch elimination benefits both window sizes.
+
+### Why Each Approach Was Worth Exploring
+
+| Approach | Teaches | Limitation Discovered |
+|----------|---------|----------------------|
+| **v1: Rebuild bitset** | `.windows()` iterator, bitset basics, popcount | Redundant work — rebuilds entire bitset each slide |
+| **v2: Freq counter** | Rolling window technique, incremental state | Branch-heavy — 4 conditionals per slide position |
+| **v3: XOR bitset** | XOR toggle property, branchless design | None for this problem — optimal |
+
+---
+
+## Core Algorithm: Rolling XOR Bitset
+
+For each byte position, XOR its bit into a `u32`. XOR toggles — first occurrence sets the bit ON, second toggles it OFF. When the window is full, also XOR out the leaving byte. Check `count_ones() == window_size` for uniqueness.
 
 **Algorithm**:
-1. Convert input to byte slice (`as_bytes()`)
-2. Use `.windows(n)` iterator for sliding window
-3. For each window, build bitset via `bits |= 1 << (byte - b'a')`
+1. Maintain a single `u32` bitset (26 bits for a-z)
+2. For each byte: `bits ^= 1 << (byte - b'a')` — XOR in
+3. When window full: `bits ^= 1 << (leaving - b'a')` — XOR out
 4. Check `bits.count_ones() == window_size`
-5. Return 1-based position: `index + window_size`
+5. Return 1-based position: `i + 1`
 
-**Time Complexity**: O(n × w) where n = input length, w = window size  
+**Time Complexity**: O(n) — constant work per position regardless of window size  
 **Space Complexity**: O(1) — single u32 register, no heap allocation
 
 ---
@@ -42,29 +80,35 @@ Slide a fixed-size window across the input bytes. For each window position, buil
 
 ```rust
 fn find_marker(input: &[u8], window_size: usize) -> usize {
-    input
-        .windows(window_size)
-        .position(|window| {
-            let mut bits: u32 = 0;
-            for &b in window {
-                bits |= 1 << (b - b'a');
-            }
-            bits.count_ones() as usize == window_size
-        })
-        .map(|pos| pos + window_size)
-        .expect("No marker found in input")
+    let mut bits: u32 = 0;
+
+    for (i, &b) in input.iter().enumerate() {
+        // XOR in the entering character (toggles its bit)
+        bits ^= 1 << (b - b'a');
+
+        // XOR out the leaving character (once window is full)
+        if i >= window_size {
+            bits ^= 1 << (input[i - window_size] - b'a');
+        }
+
+        // Check: window is full and all chars are unique
+        if i >= window_size - 1 && bits.count_ones() as usize == window_size {
+            return i + 1;
+        }
+    }
+    panic!("No marker found in input");
 }
 ```
 
 **Key Points**:
-- **Input**: Raw byte slice — avoids any string allocation or char conversion
-- **Bitset**: `u32` is sufficient for 26 lowercase letters (only 26 of 32 bits used)
-- **Uniqueness check**: If any letter repeats, its bit is already set, so `count_ones() < window_size`
-- **Return value**: 1-based position (number of characters processed), not 0-based index
+- **XOR toggle**: `^= 1 << bit_pos` flips the bit — ON if odd count, OFF if even count
+- **Correctness**: With `w` total chars, `popcount == w` means `w` distinct chars each appear odd times → exactly once
+- **Branchless update**: Two XOR ops per slide (no conditionals on character state)
+- **Hardware popcount**: `count_ones()` maps to single `POPCNT` instruction
 
-**Why u32 not u128?**: Day 3 used u128 because it needed to represent all ASCII (a-z, A-Z = 52 values). Day 6 only has lowercase letters, so u32 (32 bits) is more than enough and fits in a single register.
+**Why u32 not u128?**: Day 3 used u128 for a-z + A-Z (52 values). Day 6 only has lowercase (26 values), so u32 suffices and fits in a single register.
 
-**Complexity**: O(n × w) per call  
+**Complexity**: O(n) per call — window size doesn't affect per-position cost  
 **Used By**: `solve_part1_impl()`, `solve_part2_impl()`
 
 ---
@@ -80,8 +124,6 @@ fn solve_part1_impl(input: &str) -> usize {
 }
 ```
 
-**Window Size**: 4 — finds the first 4-character sequence with all unique chars
-
 ---
 
 #### `solve_part2_impl(input: &str) -> usize`
@@ -92,8 +134,6 @@ fn solve_part2_impl(input: &str) -> usize {
     find_marker(input.trim().as_bytes(), 14)
 }
 ```
-
-**Window Size**: 14 — finds the first 14-character sequence with all unique chars
 
 ---
 
@@ -108,92 +148,113 @@ pub fn solve(input: &str) -> (usize, usize) {
 }
 ```
 
-**Note**: Unlike Day 5, there is no shared parsed state — each part independently scans the input. The combined benchmark (11.43µs) is roughly Part 1 + Part 2, confirming no parse-once optimization is needed (or possible) here.
+**Note**: No shared parsed state — each part independently scans the input. Combined benchmark (4.80µs) is roughly Part 1 + Part 2.
 
 ---
 
 ## Algorithm Deep Dive
 
-### Why Bitset Works
+### Why XOR Works for Uniqueness
 
-The problem asks: "are all characters in this window unique?" The bitset answers this in O(w) time with O(1) space:
+XOR toggles bits. In a window of `w` characters:
+- Character appearing **1 time** (odd) → bit is **ON**
+- Character appearing **2 times** (even) → bit is **OFF** (toggled back)
+- Character appearing **3 times** (odd) → bit is **ON** again
+
+If `count_ones() == w`, then `w` distinct bits are ON. Each of those `w` characters appears an odd number of times. But we only have `w` total characters — so each must appear exactly **once**.
 
 ```
-Window: "jpqm"
-  j → bit 9 set     → bits = 0000...0000_0010_0000_0000
-  p → bit 15 set    → bits = 0000...1000_0010_0000_0000
-  q → bit 16 set    → bits = 0001...1000_0010_0000_0000
-  m → bit 12 set    → bits = 0001...1001_0010_0000_0000
+Window: "jpqm" (all unique)
+  j → XOR bit 9    → bits = ...0010_0000_0000    count=1
+  p → XOR bit 15   → bits = ...1000_0010_0000_0000    count=2
+  q → XOR bit 16   → bits = ..1_0000_1000_0010_0000_0000    count=3
+  m → XOR bit 12   → bits = ..1_0000_1001_0010_0000_0000    count=4
 
 count_ones() = 4 == window_size(4) → All unique! ✓
 ```
 
-If a character repeats, its bit is already set — OR is idempotent:
 ```
-Window: "jpjm"
-  j → bit 9 set     → bits = 0000...0000_0010_0000_0000
-  p → bit 15 set    → bits = 0000...1000_0010_0000_0000
-  j → bit 9 ALREADY SET → bits unchanged
-  m → bit 12 set    → bits = 0000...1001_0010_0000_0000
+Window: "jpjm" (j appears twice)
+  j → XOR bit 9    → bits = ...0010_0000_0000    count=1
+  p → XOR bit 15   → bits = ...1000_0010_0000_0000    count=2
+  j → XOR bit 9    → bits = ...1000_0000_0000_0000    count=1  (j toggled OFF!)
+  m → XOR bit 12   → bits = ...1001_0000_0000_0000    count=2
 
-count_ones() = 3 ≠ 4 → Duplicate detected! ✗
+count_ones() = 2 ≠ 4 → Duplicate detected! ✗
 ```
 
-### Part 2 is ~7× Slower Than Part 1
+### Rolling Update Visualization
+
+```
+Input: a b c d e f ...
+       └─────┘         Window [0..4]: XOR in a,b,c,d → check
+         └─────┘       Window [1..5]: XOR out a, XOR in e → check
+           └─────┘     Window [2..6]: XOR out b, XOR in f → check
+
+Per slide: 2 XOR ops + 1 popcount (constant, regardless of window size)
+```
+
+### Part 2 vs Part 1 Scaling (After Optimization)
 
 | Factor | Part 1 (w=4) | Part 2 (w=14) |
 |--------|-------------|---------------|
-| Window size | 4 bytes | 14 bytes |
-| Inner loop iterations | 4 per window | 14 per window |
+| Work per slide | 2 XORs + popcount | 2 XORs + popcount (same!) |
 | Positions checked | ~1140 | ~3495 |
-| Time | 1.46µs | 10.06µs |
+| Time | 1.11µs | 3.69µs |
+| Ratio | 1× | 3.3× |
 
-Part 2 is slower because:
-1. **Larger window** → 3.5× more work per position (14 vs 4 OR operations)
-2. **Later marker** → 3× more positions to check before finding answer (3495 vs 1140)
-3. **Combined**: ~3.5 × ~2 ≈ ~7× slowdown — matches observed 6.9× ratio
+After optimization, the ratio is **3.3×** (purely from checking more positions) vs the original **6.9×** (positions × window rebuilding). Eliminating per-slide window-size dependence collapsed the ratio to just the position difference.
 
-### Alternative Approaches Not Taken
+### All Three Approaches Compared
 
-| Approach | Pros | Cons |
-|----------|------|------|
-| **HashSet per window** | Readable, handles any chars | Heap allocation per window, ~10-50× slower |
-| **Rolling hash** | O(1) per slide | Complex implementation, hash collisions |
-| **Frequency counter** | O(w) update, O(1) check | Array of 26 counters, more bookkeeping |
-| **Bitset (chosen)** | Zero alloc, simple, fast | Only works for bounded char set |
+```
+v1: Rebuild bitset          v2: Frequency counter       v3: Rolling XOR
+─────────────────           ─────────────────           ─────────────────
+Per window:                 Per slide:                  Per slide:
+  for b in window:            freq[entering] += 1         bits ^= entering
+    bits |= 1 << b           freq[leaving] -= 1          bits ^= leaving
+  popcount(bits)              update unique count         popcount(bits)
+                              (4 branches)
+                            
+O(w) per position           O(1) per position           O(1) per position
+w=14: 14 OR ops             4 branches + array ops      2 XORs + popcount
+11.43µs combined            5.96µs combined             4.80µs combined
+```
 
-The frequency counter with rolling updates (add entering char, remove leaving char) would give O(1) per slide instead of O(w), but for w ≤ 14 the constant factor overhead makes it slower in practice. The bitset approach wins by being dead simple.
+**v1 → v2**: Algorithmic improvement (eliminate redundant work)  
+**v2 → v3**: Implementation improvement (eliminate branches)  
+Both matter. The best solution combines the right algorithm with the right implementation.
 
 ---
 
 ## Rust Techniques
 
-### `.windows(n)` Iterator
+### XOR for Toggle
 ```rust
-// Creates overlapping windows of size n from a slice
-[1, 2, 3, 4, 5].windows(3)
-// Yields: [1,2,3], [2,3,4], [3,4,5]
+let mut bits: u32 = 0;
+bits ^= 1 << 5;  // Set bit 5 ON
+bits ^= 1 << 5;  // Toggle bit 5 OFF
+bits ^= 1 << 5;  // Toggle bit 5 ON again
 ```
-**Key property**: Yields `&[T]` slices — zero allocation, just pointer arithmetic over the original data.
-
-### `.position()` for First Match
-```rust
-iterator.position(|item| predicate(item))
-// Returns: Option<usize> — index of first match
-```
-**Short-circuits**: Stops iterating as soon as the predicate returns true. Perfect for "find first" problems.
+**Property**: XOR is its own inverse — `a ^ b ^ b == a`. This makes it perfect for rolling window add/remove without tracking counts.
 
 ### `count_ones()` / Popcount
 ```rust
 let bits: u32 = 0b1010_1100;
 bits.count_ones()  // Returns 4
 ```
-**Hardware instruction**: Maps to x86 `POPCNT` — single cycle on modern CPUs. This makes the uniqueness check essentially free.
+**Hardware instruction**: Maps to x86 `POPCNT` — single cycle on modern CPUs.
 
 ### No Parse Step Required
 This is the only AoC 2022 problem so far that needs no parsing:
 - Input is a single line of lowercase ASCII
 - `trim().as_bytes()` is the entire "parse" — just a pointer + length
+
+### Direct Byte Indexing
+```rust
+input[i - window_size]  // Access leaving byte by index
+```
+Unlike v1's `.windows()` iterator approach, v3 uses direct byte indexing into the input slice. This avoids creating window sub-slices entirely.
 
 ---
 
@@ -221,24 +282,27 @@ This is the only AoC 2022 problem so far that needs no parsing:
 
 ## Key Insights
 
-1. **Simplest problem, simplest solution**: ~90 lines total including tests. Both parts differ only in a single constant (4 vs 14). The right abstraction (`find_marker` parameterized by window size) makes the whole thing trivial.
+1. **Question the approach, not just the algorithm**: The initial bitset solution was "correct" and fast enough — but asking "are we doing redundant work?" led to the rolling approach, and asking "can we remove branches?" led to XOR. Each question yielded measurable improvement.
 
-2. **Bitset reuse from Day 3**: Same core technique (u32/u128 bitmask for character sets), different application. Day 3 used intersection (AND); Day 6 uses uniqueness (popcount). Pattern recognition across problems is the real skill.
+2. **XOR is its own inverse**: `a ^ b ^ b == a`. This property makes XOR perfect for rolling window add/remove without needing a frequency array to track counts. One register instead of 26 bytes.
 
-3. **No parsing needed**: Working directly on `&[u8]` eliminates an entire category of complexity. The input format is so simple that transformation would only add overhead.
+3. **Branchless beats branchy for tight loops**: The frequency counter (v2) needed 4 conditional branches per slide. XOR (v3) needs zero. On modern CPUs with branch prediction, this matters in tight inner loops where every cycle counts.
 
-4. **`.windows()` is the perfect tool**: Rust's stdlib iterator produces exactly the sliding windows we need with zero allocation. This is why knowing your stdlib matters — without `.windows()`, you'd write manual index arithmetic.
+4. **Optimization has diminishing returns with window size**: v1→v2 helped Part 2 dramatically (10µs → 4.5µs) but not Part 1. v2→v3 helped both by constant factor. Know when your optimization targets algorithm complexity vs. constant factor.
 
-5. **Hardware popcount**: `count_ones()` compiles to a single CPU instruction (`POPCNT`), making the bitset uniqueness check essentially free compared to any collection-based approach.
+5. **Bitset reuse from Day 3**: Third application of bit manipulation in 6 days. Day 3 used OR+AND for intersection, Day 6 v1 used OR+popcount for uniqueness, Day 6 v3 uses XOR+popcount for rolling uniqueness. The building blocks compose.
+
+6. **Simplest problem drove deepest optimization**: Day 6 has the simplest input and shortest solution, yet produced the richest optimization discussion. Simple problems create room to focus on technique rather than fighting problem complexity.
 
 ---
 
 ## Zettelkasten Links
 
 *Mathematics & Algorithms*:
-- [[sliding-window-technique]] - Fixed-size window over sequential data
+- [[sliding-window-technique]] - Fixed-size window over sequential data, rolling state updates
 - [[bitset-optimization]] - Bit manipulation for set operations (reused from Day 3)
 - [[set-theory-fundamentals]] - Uniqueness = set cardinality equals input count
+- [[xor-properties]] - Self-inverse property, toggle semantics, branchless design
 
 *Rust Patterns*:
 - [[iterator-patterns]] - `.windows()`, `.position()`, method chaining
@@ -246,7 +310,7 @@ This is the only AoC 2022 problem so far that needs no parsing:
 
 *Related Problems*:
 - Day 3: Same bitset technique for set intersection
-- Future sliding window problems will reuse `find_marker` pattern
+- Future sliding window problems will reuse rolling XOR pattern
 
 ---
 
