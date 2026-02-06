@@ -324,6 +324,8 @@
 - [[BFS Patterns]] - Breadth-first search for shortest paths
 - [[DFS Patterns]] - Depth-first search and backtracking
 - [[Graph Network Density]] - Network connectivity metrics and graph analysis
+- [[sliding-window-patterns]] - Fixed/variable window algorithms, rolling state, XOR bitset uniqueness
+- [[xor-properties]] - XOR self-inverse property, branchless bit toggling, rolling window applications
 
 ### **Production Algorithm Tools**
 

@@ -245,6 +245,8 @@ let first = data.par_iter().find_first(|x| is_solution(x));
 
 ## Level 5: Bit Manipulation
 
+See also: [[xor-properties]] for XOR toggle semantics, [[sliding-window-patterns]] for rolling state techniques.
+
 ### Bitsets for State
 
 ```rust
@@ -460,6 +462,10 @@ Before optimizing, ask:
 - [[hashmap-fundamentals]] - O(1) key-value lookups
 - [[Collections MOC]] - All Rust collection types
 - [[spatial-indexing-pattern]] - Coordinate-to-entity lookup (246.8x speedup on Day 3)
+
+### Bit Manipulation & Sliding Windows
+- [[xor-properties]] - XOR self-inverse, branchless toggles, rolling bitset uniqueness
+- [[sliding-window-patterns]] - Fixed/variable window patterns, rolling state, O(n) stream processing
 
 ### AoC Specific
 - [[AoC Pattern Library]] - Reusable solution patterns
