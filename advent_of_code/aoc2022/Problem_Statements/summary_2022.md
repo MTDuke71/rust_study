@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 7/25 |
-| **Total Runtime** | 208.0µs |
-| **Average per Day** | 29.7µs |
+| **Total Runtime** | 198.6µs |
+| **Average per Day** | 28.4µs |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 5 (85.0µs) |
 | **Mission Integration** | 0 days |
 | **Patterns Extracted** | 12 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) |
 
-**1-Second Goal**: 🎯 0.208ms / 1000ms (0.021%)
+**1-Second Goal**: 🎯 0.199ms / 1000ms (0.020%)
 
 ---
 
@@ -31,11 +31,11 @@
 | [4](days/day04.md) | - | - | 27.7µs | Range overlap | - | Endpoint comparison, O(1) checks · [Guide →](days/day04_function_guide.md) |
 | [5](days/day05.md) | 66.3µs | 78.7µs | 85.0µs | Stack simulation | - | ASCII art parsing, Vec as stack · [Guide →](days/day05_function_guide.md) |
 | [6](days/day06.md) | ~~1.46µs~~ **1.11µs** | ~~10.06µs~~ **3.69µs** | ~~11.4µs~~ **4.80µs** | Rolling XOR bitset | - | **Optimized**: Rebuild→Rolling XOR (2.4× faster) · [Guide →](days/day06_function_guide.md) |
-| [7](days/day07.md) | - | - | 19.6µs | Stack accumulation | - | **Optimized**: HashMap→Stack (23× faster) · [Guide →](days/day07_function_guide.md) |
+| [7](days/day07.md) | - | - | 9.32µs | Stack accumulation | - | **Optimized**: HashMap→Stack (23×), parse-once (2×) · [Guide →](days/day07_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 208.0µs (0.208ms)  
-**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×)
+**Cumulative Runtime**: 198.6µs (0.199ms)  
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) + parse-once (2×)
 
 ---
 
@@ -144,12 +144,13 @@
 - **Key Insight (from learner)**: "XOR out the exiting bit, XOR in the new bit" — eliminates both redundant work AND branches
 - **Impact**: Part 2 improved most (10.06µs → 3.69µs = 2.7×) because v1's O(w) inner loop hurt more with w=14
 
-### Day 7: HashMap → Stack Accumulation (23× speedup)
+### Day 7: HashMap → Stack Accumulation (23×) + Parse-Once (2×)
 - **v1 (HashMap<String, u64>)**: 455µs — build path string keys per file × depth, hash lookups
-- **v2 (Vec<u64> stack)**: 19.6µs — push/pop running totals, zero String allocations
-- **Technique**: cd/cd.. commands naturally form a stack. File sizes accumulate at stack top; cd.. pops and rolls up to parent. No directory names needed.
-- **Key Insight**: We only need directory *sizes*, not names or structure. The HashMap keys (path strings) were pure overhead.
-- **Impact**: 23× faster by eliminating ~5,000 String format! allocations per solve call
+- **v2 (Vec<u64> stack)**: 19.6µs — push/pop running totals, zero String allocations (23× faster)
+- **v3 (Parse-once)**: 9.32µs — compute_dir_sizes() once, shared by both parts (2× faster)
+- **Technique**: cd/cd.. naturally form a stack. Sizes accumulate at top; cd.. pops + rolls to parent.
+- **Key Insight**: Only need *sizes*, not names. HashMap keys were overhead. Parse-once pattern avoids double work.
+- **Impact**: Combined 49× speedup (455µs → 9.32µs)
 
 ---
 
@@ -185,7 +186,7 @@
 - Day 3: 23.8µs - after bitset optimization (originally 359µs with HashSet)
 - Day 4: 27.7µs - simple range endpoint comparisons, parsing dominates 95% of runtime
 - Day 6: 4.80µs - fastest day, no parsing, rolling XOR bitset (optimized from 11.4µs)
-- Day 7: 19.6µs - stack accumulation, optimized from 455µs HashMap version (23×)
+- Day 7: 9.32µs - stack accumulation + parse-once (optimized from 455µs HashMap, then parse-once from 18.5µs)
 
 ### Days with Comprehensive Function Guides
 - Day 1: Full breakdown of parsing, max/top-k patterns, performance analysis
@@ -222,10 +223,11 @@
 - **Trade-off**: Only works when window size ≤ 32 (u32 bits) and chars map to unique bit positions
 - **Impact**: Part 2 improved most dramatically (10.06µs → 3.69µs) because O(w) inner loop eliminated
 
-### Day 7: HashMap → Stack Accumulation (23× speedup)
-- **Before**: 455µs (HashMap<String, u64> with format! path keys per file per depth)
-- **After**: 19.6µs (Vec<u64> stack accumulation, zero String allocations)
-- **Technique**: cd/cd.. = push/pop on a running totals stack. File sizes accumulate at top; pop rolls up to parent.
-- **Key Insight**: We only need directory *sizes*, not their names. HashMap keys were pure overhead.
-- **Trade-off**: Loses directory names (can't query "what's the size of /a/e?"), but the problem doesn't need that.
-- **Impact**: 23× speedup; would have added 455µs to total runtime without optimization
+### Day 7: HashMap→Stack (23×) + Parse-Once (2×)
+- **v1 (HashMap)**: 455µs — String allocations for path keys
+- **v2 (Stack)**: 19.6µs — Vec<u64> running totals (23×)
+- **v3 (Parse-once)**: 9.32µs — compute_dir_sizes() called once (2×)
+- **Technique**: cd/cd.. = stack push/pop. Parse-once pattern: share parsed data between parts.
+- **Key Insight**: Only need sizes, not names. Don't reparse when you can share data.
+- **Trade-off**: Name-free stack can't handle directory revisits (works for AoC's strict DFS inputs).
+- **Impact**: 49× total speedup; parse-once saved 9.3µs (would add 455µs without any optimization)
