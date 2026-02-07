@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (6/25 complete)
+**Status**: 🎯 In Progress (7/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 6/25 |
-| **Total Runtime** | 188.4µs (XOR bitset optimized) |
-| **Average per Day** | 31.4µs |
+| **Progress** | 7/25 |
+| **Total Runtime** | 208.0µs |
+| **Average per Day** | 29.7µs |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 5 (85.0µs) |
 | **Mission Integration** | 0 days |
-| **Patterns Extracted** | 10 patterns |
-| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×) |
+| **Patterns Extracted** | 12 patterns |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) |
 
-**1-Second Goal**: 🎯 0.188ms / 1000ms (0.019%)
+**1-Second Goal**: 🎯 0.208ms / 1000ms (0.021%)
 
 ---
 
@@ -31,10 +31,11 @@
 | [4](days/day04.md) | - | - | 27.7µs | Range overlap | - | Endpoint comparison, O(1) checks · [Guide →](days/day04_function_guide.md) |
 | [5](days/day05.md) | 66.3µs | 78.7µs | 85.0µs | Stack simulation | - | ASCII art parsing, Vec as stack · [Guide →](days/day05_function_guide.md) |
 | [6](days/day06.md) | ~~1.46µs~~ **1.11µs** | ~~10.06µs~~ **3.69µs** | ~~11.4µs~~ **4.80µs** | Rolling XOR bitset | - | **Optimized**: Rebuild→Rolling XOR (2.4× faster) · [Guide →](days/day06_function_guide.md) |
+| [7](days/day07.md) | - | - | 19.6µs | Stack accumulation | - | **Optimized**: HashMap→Stack (23× faster) · [Guide →](days/day07_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 188.4µs (0.188ms)  
-**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×) — reduced total from 519.0µs → 188.4µs
+**Cumulative Runtime**: 208.0µs (0.208ms)  
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×)
 
 ---
 
@@ -47,7 +48,8 @@
 - [Day 4](days/day04.md) - Camp Cleanup ✅ | [Function Guide](days/day04_function_guide.md) | [Code](../../aoc2022/src/solver/day04.rs)
 - [Day 5](days/day05.md) - Supply Stacks ✅ | [Function Guide](days/day05_function_guide.md) | [Code](../../aoc2022/src/solver/day05.rs)
 - [Day 6](days/day06.md) - Tuning Trouble ✅ | [Function Guide](days/day06_function_guide.md) | [Code](../../aoc2022/src/solver/day06.rs)
-- Day 7-25: Not yet started
+- [Day 7](days/day07.md) - No Space Left On Device ✅ | [Function Guide](days/day07_function_guide.md) | [Code](../../aoc2022/src/solver/day07.rs)
+- Day 8-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -58,6 +60,7 @@
 - [Day 4 Function Guide](days/day04_function_guide.md) - Range containment/overlap, interval arithmetic
 - [Day 5 Function Guide](days/day05_function_guide.md) - Stack simulation, ASCII art parsing, Vec operations
 - [Day 6 Function Guide](days/day06_function_guide.md) - Rolling XOR bitset, 3-version optimization journey, branchless design
+- [Day 7 Function Guide](days/day07_function_guide.md) - Stack-based size accumulation, HashMap→Stack optimization (23×)
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -75,6 +78,7 @@
 - **Range/Interval Operations**: Day 4 (containment, overlap)
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
 - **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
+- **Stack-Based Traversal**: Day 7 (DFS-style filesystem accumulation)
 - **Simulation**: Day 5 (crane operations)
 - **Grid**: Day -
 - **Graph**: Day -
@@ -84,7 +88,7 @@
 ### Complexity Analysis
 - **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide)
 - **O(log n)**: Day -
-- **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art), Day 6 (rolling XOR — window-size independent)
+- **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art), Day 6 (rolling XOR — window-size independent), Day 7 (single-pass stack accumulation)
 - **O(n * m)**: Day 3 HashSet (replaced by O(n) bitset), Day 5 (simulation: moves × crates)
 - **O(n log n)**: Day 1 (sorting for top-3)
 - **O(n²)**: Day -
@@ -107,6 +111,8 @@
 - **Rolling XOR bitset** (Day 6): XOR toggle + popcount for uniqueness — O(1) per slide, branchless (rebuild→freq→XOR: 11.4µs→6.0µs→4.8µs)
 - **Parameterized core** (Day 6): Single `find_marker(input, window_size)` function serves both parts — differ only in a constant
 - **Iterative optimization** (Day 6): Three-version journey: algorithm improvement (O(n×w)→O(n)), then implementation improvement (branches→branchless)
+- **Stack-based DFS accumulation** (Day 7): cd/cd.. naturally form a stack; accumulate sizes on pop, eliminating tree construction entirely
+- **Data structure elimination** (Day 7): HashMap<String, u64> → Vec<u64> stack (23× speedup). When you only need values, don't pay for keys.
 - **Group splitting pattern** (Day 1, 5): Using `.split("\n\n")` for blank-line delimited sections
 - **Parse-once pattern** (Day 1): Separate parsing from solving, reuse parsed data for both parts (49% speedup)
 
@@ -138,6 +144,13 @@
 - **Key Insight (from learner)**: "XOR out the exiting bit, XOR in the new bit" — eliminates both redundant work AND branches
 - **Impact**: Part 2 improved most (10.06µs → 3.69µs = 2.7×) because v1's O(w) inner loop hurt more with w=14
 
+### Day 7: HashMap → Stack Accumulation (23× speedup)
+- **v1 (HashMap<String, u64>)**: 455µs — build path string keys per file × depth, hash lookups
+- **v2 (Vec<u64> stack)**: 19.6µs — push/pop running totals, zero String allocations
+- **Technique**: cd/cd.. commands naturally form a stack. File sizes accumulate at stack top; cd.. pops and rolls up to parent. No directory names needed.
+- **Key Insight**: We only need directory *sizes*, not names or structure. The HashMap keys (path strings) were pure overhead.
+- **Impact**: 23× faster by eliminating ~5,000 String format! allocations per solve call
+
 ---
 
 ## 🎓 Learning Highlights
@@ -161,6 +174,10 @@
 - XOR toggle (`^=`) for branchless rolling window state (Day 6)
 - `count_ones()` / popcount for hardware-accelerated bit counting (Day 3, 6)
 - Direct byte indexing for O(1) sliding window access (Day 6)
+- `Vec` as stack with `push(0)` / `pop()` for DFS accumulation (Day 7)
+- `last_mut().unwrap()` for O(1) mutable access to stack top (Day 7)
+- `starts_with()` for fast line classification without full parsing (Day 7)
+- `saturating_sub()` for safe arithmetic avoiding underflow (Day 7)
 
 ### Days with Quick Solutions
 - Day 1: 25.6µs - straightforward group parsing and sorting
@@ -168,6 +185,7 @@
 - Day 3: 23.8µs - after bitset optimization (originally 359µs with HashSet)
 - Day 4: 27.7µs - simple range endpoint comparisons, parsing dominates 95% of runtime
 - Day 6: 4.80µs - fastest day, no parsing, rolling XOR bitset (optimized from 11.4µs)
+- Day 7: 19.6µs - stack accumulation, optimized from 455µs HashMap version (23×)
 
 ### Days with Comprehensive Function Guides
 - Day 1: Full breakdown of parsing, max/top-k patterns, performance analysis
@@ -176,11 +194,12 @@
 - Day 4: Range operations, interval arithmetic, mathematical foundations
 - Day 5: Stack simulation, ASCII art parsing, Vec operations, Part 1 vs Part 2 differences
 - Day 6: Three-version optimization journey (rebuild→freq→XOR), rolling XOR bitset, branchless design
+- Day 7: Stack-based DFS accumulation, HashMap→Stack optimization (23×), structural insight: sizes don't need names
 
 ---
 
-**Last Updated**: 2026-02-06 (Day 6 complete)  
-**Next Update**: After Day 7
+**Last Updated**: 2026-02-07 (Day 7 complete)  
+**Next Update**: After Day 8
 
 ---
 
@@ -202,3 +221,11 @@
 - **Key Insight**: Learner-driven — "XOR out the exiting bit, XOR in the new bit"
 - **Trade-off**: Only works when window size ≤ 32 (u32 bits) and chars map to unique bit positions
 - **Impact**: Part 2 improved most dramatically (10.06µs → 3.69µs) because O(w) inner loop eliminated
+
+### Day 7: HashMap → Stack Accumulation (23× speedup)
+- **Before**: 455µs (HashMap<String, u64> with format! path keys per file per depth)
+- **After**: 19.6µs (Vec<u64> stack accumulation, zero String allocations)
+- **Technique**: cd/cd.. = push/pop on a running totals stack. File sizes accumulate at top; pop rolls up to parent.
+- **Key Insight**: We only need directory *sizes*, not their names. HashMap keys were pure overhead.
+- **Trade-off**: Loses directory names (can't query "what's the size of /a/e?"), but the problem doesn't need that.
+- **Impact**: 23× speedup; would have added 455µs to total runtime without optimization
