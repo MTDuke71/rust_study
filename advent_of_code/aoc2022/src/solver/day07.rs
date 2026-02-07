@@ -9,6 +9,10 @@
 //! A stack of running totals mirrors the directory depth. When we `cd ..`,
 //! the popped size rolls up into the parent and gets collected into a flat
 //! list. One pass, zero allocations beyond the stack and results Vec.
+//!
+//! **Limitation**: Since we don't track directory names, revisiting the same
+//! directory (e.g., `cd /; cd a; cd /; cd a`) produces duplicate entries.
+//! This works for AoC inputs which follow a strict DFS pattern (never revisit).
 
 // ============================================================================
 // Core Algorithm
@@ -37,9 +41,12 @@ fn compute_dir_sizes(input: &str) -> Vec<u64> {
             if let Some(&root) = stack.last() {
                 all_sizes.push(root);
             }
-            // Now reset to fresh root
-            stack.clear();
-            stack.push(0);
+            // Reset to fresh root (stack might be empty on first cd /)
+            if stack.is_empty() {
+                stack.push(0);
+            } else {
+                stack[0] = 0;
+            }
         } else if line == "$ cd .." {
             // Pop current directory: record its size, roll up to parent
             let completed = stack.pop().unwrap();
@@ -175,6 +182,9 @@ $ ls
     fn test_mid_input_cd_root() {
         // Edge case: cd / appears in the middle of the input
         // Ensures we properly unwind the stack before resetting
+        // NOTE: This would NOT handle revisiting the same directory name
+        // (e.g., cd /; cd a; cd /; cd a) - would create duplicate entries
+        // since we don't track names. AoC inputs follow strict DFS.
         let input = "\
 $ cd /
 $ ls
