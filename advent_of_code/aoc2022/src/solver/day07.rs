@@ -86,8 +86,7 @@ fn compute_dir_sizes(input: &str) -> Vec<u64> {
 // ============================================================================
 
 /// Find all directories with total size ≤ 100,000 and sum their sizes.
-fn solve_part1_impl(input: &str) -> u64 {
-    let sizes = compute_dir_sizes(input);
+fn solve_part1(sizes: &[u64]) -> u64 {
     sizes.iter().filter(|&&size| size <= 100_000).sum()
 }
 
@@ -99,8 +98,7 @@ fn solve_part1_impl(input: &str) -> u64 {
 ///
 /// Total disk: 70,000,000. Update needs: 30,000,000 free.
 /// Need to free: used - (70,000,000 - 30,000,000) = used - 40,000,000
-fn solve_part2_impl(input: &str) -> u64 {
-    let sizes = compute_dir_sizes(input);
+fn solve_part2(sizes: &[u64]) -> u64 {
     // Root is always the last entry pushed
     let total_used = *sizes.last().unwrap();
     let need_to_free = total_used.saturating_sub(40_000_000);
@@ -118,7 +116,8 @@ fn solve_part2_impl(input: &str) -> u64 {
 // ============================================================================
 
 pub fn solve(input: &str) -> (u64, u64) {
-    (solve_part1_impl(input), solve_part2_impl(input))
+    let sizes = compute_dir_sizes(input);
+    (solve_part1(&sizes), solve_part2(&sizes))
 }
 
 // ============================================================================
@@ -168,14 +167,16 @@ $ ls
 
     #[test]
     fn test_part1_example() {
-        assert_eq!(solve_part1_impl(EXAMPLE), 95_437);
+        let sizes = compute_dir_sizes(EXAMPLE);
+        assert_eq!(solve_part1(&sizes), 95_437);
     }
 
     #[test]
     fn test_part2_example() {
         // Total used: 48,381,165. Need to free: 48,381,165 - 40,000,000 = 8,381,165
         // Smallest dir >= 8,381,165 is d (24,933,642)
-        assert_eq!(solve_part2_impl(EXAMPLE), 24_933_642);
+        let sizes = compute_dir_sizes(EXAMPLE);
+        assert_eq!(solve_part2(&sizes), 24_933_642);
     }
 
     #[test]
