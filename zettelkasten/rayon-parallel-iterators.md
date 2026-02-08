@@ -249,6 +249,66 @@ fn solve_all_parts(input: &str) -> (u64, u64, u64) {
 }
 ```
 
+### Pattern 5: Work Unit Granularity Matters (AoC 2022 Day 8)
+
+**Lesson**: Rayon isn't magic - work unit size determines success or failure.
+
+```rust
+use rayon::prelude::*;
+
+// ❌ FAILED: Ring-based parallel (920µs - 3.5× SLOWER than 262µs sequential!)
+// Problem: Thousands of tiny tasks (each tree = ~30 operations) 
+// Thread pool overhead >> speedup gained
+fn solve_part2_ring_parallel_failed(grid: &Grid) -> usize {
+    // Group by min edge distance (50 rings, varied sizes)
+    let rings = group_by_ring(grid);
+    
+    let mut max_score = 0;
+    for ring in rings.iter().rev() {
+        // Parallel iteration over trees in this ring
+        let max_in_ring = ring
+            .par_iter()  // ❌ Too fine-grained!
+            .map(|&(row, col)| scenic_score(grid, row, col))
+            .max()
+            .unwrap_or(0);
+        max_score = max_score.max(max_in_ring);
+    }
+    max_score
+}
+
+// ✅ SUCCESS: Row-based parallel (174µs - 1.5× FASTER than 262µs sequential!)
+// Solution: 99 rows, each ~99 trees = ~9,000 operations per task
+// Work unit large enough to amortize thread pool overhead
+fn solve_part2_row_parallel_success(grid: &Grid) -> usize {
+    let rows = grid.len();
+    let cols = grid[0].len();
+    
+    (0..rows)
+        .into_par_iter()  // ✅ Right granularity!
+        .map(|row| {
+            (0..cols)
+                .map(|col| scenic_score(grid, row, col))
+                .max()
+                .unwrap_or(0)
+        })
+        .max()
+        .unwrap_or(0)
+}
+```
+
+**Key Insights**:
+- **Thread overhead**: 50-100µs per spawn on typical systems
+- **Break-even point**: ~1,000-10,000 operations per task
+- **Red flag**: Thousands of tasks with <100 ops each
+- **Sweet spot**: Tens to hundreds of tasks with 1,000+ ops each
+
+**Benchmark Results (99×99 grid, AMD Ryzen system)**:
+- Sequential (with ring pruning): 262µs
+- Ring-based parallel (9,801 tasks): 920µs (**3.5× slower**)
+- Row-based parallel (99 tasks): 174µs (**1.5× faster**)
+
+**Rule of Thumb**: Parallelize at the **coarsest granularity** that still gives enough tasks for work-stealing (aim for 2-4× number of cores).
+
 ---
 
 ## find_first vs find_any
@@ -469,6 +529,7 @@ fn process_grid_parallel(grid: &Grid<i32>) -> i32 {
 ### AoC Patterns
 - [[aoc-optimization-strategies]] - Performance optimization techniques
 - [[AoC Pattern Library]] - Reusable solution patterns
+- **AoC 2022 Day 8** - Grid visibility: row-parallel SUCCESS (1.5×) vs ring-parallel FAILURE (0.29×) - work unit granularity lesson (see `advent_of_code/aoc2022/src/solver/day08.rs`)
 - **AoC 2024 Day 14** - Robot simulation with parallel safety factor calculation (see `advent_of_code/aoc2024/examples/day14_rayon_learning.rs`)
 - **AoC 2024 Day 22** - PRNG simulation with 16.58x speedup + HashMap aggregation patterns (see `advent_of_code/aoc2024/examples/day22_rayon_benchmark.rs`)
 

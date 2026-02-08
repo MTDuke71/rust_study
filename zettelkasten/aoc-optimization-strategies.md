@@ -234,12 +234,22 @@ let first = data.par_iter().find_first(|x| is_solution(x));
 - Search spaces (>10,000 candidates)
 - Independent calculations per item
 - Total work >10ms
+- **Work units with 1,000-10,000+ operations each**
 
 ❌ **Poor candidates**:
 - Small collections (<1000 items)
-- Cheap operations per item
+- Cheap operations per item (<100 ops)
 - Heavy synchronization needed
 - Sequential dependencies
+- **Too many tiny tasks** (thread overhead > speedup)
+
+**Work Unit Granularity Rule** (AoC 2022 Day 8 lesson):
+- Thread spawn overhead: ~50-100µs
+- Break-even: ~1,000-10,000 operations per task
+- Sweet spot: 2-4× CPU cores worth of coarse-grained tasks
+- Example: 99 rows (success) vs 9,801 individual trees (failure)
+
+See [[rayon-parallel-iterators#Pattern 5]] for detailed Day 8 case study.
 
 ---
 
@@ -322,6 +332,76 @@ fn sieve_of_eratosthenes(limit: usize) -> Vec<bool> {
 
 // O(1) lookup vs O(√n) per check
 ```
+
+### Precompute Running Aggregates (AoC 2022 Day 8)
+
+**Problem**: Count trees visible from grid edges (must check all 4 directions per tree).
+
+```rust
+// ❌ Naive O(N³): For each of N² trees, scan up to N trees in 4 directions
+fn is_visible_naive(grid: &Grid, row: usize, col: usize) -> bool {
+    let height = grid[row][col];
+    
+    // Check left: all trees shorter?
+    let visible_left = (0..col).all(|c| grid[row][c] < height);
+    // Check right: all trees shorter?
+    let visible_right = (col+1..grid[0].len()).all(|c| grid[row][c] < height);
+    // Check up: all trees shorter?
+    let visible_up = (0..row).all(|r| grid[r][col] < height);
+    // Check down: all trees shorter?
+    let visible_down = (row+1..grid.len()).all(|r| grid[r][col] < height);
+    
+    visible_left || visible_right || visible_up || visible_down
+}
+
+// ✅ Optimized O(N²): 4 precompute passes + O(1) check per tree
+fn solve_part1_precompute(grid: &Grid) -> usize {
+    let rows = grid.len();
+    let cols = grid[0].len();
+    
+    // Precompute max heights from each direction (4 passes)
+    let mut max_from_left = vec![vec![0u8; cols]; rows];
+    let mut max_from_right = vec![vec![0u8; cols]; rows];
+    let mut max_from_top = vec![vec![0u8; cols]; rows];
+    let mut max_from_bottom = vec![vec![0u8; cols]; rows];
+    
+    // Pass 1: Left to right
+    for row in 0..rows {
+        let mut max_height = 0;
+        for col in 0..cols {
+            max_from_left[row][col] = max_height;
+            max_height = max_height.max(grid[row][col]);
+        }
+    }
+    
+    // Passes 2-4: Similar for right, top, bottom
+    // ... (omitted for brevity)
+    
+    // Count visible trees: O(1) check per tree
+    let mut count = 0;
+    for row in 0..rows {
+        for col in 0..cols {
+            let height = grid[row][col];
+            if height > max_from_left[row][col]
+                || height > max_from_right[row][col]
+                || height > max_from_top[row][col]
+                || height > max_from_bottom[row][col]
+            {
+                count += 1;
+            }
+        }
+    }
+    count
+}
+```
+
+**Results (99×99 grid)**:
+- Naive O(N³): 180µs per part
+- Precompute O(N²): 80µs per part (**2.25× speedup**)
+
+**Trade-off**: 4 extra grids (~40KB memory) for major time savings.
+
+**Pattern**: When scanning same data repeatedly, precompute aggregates (max/min/sum/count) in each direction.
 
 ### LRU Cache for Repeated Lookups
 
