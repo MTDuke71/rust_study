@@ -20,6 +20,8 @@
 //!
 //! Parse grid once in `solve()`, pass &[Vec<u8>] to both parts when Part 2 arrives.
 
+use rayon::prelude::*;
+
 type Grid = Vec<Vec<u8>>;
 
 /// Parse input into 2D grid of tree heights.
@@ -152,49 +154,24 @@ fn scenic_score(grid: &Grid, row: usize, col: usize) -> usize {
 
 /// **Part 2**: Find maximum scenic score.
 ///
-/// **Optimization**: Process trees from center outward (by min edge distance).
-/// Skip outer rings when theoretical maximum score ≤ current best.
-///
-/// For a tree at distance `d` from nearest edge in a 99×99 grid:
-/// - Theoretical max score = d² × (98-d)²
-/// - Example: d=8 → max = 518,400 (below actual answer 535,680)
-/// - Can skip all rings d ≤ 8 once we find a score > 518,400
+/// **Optimization**: Parallel row processing using Rayon.
+/// Each row is processed independently, leveraging multiple CPU cores.
 fn solve_part2(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
     
-    // Group trees by minimum edge distance (ring number)
-    let max_dist = (rows / 2).min(cols / 2);
-    let mut rings: Vec<Vec<(usize, usize)>> = vec![Vec::new(); max_dist + 1];
-    
-    for row in 0..rows {
-        for col in 0..cols {
-            let min_dist = row.min(col).min(rows - 1 - row).min(cols - 1 - col);
-            rings[min_dist].push((row, col));
-        }
-    }
-    
-    // Process from center outward (decreasing distance)
-    let mut max_score = 0;
-    
-    for dist in (0..=max_dist).rev() {
-        // Theoretical maximum for trees at this distance from edge
-        // In worst case: viewing distances are [dist, dist, rows-1-dist, cols-1-dist]
-        let theo_max = dist * dist * (rows - 1 - dist) * (cols - 1 - dist);
-        
-        // Early exit: remaining rings can't beat current best
-        if theo_max <= max_score {
-            break;
-        }
-        
-        // Check all trees in this ring
-        for &(row, col) in &rings[dist] {
-            let score = scenic_score(grid, row, col);
-            max_score = max_score.max(score);
-        }
-    }
-    
-    max_score
+    // Process each row in parallel, find max scenic score per row,
+    // then take the global maximum
+    (0..rows)
+        .into_par_iter()
+        .map(|row| {
+            (0..cols)
+                .map(|col| scenic_score(grid, row, col))
+                .max()
+                .unwrap_or(0)
+        })
+        .max()
+        .unwrap_or(0)
 }
 
 /// **Main solver**: Parse once, solve both parts.
