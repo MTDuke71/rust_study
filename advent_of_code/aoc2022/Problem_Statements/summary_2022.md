@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (7/25 complete)
+**Status**: 🎯 In Progress (8/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 7/25 |
-| **Total Runtime** | 198.6µs |
-| **Average per Day** | 28.4µs |
+| **Progress** | 8/25 |
+| **Total Runtime** | 681.6µs |
+| **Average per Day** | 85.2µs |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 5 (85.0µs) |
+| **Slowest Day** | Day 8 (483µs) |
 | **Mission Integration** | 0 days |
 | **Patterns Extracted** | 12 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) |
 
-**1-Second Goal**: 🎯 0.199ms / 1000ms (0.020%)
+**1-Second Goal**: 🎯 0.682ms / 1000ms (0.068%)
 
 ---
 
@@ -32,9 +32,10 @@
 | [5](days/day05.md) | 66.3µs | 78.7µs | 85.0µs | Stack simulation | - | ASCII art parsing, Vec as stack · [Guide →](days/day05_function_guide.md) |
 | [6](days/day06.md) | ~~1.46µs~~ **1.11µs** | ~~10.06µs~~ **3.69µs** | ~~11.4µs~~ **4.80µs** | Rolling XOR bitset | - | **Optimized**: Rebuild→Rolling XOR (2.4× faster) · [Guide →](days/day06_function_guide.md) |
 | [7](days/day07.md) | - | - | 9.32µs | Stack accumulation | - | **Optimized**: HashMap→Stack (23×), parse-once (2×) · [Guide →](days/day07_function_guide.md) |
+| [8](days/day08.md) | - | - | 483µs | Grid visibility | - | Directional iteration, scenic score · [Guide →](days/day08_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 198.6µs (0.199ms)  
+**Cumulative Runtime**: 681.6µs (0.682ms)  
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) + parse-once (2×)
 
 ---
@@ -49,7 +50,8 @@
 - [Day 5](days/day05.md) - Supply Stacks ✅ | [Function Guide](days/day05_function_guide.md) | [Code](../../aoc2022/src/solver/day05.rs)
 - [Day 6](days/day06.md) - Tuning Trouble ✅ | [Function Guide](days/day06_function_guide.md) | [Code](../../aoc2022/src/solver/day06.rs)
 - [Day 7](days/day07.md) - No Space Left On Device ✅ | [Function Guide](days/day07_function_guide.md) | [Code](../../aoc2022/src/solver/day07.rs)
-- Day 8-25: Not yet started
+- [Day 8](days/day08.md) - Treetop Tree House ✅ | [Function Guide](days/day08_function_guide.md) | [Code](../../aoc2022/src/solver/day08.rs)
+- Day 9-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
