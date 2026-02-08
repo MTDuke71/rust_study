@@ -37,48 +37,75 @@ fn parse_grid(input: &str) -> Grid {
         .collect()
 }
 
-/// Check if tree at (row, col) is visible from any direction.
-fn is_visible(grid: &Grid, row: usize, col: usize) -> bool {
-    let rows = grid.len();
-    let cols = grid[0].len();
-    let height = grid[row][col];
-    
-    // Edge trees always visible
-    if row == 0 || row == rows - 1 || col == 0 || col == cols - 1 {
-        return true;
-    }
-    
-    // Check left: all trees in row[0..col] shorter?
-    let visible_left = (0..col).all(|c| grid[row][c] < height);
-    if visible_left {
-        return true;
-    }
-    
-    // Check right: all trees in row[col+1..] shorter?
-    let visible_right = (col + 1..cols).all(|c| grid[row][c] < height);
-    if visible_right {
-        return true;
-    }
-    
-    // Check up: all trees in col[0..row] shorter?
-    let visible_up = (0..row).all(|r| grid[r][col] < height);
-    if visible_up {
-        return true;
-    }
-    
-    // Check down: all trees in col[row+1..] shorter?
-    (row + 1..rows).all(|r| grid[r][col] < height)
-}
-
 /// **Part 1**: Count visible trees.
+///
+/// **Optimization**: Pre-compute maximum heights from each direction.
+/// Instead of scanning all 4 directions per tree (O(N³)), do 4 passes
+/// to compute max heights, then O(1) visibility check per tree (O(N²) total).
 fn solve_part1(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
     
+    // Pre-compute max heights from each direction
+    // max_from_left[row][col] = max height from left edge to col-1
+    let mut max_from_left = vec![vec![0u8; cols]; rows];
+    let mut max_from_right = vec![vec![0u8; cols]; rows];
+    let mut max_from_top = vec![vec![0u8; cols]; rows];
+    let mut max_from_bottom = vec![vec![0u8; cols]; rows];
+    
+    // Pass 1: Left to right
+    for row in 0..rows {
+        let mut max_height = 0;
+        for col in 0..cols {
+            max_from_left[row][col] = max_height;
+            max_height = max_height.max(grid[row][col]);
+        }
+    }
+    
+    // Pass 2: Right to left
+    for row in 0..rows {
+        let mut max_height = 0;
+        for col in (0..cols).rev() {
+            max_from_right[row][col] = max_height;
+            max_height = max_height.max(grid[row][col]);
+        }
+    }
+    
+    // Pass 3: Top to bottom
+    for col in 0..cols {
+        let mut max_height = 0;
+        for row in 0..rows {
+            max_from_top[row][col] = max_height;
+            max_height = max_height.max(grid[row][col]);
+        }
+    }
+    
+    // Pass 4: Bottom to top
+    for col in 0..cols {
+        let mut max_height = 0;
+        for row in (0..rows).rev() {
+            max_from_bottom[row][col] = max_height;
+            max_height = max_height.max(grid[row][col]);
+        }
+    }
+    
+    // Count visible trees: visible if height > max from ANY direction
     let mut count = 0;
     for row in 0..rows {
         for col in 0..cols {
-            if is_visible(grid, row, col) {
+            // Edge trees are always visible
+            if row == 0 || row == rows - 1 || col == 0 || col == cols - 1 {
+                count += 1;
+                continue;
+            }
+            
+            // Interior trees: visible if taller than max from ANY direction
+            let height = grid[row][col];
+            if height > max_from_left[row][col]
+                || height > max_from_right[row][col]
+                || height > max_from_top[row][col]
+                || height > max_from_bottom[row][col]
+            {
                 count += 1;
             }
         }
@@ -197,42 +224,6 @@ mod tests {
         assert_eq!(grid[0][0], 3);
         assert_eq!(grid[0][4], 3);
         assert_eq!(grid[4][4], 0);
-    }
-
-    #[test]
-    fn test_visibility_edge_trees() {
-        let grid = parse_grid(EXAMPLE);
-        // All edge trees should be visible
-        assert!(is_visible(&grid, 0, 0)); // top-left
-        assert!(is_visible(&grid, 0, 4)); // top-right
-        assert!(is_visible(&grid, 4, 0)); // bottom-left
-        assert!(is_visible(&grid, 4, 4)); // bottom-right
-        assert!(is_visible(&grid, 2, 0)); // left edge
-        assert!(is_visible(&grid, 0, 2)); // top edge
-    }
-
-    #[test]
-    fn test_visibility_interior() {
-        let grid = parse_grid(EXAMPLE);
-        // Interior tree examples from problem:
-        // Row 1, Col 1: top-left 5 - visible from left and top
-        assert!(is_visible(&grid, 1, 1));
-        // Row 1, Col 2: top-middle 5 - visible from top and right
-        assert!(is_visible(&grid, 1, 2));
-        // Row 1, Col 3: top-right 1 - NOT visible
-        assert!(!is_visible(&grid, 1, 3));
-        // Row 2, Col 1: left-middle 5 - visible from right
-        assert!(is_visible(&grid, 2, 1));
-        // Row 2, Col 2: center 3 - NOT visible
-        assert!(!is_visible(&grid, 2, 2));
-        // Row 2, Col 3: right-middle 3 - visible from right
-        assert!(is_visible(&grid, 2, 3));
-        // Row 3, Col 2: bottom-middle 5 - visible
-        assert!(is_visible(&grid, 3, 2));
-        // Row 3, Col 1: 3 - NOT visible
-        assert!(!is_visible(&grid, 3, 1));
-        // Row 3, Col 3: 4 - NOT visible
-        assert!(!is_visible(&grid, 3, 3));
     }
 
     #[test]
