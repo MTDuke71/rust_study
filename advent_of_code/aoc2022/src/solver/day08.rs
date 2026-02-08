@@ -67,6 +67,13 @@ fn solve_part1(grid: &Grid) -> usize {
         for col in 0..cols {
             max_from_left[row][col] = max_height;
             max_height = max_height.max(grid[row][col]);
+            // Early termination: if max=9, fill rest of row with 9
+            if max_height == 9 {
+                for c in (col + 1)..cols {
+                    max_from_left[row][c] = 9;
+                }
+                break;
+            }
         }
         
         // Right to left (process same row while hot in cache)
@@ -74,11 +81,19 @@ fn solve_part1(grid: &Grid) -> usize {
         for col in (0..cols).rev() {
             max_from_right[row][col] = max_height;
             max_height = max_height.max(grid[row][col]);
+            // Early termination: if max=9, fill rest of row with 9
+            if max_height == 9 {
+                for c in (0..col).rev() {
+                    max_from_right[row][c] = 9;
+                }
+                break;
+            }
         }
     }
     
     // Vertical passes: process ALL columns at once (better cache locality!)
     // Grid is row-major, so processing row-by-row is more cache-friendly
+    // No early termination here - overhead of tracking done state > benefit
     
     // Top to bottom: track max for each column as we scan rows
     let mut max_heights_top = vec![0u8; cols];
