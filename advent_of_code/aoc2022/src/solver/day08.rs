@@ -59,17 +59,17 @@ fn solve_part1(grid: &Grid) -> usize {
     let mut max_from_top = vec![vec![0u8; cols]; rows];
     let mut max_from_bottom = vec![vec![0u8; cols]; rows];
     
-    // Pass 1: Left to right
+    // Horizontal passes: combine left + right for better cache locality
+    // Process both directions while row data is hot in cache
     for row in 0..rows {
+        // Left to right
         let mut max_height = 0;
         for col in 0..cols {
             max_from_left[row][col] = max_height;
             max_height = max_height.max(grid[row][col]);
         }
-    }
-    
-    // Pass 2: Right to left
-    for row in 0..rows {
+        
+        // Right to left (process same row while hot in cache)
         let mut max_height = 0;
         for col in (0..cols).rev() {
             max_from_right[row][col] = max_height;
@@ -77,17 +77,17 @@ fn solve_part1(grid: &Grid) -> usize {
         }
     }
     
-    // Pass 3: Top to bottom
+    // Vertical passes: combine top + bottom for better cache locality
+    // Process both directions while column data is hot in cache
     for col in 0..cols {
+        // Top to bottom
         let mut max_height = 0;
         for row in 0..rows {
             max_from_top[row][col] = max_height;
             max_height = max_height.max(grid[row][col]);
         }
-    }
-    
-    // Pass 4: Bottom to top
-    for col in 0..cols {
+        
+        // Bottom to top (process same column while hot in cache)
         let mut max_height = 0;
         for row in (0..rows).rev() {
             max_from_bottom[row][col] = max_height;
