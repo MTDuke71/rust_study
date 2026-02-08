@@ -77,21 +77,24 @@ fn solve_part1(grid: &Grid) -> usize {
         }
     }
     
-    // Vertical passes: combine top + bottom for better cache locality
-    // Process both directions while column data is hot in cache
-    for col in 0..cols {
-        // Top to bottom
-        let mut max_height = 0;
-        for row in 0..rows {
-            max_from_top[row][col] = max_height;
-            max_height = max_height.max(grid[row][col]);
+    // Vertical passes: process ALL columns at once (better cache locality!)
+    // Grid is row-major, so processing row-by-row is more cache-friendly
+    
+    // Top to bottom: track max for each column as we scan rows
+    let mut max_heights_top = vec![0u8; cols];
+    for row in 0..rows {
+        for col in 0..cols {
+            max_from_top[row][col] = max_heights_top[col];
+            max_heights_top[col] = max_heights_top[col].max(grid[row][col]);
         }
-        
-        // Bottom to top (process same column while hot in cache)
-        let mut max_height = 0;
-        for row in (0..rows).rev() {
-            max_from_bottom[row][col] = max_height;
-            max_height = max_height.max(grid[row][col]);
+    }
+    
+    // Bottom to top: track max for each column as we scan rows backwards
+    let mut max_heights_bottom = vec![0u8; cols];
+    for row in (0..rows).rev() {
+        for col in 0..cols {
+            max_from_bottom[row][col] = max_heights_bottom[col];
+            max_heights_bottom[col] = max_heights_bottom[col].max(grid[row][col]);
         }
     }
     
