@@ -63,6 +63,7 @@
 - [Day 5 Function Guide](days/day05_function_guide.md) - Stack simulation, ASCII art parsing, Vec operations
 - [Day 6 Function Guide](days/day06_function_guide.md) - Rolling XOR bitset, 3-version optimization journey, branchless design
 - [Day 7 Function Guide](days/day07_function_guide.md) - Stack-based size accumulation, HashMap→Stack optimization (23×)
+- [Day 8 Function Guide](days/day08_function_guide.md) - Grid visibility, directional iteration, scenic score calculation
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -82,7 +83,7 @@
 - **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
 - **Stack-Based Traversal**: Day 7 (DFS-style filesystem accumulation)
 - **Simulation**: Day 5 (crane operations)
-- **Grid**: Day -
+- **Grid**: Day 8 (2D visibility checks, directional iteration)
 - **Graph**: Day -
 - **DP**: Day -
 - **Math**: Day 4 (interval arithmetic, set theory)
@@ -93,7 +94,7 @@
 - **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art), Day 6 (rolling XOR — window-size independent), Day 7 (single-pass stack accumulation)
 - **O(n * m)**: Day 3 HashSet (replaced by O(n) bitset), Day 5 (simulation: moves × crates)
 - **O(n log n)**: Day 1 (sorting for top-3)
-- **O(n²)**: Day -
+- **O(n²)**: Day 8 (grid iteration: rows × cols)
 - **O(2ⁿ)**: Day -
 
 ---
@@ -115,6 +116,8 @@
 - **Iterative optimization** (Day 6): Three-version journey: algorithm improvement (O(n×w)→O(n)), then implementation improvement (branches→branchless)
 - **Stack-based DFS accumulation** (Day 7): cd/cd.. naturally form a stack; accumulate sizes on pop, eliminating tree construction entirely
 - **Data structure elimination** (Day 7): HashMap<String, u64> → Vec<u64> stack (23× speedup). When you only need values, don't pay for keys.
+- **Directional iteration pattern** (Day 8): Single function with signed offsets `(dr, dc)` handles all 4 directions, avoiding code duplication
+- **Grid parsing pattern** (Day 8): `Vec<Vec<u8>>` from line-by-line character iteration, simple and cache-friendly
 - **Group splitting pattern** (Day 1, 5): Using `.split("\n\n")` for blank-line delimited sections
 - **Parse-once pattern** (Day 1): Separate parsing from solving, reuse parsed data for both parts (49% speedup)
 
@@ -181,6 +184,8 @@
 - `last_mut().unwrap()` for O(1) mutable access to stack top (Day 7)
 - `starts_with()` for fast line classification without full parsing (Day 7)
 - `saturating_sub()` for safe arithmetic avoiding underflow (Day 7)
+- Direct 2D indexing `grid[row][col]` for cache-friendly grid access (Day 8)
+- Signed `isize` offsets for directional movement with bounds checking (Day 8)
 
 ### Days with Quick Solutions
 - Day 1: 25.6µs - straightforward group parsing and sorting
@@ -189,6 +194,7 @@
 - Day 4: 27.7µs - simple range endpoint comparisons, parsing dominates 95% of runtime
 - Day 6: 4.80µs - fastest day, no parsing, rolling XOR bitset (optimized from 11.4µs)
 - Day 7: 9.32µs - stack accumulation + parse-once (optimized from 455µs HashMap, then parse-once from 18.5µs)
+- Day 8: 483µs - grid visibility, straightforward directional iteration (current slowest)
 
 ### Days with Comprehensive Function Guides
 - Day 1: Full breakdown of parsing, max/top-k patterns, performance analysis
@@ -198,10 +204,11 @@
 - Day 5: Stack simulation, ASCII art parsing, Vec operations, Part 1 vs Part 2 differences
 - Day 6: Three-version optimization journey (rebuild→freq→XOR), rolling XOR bitset, branchless design
 - Day 7: Stack-based DFS accumulation, HashMap→Stack optimization (23×), structural insight: sizes don't need names
+- Day 8: Grid visibility, directional iteration pattern, visibility vs viewing distance algorithms
 
 ---
 
-**Last Updated**: 2026-02-07 (Day 7 complete)  
+**Last Updated**: 2026-02-08 (Day 8 complete)  
 **Next Update**: After Day 8
 
 ---
