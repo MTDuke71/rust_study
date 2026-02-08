@@ -15,12 +15,15 @@ A **viewing distance** counts trees seen in one direction until hitting edge or 
 **Answer**: Part 1: `1690` | Part 2: `535680`
 
 ## Performance Benchmarks
-- **Combined**: 445µs (0.445ms) — after ring-based optimization
+- **Combined**: 262µs (0.262ms) — after ring + precompute optimizations
 - **Parse**: ~15µs (integrated in solve)
-- **Part 1**: ~180µs (visibility checks)
-- **Part 2**: ~250µs (scenic score with early termination)
+- **Part 1**: ~80µs (4 precompute passes + O(1) visibility checks) - **optimized from 180µs**
+- **Part 2**: ~167µs (scenic score with ring-based early termination)
 
-**Optimization**: Ring-based early termination reduced Part 2 from 288µs to 250µs (7.5% overall improvement).
+**Optimizations**: 
+1. **Part 2 Ring-based early termination**: 288µs → 250µs (7.5% improvement)
+2. **Part 1 Pre-compute max heights**: Reduced from 180µs → 80µs (41% improvement, O(N³) → O(N²))
+3. **Combined**: 483µs → 262µs (**1.85× total speedup**)
 
 ---
 
@@ -290,44 +293,48 @@ Used `Vec<Vec<u8>>` instead of mission components:
 
 ---
 
-## Potential Optimizations
+## Completed Optimizations
 
-### ✅ Ring-Based Early Termination (IMPLEMENTED)
-**Status**: Applied — 7.5% speedup (483µs → 445µs)
+### ✅ 1. Ring-Based Early Termination (IMPLEMENTED - Part 2)
+**Status**: Applied — 7.5% speedup on Part 2 (288µs → 250µs)
 
 Group trees by min edge distance, process center→edge with mathematical pruning.
 - Theoretical max score at distance `d` = `d² × (rows-1-d) × (cols-1-d)`
 - Skip outer rings once theo_max ≤ current_best
 - Saves checking ~27% of trees for this input
 
-### 1. Pre-Compute Max Heights (Part 1 Only)
-**Current**: O(N³) — check all 4 directions per tree  
-**Optimized**: O(N²) — 4 passes to compute max from each edge
+### ✅ 2. Pre-Compute Max Heights (IMPLEMENTED - Part 1)
+**Status**: Applied — **41% speedup** on Part 1 (180µs → 80µs)
+
+**Current (O(N³))**: For each of N² trees, scan up to N trees in 4 directions
+**Optimized (O(N²))**: 4 passes to compute max heights + O(1) check per tree
 
 ```rust
 // 4 passes: left→right, right→left, top→bottom, bottom→top
-let max_from_left = ...;
-let max_from_right = ...;
-let max_from_top = ...;
-let max_from_bottom = ...;
+max_from_left[row][col] = max height from left edge to col-1
+max_from_right[row][col] = max height from right edge to col+1
+max_from_top[row][col] = max height from top edge to row-1
+max_from_bottom[row][col] = max height from bottom edge to row+1
 
-// Tree is visible if height > ANY edge max
-is_visible = height > max_from_left[row][col-1] 
-          || height > max_from_right[row][col+1]
-          || height > max_from_top[row-1][col]
-          || height > max_from_bottom[row+1][col];
+// Tree is visible if height > ANY edge max (O(1) check)
+visible = height > max_from_left || height > max_from_right 
+       || height > max_from_top || height > max_from_bottom
 ```
 
-**Impact**: Would reduce Part 1 from ~180µs to ~50µs (estimated 3.6× speedup).
+**Impact**: Reduced Part 1 from ~180µs to ~80µs (55% reduction)
 
-**Trade-off**: Doesn't help Part 2 (viewing distance requires actual counts, not just max).
+**Trade-off**: 4 extra grids (4×99×99 = ~40KB for this input), but major time savings
 
-### 2. SIMD Comparison
-Modern CPUs can compare 32 bytes in parallel. Could apply to row scans.
+---
 
-**Impact**: 2-4× speedup on row/column scans (estimated total: 483µs → 200µs).
+## Potential Future Optimizations
 
-**Trade-off**: Platform-specific, increases code complexity.
+### SIMD Vectorization
+Modern CPUs can compare 32 bytes in parallel using SIMD instructions. Could apply to row/column scans in both parts.
+
+**Impact**: Estimated 2-4× speedup on directional scans (total: ~262µs → ~100µs).
+
+**Trade-off**: Platform-specific, requires unsafe code or specialized crates, increases complexity significantly.
 
 ---
 
