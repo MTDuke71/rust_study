@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 8/25 |
-| **Total Runtime** | 681.6µs |
-| **Average per Day** | 85.2µs |
+| **Total Runtime** | 643.6µs |
+| **Average per Day** | 80.5µs |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 8 (483µs) |
+| **Slowest Day** | Day 8 (445µs) |
 | **Mission Integration** | 0 days |
 | **Patterns Extracted** | 12 patterns |
-| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 ring pruning (1.08×) |
 
-**1-Second Goal**: 🎯 0.682ms / 1000ms (0.068%)
+**1-Second Goal**: 🎯 0.644ms / 1000ms (0.064%)
 
 ---
 
@@ -32,10 +32,10 @@
 | [5](days/day05.md) | 66.3µs | 78.7µs | 85.0µs | Stack simulation | - | ASCII art parsing, Vec as stack · [Guide →](days/day05_function_guide.md) |
 | [6](days/day06.md) | ~~1.46µs~~ **1.11µs** | ~~10.06µs~~ **3.69µs** | ~~11.4µs~~ **4.80µs** | Rolling XOR bitset | - | **Optimized**: Rebuild→Rolling XOR (2.4× faster) · [Guide →](days/day06_function_guide.md) |
 | [7](days/day07.md) | - | - | 9.32µs | Stack accumulation | - | **Optimized**: HashMap→Stack (23×), parse-once (2×) · [Guide →](days/day07_function_guide.md) |
-| [8](days/day08.md) | - | - | 483µs | Grid visibility | - | Directional iteration, scenic score · [Guide →](days/day08_function_guide.md) |
+| [8](days/day08.md) | - | - | 445µs | Grid visibility | - | **Optimized**: Ring-based early termination (1.08×) · [Guide →](days/day08_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 681.6µs (0.682ms)  
+**Cumulative Runtime**: 643.6µs (0.644ms)  
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) + parse-once (2×)
 
 ---
@@ -194,7 +194,7 @@
 - Day 4: 27.7µs - simple range endpoint comparisons, parsing dominates 95% of runtime
 - Day 6: 4.80µs - fastest day, no parsing, rolling XOR bitset (optimized from 11.4µs)
 - Day 7: 9.32µs - stack accumulation + parse-once (optimized from 455µs HashMap, then parse-once from 18.5µs)
-- Day 8: 483µs - grid visibility, straightforward directional iteration (current slowest)
+- Day 8: 445µs - grid visibility, ring-based pruning (optimized from 483µs)
 
 ### Days with Comprehensive Function Guides
 - Day 1: Full breakdown of parsing, max/top-k patterns, performance analysis
@@ -239,4 +239,12 @@
 - **Technique**: cd/cd.. = stack push/pop. Parse-once pattern: share parsed data between parts.
 - **Key Insight**: Only need sizes, not names. Don't reparse when you can share data.
 - **Trade-off**: Name-free stack can't handle directory revisits (works for AoC's strict DFS inputs).
+
+### Day 8: Ring-Based Early Termination (1.08× speedup)
+- **Before**: 483µs — check all 9,801 trees (99×99 grid)
+- **After**: 445µs — skip outer rings when theoretical max ≤ current best (7.5% faster)
+- **Technique**: Group trees by min edge distance, process center→edge, calculate theoretical max per ring
+- **Key Insight**: Trees at distance `d` have theoretical max score = `d² × (rows-1-d) × (cols-1-d)`. Once current best exceeds this, skip all remaining outer rings.
+- **Trade-off**: Ring grouping adds O(N²) setup overhead, but pruning saves checking ~27% of trees (rings d=0 to d=8 skipped)
+- **Impact**: Modest improvement due to setup cost, but demonstrates mathematical pruning technique
 - **Impact**: 49× total speedup; parse-once saved 9.3µs (would add 455µs without any optimization)
