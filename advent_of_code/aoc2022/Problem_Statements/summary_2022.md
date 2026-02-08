@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 8/25 |
-| **Total Runtime** | 460.6µs |
-| **Average per Day** | 57.6µs |
+| **Total Runtime** | 372.6µs |
+| **Average per Day** | 46.6µs |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 8 (262µs) |
+| **Slowest Day** | Day 8 (174µs) |
 | **Mission Integration** | 0 days |
 | **Patterns Extracted** | 12 patterns |
-| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 ring (1.08×) + precompute (1.7×) |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×) |
 
-**1-Second Goal**: 🎯 0.461ms / 1000ms (0.046%)
+**1-Second Goal**: 🎯 0.373ms / 1000ms (0.037%)
 
 ---
 
@@ -32,10 +32,10 @@
 | [5](days/day05.md) | 66.3µs | 78.7µs | 85.0µs | Stack simulation | - | ASCII art parsing, Vec as stack · [Guide →](days/day05_function_guide.md) |
 | [6](days/day06.md) | ~~1.46µs~~ **1.11µs** | ~~10.06µs~~ **3.69µs** | ~~11.4µs~~ **4.80µs** | Rolling XOR bitset | - | **Optimized**: Rebuild→Rolling XOR (2.4× faster) · [Guide →](days/day06_function_guide.md) |
 | [7](days/day07.md) | - | - | 9.32µs | Stack accumulation | - | **Optimized**: HashMap→Stack (23×), parse-once (2×) · [Guide →](days/day07_function_guide.md) |
-| [8](days/day08.md) | - | - | 262µs | Grid visibility | - | **Optimized**: Ring pruning (1.08×) + precompute (1.7×) · [Guide →](days/day08_function_guide.md) |
+| [8](days/day08.md) | - | - | ~~262µs~~ **174µs** | Grid visibility + parallel | - | **Optimized**: Rayon row-parallel (1.5×) · [Guide →](days/day08_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 460.6µs (0.461ms)  
+**Cumulative Runtime**: 372.6µs (0.373ms)  
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) + parse-once (2×)
 
 ---
@@ -194,7 +194,7 @@
 - Day 4: 27.7µs - simple range endpoint comparisons, parsing dominates 95% of runtime
 - Day 6: 4.80µs - fastest day, no parsing, rolling XOR bitset (optimized from 11.4µs)
 - Day 7: 9.32µs - stack accumulation + parse-once (optimized from 455µs HashMap, then parse-once from 18.5µs)
-- Day 8: 262µs - grid visibility, ring pruning + precompute max heights (optimized from 483µs)
+- Day 8: 174µs - grid visibility with Rayon row-parallel (optimized from 483µs → 262µs → 174µs)
 
 ### Days with Comprehensive Function Guides
 - Day 1: Full breakdown of parsing, max/top-k patterns, performance analysis
@@ -264,3 +264,22 @@
 - **Trade-off**: 4 extra grids (4×N² memory), but reduces time complexity from O(N³) to O(N²)
 - **Impact**: Major speedup - eliminated redundant directional scans
 - **Impact**: 49× total speedup; parse-once saved 9.3µs (would add 455µs without any optimization)
+
+### Day 8: Rayon Row-Based Parallelization (1.5× speedup)
+- **Before**: 262µs — sequential processing with ring pruning + precompute
+- **After**: 174µs — parallel row processing using Rayon (33% faster)
+- **Technique**: Process each row in parallel using `into_par_iter()`, find max scenic score per row, then take global max
+  ```rust
+  (0..rows)
+      .into_par_iter()
+      .map(|row| {
+          (0..cols).map(|col| scenic_score(grid, row, col)).max().unwrap_or(0)
+      })
+      .max()
+      .unwrap_or(0)
+  ```
+- **Key Insight**: Row-level parallelism (99 tasks) beats fine-grained tree-level parallelism (9,801 tasks) due to lower thread overhead
+- **Failed Approach**: Ring-based parallel (920µs, 3.5× slower) — thread pool overhead dominated with small per-tree work
+- **Trade-off**: Gave up ring-based early termination (skipping 27% of trees) to gain multi-core parallelism (1.5× speedup on this system)
+- **Work Unit Size Matters**: 99 rows × ~99 trees per row = ideal granularity for thread pool, vs. thousands of individual tree tasks creating excessive overhead
+- **Learning**: Parallelization isn't always faster — need large enough work units to amortize thread spawning costs

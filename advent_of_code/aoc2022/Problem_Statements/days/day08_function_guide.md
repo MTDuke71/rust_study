@@ -15,15 +15,16 @@ A **viewing distance** counts trees seen in one direction until hitting edge or 
 **Answer**: Part 1: `1690` | Part 2: `535680`
 
 ## Performance Benchmarks
-- **Combined**: 262µs (0.262ms) — after ring + precompute optimizations
+- **Combined**: ~~262µs~~ **174µs** (0.174ms) — after ring + precompute + Rayon optimizations
 - **Parse**: ~15µs (integrated in solve)
 - **Part 1**: ~80µs (4 precompute passes + O(1) visibility checks) - **optimized from 180µs**
-- **Part 2**: ~167µs (scenic score with ring-based early termination)
+- **Part 2**: ~94µs (scenic score with Rayon row-parallel processing) - **optimized from 167µs**
 
 **Optimizations**: 
-1. **Part 2 Ring-based early termination**: 288µs → 250µs (7.5% improvement)
-2. **Part 1 Pre-compute max heights**: Reduced from 180µs → 80µs (41% improvement, O(N³) → O(N²))
-3. **Combined**: 483µs → 262µs (**1.85× total speedup**)
+1. **Part 2 Ring-based early termination**: 288µs → 250µs (7.5% improvement) - REPLACED by Rayon
+2. **Part 1 Pre-compute max heights**: 180µs → 80µs (41% improvement, O(N³) → O(N²))
+3. **Part 2 Rayon row-parallel**: 167µs → 94µs (44% improvement, multi-core)
+4. **Combined**: 483µs → 174µs (**2.8× total speedup**)
 
 ---
 
@@ -295,15 +296,7 @@ Used `Vec<Vec<u8>>` instead of mission components:
 
 ## Completed Optimizations
 
-### ✅ 1. Ring-Based Early Termination (IMPLEMENTED - Part 2)
-**Status**: Applied — 7.5% speedup on Part 2 (288µs → 250µs)
-
-Group trees by min edge distance, process center→edge with mathematical pruning.
-- Theoretical max score at distance `d` = `d² × (rows-1-d) × (cols-1-d)`
-- Skip outer rings once theo_max ≤ current_best
-- Saves checking ~27% of trees for this input
-
-### ✅ 2. Pre-Compute Max Heights (IMPLEMENTED - Part 1)
+### ✅ 1. Pre-Compute Max Heights (IMPLEMENTED - Part 1)
 **Status**: Applied — **41% speedup** on Part 1 (180µs → 80µs)
 
 **Current (O(N³))**: For each of N² trees, scan up to N trees in 4 directions
@@ -324,6 +317,49 @@ visible = height > max_from_left || height > max_from_right
 **Impact**: Reduced Part 1 from ~180µs to ~80µs (55% reduction)
 
 **Trade-off**: 4 extra grids (4×99×99 = ~40KB for this input), but major time savings
+
+### ✅ 2. Rayon Row-Based Parallelization (IMPLEMENTED - Part 2)
+**Status**: Applied — **44% speedup** on Part 2 (167µs → 94µs), **33% overall** (262µs → 174µs)
+
+Leverage multi-core CPU parallelism to compute scenic scores concurrently.
+
+```rust
+use rayon::prelude::*;
+
+fn solve_part2(grid: &Grid) -> usize {
+    let rows = grid.len();
+    let cols = grid[0].len();
+    
+    (0..rows)
+        .into_par_iter()              // Parallel iterator over rows
+        .map(|row| {
+            (0..cols)
+                .map(|col| scenic_score(grid, row, col))
+                .max()
+                .unwrap_or(0)
+        })
+        .max()
+        .unwrap_or(0)
+}
+```
+
+**Key Insights**:
+- **Work unit granularity matters**: 99 rows (each ~99 trees) is optimal for thread pool overhead
+- **❌ Ring-based parallel FAILED**: 920µs (3.5× slower) — 5,000+ tiny tasks created excessive thread spawning overhead
+- **✅ Row-based parallel SUCCEEDED**: 174µs (1.5× faster) — 99 larger tasks amortize thread pool costs
+- **Trade-off**: Gave up ring-based early termination (27% tree skip) to gain multi-core parallelism
+
+**When Parallelization Helps**:
+- ✅ Large enough work units (milliseconds of compute per task)
+- ✅ Independent tasks (no sequential dependencies)
+- ✅ High compute-to-overhead ratio
+
+**When Parallelization Hurts**:
+- ❌ Tiny work units (microseconds per task)
+- ❌ Thread pool overhead > speedup gained
+- ❌ Early termination patterns disrupted
+
+**Impact**: Part 2 from ~167µs → ~94µs; combined 262µs → 174µs (2.8× from original 483µs)
 
 ---
 
