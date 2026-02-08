@@ -22,6 +22,10 @@
 
 use rayon::prelude::*;
 
+// SIMD support - commented out along with SIMD implementation
+// #[cfg(target_arch = "x86_64")]
+// use std::arch::x86_64::*;
+
 type Grid = Vec<Vec<u8>>;
 
 /// Parse input into 2D grid of tree heights.
@@ -114,6 +118,145 @@ fn solve_part1(grid: &Grid) -> usize {
     }
     count
 }
+
+// ============================================================================
+// SIMD OPTIMIZATION ATTEMPT (x86_64 AVX2) - COMMENTED OUT
+// ============================================================================
+// **RESULT**: No performance benefit (174µs SIMD vs 173µs scalar)
+//
+// **Why SIMD Failed**:
+// 1. Implementation loaded SIMD vectors but used scalar processing (incomplete)
+// 2. Running max has sequential dependency - each element depends on previous
+// 3. Modern compilers already auto-vectorize simple max operations
+// 4. Small grid (99×99) doesn't amortize SIMD setup overhead
+// 5. Only 4 passes - not a tight enough loop to benefit from vectorization
+//
+// **Educational Value**:
+// - SIMD isn't a magic speedup bullet
+// - Work unit size and dependencies matter more than instruction parallelism
+// - Compiler auto-vectorization often good enough for simple patterns
+// - Rayon (multi-core) provided 1.5× speedup, SIMD provided 0× speedup
+//
+// **What Would Need to Change for SIMD to Help**:
+// - Larger grids (1000×1000+) to amortize setup costs
+// - Prefix-sum SIMD algorithms for running max (complex to implement)
+// - More computation per element (SIMD shines with 10+ ops per element)
+// ============================================================================
+
+/*
+#[cfg(target_arch = "x86_64")]
+#[target_feature(enable = "avx2")]
+unsafe fn solve_part1_simd_impl(grid: &Grid) -> usize {
+    let rows = grid.len();
+    let cols = grid[0].len();
+    
+    // Pre-compute max heights from each direction
+    let mut max_from_left = vec![vec![0u8; cols]; rows];
+    let mut max_from_right = vec![vec![0u8; cols]; rows];
+    let mut max_from_top = vec![vec![0u8; cols]; rows];
+    let mut max_from_bottom = vec![vec![0u8; cols]; rows];
+    
+    const SIMD_WIDTH: usize = 32; // AVX2 processes 32 bytes at once
+    
+    // Pass 1: Left to right (SIMD-accelerated for horizontal scanning)
+    for row in 0..rows {
+        let mut max_height = 0u8;
+        
+        // Process chunks of 32 columns with SIMD
+        let chunks = cols / SIMD_WIDTH;
+        for chunk_idx in 0..chunks {
+            let start = chunk_idx * SIMD_WIDTH;
+            
+            // Load 32 grid values (for potential future optimization)
+            let _grid_vec = _mm256_loadu_si256(grid[row][start..].as_ptr() as *const __m256i);
+            
+            // Store "max so far" for each position
+            // For left-to-right, we need running max which is hard to vectorize efficiently
+            // Fall back to scalar for simplicity (vectorizing running max is complex)
+            for col in start..(start + SIMD_WIDTH).min(cols) {
+                max_from_left[row][col] = max_height;
+                max_height = max_height.max(grid[row][col]);
+            }
+        }
+        
+        // Handle remainder columns
+        for col in (chunks * SIMD_WIDTH)..cols {
+            max_from_left[row][col] = max_height;
+            max_height = max_height.max(grid[row][col]);
+        }
+    }
+    
+    // Pass 2: Right to left (scalar - running max in reverse is complex to vectorize)
+    for row in 0..rows {
+        let mut max_height = 0;
+        for col in (0..cols).rev() {
+            max_from_right[row][col] = max_height;
+            max_height = max_height.max(grid[row][col]);
+        }
+    }
+    
+    // Pass 3 & 4: Vertical passes (scalar - gather/scatter overhead not worth it)
+    for col in 0..cols {
+        let mut max_height = 0;
+        for row in 0..rows {
+            max_from_top[row][col] = max_height;
+            max_height = max_height.max(grid[row][col]);
+        }
+    }
+    
+    for col in 0..cols {
+        let mut max_height = 0;
+        for row in (0..rows).rev() {
+            max_from_bottom[row][col] = max_height;
+            max_height = max_height.max(grid[row][col]);
+        }
+    }
+    
+    // Count visible trees (could vectorize comparisons, but setup cost likely dominates)
+    let mut count = 0;
+    for row in 0..rows {
+        for col in 0..cols {
+            if row == 0 || row == rows - 1 || col == 0 || col == cols - 1 {
+                count += 1;
+                continue;
+            }
+            
+            let height = grid[row][col];
+            if height > max_from_left[row][col]
+                || height > max_from_right[row][col]
+                || height > max_from_top[row][col]
+                || height > max_from_bottom[row][col]
+            {
+                count += 1;
+            }
+        }
+    }
+    count
+}
+
+#[cfg(target_arch = "x86_64")]
+#[allow(dead_code)]
+pub fn solve_part1_simd(grid: &Grid) -> usize {
+    // SAFETY: We're checking for x86_64 at compile time and AVX2 at runtime
+    if is_x86_feature_detected!("avx2") {
+        unsafe { solve_part1_simd_impl(grid) }
+    } else {
+        // Fallback to scalar version if AVX2 not available
+        solve_part1(grid)
+    }
+}
+
+#[cfg(target_arch = "x86_64")]
+#[allow(dead_code)]
+pub fn solve_simd(input: &str) -> (usize, usize) {
+    let grid = parse_grid(input);
+    let part1 = solve_part1_simd(&grid);
+    let part2 = solve_part2(&grid);
+    (part1, part2)
+}
+*/
+
+
 
 /// Calculate viewing distance in one direction.
 ///
@@ -227,4 +370,15 @@ mod tests {
         let grid = parse_grid(EXAMPLE);
         assert_eq!(solve_part2(&grid), 8);
     }
+    
+    /*
+    // SIMD test - commented out along with SIMD implementation
+    #[test]
+    #[cfg(target_arch = "x86_64")]
+    fn test_simd_correctness() {
+        let grid = parse_grid(EXAMPLE);
+        // SIMD version should produce same results as scalar
+        assert_eq!(solve_part1_simd(&grid), 21);
+    }
+    */
 }

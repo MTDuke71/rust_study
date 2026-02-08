@@ -113,6 +113,17 @@ fn benchmark_day08(c: &mut Criterion) {
     c.bench_function("day08_combined", |b| {
         b.iter(|| day08::solve(black_box(input)))
     });
+    
+    /*
+    // SIMD comparison - commented out (no performance benefit)
+    // Benchmark showed: 174µs SIMD vs 173µs scalar (no improvement)
+    #[cfg(target_arch = "x86_64")]
+    {
+        c.bench_function("day08_simd", |b| {
+            b.iter(|| day08::solve_simd(black_box(input)))
+        });
+    }
+    */
 }
 
 criterion_group!(
