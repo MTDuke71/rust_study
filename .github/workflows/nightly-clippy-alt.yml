@@ -21,6 +21,7 @@ jobs:
   clippy-fixes:
     name: Apply Clippy Fixes
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     
     steps:
     - name: Checkout repository
@@ -36,14 +37,16 @@ jobs:
         components: clippy
     
     - name: Cache Cargo dependencies
+      continue-on-error: true
+      timeout-minutes: 5
       uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/registry
           ~/.cargo/git
-          target/
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-clippy-v2-${{ hashFiles('**/Cargo.lock') }}
         restore-keys: |
+          ${{ runner.os }}-cargo-clippy-v2-
           ${{ runner.os }}-cargo-
     
     - name: Configure git

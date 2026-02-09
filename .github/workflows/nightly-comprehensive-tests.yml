@@ -22,6 +22,7 @@ jobs:
   comprehensive-test-suite:
     name: Comprehensive Test Suite & Quality Analysis
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     
     steps:
     - name: Checkout repository
@@ -40,15 +41,16 @@ jobs:
         cargo install cargo-tarpaulin --locked
     
     - name: Cache Cargo dependencies
+      continue-on-error: true
+      timeout-minutes: 5
       uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/registry
           ~/.cargo/git
-          target/
-        key: ${{ runner.os }}-cargo-test-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-test-v2-${{ hashFiles('**/Cargo.lock') }}
         restore-keys: |
-          ${{ runner.os }}-cargo-test-
+          ${{ runner.os }}-cargo-test-v2-
           ${{ runner.os }}-cargo-
     
     # ============================================================================
