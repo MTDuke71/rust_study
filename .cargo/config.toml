@@ -5,7 +5,7 @@
 # Move target directory outside the vault
 # Change this path to wherever you want the build artifacts
 # Note: Windows path - commented out for CI/CD compatibility
-# target-dir = "D:/rust_build_cache/rust_study_target"
+target-dir = "D:/rust_build_cache/rust_study_target"
 
 # Optional: Enable incremental compilation for faster rebuilds
 incremental = true
