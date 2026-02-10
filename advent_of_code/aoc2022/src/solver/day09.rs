@@ -1,5 +1,5 @@
 use mission6::Direction;
-use std::collections::HashSet;
+use rustc_hash::FxHashSet;
 
 /// Parse move commands from input
 /// Format: "R 4" -> (Direction::East, 4)
@@ -77,7 +77,7 @@ impl Pos {
 fn solve_part1_with_moves(moves: &[(Direction, i32)]) -> usize {
     let mut head = Pos::origin();
     let mut tail = Pos::origin();
-    let mut visited = HashSet::new();
+    let mut visited = FxHashSet::default();
     
     // Track starting position
     visited.insert(tail);
@@ -108,7 +108,7 @@ pub fn solve_part1(input: &str) -> usize {
 fn solve_part2_with_moves(moves: &[(Direction, i32)]) -> usize {
     // 10 knots: head (index 0) + knots 1-9
     let mut knots = vec![Pos::origin(); 10];
-    let mut visited = HashSet::new();
+    let mut visited = FxHashSet::default();
     
     // Track starting position of tail (knot 9)
     visited.insert(knots[9]);

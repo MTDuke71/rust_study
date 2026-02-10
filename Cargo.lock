@@ -127,6 +127,7 @@ dependencies = [
  "criterion 0.5.1",
  "mission6",
  "rayon",
+ "rustc-hash 2.1.1",
 ]
 
 [[package]]
