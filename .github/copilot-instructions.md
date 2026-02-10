@@ -21,6 +21,7 @@ This repository uses **modular instruction files** for different content types. 
 - **🎯 [[.github/instructions/mission-instructions.md]]** - V-Cycle engineering methodology, requirements traceability, production-quality implementations
 - **🎓 [[.github/instructions/tutorial-instructions.md]]** - Progressive learning scaffolding, step-by-step skill building, mission preparation
 - **📚 [[.github/instructions/rust-book-instructions.md]]** - Official content integration, systematic chapter processing, foundational knowledge validation
+- **🎄 [[.github/instructions/aoc-instructions.md]]** - Advent of Code problem solving, parse-once pattern, performance optimization, mission integration
 
 ### **Instruction Hierarchy**
 1. **This file**: General repository structure, build commands, quality standards
@@ -718,10 +719,11 @@ This file is optimized for GitHub Copilot Coding Agent. Key points:
 | Mission implementations (REQ-based) | `mission-instructions.md` | V-Cycle methodology, traceability, performance validation |
 | Tutorial step-by-step progressions | `tutorial-instructions.md` | Progressive scaffolding, skill building, mission prep |
 | Rust Book chapter integration | `rust-book-instructions.md` | Official content, systematic coverage, concept validation |
+| Solving AoC problems | `aoc-instructions.md` | **Parse-once pattern**, 4-function structure, mission integration, benchmarking |
 
 **Most Common Tasks (Updated Priority):**
 - **Process Rust Book chapter**: Use `rust-book-instructions.md` for systematic integration (PRIMARY)
-- **Solve AoC problem**: Apply Book concepts, document patterns in zettelkasten (ACTIVE)
+- **Solve AoC problem**: Use `aoc-instructions.md` for parse-once pattern + mission integration (ACTIVE)
 - **Create zettelkasten page**: Use `zettelkasten-instructions.md` for linking Book/AoC concepts (ACTIVE)
 - **Document math concept**: Create/update `math-foundations/` notes with bidirectional links (NEW - ACTIVE)
 - **Implement mission**: Use `mission-instructions.md` - DEFERRED until Book mastery
