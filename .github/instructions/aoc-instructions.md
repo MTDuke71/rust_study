@@ -196,7 +196,13 @@ mod tests {
    # Verify: combined < part1 + part2 (proves parse-once works!)
    ```
 
-6. **Document** (20-25 min)
+6. **Clippy** (1 min)
+   ```bash
+   cargo clippy -p aoc2022 --all-targets -- -D warnings
+   # MUST pass with zero warnings before committing
+   ```
+
+7. **Document** (20-25 min)
    - Update `Problem_Statements/summary_2022.md` (2 min)
    - Create `Problem_Statements/days/dayXX_function_guide.md` (15-20 min)
    - Update `zettelkasten/Daily Notes/YYYY-MM-DD.md` (5 min)
@@ -439,6 +445,7 @@ Before committing any AoC day:
 - [ ] **Parse-once**: `solve()` parses exactly once
 - [ ] **Tests**: All example tests pass
 - [ ] **Benchmark**: Combined < sum of parts
+- [ ] **Clippy**: `cargo clippy -p aoc2022 --all-targets -- -D warnings` passes (zero warnings)
 - [ ] **Mission scan**: Checked for reusable components
 - [ ] **Documentation**: summary_2022.md + function_guide.md + daily note updated
 - [ ] **User review**: Had code reviewed before commit (if possible)

@@ -7,7 +7,7 @@ fn parse_moves(input: &str) -> Vec<(Direction, i32)> {
     input
         .lines()
         .filter_map(|line| {
-            let mut parts = line.trim().split_whitespace();
+            let mut parts = line.split_whitespace();
             let dir_char = parts.next()?;
             let count: i32 = parts.next()?.parse().ok()?;
             
@@ -107,7 +107,7 @@ pub fn solve_part1(input: &str) -> usize {
 /// Internal: Solve Part 2 with pre-parsed moves
 fn solve_part2_with_moves(moves: &[(Direction, i32)]) -> usize {
     // 10 knots: head (index 0) + knots 1-9
-    let mut knots = vec![Pos::origin(); 10];
+    let mut knots = [Pos::origin(); 10];
     let mut visited = FxHashSet::default();
     
     // Track starting position of tail (knot 9)

@@ -83,7 +83,7 @@ fn solve_part2_with_instructions(instructions: &[Instruction]) -> String {
         
         for _ in 0..cycles_to_execute {
             // Calculate CRT column position (0-39 within current row)
-            let crt_col = (cycle % 40) as i32;
+            let crt_col = cycle % 40;
             
             // Sprite is 3 pixels wide, centered on X: [X-1, X, X+1]
             // Draw '#' if CRT position overlaps with sprite

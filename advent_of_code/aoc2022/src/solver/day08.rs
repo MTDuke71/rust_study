@@ -69,8 +69,8 @@ fn solve_part1(grid: &Grid) -> usize {
             max_height = max_height.max(grid[row][col]);
             // Early termination: if max=9, fill rest of row with 9
             if max_height == 9 {
-                for c in (col + 1)..cols {
-                    max_from_left[row][c] = 9;
+                for item in max_from_left[row].iter_mut().take(cols).skip(col + 1) {
+                    *item = 9;
                 }
                 break;
             }
