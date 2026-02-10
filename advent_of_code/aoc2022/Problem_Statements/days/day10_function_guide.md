@@ -5,9 +5,12 @@
 **Answer**: Part 1: `13520` | Part 2: `PGPHBEAB`
 
 ## Performance Benchmarks
-- **Combined**: **14.4µs** (0.014ms)
+- **Combined**: ~~14.4µs~~ **7.5µs** (0.0075ms) — optimized with parse-once
 - **Part 1**: ~7.3µs (signal strength calculation)
 - **Part 2**: ~7.3µs (CRT rendering)
+
+**Optimizations**:
+- **Parse once**: 14.4µs → 7.5µs (-48%, single parse shared between parts)
 
 **Complexity**: O(n) where n ≈ 240 cycles (6 rows × 40 pixels)
 
@@ -188,10 +191,11 @@ noop
 - **String building**: Minimal overhead (240 chars + 6 newlines)
 
 ### Why It's Fast
-1. **Few cycles**: Only 240 total (vs thousands in previous days)
-2. **No complex data structures**: Just integer counters
-3. **Sequential processing**: No searching, hashing, or sorting
-4. **Tight loops**: Simple conditionals, no branching complexity
+1. **Parse once pattern**: Single parse shared by both parts (~48% speedup)
+2. **Few cycles**: Only 240 total (vs thousands in previous days)
+3. **No complex data structures**: Just integer counters
+4. **Sequential processing**: No searching, hashing, or sorting
+5. **Tight loops**: Simple conditionals, no branching complexity
 
 ### No Further Optimization Needed
 - Already runs in **14µs** (0.014ms)

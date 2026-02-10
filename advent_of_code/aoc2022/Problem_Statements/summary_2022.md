@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 10/25 |
-| **Total Runtime** | 944µs |
-| **Average per Day** | 94.4µs |
+| **Total Runtime** | 937µs |
+| **Average per Day** | 93.7µs |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 9 (568µs) |
 | **Mission Integration** | 1 day (Day 9: Mission 6 Direction) |
 | **Patterns Extracted** | 13 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon + precompute (2.8×), Day 9 FxHashSet (1.25×) |
 
-**1-Second Goal**: 🎯 0.944ms / 1000ms (0.094%)
+**1-Second Goal**: 🎯 0.937ms / 1000ms (0.094%)
 
 ---
 
@@ -34,11 +34,11 @@
 | [7](days/day07.md) | - | - | 9.32µs | Stack accumulation | - | **Optimized**: HashMap→Stack (23×), parse-once (2×) · [Guide →](days/day07_function_guide.md) |
 | [8](days/day08.md) | - | - | ~~262µs~~ **174µs** | Grid visibility + parallel | - | **Optimized**: Rayon row-parallel (1.5×) · [Guide →](days/day08_function_guide.md) |
 | [9](days/day09.md) | 180µs | 388µs | ~~756µs~~ **568µs** | Rope physics simulation | Mission 6 | **Optimized**: FxHashSet (20×), parse-once · [Guide →](days/day09_function_guide.md) |
-| [10](days/day10.md) | 7.3µs | 7.3µs | 14.4µs | CPU cycle simulation | - | CRT rendering, sprite overlap · [Guide →](days/day10_function_guide.md) |
+| [10](days/day10.md) | 7.3µs | 7.3µs | ~~14.4µs~~ **7.5µs** | CPU cycle simulation | - | **Optimized**: Parse-once (48×) · [Guide →](days/day10_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 944µs (0.944ms)  
-**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 early-term + Rayon (2.8×), Day 9 FxHashSet (1.25×)
+**Cumulative Runtime**: 937µs (0.937ms)  
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 early-term + Rayon (2.8×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×)
 
 ---
 
