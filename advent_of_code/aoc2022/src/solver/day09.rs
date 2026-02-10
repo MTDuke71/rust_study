@@ -73,9 +73,8 @@ impl Pos {
     }
 }
 
-pub fn solve_part1(input: &str) -> usize {
-    let moves = parse_moves(input);
-    
+/// Internal: Solve Part 1 with pre-parsed moves
+fn solve_part1_with_moves(moves: &[(Direction, i32)]) -> usize {
     let mut head = Pos::origin();
     let mut tail = Pos::origin();
     let mut visited = HashSet::new();
@@ -84,7 +83,7 @@ pub fn solve_part1(input: &str) -> usize {
     visited.insert(tail);
     
     // Simulate rope movements
-    for (direction, count) in moves {
+    for &(direction, count) in moves {
         for _ in 0..count {
             // Move head one step
             head.step(direction);
@@ -100,9 +99,13 @@ pub fn solve_part1(input: &str) -> usize {
     visited.len()
 }
 
-pub fn solve_part2(input: &str) -> usize {
+pub fn solve_part1(input: &str) -> usize {
     let moves = parse_moves(input);
-    
+    solve_part1_with_moves(&moves)
+}
+
+/// Internal: Solve Part 2 with pre-parsed moves
+fn solve_part2_with_moves(moves: &[(Direction, i32)]) -> usize {
     // 10 knots: head (index 0) + knots 1-9
     let mut knots = vec![Pos::origin(); 10];
     let mut visited = HashSet::new();
@@ -111,7 +114,7 @@ pub fn solve_part2(input: &str) -> usize {
     visited.insert(knots[9]);
     
     // Simulate rope movements
-    for (direction, count) in moves {
+    for &(direction, count) in moves {
         for _ in 0..count {
             // Move head one step
             knots[0].step(direction);
@@ -130,8 +133,15 @@ pub fn solve_part2(input: &str) -> usize {
     visited.len()
 }
 
+pub fn solve_part2(input: &str) -> usize {
+    let moves = parse_moves(input);
+    solve_part2_with_moves(&moves)
+}
+
 pub fn solve(input: &str) -> (usize, usize) {
-    (solve_part1(input), solve_part2(input))
+    // Parse once, use for both parts
+    let moves = parse_moves(input);
+    (solve_part1_with_moves(&moves), solve_part2_with_moves(&moves))
 }
 
 #[cfg(test)]
