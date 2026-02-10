@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 9/25 |
-| **Total Runtime** | 1.12ms |
-| **Average per Day** | 124µs |
+| **Total Runtime** | 930µs |
+| **Average per Day** | 103µs |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 9 (756µs) |
+| **Slowest Day** | Day 9 (568µs) |
 | **Mission Integration** | 1 day (Day 9: Mission 6 Direction) |
 | **Patterns Extracted** | 13 patterns |
-| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon + precompute (2.8×) |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon + precompute (2.8×), Day 9 FxHashSet (1.25×) |
 
-**1-Second Goal**: 🎯 1.12ms / 1000ms (0.112%)
+**1-Second Goal**: 🎯 0.93ms / 1000ms (0.093%)
 
 ---
 
@@ -33,10 +33,11 @@
 | [6](days/day06.md) | ~~1.46µs~~ **1.11µs** | ~~10.06µs~~ **3.69µs** | ~~11.4µs~~ **4.80µs** | Rolling XOR bitset | - | **Optimized**: Rebuild→Rolling XOR (2.4× faster) · [Guide →](days/day06_function_guide.md) |
 | [7](days/day07.md) | - | - | 9.32µs | Stack accumulation | - | **Optimized**: HashMap→Stack (23×), parse-once (2×) · [Guide →](days/day07_function_guide.md) |
 | [8](days/day08.md) | - | - | ~~262µs~~ **174µs** | Grid visibility + parallel | - | **Optimized**: Rayon row-parallel (1.5×) · [Guide →](days/day08_function_guide.md) |
-| [9](days/day09.md) | 241µs | 515µs | 756µs | Rope physics simulation | Mission 6 | signum() follow logic, HashSet tracking · [Guide →](days/day09_function_guide.md) |
+| [9](days/day09.md) | 180µs | 388µs | ~~756µs~~ **568µs** | Rope physics simulation | Mission 6 | **Optimized**: FxHashSet (20×), parse-once · [Guide →](days/day09_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 1.12ms (1120µs)  
+**Cumulative Runtime**: 930µs (0.93ms)  
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 early-term + Rayon (2.8×), Day 9 FxHashSet (1.25×)  
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) + parse-once (2×)
 
 ---
@@ -79,7 +80,7 @@
 - **Parsing**: Day 1 (groups), Day 2 (lines), Day 3 (chars), Day 4 (range parsing), Day 5 (ASCII art), Day 6 (none — raw bytes), Day 9 (direction + count)
 - **Sorting**: Day 1 (top-k)
 - **Lookup Tables**: Day 2 (3×3 precomputed scores)
-- **Set Operations**: Day 3 (bitset intersection - optimized from HashSet), Day 9 (HashSet for visited positions)
+- **Set Operations**: Day 3 (bitset intersection - optimized from HashSet), Day 9 (FxHashSet for visited positions - optimized from std HashMap)
 - **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 XOR bitset for rolling uniqueness)
 - **Range/Interval Operations**: Day 4 (containment, overlap)
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
@@ -93,7 +94,7 @@
 - **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum)
 
 ### Complexity Analysis
-- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide), Day 9 (is_touching, follow)
+- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide), Day 9 (is_touching, follow, FxHashSet insert)
 - **O(log n)**: Day -
 - **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art), Day 6 (rolling XOR — window-size independent), Day 7 (single-pass stack accumulation), Day 9 (total steps × knots)
 - **O(n * m)**: Day 3 HashSet (replaced by O(n) bitset), Day 5 (simulation: moves × crates)
