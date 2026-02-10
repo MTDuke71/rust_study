@@ -39,14 +39,13 @@ fn parse_instructions(input: &str) -> Vec<Instruction> {
         .collect()
 }
 
-pub fn solve_part1(input: &str) -> i32 {
-    let instructions = parse_instructions(input);
-    
+/// Internal: Solve Part 1 with pre-parsed instructions
+fn solve_part1_with_instructions(instructions: &[Instruction]) -> i32 {
     let mut x = 1i32; // Register X starts at 1
     let mut cycle = 0;
     let mut signal_sum = 0;
     
-    for instruction in &instructions {
+    for instruction in instructions {
         let cycles_to_execute = instruction.cycles();
         
         for _ in 0..cycles_to_execute {
@@ -68,14 +67,18 @@ pub fn solve_part1(input: &str) -> i32 {
     signal_sum
 }
 
-pub fn solve_part2(input: &str) -> String {
+pub fn solve_part1(input: &str) -> i32 {
     let instructions = parse_instructions(input);
-    
+    solve_part1_with_instructions(&instructions)
+}
+
+/// Internal: Solve Part 2 with pre-parsed instructions
+fn solve_part2_with_instructions(instructions: &[Instruction]) -> String {
     let mut x = 1i32; // Sprite center position
     let mut cycle = 0;
     let mut crt = String::new();
     
-    for instruction in &instructions {
+    for instruction in instructions {
         let cycles_to_execute = instruction.cycles();
         
         for _ in 0..cycles_to_execute {
@@ -107,8 +110,17 @@ pub fn solve_part2(input: &str) -> String {
     crt.trim_end().to_string()
 }
 
+pub fn solve_part2(input: &str) -> String {
+    let instructions = parse_instructions(input);
+    solve_part2_with_instructions(&instructions)
+}
+
 pub fn solve(input: &str) -> (i32, String) {
-    (solve_part1(input), solve_part2(input))
+    let instructions = parse_instructions(input);
+    (
+        solve_part1_with_instructions(&instructions),
+        solve_part2_with_instructions(&instructions),
+    )
 }
 
 #[cfg(test)]
