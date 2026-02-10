@@ -4,6 +4,8 @@
 # Rust build artifacts and cache
 /target/
 **/target/
+# Prevent absolute paths from Windows build cache
+D:/
 
 # Obsidian workspace files (optional - keeps your personal workspace settings private)
 .obsidian/
