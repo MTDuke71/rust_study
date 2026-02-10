@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (8/25 complete)
+**Status**: 🎯 In Progress (9/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 8/25 |
-| **Total Runtime** | 372.6µs |
-| **Average per Day** | 46.6µs |
+| **Progress** | 9/25 |
+| **Total Runtime** | 1.12ms |
+| **Average per Day** | 124µs |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 8 (174µs) |
-| **Mission Integration** | 0 days |
-| **Patterns Extracted** | 12 patterns |
-| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×) |
+| **Slowest Day** | Day 9 (756µs) |
+| **Mission Integration** | 1 day (Day 9: Mission 6 Direction) |
+| **Patterns Extracted** | 13 patterns |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon + precompute (2.8×) |
 
-**1-Second Goal**: 🎯 0.373ms / 1000ms (0.037%)
+**1-Second Goal**: 🎯 1.12ms / 1000ms (0.112%)
 
 ---
 
@@ -33,9 +33,10 @@
 | [6](days/day06.md) | ~~1.46µs~~ **1.11µs** | ~~10.06µs~~ **3.69µs** | ~~11.4µs~~ **4.80µs** | Rolling XOR bitset | - | **Optimized**: Rebuild→Rolling XOR (2.4× faster) · [Guide →](days/day06_function_guide.md) |
 | [7](days/day07.md) | - | - | 9.32µs | Stack accumulation | - | **Optimized**: HashMap→Stack (23×), parse-once (2×) · [Guide →](days/day07_function_guide.md) |
 | [8](days/day08.md) | - | - | ~~262µs~~ **174µs** | Grid visibility + parallel | - | **Optimized**: Rayon row-parallel (1.5×) · [Guide →](days/day08_function_guide.md) |
+| [9](days/day09.md) | 241µs | 515µs | 756µs | Rope physics simulation | Mission 6 | signum() follow logic, HashSet tracking · [Guide →](days/day09_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 372.6µs (0.373ms)  
+**Cumulative Runtime**: 1.12ms (1120µs)  
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×) + parse-once (2×)
 
 ---
@@ -51,7 +52,8 @@
 - [Day 6](days/day06.md) - Tuning Trouble ✅ | [Function Guide](days/day06_function_guide.md) | [Code](../../aoc2022/src/solver/day06.rs)
 - [Day 7](days/day07.md) - No Space Left On Device ✅ | [Function Guide](days/day07_function_guide.md) | [Code](../../aoc2022/src/solver/day07.rs)
 - [Day 8](days/day08.md) - Treetop Tree House ✅ | [Function Guide](days/day08_function_guide.md) | [Code](../../aoc2022/src/solver/day08.rs)
-- Day 9-25: Not yet started
+- [Day 9](days/day09.md) - Rope Bridge ✅ | [Function Guide](days/day09_function_guide.md) | [Code](../../aoc2022/src/solver/day09.rs)
+- Day 10-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -64,6 +66,7 @@
 - [Day 6 Function Guide](days/day06_function_guide.md) - Rolling XOR bitset, 3-version optimization journey, branchless design
 - [Day 7 Function Guide](days/day07_function_guide.md) - Stack-based size accumulation, HashMap→Stack optimization (23×)
 - [Day 8 Function Guide](days/day08_function_guide.md) - Grid visibility, directional iteration, scenic score calculation
+- [Day 9 Function Guide](days/day09_function_guide.md) - Rope physics, signum() diagonal movement, cascade following
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -73,25 +76,26 @@
 ## 🎯 Algorithms Used
 
 *Updated as days are completed*
-- **Parsing**: Day 1 (groups), Day 2 (lines), Day 3 (chars), Day 4 (range parsing), Day 5 (ASCII art), Day 6 (none — raw bytes)
+- **Parsing**: Day 1 (groups), Day 2 (lines), Day 3 (chars), Day 4 (range parsing), Day 5 (ASCII art), Day 6 (none — raw bytes), Day 9 (direction + count)
 - **Sorting**: Day 1 (top-k)
 - **Lookup Tables**: Day 2 (3×3 precomputed scores)
-- **Set Operations**: Day 3 (bitset intersection - optimized from HashSet)
+- **Set Operations**: Day 3 (bitset intersection - optimized from HashSet), Day 9 (HashSet for visited positions)
 - **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 XOR bitset for rolling uniqueness)
 - **Range/Interval Operations**: Day 4 (containment, overlap)
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
 - **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
 - **Stack-Based Traversal**: Day 7 (DFS-style filesystem accumulation)
-- **Simulation**: Day 5 (crane operations)
+- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following)
 - **Grid**: Day 8 (2D visibility checks, directional iteration)
+- **Coordinate Systems**: Day 9 (signed 2D coords, signum() movement)
 - **Graph**: Day -
 - **DP**: Day -
-- **Math**: Day 4 (interval arithmetic, set theory)
+- **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum)
 
 ### Complexity Analysis
-- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide)
+- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide), Day 9 (is_touching, follow)
 - **O(log n)**: Day -
-- **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art), Day 6 (rolling XOR — window-size independent), Day 7 (single-pass stack accumulation)
+- **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art), Day 6 (rolling XOR — window-size independent), Day 7 (single-pass stack accumulation), Day 9 (total steps × knots)
 - **O(n * m)**: Day 3 HashSet (replaced by O(n) bitset), Day 5 (simulation: moves × crates)
 - **O(n log n)**: Day 1 (sorting for top-3)
 - **O(n²)**: Day 8 (grid iteration: rows × cols)
