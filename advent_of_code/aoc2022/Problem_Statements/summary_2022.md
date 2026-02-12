@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (10/25 complete)
+**Status**: 🎯 In Progress (11/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 10/25 |
-| **Total Runtime** | 937µs |
-| **Average per Day** | 93.7µs |
+| **Progress** | 11/25 |
+| **Total Runtime** | 3.86ms |
+| **Average per Day** | 351µs |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 9 (568µs) |
+| **Slowest Day** | Day 11 (2.92ms) |
 | **Mission Integration** | 1 day (Day 9: Mission 6 Direction) |
-| **Patterns Extracted** | 13 patterns |
+| **Patterns Extracted** | 14 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon + precompute (2.8×), Day 9 FxHashSet (1.25×) |
 
-**1-Second Goal**: 🎯 0.937ms / 1000ms (0.094%)
+**1-Second Goal**: 🎯 3.86ms / 1000ms (0.386%)
 
 ---
 
@@ -35,10 +35,11 @@
 | [8](days/day08.md) | - | - | ~~262µs~~ **174µs** | Grid visibility + parallel | - | **Optimized**: Rayon row-parallel (1.5×) · [Guide →](days/day08_function_guide.md) |
 | [9](days/day09.md) | 180µs | 388µs | ~~756µs~~ **568µs** | Rope physics simulation | Mission 6 | **Optimized**: FxHashSet (20×), parse-once · [Guide →](days/day09_function_guide.md) |
 | [10](days/day10.md) | 7.3µs | 7.3µs | ~~14.4µs~~ **7.5µs** | CPU cycle simulation | - | **Optimized**: Parse-once (48×) · [Guide →](days/day10_function_guide.md) |
+| [11](days/day11.md) | 9.3µs | 3.0ms | **2.92ms** | Monkey simulation + modular arithmetic | - | Part 2: 10K rounds, modulo optimization · [Guide →](days/day11_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 937µs (0.937ms)  
-**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 early-term + Rayon (2.8×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×)
+**Cumulative Runtime**: 3.86ms  
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 early-term + Rayon (2.8×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow)
 
 ---
 
@@ -55,7 +56,8 @@
 - [Day 8](days/day08.md) - Treetop Tree House ✅ | [Function Guide](days/day08_function_guide.md) | [Code](../../aoc2022/src/solver/day08.rs)
 - [Day 9](days/day09.md) - Rope Bridge ✅ | [Function Guide](days/day09_function_guide.md) | [Code](../../aoc2022/src/solver/day09.rs)
 - [Day 10](days/day10.md) - Cathode-Ray Tube ✅ | [Function Guide](days/day10_function_guide.md) | [Code](../../aoc2022/src/solver/day10.rs)
-- Day 11-25: Not yet started
+- [Day 11](days/day11.md) - Monkey in the Middle ✅ | [Function Guide](days/day11_function_guide.md) | [Code](../../aoc2022/src/solver/day11.rs)
+- Day 12-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -70,6 +72,7 @@
 - [Day 8 Function Guide](days/day08_function_guide.md) - Grid visibility, directional iteration, scenic score calculation
 - [Day 9 Function Guide](days/day09_function_guide.md) - Rope physics, signum() diagonal movement, cascade following
 - [Day 10 Function Guide](days/day10_function_guide.md) - CPU cycle simulation, CRT rendering, sprite overlap detection
+- [Day 11 Function Guide](days/day11_function_guide.md) - Monkey simulation, modular arithmetic, worry level management
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -79,8 +82,8 @@
 ## 🎯 Algorithms Used
 
 *Updated as days are completed*
-- **Parsing**: Day 1 (groups), Day 2 (lines), Day 3 (chars), Day 4 (range parsing), Day 5 (ASCII art), Day 6 (none — raw bytes), Day 9 (direction + count), Day 10 (instruction parsing)
-- **Sorting**: Day 1 (top-k)
+- **Parsing**: Day 1 (groups), Day 2 (lines), Day 3 (chars), Day 4 (range parsing), Day 5 (ASCII art), Day 6 (none — raw bytes), Day 9 (direction + count), Day 10 (instruction parsing), Day 11 (multi-line monkey blocks)
+- **Sorting**: Day 1 (top-k), Day 11 (top-2 inspection counts)
 - **Lookup Tables**: Day 2 (3×3 precomputed scores)
 - **Set Operations**: Day 3 (bitset intersection - optimized from HashSet), Day 9 (FxHashSet for visited positions - optimized from std HashMap)
 - **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 XOR bitset for rolling uniqueness)
@@ -88,20 +91,22 @@
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
 - **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
 - **Stack-Based Traversal**: Day 7 (DFS-style filesystem accumulation)
-- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering)
+- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds)
 - **Grid**: Day 8 (2D visibility checks, directional iteration)
 - **Coordinate Systems**: Day 9 (signed 2D coords, signum() movement)
+- **Queue Operations**: Day 11 (VecDeque for FIFO item passing)
 - **Graph**: Day -
 - **DP**: Day -
-- **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum)
+- **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept)
 
 ### Complexity Analysis
-- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide), Day 9 (is_touching, follow, FxHashSet insert), Day 10 (cycle increment, pixel draw)
+- **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide), Day 9 (is_touching, follow, FxHashSet insert), Day 10 (cycle increment, pixel draw), Day 11 (VecDeque push/pop, modulo)
 - **O(log n)**: Day -
-- **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art), Day 6 (rolling XOR — window-size independent), Day 7 (single-pass stack accumulation), Day 9 (total steps × knots), Day 10 (240 cycles)
+- **O(n)**: Day 1 (parsing), Day 2 (iteration), Day 3 (bitset construction), Day 4 (parsing + filtering), Day 5 (parsing ASCII art), Day 6 (rolling XOR — window-size independent), Day 7 (single-pass stack accumulation), Day 9 (total steps × knots), Day 10 (240 cycles), Day 11 (parsing monkey blocks)
 - **O(n * m)**: Day 3 HashSet (replaced by O(n) bitset), Day 5 (simulation: moves × crates)
-- **O(n log n)**: Day 1 (sorting for top-3)
+- **O(n log n)**: Day 1 (sorting for top-3), Day 11 (sorting inspection counts for top-2)
 - **O(n²)**: Day 8 (grid iteration: rows × cols)
+- **O(rounds × monkeys × items)**: Day 11 (Part 1: 20 rounds, Part 2: 10,000 rounds)
 - **O(2ⁿ)**: Day -
 
 ---
