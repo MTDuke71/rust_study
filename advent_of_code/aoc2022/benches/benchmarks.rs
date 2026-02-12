@@ -177,11 +177,11 @@ fn benchmark_day11(c: &mut Criterion) {
 fn benchmark_day12(c: &mut Criterion) {
     let input = include_str!("../inputs/day12.txt");
 
-    c.bench_function("day12_combined_parallel", |b| {
+    c.bench_function("day12_combined_backward", |b| {
         b.iter(|| day12::solve(black_box(input)))
     });
 
-    // Compare sequential vs parallel for Part 2
+    // Compare all three approaches for Part 2
     let map = day12::parse_input(input);
     
     c.bench_function("day12_part2_sequential", |b| {
@@ -190,6 +190,10 @@ fn benchmark_day12(c: &mut Criterion) {
 
     c.bench_function("day12_part2_parallel", |b| {
         b.iter(|| day12::solve_part2_parallel(black_box(&map)))
+    });
+
+    c.bench_function("day12_part2_backward", |b| {
+        b.iter(|| day12::bfs_backward_to_any_a(black_box(&map)))
     });
 }
 

@@ -56,6 +56,47 @@ impl HeightMap {
 
         result
     }
+
+    // Reverse neighbors for backward search from E
+    // When searching backward: can descend FROM by at most 1
+    // (reverse of: can climb UP by at most 1)
+    fn neighbors_reverse(&self, pos: Pos) -> Vec<Pos> {
+        let mut result = Vec::new();
+        let current_height = self.height_at(pos);
+
+        // Up
+        if pos.row > 0 {
+            let next = Pos { row: pos.row - 1, col: pos.col };
+            // Reverse constraint: current can descend TO next by at most 1
+            // Which means: next can climb UP to current by at most 1
+            if current_height <= self.height_at(next) + 1 {
+                result.push(next);
+            }
+        }
+        // Down
+        if pos.row < self.rows - 1 {
+            let next = Pos { row: pos.row + 1, col: pos.col };
+            if current_height <= self.height_at(next) + 1 {
+                result.push(next);
+            }
+        }
+        // Left
+        if pos.col > 0 {
+            let next = Pos { row: pos.row, col: pos.col - 1 };
+            if current_height <= self.height_at(next) + 1 {
+                result.push(next);
+            }
+        }
+        // Right
+        if pos.col < self.cols - 1 {
+            let next = Pos { row: pos.row, col: pos.col + 1 };
+            if current_height <= self.height_at(next) + 1 {
+                result.push(next);
+            }
+        }
+
+        result
+    }
 }
 
 pub fn parse_input(input: &str) -> HeightMap {
@@ -111,6 +152,31 @@ fn bfs_shortest_path(map: &HeightMap, start: Pos, end: Pos) -> Option<usize> {
     None
 }
 
+// Backward BFS from E to find closest 'a' elevation
+pub fn bfs_backward_to_any_a(map: &HeightMap) -> usize {
+    let mut queue = VecDeque::new();
+    let mut visited = vec![vec![false; map.cols]; map.rows];
+    
+    queue.push_back((map.end, 0));
+    visited[map.end.row][map.end.col] = true;
+
+    while let Some((pos, dist)) = queue.pop_front() {
+        // Check if we reached any 'a' elevation
+        if map.height_at(pos) == 0 {
+            return dist;
+        }
+
+        for next in map.neighbors_reverse(pos) {
+            if !visited[next.row][next.col] {
+                visited[next.row][next.col] = true;
+                queue.push_back((next, dist + 1));
+            }
+        }
+    }
+
+    panic!("No path from E to any 'a' position")
+}
+
 fn solve_part1_with_data(map: &HeightMap) -> usize {
     bfs_shortest_path(map, map.start, map.end)
         .expect("Path should exist from S to E")
@@ -159,7 +225,7 @@ pub fn solve_part2_parallel(map: &HeightMap) -> usize {
 pub fn solve(input: &str) -> (usize, usize) {
     let map = parse_input(input);
     let part1 = solve_part1_with_data(&map);
-    let part2 = solve_part2_parallel(&map);  // Use parallel version
+    let part2 = bfs_backward_to_any_a(&map);  // Use backward BFS (fastest!)
     (part1, part2)
 }
 
@@ -201,5 +267,11 @@ abdefghi";
     fn test_part2_parallel_example() {
         let map = parse_input(EXAMPLE);
         assert_eq!(solve_part2_parallel(&map), 29);
+    }
+
+    #[test]
+    fn test_part2_backward_example() {
+        let map = parse_input(EXAMPLE);
+        assert_eq!(bfs_backward_to_any_a(&map), 29);
     }
 }
