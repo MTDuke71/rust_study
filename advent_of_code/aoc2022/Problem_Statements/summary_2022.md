@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (11/25 complete)
+**Status**: 🎯 In Progress (12/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 11/25 |
-| **Total Runtime** | 3.86ms |
-| **Average per Day** | 351µs |
+| **Progress** | 12/25 |
+| **Total Runtime** | 32.75ms |
+| **Average per Day** | 2.73ms |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 11 (2.92ms) |
+| **Slowest Day** | Day 12 (28.89ms) |
 | **Mission Integration** | 1 day (Day 9: Mission 6 Direction) |
 | **Patterns Extracted** | 14 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon + precompute (2.8×), Day 9 FxHashSet (1.25×) |
 
-**1-Second Goal**: 🎯 3.86ms / 1000ms (0.386%)
+**1-Second Goal**: 🎯 32.75ms / 1000ms (3.28%)
 
 ---
 
@@ -36,9 +36,10 @@
 | [9](days/day09.md) | 180µs | 388µs | ~~756µs~~ **568µs** | Rope physics simulation | Mission 6 | **Optimized**: FxHashSet (20×), parse-once · [Guide →](days/day09_function_guide.md) |
 | [10](days/day10.md) | 7.3µs | 7.3µs | ~~14.4µs~~ **7.5µs** | CPU cycle simulation | - | **Optimized**: Parse-once (48×) · [Guide →](days/day10_function_guide.md) |
 | [11](days/day11.md) | 9.3µs | 3.0ms | **2.92ms** | Monkey simulation + modular arithmetic | - | Part 2: 10K rounds, modulo optimization · [Guide →](days/day11_function_guide.md) |
+| [12](days/day12.md) | 484 | 478 | **28.89ms** | BFS pathfinding | - | Grid traversal, elevation constraints · Function Guide TBD |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 3.86ms  
+**Cumulative Runtime**: 32.75ms  
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 early-term + Rayon (2.8×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow)
 
 ---
@@ -57,7 +58,8 @@
 - [Day 9](days/day09.md) - Rope Bridge ✅ | [Function Guide](days/day09_function_guide.md) | [Code](../../aoc2022/src/solver/day09.rs)
 - [Day 10](days/day10.md) - Cathode-Ray Tube ✅ | [Function Guide](days/day10_function_guide.md) | [Code](../../aoc2022/src/solver/day10.rs)
 - [Day 11](days/day11.md) - Monkey in the Middle ✅ | [Function Guide](days/day11_function_guide.md) | [Code](../../aoc2022/src/solver/day11.rs)
-- Day 12-25: Not yet started
+- [Day 12](days/day12.md) - Hill Climbing Algorithm ✅ | Function Guide TBD | [Code](../../aoc2022/src/solver/day12.rs)
+- Day 13-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -95,7 +97,8 @@
 - **Grid**: Day 8 (2D visibility checks, directional iteration)
 - **Coordinate Systems**: Day 9 (signed 2D coords, signum() movement)
 - **Queue Operations**: Day 11 (VecDeque for FIFO item passing)
-- **Graph**: Day -
+- **Graph**: Day 12 (BFS pathfinding, elevation constraints, neighbor generation)
+- **BFS**: Day 12 (shortest path, multi-source BFS for Part 2)
 - **DP**: Day -
 - **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept)
 
