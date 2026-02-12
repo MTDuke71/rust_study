@@ -133,6 +133,26 @@ mod tests {
     fn test_part2_example() {
         assert_eq!(solve_part2(EXAMPLE), 0); // Replace 0 with expected
     }
+
+    #[test]
+    fn test_part1_actual() {
+        let input = include_str!("../../inputs/dayXX.txt");
+        let (part1, _) = solve(input);
+        assert_eq!(part1, 0); // Replace 0 with actual answer after submitting
+    }
+
+    #[test]
+    fn test_part2_actual() {
+        let input = include_str!("../../inputs/dayXX.txt");
+        let (_, part2) = solve(input);
+        assert_eq!(part2, 0); // Replace 0 with actual answer after submitting
+    }
+
+    #[test]
+    fn test_both_parts_actual() {
+        let input = include_str!("../../inputs/dayXX.txt");
+        assert_eq!(solve(input), (0, 0)); // Replace with (part1, part2) answers
+    }
 }
 ```
 
@@ -141,7 +161,8 @@ mod tests {
 ✅ **No parsing** in internal functions - data already prepared  
 ✅ **Public wrappers** for individual tests (`solve_part1()`, `solve_part2()`)  
 ✅ **Combined solver** parses once and calls both internal functions  
-✅ **Clear sections** with banner comments
+✅ **Clear sections** with banner comments  
+✅ **Actual answer tests** to validate puzzle solutions remain correct
 
 ---
 
@@ -178,6 +199,7 @@ mod tests {
    - Test with example data
    - Run on puzzle input
    - Submit answer ⭐
+   - Add `test_part1_actual()` with verified answer
 
 4. **Solve Part 2** (20-40 min)
    ```rust
@@ -189,6 +211,7 @@ mod tests {
    - Test with example data
    - Run on puzzle input
    - Submit answer ⭐
+   - Add `test_part2_actual()` and `test_both_parts_actual()` with verified answers
 
 5. **Benchmark** (2 min)
    ```bash
@@ -255,6 +278,55 @@ day10_part2      7.3µs
 - Have user review code before committing
 - Days 9 and 10 violations both caught by user
 - Better to catch early than fix later!
+
+---
+
+## ✅ **Testing Best Practices**
+
+### **Test Actual Puzzle Answers**
+
+**CRITICAL**: Always add tests validating your actual submitted answers!
+
+**Why this matters**:
+- **Prevents regressions** during refactoring/optimization
+- **Guards against copy-paste errors** when restructuring code
+- **Validates parse-once pattern** preserves correctness
+- **Enables confident code changes** with immediate verification
+- **Documents the correct output** for future reference
+
+**Example from Day 12**:
+```rust
+#[test]
+fn test_part1_actual() {
+    let input = include_str!("../../inputs/day12.txt");
+    let (part1, _) = solve(input);
+    assert_eq!(part1, 484);  // Actual submitted answer
+}
+
+#[test]
+fn test_part2_actual() {
+    let input = include_str!("../../inputs/day12.txt");
+    let (_, part2) = solve(input);
+    assert_eq!(part2, 478);  // Actual submitted answer
+}
+
+#[test]
+fn test_both_parts_actual() {
+    let input = include_str!("../../inputs/day12.txt");
+    assert_eq!(solve(input), (484, 478));  // Both answers
+}
+```
+
+**When to add**:
+1. ✅ After submitting Part 1 answer - add `test_part1_actual()`
+2. ✅ After submitting Part 2 answer - add `test_part2_actual()` + `test_both_parts_actual()`
+3. ✅ Before any refactoring/optimization work
+4. ✅ Before committing final solution
+
+**Benefits demonstrated**:
+- Day 12 refactoring: Sequential → Parallel → Backward BFS (3 major rewrites)
+- All 3 approaches verified to give same answer (478) via tests
+- Confident optimization because tests catch any breakage instantly
 
 ---
 

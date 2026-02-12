@@ -274,4 +274,24 @@ abdefghi";
         let map = parse_input(EXAMPLE);
         assert_eq!(bfs_backward_to_any_a(&map), 29);
     }
+
+    #[test]
+    fn test_part1_actual() {
+        let input = include_str!("../../inputs/day12.txt");
+        let (part1, _) = solve(input);
+        assert_eq!(part1, 484);
+    }
+
+    #[test]
+    fn test_part2_actual() {
+        let input = include_str!("../../inputs/day12.txt");
+        let (_, part2) = solve(input);
+        assert_eq!(part2, 478);
+    }
+
+    #[test]
+    fn test_both_parts_actual() {
+        let input = include_str!("../../inputs/day12.txt");
+        assert_eq!(solve(input), (484, 478));
+    }
 }
