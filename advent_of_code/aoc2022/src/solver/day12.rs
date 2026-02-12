@@ -1,4 +1,5 @@
 use std::collections::VecDeque;
+use rayon::prelude::*;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct Pos {
@@ -7,7 +8,7 @@ struct Pos {
 }
 
 #[derive(Debug)]
-struct HeightMap {
+pub struct HeightMap {
     grid: Vec<Vec<u8>>,
     start: Pos,
     end: Pos,
@@ -57,7 +58,7 @@ impl HeightMap {
     }
 }
 
-fn parse_input(input: &str) -> HeightMap {
+pub fn parse_input(input: &str) -> HeightMap {
     let lines: Vec<&str> = input.lines().collect();
     let rows = lines.len();
     let cols = lines[0].len();
@@ -115,8 +116,8 @@ fn solve_part1_with_data(map: &HeightMap) -> usize {
         .expect("Path should exist from S to E")
 }
 
-fn solve_part2_with_data(map: &HeightMap) -> usize {
-    // Find shortest path from ANY 'a' elevation to E
+pub fn solve_part2_with_data(map: &HeightMap) -> usize {
+    // Find shortest path from ANY 'a' elevation to E (sequential)
     let mut min_steps = usize::MAX;
 
     for row in 0..map.rows {
@@ -133,10 +134,32 @@ fn solve_part2_with_data(map: &HeightMap) -> usize {
     min_steps
 }
 
+pub fn solve_part2_parallel(map: &HeightMap) -> usize {
+    // Collect all 'a' elevation positions
+    let start_positions: Vec<Pos> = (0..map.rows)
+        .flat_map(|row| {
+            (0..map.cols).filter_map(move |col| {
+                if map.grid[row][col] == 0 {
+                    Some(Pos { row, col })
+                } else {
+                    None
+                }
+            })
+        })
+        .collect();
+
+    // Run BFS from each 'a' position in parallel and find minimum
+    start_positions
+        .par_iter()
+        .filter_map(|&start| bfs_shortest_path(map, start, map.end))
+        .min()
+        .expect("At least one path should exist")
+}
+
 pub fn solve(input: &str) -> (usize, usize) {
     let map = parse_input(input);
     let part1 = solve_part1_with_data(&map);
-    let part2 = solve_part2_with_data(&map);
+    let part2 = solve_part2_parallel(&map);  // Use parallel version
     (part1, part2)
 }
 
@@ -172,5 +195,11 @@ abdefghi";
     fn test_part2_example() {
         let map = parse_input(EXAMPLE);
         assert_eq!(solve_part2_with_data(&map), 29);
+    }
+
+    #[test]
+    fn test_part2_parallel_example() {
+        let map = parse_input(EXAMPLE);
+        assert_eq!(solve_part2_parallel(&map), 29);
     }
 }

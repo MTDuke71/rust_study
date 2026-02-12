@@ -177,8 +177,19 @@ fn benchmark_day11(c: &mut Criterion) {
 fn benchmark_day12(c: &mut Criterion) {
     let input = include_str!("../inputs/day12.txt");
 
-    c.bench_function("day12_combined", |b| {
+    c.bench_function("day12_combined_parallel", |b| {
         b.iter(|| day12::solve(black_box(input)))
+    });
+
+    // Compare sequential vs parallel for Part 2
+    let map = day12::parse_input(input);
+    
+    c.bench_function("day12_part2_sequential", |b| {
+        b.iter(|| day12::solve_part2_with_data(black_box(&map)))
+    });
+
+    c.bench_function("day12_part2_parallel", |b| {
+        b.iter(|| day12::solve_part2_parallel(black_box(&map)))
     });
 }
 
