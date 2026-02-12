@@ -36,7 +36,7 @@
 | [9](days/day09.md) | 180µs | 388µs | ~~756µs~~ **568µs** | Rope physics simulation | Mission 6 | **Optimized**: FxHashSet (20×), parse-once · [Guide →](days/day09_function_guide.md) |
 | [10](days/day10.md) | 7.3µs | 7.3µs | ~~14.4µs~~ **7.5µs** | CPU cycle simulation | - | **Optimized**: Parse-once (48×) · [Guide →](days/day10_function_guide.md) |
 | [11](days/day11.md) | 9.3µs | 3.0ms | **2.92ms** | Monkey simulation + modular arithmetic | - | Part 2: 10K rounds, modulo optimization · [Guide →](days/day11_function_guide.md) |
-| [12](days/day12.md) | 484 | 478 | ~~28.89ms~~ **3.33ms** | BFS pathfinding + parallel | - | **Optimized**: Rayon parallel BFS (9.5×) · Function Guide TBD |
+| [12](days/day12.md) | 484 | 478 | ~~28.89ms~~ **3.33ms** | BFS pathfinding + parallel | - | **Optimized**: Rayon parallel BFS (9.5×) · [Guide →](days/day12_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
 **Cumulative Runtime**: 7.19ms  
@@ -58,7 +58,7 @@
 - [Day 9](days/day09.md) - Rope Bridge ✅ | [Function Guide](days/day09_function_guide.md) | [Code](../../aoc2022/src/solver/day09.rs)
 - [Day 10](days/day10.md) - Cathode-Ray Tube ✅ | [Function Guide](days/day10_function_guide.md) | [Code](../../aoc2022/src/solver/day10.rs)
 - [Day 11](days/day11.md) - Monkey in the Middle ✅ | [Function Guide](days/day11_function_guide.md) | [Code](../../aoc2022/src/solver/day11.rs)
-- [Day 12](days/day12.md) - Hill Climbing Algorithm ✅ | Function Guide TBD | [Code](../../aoc2022/src/solver/day12.rs)
+- [Day 12](days/day12.md) - Hill Climbing Algorithm ✅ | [Function Guide](days/day12_function_guide.md) | [Code](../../aoc2022/src/solver/day12.rs)
 - Day 13-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
@@ -75,6 +75,7 @@
 - [Day 9 Function Guide](days/day09_function_guide.md) - Rope physics, signum() diagonal movement, cascade following
 - [Day 10 Function Guide](days/day10_function_guide.md) - CPU cycle simulation, CRT rendering, sprite overlap detection
 - [Day 11 Function Guide](days/day11_function_guide.md) - Monkey simulation, modular arithmetic, worry level management
+- [Day 12 Function Guide](days/day12_function_guide.md) - BFS pathfinding, grid neighbors, parallel optimization (9.5× speedup)
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
