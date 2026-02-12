@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 12/25 |
-| **Total Runtime** | 32.75ms |
-| **Average per Day** | 2.73ms |
+| **Total Runtime** | 7.19ms |
+| **Average per Day** | 599µs |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 12 (28.89ms) |
+| **Slowest Day** | Day 12 (3.33ms) |
 | **Mission Integration** | 1 day (Day 9: Mission 6 Direction) |
 | **Patterns Extracted** | 14 patterns |
-| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon + precompute (2.8×), Day 9 FxHashSet (1.25×) |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 Rayon (9.5×) |
 
-**1-Second Goal**: 🎯 32.75ms / 1000ms (3.28%)
+**1-Second Goal**: 🎯 7.19ms / 1000ms (0.72%)
 
 ---
 
@@ -36,11 +36,11 @@
 | [9](days/day09.md) | 180µs | 388µs | ~~756µs~~ **568µs** | Rope physics simulation | Mission 6 | **Optimized**: FxHashSet (20×), parse-once · [Guide →](days/day09_function_guide.md) |
 | [10](days/day10.md) | 7.3µs | 7.3µs | ~~14.4µs~~ **7.5µs** | CPU cycle simulation | - | **Optimized**: Parse-once (48×) · [Guide →](days/day10_function_guide.md) |
 | [11](days/day11.md) | 9.3µs | 3.0ms | **2.92ms** | Monkey simulation + modular arithmetic | - | Part 2: 10K rounds, modulo optimization · [Guide →](days/day11_function_guide.md) |
-| [12](days/day12.md) | 484 | 478 | **28.89ms** | BFS pathfinding | - | Grid traversal, elevation constraints · Function Guide TBD |
+| [12](days/day12.md) | 484 | 478 | ~~28.89ms~~ **3.33ms** | BFS pathfinding + parallel | - | **Optimized**: Rayon parallel BFS (9.5×) · Function Guide TBD |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 32.75ms  
-**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 early-term + Rayon (2.8×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow)
+**Cumulative Runtime**: 7.19ms  
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 Rayon multi-start BFS (9.5×)
 
 ---
 
