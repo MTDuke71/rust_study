@@ -407,6 +407,7 @@ x ≡ aₖ (mod nₖ)
 
 **Advanced**:
 - [[math-foundations/number-theory-basics]] - Broader context
+- [[math-foundations/chinese-remainder-theorem]] - CRT and system of congruences
 - [[cryptography-foundations]] - RSA, Diffie-Hellman
 
 ---
