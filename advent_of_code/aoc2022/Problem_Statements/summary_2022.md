@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (12/25 complete)
+**Status**: 🎯 In Progress (13/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 12/25 |
-| **Total Runtime** | 4.30ms |
-| **Average per Day** | 358µs |
+| **Progress** | 13/25 |
+| **Total Runtime** | 5.02ms |
+| **Average per Day** | 386µs |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 11 (2.92ms) |
 | **Mission Integration** | 1 day (Day 9: Mission 6 Direction) |
 | **Patterns Extracted** | 14 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!) |
 
-**1-Second Goal**: 🎯 4.30ms / 1000ms (0.43%)
+**1-Second Goal**: 🎯 5.02ms / 1000ms (0.50%)
 
 ---
 
@@ -37,9 +37,10 @@
 | [10](days/day10.md) | 7.3µs | 7.3µs | ~~14.4µs~~ **7.5µs** | CPU cycle simulation | - | **Optimized**: Parse-once (48×) · [Guide →](days/day10_function_guide.md) |
 | [11](days/day11.md) | 9.3µs | 3.0ms | **2.92ms** | Monkey simulation + modular arithmetic | - | Part 2: 10K rounds, modulo optimization · [Guide →](days/day11_function_guide.md) |
 | [12](days/day12.md) | 484 | 478 | ~~28.89ms~~ ~~3.33ms~~ **435µs** | BFS pathfinding + backward search | - | **Optimized**: Backward BFS from E (164×) · [Guide →](days/day12_function_guide.md) |
+| [13](days/day13.md) | 5852 | 24190 | **721µs** | Packet comparison + sorting | - | Recursive JSON parsing, divider packets · [Guide →](days/day13_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 4.30ms  
+**Cumulative Runtime**: 5.02ms  
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs)
 
 ---
@@ -59,7 +60,8 @@
 - [Day 10](days/day10.md) - Cathode-Ray Tube ✅ | [Function Guide](days/day10_function_guide.md) | [Code](../../aoc2022/src/solver/day10.rs)
 - [Day 11](days/day11.md) - Monkey in the Middle ✅ | [Function Guide](days/day11_function_guide.md) | [Code](../../aoc2022/src/solver/day11.rs)
 - [Day 12](days/day12.md) - Hill Climbing Algorithm ✅ | [Function Guide](days/day12_function_guide.md) | [Code](../../aoc2022/src/solver/day12.rs)
-- Day 13-25: Not yet started
+- [Day 13](days/day13.md) - Distress Signal ✅ | [Function Guide](days/day13_function_guide.md) | [Code](../../aoc2022/src/solver/day13.rs)
+- Day 14-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -75,7 +77,8 @@
 - [Day 9 Function Guide](days/day09_function_guide.md) - Rope physics, signum() diagonal movement, cascade following
 - [Day 10 Function Guide](days/day10_function_guide.md) - CPU cycle simulation, CRT rendering, sprite overlap detection
 - [Day 11 Function Guide](days/day11_function_guide.md) - Monkey simulation, modular arithmetic, worry level management
-- [Day 12 Function Guide](days/day12_function_guide.md) - BFS pathfinding, grid neighbors, parallel optimization (9.5× speedup)
+- [Day 12 Function Guide](days/day12_function_guide.md) - BFS pathfinding, grid neighbors, backward search (164× speedup!)
+- [Day 13 Function Guide](days/day13_function_guide.md) - Recursive packet comparison, JSON parsing, sorting with custom comparator
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -95,9 +98,12 @@
 - **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
 - **Stack-Based Traversal**: Day 7 (DFS-style filesystem accumulation)
 - **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds)
-- **Grid**: Day 8 (2D visibility checks, directional iteration)
+- **Grid**: Day 8 (2D visibility checks, directional iteration), Day 12 (BFS pathfinding, backward search)
 - **Coordinate Systems**: Day 9 (signed 2D coords, signum() movement)
 - **Queue Operations**: Day 11 (VecDeque for FIFO item passing)
+- **Recursive Comparison**: Day 13 (nested list comparison with type coercion)
+- **JSON Parsing**: Day 13 (serde_json for nested structures)
+- **Custom Sorting**: Day 13 (sort with custom comparator finding divider packets)
 - **Graph**: Day 12 (BFS pathfinding, elevation constraints, neighbor generation)
 - **BFS**: Day 12 (shortest path, multi-source BFS for Part 2)
 - **DP**: Day -
