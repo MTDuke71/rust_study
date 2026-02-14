@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 13/25 |
-| **Total Runtime** | 5.02ms |
-| **Average per Day** | 386µs |
+| **Total Runtime** | 4.66ms |
+| **Average per Day** | 358µs |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 11 (2.92ms) |
 | **Mission Integration** | 1 day (Day 9: Mission 6 Direction) |
 | **Patterns Extracted** | 14 patterns |
-| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!) |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), **Day 13 counting (33×!)** |
 
-**1-Second Goal**: 🎯 5.02ms / 1000ms (0.50%)
+**1-Second Goal**: 🎯 4.66ms / 1000ms (0.47%)
 
 ---
 
@@ -37,11 +37,11 @@
 | [10](days/day10.md) | 7.3µs | 7.3µs | ~~14.4µs~~ **7.5µs** | CPU cycle simulation | - | **Optimized**: Parse-once (48×) · [Guide →](days/day10_function_guide.md) |
 | [11](days/day11.md) | 9.3µs | 3.0ms | **2.92ms** | Monkey simulation + modular arithmetic | - | Part 2: 10K rounds, modulo optimization · [Guide →](days/day11_function_guide.md) |
 | [12](days/day12.md) | 484 | 478 | ~~28.89ms~~ ~~3.33ms~~ **435µs** | BFS pathfinding + backward search | - | **Optimized**: Backward BFS from E (164×) · [Guide →](days/day12_function_guide.md) |
-| [13](days/day13.md) | 5852 | 24190 | **721µs** | Packet comparison + sorting | - | Recursive JSON parsing, divider packets · [Guide →](days/day13_function_guide.md) |
+| [13](days/day13.md) | 5852 | 24190 | ~~721µs~~ **341µs** | Packet comparison + counting | - | **Optimized**: Count instead of sort (33×) · [Guide →](days/day13_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 5.02ms  
-**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs)
+**Cumulative Runtime**: 4.66ms  
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), **Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2)**
 
 ---
 

@@ -115,34 +115,32 @@ pub fn solve_part1_with_data(data: &ParsedData) -> usize {
 // ============================================================================
 
 pub fn solve_part2_with_data(data: &ParsedData) -> usize {
-    // Collect all packets from pairs
-    let mut packets: Vec<Value> = data
-        .pairs
-        .iter()
-        .flat_map(|pair| vec![pair.left.clone(), pair.right.clone()])
-        .collect();
-
-    // Add divider packets
+    // Divider packets
     let divider1: Value = serde_json::from_str("[[2]]").unwrap();
     let divider2: Value = serde_json::from_str("[[6]]").unwrap();
-    packets.push(divider1.clone());
-    packets.push(divider2.clone());
-
-    // Sort all packets using our comparison function
-    packets.sort_by(compare_packets);
-
-    // Find indices of divider packets (1-based)
-    let mut divider1_idx = 0;
-    let mut divider2_idx = 0;
-
-    for (idx, packet) in packets.iter().enumerate() {
-        if packet == &divider1 {
-            divider1_idx = idx + 1; // 1-based indexing
-        } else if packet == &divider2 {
-            divider2_idx = idx + 1; // 1-based indexing
+    
+    // Start with divider positions (1-based):
+    // [[2]] starts at position 1
+    // [[6]] starts at position 2 (right after [[2]])
+    let mut divider1_idx = 1;
+    let mut divider2_idx = 2;
+    
+    // For each packet, count if it's less than dividers
+    // This shifts the divider positions without actually sorting
+    for pair in &data.pairs {
+        for packet in [&pair.left, &pair.right] {
+            if compare_packets(packet, &divider1) == Ordering::Less {
+                // Packet comes before [[2]], so both dividers shift right
+                divider1_idx += 1;
+                divider2_idx += 1;
+            } else if compare_packets(packet, &divider2) == Ordering::Less {
+                // Packet is between [[2]] and [[6]], so only [[6]] shifts right
+                divider2_idx += 1;
+            }
+            // else: packet >= [[6]], no shifts needed
         }
     }
-
+    
     divider1_idx * divider2_idx
 }
 
