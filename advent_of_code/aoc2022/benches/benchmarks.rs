@@ -200,6 +200,20 @@ fn benchmark_day12(c: &mut Criterion) {
 fn benchmark_day13(c: &mut Criterion) {
     let input = include_str!("../inputs/day13.txt");
 
+    c.bench_function("day13_parse", |b| {
+        b.iter(|| day13::parse_input(black_box(input)))
+    });
+
+    let data = day13::parse_input(input);
+
+    c.bench_function("day13_part1", |b| {
+        b.iter(|| day13::solve_part1_with_data(black_box(&data)))
+    });
+
+    c.bench_function("day13_part2", |b| {
+        b.iter(|| day13::solve_part2_with_data(black_box(&data)))
+    });
+
     c.bench_function("day13_combined", |b| {
         b.iter(|| day13::solve(black_box(input)))
     });

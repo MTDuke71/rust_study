@@ -353,15 +353,25 @@ pub fn solve(input: &str) -> (usize, usize) {
 ### Benchmark Results
 
 ```
-day13_combined: 721.17µs
+day13_parse:    367.41µs
+day13_part1:      3.32µs
+day13_part2:    338.07µs
+day13_combined: 705.13µs
 ```
 
-**Breakdown estimate**:
-- Parsing (serde_json): ~400µs (~55%)
-- Part 1 comparison: ~200µs (~28%)
-- Part 2 sorting: ~120µs (~17%)
+**Breakdown (measured)**:
+- Parsing (serde_json): **367.41µs (52.1%)**
+- Part 1 comparison: **3.32µs (0.5%)**
+- Part 2 sorting: **338.07µs (47.9%)**
 
-**Why is parsing slow?**
+**Key insights**:
+- ✅ **Part 1 is extremely fast** (3.3µs) - only ~150 comparisons
+- ✅ **Part 2 dominates solve time** (~102× slower than Part 1)
+  - Sorting 302 packets requires ~2,488 comparisons (n log n)
+  - Factor: 2488/150 ≈ 16.6× more comparisons + overhead
+- ✅ **Parsing is the bottleneck** (367µs > 341µs for both solves)
+
+**Why is parsing the bottleneck?**
 - serde_json is a general-purpose JSON parser
 - Handles all JSON features (we only need arrays + integers)
 - Allocates `Value` enum for every element
@@ -373,10 +383,11 @@ day13_combined: 721.17µs
 4. **Early exit**: Stop searching after finding both dividers
 
 **Why we didn't optimize**:
-- ✅ 721µs is well under 100ms budget
+- ✅ 705µs is well under 100ms budget
 - ✅ serde_json is correct and maintainable
 - ✅ Premature optimization avoided
 - ✅ Code clarity prioritized
+- ✅ **LESSON**: Measure, don't guess! Initial estimates were way off.
 
 ---
 

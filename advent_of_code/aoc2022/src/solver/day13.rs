@@ -96,7 +96,7 @@ pub fn parse_input(input: &str) -> ParsedData {
 // Part 1 Logic (Internal - accepts parsed data)
 // ============================================================================
 
-fn solve_part1_with_data(data: &ParsedData) -> usize {
+pub fn solve_part1_with_data(data: &ParsedData) -> usize {
     data.pairs
         .iter()
         .enumerate()
@@ -114,7 +114,7 @@ fn solve_part1_with_data(data: &ParsedData) -> usize {
 // Part 2 Logic (Internal - accepts parsed data)
 // ============================================================================
 
-fn solve_part2_with_data(data: &ParsedData) -> usize {
+pub fn solve_part2_with_data(data: &ParsedData) -> usize {
     // Collect all packets from pairs
     let mut packets: Vec<Value> = data
         .pairs
