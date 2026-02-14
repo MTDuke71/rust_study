@@ -445,6 +445,7 @@ cargo run --bin day25
    - Missions: `.github/instructions/mission-instructions.md`
    - Daily Study: `.github/instructions/daily-study-instructions.md`
    - Rust Book: `.github/instructions/rust-book-instructions.md`
+   - AoC: `.github/instructions/aoc-instructions.md`
 4. **Most recent Daily Note** - What happened in last session
 5. **Zettelkasten index** - `zettelkasten/zettel-index.md` for navigation
 
