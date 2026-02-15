@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (13/25 complete)
+**Status**: 🎯 In Progress (15/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 13/25 |
-| **Total Runtime** | 4.66ms |
-| **Average per Day** | 358µs |
+| **Progress** | 15/25 |
+| **Total Runtime** | 445.83ms |
+| **Average per Day** | 29.7ms |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 11 (2.92ms) |
-| **Mission Integration** | 1 day (Day 9: Mission 6 Direction) |
-| **Patterns Extracted** | 14 patterns |
+| **Slowest Day** | Day 15 (432.52ms) |
+| **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
+| **Patterns Extracted** | 15 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), **Day 13 counting (33×!)** |
 
-**1-Second Goal**: 🎯 4.66ms / 1000ms (0.47%)
+**1-Second Goal**: 🎯 445.83ms / 1000ms (44.6%)
 
 ---
 
@@ -38,9 +38,11 @@
 | [11](days/day11.md) | 9.3µs | 3.0ms | **2.92ms** | Monkey simulation + modular arithmetic | - | Part 2: 10K rounds, modulo optimization · [Guide →](days/day11_function_guide.md) |
 | [12](days/day12.md) | 484 | 478 | ~~28.89ms~~ ~~3.33ms~~ **435µs** | BFS pathfinding + backward search | - | **Optimized**: Backward BFS from E (164×) · [Guide →](days/day12_function_guide.md) |
 | [13](days/day13.md) | 5852 | 24190 | ~~721µs~~ **341µs** | Packet comparison + counting | - | **Optimized**: Count instead of sort (33×) · [Guide →](days/day13_function_guide.md) |
+| [14](days/day14.md) | 763 | 23921 | **8.62ms** | Sand simulation + grid | Mission 6 | Coordinate normalization, physics simulation · [Guide →](days/day14_function_guide.md) |
+| [15](days/day15.md) | 4876693 | 11645454855041 | **432.52ms** | Interval merging + row scan | - | Manhattan distance, sparse coverage, 4M rows · [Guide →](days/day15_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 4.66ms  
+**Cumulative Runtime**: 445.83ms  
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), **Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2)**
 
 ---
@@ -61,7 +63,9 @@
 - [Day 11](days/day11.md) - Monkey in the Middle ✅ | [Function Guide](days/day11_function_guide.md) | [Code](../../aoc2022/src/solver/day11.rs)
 - [Day 12](days/day12.md) - Hill Climbing Algorithm ✅ | [Function Guide](days/day12_function_guide.md) | [Code](../../aoc2022/src/solver/day12.rs)
 - [Day 13](days/day13.md) - Distress Signal ✅ | [Function Guide](days/day13_function_guide.md) | [Code](../../aoc2022/src/solver/day13.rs)
-- Day 14-25: Not yet started
+- [Day 14](days/day14.md) - Regolith Reservoir ✅ | [Function Guide](days/day14_function_guide.md) | [Code](../../aoc2022/src/solver/day14.rs)
+- [Day 15](days/day15.md) - Beacon Exclusion Zone ✅ | [Function Guide](days/day15_function_guide.md) | [Code](../../aoc2022/src/solver/day15.rs)
+- Day 16-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -79,6 +83,8 @@
 - [Day 11 Function Guide](days/day11_function_guide.md) - Monkey simulation, modular arithmetic, worry level management
 - [Day 12 Function Guide](days/day12_function_guide.md) - BFS pathfinding, grid neighbors, backward search (164× speedup!)
 - [Day 13 Function Guide](days/day13_function_guide.md) - Recursive packet comparison, JSON parsing, sorting with custom comparator
+- [Day 14 Function Guide](days/day14_function_guide.md) - Sand simulation, coordinate normalization, Mission 6 Grid integration
+- [Day 15 Function Guide](days/day15_function_guide.md) - Interval merging, Manhattan distance, sparse coverage scanning
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -93,12 +99,12 @@
 - **Lookup Tables**: Day 2 (3×3 precomputed scores)
 - **Set Operations**: Day 3 (bitset intersection - optimized from HashSet), Day 9 (FxHashSet for visited positions - optimized from std HashMap)
 - **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 XOR bitset for rolling uniqueness)
-- **Range/Interval Operations**: Day 4 (containment, overlap)
+- **Range/Interval Operations**: Day 4 (containment, overlap), Day 15 (interval merging, gap finding)
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
 - **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
 - **Stack-Based Traversal**: Day 7 (DFS-style filesystem accumulation)
-- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds)
-- **Grid**: Day 8 (2D visibility checks, directional iteration), Day 12 (BFS pathfinding, backward search)
+- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds), Day 14 (sand physics, falling + settling)
+- **Grid**: Day 8 (2D visibility checks, directional iteration), Day 12 (BFS pathfinding, backward search), Day 14 (Mission 6 Grid, coordinate normalization, dynamic bounds)
 - **Coordinate Systems**: Day 9 (signed 2D coords, signum() movement)
 - **Queue Operations**: Day 11 (VecDeque for FIFO item passing)
 - **Recursive Comparison**: Day 13 (nested list comparison with type coercion)
@@ -107,7 +113,7 @@
 - **Graph**: Day 12 (BFS pathfinding, elevation constraints, neighbor generation)
 - **BFS**: Day 12 (shortest path, multi-source BFS for Part 2)
 - **DP**: Day -
-- **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept)
+- **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept), Day 15 (Manhattan distance, geometric coverage)
 
 ### Complexity Analysis
 - **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide), Day 9 (is_touching, follow, FxHashSet insert), Day 10 (cycle increment, pixel draw), Day 11 (VecDeque push/pop, modulo)
@@ -117,6 +123,7 @@
 - **O(n log n)**: Day 1 (sorting for top-3), Day 11 (sorting inspection counts for top-2)
 - **O(n²)**: Day 8 (grid iteration: rows × cols)
 - **O(rounds × monkeys × items)**: Day 11 (Part 1: 20 rounds, Part 2: 10,000 rounds)
+- **O(n × m)**: Day 15 Part 2 (4M rows × n sensors, interval merging per row)
 - **O(2ⁿ)**: Day -
 
 ---
@@ -149,13 +156,13 @@
 
 | Mission | Days Used | Components |
 |---------|-----------|------------|
-| Mission 6 (Grid) | - | - |
+| Mission 6 (Grid) | Day 14 | Grid<Tile>, Coord (type-safe coordinates) |
 | Mission 8 (Graph) | - | - |
 | Mission 5 (HashSet) | - | - |
 | Mission 2 (Queue) | - | - |
 | Mission 10 (Union-Find) | - | - |
 
-**Integration Rate**: -% of days used mission components
+**Integration Rate**: 7.1% of days used mission components (1/14)
 
 ---
 
@@ -230,8 +237,8 @@
 
 ---
 
-**Last Updated**: 2026-02-08 (Day 8 complete)  
-**Next Update**: After Day 8
+**Last Updated**: 2026-02-14 (Day 14 complete)
+**Next Update**: After Day 15
 
 ---
 
