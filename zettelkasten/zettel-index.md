@@ -244,6 +244,8 @@
 **Software Architecture:**
 
 - [[software-architecture-patterns]] - **Layer-based vs Feature-based Architecture** - Project organization patterns, decision framework, and Rust-specific considerations
+- [[domain-driven-design]] - **Domain-Driven Design (DDD)** - Ubiquitous language, bounded contexts, entities vs value objects, aggregates, and practical Rust patterns with AUTOSAR parallels
+- [[philosophy-of-software-design]] - **A Philosophy of Software Design** - Deep vs shallow modules, information hiding, complexity management; complements DDD by providing *how* to design modules
 - [[deterministic-debugging]] - **Deterministic Debugging** - Reproducible bug detection, HashMap non-determinism solutions, and professional debugging methodologies
 
 **Performance & Optimization:**
