@@ -254,6 +254,10 @@ fn benchmark_day15(c: &mut Criterion) {
         b.iter(|| day15::part2(black_box(&sensors)))
     });
 
+    c.bench_function("day15_part2_row_scan", |b| {
+        b.iter(|| day15::part2_row_scan(black_box(&sensors)))
+    });
+
     c.bench_function("day15_combined", |b| {
         b.iter(|| day15::solve(black_box(input)))
     });

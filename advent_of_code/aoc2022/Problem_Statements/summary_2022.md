@@ -9,13 +9,13 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 15/25 |
-| **Total Runtime** | 445.83ms |
-| **Average per Day** | 29.7ms |
+| **Total Runtime** | 58.31ms |
+| **Average per Day** | 3.89ms |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 15 (432.52ms) |
+| **Slowest Day** | Day 15 (45.02ms) |
 | **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
 | **Patterns Extracted** | 15 patterns |
-| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), **Day 13 counting (33×!)** |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 perimeter search (10×!)** |
 
 **1-Second Goal**: 🎯 445.83ms / 1000ms (44.6%)
 
@@ -39,11 +39,11 @@
 | [12](days/day12.md) | 484 | 478 | ~~28.89ms~~ ~~3.33ms~~ **435µs** | BFS pathfinding + backward search | - | **Optimized**: Backward BFS from E (164×) · [Guide →](days/day12_function_guide.md) |
 | [13](days/day13.md) | 5852 | 24190 | ~~721µs~~ **341µs** | Packet comparison + counting | - | **Optimized**: Count instead of sort (33×) · [Guide →](days/day13_function_guide.md) |
 | [14](days/day14.md) | 763 | 23921 | **8.62ms** | Sand simulation + grid | Mission 6 | Coordinate normalization, physics simulation · [Guide →](days/day14_function_guide.md) |
-| [15](days/day15.md) | 4876693 | 11645454855041 | **432.52ms** | Interval merging + row scan | - | Manhattan distance, sparse coverage, 4M rows · [Guide →](days/day15_function_guide.md) |
+| [15](days/day15.md) | 4876693 | 11645454855041 | ~~432.52ms~~ **45.02ms** | Interval merging + perimeter search | - | **Optimized**: Perimeter boundary search (10×) · [Guide →](days/day15_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 445.83ms  
-**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), **Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2)**
+**Cumulative Runtime**: 58.31ms
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 perimeter boundary search (10×! - from 451.9ms → 45.0ms for Part 2)**
 
 ---
 
@@ -149,6 +149,7 @@
 - **Grid parsing pattern** (Day 8): `Vec<Vec<u8>>` from line-by-line character iteration, simple and cache-friendly
 - **Group splitting pattern** (Day 1, 5): Using `.split("\n\n")` for blank-line delimited sections
 - **Parse-once pattern** (Day 1): Separate parsing from solving, reuse parsed data for both parts (49% speedup)
+- **Perimeter boundary search** (Day 15): Instead of scanning 4M rows, check only sensor perimeters (radius + 1) where uncovered position MUST exist (10× speedup)
 
 ---
 
