@@ -11,7 +11,7 @@ pub fn solve(input: &str) -> (usize, i64) {
     let sensors = parse_input(input);
     (
         count_impossible_positions(&sensors, 2_000_000),
-        find_distress_beacon_perimeter(&sensors, 4_000_000),
+        find_distress_beacon_lines(&sensors, 4_000_000),
     )
 }
 
@@ -25,14 +25,24 @@ pub fn part1(sensors: &[Sensor]) -> usize {
     count_impossible_positions(sensors, 2_000_000)
 }
 
-/// Solve Part 2 only (for testing) - Uses optimized perimeter search
+/// Solve Part 2 only (for testing) - Uses optimized line-based search (Feng method)
 pub fn part2(sensors: &[Sensor]) -> i64 {
-    find_distress_beacon_perimeter(sensors, 4_000_000)
+    find_distress_beacon_lines(sensors, 4_000_000)
 }
 
 /// Part 2 with row scan (original approach, for benchmarking comparison)
-pub fn part2_row_scan(sensors: &[Sensor]) -> i64 {
-    find_distress_beacon_row_scan(sensors, 4_000_000)
+pub fn part2_row_scan(sensors: &[Sensor], max_coord: i32) -> i64 {
+    find_distress_beacon_row_scan(sensors, max_coord)
+}
+
+/// Part 2 with perimeter point search (for benchmarking comparison)
+pub fn part2_perimeter(sensors: &[Sensor], max_coord: i32) -> i64 {
+    find_distress_beacon_perimeter(sensors, max_coord)
+}
+
+/// Part 2 with line-based search (Feng method, for benchmarking comparison)
+pub fn part2_lines(sensors: &[Sensor], max_coord: i32) -> i64 {
+    find_distress_beacon_lines(sensors, max_coord)
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -197,7 +207,7 @@ fn find_distress_beacon_row_scan(sensors: &[Sensor], max_coord: i32) -> i64 {
     0 // Not found
 }
 
-/// Part 2: Perimeter Search Approach (PRIMARY - 10× faster!)
+/// Part 2: Perimeter Search Approach (checks ~millions of points)
 ///
 /// **Key Insight**: The distress beacon must be just outside (radius + 1) from
 /// at least one sensor's range, at the boundary between coverage areas.
@@ -246,6 +256,85 @@ fn find_distress_beacon_perimeter(sensors: &[Sensor], max_coord: i32) -> i64 {
     0
 }
 
+/// Part 2: Line-Based Search (Feng Method - PRIMARY - fastest!)
+///
+/// **Key Insight**: Each sensor perimeter creates 4 diagonal lines (slope ±1).
+/// The distress beacon is at the intersection of perimeter lines.
+///
+/// **Geometric Foundation**:
+/// - Manhattan distance diamond = 4 diagonal lines with slope +1 and -1
+/// - Positive slope (NE-SW): y - x = constant
+/// - Negative slope (NW-SE): y + x = constant
+///
+/// **Algorithm**:
+/// 1. Extract all perimeter line equations (y±x = c) from sensors
+/// 2. Check ALL intersections of positive × negative slope lines
+/// 3. Filter for in-bounds and uncovered by sensors
+///
+/// **Optimization**: Only ~124 lines × 124 lines = ~15k intersections (vs millions of points)
+///
+/// **Performance**: Expected <10ms (vs 45ms perimeter points, 451ms row scan)
+///
+/// **Credit**: William Y. Feng optimization
+fn find_distress_beacon_lines(sensors: &[Sensor], max_coord: i32) -> i64 {
+    use std::collections::HashSet;
+
+    // Collect all perimeter lines as constants in y±x = constant form
+    let mut pos_lines = Vec::new(); // y - x = c (positive slope)
+    let mut neg_lines = Vec::new(); // y + x = c (negative slope)
+
+    for sensor in sensors {
+        let r = sensor.radius() + 1; // Perimeter is at radius + 1
+        let cx = sensor.x;
+        let cy = sensor.y;
+
+        // Perimeter diamond has 4 edges:
+        // Top-right and bottom-left: y - x = (cy - cx) ± r
+        pos_lines.push(cy - cx + r);
+        pos_lines.push(cy - cx - r);
+
+        // Top-left and bottom-right: y + x = (cy + cx) ± r
+        neg_lines.push(cy + cx + r);
+        neg_lines.push(cy + cx - r);
+    }
+
+    // Remove duplicates
+    let pos_lines: HashSet<_> = pos_lines.into_iter().collect();
+    let neg_lines: HashSet<_> = neg_lines.into_iter().collect();
+
+    // Check all intersections of positive × negative slope lines
+    for &pos_c in &pos_lines {
+        for &neg_c in &neg_lines {
+            // Solve intersection of y - x = pos_c and y + x = neg_c
+            // Adding equations: 2y = pos_c + neg_c => y = (pos_c + neg_c) / 2
+            // Subtracting: 2x = neg_c - pos_c => x = (neg_c - pos_c) / 2
+
+            // Check if intersection has integer coordinates
+            if (neg_c - pos_c) % 2 != 0 || (pos_c + neg_c) % 2 != 0 {
+                continue;
+            }
+
+            let x = (neg_c - pos_c) / 2;
+            let y = (pos_c + neg_c) / 2;
+
+            // Bounds check
+            if x < 0 || x > max_coord || y < 0 || y > max_coord {
+                continue;
+            }
+
+            // Verify this point is outside ALL sensor ranges
+            if sensors
+                .iter()
+                .all(|s| s.distance_to(x, y) > s.radius())
+            {
+                return x as i64 * 4_000_000 + y as i64;
+            }
+        }
+    }
+
+    0 // Not found
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -292,8 +381,22 @@ Sensor at x=20, y=1: closest beacon is at x=15, y=3";
     #[test]
     fn test_part2_example() {
         let sensors = parse(EXAMPLE);
-        let tuning_freq = find_distress_beacon_perimeter(&sensors, 20);
+        let tuning_freq = find_distress_beacon_lines(&sensors, 20);
         assert_eq!(tuning_freq, 56000011);
+    }
+
+    #[test]
+    fn test_part2_lines_example() {
+        let sensors = parse(EXAMPLE);
+        let result = find_distress_beacon_lines(&sensors, 20);
+        assert_eq!(result, 56000011);
+    }
+
+    #[test]
+    fn test_part2_perimeter_example() {
+        let sensors = parse(EXAMPLE);
+        let result = find_distress_beacon_perimeter(&sensors, 20);
+        assert_eq!(result, 56000011);
     }
 
     #[test]
@@ -324,9 +427,23 @@ Sensor at x=20, y=1: closest beacon is at x=15, y=3";
     }
 
     #[test]
+    fn test_part2_lines_actual() {
+        let input = include_str!("../../inputs/day15.txt");
+        let sensors = parse(input);
+        assert_eq!(part2_lines(&sensors, 4_000_000), 11645454855041);
+    }
+
+    #[test]
+    fn test_part2_perimeter_actual() {
+        let input = include_str!("../../inputs/day15.txt");
+        let sensors = parse(input);
+        assert_eq!(part2_perimeter(&sensors, 4_000_000), 11645454855041);
+    }
+
+    #[test]
     fn test_part2_row_scan_actual() {
         let input = include_str!("../../inputs/day15.txt");
         let sensors = parse(input);
-        assert_eq!(part2_row_scan(&sensors), 11645454855041);
+        assert_eq!(part2_row_scan(&sensors, 4_000_000), 11645454855041);
     }
 }

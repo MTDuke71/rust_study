@@ -24,28 +24,29 @@ fn main() {
     println!("{}", "=".repeat(60));
     println!();
 
-    // Original approach
+    // Row scan (original)
     let start = Instant::now();
-    let result1 = day15::part2(&sensors);
+    let result1 = day15::part2_row_scan(&sensors, 20);
     let time1 = start.elapsed();
-    println!("✅ Original (row scan):     {:?} → {}", time1, result1);
+    println!("✅ Row scan (original):     {:?} → {}", time1, result1);
 
-    // HashMap pre-computation
+    // Perimeter point search
     let start = Instant::now();
-    let result2 = day15::part2_hashmap(&sensors, 20);
+    let result2 = day15::part2_perimeter(&sensors, 20);
     let time2 = start.elapsed();
-    println!("✅ HashMap pre-compute:     {:?} → {}", time2, result2);
+    println!("✅ Perimeter points:        {:?} → {}", time2, result2);
 
-    // Perimeter search
+    // Line-based search (Feng method)
     let start = Instant::now();
-    let result3 = day15::part2_perimeter(&sensors, 20);
+    let result3 = day15::part2_lines(&sensors, 20);
     let time3 = start.elapsed();
-    println!("✅ Perimeter search:        {:?} → {}", time3, result3);
+    println!("✅ Line-based (Feng):       {:?} → {}", time3, result3);
 
     println!();
     println!("Speedup factors:");
-    println!("  HashMap vs Original:    {:.2}×", time1.as_secs_f64() / time2.as_secs_f64());
-    println!("  Perimeter vs Original:  {:.2}×", time1.as_secs_f64() / time3.as_secs_f64());
+    println!("  Perimeter vs Row scan:  {:.2}×", time1.as_secs_f64() / time2.as_secs_f64());
+    println!("  Lines vs Row scan:      {:.2}×", time1.as_secs_f64() / time3.as_secs_f64());
+    println!("  Lines vs Perimeter:     {:.2}×", time2.as_secs_f64() / time3.as_secs_f64());
     println!();
 
     // Now with actual input
@@ -57,37 +58,34 @@ fn main() {
     let input = include_str!("../inputs/day15.txt");
     let sensors = day15::parse(input);
 
-    // Original approach
-    println!("Running original...");
+    // Row scan
+    println!("Running row scan...");
     let start = Instant::now();
-    let result1 = day15::part2(&sensors);
+    let result1 = day15::part2_row_scan(&sensors, 4_000_000);
     let time1 = start.elapsed();
-    println!("✅ Original (row scan):     {:?} → {}", time1, result1);
+    println!("✅ Row scan (original):     {:?} → {}", time1, result1);
 
-    // HashMap pre-computation
-    println!("Running HashMap...");
-    let start = Instant::now();
-    let result2 = day15::part2_hashmap(&sensors, 4_000_000);
-    let time2 = start.elapsed();
-    println!("✅ HashMap pre-compute:     {:?} → {}", time2, result2);
-
-    // Perimeter search
+    // Perimeter point search
     println!("Running perimeter...");
     let start = Instant::now();
-    let result3 = day15::part2_perimeter(&sensors, 4_000_000);
+    let result2 = day15::part2_perimeter(&sensors, 4_000_000);
+    let time2 = start.elapsed();
+    println!("✅ Perimeter points:        {:?} → {}", time2, result2);
+
+    // Line-based search
+    println!("Running line-based...");
+    let start = Instant::now();
+    let result3 = day15::part2_lines(&sensors, 4_000_000);
     let time3 = start.elapsed();
-    println!("✅ Perimeter search:        {:?} → {}", time3, result3);
+    println!("✅ Line-based (Feng):       {:?} → {}", time3, result3);
 
     println!();
     println!("Speedup factors:");
-    if time1.as_secs_f64() > time2.as_secs_f64() {
-        println!("  HashMap vs Original:    {:.2}× FASTER", time1.as_secs_f64() / time2.as_secs_f64());
+    println!("  Perimeter vs Row scan:  {:.2}× FASTER", time1.as_secs_f64() / time2.as_secs_f64());
+    println!("  Lines vs Row scan:      {:.2}× FASTER", time1.as_secs_f64() / time3.as_secs_f64());
+    if time2.as_secs_f64() > time3.as_secs_f64() {
+        println!("  Lines vs Perimeter:     {:.2}× FASTER", time2.as_secs_f64() / time3.as_secs_f64());
     } else {
-        println!("  HashMap vs Original:    {:.2}× SLOWER", time2.as_secs_f64() / time1.as_secs_f64());
-    }
-    if time1.as_secs_f64() > time3.as_secs_f64() {
-        println!("  Perimeter vs Original:  {:.2}× FASTER", time1.as_secs_f64() / time3.as_secs_f64());
-    } else {
-        println!("  Perimeter vs Original:  {:.2}× SLOWER", time3.as_secs_f64() / time1.as_secs_f64());
+        println!("  Perimeter vs Lines:     {:.2}× FASTER", time3.as_secs_f64() / time2.as_secs_f64());
     }
 }

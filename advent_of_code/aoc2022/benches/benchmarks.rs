@@ -254,8 +254,16 @@ fn benchmark_day15(c: &mut Criterion) {
         b.iter(|| day15::part2(black_box(&sensors)))
     });
 
+    c.bench_function("day15_part2_lines", |b| {
+        b.iter(|| day15::part2_lines(black_box(&sensors), 4_000_000))
+    });
+
+    c.bench_function("day15_part2_perimeter", |b| {
+        b.iter(|| day15::part2_perimeter(black_box(&sensors), 4_000_000))
+    });
+
     c.bench_function("day15_part2_row_scan", |b| {
-        b.iter(|| day15::part2_row_scan(black_box(&sensors)))
+        b.iter(|| day15::part2_row_scan(black_box(&sensors), 4_000_000))
     });
 
     c.bench_function("day15_combined", |b| {
