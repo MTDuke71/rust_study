@@ -493,4 +493,4 @@ fn solve<'a>(
 
 *Links:*
 - **Outgoing:** [[Dynamic Programming]], [[memoization-comprehensive-guide]], [[Recursion]], [[HashMap]], [[zero-copy-string-slicing]], [[mission-11]]
-- **Incoming:** (To be added by related notes)
+- **Incoming:** [[sos-dp]], [[dp-aggregation-patterns]], [[boolean-to-counting-dp]]

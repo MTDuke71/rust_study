@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (15/25 complete)
+**Status**: 🎯 In Progress (16/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 15/25 |
-| **Total Runtime** | 13.29ms |
-| **Average per Day** | 886µs |
+| **Progress** | 16/25 |
+| **Total Runtime** | 18.23ms |
+| **Average per Day** | 1.14ms |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 11 (2.92ms) |
+| **Slowest Day** | Day 16 (4.94ms) |
 | **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
-| **Patterns Extracted** | 15 patterns |
+| **Patterns Extracted** | 18 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 line-based search (27,000×!)** |
 
-**1-Second Goal**: 🎯 13.29ms / 1000ms (1.3%)
+**1-Second Goal**: 🎯 18.23ms / 1000ms (1.8%)
 
 ---
 
@@ -40,9 +40,10 @@
 | [13](days/day13.md) | 5852 | 24190 | ~~721µs~~ **341µs** | Packet comparison + counting | - | **Optimized**: Count instead of sort (33×) · [Guide →](days/day13_function_guide.md) |
 | [14](days/day14.md) | 763 | 23921 | **8.62ms** | Sand simulation + grid | Mission 6 | Coordinate normalization, physics simulation · [Guide →](days/day14_function_guide.md) |
 | [15](days/day15.md) | 4876693 | 11645454855041 | ~~432.52ms~~ ~~45.02ms~~ **23.02µs** | Interval merging + line-based search | - | **Optimized**: Line-based (Feng method) 27,000× faster! · [Guide →](days/day15_function_guide.md) |
+| [16](days/day16.md) | 1638 | 2400 | **4.94ms** | Graph compression + bitmask DFS + SOS DP | - | BFS distances, bitmask partition for 2 actors · [Guide →](days/day16_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 13.29ms
+**Cumulative Runtime**: 18.23ms
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**
 
 ---
@@ -65,7 +66,8 @@
 - [Day 13](days/day13.md) - Distress Signal ✅ | [Function Guide](days/day13_function_guide.md) | [Code](../../aoc2022/src/solver/day13.rs)
 - [Day 14](days/day14.md) - Regolith Reservoir ✅ | [Function Guide](days/day14_function_guide.md) | [Code](../../aoc2022/src/solver/day14.rs)
 - [Day 15](days/day15.md) - Beacon Exclusion Zone ✅ | [Function Guide](days/day15_function_guide.md) | [Code](../../aoc2022/src/solver/day15.rs)
-- Day 16-25: Not yet started
+- [Day 16](days/day16.md) - Proboscidea Volcanium ✅ | [Function Guide](days/day16_function_guide.md) | [Code](../../aoc2022/src/solver/day16.rs)
+- Day 17-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -85,6 +87,7 @@
 - [Day 13 Function Guide](days/day13_function_guide.md) - Recursive packet comparison, JSON parsing, sorting with custom comparator
 - [Day 14 Function Guide](days/day14_function_guide.md) - Sand simulation, coordinate normalization, Mission 6 Grid integration
 - [Day 15 Function Guide](days/day15_function_guide.md) - Interval merging, Manhattan distance, sparse coverage scanning
+- [Day 16 Function Guide](days/day16_function_guide.md) - Graph compression, bitmask DFS, SOS DP for two-actor partition
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -110,9 +113,9 @@
 - **Recursive Comparison**: Day 13 (nested list comparison with type coercion)
 - **JSON Parsing**: Day 13 (serde_json for nested structures)
 - **Custom Sorting**: Day 13 (sort with custom comparator finding divider packets)
-- **Graph**: Day 12 (BFS pathfinding, elevation constraints, neighbor generation)
-- **BFS**: Day 12 (shortest path, multi-source BFS for Part 2)
-- **DP**: Day -
+- **Graph**: Day 12 (BFS pathfinding, elevation constraints, neighbor generation), Day 16 (graph compression via BFS all-pairs distances, state-space DFS)
+- **BFS**: Day 12 (shortest path, multi-source BFS for Part 2), Day 16 (all-pairs shortest distances between important valves)
+- **DP**: Day 16 (SOS DP — Sum over Subsets for bitmask partition)
 - **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept), Day 15 (Manhattan distance, geometric coverage)
 
 ### Complexity Analysis
@@ -124,7 +127,8 @@
 - **O(n²)**: Day 8 (grid iteration: rows × cols)
 - **O(rounds × monkeys × items)**: Day 11 (Part 1: 20 rounds, Part 2: 10,000 rounds)
 - **O(n × m)**: Day 15 Part 2 (4M rows × n sensors, interval merging per row)
-- **O(2ⁿ)**: Day -
+- **O(n! / (n-k)!)**: Day 16 Part 1 (permutations of valve orderings, pruned by time budget)
+- **O(n × 2ⁿ)**: Day 16 Part 2 (SOS DP over bitmasks, n=15 important valves)
 
 ---
 
@@ -150,6 +154,9 @@
 - **Group splitting pattern** (Day 1, 5): Using `.split("\n\n")` for blank-line delimited sections
 - **Parse-once pattern** (Day 1): Separate parsing from solving, reuse parsed data for both parts (49% speedup)
 - **Line-based geometric search (Feng method)** (Day 15): Manhattan distance diamonds → diagonal lines (y±x=c). Check ~15k line intersections instead of millions of points (27,000× speedup!)
+- **Graph compression** (Day 16): Reduce large graph (55 nodes) to only important nodes (16) by precomputing BFS all-pairs shortest distances. Eliminates "hallway" nodes from search.
+- **Bitmask DFS for ordering optimization** (Day 16): State = (position, opened_bitmask, time_remaining). Explores orderings of valve openings, pruning when time runs out. Similar to TSP with time budget.
+- **SOS DP + bitmask partition** (Day 16): For two independent actors, record best result per bitmask, propagate with Sum over Subsets DP, then find best disjoint pair in O(2ⁿ). Avoids O(4ⁿ) brute-force pairing.
 
 ---
 
@@ -238,8 +245,8 @@
 
 ---
 
-**Last Updated**: 2026-02-14 (Day 14 complete)
-**Next Update**: After Day 15
+**Last Updated**: 2026-02-16 (Day 16 complete)
+**Next Update**: After Day 17
 
 ---
 

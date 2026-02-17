@@ -503,6 +503,6 @@ fn find_all(state: &State) -> Vec<Path> {
 
 ---
 
-*Links*: [[boolean-to-counting-dp]] | [[dynamic-programming-memoization]] | [[top-down-dp-pattern]] | [[mission-11]] | [[aoc-pattern-recognition]]
+*Links*: [[boolean-to-counting-dp]] | [[dynamic-programming-memoization]] | [[top-down-dp-pattern]] | [[sos-dp]] | [[mission-11]] | [[aoc-pattern-recognition]]
 
 *Tags*: #dynamic-programming #aggregation-patterns #reduction-operators #or-sum-max-min #optimization #counting #memoization #mission11
