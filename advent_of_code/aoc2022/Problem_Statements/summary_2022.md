@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (16/25 complete)
+**Status**: 🎯 In Progress (17/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 16/25 |
-| **Total Runtime** | 18.23ms |
-| **Average per Day** | 1.14ms |
+| **Progress** | 17/25 |
+| **Total Runtime** | 18.96ms |
+| **Average per Day** | 1.12ms |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 16 (4.94ms) |
 | **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
-| **Patterns Extracted** | 18 patterns |
+| **Patterns Extracted** | 20 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 line-based search (27,000×!)** |
 
-**1-Second Goal**: 🎯 18.23ms / 1000ms (1.8%)
+**1-Second Goal**: 🎯 18.96ms / 1000ms (1.9%)
 
 ---
 
@@ -41,9 +41,10 @@
 | [14](days/day14.md) | 763 | 23921 | **8.62ms** | Sand simulation + grid | Mission 6 | Coordinate normalization, physics simulation · [Guide →](days/day14_function_guide.md) |
 | [15](days/day15.md) | 4876693 | 11645454855041 | ~~432.52ms~~ ~~45.02ms~~ **23.02µs** | Interval merging + line-based search | - | **Optimized**: Line-based (Feng method) 27,000× faster! · [Guide →](days/day15_function_guide.md) |
 | [16](days/day16.md) | 1638 | 2400 | **4.94ms** | Graph compression + bitmask DFS + SOS DP | - | BFS distances, bitmask partition for 2 actors · [Guide →](days/day16_function_guide.md) |
+| [17](days/day17.md) | 3109 | 1541449275365 | **734µs** | Tetris simulation + cycle detection | - | Bitmask rows, top-30 profile fingerprinting · [Guide →](days/day17_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 18.23ms
+**Cumulative Runtime**: 18.96ms
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**
 
 ---
@@ -67,7 +68,8 @@
 - [Day 14](days/day14.md) - Regolith Reservoir ✅ | [Function Guide](days/day14_function_guide.md) | [Code](../../aoc2022/src/solver/day14.rs)
 - [Day 15](days/day15.md) - Beacon Exclusion Zone ✅ | [Function Guide](days/day15_function_guide.md) | [Code](../../aoc2022/src/solver/day15.rs)
 - [Day 16](days/day16.md) - Proboscidea Volcanium ✅ | [Function Guide](days/day16_function_guide.md) | [Code](../../aoc2022/src/solver/day16.rs)
-- Day 17-25: Not yet started
+- [Day 17](days/day17.md) - Pyroclastic Flow ✅ | [Function Guide](days/day17_function_guide.md) | [Code](../../aoc2022/src/solver/day17.rs)
+- Day 18-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -88,6 +90,7 @@
 - [Day 14 Function Guide](days/day14_function_guide.md) - Sand simulation, coordinate normalization, Mission 6 Grid integration
 - [Day 15 Function Guide](days/day15_function_guide.md) - Interval merging, Manhattan distance, sparse coverage scanning
 - [Day 16 Function Guide](days/day16_function_guide.md) - Graph compression, bitmask DFS, SOS DP for two-actor partition
+- [Day 17 Function Guide](days/day17_function_guide.md) - Tetris simulation, bitmask rows, cycle detection for trillion-scale
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -101,12 +104,12 @@
 - **Sorting**: Day 1 (top-k), Day 11 (top-2 inspection counts)
 - **Lookup Tables**: Day 2 (3×3 precomputed scores)
 - **Set Operations**: Day 3 (bitset intersection - optimized from HashSet), Day 9 (FxHashSet for visited positions - optimized from std HashMap)
-- **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 XOR bitset for rolling uniqueness)
+- **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 XOR bitset for rolling uniqueness), Day 17 (u8 row bitmasks for 7-wide chamber)
 - **Range/Interval Operations**: Day 4 (containment, overlap), Day 15 (interval merging, gap finding)
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
 - **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
 - **Stack-Based Traversal**: Day 7 (DFS-style filesystem accumulation)
-- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds), Day 14 (sand physics, falling + settling)
+- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds), Day 14 (sand physics, falling + settling), Day 17 (Tetris-like rock falling with jet pushes)
 - **Grid**: Day 8 (2D visibility checks, directional iteration), Day 12 (BFS pathfinding, backward search), Day 14 (Mission 6 Grid, coordinate normalization, dynamic bounds)
 - **Coordinate Systems**: Day 9 (signed 2D coords, signum() movement)
 - **Queue Operations**: Day 11 (VecDeque for FIFO item passing)
@@ -116,6 +119,7 @@
 - **Graph**: Day 12 (BFS pathfinding, elevation constraints, neighbor generation), Day 16 (graph compression via BFS all-pairs distances, state-space DFS)
 - **BFS**: Day 12 (shortest path, multi-source BFS for Part 2), Day 16 (all-pairs shortest distances between important valves)
 - **DP**: Day 16 (SOS DP — Sum over Subsets for bitmask partition)
+- **Cycle Detection**: Day 17 (state fingerprinting via HashMap for trillion-scale simulation)
 - **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept), Day 15 (Manhattan distance, geometric coverage)
 
 ### Complexity Analysis
@@ -129,6 +133,7 @@
 - **O(n × m)**: Day 15 Part 2 (4M rows × n sensors, interval merging per row)
 - **O(n! / (n-k)!)**: Day 16 Part 1 (permutations of valve orderings, pruned by time budget)
 - **O(n × 2ⁿ)**: Day 16 Part 2 (SOS DP over bitmasks, n=15 important valves)
+- **O(R × S)**: Day 17 (R = rocks simulated ~2K-3.4K, S = shape cells 4-5, cycle detection amortized O(1))
 
 ---
 
@@ -157,6 +162,8 @@
 - **Graph compression** (Day 16): Reduce large graph (55 nodes) to only important nodes (16) by precomputing BFS all-pairs shortest distances. Eliminates "hallway" nodes from search.
 - **Bitmask DFS for ordering optimization** (Day 16): State = (position, opened_bitmask, time_remaining). Explores orderings of valve openings, pruning when time runs out. Similar to TSP with time budget.
 - **SOS DP + bitmask partition** (Day 16): For two independent actors, record best result per bitmask, propagate with Sum over Subsets DP, then find best disjoint pair in O(2ⁿ). Avoids O(4ⁿ) brute-force pairing.
+- **Bitmask row representation** (Day 17): Pack a fixed-width chamber (7 columns) into `u8` bitmasks — O(1) collision detection via bitwise AND, O(1) placement via bitwise OR. 1 byte per row instead of 7.
+- **Cycle detection via state fingerprinting** (Day 17): For trillion-scale simulation, fingerprint state as (rock_type, jet_index, top_N_rows). HashMap lookup finds repeat → extrapolate with arithmetic. Simulates ~3,400 rocks instead of 10¹².
 
 ---
 
@@ -245,8 +252,8 @@
 
 ---
 
-**Last Updated**: 2026-02-16 (Day 16 complete)
-**Next Update**: After Day 17
+**Last Updated**: 2026-02-17 (Day 17 complete)
+**Next Update**: After Day 18
 
 ---
 
