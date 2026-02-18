@@ -36,7 +36,7 @@ const ROCKS: [&[(usize, usize)]; 5] = [
 // ============================================================================
 
 /// Parsed jet directions: -1 for left, +1 for right
-pub type ParsedData = Vec<i64>;
+pub type ParsedData = Vec<i8>;
 
 struct Chamber {
     /// Each row is a bitmask of 7 columns (bit 0 = left wall side)
@@ -109,12 +109,12 @@ pub fn parse_input(input: &str) -> ParsedData {
 // Simulation
 // ============================================================================
 
-fn simulate(jets: &[i64], num_rocks: u64) -> u64 {
+fn simulate(jets: &[i8], num_rocks: u64) -> u64 {
     let mut chamber = Chamber::new();
     let mut jet_idx = 0usize;
 
-    // Cycle detection state: (rock_idx % 5, jet_idx, top_profile) -> (rock_count, height)
-    let mut seen: HashMap<(usize, usize, Vec<u8>), (u64, u64)> = HashMap::new();
+    // Cycle detection state: (rock_idx % 5, jet_idx, top_profile) -> (rock_count, height, jet_idx)
+    let mut seen: HashMap<(usize, usize, Vec<u8>), (u64, u64, usize)> = HashMap::new();
     let mut extra_height: u64 = 0;
     let mut rock_count: u64 = 0;
 
@@ -128,7 +128,7 @@ fn simulate(jets: &[i64], num_rocks: u64) -> u64 {
 
         loop {
             // Jet push
-            let dx = jets[jet_idx % jets.len()];
+            let dx = jets[jet_idx % jets.len()] as i64;
             jet_idx += 1;
             if !chamber.is_blocked(x + dx, y, rock) {
                 x += dx;
@@ -147,17 +147,30 @@ fn simulate(jets: &[i64], num_rocks: u64) -> u64 {
         // Cycle detection (only check after some initial rocks settle)
         if extra_height == 0 && chamber.height > 30 {
             let key = (rock_type, jet_idx % jets.len(), chamber.top_profile());
-            if let Some(&(prev_rock, prev_height)) = seen.get(&key) {
+            if let Some(&(prev_rock, prev_height, prev_jet_idx)) = seen.get(&key) {
                 // Found a cycle!
                 let cycle_len = rock_count - prev_rock;
                 let cycle_height = chamber.height as u64 - prev_height;
+                let cycle_jets = jet_idx - prev_jet_idx;
                 let remaining = num_rocks - rock_count;
                 let full_cycles = remaining / cycle_len;
+                let remainder = remaining % cycle_len;
+                let jet_pos = jet_idx % jets.len();
+                eprintln!("  Cycle detected! rock {rock_count} matches rock {prev_rock} (jet pos {jet_pos}/{}, rock shape {rock_type})", jets.len());
+                eprintln!(
+                    "    cycle: {cycle_len} rocks, {cycle_jets} jets ({:.1}× full pattern), {cycle_height} height",
+                    cycle_jets as f64 / jets.len() as f64
+                );
+                eprintln!(
+                    "    skip {full_cycles} cycles ({} height) | {remainder} rocks remain",
+                    full_cycles * cycle_height
+                );
                 extra_height = full_cycles * cycle_height;
                 rock_count += full_cycles * cycle_len;
+                seen.clear(); // Stop detecting — only report the first cycle
                 // Continue simulating the remainder
             } else {
-                seen.insert(key, (rock_count, chamber.height as u64));
+                seen.insert(key, (rock_count, chamber.height as u64, jet_idx));
             }
         }
     }
