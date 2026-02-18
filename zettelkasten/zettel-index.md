@@ -331,6 +331,7 @@
 - [[top-down-dp-pattern]] - Canonical 4-step memoization template (boolean/counting/optimization variants)
 - [[dp-aggregation-patterns]] - Reduction operators in DP (OR, SUM, MAX, MIN, AND, COLLECT)
 - [[boolean-to-counting-dp]] - OR→SUM transformation pattern
+- [[bitmask-representation]] - Bitmask patterns: set operations as bitwise instructions, grid encoding, state tracking (18× faster than HashSet)
 - [[sos-dp]] - Sum Over Subsets DP: O(n × 2^n) subset propagation for bitmask partition problems
 
 ### **Production Algorithm Tools**

@@ -109,12 +109,15 @@ pub fn parse_input(input: &str) -> ParsedData {
 // Simulation
 // ============================================================================
 
+type CycleKey = (usize, usize, Vec<u8>);
+type CycleVal = (u64, u64, usize);
+
 fn simulate(jets: &[i8], num_rocks: u64) -> u64 {
     let mut chamber = Chamber::new();
     let mut jet_idx = 0usize;
 
     // Cycle detection state: (rock_idx % 5, jet_idx, top_profile) -> (rock_count, height, jet_idx)
-    let mut seen: HashMap<(usize, usize, Vec<u8>), (u64, u64, usize)> = HashMap::new();
+    let mut seen: HashMap<CycleKey, CycleVal> = HashMap::new();
     let mut extra_height: u64 = 0;
     let mut rock_count: u64 = 0;
 
