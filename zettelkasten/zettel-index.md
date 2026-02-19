@@ -240,6 +240,7 @@
 **Mathematics Foundations:**
 
 - [[math-foundations/README]] - **Math Foundations Index** - Mathematical concepts underlying algorithm implementations
+- [[math-foundations/3d-geometry]] - **3D Geometry** - 3D grids, 6/26-adjacency, voxel surface area, flood fill, data structure choices (AoC 2022 Day 18, 2023 Day 22)
 
 **Software Architecture:**
 

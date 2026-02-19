@@ -264,9 +264,10 @@ fn count_enclosed(grid: &Grid<char>, loop_tiles: &HashMap<Coord, usize>) -> usiz
 
 - **Prerequisites**: 
   - [[set-theory-fundamentals]] - Points and regions as sets
-- **Related**: 
+- **Related**:
   - [[graph-theory-fundamentals]] - Boundary as graph structure
   - [[state-machine-pattern]] - Implementation uses state machine
+  - [[3d-geometry]] - Extension to 3D: voxels, flood fill, surface area
 - **Applications**:
   - GIS (geographic information systems)
   - Computer graphics

@@ -28,6 +28,7 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 - `linear-algebra-fundamentals.md` - Systems of equations, Cramer's rule, Gaussian elimination ✅
 - `parametric-equations.md` - Parametric lines, line intersection, ray tracing ✅
 - `cross-products-vector-algebra.md` - Cross products, variable elimination, 3D geometry ✅
+- `3d-geometry.md` - 3D grids, adjacency, flood fill, voxel surface area ✅
 - `grid-mathematics.md` - Coordinate systems, transformations, rotations
 
 ---
@@ -198,6 +199,7 @@ Each implementation references mathematical foundations:
 15. ✅ `parametric-equations.md` - Parametric line intersection (AoC Day 24)
 16. ✅ `cross-products-vector-algebra.md` - Variable elimination technique (AoC Day 24)
 17. ✅ `graph-minimum-cut.md` - Min-cut algorithms, edge betweenness, network analysis (AoC Day 25)
+18. ✅ `3d-geometry.md` - 3D grids, adjacency, voxel surface area, flood fill (AoC 2022 Day 18)
 
 ### **Priority Concepts** (Create these next)
 
