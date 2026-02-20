@@ -360,21 +360,21 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
                 let wait_ore = if ore >= bp.obsidian_robot_ore { 0 } else { (bp.obsidian_robot_ore - ore).div_ceil(r_ore) };
                 let wait_clay = if clay >= bp.obsidian_robot_clay { 0 } else { (bp.obsidian_robot_clay - clay).div_ceil(r_clay) };
                 let wait = wait_ore.max(wait_clay) + 1;
-                if wait < time {
+                if wait < time.saturating_sub(2) {
                     let s = (time - wait, ore + r_ore * wait - bp.obsidian_robot_ore, clay + r_clay * wait - bp.obsidian_robot_clay, obsidian + r_obs * wait, geodes + r_geo * wait, r_ore, r_clay, r_obs + 1, r_geo);
                     push_child!(s, format!("Build OBS (wait {wait} min)"));
                 }
             }
             if r_clay < max_clay_cost {
                 let wait = if ore >= bp.clay_robot_ore { 0 } else { (bp.clay_robot_ore - ore).div_ceil(r_ore) } + 1;
-                if wait < time {
+                if wait < time.saturating_sub(4) {
                     let s = (time - wait, ore + r_ore * wait - bp.clay_robot_ore, clay + r_clay * wait, obsidian + r_obs * wait, geodes + r_geo * wait, r_ore, r_clay + 1, r_obs, r_geo);
                     push_child!(s, format!("Build CLAY (wait {wait} min)"));
                 }
             }
             if r_ore < max_ore_cost {
                 let wait = if ore >= bp.ore_robot_ore { 0 } else { (bp.ore_robot_ore - ore).div_ceil(r_ore) } + 1;
-                if wait < time {
+                if wait < time.saturating_sub(2) {
                     let s = (time - wait, ore + r_ore * wait - bp.ore_robot_ore, clay + r_clay * wait, obsidian + r_obs * wait, geodes + r_geo * wait, r_ore + 1, r_clay, r_obs, r_geo);
                     push_child!(s, format!("Build ORE (wait {wait} min)"));
                 }
@@ -466,19 +466,19 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
                 let w_ore = if ore >= bp.obsidian_robot_ore { 0 } else { (bp.obsidian_robot_ore - ore).div_ceil(r_ore) };
                 let w_clay = if clay >= bp.obsidian_robot_clay { 0 } else { (bp.obsidian_robot_clay - clay).div_ceil(r_clay) };
                 let w = w_ore.max(w_clay) + 1;
-                if w < time {
+                if w < time.saturating_sub(2) {
                     push_child!((time-w, ore+r_ore*w-bp.obsidian_robot_ore, clay+r_clay*w-bp.obsidian_robot_clay, obsidian+r_obs*w, geodes+r_geo*w, r_ore, r_clay, r_obs+1, r_geo), format!("Build OBS"));
                 }
             }
             if r_clay < max_clay_cost {
                 let w = if ore >= bp.clay_robot_ore { 0 } else { (bp.clay_robot_ore - ore).div_ceil(r_ore) } + 1;
-                if w < time {
+                if w < time.saturating_sub(4) {
                     push_child!((time-w, ore+r_ore*w-bp.clay_robot_ore, clay+r_clay*w, obsidian+r_obs*w, geodes+r_geo*w, r_ore, r_clay+1, r_obs, r_geo), format!("Build CLAY"));
                 }
             }
             if r_ore < max_ore_cost {
                 let w = if ore >= bp.ore_robot_ore { 0 } else { (bp.ore_robot_ore - ore).div_ceil(r_ore) } + 1;
-                if w < time {
+                if w < time.saturating_sub(2) {
                     push_child!((time-w, ore+r_ore*w-bp.ore_robot_ore, clay+r_clay*w, obsidian+r_obs*w, geodes+r_geo*w, r_ore+1, r_clay, r_obs, r_geo), format!("Build ORE"));
                 }
             }
@@ -514,16 +514,9 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
         // The build completes (robot ready) at the END of minute (time_limit - new_time_left)
         let mut build_at: std::collections::HashMap<u32, String> = std::collections::HashMap::new();
         for i in 1..path.len() {
-            let prev_time = path[i - 1].0.0; // time_left before
-            let curr_time = path[i].0.0;     // time_left after build
+            let curr_time = path[i].0.0; // time_left after build
             let build_minute = time_limit - curr_time; // minute when build completes
-            // The build was STARTED at the beginning of this minute,
-            // robot becomes available at END of this minute
             build_at.insert(build_minute, path[i].1.clone());
-
-            // Also figure out when spending happens: resources are spent at start of build minute
-            // but we need to track the "wait" minutes where we just collect
-            let _wait = prev_time - curr_time; // includes 1 min build time
         }
 
         // Simulate minute by minute
