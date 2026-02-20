@@ -13,13 +13,15 @@
 - **Part 2**: 32 minutes, first 3 blueprints only — product of max geodes
 
 ### Performance
-- **Parse**: 7.48µs
-- **Part 1**: 1.92ms (30 blueprints × 24 min DFS)
-- **Part 2**: 1.56ms (3 blueprints × 32 min DFS)
-- **Combined**: 3.50ms ✅ Parse-once verified
+- **Parse**: 7.96µs
+- **Part 1**: 222µs (30 blueprints × 24 min DFS, parallelized)
+- **Part 2**: 742µs (3 blueprints × 32 min DFS, parallelized)
+- **Combined**: 1.16ms ✅ Parse-once verified
 
 ### Key Insight
 **Skip-to-build eliminates "do nothing" turns.** Instead of deciding each minute whether to build or wait, jump directly to the time when enough resources accumulate for each robot type. This collapses the branching factor from 5 choices/minute (build one of 4 robots or wait) to at most 4 choices per state (which robot to build next).
+
+**Heuristic Push Order Matters:** The DFS uses a `Vec` as a stack. By pushing the robot choices in the order: Geode, Obsidian, Clay, Ore, the `stack.pop()` operation explores the **Ore robot branches first**. Counter-intuitively, for deep searches (like Part 2's 32 minutes), establishing a strong economy early by exploring Ore/Clay branches first yields a much higher `best` score (e.g., 50 geodes) than rushing Geode robots early (e.g., 10 geodes). This higher `best` score makes the upper-bound pruning massively more effective.
 
 ---
 
@@ -63,7 +65,7 @@ let wait = wait_ore.max(wait_obs) + 1;  // +1 for build time
 
 **Why `.div_ceil()`?** If you need 7 ore and produce 3/min, you need ceil(7/3) = 3 minutes of waiting. The `+1` accounts for the build minute itself.
 
-### Three Pruning Strategies
+### Four Pruning Strategies
 
 #### 1. Robot Caps (Don't overbuild)
 ```rust
@@ -88,6 +90,11 @@ Instead of branching on "build or wait" each minute, compute exactly when we CAN
 Traditional:     Min 1 → Min 2 → Min 3 → ... → Build
 Skip-to-build:   Current state → Build (after computed wait)
 ```
+
+#### 4. End-Game Pruning
+Building certain robots in the final minutes is mathematically useless because their resources won't have time to cascade into a Geode:
+- **Ore/Obsidian Robots:** Must be ready by `time = 3` to produce resources for a Geode robot starting at `time = 2`. (`wait < time.saturating_sub(2)`)
+- **Clay Robots:** Must be ready by `time = 5` to produce clay for an Obsidian robot (ready at 3), which produces obsidian for a Geode robot (ready at 1). (`wait < time.saturating_sub(4)`)
 
 ### Why No Memoization?
 

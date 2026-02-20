@@ -5,6 +5,8 @@
 //! Part 1: 24 minutes, sum quality levels (id × max_geodes) for all 30 blueprints.
 //! Part 2: 32 minutes, first 3 blueprints only, product of max geodes.
 
+use rayon::prelude::*;
+
 // ============================================================================
 // Data Types
 // ============================================================================
@@ -87,6 +89,8 @@ fn max_geodes(bp: &Blueprint, time_limit: u32) -> u32 {
         }
 
         // Try building each robot type (skip-to-build: compute how long to wait)
+        // PUSH ORDER REVERSED: Ore -> Clay -> Obsidian -> Geode
+        // This ensures Geode branches are popped and explored FIRST, establishing a high `best` score early.
 
         // Option 1: Build geode robot
         if r_obs > 0 {
@@ -117,6 +121,7 @@ fn max_geodes(bp: &Blueprint, time_limit: u32) -> u32 {
         }
 
         // Option 2: Build obsidian robot (only if we need more)
+        // End-game pruning: Obsidian robot must be ready by time=3 to produce obsidian for a Geode robot starting at time=2
         if r_obs < max_obsidian_cost && r_clay > 0 {
             let wait_ore = if ore >= bp.obsidian_robot_ore {
                 0
@@ -129,7 +134,7 @@ fn max_geodes(bp: &Blueprint, time_limit: u32) -> u32 {
                 (bp.obsidian_robot_clay - clay).div_ceil(r_clay)
             };
             let wait = wait_ore.max(wait_clay) + 1;
-            if wait < time {
+            if wait < time.saturating_sub(2) {
                 stack.push((
                     time - wait,
                     ore + r_ore * wait - bp.obsidian_robot_ore,
@@ -145,13 +150,14 @@ fn max_geodes(bp: &Blueprint, time_limit: u32) -> u32 {
         }
 
         // Option 3: Build clay robot (only if we need more)
+        // End-game pruning: Clay robot must be ready by time=5 to produce clay for an Obsidian robot (ready at 3), which produces obsidian for a Geode robot (ready at 1)
         if r_clay < max_clay_cost {
             let wait = if ore >= bp.clay_robot_ore {
                 0
             } else {
                 (bp.clay_robot_ore - ore).div_ceil(r_ore)
             } + 1;
-            if wait < time {
+            if wait < time.saturating_sub(4) {
                 stack.push((
                     time - wait,
                     ore + r_ore * wait - bp.clay_robot_ore,
@@ -167,13 +173,14 @@ fn max_geodes(bp: &Blueprint, time_limit: u32) -> u32 {
         }
 
         // Option 4: Build ore robot (only if we need more)
+        // End-game pruning: Ore robot must be ready by time=3 to produce ore for a Geode robot starting at time=2
         if r_ore < max_ore_cost {
             let wait = if ore >= bp.ore_robot_ore {
                 0
             } else {
                 (bp.ore_robot_ore - ore).div_ceil(r_ore)
             } + 1;
-            if wait < time {
+            if wait < time.saturating_sub(2) {
                 stack.push((
                     time - wait,
                     ore + r_ore * wait - bp.ore_robot_ore,
@@ -198,7 +205,7 @@ fn max_geodes(bp: &Blueprint, time_limit: u32) -> u32 {
 
 pub fn solve_part1_with_data(blueprints: &ParsedData) -> u32 {
     blueprints
-        .iter()
+        .par_iter()
         .map(|bp| bp.id * max_geodes(bp, 24))
         .sum()
 }
@@ -208,9 +215,9 @@ pub fn solve_part1_with_data(blueprints: &ParsedData) -> u32 {
 // ============================================================================
 
 pub fn solve_part2_with_data(blueprints: &ParsedData) -> u64 {
-    blueprints
-        .iter()
-        .take(3)
+    let limit = blueprints.len().min(3);
+    blueprints[..limit]
+        .par_iter()
         .map(|bp| max_geodes(bp, 32) as u64)
         .product()
 }
