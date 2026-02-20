@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (18/25 complete)
+**Status**: 🎯 In Progress (19/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 18/25 |
-| **Total Runtime** | 20.34ms |
-| **Average per Day** | 1.13ms |
+| **Progress** | 19/25 |
+| **Total Runtime** | 23.84ms |
+| **Average per Day** | 1.25ms |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 16 (4.94ms) |
 | **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
-| **Patterns Extracted** | 21 patterns |
+| **Patterns Extracted** | 22 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 line-based search (27,000×!)** |
 
-**1-Second Goal**: 🎯 20.34ms / 1000ms (2.0%)
+**1-Second Goal**: 🎯 23.84ms / 1000ms (2.4%)
 
 ---
 
@@ -43,9 +43,10 @@
 | [16](days/day16.md) | 1638 | 2400 | **4.94ms** | Graph compression + bitmask DFS + SOS DP | - | BFS distances, bitmask partition for 2 actors · [Guide →](days/day16_function_guide.md) |
 | [17](days/day17.md) | 3109 | 1541449275365 | **734µs** | Tetris simulation + cycle detection | - | Bitmask rows, top-30 profile fingerprinting · [Guide →](days/day17_function_guide.md) |
 | [18](days/day18.md) | 3522 | 2074 | **1.38ms** | 3D surface area + BFS flood fill | - | HashSet neighbor lookup, exterior-only via flood · [Guide →](days/day18_function_guide.md) |
+| [19](days/day19.md) | 1413 | 21080 | **3.50ms** | DFS + branch-and-bound | - | Skip-to-build, robot caps, triangle upper bound · [Guide →](days/day19_function_guide.md) |
 | - | - | - | - | - | - | Not yet solved |
 
-**Cumulative Runtime**: 20.34ms
+**Cumulative Runtime**: 23.84ms
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**
 
 ---
@@ -71,7 +72,8 @@
 - [Day 16](days/day16.md) - Proboscidea Volcanium ✅ | [Function Guide](days/day16_function_guide.md) | [Code](../../aoc2022/src/solver/day16.rs)
 - [Day 17](days/day17.md) - Pyroclastic Flow ✅ | [Function Guide](days/day17_function_guide.md) | [Code](../../aoc2022/src/solver/day17.rs)
 - [Day 18](days/day18.md) - Boiling Boulders ✅ | [Function Guide](days/day18_function_guide.md) | [Code](../../aoc2022/src/solver/day18.rs)
-- Day 19-25: Not yet started
+- [Day 19](days/day19.md) - Not Enough Minerals ✅ | [Function Guide](days/day19_function_guide.md) | [Code](../../aoc2022/src/solver/day19.rs)
+- Day 20-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -94,6 +96,7 @@
 - [Day 16 Function Guide](days/day16_function_guide.md) - Graph compression, bitmask DFS, SOS DP for two-actor partition
 - [Day 17 Function Guide](days/day17_function_guide.md) - Tetris simulation, bitmask rows, cycle detection for trillion-scale
 - [Day 18 Function Guide](days/day18_function_guide.md) - 3D surface area, BFS flood fill, interior vs exterior faces
+- [Day 19 Function Guide](days/day19_function_guide.md) - DFS branch-and-bound, skip-to-build, resource optimization
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -122,6 +125,7 @@
 - **Custom Sorting**: Day 13 (sort with custom comparator finding divider packets)
 - **Graph**: Day 12 (BFS pathfinding, elevation constraints, neighbor generation), Day 16 (graph compression via BFS all-pairs distances, state-space DFS)
 - **BFS**: Day 12 (shortest path, multi-source BFS for Part 2), Day 16 (all-pairs shortest distances between important valves), Day 18 (3D flood fill from exterior)
+- **DFS + Branch-and-Bound**: Day 19 (resource optimization, skip-to-build, triangle upper bound, robot caps)
 - **DP**: Day 16 (SOS DP — Sum over Subsets for bitmask partition)
 - **Cycle Detection**: Day 17 (state fingerprinting via HashMap for trillion-scale simulation)
 - **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept), Day 15 (Manhattan distance, geometric coverage)
@@ -139,6 +143,7 @@
 - **O(n × 2ⁿ)**: Day 16 Part 2 (SOS DP over bitmasks, n=15 important valves)
 - **O(R × S)**: Day 17 (R = rocks simulated ~2K-3.4K, S = shape cells 4-5, cycle detection amortized O(1))
 - **O(n + V)**: Day 18 (n cubes for Part 1, V bounding-box volume for Part 2 BFS flood fill)
+- **O(n × B^d)**: Day 19 (n blueprints × DFS search, B~4 branching, d~time_limit depth, heavily pruned)
 
 ---
 
@@ -170,6 +175,7 @@
 - **Bitmask row representation** (Day 17): Pack a fixed-width chamber (7 columns) into `u8` bitmasks — O(1) collision detection via bitwise AND, O(1) placement via bitwise OR. 1 byte per row instead of 7.
 - **Cycle detection via state fingerprinting** (Day 17): For trillion-scale simulation, fingerprint state as (rock_type, jet_index, top_N_rows). HashMap lookup finds repeat → extrapolate with arithmetic. Simulates ~3,400 rocks instead of 10¹².
 - **Exterior flood fill** (Day 18): BFS from outside padded bounding box to count only exterior surface faces. Water floods around the droplet; interior air pockets are unreachable. Simpler than detecting voids explicitly.
+- **Skip-to-build DFS with branch-and-bound** (Day 19): Instead of deciding each minute (build or wait), jump to the time when enough resources accumulate for each robot type. Combined with robot caps (never overbuild), triangle-number upper bound, and prerequisite guards. Collapses branching from 5^T to ~thousands of states per blueprint.
 
 ---
 
@@ -258,8 +264,8 @@
 
 ---
 
-**Last Updated**: 2026-02-18 (Day 18 complete)
-**Next Update**: After Day 19
+**Last Updated**: 2026-02-19 (Day 19 complete)
+**Next Update**: After Day 20
 
 ---
 
