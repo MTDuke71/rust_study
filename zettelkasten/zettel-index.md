@@ -334,6 +334,9 @@
 - [[boolean-to-counting-dp]] - OR→SUM transformation pattern
 - [[bitmask-representation]] - Bitmask patterns: set operations as bitwise instructions, grid encoding, state tracking (18× faster than HashSet)
 - [[sos-dp]] - Sum Over Subsets DP: O(n × 2^n) subset propagation for bitmask partition problems
+- [[circular-list]] - Circular list operations: modular indexing, remove-reinsert, mod n-1 subtlety (AoC 2022 Day 20)
+- [[modular-arithmetic]] - Remainder vs modulus, double-modulus pattern, cycle detection, LCM tricks
+- [[index-tracking]] - Tagging elements with original indices to disambiguate duplicates
 
 ### **Production Algorithm Tools**
 
