@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (20/25 complete)
+**Status**: 🎯 In Progress (21/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 20/25 |
-| **Total Runtime** | 89.30ms |
-| **Average per Day** | 4.47ms |
+| **Progress** | 21/25 |
+| **Total Runtime** | 89.80ms |
+| **Average per Day** | 4.28ms |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 20 (65.46ms) |
 | **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
-| **Patterns Extracted** | 22 patterns |
+| **Patterns Extracted** | 23 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 line-based search (27,000×!)** |
 
-**1-Second Goal**: 🎯 89.30ms / 1000ms (8.9%)
+**1-Second Goal**: 🎯 89.80ms / 1000ms (9.0%)
 
 ---
 
@@ -45,9 +45,9 @@
 | [18](days/day18.md) | 3522 | 2074 | **1.38ms** | 3D surface area + BFS flood fill | - | HashSet neighbor lookup, exterior-only via flood · [Guide →](days/day18_function_guide.md) |
 | [19](days/day19.md) | 1413 | 21080 | **3.50ms** | DFS + branch-and-bound | - | Skip-to-build, robot caps, triangle upper bound · [Guide →](days/day19_function_guide.md) |
 | [20](days/day20.md) | 8028 | 8798438007673 | **65.46ms** | Circular list mixing | - | Index-tagged elements, mod n-1, Vec remove/insert · [Guide →](days/day20_function_guide.md) |
-| - | - | - | - | - | - | Not yet solved |
+| [21](days/day21.md) | 160274622817992 | 3087390115721 | **499µs** | Expression tree + algebraic inversion | - | Recursive eval, solve-for-humn with op inversion · [Guide →](days/day21_function_guide.md) |
 
-**Cumulative Runtime**: 89.30ms
+**Cumulative Runtime**: 89.80ms
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**
 
 ---
@@ -75,7 +75,8 @@
 - [Day 18](days/day18.md) - Boiling Boulders ✅ | [Function Guide](days/day18_function_guide.md) | [Code](../../aoc2022/src/solver/day18.rs)
 - [Day 19](days/day19.md) - Not Enough Minerals ✅ | [Function Guide](days/day19_function_guide.md) | [Code](../../aoc2022/src/solver/day19.rs)
 - [Day 20](days/day20.md) - Grove Positioning System ✅ | [Function Guide](days/day20_function_guide.md) | [Code](../../aoc2022/src/solver/day20.rs)
-- Day 21-25: Not yet started
+- [Day 21](days/day21.md) - Monkey Math ✅ | [Function Guide](days/day21_function_guide.md) | [Code](../../aoc2022/src/solver/day21.rs)
+- Day 22-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -100,6 +101,7 @@
 - [Day 18 Function Guide](days/day18_function_guide.md) - 3D surface area, BFS flood fill, interior vs exterior faces
 - [Day 19 Function Guide](days/day19_function_guide.md) - DFS branch-and-bound, skip-to-build, resource optimization
 - [Day 20 Function Guide](days/day20_function_guide.md) - Circular list mixing, index tracking, modular reinsertion
+- [Day 21 Function Guide](days/day21_function_guide.md) - Expression tree evaluation, algebraic inversion for single unknown
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -132,6 +134,7 @@
 - **DP**: Day 16 (SOS DP — Sum over Subsets for bitmask partition)
 - **Cycle Detection**: Day 17 (state fingerprinting via HashMap for trillion-scale simulation)
 - **Circular List**: Day 20 (remove/insert mixing, mod n-1 for reinsertion, double-modulus for negatives)
+- **Expression Tree**: Day 21 (recursive evaluation via HashMap lookup, algebraic inversion for solving single unknown)
 - **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept), Day 15 (Manhattan distance, geometric coverage), Day 20 (modular arithmetic for circular positions)
 
 ### Complexity Analysis
@@ -149,6 +152,7 @@
 - **O(n + V)**: Day 18 (n cubes for Part 1, V bounding-box volume for Part 2 BFS flood fill)
 - **O(n × B^d)**: Day 19 (n blueprints × DFS search, B~4 branching, d~time_limit depth, heavily pruned)
 - **O(R × n²)**: Day 20 (R rounds × n elements × O(n) Vec remove/insert per element)
+- **O(n × d)**: Day 21 (n monkeys × d tree depth for contains_humn checks during inversion walk)
 
 ---
 
@@ -182,6 +186,7 @@
 - **Exterior flood fill** (Day 18): BFS from outside padded bounding box to count only exterior surface faces. Water floods around the droplet; interior air pockets are unreachable. Simpler than detecting voids explicitly.
 - **Skip-to-build DFS with branch-and-bound** (Day 19): Instead of deciding each minute (build or wait), jump to the time when enough resources accumulate for each robot type. Combined with robot caps (never overbuild), triangle-number upper bound, and prerequisite guards. Collapses branching from 5^T to ~thousands of states per blueprint.
 - **Index-tagged circular mixing** (Day 20): Tag each element with its original index to handle duplicates. Remove element, compute `(pos + val) % (n-1)` for new position (mod n-1 because element is temporarily removed), reinsert. Double-modulus pattern `((x%m)+m)%m` for negative values.
+- **Expression tree evaluation + algebraic inversion** (Day 21): Recursive eval with HashMap<&str, Monkey> for O(1) lookup. For single-unknown solving: determine which branch contains the unknown, evaluate the known branch for target, walk toward unknown inverting operations. Non-commutative trap: `k - x = t → x = k - t` (not `t - k`), `k / x = t → x = k / t` (not `t / k`).
 
 ---
 
@@ -270,8 +275,8 @@
 
 ---
 
-**Last Updated**: 2026-02-20 (Day 20 complete)
-**Next Update**: After Day 21
+**Last Updated**: 2026-02-22 (Day 21 complete)
+**Next Update**: After Day 22
 
 ---
 

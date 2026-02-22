@@ -177,7 +177,7 @@ Each implementation references mathematical foundations:
 
 ## 🎯 Current Coverage
 
-**Math notes created**: 13/20  
+**Math notes created**: 14/20  
 **Target by end of January**: 20+  
 **Target by end of Q1**: 100+
 
@@ -200,6 +200,7 @@ Each implementation references mathematical foundations:
 16. ✅ `cross-products-vector-algebra.md` - Variable elimination technique (AoC Day 24)
 17. ✅ `graph-minimum-cut.md` - Min-cut algorithms, edge betweenness, network analysis (AoC Day 25)
 18. ✅ `3d-geometry.md` - 3D grids, adjacency, voxel surface area, flood fill (AoC 2022 Day 18)
+19. ✅ `algebraic-inversion.md` - Inverse operations, expression tree walk, non-commutative trap (AoC 2022 Day 21)
 
 ### **Priority Concepts** (Create these next)
 
