@@ -47,7 +47,7 @@
 | [20](days/day20.md) | 8028 | 8798438007673 | **65.46ms** | Circular list mixing | - | Index-tagged elements, mod n-1, Vec remove/insert · [Guide →](days/day20_function_guide.md) |
 | [21](days/day21.md) | 160274622817992 | 3087390115721 | **499µs** | Expression tree + algebraic inversion | - | Recursive eval, solve-for-humn with op inversion · [Guide →](days/day21_function_guide.md) |
 | [22](days/day22.md) | 88226 | 57305 | **1.46ms** | Sparse board walk + cube net wrapping | - | HashMap tiles, flat/cube wrapping, 14 hardcoded face transitions · [Guide →](days/day22_function_guide.md) |
-| 23 | 3780 | 930 | **104.62ms** | HashSet elf diffusion simulation | - | FxHashSet positions, proposal/movement phases, rotating direction priority |
+| 23 | 3780 | 930 | **104.62ms** | HashSet elf diffusion simulation | - | FxHashSet positions, proposal/movement phases, rotating direction priority · [Guide →](days/day23_function_guide.md) |
 
 **Cumulative Runtime**: 195.88ms
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**
@@ -79,7 +79,7 @@
 - [Day 20](days/day20.md) - Grove Positioning System ✅ | [Function Guide](days/day20_function_guide.md) | [Code](../../aoc2022/src/solver/day20.rs)
 - [Day 21](days/day21.md) - Monkey Math ✅ | [Function Guide](days/day21_function_guide.md) | [Code](../../aoc2022/src/solver/day21.rs)
 - [Day 22](days/day22.md) - Monkey Map ✅ | [Function Guide](days/day22_function_guide.md) | [Code](../../aoc2022/src/solver/day22.rs)
-- Day 23 - Unstable Diffusion ✅ | [Code](../../aoc2022/src/solver/day23.rs)
+- Day 23 - Unstable Diffusion ✅ | [Function Guide](days/day23_function_guide.md) | [Code](../../aoc2022/src/solver/day23.rs)
 - Day 24-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
@@ -107,6 +107,7 @@
 - [Day 20 Function Guide](days/day20_function_guide.md) - Circular list mixing, index tracking, modular reinsertion
 - [Day 21 Function Guide](days/day21_function_guide.md) - Expression tree evaluation, algebraic inversion for single unknown
 - [Day 22 Function Guide](days/day22_function_guide.md) - Sparse board navigation, flat/cube wrapping, hardcoded face transitions
+- [Day 23 Function Guide](days/day23_function_guide.md) - FxHashSet infinite grid, proposal/collision phases, direction table indirection
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
