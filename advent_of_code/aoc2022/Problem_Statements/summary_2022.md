@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (22/25 complete)
+**Status**: 🎯 In Progress (23/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 22/25 |
-| **Total Runtime** | 91.26ms |
-| **Average per Day** | 4.15ms |
+| **Progress** | 23/25 |
+| **Total Runtime** | 195.88ms |
+| **Average per Day** | 8.52ms |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 20 (65.46ms) |
+| **Slowest Day** | Day 23 (104.62ms) |
 | **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
 | **Patterns Extracted** | 25 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 line-based search (27,000×!)** |
 
-**1-Second Goal**: 🎯 91.26ms / 1000ms (9.1%)
+**1-Second Goal**: 🎯 195.88ms / 1000ms (19.6%)
 
 ---
 
@@ -47,8 +47,9 @@
 | [20](days/day20.md) | 8028 | 8798438007673 | **65.46ms** | Circular list mixing | - | Index-tagged elements, mod n-1, Vec remove/insert · [Guide →](days/day20_function_guide.md) |
 | [21](days/day21.md) | 160274622817992 | 3087390115721 | **499µs** | Expression tree + algebraic inversion | - | Recursive eval, solve-for-humn with op inversion · [Guide →](days/day21_function_guide.md) |
 | [22](days/day22.md) | 88226 | 57305 | **1.46ms** | Sparse board walk + cube net wrapping | - | HashMap tiles, flat/cube wrapping, 14 hardcoded face transitions · [Guide →](days/day22_function_guide.md) |
+| 23 | 3780 | 930 | **104.62ms** | HashSet elf diffusion simulation | - | FxHashSet positions, proposal/movement phases, rotating direction priority |
 
-**Cumulative Runtime**: 91.26ms
+**Cumulative Runtime**: 195.88ms
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**
 
 ---
@@ -78,7 +79,8 @@
 - [Day 20](days/day20.md) - Grove Positioning System ✅ | [Function Guide](days/day20_function_guide.md) | [Code](../../aoc2022/src/solver/day20.rs)
 - [Day 21](days/day21.md) - Monkey Math ✅ | [Function Guide](days/day21_function_guide.md) | [Code](../../aoc2022/src/solver/day21.rs)
 - [Day 22](days/day22.md) - Monkey Map ✅ | [Function Guide](days/day22_function_guide.md) | [Code](../../aoc2022/src/solver/day22.rs)
-- Day 23-25: Not yet started
+- Day 23 - Unstable Diffusion ✅ | [Code](../../aoc2022/src/solver/day23.rs)
+- Day 24-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -117,13 +119,13 @@
 - **Parsing**: Day 1 (groups), Day 2 (lines), Day 3 (chars), Day 4 (range parsing), Day 5 (ASCII art), Day 6 (none — raw bytes), Day 9 (direction + count), Day 10 (instruction parsing), Day 11 (multi-line monkey blocks)
 - **Sorting**: Day 1 (top-k), Day 11 (top-2 inspection counts)
 - **Lookup Tables**: Day 2 (3×3 precomputed scores)
-- **Set Operations**: Day 3 (bitset intersection - optimized from HashSet), Day 9 (FxHashSet for visited positions - optimized from std HashMap)
+- **Set Operations**: Day 3 (bitset intersection - optimized from HashSet), Day 9 (FxHashSet for visited positions - optimized from std HashMap), Day 23 (FxHashSet for elf positions on infinite grid, FxHashMap for proposal counting)
 - **Bit Manipulation**: Day 3 (u128 bitset for ASCII set operations), Day 6 (u32 XOR bitset for rolling uniqueness), Day 17 (u8 row bitmasks for 7-wide chamber)
 - **Range/Interval Operations**: Day 4 (containment, overlap), Day 15 (interval merging, gap finding)
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
 - **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
 - **Stack-Based Traversal**: Day 7 (DFS-style filesystem accumulation)
-- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds), Day 14 (sand physics, falling + settling), Day 17 (Tetris-like rock falling with jet pushes), Day 20 (circular list mixing, index-tagged element movement), Day 22 (board navigation with direction tracking)
+- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds), Day 14 (sand physics, falling + settling), Day 17 (Tetris-like rock falling with jet pushes), Day 20 (circular list mixing, index-tagged element movement), Day 22 (board navigation with direction tracking), Day 23 (elf diffusion with proposal/movement phases)
 - **3D Geometry**: Day 18 (3D surface area, bounding box, 6-connected neighbors)
 - **Grid**: Day 8 (2D visibility checks, directional iteration), Day 12 (BFS pathfinding, backward search), Day 14 (Mission 6 Grid, coordinate normalization, dynamic bounds)
 - **Coordinate Systems**: Day 9 (signed 2D coords, signum() movement)
@@ -158,6 +160,7 @@
 - **O(R × n²)**: Day 20 (R rounds × n elements × O(n) Vec remove/insert per element)
 - **O(n × d)**: Day 21 (n monkeys × d tree depth for contains_humn checks during inversion walk)
 - **O(T + S)**: Day 22 (T tiles for HashMap construction + S total steps for walk simulation)
+- **O(R × n)**: Day 23 (R rounds × n elves per round, ~930 rounds × ~2500 elves, FxHashSet lookups amortized O(1))
 
 ---
 
@@ -193,6 +196,7 @@
 - **Index-tagged circular mixing** (Day 20): Tag each element with its original index to handle duplicates. Remove element, compute `(pos + val) % (n-1)` for new position (mod n-1 because element is temporarily removed), reinsert. Double-modulus pattern `((x%m)+m)%m` for negative values.
 - **Expression tree evaluation + algebraic inversion** (Day 21): Recursive eval with HashMap<&str, Monkey> for O(1) lookup. For single-unknown solving: determine which branch contains the unknown, evaluate the known branch for target, walk toward unknown inverting operations. Non-commutative trap: `k - x = t → x = k - t` (not `t - k`), `k / x = t → x = k / t` (not `t / k`).
 - **Sparse HashMap board + cube net hardcoding** (Day 22): Non-rectangular map → HashMap<(row,col), Tile> with row/col range maps for O(1) flat wrapping. Cube wrapping: step one past the edge to get out-of-bounds (row, col, facing) as unique dispatch key, match to 14 transition rules. Adjacent faces use natural steps (no special handling). Facing direction changes only on cube wraps.
+- **Proposal-collision simulation on infinite grid** (Day 23): FxHashSet for sparse elf positions (no fixed grid needed). Two-phase round: (1) propose direction from rotating priority list, checking 3 neighbors per direction; (2) move only sole proposers via FxHashMap counting. Direction table with neighbor index lookups avoids repeated coordinate math.
 
 ---
 
@@ -281,8 +285,8 @@
 
 ---
 
-**Last Updated**: 2026-02-22 (Day 22 complete)
-**Next Update**: After Day 23
+**Last Updated**: 2026-02-23 (Day 23 complete)
+**Next Update**: After Day 24
 
 ---
 
