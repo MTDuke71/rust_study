@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (21/25 complete)
+**Status**: 🎯 In Progress (22/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 21/25 |
-| **Total Runtime** | 89.80ms |
-| **Average per Day** | 4.28ms |
+| **Progress** | 22/25 |
+| **Total Runtime** | 91.26ms |
+| **Average per Day** | 4.15ms |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 20 (65.46ms) |
 | **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
-| **Patterns Extracted** | 23 patterns |
+| **Patterns Extracted** | 25 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 line-based search (27,000×!)** |
 
-**1-Second Goal**: 🎯 89.80ms / 1000ms (9.0%)
+**1-Second Goal**: 🎯 91.26ms / 1000ms (9.1%)
 
 ---
 
@@ -46,8 +46,9 @@
 | [19](days/day19.md) | 1413 | 21080 | **3.50ms** | DFS + branch-and-bound | - | Skip-to-build, robot caps, triangle upper bound · [Guide →](days/day19_function_guide.md) |
 | [20](days/day20.md) | 8028 | 8798438007673 | **65.46ms** | Circular list mixing | - | Index-tagged elements, mod n-1, Vec remove/insert · [Guide →](days/day20_function_guide.md) |
 | [21](days/day21.md) | 160274622817992 | 3087390115721 | **499µs** | Expression tree + algebraic inversion | - | Recursive eval, solve-for-humn with op inversion · [Guide →](days/day21_function_guide.md) |
+| [22](days/day22.md) | 88226 | 57305 | **1.46ms** | Sparse board walk + cube net wrapping | - | HashMap tiles, flat/cube wrapping, 14 hardcoded face transitions · [Guide →](days/day22_function_guide.md) |
 
-**Cumulative Runtime**: 89.80ms
+**Cumulative Runtime**: 91.26ms
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**
 
 ---
@@ -76,7 +77,8 @@
 - [Day 19](days/day19.md) - Not Enough Minerals ✅ | [Function Guide](days/day19_function_guide.md) | [Code](../../aoc2022/src/solver/day19.rs)
 - [Day 20](days/day20.md) - Grove Positioning System ✅ | [Function Guide](days/day20_function_guide.md) | [Code](../../aoc2022/src/solver/day20.rs)
 - [Day 21](days/day21.md) - Monkey Math ✅ | [Function Guide](days/day21_function_guide.md) | [Code](../../aoc2022/src/solver/day21.rs)
-- Day 22-25: Not yet started
+- [Day 22](days/day22.md) - Monkey Map ✅ | [Function Guide](days/day22_function_guide.md) | [Code](../../aoc2022/src/solver/day22.rs)
+- Day 23-25: Not yet started
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -102,6 +104,7 @@
 - [Day 19 Function Guide](days/day19_function_guide.md) - DFS branch-and-bound, skip-to-build, resource optimization
 - [Day 20 Function Guide](days/day20_function_guide.md) - Circular list mixing, index tracking, modular reinsertion
 - [Day 21 Function Guide](days/day21_function_guide.md) - Expression tree evaluation, algebraic inversion for single unknown
+- [Day 22 Function Guide](days/day22_function_guide.md) - Sparse board navigation, flat/cube wrapping, hardcoded face transitions
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -120,7 +123,7 @@
 - **Stack Operations**: Day 5 (Vec push/pop, split_off/extend)
 - **Sliding Window**: Day 6 (rolling XOR bitset, O(1) per slide)
 - **Stack-Based Traversal**: Day 7 (DFS-style filesystem accumulation)
-- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds), Day 14 (sand physics, falling + settling), Day 17 (Tetris-like rock falling with jet pushes), Day 20 (circular list mixing, index-tagged element movement)
+- **Simulation**: Day 5 (crane operations), Day 9 (rope physics, knot following), Day 10 (CPU cycles, CRT rendering), Day 11 (monkey item passing, 20/10,000 rounds), Day 14 (sand physics, falling + settling), Day 17 (Tetris-like rock falling with jet pushes), Day 20 (circular list mixing, index-tagged element movement), Day 22 (board navigation with direction tracking)
 - **3D Geometry**: Day 18 (3D surface area, bounding box, 6-connected neighbors)
 - **Grid**: Day 8 (2D visibility checks, directional iteration), Day 12 (BFS pathfinding, backward search), Day 14 (Mission 6 Grid, coordinate normalization, dynamic bounds)
 - **Coordinate Systems**: Day 9 (signed 2D coords, signum() movement)
@@ -135,6 +138,7 @@
 - **Cycle Detection**: Day 17 (state fingerprinting via HashMap for trillion-scale simulation)
 - **Circular List**: Day 20 (remove/insert mixing, mod n-1 for reinsertion, double-modulus for negatives)
 - **Expression Tree**: Day 21 (recursive evaluation via HashMap lookup, algebraic inversion for solving single unknown)
+- **Sparse Board Navigation**: Day 22 (HashMap for non-rectangular map, row/col range maps for flat wrapping, hardcoded cube face transitions for 3D wrapping)
 - **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept), Day 15 (Manhattan distance, geometric coverage), Day 20 (modular arithmetic for circular positions)
 
 ### Complexity Analysis
@@ -153,6 +157,7 @@
 - **O(n × B^d)**: Day 19 (n blueprints × DFS search, B~4 branching, d~time_limit depth, heavily pruned)
 - **O(R × n²)**: Day 20 (R rounds × n elements × O(n) Vec remove/insert per element)
 - **O(n × d)**: Day 21 (n monkeys × d tree depth for contains_humn checks during inversion walk)
+- **O(T + S)**: Day 22 (T tiles for HashMap construction + S total steps for walk simulation)
 
 ---
 
@@ -187,6 +192,7 @@
 - **Skip-to-build DFS with branch-and-bound** (Day 19): Instead of deciding each minute (build or wait), jump to the time when enough resources accumulate for each robot type. Combined with robot caps (never overbuild), triangle-number upper bound, and prerequisite guards. Collapses branching from 5^T to ~thousands of states per blueprint.
 - **Index-tagged circular mixing** (Day 20): Tag each element with its original index to handle duplicates. Remove element, compute `(pos + val) % (n-1)` for new position (mod n-1 because element is temporarily removed), reinsert. Double-modulus pattern `((x%m)+m)%m` for negative values.
 - **Expression tree evaluation + algebraic inversion** (Day 21): Recursive eval with HashMap<&str, Monkey> for O(1) lookup. For single-unknown solving: determine which branch contains the unknown, evaluate the known branch for target, walk toward unknown inverting operations. Non-commutative trap: `k - x = t → x = k - t` (not `t - k`), `k / x = t → x = k / t` (not `t / k`).
+- **Sparse HashMap board + cube net hardcoding** (Day 22): Non-rectangular map → HashMap<(row,col), Tile> with row/col range maps for O(1) flat wrapping. Cube wrapping: step one past the edge to get out-of-bounds (row, col, facing) as unique dispatch key, match to 14 transition rules. Adjacent faces use natural steps (no special handling). Facing direction changes only on cube wraps.
 
 ---
 
@@ -275,8 +281,8 @@
 
 ---
 
-**Last Updated**: 2026-02-22 (Day 21 complete)
-**Next Update**: After Day 22
+**Last Updated**: 2026-02-22 (Day 22 complete)
+**Next Update**: After Day 23
 
 ---
 
