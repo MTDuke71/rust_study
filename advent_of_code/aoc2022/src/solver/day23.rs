@@ -6,10 +6,22 @@
 
 use rustc_hash::{FxHashMap, FxHashSet};
 
-type Pos = (i32, i32);
+/// Packed (row, col) into a single i64 for faster hashing.
+/// High 32 bits = row, low 32 bits = col.
+type Pos = i64;
 
-/// Eight neighbors in order: N, NE, E, SE, S, SW, W, NW
-const NEIGHBORS: [Pos; 8] = [
+#[inline(always)]
+fn pack(r: i32, c: i32) -> Pos {
+    ((r as i64) << 32) | (c as u32 as i64)
+}
+
+#[inline(always)]
+fn unpack(p: Pos) -> (i32, i32) {
+    ((p >> 32) as i32, p as i32)
+}
+
+/// Eight neighbor offsets as (dr, dc): N, NE, E, SE, S, SW, W, NW
+const NEIGHBORS: [(i32, i32); 8] = [
     (-1, 0),  // N
     (-1, 1),  // NE
     (0, 1),   // E
@@ -20,16 +32,15 @@ const NEIGHBORS: [Pos; 8] = [
     (-1, -1), // NW
 ];
 
-/// Direction checks: (check positions indices into NEIGHBORS, move delta)
-/// N: check N, NE, NW → move N
-/// S: check S, SE, SW → move S
-/// W: check W, NW, SW → move W
-/// E: check E, NE, SE → move E
-const DIRECTIONS: [(Pos, [usize; 3]); 4] = [
-    ((-1, 0), [0, 1, 7]), // N: check N, NE, NW
-    ((1, 0), [4, 3, 5]),  // S: check S, SE, SW
-    ((0, -1), [6, 7, 5]), // W: check W, NW, SW
-    ((0, 1), [2, 1, 3]),  // E: check E, NE, SE
+/// Direction move deltas as (dr, dc): N, S, W, E
+const DIR_DELTAS: [(i32, i32); 4] = [(-1, 0), (1, 0), (0, -1), (0, 1)];
+
+/// Bitmasks for 3-neighbor direction checks (indices match NEIGHBOR_DELTAS)
+const DIR_MASKS: [u8; 4] = [
+    (1 << 0) | (1 << 1) | (1 << 7), // N: N, NE, NW
+    (1 << 4) | (1 << 3) | (1 << 5), // S: S, SE, SW
+    (1 << 6) | (1 << 7) | (1 << 5), // W: W, NW, SW
+    (1 << 2) | (1 << 1) | (1 << 3), // E: E, NE, SE
 ];
 
 fn parse(input: &str) -> FxHashSet<Pos> {
@@ -37,7 +48,7 @@ fn parse(input: &str) -> FxHashSet<Pos> {
     for (row, line) in input.lines().enumerate() {
         for (col, ch) in line.chars().enumerate() {
             if ch == '#' {
-                elves.insert((row as i32, col as i32));
+                elves.insert(pack(row as i32, col as i32));
             }
         }
     }
@@ -45,51 +56,54 @@ fn parse(input: &str) -> FxHashSet<Pos> {
 }
 
 /// Simulate one round. Returns true if any elf moved.
-fn step(elves: &mut FxHashSet<Pos>, round: usize) -> bool {
-    // Phase 1: proposals
-    // Map from proposed destination → list of elves proposing it
-    let mut proposals: FxHashMap<Pos, Vec<Pos>> = FxHashMap::default();
+fn step(
+    elves: &mut FxHashSet<Pos>,
+    round: usize,
+    proposals: &mut FxHashMap<Pos, (Pos, u8)>,
+    elf_vec: &mut Vec<Pos>,
+) -> bool {
+    proposals.clear();
 
-    for &elf in elves.iter() {
-        // Check if any neighbor is occupied
-        let has_neighbor = NEIGHBORS.iter().any(|&(dr, dc)| {
-            elves.contains(&(elf.0 + dr, elf.1 + dc))
-        });
+    // Collect to Vec for cache-friendly iteration
+    elf_vec.clear();
+    elf_vec.extend(elves.iter());
 
-        if !has_neighbor {
-            continue; // Elf stays put
-        }
+    for &elf in elf_vec.iter() {
+        let (r, c) = unpack(elf);
 
-        // Try each direction in rotated order
-        let mut proposed = false;
-        for i in 0..4 {
-            let dir_idx = (round + i) % 4;
-            let (delta, checks) = &DIRECTIONS[dir_idx];
-
-            let clear = checks.iter().all(|&ci| {
-                let n = NEIGHBORS[ci];
-                !elves.contains(&(elf.0 + n.0, elf.1 + n.1))
-            });
-
-            if clear {
-                let dest = (elf.0 + delta.0, elf.1 + delta.1);
-                proposals.entry(dest).or_default().push(elf);
-                proposed = true;
-                break;
+        // Build 8-neighbor occupancy bitmask
+        let mut occupied: u8 = 0;
+        for (i, &(dr, dc)) in NEIGHBORS.iter().enumerate() {
+            if elves.contains(&pack(r + dr, c + dc)) {
+                occupied |= 1 << i;
             }
         }
 
-        if !proposed {
-            // All four directions blocked, elf stays
+        if occupied == 0 {
+            continue;
+        }
+
+        // Try each direction — bitmask test instead of 3 hash lookups
+        for i in 0..4 {
+            let dir_idx = (round + i) % 4;
+            if occupied & DIR_MASKS[dir_idx] == 0 {
+                let (dr, dc) = DIR_DELTAS[dir_idx];
+                let dest = pack(r + dr, c + dc);
+                proposals
+                    .entry(dest)
+                    .and_modify(|e| e.1 += 1)
+                    .or_insert((elf, 1));
+                break;
+            }
         }
     }
 
-    // Phase 2: movement - only move if sole proposer
+    // Phase 2: move sole proposers
     let mut moved = false;
-    for (dest, proposers) in &proposals {
-        if proposers.len() == 1 {
-            elves.remove(&proposers[0]);
-            elves.insert(*dest);
+    for (&dest, &(src, count)) in proposals.iter() {
+        if count == 1 {
+            elves.remove(&src);
+            elves.insert(dest);
             moved = true;
         }
     }
@@ -98,11 +112,15 @@ fn step(elves: &mut FxHashSet<Pos>, round: usize) -> bool {
 }
 
 fn bounding_box_empty(elves: &FxHashSet<Pos>) -> usize {
-    let min_r = elves.iter().map(|p| p.0).min().unwrap();
-    let max_r = elves.iter().map(|p| p.0).max().unwrap();
-    let min_c = elves.iter().map(|p| p.1).min().unwrap();
-    let max_c = elves.iter().map(|p| p.1).max().unwrap();
-
+    let (mut min_r, mut max_r) = (i32::MAX, i32::MIN);
+    let (mut min_c, mut max_c) = (i32::MAX, i32::MIN);
+    for &p in elves.iter() {
+        let (r, c) = unpack(p);
+        min_r = min_r.min(r);
+        max_r = max_r.max(r);
+        min_c = min_c.min(c);
+        max_c = max_c.max(c);
+    }
     let area = (max_r - min_r + 1) as usize * (max_c - min_c + 1) as usize;
     area - elves.len()
 }
@@ -110,22 +128,24 @@ fn bounding_box_empty(elves: &FxHashSet<Pos>) -> usize {
 pub fn solve(input: &str) -> (usize, usize) {
     let input = input.replace("\r\n", "\n");
     let mut elves = parse(&input);
+    let mut proposals = FxHashMap::default();
+    let mut elf_vec = Vec::with_capacity(elves.len());
 
-    // Part 1: 10 rounds
-    let mut elves_p1 = elves.clone();
-    for round in 0..10 {
-        step(&mut elves_p1, round);
-    }
-    let part1 = bounding_box_empty(&elves_p1);
-
-    // Part 2: find first round where no elf moves
+    // Single run: checkpoint at round 10 for Part 1, continue for Part 2
+    let mut part1 = 0;
     let mut round = 0;
     loop {
-        let moved = step(&mut elves, round);
+        if round == 10 {
+            part1 = bounding_box_empty(&elves);
+        }
+        let moved = step(&mut elves, round, &mut proposals, &mut elf_vec);
         round += 1;
         if !moved {
             break;
         }
+    }
+    if round <= 10 {
+        part1 = bounding_box_empty(&elves);
     }
     let part2 = round;
 

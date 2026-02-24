@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 23/25 |
-| **Total Runtime** | 195.88ms |
-| **Average per Day** | 8.52ms |
+| **Total Runtime** | 147.64ms |
+| **Average per Day** | 6.42ms |
 | **Fastest Day** | Day 6 (4.80µs) |
-| **Slowest Day** | Day 23 (104.62ms) |
+| **Slowest Day** | Day 20 (65.46ms) |
 | **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
 | **Patterns Extracted** | 25 patterns |
-| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 line-based search (27,000×!)** |
+| **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 line-based search (27,000×!)**, Day 23 packed i64 + alloc reduction (1.86×) |
 
-**1-Second Goal**: 🎯 195.88ms / 1000ms (19.6%)
+**1-Second Goal**: 🎯 147.64ms / 1000ms (14.8%)
 
 ---
 
@@ -47,10 +47,10 @@
 | [20](days/day20.md) | 8028 | 8798438007673 | **65.46ms** | Circular list mixing | - | Index-tagged elements, mod n-1, Vec remove/insert · [Guide →](days/day20_function_guide.md) |
 | [21](days/day21.md) | 160274622817992 | 3087390115721 | **499µs** | Expression tree + algebraic inversion | - | Recursive eval, solve-for-humn with op inversion · [Guide →](days/day21_function_guide.md) |
 | [22](days/day22.md) | 88226 | 57305 | **1.46ms** | Sparse board walk + cube net wrapping | - | HashMap tiles, flat/cube wrapping, 14 hardcoded face transitions · [Guide →](days/day22_function_guide.md) |
-| 23 | 3780 | 930 | **104.62ms** | HashSet elf diffusion simulation | - | FxHashSet positions, proposal/movement phases, rotating direction priority · [Guide →](days/day23_function_guide.md) |
+| 23 | 3780 | 930 | ~~104.62ms~~ **56.38ms** | HashSet elf diffusion simulation | - | **Optimized**: Packed i64 coords, bitmask direction checks, alloc reduction (1.86×) · [Guide →](days/day23_function_guide.md) |
 
-**Cumulative Runtime**: 195.88ms
-**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**
+**Cumulative Runtime**: 147.64ms
+**Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**, Day 23 packed i64 + alloc reduction (1.86× - from 104.62ms → 56.38ms)
 
 ---
 
@@ -197,7 +197,7 @@
 - **Index-tagged circular mixing** (Day 20): Tag each element with its original index to handle duplicates. Remove element, compute `(pos + val) % (n-1)` for new position (mod n-1 because element is temporarily removed), reinsert. Double-modulus pattern `((x%m)+m)%m` for negative values.
 - **Expression tree evaluation + algebraic inversion** (Day 21): Recursive eval with HashMap<&str, Monkey> for O(1) lookup. For single-unknown solving: determine which branch contains the unknown, evaluate the known branch for target, walk toward unknown inverting operations. Non-commutative trap: `k - x = t → x = k - t` (not `t - k`), `k / x = t → x = k / t` (not `t / k`).
 - **Sparse HashMap board + cube net hardcoding** (Day 22): Non-rectangular map → HashMap<(row,col), Tile> with row/col range maps for O(1) flat wrapping. Cube wrapping: step one past the edge to get out-of-bounds (row, col, facing) as unique dispatch key, match to 14 transition rules. Adjacent faces use natural steps (no special handling). Facing direction changes only on cube wraps.
-- **Proposal-collision simulation on infinite grid** (Day 23): FxHashSet for sparse elf positions (no fixed grid needed). Two-phase round: (1) propose direction from rotating priority list, checking 3 neighbors per direction; (2) move only sole proposers via FxHashMap counting. Direction table with neighbor index lookups avoids repeated coordinate math.
+- **Proposal-collision simulation on infinite grid** (Day 23): Packed i64 coordinates in FxHashSet for sparse elf positions (single-u64 hash, no fixed grid). Two-phase round: (1) build 8-neighbor occupancy bitmask, test directions with bitwise AND; (2) move sole proposers via FxHashMap `(src, count)`. Reuse HashMap + Vec across rounds, checkpoint at round 10 for Part 1. Optimized from 104.62ms → 56.38ms (1.86×).
 
 ---
 
@@ -361,3 +361,18 @@
 - **Trade-off**: Gave up ring-based early termination (skipping 27% of trees) to gain multi-core parallelism (1.5× speedup on this system)
 - **Work Unit Size Matters**: 99 rows × ~99 trees per row = ideal granularity for thread pool, vs. thousands of individual tree tasks creating excessive overhead
 - **Learning**: Parallelization isn't always faster — need large enough work units to amortize thread spawning costs
+
+### Day 23: Packed i64 + Allocation Reduction (1.86× speedup)
+- **Before**: 104.62ms — `(i32, i32)` tuple coords, `Vec<Pos>` in proposals HashMap, fresh HashMap per round, clone + separate Part 1/Part 2 runs
+- **After**: 56.38ms — packed `i64` coords, `(Pos, u8)` proposals, reused HashMap + Vec, single run with checkpoint
+- **Key Changes**:
+  1. `(Pos, u8)` proposals instead of `Vec<Pos>` — eliminated ~1,000 Vec allocs/round × 930 rounds (biggest win)
+  2. HashMap `clear()` reuse — one allocation instead of 930
+  3. Single simulation with round-10 checkpoint — saves redundant first 10 rounds
+  4. Packed `i64` coordinates — single-u64 FxHash vs two-part tuple hash (17% further gain)
+  5. Vec collection for iteration — cache-friendly sequential access vs hash-bucket jumping
+- **Failed Approaches**:
+  - Bitmask direction checks (wash): 8-neighbor bitmask eliminates direction hash lookups, but isolated elves (majority) already bail early with `any()` short-circuit
+  - Sorted Vec proposals (4% slower): O(n log n) sort overhead outweighed cache locality vs HashMap O(1) amortized
+- **Key Insight**: When hash lookups dominate (~18.6M), reducing per-lookup cost (packed keys) and per-round allocation (reuse containers) matter more than algorithmic changes
+- **Packed Coordinate Trap**: `pack(r,c) + pack(dr,dc)` doesn't work — column overflow carries into row bits. Must unpack, add, repack.
