@@ -134,4 +134,4 @@ Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Yellow
 Write-Host "  1. Extract example inputs from problem statements"
 Write-Host "  2. Save as inputs/dayXX_example.txt"
-Write-Host "  3. Start solving! 🎄"
+Write-Host "  3. Start solving!"

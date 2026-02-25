@@ -201,6 +201,7 @@ Each implementation references mathematical foundations:
 17. ✅ `graph-minimum-cut.md` - Min-cut algorithms, edge betweenness, network analysis (AoC Day 25)
 18. ✅ `3d-geometry.md` - 3D grids, adjacency, voxel surface area, flood fill (AoC 2022 Day 18)
 19. ✅ `algebraic-inversion.md` - Inverse operations, expression tree walk, non-commutative trap (AoC 2022 Day 21)
+20. ✅ `base-conversion.md` - Positional notation, Horner's method, balanced bases, carry propagation (AoC 2022 Day 25)
 
 ### **Priority Concepts** (Create these next)
 

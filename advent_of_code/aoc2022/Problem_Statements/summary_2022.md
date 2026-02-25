@@ -1,6 +1,6 @@
 # AoC 2022 - Summary
 
-**Status**: 🎯 In Progress (24/25 complete)
+**Status**: 🎉 Complete! (25/25)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 24/25 |
-| **Total Runtime** | 243.54ms |
-| **Average per Day** | 10.15ms |
+| **Progress** | 25/25 |
+| **Total Runtime** | ~243.5ms |
+| **Average per Day** | ~9.7ms |
 | **Fastest Day** | Day 6 (4.80µs) |
 | **Slowest Day** | Day 24 (95.9ms) |
 | **Mission Integration** | 2 days (Day 9, Day 14: Mission 6 Grid) |
-| **Patterns Extracted** | 26 patterns |
+| **Patterns Extracted** | 27 patterns |
 | **Optimizations Applied** | Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon (1.5×), Day 9 FxHashSet (1.25×), Day 12 backward BFS (164×!), Day 13 counting (33×!), **Day 15 line-based search (27,000×!)**, Day 23 packed i64 + alloc reduction (1.86×) |
 
-**1-Second Goal**: 🎯 243.54ms / 1000ms (24.4%)
+**1-Second Goal**: 🎯 ~243.5ms / 1000ms (24.4%) ✅
 
 ---
 
@@ -49,8 +49,9 @@
 | [22](days/day22.md) | 88226 | 57305 | **1.46ms** | Sparse board walk + cube net wrapping | - | HashMap tiles, flat/cube wrapping, 14 hardcoded face transitions · [Guide →](days/day22_function_guide.md) |
 | 23 | 3780 | 930 | ~~104.62ms~~ **56.38ms** | HashSet elf diffusion simulation | - | **Optimized**: Packed i64 coords, bitmask direction checks, alloc reduction (1.86×) · [Guide →](days/day23_function_guide.md) |
 | [24](days/day24.md) | 242 | 720 | **95.9ms** | BFS + periodic blizzard precomputation | - | Precompute LCM(h,w)=600 blocked sets, 3-leg BFS for Part 2 · [Guide →](days/day24_function_guide.md) |
+| [25](days/day25.md) | 2=-0=01----22-0-1-10 | ⭐ | **6.09µs** | Balanced base-5 conversion | - | SNAFU↔decimal with carry propagation, Day 25 free star · [Guide →](days/day25_function_guide.md) |
 
-**Cumulative Runtime**: 243.54ms
+**Cumulative Runtime**: ~243.5ms (Day 25 adds negligible time)
 **Optimization Impact**: Day 3 bitset (15×), Day 6 rolling XOR (2.4×), Day 7 HashMap→Stack (23×), Day 8 Rayon row-parallel (1.5×), Day 9 FxHashSet (1.25×), Day 10 parse-once (2×), Day 11 modular arithmetic (prevents overflow), Day 12 backward BFS from goal (164×! - from 28.74ms → 175µs), Day 13 count positions instead of sorting (33×! - from 338µs → 10µs for Part 2), **Day 15 line-based search (Feng method) (27,000×! - from 460.89ms → 17.07µs for Part 2)**, Day 23 packed i64 + alloc reduction (1.86× - from 104.62ms → 56.38ms), Day 24 baseline 95.9ms (precomputed blocked sets)
 
 ---
@@ -82,7 +83,7 @@
 - [Day 22](days/day22.md) - Monkey Map ✅ | [Function Guide](days/day22_function_guide.md) | [Code](../../aoc2022/src/solver/day22.rs)
 - Day 23 - Unstable Diffusion ✅ | [Function Guide](days/day23_function_guide.md) | [Code](../../aoc2022/src/solver/day23.rs)
 - [Day 24](days/day24.md) - Blizzard Basin ✅ | [Function Guide](days/day24_function_guide.md) | [Code](../../aoc2022/src/solver/day24.rs)
-- Day 25: Not yet started
+- [Day 25](days/day25.md) - Full of Hot Air ✅ | [Function Guide](days/day25_function_guide.md) | [Code](../../aoc2022/src/solver/day25.rs)
 
 **All Days**: [Days Directory](days/README.md)
 
@@ -111,6 +112,7 @@
 - [Day 22 Function Guide](days/day22_function_guide.md) - Sparse board navigation, flat/cube wrapping, hardcoded face transitions
 - [Day 23 Function Guide](days/day23_function_guide.md) - FxHashSet infinite grid, proposal/collision phases, direction table indirection
 - [Day 24 Function Guide](days/day24_function_guide.md) - BFS with periodic blizzards, precomputed blocked sets, 3-leg pathfinding
+- [Day 25 Function Guide](days/day25_function_guide.md) - Balanced base-5 (SNAFU) conversion, carry propagation for out-of-range remainders
 
 **Daily Notes**:
 - [[zettelkasten/Daily Notes/]] - Check Feb 2026 entries for solving notes
@@ -145,8 +147,9 @@
 - **Circular List**: Day 20 (remove/insert mixing, mod n-1 for reinsertion, double-modulus for negatives)
 - **Expression Tree**: Day 21 (recursive evaluation via HashMap lookup, algebraic inversion for solving single unknown)
 - **Sparse Board Navigation**: Day 22 (HashMap for non-rectangular map, row/col range maps for flat wrapping, hardcoded cube face transitions for 3D wrapping)
-- **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept), Day 15 (Manhattan distance, geometric coverage), Day 20 (modular arithmetic for circular positions), Day 24 (LCM for blizzard periodicity, modular arithmetic for wrapping)
+- **Math**: Day 4 (interval arithmetic, set theory), Day 9 (Chebyshev distance, signum), Day 11 (modular arithmetic, Chinese Remainder Theorem concept), Day 15 (Manhattan distance, geometric coverage), Day 20 (modular arithmetic for circular positions), Day 24 (LCM for blizzard periodicity, modular arithmetic for wrapping), Day 25 (balanced base-5 number system, carry propagation)
 - **Time-Varying BFS**: Day 24 (state = position + time mod period, precomputed obstacle sets per time step, multi-leg chained BFS)
+- **Number System Conversion**: Day 25 (SNAFU balanced quinary: Horner's method for decode, div-mod with carry for encode)
 
 ### Complexity Analysis
 - **O(1)**: Day 2 (lookup per round), Day 3 (bitset operations), Day 4 (range comparisons), Day 5 (push/pop), Day 6 (XOR + popcount per slide), Day 9 (is_touching, follow, FxHashSet insert), Day 10 (cycle increment, pixel draw), Day 11 (VecDeque push/pop, modulo)
@@ -167,6 +170,7 @@
 - **O(T + S)**: Day 22 (T tiles for HashMap construction + S total steps for walk simulation)
 - **O(R × n)**: Day 23 (R rounds × n elves per round, ~930 rounds × ~2500 elves, FxHashSet lookups amortized O(1))
 - **O(R × C × P)**: Day 24 (R rows × C cols × P period, BFS state space bounded by position × blizzard phase, P = LCM(h-2, w-2))
+- **O(n × d)**: Day 25 (n lines × d digits per line, pure string↔number conversion)
 
 ---
 
@@ -204,6 +208,7 @@
 - **Sparse HashMap board + cube net hardcoding** (Day 22): Non-rectangular map → HashMap<(row,col), Tile> with row/col range maps for O(1) flat wrapping. Cube wrapping: step one past the edge to get out-of-bounds (row, col, facing) as unique dispatch key, match to 14 transition rules. Adjacent faces use natural steps (no special handling). Facing direction changes only on cube wraps.
 - **Proposal-collision simulation on infinite grid** (Day 23): Packed i64 coordinates in FxHashSet for sparse elf positions (single-u64 hash, no fixed grid). Two-phase round: (1) build 8-neighbor occupancy bitmask, test directions with bitwise AND; (2) move sole proposers via FxHashMap `(src, count)`. Reuse HashMap + Vec across rounds, checkpoint at round 10 for Part 1. Optimized from 104.62ms → 56.38ms (1.86×).
 - **BFS through periodic time-varying obstacles** (Day 24): Blizzards cycle with period LCM(inner_h, inner_w), precompute `blocked[t]` HashSet for each time step. BFS state = `(row, col, time mod period)` bounds infinite time to finite state space. Multi-leg Part 2 chains three BFS calls with carried-over start times. Start/goal positions in wall rows serve as blizzard-free safe havens.
+- **Balanced base-N conversion with carry propagation** (Day 25): SNAFU = balanced base-5 (digits -2 to 2). Decode via Horner's method (`fold` with `acc * 5 + digit`). Encode via repeated div-mod: when remainder > 2, emit negative digit and carry +1 to next position. Generalizes to any balanced odd-base system.
 
 ---
 
@@ -292,8 +297,8 @@
 
 ---
 
-**Last Updated**: 2026-02-24 (Day 24 complete)
-**Next Update**: After Day 25
+**Last Updated**: 2026-02-25 (Day 25 complete — AoC 2022 finished! 🎉)
+**50/50 stars**
 
 ---
 
