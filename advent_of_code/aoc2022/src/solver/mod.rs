@@ -24,6 +24,7 @@ pub mod day20;
 pub mod day21;
 pub mod day22;
 pub mod day23;
+pub mod day24;
 // ... etc
 
 pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
@@ -122,6 +123,10 @@ pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
         },
         23 => {
             let (p1, p2) = day23::solve(input);
+            Ok((p1.to_string(), p2.to_string()))
+        },
+        24 => {
+            let (p1, p2) = day24::solve(input);
             Ok((p1.to_string(), p2.to_string()))
         },
         // ... etc
