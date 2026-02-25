@@ -172,6 +172,9 @@ Early return optimization — if we've reached the goal, we don't need to check 
 **Why does the BFS queue store absolute time but visited uses modular time?**
 The queue needs absolute time to compute blizzard state (`t + 1`) and return the final answer. But for deduplication, only `time % period` matters — same position at same blizzard phase is equivalent.
 
+**Why store blocked positions instead of open positions?**
+With 3,141 blizzards in 3,600 inner cells, only ~459 cells are open per time step — storing open sets would use ~7× less memory. However, benchmarking showed the open-set approach is **16% slower** (111ms vs 95.9ms). The set-difference precomputation adds overhead (building blocked set *then* subtracting from all_inner for each of 700 time steps), and the BFS lookup cost is dominated by the hash function itself, not the number of entries. Smaller sets don't improve cache performance since the BFS visited set dominates memory access patterns.
+
 ---
 
 ## Complexity Analysis
