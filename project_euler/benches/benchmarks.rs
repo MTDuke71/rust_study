@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p014};
 
 fn benchmark_problems(c: &mut Criterion) {
     c.bench_function("Problem 1", |b| b.iter(|| p001::solve()));
@@ -21,6 +21,14 @@ fn benchmark_problems(c: &mut Criterion) {
     });
     c.bench_function("Problem 13 (f64)", |b| {
         b.iter(|| p013::first_ten_digits_of_sum_f64())
+    });
+    c.bench_function("Problem 14", |b| b.iter(|| p014::solve()));
+    c.bench_function("Problem 14 (naive)", |b| {
+        b.iter(|| {
+            (1u64..black_box(1_000_000))
+                .max_by_key(|&n| p014::collatz_chain_length(n))
+                .unwrap()
+        })
     });
 }
 

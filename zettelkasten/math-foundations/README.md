@@ -37,10 +37,11 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 
 **Target**: 20 mathematical concepts documented by **January 25, 2026**
 
-**Current**: 21/20 notes ✅ 🎉 **GOAL EXCEEDED!**
+**Current**: 23/20 notes ✅ 🎉 **GOAL EXCEEDED!**
 
-**Latest additions** (January 25, 2026):
-- `graph-minimum-cut.md` - Min-cut algorithms, edge betweenness, network analysis (AoC 2023 Day 25)
+**Latest additions** (February 26, 2026):
+- `collatz-conjecture.md` - Collatz conjecture, parity observations, computational approaches (Project Euler P14)
+- `project-euler-p014.md` - Longest Collatz sequence, memoization, even-number elimination
 
 ---
 
@@ -177,7 +178,7 @@ Each implementation references mathematical foundations:
 
 ## 🎯 Current Coverage
 
-**Math notes created**: 14/20  
+**Math notes created**: 16/20
 **Target by end of January**: 20+  
 **Target by end of Q1**: 100+
 
@@ -202,6 +203,8 @@ Each implementation references mathematical foundations:
 18. ✅ `3d-geometry.md` - 3D grids, adjacency, voxel surface area, flood fill (AoC 2022 Day 18)
 19. ✅ `algebraic-inversion.md` - Inverse operations, expression tree walk, non-commutative trap (AoC 2022 Day 21)
 20. ✅ `base-conversion.md` - Positional notation, Horner's method, balanced bases, carry propagation (AoC 2022 Day 25)
+21. ✅ `collatz-conjecture.md` - Collatz conjecture, parity observations, computational approaches (Project Euler P14)
+22. ✅ `project-euler-p014.md` - Longest Collatz sequence, memoization, even-number elimination (Project Euler P14)
 
 ### **Priority Concepts** (Create these next)
 
