@@ -1,4 +1,3 @@
-
 //! Day 19: Not Enough Minerals
 //!
 //! Resource optimization: given robot blueprints, maximize geode production.
@@ -60,7 +59,8 @@ type SearchState = (u32, u32, u32, u32, u32, u32, u32, u32, u32);
 
 fn max_geodes(bp: &Blueprint, time_limit: u32) -> u32 {
     // Max ore we could spend per minute — no point building more ore robots than this
-    let max_ore_cost = bp.ore_robot_ore
+    let max_ore_cost = bp
+        .ore_robot_ore
         .max(bp.clay_robot_ore)
         .max(bp.obsidian_robot_ore)
         .max(bp.geode_robot_ore);
@@ -72,8 +72,7 @@ fn max_geodes(bp: &Blueprint, time_limit: u32) -> u32 {
     let mut stack: Vec<SearchState> = Vec::new();
     stack.push((time_limit, 0, 0, 0, 0, 1, 0, 0, 0));
 
-    while let Some((time, ore, clay, obsidian, geodes, r_ore, r_clay, r_obs, r_geo)) = stack.pop()
-    {
+    while let Some((time, ore, clay, obsidian, geodes, r_ore, r_clay, r_obs, r_geo)) = stack.pop() {
         // Update best
         best = best.max(geodes + r_geo * time);
 
@@ -299,7 +298,8 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
         let bps = parse_input(EXAMPLE);
         let bp = &bps[0];
 
-        let max_ore_cost = bp.ore_robot_ore
+        let max_ore_cost = bp
+            .ore_robot_ore
             .max(bp.clay_robot_ore)
             .max(bp.obsidian_robot_ore)
             .max(bp.geode_robot_ore);
@@ -330,7 +330,9 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
                 best_idx = my_idx;
             }
 
-            if time == 0 { continue; }
+            if time == 0 {
+                continue;
+            }
 
             let upper = geodes + r_geo * time + time * (time - 1) / 2;
             if upper <= best {
@@ -348,34 +350,98 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
             }
 
             if r_obs > 0 {
-                let wait_ore = if ore >= bp.geode_robot_ore { 0 } else { (bp.geode_robot_ore - ore).div_ceil(r_ore) };
-                let wait_obs = if obsidian >= bp.geode_robot_obsidian { 0 } else { (bp.geode_robot_obsidian - obsidian).div_ceil(r_obs) };
+                let wait_ore = if ore >= bp.geode_robot_ore {
+                    0
+                } else {
+                    (bp.geode_robot_ore - ore).div_ceil(r_ore)
+                };
+                let wait_obs = if obsidian >= bp.geode_robot_obsidian {
+                    0
+                } else {
+                    (bp.geode_robot_obsidian - obsidian).div_ceil(r_obs)
+                };
                 let wait = wait_ore.max(wait_obs) + 1;
                 if wait < time {
-                    let s = (time - wait, ore + r_ore * wait - bp.geode_robot_ore, clay + r_clay * wait, obsidian + r_obs * wait - bp.geode_robot_obsidian, geodes + r_geo * wait, r_ore, r_clay, r_obs, r_geo + 1);
+                    let s = (
+                        time - wait,
+                        ore + r_ore * wait - bp.geode_robot_ore,
+                        clay + r_clay * wait,
+                        obsidian + r_obs * wait - bp.geode_robot_obsidian,
+                        geodes + r_geo * wait,
+                        r_ore,
+                        r_clay,
+                        r_obs,
+                        r_geo + 1,
+                    );
                     push_child!(s, format!("Build GEODE (wait {wait} min)"));
                 }
             }
             if r_obs < max_obsidian_cost && r_clay > 0 {
-                let wait_ore = if ore >= bp.obsidian_robot_ore { 0 } else { (bp.obsidian_robot_ore - ore).div_ceil(r_ore) };
-                let wait_clay = if clay >= bp.obsidian_robot_clay { 0 } else { (bp.obsidian_robot_clay - clay).div_ceil(r_clay) };
+                let wait_ore = if ore >= bp.obsidian_robot_ore {
+                    0
+                } else {
+                    (bp.obsidian_robot_ore - ore).div_ceil(r_ore)
+                };
+                let wait_clay = if clay >= bp.obsidian_robot_clay {
+                    0
+                } else {
+                    (bp.obsidian_robot_clay - clay).div_ceil(r_clay)
+                };
                 let wait = wait_ore.max(wait_clay) + 1;
                 if wait < time.saturating_sub(2) {
-                    let s = (time - wait, ore + r_ore * wait - bp.obsidian_robot_ore, clay + r_clay * wait - bp.obsidian_robot_clay, obsidian + r_obs * wait, geodes + r_geo * wait, r_ore, r_clay, r_obs + 1, r_geo);
+                    let s = (
+                        time - wait,
+                        ore + r_ore * wait - bp.obsidian_robot_ore,
+                        clay + r_clay * wait - bp.obsidian_robot_clay,
+                        obsidian + r_obs * wait,
+                        geodes + r_geo * wait,
+                        r_ore,
+                        r_clay,
+                        r_obs + 1,
+                        r_geo,
+                    );
                     push_child!(s, format!("Build OBS (wait {wait} min)"));
                 }
             }
             if r_clay < max_clay_cost {
-                let wait = if ore >= bp.clay_robot_ore { 0 } else { (bp.clay_robot_ore - ore).div_ceil(r_ore) } + 1;
+                let wait = if ore >= bp.clay_robot_ore {
+                    0
+                } else {
+                    (bp.clay_robot_ore - ore).div_ceil(r_ore)
+                } + 1;
                 if wait < time.saturating_sub(4) {
-                    let s = (time - wait, ore + r_ore * wait - bp.clay_robot_ore, clay + r_clay * wait, obsidian + r_obs * wait, geodes + r_geo * wait, r_ore, r_clay + 1, r_obs, r_geo);
+                    let s = (
+                        time - wait,
+                        ore + r_ore * wait - bp.clay_robot_ore,
+                        clay + r_clay * wait,
+                        obsidian + r_obs * wait,
+                        geodes + r_geo * wait,
+                        r_ore,
+                        r_clay + 1,
+                        r_obs,
+                        r_geo,
+                    );
                     push_child!(s, format!("Build CLAY (wait {wait} min)"));
                 }
             }
             if r_ore < max_ore_cost {
-                let wait = if ore >= bp.ore_robot_ore { 0 } else { (bp.ore_robot_ore - ore).div_ceil(r_ore) } + 1;
+                let wait = if ore >= bp.ore_robot_ore {
+                    0
+                } else {
+                    (bp.ore_robot_ore - ore).div_ceil(r_ore)
+                } + 1;
                 if wait < time.saturating_sub(2) {
-                    let s = (time - wait, ore + r_ore * wait - bp.ore_robot_ore, clay + r_clay * wait, obsidian + r_obs * wait, geodes + r_geo * wait, r_ore + 1, r_clay, r_obs, r_geo);
+                    let s = (
+                        time - wait,
+                        ore + r_ore * wait - bp.ore_robot_ore,
+                        clay + r_clay * wait,
+                        obsidian + r_obs * wait,
+                        geodes + r_geo * wait,
+                        r_ore + 1,
+                        r_clay,
+                        r_obs,
+                        r_geo,
+                    );
                     push_child!(s, format!("Build ORE (wait {wait} min)"));
                 }
             }
@@ -397,32 +463,53 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
 
         eprintln!();
         eprintln!("=== Blueprint 1: ore=4ore, clay=2ore, obs=3ore+14clay, geo=2ore+7obs ===");
-        eprintln!("Robot caps: ore<={max_ore_cost}, clay<={max_clay_cost}, obs<={max_obsidian_cost}");
+        eprintln!(
+            "Robot caps: ore<={max_ore_cost}, clay<={max_clay_cost}, obs<={max_obsidian_cost}"
+        );
         eprintln!();
         eprintln!("--- WINNING PATH ({best} geodes) ---");
         eprintln!();
-        eprintln!("{:<30} {:>4} {:>5} {:>5} {:>5} {:>5}  {:>9} {:>10} {:>9} {:>9}",
-            "Action", "Time", "Ore", "Clay", "Obs", "Geo", "Ore Bots", "Clay Bots", "Obs Bots", "Geo Bots");
+        eprintln!(
+            "{:<30} {:>4} {:>5} {:>5} {:>5} {:>5}  {:>9} {:>10} {:>9} {:>9}",
+            "Action",
+            "Time",
+            "Ore",
+            "Clay",
+            "Obs",
+            "Geo",
+            "Ore Bots",
+            "Clay Bots",
+            "Obs Bots",
+            "Geo Bots"
+        );
         eprintln!("{}", "-".repeat(120));
 
         for (state, label) in &path {
             let (time, ore, clay, obs, geo, r_ore, r_clay, r_obs, r_geo) = *state;
-            eprintln!("{:<30} {:>4} {:>5} {:>5} {:>5} {:>5}  {:>9} {:>10} {:>9} {:>9}",
-                label, time, ore, clay, obs, geo, r_ore, r_clay, r_obs, r_geo);
+            eprintln!(
+                "{:<30} {:>4} {:>5} {:>5} {:>5} {:>5}  {:>9} {:>10} {:>9} {:>9}",
+                label, time, ore, clay, obs, geo, r_ore, r_clay, r_obs, r_geo
+            );
         }
 
         let (_, _, _, _, geo, _, _, _, r_geo) = path.last().unwrap().0;
-        let final_time = path.last().unwrap().0.0;
+        let final_time = path.last().unwrap().0 .0;
         eprintln!();
-        eprintln!("Final: {geo} produced + {r_geo} bots × {final_time} remaining = {} geodes", geo + r_geo * final_time);
+        eprintln!(
+            "Final: {geo} produced + {r_geo} bots × {final_time} remaining = {} geodes",
+            geo + r_geo * final_time
+        );
         eprintln!();
-        eprintln!("Stats: {states_explored} states explored, {states_pruned} pruned by upper bound");
+        eprintln!(
+            "Stats: {states_explored} states explored, {states_pruned} pruned by upper bound"
+        );
         assert_eq!(best, 9);
     }
 
     /// Finds the winning path for a blueprint, then expands it minute-by-minute as CSV.
     fn trace_minute_by_minute(bp: &Blueprint, time_limit: u32) -> String {
-        let max_ore_cost = bp.ore_robot_ore
+        let max_ore_cost = bp
+            .ore_robot_ore
             .max(bp.clay_robot_ore)
             .max(bp.obsidian_robot_ore)
             .max(bp.geode_robot_ore);
@@ -442,10 +529,17 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
             stack.pop()
         {
             let projected = geodes + r_geo * time;
-            if projected > best { best = projected; best_idx = my_idx; }
-            if time == 0 { continue; }
+            if projected > best {
+                best = projected;
+                best_idx = my_idx;
+            }
+            if time == 0 {
+                continue;
+            }
             let upper = geodes + r_geo * time + time * (time - 1) / 2;
-            if upper <= best { continue; }
+            if upper <= best {
+                continue;
+            }
 
             macro_rules! push_child {
                 ($state:expr, $label:expr) => {{
@@ -455,31 +549,107 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
                 }};
             }
             if r_obs > 0 {
-                let w_ore = if ore >= bp.geode_robot_ore { 0 } else { (bp.geode_robot_ore - ore).div_ceil(r_ore) };
-                let w_obs = if obsidian >= bp.geode_robot_obsidian { 0 } else { (bp.geode_robot_obsidian - obsidian).div_ceil(r_obs) };
+                let w_ore = if ore >= bp.geode_robot_ore {
+                    0
+                } else {
+                    (bp.geode_robot_ore - ore).div_ceil(r_ore)
+                };
+                let w_obs = if obsidian >= bp.geode_robot_obsidian {
+                    0
+                } else {
+                    (bp.geode_robot_obsidian - obsidian).div_ceil(r_obs)
+                };
                 let w = w_ore.max(w_obs) + 1;
                 if w < time {
-                    push_child!((time-w, ore+r_ore*w-bp.geode_robot_ore, clay+r_clay*w, obsidian+r_obs*w-bp.geode_robot_obsidian, geodes+r_geo*w, r_ore, r_clay, r_obs, r_geo+1), format!("Build GEODE"));
+                    push_child!(
+                        (
+                            time - w,
+                            ore + r_ore * w - bp.geode_robot_ore,
+                            clay + r_clay * w,
+                            obsidian + r_obs * w - bp.geode_robot_obsidian,
+                            geodes + r_geo * w,
+                            r_ore,
+                            r_clay,
+                            r_obs,
+                            r_geo + 1
+                        ),
+                        format!("Build GEODE")
+                    );
                 }
             }
             if r_obs < max_obsidian_cost && r_clay > 0 {
-                let w_ore = if ore >= bp.obsidian_robot_ore { 0 } else { (bp.obsidian_robot_ore - ore).div_ceil(r_ore) };
-                let w_clay = if clay >= bp.obsidian_robot_clay { 0 } else { (bp.obsidian_robot_clay - clay).div_ceil(r_clay) };
+                let w_ore = if ore >= bp.obsidian_robot_ore {
+                    0
+                } else {
+                    (bp.obsidian_robot_ore - ore).div_ceil(r_ore)
+                };
+                let w_clay = if clay >= bp.obsidian_robot_clay {
+                    0
+                } else {
+                    (bp.obsidian_robot_clay - clay).div_ceil(r_clay)
+                };
                 let w = w_ore.max(w_clay) + 1;
                 if w < time.saturating_sub(2) {
-                    push_child!((time-w, ore+r_ore*w-bp.obsidian_robot_ore, clay+r_clay*w-bp.obsidian_robot_clay, obsidian+r_obs*w, geodes+r_geo*w, r_ore, r_clay, r_obs+1, r_geo), format!("Build OBS"));
+                    push_child!(
+                        (
+                            time - w,
+                            ore + r_ore * w - bp.obsidian_robot_ore,
+                            clay + r_clay * w - bp.obsidian_robot_clay,
+                            obsidian + r_obs * w,
+                            geodes + r_geo * w,
+                            r_ore,
+                            r_clay,
+                            r_obs + 1,
+                            r_geo
+                        ),
+                        format!("Build OBS")
+                    );
                 }
             }
             if r_clay < max_clay_cost {
-                let w = if ore >= bp.clay_robot_ore { 0 } else { (bp.clay_robot_ore - ore).div_ceil(r_ore) } + 1;
+                let w = if ore >= bp.clay_robot_ore {
+                    0
+                } else {
+                    (bp.clay_robot_ore - ore).div_ceil(r_ore)
+                } + 1;
                 if w < time.saturating_sub(4) {
-                    push_child!((time-w, ore+r_ore*w-bp.clay_robot_ore, clay+r_clay*w, obsidian+r_obs*w, geodes+r_geo*w, r_ore, r_clay+1, r_obs, r_geo), format!("Build CLAY"));
+                    push_child!(
+                        (
+                            time - w,
+                            ore + r_ore * w - bp.clay_robot_ore,
+                            clay + r_clay * w,
+                            obsidian + r_obs * w,
+                            geodes + r_geo * w,
+                            r_ore,
+                            r_clay + 1,
+                            r_obs,
+                            r_geo
+                        ),
+                        format!("Build CLAY")
+                    );
                 }
             }
             if r_ore < max_ore_cost {
-                let w = if ore >= bp.ore_robot_ore { 0 } else { (bp.ore_robot_ore - ore).div_ceil(r_ore) } + 1;
+                let w = if ore >= bp.ore_robot_ore {
+                    0
+                } else {
+                    (bp.ore_robot_ore - ore).div_ceil(r_ore)
+                } + 1;
                 if w < time.saturating_sub(2) {
-                    push_child!((time-w, ore+r_ore*w-bp.ore_robot_ore, clay+r_clay*w, obsidian+r_obs*w, geodes+r_geo*w, r_ore+1, r_clay, r_obs, r_geo), format!("Build ORE"));
+                    push_child!(
+                        (
+                            time - w,
+                            ore + r_ore * w - bp.ore_robot_ore,
+                            clay + r_clay * w,
+                            obsidian + r_obs * w,
+                            geodes + r_geo * w,
+                            r_ore + 1,
+                            r_clay,
+                            r_obs,
+                            r_geo
+                        ),
+                        format!("Build ORE")
+                    );
                 }
             }
         }
@@ -490,14 +660,19 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
         loop {
             let (state, parent, ref label) = history[idx];
             path.push((state, label.clone()));
-            match parent { Some(p) => idx = p, None => break }
+            match parent {
+                Some(p) => idx = p,
+                None => break,
+            }
         }
         path.reverse();
 
         // --- Pass 2: expand to minute-by-minute CSV ---
         // The path gives us snapshots AFTER each build completes.
         // We simulate forward, filling in the waiting minutes between builds.
-        let mut csv = String::from("Minute,Action,Ore,Clay,Obsidian,Geodes,Ore Bots,Clay Bots,Obs Bots,Geo Bots\n");
+        let mut csv = String::from(
+            "Minute,Action,Ore,Clay,Obsidian,Geodes,Ore Bots,Clay Bots,Obs Bots,Geo Bots\n",
+        );
 
         let mut ore = 0u32;
         let mut clay = 0u32;
@@ -514,7 +689,7 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
         // The build completes (robot ready) at the END of minute (time_limit - new_time_left)
         let mut build_at: std::collections::HashMap<u32, String> = std::collections::HashMap::new();
         for i in 1..path.len() {
-            let curr_time = path[i].0.0; // time_left after build
+            let curr_time = path[i].0 .0; // time_left after build
             let build_minute = time_limit - curr_time; // minute when build completes
             build_at.insert(build_minute, path[i].1.clone());
         }
@@ -544,7 +719,11 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
             geodes += r_geo;
 
             // New robot ready (end of minute)
-            let display_action = if action.is_empty() { "Collect".to_string() } else { action.clone() };
+            let display_action = if action.is_empty() {
+                "Collect".to_string()
+            } else {
+                action.clone()
+            };
             match action.as_str() {
                 "Build ORE" => r_ore += 1,
                 "Build CLAY" => r_clay += 1,
@@ -581,11 +760,20 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
         // Trace the first productive blueprint
         let bp = bps.iter().find(|bp| max_geodes(bp, 24) > 0).unwrap();
         eprintln!();
-        eprintln!("=== Minute-by-minute for Blueprint {} ({} geodes) ===", bp.id, max_geodes(bp, 24));
-        eprintln!("Costs: ore={} ore, clay={} ore, obs={} ore + {} clay, geo={} ore + {} obs",
-            bp.ore_robot_ore, bp.clay_robot_ore,
-            bp.obsidian_robot_ore, bp.obsidian_robot_clay,
-            bp.geode_robot_ore, bp.geode_robot_obsidian);
+        eprintln!(
+            "=== Minute-by-minute for Blueprint {} ({} geodes) ===",
+            bp.id,
+            max_geodes(bp, 24)
+        );
+        eprintln!(
+            "Costs: ore={} ore, clay={} ore, obs={} ore + {} clay, geo={} ore + {} obs",
+            bp.ore_robot_ore,
+            bp.clay_robot_ore,
+            bp.obsidian_robot_ore,
+            bp.obsidian_robot_clay,
+            bp.geode_robot_ore,
+            bp.geode_robot_obsidian
+        );
         eprintln!();
         let csv = trace_minute_by_minute(bp, 24);
         eprintln!("{csv}");

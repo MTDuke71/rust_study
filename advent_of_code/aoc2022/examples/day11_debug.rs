@@ -70,7 +70,10 @@ fn main() {
     // Simulate 3 rounds with detailed output
     for round in 1..=3 {
         println!("╭─────────────────────────────────────────────────────────────────╮");
-        println!("│ ROUND {}                                                         │", round);
+        println!(
+            "│ ROUND {}                                                         │",
+            round
+        );
         println!("╰─────────────────────────────────────────────────────────────────╯\n");
 
         for monkey_idx in 0..monkeys.len() {
@@ -90,15 +93,19 @@ fn main() {
 
                 // Apply operation
                 let new_worry_unbounded = monkeys[monkey_idx].operation.apply(worry);
-                println!("      Operation {:?}: {} → {}", 
-                    monkeys[monkey_idx].operation, worry, new_worry_unbounded);
+                println!(
+                    "      Operation {:?}: {} → {}",
+                    monkeys[monkey_idx].operation, worry, new_worry_unbounded
+                );
 
                 // Apply modulo (Part 2 - NO division by 3!)
                 let new_worry = new_worry_unbounded % modulo;
-                
+
                 if new_worry != new_worry_unbounded {
-                    println!("      Apply modulo {}: {} → {} (reduced)", 
-                        modulo, new_worry_unbounded, new_worry);
+                    println!(
+                        "      Apply modulo {}: {} → {} (reduced)",
+                        modulo, new_worry_unbounded, new_worry
+                    );
                 } else {
                     println!("      No reduction needed (already < {})", modulo);
                 }
@@ -106,15 +113,24 @@ fn main() {
                 // Test divisibility
                 let divisor = monkeys[monkey_idx].divisible_by;
                 let divisible = new_worry % divisor == 0;
-                
-                println!("      Test: {} % {} = {} (divisible: {})", 
-                    new_worry, divisor, new_worry % divisor, divisible);
+
+                println!(
+                    "      Test: {} % {} = {} (divisible: {})",
+                    new_worry,
+                    divisor,
+                    new_worry % divisor,
+                    divisible
+                );
 
                 // Demonstrate that modulo preserves divisibility
                 let unbounded_divisible = new_worry_unbounded % divisor == 0;
                 if unbounded_divisible == divisible {
-                    println!("      ✓ Divisibility preserved! ({} % {} = {})",
-                        new_worry_unbounded, divisor, new_worry_unbounded % divisor);
+                    println!(
+                        "      ✓ Divisibility preserved! ({} % {} = {})",
+                        new_worry_unbounded,
+                        divisor,
+                        new_worry_unbounded % divisor
+                    );
                 }
 
                 let target = if divisible {
@@ -134,8 +150,10 @@ fn main() {
         // Show state after round
         println!("  After round {}:", round);
         for monkey in &monkeys {
-            println!("    Monkey {}: items = {:?}, inspections = {}", 
-                monkey.id, monkey.items, monkey.inspection_count);
+            println!(
+                "    Monkey {}: items = {:?}, inspections = {}",
+                monkey.id, monkey.items, monkey.inspection_count
+            );
         }
         println!("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
     }
@@ -146,11 +164,17 @@ fn main() {
     println!("╚══════════════════════════════════════════════════════════════════╝\n");
 
     for monkey in &monkeys {
-        println!("  Monkey {}: {} inspections", monkey.id, monkey.inspection_count);
+        println!(
+            "  Monkey {}: {} inspections",
+            monkey.id, monkey.inspection_count
+        );
     }
 
     println!("\n📊 Key Observations:");
-    println!("   1. Worry levels stay bounded (< {}) due to modulo", modulo);
+    println!(
+        "   1. Worry levels stay bounded (< {}) due to modulo",
+        modulo
+    );
     println!("   2. Divisibility tests are preserved after applying modulo");
     println!("   3. Without modulo, values would grow exponentially and overflow");
     println!("\n💡 Mathematical Principle:");
@@ -161,29 +185,39 @@ fn main() {
     // Demonstrate exponential growth without modulo
     println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
     println!("⚠️  WITHOUT MODULO (exponential growth):\n");
-    
+
     let mut demo_worry = 79u64;
     for round in 1..=10 {
         let old_worry = demo_worry;
-        demo_worry = demo_worry.saturating_mul(19);  // Multiply by 19 (Monkey 0's operation)
-        
+        demo_worry = demo_worry.saturating_mul(19); // Multiply by 19 (Monkey 0's operation)
+
         if demo_worry == u64::MAX {
-            println!("   Round {}: {} → OVERFLOW! (would exceed u64::MAX)", round, old_worry);
+            println!(
+                "   Round {}: {} → OVERFLOW! (would exceed u64::MAX)",
+                round, old_worry
+            );
             break;
         } else {
-            println!("   Round {}: {} → {} (growth: {:.1}×)", 
-                round, old_worry, demo_worry, demo_worry as f64 / old_worry as f64);
+            println!(
+                "   Round {}: {} → {} (growth: {:.1}×)",
+                round,
+                old_worry,
+                demo_worry,
+                demo_worry as f64 / old_worry as f64
+            );
         }
     }
 
     println!("\n✅ WITH MODULO (bounded growth):\n");
-    
+
     let mut demo_worry = 79u64;
     for round in 1..=10 {
         let old_worry = demo_worry;
         demo_worry = (demo_worry * 19) % modulo;
-        println!("   Round {}: {} → {} (stays < {})", 
-            round, old_worry, demo_worry, modulo);
+        println!(
+            "   Round {}: {} → {} (stays < {})",
+            round, old_worry, demo_worry, modulo
+        );
     }
 
     println!("\n🎯 Result: Modulo keeps values manageable for 10,000 rounds!\n");

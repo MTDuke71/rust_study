@@ -44,9 +44,18 @@ fn main() {
 
     println!();
     println!("Speedup factors:");
-    println!("  Perimeter vs Row scan:  {:.2}×", time1.as_secs_f64() / time2.as_secs_f64());
-    println!("  Lines vs Row scan:      {:.2}×", time1.as_secs_f64() / time3.as_secs_f64());
-    println!("  Lines vs Perimeter:     {:.2}×", time2.as_secs_f64() / time3.as_secs_f64());
+    println!(
+        "  Perimeter vs Row scan:  {:.2}×",
+        time1.as_secs_f64() / time2.as_secs_f64()
+    );
+    println!(
+        "  Lines vs Row scan:      {:.2}×",
+        time1.as_secs_f64() / time3.as_secs_f64()
+    );
+    println!(
+        "  Lines vs Perimeter:     {:.2}×",
+        time2.as_secs_f64() / time3.as_secs_f64()
+    );
     println!();
 
     // Now with actual input
@@ -81,11 +90,23 @@ fn main() {
 
     println!();
     println!("Speedup factors:");
-    println!("  Perimeter vs Row scan:  {:.2}× FASTER", time1.as_secs_f64() / time2.as_secs_f64());
-    println!("  Lines vs Row scan:      {:.2}× FASTER", time1.as_secs_f64() / time3.as_secs_f64());
+    println!(
+        "  Perimeter vs Row scan:  {:.2}× FASTER",
+        time1.as_secs_f64() / time2.as_secs_f64()
+    );
+    println!(
+        "  Lines vs Row scan:      {:.2}× FASTER",
+        time1.as_secs_f64() / time3.as_secs_f64()
+    );
     if time2.as_secs_f64() > time3.as_secs_f64() {
-        println!("  Lines vs Perimeter:     {:.2}× FASTER", time2.as_secs_f64() / time3.as_secs_f64());
+        println!(
+            "  Lines vs Perimeter:     {:.2}× FASTER",
+            time2.as_secs_f64() / time3.as_secs_f64()
+        );
     } else {
-        println!("  Perimeter vs Lines:     {:.2}× FASTER", time3.as_secs_f64() / time2.as_secs_f64());
+        println!(
+            "  Perimeter vs Lines:     {:.2}× FASTER",
+            time3.as_secs_f64() / time2.as_secs_f64()
+        );
     }
 }

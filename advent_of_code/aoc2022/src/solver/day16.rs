@@ -18,9 +18,9 @@ struct Valve {
 
 #[derive(Debug, Clone)]
 struct ParsedData {
-    important: Vec<usize>,           // indices of non-zero flow valves
-    distances: Vec<Vec<u32>>,        // distances[i][j] = shortest path between key_nodes[i] and key_nodes[j]
-    flows: Vec<u32>,                 // flow rates of important valves (parallel to `important`)
+    important: Vec<usize>,    // indices of non-zero flow valves
+    distances: Vec<Vec<u32>>, // distances[i][j] = shortest path between key_nodes[i] and key_nodes[j]
+    flows: Vec<u32>,          // flow rates of important valves (parallel to `important`)
 }
 
 // ============================================================================
@@ -47,12 +47,7 @@ fn parse_input(input: &str) -> ParsedData {
         let parts: Vec<&str> = line.splitn(2, ';').collect();
 
         // Parse flow rate from "Valve XX has flow rate=N"
-        let flow_rate: u32 = parts[0]
-            .split('=')
-            .nth(1)
-            .unwrap()
-            .parse()
-            .unwrap();
+        let flow_rate: u32 = parts[0].split('=').nth(1).unwrap().parse().unwrap();
 
         // Parse tunnel list from "; tunnels lead to valve(s) AA, BB, CC"
         let tunnel_str = if parts[1].contains("valves") {
@@ -173,7 +168,15 @@ fn dfs(
         let remaining = time - cost;
         let new_pressure = pressure + data.flows[i] * remaining;
 
-        dfs(data, i + 1, opened | (1 << i), remaining, new_pressure, n, best);
+        dfs(
+            data,
+            i + 1,
+            opened | (1 << i),
+            remaining,
+            new_pressure,
+            n,
+            best,
+        );
     }
 }
 
@@ -236,7 +239,15 @@ fn dfs_collect(
         let remaining = time - cost;
         let new_pressure = pressure + data.flows[i] * remaining;
 
-        dfs_collect(data, i + 1, opened | (1 << i), remaining, new_pressure, n, best_for_mask);
+        dfs_collect(
+            data,
+            i + 1,
+            opened | (1 << i),
+            remaining,
+            new_pressure,
+            n,
+            best_for_mask,
+        );
     }
 }
 
@@ -246,10 +257,7 @@ fn dfs_collect(
 
 pub fn solve(input: &str) -> (u32, u32) {
     let data = parse_input(input);
-    (
-        solve_part1_with_data(&data),
-        solve_part2_with_data(&data),
-    )
+    (solve_part1_with_data(&data), solve_part2_with_data(&data))
 }
 
 pub fn solve_part1(input: &str) -> u32 {

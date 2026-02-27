@@ -38,7 +38,7 @@ fn main() {
         let neg1 = cy + cx + r;
         let neg2 = cy + cx - r;
 
-        println!("Sensor {}: ({}, {}) r={}", i, cx, cy, r-1);
+        println!("Sensor {}: ({}, {}) r={}", i, cx, cy, r - 1);
         println!("  Pos lines: y-x={}, y-x={}", pos1, pos2);
         println!("  Neg lines: y+x={}, y+x={}", neg1, neg2);
 
@@ -56,14 +56,14 @@ fn main() {
     let mut pos_pairs = Vec::new();
     for &c in &pos_lines {
         if pos_lines.contains(&(c + 2)) {
-            pos_pairs.push((c, c+2));
+            pos_pairs.push((c, c + 2));
         }
     }
 
     let mut neg_pairs = Vec::new();
     for &c in &neg_lines {
         if neg_lines.contains(&(c + 2)) {
-            neg_pairs.push((c, c+2));
+            neg_pairs.push((c, c + 2));
         }
     }
 
@@ -75,20 +75,26 @@ fn main() {
     let x = 14;
     let y = 11;
     println!();
-    println!("Expected point ({}, {}): y-x={}, y+x={}", x, y, y-x, y+x);
+    println!(
+        "Expected point ({}, {}): y-x={}, y+x={}",
+        x,
+        y,
+        y - x,
+        y + x
+    );
 
     // See which lines pass through this point
     println!("Lines through expected point:");
-    if pos_lines.contains(&(y-x)) {
-        println!("  y-x={} ✓", y-x);
+    if pos_lines.contains(&(y - x)) {
+        println!("  y-x={} ✓", y - x);
     }
-    if pos_lines.contains(&(y-x-1)) && pos_lines.contains(&(y-x+1)) {
-        println!("  Between y-x={} and y-x={}", y-x-1, y-x+1);
+    if pos_lines.contains(&(y - x - 1)) && pos_lines.contains(&(y - x + 1)) {
+        println!("  Between y-x={} and y-x={}", y - x - 1, y - x + 1);
     }
-    if neg_lines.contains(&(y+x)) {
-        println!("  y+x={} ✓", y+x);
+    if neg_lines.contains(&(y + x)) {
+        println!("  y+x={} ✓", y + x);
     }
-    if neg_lines.contains(&(y+x-1)) && neg_lines.contains(&(y+x+1)) {
-        println!("  Between y+x={} and y+x={}", y+x-1, y+x+1);
+    if neg_lines.contains(&(y + x - 1)) && neg_lines.contains(&(y + x + 1)) {
+        println!("  Between y+x={} and y+x={}", y + x - 1, y + x + 1);
     }
 }

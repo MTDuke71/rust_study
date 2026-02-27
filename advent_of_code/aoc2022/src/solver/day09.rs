@@ -10,7 +10,7 @@ fn parse_moves(input: &str) -> Vec<(Direction, i32)> {
             let mut parts = line.split_whitespace();
             let dir_char = parts.next()?;
             let count: i32 = parts.next()?.parse().ok()?;
-            
+
             let direction = match dir_char {
                 "U" => Direction::North,
                 "D" => Direction::South,
@@ -18,7 +18,7 @@ fn parse_moves(input: &str) -> Vec<(Direction, i32)> {
                 "R" => Direction::East,
                 _ => return None,
             };
-            
+
             Some((direction, count))
         })
         .collect()
@@ -35,37 +35,37 @@ impl Pos {
     fn new(x: i32, y: i32) -> Self {
         Pos { x, y }
     }
-    
+
     fn origin() -> Self {
         Pos::new(0, 0)
     }
-    
+
     /// Move one step in the given direction
     fn step(&mut self, dir: Direction) {
         match dir {
-            Direction::North => self.y -= 1,      // Up
-            Direction::South => self.y += 1,      // Down
-            Direction::East => self.x += 1,       // Right
-            Direction::West => self.x -= 1,       // Left
-            _ => {} // Diagonals not used in head movement
+            Direction::North => self.y -= 1, // Up
+            Direction::South => self.y += 1, // Down
+            Direction::East => self.x += 1,  // Right
+            Direction::West => self.x -= 1,  // Left
+            _ => {}                          // Diagonals not used in head movement
         }
     }
-    
+
     /// Check if two positions are touching (adjacent, diagonal, or overlapping)
     fn is_touching(&self, other: &Pos) -> bool {
         (self.x - other.x).abs() <= 1 && (self.y - other.y).abs() <= 1
     }
-    
+
     /// Update tail position to follow head
     fn follow(&mut self, head: &Pos) {
         // Already touching? No movement needed
         if self.is_touching(head) {
             return;
         }
-        
+
         let dx = head.x - self.x;
         let dy = head.y - self.y;
-        
+
         // Move tail one step toward head
         // Use signum to get direction: -1, 0, or 1
         self.x += dx.signum();
@@ -78,24 +78,24 @@ fn solve_part1_with_moves(moves: &[(Direction, i32)]) -> usize {
     let mut head = Pos::origin();
     let mut tail = Pos::origin();
     let mut visited = FxHashSet::default();
-    
+
     // Track starting position
     visited.insert(tail);
-    
+
     // Simulate rope movements
     for &(direction, count) in moves {
         for _ in 0..count {
             // Move head one step
             head.step(direction);
-            
+
             // Update tail to follow
             tail.follow(&head);
-            
+
             // Track tail position
             visited.insert(tail);
         }
     }
-    
+
     visited.len()
 }
 
@@ -109,27 +109,27 @@ fn solve_part2_with_moves(moves: &[(Direction, i32)]) -> usize {
     // 10 knots: head (index 0) + knots 1-9
     let mut knots = [Pos::origin(); 10];
     let mut visited = FxHashSet::default();
-    
+
     // Track starting position of tail (knot 9)
     visited.insert(knots[9]);
-    
+
     // Simulate rope movements
     for &(direction, count) in moves {
         for _ in 0..count {
             // Move head one step
             knots[0].step(direction);
-            
+
             // Each subsequent knot follows the one in front
             for i in 1..10 {
                 let head_pos = knots[i - 1];
                 knots[i].follow(&head_pos);
             }
-            
+
             // Track tail position (knot 9)
             visited.insert(knots[9]);
         }
     }
-    
+
     visited.len()
 }
 
@@ -141,7 +141,10 @@ pub fn solve_part2(input: &str) -> usize {
 pub fn solve(input: &str) -> (usize, usize) {
     // Parse once, use for both parts
     let moves = parse_moves(input);
-    (solve_part1_with_moves(&moves), solve_part2_with_moves(&moves))
+    (
+        solve_part1_with_moves(&moves),
+        solve_part2_with_moves(&moves),
+    )
 }
 
 #[cfg(test)]
@@ -184,7 +187,7 @@ R 2";
         let head = Pos::new(2, 0); // Two steps right
         tail.follow(&head);
         assert_eq!(tail, Pos::new(1, 0)); // Tail moved one step right
-        
+
         let mut tail = Pos::origin();
         let head = Pos::new(1, 2); // Diagonal: right 1, down 2
         tail.follow(&head);

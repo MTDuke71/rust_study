@@ -118,13 +118,13 @@ pub fn solve_part2_with_data(data: &ParsedData) -> usize {
     // Divider packets
     let divider1: Value = serde_json::from_str("[[2]]").unwrap();
     let divider2: Value = serde_json::from_str("[[6]]").unwrap();
-    
+
     // Start with divider positions (1-based):
     // [[2]] starts at position 1
     // [[6]] starts at position 2 (right after [[2]])
     let mut divider1_idx = 1;
     let mut divider2_idx = 2;
-    
+
     // For each packet, count if it's less than dividers
     // This shifts the divider positions without actually sorting
     for pair in &data.pairs {
@@ -140,7 +140,7 @@ pub fn solve_part2_with_data(data: &ParsedData) -> usize {
             // else: packet >= [[6]], no shifts needed
         }
     }
-    
+
     divider1_idx * divider2_idx
 }
 
@@ -203,7 +203,7 @@ mod tests {
     fn test_parse() {
         let data = parse_input(EXAMPLE);
         assert_eq!(data.pairs.len(), 8);
-        
+
         // Check first pair
         let first_left = data.pairs[0].left.as_array().unwrap();
         assert_eq!(first_left.len(), 5);

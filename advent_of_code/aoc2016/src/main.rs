@@ -142,7 +142,10 @@ fn run_all_days(bench_iters: Option<usize>) -> Result<()> {
                         days_run += 1;
                         println!(
                             "Day {:2} | Part 1: {:<20} | Part 2: {:<20} | {:>10}",
-                            day, part1, part2, format_duration(elapsed)
+                            day,
+                            part1,
+                            part2,
+                            format_duration(elapsed)
                         );
                     }
                 }
@@ -153,11 +156,7 @@ fn run_all_days(bench_iters: Option<usize>) -> Result<()> {
 
     if days_run > 0 {
         println!("{}", "-".repeat(80));
-        println!(
-            "{:>58} Total: {:>10}",
-            "",
-            format_duration(total)
-        );
+        println!("{:>58} Total: {:>10}", "", format_duration(total));
     }
 
     Ok(())

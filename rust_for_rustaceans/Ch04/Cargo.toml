@@ -48,5 +48,5 @@ path = "examples/thiserror_anyhow.rs"
 
 # Comprehensive review
 [[example]]
-name = "review"
+name = "ch04_review"
 path = "examples/review.rs"

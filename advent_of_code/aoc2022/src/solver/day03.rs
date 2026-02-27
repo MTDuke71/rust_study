@@ -42,7 +42,7 @@ fn item_priority(item: char) -> u32 {
 fn find_common_item(first: &str, second: &str) -> Option<char> {
     let first_set: HashSet<char> = first.chars().collect();
     let second_set: HashSet<char> = second.chars().collect();
-    
+
     first_set.intersection(&second_set).next().copied()
 }
 
@@ -51,7 +51,7 @@ fn find_badge_item(first: &str, second: &str, third: &str) -> Option<char> {
     let first_set: HashSet<char> = first.chars().collect();
     let second_set: HashSet<char> = second.chars().collect();
     let third_set: HashSet<char> = third.chars().collect();
-    
+
     // Find intersection of all three sets
     let first_second: HashSet<char> = first_set.intersection(&second_set).copied().collect();
     first_second.intersection(&third_set).next().copied()
@@ -70,17 +70,17 @@ fn find_badge_item(first: &str, second: &str, third: &str) -> Option<char> {
 
 /// Convert a string of items to a bitset (one bit per ASCII character)
 /// Each character sets its corresponding bit in a u128
-/// 
+///
 /// # Why u128 instead of u64?
 /// ASCII values: 'A'=65, 'Z'=90, 'a'=97, 'z'=122
 /// Using u128 lets us use raw ASCII values as bit positions directly:
 ///   'A' → bit 65, 'z' → bit 122 (requires 123 bits)
-/// 
+///
 /// Alternative with u64 would require remapping:
 ///   'A'-'Z' (65-90) → bits 0-25
 ///   'a'-'z' (97-122) → bits 26-51
 /// This would save 8 bytes but add branching/arithmetic overhead
-/// 
+///
 /// # Example (chess engine analogy)
 /// Chess bitboard: u64 where bit N = piece at square N (squares 0-63)
 /// Our approach:    u128 where bit N = character with ASCII value N (0-127)
@@ -90,7 +90,7 @@ fn items_to_bitset(s: &str) -> u128 {
 }
 
 /// Find the common item between two compartments using bitset intersection
-/// 
+///
 /// Equivalent to chess engine: "Which squares have both white pieces AND attacked by opponent?"
 /// Answer: `white_pieces & opponent_attacks` (single CPU instruction)
 #[inline]
@@ -108,10 +108,8 @@ fn find_common_item_bitset(first: &str, second: &str) -> Option<char> {
 /// Find common item across three rucksacks using bitset intersection
 #[inline]
 fn find_badge_item_bitset(first: &str, second: &str, third: &str) -> Option<char> {
-    let intersection = items_to_bitset(first) 
-        & items_to_bitset(second) 
-        & items_to_bitset(third);
-    
+    let intersection = items_to_bitset(first) & items_to_bitset(second) & items_to_bitset(third);
+
     if intersection == 0 {
         None
     } else {
@@ -143,7 +141,7 @@ fn solve_part1_impl(data: &Rucksacks) -> u32 {
         .filter_map(|rucksack| {
             let mid = rucksack.len() / 2;
             let (first, second) = rucksack.split_at(mid);
-            
+
             find_common_item(first, second).map(item_priority)
         })
         .sum()
@@ -156,7 +154,7 @@ fn solve_part1_bitset(data: &Rucksacks) -> u32 {
         .filter_map(|rucksack| {
             let mid = rucksack.len() / 2;
             let (first, second) = rucksack.split_at(mid);
-            
+
             find_common_item_bitset(first, second).map(item_priority)
         })
         .sum()
@@ -238,7 +236,10 @@ CrZsJsPPZsGzwwsLwLmpwMDw";
     #[test]
     fn test_find_common_item() {
         assert_eq!(find_common_item("vJrwpWtwJgWr", "hcsFMMfFFhFp"), Some('p'));
-        assert_eq!(find_common_item("jqHRNqRjqzjGDLGL", "rsFMfFZSrLrFZsSL"), Some('L'));
+        assert_eq!(
+            find_common_item("jqHRNqRjqzjGDLGL", "rsFMfFZSrLrFZsSL"),
+            Some('L')
+        );
         assert_eq!(find_common_item("PmmdzqPrV", "vPwwTWBwg"), Some('P'));
     }
 
@@ -295,8 +296,14 @@ CrZsJsPPZsGzwwsLwLmpwMDw";
 
     #[test]
     fn test_bitset_find_common_item() {
-        assert_eq!(find_common_item_bitset("vJrwpWtwJgWr", "hcsFMMfFFhFp"), Some('p'));
-        assert_eq!(find_common_item_bitset("jqHRNqRjqzjGDLGL", "rsFMfFZSrLrFZsSL"), Some('L'));
+        assert_eq!(
+            find_common_item_bitset("vJrwpWtwJgWr", "hcsFMMfFFhFp"),
+            Some('p')
+        );
+        assert_eq!(
+            find_common_item_bitset("jqHRNqRjqzjGDLGL", "rsFMfFZSrLrFZsSL"),
+            Some('L')
+        );
         assert_eq!(find_common_item_bitset("PmmdzqPrV", "vPwwTWBwg"), Some('P'));
     }
 
@@ -340,7 +347,7 @@ CrZsJsPPZsGzwwsLwLmpwMDw";
     fn test_bitset_matches_hashset() {
         // Verify bitset and hashset implementations produce identical results
         let data = parse_input(EXAMPLE);
-        
+
         let hashset_p1 = solve_part1_impl(&data);
         let bitset_p1 = solve_part1_bitset(&data);
         assert_eq!(hashset_p1, bitset_p1, "Part 1 results should match");

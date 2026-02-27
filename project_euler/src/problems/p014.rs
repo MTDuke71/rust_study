@@ -78,8 +78,11 @@ pub fn longest_collatz_under(limit: u64) -> u64 {
             } else {
                 // 3n+1 is always even, so combine: n → 3n+1 → (3n+1)/2
                 chain.push((n, 2));
-                #[allow(clippy::manual_div_ceil)] // Collatz formula: 3n+1 then /2, not ceil division
-                    { n = (3 * n + 1) / 2; }
+                #[allow(clippy::manual_div_ceil)]
+                // Collatz formula: 3n+1 then /2, not ceil division
+                {
+                    n = (3 * n + 1) / 2;
+                }
             }
         }
         // Now cache[n] is known - backfill using each entry's step cost
@@ -164,8 +167,11 @@ mod tests {
                     n /= 2;
                 } else {
                     chain.push((n, 2));
-                    #[allow(clippy::manual_div_ceil)] // Collatz formula: 3n+1 then /2, not ceil division
-                    { n = (3 * n + 1) / 2; }
+                    #[allow(clippy::manual_div_ceil)]
+                    // Collatz formula: 3n+1 then /2, not ceil division
+                    {
+                        n = (3 * n + 1) / 2;
+                    }
                 }
             }
             steps_walked += chain.iter().map(|&(_, s)| s as u64).sum::<u64>();
@@ -185,7 +191,10 @@ mod tests {
             .map(|n| collatz_chain_length(n) - 1) // -1 because length includes start
             .sum();
 
-        println!("\n=== Cache Effectiveness Analysis (limit = {}) ===\n", limit);
+        println!(
+            "\n=== Cache Effectiveness Analysis (limit = {}) ===\n",
+            limit
+        );
         println!("Starting numbers (2..{}):     {}", limit, limit - 2);
         println!("  Evens skipped (< half):     {}", evens_skipped);
         println!("  Already cached (backfill):  {}", already_cached);

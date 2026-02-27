@@ -112,18 +112,18 @@ fn solve_for_humn(monkeys: &ParsedData<'_>, name: &str, target: i64) -> i64 {
             // If humn is on the right: known op right = target
             let new_target = if humn_in_left {
                 match op {
-                    '+' => target - known_val,        // left + k = t  → left = t - k
-                    '-' => target + known_val,        // left - k = t  → left = t + k
-                    '*' => target / known_val,        // left * k = t  → left = t / k
-                    '/' => target * known_val,        // left / k = t  → left = t * k
+                    '+' => target - known_val, // left + k = t  → left = t - k
+                    '-' => target + known_val, // left - k = t  → left = t + k
+                    '*' => target / known_val, // left * k = t  → left = t / k
+                    '/' => target * known_val, // left / k = t  → left = t * k
                     _ => unreachable!(),
                 }
             } else {
                 match op {
-                    '+' => target - known_val,        // k + right = t → right = t - k
-                    '-' => known_val - target,        // k - right = t → right = k - t
-                    '*' => target / known_val,        // k * right = t → right = t / k
-                    '/' => known_val / target,        // k / right = t → right = k / t
+                    '+' => target - known_val, // k + right = t → right = t - k
+                    '-' => known_val - target, // k - right = t → right = k - t
+                    '*' => target / known_val, // k * right = t → right = t / k
+                    '/' => known_val / target, // k / right = t → right = k / t
                     _ => unreachable!(),
                 }
             };
@@ -190,10 +190,7 @@ hmdt: 32";
         let monkeys = parse_input(EXAMPLE);
         assert_eq!(monkeys.len(), 15);
         assert!(matches!(monkeys["humn"], Monkey::Num(5)));
-        assert!(matches!(
-            monkeys["root"],
-            Monkey::Op { op: '+', .. }
-        ));
+        assert!(matches!(monkeys["root"], Monkey::Op { op: '+', .. }));
     }
 
     #[test]

@@ -203,7 +203,10 @@ $ ls
         // Second traversal: fresh root (300)
         assert!(sizes.contains(&200), "dir a from first traversal");
         assert!(sizes.contains(&300), "root from first traversal");
-        assert!(sizes.contains(&300), "root from second traversal (same value)");
+        assert!(
+            sizes.contains(&300),
+            "root from second traversal (same value)"
+        );
         // Note: we get two roots with same size (300), but that's fine
         assert!(sizes.len() >= 2, "at least a + root from first traversal");
     }

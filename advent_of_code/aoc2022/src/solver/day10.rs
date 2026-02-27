@@ -44,26 +44,26 @@ fn solve_part1_with_instructions(instructions: &[Instruction]) -> i32 {
     let mut x = 1i32; // Register X starts at 1
     let mut cycle = 0;
     let mut signal_sum = 0;
-    
+
     for instruction in instructions {
         let cycles_to_execute = instruction.cycles();
-        
+
         for _ in 0..cycles_to_execute {
             cycle += 1;
-            
+
             // Check if we're at a target cycle (20, 60, 100, 140, 180, 220)
             if cycle == 20 || (cycle > 20 && (cycle - 20) % 40 == 0) {
                 let signal_strength = cycle * x;
                 signal_sum += signal_strength;
             }
         }
-        
+
         // After the instruction completes, update X if it's addx
         if let Instruction::Addx(value) = instruction {
             x += value;
         }
     }
-    
+
     signal_sum
 }
 
@@ -77,14 +77,14 @@ fn solve_part2_with_instructions(instructions: &[Instruction]) -> String {
     let mut x = 1i32; // Sprite center position
     let mut cycle = 0;
     let mut crt = String::new();
-    
+
     for instruction in instructions {
         let cycles_to_execute = instruction.cycles();
-        
+
         for _ in 0..cycles_to_execute {
             // Calculate CRT column position (0-39 within current row)
             let crt_col = cycle % 40;
-            
+
             // Sprite is 3 pixels wide, centered on X: [X-1, X, X+1]
             // Draw '#' if CRT position overlaps with sprite
             if (x - 1..=x + 1).contains(&crt_col) {
@@ -92,21 +92,21 @@ fn solve_part2_with_instructions(instructions: &[Instruction]) -> String {
             } else {
                 crt.push('.');
             }
-            
+
             cycle += 1;
-            
+
             // Add newline after every 40 pixels
             if cycle % 40 == 0 {
                 crt.push('\n');
             }
         }
-        
+
         // After instruction completes, update X
         if let Instruction::Addx(value) = instruction {
             x += value;
         }
     }
-    
+
     crt.trim_end().to_string()
 }
 

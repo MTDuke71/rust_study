@@ -21,7 +21,11 @@ struct Valley {
 }
 
 fn gcd(a: usize, b: usize) -> usize {
-    if b == 0 { a } else { gcd(b, a % b) }
+    if b == 0 {
+        a
+    } else {
+        gcd(b, a % b)
+    }
 }
 
 fn lcm(a: usize, b: usize) -> usize {
@@ -134,12 +138,7 @@ fn bfs(valley: &Valley, start: Pos, goal: Pos, start_time: usize) -> usize {
 /// BFS that also reconstructs the path. Returns (arrival_time, path).
 /// Path is a Vec of positions from start to goal (inclusive).
 #[cfg(test)]
-fn bfs_with_path(
-    valley: &Valley,
-    start: Pos,
-    goal: Pos,
-    start_time: usize,
-) -> (usize, Vec<Pos>) {
+fn bfs_with_path(valley: &Valley, start: Pos, goal: Pos, start_time: usize) -> (usize, Vec<Pos>) {
     use rustc_hash::FxHashMap;
 
     let mut visited = FxHashSet::default();
@@ -181,8 +180,7 @@ fn bfs_with_path(
             }
 
             let is_start_or_goal = (nr, nc) == valley.start || (nr, nc) == valley.goal;
-            let is_inner =
-                nr >= 1 && nr < valley.rows - 1 && nc >= 1 && nc < valley.cols - 1;
+            let is_inner = nr >= 1 && nr < valley.rows - 1 && nc >= 1 && nc < valley.cols - 1;
 
             if !is_start_or_goal && !is_inner {
                 continue;
@@ -270,7 +268,11 @@ mod tests {
             (p.0 as isize - goal.0 as isize).abs() + (p.1 as isize - goal.1 as isize).abs()
         };
 
-        let mut stats = PathStats { productive: 0, waits: 0, backtracks: 0 };
+        let mut stats = PathStats {
+            productive: 0,
+            waits: 0,
+            backtracks: 0,
+        };
 
         for window in path.windows(2) {
             let from = window[0];
@@ -291,11 +293,22 @@ mod tests {
     fn print_leg(label: &str, steps: usize, s: &PathStats, min_dist: isize) {
         let pct = |n: usize| n as f64 / steps as f64 * 100.0;
         println!("{}: {} steps", label, steps);
-        println!("  Productive: {:>3} ({:.0}%)", s.productive, pct(s.productive));
+        println!(
+            "  Productive: {:>3} ({:.0}%)",
+            s.productive,
+            pct(s.productive)
+        );
         println!("  Wait:       {:>3} ({:.0}%)", s.waits, pct(s.waits));
-        println!("  Backtrack:  {:>3} ({:.0}%)", s.backtracks, pct(s.backtracks));
-        println!("  Overhead: {} extra steps ({:.1}x minimum)\n",
-            steps as isize - min_dist, steps as f64 / min_dist as f64);
+        println!(
+            "  Backtrack:  {:>3} ({:.0}%)",
+            s.backtracks,
+            pct(s.backtracks)
+        );
+        println!(
+            "  Overhead: {} extra steps ({:.1}x minimum)\n",
+            steps as isize - min_dist,
+            steps as f64 / min_dist as f64
+        );
     }
 
     #[test]
@@ -304,7 +317,10 @@ mod tests {
         let min_dist = (valley.goal.0 as isize - valley.start.0 as isize).abs()
             + (valley.goal.1 as isize - valley.start.1 as isize).abs();
 
-        println!("\n=== PATH ANALYSIS: Example Input (Manhattan distance: {}) ===\n", min_dist);
+        println!(
+            "\n=== PATH ANALYSIS: Example Input (Manhattan distance: {}) ===\n",
+            min_dist
+        );
 
         let (t1, path1) = bfs_with_path(&valley, valley.start, valley.goal, 0);
         let s1 = analyze_path(&path1, valley.goal);
@@ -328,7 +344,10 @@ mod tests {
         println!("  Wait:       {:>3} ({:.0}%)", tw, pct(tw));
         println!("  Backtrack:  {:>3} ({:.0}%)", tb, pct(tb));
         println!("  Minimum possible: {} (3 × {})", min_dist * 3, min_dist);
-        println!("  Overall efficiency: {:.0}%\n", (min_dist * 3) as f64 / total as f64 * 100.0);
+        println!(
+            "  Overall efficiency: {:.0}%\n",
+            (min_dist * 3) as f64 / total as f64 * 100.0
+        );
     }
 
     #[test]
@@ -339,8 +358,10 @@ mod tests {
         let min_dist = (valley.goal.0 as isize - valley.start.0 as isize).abs()
             + (valley.goal.1 as isize - valley.start.1 as isize).abs();
 
-        println!("\n=== PATH ANALYSIS: Actual Input ({}×{}, Manhattan distance: {}) ===\n",
-            valley.rows, valley.cols, min_dist);
+        println!(
+            "\n=== PATH ANALYSIS: Actual Input ({}×{}, Manhattan distance: {}) ===\n",
+            valley.rows, valley.cols, min_dist
+        );
 
         let (t1, path1) = bfs_with_path(&valley, valley.start, valley.goal, 0);
         let s1 = analyze_path(&path1, valley.goal);
@@ -364,7 +385,10 @@ mod tests {
         println!("  Wait:       {:>3} ({:.0}%)", tw, pct(tw));
         println!("  Backtrack:  {:>3} ({:.0}%)", tb, pct(tb));
         println!("  Minimum possible: {} (3 × {})", min_dist * 3, min_dist);
-        println!("  Overall efficiency: {:.0}%\n", (min_dist * 3) as f64 / total as f64 * 100.0);
+        println!(
+            "  Overall efficiency: {:.0}%\n",
+            (min_dist * 3) as f64 / total as f64 * 100.0
+        );
 
         assert_eq!(t1, 242);
         assert_eq!(t3, 720);

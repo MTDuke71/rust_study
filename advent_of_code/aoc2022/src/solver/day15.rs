@@ -243,10 +243,7 @@ fn find_distress_beacon_perimeter(sensors: &[Sensor], max_coord: i32) -> i64 {
                 }
 
                 // Check if this point is outside ALL sensor ranges
-                if sensors
-                    .iter()
-                    .all(|s| s.distance_to(x, y) > s.radius())
-                {
+                if sensors.iter().all(|s| s.distance_to(x, y) > s.radius()) {
                     return x as i64 * 4_000_000 + y as i64;
                 }
             }
@@ -323,10 +320,7 @@ fn find_distress_beacon_lines(sensors: &[Sensor], max_coord: i32) -> i64 {
             }
 
             // Verify this point is outside ALL sensor ranges
-            if sensors
-                .iter()
-                .all(|s| s.distance_to(x, y) > s.radius())
-            {
+            if sensors.iter().all(|s| s.distance_to(x, y) > s.radius()) {
                 return x as i64 * 4_000_000 + y as i64;
             }
         }

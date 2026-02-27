@@ -491,6 +491,24 @@ Then pipeline will use `cargo +nightly udeps`.
 
 **Solution**: Fix compilation first, then retry coverage.
 
+### "cargo fmt" fails with "filename or extension is too long" (OS error 206)
+
+**Cause**: Windows path length limitation when formatting the entire 80+ crate workspace.
+
+**Solution**: Run `cargo fmt` from WSL instead. Open a VS Code terminal (`` Ctrl+` ``), then:
+
+```bash
+wsl
+cd /mnt/d/repos/rust_study
+cargo fmt --all
+```
+
+WSL bypasses the Windows path length limit. Alternatively, format individual packages:
+
+```powershell
+cargo fmt -p mission8 -p aoc2022
+```
+
 ### Slow workspace coverage
 
 **Solution**: Use `-MissionsOnly` to focus on mission packages:

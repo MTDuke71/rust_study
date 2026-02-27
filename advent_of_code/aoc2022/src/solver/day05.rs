@@ -6,7 +6,7 @@
 //!
 //! **Key Insights**:
 //! - Part 1: Crane moves crates one at a time (LIFO - stack behavior)
-//! - Stacks are represented as Vec<char> (top is end of vec)
+//! - Stacks are represented as `Vec<char>` (top is end of vec)
 
 // ============================================================================
 // Data Structures
@@ -16,8 +16,8 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Move {
     pub count: usize,
-    pub from: usize,  // 1-indexed
-    pub to: usize,    // 1-indexed
+    pub from: usize, // 1-indexed
+    pub to: usize,   // 1-indexed
 }
 
 /// The initial configuration and move instructions
@@ -33,7 +33,11 @@ pub struct CargoArrangement {
 
 pub fn parse_input(input: &str) -> CargoArrangement {
     let parts: Vec<&str> = input.split("\n\n").collect();
-    assert_eq!(parts.len(), 2, "Input must have stacks and moves separated by blank line");
+    assert_eq!(
+        parts.len(),
+        2,
+        "Input must have stacks and moves separated by blank line"
+    );
 
     let stacks = parse_stacks(parts[0]);
     let moves = parse_moves(parts[1]);
@@ -64,7 +68,7 @@ fn parse_stacks(stack_text: &str) -> Vec<Vec<char>> {
             if crate_col >= line.len() {
                 break;
             }
-            
+
             if let Some(c) = line.chars().nth(crate_col) {
                 if c.is_alphabetic() {
                     stacks[stack_idx].push(c);
@@ -112,14 +116,11 @@ fn solve_part1_impl(data: &CargoArrangement) -> String {
     }
 
     // Collect top crates
-    stacks
-        .iter()
-        .filter_map(|stack| stack.last())
-        .collect()
+    stacks.iter().filter_map(|stack| stack.last()).collect()
 }
 
 // ============================================================================
-// Part 2 Logic  
+// Part 2 Logic
 // ============================================================================
 
 fn solve_part2_impl(data: &CargoArrangement) -> String {
@@ -129,23 +130,20 @@ fn solve_part2_impl(data: &CargoArrangement) -> String {
     for movement in &data.moves {
         let from_idx = movement.from - 1;
         let to_idx = movement.to - 1;
-        
+
         // Calculate where to split the source stack
         let stack_len = stacks[from_idx].len();
         let split_at = stack_len.saturating_sub(movement.count);
-        
+
         // Take the crates off the source stack (preserving order)
         let crates_to_move = stacks[from_idx].split_off(split_at);
-        
+
         // Add them to the destination stack (in same order)
         stacks[to_idx].extend(crates_to_move);
     }
 
     // Get top crate from each stack
-    stacks
-        .iter()
-        .filter_map(|stack| stack.last())
-        .collect()
+    stacks.iter().filter_map(|stack| stack.last()).collect()
 }
 
 // ============================================================================
@@ -191,13 +189,13 @@ move 1 from 1 to 2
     fn test_parse_stacks() {
         let data = parse_input(EXAMPLE);
         assert_eq!(data.stacks.len(), 3);
-        
+
         // Stack 1: Z, N (bottom to top)
         assert_eq!(data.stacks[0], vec!['Z', 'N']);
-        
+
         // Stack 2: M, C, D
         assert_eq!(data.stacks[1], vec!['M', 'C', 'D']);
-        
+
         // Stack 3: P
         assert_eq!(data.stacks[2], vec!['P']);
     }
@@ -206,11 +204,39 @@ move 1 from 1 to 2
     fn test_parse_moves() {
         let data = parse_input(EXAMPLE);
         assert_eq!(data.moves.len(), 4);
-        
-        assert_eq!(data.moves[0], Move { count: 1, from: 2, to: 1 });
-        assert_eq!(data.moves[1], Move { count: 3, from: 1, to: 3 });
-        assert_eq!(data.moves[2], Move { count: 2, from: 2, to: 1 });
-        assert_eq!(data.moves[3], Move { count: 1, from: 1, to: 2 });
+
+        assert_eq!(
+            data.moves[0],
+            Move {
+                count: 1,
+                from: 2,
+                to: 1
+            }
+        );
+        assert_eq!(
+            data.moves[1],
+            Move {
+                count: 3,
+                from: 1,
+                to: 3
+            }
+        );
+        assert_eq!(
+            data.moves[2],
+            Move {
+                count: 2,
+                from: 2,
+                to: 1
+            }
+        );
+        assert_eq!(
+            data.moves[3],
+            Move {
+                count: 1,
+                from: 1,
+                to: 2
+            }
+        );
     }
 
     #[test]

@@ -1,5 +1,5 @@
-use std::collections::VecDeque;
 use rayon::prelude::*;
+use std::collections::VecDeque;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct Pos {
@@ -27,28 +27,40 @@ impl HeightMap {
 
         // Up
         if pos.row > 0 {
-            let next = Pos { row: pos.row - 1, col: pos.col };
+            let next = Pos {
+                row: pos.row - 1,
+                col: pos.col,
+            };
             if self.height_at(next) <= current_height + 1 {
                 result.push(next);
             }
         }
         // Down
         if pos.row < self.rows - 1 {
-            let next = Pos { row: pos.row + 1, col: pos.col };
+            let next = Pos {
+                row: pos.row + 1,
+                col: pos.col,
+            };
             if self.height_at(next) <= current_height + 1 {
                 result.push(next);
             }
         }
         // Left
         if pos.col > 0 {
-            let next = Pos { row: pos.row, col: pos.col - 1 };
+            let next = Pos {
+                row: pos.row,
+                col: pos.col - 1,
+            };
             if self.height_at(next) <= current_height + 1 {
                 result.push(next);
             }
         }
         // Right
         if pos.col < self.cols - 1 {
-            let next = Pos { row: pos.row, col: pos.col + 1 };
+            let next = Pos {
+                row: pos.row,
+                col: pos.col + 1,
+            };
             if self.height_at(next) <= current_height + 1 {
                 result.push(next);
             }
@@ -66,7 +78,10 @@ impl HeightMap {
 
         // Up
         if pos.row > 0 {
-            let next = Pos { row: pos.row - 1, col: pos.col };
+            let next = Pos {
+                row: pos.row - 1,
+                col: pos.col,
+            };
             // Reverse constraint: current can descend TO next by at most 1
             // Which means: next can climb UP to current by at most 1
             if current_height <= self.height_at(next) + 1 {
@@ -75,21 +90,30 @@ impl HeightMap {
         }
         // Down
         if pos.row < self.rows - 1 {
-            let next = Pos { row: pos.row + 1, col: pos.col };
+            let next = Pos {
+                row: pos.row + 1,
+                col: pos.col,
+            };
             if current_height <= self.height_at(next) + 1 {
                 result.push(next);
             }
         }
         // Left
         if pos.col > 0 {
-            let next = Pos { row: pos.row, col: pos.col - 1 };
+            let next = Pos {
+                row: pos.row,
+                col: pos.col - 1,
+            };
             if current_height <= self.height_at(next) + 1 {
                 result.push(next);
             }
         }
         // Right
         if pos.col < self.cols - 1 {
-            let next = Pos { row: pos.row, col: pos.col + 1 };
+            let next = Pos {
+                row: pos.row,
+                col: pos.col + 1,
+            };
             if current_height <= self.height_at(next) + 1 {
                 result.push(next);
             }
@@ -103,7 +127,7 @@ pub fn parse_input(input: &str) -> HeightMap {
     let lines: Vec<&str> = input.lines().collect();
     let rows = lines.len();
     let cols = lines[0].len();
-    
+
     let mut grid = vec![vec![0u8; cols]; rows];
     let mut start = Pos { row: 0, col: 0 };
     let mut end = Pos { row: 0, col: 0 };
@@ -126,13 +150,19 @@ pub fn parse_input(input: &str) -> HeightMap {
         }
     }
 
-    HeightMap { grid, start, end, rows, cols }
+    HeightMap {
+        grid,
+        start,
+        end,
+        rows,
+        cols,
+    }
 }
 
 fn bfs_shortest_path(map: &HeightMap, start: Pos, end: Pos) -> Option<usize> {
     let mut queue = VecDeque::new();
     let mut visited = vec![vec![false; map.cols]; map.rows];
-    
+
     queue.push_back((start, 0));
     visited[start.row][start.col] = true;
 
@@ -156,7 +186,7 @@ fn bfs_shortest_path(map: &HeightMap, start: Pos, end: Pos) -> Option<usize> {
 pub fn bfs_backward_to_any_a(map: &HeightMap) -> usize {
     let mut queue = VecDeque::new();
     let mut visited = vec![vec![false; map.cols]; map.rows];
-    
+
     queue.push_back((map.end, 0));
     visited[map.end.row][map.end.col] = true;
 
@@ -178,8 +208,7 @@ pub fn bfs_backward_to_any_a(map: &HeightMap) -> usize {
 }
 
 fn solve_part1_with_data(map: &HeightMap) -> usize {
-    bfs_shortest_path(map, map.start, map.end)
-        .expect("Path should exist from S to E")
+    bfs_shortest_path(map, map.start, map.end).expect("Path should exist from S to E")
 }
 
 pub fn solve_part2_with_data(map: &HeightMap) -> usize {
@@ -188,7 +217,8 @@ pub fn solve_part2_with_data(map: &HeightMap) -> usize {
 
     for row in 0..map.rows {
         for col in 0..map.cols {
-            if map.grid[row][col] == 0 {  // elevation 'a'
+            if map.grid[row][col] == 0 {
+                // elevation 'a'
                 let start = Pos { row, col };
                 if let Some(steps) = bfs_shortest_path(map, start, map.end) {
                     min_steps = min_steps.min(steps);
@@ -225,7 +255,7 @@ pub fn solve_part2_parallel(map: &HeightMap) -> usize {
 pub fn solve(input: &str) -> (usize, usize) {
     let map = parse_input(input);
     let part1 = solve_part1_with_data(&map);
-    let part2 = bfs_backward_to_any_a(&map);  // Use backward BFS (fastest!)
+    let part2 = bfs_backward_to_any_a(&map); // Use backward BFS (fastest!)
     (part1, part2)
 }
 
@@ -248,7 +278,7 @@ abdefghi";
         assert_eq!(map.start, Pos { row: 0, col: 0 });
         assert_eq!(map.end, Pos { row: 2, col: 5 });
         assert_eq!(map.height_at(map.start), 0); // 'a'
-        assert_eq!(map.height_at(map.end), 25);   // 'z'
+        assert_eq!(map.height_at(map.end), 25); // 'z'
     }
 
     #[test]

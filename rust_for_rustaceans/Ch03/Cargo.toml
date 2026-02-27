@@ -44,5 +44,5 @@ path = "examples/constrained_contracts.rs"
 
 # Day 7 - Saturday: Review
 [[example]]
-name = "review"
+name = "ch03_review"
 path = "examples/review.rs"

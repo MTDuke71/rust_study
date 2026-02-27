@@ -551,3 +551,61 @@ fn test_large_list_performance() {
     list.clear();
     assert!(list.is_empty());
 }
+
+// ============================================================================
+// Coverage Gap Tests
+// ============================================================================
+
+#[test]
+fn test_error_display_formatting() {
+    // LinkedListError Display impl - all 3 variants
+    let err = LinkedListError::BorrowError;
+    assert_eq!(format!("{}", err), "Node is already mutably borrowed");
+
+    let err = LinkedListError::MultipleReferences;
+    assert_eq!(format!("{}", err), "Node still has multiple references");
+
+    let err = LinkedListError::EmptyList;
+    assert_eq!(format!("{}", err), "Operation attempted on empty list");
+}
+
+#[test]
+fn test_default_trait() {
+    let simple: SimpleLinkedList<i32> = SimpleLinkedList::default();
+    assert!(simple.is_empty());
+    assert_eq!(simple.len(), 0);
+
+    let rc: RcLinkedList<i32> = RcLinkedList::default();
+    assert!(rc.is_empty());
+    assert_eq!(rc.len(), 0);
+}
+
+#[test]
+fn test_try_peek_front_mut_empty_list() {
+    let list = RcLinkedList::<i32>::new();
+    // Block scope ensures RefMut temporary is dropped before list
+    {
+        let result = list.try_peek_front_mut();
+        assert!(matches!(result, Ok(None)));
+    }
+}
+
+#[test]
+fn test_try_peek_front_mut_borrow_error() {
+    let mut list = RcLinkedList::new();
+    list.push_front(42);
+
+    // Hold an immutable borrow via get_head_ref + borrow()
+    let head = list.get_head_ref().unwrap();
+    let _borrowed = head.borrow();
+
+    // Inner block ensures the Result (which borrows list) is dropped
+    // before head/_borrowed, satisfying the borrow checker
+    {
+        let result = list.try_peek_front_mut();
+        assert!(matches!(result, Err(LinkedListError::BorrowError)));
+    }
+
+    drop(_borrowed);
+    drop(head);
+}

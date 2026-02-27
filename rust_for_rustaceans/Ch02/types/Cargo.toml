@@ -34,5 +34,5 @@ name = "existential_types"
 path = "examples/existential_types.rs"
 
 [[example]]
-name = "full_chapter"
+name = "ch02_full_chapter"
 path = "examples/full_chapter.rs"

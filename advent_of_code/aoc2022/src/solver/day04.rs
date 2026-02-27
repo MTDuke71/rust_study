@@ -2,7 +2,7 @@
 //!
 //! **Problem**: Elves assigned section ranges. Find pairs where ranges fully contain or overlap.
 //!
-//! **Approach**: 
+//! **Approach**:
 //! - Part 1: Check if one range fully contains the other
 //! - Part 2: Check if ranges have any overlap
 
@@ -106,10 +106,7 @@ fn solve_part1_impl(data: &AssignmentPairs) -> usize {
 
 fn solve_part2_impl(data: &AssignmentPairs) -> usize {
     // Count pairs where ranges have any overlap
-    data.pairs
-        .iter()
-        .filter(|pair| pair.has_overlap())
-        .count()
+    data.pairs.iter().filter(|pair| pair.has_overlap()).count()
 }
 
 // ============================================================================

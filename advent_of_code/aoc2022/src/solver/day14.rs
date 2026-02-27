@@ -46,11 +46,7 @@ fn parse_coord(s: &str) -> (usize, usize) {
 fn parse_rock_paths(input: &str) -> Vec<Vec<(usize, usize)>> {
     input
         .lines()
-        .map(|line| {
-            line.split(" -> ")
-                .map(parse_coord)
-                .collect()
-        })
+        .map(|line| line.split(" -> ").map(parse_coord).collect())
         .collect()
 }
 
@@ -115,7 +111,11 @@ pub fn parse(input: &str) -> ParsedData {
     // Calculate normalized source position
     let source = Coord::new(SOURCE_X - x_offset, SOURCE_Y);
 
-    ParsedData { grid, source, max_y }
+    ParsedData {
+        grid,
+        source,
+        max_y,
+    }
 }
 
 // ============================================================================
@@ -144,7 +144,8 @@ fn try_move_sand(grid: &Grid<Tile>, pos: Coord) -> Option<Coord> {
 
     // Try down-right
     let down_right = Coord::new(pos.x + 1, pos.y + 1);
-    if down_right.x < grid.width() && down_right.y < grid.height() && grid[down_right] == Tile::Air {
+    if down_right.x < grid.width() && down_right.y < grid.height() && grid[down_right] == Tile::Air
+    {
         return Some(down_right);
     }
     if down_right.x >= grid.width() {

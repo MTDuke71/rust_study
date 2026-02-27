@@ -898,9 +898,17 @@ pub fn connected_components<G: Graph>(graph: &G) -> Vec<Vec<G::Node>> {
     let mut visited = HashSet::new();
     let mut components = Vec::new();
 
+    // Pre-build reverse adjacency map once: O(V + E)
+    let mut reverse: HashMap<G::Node, Vec<G::Node>> = HashMap::new();
+    for node in graph.nodes() {
+        for neighbor in graph.neighbors(node) {
+            reverse.entry(neighbor).or_default().push(node);
+        }
+    }
+
     for node in graph.nodes() {
         if !visited.contains(&node) {
-            let component = bfs_collect_component(graph, node, &mut visited);
+            let component = bfs_collect_component(graph, node, &mut visited, &reverse);
             components.push(component);
         }
     }
@@ -916,6 +924,7 @@ fn bfs_collect_component<G: Graph>(
     graph: &G,
     start: G::Node,
     visited: &mut HashSet<G::Node>,
+    reverse: &HashMap<G::Node, Vec<G::Node>>,
 ) -> Vec<G::Node> {
     let mut component = Vec::new();
     let mut queue = VecDeque::new();
@@ -935,10 +944,12 @@ fn bfs_collect_component<G: Graph>(
         }
 
         // Follow incoming edges (neighbor -> current) for undirected behavior
-        for node in graph.nodes() {
-            if graph.neighbors(node).contains(&current) && !visited.contains(&node) {
-                visited.insert(node);
-                queue.push_back(node);
+        if let Some(predecessors) = reverse.get(&current) {
+            for &node in predecessors {
+                if !visited.contains(&node) {
+                    visited.insert(node);
+                    queue.push_back(node);
+                }
             }
         }
     }

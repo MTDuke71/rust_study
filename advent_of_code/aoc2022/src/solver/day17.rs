@@ -171,7 +171,7 @@ fn simulate(jets: &[i8], num_rocks: u64) -> u64 {
                 extra_height = full_cycles * cycle_height;
                 rock_count += full_cycles * cycle_len;
                 seen.clear(); // Stop detecting — only report the first cycle
-                // Continue simulating the remainder
+                              // Continue simulating the remainder
             } else {
                 seen.insert(key, (rock_count, chamber.height as u64, jet_idx));
             }
@@ -203,10 +203,7 @@ fn solve_part2_with_data(jets: &ParsedData) -> u64 {
 
 pub fn solve(input: &str) -> (u64, u64) {
     let jets = parse_input(input);
-    (
-        solve_part1_with_data(&jets),
-        solve_part2_with_data(&jets),
-    )
+    (solve_part1_with_data(&jets), solve_part2_with_data(&jets))
 }
 
 pub fn solve_part1(input: &str) -> u64 {
@@ -233,7 +230,7 @@ mod tests {
     fn test_parse() {
         let jets = parse_input(EXAMPLE);
         assert_eq!(jets.len(), 40);
-        assert_eq!(jets[0], 1);  // '>'
+        assert_eq!(jets[0], 1); // '>'
         assert_eq!(jets[3], -1); // '<'
     }
 

@@ -207,10 +207,7 @@ fn solve_part2_with_data(game: &MonkeyGame) -> u64 {
 /// Solve both parts efficiently (PARSE ONCE!)
 pub fn solve(input: &str) -> (u64, u64) {
     let game = parse_input(input);
-    (
-        solve_part1_with_data(&game),
-        solve_part2_with_data(&game),
-    )
+    (solve_part1_with_data(&game), solve_part2_with_data(&game))
 }
 
 /// Solve Part 1 only (for testing)

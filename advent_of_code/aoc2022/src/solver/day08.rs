@@ -18,7 +18,7 @@
 //!
 //! ## Parse-Once Pattern
 //!
-//! Parse grid once in `solve()`, pass &[Vec<u8>] to both parts when Part 2 arrives.
+//! Parse grid once in `solve()`, pass `&[Vec<u8>]` to both parts when Part 2 arrives.
 
 use rayon::prelude::*;
 
@@ -51,14 +51,14 @@ fn parse_grid(input: &str) -> Grid {
 fn solve_part1(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
-    
+
     // Pre-compute max heights from each direction
     // max_from_left[row][col] = max height from left edge to col-1
     let mut max_from_left = vec![vec![0u8; cols]; rows];
     let mut max_from_right = vec![vec![0u8; cols]; rows];
     let mut max_from_top = vec![vec![0u8; cols]; rows];
     let mut max_from_bottom = vec![vec![0u8; cols]; rows];
-    
+
     // Horizontal passes: combine left + right for better cache locality
     // Process both directions while row data is hot in cache
     for row in 0..rows {
@@ -75,7 +75,7 @@ fn solve_part1(grid: &Grid) -> usize {
                 break;
             }
         }
-        
+
         // Right to left (process same row while hot in cache)
         let mut max_height = 0;
         for col in (0..cols).rev() {
@@ -90,11 +90,11 @@ fn solve_part1(grid: &Grid) -> usize {
             }
         }
     }
-    
+
     // Vertical passes: process ALL columns at once (better cache locality!)
     // Grid is row-major, so processing row-by-row is more cache-friendly
     // No early termination here - overhead of tracking done state > benefit
-    
+
     // Top to bottom: track max for each column as we scan rows
     let mut max_heights_top = vec![0u8; cols];
     for row in 0..rows {
@@ -103,7 +103,7 @@ fn solve_part1(grid: &Grid) -> usize {
             max_heights_top[col] = max_heights_top[col].max(grid[row][col]);
         }
     }
-    
+
     // Bottom to top: track max for each column as we scan rows backwards
     let mut max_heights_bottom = vec![0u8; cols];
     for row in (0..rows).rev() {
@@ -112,7 +112,7 @@ fn solve_part1(grid: &Grid) -> usize {
             max_heights_bottom[col] = max_heights_bottom[col].max(grid[row][col]);
         }
     }
-    
+
     // Count visible trees: visible if height > max from ANY direction
     let mut count = 0;
     for row in 0..rows {
@@ -122,7 +122,7 @@ fn solve_part1(grid: &Grid) -> usize {
                 count += 1;
                 continue;
             }
-            
+
             // Interior trees: visible if taller than max from ANY direction
             let height = grid[row][col];
             if height > max_from_left[row][col]
@@ -167,27 +167,27 @@ fn solve_part1(grid: &Grid) -> usize {
 unsafe fn solve_part1_simd_impl(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
-    
+
     // Pre-compute max heights from each direction
     let mut max_from_left = vec![vec![0u8; cols]; rows];
     let mut max_from_right = vec![vec![0u8; cols]; rows];
     let mut max_from_top = vec![vec![0u8; cols]; rows];
     let mut max_from_bottom = vec![vec![0u8; cols]; rows];
-    
+
     const SIMD_WIDTH: usize = 32; // AVX2 processes 32 bytes at once
-    
+
     // Pass 1: Left to right (SIMD-accelerated for horizontal scanning)
     for row in 0..rows {
         let mut max_height = 0u8;
-        
+
         // Process chunks of 32 columns with SIMD
         let chunks = cols / SIMD_WIDTH;
         for chunk_idx in 0..chunks {
             let start = chunk_idx * SIMD_WIDTH;
-            
+
             // Load 32 grid values (for potential future optimization)
             let _grid_vec = _mm256_loadu_si256(grid[row][start..].as_ptr() as *const __m256i);
-            
+
             // Store "max so far" for each position
             // For left-to-right, we need running max which is hard to vectorize efficiently
             // Fall back to scalar for simplicity (vectorizing running max is complex)
@@ -196,14 +196,14 @@ unsafe fn solve_part1_simd_impl(grid: &Grid) -> usize {
                 max_height = max_height.max(grid[row][col]);
             }
         }
-        
+
         // Handle remainder columns
         for col in (chunks * SIMD_WIDTH)..cols {
             max_from_left[row][col] = max_height;
             max_height = max_height.max(grid[row][col]);
         }
     }
-    
+
     // Pass 2: Right to left (scalar - running max in reverse is complex to vectorize)
     for row in 0..rows {
         let mut max_height = 0;
@@ -212,7 +212,7 @@ unsafe fn solve_part1_simd_impl(grid: &Grid) -> usize {
             max_height = max_height.max(grid[row][col]);
         }
     }
-    
+
     // Pass 3 & 4: Vertical passes (scalar - gather/scatter overhead not worth it)
     for col in 0..cols {
         let mut max_height = 0;
@@ -221,7 +221,7 @@ unsafe fn solve_part1_simd_impl(grid: &Grid) -> usize {
             max_height = max_height.max(grid[row][col]);
         }
     }
-    
+
     for col in 0..cols {
         let mut max_height = 0;
         for row in (0..rows).rev() {
@@ -229,7 +229,7 @@ unsafe fn solve_part1_simd_impl(grid: &Grid) -> usize {
             max_height = max_height.max(grid[row][col]);
         }
     }
-    
+
     // Count visible trees (could vectorize comparisons, but setup cost likely dominates)
     let mut count = 0;
     for row in 0..rows {
@@ -238,7 +238,7 @@ unsafe fn solve_part1_simd_impl(grid: &Grid) -> usize {
                 count += 1;
                 continue;
             }
-            
+
             let height = grid[row][col];
             if height > max_from_left[row][col]
                 || height > max_from_right[row][col]
@@ -274,8 +274,6 @@ pub fn solve_simd(input: &str) -> (usize, usize) {
 }
 */
 
-
-
 /// Calculate viewing distance in one direction.
 ///
 /// Counts trees until hitting edge or tree >= height.
@@ -284,11 +282,11 @@ fn viewing_distance(grid: &Grid, row: usize, col: usize, dr: isize, dc: isize) -
     let height = grid[row][col];
     let rows = grid.len() as isize;
     let cols = grid[0].len() as isize;
-    
+
     let mut count = 0;
     let mut r = row as isize + dr;
     let mut c = col as isize + dc;
-    
+
     while r >= 0 && r < rows && c >= 0 && c < cols {
         count += 1;
         if grid[r as usize][c as usize] >= height {
@@ -297,7 +295,7 @@ fn viewing_distance(grid: &Grid, row: usize, col: usize, dr: isize, dc: isize) -
         r += dr;
         c += dc;
     }
-    
+
     count
 }
 
@@ -309,7 +307,7 @@ fn scenic_score(grid: &Grid, row: usize, col: usize) -> usize {
     let down = viewing_distance(grid, row, col, 1, 0); // South
     let left = viewing_distance(grid, row, col, 0, -1); // West
     let right = viewing_distance(grid, row, col, 0, 1); // East
-    
+
     up * down * left * right
 }
 
@@ -320,7 +318,7 @@ fn scenic_score(grid: &Grid, row: usize, col: usize) -> usize {
 fn solve_part2(grid: &Grid) -> usize {
     let rows = grid.len();
     let cols = grid[0].len();
-    
+
     // Process each row in parallel, find max scenic score per row,
     // then take the global maximum
     (0..rows)
@@ -373,11 +371,11 @@ mod tests {
     #[test]
     fn test_scenic_score_examples() {
         let grid = parse_grid(EXAMPLE);
-        
+
         // Middle 5 in second row [1][2]: score = 1 * 1 * 2 * 2 = 4
         // up=1 (sees 1 tree), left=1 (blocked immediately), right=2, down=2
         assert_eq!(scenic_score(&grid, 1, 2), 4);
-        
+
         // Middle 5 in fourth row [3][2]: score = 2 * 2 * 1 * 2 = 8
         // up=2 (blocked by height 5), left=2, down=1 (edge), right=2 (blocked by 9)
         assert_eq!(scenic_score(&grid, 3, 2), 8);
@@ -388,7 +386,7 @@ mod tests {
         let grid = parse_grid(EXAMPLE);
         assert_eq!(solve_part2(&grid), 8);
     }
-    
+
     /*
     // SIMD test - commented out along with SIMD implementation
     #[test]

@@ -32,11 +32,11 @@ pub struct GameRounds {
 /// You: X=0, Y=1, Z=2 (Rock, Paper, Scissors)
 const PART1_SCORES: [[u8; 3]; 3] = [
     // Opponent plays Rock (A)
-    [1+3, 2+6, 3],  // You play: Rock (draw), Paper (win), Scissors (lose=0)
+    [1 + 3, 2 + 6, 3], // You play: Rock (draw), Paper (win), Scissors (lose=0)
     // Opponent plays Paper (B)
-    [1, 2+3, 3+6],  // You play: Rock (lose=0), Paper (draw), Scissors (win)
+    [1, 2 + 3, 3 + 6], // You play: Rock (lose=0), Paper (draw), Scissors (win)
     // Opponent plays Scissors (C)
-    [1+6, 2, 3+3],  // You play: Rock (win), Paper (lose=0), Scissors (draw)
+    [1 + 6, 2, 3 + 3], // You play: Rock (win), Paper (lose=0), Scissors (draw)
 ];
 
 /// Part 2 scoring: [opponent][desired_outcome] = total_score
@@ -44,11 +44,11 @@ const PART1_SCORES: [[u8; 3]; 3] = [
 /// Outcome: X=0, Y=1, Z=2 (Lose, Draw, Win)
 const PART2_SCORES: [[u8; 3]; 3] = [
     // Opponent plays Rock (A)
-    [3, 1+3, 2+6],  // Lose (Scissors=3+0), Draw (Rock), Win (Paper)
+    [3, 1 + 3, 2 + 6], // Lose (Scissors=3+0), Draw (Rock), Win (Paper)
     // Opponent plays Paper (B)
-    [1, 2+3, 3+6],  // Lose (Rock=1+0), Draw (Paper), Win (Scissors)
+    [1, 2 + 3, 3 + 6], // Lose (Rock=1+0), Draw (Paper), Win (Scissors)
     // Opponent plays Scissors (C)
-    [2, 3+3, 1+6],  // Lose (Paper=2+0), Draw (Scissors), Win (Rock)
+    [2, 3 + 3, 1 + 6], // Lose (Paper=2+0), Draw (Scissors), Win (Rock)
 ];
 
 // ============================================================================

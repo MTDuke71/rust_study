@@ -293,6 +293,7 @@ for value in list.iter_mut() { ... }
 - **No bidirectional iteration**: Would require more complex Weak reference handling
 - **Stack overflow on large lists**: Deep recursion in Drop implementation
 - **No concurrent access**: Single-threaded design (by intention)
+- **RefMut drop-order gotcha**: See [[REFMUT_DROP_ORDER|./REFMUT_DROP_ORDER]] — callers of `try_peek_front_mut()` must scope the `Result` carefully
 
 ### Future Enhancements
 - **Custom allocator support**: For specialized memory management

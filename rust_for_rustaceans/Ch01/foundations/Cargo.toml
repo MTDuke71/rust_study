@@ -24,5 +24,5 @@ name = "variance"
 path = "examples/variance.rs"
 
 [[example]]
-name = "full_chapter"
+name = "ch01_full_chapter"
 path = "examples/full_chapter.rs"
