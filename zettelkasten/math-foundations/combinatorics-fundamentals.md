@@ -125,6 +125,15 @@ fn count_accepted(&self, workflow_name: &str, ranges: PartRange) -> u64 {
 3. **No enumeration**: Count directly from range arithmetic
 4. **Optimization**: Exponential problem becomes graph traversal
 
+### **Project Euler P15**: Lattice Paths - Central Binomial Coefficient
+- **What**: Count paths through a 20x20 grid moving only right and down
+- **How it uses combinatorics**:
+  - Path = sequence of 20 R's and 20 D's = 40 moves total
+  - Count = C(40, 20) = "choose which 20 of 40 steps are right"
+  - This is the **central binomial coefficient** (middle of Pascal's triangle row 40)
+- **Integrator win**: One-liner using shared `combinatorics::binomial(2*n, n)`
+- **Link**: [[project-euler-p015]] | `project_euler/src/problems/p015.rs`
+
 ### **Future AoC**: Subset Selection Problems
 - **What**: Choose $r$ items from $n$ candidates
 - **How it uses combinatorics**: Combination formula $\binom{n}{r}$
@@ -285,8 +294,8 @@ Combinatorics: Product of range sizes → instant
 
 *Tags: #mathematics #combinatorics #discrete-math #counting #product-rule #permutations #combinations #aoc2023 #day19*
 
-*Created*: 2026-01-19  
-*Last Updated*: 2026-01-19  
-*Implementations*: 1 (AoC 2023 Day 19)
+*Created*: 2026-01-19
+*Last Updated*: 2026-02-26
+*Implementations*: 2 (AoC 2023 Day 19, Project Euler P15)
 
-*Links: [[zettel-index]] | [[math-foundations/README]] | [[set-theory-fundamentals]] | [[constraint-propagation]] | [[workflow-pattern-matching]] | [[dynamic-programming-theory]]*
+*Links: [[zettel-index]] | [[math-foundations/README]] | [[set-theory-fundamentals]] | [[constraint-propagation]] | [[workflow-pattern-matching]] | [[dynamic-programming-theory]] | [[project-euler-p015]]*

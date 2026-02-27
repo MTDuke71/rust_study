@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016};
 
 #[test]
 fn test_problem_001() {
@@ -115,4 +115,26 @@ fn test_problem_013_string() {
     let result = p013::first_ten_digits_of_sum();
     assert_eq!(result, "5537376230");
     assert_eq!(result.len(), 10);
+}
+
+#[test]
+fn test_problem_015() {
+    assert_eq!(p015::solve(), 137846528820);
+}
+
+#[test]
+fn test_problem_015_example() {
+    // Example from problem statement: 6 routes through 2×2 grid
+    assert_eq!(p015::lattice_paths(2), 6);
+}
+
+#[test]
+fn test_problem_016() {
+    assert_eq!(p016::solve(), 1366);
+}
+
+#[test]
+fn test_problem_016_example() {
+    // Example from problem statement: 2^15 = 32768, digit sum = 26
+    assert_eq!(p016::power_digit_sum(2, 15), 26);
 }
