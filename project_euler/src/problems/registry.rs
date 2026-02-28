@@ -27,13 +27,16 @@ impl ProblemSolver {
             14 => Some(super::p014::solve()),
             15 => Some(super::p015::solve()),
             16 => Some(super::p016::solve()),
+            17 => Some(super::p017::solve()),
+            18 => Some(super::p018::solve()),
+            67 => Some(super::p067::solve()),
             _ => None,
         }
     }
 
     /// Get list of implemented problems
     pub fn implemented() -> Vec<usize> {
-        vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 67]
     }
 
     /// Check if a problem is implemented

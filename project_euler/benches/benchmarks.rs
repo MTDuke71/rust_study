@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p014};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p014, p017, p018, p067};
 
 fn benchmark_problems(c: &mut Criterion) {
     c.bench_function("Problem 1", |b| b.iter(|| p001::solve()));
@@ -30,6 +30,14 @@ fn benchmark_problems(c: &mut Criterion) {
                 .unwrap()
         })
     });
+    c.bench_function("Problem 17", |b| b.iter(|| p017::solve()));
+    c.bench_function("Problem 18 (DP)", |b| b.iter(|| p018::solve()));
+    c.bench_function("Problem 18 (brute force)", |b| {
+        let triangle = p018::parse_triangle(p018::TRIANGLE_INPUT);
+        let flat = p018::flatten_triangle(&triangle);
+        b.iter(|| p018::brute_force_max_path(black_box(&flat), 15))
+    });
+    c.bench_function("Problem 67", |b| b.iter(|| p067::solve()));
 }
 
 criterion_group!(benches, benchmark_problems);

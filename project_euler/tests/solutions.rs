@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p067};
 
 #[test]
 fn test_problem_001() {
@@ -137,4 +137,32 @@ fn test_problem_016() {
 fn test_problem_016_example() {
     // Example from problem statement: 2^15 = 32768, digit sum = 26
     assert_eq!(p016::power_digit_sum(2, 15), 26);
+}
+
+#[test]
+fn test_problem_017() {
+    assert_eq!(p017::solve(), 21124);
+}
+
+#[test]
+fn test_problem_017_example() {
+    // Example from problem statement: 1–5 = 3+3+5+4+4 = 19 letters
+    assert_eq!(p017::total_letter_count(5), 19);
+}
+
+#[test]
+fn test_problem_018() {
+    assert_eq!(p018::solve(), 1074);
+}
+
+#[test]
+fn test_problem_018_example() {
+    // Example from problem statement: 4-row triangle, max path = 23
+    let mut t = vec![vec![3], vec![7, 4], vec![2, 4, 6], vec![8, 5, 9, 3]];
+    assert_eq!(p018::max_path_sum(&mut t), 23);
+}
+
+#[test]
+fn test_problem_067() {
+    assert_eq!(p067::solve(), 7273);
 }
