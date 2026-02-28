@@ -5,7 +5,15 @@
 # Move target directory outside the vault
 # Change this path to wherever you want the build artifacts
 # Note: Windows path - commented out for CI/CD compatibility
-target-dir = "D:/rust_build_cache/rust_study_target"
+# target-dir is set via CARGO_TARGET_DIR environment variable (machine-specific)
+# Set in Windows System Environment Variables on each PC:
+#   CARGO_TARGET_DIR = C:/rust_build_cache/rust_study_target
 
 # Optional: Enable incremental compilation for faster rebuilds
 incremental = true
+
+[target.x86_64-pc-windows-msvc]
+# Linker is set via CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER environment variable (machine-specific)
+# Needed on Windows to prevent Git's link.exe shadowing MSVC's link.exe
+# Set in Windows System Environment Variables on each PC:
+#   CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER = C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.exe
