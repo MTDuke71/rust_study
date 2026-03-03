@@ -913,12 +913,74 @@ criterion_main!(benches);
 
 ---
 
-*Tags: #performance #optimization #bounds-checking #chess-engines #game-development #unsafe-rust #hot-paths #bitboards #magic-bitboards*
+## When Sentinel Borders Hurt: AoC 2016 Day 2 Case Study
 
-*Links: [[zettel-index]] | [[daily-study/Day23]] | [[mission-6]] | [[Unsafe Rust]] | [[Performance Optimization]] | [[Chess Engine Architecture]]*
+*Added: 2026-03-02 — Concrete counterexample showing mailbox technique can regress on small grids*
+
+### The Experiment
+
+AoC 2016 Day 2 navigates a keypad with UDLR instructions. Two keypads: 3×3 (Part 1) and 5×5 diamond (Part 2). Applied the chess mailbox technique — added a `b'.'` sentinel border to eliminate bounds checks.
+
+**Before** (3-layer bounds checking, `i32` casts):
+```rust
+let nr = r as i32 + dr;
+let nc = c as i32 + dc;
+if nr >= 0 && nc >= 0 {                              // check 1: negative
+    let (nr, nc) = (nr as usize, nc as usize);
+    if nr < keypad.len() && nc < keypad[nr].len()     // check 2: bounds
+        && keypad[nr][nc] != b'.' {                    // check 3: empty cell
+```
+
+**After** (single check, pure `usize`):
+```rust
+let (nr, nc) = (r - 1, c);       // pure usize, no casts
+if keypad[nr][nc] != b'.' {      // only check needed
+```
+
+### Benchmark Results
+
+| Function | Before (no border) | After (sentinel border) | Change |
+|----------|-------------------|------------------------|--------|
+| Part 1 (3×3 keypad) | 6.7µs | 11.5µs | **+72%** |
+| Part 2 (5×5 diamond) | 9.8µs | 11.5µs | **+17%** |
+| Combined | 20.3µs | 22.9µs | **+13%** |
+
+### Why It Got Slower
+
+1. **Grid too small**: The 3×3 keypad (9 bytes) expanded to 5×5 (25 bytes). The padding-to-data ratio is terrible — 64% of the grid is padding. On an 8×8 chess board inside 12×10, only 37% is padding.
+
+2. **Branch prediction already won**: The CPU's branch predictor was already handling the 3-layer checks at near-zero cost. The checks were highly predictable (most moves are valid on a 3×3 grid), so eliminating them saved nothing.
+
+3. **Indirection cost**: `&[&[u8]]` means each row lookup is a pointer dereference. With a larger grid, more cache lines are touched per access, and the compiler has less room to optimize the inner loop.
+
+### The Lesson
+
+**Sentinel borders win when:**
+- Grid is large relative to border (chess: 64/120 = 53% useful)
+- Move patterns are irregular (knights: 8 offsets, each needs bounds check)
+- Millions of iterations amplify per-check savings
+
+**Sentinel borders lose when:**
+- Grid is tiny (keypad: 9/25 = 36% useful)
+- Branch prediction already handles checks (predictable 4-direction movement)
+- Low iteration count doesn't amplify savings
+
+**The optimization was kept for code clarity** — at 23µs total, the 2.6µs delta is irrelevant. But in a chess engine at 2M nodes/sec, this same analysis determines whether you gain or lose Elo.
+
+### Key Insight (Stockfish parallel)
+
+> Every optimization is workload-dependent. Stockfish tests every patch with SPRT across thousands of games — no "it should be faster" allowed. This Day 2 benchmark is a micro-scale version of the same discipline: measure, don't assume.
+
+See: [[aoc-2016-day02]] for full solution details.
 
 ---
 
-**Key Takeaway:** In performance-critical code like chess engines, **pre-computation wins**. Move bounds checks from runtime to compile time whenever possible. The 13× speedup is worth the complexity for hot paths.
+*Tags: #performance #optimization #bounds-checking #chess-engines #game-development #unsafe-rust #hot-paths #bitboards #magic-bitboards #sentinel-border #mailbox #benchmark-surprise*
 
-**Remember:** Optimize hot paths, keep cold paths safe!
+*Links: [[zettel-index]] | [[daily-study/Day23]] | [[mission-6]] | [[Unsafe Rust]] | [[Performance Optimization]] | [[Chess Engine Architecture]] | [[aoc-2016-day02]]*
+
+---
+
+**Key Takeaway:** In performance-critical code like chess engines, **pre-computation wins** — but only at scale. The same technique that gives 13× speedup on an 8×8 board can **regress 72%** on a 3×3 grid. Always benchmark; never assume.
+
+**Remember:** Optimize hot paths, keep cold paths safe. And measure everything.
