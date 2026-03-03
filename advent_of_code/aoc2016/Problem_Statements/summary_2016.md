@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (1/25 complete)
+**Status**: In Progress (2/25 complete)
 
 ---
 
@@ -8,13 +8,13 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 1/25 |
-| **Total Runtime** | 13.5µs |
-| **Average per Day** | 13.5µs |
+| **Progress** | 2/25 |
+| **Total Runtime** | 33.8µs |
+| **Average per Day** | 16.9µs |
 | **Fastest Day** | Day 1 (13.5µs) |
-| **Slowest Day** | Day 1 (13.5µs) |
+| **Slowest Day** | Day 2 (20.3µs) |
 | **Mission Integration** | None yet |
-| **Patterns Extracted** | 1 |
+| **Patterns Extracted** | 2 |
 | **Optimizations Applied** | Parse-once |
 
 **1-Second Goal**: TBD
@@ -26,7 +26,7 @@
 | Day | Part 1 | Part 2 | Total | Algorithm | Mission | Notes |
 |-----|--------|--------|-------|-----------|---------|-------|
 | [1](days/day01_function_guide.md) | 1.6µs | 13.2µs | 13.5µs | Coordinate walk + HashSet | None | Part 2 walks block-by-block |
-| [2](days/day02.md) | - | - | - | - | - | |
+| [2](days/day02_function_guide.md) | 6.7µs | 9.8µs | 20.3µs | Keypad walk + sentinel bounds | None | Generic `decode` serves both parts |
 | [3](days/day03.md) | - | - | - | - | - | |
 | [4](days/day04.md) | - | - | - | - | - | |
 | [5](days/day05.md) | - | - | - | - | - | |
@@ -57,7 +57,7 @@
 
 **By Day**:
 - [Day 1](days/day01_function_guide.md) - No Time for a Taxicab | [Code](../src/solver/day01.rs) ✅
-- [Day 2](days/day02.md) - Bathroom Security
+- [Day 2](days/day02_function_guide.md) - Bathroom Security | [Code](../src/solver/day02.rs) ✅
 - [Day 3](days/day03.md) - Squares With Three Sides
 - [Day 4](days/day04.md) - Security Through Obscurity
 - [Day 5](days/day05.md) - How About a Nice Game of Chess?
@@ -89,6 +89,7 @@
 | Day | Algorithm | Key Insight |
 |-----|-----------|-------------|
 | 1 | Coordinate walk + HashSet | Part 1 = jump by steps; Part 2 = step one-at-a-time, detect revisit |
+| 2 | Keypad walk + sentinel bounds | Generic `decode` with `b'.'` sentinels handles rectangular and diamond keypads identically |
 
 ---
 
@@ -96,7 +97,8 @@
 
 | Pattern | Days | Description |
 |---------|------|-------------|
-| Parse-once | 1 | Parse instructions once, reuse parsed data for both parts |
+| Parse-once | 1, 2 | Parse instructions once, reuse parsed data for both parts |
+| Sentinel padding | 2 | Use `b'.'` to pad irregular shapes into rectangles for uniform bounds checking |
 
 ---
 
@@ -111,4 +113,4 @@
 
 ---
 
-**Last Updated**: 2026-03-01 (Day 1 complete)
+**Last Updated**: 2026-03-02 (Day 2 complete)
