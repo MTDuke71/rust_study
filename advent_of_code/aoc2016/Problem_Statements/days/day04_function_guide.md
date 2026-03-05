@@ -216,4 +216,4 @@ Same pattern as Days 1-3: `solve()` parses once, passes data to both `_with_data
 
 ---
 
-**Navigation**: [<- Day 3](day03_function_guide.md) | [All Days](../summary_2016.md) | [Day 5 ->](day05.md)
+**Navigation**: [<- Day 3](day03_function_guide.md) | [All Days](../summary_2016.md) | [Day 5 ->](day05_function_guide.md)

@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (4/25 complete)
+**Status**: In Progress (5/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 4/25 |
-| **Total Runtime** | 487.0µs |
-| **Average per Day** | 121.8µs |
-| **Fastest Day** | Day 1 (13.5µs) |
-| **Slowest Day** | Day 4 (331.8µs) |
+| **Progress** | 5/25 |
+| **Total Runtime** | 262.5ms |
+| **Average per Day** | 52.5ms |
+| **Fastest Day** | Day 1 (13.5us) |
+| **Slowest Day** | Day 5 (262ms) |
 | **Mission Integration** | None yet |
-| **Patterns Extracted** | 6 |
-| **Optimizations Applied** | Parse-once |
+| **Patterns Extracted** | 11 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass |
 
-**1-Second Goal**: 487.0µs / 1,000,000µs (0.05% used after 4 days)
+**1-Second Goal**: 262.5ms / 1,000ms (26.3% used after 5 days) --- back on track after Rayon optimization
 
 ---
 
@@ -28,8 +28,8 @@
 | [1](days/day01_function_guide.md) | 1.6µs | 13.2µs | 13.5µs | Coordinate walk + HashSet | None | Part 2 walks block-by-block |
 | [2](days/day02_function_guide.md) | 6.7µs | 9.8µs | 20.3µs | Keypad walk + sentinel bounds | None | Generic `decode` serves both parts |
 | [3](days/day03_function_guide.md) | 119.4µs | 118.9µs | 121.3µs | Triangle inequality + chunks | None | Parse dominates; sort vs direct identical |
-| [4](days/day04_function_guide.md) | 306.8µs | 335.3µs | 331.8µs | Frequency sort + Caesar cipher | None | Pre-filter real rooms; zero-copy `&str` parsing |
-| [5](days/day05.md) | - | - | - | - | - | |
+| [4](days/day04_function_guide.md) | 306.8us | 335.3us | 331.8us | Frequency sort + Caesar cipher | None | Pre-filter real rooms; zero-copy `&str` parsing |
+| [5](days/day05_function_guide.md) | - | - | 262ms | MD5 mining + Rayon | None | Single-pass + parallel batches; 15.5x speedup over naive |
 | [6](days/day06.md) | - | - | - | - | - | |
 | [7](days/day07.md) | - | - | - | - | - | |
 | [8](days/day08.md) | - | - | - | - | - | |
@@ -60,7 +60,7 @@
 - [Day 2](days/day02_function_guide.md) - Bathroom Security | [Code](../src/solver/day02.rs) ✅
 - [Day 3](days/day03_function_guide.md) - Squares With Three Sides | [Code](../src/solver/day03.rs) ✅
 - [Day 4](days/day04_function_guide.md) - Security Through Obscurity | [Code](../src/solver/day04.rs) ✅
-- [Day 5](days/day05.md) - How About a Nice Game of Chess?
+- [Day 5](days/day05_function_guide.md) - How About a Nice Game of Chess? | [Code](../src/solver/day05.rs) ✅
 - [Day 6](days/day06.md) - Signals and Noise
 - [Day 7](days/day07.md) - Internet Protocol Version 7
 - [Day 8](days/day08.md) - Two-Factor Authentication
@@ -92,6 +92,7 @@
 | 2 | Keypad walk + sentinel bounds | Generic `decode` with `b'.'` sentinels handles rectangular and diamond keypads identically |
 | 3 | Triangle inequality + chunks(3) | Sort+1 check vs direct 3-check: identical perf because parsing dominates |
 | 4 | Frequency sort + Caesar cipher | `[u32;26]` array beats HashMap for 26-letter alphabet; zero-copy `&str` parsing |
+| 5 | MD5 mining + Rayon parallel batches | Single-pass dual extraction + parallel batch mining; 15.5x speedup (4.05s -> 262ms) |
 
 ---
 
@@ -105,6 +106,11 @@
 | chunks(n) regrouping | 3 | Re-read row-major data as column-major using `chunks(3).flat_map()` |
 | Fixed-size freq array | 4 | `[u32; 26]` beats HashMap for small known character sets |
 | Zero-copy `&str` parsing | 4 | Borrow slices from input instead of allocating `String`s |
+| Byte-level hash check | 5 | Check raw bytes instead of hex string conversion for leading-zero detection |
+| Nibble extraction | 5 | Bitwise `& 0x0F` and `>> 4` to read individual hex characters from hash bytes |
+| Option array filling | 5 | `[Option<char>; 8]` for first-wins positional password assembly |
+| Rayon parallel batches | 5 | Partition index space into chunks, `par_iter` each, sort results to restore order |
+| Single-pass dual extraction | 5 | Mine once, fill both passwords simultaneously; Part 1 rides free while Part 2 mines |
 
 ---
 
@@ -119,4 +125,4 @@
 
 ---
 
-**Last Updated**: 2026-03-04 (Day 4 complete)
+**Last Updated**: 2026-03-05 (Day 5 complete)
