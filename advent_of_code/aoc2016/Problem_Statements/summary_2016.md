@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (3/25 complete)
+**Status**: In Progress (4/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 3/25 |
-| **Total Runtime** | 155.1µs |
-| **Average per Day** | 51.7µs |
+| **Progress** | 4/25 |
+| **Total Runtime** | 487.0µs |
+| **Average per Day** | 121.8µs |
 | **Fastest Day** | Day 1 (13.5µs) |
-| **Slowest Day** | Day 3 (121.3µs) |
+| **Slowest Day** | Day 4 (331.8µs) |
 | **Mission Integration** | None yet |
-| **Patterns Extracted** | 4 |
+| **Patterns Extracted** | 6 |
 | **Optimizations Applied** | Parse-once |
 
-**1-Second Goal**: TBD
+**1-Second Goal**: 487.0µs / 1,000,000µs (0.05% used after 4 days)
 
 ---
 
@@ -28,7 +28,7 @@
 | [1](days/day01_function_guide.md) | 1.6µs | 13.2µs | 13.5µs | Coordinate walk + HashSet | None | Part 2 walks block-by-block |
 | [2](days/day02_function_guide.md) | 6.7µs | 9.8µs | 20.3µs | Keypad walk + sentinel bounds | None | Generic `decode` serves both parts |
 | [3](days/day03_function_guide.md) | 119.4µs | 118.9µs | 121.3µs | Triangle inequality + chunks | None | Parse dominates; sort vs direct identical |
-| [4](days/day04.md) | - | - | - | - | - | |
+| [4](days/day04_function_guide.md) | 306.8µs | 335.3µs | 331.8µs | Frequency sort + Caesar cipher | None | Pre-filter real rooms; zero-copy `&str` parsing |
 | [5](days/day05.md) | - | - | - | - | - | |
 | [6](days/day06.md) | - | - | - | - | - | |
 | [7](days/day07.md) | - | - | - | - | - | |
@@ -59,7 +59,7 @@
 - [Day 1](days/day01_function_guide.md) - No Time for a Taxicab | [Code](../src/solver/day01.rs) ✅
 - [Day 2](days/day02_function_guide.md) - Bathroom Security | [Code](../src/solver/day02.rs) ✅
 - [Day 3](days/day03_function_guide.md) - Squares With Three Sides | [Code](../src/solver/day03.rs) ✅
-- [Day 4](days/day04.md) - Security Through Obscurity
+- [Day 4](days/day04_function_guide.md) - Security Through Obscurity | [Code](../src/solver/day04.rs) ✅
 - [Day 5](days/day05.md) - How About a Nice Game of Chess?
 - [Day 6](days/day06.md) - Signals and Noise
 - [Day 7](days/day07.md) - Internet Protocol Version 7
@@ -91,6 +91,7 @@
 | 1 | Coordinate walk + HashSet | Part 1 = jump by steps; Part 2 = step one-at-a-time, detect revisit |
 | 2 | Keypad walk + sentinel bounds | Generic `decode` with `b'.'` sentinels handles rectangular and diamond keypads identically |
 | 3 | Triangle inequality + chunks(3) | Sort+1 check vs direct 3-check: identical perf because parsing dominates |
+| 4 | Frequency sort + Caesar cipher | `[u32;26]` array beats HashMap for 26-letter alphabet; zero-copy `&str` parsing |
 
 ---
 
@@ -98,10 +99,12 @@
 
 | Pattern | Days | Description |
 |---------|------|-------------|
-| Parse-once | 1, 2, 3 | Parse instructions once, reuse parsed data for both parts |
+| Parse-once | 1, 2, 3, 4 | Parse instructions once, reuse parsed data for both parts |
 | Sentinel padding | 2 | Use `b'.'` to pad irregular shapes into rectangles for uniform bounds checking |
 | Array destructuring | 3 | Destructure `&[a, b, c]` in function signature for clean element access |
 | chunks(n) regrouping | 3 | Re-read row-major data as column-major using `chunks(3).flat_map()` |
+| Fixed-size freq array | 4 | `[u32; 26]` beats HashMap for small known character sets |
+| Zero-copy `&str` parsing | 4 | Borrow slices from input instead of allocating `String`s |
 
 ---
 
@@ -116,4 +119,4 @@
 
 ---
 
-**Last Updated**: 2026-03-03 (Day 3 complete)
+**Last Updated**: 2026-03-04 (Day 4 complete)
