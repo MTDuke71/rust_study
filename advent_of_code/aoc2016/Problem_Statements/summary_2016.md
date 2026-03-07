@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (6/25 complete)
+**Status**: In Progress (7/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 6/25 |
-| **Total Runtime** | 262.5ms |
-| **Average per Day** | 43.8ms |
+| **Progress** | 7/25 |
+| **Total Runtime** | 263.2ms |
+| **Average per Day** | 37.6ms |
 | **Fastest Day** | Day 6 (8.1us) |
 | **Slowest Day** | Day 5 (262ms) |
 | **Mission Integration** | None yet |
-| **Patterns Extracted** | 13 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays |
+| **Patterns Extracted** | 16 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine |
 
-**1-Second Goal**: 262.5ms / 1,000ms (26.3% used after 6 days) --- comfortably on track
+**1-Second Goal**: 263.2ms / 1,000ms (26.3% used after 7 days) --- comfortably on track
 
 ---
 
@@ -31,7 +31,7 @@
 | [4](days/day04_function_guide.md) | 306.8us | 335.3us | 331.8us | Frequency sort + Caesar cipher | None | Pre-filter real rooms; zero-copy `&str` parsing |
 | [5](days/day05_function_guide.md) | - | - | 262ms | MD5 mining + Rayon | None | Single-pass + parallel batches; 15.5x speedup over naive |
 | [6](days/day06_function_guide.md) | 8.4us | 7.9us | 8.1us | Column frequency + `[u32;26]` | None | Reuses Day 4 freq array pattern; zero-filter for min |
-| [7](days/day07.md) | - | - | - | - | - | |
+| [7](days/day07_function_guide.md) | 255us | 436us | 713us | Sliding window + bracket state machine | None | P1 streams zero-alloc; P2 collects segments for cross-match |
 | [8](days/day08.md) | - | - | - | - | - | |
 | [9](days/day09.md) | - | - | - | - | - | |
 | [10](days/day10.md) | - | - | - | - | - | |
@@ -62,7 +62,7 @@
 - [Day 4](days/day04_function_guide.md) - Security Through Obscurity | [Code](../src/solver/day04.rs) ✅
 - [Day 5](days/day05_function_guide.md) - How About a Nice Game of Chess? | [Code](../src/solver/day05.rs) ✅
 - [Day 6](days/day06_function_guide.md) - Signals and Noise | [Code](../src/solver/day06.rs) ✅
-- [Day 7](days/day07.md) - Internet Protocol Version 7
+- [Day 7](days/day07_function_guide.md) - Internet Protocol Version 7 | [Code](../src/solver/day07.rs) ✅
 - [Day 8](days/day08.md) - Two-Factor Authentication
 - [Day 9](days/day09.md) - Explosives in Cyberspace
 - [Day 10](days/day10.md) - Balance Bots
@@ -94,6 +94,7 @@
 | 4 | Frequency sort + Caesar cipher | `[u32;26]` array beats HashMap for 26-letter alphabet; zero-copy `&str` parsing |
 | 5 | MD5 mining + Rayon parallel batches | Single-pass dual extraction + parallel batch mining; 15.5x speedup (4.05s -> 262ms) |
 | 6 | Column frequency + fixed-size array | Same `[u32;26]` pattern as Day 4; max vs min extraction for Part 1 vs Part 2 |
+| 7 | Sliding window + bracket state machine | `windows(4)` for ABBA, `windows(3)` for ABA/BAB; track bracket state to split supernet/hypernet |
 
 ---
 
@@ -114,6 +115,9 @@
 | Single-pass dual extraction | 5 | Mine once, fill both passwords simultaneously; Part 1 rides free while Part 2 mines |
 | Zero-filter for min | 6 | `.filter(\|c\| c > 0)` prevents unused array slots from winning min selection |
 | Dual aggregation | 6 | Same parsed data, different reduction (max vs min) for each part |
+| Sliding window | 7 | `windows(n)` for fixed-size palindrome detection (ABBA, ABA) |
+| Bracket state machine | 7 | Track `in_bracket` + `start` index to segment lines without splitting/allocating |
+| Early rejection | 7 | ABBA inside hypernet → immediate `false` (skip remaining segments) |
 
 ---
 
@@ -128,4 +132,4 @@
 
 ---
 
-**Last Updated**: 2026-03-06 (Day 6 complete)
+**Last Updated**: 2026-03-07 (Day 7 complete)
