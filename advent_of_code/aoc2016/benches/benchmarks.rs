@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use aoc2016::solver::{day01, day02, day03, day04, day05};
+use aoc2016::solver::{day01, day02, day03, day04, day05, day06};
 
 fn bench_day01(c: &mut Criterion) {
     let input = include_str!("../inputs/day01.txt");
@@ -40,5 +40,12 @@ fn bench_day05(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, bench_day01, bench_day02, bench_day03, bench_day04, bench_day05);
+fn bench_day06(c: &mut Criterion) {
+    let input = include_str!("../inputs/day06.txt");
+    c.bench_function("day06_combined", |b| b.iter(|| day06::solve(input)));
+    c.bench_function("day06_part1",   |b| b.iter(|| day06::solve_part1(input)));
+    c.bench_function("day06_part2",   |b| b.iter(|| day06::solve_part2(input)));
+}
+
+criterion_group!(benches, bench_day01, bench_day02, bench_day03, bench_day04, bench_day05, bench_day06);
 criterion_main!(benches);

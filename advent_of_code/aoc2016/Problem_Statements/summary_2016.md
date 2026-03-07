@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (5/25 complete)
+**Status**: In Progress (6/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 5/25 |
+| **Progress** | 6/25 |
 | **Total Runtime** | 262.5ms |
-| **Average per Day** | 52.5ms |
-| **Fastest Day** | Day 1 (13.5us) |
+| **Average per Day** | 43.8ms |
+| **Fastest Day** | Day 6 (8.1us) |
 | **Slowest Day** | Day 5 (262ms) |
 | **Mission Integration** | None yet |
-| **Patterns Extracted** | 11 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass |
+| **Patterns Extracted** | 13 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays |
 
-**1-Second Goal**: 262.5ms / 1,000ms (26.3% used after 5 days) --- back on track after Rayon optimization
+**1-Second Goal**: 262.5ms / 1,000ms (26.3% used after 6 days) --- comfortably on track
 
 ---
 
@@ -30,7 +30,7 @@
 | [3](days/day03_function_guide.md) | 119.4µs | 118.9µs | 121.3µs | Triangle inequality + chunks | None | Parse dominates; sort vs direct identical |
 | [4](days/day04_function_guide.md) | 306.8us | 335.3us | 331.8us | Frequency sort + Caesar cipher | None | Pre-filter real rooms; zero-copy `&str` parsing |
 | [5](days/day05_function_guide.md) | - | - | 262ms | MD5 mining + Rayon | None | Single-pass + parallel batches; 15.5x speedup over naive |
-| [6](days/day06.md) | - | - | - | - | - | |
+| [6](days/day06_function_guide.md) | 8.4us | 7.9us | 8.1us | Column frequency + `[u32;26]` | None | Reuses Day 4 freq array pattern; zero-filter for min |
 | [7](days/day07.md) | - | - | - | - | - | |
 | [8](days/day08.md) | - | - | - | - | - | |
 | [9](days/day09.md) | - | - | - | - | - | |
@@ -61,7 +61,7 @@
 - [Day 3](days/day03_function_guide.md) - Squares With Three Sides | [Code](../src/solver/day03.rs) ✅
 - [Day 4](days/day04_function_guide.md) - Security Through Obscurity | [Code](../src/solver/day04.rs) ✅
 - [Day 5](days/day05_function_guide.md) - How About a Nice Game of Chess? | [Code](../src/solver/day05.rs) ✅
-- [Day 6](days/day06.md) - Signals and Noise
+- [Day 6](days/day06_function_guide.md) - Signals and Noise | [Code](../src/solver/day06.rs) ✅
 - [Day 7](days/day07.md) - Internet Protocol Version 7
 - [Day 8](days/day08.md) - Two-Factor Authentication
 - [Day 9](days/day09.md) - Explosives in Cyberspace
@@ -93,6 +93,7 @@
 | 3 | Triangle inequality + chunks(3) | Sort+1 check vs direct 3-check: identical perf because parsing dominates |
 | 4 | Frequency sort + Caesar cipher | `[u32;26]` array beats HashMap for 26-letter alphabet; zero-copy `&str` parsing |
 | 5 | MD5 mining + Rayon parallel batches | Single-pass dual extraction + parallel batch mining; 15.5x speedup (4.05s -> 262ms) |
+| 6 | Column frequency + fixed-size array | Same `[u32;26]` pattern as Day 4; max vs min extraction for Part 1 vs Part 2 |
 
 ---
 
@@ -100,17 +101,19 @@
 
 | Pattern | Days | Description |
 |---------|------|-------------|
-| Parse-once | 1, 2, 3, 4 | Parse instructions once, reuse parsed data for both parts |
+| Parse-once | 1, 2, 3, 4, 6 | Parse instructions once, reuse parsed data for both parts |
 | Sentinel padding | 2 | Use `b'.'` to pad irregular shapes into rectangles for uniform bounds checking |
 | Array destructuring | 3 | Destructure `&[a, b, c]` in function signature for clean element access |
 | chunks(n) regrouping | 3 | Re-read row-major data as column-major using `chunks(3).flat_map()` |
-| Fixed-size freq array | 4 | `[u32; 26]` beats HashMap for small known character sets |
+| Fixed-size freq array | 4, 6 | `[u32; 26]` beats HashMap for small known character sets |
 | Zero-copy `&str` parsing | 4 | Borrow slices from input instead of allocating `String`s |
 | Byte-level hash check | 5 | Check raw bytes instead of hex string conversion for leading-zero detection |
 | Nibble extraction | 5 | Bitwise `& 0x0F` and `>> 4` to read individual hex characters from hash bytes |
 | Option array filling | 5 | `[Option<char>; 8]` for first-wins positional password assembly |
 | Rayon parallel batches | 5 | Partition index space into chunks, `par_iter` each, sort results to restore order |
 | Single-pass dual extraction | 5 | Mine once, fill both passwords simultaneously; Part 1 rides free while Part 2 mines |
+| Zero-filter for min | 6 | `.filter(\|c\| c > 0)` prevents unused array slots from winning min selection |
+| Dual aggregation | 6 | Same parsed data, different reduction (max vs min) for each part |
 
 ---
 
@@ -125,4 +128,4 @@
 
 ---
 
-**Last Updated**: 2026-03-05 (Day 5 complete)
+**Last Updated**: 2026-03-06 (Day 6 complete)
