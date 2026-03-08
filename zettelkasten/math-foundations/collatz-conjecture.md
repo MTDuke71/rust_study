@@ -175,6 +175,7 @@ while n != 1 {
 **Related Concepts**:
 - [[dynamic-programming]] - Overlapping subproblems in chain computation
 - [[number-theory]] - Open problem in number theory
+- [[math-foundations/formal-systems-invariants]] - Collatz is a transformation system where no invariant has been found to prove/disprove convergence (contrast with MIU's clean mod-3 proof)
 
 ---
 

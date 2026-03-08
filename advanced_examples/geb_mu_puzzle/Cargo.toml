@@ -1,0 +1,10 @@
+[package]
+name = "geb_mu_puzzle"
+version = "0.1.0"
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "mu_puzzle"
+path = "src/main.rs"

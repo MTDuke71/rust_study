@@ -77,6 +77,7 @@ members = [
     "advanced_examples/competitive_ring_bfs",
     "advanced_examples/competitive_linked_tree",
     "advanced_examples/weasel_evolution",
+    "advanced_examples/geb_mu_puzzle",
     "advent_of_code/aoc_pattern_recognition",
     "advent_of_code/aoc2015",
     "advent_of_code/aoc2016",
