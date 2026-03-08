@@ -39,7 +39,10 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 
 **Current**: 23/20 notes ✅ 🎉 **GOAL EXCEEDED!**
 
-**Latest additions** (February 26, 2026):
+**Latest additions** (March 7, 2026):
+- `formal-systems-invariants.md` - Formal systems, MIU puzzle (GEB Ch1), invariant proofs, mod-3 impossibility
+
+**Previous additions** (February 26, 2026):
 - `collatz-conjecture.md` - Collatz conjecture, parity observations, computational approaches (Project Euler P14)
 - `project-euler-p014.md` - Longest Collatz sequence, memoization, even-number elimination
 

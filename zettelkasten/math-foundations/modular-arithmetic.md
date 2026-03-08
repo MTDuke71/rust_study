@@ -408,6 +408,7 @@ x ≡ aₖ (mod nₖ)
 **Advanced**:
 - [[math-foundations/number-theory-basics]] - Broader context
 - [[math-foundations/chinese-remainder-theorem]] - CRT and system of congruences
+- [[math-foundations/formal-systems-invariants]] - Mod-3 invariant proves MU unreachable from MI (GEB Chapter 1)
 - [[cryptography-foundations]] - RSA, Diffie-Hellman
 
 ---

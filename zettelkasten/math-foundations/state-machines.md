@@ -321,6 +321,7 @@ impl Module {
 - [[complexity-theory]] - State space size affects computational complexity
 - [[pigeonhole-principle-cycle-detection]] - Finite state spaces must cycle
 - [[number-theory-basics]] - Cycle alignment via LCM
+- [[math-foundations/formal-systems-invariants]] - Formal systems generalize state machines with string rewriting rules (MIU puzzle)
 
 **Applications**:
 - **Regular expressions**: NFA/DFA for pattern matching
