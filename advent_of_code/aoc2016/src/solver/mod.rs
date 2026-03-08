@@ -7,6 +7,7 @@ pub mod day04;
 pub mod day05;
 pub mod day06;
 pub mod day07;
+pub mod day08;
 
 pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
     match day {
@@ -36,6 +37,10 @@ pub fn run_day(day: usize, input: &str) -> Result<(String, String)> {
         },
         7 => {
             let (p1, p2) = day07::solve(input);
+            Ok((p1, p2))
+        },
+        8 => {
+            let (p1, p2) = day08::solve(input);
             Ok((p1, p2))
         },
 
