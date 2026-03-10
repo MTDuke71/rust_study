@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (8/25 complete)
+**Status**: In Progress (9/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 8/25 |
+| **Progress** | 9/25 |
 | **Total Runtime** | 263.2ms |
-| **Average per Day** | 32.9ms |
+| **Average per Day** | 29.2ms |
 | **Fastest Day** | Day 6 (8.1us) |
 | **Slowest Day** | Day 5 (262ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 19 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation |
+| **Patterns Extracted** | 22 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion |
 
-**1-Second Goal**: 263.2ms / 1,000ms (26.3% used after 8 days) --- comfortably on track
+**1-Second Goal**: 263.2ms / 1,000ms (26.3% used after 9 days) --- comfortably on track
 
 ---
 
@@ -33,7 +33,7 @@
 | [6](days/day06_function_guide.md) | 8.4us | 7.9us | 8.1us | Column frequency + `[u32;26]` | None | Reuses Day 4 freq array pattern; zero-filter for min |
 | [7](days/day07_function_guide.md) | 255us | 436us | 713us | Sliding window + bracket state machine | None | P1 streams zero-alloc; P2 collects segments for cross-match |
 | [8](days/day08_function_guide.md) | 17.7µs | 18.3µs | 18.2µs | Screen simulation + modular rotation | Mission 6 | First mission integration; interactive viz with crossterm |
-| [9](days/day09.md) | - | - | - | - | - | |
+| [9](days/day09_function_guide.md) | 157ns | 17.3µs | 17.5µs | Pointer walk + slice recursion | None | Length-only: 11.6B chars computed without building string |
 | [10](days/day10.md) | - | - | - | - | - | |
 | [11](days/day11.md) | - | - | - | - | - | |
 | [12](days/day12.md) | - | - | - | - | - | |
@@ -64,7 +64,7 @@
 - [Day 6](days/day06_function_guide.md) - Signals and Noise | [Code](../src/solver/day06.rs) ✅
 - [Day 7](days/day07_function_guide.md) - Internet Protocol Version 7 | [Code](../src/solver/day07.rs) ✅
 - [Day 8](days/day08_function_guide.md) - Two-Factor Authentication | [Code](../src/solver/day08.rs) | [Viz](../examples/day08_viz.rs) ✅
-- [Day 9](days/day09.md) - Explosives in Cyberspace
+- [Day 9](days/day09_function_guide.md) - Explosives in Cyberspace | [Code](../src/solver/day09.rs) ✅
 - [Day 10](days/day10.md) - Balance Bots
 - [Day 11](days/day11.md) - Radioisotope Thermoelectric Generators
 - [Day 12](days/day12.md) - Leonardo's Monorail
@@ -96,6 +96,7 @@
 | 6 | Column frequency + fixed-size array | Same `[u32;26]` pattern as Day 4; max vs min extraction for Part 1 vs Part 2 |
 | 7 | Sliding window + bracket state machine | `windows(4)` for ABBA, `windows(3)` for ABA/BAB; track bracket state to split supernet/hypernet |
 | 8 | Screen simulation + modular rotation | Apply rect/rotate to `Grid<bool>`; modular arithmetic for wrap-around; Part 2 reads pixel art letters |
+| 9 | Pointer walk + slice recursion | Byte-level scan with manual index jumps; Part 2 recurses on sub-slices to handle nested markers |
 
 ---
 
@@ -122,6 +123,12 @@
 | Screen simulation | 8 | Apply instructions sequentially to mutable grid — common in AoC "pixel art" problems |
 | Modular rotation | 8 | `(index + amount) % dimension` for circular shift with natural wrap-around |
 | Temporary copy for rotation | 8 | Copy row/column before writing back to avoid read-after-write corruption |
+| Byte-level scanning | 9 | Work on `&[u8]` for direct indexing and ASCII byte comparisons |
+| Pointer walk with variable jumps | 9 | Manual index `i` with skip-ahead — more natural than iterators for marker parsing |
+| Length-only computation | 9 | Count output bytes without building the string — essential for billion-byte outputs |
+| Slice recursion | 9 | Zero-copy `&data[start..end]` as recursive input for nested marker expansion |
+| Multiplicative nesting | 9 | Nested `(LENxREP)` markers create exponential growth from small input |
+| Same algorithm, different depth | 9 | Part 1 and Part 2 share identical structure; only the counting line differs |
 
 ---
 
@@ -136,4 +143,4 @@
 
 ---
 
-**Last Updated**: 2026-03-08 (Day 8 complete)
+**Last Updated**: 2026-03-09 (Day 9 complete)
