@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (9/25 complete)
+**Status**: In Progress (10/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 9/25 |
-| **Total Runtime** | 263.2ms |
-| **Average per Day** | 29.2ms |
+| **Progress** | 10/25 |
+| **Total Runtime** | 263.3ms |
+| **Average per Day** | 26.3ms |
 | **Fastest Day** | Day 6 (8.1us) |
 | **Slowest Day** | Day 5 (262ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 22 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion |
+| **Patterns Extracted** | 24 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation |
 
-**1-Second Goal**: 263.2ms / 1,000ms (26.3% used after 9 days) --- comfortably on track
+**1-Second Goal**: 263.3ms / 1,000ms (26.3% used after 10 days) --- comfortably on track
 
 ---
 
@@ -34,7 +34,7 @@
 | [7](days/day07_function_guide.md) | 255us | 436us | 713us | Sliding window + bracket state machine | None | P1 streams zero-alloc; P2 collects segments for cross-match |
 | [8](days/day08_function_guide.md) | 17.7µs | 18.3µs | 18.2µs | Screen simulation + modular rotation | Mission 6 | First mission integration; interactive viz with crossterm |
 | [9](days/day09_function_guide.md) | 157ns | 17.3µs | 17.5µs | Pointer walk + slice recursion | None | Length-only: 11.6B chars computed without building string |
-| [10](days/day10.md) | - | - | - | - | - | |
+| [10](days/day10_function_guide.md) | 81.4µs | 70.7µs | 69.0µs | Event-driven simulation | None | HashMap mailbox pattern; bots fire when holding 2 chips |
 | [11](days/day11.md) | - | - | - | - | - | |
 | [12](days/day12.md) | - | - | - | - | - | |
 | [13](days/day13.md) | - | - | - | - | - | |
@@ -65,7 +65,7 @@
 - [Day 7](days/day07_function_guide.md) - Internet Protocol Version 7 | [Code](../src/solver/day07.rs) ✅
 - [Day 8](days/day08_function_guide.md) - Two-Factor Authentication | [Code](../src/solver/day08.rs) | [Viz](../examples/day08_viz.rs) ✅
 - [Day 9](days/day09_function_guide.md) - Explosives in Cyberspace | [Code](../src/solver/day09.rs) ✅
-- [Day 10](days/day10.md) - Balance Bots
+- [Day 10](days/day10_function_guide.md) - Balance Bots | [Code](../src/solver/day10.rs) ✅
 - [Day 11](days/day11.md) - Radioisotope Thermoelectric Generators
 - [Day 12](days/day12.md) - Leonardo's Monorail
 - [Day 13](days/day13.md) - A Maze of Twisty Little Cubicles
@@ -97,6 +97,7 @@
 | 7 | Sliding window + bracket state machine | `windows(4)` for ABBA, `windows(3)` for ABA/BAB; track bracket state to split supernet/hypernet |
 | 8 | Screen simulation + modular rotation | Apply rect/rotate to `Grid<bool>`; modular arithmetic for wrap-around; Part 2 reads pixel art letters |
 | 9 | Pointer walk + slice recursion | Byte-level scan with manual index jumps; Part 2 recurses on sub-slices to handle nested markers |
+| 10 | Event-driven simulation | Bots fire when holding 2 chips; HashMap as mailbox; parameterized target search |
 
 ---
 
@@ -129,6 +130,8 @@
 | Slice recursion | 9 | Zero-copy `&data[start..end]` as recursive input for nested marker expansion |
 | Multiplicative nesting | 9 | Nested `(LENxREP)` markers create exponential growth from small input |
 | Same algorithm, different depth | 9 | Part 1 and Part 2 share identical structure; only the counting line differs |
+| Event-driven simulation | 10 | Bots fire when accumulating 2 inputs — dataflow network processing |
+| Enum-tagged destinations | 10 | `Destination::Bot` vs `Output` — compiler-enforced exhaustive handling |
 
 ---
 
@@ -143,4 +146,4 @@
 
 ---
 
-**Last Updated**: 2026-03-09 (Day 9 complete)
+**Last Updated**: 2026-03-10 (Day 10 complete)

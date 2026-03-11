@@ -1,0 +1,321 @@
+Day 10: Balance Bots — Chip Flow Diagram
+==========================================
+
+=== INITIAL CHIP ASSIGNMENTS ===
+
+  value  2 ──→ bot 130
+  value  3 ──→ bot 208
+  value  5 ──→ bot 200
+  value  7 ──→ bot 174
+  value 11 ──→ bot 136
+  value 13 ──→ bot 150
+  value 17 ──→ bot 48
+  value 19 ──→ bot 208
+  value 23 ──→ bot 70
+  value 29 ──→ bot 34
+  value 31 ──→ bot 85
+  value 37 ──→ bot 97
+  value 41 ──→ bot 99
+  value 43 ──→ bot 40
+  value 47 ──→ bot 167
+  value 53 ──→ bot 153
+  value 59 ──→ bot 39
+  value 61 ──→ bot 209
+  value 67 ──→ bot 4
+  value 71 ──→ bot 52
+  value 73 ──→ bot 154
+
+=== SIMULATION TRACE ===
+
+Step   1: bot 208 fires  [ 3, 19]  ──→  low( 3) to bot 70        high(19) to bot 45      
+Step   2: bot  70 fires  [ 3, 23]  ──→  low( 3) to bot 174       high(23) to bot 45      
+Step   3: bot  45 fires  [19, 23]  ──→  low(19) to bot 27        high(23) to bot 33      
+Step   4: bot 174 fires  [ 3,  7]  ──→  low( 3) to bot 99        high( 7) to bot 27      
+Step   5: bot  27 fires  [ 7, 19]  ──→  low( 7) to bot 47        high(19) to bot 33      
+Step   6: bot  99 fires  [ 3, 41]  ──→  low( 3) to bot 52        high(41) to bot 47      
+Step   7: bot  33 fires  [19, 23]  ──→  low(19) to bot 161       high(23) to bot 151     
+Step   8: bot  47 fires  [ 7, 41]  ──→  low( 7) to bot 207       high(41) to bot 161     
+Step   9: bot  52 fires  [ 3, 71]  ──→  low( 3) to bot 150       high(71) to bot 207     
+Step  10: bot 150 fires  [ 3, 13]  ──→  low( 3) to bot 48        high(13) to bot 20      
+Step  11: bot 161 fires  [19, 41]  ──→  low(19) to bot 135       high(41) to bot 151     
+Step  12: bot 207 fires  [ 7, 71]  ──→  low( 7) to bot 20        high(71) to bot 135     
+Step  13: bot  20 fires  [ 7, 13]  ──→  low( 7) to bot 123       high(13) to bot 80      
+Step  14: bot  48 fires  [ 3, 17]  ──→  low( 3) to bot 200       high(17) to bot 123     
+Step  15: bot 135 fires  [19, 71]  ──→  low(19) to bot 80        high(71) to bot 100     
+Step  16: bot 151 fires  [23, 41]  ──→  low(23) to bot 100       high(41) to bot 188     
+Step  17: bot  80 fires  [13, 19]  ──→  low(13) to bot 37        high(19) to bot 156     
+Step  18: bot 100 fires  [23, 71]  ──→  low(23) to bot 156       high(71) to bot 188     
+Step  19: bot 123 fires  [ 7, 17]  ──→  low( 7) to bot 141       high(17) to bot 37      
+Step  20: bot 200 fires  [ 3,  5]  ──→  low( 3) to bot 40        high( 5) to bot 141     
+Step  21: bot  37 fires  [13, 17]  ──→  low(13) to bot 1         high(17) to bot 101     
+Step  22: bot  40 fires  [ 3, 43]  ──→  low( 3) to bot 85        high(43) to bot 172     
+Step  23: bot 141 fires  [ 5,  7]  ──→  low( 5) to bot 172       high( 7) to bot 1       
+Step  24: bot 156 fires  [19, 23]  ──→  low(19) to bot 101       high(23) to bot 137     
+Step  25: bot 188 fires  [41, 71]  ──→  low(41) to bot 137       high(71) to bot 106     
+Step  26: bot   1 fires  [ 7, 13]  ──→  low( 7) to bot 66        high(13) to bot 119     
+Step  27: bot  85 fires  [ 3, 31]  ──→  low( 3) to bot 154       high(31) to bot 84      
+Step  28: bot 101 fires  [17, 19]  ──→  low(17) to bot 119       high(19) to bot 32      
+Step  29: bot 137 fires  [23, 41]  ──→  low(23) to bot 32        high(41) to bot 106     
+Step  30: bot 172 fires  [ 5, 43]  ──→  low( 5) to bot 84        high(43) to bot 66      
+Step  31: bot  32 fires  [19, 23]  ──→  low(19) to bot 206       high(23) to bot 199     
+Step  32: bot  66 fires  [ 7, 43]  ──→  low( 7) to bot 185       high(43) to bot 118     
+Step  33: bot  84 fires  [ 5, 31]  ──→  low( 5) to bot 25        high(31) to bot 185     
+Step  34: bot 106 fires  [41, 71]  ──→  low(41) to bot 199       high(71) to bot 64      
+Step  35: bot 119 fires  [13, 17]  ──→  low(13) to bot 118       high(17) to bot 206     
+Step  36: bot 154 fires  [ 3, 73]  ──→  low( 3) to bot 153       high(73) to bot 25      
+Step  37: bot  25 fires  [ 5, 73]  ──→  low( 5) to bot 8         high(73) to bot 193     
+Step  38: bot 118 fires  [13, 43]  ──→  low(13) to bot 102       high(43) to bot 53      
+Step  39: bot 153 fires  [ 3, 53]  ──→  low( 3) to bot 167       high(53) to bot 8       
+Step  40: bot 185 fires  [ 7, 31]  ──→  low( 7) to bot 193       high(31) to bot 102     
+Step  41: bot 199 fires  [23, 41]  ──→  low(23) to bot 178       high(41) to bot 64      
+Step  42: bot 206 fires  [17, 19]  ──→  low(17) to bot 53        high(19) to bot 178     
+Step  43: bot   8 fires  [ 5, 53]  ──→  low( 5) to bot 16        high(53) to bot 38      
+Step  44: bot  53 fires  [17, 43]  ──→  low(17) to bot 31        high(43) to bot 181     
+Step  45: bot  64 fires  [41, 71]  ──→  low(41) to bot 35        high(71) to bot 111     
+Step  46: bot 102 fires  [13, 31]  ──→  low(13) to bot 116       high(31) to bot 31      
+Step  47: bot 167 fires  [ 3, 47]  ──→  low( 3) to bot 4         high(47) to bot 16      
+Step  48: bot 178 fires  [19, 23]  ──→  low(19) to bot 181       high(23) to bot 35      
+Step  49: bot 193 fires  [ 7, 73]  ──→  low( 7) to bot 38        high(73) to bot 116     
+Step  50: bot   4 fires  [ 3, 67]  ──→  low( 3) to bot 136       high(67) to bot 55      
+Step  51: bot  16 fires  [ 5, 47]  ──→  low( 5) to bot 55        high(47) to bot 17      
+Step  52: bot  31 fires  [17, 31]  ──→  low(17) to bot 176       high(31) to bot 54      
+Step  53: bot  35 fires  [23, 41]  ──→  low(23) to bot 148       high(41) to bot 111     
+Step  54: bot  38 fires  [ 7, 53]  ──→  low( 7) to bot 17        high(53) to bot 179     
+Step  55: bot 116 fires  [13, 73]  ──→  low(13) to bot 179       high(73) to bot 176     
+Step  56: bot 181 fires  [19, 43]  ──→  low(19) to bot 54        high(43) to bot 148     
+Step  57: bot  17 fires  [ 7, 47]  ──→  low( 7) to bot 2         high(47) to bot 73      
+Step  58: bot  54 fires  [19, 31]  ──→  low(19) to bot 3         high(31) to bot 59      
+Step  59: bot  55 fires  [ 5, 67]  ──→  low( 5) to bot 94        high(67) to bot 2       
+Step  60: bot 111 fires  [41, 71]  ──→  low(41) to bot 10        high(71) to bot 177     
+Step  61: bot 136 fires  [ 3, 11]  ──→  low( 3) to bot 209       high(11) to bot 94      
+Step  62: bot 148 fires  [23, 43]  ──→  low(23) to bot 59        high(43) to bot 10      
+Step  63: bot 176 fires  [17, 73]  ──→  low(17) to bot 110       high(73) to bot 3       
+Step  64: bot 179 fires  [13, 53]  ──→  low(13) to bot 73        high(53) to bot 110     
+Step  65: bot   2 fires  [ 7, 67]  ──→  low( 7) to bot 143       high(67) to bot 105     
+Step  66: bot   3 fires  [19, 73]  ──→  low(19) to bot 63        high(73) to bot 189     
+Step  67: bot  10 fires  [41, 43]  ──→  low(41) to bot 124       high(43) to bot 177     
+Step  68: bot  59 fires  [23, 31]  ──→  low(23) to bot 189       high(31) to bot 124     
+Step  69: bot  73 fires  [13, 47]  ──→  low(13) to bot 105       high(47) to bot 14      
+Step  70: bot  94 fires  [ 5, 11]  ──→  low( 5) to bot 121       high(11) to bot 143     
+Step  71: bot 110 fires  [17, 53]  ──→  low(17) to bot 14        high(53) to bot 63      
+Step  72: bot 209 fires  [ 3, 61]  ──→  low( 3) to bot 34        high(61) to bot 121     
+Step  73: bot  14 fires  [17, 47]  ──→  low(17) to bot 90        high(47) to bot 184     
+Step  74: bot  34 fires  [ 3, 29]  ──→  low( 3) to bot 39        high(29) to bot 42      
+Step  75: bot  63 fires  [19, 53]  ──→  low(19) to bot 184       high(53) to bot 62      
+Step  76: bot 105 fires  [13, 67]  ──→  low(13) to bot 125       high(67) to bot 90      
+Step  77: bot 121 fires  [ 5, 61]  ──→  low( 5) to bot 42        high(61) to bot 109     
+Step  78: bot 124 fires  [31, 41]  ──→  low(31) to bot 168       high(41) to bot 203     
+Step  79: bot 143 fires  [ 7, 11]  ──→  low( 7) to bot 109       high(11) to bot 125     
+Step  80: bot 177 fires  [43, 71]  ──→  low(43) to bot 203       high(71) to bot 28      
+Step  81: bot 189 fires  [23, 73]  ──→  low(23) to bot 62        high(73) to bot 168     
+Step  82: bot  39 fires  [ 3, 59]  ──→  low( 3) to bot 130       high(59) to bot 164     
+Step  83: bot  42 fires  [ 5, 29]  ──→  low( 5) to bot 164       high(29) to bot 81      
+Step  84: bot  62 fires  [23, 53]  ──→  low(23) to bot 107       high(53) to bot 115     
+Step  85: bot  90 fires  [17, 67]  ──→  low(17) to bot 140       high(67) to bot 83      
+Step  86: bot 109 fires  [ 7, 61]  ──→  low( 7) to bot 81        high(61) to bot 12      
+Step  87: bot 125 fires  [11, 13]  ──→  low(11) to bot 12        high(13) to bot 140     
+Step  88: bot 168 fires  [31, 73]  ──→  low(31) to bot 115       high(73) to bot 197     
+Step  89: bot 184 fires  [19, 47]  ──→  low(19) to bot 83        high(47) to bot 107     
+Step  90: bot 203 fires  [41, 43]  ──→  low(41) to bot 197       high(43) to bot 28      
+Step  91: bot  12 fires  [11, 61]  ──→  low(11) to bot 88        high(61) to bot 29      
+Step  92: bot  28 fires  [43, 71]  ──→  low(43) to bot 65        high(71) to bot 87      
+Step  93: bot  81 fires  [ 7, 29]  ──→  low( 7) to bot 180       high(29) to bot 88      
+Step  94: bot  83 fires  [19, 67]  ──→  low(19) to bot 71        high(67) to bot 162     
+Step  95: bot 107 fires  [23, 47]  ──→  low(23) to bot 162       high(47) to bot 113     
+Step  96: bot 115 fires  [31, 53]  ──→  low(31) to bot 113       high(53) to bot 202     
+Step  97: bot 130 fires  [ 2,  3]  ──→  low( 2) to bot 97        high( 3) to bot 26      
+Step  98: bot 140 fires  [13, 17]  ──→  low(13) to bot 29        high(17) to bot 71      
+Step  99: bot 164 fires  [ 5, 59]  ──→  low( 5) to bot 26        high(59) to bot 180     
+Step 100: bot 197 fires  [41, 73]  ──→  low(41) to bot 202       high(73) to bot 65      
+Step 101: bot  26 fires  [ 3,  5]  ──→  low( 3) to bot 152       high( 5) to bot 95      
+Step 102: bot  29 fires  [13, 61]  ──→  low(13) to bot 126       high(61) to bot 157     
+Step 103: bot  65 fires  [43, 73]  ──→  low(43) to bot 49        high(73) to bot 87      
+Step 104: bot  71 fires  [17, 19]  ──→  low(17) to bot 157       high(19) to bot 163     
+Step 105: bot  88 fires  [11, 29]  ──→  low(11) to bot 56        high(29) to bot 126     
+Step 106: bot  97 fires  [ 2, 37]  ──→  low( 2) to OUTPUT 13     high(37) to bot 152     
+Step 107: bot 113 fires  [31, 47]  ──→  low(31) to bot 128       high(47) to bot 11      
+Step 108: bot 162 fires  [23, 67]  ──→  low(23) to bot 163       high(67) to bot 128     
+Step 109: bot 180 fires  [ 7, 59]  ──→  low( 7) to bot 95        high(59) to bot 56      
+Step 110: bot 202 fires  [41, 53]  ──→  low(41) to bot 11        high(53) to bot 49      
+Step 111: bot  11 fires  [41, 47]  ──→  low(41) to bot 51        high(47) to bot 145     
+Step 112: bot  49 fires  [43, 53]  ──→  low(43) to bot 145       high(53) to bot 58      
+Step 113: bot  56 fires  [11, 59]  ──→  low(11) to bot 191       high(59) to bot 146     
+Step 114: bot  87 fires  [71, 73]  ──→  low(71) to bot 58        high(73) to bot 46      
+Step 115: bot  95 fires  [ 5,  7]  ──→  low( 5) to bot 186       high( 7) to bot 191     
+Step 116: bot 126 fires  [13, 29]  ──→  low(13) to bot 146       high(29) to bot 131     
+Step 117: bot 128 fires  [31, 67]  ──→  low(31) to bot 24        high(67) to bot 51      
+Step 118: bot 152 fires  [ 3, 37]  ──→  low( 3) to OUTPUT 20     high(37) to bot 186     
+Step 119: bot 157 fires  [17, 61]  ──→  low(17) to bot 131       high(61) to bot 91       ◄◄◄ PART 1 ANSWER: This bot compares 17 and 61!
+Step 120: bot 163 fires  [19, 23]  ──→  low(19) to bot 91        high(23) to bot 24      
+Step 121: bot  24 fires  [23, 31]  ──→  low(23) to bot 129       high(31) to bot 192     
+Step 122: bot  51 fires  [41, 67]  ──→  low(41) to bot 192       high(67) to bot 72      
+Step 123: bot  58 fires  [53, 71]  ──→  low(53) to bot 166       high(71) to bot 46      
+Step 124: bot  91 fires  [19, 61]  ──→  low(19) to bot 36        high(61) to bot 129     
+Step 125: bot 131 fires  [17, 29]  ──→  low(17) to bot 6         high(29) to bot 36      
+Step 126: bot 145 fires  [43, 47]  ──→  low(43) to bot 72        high(47) to bot 166     
+Step 127: bot 146 fires  [13, 59]  ──→  low(13) to bot 117       high(59) to bot 6       
+Step 128: bot 186 fires  [ 5, 37]  ──→  low( 5) to OUTPUT 1      high(37) to bot 104     
+Step 129: bot 191 fires  [ 7, 11]  ──→  low( 7) to bot 104       high(11) to bot 117     
+Step 130: bot   6 fires  [17, 59]  ──→  low(17) to bot 22        high(59) to bot 134     
+Step 131: bot  36 fires  [19, 29]  ──→  low(19) to bot 134       high(29) to bot 183     
+Step 132: bot  46 fires  [71, 73]  ──→  low(71) to bot 96        high(73) to bot 187     
+Step 133: bot  72 fires  [43, 67]  ──→  low(43) to bot 9         high(67) to bot 77      
+Step 134: bot 104 fires  [ 7, 37]  ──→  low( 7) to OUTPUT 2      high(37) to bot 43      
+Step 135: bot 117 fires  [11, 13]  ──→  low(11) to bot 43        high(13) to bot 22      
+Step 136: bot 129 fires  [23, 61]  ──→  low(23) to bot 183       high(61) to bot 132     
+Step 137: bot 166 fires  [47, 53]  ──→  low(47) to bot 77        high(53) to bot 96      
+Step 138: bot 192 fires  [31, 41]  ──→  low(31) to bot 132       high(41) to bot 9       
+Step 139: bot   9 fires  [41, 43]  ──→  low(41) to bot 23        high(43) to bot 7       
+Step 140: bot  22 fires  [13, 17]  ──→  low(13) to bot 194       high(17) to bot 13      
+Step 141: bot  43 fires  [11, 37]  ──→  low(11) to OUTPUT 12     high(37) to bot 194     
+Step 142: bot  77 fires  [47, 67]  ──→  low(47) to bot 7         high(67) to bot 86      
+Step 143: bot  96 fires  [53, 71]  ──→  low(53) to bot 86        high(71) to bot 187     
+Step 144: bot 132 fires  [31, 61]  ──→  low(31) to bot 198       high(61) to bot 23      
+Step 145: bot 134 fires  [19, 59]  ──→  low(19) to bot 13        high(59) to bot 112     
+Step 146: bot 183 fires  [23, 29]  ──→  low(23) to bot 112       high(29) to bot 198     
+Step 147: bot   7 fires  [43, 47]  ──→  low(43) to bot 173       high(47) to bot 21      
+Step 148: bot  13 fires  [17, 19]  ──→  low(17) to bot 74        high(19) to bot 149     
+Step 149: bot  23 fires  [41, 61]  ──→  low(41) to bot 138       high(61) to bot 173     
+Step 150: bot  86 fires  [53, 67]  ──→  low(53) to bot 21        high(67) to bot 89      
+Step 151: bot 112 fires  [23, 59]  ──→  low(23) to bot 149       high(59) to bot 44      
+Step 152: bot 187 fires  [71, 73]  ──→  low(71) to bot 89        high(73) to bot 142     
+Step 153: bot 194 fires  [13, 37]  ──→  low(13) to OUTPUT 9      high(37) to bot 74      
+Step 154: bot 198 fires  [29, 31]  ──→  low(29) to bot 44        high(31) to bot 138     
+Step 155: bot  21 fires  [47, 53]  ──→  low(47) to bot 79        high(53) to bot 76      
+Step 156: bot  44 fires  [29, 59]  ──→  low(29) to bot 75        high(59) to bot 182     
+Step 157: bot  74 fires  [17, 37]  ──→  low(17) to OUTPUT 16     high(37) to bot 57      
+Step 158: bot  89 fires  [67, 71]  ──→  low(67) to bot 76        high(71) to bot 142     
+Step 159: bot 138 fires  [31, 41]  ──→  low(31) to bot 182       high(41) to bot 93      
+Step 160: bot 149 fires  [19, 23]  ──→  low(19) to bot 57        high(23) to bot 75      
+Step 161: bot 173 fires  [43, 61]  ──→  low(43) to bot 93        high(61) to bot 79      
+Step 162: bot  57 fires  [19, 37]  ──→  low(19) to OUTPUT 4      high(37) to bot 5       
+Step 163: bot  75 fires  [23, 29]  ──→  low(23) to bot 5         high(29) to bot 92      
+Step 164: bot  76 fires  [53, 67]  ──→  low(53) to bot 147       high(67) to bot 190     
+Step 165: bot  79 fires  [47, 61]  ──→  low(47) to bot 108       high(61) to bot 147     
+Step 166: bot  93 fires  [41, 43]  ──→  low(41) to bot 82        high(43) to bot 108     
+Step 167: bot 142 fires  [71, 73]  ──→  low(71) to bot 190       high(73) to bot 133     
+Step 168: bot 182 fires  [31, 59]  ──→  low(31) to bot 92        high(59) to bot 82      
+Step 169: bot   5 fires  [23, 37]  ──→  low(23) to OUTPUT 7      high(37) to bot 60      
+Step 170: bot  82 fires  [41, 59]  ──→  low(41) to bot 171       high(59) to bot 144     
+Step 171: bot  92 fires  [29, 31]  ──→  low(29) to bot 60        high(31) to bot 171     
+Step 172: bot 108 fires  [43, 47]  ──→  low(43) to bot 144       high(47) to bot 61      
+Step 173: bot 147 fires  [53, 61]  ──→  low(53) to bot 61        high(61) to bot 68      
+Step 174: bot 190 fires  [67, 71]  ──→  low(67) to bot 68        high(71) to bot 133     
+Step 175: bot  60 fires  [29, 37]  ──→  low(29) to OUTPUT 10     high(37) to bot 165     
+Step 176: bot  61 fires  [47, 53]  ──→  low(47) to bot 195       high(53) to bot 103     
+Step 177: bot  68 fires  [61, 67]  ──→  low(61) to bot 103       high(67) to bot 139     
+Step 178: bot 133 fires  [71, 73]  ──→  low(71) to bot 139       high(73) to bot 114     
+Step 179: bot 144 fires  [43, 59]  ──→  low(43) to bot 205       high(59) to bot 195     
+Step 180: bot 171 fires  [31, 41]  ──→  low(31) to bot 165       high(41) to bot 205     
+Step 181: bot 103 fires  [53, 61]  ──→  low(53) to bot 69        high(61) to bot 127     
+Step 182: bot 139 fires  [67, 71]  ──→  low(67) to bot 127       high(71) to bot 114     
+Step 183: bot 165 fires  [31, 37]  ──→  low(31) to OUTPUT 0      high(37) to bot 159     
+Step 184: bot 195 fires  [47, 59]  ──→  low(47) to bot 0         high(59) to bot 69      
+Step 185: bot 205 fires  [41, 43]  ──→  low(41) to bot 159       high(43) to bot 0       
+Step 186: bot   0 fires  [43, 47]  ──→  low(43) to bot 175       high(47) to bot 201     
+Step 187: bot  69 fires  [53, 59]  ──→  low(53) to bot 201       high(59) to bot 15      
+Step 188: bot 114 fires  [71, 73]  ──→  low(71) to bot 204       high(73) to bot 19      
+Step 189: bot 127 fires  [61, 67]  ──→  low(61) to bot 15        high(67) to bot 204     
+Step 190: bot 159 fires  [37, 41]  ──→  low(37) to OUTPUT 8      high(41) to bot 175     
+Step 191: bot  15 fires  [59, 61]  ──→  low(59) to bot 155       high(61) to bot 122     
+Step 192: bot 175 fires  [41, 43]  ──→  low(41) to OUTPUT 3      high(43) to bot 158     
+Step 193: bot 201 fires  [47, 53]  ──→  low(47) to bot 158       high(53) to bot 155     
+Step 194: bot 204 fires  [67, 71]  ──→  low(67) to bot 122       high(71) to bot 19      
+Step 195: bot  19 fires  [71, 73]  ──→  low(71) to bot 170       high(73) to bot 120     
+Step 196: bot 122 fires  [61, 67]  ──→  low(61) to bot 41        high(67) to bot 170     
+Step 197: bot 155 fires  [53, 59]  ──→  low(53) to bot 196       high(59) to bot 41      
+Step 198: bot 158 fires  [43, 47]  ──→  low(43) to OUTPUT 17     high(47) to bot 196     
+Step 199: bot  41 fires  [59, 61]  ──→  low(59) to bot 30        high(61) to bot 98      
+Step 200: bot 170 fires  [67, 71]  ──→  low(67) to bot 98        high(71) to bot 120     
+Step 201: bot 196 fires  [47, 53]  ──→  low(47) to OUTPUT 15     high(53) to bot 30      
+Step 202: bot  30 fires  [53, 59]  ──→  low(53) to OUTPUT 14     high(59) to bot 67      
+Step 203: bot  98 fires  [61, 67]  ──→  low(61) to bot 67        high(67) to bot 160     
+Step 204: bot 120 fires  [71, 73]  ──→  low(71) to bot 160       high(73) to bot 50      
+Step 205: bot  67 fires  [59, 61]  ──→  low(59) to OUTPUT 6      high(61) to bot 18      
+Step 206: bot 160 fires  [67, 71]  ──→  low(67) to bot 18        high(71) to bot 50      
+Step 207: bot  18 fires  [61, 67]  ──→  low(61) to OUTPUT 5      high(67) to bot 78      
+Step 208: bot  50 fires  [71, 73]  ──→  low(71) to bot 78        high(73) to bot 169     
+Step 209: bot  78 fires  [67, 71]  ──→  low(67) to OUTPUT 18     high(71) to bot 169     
+Step 210: bot 169 fires  [71, 73]  ──→  low(71) to OUTPUT 19     high(73) to OUTPUT 11   
+
+=== SUMMARY ===
+
+Total steps (bot firings): 210
+Chips in system: 21
+Output bins filled: 21
+
+=== OUTPUT BINS ===
+
+  output  0 = 31 ◄ Part 2
+  output  1 =  5 ◄ Part 2
+  output  2 =  7 ◄ Part 2
+  output  3 = 41
+  output  4 = 19
+  output  5 = 61
+  output  6 = 59
+  output  7 = 23
+  output  8 = 37
+  output  9 = 13
+  output 10 = 29
+  output 11 = 73
+  output 12 = 11
+  output 13 =  2
+  output 14 = 53
+  output 15 = 47
+  output 16 = 17
+  output 17 = 43
+  output 18 = 67
+  output 19 = 71
+  output 20 =  3
+
+Part 2: output[0] × output[1] × output[2] = 31 × 5 × 7 = 1085
+
+=== CHIP 17 AND CHIP 61 JOURNEY ===
+
+Chip 17:
+  value 17 ──→ bot 48
+  → bot 48 (high) ──→ bot 123
+  → bot 123 (high) ──→ bot 37
+  → bot 37 (high) ──→ bot 101
+  → bot 101 (low) ──→ bot 119
+  → bot 119 (high) ──→ bot 206
+  → bot 206 (low) ──→ bot 53
+  → bot 53 (low) ──→ bot 31
+  → bot 31 (low) ──→ bot 176
+  → bot 176 (low) ──→ bot 110
+  → bot 110 (low) ──→ bot 14
+  → bot 14 (low) ──→ bot 90
+  → bot 90 (low) ──→ bot 140
+  → bot 140 (high) ──→ bot 71
+  → bot 71 (low) ──→ bot 157
+  → bot 157 (low) ──→ bot 131
+  → bot 131 (low) ──→ bot 6
+  → bot 6 (low) ──→ bot 22
+  → bot 22 (high) ──→ bot 13
+  → bot 13 (low) ──→ bot 74
+  → bot 74 (low) ──→ OUTPUT 16
+
+Chip 61:
+  value 61 ──→ bot 209
+  → bot 209 (high) ──→ bot 121
+  → bot 121 (high) ──→ bot 109
+  → bot 109 (high) ──→ bot 12
+  → bot 12 (high) ──→ bot 29
+  → bot 29 (high) ──→ bot 157
+  → bot 157 (high) ──→ bot 91
+  → bot 91 (high) ──→ bot 129
+  → bot 129 (high) ──→ bot 132
+  → bot 132 (high) ──→ bot 23
+  → bot 23 (high) ──→ bot 173
+  → bot 173 (high) ──→ bot 79
+  → bot 79 (high) ──→ bot 147
+  → bot 147 (high) ──→ bot 68
+  → bot 68 (low) ──→ bot 103
+  → bot 103 (high) ──→ bot 127
+  → bot 127 (low) ──→ bot 15
+  → bot 15 (high) ──→ bot 122
+  → bot 122 (low) ──→ bot 41
+  → bot 41 (high) ──→ bot 98
+  → bot 98 (low) ──→ bot 67
+  → bot 67 (high) ──→ bot 18
+  → bot 18 (low) ──→ OUTPUT 5
