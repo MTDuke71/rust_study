@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (10/25 complete)
+**Status**: In Progress (11/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 10/25 |
-| **Total Runtime** | 263.3ms |
-| **Average per Day** | 26.3ms |
+| **Progress** | 11/25 |
+| **Total Runtime** | 293.9ms |
+| **Average per Day** | 26.7ms |
 | **Fastest Day** | Day 6 (8.1us) |
 | **Slowest Day** | Day 5 (262ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 24 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation |
+| **Patterns Extracted** | 27 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS |
 
-**1-Second Goal**: 263.3ms / 1,000ms (26.3% used after 10 days) --- comfortably on track
+**1-Second Goal**: 293.9ms / 1,000ms (29.4% used after 11 days) --- comfortably on track
 
 ---
 
@@ -35,7 +35,7 @@
 | [8](days/day08_function_guide.md) | 17.7µs | 18.3µs | 18.2µs | Screen simulation + modular rotation | Mission 6 | First mission integration; interactive viz with crossterm |
 | [9](days/day09_function_guide.md) | 157ns | 17.3µs | 17.5µs | Pointer walk + slice recursion | None | Length-only: 11.6B chars computed without building string |
 | [10](days/day10_function_guide.md) | 81.4µs | 70.7µs | 69.0µs | Event-driven simulation | None | HashMap mailbox pattern; bots fire when holding 2 chips |
-| [11](days/day11.md) | - | - | - | - | - | |
+| [11](days/day11_function_guide.md) | 4.32ms | 25.98ms | 30.57ms | BFS + canonical state | None | Pair symmetry reduces 1B→400K states |
 | [12](days/day12.md) | - | - | - | - | - | |
 | [13](days/day13.md) | - | - | - | - | - | |
 | [14](days/day14.md) | - | - | - | - | - | |
@@ -66,7 +66,7 @@
 - [Day 8](days/day08_function_guide.md) - Two-Factor Authentication | [Code](../src/solver/day08.rs) | [Viz](../examples/day08_viz.rs) ✅
 - [Day 9](days/day09_function_guide.md) - Explosives in Cyberspace | [Code](../src/solver/day09.rs) ✅
 - [Day 10](days/day10_function_guide.md) - Balance Bots | [Code](../src/solver/day10.rs) ✅
-- [Day 11](days/day11.md) - Radioisotope Thermoelectric Generators
+- [Day 11](days/day11_function_guide.md) - Radioisotope Thermoelectric Generators | [Code](../src/solver/day11.rs) ✅
 - [Day 12](days/day12.md) - Leonardo's Monorail
 - [Day 13](days/day13.md) - A Maze of Twisty Little Cubicles
 - [Day 14](days/day14.md) - One-Time Pad
@@ -98,6 +98,7 @@
 | 8 | Screen simulation + modular rotation | Apply rect/rotate to `Grid<bool>`; modular arithmetic for wrap-around; Part 2 reads pixel art letters |
 | 9 | Pointer walk + slice recursion | Byte-level scan with manual index jumps; Part 2 recurses on sub-slices to handle nested markers |
 | 10 | Event-driven simulation | Bots fire when holding 2 chips; HashMap as mailbox; parameterized target search |
+| 11 | BFS + canonical state space | Sort (gen, chip) pairs to exploit element symmetry; reduces 1B states to ~400K |
 
 ---
 
@@ -131,6 +132,9 @@
 | Multiplicative nesting | 9 | Nested `(LENxREP)` markers create exponential growth from small input |
 | Same algorithm, different depth | 9 | Part 1 and Part 2 share identical structure; only the counting line differs |
 | Event-driven simulation | 10 | Bots fire when accumulating 2 inputs — dataflow network processing |
+| BFS shortest path | 11 | Unweighted implicit graph — generate successors on the fly, never build graph |
+| State canonicalization | 11 | Sort interchangeable components to collapse equivalent states (N! reduction) |
+| Symmetry breaking | 11 | Element pairs are fungible — only the (gen_floor, chip_floor) pattern matters |
 | Enum-tagged destinations | 10 | `Destination::Bot` vs `Output` — compiler-enforced exhaustive handling |
 
 ---
@@ -146,4 +150,4 @@
 
 ---
 
-**Last Updated**: 2026-03-10 (Day 10 complete)
+**Last Updated**: 2026-03-11 (Day 11 complete)
