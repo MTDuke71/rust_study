@@ -1,0 +1,393 @@
+Day 11: Radioisotope Thermoelectric Generators — Optimal Path Trace
+===================================================================
+
+Elements (canonical order): ["thulium", "ruthenium", "cobalt", "polonium", "promethium"]
+Optimal solution: 47 steps
+Legend: Th, Ru, Co, Po, PrG/M = generator/microchip, E = elevator
+
+===================================================================
+--- INITIAL STATE ---
+F4 .   .   .   .   .   .   .   .   .   .   . 
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 .   .   .   .   .   .   .   .  PoM  .  PrM
+F1 E  ThG ThM RuG RuM CoG CoM PoG  .  PrG  . 
+
+  Elevator UP: F1 → F2  [2M]
+
+--- Step 1 ---
+F4 .   .   .   .   .   .   .   .   .   .   . 
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 E   .   .   .  RuM  .  CoM  .  PoM  .  PrM
+F1 .  ThG ThM RuG  .  CoG  .  PoG  .  PrG  . 
+
+  Elevator UP: F2 → F3  [2M]
+
+--- Step 2 ---
+F4 .   .   .   .   .   .   .   .   .   .   . 
+F3 E   .   .   .   .   .   .   .  PoM  .  PrM
+F2 .   .   .   .  RuM  .  CoM  .   .   .   . 
+F1 .  ThG ThM RuG  .  CoG  .  PoG  .  PrG  . 
+
+  Elevator UP: F3 → F4  [2M]
+
+--- Step 3 ---
+F4 E   .   .   .   .   .   .   .  PoM  .  PrM
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 .   .   .   .  RuM  .  CoM  .   .   .   . 
+F1 .  ThG ThM RuG  .  CoG  .  PoG  .  PrG  . 
+
+  Elevator DOWN: F4 → F3  [1M]
+
+--- Step 4 ---
+F4 .   .   .   .   .   .   .   .   .   .  PrM
+F3 E   .   .   .   .   .   .   .  PoM  .   . 
+F2 .   .   .   .  RuM  .  CoM  .   .   .   . 
+F1 .  ThG ThM RuG  .  CoG  .  PoG  .  PrG  . 
+
+  Elevator DOWN: F3 → F2  [1M]
+
+--- Step 5 ---
+F4 .   .   .   .   .   .   .   .   .   .  PrM
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 E   .   .   .  RuM  .  CoM  .  PoM  .   . 
+F1 .  ThG ThM RuG  .  CoG  .  PoG  .  PrG  . 
+
+  Elevator UP: F2 → F3  [2M]
+
+--- Step 6 ---
+F4 .   .   .   .   .   .   .   .   .   .  PrM
+F3 E   .   .   .   .   .  CoM  .  PoM  .   . 
+F2 .   .   .   .  RuM  .   .   .   .   .   . 
+F1 .  ThG ThM RuG  .  CoG  .  PoG  .  PrG  . 
+
+  Elevator DOWN: F3 → F2  [1M]
+
+--- Step 7 ---
+F4 .   .   .   .   .   .   .   .   .   .  PrM
+F3 .   .   .   .   .   .   .   .  PoM  .   . 
+F2 E   .   .   .  RuM  .  CoM  .   .   .   . 
+F1 .  ThG ThM RuG  .  CoG  .  PoG  .  PrG  . 
+
+  Elevator DOWN: F2 → F1  [1M]
+
+--- Step 8 ---
+F4 .   .   .   .   .   .   .   .   .   .  PrM
+F3 .   .   .   .   .   .   .   .  PoM  .   . 
+F2 .   .   .   .   .   .  CoM  .   .   .   . 
+F1 E  ThG ThM RuG RuM CoG  .  PoG  .  PrG  . 
+
+  Elevator UP: F1 → F2  [2G]
+
+--- Step 9 ---
+F4 .   .   .   .   .   .  CoM  .   .   .   . 
+F3 .   .   .   .   .   .   .   .   .   .  PrM
+F2 E   .   .   .   .   .   .  PoG PoM PrG  . 
+F1 .  ThG ThM RuG RuM CoG  .   .   .   .   . 
+
+  Elevator UP: F2 → F3  [2G]
+
+--- Step 10 ---
+F4 .   .   .   .   .   .  CoM  .   .   .   . 
+F3 E   .   .   .   .   .   .  PoG  .  PrG PrM
+F2 .   .   .   .   .   .   .   .  PoM  .   . 
+F1 .  ThG ThM RuG RuM CoG  .   .   .   .   . 
+
+  Elevator DOWN: F3 → F2  [1G]
+
+--- Step 11 ---
+F4 .   .   .   .   .   .  CoM  .   .   .   . 
+F3 .   .   .   .   .   .   .   .   .  PrG PrM
+F2 E   .   .   .   .   .   .  PoG PoM  .   . 
+F1 .  ThG ThM RuG RuM CoG  .   .   .   .   . 
+
+  Elevator DOWN: F2 → F1  [1G]
+
+--- Step 12 ---
+F4 .   .   .   .   .   .   .   .  PoM  .   . 
+F3 .   .   .   .   .   .   .   .   .  PrG PrM
+F2 .   .   .   .   .   .  CoM  .   .   .   . 
+F1 E  ThG ThM RuG RuM CoG  .  PoG  .   .   . 
+
+  Elevator UP: F1 → F2  [2M]
+
+--- Step 13 ---
+F4 .   .   .   .   .   .   .   .  PoM  .   . 
+F3 .   .   .   .   .   .   .   .   .  PrG PrM
+F2 E   .  ThM  .  RuM  .  CoM  .   .   .   . 
+F1 .  ThG  .  RuG  .  CoG  .  PoG  .   .   . 
+
+  Elevator DOWN: F2 → F1  [1M]
+
+--- Step 14 ---
+F4 .   .   .   .   .   .   .   .  PoM  .   . 
+F3 .   .   .   .   .   .   .   .   .  PrG PrM
+F2 .   .   .   .  RuM  .  CoM  .   .   .   . 
+F1 E  ThG ThM RuG  .  CoG  .  PoG  .   .   . 
+
+  Elevator UP: F1 → F2  [2G]
+
+--- Step 15 ---
+F4 .   .   .   .  RuM  .   .   .   .   .   . 
+F3 .   .   .   .   .   .   .   .   .  PrG PrM
+F2 E   .   .   .   .  CoG CoM PoG PoM  .   . 
+F1 .  ThG ThM RuG  .   .   .   .   .   .   . 
+
+  Elevator UP: F2 → F3  [2G]
+
+--- Step 16 ---
+F4 .   .   .   .  RuM  .   .   .   .   .   . 
+F3 E   .   .   .   .  CoG  .  PoG  .  PrG PrM
+F2 .   .   .   .   .   .  CoM  .  PoM  .   . 
+F1 .  ThG ThM RuG  .   .   .   .   .   .   . 
+
+  Elevator DOWN: F3 → F2  [1M]
+
+--- Step 17 ---
+F4 .   .   .   .  RuM  .   .   .   .   .   . 
+F3 .   .   .   .   .  CoG  .  PoG  .  PrG  . 
+F2 E   .   .   .   .   .  CoM  .  PoM  .  PrM
+F1 .  ThG ThM RuG  .   .   .   .   .   .   . 
+
+  Elevator UP: F2 → F3  [2M]
+
+--- Step 18 ---
+F4 .   .   .   .  RuM  .   .   .   .   .   . 
+F3 E   .   .   .   .  CoG  .  PoG PoM PrG PrM
+F2 .   .   .   .   .   .  CoM  .   .   .   . 
+F1 .  ThG ThM RuG  .   .   .   .   .   .   . 
+
+  Elevator DOWN: F3 → F2  [1G]
+
+--- Step 19 ---
+F4 .   .   .   .  RuM  .   .   .   .   .   . 
+F3 .   .   .   .   .   .   .  PoG PoM PrG PrM
+F2 E   .   .   .   .  CoG CoM  .   .   .   . 
+F1 .  ThG ThM RuG  .   .   .   .   .   .   . 
+
+  Elevator DOWN: F2 → F1  [1G]
+
+--- Step 20 ---
+F4 .   .   .   .   .   .  CoM  .   .   .   . 
+F3 .   .   .   .   .   .   .  PoG PoM PrG PrM
+F2 .   .   .   .  RuM  .   .   .   .   .   . 
+F1 E  ThG ThM RuG  .  CoG  .   .   .   .   . 
+
+  Elevator UP: F1 → F2  [2G]
+
+--- Step 21 ---
+F4 .   .   .   .   .   .  CoM  .   .   .   . 
+F3 .   .   .   .   .   .   .  PoG PoM PrG PrM
+F2 E   .   .  RuG RuM CoG  .   .   .   .   . 
+F1 .  ThG ThM  .   .   .   .   .   .   .   . 
+
+  Elevator UP: F2 → F3  [2G]
+
+--- Step 22 ---
+F4 .   .   .   .   .   .   .   .   .   .  PrM
+F3 E   .   .  RuG  .  CoG CoM PoG PoM PrG  . 
+F2 .   .   .   .  RuM  .   .   .   .   .   . 
+F1 .  ThG ThM  .   .   .   .   .   .   .   . 
+
+  Elevator UP: F3 → F4  [2G]
+
+--- Step 23 ---
+F4 E   .   .   .   .   .   .  PoG  .  PrG PrM
+F3 .   .   .  RuG RuM CoG CoM  .   .   .   . 
+F2 .   .   .   .   .   .   .   .  PoM  .   . 
+F1 .  ThG ThM  .   .   .   .   .   .   .   . 
+
+  Elevator DOWN: F4 → F3  [1G]
+
+--- Step 24 ---
+F4 .   .   .   .   .   .   .   .   .  PrG PrM
+F3 E   .   .  RuG  .  CoG CoM PoG PoM  .   . 
+F2 .   .   .   .  RuM  .   .   .   .   .   . 
+F1 .  ThG ThM  .   .   .   .   .   .   .   . 
+
+  Elevator DOWN: F3 → F2  [1G]
+
+--- Step 25 ---
+F4 .   .   .   .   .   .   .   .   .  PrG PrM
+F3 .   .   .   .   .  CoG CoM PoG PoM  .   . 
+F2 E   .   .  RuG RuM  .   .   .   .   .   . 
+F1 .  ThG ThM  .   .   .   .   .   .   .   . 
+
+  Elevator DOWN: F2 → F1  [1G]
+
+--- Step 26 ---
+F4 .   .   .   .   .   .   .   .   .  PrG PrM
+F3 .   .   .   .   .  CoG CoM PoG PoM  .   . 
+F2 .   .   .   .  RuM  .   .   .   .   .   . 
+F1 E  ThG ThM RuG  .   .   .   .   .   .   . 
+
+  Elevator UP: F1 → F2  [2G]
+
+--- Step 27 ---
+F4 .   .   .   .   .   .   .   .   .  PrG PrM
+F3 .   .   .   .   .  CoG CoM PoG PoM  .   . 
+F2 E  ThG  .  RuG RuM  .   .   .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator UP: F2 → F3  [2G]
+
+--- Step 28 ---
+F4 .   .   .   .   .   .   .   .   .  PrG PrM
+F3 E  ThG  .  RuG  .  CoG CoM PoG PoM  .   . 
+F2 .   .   .   .  RuM  .   .   .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator UP: F3 → F4  [2G]
+
+--- Step 29 ---
+F4 E   .   .   .   .  CoG  .  PoG  .  PrG PrM
+F3 .  ThG ThM RuG RuM  .   .   .   .   .   . 
+F2 .   .   .   .   .   .   .   .  PoM  .   . 
+F1 .   .   .   .   .   .  CoM  .   .   .   . 
+
+  Elevator DOWN: F4 → F3  [1G]
+
+--- Step 30 ---
+F4 .   .   .   .   .   .   .  PoG  .  PrG PrM
+F3 E  ThG  .  RuG RuM CoG CoM  .   .   .   . 
+F2 .   .   .   .   .   .   .   .  PoM  .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator UP: F3 → F4  [1G, 1M]
+
+--- Step 31 ---
+F4 E   .   .   .   .  CoG  .  PoG PoM PrG PrM
+F3 .  ThG  .  RuG RuM  .   .   .   .   .   . 
+F2 .   .   .   .   .   .  CoM  .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator DOWN: F4 → F3  [1G]
+
+--- Step 32 ---
+F4 .   .   .   .   .   .   .  PoG PoM PrG PrM
+F3 E  ThG  .  RuG  .  CoG CoM  .   .   .   . 
+F2 .   .   .   .  RuM  .   .   .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator UP: F3 → F4  [2G]
+
+--- Step 33 ---
+F4 E   .   .  RuG  .  CoG  .  PoG PoM PrG PrM
+F3 .  ThG ThM  .   .   .   .   .   .   .   . 
+F2 .   .   .   .   .   .  CoM  .   .   .   . 
+F1 .   .   .   .  RuM  .   .   .   .   .   . 
+
+  Elevator DOWN: F4 → F3  [1G]
+
+--- Step 34 ---
+F4 .   .   .   .   .  CoG  .  PoG PoM PrG PrM
+F3 E  ThG  .  RuG RuM  .   .   .   .   .   . 
+F2 .   .   .   .   .   .  CoM  .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator UP: F3 → F4  [2G]
+
+--- Step 35 ---
+F4 E  ThG  .  RuG  .  CoG  .  PoG PoM PrG PrM
+F3 .   .   .   .   .   .  CoM  .   .   .   . 
+F2 .   .   .   .  RuM  .   .   .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator DOWN: F4 → F3  [1G]
+
+--- Step 36 ---
+F4 .   .   .  RuG  .  CoG  .  PoG PoM PrG PrM
+F3 E  ThG ThM  .   .   .   .   .   .   .   . 
+F2 .   .   .   .   .   .  CoM  .   .   .   . 
+F1 .   .   .   .  RuM  .   .   .   .   .   . 
+
+  Elevator UP: F3 → F4  [1G, 1M]
+
+--- Step 37 ---
+F4 E  ThG  .  RuG  .  CoG CoM PoG PoM PrG PrM
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 .   .   .   .  RuM  .   .   .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator DOWN: F4 → F3  [1G]
+
+--- Step 38 ---
+F4 .   .   .  RuG  .  CoG CoM PoG PoM PrG PrM
+F3 E  ThG  .   .   .   .   .   .   .   .   . 
+F2 .   .  ThM  .   .   .   .   .   .   .   . 
+F1 .   .   .   .  RuM  .   .   .   .   .   . 
+
+  Elevator DOWN: F3 → F2  [1G]
+
+--- Step 39 ---
+F4 .   .   .  RuG  .  CoG CoM PoG PoM PrG PrM
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 E  ThG ThM  .   .   .   .   .   .   .   . 
+F1 .   .   .   .  RuM  .   .   .   .   .   . 
+
+  Elevator UP: F2 → F3  [1G, 1M]
+
+--- Step 40 ---
+F4 .   .   .  RuG  .  CoG CoM PoG PoM PrG PrM
+F3 E  ThG ThM  .   .   .   .   .   .   .   . 
+F2 .   .   .   .   .   .   .   .   .   .   . 
+F1 .   .   .   .  RuM  .   .   .   .   .   . 
+
+  Elevator UP: F3 → F4  [1G, 1M]
+
+--- Step 41 ---
+F4 E  ThG  .  RuG RuM CoG CoM PoG PoM PrG PrM
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 .   .   .   .   .   .   .   .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator DOWN: F4 → F3  [1G]
+
+--- Step 42 ---
+F4 .   .   .  RuG RuM CoG CoM PoG PoM PrG PrM
+F3 E  ThG  .   .   .   .   .   .   .   .   . 
+F2 .   .   .   .   .   .   .   .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator DOWN: F3 → F2  [1G]
+
+--- Step 43 ---
+F4 .   .   .  RuG RuM CoG CoM PoG PoM PrG PrM
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 E  ThG  .   .   .   .   .   .   .   .   . 
+F1 .   .  ThM  .   .   .   .   .   .   .   . 
+
+  Elevator DOWN: F2 → F1  [1G]
+
+--- Step 44 ---
+F4 .   .   .  RuG RuM CoG CoM PoG PoM PrG PrM
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 .   .   .   .   .   .   .   .   .   .   . 
+F1 E  ThG ThM  .   .   .   .   .   .   .   . 
+
+  Elevator UP: F1 → F2  [1G, 1M]
+
+--- Step 45 ---
+F4 .   .   .  RuG RuM CoG CoM PoG PoM PrG PrM
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 E  ThG ThM  .   .   .   .   .   .   .   . 
+F1 .   .   .   .   .   .   .   .   .   .   . 
+
+  Elevator UP: F2 → F3  [1G, 1M]
+
+--- Step 46 ---
+F4 .   .   .  RuG RuM CoG CoM PoG PoM PrG PrM
+F3 E  ThG ThM  .   .   .   .   .   .   .   . 
+F2 .   .   .   .   .   .   .   .   .   .   . 
+F1 .   .   .   .   .   .   .   .   .   .   . 
+
+  Elevator UP: F3 → F4  [1G, 1M]
+
+--- Step 47 ---
+F4 E  ThG ThM RuG RuM CoG CoM PoG PoM PrG PrM
+F3 .   .   .   .   .   .   .   .   .   .   . 
+F2 .   .   .   .   .   .   .   .   .   .   . 
+F1 .   .   .   .   .   .   .   .   .   .   . 
+
+===================================================================
+Total: 47 steps to move all items to F4
+BFS guarantees this is the minimum possible.

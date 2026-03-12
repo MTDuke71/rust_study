@@ -125,6 +125,19 @@ costs exactly 1 step, making BFS optimal (no need for Dijkstra or A*).
 The canonicalization is the **critical optimization**. Without it, Part 2's
 billion-state space would be unsearchable.
 
+### Scaling Experiment (Adding Pairs)
+
+| Pairs | Steps | Time | Raw States | Slowdown |
+|-------|-------|------|------------|----------|
+| 5 (Part 1) | 47 | 4.3ms | 4 × 4¹⁰ = 4.2M | baseline |
+| 7 (Part 2) | 71 | 26.9ms | 4 × 4¹⁴ = 1.07B | 6.3× vs P1 |
+| 8 (experiment) | 83 | 55.9ms | 4 × 4¹⁶ = 17.2B | 2.1× vs 7 pairs |
+
+Each additional pair on floor 0 adds ~12 steps and roughly doubles the time.
+Raw states grow 16× per pair (4²), but canonicalization keeps actual time
+scaling to ~2× — the N! symmetry reduction absorbs most of the explosion.
+Without canonicalization, 8 pairs (17.2B raw states) would be unsearchable.
+
 ### Validity Check Logic
 A floor is safe if:
 - It has **no generators**, OR
