@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (11/25 complete)
+**Status**: In Progress (12/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 11/25 |
-| **Total Runtime** | 293.9ms |
-| **Average per Day** | 26.7ms |
+| **Progress** | 12/25 |
+| **Total Runtime** | 340.1ms |
+| **Average per Day** | 28.3ms |
 | **Fastest Day** | Day 6 (8.1us) |
 | **Slowest Day** | Day 5 (262ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 27 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS |
+| **Patterns Extracted** | 30 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM |
 
-**1-Second Goal**: 293.9ms / 1,000ms (29.4% used after 11 days) --- comfortably on track
+**1-Second Goal**: 340.1ms / 1,000ms (34.0% used after 12 days) --- comfortably on track
 
 ---
 
@@ -36,7 +36,7 @@
 | [9](days/day09_function_guide.md) | 157ns | 17.3µs | 17.5µs | Pointer walk + slice recursion | None | Length-only: 11.6B chars computed without building string |
 | [10](days/day10_function_guide.md) | 81.4µs | 70.7µs | 69.0µs | Event-driven simulation | None | HashMap mailbox pattern; bots fire when holding 2 chips |
 | [11](days/day11_function_guide.md) | 4.32ms | 25.98ms | 30.57ms | BFS + canonical state | None | Pair symmetry reduces 1B→400K states |
-| [12](days/day12.md) | - | - | - | - | - | |
+| [12](days/day12_function_guide.md) | 1.57ms | 44.53ms | 46.17ms | Register VM | None | Assembunny computes fib(28)+306 / fib(35)+306; trace mode for debugging |
 | [13](days/day13.md) | - | - | - | - | - | |
 | [14](days/day14.md) | - | - | - | - | - | |
 | [15](days/day15.md) | - | - | - | - | - | |
@@ -67,7 +67,7 @@
 - [Day 9](days/day09_function_guide.md) - Explosives in Cyberspace | [Code](../src/solver/day09.rs) ✅
 - [Day 10](days/day10_function_guide.md) - Balance Bots | [Code](../src/solver/day10.rs) ✅
 - [Day 11](days/day11_function_guide.md) - Radioisotope Thermoelectric Generators | [Code](../src/solver/day11.rs) ✅
-- [Day 12](days/day12.md) - Leonardo's Monorail
+- [Day 12](days/day12_function_guide.md) - Leonardo's Monorail | [Code](../src/solver/day12.rs) ✅
 - [Day 13](days/day13.md) - A Maze of Twisty Little Cubicles
 - [Day 14](days/day14.md) - One-Time Pad
 - [Day 15](days/day15.md) - Timing is Everything
@@ -99,6 +99,7 @@
 | 9 | Pointer walk + slice recursion | Byte-level scan with manual index jumps; Part 2 recurses on sub-slices to handle nested markers |
 | 10 | Event-driven simulation | Bots fire when holding 2 chips; HashMap as mailbox; parameterized target search |
 | 11 | BFS + canonical state space | Sort (gen, chip) pairs to exploit element symmetry; reduces 1B states to ~400K |
+| 12 | Register VM (assembunny) | Program computes Fibonacci + constant; VM with step/trace capability for debugging |
 
 ---
 
@@ -136,6 +137,9 @@
 | State canonicalization | 11 | Sort interchangeable components to collapse equivalent states (N! reduction) |
 | Symmetry breaking | 11 | Element pairs are fungible — only the (gen_floor, chip_floor) pattern matters |
 | Enum-tagged destinations | 10 | `Destination::Bot` vs `Output` — compiler-enforced exhaustive handling |
+| Register VM | 12 | Fixed-size register array + enum instruction set — reusable for Days 23, 25 |
+| Zero-cost trace mode | 12 | `tracing: bool` gates all trace recording — zero overhead when off |
+| Dual-purpose Value enum | 12 | `Value::Lit` / `Value::Reg` — single type handles immediate and register operands |
 
 ---
 
@@ -150,4 +154,4 @@
 
 ---
 
-**Last Updated**: 2026-03-11 (Day 11 complete)
+**Last Updated**: 2026-03-12 (Day 12 complete)
