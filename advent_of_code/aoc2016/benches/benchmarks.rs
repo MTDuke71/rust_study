@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use aoc2016::solver::{day01, day02, day03, day04, day05, day06, day07, day08, day09, day10, day11, day12};
+use aoc2016::solver::{day01, day02, day03, day04, day05, day06, day07, day08, day09, day10, day11, day12, day13};
 
 fn bench_day01(c: &mut Criterion) {
     let input = include_str!("../inputs/day01.txt");
@@ -95,5 +95,12 @@ fn bench_day12(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, bench_day01, bench_day02, bench_day03, bench_day04, bench_day05, bench_day06, bench_day07, bench_day08, bench_day09, bench_day10, bench_day11, bench_day12);
+fn bench_day13(c: &mut Criterion) {
+    let input = include_str!("../inputs/day13.txt");
+    c.bench_function("day13_combined", |b| b.iter(|| day13::solve(input)));
+    c.bench_function("day13_part1",   |b| b.iter(|| day13::solve_part1(input)));
+    c.bench_function("day13_part2",   |b| b.iter(|| day13::solve_part2(input)));
+}
+
+criterion_group!(benches, bench_day01, bench_day02, bench_day03, bench_day04, bench_day05, bench_day06, bench_day07, bench_day08, bench_day09, bench_day10, bench_day11, bench_day12, bench_day13);
 criterion_main!(benches);
