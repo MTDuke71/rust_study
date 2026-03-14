@@ -5,6 +5,7 @@
 use std::collections::VecDeque;
 
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 enum Operation {
     Add(u64),
     Multiply(u64),
@@ -112,7 +113,7 @@ fn main() {
 
                 // Test divisibility
                 let divisor = monkeys[monkey_idx].divisible_by;
-                let divisible = new_worry % divisor == 0;
+                let divisible = new_worry.is_multiple_of(divisor);
 
                 println!(
                     "      Test: {} % {} = {} (divisible: {})",
@@ -123,7 +124,7 @@ fn main() {
                 );
 
                 // Demonstrate that modulo preserves divisibility
-                let unbounded_divisible = new_worry_unbounded % divisor == 0;
+                let unbounded_divisible = new_worry_unbounded.is_multiple_of(divisor);
                 if unbounded_divisible == divisible {
                     println!(
                         "      ✓ Divisibility preserved! ({} % {} = {})",
