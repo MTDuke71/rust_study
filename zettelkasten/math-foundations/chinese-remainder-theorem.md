@@ -404,6 +404,65 @@ t ≡ -4 (mod 59)
 
 **Solution**: Informal CRT - use product of divisors as modulo.
 
+### 2016 Day 15: Timing is Everything
+
+**Problem**: Drop a capsule through a stack of rotating discs. Each disc has a slot
+at position 0. Disc N is reached N seconds after pressing the button. Find the first
+button-press time where all discs align.
+
+**Physical intuition**: At button press, each disc must be the right number of ticks
+*before* position 0 — disc 1 needs to be 1 tick away, disc 2 needs to be 2 ticks away, etc.
+
+**System** (from puzzle input):
+```
+Disc 1: 17 positions, starts at 1  →  t ≡ -(1+1) ≡ 15 (mod 17)
+Disc 2:  7 positions, starts at 0  →  t ≡ -(0+2) ≡  5 (mod 7)
+Disc 3: 19 positions, starts at 2  →  t ≡ -(2+3) ≡ 14 (mod 19)
+Disc 4:  5 positions, starts at 0  →  t ≡ -(0+4) ≡  1 (mod 5)
+Disc 5:  3 positions, starts at 0  →  t ≡ -(0+5) ≡  1 (mod 3)
+Disc 6: 13 positions, starts at 5  →  t ≡ -(5+6) ≡  2 (mod 13)
+```
+
+General formula per disc: `t ≡ -(initial + disc_number) (mod positions)`
+
+**CRT solution** (iterative pairwise combining):
+```
+Start:  t ≡ 0 (mod 1)
++Disc 1: t ≡ 15 (mod 17)       → t ≡ 15       (mod 17)
++Disc 2: t ≡ 5  (mod 7)        → t ≡ 117      (mod 119)
++Disc 3: t ≡ 14 (mod 19)       → t ≡ 832      (mod 2,261)
++Disc 4: t ≡ 1  (mod 5)        → t ≡ 5,356    (mod 11,305)
++Disc 5: t ≡ 1  (mod 3)        → t ≡ 16,661   (mod 33,915)
++Disc 6: t ≡ 2  (mod 13)       → t ≡ 317,371  (mod 442,065)
+```
+
+**Answer**: t = **317,371** — exact solution in 6 combine operations.
+
+**Verification** (disc_number + position_at_press) % size == 0:
+```
+Disc 1: (1 + 16) % 17 = 0 ✓  — 122,408 full rotations + 16 extra
+Disc 2: (2 +  5) %  7 = 0 ✓  — 297,278 full rotations +  5 extra
+Disc 3: (3 + 16) % 19 = 0 ✓  — 109,523 full rotations + 16 extra
+Disc 4: (4 +  1) %  5 = 0 ✓  — 416,190 full rotations +  1 extra
+Disc 5: (5 +  1) %  3 = 0 ✓  — 693,650 full rotations +  1 extra
+Disc 6: (6 +  7) % 13 = 0 ✓  — 160,073 full rotations +  7 extra
+```
+
+Each disc sits at a partial rotation — exactly enough ticks away from 0 so the capsule
+catches it at the slot.
+
+**Part 2** adds disc 7 (11 positions, starts at 0). All 7 disc sizes are prime, so CRT
+is guaranteed to find a unique solution: t = **2,080,951** (mod 4,862,715).
+
+**Performance**: CRT solves in **1.5µs** vs brute-force scan in **3,065µs** — a **2,043× speedup**.
+
+**Key insight**: Same-size discs can be unsolvable. Two discs of size 5 separated by 1 position
+produce `t+1 ≡ 0 (mod 5)` and `t+2 ≡ 0 (mod 5)`. Subtracting gives `1 ≡ 0 (mod 5)` — contradiction.
+CRT requires coprime moduli (or compatible remainders for shared factors).
+
+**Implementation**: See [[advent_of_code/aoc2016/src/solver/day15.rs]] — uses iterative `combine()`
+with `extended_gcd()` to fold congruences pairwise.
+
 ### General Pattern
 
 **When to use CRT in AoC**:
@@ -426,9 +485,9 @@ t ≡ -4 (mod 59)
 *Links:*
 - **Related Theory**: [[modular-arithmetic]], [[number-theory-fundamentals]], [[divisibility]], [[coprime-numbers]]
 - **Algorithms**: [[extended-euclidean-algorithm]], [[modular-inverse]]
-- **Applications**: [[advent_of_code/aoc2022/src/solver/day11.rs]], [[aoc-2020-day13]]
-- **Related Problems**: [[aoc-2022-day11]], [[cycle-detection]], [[calendar-arithmetic]]
-- **Daily Notes**: [[zettelkasten/Daily Notes/2026-02-11]] - Day 11 session
-- **Function Guide**: [[advent_of_code/aoc2022/Problem_Statements/days/day11_function_guide.md]]
+- **Applications**: [[advent_of_code/aoc2022/src/solver/day11.rs]], [[advent_of_code/aoc2016/src/solver/day15.rs]], [[aoc-2020-day13]]
+- **Related Problems**: [[aoc-2022-day11]], [[aoc-2016-day15]], [[cycle-detection]], [[calendar-arithmetic]]
+- **Daily Notes**: [[zettelkasten/Daily Notes/2026-02-11]] - Day 11 session, [[zettelkasten/Daily Notes/2026-03-15]] - Day 15 session
+- **Function Guides**: [[advent_of_code/aoc2022/Problem_Statements/days/day11_function_guide.md]], [[advent_of_code/aoc2016/Problem_Statements/days/day15_function_guide.md]]
 
 *Tags:* #number-theory #modular-arithmetic #chinese-remainder-theorem #congruences #crt #mathematics #competitive-programming #aoc-pattern
