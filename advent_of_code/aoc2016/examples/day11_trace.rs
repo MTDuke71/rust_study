@@ -23,10 +23,10 @@ impl State {
 
     fn is_valid(&self) -> bool {
         for &(gen_floor, chip_floor) in &self.pairs {
-            if gen_floor != chip_floor {
-                if self.pairs.iter().any(|&(g, _)| g == chip_floor) {
-                    return false;
-                }
+            if gen_floor != chip_floor
+                && self.pairs.iter().any(|&(g, _)| g == chip_floor)
+            {
+                return false;
             }
         }
         true

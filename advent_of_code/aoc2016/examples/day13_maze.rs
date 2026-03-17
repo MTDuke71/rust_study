@@ -8,6 +8,8 @@
 use image::{Rgb, RgbImage};
 use std::collections::{HashMap, HashSet, VecDeque};
 
+type Point = (u64, u64);
+
 const FAV: u64 = 1350;
 const START: (u64, u64) = (1, 1);
 const TARGET: (u64, u64) = (31, 39);
@@ -35,11 +37,11 @@ fn is_open(x: u64, y: u64) -> bool {
 }
 
 /// BFS that tracks parent pointers for path reconstruction
-fn bfs_with_path() -> (Vec<(u64, u64)>, HashSet<(u64, u64)>) {
-    let mut visited: HashSet<(u64, u64)> = HashSet::new();
-    let mut parent: HashMap<(u64, u64), (u64, u64)> = HashMap::new();
+fn bfs_with_path() -> (Vec<Point>, HashSet<Point>) {
+    let mut visited: HashSet<Point> = HashSet::new();
+    let mut parent: HashMap<Point, Point> = HashMap::new();
     let mut queue: VecDeque<(u64, u64, u64)> = VecDeque::new();
-    let mut flood_region: HashSet<(u64, u64)> = HashSet::new();
+    let mut flood_region: HashSet<Point> = HashSet::new();
 
     queue.push_back((START.0, START.1, 0));
     visited.insert(START);

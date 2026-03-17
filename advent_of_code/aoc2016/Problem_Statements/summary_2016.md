@@ -9,15 +9,15 @@
 | Metric | Value |
 |--------|-------|
 | **Progress** | 16/25 |
-| **Total Runtime** | 987.3ms |
-| **Average per Day** | 61.7ms |
+| **Total Runtime** | 957.7ms |
+| **Average per Day** | 59.9ms |
 | **Fastest Day** | Day 6 (8.1us) |
 | **Slowest Day** | Day 14 (593ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
 | **Patterns Extracted** | 42 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum |
 
-**1-Second Goal**: 987.3ms / 1,000ms (98.7% used after 16 days) --- Only 12.7ms remaining!
+**1-Second Goal**: 957.7ms / 1,000ms (95.8% used after 16 days) — 42.3ms remaining for 9 days
 
 ---
 
@@ -40,7 +40,7 @@
 | [13](days/day13_function_guide.md) | 18.9µs | 19.0µs | 18.9µs | BFS on implicit graph | None | Procedural maze via popcount; single BFS answers both parts |
 | [14](days/day14_function_guide.md) | 25.4ms | 571ms | 593ms | MD5 triplet/quintuplet mining + Rayon | None | Key stretching (2017× MD5); ~10× Rayon speedup |
 | [15](days/day15_function_guide.md) | 1.29µs | 1.40µs | 1.50µs | CRT (Chinese Remainder Theorem) | None | 2,043× faster than brute force; extended GCD for modular inverse |
-| [16](days/day16_function_guide.md) | 720ns | 51.0ms | 53.9ms | Dragon curve + checksum reduction | None | 35M-bit fill; checksum halves 21× to odd length |
+| [16](days/day16_function_guide.md) | 415ns | 22.1ms | 24.3ms | Dragon curve + single-pass parity checksum | None | 35M-bit fill; 2.2× speedup via parity optimization |
 | [17](days/day17.md) | - | - | - | - | - | |
 | [18](days/day18.md) | - | - | - | - | - | |
 | [19](days/day19.md) | - | - | - | - | - | |

@@ -22,16 +22,18 @@ fn dragon_fill(initial: &[bool], disk_size: usize) -> Vec<bool> {
     data
 }
 
-/// Checksum: pair up bits (same=1, diff=0), repeat until odd length
+/// Checksum: single-pass parity reduction.
+/// The repeated halving of pairs is equivalent to counting 1s in chunks of 2^k,
+/// where k = number of times the length is divisible by 2.
+/// Even count of 1s → '1', odd → '0'.
 fn checksum(data: &[bool]) -> String {
-    let mut current = data.to_vec();
-    while current.len().is_multiple_of(2) {
-        current = current
-            .chunks(2)
-            .map(|pair| pair[0] == pair[1])
-            .collect();
-    }
-    current.iter().map(|&b| if b { '1' } else { '0' }).collect()
+    let chunk_size = 1usize << data.len().trailing_zeros();
+    data.chunks(chunk_size)
+        .map(|chunk| {
+            let ones: usize = chunk.iter().map(|&b| b as usize).sum();
+            if ones % 2 == 0 { '1' } else { '0' }
+        })
+        .collect()
 }
 
 fn solve_with_disk_size(initial: &[bool], disk_size: usize) -> String {
