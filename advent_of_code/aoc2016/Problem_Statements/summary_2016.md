@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (16/25 complete)
+**Status**: In Progress (17/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 16/25 |
-| **Total Runtime** | 957.7ms |
-| **Average per Day** | 59.9ms |
+| **Progress** | 17/25 |
+| **Total Runtime** | 980.6ms |
+| **Average per Day** | 57.7ms |
 | **Fastest Day** | Day 6 (8.1us) |
 | **Slowest Day** | Day 14 (593ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
 | **Patterns Extracted** | 42 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS |
 
-**1-Second Goal**: 957.7ms / 1,000ms (95.8% used after 16 days) — 42.3ms remaining for 9 days
+**1-Second Goal**: 980.6ms / 1,000ms (98.1% used after 17 days) — 19.4ms remaining for 8 days
 
 ---
 
@@ -40,8 +40,8 @@
 | [13](days/day13_function_guide.md) | 18.9µs | 19.0µs | 18.9µs | BFS on implicit graph | None | Procedural maze via popcount; single BFS answers both parts |
 | [14](days/day14_function_guide.md) | 25.4ms | 571ms | 593ms | MD5 triplet/quintuplet mining + Rayon | None | Key stretching (2017× MD5); ~10× Rayon speedup |
 | [15](days/day15_function_guide.md) | 1.29µs | 1.40µs | 1.50µs | CRT (Chinese Remainder Theorem) | None | 2,043× faster than brute force; extended GCD for modular inverse |
-| [16](days/day16_function_guide.md) | 415ns | 22.1ms | 24.3ms | Dragon curve + single-pass parity checksum | None | 35M-bit fill; 2.2× speedup via parity optimization |
-| [17](days/day17.md) | - | - | - | - | - | |
+| [16](days/day16_function_guide.md) | 244ns | 12.2ms | 12.2ms | Dragon curve + early-stop fill + parity checksum | None | 35M-bit fill; 4.4× speedup total; O(1) example: 2.1µs |
+| [17](days/day17_function_guide.md) | 13.2µs | 22.9ms | 22.9ms | BFS with MD5-based door states | None | No visited set needed; path-dependent hash makes every state unique |
 | [18](days/day18.md) | - | - | - | - | - | |
 | [19](days/day19.md) | - | - | - | - | - | |
 | [20](days/day20.md) | - | - | - | - | - | |
@@ -72,7 +72,7 @@
 - [Day 14](days/day14_function_guide.md) - One-Time Pad | [Code](../src/solver/day14.rs) ✅
 - [Day 15](days/day15_function_guide.md) - Timing is Everything | [Code](../src/solver/day15.rs) ✅
 - [Day 16](days/day16_function_guide.md) - Dragon Checksum | [Code](../src/solver/day16.rs) ✅
-- [Day 17](days/day17.md) - Two Steps Forward
+- [Day 17](days/day17_function_guide.md) - Two Steps Forward | [Code](../src/solver/day17.rs) ✅
 - [Day 18](days/day18.md) - Like a Rogue
 - [Day 19](days/day19.md) - An Elephant Named Joseph
 - [Day 20](days/day20.md) - Firewall Rules
@@ -172,4 +172,4 @@
 
 ---
 
-**Last Updated**: 2026-03-16 (Day 16 complete)
+**Last Updated**: 2026-03-17 (Day 17 complete)
