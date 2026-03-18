@@ -9,16 +9,19 @@ fn parse_input(input: &str) -> Vec<bool> {
 }
 
 /// Dragon curve: a + 0 + reverse(flip(a))
-/// Grows data until it reaches `disk_size`, then truncates.
+/// Grows data until it reaches `disk_size`. Only copies what fits on the last step.
 fn dragon_fill(initial: &[bool], disk_size: usize) -> Vec<bool> {
-    let mut data = initial.to_vec();
+    let mut data = Vec::with_capacity(disk_size);
+    data.extend_from_slice(initial);
     while data.len() < disk_size {
-        // b = reversed, bit-flipped copy of a
-        let b: Vec<bool> = data.iter().rev().map(|&bit| !bit).collect();
+        let a_len = data.len();
         data.push(false); // the joining '0'
+        // How many of the reversed bits do we actually need?
+        let to_copy = a_len.min(disk_size - data.len());
+        // Bulk collect only what fits
+        let b: Vec<bool> = data[a_len - to_copy..a_len].iter().rev().map(|&bit| !bit).collect();
         data.extend(b);
     }
-    data.truncate(disk_size);
     data
 }
 
@@ -31,7 +34,7 @@ fn checksum(data: &[bool]) -> String {
     data.chunks(chunk_size)
         .map(|chunk| {
             let ones: usize = chunk.iter().map(|&b| b as usize).sum();
-            if ones % 2 == 0 { '1' } else { '0' }
+            if ones.is_multiple_of(2) { '1' } else { '0' }
         })
         .collect()
 }
