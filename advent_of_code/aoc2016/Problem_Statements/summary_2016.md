@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (17/25 complete)
+**Status**: In Progress (18/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 17/25 |
-| **Total Runtime** | 980.6ms |
-| **Average per Day** | 57.7ms |
+| **Progress** | 18/25 |
+| **Total Runtime** | 1010.5ms |
+| **Average per Day** | 56.1ms |
 | **Fastest Day** | Day 6 (8.1us) |
 | **Slowest Day** | Day 14 (593ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 42 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS |
+| **Patterns Extracted** | 43 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification |
 
-**1-Second Goal**: 980.6ms / 1,000ms (98.1% used after 17 days) — 19.4ms remaining for 8 days
+**1-Second Goal**: 1010.5ms / 1,000ms (101.0% used after 18 days) — 10.5ms over budget with 7 days remaining
 
 ---
 
@@ -42,7 +42,7 @@
 | [15](days/day15_function_guide.md) | 1.29µs | 1.40µs | 1.50µs | CRT (Chinese Remainder Theorem) | None | 2,043× faster than brute force; extended GCD for modular inverse |
 | [16](days/day16_function_guide.md) | 244ns | 12.2ms | 12.2ms | Dragon curve + early-stop fill + parity checksum | None | 35M-bit fill; 4.4× speedup total; O(1) example: 2.1µs |
 | [17](days/day17_function_guide.md) | 13.2µs | 22.9ms | 22.9ms | BFS with MD5-based door states | None | No visited set needed; path-dependent hash makes every state unique |
-| [18](days/day18.md) | - | - | - | - | - | |
+| [18](days/day18_function_guide.md) | 3.9µs | 1.09ms | 1.10ms | 1D cellular automaton + u128 bit-parallel | None | Bitset implementation: 35× faster than vector (38.5ms → 1.09ms); uses popcount for trap counting |
 | [19](days/day19.md) | - | - | - | - | - | |
 | [20](days/day20.md) | - | - | - | - | - | |
 | [21](days/day21.md) | - | - | - | - | - | |
@@ -73,7 +73,7 @@
 - [Day 15](days/day15_function_guide.md) - Timing is Everything | [Code](../src/solver/day15.rs) ✅
 - [Day 16](days/day16_function_guide.md) - Dragon Checksum | [Code](../src/solver/day16.rs) ✅
 - [Day 17](days/day17_function_guide.md) - Two Steps Forward | [Code](../src/solver/day17.rs) ✅
-- [Day 18](days/day18.md) - Like a Rogue
+- [Day 18](days/day18_function_guide.md) - Like a Rogue | [Code](../src/solver/day18.rs) ✅
 - [Day 19](days/day19.md) - An Elephant Named Joseph
 - [Day 20](days/day20.md) - Firewall Rules
 - [Day 21](days/day21.md) - Scrambled Letters and Hash
@@ -104,6 +104,8 @@
 | 14 | MD5 triplet/quintuplet mining + Rayon | Hash salt+index, find triplets confirmed by quintuplets in next 1000; key stretching (2017× MD5) for Part 2 |
 | 15 | Chinese Remainder Theorem | System of linear congruences solved via extended GCD; 2,043× faster than brute-force scan |
 | 16 | Dragon curve + checksum | Modified dragon curve doubles+1 data; checksum pairs bits until odd length; 35M bits in 51ms |
+| 17 | BFS with MD5-based door states | Path-dependent hash means states are `(position, path)`; no global visited set is needed |
+| 18 | 1D cellular automaton + XOR transition | Trap rule reduces to `left ^ right`; reusing two row buffers gives O(width × rows) time and O(width) space |
 
 ---
 
@@ -158,6 +160,7 @@
 | Clone-and-extend | 15 | Clone Part 1 data, append element for Part 2's extended problem |
 | Dragon curve expansion | 16 | `a + "0" + reverse(flip(a))` — doubles+1 per step for pseudo-random fill |
 | Iterative checksum halving | 16 | Pair bits (same→1, diff→0), repeat until odd length — geometric series convergence |
+| XOR transition simplification | 18 | Four trap cases collapse to `left != right`, enabling branch-light next-row generation |
 
 ---
 
@@ -172,4 +175,4 @@
 
 ---
 
-**Last Updated**: 2026-03-17 (Day 17 complete)
+**Last Updated**: 2026-03-18 (Day 18 complete)
