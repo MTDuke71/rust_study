@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (18/25 complete)
+**Status**: In Progress (19/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 18/25 |
+| **Progress** | 19/25 |
 | **Total Runtime** | 1010.5ms |
-| **Average per Day** | 56.1ms |
-| **Fastest Day** | Day 6 (8.1us) |
+| **Average per Day** | 53.2ms |
+| **Fastest Day** | Day 19 (73ns) |
 | **Slowest Day** | Day 14 (593ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 43 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification |
+| **Patterns Extracted** | 45 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula |
 
-**1-Second Goal**: 1010.5ms / 1,000ms (101.0% used after 18 days) — 10.5ms over budget with 7 days remaining
+**1-Second Goal**: 1010.5ms / 1,000ms (101.0% used after 19 days) — 10.5ms over budget with 6 days remaining
 
 ---
 
@@ -43,7 +43,7 @@
 | [16](days/day16_function_guide.md) | 244ns | 12.2ms | 12.2ms | Dragon curve + early-stop fill + parity checksum | None | 35M-bit fill; 4.4× speedup total; O(1) example: 2.1µs |
 | [17](days/day17_function_guide.md) | 13.2µs | 22.9ms | 22.9ms | BFS with MD5-based door states | None | No visited set needed; path-dependent hash makes every state unique |
 | [18](days/day18_function_guide.md) | 3.9µs | 1.09ms | 1.10ms | 1D cellular automaton + u128 bit-parallel | None | Bitset implementation: 35× faster than vector (38.5ms → 1.09ms); uses popcount for trap counting |
-| [19](days/day19.md) | - | - | - | - | - | |
+| [19](days/day19_function_guide.md) | ~0ns | ~0ns | 73ns | Josephus closed-form + power-of-3 formula | None | O(1) math — no simulation; fastest day at 73ns |
 | [20](days/day20.md) | - | - | - | - | - | |
 | [21](days/day21.md) | - | - | - | - | - | |
 | [22](days/day22.md) | - | - | - | - | - | |
@@ -74,7 +74,7 @@
 - [Day 16](days/day16_function_guide.md) - Dragon Checksum | [Code](../src/solver/day16.rs) ✅
 - [Day 17](days/day17_function_guide.md) - Two Steps Forward | [Code](../src/solver/day17.rs) ✅
 - [Day 18](days/day18_function_guide.md) - Like a Rogue | [Code](../src/solver/day18.rs) ✅
-- [Day 19](days/day19.md) - An Elephant Named Joseph
+- [Day 19](days/day19_function_guide.md) - An Elephant Named Joseph | [Code](../src/solver/day19.rs) ✅
 - [Day 20](days/day20.md) - Firewall Rules
 - [Day 21](days/day21.md) - Scrambled Letters and Hash
 - [Day 22](days/day22.md) - Grid Computing
@@ -106,6 +106,7 @@
 | 16 | Dragon curve + checksum | Modified dragon curve doubles+1 data; checksum pairs bits until odd length; 35M bits in 51ms |
 | 17 | BFS with MD5-based door states | Path-dependent hash means states are `(position, path)`; no global visited set is needed |
 | 18 | 1D cellular automaton + XOR transition | Trap rule reduces to `left ^ right`; reusing two row buffers gives O(width × rows) time and O(width) space |
+| 19 | Josephus closed-form + power-of-3 formula | Part 1: binary bit rotation (k=2); Part 2: piecewise formula resets at powers of 3 |
 
 ---
 
@@ -161,6 +162,8 @@
 | Dragon curve expansion | 16 | `a + "0" + reverse(flip(a))` — doubles+1 per step for pseudo-random fill |
 | Iterative checksum halving | 16 | Pair bits (same→1, diff→0), repeat until odd length — geometric series convergence |
 | XOR transition simplification | 18 | Four trap cases collapse to `left != right`, enabling branch-light next-row generation |
+| Josephus closed-form (k=2) | 19 | Binary bit rotation: move leading 1 to end gives survivor position in O(1) |
+| Power-of-3 piecewise formula | 19 | Across-circle elimination resets at powers of 3; linear climb by 1s then 2s between resets |
 
 ---
 
@@ -175,4 +178,4 @@
 
 ---
 
-**Last Updated**: 2026-03-18 (Day 18 complete)
+**Last Updated**: 2026-03-19 (Day 19 complete)
