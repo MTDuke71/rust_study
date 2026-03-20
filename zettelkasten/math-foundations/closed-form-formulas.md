@@ -382,7 +382,7 @@ Complexity: O(1) - instant for any n!
 ---
 
 *Links:*
-- **Applications**: [[project-euler-p001]], [[project-euler-p006]]
+- **Applications**: [[project-euler-p001]], [[project-euler-p006]], [[josephus-problem]]
 - **Techniques**: [[proof-by-induction]], [[generating-functions]], [[telescoping-series]]
 - **Theory**: [[arithmetic-series]], [[recurrence-relations]], [[big-o-notation]]
 - **Related**: [[algorithm-optimization]], [[asymptotic-analysis]]

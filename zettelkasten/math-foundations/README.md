@@ -37,9 +37,12 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 
 **Target**: 20 mathematical concepts documented by **January 25, 2026**
 
-**Current**: 23/20 notes ✅ 🎉 **GOAL EXCEEDED!**
+**Current**: 24/20 notes ✅ 🎉 **GOAL EXCEEDED!**
 
-**Latest additions** (March 7, 2026):
+**Latest additions** (March 19, 2026):
+- `josephus-problem.md` - Circular elimination, k=2 binary trick, across-circle power-of-3 formula (AoC 2016 Day 19)
+
+**Previous additions** (March 7, 2026):
 - `formal-systems-invariants.md` - Formal systems, MIU puzzle (GEB Ch1), invariant proofs, mod-3 impossibility
 
 **Previous additions** (February 26, 2026):
@@ -208,6 +211,7 @@ Each implementation references mathematical foundations:
 20. ✅ `base-conversion.md` - Positional notation, Horner's method, balanced bases, carry propagation (AoC 2022 Day 25)
 21. ✅ `collatz-conjecture.md` - Collatz conjecture, parity observations, computational approaches (Project Euler P14)
 22. ✅ `project-euler-p014.md` - Longest Collatz sequence, memoization, even-number elimination (Project Euler P14)
+23. ✅ `josephus-problem.md` - Circular elimination, binary bit rotation (k=2), power-of-3 across formula (AoC 2016 Day 19)
 
 ### **Priority Concepts** (Create these next)
 
