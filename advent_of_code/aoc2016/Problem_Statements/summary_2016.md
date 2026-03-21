@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (19/25 complete)
+**Status**: In Progress (20/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 19/25 |
+| **Progress** | 20/25 |
 | **Total Runtime** | 1010.5ms |
-| **Average per Day** | 53.2ms |
+| **Average per Day** | 50.5ms |
 | **Fastest Day** | Day 19 (73ns) |
 | **Slowest Day** | Day 14 (593ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 45 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula |
+| **Patterns Extracted** | 47 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula, interval merging |
 
-**1-Second Goal**: 1010.5ms / 1,000ms (101.0% used after 19 days) — 10.5ms over budget with 6 days remaining
+**1-Second Goal**: 1010.5ms / 1,000ms (101.0% used after 20 days) — 10.5ms over budget with 5 days remaining
 
 ---
 
@@ -44,7 +44,7 @@
 | [17](days/day17_function_guide.md) | 13.2µs | 22.9ms | 22.9ms | BFS with MD5-based door states | None | No visited set needed; path-dependent hash makes every state unique |
 | [18](days/day18_function_guide.md) | 3.9µs | 1.09ms | 1.10ms | 1D cellular automaton + u128 bit-parallel | None | Bitset implementation: 35× faster than vector (38.5ms → 1.09ms); uses popcount for trap counting |
 | [19](days/day19_function_guide.md) | ~0ns | ~0ns | 73ns | Josephus closed-form + power-of-3 formula | None | O(1) math — no simulation; fastest day at 73ns |
-| [20](days/day20.md) | - | - | - | - | - | |
+| [20](days/day20_function_guide.md) | 41.3us | 41.6us | 42.5us | Interval merging | None | Sort + merge 1005 ranges; u64 overflow guard |
 | [21](days/day21.md) | - | - | - | - | - | |
 | [22](days/day22.md) | - | - | - | - | - | |
 | [23](days/day23.md) | - | - | - | - | - | |
@@ -75,7 +75,7 @@
 - [Day 17](days/day17_function_guide.md) - Two Steps Forward | [Code](../src/solver/day17.rs) ✅
 - [Day 18](days/day18_function_guide.md) - Like a Rogue | [Code](../src/solver/day18.rs) ✅
 - [Day 19](days/day19_function_guide.md) - An Elephant Named Joseph | [Code](../src/solver/day19.rs) ✅
-- [Day 20](days/day20.md) - Firewall Rules
+- [Day 20](days/day20_function_guide.md) - Firewall Rules | [Code](../src/solver/day20.rs) ✅
 - [Day 21](days/day21.md) - Scrambled Letters and Hash
 - [Day 22](days/day22.md) - Grid Computing
 - [Day 23](days/day23.md) - Safe Cracking
@@ -107,6 +107,7 @@
 | 17 | BFS with MD5-based door states | Path-dependent hash means states are `(position, path)`; no global visited set is needed |
 | 18 | 1D cellular automaton + XOR transition | Trap rule reduces to `left ^ right`; reusing two row buffers gives O(width × rows) time and O(width) space |
 | 19 | Josephus closed-form + power-of-3 formula | Part 1: binary bit rotation (k=2); Part 2: piecewise formula resets at powers of 3 |
+| 20 | Interval merging (sort + sweep) | Sort ranges by start, merge overlapping/adjacent, query gaps; u64 for overflow safety |
 
 ---
 
@@ -164,6 +165,8 @@
 | XOR transition simplification | 18 | Four trap cases collapse to `left != right`, enabling branch-light next-row generation |
 | Josephus closed-form (k=2) | 19 | Binary bit rotation: move leading 1 to end gives survivor position in O(1) |
 | Power-of-3 piecewise formula | 19 | Across-circle elimination resets at powers of 3; linear climb by 1s then 2s between resets |
+| Interval merging | 20 | Sort ranges by start, merge overlapping/adjacent in one pass — textbook sweep-line |
+| u64 overflow promotion | 20 | Promote `u32` to `u64` for adjacency check to avoid overflow when range ends at `u32::MAX` |
 
 ---
 
@@ -178,4 +181,4 @@
 
 ---
 
-**Last Updated**: 2026-03-19 (Day 19 complete)
+**Last Updated**: 2026-03-20 (Day 20 complete)

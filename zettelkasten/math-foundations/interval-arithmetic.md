@@ -164,6 +164,83 @@ impl Range {
 
 ---
 
+### **Algorithm 3: Sweep Line Merge (Sort + Linear Scan)**
+
+**Problem**: Given $n$ intervals, merge all overlapping and adjacent intervals into a minimal non-overlapping set, then query the gaps.
+
+**Mathematical Definition**:
+Given intervals $\{I_1, I_2, ..., I_n\}$, produce merged set $\{M_1, M_2, ..., M_k\}$ where:
+- $k \leq n$ (merged set is smaller or equal)
+- $\bigcup M_i = \bigcup I_i$ (same coverage)
+- $\forall i \neq j: M_i \cap M_j = \emptyset$ (non-overlapping)
+- No two merged intervals are adjacent: $M_i.end + 1 < M_{i+1}.start$
+
+**Algorithm**:
+1. **Sort** all intervals by start position: $O(n \log n)$
+2. **Sweep** left to right, maintaining current merged interval: $O(n)$
+3. For each interval $(lo, hi)$:
+   - If $lo \leq \text{current.end} + 1$: **extend** current (overlap or adjacent)
+   - Otherwise: **emit** current, start new interval
+
+**Why adjacency matters**: For gap-finding problems, $[0, 5]$ and $[6, 10]$ should merge to $[0, 10]$ even though they don't overlap. The gap test is $lo \leq end + 1$, not $lo \leq end$.
+
+**Visual Proof**:
+```
+Input (unsorted):
+  [5,8] [0,2] [4,7]
+
+After sort by start:
+  [0,2] [4,7] [5,8]
+
+Sweep:
+  Start: current = [0,2]
+  [4,7]: 4 > 2+1=3 → GAP! Emit [0,2], current = [4,7]
+  [5,8]: 5 ≤ 7+1=8 → Extend to [4,8]
+  Done: Emit [4,8]
+
+Result: {[0,2], [4,8]}
+Gap:    {3}              ← lowest allowed value
+```
+
+**Overflow Trap**: When `end == u32::MAX`, computing `end + 1` overflows. Promote to `u64`:
+```rust
+// WRONG: overflows when last.1 == u32::MAX
+if lo <= last.1 + 1 { ... }
+
+// CORRECT: u64 arithmetic avoids overflow
+if (lo as u64) <= (last.1 as u64) + 1 { ... }
+```
+
+**Implementation** (from AoC 2016 Day 20):
+```rust
+type Range = (u32, u32);
+
+fn merge_ranges(ranges: &mut [Range]) -> Vec<Range> {
+    ranges.sort_unstable();
+    let mut merged: Vec<Range> = Vec::new();
+    for &(lo, hi) in ranges.iter() {
+        if let Some(last) = merged.last_mut() {
+            if (lo as u64) <= (last.1 as u64) + 1 {
+                last.1 = last.1.max(hi);
+                continue;
+            }
+        }
+        merged.push((lo, hi));
+    }
+    merged
+}
+```
+
+**Querying the merged result**:
+- **First gap** (lowest allowed value): `merged[0].1 + 1` (if first range starts at 0)
+- **Count gaps** (total allowed): `total_space - sum(hi - lo + 1 for each merged range)`
+
+**Complexity**:
+- **Time**: $O(n \log n)$ for sort + $O(n)$ for sweep = $O(n \log n)$
+- **Space**: $O(n)$ for merged output (often $k \ll n$)
+
+---
+
 ### **Theorem 1**: Interval Intersection Test
 - **Statement**: Two intervals $[a_1, a_2]$ and $[b_1, b_2]$ overlap if and only if $a_1 \leq b_2 \land b_1 \leq a_2$
 - **Proof**: By contrapositive—they're disjoint iff one ends before the other starts
@@ -191,6 +268,23 @@ impl Range {
   - Part 2: 794 pairs with any overlap
 - **Performance**: 27.7µs (O(1) per pair, 1000 pairs total)
 - **Link**: `advent_of_code/aoc2022/src/solver/day04.rs` | [[2026-02-04]]
+
+### **AoC 2016 Day 20**: Firewall Rules - Sweep Line Merge + Gap Finding
+- **Problem**: Firewall blocks IP ranges (0 to 4,294,967,295). Find lowest unblocked IP and count all allowed IPs.
+  - Part 1: Lowest allowed IP address
+  - Part 2: Total count of allowed IPs
+- **How it uses interval arithmetic**:
+  - Parse 1005 blocked ranges: `"3382920125-3384842620"` → `(u32, u32)` tuple
+  - Sort + merge overlapping/adjacent ranges (Algorithm 3 above)
+  - Part 1: First gap after merged block starting at 0
+  - Part 2: Total IP space (2^32) minus sum of blocked ranges
+- **Key insight**: Adjacent ranges must merge ($[0,5]$ + $[6,10]$ → $[0,10]$), requiring `lo <= end + 1` check
+- **Overflow safety**: `u32::MAX + 1` overflows — promote adjacency check to `u64`
+- **Results**:
+  - Part 1: 22,887,907 (lowest allowed IP)
+  - Part 2: 109 (total allowed IPs out of 4.3 billion!)
+- **Performance**: 42.5us combined (sort dominates at 1005 ranges)
+- **Link**: `advent_of_code/aoc2016/src/solver/day20.rs` | [[2026-03-20]]
 
 **Complete Implementation from Day 4**:
 ```rust
@@ -592,14 +686,16 @@ fn classify_relation(a: &Range, b: &Range) -> RangeRelation {
 - Edge cases (boundary touching, self-containment)
 
 **Advanced** (optimize):
-- Interval merging algorithms
-- Sweep line techniques for multiple intervals
+- Interval merging algorithms (sort + linear sweep)
+- Sweep line techniques for multiple intervals (see Algorithm 3 below)
 - Interval trees for efficient range queries
+- Adjacency merging: $[a, b]$ and $[b+1, c]$ merge to $[a, c]$ (critical for gap-finding)
+- Overflow safety: promote to wider type when endpoints are at type boundary (e.g., `u32::MAX + 1`)
 
 ---
 
-*Tags: #mathematics #interval-arithmetic #real-analysis #discrete-math #ranges #aoc2022-day4 #computational-geometry*
+*Tags: #mathematics #interval-arithmetic #real-analysis #discrete-math #ranges #aoc2022-day4 #aoc2016-day20 #sweep-line #computational-geometry*
 
-*Created*: 2026-02-04  
-*Last Updated*: 2026-02-04  
-*Implementations*: 1 (AoC 2022 Day 4)
+*Created*: 2026-02-04
+*Last Updated*: 2026-03-20
+*Implementations*: 2 (AoC 2022 Day 4, AoC 2016 Day 20)
