@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (21/25 complete)
+**Status**: In Progress (22/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 21/25 |
-| **Total Runtime** | 1010.5ms |
-| **Average per Day** | 48.1ms |
+| **Progress** | 22/25 |
+| **Total Runtime** | 1011.0ms |
+| **Average per Day** | 46.0ms |
 | **Fastest Day** | Day 19 (73ns) |
 | **Slowest Day** | Day 14 (593ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 51 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula, interval merging, byte-level string ops, brute-force inverse |
+| **Patterns Extracted** | 54 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula, interval merging, byte-level string ops, brute-force inverse, sliding puzzle geometry, BFS pathfinding |
 
-**1-Second Goal**: 1010.5ms / 1,000ms (101.1% used after 21 days) — 10.5ms over budget with 4 days remaining
+**1-Second Goal**: 1011.0ms / 1,000ms (101.1% used after 22 days) — 11.0ms over budget with 3 days remaining
 
 ---
 
@@ -46,7 +46,7 @@
 | [19](days/day19_function_guide.md) | ~0ns | ~0ns | 73ns | Josephus closed-form + power-of-3 formula | None | O(1) math — no simulation; fastest day at 73ns |
 | [20](days/day20_function_guide.md) | 41.3us | 41.6us | 42.5us | Interval merging | None | Sort + merge 1005 ranges; u64 overflow guard |
 | [21](days/day21_function_guide.md) | 11.7us | 16.2us | 16.1us | String scramble/unscramble | None | 6 op types; brute-force rotate-based reversal |
-| [22](days/day22.md) | - | - | - | - | - | |
+| [22](days/day22_function_guide.md) | 487us | 194us | 517us | Sliding puzzle + BFS | None | O(n^2) viable pairs; geometry for 5-move slide cycle |
 | [23](days/day23.md) | - | - | - | - | - | |
 | [24](days/day24.md) | - | - | - | - | - | |
 | [25](days/day25.md) | - | - | - | - | - | |
@@ -77,7 +77,7 @@
 - [Day 19](days/day19_function_guide.md) - An Elephant Named Joseph | [Code](../src/solver/day19.rs) ✅
 - [Day 20](days/day20_function_guide.md) - Firewall Rules | [Code](../src/solver/day20.rs) ✅
 - [Day 21](days/day21_function_guide.md) - Scrambled Letters and Hash | [Code](../src/solver/day21.rs) ✅
-- [Day 22](days/day22.md) - Grid Computing
+- [Day 22](days/day22_function_guide.md) - Grid Computing | [Code](../src/solver/day22.rs) ✅
 - [Day 23](days/day23.md) - Safe Cracking
 - [Day 24](days/day24.md) - Air Duct Spelunking
 - [Day 25](days/day25.md) - Clock Signal
@@ -109,6 +109,7 @@
 | 19 | Josephus closed-form + power-of-3 formula | Part 1: binary bit rotation (k=2); Part 2: piecewise formula resets at powers of 3 |
 | 20 | Interval merging (sort + sweep) | Sort ranges by start, merge overlapping/adjacent, query gaps; u64 for overflow safety |
 | 21 | String scramble + reverse operations | 6 op types on Vec<u8>; Part 2 reverses ops; brute-force trial for rotate-based inverse |
+| 22 | Sliding puzzle + BFS geometry | BFS empty node around wall; 5-move cycle slides goal left; O(n^2) viable pairs |
 
 ---
 
@@ -172,6 +173,9 @@
 | Self-inverse operations | 21 | Swap and reverse are their own inverses — reuse `apply` for `unapply` |
 | Brute-force inverse | 21 | When forward mapping isn't cleanly invertible, try all candidates and verify — feasible for small domains |
 | Byte-level string ops | 21 | `Vec<u8>` gives direct indexing, `swap`, `rotate_left/right`, `reverse` from std |
+| Sliding puzzle geometry | 22 | Reduce 2D grid movement to BFS + fixed-cycle formula instead of full state-space search |
+| Node type classification | 22 | Threshold-based wall detection (used > 100T) separates normal, wall, and empty nodes |
+| Two-phase solve | 22 | BFS for pathfinding phase, then arithmetic formula for repetitive sliding phase |
 
 ---
 
@@ -186,4 +190,4 @@
 
 ---
 
-**Last Updated**: 2026-03-22 (Day 21 complete)
+**Last Updated**: 2026-03-22 (Day 22 complete)
