@@ -92,7 +92,8 @@ Total: BFS distance (47) + sliding (141) = **188 moves**.
 
 ## Key Observations
 
-1. **Three node types**: The ~500T "wall" nodes can't move their data anywhere (no node has 500T available). They form a barrier the empty node must navigate around.
+1. **Only the empty node can receive data**: The smallest used value (excluding zero) is 64T, but the largest avail on any non-empty node is only 30T. Since 64 > 30, no normal node can move its data into another normal node. Data can *only* move into the empty node — this is what makes the grid a sliding puzzle with exactly one "hole".
+2. **Three node types**: The ~500T "wall" nodes can't move their data anywhere (no node has 500T available). They form a barrier the empty node must navigate around.
 2. **Sliding puzzle reduction**: With exactly one empty node and uniform normal nodes (any normal node's data fits in the empty), this reduces to a classic sliding puzzle.
 3. **Geometry beats search**: Full state-space BFS on (empty_pos, goal_pos) would work but is overkill. The empty node's path to the goal is a simple BFS, then the sliding pattern is a fixed 5-move cycle.
 4. **Wall threshold**: Normal nodes use 64-73T, walls use 490-499T. The `used > 100` threshold cleanly separates them.
