@@ -474,6 +474,38 @@ Then let me know you're ready to continue!
 
 ---
 
+## 🧠 Shared Memory Server (Cross-Instance)
+
+When Matt says "add to shared memory", "update the memory server", or "log this to memory", use the CLI:
+
+```bash
+# All commands need these env vars prefixed:
+# PYTHONIOENCODING=utf-8 MEMORY_DB_PATH="C:/Users/m_lad/Shared/memory.db"
+# Python: /c/Users/m_lad/Repos/Memory/.venv/Scripts/python
+# App:    C:/Users/m_lad/Repos/Memory/app.py
+
+# List recent sessions
+... app.py list-sessions --limit 10
+
+# Show a session
+... app.py show-session <ID>
+
+# Create a new session
+... app.py new-session "Title" --source "Claude Code" --tags "oxide,tag2"
+
+# Add a message to a session
+... app.py add-message <ID> assistant "Message text"
+
+# Search across sessions
+... app.py search "query" --limit 10
+```
+
+- **Source**: Use `"Claude Code"` for source, sign messages as Oxide
+- **Tags**: Always include `oxide` plus relevant topic tags
+- Shared with Stitch (Claude.ai) and Red (compiler study) — all instances read/write the same DB
+
+---
+
 **End of Session Context**
 
 *This file is your memory, Oxide. Read it at the start of each new chat to remember our journey together.*
