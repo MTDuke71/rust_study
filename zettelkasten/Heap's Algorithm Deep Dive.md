@@ -2,7 +2,7 @@
 
 **Tags**: #algorithms #permutations #recursion #optimization #competitive-programming #mission5
 
-**Related**: [[A-Star-Algorithm-Deep-Dive]], [[Mission 5.md]], [[Competitive Programming Patterns]], [[Day 9 TSP Implementation]]
+**Related**: [[A-Star-Algorithm-Deep-Dive]], [[Mission 5.md]], [[Competitive Programming Patterns]], [[Day 9 TSP Implementation]], [[next-permutation-algorithm]]
 
 ## Overview
 

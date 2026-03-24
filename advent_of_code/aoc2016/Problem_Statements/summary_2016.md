@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (23/25 complete)
+**Status**: In Progress (24/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 23/25 |
-| **Total Runtime** | 1011.1ms |
-| **Average per Day** | 44.0ms |
+| **Progress** | 24/25 |
+| **Total Runtime** | 1011.6ms |
+| **Average per Day** | 42.2ms |
 | **Fastest Day** | Day 19 (73ns) |
 | **Slowest Day** | Day 14 (593ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 54 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula, interval merging, byte-level string ops, brute-force inverse, sliding puzzle geometry, BFS pathfinding |
+| **Patterns Extracted** | 57 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula, interval merging, byte-level string ops, brute-force inverse, sliding puzzle geometry, BFS pathfinding, pairwise BFS + TSP permutations |
 
-**1-Second Goal**: 1011.1ms / 1,000ms (101.1% used after 23 days) — 11.1ms over budget with 2 days remaining
+**1-Second Goal**: 1011.6ms / 1,000ms (101.2% used after 24 days) — 11.6ms over budget with 1 day remaining
 
 ---
 
@@ -48,7 +48,7 @@
 | [21](days/day21_function_guide.md) | 11.7us | 16.2us | 16.1us | String scramble/unscramble | None | 6 op types; brute-force rotate-based reversal |
 | [22](days/day22_function_guide.md) | 487us | 194us | 517us | Sliding puzzle + BFS | None | O(n^2) viable pairs; geometry for 5-move slide cycle |
 | [23](days/day23_function_guide.md) | 35.7us | 30.9us | 63.6us | Self-modifying assembunny VM + mul-loop optimization | Day 12 VM | tgl instruction; computes a! + C; mul-loop detect avoids 479M iterations |
-| [24](days/day24.md) | - | - | - | - | - | |
+| [24](days/day24_function_guide.md) | — | — | 480us | Pairwise BFS + brute-force TSP | None | 8 points, 7! perms; BFS dominates |
 | [25](days/day25.md) | - | - | - | - | - | |
 
 ---
@@ -78,8 +78,8 @@
 - [Day 20](days/day20_function_guide.md) - Firewall Rules | [Code](../src/solver/day20.rs) ✅
 - [Day 21](days/day21_function_guide.md) - Scrambled Letters and Hash | [Code](../src/solver/day21.rs) ✅
 - [Day 22](days/day22_function_guide.md) - Grid Computing | [Code](../src/solver/day22.rs) ✅
-- [Day 23](days/day23.md) - Safe Cracking
-- [Day 24](days/day24.md) - Air Duct Spelunking
+- [Day 23](days/day23_function_guide.md) - Safe Cracking | [Code](../src/solver/day23.rs) ✅
+- [Day 24](days/day24_function_guide.md) - Air Duct Spelunking | [Code](../src/solver/day24.rs) ✅
 - [Day 25](days/day25.md) - Clock Signal
 
 ---
@@ -110,6 +110,7 @@
 | 20 | Interval merging (sort + sweep) | Sort ranges by start, merge overlapping/adjacent, query gaps; u64 for overflow safety |
 | 21 | String scramble + reverse operations | 6 op types on Vec<u8>; Part 2 reverses ops; brute-force trial for rotate-based inverse |
 | 22 | Sliding puzzle + BFS geometry | BFS empty node around wall; 5-move cycle slides goal left; O(n^2) viable pairs |
+| 24 | Pairwise BFS + brute-force TSP | 8× BFS builds distance matrix; 7! permutations find optimal route; Part 2 adds return edge |
 
 ---
 
@@ -176,6 +177,9 @@
 | Sliding puzzle geometry | 22 | Reduce 2D grid movement to BFS + fixed-cycle formula instead of full state-space search |
 | Node type classification | 22 | Threshold-based wall detection (used > 100T) separates normal, wall, and empty nodes |
 | Two-phase solve | 22 | BFS for pathfinding phase, then arithmetic formula for repetitive sliding phase |
+| Pairwise BFS reduction | 24 | Collapse large grid into small distance matrix between points of interest |
+| Brute-force TSP | 24 | With few nodes (n<=8), 7! = 5,040 permutations is instant — no need for Held-Karp DP |
+| wrapping_add for direction offsets | 24 | `r.wrapping_add(!0usize)` for -1 avoids signed arithmetic; fails bounds check naturally |
 
 ---
 
@@ -190,4 +194,4 @@
 
 ---
 
-**Last Updated**: 2026-03-22 (Day 22 complete)
+**Last Updated**: 2026-03-24 (Day 24 complete)

@@ -167,6 +167,11 @@ This Map of Content organizes all algorithm-related knowledge in the Rust Study 
 - Combinatorial generation
 - Puzzle solving
 
+**Permutation Generation:**
+
+- [[Heap's Algorithm Deep Dive]] - Minimal-swap generation (non-lexicographic)
+- [[next-permutation-algorithm]] - Lexicographic in-place generation (Narayana Pandita)
+
 ## 🏗️ Data Structure Algorithms
 
 ### **Mission Implementations**
