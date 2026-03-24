@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (22/25 complete)
+**Status**: In Progress (23/25 complete)
 
 ---
 
@@ -8,16 +8,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 22/25 |
-| **Total Runtime** | 1011.0ms |
-| **Average per Day** | 46.0ms |
+| **Progress** | 23/25 |
+| **Total Runtime** | 1011.1ms |
+| **Average per Day** | 44.0ms |
 | **Fastest Day** | Day 19 (73ns) |
 | **Slowest Day** | Day 14 (593ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
 | **Patterns Extracted** | 54 |
 | **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula, interval merging, byte-level string ops, brute-force inverse, sliding puzzle geometry, BFS pathfinding |
 
-**1-Second Goal**: 1011.0ms / 1,000ms (101.1% used after 22 days) — 11.0ms over budget with 3 days remaining
+**1-Second Goal**: 1011.1ms / 1,000ms (101.1% used after 23 days) — 11.1ms over budget with 2 days remaining
 
 ---
 
@@ -47,7 +47,7 @@
 | [20](days/day20_function_guide.md) | 41.3us | 41.6us | 42.5us | Interval merging | None | Sort + merge 1005 ranges; u64 overflow guard |
 | [21](days/day21_function_guide.md) | 11.7us | 16.2us | 16.1us | String scramble/unscramble | None | 6 op types; brute-force rotate-based reversal |
 | [22](days/day22_function_guide.md) | 487us | 194us | 517us | Sliding puzzle + BFS | None | O(n^2) viable pairs; geometry for 5-move slide cycle |
-| [23](days/day23.md) | - | - | - | - | - | |
+| [23](days/day23_function_guide.md) | 35.7us | 30.9us | 63.6us | Self-modifying assembunny VM + mul-loop optimization | Day 12 VM | tgl instruction; computes a! + C; mul-loop detect avoids 479M iterations |
 | [24](days/day24.md) | - | - | - | - | - | |
 | [25](days/day25.md) | - | - | - | - | - | |
 
