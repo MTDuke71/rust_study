@@ -47,6 +47,83 @@ The input program has three phases:
 
 The net effect: the program outputs the binary digits of `a + 2550` in LSB-first order, repeating forever.
 
+### Full Annotated Disassembly
+
+```asm
+;=== Phase 1: Initialization — compute d = a + 15*170 = a + 2550 ===
+;    This is a multiply-by-addition loop: adds 170 to d, 15 times.
+;
+ 1: cpy a d         ; d = a (save initial input)
+ 2: cpy 15 c        ; c = 15 (outer loop counter)
+ 3: cpy 170 b       ; b = 170 (inner loop counter)
+ 4: inc d           ; d += 1                     ─┐
+ 5: dec b           ; b -= 1                      │ inner: d += 170
+ 6: jnz b -2        ; if b != 0, goto 4          ─┘
+ 7: dec c           ; c -= 1                     ─┐
+ 8: jnz c -5        ; if c != 0, goto 3           │ outer: repeat 15×
+                     ;                            ─┘
+                     ; Result: d = a + (15 × 170) = a + 2550
+
+;=== Phase 2: Reload and begin division cycle ===
+;
+ 9: cpy d a         ; a = d (reload from saved value)
+10: jnz 0 0         ; nop (no-op: 0 is always false)
+
+;=== Phase 3: Division loop — divmod(a, 2) → a=quotient, b=remainder ===
+;    Repeatedly subtracts 2 from b (copied from a), counting how many
+;    times it fits. The leftover (0 or 1) in b is the remainder.
+;
+;--- Outer: for each bit, start with b=a, a=0 ---
+11: cpy a b         ; b = a (dividend)           ─┐
+12: cpy 0 a         ; a = 0 (quotient accumulator)│
+                     ;                             │
+;--- Inner: subtract 2 from b, increment a each time ---
+13: cpy 2 c         ; c = 2 (subtraction counter) │
+14: jnz b 2         ; if b != 0, goto 16          │ divmod loop
+15: jnz 1 6         ; else goto 21 (b exhausted)──│──> remainder path
+16: dec b           ; b -= 1                      │─┐
+17: dec c           ; c -= 1                      │ │ subtract 2 from b
+18: jnz c -4        ; if c != 0, goto 14         ─│─┘
+19: inc a           ; a += 1 (one "2" removed)    │
+20: jnz 1 -7        ; goto 13 (try next subtract)─┘
+                     ;
+                     ; After loop: a = floor(old_a / 2)
+                     ;             b = old_a mod 2
+
+;--- Remainder path: determine b = old_a mod 2 ---
+;    Arrives here when b == 0. c holds how many of the 2
+;    subtractions were completed (c=2 means 0 remain, c=1 means 1).
+;    Converts c → b: if c > 0, b should be odd (1); else even (0).
+;
+21: cpy 2 b         ; b = 2                      ─┐
+22: jnz c 2         ; if c != 0, goto 24          │
+23: jnz 1 4         ; else goto 27 (remainder=0)──│──> b stays 0? no...
+24: dec b           ; b -= 1                      │─┐
+25: dec c           ; c -= 1                      │ │ b = 2 - c
+26: jnz 1 -4        ; goto 22                    ─│─┘
+27: jnz 0 0         ; nop                         │
+                     ;                            ─┘
+                     ; Result: b = 2 - c = remainder (0 or 1)
+
+;=== Phase 4: Output and repeat ===
+;
+28: out b           ; TRANSMIT b (the current bit: 0 or 1)
+29: jnz a -19       ; if a != 0, goto 10 (more bits to extract)
+                     ;   (a = quotient from division; 0 when all bits done)
+30: jnz 1 -21       ; goto 9 (reload d → a, repeat entire binary sequence)
+                     ;   (infinite loop: outputs binary digits of d forever)
+```
+
+**Pseudocode equivalent:**
+```
+d = a + 2550
+loop forever:
+    a = d
+    while a > 0:
+        output(a % 2)
+        a = a / 2
+```
+
 ### Mathematical Solution
 
 For the output `0, 1, 0, 1, ...`, the value `a + 2550` must have the binary pattern `...10101010`:
