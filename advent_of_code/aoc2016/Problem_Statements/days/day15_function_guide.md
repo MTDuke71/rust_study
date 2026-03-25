@@ -228,3 +228,7 @@ Disc #6 has 13 positions; at time=0, it is at position 5.
 - LCM with 7th disc (11): 442,065 × 11 = 4,862,715
 - Answer for Part 1 (317,371) < LCM (442,065) ✓
 - Answer for Part 2 (2,080,951) < LCM (4,862,715) ✓
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

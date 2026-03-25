@@ -1162,3 +1162,7 @@ Day 24 demonstrates the power of mathematical transformation:
 **Final Answers**:
 - Part 1: 18651
 - Part 2: 546494494317645
+
+---
+
+**See also**: [AoC 2023 Summary](../summary_2023.md) | [[linear-algebra-fundamentals]] | [[computational-geometry-basics]] | [[gaussian-elimination]]

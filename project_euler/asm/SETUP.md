@@ -182,3 +182,7 @@ INVOKE WriteFile, hout, edi, ecx, ADDR nw, 0
 
 After any `CALL` or `INVOKE`, assume `EAX`, `ECX`, `EDX` have changed.
 `EBX`, `ESI`, `EDI`, `EBP` are preserved across calls (callee must save/restore them).
+
+---
+
+**See also**: [Session notes](../../zettelkasten/Daily%20Notes/2026-03-01.md)

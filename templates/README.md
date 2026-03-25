@@ -18,8 +18,8 @@ Templates for consistent documentation across the learning workspace.
   - [day_comprehensive_template.md](aoc_documentation/day_comprehensive_template.md) - ⚠️ DEPRECATED (use function guide)
 
 ### Daily & Weekly Notes
-- **[Daily Notes Template.md](Daily Notes Template.md)** - Daily zettelkasten notes
-- **[Weekly Notes Template.md](Weekly Notes Template.md)** - Weekly planning and reflection
+- **[[Daily Notes Template]]** - Daily zettelkasten notes
+- **[[Weekly Notes Template]]** - Weekly planning and reflection
 
 ---
 

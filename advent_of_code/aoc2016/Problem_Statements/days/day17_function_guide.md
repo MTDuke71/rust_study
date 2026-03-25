@@ -102,3 +102,7 @@ Part 1 is essentially instant. Part 2 dominates — exhaustive BFS exploring all
 - **Nibble extraction without hex chars**: Skip the hex character conversion, compare nibbles directly (minor savings per hash)
 
 None worthwhile at 23ms — well under the 100ms target.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

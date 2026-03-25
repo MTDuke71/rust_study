@@ -972,3 +972,7 @@ Every instruction mnemonic that appears in this listing, grouped by category.
 | `__l` / `__b` | 8-bit | `al`, `cl`, `r10b` | Lowest byte of the register. |
 
 **Key insight**: `xor ebx, ebx` zeros all 64 bits of `rbx` because writing a 32-bit register implicitly zero-extends to 64 bits on x86-64. This is why the compiler uses `xor ebx, ebx` instead of `xor rbx, rbx` — shorter encoding, same result.
+
+---
+
+**See also**: [Day 9 Function Guide](day09_function_guide.md) | [AoC 2016 Summary](../summary_2016.md)

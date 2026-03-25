@@ -247,3 +247,7 @@ runnable triggers on receiving 2 data elements, processes (sorts), and sends res
 to the next SWC in the chain. The "low to output" path is like writing to an NV block
 (final storage), while "high to bot" is an inter-runnable variable triggering the next
 computation stage.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

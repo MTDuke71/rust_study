@@ -110,3 +110,7 @@ day22_part2             194us
 ```
 
 Part 1's O(n²) pair counting dominates. Part 2's BFS on a 30x32 grid is trivial.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

@@ -1557,3 +1557,7 @@ Results: (490, 96356)
 ---
 
 *This guide represents the complete technical documentation for Day 22's solution, from parsing to optimization.*
+
+---
+
+**See also**: [AoC 2023 Summary](../summary_2023.md) | [[graph-theory-fundamentals]] | [[bfs-patterns]] | [[mission-6]] | [[mission-8]]

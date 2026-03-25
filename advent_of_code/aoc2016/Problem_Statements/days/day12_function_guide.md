@@ -341,3 +341,7 @@ The 23-instruction program:
 ```
 
 Three logical blocks: init + conditional, Fibonacci loop, multiply epilogue.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

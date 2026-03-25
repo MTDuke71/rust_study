@@ -345,6 +345,6 @@ cargo run -p mission11 --example demo_counting_paths
 
 ---
 
-*Links*: [[dp-aggregation-patterns]] | [[dynamic-programming-memoization]] | [[top-down-dp-pattern]] | [[mission-11]] | [[aoc-pattern-recognition]]
+*Links*: [[dp-aggregation-patterns]] | [[dynamic-programming-memoization]] | [[top-down-dp-pattern]] | [[mission-11]] | [[aoc-pattern-recognition]] | [[boolean-to-counting-transformation]]
 
 *Tags*: #dynamic-programming #memoization #transformation-pattern #boolean-to-counting #aoc-patterns #mission11

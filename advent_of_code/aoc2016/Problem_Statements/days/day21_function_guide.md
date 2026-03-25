@@ -107,3 +107,7 @@ day21_part2             16.2us
 ```
 
 Part 2 is slightly slower due to the brute-force rotate-based reversal (cloning + trial applications). Combined appears faster than Part 2 alone — this is measurement noise; at microsecond scale, CPU cache state and scheduling jitter dominate.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

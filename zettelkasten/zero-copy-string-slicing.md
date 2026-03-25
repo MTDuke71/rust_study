@@ -528,4 +528,4 @@ let mut memo: HashMap<String, T> = HashMap::new();
 
 *Links:*
 - **Outgoing:** [[String Type]], [[top-down-dp-pattern]], [[Performance Optimization]], [[Memory Optimization]], [[ownership-fundamentals]], [[mission-11]]
-- **Incoming:** (To be added by related notes)
+- **Applied in:** AoC 2022 Day 21 (Monkey Math) - `Monkey<'a>` with `&'a str` borrowed names, HashMap<&str, Monkey> for ~2,800 zero-copy lookups

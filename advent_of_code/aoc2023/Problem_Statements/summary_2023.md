@@ -408,6 +408,8 @@ error[E0277]: trait bound `f64: From<Variable>` is not satisfied
 - ✅ Local search finds exact integer
 - ✅ Full actual input (both parts)
 
+**Function Guide**: [day24_function_guide.md](days/day24_function_guide.md)
+
 **Zettelkasten**: [[linear-algebra-fundamentals]], [[computational-geometry-basics]], [[gaussian-elimination]], [[cross-product-applications]], [[local-search-methods]]
 
 **Links**: ← [Day 23](#day-23-a-long-walk) | Day 25 →
@@ -2120,6 +2122,8 @@ This explains why Part 2 is ~2.8× slower despite same grid size.
 - [[graph-theory-fundamentals]] - State-space graphs, weighted edges
 - [[state-space-search]] - Extended states for constraint satisfaction
 
+**Function Guide**: [day17_function_guide.md](days/day17_function_guide.md)
+
 **Links**: ← [Day 16](#day-16-the-floor-will-be-lava) | [Day 18](#day-18-lavaduct-lagoon) →
 
 ---
@@ -2308,6 +2312,8 @@ fn decode_from_hex(&self) -> Result<Instruction> {
 - [[computational-geometry-basics]] - Shoelace Formula, Pick's Theorem proofs
 - [[number-theory-basics]] - Lattice points, integer coordinates
 - [[hexadecimal-encoding]] - Base-16 number systems
+
+**Function Guide**: [day18_function_guide.md](days/day18_function_guide.md)
 
 **Links**: ← [Day 17](#day-17-clumsy-crucible) | [Day 19](#day-19-aplenty) →
 
@@ -3057,6 +3063,8 @@ Part 2 (1.73ms):
   - BFS queue per reaction: O(bricks_in_chain + edges)
   - Vec<bool> state tracking: ~0.1µs overhead per sim
 ```
+
+**Function Guide**: [day22_function_guide.md](days/day22_function_guide.md)
 
 **Zettelkasten**: [[graph-theory-fundamentals]], [[bfs-patterns]], [[spatial-indexing-pattern]], [[mission-6]], [[mission-8]]
 

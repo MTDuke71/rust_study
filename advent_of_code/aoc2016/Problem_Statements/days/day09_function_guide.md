@@ -219,3 +219,6 @@ At 17.5µs total, this is among the fastest days — well under the 100ms thresh
 | Slice recursion | `decompressed_len(&data[start..start+chars])` — zero-copy sub-slice as recursive input |
 | Multiplicative nesting | Nested `(LENxREP)` markers create exponential growth: small input → huge output |
 | Same algorithm, different depth | Part 1 and Part 2 share identical structure; only the "count consumed chars" line differs |
+
+
+**See also**: [Assembly Analysis](day09_asm_analysis.md) — annotated LLVM output showing how Rust compiles to 157ns | [AoC 2016 Summary](../summary_2016.md)

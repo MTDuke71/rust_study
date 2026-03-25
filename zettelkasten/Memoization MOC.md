@@ -173,6 +173,7 @@ let cache: FxHashMap<u64, u64> = FxHashMap::default();
 - **[[Dynamic Programming Patterns]]** - General DP strategies
 - **[[Tabulation Patterns]]** - Bottom-up DP (iterative alternative)
 - **Memoization**: Top-down DP (recursive with cache)
+- **[[boolean-to-counting-transformation]]** - Boolean→counting operator swap pattern
 
 ### Algorithm Analysis
 - **[[Algorithm Complexity Analysis]]** - Big-O impact of memoization

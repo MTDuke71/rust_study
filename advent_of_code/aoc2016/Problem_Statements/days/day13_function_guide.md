@@ -228,3 +228,7 @@ optimal (BFS for unweighted shortest path).
 - **Actual shortest path**: 92 steps (longer than Manhattan due to walls)
 - **Reachable in 50 steps**: 124 distinct positions
 - **Total cells visited by BFS**: ~800 (to reach distance 92)
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

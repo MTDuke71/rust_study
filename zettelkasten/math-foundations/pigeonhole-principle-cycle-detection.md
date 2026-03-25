@@ -189,6 +189,20 @@ pub fn solve_part2(input: &str) -> Result<String> {
 
 **Performance Gain**: ~99.9999% reduction in iterations
 
+### **AoC 2022 Day 17 - Pyroclastic Flow**
+
+**Problem**: Simulate 1 trillion Tetris-like rocks falling in a 7-wide chamber.
+
+**Mathematical Insight**:
+- State = `(rock_type, jet_index % len, top_30_rows)` — finite state space
+- By Pigeonhole Principle: Deterministic simulation must cycle
+- Detection: HashMap fingerprint finds repeat within ~3,400 rocks
+- Fast-forward: Skip `full_cycles × cycle_height`, simulate remainder only
+
+**Performance**: ~400µs instead of impossible 10^12 iterations
+
+**Link**: `advent_of_code/aoc2022/src/solver/day17.rs`
+
 ### **AoC 2023 Day 8 - Haunted Wasteland**
 
 **Problem**: Simultaneous ghost paths on directed graph - find when all ghosts reach 'Z' nodes simultaneously.
@@ -405,6 +419,6 @@ For random mapping on $n$ states:
 
 ---
 
-*Mathematical Foundation for*: AoC 2023 Day 14, AoC 2023 Day 8, AoC 2023 Day 20  
+*Mathematical Foundation for*: AoC 2022 Day 17, AoC 2023 Day 8, AoC 2023 Day 14, AoC 2023 Day 20  
 *Tags*: #discrete-math #combinatorics #algorithms #cycle-detection #pigeonhole-principle  
 *Related*: [[linear-feedback-shift-registers]], [[graph-theory-fundamentals]], [[modular-arithmetic]], [[state-machines]], [[number-theory-basics]], [[Dynamic Programming]]

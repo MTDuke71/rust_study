@@ -118,7 +118,7 @@ struct GraphVec {
 
 - **Connection**: Direct application of graph theory concepts
 - **Implementation**: BFS/DFS traversal patterns
-- **Data Structures**: Adjacency list representations
+- **Data Structures**: Adjacency list representations (see [[Adjacency List Performance]])
 
 ## Related Concepts
 

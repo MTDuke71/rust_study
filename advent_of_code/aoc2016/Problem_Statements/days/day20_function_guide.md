@@ -104,3 +104,7 @@ day20_part2             41.6us
 ```
 
 Combined is barely more than individual parts — parsing + sorting dominates, and both queries are O(merged_count) scans.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

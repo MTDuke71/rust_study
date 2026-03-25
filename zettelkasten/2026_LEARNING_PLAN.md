@@ -926,7 +926,7 @@ Create `PROGRESS_2026.md` with:
 **Q3-Q4 2026 (Jul-Dec) - Optional:**
 - 📖 **"The Embedded Rust Book"** (free online, rust-embedded.github.io)
   - Systems programming with no_std
-  - Hardware abstraction, embedded patterns
+  - Hardware abstraction, embedded patterns (see [[rust-embedded-rtos]])
   - Leverages AUTOSAR automotive background
   - Timeline: 2-3 chapters/month (lighter read)
 

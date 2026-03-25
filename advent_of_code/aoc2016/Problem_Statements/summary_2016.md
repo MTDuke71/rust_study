@@ -1,6 +1,7 @@
 # AoC 2016 - Summary
 
 **Status**: In Progress (24/25 complete)
+**Project**: [README](../README.md)
 
 ---
 

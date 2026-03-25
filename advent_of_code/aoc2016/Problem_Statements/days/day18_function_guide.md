@@ -103,3 +103,7 @@ Part 1 is effectively free; Part 2 is the full workload.
 - **SIMD-friendly row updates** could accelerate large-width variants.
 
 Current performance (~30ms combined) is already within the usual AoC target budget for a day.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

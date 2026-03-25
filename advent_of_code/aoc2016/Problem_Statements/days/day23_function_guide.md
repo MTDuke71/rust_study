@@ -132,3 +132,6 @@ Each outer loop iteration decrements `b` by 1, so `c = 2*b` walks the toggle tar
 | 3 | 6 | 22 | `inc d` -> `dec d` |
 | 2 | 4 | 20 | `jnz 80 d` -> `cpy 80 d` |
 | 1 | 2 | 18 | `jnz 1 c` -> `cpy 1 c` (breaks factorial loop) |
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

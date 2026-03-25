@@ -218,3 +218,7 @@ Floor 4: (empty)
 
 Three paired elements on F1, two with chips separated on F2.
 Part 2 adds two more `(0, 0)` pairs, making 7 total.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

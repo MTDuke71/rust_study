@@ -100,3 +100,7 @@ Input (37x183 grid with #, ., 0-7)
        └─ Part 2: min over 7! routes from 0, returning to 0
            → 748
 ```
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

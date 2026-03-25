@@ -104,3 +104,7 @@ Both parts together are faster than a single cache miss.
   Covers the history and the Part 1 binary bit-rotation formula.
 - **0xdf — AoC 2016 Day 19 walkthrough**: [youtube.com/watch?v=M-V_gvJomzU](https://www.youtube.com/watch?v=M-V_gvJomzU)
   Derives the Part 2 power-of-3 piecewise formula by tabulating winners and spotting the pattern. Emphasizes math observation over brute-force simulation.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

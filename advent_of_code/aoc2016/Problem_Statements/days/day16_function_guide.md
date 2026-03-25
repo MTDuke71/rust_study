@@ -202,3 +202,7 @@ data.chunks(chunk_size)
 - **Avoid the final extend**: Since we truncate anyway, stop the last dragon step when we hit disk_size
 
 None worthwhile at 24ms — well under the 100ms target.
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)

@@ -355,4 +355,4 @@ tokio::spawn(async move {
 
 *Tags: #async #trait-objects #dynamic-dispatch #futures #polymorphism #ch17 #ch18*
 
-*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[rust-oop-characteristics]] | [[future-trait-deep-dive]] | [[async-await-basics]] | [[async-streams]] | [[state-pattern-rust]]*
+*Links: [[zettel-index]] | [[rust-concurrency-moc]] | [[rust-oop-characteristics]] | [[future-trait-deep-dive]] | [[async-await-basics]] | [[async-streams]] | [[state-pattern-rust]] | [[rust_book/rust-book-ch19-22-review]]*

@@ -162,3 +162,7 @@ Rayon distributes these across all CPU cores for a ~10× speedup.
 - **Part 1 answer index**: 18,626 (~18,600 hashes + 1000 lookahead)
 - **Part 2 answer index**: 20,092 (~20,100 hashes × 2017 rounds each)
 - **Total MD5 operations**: ~19,600 (Part 1) + ~42.5M (Part 2)
+
+---
+
+**See also**: [AoC 2016 Summary](../summary_2016.md)
