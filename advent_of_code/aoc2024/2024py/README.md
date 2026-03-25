@@ -1,4 +1,5 @@
 # Advent of Code 2024
+See [[advent_of_code/aoc2024/README|README]] for the overall project description
 
 My solutions to [Advent of Code 2024](https://adventofcode.com/2024/) using Python3
 

@@ -149,6 +149,7 @@ aoc2024/
 
 For detailed analysis and additional solutions, see:
 - **[SUMMARY.md](advent_of_code/aoc2024/Problem_Statements/summary.md)** - Comprehensive implementation details, algorithm analysis, benchmarks, and conversion insights
+- [[advent_of_code/aoc2024/examples/README|Examples README]] See this file for deep dive additional programs
 - **[AoC 2015](../aoc2015/README.md)** - Reference implementation with extensive algorithmic analysis
 - **[AoC Integration](../../zettelkasten/AoC%20Integration.md)** - Integration with mission system and learning tracks
 
