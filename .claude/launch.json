@@ -1,0 +1,35 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mission10-rest-api",
+      "runtimeExecutable": "cargo",
+      "runtimeArgs": ["run", "-p", "mission10", "--example", "mission10_demo"],
+      "port": 3000
+    },
+    {
+      "name": "mission10-tutorial-api",
+      "runtimeExecutable": "cargo",
+      "runtimeArgs": ["run", "-p", "step8_rest_api"],
+      "port": 8080
+    },
+    {
+      "name": "ch21-single-threaded",
+      "runtimeExecutable": "cargo",
+      "runtimeArgs": ["run", "-p", "rust_book_ch21", "--example", "ch21_1_single_threaded"],
+      "port": 7878
+    },
+    {
+      "name": "ch21-multithreaded",
+      "runtimeExecutable": "cargo",
+      "runtimeArgs": ["run", "-p", "rust_book_ch21", "--example", "ch21_2_multithreaded"],
+      "port": 7878
+    },
+    {
+      "name": "ch21-graceful-shutdown",
+      "runtimeExecutable": "cargo",
+      "runtimeArgs": ["run", "-p", "rust_book_ch21", "--example", "ch21_3_graceful_shutdown"],
+      "port": 7878
+    }
+  ]
+}
