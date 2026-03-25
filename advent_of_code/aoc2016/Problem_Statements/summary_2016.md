@@ -1,6 +1,6 @@
 # AoC 2016 - Summary
 
-**Status**: In Progress (24/25 complete)
+**Status**: COMPLETE (25/25 -- 50 stars!)
 **Project**: [README](../README.md)
 
 ---
@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 24/25 |
-| **Total Runtime** | 1011.6ms |
-| **Average per Day** | 42.2ms |
-| **Fastest Day** | Day 19 (73ns) |
-| **Slowest Day** | Day 14 (593ms) |
+| **Progress** | 25/25 (50 stars) |
+| **Total Runtime** | 1074ms |
+| **Average per Day** | 43.0ms |
+| **Fastest Day** | Day 19 (200ns) |
+| **Slowest Day** | Day 14 (627ms) |
 | **Mission Integration** | Day 8 (Mission 6 Grid) |
-| **Patterns Extracted** | 57 |
-| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula, interval merging, byte-level string ops, brute-force inverse, sliding puzzle geometry, BFS pathfinding, pairwise BFS + TSP permutations |
+| **Patterns Extracted** | 59 |
+| **Optimizations Applied** | Parse-once, byte-level hash checks, Rayon parallelization, single-pass, fixed-size freq arrays, sliding window, bracket state machine, screen simulation, slice recursion, event-driven simulation, canonical BFS, register VM, implicit graph BFS, hash caching, generic hash function, CRT, extended GCD, dragon curve expansion, single-pass parity checksum, path-dependent BFS, XOR transition simplification, Josephus closed-form, power-of-3 piecewise formula, interval merging, byte-level string ops, brute-force inverse, sliding puzzle geometry, BFS pathfinding, pairwise BFS + TSP permutations, binary pattern analysis, VM signal simulation |
 
-**1-Second Goal**: 1011.6ms / 1,000ms (101.2% used after 24 days) — 11.6ms over budget with 1 day remaining
+**1-Second Goal**: 1074ms / 1,000ms (107.4% -- 74ms over budget, dominated by Days 5+14 MD5 mining)
 
 ---
 
@@ -50,7 +50,7 @@
 | [22](days/day22_function_guide.md) | 487us | 194us | 517us | Sliding puzzle + BFS | None | O(n^2) viable pairs; geometry for 5-move slide cycle |
 | [23](days/day23_function_guide.md) | 35.7us | 30.9us | 63.6us | Self-modifying assembunny VM + mul-loop optimization | Day 12 VM | tgl instruction; computes a! + C; mul-loop detect avoids 479M iterations |
 | [24](days/day24_function_guide.md) | — | — | 480us | Pairwise BFS + brute-force TSP | None | 8 points, 7! perms; BFS dominates |
-| [25](days/day25.md) | - | - | - | - | - | |
+| [25](days/day25_function_guide.md) | — | — | 6.25ms | Assembunny VM + binary pattern search | Day 12/23 VM | Outputs binary digits of `a+2550`; alternating-bit pattern |
 
 ---
 
@@ -81,7 +81,7 @@
 - [Day 22](days/day22_function_guide.md) - Grid Computing | [Code](../src/solver/day22.rs) ✅
 - [Day 23](days/day23_function_guide.md) - Safe Cracking | [Code](../src/solver/day23.rs) ✅
 - [Day 24](days/day24_function_guide.md) - Air Duct Spelunking | [Code](../src/solver/day24.rs) ✅
-- [Day 25](days/day25.md) - Clock Signal
+- [Day 25](days/day25_function_guide.md) - Clock Signal | [Code](../src/solver/day25.rs) ✅
 
 ---
 
@@ -112,6 +112,7 @@
 | 21 | String scramble + reverse operations | 6 op types on Vec<u8>; Part 2 reverses ops; brute-force trial for rotate-based inverse |
 | 22 | Sliding puzzle + BFS geometry | BFS empty node around wall; 5-move cycle slides goal left; O(n^2) viable pairs |
 | 24 | Pairwise BFS + brute-force TSP | 8× BFS builds distance matrix; 7! permutations find optimal route; Part 2 adds return edge |
+| 25 | Assembunny VM + binary pattern search | Program outputs binary digits of `a+2550` LSB-first; find smallest `a` giving `0,1,0,1,...` pattern |
 
 ---
 
@@ -181,6 +182,8 @@
 | Pairwise BFS reduction | 24 | Collapse large grid into small distance matrix between points of interest |
 | Brute-force TSP | 24 | With few nodes (n<=8), 7! = 5,040 permutations is instant — no need for Held-Karp DP |
 | wrapping_add for direction offsets | 24 | `r.wrapping_add(!0usize)` for -1 avoids signed arithmetic; fails bounds check naturally |
+| Binary pattern analysis | 25 | Reverse-engineer VM to identify mathematical structure; `a+2550` as binary digit extractor |
+| Signal verification simulation | 25 | Run VM with step limit, check output sequence against expected pattern; robust validation |
 
 ---
 
@@ -195,4 +198,4 @@
 
 ---
 
-**Last Updated**: 2026-03-24 (Day 24 complete)
+**Last Updated**: 2026-03-25 (ALL 25 DAYS COMPLETE -- 50 stars!)
