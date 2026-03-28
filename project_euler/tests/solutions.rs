@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p019, p020, p021, p067};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p019, p020, p021, p022, p023, p024, p067};
 
 #[test]
 fn test_problem_001() {
@@ -195,6 +195,41 @@ fn test_problem_021() {
 fn test_problem_021_example() {
     // 220 and 284 are the only amicable pair below 300
     assert_eq!(p021::sum_amicable_below(300), 220 + 284);
+}
+
+#[test]
+fn test_problem_022() {
+    assert_eq!(p022::solve(), 871198282);
+}
+
+#[test]
+fn test_problem_022_example() {
+    // COLIN has alphabetical value 53 (C=3 + O=15 + L=12 + I=9 + N=14)
+    assert_eq!(p022::alphabetical_value("COLIN"), 53);
+}
+
+#[test]
+fn test_problem_023() {
+    assert_eq!(p023::solve(), 4179871);
+}
+
+#[test]
+fn test_problem_023_example() {
+    // 12 is the smallest abundant number (1+2+3+4+6 = 16 > 12)
+    let abundants = p023::abundant_numbers(13);
+    assert_eq!(abundants, vec![12]);
+}
+
+#[test]
+fn test_problem_024() {
+    assert_eq!(p024::solve(), 2783915460);
+}
+
+#[test]
+fn test_problem_024_example() {
+    // Permutations of [0,1,2]: 012, 021, 102, 120, 201, 210
+    // 3rd permutation is 102
+    assert_eq!(p024::nth_permutation(3, 3), vec![1, 0, 2]);
 }
 
 #[test]

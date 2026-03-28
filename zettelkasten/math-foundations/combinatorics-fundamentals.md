@@ -134,6 +134,16 @@ fn count_accepted(&self, workflow_name: &str, ranges: PartRange) -> u64 {
 - **Integrator win**: One-liner using shared `combinatorics::binomial(2*n, n)`
 - **Link**: [[project-euler-p015]] | `project_euler/src/problems/p015.rs`
 
+### **Project Euler P24**: Lexicographic Permutations - Factoradic Number System
+- **What**: Find the 1,000,000th lexicographic permutation of digits 0–9
+- **How it uses combinatorics**:
+  - 10 digits have 10! = 3,628,800 total permutations (Theorem 1)
+  - Each "first digit" block contains (n-1)! permutations
+  - **Factoradic decomposition**: Repeatedly divide by (n-1)! to select each digit position
+  - Direct O(n²) computation instead of generating all permutations
+- **Key insight**: The factoradic number system creates a bijection between [0, n!) and permutations
+- **Link**: [[project-euler-p024]] | `project_euler/src/problems/p024.rs`
+
 ### **Future AoC**: Subset Selection Problems
 - **What**: Choose $r$ items from $n$ candidates
 - **How it uses combinatorics**: Combination formula $\binom{n}{r}$
@@ -296,6 +306,6 @@ Combinatorics: Product of range sizes → instant
 
 *Created*: 2026-01-19
 *Last Updated*: 2026-02-26
-*Implementations*: 2 (AoC 2023 Day 19, Project Euler P15)
+*Implementations*: 3 (AoC 2023 Day 19, Project Euler P15, Project Euler P24)
 
-*Links: [[zettel-index]] | [[math-foundations/README]] | [[set-theory-fundamentals]] | [[constraint-propagation]] | [[workflow-pattern-matching]] | [[dynamic-programming-theory]] | [[project-euler-p015]]*
+*Links: [[zettel-index]] | [[math-foundations/README]] | [[set-theory-fundamentals]] | [[constraint-propagation]] | [[workflow-pattern-matching]] | [[dynamic-programming-theory]] | [[project-euler-p015]] | [[project-euler-p024]]*
