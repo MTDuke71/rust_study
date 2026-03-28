@@ -427,6 +427,64 @@ $$n = \sum_{d|n} \tau(d) \cdot \mu(n/d)$$
 *Actual cost lower due to n shrinking  
 †After O(N log log N) preprocessing
 
+## Divisor Sum Sieve (Bulk Computation)
+
+When you need d(n) for **all** n < N (not just one), a sieve approach beats per-number computation:
+
+### Algorithm
+
+For each divisor d, add d to every multiple of d (skipping d itself for proper divisors):
+
+```rust
+fn proper_divisor_sum_sieve(limit: usize) -> Vec<u64> {
+    let mut d = vec![0u64; limit];
+    for divisor in 1..limit {
+        let mut multiple = 2 * divisor;
+        while multiple < limit {
+            d[multiple] += divisor as u64;
+            multiple += divisor;
+        }
+    }
+    d
+}
+```
+
+### Why It Works
+
+Every proper divisor of n gets visited exactly once:
+- When `divisor = 1`: adds 1 to all n ≥ 2
+- When `divisor = 2`: adds 2 to all even n ≥ 4
+- When `divisor = k`: adds k to all multiples of k ≥ 2k
+
+After the sieve, `d[n]` = sum of all proper divisors of n.
+
+### Complexity
+
+Total iterations = n/1 + n/2 + n/3 + ... + n/n = n × Hₙ ≈ **O(n log n)**
+
+This is the harmonic series — the same reason the Sieve of Eratosthenes is O(n log log n) (but that sieve skips composites, this one doesn't).
+
+| Approach | One d(n) | All d(n) for n<N |
+|----------|----------|------------------|
+| Trial division (√n) | O(√n) | O(N√N) |
+| Prime factorization | O(√n) | O(N√N) |
+| **Divisor sum sieve** | O(1) lookup | **O(N log N)** |
+
+### Analogy
+
+Think of it as the **dual of the Sieve of Eratosthenes**:
+- Eratosthenes: each prime marks its multiples as composite (boolean)
+- Divisor sum sieve: each number **adds itself** to its multiples (accumulation)
+
+### Implementation
+
+See `project_euler/src/utils/number_theory.rs` → `proper_divisor_sum_sieve`
+
+### Applications
+
+- **[[project-euler-p021]]**: Amicable numbers (d(d(n)) == n)
+- **Future**: P23 (abundant numbers: d(n) > n), sociable chains
+
 ## Interesting Properties
 
 ### Even vs. Odd τ(n)
@@ -584,9 +642,9 @@ mod tests {
 ---
 
 *Links:*
-- **Applications**: [[project-euler-p012]], [[perfect-numbers]], [[highly-composite-numbers]]
+- **Applications**: [[project-euler-p012]], [[project-euler-p021]], [[perfect-numbers]], [[highly-composite-numbers]]
 - **Theory**: [[prime-factorization]], [[fundamental-theorem-arithmetic]], [[multiplicative-functions]]
 - **Related**: [[divisor-sum-function]], [[mobius-function]], [[arithmetic-functions]]
-- **Code**: `project_euler/src/problems/p012.rs`
+- **Code**: `project_euler/src/problems/p012.rs`, `project_euler/src/utils/number_theory.rs` (sieve)
 
 *Tags:* #divisor-function #number-theory #arithmetic-functions #multiplicative #prime-factorization #tau #divisors

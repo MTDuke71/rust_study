@@ -120,9 +120,11 @@ Cannot prove correctness, but catches most errors.
 
 ## Implementations
 
-- [[project-euler-p016]]: 2^1000 digit sum via repeated doubling (primary example)
 - [[project-euler-p013]]: Large sum (avoided full big-number by truncation trick)
-- **Future**: P20 (factorial digit sum), P25 (Fibonacci digit count), P56 (a^b digit sums)
+- [[project-euler-p016]]: 2^1000 digit sum via repeated doubling (primary example)
+- [[project-euler-p020]]: 100! digit sum via successive factor multiplication
+
+- **Future**: P25 (Fibonacci digit count), P56 (a^b digit sums)
 
 ---
 
@@ -150,7 +152,7 @@ Cannot prove correctness, but catches most errors.
 *Tags: #mathematics #big-number #arbitrary-precision #digit-array #carry-propagation #project-euler*
 
 *Created*: 2026-02-26
-*Last Updated*: 2026-02-26
-*Implementations*: 1 (Project Euler P16)
+*Last Updated*: 2026-03-27
+*Implementations*: 2 (Project Euler P16, P20)
 
-*Links: [[zettel-index]] | [[math-foundations/README]] | [[project-euler-p016]] | [[project-euler-p013]] | [[order-of-magnitude]]*
+*Links: [[zettel-index]] | [[math-foundations/README]] | [[project-euler-p016]] | [[project-euler-p020]] | [[project-euler-p013]] | [[order-of-magnitude]]*

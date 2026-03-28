@@ -43,6 +43,41 @@ pub fn sum_of_proper_divisors(n: u64) -> u64 {
     divisors(n).iter().filter(|&&d| d != n).sum()
 }
 
+/// Sieve to compute the sum of proper divisors for all numbers 0..limit.
+///
+/// For each divisor d (1..limit/2), adds d to every multiple of d.
+/// This is analogous to the Sieve of Eratosthenes but accumulates sums
+/// instead of marking composites.
+///
+/// Returns a Vec where `result[n]` = sum of proper divisors of n.
+///
+/// # Complexity
+/// - Time: O(n log n) — harmonic series: n/1 + n/2 + n/3 + ... ≈ n·ln(n)
+/// - Space: O(n)
+///
+/// # Examples
+/// ```
+/// use project_euler::utils::number_theory::proper_divisor_sum_sieve;
+/// let sieve = proper_divisor_sum_sieve(300);
+/// assert_eq!(sieve[220], 284);  // d(220) = 284
+/// assert_eq!(sieve[284], 220);  // d(284) = 220 — amicable pair!
+/// assert_eq!(sieve[28], 28);    // perfect number
+/// ```
+pub fn proper_divisor_sum_sieve(limit: usize) -> Vec<u64> {
+    let mut d = vec![0u64; limit];
+
+    for divisor in 1..limit {
+        // Add `divisor` to every multiple (starting at 2*divisor to exclude n itself)
+        let mut multiple = 2 * divisor;
+        while multiple < limit {
+            d[multiple] += divisor as u64;
+            multiple += divisor;
+        }
+    }
+
+    d
+}
+
 /// Prime factorization
 pub fn prime_factors(mut n: u64) -> Vec<u64> {
     let mut factors = Vec::new();
@@ -91,6 +126,20 @@ mod tests {
     fn test_divisors() {
         assert_eq!(divisors(12), vec![1, 2, 3, 4, 6, 12]);
         assert_eq!(divisors(28), vec![1, 2, 4, 7, 14, 28]);
+    }
+
+    #[test]
+    fn test_proper_divisor_sum_sieve() {
+        let sieve = proper_divisor_sum_sieve(300);
+        // Amicable pair: d(220) = 284, d(284) = 220
+        assert_eq!(sieve[220], 284);
+        assert_eq!(sieve[284], 220);
+        // Perfect numbers: d(n) = n
+        assert_eq!(sieve[6], 6);    // 1+2+3
+        assert_eq!(sieve[28], 28);  // 1+2+4+7+14
+        // Cross-check against single-value function
+        assert_eq!(sieve[12], sum_of_proper_divisors(12));
+        assert_eq!(sieve[100], sum_of_proper_divisors(100));
     }
 
     #[test]

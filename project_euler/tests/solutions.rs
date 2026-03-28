@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p067};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p019, p020, p021, p067};
 
 #[test]
 fn test_problem_001() {
@@ -160,6 +160,41 @@ fn test_problem_018_example() {
     // Example from problem statement: 4-row triangle, max path = 23
     let mut t = vec![vec![3], vec![7, 4], vec![2, 4, 6], vec![8, 5, 9, 3]];
     assert_eq!(p018::max_path_sum(&mut t), 23);
+}
+
+#[test]
+fn test_problem_019() {
+    assert_eq!(p019::solve(), 171);
+}
+
+#[test]
+fn test_problem_019_example() {
+    // 1900 was NOT a leap year (century, not ÷400)
+    assert!(!p019::is_leap_year(1900));
+    // 2000 WAS a leap year (÷400)
+    assert!(p019::is_leap_year(2000));
+}
+
+#[test]
+fn test_problem_020() {
+    assert_eq!(p020::solve(), 648);
+}
+
+#[test]
+fn test_problem_020_example() {
+    // 10! = 3628800, digit sum = 27
+    assert_eq!(p020::factorial_digit_sum(10), 27);
+}
+
+#[test]
+fn test_problem_021() {
+    assert_eq!(p021::solve(), 31626);
+}
+
+#[test]
+fn test_problem_021_example() {
+    // 220 and 284 are the only amicable pair below 300
+    assert_eq!(p021::sum_amicable_below(300), 220 + 284);
 }
 
 #[test]
