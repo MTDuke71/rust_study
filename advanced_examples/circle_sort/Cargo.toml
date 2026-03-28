@@ -1,0 +1,18 @@
+[package]
+name = "circle_sort"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+colored = "2.1"
+
+[dev-dependencies]
+criterion = "0.7"
+
+[[example]]
+name = "circle_sort_demo"
+path = "examples/circle_sort_demo.rs"
+
+[[bench]]
+name = "sort_comparison"
+harness = false

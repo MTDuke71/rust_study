@@ -15,6 +15,7 @@ A comprehensive overview of sorting algorithms with implementations, analysis, a
 | **Counting Sort** | O(n + k) | O(k) | Yes | No | Integer keys, small range |
 | **Radix Sort** | O(d(n + k)) | O(n + k) | Yes | No | Integer/string keys |
 | **Bucket Sort** | O(n + k) avg | O(n + k) | Yes | No | Uniformly distributed data |
+| **Circle Sort** | O(n log n) avg | O(log n) | No | Yes | Curiosity-driven, recursive mirror pairs |
 
 ## 🦀 **Rust Standard Library Sorting**
 
@@ -485,6 +486,66 @@ mod heap_tests {
 - **Space**: O(1)
 - **Stable**: No
 - **Use Cases**: When guaranteed O(n log n) and O(1) space is required
+
+### **7. Circle Sort** ⚡
+
+**Concept**: Bend the array into a circle. Compare mirror pairs across the diameter (first↔last, second↔second-to-last), swap if out of order, split in half, recurse. Repeat full passes until zero swaps.
+
+**Origin**: Not published in a journal or taught at MIT — a programmer posted it on a coding forum and the community verified it actually works at O(n log n) average. One of the few sorting algorithms discovered through grassroots experimentation.
+
+```rust
+/// Circle Sort - O(n log n) avg, O(log n) space, not stable, in-place
+fn circle_sort_pass<T: Ord>(arr: &mut [T], lo: usize, hi: usize) -> usize {
+    if lo >= hi { return 0; }
+    let mut swaps = 0;
+    let (mut left, mut right) = (lo, hi);
+
+    // Compare mirror pairs: outside-in across the "diameter"
+    while left < right {
+        if arr[left] > arr[right] {
+            arr.swap(left, right);
+            swaps += 1;
+        }
+        left += 1;
+        right -= 1;
+    }
+    // Odd-length: check middle pair
+    if left == right && left < hi && arr[left] > arr[left + 1] {
+        arr.swap(left, left + 1);
+        swaps += 1;
+    }
+    // Recurse on each half
+    let mid = lo + (hi - lo) / 2;
+    swaps += circle_sort_pass(arr, lo, mid);
+    swaps += circle_sort_pass(arr, mid + 1, hi);
+    swaps
+}
+
+fn circle_sort<T: Ord>(arr: &mut [T]) {
+    if arr.len() <= 1 { return; }
+    while circle_sort_pass(arr, 0, arr.len() - 1) > 0 {}
+}
+```
+
+**Analysis**:
+
+- **Time**: O(n log n) average, O(n log² n) worst case
+- **Space**: O(log n) recursion depth only — fully in-place
+- **Stable**: No
+- **Adaptive**: Efficiently handles reverse-sorted input (one pass suffices)
+- **Use Cases**: Educational (elegant recursive structure), competitive programming curiosity
+
+**Benchmark vs std::sort and Bubble Sort** (see `advanced_examples/circle_sort/`):
+
+| n | std::sort | Circle Sort | Bubble Sort |
+|------:|----------:|------------:|------------:|
+| 100 | 453 ns | 2.7 µs | 2.6 µs |
+| 1,000 | 6.3 µs | 52.6 µs | 286 µs |
+| 10,000 | 80.6 µs | 1.52 ms | 26.1 ms |
+
+Key insight: At n=100 bubble and circle are neck-and-neck, but by n=10,000 the O(n²) vs O(n log n) divergence is 17× — complexity class only hurts at scale.
+
+> **Implementation**: Full implementation with visualization callback and benchmarks in `advanced_examples/circle_sort/`
 
 ## 🔢 **Non-Comparison Sorts**
 
@@ -1680,3 +1741,5 @@ mod sorting_tests {
 *Tags: #sorting #algorithms #performance #complexity #rust #implementation #comparison #stable #in-place*
 
 *Links: [[zettel-index]] | [[algorithm-analysis]] | [[data-structures-overview]] | [[heap-data-structure]] | [[binary-search-algorithms]] | [[performance-optimization]] | [[rust-collections]] | [[competitive-programming]]*
+
+*Implementations: `advanced_examples/circle_sort/` (Circle Sort with benchmarks, bubble sort baseline, visualization callback)*
