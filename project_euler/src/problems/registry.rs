@@ -9,6 +9,8 @@ impl ProblemSolver {
     /// Solve a specific problem by number
     ///
     /// Returns `Some(answer)` if problem is implemented, `None` otherwise.
+    /// Note: Some problems have negative answers (e.g., Problem 27).
+    /// These are stored as i64 cast to u64; display with `as i64` when needed.
     pub fn solve(problem_num: usize) -> Option<u64> {
         match problem_num {
             1 => Some(super::p001::solve()),
@@ -35,6 +37,9 @@ impl ProblemSolver {
             22 => Some(super::p022::solve()),
             23 => Some(super::p023::solve()),
             24 => Some(super::p024::solve()),
+            25 => Some(super::p025::solve()),
+            26 => Some(super::p026::solve()),
+            27 => Some(super::p027::solve() as u64),
             67 => Some(super::p067::solve()),
             _ => None,
         }
@@ -42,7 +47,7 @@ impl ProblemSolver {
 
     /// Get list of implemented problems
     pub fn implemented() -> Vec<usize> {
-        vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 67]
+        vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 67]
     }
 
     /// Check if a problem is implemented

@@ -31,7 +31,7 @@ fn main() {
     });
 
     match ProblemSolver::solve(problem_num) {
-        Some(answer) => println!("Problem {}: {}", problem_num, answer),
+        Some(answer) => println!("Problem {}: {}", problem_num, answer as i64),
         None => {
             println!("Problem {} not yet implemented", problem_num);
             println!("\nImplemented problems: {:?}", ProblemSolver::implemented());
@@ -65,7 +65,7 @@ fn solve_all() {
 
     for &num in &problems {
         if let Some(answer) = ProblemSolver::solve(num) {
-            println!("Problem {:3}: {}", num, answer);
+            println!("Problem {:3}: {}", num, answer as i64);
         }
     }
 }

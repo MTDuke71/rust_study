@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p019, p020, p021, p022, p023, p024, p067};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p019, p020, p021, p022, p023, p024, p025, p026, p027, p067};
 
 #[test]
 fn test_problem_001() {
@@ -230,6 +230,40 @@ fn test_problem_024_example() {
     // Permutations of [0,1,2]: 012, 021, 102, 120, 201, 210
     // 3rd permutation is 102
     assert_eq!(p024::nth_permutation(3, 3), vec![1, 0, 2]);
+}
+
+#[test]
+fn test_problem_025() {
+    assert_eq!(p025::solve(), 4782);
+}
+
+#[test]
+fn test_problem_025_example() {
+    // From problem statement: F(12) = 144 is the first 3-digit Fibonacci number
+    assert_eq!(p025::first_fib_with_digits(3), 12);
+}
+
+#[test]
+fn test_problem_026() {
+    assert_eq!(p026::solve(), 983);
+}
+
+#[test]
+fn test_problem_026_example() {
+    // 1/7 = 0.(142857) has the longest cycle for d < 10
+    assert_eq!(p026::cycle_length(7), 6);
+    assert_eq!(p026::longest_cycle_under(10), 7);
+}
+
+#[test]
+fn test_problem_027() {
+    assert_eq!(p027::solve(), -59231);
+}
+
+#[test]
+fn test_problem_027_example() {
+    // Euler's n² + n + 41 produces 40 consecutive primes
+    assert_eq!(p027::consecutive_primes(1, 41), 40);
 }
 
 #[test]
