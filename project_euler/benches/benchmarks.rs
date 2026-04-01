@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p014, p017, p018, p019, p020, p021, p022, p023, p024, p025, p026, p027, p067};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p014, p017, p018, p019, p020, p021, p022, p023, p024, p025, p026, p027, p028, p029, p030, p067};
 
 fn benchmark_problems(c: &mut Criterion) {
     c.bench_function("Problem 1", |b| b.iter(|| p001::solve()));
@@ -46,6 +46,16 @@ fn benchmark_problems(c: &mut Criterion) {
     c.bench_function("Problem 25", |b| b.iter(|| p025::solve()));
     c.bench_function("Problem 26", |b| b.iter(|| p026::solve()));
     c.bench_function("Problem 27", |b| b.iter(|| p027::solve()));
+    c.bench_function("Problem 28 (closed-form)", |b| {
+        b.iter(|| p028::spiral_diagonal_sum(black_box(1001)))
+    });
+    c.bench_function("Problem 28 (iterative)", |b| {
+        b.iter(|| p028::spiral_diagonal_sum_iterative(black_box(1001)))
+    });
+    c.bench_function("Problem 29", |b| {
+        b.iter(|| p029::count_distinct_powers(black_box(100)))
+    });
+    c.bench_function("Problem 30", |b| b.iter(|| p030::solve()));
     c.bench_function("Problem 67", |b| b.iter(|| p067::solve()));
 }
 
