@@ -86,6 +86,7 @@ members = [
     "advent_of_code/aoc2023",
     "advent_of_code/aoc2024",
     "advent_of_code/aoc2025",
+    "advent_of_code/aoc2017",
     "daily_study/rust_learning_week5_notes",
     "rust_book/Ch16/threads",
     "rust_book/Ch16/message_passing",

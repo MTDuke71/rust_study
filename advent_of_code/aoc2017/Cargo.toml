@@ -1,0 +1,23 @@
+[package]
+name = "aoc2017"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+mission6 = { path = "../../missions/Mission6" }
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "benchmarks"
+harness = false
+
+[lib]
+name = "aoc2017"
+path = "src/lib.rs"
+
+[[bin]]
+name = "aoc2017"
+path = "src/main.rs"

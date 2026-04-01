@@ -1,0 +1,9 @@
+use criterion::{criterion_group, criterion_main, Criterion};
+
+fn day01_bench(c: &mut Criterion) {
+    let input = std::fs::read_to_string("inputs/day01.txt").expect("Need day01.txt input");
+    c.bench_function("day01", |b| b.iter(|| aoc2017::solver::day01::solve(&input)));
+}
+
+criterion_group!(benches, day01_bench);
+criterion_main!(benches);
