@@ -15,5 +15,10 @@ fn day03_bench(c: &mut Criterion) {
     c.bench_function("day03", |b| b.iter(|| aoc2017::solver::day03::solve(&input)));
 }
 
-criterion_group!(benches, day01_bench, day02_bench, day03_bench);
+fn day04_bench(c: &mut Criterion) {
+    let input = std::fs::read_to_string("inputs/day04.txt").expect("Need day04.txt input");
+    c.bench_function("day04", |b| b.iter(|| aoc2017::solver::day04::solve(&input)));
+}
+
+criterion_group!(benches, day01_bench, day02_bench, day03_bench, day04_bench);
 criterion_main!(benches);

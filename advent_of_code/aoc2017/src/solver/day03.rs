@@ -21,7 +21,7 @@ fn solve_part1_with_data(n: u64) -> u64 {
 
     // Find which ring: smallest odd square >= n gives the side length
     let root = (n as f64).sqrt().ceil() as u64;
-    let side = if root % 2 == 0 { root + 1 } else { root };
+    let side = if root.is_multiple_of(2) { root + 1 } else { root };
     let k = (side - 1) / 2;
 
     // Position within the ring (0-indexed)
