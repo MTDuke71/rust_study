@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 5/25 (10 stars) |
-| **Total Runtime** | 34.47ms |
-| **Average per Day** | 6.89ms |
+| **Progress** | 6/25 (12 stars) |
+| **Total Runtime** | 35.33ms |
+| **Average per Day** | 5.89ms |
 | **Mission Integration** | None yet |
 
 ---
@@ -25,6 +25,7 @@
 | [3](days/day03_function_guide.md) | — | — | 9.09µs | Ring math + spiral neighbor-sum | None | O(√n) closed-form Part 1, HashMap spiral Part 2 |
 | [4](days/day04_function_guide.md) | — | — | 360.49µs | HashSet dedup + byte-sort canonicalization | None | Short-circuit `.all()`, zero-copy parsing |
 | [5](days/day05_function_guide.md) | — | — | 34.09ms | In-place jump offset simulation | None | Conditional mutation → 74× step increase |
+| [6](days/day06_function_guide.md) | — | — | 861.60µs | HashMap cycle detection + division redistribution | None | 6,681 cycles; O(n) with HashMap state tracking |
 
 ---
 
@@ -36,6 +37,7 @@
 - [Day 3](days/day03_function_guide.md) - Spiral Memory | [Code](../src/solver/day03.rs) ✅
 - [Day 4](days/day04_function_guide.md) - High-Entropy Passphrases | [Code](../src/solver/day04.rs) ✅
 - [Day 5](days/day05_function_guide.md) - A Maze of Twisty Trampolines | [Code](../src/solver/day05.rs) ✅
+- [Day 6](days/day06_function_guide.md) - Memory Reallocation | [Code](../src/solver/day06.rs) ✅
 
 ---
 
@@ -48,3 +50,4 @@
 | 3 | Ring math + spiral neighbor-sum | Part 1 is pure math (O(√n)), Part 2 needs simulation but converges in ~50 steps |
 | 4 | HashSet dedup + byte-sort canonicalization | Anagrams share the same sorted bytes — reduce to duplicate detection |
 | 5 | In-place jump offset simulation | One branch difference (≥3 decrement) changes 374K steps to 27.7M |
+| 6 | HashMap cycle detection + division redistribution | Store step numbers in HashMap → cycle length is a simple subtraction |
