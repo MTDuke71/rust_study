@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 6/25 (12 stars) |
-| **Total Runtime** | 35.33ms |
-| **Average per Day** | 5.89ms |
+| **Progress** | 7/25 (14 stars) |
+| **Total Runtime** | 35.62ms |
+| **Average per Day** | 5.09ms |
 | **Mission Integration** | None yet |
 
 ---
@@ -26,6 +26,7 @@
 | [4](days/day04_function_guide.md) | — | — | 360.49µs | HashSet dedup + byte-sort canonicalization | None | Short-circuit `.all()`, zero-copy parsing |
 | [5](days/day05_function_guide.md) | — | — | 34.09ms | In-place jump offset simulation | None | Conditional mutation → 74× step increase |
 | [6](days/day06_function_guide.md) | — | — | 861.60µs | HashMap cycle detection + division redistribution | None | 6,681 cycles; O(n) with HashMap state tracking |
+| [7](days/day07_function_guide.md) | — | — | 288.71µs | Tree root finding + recursive weight balancing | None | Bottom-up Result<Ok,Err> for early exit on imbalance |
 
 ---
 
@@ -38,6 +39,7 @@
 - [Day 4](days/day04_function_guide.md) - High-Entropy Passphrases | [Code](../src/solver/day04.rs) ✅
 - [Day 5](days/day05_function_guide.md) - A Maze of Twisty Trampolines | [Code](../src/solver/day05.rs) ✅
 - [Day 6](days/day06_function_guide.md) - Memory Reallocation | [Code](../src/solver/day06.rs) ✅
+- [Day 7](days/day07_function_guide.md) - Recursive Circus | [Code](../src/solver/day07.rs) ✅
 
 ---
 
@@ -51,3 +53,4 @@
 | 4 | HashSet dedup + byte-sort canonicalization | Anagrams share the same sorted bytes — reduce to duplicate detection |
 | 5 | In-place jump offset simulation | One branch difference (≥3 decrement) changes 374K steps to 27.7M |
 | 6 | HashMap cycle detection + division redistribution | Store step numbers in HashMap → cycle length is a simple subtraction |
+| 7 | Tree root finding + recursive weight balancing | Result<Ok,Err> gives natural short-circuit; minority detection finds the outlier |
