@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 9/25 (18 stars) |
-| **Total Runtime** | 35.79ms |
-| **Average per Day** | 3.98ms |
+| **Progress** | 10/25 (20 stars) |
+| **Total Runtime** | 35.84ms |
+| **Average per Day** | 3.58ms |
 | **Mission Integration** | None yet |
 
 ---
@@ -29,6 +29,7 @@
 | [7](days/day07_function_guide.md) | — | — | 288.71µs | Tree root finding + recursive weight balancing | None | Bottom-up Result<Ok,Err> for early exit on imbalance |
 | [8](days/day08_function_guide.md) | — | — | 164.98µs | Conditional register machine simulation | None | Single-pass dual-answer with pre-computed deltas |
 | [9](days/day09_function_guide.md) | — | — | 9.17µs | State machine stream parsing | None | O(1) space, no intermediate representation |
+| [10](days/day10_function_guide.md) | — | — | 54.92µs | Circular list reversal hash | None | 64-round Knot Hash, XOR dense compression |
 
 ---
 
@@ -44,6 +45,7 @@
 - [Day 7](days/day07_function_guide.md) - Recursive Circus | [Code](../src/solver/day07.rs) ✅
 - [Day 8](days/day08_function_guide.md) - I Heard You Like Registers | [Code](../src/solver/day08.rs) ✅
 - [Day 9](days/day09_function_guide.md) - Stream Processing | [Code](../src/solver/day09.rs) ✅
+- [Day 10](days/day10_function_guide.md) - Knot Hash | [Code](../src/solver/day10.rs) ✅
 
 ---
 
@@ -60,3 +62,4 @@
 | 7 | Tree root finding + recursive weight balancing | Result<Ok,Err> gives natural short-circuit; minority detection finds the outlier |
 | 8 | Conditional register machine simulation | Pre-compute delta at parse time; track all-time max during single execution pass |
 | 9 | State machine stream parsing | Three states (normal, garbage, escaped) — no intermediate representation, O(1) space |
+| 10 | Circular list reversal hash | Dual input interpretation (numbers vs ASCII); state persists across 64 rounds |
