@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 7/25 (14 stars) |
-| **Total Runtime** | 35.62ms |
-| **Average per Day** | 5.09ms |
+| **Progress** | 9/25 (18 stars) |
+| **Total Runtime** | 35.79ms |
+| **Average per Day** | 3.98ms |
 | **Mission Integration** | None yet |
 
 ---
@@ -27,6 +27,8 @@
 | [5](days/day05_function_guide.md) | — | — | 34.09ms | In-place jump offset simulation | None | Conditional mutation → 74× step increase |
 | [6](days/day06_function_guide.md) | — | — | 861.60µs | HashMap cycle detection + division redistribution | None | 6,681 cycles; O(n) with HashMap state tracking |
 | [7](days/day07_function_guide.md) | — | — | 288.71µs | Tree root finding + recursive weight balancing | None | Bottom-up Result<Ok,Err> for early exit on imbalance |
+| [8](days/day08_function_guide.md) | — | — | 164.98µs | Conditional register machine simulation | None | Single-pass dual-answer with pre-computed deltas |
+| [9](days/day09_function_guide.md) | — | — | 9.17µs | State machine stream parsing | None | O(1) space, no intermediate representation |
 
 ---
 
@@ -40,6 +42,8 @@
 - [Day 5](days/day05_function_guide.md) - A Maze of Twisty Trampolines | [Code](../src/solver/day05.rs) ✅
 - [Day 6](days/day06_function_guide.md) - Memory Reallocation | [Code](../src/solver/day06.rs) ✅
 - [Day 7](days/day07_function_guide.md) - Recursive Circus | [Code](../src/solver/day07.rs) ✅
+- [Day 8](days/day08_function_guide.md) - I Heard You Like Registers | [Code](../src/solver/day08.rs) ✅
+- [Day 9](days/day09_function_guide.md) - Stream Processing | [Code](../src/solver/day09.rs) ✅
 
 ---
 
@@ -54,3 +58,5 @@
 | 5 | In-place jump offset simulation | One branch difference (≥3 decrement) changes 374K steps to 27.7M |
 | 6 | HashMap cycle detection + division redistribution | Store step numbers in HashMap → cycle length is a simple subtraction |
 | 7 | Tree root finding + recursive weight balancing | Result<Ok,Err> gives natural short-circuit; minority detection finds the outlier |
+| 8 | Conditional register machine simulation | Pre-compute delta at parse time; track all-time max during single execution pass |
+| 9 | State machine stream parsing | Three states (normal, garbage, escaped) — no intermediate representation, O(1) space |
