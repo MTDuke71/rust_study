@@ -24,6 +24,7 @@
 - **[[Tree Structures]]** - Binary trees, n-ary trees, and traversal patterns
 - **[[Queue vs Stack Usage]]** - BFS, DFS, and state management
 - **[[Coordinate Systems]]** - 2D/3D grids, hex grids, and navigation
+  - **[[hex-grid-cube-coordinates]]** - Cube coordinates (q+r+s=0) for hex grid distance, neighbors, rotation
 - **[[Grid Data Structures]]** - Mission 6 Grid<T> for cellular automaton and 2D problems
   - **[[aoc2024-day4-mission6-example]]** - Word search with 43% code reduction demonstration
 

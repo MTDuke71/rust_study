@@ -208,6 +208,7 @@
 - [[flood-fill]] - Single-region modification (recursive, iterative, BFS)
 - [[explore-component]] - DFS helper for component exploration
 - [[4-connectivity]] - Grid neighbor patterns and connectivity rules
+- [[hex-grid-cube-coordinates]] - Cube coordinates (q+r+s=0) for hex grids — distance, neighbors, rotation
 
 **Data Structures & Collections:**
 
