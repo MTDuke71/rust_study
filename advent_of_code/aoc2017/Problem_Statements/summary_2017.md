@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 12/25 (24 stars) |
-| **Total Runtime** | 36.03ms |
-| **Average per Day** | 3.00ms |
+| **Progress** | 13/25 (26 stars) |
+| **Total Runtime** | 49.04ms |
+| **Average per Day** | 3.77ms |
 | **Mission Integration** | Mission 10 (Day 12) |
 
 ---
@@ -32,6 +32,7 @@
 | [10](days/day10_function_guide.md) | — | — | 54.92µs | Circular list reversal hash | None | 64-round Knot Hash, XOR dense compression |
 | [11](days/day11_function_guide.md) | — | — | 37.40µs | Hex grid cube coordinates | None | Distance = max(|q|,|r|,|s|), track max during walk |
 | [12](days/day12_function_guide.md) | — | — | 150.98µs | Union-Find connected components | Mission 10 | `members(0).count()` + `components().count()` from one UF |
+| [13](days/day13_function_guide.md) | — | — | 13.01ms | Modular arithmetic (no simulation) | None | Scanner period = 2*(R-1); closed-form catch test |
 
 ---
 
@@ -50,6 +51,7 @@
 - [Day 10](days/day10_function_guide.md) - Knot Hash | [Code](../src/solver/day10.rs) ✅
 - [Day 11](days/day11_function_guide.md) - Hex Ed | [Code](../src/solver/day11.rs) ✅
 - [Day 12](days/day12_function_guide.md) - Digital Plumber | [Code](../src/solver/day12.rs) ✅
+- [Day 13](days/day13_function_guide.md) - Packet Scanners | [Code](../src/solver/day13.rs) ✅
 
 ---
 
@@ -69,3 +71,4 @@
 | 10 | Circular list reversal hash | Dual input interpretation (numbers vs ASCII); state persists across 64 rounds |
 | 11 | Hex grid cube coordinates | Cube coords make distance trivial — cancellation is implicit in accumulation |
 | 12 | Union-Find connected components | Mission 10 reuse — `members(0)` for Part 1, `components()` for Part 2 from one UF |
+| 13 | Modular arithmetic (closed-form) | Scanner at top iff (depth + delay) mod 2*(R-1) = 0 — no per-picosecond simulation needed |
