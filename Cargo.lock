@@ -150,6 +150,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "criterion 0.5.1",
+ "mission10",
  "mission6",
 ]
 

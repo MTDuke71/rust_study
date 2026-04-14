@@ -9,10 +9,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 11/25 (22 stars) |
-| **Total Runtime** | 35.88ms |
-| **Average per Day** | 3.26ms |
-| **Mission Integration** | None yet |
+| **Progress** | 12/25 (24 stars) |
+| **Total Runtime** | 36.03ms |
+| **Average per Day** | 3.00ms |
+| **Mission Integration** | Mission 10 (Day 12) |
 
 ---
 
@@ -31,6 +31,7 @@
 | [9](days/day09_function_guide.md) | — | — | 9.17µs | State machine stream parsing | None | O(1) space, no intermediate representation |
 | [10](days/day10_function_guide.md) | — | — | 54.92µs | Circular list reversal hash | None | 64-round Knot Hash, XOR dense compression |
 | [11](days/day11_function_guide.md) | — | — | 37.40µs | Hex grid cube coordinates | None | Distance = max(|q|,|r|,|s|), track max during walk |
+| [12](days/day12_function_guide.md) | — | — | 150.98µs | Union-Find connected components | Mission 10 | `members(0).count()` + `components().count()` from one UF |
 
 ---
 
@@ -48,6 +49,7 @@
 - [Day 9](days/day09_function_guide.md) - Stream Processing | [Code](../src/solver/day09.rs) ✅
 - [Day 10](days/day10_function_guide.md) - Knot Hash | [Code](../src/solver/day10.rs) ✅
 - [Day 11](days/day11_function_guide.md) - Hex Ed | [Code](../src/solver/day11.rs) ✅
+- [Day 12](days/day12_function_guide.md) - Digital Plumber | [Code](../src/solver/day12.rs) ✅
 
 ---
 
@@ -66,3 +68,4 @@
 | 9 | State machine stream parsing | Three states (normal, garbage, escaped) — no intermediate representation, O(1) space |
 | 10 | Circular list reversal hash | Dual input interpretation (numbers vs ASCII); state persists across 64 rounds |
 | 11 | Hex grid cube coordinates | Cube coords make distance trivial — cancellation is implicit in accumulation |
+| 12 | Union-Find connected components | Mission 10 reuse — `members(0)` for Part 1, `components()` for Part 2 from one UF |
