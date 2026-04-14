@@ -9,10 +9,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 13/25 (26 stars) |
-| **Total Runtime** | 49.04ms |
-| **Average per Day** | 3.77ms |
-| **Mission Integration** | Mission 10 (Day 12) |
+| **Progress** | 14/25 (28 stars) |
+| **Total Runtime** | 52.51ms |
+| **Average per Day** | 3.75ms |
+| **Mission Integration** | Mission 10 (Days 12, 14) |
 
 ---
 
@@ -33,6 +33,7 @@
 | [11](days/day11_function_guide.md) | — | — | 37.40µs | Hex grid cube coordinates | None | Distance = max(|q|,|r|,|s|), track max during walk |
 | [12](days/day12_function_guide.md) | — | — | 150.98µs | Union-Find connected components | Mission 10 | `members(0).count()` + `components().count()` from one UF |
 | [13](days/day13_function_guide.md) | — | — | 13.01ms | Modular arithmetic (no simulation) | None | Scanner period = 2*(R-1); closed-form catch test |
+| [14](days/day14_function_guide.md) | — | — | 3.47ms | Knot Hash rows + Union-Find regions | Mission 10 | Bit-packed 128×128 grid; right+down unioning |
 
 ---
 
@@ -52,6 +53,7 @@
 - [Day 11](days/day11_function_guide.md) - Hex Ed | [Code](../src/solver/day11.rs) ✅
 - [Day 12](days/day12_function_guide.md) - Digital Plumber | [Code](../src/solver/day12.rs) ✅
 - [Day 13](days/day13_function_guide.md) - Packet Scanners | [Code](../src/solver/day13.rs) ✅
+- [Day 14](days/day14_function_guide.md) - Disk Defragmentation | [Code](../src/solver/day14.rs) ✅
 
 ---
 
@@ -72,3 +74,4 @@
 | 11 | Hex grid cube coordinates | Cube coords make distance trivial — cancellation is implicit in accumulation |
 | 12 | Union-Find connected components | Mission 10 reuse — `members(0)` for Part 1, `components()` for Part 2 from one UF |
 | 13 | Modular arithmetic (closed-form) | Scanner at top iff (depth + delay) mod 2*(R-1) = 0 — no per-picosecond simulation needed |
+| 14 | Knot Hash rows + Union-Find regions | Compose Day 10 + Mission 10 — bit-packed grid, union right+down only to halve edge work |

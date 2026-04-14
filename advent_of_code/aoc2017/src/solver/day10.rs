@@ -27,7 +27,10 @@ fn solve_part1_with_data(lengths: &[usize]) -> u32 {
     list[0] as u32 * list[1] as u32
 }
 
-fn solve_part2_with_data(input: &str) -> String {
+/// Computes the full knot hash of `input`, returning the 16 dense-hash bytes.
+///
+/// Reused by Day 14 to produce the 128-bit rows of the disk grid.
+pub fn knot_hash_bytes(input: &str) -> [u8; 16] {
     let mut lengths: Vec<usize> = input.trim().bytes().map(|b| b as usize).collect();
     lengths.extend_from_slice(&[17, 31, 73, 47, 23]);
 
@@ -38,9 +41,17 @@ fn solve_part2_with_data(input: &str) -> String {
         knot_round(&mut list, &lengths, &mut pos, &mut skip);
     }
 
-    // Dense hash: XOR each block of 16
-    list.chunks(16)
-        .map(|chunk| chunk.iter().fold(0u8, |acc, &x| acc ^ x))
+    // Dense hash: XOR each block of 16 into a single byte
+    let mut out = [0u8; 16];
+    for (i, chunk) in list.chunks(16).enumerate() {
+        out[i] = chunk.iter().fold(0u8, |acc, &x| acc ^ x);
+    }
+    out
+}
+
+fn solve_part2_with_data(input: &str) -> String {
+    knot_hash_bytes(input)
+        .iter()
         .map(|byte| format!("{byte:02x}"))
         .collect()
 }
