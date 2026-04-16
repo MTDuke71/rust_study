@@ -374,6 +374,11 @@ x ≡ aₖ (mod nₖ)
 **Modular Exponentiation** (aᵇ mod n):
 - Naive: O(b) multiplications
 - Repeated squaring: O(log b) multiplications
+- See [[math-foundations/modular-exponentiation]] for full treatment
+
+**Mersenne Prime Fast-Mod** (n mod 2^p - 1):
+- Replaces hardware DIV (~35-90 cycles) with shift+add (~5 cycles)
+- See [[math-foundations/mersenne-primes-fast-arithmetic]]
 
 ---
 
@@ -392,6 +397,7 @@ x ≡ aₖ (mod nₖ)
 - [[aoc2023-day21]] - Infinite grid wrapping
 - [[aoc2023-day08]] - Cycle detection (implicit modulo)
 - [[fast-forward-patterns]] - Skip repetitions using modulo
+- AoC 2017 Day 15 - Mersenne fast-mod + modular exponentiation for LCG parallelism
 
 ---
 
@@ -408,6 +414,8 @@ x ≡ aₖ (mod nₖ)
 **Advanced**:
 - [[math-foundations/number-theory-basics]] - Broader context
 - [[math-foundations/chinese-remainder-theorem]] - CRT and system of congruences
+- [[math-foundations/modular-exponentiation]] - a^b mod m in O(log b) via squaring
+- [[math-foundations/mersenne-primes-fast-arithmetic]] - Division-free modulo for 2^p - 1
 - [[math-foundations/formal-systems-invariants]] - Mod-3 invariant proves MU unreachable from MI (GEB Chapter 1)
 - [[cryptography-foundations]] - RSA, Diffie-Hellman
 

@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0"
+rayon = "1.10"
 mission6 = { path = "../../missions/Mission6" }
 mission10 = { path = "../../missions/Mission10" }
 

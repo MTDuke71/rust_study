@@ -338,6 +338,8 @@
 - [[sos-dp]] - Sum Over Subsets DP: O(n × 2^n) subset propagation for bitmask partition problems
 - [[circular-list]] - Circular list operations: modular indexing, remove-reinsert, mod n-1 subtlety (AoC 2022 Day 20)
 - [[modular-arithmetic]] - Remainder vs modulus, double-modulus pattern, cycle detection, LCM tricks
+- [[math-foundations/modular-exponentiation]] - a^b mod m in O(log b) via squaring, LCG jump-ahead for parallelism
+- [[math-foundations/mersenne-primes-fast-arithmetic]] - Division-free modulo for 2^p - 1, 35-90 cycle DIV → 5 cycle shift+add
 - [[index-tracking]] - Tagging elements with original indices to disambiguate duplicates
 
 ### **Production Algorithm Tools**

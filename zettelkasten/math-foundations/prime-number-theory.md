@@ -371,6 +371,8 @@ Some polynomials generate many primes:
 
 **Note**: Not all M_p are prime, but all Mersenne primes have this form.
 
+**Computational significance**: Mersenne primes enable division-free modular arithmetic — see [[math-foundations/mersenne-primes-fast-arithmetic]].
+
 **Largest known prime** (as of 2026): 2^(82,589,933) - 1 (24,862,048 digits!)
 
 ### Fermat Primes

@@ -152,6 +152,7 @@ dependencies = [
  "criterion 0.5.1",
  "mission10",
  "mission6",
+ "rayon",
 ]
 
 [[package]]
