@@ -90,6 +90,7 @@ n=3:  • • •       T₃ = 6
 ## Related Concepts
 
 - [[geometric-series]] - Series with constant ratio (vs constant difference)
+- [[harmonic-series-and-logarithmic-growth]] - Series of reciprocals, $\sum 1/i \approx \ln N$
 - [[inclusion-exclusion]] - Often used with arithmetic series for set problems
 - [[number-theory]] - Divisibility and multiples
 - [[summation-notation]] - Sigma notation $\sum$

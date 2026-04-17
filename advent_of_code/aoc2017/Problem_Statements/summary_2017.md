@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 16/25 (32 stars) |
-| **Total Runtime** | 79.54ms |
-| **Average per Day** | 4.97ms |
+| **Progress** | 17/25 (34 stars) |
+| **Total Runtime** | 79.67ms |
+| **Average per Day** | 4.69ms |
 | **Mission Integration** | Mission 10 (Days 12, 14) |
 
 ---
@@ -36,6 +36,7 @@
 | [14](days/day14_function_guide.md) | — | — | 3.47ms | Knot Hash rows + Union-Find regions | Mission 10 | Bit-packed 128×128 grid; right+down unioning |
 | [15](days/day15_function_guide.md) | — | — | 22.73ms | Park–Miller LCG + Rayon blocks | None | Mersenne fast-mod + jump-ahead parallelism (14.7× from naive) |
 | [16](days/day16_function_guide.md) | — | — | 4.82ms | Permutation cycle detection + history lookup | None | Cycle length 60; 960-byte lookup table eliminates recomputation |
+| [17](days/day17_function_guide.md) | — | — | 131.84µs | Circular-buffer insertion + position-1 tracking | None | Batch no-wrap iterations → 937× speedup (50M → ~4.3k wraps) |
 
 ---
 
@@ -58,6 +59,7 @@
 - [Day 14](days/day14_function_guide.md) - Disk Defragmentation | [Code](../src/solver/day14.rs) ✅
 - [Day 15](days/day15_function_guide.md) - Dueling Generators | [Code](../src/solver/day15.rs) ✅
 - [Day 16](days/day16_function_guide.md) - Permutation Promenade | [Code](../src/solver/day16.rs) ✅
+- [Day 17](days/day17_function_guide.md) - Spinlock | [Code](../src/solver/day17.rs) ✅
 
 ---
 
@@ -81,3 +83,4 @@
 | 14 | Knot Hash rows + Union-Find regions | Compose Day 10 + Mission 10 — bit-packed grid, union right+down only to halve edge work |
 | 15 | Mersenne fast-mod + Rayon jump-ahead | Mersenne prime `2^31-1` eliminates DIV (1.8×); `mod_pow` jump-ahead enables parallel blocks (3.9× total) |
 | 16 | Permutation cycle detection + history lookup | Any permutation has finite order; cycle of 60 means 1B dances reduces to a table lookup |
+| 17 | Circular-buffer insertion + position-1 tracking | Position 0 never moves — only track the last value written to position 1; batch no-wrap iterations to skip 50M → ~4.3k |

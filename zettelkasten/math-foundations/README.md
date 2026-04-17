@@ -212,6 +212,7 @@ Each implementation references mathematical foundations:
 21. ✅ `collatz-conjecture.md` - Collatz conjecture, parity observations, computational approaches (Project Euler P14)
 22. ✅ `project-euler-p014.md` - Longest Collatz sequence, memoization, even-number elimination (Project Euler P14)
 23. ✅ `josephus-problem.md` - Circular elimination, binary bit rotation (k=2), power-of-3 across formula (AoC 2016 Day 19)
+24. ✅ `harmonic-series-and-logarithmic-growth.md` - $H_N \approx \ln N + \gamma$, rare-event counting, log-log perception trap (AoC 2017 Day 17)
 
 ### **Priority Concepts** (Create these next)
 
