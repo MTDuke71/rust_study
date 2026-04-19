@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 17/25 (34 stars) |
-| **Total Runtime** | 79.67ms |
-| **Average per Day** | 4.69ms |
+| **Progress** | 18/25 (36 stars) |
+| **Total Runtime** | 80.30ms |
+| **Average per Day** | 4.46ms |
 | **Mission Integration** | Mission 10 (Days 12, 14) |
 
 ---
@@ -37,6 +37,7 @@
 | [15](days/day15_function_guide.md) | — | — | 22.73ms | Park–Miller LCG + Rayon blocks | None | Mersenne fast-mod + jump-ahead parallelism (14.7× from naive) |
 | [16](days/day16_function_guide.md) | — | — | 4.82ms | Permutation cycle detection + history lookup | None | Cycle length 60; 960-byte lookup table eliminates recomputation |
 | [17](days/day17_function_guide.md) | — | — | 131.84µs | Circular-buffer insertion + position-1 tracking | None | Batch no-wrap iterations → 937× speedup (50M → ~4.3k wraps) |
+| [18](days/day18_function_guide.md) | 3.05µs | 406.58µs | 400.13µs | Assembly interpreter + coroutine scheduling | None | Part 1 = last LCG sample (3,188); Part 2 = 56 × 127 distributed bubble-sort sends |
 
 ---
 
@@ -60,6 +61,7 @@
 - [Day 15](days/day15_function_guide.md) - Dueling Generators | [Code](../src/solver/day15.rs) ✅
 - [Day 16](days/day16_function_guide.md) - Permutation Promenade | [Code](../src/solver/day16.rs) ✅
 - [Day 17](days/day17_function_guide.md) - Spinlock | [Code](../src/solver/day17.rs) ✅
+- [Day 18](days/day18_function_guide.md) - Duet | [Code](../src/solver/day18.rs) ✅
 
 ---
 
@@ -84,3 +86,4 @@
 | 15 | Mersenne fast-mod + Rayon jump-ahead | Mersenne prime `2^31-1` eliminates DIV (1.8×); `mod_pow` jump-ahead enables parallel blocks (3.9× total) |
 | 16 | Permutation cycle detection + history lookup | Any permutation has finite order; cycle of 60 means 1B dances reduces to a table lookup |
 | 17 | Circular-buffer insertion + position-1 tracking | Position 0 never moves — only track the last value written to position 1; batch no-wrap iterations to skip 50M → ~4.3k |
+| 18 | Assembly interpreter + coroutine scheduling | Same `Instr` enum drives both parts; Part 2 alternates two programs with FIFO queues and detects deadlock by "both blocked and both inboxes empty" |
