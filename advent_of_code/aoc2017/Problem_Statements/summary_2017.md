@@ -9,10 +9,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 18/25 (36 stars) |
-| **Total Runtime** | 80.30ms |
-| **Average per Day** | 4.46ms |
-| **Mission Integration** | Mission 10 (Days 12, 14) |
+| **Progress** | 19/25 (38 stars) |
+| **Total Runtime** | 80.39ms |
+| **Average per Day** | 4.23ms |
+| **Mission Integration** | Mission 6 (Day 19), Mission 10 (Days 12, 14) |
 
 ---
 
@@ -38,6 +38,7 @@
 | [16](days/day16_function_guide.md) | — | — | 4.82ms | Permutation cycle detection + history lookup | None | Cycle length 60; 960-byte lookup table eliminates recomputation |
 | [17](days/day17_function_guide.md) | — | — | 131.84µs | Circular-buffer insertion + position-1 tracking | None | Batch no-wrap iterations → 937× speedup (50M → ~4.3k wraps) |
 | [18](days/day18_function_guide.md) | 3.05µs | 406.58µs | 400.13µs | Assembly interpreter + coroutine scheduling | None | Part 1 = last LCG sample (3,188); Part 2 = 56 × 127 distributed bubble-sort sends |
+| [19](days/day19_function_guide.md) | 85.50µs | 85.26µs | 89.97µs | ASCII-maze walk with cardinal turns | Mission 6 | One traversal yields both answers; `Option<Coord>` unifies move + boundary |
 
 ---
 
@@ -62,6 +63,7 @@
 - [Day 16](days/day16_function_guide.md) - Permutation Promenade | [Code](../src/solver/day16.rs) ✅
 - [Day 17](days/day17_function_guide.md) - Spinlock | [Code](../src/solver/day17.rs) ✅
 - [Day 18](days/day18_function_guide.md) - Duet | [Code](../src/solver/day18.rs) ✅
+- [Day 19](days/day19_function_guide.md) - A Series of Tubes | [Code](../src/solver/day19.rs) ✅
 
 ---
 
@@ -87,3 +89,4 @@
 | 16 | Permutation cycle detection + history lookup | Any permutation has finite order; cycle of 60 means 1B dances reduces to a table lookup |
 | 17 | Circular-buffer insertion + position-1 tracking | Position 0 never moves — only track the last value written to position 1; batch no-wrap iterations to skip 50M → ~4.3k |
 | 18 | Assembly interpreter + coroutine scheduling | Same `Instr` enum drives both parts; Part 2 alternates two programs with FIFO queues and detects deadlock by "both blocked and both inboxes empty" |
+| 19 | ASCII-maze walk with cardinal turns | Letters and step count are both side effects of a single traversal — combined runtime equals a single walk, not 2× |
