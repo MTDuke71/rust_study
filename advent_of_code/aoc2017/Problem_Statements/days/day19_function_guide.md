@@ -183,4 +183,4 @@ The `is_ascii_uppercase` guard matches A–Z in one test; no range check, no `if
 
 ---
 
-**Navigation**: [← Day 18](day18_function_guide.md) | [All Days](../summary_2017.md) | Day 20 →
+**Navigation**: [← Day 18](day18_function_guide.md) | [All Days](../summary_2017.md) | [Day 20 →](day20_function_guide.md)

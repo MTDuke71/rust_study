@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 19/25 (38 stars) |
-| **Total Runtime** | 80.39ms |
-| **Average per Day** | 4.23ms |
+| **Progress** | 20/25 (40 stars) |
+| **Total Runtime** | 82.51ms |
+| **Average per Day** | 4.13ms |
 | **Mission Integration** | Mission 6 (Day 19), Mission 10 (Days 12, 14) |
 
 ---
@@ -39,6 +39,7 @@
 | [17](days/day17_function_guide.md) | — | — | 131.84µs | Circular-buffer insertion + position-1 tracking | None | Batch no-wrap iterations → 937× speedup (50M → ~4.3k wraps) |
 | [18](days/day18_function_guide.md) | 3.05µs | 406.58µs | 400.13µs | Assembly interpreter + coroutine scheduling | None | Part 1 = last LCG sample (3,188); Part 2 = 56 × 127 distributed bubble-sort sends |
 | [19](days/day19_function_guide.md) | 85.50µs | 85.26µs | 89.97µs | ASCII-maze walk with cardinal turns | Mission 6 | One traversal yields both answers; `Option<Coord>` unifies move + boundary |
+| [20](days/day20_function_guide.md) | 214.84µs | 2.115ms | 2.124ms | Closed-form ranking + bucket-filter simulation | None | Part 1 is `min_by_key(\|a\|,\|v\|,\|p\|)` — no simulation; Part 2 buckets by position, retain count==1 |
 
 ---
 
@@ -64,6 +65,7 @@
 - [Day 17](days/day17_function_guide.md) - Spinlock | [Code](../src/solver/day17.rs) ✅
 - [Day 18](days/day18_function_guide.md) - Duet | [Code](../src/solver/day18.rs) ✅
 - [Day 19](days/day19_function_guide.md) - A Series of Tubes | [Code](../src/solver/day19.rs) ✅
+- [Day 20](days/day20_function_guide.md) - Particle Swarm | [Code](../src/solver/day20.rs) ✅
 
 ---
 
@@ -90,3 +92,4 @@
 | 17 | Circular-buffer insertion + position-1 tracking | Position 0 never moves — only track the last value written to position 1; batch no-wrap iterations to skip 50M → ~4.3k |
 | 18 | Assembly interpreter + coroutine scheduling | Same `Instr` enum drives both parts; Part 2 alternates two programs with FIFO queues and detects deadlock by "both blocked and both inboxes empty" |
 | 19 | ASCII-maze walk with cardinal turns | Letters and step count are both side effects of a single traversal — combined runtime equals a single walk, not 2× |
+| 20 | Closed-form ranking + bucket-filter simulation | Long-term position ~ ½at² → Part 1 is just `min_by_key` on acceleration magnitude; Part 2 uses `HashMap<Pos, count>` then `retain(count == 1)` to avoid O(n²) pair checks |
