@@ -26,6 +26,7 @@ def html_to_md(html: str) -> str:
     text = text.replace("&amp;", "&")
     text = text.replace("&apos;", "'")
     text = text.replace("&quot;", '"')
+    text = text.replace("&nbsp;", " ")
 
     # Convert headings: <h2>--- Day X: Title ---</h2>
     text = re.sub(r"<h2>(.*?)</h2>", r"## \1\n", text)
