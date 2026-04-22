@@ -13,6 +13,7 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 - `combinatorics-fundamentals.md` - Product rule, permutations, combinations, counting without enumeration ✅
 - `graph-theory-fundamentals.md` - Vertices, edges, paths, cycles, trees
 - `number-theory-basics.md` - Primes, divisibility, GCD, modular arithmetic
+- `dihedral-group-d4.md` - Symmetries of the square (D₄), orbit-stabilizer, symmetry-aware lookup ✅
 
 ### **Computational Theory**
 - `complexity-theory.md` - Big-O notation, time/space analysis, complexity classes
@@ -37,9 +38,12 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 
 **Target**: 20 mathematical concepts documented by **January 25, 2026**
 
-**Current**: 24/20 notes ✅ 🎉 **GOAL EXCEEDED!**
+**Current**: 25/20 notes ✅ 🎉 **GOAL EXCEEDED!**
 
-**Latest additions** (March 19, 2026):
+**Latest additions** (April 21, 2026):
+- `dihedral-group-d4.md` - Symmetries of the square, 8-element group, orbit-stabilizer theorem, expand-at-parse symmetry-aware lookup (AoC 2017 Day 21)
+
+**Previous additions** (March 19, 2026):
 - `josephus-problem.md` - Circular elimination, k=2 binary trick, across-circle power-of-3 formula (AoC 2016 Day 19)
 
 **Previous additions** (March 7, 2026):

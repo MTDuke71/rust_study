@@ -106,5 +106,26 @@ fn day20_bench(c: &mut Criterion) {
     c.bench_function("day20_part2", |b| b.iter(|| aoc2017::solver::day20::solve_part2(&input)));
 }
 
-criterion_group!(benches, day01_bench, day02_bench, day03_bench, day04_bench, day05_bench, day06_bench, day07_bench, day08_bench, day09_bench, day10_bench, day11_bench, day12_bench, day13_bench, day14_bench, day15_bench, day16_bench, day17_bench, day18_bench, day19_bench, day20_bench);
+fn day21_bench(c: &mut Criterion) {
+    let input = std::fs::read_to_string("inputs/day21.txt").expect("Need day21.txt input");
+    c.bench_function("day21", |b| b.iter(|| aoc2017::solver::day21::solve(&input)));
+    c.bench_function("day21_part1", |b| b.iter(|| aoc2017::solver::day21::solve_part1(&input)));
+    c.bench_function("day21_part2", |b| b.iter(|| aoc2017::solver::day21::solve_part2(&input)));
+}
+
+fn day21_bitpacked_bench(c: &mut Criterion) {
+    let input = std::fs::read_to_string("inputs/day21.txt").expect("Need day21.txt input");
+    c.bench_function("day21_bitpacked", |b| b.iter(|| aoc2017::solver::day21_bitpacked::solve(&input)));
+    c.bench_function("day21_bitpacked_part1", |b| b.iter(|| aoc2017::solver::day21_bitpacked::solve_part1(&input)));
+    c.bench_function("day21_bitpacked_part2", |b| b.iter(|| aoc2017::solver::day21_bitpacked::solve_part2(&input)));
+}
+
+fn day21_memo_bench(c: &mut Criterion) {
+    let input = std::fs::read_to_string("inputs/day21.txt").expect("Need day21.txt input");
+    c.bench_function("day21_memo", |b| b.iter(|| aoc2017::solver::day21_memo::solve(&input)));
+    c.bench_function("day21_memo_part1", |b| b.iter(|| aoc2017::solver::day21_memo::solve_part1(&input)));
+    c.bench_function("day21_memo_part2", |b| b.iter(|| aoc2017::solver::day21_memo::solve_part2(&input)));
+}
+
+criterion_group!(benches, day01_bench, day02_bench, day03_bench, day04_bench, day05_bench, day06_bench, day07_bench, day08_bench, day09_bench, day10_bench, day11_bench, day12_bench, day13_bench, day14_bench, day15_bench, day16_bench, day17_bench, day18_bench, day19_bench, day20_bench, day21_bench, day21_bitpacked_bench, day21_memo_bench);
 criterion_main!(benches);

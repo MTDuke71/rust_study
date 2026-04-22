@@ -243,6 +243,7 @@
 - [[math-foundations/README]] - **Math Foundations Index** - Mathematical concepts underlying algorithm implementations
 - [[math-foundations/3d-geometry]] - **3D Geometry** - 3D grids, 6/26-adjacency, voxel surface area, flood fill, data structure choices (AoC 2022 Day 18, 2023 Day 22)
 - [[math-foundations/base-conversion]] - **Base Conversion** - Positional notation, Horner's method, balanced bases, carry propagation (AoC 2022 Day 25)
+- [[math-foundations/dihedral-group-d4]] - **Dihedral Group D₄** - Symmetries of the square (4 rotations × 2 flips = 8 elements), orbit-stabilizer, expand-at-parse lookup pattern (AoC 2017 Day 21)
 
 **Software Architecture:**
 

@@ -1,6 +1,6 @@
 # AoC 2017 - Summary
 
-**Status**: IN PROGRESS (1/25)
+**Status**: IN PROGRESS (21/25)
 **Project**: [README](../README.md)
 
 ---
@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 20/25 (40 stars) |
-| **Total Runtime** | 82.51ms |
-| **Average per Day** | 4.13ms |
+| **Progress** | 21/25 (42 stars) |
+| **Total Runtime** | 324.40ms |
+| **Average per Day** | 15.45ms |
 | **Mission Integration** | Mission 6 (Day 19), Mission 10 (Days 12, 14) |
 
 ---
@@ -40,6 +40,7 @@
 | [18](days/day18_function_guide.md) | 3.05µs | 406.58µs | 400.13µs | Assembly interpreter + coroutine scheduling | None | Part 1 = last LCG sample (3,188); Part 2 = 56 × 127 distributed bubble-sort sends |
 | [19](days/day19_function_guide.md) | 85.50µs | 85.26µs | 89.97µs | ASCII-maze walk with cardinal turns | Mission 6 | One traversal yields both answers; `Option<Coord>` unifies move + boundary |
 | [20](days/day20_function_guide.md) | 214.84µs | 2.115ms | 2.124ms | Closed-form ranking + bucket-filter simulation | None | Part 1 is `min_by_key(\|a\|,\|v\|,\|p\|)` — no simulation; Part 2 buckets by position, retain count==1 |
+| [21](days/day21_function_guide.md) | 555.89µs | 234.25ms | 241.89ms | Dihedral-group rule expansion + block step | None | Reference; alternates: `day21_bitpacked` 5.68ms (40×), `day21_memo` **32.46µs (7,070×)** via 3-iter cache — grid never materialized |
 
 ---
 
@@ -66,6 +67,7 @@
 - [Day 18](days/day18_function_guide.md) - Duet | [Code](../src/solver/day18.rs) ✅
 - [Day 19](days/day19_function_guide.md) - A Series of Tubes | [Code](../src/solver/day19.rs) ✅
 - [Day 20](days/day20_function_guide.md) - Particle Swarm | [Code](../src/solver/day20.rs) ✅
+- [Day 21](days/day21_function_guide.md) - Fractal Art | [Code](../src/solver/day21.rs) ✅
 
 ---
 
@@ -93,3 +95,4 @@
 | 18 | Assembly interpreter + coroutine scheduling | Same `Instr` enum drives both parts; Part 2 alternates two programs with FIFO queues and detects deadlock by "both blocked and both inboxes empty" |
 | 19 | ASCII-maze walk with cardinal turns | Letters and step count are both side effects of a single traversal — combined runtime equals a single walk, not 2× |
 | 20 | Closed-form ranking + bucket-filter simulation | Long-term position ~ ½at² → Part 1 is just `min_by_key` on acceleration magnitude; Part 2 uses `HashMap<Pos, count>` then `retain(count == 1)` to avoid O(n²) pair checks |
+| 21 | Dihedral-group rule expansion + block step + 3-iter memoization | 8 orientations (4 rotations × 2 flips) is the dihedral group D₄; expand at parse so lookups become one `HashMap::get`; grid side triples every 3 iterations (`3 → 4 → 6 → 9`, cycle gain = 4/3 × 3/2 × 3/2 = 3), so 18 iter → 2187² = 3¹⁴ ≈ 4.78M cells. Memo alternate: 3-iter structural periodicity means `f(block, depth)` recurses with ≤ 512 distinct 3×3 blocks — Part 2 drops from 230ms to **32µs** (7,070×) without materializing the grid |
