@@ -141,5 +141,12 @@ fn day23_bench(c: &mut Criterion) {
     c.bench_function("day23_part2", |b| b.iter(|| aoc2017::solver::day23::solve_part2(&input)));
 }
 
-criterion_group!(benches, day01_bench, day02_bench, day03_bench, day04_bench, day05_bench, day06_bench, day07_bench, day08_bench, day09_bench, day10_bench, day11_bench, day12_bench, day13_bench, day14_bench, day15_bench, day16_bench, day17_bench, day18_bench, day19_bench, day20_bench, day21_bench, day21_bitpacked_bench, day21_memo_bench, day22_bench, day23_bench);
+fn day24_bench(c: &mut Criterion) {
+    let input = std::fs::read_to_string("inputs/day24.txt").expect("Need day24.txt input");
+    c.bench_function("day24", |b| b.iter(|| aoc2017::solver::day24::solve(&input)));
+    c.bench_function("day24_part1", |b| b.iter(|| aoc2017::solver::day24::solve_part1(&input)));
+    c.bench_function("day24_part2", |b| b.iter(|| aoc2017::solver::day24::solve_part2(&input)));
+}
+
+criterion_group!(benches, day01_bench, day02_bench, day03_bench, day04_bench, day05_bench, day06_bench, day07_bench, day08_bench, day09_bench, day10_bench, day11_bench, day12_bench, day13_bench, day14_bench, day15_bench, day16_bench, day17_bench, day18_bench, day19_bench, day20_bench, day21_bench, day21_bitpacked_bench, day21_memo_bench, day22_bench, day23_bench, day24_bench);
 criterion_main!(benches);

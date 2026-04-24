@@ -1,6 +1,6 @@
 # AoC 2017 - Summary
 
-**Status**: IN PROGRESS (23/25)
+**Status**: IN PROGRESS (24/25)
 **Project**: [README](../README.md)
 
 ---
@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 23/25 (46 stars) |
-| **Total Runtime** | 378.39ms |
-| **Average per Day** | 16.45ms |
+| **Progress** | 24/25 (48 stars) |
+| **Total Runtime** | 383.37ms |
+| **Average per Day** | 15.97ms |
 | **Mission Integration** | Mission 6 (Day 19), Mission 10 (Days 12, 14) |
 
 ---
@@ -43,6 +43,7 @@
 | [21](days/day21_function_guide.md) | 555.89µs | 234.25ms | 241.89ms | Dihedral-group rule expansion + block step | None | Reference; alternates: `day21_bitpacked` 5.68ms (40×), `day21_memo` **32.46µs (7,070×)** via 3-iter cache — grid never materialized |
 | [22](days/day22_function_guide.md) | 321.32µs | 54.997ms | 53.87ms | Sparse-set (P1) + bounded `Vec<u8>` state grid (P2) | None | Y-up reflected coords so Up=+y; Part 2 encodes 4 states as `u8` with `(s+1) & 3` advance on a 1024² flat grid (1 MiB) — 10M bursts in ~55ms vs seconds for a HashMap |
 | [23](days/day23_function_guide.md) | 89.41µs | 26.07µs | 116.07µs | VM simulation (P1) + bytecode analysis → primality (P2) | None | Part 1 = (93-2)² = 8,281 muls from the single outer pass; Part 2 reads the VM program as "count composites in AP {109300, 109317, …, 126300}" — replace O(b²) trial multiplication with O(√b) trial division, 5×10⁸× speedup |
+| [24](days/day24_function_guide.md) | 4.94ms | 5.00ms | 4.98ms | DFS over component graph with `u64` used-mask | None | Single recursive search updates both "max strength" and "longest then strongest"; adjacency keyed by port value, self-loop `p/p` recorded once. 56 components → bitmask fits in one register; combined ≈ part1 ≈ part2 because `solve()` shares one DFS |
 
 ---
 
@@ -72,6 +73,7 @@
 - [Day 21](days/day21_function_guide.md) - Fractal Art | [Code](../src/solver/day21.rs) ✅
 - [Day 22](days/day22_function_guide.md) - Sporifica Virus | [Code](../src/solver/day22.rs) ✅
 - [Day 23](days/day23_function_guide.md) - Coprocessor Conflagration | [Code](../src/solver/day23.rs) ✅
+- [Day 24](days/day24_function_guide.md) - Electromagnetic Moat | [Code](../src/solver/day24.rs) ✅
 
 ---
 
@@ -102,3 +104,4 @@
 | 21 | Dihedral-group rule expansion + block step + 3-iter memoization | 8 orientations (4 rotations × 2 flips) is the dihedral group D₄; expand at parse so lookups become one `HashMap::get`; grid side triples every 3 iterations (`3 → 4 → 6 → 9`, cycle gain = 4/3 × 3/2 × 3/2 = 3), so 18 iter → 2187² = 3¹⁴ ≈ 4.78M cells. Memo alternate: 3-iter structural periodicity means `f(block, depth)` recurses with ≤ 512 distinct 3×3 blocks — Part 2 drops from 230ms to **32µs** (7,070×) without materializing the grid |
 | 22 | Sparse-set Part 1 + bounded `Vec<u8>` Part 2 with `(s+1) & 3` state advance | Part 1's 10k bursts are HashSet-sized (5240 infections, few thousand live cells); Part 2's 10M bursts would be HashMap-slow, but the carrier stays within a few hundred cells of origin, so a flat 1024×1024 `Vec<u8>` (1 MiB) gives O(1) direct indexing. Four states (Clean=0, Weakened=1, Infected=2, Flagged=3) cycle forward, so the whole transition is a single add-and-mask; only Weakened→Infected (state+1 == 2) counts, so the infection counter is one compare per burst |
 | 23 | Straight VM sim (P1) + bytecode-reading → trial-division primality (P2) | Four-opcode VM (`set/sub/mul/jnz`). Part 1 with a=0 runs a single outer pass producing (b-2)² = 8,281 muls — closed-form matches. Part 2 with a=1 would do ~10¹³ multiplications naively; instead extract `(b_start, b_end, step)` from the parsed instructions at lines 0/4/5/7/30 (accounting for `sub X -N` as "add N"), recognise the `d/e` double-loop as naive primality, and replace with `while i*i <= n`. 1001 candidates ≤ 126,300 resolve in 26µs. "`sub X -N` = add N" sign-flip is the subtle bit |
+| 24 | DFS bridge enumeration with `u64` used-mask + per-port adjacency | Bridge construction is a depth-first walk on a graph keyed by port type: from the open port `p`, every component touching `p` is a candidate edge whose other end becomes the new open port. With ≤64 components the "used" set is a single `u64` bit-flip, giving O(1) take/release per recursion frame. One DFS produces both answers — Part 1 tracks `max(strength)`; Part 2 tracks `(length, strength)` lexicographically — so `solve()` runs one search, not two. Self-loops `p/p` are stored once per port to avoid trying the same component in both orientations. Adjacency lists keyed by port value (rather than scanning all 56 components per step) keep the branching factor at the graph's actual degree, ~3–4 |
