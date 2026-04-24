@@ -60,8 +60,10 @@ desktop.ini
 
 .obsidian/
 .obsidian/workspace.json
+.claude/settings.json
 .claude/settings.local.json
 .claude/AI_README.md
+.claude/worktrees/
 nul
 
 # Oxide's private learning journal (local only)

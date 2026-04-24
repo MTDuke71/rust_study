@@ -301,4 +301,4 @@ I predicted 100–500× and was off by an order of magnitude. The reason: I assu
 
 ---
 
-**Navigation**: [← Day 20](day20_function_guide.md) | [All Days](../summary_2017.md) | Day 22 →
+**Navigation**: [← Day 20](day20_function_guide.md) | [All Days](../summary_2017.md) | [Day 22 →](day22_function_guide.md)

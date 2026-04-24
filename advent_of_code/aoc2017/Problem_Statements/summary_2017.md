@@ -1,6 +1,6 @@
 # AoC 2017 - Summary
 
-**Status**: IN PROGRESS (21/25)
+**Status**: IN PROGRESS (22/25)
 **Project**: [README](../README.md)
 
 ---
@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| **Progress** | 21/25 (42 stars) |
-| **Total Runtime** | 324.40ms |
-| **Average per Day** | 15.45ms |
+| **Progress** | 22/25 (44 stars) |
+| **Total Runtime** | 378.27ms |
+| **Average per Day** | 17.19ms |
 | **Mission Integration** | Mission 6 (Day 19), Mission 10 (Days 12, 14) |
 
 ---
@@ -41,6 +41,7 @@
 | [19](days/day19_function_guide.md) | 85.50µs | 85.26µs | 89.97µs | ASCII-maze walk with cardinal turns | Mission 6 | One traversal yields both answers; `Option<Coord>` unifies move + boundary |
 | [20](days/day20_function_guide.md) | 214.84µs | 2.115ms | 2.124ms | Closed-form ranking + bucket-filter simulation | None | Part 1 is `min_by_key(\|a\|,\|v\|,\|p\|)` — no simulation; Part 2 buckets by position, retain count==1 |
 | [21](days/day21_function_guide.md) | 555.89µs | 234.25ms | 241.89ms | Dihedral-group rule expansion + block step | None | Reference; alternates: `day21_bitpacked` 5.68ms (40×), `day21_memo` **32.46µs (7,070×)** via 3-iter cache — grid never materialized |
+| [22](days/day22_function_guide.md) | 321.32µs | 54.997ms | 53.87ms | Sparse-set (P1) + bounded `Vec<u8>` state grid (P2) | None | Y-up reflected coords so Up=+y; Part 2 encodes 4 states as `u8` with `(s+1) & 3` advance on a 1024² flat grid (1 MiB) — 10M bursts in ~55ms vs seconds for a HashMap |
 
 ---
 
@@ -68,6 +69,7 @@
 - [Day 19](days/day19_function_guide.md) - A Series of Tubes | [Code](../src/solver/day19.rs) ✅
 - [Day 20](days/day20_function_guide.md) - Particle Swarm | [Code](../src/solver/day20.rs) ✅
 - [Day 21](days/day21_function_guide.md) - Fractal Art | [Code](../src/solver/day21.rs) ✅
+- [Day 22](days/day22_function_guide.md) - Sporifica Virus | [Code](../src/solver/day22.rs) ✅
 
 ---
 
@@ -96,3 +98,4 @@
 | 19 | ASCII-maze walk with cardinal turns | Letters and step count are both side effects of a single traversal — combined runtime equals a single walk, not 2× |
 | 20 | Closed-form ranking + bucket-filter simulation | Long-term position ~ ½at² → Part 1 is just `min_by_key` on acceleration magnitude; Part 2 uses `HashMap<Pos, count>` then `retain(count == 1)` to avoid O(n²) pair checks |
 | 21 | Dihedral-group rule expansion + block step + 3-iter memoization | 8 orientations (4 rotations × 2 flips) is the dihedral group D₄; expand at parse so lookups become one `HashMap::get`; grid side triples every 3 iterations (`3 → 4 → 6 → 9`, cycle gain = 4/3 × 3/2 × 3/2 = 3), so 18 iter → 2187² = 3¹⁴ ≈ 4.78M cells. Memo alternate: 3-iter structural periodicity means `f(block, depth)` recurses with ≤ 512 distinct 3×3 blocks — Part 2 drops from 230ms to **32µs** (7,070×) without materializing the grid |
+| 22 | Sparse-set Part 1 + bounded `Vec<u8>` Part 2 with `(s+1) & 3` state advance | Part 1's 10k bursts are HashSet-sized (5240 infections, few thousand live cells); Part 2's 10M bursts would be HashMap-slow, but the carrier stays within a few hundred cells of origin, so a flat 1024×1024 `Vec<u8>` (1 MiB) gives O(1) direct indexing. Four states (Clean=0, Weakened=1, Infected=2, Flagged=3) cycle forward, so the whole transition is a single add-and-mask; only Weakened→Infected (state+1 == 2) counts, so the infection counter is one compare per burst |
