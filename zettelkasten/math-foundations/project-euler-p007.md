@@ -4,7 +4,7 @@
 **Published**: December 28, 2001  
 **Solved**: January 28, 2026  
 **Category**: Prime Numbers, Number Theory  
-**Related Concepts**: [[prime-number-theorem]], [[sieve-of-eratosthenes]], [[primality-testing]]
+**Related Concepts**: [[prime-number-theorem]], [[sieve-of-eratosthenes]], [[primality-fundamentals]]
 
 ## Problem Statement
 
@@ -412,7 +412,7 @@ fn nth_prime_trial(n: usize) -> u64 {
 
 - [[prime-number-theorem]] - Asymptotic distribution
 - [[sieve-of-eratosthenes]] - Prime generation algorithm
-- [[primality-testing]] - Checking if number is prime
+- [[primality-fundamentals]] - Checking if number is prime
 - [[prime-gaps]] - Distribution and patterns
 
 ## Implementation Details
@@ -438,7 +438,7 @@ use crate::utils::primes::sieve;
 
 - [[prime-number-theorem]] - Estimation of nth prime
 - [[sieve-of-eratosthenes]] - Prime generation algorithm
-- [[primality-testing]] - Trial division alternative
+- [[primality-fundamentals]] - Trial division alternative
 - [[prime-gaps]] - Spacing between consecutive primes
 - [[big-o-notation]] - Complexity analysis
 - [[project-euler-p003]] - Related: prime factorization
@@ -457,7 +457,7 @@ use crate::utils::primes::sieve;
 
 *Links:*
 - **Foundation**: [[prime-number-theorem]], [[sieve-of-eratosthenes]]
-- **Techniques**: [[primality-testing]], [[algorithm-selection]]
+- **Techniques**: [[primality-fundamentals]], [[algorithm-selection]]
 - **Related Problems**: [[project-euler-p003]], [[project-euler-p010]]
 - **Session**: [[2026-01-28]]
 

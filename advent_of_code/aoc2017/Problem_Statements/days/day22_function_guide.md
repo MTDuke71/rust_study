@@ -210,4 +210,4 @@ Reflect the y-axis once during parsing and all downstream code reads in the puzz
 
 ---
 
-**Navigation**: [← Day 21](day21_function_guide.md) | [All Days](../summary_2017.md) | Day 23 →
+**Navigation**: [← Day 21](day21_function_guide.md) | [All Days](../summary_2017.md) | [Day 23 →](day23_function_guide.md)

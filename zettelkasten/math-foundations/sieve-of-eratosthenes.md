@@ -3,7 +3,7 @@
 **Category**: Number Theory, Prime Numbers, Algorithms  
 **Difficulty**: Fundamental  
 **Complexity**: O(n log log n) time, O(n) space  
-**Related Concepts**: [[prime-numbers]], [[primality-testing]], [[prime-number-theorem]]
+**Related Concepts**: [[prime-numbers]], [[primality-fundamentals]], [[prime-number-theorem]]
 
 ## Definition
 
@@ -502,7 +502,7 @@ assert_eq!(primes.len(), 25);  // π(100) = 25
 ## Related Concepts
 
 - [[prime-number-theorem]] - Asymptotic distribution of primes
-- [[primality-testing]] - Alternative approach for individual numbers
+- [[primality-fundamentals]] - Alternative approach for individual numbers
 - [[trial-division]] - Simpler but slower method
 - [[prime-factorization]] - Uses sieve for preprocessing
 - [[miller-rabin-primality-test]] - For large individual numbers
@@ -521,7 +521,7 @@ assert_eq!(primes.len(), 25);  // π(100) = 25
 *Links:*
 - **Applications**: [[project-euler-p007]], [[project-euler-p010]], [[prime-factorization]]
 - **Theory**: [[prime-number-theorem]], [[sqrt-bound-theorem]]
-- **Algorithms**: [[primality-testing]], [[trial-division]], [[segmented-sieve]]
+- **Algorithms**: [[primality-fundamentals]], [[trial-division]], [[segmented-sieve]]
 - **Code**: `project_euler/src/utils/primes.rs`
 
 *Tags:* #sieve #primes #algorithms #number-theory #optimization #eratosthenes #project-euler

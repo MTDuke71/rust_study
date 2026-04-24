@@ -38,9 +38,12 @@ This directory creates a **knowledge layer** that makes implicit mathematics exp
 
 **Target**: 20 mathematical concepts documented by **January 25, 2026**
 
-**Current**: 25/20 notes ✅ 🎉 **GOAL EXCEEDED!**
+**Current**: 26/20 notes ✅ 🎉 **GOAL EXCEEDED!**
 
-**Latest additions** (April 21, 2026):
+**Latest additions** (April 23, 2026):
+- `primality-fundamentals.md` - Trial division with √n bound, 6k±1 optimization, Fermat's little theorem, Miller–Rabin witness set for u64; recognises bytecode-VM primality patterns (AoC 2017 Day 23)
+
+**Previous additions** (April 21, 2026):
 - `dihedral-group-d4.md` - Symmetries of the square, 8-element group, orbit-stabilizer theorem, expand-at-parse symmetry-aware lookup (AoC 2017 Day 21)
 
 **Previous additions** (March 19, 2026):
@@ -217,6 +220,8 @@ Each implementation references mathematical foundations:
 22. ✅ `project-euler-p014.md` - Longest Collatz sequence, memoization, even-number elimination (Project Euler P14)
 23. ✅ `josephus-problem.md` - Circular elimination, binary bit rotation (k=2), power-of-3 across formula (AoC 2016 Day 19)
 24. ✅ `harmonic-series-and-logarithmic-growth.md` - $H_N \approx \ln N + \gamma$, rare-event counting, log-log perception trap (AoC 2017 Day 17)
+25. ✅ `dihedral-group-d4.md` - Symmetries of the square (D₄), orbit-stabilizer, symmetry-aware lookup (AoC 2017 Day 21)
+26. ✅ `primality-fundamentals.md` - Trial division, 6k±1, Fermat, Miller–Rabin witness set for u64; bytecode-VM pattern: `∃ d, e ∈ [2, b): d·e = b` ↔ "b is composite" (AoC 2017 Day 23)
 
 ### **Priority Concepts** (Create these next)
 

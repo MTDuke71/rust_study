@@ -542,7 +542,7 @@ fn test_pnt_accuracy() {
 
 *Links:*
 - **Related Theory**: [[prime-factorization]], [[divisibility]], [[number-theory-fundamentals]]
-- **Algorithms**: [[sieve-of-eratosthenes]], [[primality-testing]]
+- **Algorithms**: [[sieve-of-eratosthenes]], [[primality-fundamentals]]
 - **Applications**: [[project-euler-p007]], [[project-euler-p010]]
 - **Advanced**: [[riemann-hypothesis]], [[twin-prime-conjecture]]
 - **Code**: `project_euler/src/problems/p007.rs`, `project_euler/src/problems/p010.rs`

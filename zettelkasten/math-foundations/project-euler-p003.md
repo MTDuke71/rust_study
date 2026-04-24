@@ -28,7 +28,7 @@ Find the largest prime factor of 600,851,475,143.
   - Remainder after all divisions (if > 1) must be prime
 
 ### Supporting Concepts
-- **[[primality-testing]]** - Determining if a number is prime
+- **[[primality-fundamentals]]** - Determining if a number is prime
   - Not needed if using trial division with elimination!
   - Any remainder > 1 after dividing to $\sqrt{n}$ is automatically prime
   

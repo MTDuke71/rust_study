@@ -313,7 +313,7 @@ pub fn prime_factors_6k_optimized(mut n: u64) -> Vec<u64> {
 - **[[trial-division]]** - Primary factorization algorithm
 - **[[divisibility]]** - Fundamental property used in factorization
 - **[[sqrt-bound-theorem]]** - Key optimization
-- **[[primality-testing]]** - Related but distinct problem
+- **[[primality-fundamentals]]** - Related but distinct problem
 - **[[sieve-of-eratosthenes]]** - Generate primes for factorization
 - **[[gcd-lcm]]** - Computed using factorizations
 
@@ -390,6 +390,6 @@ Factorization has been studied for millennia:
 *Links:*
 - **Applications**: [[project-euler-p003]], [[project-euler-p012]], [[gcd-lcm]], [[divisor-function]]
 - **Algorithms**: [[trial-division]], [[sieve-of-eratosthenes]]
-- **Theory**: [[sqrt-bound-theorem]], [[divisibility]], [[primality-testing]], [[prime-number-theory]]
+- **Theory**: [[sqrt-bound-theorem]], [[divisibility]], [[primality-fundamentals]], [[prime-number-theory]]
 - **Code**: `project_euler/src/problems/p003.rs`, `project_euler/src/problems/p012.rs`
 - **Tags**: #prime-numbers #factorization #number-theory #algorithms #cryptography
