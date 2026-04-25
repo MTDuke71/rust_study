@@ -8,15 +8,16 @@
 
 ## Table of Contents
 1. [Problem Summary](#problem-summary)
-2. [Modelling Components as a Port-Indexed Graph](#modelling-components-as-a-port-indexed-graph)
-3. [The DFS](#the-dfs)
-4. [One Search, Both Answers](#one-search-both-answers)
-5. [Bitmask Trick: 56 Components Fit in a `u64`](#bitmask-trick-56-components-fit-in-a-u64)
-6. [Self-Loops `p/p` and Why They're Stored Once](#self-loops-pp-and-why-theyre-stored-once)
-7. [Benchmarks](#benchmarks)
-8. [Why No Pruning](#why-no-pruning)
-9. [Key Patterns](#key-patterns)
-10. [Integrator Notes](#integrator-notes)
+2. [Mental Model: It's Dominoes](#mental-model-its-dominoes)
+3. [Modelling Components as a Port-Indexed Graph](#modelling-components-as-a-port-indexed-graph)
+4. [The DFS](#the-dfs)
+5. [One Search, Both Answers](#one-search-both-answers)
+6. [Bitmask Trick: 56 Components Fit in a `u64`](#bitmask-trick-56-components-fit-in-a-u64)
+7. [Self-Loops `p/p` and Why They're Stored Once](#self-loops-pp-and-why-theyre-stored-once)
+8. [Benchmarks](#benchmarks)
+9. [Why No Pruning](#why-no-pruning)
+10. [Key Patterns](#key-patterns)
+11. [Integrator Notes](#integrator-notes)
 
 ---
 
@@ -42,6 +43,34 @@ A bridge is a sequence `c₁ — c₂ — … — cₖ` where:
 - no component appears twice.
 
 The strength of the bridge is `Σ (port_a + port_b)` over its components. Both parts ask for an extremum over all possible bridges — Part 1 the strongest bridge, Part 2 the strongest among the longest. Brute-force enumeration with backtracking is the natural fit because the search tree is small (the real input has 56 components, branching factor of ~3–4).
+
+---
+
+## Mental Model: It's Dominoes
+
+Strip the "magnetic components" framing and this puzzle is **dominoes with one extra rule**. If the DFS ever feels abstract, picture laying tiles on a table:
+
+| Puzzle concept                        | Dominoes equivalent                                              |
+|:--------------------------------------|:-----------------------------------------------------------------|
+| Component `a/b`                       | A domino with `a` pips on one half, `b` on the other             |
+| Self-loop `2/2`                       | A "double" domino (the 2-2)                                      |
+| Ports must match end-to-end           | Pip counts must match where dominoes touch                       |
+| Ports can be flipped freely           | A domino can be rotated 180° before placing                      |
+| Each component used at most once      | Each domino is in the boneyard once — no duplicates              |
+| Bridge                                | A chain of laid-down dominoes                                    |
+| **Bridge must start at port 0**       | The one extra rule — chain must start with a `0` exposed         |
+| Strength                              | Sum of all pips on the chain                                     |
+| Length                                | Number of dominoes in the chain                                  |
+| `used: u64` bitmask                   | The "this one's already on the table" rule, encoded as bits      |
+
+So when reading the DFS, picture: *"I'm holding dominoes in my hand, the open end of the chain shows port `port`, and I'm trying every domino in my hand whose half matches `port`, then recursing with that domino flipped so the new open end is `other`."*
+
+Two design choices fall straight out of this picture:
+
+- **Each non-loop component lives in *two* buckets in `adj`** (`2/3` is in both `adj[2]` and `adj[3]`). It doesn't matter which half is "used" — the whole domino is placed, and the bitmask retires it by **component index**, so once it's on the table neither bucket can present it again. The double-bucketing exists so the DFS can *find* the component regardless of which port the chain currently exposes: if the chain exposes 3, look in `adj[3]` and the tuple says "new exposed port = 2"; if a different chain exposes 2, look in `adj[2]` and the tuple says "new exposed port = 3." Same domino, two lookup paths.
+- **Self-loops live in *one* bucket** (`2/2` is in `adj[2]` only, guarded by `if a != b`). Both lookup paths would point at the same bucket anyway, so bucketing twice would just make the DFS iterate the same placement twice on every visit to port 2 — the bitmask would still catch the reuse, but the wasted branches add up.
+
+Part 1 = "build the chain with the most total pips." Part 2 = "build the longest chain you can; if multiple chains tie for length, pick the one with the most pips." Same dominoes, two scoring rules, one DFS.
 
 ---
 
