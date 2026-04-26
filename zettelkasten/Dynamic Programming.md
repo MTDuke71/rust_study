@@ -227,6 +227,44 @@ fn coin_change(coins: &[u32], amount: u32) -> Option<u32> {
 }
 ```
 
+### **Example: Counting Coin Combinations** ([[project-euler-p031]])
+
+The same problem shape with a different objective: instead of *minimum coins*,
+count the *number of unordered ways* to make a target. This is the Project
+Euler P31 solution.
+
+```rust
+/// Count the number of unordered ways to make `target` using the given coins.
+/// Each coin may be used any number of times.
+pub fn count_coin_combinations(target: usize, coins: &[usize]) -> u64 {
+    let mut ways = vec![0u64; target + 1];
+    ways[0] = 1;  // empty multiset is the unique way to make 0
+
+    for &coin in coins {
+        for s in coin..=target {
+            ways[s] += ways[s - coin];
+        }
+    }
+
+    ways[target]
+}
+```
+
+**The Loop-Order Trick** — *coins outer, sums inner* counts unordered
+combinations. Swap them and you'd count ordered sequences (compositions),
+double-counting e.g. (1p, 2p) and (2p, 1p) as distinct. This is the single
+most important pattern in counting DP.
+
+| Variant | Objective | Recurrence | Loop order |
+|---------|-----------|------------|------------|
+| Minimum coins | `dp[s] = min(dp[s], dp[s-c] + 1)` | take `min` | sums outer |
+| Counting combinations | `ways[s] += ways[s-c]` | accumulate sum | **coins outer** |
+| Counting compositions | `ways[s] += ways[s-c]` | accumulate sum | sums outer |
+
+For the UK coin set {1, 2, 5, 10, 20, 50, 100, 200} and target 200, the answer
+is **73,682** — computed in ~744 ns. See [[project-euler-p031]] for the
+generating-function derivation.
+
 ## Decision Framework: When to Use DP
 
 ### **✅ Use DP When:**
@@ -349,6 +387,13 @@ let result = dp[n]; // OK
 - 2020 Day 10: Adapter chains (counting paths)
 - 2021 Day 21: Dirac Dice (game states DP)
 
+### **Project Euler DP Problems:**
+
+- **P31**: [[project-euler-p031]] — Coin Sums (counting combinations, loop-order trick)
+- **P76**: Counting Summations (same algorithm, parts are 1..=n−1)
+- **P77**: Prime Summations (coin set is the primes)
+- **P78**: Coin Partitions (partition function `p(n)` modulo arithmetic)
+
 ## References & Further Reading
 
 - **Theory:** Introduction to Algorithms (CLRS) - Chapter 15
@@ -380,6 +425,7 @@ let result = dp[n]; // OK
 
 - [[AoC Patterns MOC]] - DP in competitive programming
 - [[Performance Optimization Guide]] - When and how to optimize DP
+- [[project-euler-p031]] - Coin sums via counting DP (loop-order trick)
 
 **Navigation:**
 

@@ -276,6 +276,7 @@ gcd(48, 18) = 6
 - [[prime-factorization]] - Alternative method for LCM using prime powers
 - [[modular-arithmetic]] - Uses GCD for inverse computation
 - [[project-euler-p005]] - LCM of range 1-20
+- [[project-euler-p033]] - GCD reduction of digit-cancelling fraction product
 - [[number-theory-fundamentals]] - Divisibility, primes, factorization
 
 ## References
@@ -288,8 +289,8 @@ gcd(48, 18) = 6
 ---
 
 *Links:*
-- **Applications**: [[project-euler-p005]]
+- **Applications**: [[project-euler-p005]], [[project-euler-p033]]
 - **Related Theory**: [[prime-factorization]], [[modular-arithmetic]]
-- **Implementations**: `project_euler/src/problems/p005.rs`, `project_euler/src/utils/number_theory.rs`
+- **Implementations**: `project_euler/src/problems/p005.rs`, `project_euler/src/problems/p033.rs`, `project_euler/src/utils/number_theory.rs`
 
 *Tags:* #number-theory #algorithms #gcd #lcm #euclidean-algorithm #divisibility

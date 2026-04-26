@@ -144,6 +144,15 @@ fn count_accepted(&self, workflow_name: &str, ranges: PartRange) -> u64 {
 - **Key insight**: The factoradic number system creates a bijection between [0, n!) and permutations
 - **Link**: [[project-euler-p024]] | `project_euler/src/problems/p024.rs`
 
+### **Project Euler P32**: Pandigital Products - Digit-Count Constraint Reasoning
+- **What**: Find all 1–9 pandigital identities a × b = c (each digit used once across a, b, c)
+- **How it uses combinatorics**:
+  - Pandigital constraint: a + b + c = 9 (where each variable is a digit count)
+  - Multiplication rule: a-digit × b-digit yields (a+b−1) or (a+b) digits
+  - Combining: only a+b = 5, c = 4 has integer solutions → shapes 1×4=4 and 2×3=4
+- **Key insight**: Constraint reasoning on digit counts eliminates entire shape classes without enumeration
+- **Link**: [[project-euler-p032]] | `project_euler/src/problems/p032.rs`
+
 ### **Future AoC**: Subset Selection Problems
 - **What**: Choose $r$ items from $n$ candidates
 - **How it uses combinatorics**: Combination formula $\binom{n}{r}$
@@ -306,6 +315,6 @@ Combinatorics: Product of range sizes → instant
 
 *Created*: 2026-01-19
 *Last Updated*: 2026-02-26
-*Implementations*: 3 (AoC 2023 Day 19, Project Euler P15, Project Euler P24)
+*Implementations*: 4 (AoC 2023 Day 19, Project Euler P15, Project Euler P24, Project Euler P32)
 
-*Links: [[zettel-index]] | [[math-foundations/README]] | [[set-theory-fundamentals]] | [[constraint-propagation]] | [[workflow-pattern-matching]] | [[dynamic-programming-theory]] | [[project-euler-p015]] | [[project-euler-p024]]*
+*Links: [[zettel-index]] | [[math-foundations/README]] | [[set-theory-fundamentals]] | [[constraint-propagation]] | [[workflow-pattern-matching]] | [[dynamic-programming-theory]] | [[project-euler-p015]] | [[project-euler-p024]] | [[project-euler-p032]]*

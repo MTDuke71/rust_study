@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p019, p020, p021, p022, p023, p024, p025, p026, p027, p067};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p019, p020, p021, p022, p023, p024, p025, p026, p027, p031, p032, p033, p067};
 
 #[test]
 fn test_problem_001() {
@@ -264,6 +264,42 @@ fn test_problem_027() {
 fn test_problem_027_example() {
     // Euler's n² + n + 41 produces 40 consecutive primes
     assert_eq!(p027::consecutive_primes(1, 41), 40);
+}
+
+#[test]
+fn test_problem_031() {
+    assert_eq!(p031::solve(), 73682);
+}
+
+#[test]
+fn test_problem_031_example() {
+    // From problem statement: ways to make 5p with {1, 2, 5} = 4
+    assert_eq!(p031::count_coin_combinations(5, &[1, 2, 5]), 4);
+}
+
+#[test]
+fn test_problem_032() {
+    assert_eq!(p032::solve(), 45228);
+}
+
+#[test]
+fn test_problem_032_example() {
+    // From problem statement: 39 × 186 = 7254 is pandigital 1–9
+    assert!(p032::is_pandigital_1_9(&[39, 186, 7254]));
+}
+
+#[test]
+fn test_problem_033() {
+    assert_eq!(p033::solve(), 100);
+}
+
+#[test]
+fn test_problem_033_example() {
+    // From problem statement: exactly four non-trivial digit-cancelling fractions
+    assert_eq!(
+        p033::find_curious_fractions(),
+        vec![(16, 64), (19, 95), (26, 65), (49, 98)]
+    );
 }
 
 #[test]
