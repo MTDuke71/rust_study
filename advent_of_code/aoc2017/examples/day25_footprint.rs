@@ -61,7 +61,7 @@ fn main() {
     let (start, steps, rules) = parse(&input);
 
     let mut tape: Vec<u8> = vec![0u8; 1 << 16];
-    let mut offset: isize = 1 << 15;
+    const OFFSET: isize = 1 << 15;
     let mut pos: isize = 0;
     let mut state = start as usize;
 
@@ -71,7 +71,7 @@ fn main() {
     visited.insert(0);
 
     for _ in 0..steps {
-        let idx = pos + offset;
+        let idx = pos + OFFSET;
         let i = idx as usize;
         let val = tape[i] as usize;
         let rule = &rules[state][val];
