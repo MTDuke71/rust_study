@@ -2,7 +2,7 @@
 //!
 //! Test correct answers for implemented problems.
 
-use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p019, p020, p021, p022, p023, p024, p025, p026, p027, p031, p032, p033, p067};
+use project_euler::problems::{p001, p006, p007, p008, p009, p010, p011, p012, p013, p015, p016, p017, p018, p019, p020, p021, p022, p023, p024, p025, p026, p027, p031, p032, p033, p034, p035, p036, p067};
 
 #[test]
 fn test_problem_001() {
@@ -300,6 +300,40 @@ fn test_problem_033_example() {
         p033::find_curious_fractions(),
         vec![(16, 64), (19, 95), (26, 65), (49, 98)]
     );
+}
+
+#[test]
+fn test_problem_034() {
+    assert_eq!(p034::solve(), 40730);
+}
+
+#[test]
+fn test_problem_034_example() {
+    // From problem statement: 145 = 1! + 4! + 5!
+    assert_eq!(p034::digit_factorial_sum(145), 145);
+}
+
+#[test]
+fn test_problem_035() {
+    assert_eq!(p035::solve(), 55);
+}
+
+#[test]
+fn test_problem_035_example() {
+    // From problem statement: 13 circular primes below 100
+    assert_eq!(p035::count_circular_primes_below(100), 13);
+}
+
+#[test]
+fn test_problem_036() {
+    assert_eq!(p036::solve(), 872187);
+}
+
+#[test]
+fn test_problem_036_example() {
+    // From problem statement: 585 = 1001001001 binary, palindromic in both bases
+    assert!(p036::is_decimal_palindrome(585));
+    assert!(p036::is_binary_palindrome(585));
 }
 
 #[test]

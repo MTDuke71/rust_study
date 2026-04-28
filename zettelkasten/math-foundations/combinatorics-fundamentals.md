@@ -153,6 +153,15 @@ fn count_accepted(&self, workflow_name: &str, ranges: PartRange) -> u64 {
 - **Key insight**: Constraint reasoning on digit counts eliminates entire shape classes without enumeration
 - **Link**: [[project-euler-p032]] | `project_euler/src/problems/p032.rs`
 
+### **Project Euler P34**: Digit Factorials - Factorions and Bounded Search
+- **What**: Find all n equal to the sum of factorials of its digits (e.g., 145 = 1! + 4! + 5!)
+- **How it uses combinatorics**:
+  - Direct factorial application: each digit d contributes d! to the digit-factorial sum
+  - Bound derivation: a d-digit number is ≤ d × 9!; for d > 7 this is too small to be d digits
+  - Yields upper bound 7 × 9! = 2,540,160 — beyond which no factorions can exist
+- **Key insight**: Same digit-bound technique as power problems, with factorial replacing exponentiation
+- **Link**: [[project-euler-p034]] | `project_euler/src/problems/p034.rs`
+
 ### **Future AoC**: Subset Selection Problems
 - **What**: Choose $r$ items from $n$ candidates
 - **How it uses combinatorics**: Combination formula $\binom{n}{r}$

@@ -2,7 +2,7 @@
 
 **Category**: Number Theory, String Algorithms  
 **Created**: January 27, 2026  
-**Related Problems**: [[project-euler-p004]]
+**Related Problems**: [[project-euler-p004]], [[project-euler-p036]]
 
 ## Definition
 
